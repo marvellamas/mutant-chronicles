@@ -2,7 +2,7 @@
 import { validaDati, avvisiDati } from './validate.js';
 
 export const FILE_DATI = ['caratteristiche', 'abilita', 'corporazioni', 'addestramenti', 'classi', 'incantesimi', 'regole',
-  'talenti_liberi', 'specializzazioni', 'tecniche_interiori', 'dotazioni', 'formato_nemici', 'bestiario', 'veicoli', 'mappa', 'galleria', 'px_partita'];
+  'talenti_liberi', 'specializzazioni', 'tecniche_interiori', 'dotazioni', 'formato_nemici', 'bestiario', 'png_generici', 'veicoli', 'mappa', 'galleria', 'px_partita'];
 
 /** Lettore per il browser: scarica data/<nome>.json accanto a index.html. */
 export function lettoreFetch(base = 'data/') {
@@ -71,7 +71,7 @@ async function caricaEquipaggiamento(leggi, dati, erroriLettura) {
 // nel piede della stampa. Il Bestiario proposto è del Tavolo del Master. I veicoli (lotto 3) stanno nel file del PG
 // che li possiede (A.91, decisione provvisoria), ma veicoli.json resta qui: così le versioni dei dati scritte nei
 // file dei PG senza veicoli non cambiano. La mappa di battaglia (mappa.json) è solo del Tavolo del Master.
-export const FILE_SOLO_TAVOLO = ['bestiario', 'veicoli', 'mappa', 'galleria', 'px_partita'];
+export const FILE_SOLO_TAVOLO = ['bestiario', 'png_generici', 'veicoli', 'mappa', 'galleria', 'px_partita'];
 
 /** Versione del manuale di ogni file dati che riguarda il personaggio: { file: versione_manuale }. */
 export function versioniPersonaggio(dati) {

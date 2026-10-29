@@ -106,6 +106,7 @@ export function validaDati(dati) {
   if (isOggetto(dati.mappa)) validaMappa(dati, err);
   if (isOggetto(dati.galleria)) validaGalleria(dati, err);
   if (isOggetto(dati.px_partita)) validaPxPartita(dati, err);
+  if (isOggetto(dati.png_generici)) validaPngGenerici(dati, err);
   if (dati.incantesimi?.incantesimi?.length) validaDurateIncantesimi(dati, err);
   // durate in Round (Giocatore §8.9.1, §5.18): il Round di attivazione conta o no (src/tecniche.js → fineDurata)
   if (dati.regole?.durate_round !== undefined && typeof dati.regole.durate_round?.round_attivazione_conta !== 'boolean') err('regole', 'durate_round.round_attivazione_conta', 'vero o falso: il Round di attivazione conta nella durata?');
@@ -3042,6 +3043,53 @@ function validaVeicoli(dati, err) {
  * Galleria (data/galleria.json, N1 del 13/10/2026): i parametri della cartella galleria/ e della tab del master.
  * Un numero sbagliato qui farebbe rifiutare ogni immagine o manderebbe l'originale ai tablet.
  */
+// Modelli PNG generici Classe / Grado / EQ (data/png_generici.json, Mostri 0.46, Direttore §9.6): sei Gradi per Classe, EQ 0–5,
+// tabelle dei PX 6 × 6, armamenti con dado valido, 24 Abilità con sei valori, ogni arma dei pronti nella tabella degli armamenti.
+function validaPngGenerici(dati, err) {
+  const F = 'png_generici';
+  const p = dati.png_generici;
+  const GR = ['I', 'II', 'III', 'IV', 'V', 'VI'];
+  if (!isTesto(p.versione_manuale)) err(F, 'versione_manuale', 'testo mancante');
+  if (JSON.stringify(p.gradi) !== JSON.stringify(GR)) err(F, 'gradi', 'servono i sei Gradi I–VI nell’ordine');
+  if (!Array.isArray(p.eq) || p.eq.length !== 6 || !p.eq.every((e, i) => e?.eq === i && isTesto(e?.nome))) err(F, 'eq', 'sei livelli di EQ da 0 a 5, ciascuno con il nome');
+  for (const g of GR) {
+    const r = p.px?.[g];
+    if (!Array.isArray(r) || r.length !== 6 || !r.every((x, i) => isIntero(x) && x > 0 && (i === 0 || x > r[i - 1]))) err(F, `px.${g}`, 'sei PX crescenti, uno per EQ');
+  }
+  const DADO = /^\d+d\d+$/;
+  const tipi = new Set();
+  for (const [i, a] of (p.armamenti ?? []).entries()) {
+    if (!isTesto(a?.tipo) || !DADO.test(a?.dado ?? '') || !isIntero(a?.mani) || a.mani < 0) err(F, `armamenti[${i}]`, 'tipo, dado (NdM) e mani interi');
+    if (a?.q !== null && (!isIntero(a?.q) || a.q < 1)) err(F, `armamenti[${i}].q`, 'portata o gittata in Q (intero ≥ 1) o null');
+    if (a?.q > 1 && !(Array.isArray(a.modalita) && a.modalita.length && a.modalita.every((m) => dati.regole?.modalita_di_fuoco?.[m] !== undefined))) err(F, `armamenti[${i}].modalita`, 'un’arma a distanza ha modalità di fuoco note (regole.json → modalita_di_fuoco)');
+    tipi.add(a?.tipo);
+  }
+  const nomiAb = new Set((dati.abilita?.abilita ?? []).map((a) => a.nome));
+  const classi = p.classi;
+  if (!isOggetto(classi) || Object.keys(classi).length < 1) { err(F, 'classi', 'almeno un modello'); return; }
+  const CAR = ['FOR', 'DES', 'COS', 'INT', 'SAG', 'CAR'];
+  for (const [id, c] of Object.entries(classi)) {
+    const K = `classi.${id}`;
+    if (!isTesto(c?.nome) || !isTesto(c?.categoria)) err(F, K, 'nome e categoria');
+    for (const g of GR) {
+      const a = c?.caratteristiche?.[g]; const r = c?.risorse?.[g]; const s = c?.salvezze?.[g]; const t = c?.attacchi?.[g];
+      if (!a || !CAR.every((x) => isIntero(a[x]) && a[x] >= 0 && a[x] <= 10) || !isIntero(a.livello)) err(F, `${K}.caratteristiche.${g}`, 'livello e sei Caratteristiche da 0 a 10');
+      if (!r || !['pv', 'pm', 'ini', 'ap', 'ar', 'schivata'].every((x) => isIntero(r[x]) && r[x] >= 0) || !(r.parata === null || isIntero(r.parata))) err(F, `${K}.risorse.${g}`, 'pv, pm, ini, ap, ar, schivata interi e parata intera (null solo se il manuale scrive «—»)');
+      if (!s || !['tempra', 'riflessi', 'volonta', 'magia'].every((x) => isIntero(s[x]))) err(F, `${K}.salvezze.${g}`, 'quattro Salvezze intere');
+      if (!Array.isArray(t) || !t.length) err(F, `${K}.attacchi.${g}`, 'almeno un attacco');
+      else for (const [j, x] of t.entries()) {
+        if (!tipi.has(x?.arma)) err(F, `${K}.attacchi.${g}[${j}]`, `l’arma «${x?.arma}» non è nella tabella degli armamenti`);
+        if (!isIntero(x?.va) || !/^\d+d\d+([+-]\d+)?$/.test(x?.danno ?? '')) err(F, `${K}.attacchi.${g}[${j}]`, 'VA intero e danno NdM±B');
+      }
+    }
+    const ab = Object.keys(c?.abilita ?? {});
+    for (const n of ab) if (!nomiAb.has(n)) err(F, `${K}.abilita.${n}`, 'Abilità sconosciuta');
+    for (const n of nomiAb) if (!ab.includes(n)) err(F, `${K}.abilita`, `manca l’Abilità «${n}»`);
+    for (const [n, v] of Object.entries(c?.abilita ?? {})) if (!Array.isArray(v) || v.length !== 6 || !v.every(isIntero)) err(F, `${K}.abilita.${n}`, 'sei valori, uno per Grado');
+    for (const g of GR) if (!c?.talenti_classe?.[g]?.nome) err(F, `${K}.talenti_classe.${g}`, 'Talento di Classe del Grado');
+  }
+}
+
 // A.161: regole del calcolatore «PX della partita». I Titoli coprono i livelli 1–20 senza buchi, con fattori e
 // px crescenti; 20 soglie cumulative crescenti; Atti con limite di livello crescente; voti min < max.
 function validaPxPartita(dati, err) {

@@ -9,6 +9,7 @@
 // TODO(Davide): il Bestiario è una proposta in attesa di Davide (data/bestiario.json → «TODO(Davide)»).
 import { iniziativaCreatura } from './iniziativa-creature.js';
 import { aggiungiDanno, catalogo } from './equipaggiamento.js';
+import { profiloPng, proponiNomePng, proponiDescrizionePng } from './png-generici.js';
 
 const riga = (fonte, valore, nota) => ({ fonte, valore, ...(nota ? { nota } : {}) });
 const clona = (x) => JSON.parse(JSON.stringify(x));
@@ -60,6 +61,8 @@ const aggiungiProprieta = (a, p) => {
  * @returns {{ nemico, provenienza, round, avvisi: string[], errori: string[] }}
  */
 export function profiloNemico(scelte, dati, { umani = {} } = {}) {
+  // modello PNG generico Classe / Grado / EQ (Mostri 0.46, Direttore §9.6): src/png-generici.js
+  if (scelte.png) return profiloPng({ ...scelte.png, nome: scelte.nome, descrizione: scelte.descrizione, id: scelte.id }, dati);
   const BE = B(dati);
   const avvisi = [];
   const errori = [];
@@ -297,6 +300,7 @@ function predefiniteArmi(rifs, cat) {
 
 /** Nome proposto: «Insettoide posseduto Medio», «Boss Aracnoide Potente», «Scavafosse Semplice» (le copie nello scontro aggiungono il numero). */
 export function proponiNome(scelte, dati) {
+  if (scelte.png) return proponiNomePng(scelte.png, dati);
   const BE = B(dati);
   const g = BE.gradi.find((x) => x.id === scelte.grado);
   const ricetta = scelte.creatura ? BE.creature.find((x) => x.id === scelte.creatura) : null;
@@ -310,6 +314,7 @@ export function proponiNome(scelte, dati) {
 
 /** Descrizione proposta: la prima frase della base (o la creatura pronta) e i moduli. */
 export function proponiDescrizione(scelte, dati) {
+  if (scelte.png) return proponiDescrizionePng(scelte.png, dati);
   const BE = B(dati);
   const ricetta = scelte.creatura ? BE.creature.find((x) => x.id === scelte.creatura) : null;
   if (ricetta) return ricetta.descrizione;

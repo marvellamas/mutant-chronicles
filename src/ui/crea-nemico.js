@@ -18,6 +18,7 @@ import {
   profiloNemico, scelteCreatura, fileUmano, SUFFISSO_UMANO, aCaso, ritiraPasso, mutazioniAmmesse,
   roundResistenza, proponiNome, proponiDescrizione, idDaNome,
 } from '../crea-nemico.js';
+import { classiPng, pxPng } from '../png-generici.js';
 
 const PASSI = ['Base', 'Grado', 'Moduli', 'Nome e descrizione', 'Riepilogo'];
 const nuovoSeme = () => Math.floor(Math.random() * 2 ** 31) + 1;
@@ -96,12 +97,14 @@ export function apriCreaNemico(ctx, { voci = [], salvato = () => {}, destinazion
     const basi = Object.entries(BE.basi);
     const base = BE.basi[s.base];
     return [
-      rigaScelte('Base (cap. 3)', basi.map(([id, b]) => ({ valore: id, etichetta: b.nome, riga: b.paragrafo, titolo: b.comportamento ?? b.nota ?? null })), s.creatura ? null : s.base,
-        (v) => cambia((x) => { Object.assign(x, { base: v, creatura: undefined, mutazioni: x.mutazioni.filter((m) => mutazioniAmmesse(v, dati).some((y) => y.id === m)) }); if (BE.basi[v].umano) { x.tipoUmano ??= BE.basi.umano.tipi[0]; if (!SUFFISSO_UMANO[x.grado]) x.grado = 'medio'; } else delete x.tipoUmano; if (!BE.moduli.equipaggiamento.basi.includes(v)) x.equipaggiamento = null; })),
+      modelloPng(),
+      rigaScelte('Base (cap. 3)', basi.map(([id, b]) => ({ valore: id, etichetta: b.nome, riga: b.paragrafo, titolo: b.comportamento ?? b.nota ?? null })), s.creatura || s.png ? null : s.base,
+        (v) => cambia((x) => { delete x.png; Object.assign(x, { base: v, creatura: undefined, mutazioni: x.mutazioni.filter((m) => mutazioniAmmesse(v, dati).some((y) => y.id === m)) }); if (BE.basi[v].umano) { x.tipoUmano ??= BE.basi.umano.tipi[0]; if (!SUFFISSO_UMANO[x.grado]) x.grado = 'medio'; } else delete x.tipoUmano; if (!BE.moduli.equipaggiamento.basi.includes(v)) x.equipaggiamento = null; })),
       base?.umano && !s.creatura ? rigaScelte('Tipo umano (bestiario umano del Tavolo del Master)', base.tipi.map((t) => ({ valore: t, etichetta: base.nomi_tipi?.[t] ?? t })), s.tipoUmano,
         (v) => cambia((x) => { x.tipoUmano = v; })) : null,
       h('label', { class: 'scelta-creatura' }, h('span', { class: 'scelta-titolo' }, 'Oppure una creatura pronta (cap. 5) '),
         tendinaCreature(BE, s.creatura ?? '', (v) => cambia((x) => {
+          delete x.png;
           if (!v) { delete x.creatura; return; }
           const c = BE.creature.find((y) => y.id === v);
           Object.assign(x, scelteCreatura(v, c.gradi.includes(x.grado) ? x.grado : c.gradi[0], {}, dati));
@@ -110,8 +113,31 @@ export function apriCreaNemico(ctx, { voci = [], salvato = () => {}, destinazion
     ];
   };
 
+  // Modello PNG generico (Mostri 0.46 / Direttore §9.6): Classe, Grado ed EQ → un nemico da ritoccare e salvare.
+  // Il Grado e l'EQ si scelgono qui; i passi 2 e 3 (grado del bestiario proposto e moduli) non servono.
+  const modelloPng = () => {
+    const D = dati.png_generici;
+    if (!D) return null;
+    const s = st.scelte;
+    const attuale = s.png ?? null;
+    const imposta = (campo, valore) => cambia((x) => { x.png = { classe: x.png?.classe ?? classiPng(dati)[0].id, grado: x.png?.grado ?? 'I', eq: x.png?.eq ?? 0, [campo]: valore }; delete x.creatura; });
+    const px = attuale ? pxPng(attuale.grado, attuale.eq, dati) : null;
+    return h('div', { class: 'scelta-attacco scelta-gruppo modello-png', role: 'group', 'aria-label': 'Modello PNG generico' },
+      h('p', { class: 'scelta-titolo' }, 'Oppure un modello PNG generico (Direttore §9.6, Mostri 0.46)'),
+      h('div', { class: 'riga-azioni' },
+        h('label', {}, 'Classe ', h('select', { 'aria-label': 'Classe del modello PNG', onchange: (e) => imposta('classe', e.target.value) },
+          h('option', { value: '', selected: !attuale }, '— nessun modello —'),
+          [...new Set(classiPng(dati).map((c) => c.categoria))].map((cat) => h('optgroup', { label: cat }, classiPng(dati).filter((c) => c.categoria === cat).map((c) => h('option', { value: c.id, selected: attuale?.classe === c.id }, c.nome)))))),
+        h('label', {}, 'Grado ', h('select', { 'aria-label': 'Grado del modello PNG', disabled: !attuale, onchange: (e) => imposta('grado', e.target.value) }, D.gradi.map((g) => h('option', { value: g, selected: attuale?.grado === g }, g)))),
+        h('label', {}, 'EQ ', h('select', { 'aria-label': 'Qualità complessiva EQ', disabled: !attuale, onchange: (e) => imposta('eq', Number(e.target.value)) }, D.eq.map((q) => h('option', { value: q.eq, selected: attuale?.eq === q.eq }, `${q.eq} · ${q.nome}`)))),
+        attuale ? h('button', { type: 'button', class: 'btn primario', onclick: () => { st.passo = 3; disegna(); } }, 'Usa questo modello →') : null),
+      attuale ? h('p', { class: 'nota' }, `${D.classi[attuale.classe].descrizione} Valore pronto: ${px} PX per quattro PG. Dieci modelli su venticinque: Lavoratori, Studiosi e Taumaturghi non sono ancora nel manuale.`)
+        : h('p', { class: 'nota' }, 'Si sceglie una Classe, un Grado da I a VI e un solo valore di EQ: i numeri vengono dal manuale; poi si ritocca e si salva come ogni altro nemico.'));
+  };
+
   const passoGrado = () => {
     const s = st.scelte;
+    if (s.png) return [h('p', { class: 'riquadro ok', role: 'status' }, `Modello PNG generico: Grado ${s.png.grado} ed EQ ${s.png.eq} si scelgono al passo 1 («${dati.png_generici.classi[s.png.classe].nome}»). Il Grado del bestiario proposto non si applica.`)];
     const c = s.creatura ? BE.creature.find((x) => x.id === s.creatura) : null;
     const base = BE.basi[s.base];
     const opzioni = BE.gradi.map((g) => ({
@@ -134,6 +160,7 @@ export function apriCreaNemico(ctx, { voci = [], salvato = () => {}, destinazion
 
   const passoModuli = () => {
     const s = st.scelte;
+    if (s.png) return [h('p', { class: 'riquadro ok', role: 'status' }, 'Modello PNG generico: EQ rappresenta l’intera dotazione; non ci sono moduli da scegliere. Armi e protezioni generiche sono già nelle tabelle del modello.')];
     if (s.creatura) {
       const c = BE.creature.find((x) => x.id === s.creatura);
       return [h('p', { class: 'nota' }, `${c.nome}: i moduli sono quelli della creatura pronta (${c.paragrafo}). Per cambiarli, scegli una base al passo 1.`), riepilogoCosto()];
@@ -210,7 +237,7 @@ export function apriCreaNemico(ctx, { voci = [], salvato = () => {}, destinazion
     return [
       st.casuale ? pannelloCasuale() : null,
       h('p', {}, h('strong', {}, n.nome), h('small', { class: 'nota' }, ` · nemici/${n.id}.json`)),
-      h('p', { class: 'nota' }, n.fonte, ' · ', `${s.boss ? 'Boss (etichetta), ' : ''}circa ${virgola(r.round.grado)} Round di resistenza contro 7 PG del grado: ${BE.equilibrato.etichetta ?? 'stima'}`),
+      h('p', { class: 'nota' }, n.fonte, ' · ', s.png ? `PX pronti per quattro PG: ${pxPng(s.png.grado, s.png.eq, dati)} (già con EQ)` : `${s.boss ? 'Boss (etichetta), ' : ''}circa ${virgola(r.round.grado)} Round di resistenza contro 7 PG del grado: ${BE.equilibrato.etichetta ?? 'stima'}`),
       r.avvisi.length ? h('div', { class: 'riquadro attenzione' }, h('ul', {}, r.avvisi.map((x) => h('li', {}, x)))) : null,
       h('div', { class: 'griglia-ritocchi' }, CAMPI_RITOCCO.map(([p, e]) => cella(p, e))),
       h('p', { class: 'nota' }, `Caratteristiche: ${Object.entries(n.caratteristiche ?? {}).map(([k, v]) => `${k} ${v}`).join(' · ')}.`),
@@ -274,7 +301,7 @@ export function apriCreaNemico(ctx, { voci = [], salvato = () => {}, destinazion
     const seme = nuovoSeme();
     if (st.passo === 0) {
       const x = aCaso({ seme, livello: st.livello, contesto: st.contesto, fissa: { grado: s.grado, boss: s.boss } }, dati).scelte;
-      cambia((y) => { Object.assign(y, { base: x.base, tipoUmano: x.tipoUmano, creatura: undefined, mutazioni: [], corrotto: null, equipaggiamento: null }); if (!x.tipoUmano) delete y.tipoUmano; });
+      cambia((y) => { delete y.png; Object.assign(y, { base: x.base, tipoUmano: x.tipoUmano, creatura: undefined, mutazioni: [], corrotto: null, equipaggiamento: null }); if (!x.tipoUmano) delete y.tipoUmano; });
     } else if (st.passo === 1) {
       if (s.creatura) {
         const c = BE.creature.find((y) => y.id === s.creatura);
@@ -338,7 +365,7 @@ export function apriCreaNemico(ctx, { voci = [], salvato = () => {}, destinazion
       h('section', { class: 'passo-crea' }, contenuti[passo]()),
       h('nav', { class: 'attacco-nav crea-nav', 'aria-label': 'Indietro e avanti' },
         h('button', { type: 'button', class: 'btn', disabled: passo === 0, onclick: () => { st.passo -= 1; disegna(); } }, '← Indietro'),
-        !ultimo && !(passo === 2 && st.scelte.creatura) ? h('button', { type: 'button', class: 'btn', title: 'Questo passo con le tabelle del cap. 6; gli altri restano', onclick: aCasoPasso }, 'A caso') : null,
+        !ultimo && !(passo === 2 && st.scelte.creatura) && !(st.scelte.png && (passo === 1 || passo === 2)) ? h('button', { type: 'button', class: 'btn', title: 'Questo passo con le tabelle del cap. 6; gli altri restano', onclick: aCasoPasso }, 'A caso') : null,
         !ultimo ? h('button', { type: 'button', class: 'btn primario', onclick: () => { st.passo += 1; disegna(); } }, `${PASSI[passo + 1]} →`) : null)));
     finestra.scrollTop = scorrimento;
   };

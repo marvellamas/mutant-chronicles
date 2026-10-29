@@ -1,0 +1,5183 @@
+{
+  "versione_manuale": "Mostri 0.46 (Word del 27/10/2026); Direttore 0.45 §9.6",
+  "fonte": "Manuale dei Mostri 0.46, cap. 8 «PNG generici Classe Grado ed EQ»; Manuale del Direttore 0.45 §9.6. Dieci dei venticinque modelli previsti: gli altri quindici (Lavoratori, Studiosi, Taumaturghi) non sono ancora compilati nel manuale.",
+  "gradi": [
+    "I",
+    "II",
+    "III",
+    "IV",
+    "V",
+    "VI"
+  ],
+  "movimento": {
+    "passo": 6,
+    "corsa": 12,
+    "scatto": 18,
+    "nota": "Movimento: 6/12/18 Q Base (Agente, tabella delle risorse); una AM per Round."
+  },
+  "px": {
+    "I": [
+      10,
+      15,
+      20,
+      25,
+      30,
+      35
+    ],
+    "II": [
+      20,
+      30,
+      40,
+      50,
+      60,
+      70
+    ],
+    "III": [
+      30,
+      45,
+      60,
+      75,
+      90,
+      105
+    ],
+    "IV": [
+      50,
+      75,
+      100,
+      125,
+      150,
+      175
+    ],
+    "V": [
+      70,
+      105,
+      140,
+      175,
+      210,
+      245
+    ],
+    "VI": [
+      100,
+      150,
+      200,
+      250,
+      300,
+      350
+    ]
+  },
+  "eq": [
+    {
+      "eq": 0,
+      "nome": "Comune"
+    },
+    {
+      "eq": 1,
+      "nome": "Non comune"
+    },
+    {
+      "eq": 2,
+      "nome": "Rara"
+    },
+    {
+      "eq": 3,
+      "nome": "Molto rara"
+    },
+    {
+      "eq": 4,
+      "nome": "Epica"
+    },
+    {
+      "eq": 5,
+      "nome": "Leggendaria"
+    }
+  ],
+  "modifiche": [
+    {
+      "valore": "Iniziativa",
+      "modifica": "+EQ"
+    },
+    {
+      "valore": "VA offensivo",
+      "modifica": "+EQ a ogni Prova offensiva pertinente, una sola volta per Prova"
+    },
+    {
+      "valore": "Parata e Schivata",
+      "modifica": "+EQ; Elusione usa soltanto Riflessi modificata"
+    },
+    {
+      "valore": "AR",
+      "modifica": "+EQ ordinaria al totale del profilo, una sola volta"
+    },
+    {
+      "valore": "Danno diretto",
+      "modifica": "+EQ per colpo prima di moltiplicatori, Difese e AR"
+    },
+    {
+      "valore": "Tempra Riflessi Volontà Magia",
+      "modifica": "+EQ alle quattro Salvezze"
+    },
+    {
+      "valore": "Ripristino PV",
+      "modifica": "+EQ per bersaglio e uso se la cura prevede già un recupero di PV"
+    }
+  ],
+  "armamenti": [
+    {
+      "tipo": "Pistola",
+      "abilita": "leggere",
+      "dado": "1d6",
+      "mani": 1,
+      "q": 30,
+      "colpi": 12,
+      "modalita": [
+        "S",
+        "TR"
+      ]
+    },
+    {
+      "tipo": "Lama leggera",
+      "abilita": "mischia",
+      "dado": "1d6",
+      "mani": 1,
+      "q": 1,
+      "colpi": null,
+      "modalita": []
+    },
+    {
+      "tipo": "Carabina",
+      "abilita": "medie",
+      "dado": "1d8",
+      "mani": 2,
+      "q": 100,
+      "colpi": 20,
+      "modalita": [
+        "S",
+        "TR"
+      ]
+    },
+    {
+      "tipo": "Mitragliatore",
+      "abilita": "pesanti",
+      "dado": "2d6",
+      "mani": 2,
+      "q": 200,
+      "colpi": 30,
+      "modalita": [
+        "S",
+        "RB",
+        "RM",
+        "RL",
+        "FS"
+      ]
+    },
+    {
+      "tipo": "Arma da guerra",
+      "abilita": "guerra",
+      "dado": "1d8",
+      "mani": 1,
+      "q": 1,
+      "colpi": null,
+      "modalita": []
+    },
+    {
+      "tipo": "Senz’armi",
+      "abilita": "Corpo a corpo",
+      "dado": "1d6",
+      "mani": 0,
+      "q": 1,
+      "colpi": null,
+      "modalita": []
+    },
+    {
+      "tipo": "Bastone",
+      "abilita": "mischia",
+      "dado": "1d6",
+      "mani": 1,
+      "q": 1,
+      "colpi": null,
+      "modalita": []
+    },
+    {
+      "tipo": "Fucile d’assalto",
+      "abilita": "medie",
+      "dado": "1d8",
+      "mani": 2,
+      "q": 100,
+      "colpi": 24,
+      "modalita": [
+        "S",
+        "RB",
+        "RM",
+        "RL",
+        "TR",
+        "FS"
+      ]
+    }
+  ],
+  "regole": {
+    "impiego": "Impiego. Guardia e veterano possono usare Soldato; gladiatore e guardia del corpo Assaltatore; spia e bandito Lestofante. La diversa funzione narrativa non crea un nuovo profilo.",
+    "natura_spazio": "Natura e spazio. Tutti i modelli di questo blocco sono umani corporei di Natura Comune, con sensi umani ordinari, spazio 1 × 1 Q Base e 1 AM. Attacchi Naturali e AR magica 0. Non conoscono Incantesimi o Tecniche Interiori; i PM personali conservano le normali funzioni e vulnerabilità.",
+    "dadi_e_bonus": "Dadi e bonus. Il dado è la base del tipo d’arma. Le tabelle di Classe includono già il bonus di Caratteristica al danno e l’eventuale Specializzazione; aggiungere soltanto EQ e le condizioni del momento. Il Lottatore usa il dado della Disciplina. Tutti i colpi hanno AC 1, costano 1 AP e infliggono danni Naturali.",
+    "tiro_e_munizioni": "Tiro e munizioni. S indica Colpo Singolo; TR Tiro Rapido; RB, RM e RL le Raffiche; FS Fuoco di Soppressione. I valori Q delle armi a distanza sono massimi, con normali penalità e AP preparatorie del Giocatore §§5.10–5.11. Tutte le armi da fuoco generiche hanno INC 6. Si parte con arma carica e due ricariche complete; una ricarica costa 1 AP con mani e accesso necessari.",
+    "raffiche": "Raffiche. RB: +2 VA, tre munizioni, un colpo a segno. RM: −2 VA, cinque munizioni, tre colpi. RL: −6 VA, dieci munizioni, cinque colpi. Una sola Prova e 1 AP; ciascun colpo applica separatamente danno e AR. TR: 1 AP e due Prove distinte a −4, due munizioni. Si rispettano modalità dell’arma e incompatibilità. L’Artigliere dal III Grado ha i consumi ridotti del proprio Talento.",
+    "mani_e_protezioni": "Mani e protezioni. Si parte con l’arma principale pronta; Assaltatore con arma da guerra e scudo, Lottatore a mani nude, Lestofante con la lama occultata ancora da estrarre. Le secondarie sono riposte. Estrarre o cambiare arma costa 1 AP; incorporare una sola operazione consentita nell’attacco impone −4 VA (§5.1.1). Il Mitragliatore richiede Imbracciatura: 1 AM oppure −4 VA al tiro; Postura d’Assedio segue la propria eccezione.",
+    "integrita": "Integrità operativa. Se occorre gestirla: armi da fuoco 6 PI, armi ravvicinate 5 PI, protezione 8 PI, scudo 6 PI. PS Integrità generica 10 + EQ; nessun altro incremento dei PI. Sono valori astratti di questo modulo, non modifiche ai cataloghi.",
+    "base_umana": "Base umana. Ogni modello distribuisce 7, 7, 6, 6, 5, 5 nelle sei Caratteristiche secondo il ruolo. È una base generica per questi PNG, senza bonus di Corporazione. La tabella mostra già gli aumenti ai livelli 2, 6, 10, 14 e 18, entro 10. Non cambia la procedura di creazione dei PG.",
+    "gradi": "Gradi. Le righe I–VI corrispondono ai livelli 1, 4, 8, 12, 16 e 20. I Talenti di Classe si cumulano: ogni riga aggiunge quello indicato. I Liberi sono scelte predefinite ai livelli dispari dal 3°. Le Abilità usano basi e categorie della Classe, incrementi automatici e sette punti liberi per Grado, entro i limiti del Giocatore.",
+    "pv_pm": "PV e PM. Il primo dado dei PV è massimo; i successivi sono fissati a 4 per d6 e a 5 per d8 per rendere stabili questi esemplari. Buona Costituzione è già inclusa dal livello in cui viene acquisita. COS e SAG entrano una sola volta. EQ non modifica queste riserve.",
+    "azioni_difese": "Azioni e Difese. Una AP fino al III Grado, due dal IV; sempre una AM per Round. Parata 1 AP; Schivata 1 AP + 1 AM; Elusione è la PS Riflessi senza Azioni quando consentita. Parata Istintiva e Schivata Istintiva introducono solo le rispettive eccezioni. Parare richiede il mezzo pronto e adatto.",
+    "bonus_permanenti": "Bonus permanenti. Attacchi, Iniziativa e Salvezze delle tabelle includono i benefici permanenti raggiunti. I VA delle Abilità sono personali, prima di EQ, strumenti e condizioni. La penalità della Media si applica inoltre a Prove di Atletica o Furtività realmente ostacolate; la Parata non riceve la penalità di Agilità.",
+    "un_solo_bonus": "Un solo bonus. EQ rappresenta l’intera dotazione: si aggiunge una sola volta al valore pertinente. Con AR base 5 ed EQ 2 il totale è 7, anche se il PNG usa protezione e scudo. Ogni colpo di una Raffica riceve +EQ al danno, poi applica separatamente Difesa e AR.",
+    "ambiti": "Ambiti. EQ non modifica i VA non offensivi delle ventiquattro Abilità. Non aumenta PV o PM massimi, AP, AM, Movimento, portata, durata, numero dei bersagli o quantità di colpi. Non assegna capacità nuove, rigenerazione, danni Magici o AR magica. Le penalità e il Movimento già calcolati nel modello non cambiano perché aumenta EQ.",
+    "cure": "Cure. Il bonus si applica solo quando la procedura produce un recupero di PV; non trasforma una stabilizzazione senza guarigione in una cura. Si aggiunge una volta per bersaglio e uso dopo gli eventuali moltiplicatori propri della cura. Il recupero resta limitato dai PV massimi.",
+    "tiri_obbligatori": "Tiri obbligatori. Attacchi, Difese e Salvezze rispettano sempre i risultati naturali: 20 Maldestro; con VA finale almeno 21 anche il 2 è Magistrale. EQ è un modificatore successivo al VA personale e al valore strutturale delle Salvezze.",
+    "vantaggio_addestramento": "Vantaggio di Addestramento. Avventuriero ha Sopravvissuto: una volta per sessione ritira una Prova fallita di Percezione o Sopravvivenza, accettando il secondo risultato. Combattente ha Colpo Perentorio: una volta per combattimento massimizza i dadi di una singola istanza di danno di un proprio attacco, dopo aver colpito e prima dei dadi; in Raffica vale per un solo colpo.",
+    "opportunita": "Opportunità. Una volta per Round, un’uscita volontaria dalla portata può concedere un normale attacco ravvicinato gratuito, anche senza AP disponibili. Non incorpora Manovre offensive. Questi modelli non hanno altri tetti speciali di attacchi oltre alle Azioni e alle capacità scritte.",
+    "pronto_soccorso": "Pronto Soccorso. Il Paramedico dispone di una dotazione sanitaria generica idonea ai propri Talenti: dieci applicazioni e +2 Medicina per il Pronto Soccorso, da aggiungere al VA personale. Ogni tentativo consuma un’applicazione all’inizio. Il successo arresta il Sanguinamento e recupera 1d4 PV + EQ; il Magistrale arresta e recupera 2 × 1d4 PV + EQ. Si tira un solo dado, raddoppiandone il risultato. Per Soccorso Immediato impiega le AP e resta adiacente per due Round; una interruzione fa riprendere il Sanguinamento. Modificatori: Sanguinamento 1 +2; 2 nessuno; 3 o più −2. Restano Specializzazione, Talenti e circostanze.",
+    "trattamenti": "Trattamenti. Diagnosi e Campo Sterile migliorano le Prove consentite, non le autorizzazioni. Il Paramedico può trattare Menomazioni temporanee secondo il Giocatore §5.16.5; quelle permanenti richiedono Medico. Triage Estremo non recupera PV, quindi non riceve il bonus EQ al ripristino.",
+    "ferite_e_pm": "Ferite e PM. A 0 PV si applicano Ferite e Menomazioni ordinarie, senza morte o perdita automatica di coscienza. A 0 PM personali si applica Svenuto. I profili hanno 5 PE iniziali e nessun investimento aggiuntivo da Distintivi; gli attuali si gestiscono secondo il Giocatore §1.8."
+  },
+  "talenti_liberi_condivisi": {
+    "Specializzazione d’arma": "+1 VA e +1 danno nell’impiego dell’arma della famiglia scelta. Già inclusa negli attacchi pertinenti; non si aggiunge di nuovo.",
+    "Medicina Clinica": "+2 alle Prove pertinenti di Medicina, come il Pronto Soccorso; non concede autorizzazioni chirurgiche. Bonus condizionato, fuori dalla tabella dei VA personali.",
+    "Parata Istintiva": "una Parata gratuita per Round, anche fuori Iniziativa, con normali requisiti e Prova.",
+    "Sempre Allerta": "+3 Percezione contro imboscate, aggressori nascosti e pericoli improvvisi concretamente percepibili, anche senza cercarli. Nessuna immunità automatica alla Sorpresa.",
+    "Schivata Istintiva": "una Schivata per Round costa soltanto AM, anche fuori Iniziativa; restano Prova, possibilità di spostarsi e penalità.",
+    "Buona Costituzione": "+5 PV massimi già inclusi; non modifica Ferite o Menomazioni.",
+    "Resistenza ai Veleni": "+2 alla PS pertinente per evitare o attenuare l’avvelenamento; non alle Tempra per nuove Ferite da quei danni a 0 PV.",
+    "Resistenza alla Paura": "+2 alle PS contro paura, terrore, panico e demoralizzazione. Più Resistenze specifiche sulla stessa Prova non superano +2 complessivo.",
+    "Salvezza Migliorata": "+1 alla Salvezza indicata, già inclusa. Limite strutturale 18 secondo Giocatore §1.2.3; EQ si applica successivamente."
+  },
+  "classi": {
+    "agente": {
+      "nome": "Agente",
+      "categoria": "Avventurieri",
+      "descrizione": "Sicurezza, indagini e operazioni sotto copertura. Può rappresentare un investigatore, un agente di sicurezza o un funzionario operativo.",
+      "caratteristiche": {
+        "I": {
+          "livello": 1,
+          "FOR": 5,
+          "DES": 7,
+          "COS": 6,
+          "INT": 6,
+          "SAG": 5,
+          "CAR": 7
+        },
+        "II": {
+          "livello": 4,
+          "FOR": 5,
+          "DES": 9,
+          "COS": 6,
+          "INT": 6,
+          "SAG": 5,
+          "CAR": 7
+        },
+        "III": {
+          "livello": 8,
+          "FOR": 5,
+          "DES": 10,
+          "COS": 6,
+          "INT": 6,
+          "SAG": 6,
+          "CAR": 7
+        },
+        "IV": {
+          "livello": 12,
+          "FOR": 5,
+          "DES": 10,
+          "COS": 6,
+          "INT": 6,
+          "SAG": 8,
+          "CAR": 7
+        },
+        "V": {
+          "livello": 16,
+          "FOR": 5,
+          "DES": 10,
+          "COS": 8,
+          "INT": 6,
+          "SAG": 8,
+          "CAR": 7
+        },
+        "VI": {
+          "livello": 20,
+          "FOR": 5,
+          "DES": 10,
+          "COS": 8,
+          "INT": 6,
+          "SAG": 8,
+          "CAR": 9
+        }
+      },
+      "risorse": {
+        "I": {
+          "pv": 16,
+          "pm": 7,
+          "ini": 3,
+          "ap": 1,
+          "ar": 1,
+          "parata": 9,
+          "schivata": 9
+        },
+        "II": {
+          "pv": 24,
+          "pm": 9,
+          "ini": 5,
+          "ap": 1,
+          "ar": 1,
+          "parata": 11,
+          "schivata": 11
+        },
+        "III": {
+          "pv": 32,
+          "pm": 12,
+          "ini": 6,
+          "ap": 1,
+          "ar": 1,
+          "parata": 13,
+          "schivata": 13
+        },
+        "IV": {
+          "pv": 45,
+          "pm": 16,
+          "ini": 6,
+          "ap": 2,
+          "ar": 1,
+          "parata": 15,
+          "schivata": 15
+        },
+        "V": {
+          "pv": 55,
+          "pm": 18,
+          "ini": 6,
+          "ap": 2,
+          "ar": 1,
+          "parata": 16,
+          "schivata": 16
+        },
+        "VI": {
+          "pv": 63,
+          "pm": 20,
+          "ini": 6,
+          "ap": 2,
+          "ar": 1,
+          "parata": 18,
+          "schivata": 18
+        }
+      },
+      "nota_risorse": "Aggiungere EQ a INI, AR, Parata e Schivata; al tiro di Iniziativa si aggiunge 1d10. Sempre 1 AM. Movimento: 6/12/18 Q Base.",
+      "salvezze": {
+        "I": {
+          "tempra": 10,
+          "riflessi": 10,
+          "volonta": 10,
+          "magia": 8
+        },
+        "II": {
+          "tempra": 11,
+          "riflessi": 12,
+          "volonta": 11,
+          "magia": 9
+        },
+        "III": {
+          "tempra": 11,
+          "riflessi": 13,
+          "volonta": 11,
+          "magia": 10
+        },
+        "IV": {
+          "tempra": 12,
+          "riflessi": 14,
+          "volonta": 12,
+          "magia": 12
+        },
+        "V": {
+          "tempra": 14,
+          "riflessi": 14,
+          "volonta": 12,
+          "magia": 12
+        },
+        "VI": {
+          "tempra": 15,
+          "riflessi": 16,
+          "volonta": 15,
+          "magia": 13
+        }
+      },
+      "attacchi": {
+        "I": [
+          {
+            "arma": "Pistola",
+            "va": 9,
+            "danno": "1d6+1"
+          },
+          {
+            "arma": "Lama leggera",
+            "va": 7,
+            "danno": "1d6+1"
+          }
+        ],
+        "II": [
+          {
+            "arma": "Pistola",
+            "va": 12,
+            "danno": "1d6+2"
+          },
+          {
+            "arma": "Lama leggera",
+            "va": 9,
+            "danno": "1d6+1"
+          }
+        ],
+        "III": [
+          {
+            "arma": "Pistola",
+            "va": 14,
+            "danno": "1d6+3"
+          },
+          {
+            "arma": "Lama leggera",
+            "va": 10,
+            "danno": "1d6+2"
+          }
+        ],
+        "IV": [
+          {
+            "arma": "Pistola",
+            "va": 16,
+            "danno": "1d6+3"
+          },
+          {
+            "arma": "Lama leggera",
+            "va": 10,
+            "danno": "1d6+2"
+          }
+        ],
+        "V": [
+          {
+            "arma": "Pistola",
+            "va": 18,
+            "danno": "1d6+4"
+          },
+          {
+            "arma": "Lama leggera",
+            "va": 10,
+            "danno": "1d6+3"
+          }
+        ],
+        "VI": [
+          {
+            "arma": "Pistola",
+            "va": 20,
+            "danno": "1d6+4"
+          },
+          {
+            "arma": "Lama leggera",
+            "va": 10,
+            "danno": "1d6+3"
+          }
+        ]
+      },
+      "nota_attacchi": "Aggiungere EQ una volta al VA e al danno di ogni colpo, e alle quattro PS. Sono esclusi i bonus condizionati dei Talenti. Le portate, mani e modalità sono nella tabella degli armamenti astratti.",
+      "abilita": {
+        "Armi da lancio": [
+          7,
+          9,
+          10,
+          10,
+          10,
+          10
+        ],
+        "Armi leggere": [
+          9,
+          11,
+          13,
+          15,
+          17,
+          19
+        ],
+        "Armi medie": [
+          6,
+          6,
+          6,
+          6,
+          6,
+          6
+        ],
+        "Armi pesanti": [
+          3,
+          3,
+          3,
+          3,
+          3,
+          3
+        ],
+        "Armi da guerra": [
+          3,
+          3,
+          3,
+          3,
+          3,
+          3
+        ],
+        "Armi da mischia": [
+          7,
+          9,
+          10,
+          10,
+          10,
+          10
+        ],
+        "Corpo a corpo": [
+          5,
+          5,
+          5,
+          5,
+          5,
+          5
+        ],
+        "Difese": [
+          9,
+          11,
+          13,
+          15,
+          16,
+          18
+        ],
+        "Artefatti": [
+          5,
+          5,
+          6,
+          8,
+          8,
+          8
+        ],
+        "Occultismo": [
+          6,
+          6,
+          6,
+          6,
+          6,
+          6
+        ],
+        "Potere": [
+          3,
+          3,
+          4,
+          6,
+          6,
+          6
+        ],
+        "Rituali": [
+          4,
+          4,
+          4,
+          4,
+          4,
+          4
+        ],
+        "Atletica": [
+          5,
+          5,
+          5,
+          5,
+          5,
+          5
+        ],
+        "Furtività": [
+          9,
+          11,
+          13,
+          15,
+          17,
+          19
+        ],
+        "Percezione": [
+          10,
+          13,
+          16,
+          18,
+          20,
+          22
+        ],
+        "Sopravvivenza": [
+          5,
+          5,
+          6,
+          8,
+          8,
+          8
+        ],
+        "Cultura": [
+          9,
+          11,
+          13,
+          15,
+          17,
+          19
+        ],
+        "Intrattenere": [
+          7,
+          7,
+          7,
+          7,
+          7,
+          9
+        ],
+        "Oratoria": [
+          9,
+          10,
+          11,
+          12,
+          13,
+          16
+        ],
+        "Raggirare": [
+          12,
+          14,
+          16,
+          18,
+          20,
+          22
+        ],
+        "Medicina": [
+          5,
+          5,
+          6,
+          8,
+          8,
+          8
+        ],
+        "Pilotare": [
+          6,
+          6,
+          6,
+          6,
+          6,
+          6
+        ],
+        "Scienza": [
+          6,
+          6,
+          6,
+          6,
+          6,
+          6
+        ],
+        "Tecnologia": [
+          8,
+          10,
+          12,
+          14,
+          15,
+          16
+        ]
+      },
+      "talenti_liberi": [
+        {
+          "livello": 3,
+          "talento": "Specializzazione in Pistole"
+        },
+        {
+          "livello": 5,
+          "talento": "Parata Istintiva"
+        },
+        {
+          "livello": 7,
+          "talento": "Sempre Allerta"
+        },
+        {
+          "livello": 9,
+          "talento": "Schivata Istintiva"
+        },
+        {
+          "livello": 11,
+          "talento": "Buona Costituzione"
+        },
+        {
+          "livello": 13,
+          "talento": "Resistenza ai Veleni"
+        },
+        {
+          "livello": 15,
+          "talento": "Prova Salvezza Migliorata (Tempra)"
+        },
+        {
+          "livello": 17,
+          "talento": "Prova Salvezza Migliorata (Riflessi)"
+        },
+        {
+          "livello": 19,
+          "talento": "Prova Salvezza Migliorata (Volontà)"
+        }
+      ],
+      "talenti_classe": {
+        "I": {
+          "nome": "Fuoco Controllato",
+          "testo": "Elimina la penalità specifica e la seconda Prova quando spara contro un nemico ingaggiato, protetto da un alleato o che usa un ostaggio. Un fallimento normale non colpisce l’alleato o l’ostaggio; un Maldestro produce una complicazione non collaterale. Restano distanza, Copertura e altri modificatori."
+        },
+        "II": {
+          "nome": "Reazione Operativa",
+          "testo": "Una volta per combattimento, quando un nemico visibile abbandona volontariamente una Copertura, anche per esporsi e attaccare, può effettuare subito un Tiro Singolo con arma pronta. Spende tutte le AP richieste e disponibili, anche per distanza. Il nemico perde quella Copertura contro il tiro; non serve preparare l’azione."
+        },
+        "III": {
+          "nome": "Rete di Informatori",
+          "testo": "Una volta per sessione, dopo almeno un’ora dedicata ai contatti in un luogo abitato o tramite comunicazioni, ottiene un’informazione attendibile pertinente. Se l’informazione è protetta e non ottenibile direttamente, riceve +4 alla prossima Prova pertinente di Cultura, Oratoria o Raggirare per ottenerla."
+        },
+        "IV": {
+          "nome": "Analisi Rapida",
+          "testo": "Con 1 AP e senza Prova studia un nemico visibile. Ottiene +2 alla prima Prova per colpirlo a distanza entro la fine della propria Iniziativa successiva. Si consuma con quella Prova, anche se fallita, e non si accumula; può valere per una Raffica o per il primo tiro di Tiro Rapido."
+        },
+        "V": {
+          "nome": "Ottime Credenziali",
+          "testo": "Con credenziali autentiche o autorità reale riconosciuta ottiene +4 alle Prove Sociali pertinenti. Una volta per sessione ottiene una concessione ordinaria coerente col ruolo, come accesso controllato o collaborazione temporanea. Esclusi risorse rare, segreti senza restrizioni, ordini suicidi e autorità superiore alla propria."
+        },
+        "VI": {
+          "nome": "Posizionamento Operativo",
+          "testo": "Una volta per combattimento, dopo l’Iniziativa e prima del primo Round, si sposta fino a 3 Q senza consumare AM. Rispetta terreno, ostacoli e Opportunità; non compie altre azioni nello spostamento. Non utilizzabile se Sorpreso."
+        }
+      },
+      "comportamento": "Sfrutta coperture e linee di tiro pulite, identifica il bersaglio prioritario e conserva AP per Reazione Operativa quando disponibile.",
+      "strumenti": "Strumenti. Corredo operativo generico adatto alla Classe, senza bonus aggiuntivi ai VA. Le capacità che richiedono materiali, accessi o coperture necessitano comunque di condizioni reali.",
+      "fonte_classe": "Fonte della Classe. Giocatore v0.49 §3.5.2. L’equipaggiamento astratto e la matrice EQ sono propri di questi modelli PNG.",
+      "costruzione": "Costruzione. Incrementi automatici delle cinque Abilità di Classe e sette punti liberi a ogni Grado; i limiti sono applicati a ogni assegnazione. Priorità degli aumenti di Caratteristica: DES, SAG, COS, CAR. I dadi dei PV e la selezione dei Talenti sono fissati per rendere il modello pronto."
+    },
+    "cacciatore": {
+      "nome": "Cacciatore",
+      "categoria": "Avventurieri",
+      "descrizione": "Ricerca e inseguimento di una preda. Può rappresentare un battitore, un cacciatore di taglie o un sorvegliante di territori selvaggi.",
+      "caratteristiche": {
+        "I": {
+          "livello": 1,
+          "FOR": 6,
+          "DES": 6,
+          "COS": 5,
+          "INT": 7,
+          "SAG": 7,
+          "CAR": 5
+        },
+        "II": {
+          "livello": 4,
+          "FOR": 6,
+          "DES": 6,
+          "COS": 5,
+          "INT": 9,
+          "SAG": 7,
+          "CAR": 5
+        },
+        "III": {
+          "livello": 8,
+          "FOR": 6,
+          "DES": 6,
+          "COS": 5,
+          "INT": 10,
+          "SAG": 8,
+          "CAR": 5
+        },
+        "IV": {
+          "livello": 12,
+          "FOR": 6,
+          "DES": 6,
+          "COS": 5,
+          "INT": 10,
+          "SAG": 10,
+          "CAR": 5
+        },
+        "V": {
+          "livello": 16,
+          "FOR": 6,
+          "DES": 6,
+          "COS": 7,
+          "INT": 10,
+          "SAG": 10,
+          "CAR": 5
+        },
+        "VI": {
+          "livello": 20,
+          "FOR": 6,
+          "DES": 8,
+          "COS": 7,
+          "INT": 10,
+          "SAG": 10,
+          "CAR": 5
+        }
+      },
+      "risorse": {
+        "I": {
+          "pv": 15,
+          "pm": 10,
+          "ini": 3,
+          "ap": 1,
+          "ar": 1,
+          "parata": 8,
+          "schivata": 8
+        },
+        "II": {
+          "pv": 23,
+          "pm": 13,
+          "ini": 5,
+          "ap": 1,
+          "ar": 1,
+          "parata": 9,
+          "schivata": 9
+        },
+        "III": {
+          "pv": 31,
+          "pm": 17,
+          "ini": 6,
+          "ap": 1,
+          "ar": 1,
+          "parata": 11,
+          "schivata": 11
+        },
+        "IV": {
+          "pv": 44,
+          "pm": 22,
+          "ini": 6,
+          "ap": 2,
+          "ar": 1,
+          "parata": 13,
+          "schivata": 13
+        },
+        "V": {
+          "pv": 54,
+          "pm": 25,
+          "ini": 6,
+          "ap": 2,
+          "ar": 1,
+          "parata": 15,
+          "schivata": 15
+        },
+        "VI": {
+          "pv": 62,
+          "pm": 28,
+          "ini": 8,
+          "ap": 2,
+          "ar": 1,
+          "parata": 19,
+          "schivata": 19
+        }
+      },
+      "nota_risorse": "Aggiungere EQ a INI, AR, Parata e Schivata; al tiro di Iniziativa si aggiunge 1d10. Sempre 1 AM. Movimento: 6/12/18 Q Base.",
+      "salvezze": {
+        "I": {
+          "tempra": 9,
+          "riflessi": 10,
+          "volonta": 9,
+          "magia": 9
+        },
+        "II": {
+          "tempra": 10,
+          "riflessi": 11,
+          "volonta": 10,
+          "magia": 10
+        },
+        "III": {
+          "tempra": 10,
+          "riflessi": 11,
+          "volonta": 10,
+          "magia": 11
+        },
+        "IV": {
+          "tempra": 11,
+          "riflessi": 12,
+          "volonta": 11,
+          "magia": 13
+        },
+        "V": {
+          "tempra": 13,
+          "riflessi": 12,
+          "volonta": 11,
+          "magia": 13
+        },
+        "VI": {
+          "tempra": 14,
+          "riflessi": 15,
+          "volonta": 13,
+          "magia": 14
+        }
+      },
+      "attacchi": {
+        "I": [
+          {
+            "arma": "Carabina",
+            "va": 11,
+            "danno": "1d8+1"
+          },
+          {
+            "arma": "Lama leggera",
+            "va": 9,
+            "danno": "1d6+1"
+          }
+        ],
+        "II": [
+          {
+            "arma": "Carabina",
+            "va": 15,
+            "danno": "1d8+2"
+          },
+          {
+            "arma": "Lama leggera",
+            "va": 11,
+            "danno": "1d6+1"
+          }
+        ],
+        "III": [
+          {
+            "arma": "Carabina",
+            "va": 17,
+            "danno": "1d8+3"
+          },
+          {
+            "arma": "Lama leggera",
+            "va": 13,
+            "danno": "1d6+1"
+          }
+        ],
+        "IV": [
+          {
+            "arma": "Carabina",
+            "va": 19,
+            "danno": "1d8+3"
+          },
+          {
+            "arma": "Lama leggera",
+            "va": 15,
+            "danno": "1d6+1"
+          }
+        ],
+        "V": [
+          {
+            "arma": "Carabina",
+            "va": 21,
+            "danno": "1d8+4"
+          },
+          {
+            "arma": "Lama leggera",
+            "va": 17,
+            "danno": "1d6+1"
+          }
+        ],
+        "VI": [
+          {
+            "arma": "Carabina",
+            "va": 23,
+            "danno": "1d8+4"
+          },
+          {
+            "arma": "Lama leggera",
+            "va": 19,
+            "danno": "1d6+2"
+          }
+        ]
+      },
+      "nota_attacchi": "Aggiungere EQ una volta al VA e al danno di ogni colpo, e alle quattro PS. Sono esclusi i bonus condizionati dei Talenti. Le portate, mani e modalità sono nella tabella degli armamenti astratti.",
+      "abilita": {
+        "Armi da lancio": [
+          6,
+          6,
+          6,
+          6,
+          6,
+          8
+        ],
+        "Armi leggere": [
+          6,
+          6,
+          6,
+          6,
+          6,
+          8
+        ],
+        "Armi medie": [
+          11,
+          14,
+          16,
+          18,
+          20,
+          22
+        ],
+        "Armi pesanti": [
+          4,
+          4,
+          4,
+          4,
+          4,
+          4
+        ],
+        "Armi da guerra": [
+          4,
+          4,
+          4,
+          4,
+          4,
+          4
+        ],
+        "Armi da mischia": [
+          9,
+          11,
+          13,
+          15,
+          17,
+          19
+        ],
+        "Corpo a corpo": [
+          6,
+          6,
+          6,
+          6,
+          6,
+          6
+        ],
+        "Difese": [
+          8,
+          9,
+          11,
+          13,
+          15,
+          19
+        ],
+        "Artefatti": [
+          7,
+          7,
+          8,
+          10,
+          10,
+          10
+        ],
+        "Occultismo": [
+          9,
+          11,
+          13,
+          14,
+          15,
+          16
+        ],
+        "Potere": [
+          5,
+          5,
+          6,
+          8,
+          8,
+          8
+        ],
+        "Rituali": [
+          5,
+          7,
+          8,
+          8,
+          8,
+          8
+        ],
+        "Atletica": [
+          8,
+          9,
+          11,
+          12,
+          13,
+          14
+        ],
+        "Furtività": [
+          9,
+          11,
+          13,
+          15,
+          17,
+          19
+        ],
+        "Percezione": [
+          11,
+          14,
+          16,
+          18,
+          20,
+          22
+        ],
+        "Sopravvivenza": [
+          9,
+          11,
+          13,
+          15,
+          17,
+          19
+        ],
+        "Cultura": [
+          5,
+          5,
+          5,
+          5,
+          5,
+          5
+        ],
+        "Intrattenere": [
+          5,
+          5,
+          5,
+          5,
+          5,
+          5
+        ],
+        "Oratoria": [
+          5,
+          5,
+          5,
+          5,
+          5,
+          5
+        ],
+        "Raggirare": [
+          5,
+          5,
+          5,
+          5,
+          5,
+          5
+        ],
+        "Medicina": [
+          7,
+          7,
+          8,
+          10,
+          10,
+          10
+        ],
+        "Pilotare": [
+          7,
+          9,
+          10,
+          10,
+          10,
+          10
+        ],
+        "Scienza": [
+          7,
+          9,
+          10,
+          10,
+          10,
+          10
+        ],
+        "Tecnologia": [
+          7,
+          9,
+          10,
+          10,
+          10,
+          10
+        ]
+      },
+      "talenti_liberi": [
+        {
+          "livello": 3,
+          "talento": "Specializzazione in Carabine"
+        },
+        {
+          "livello": 5,
+          "talento": "Parata Istintiva"
+        },
+        {
+          "livello": 7,
+          "talento": "Sempre Allerta"
+        },
+        {
+          "livello": 9,
+          "talento": "Schivata Istintiva"
+        },
+        {
+          "livello": 11,
+          "talento": "Buona Costituzione"
+        },
+        {
+          "livello": 13,
+          "talento": "Resistenza ai Veleni"
+        },
+        {
+          "livello": 15,
+          "talento": "Prova Salvezza Migliorata (Tempra)"
+        },
+        {
+          "livello": 17,
+          "talento": "Prova Salvezza Migliorata (Riflessi)"
+        },
+        {
+          "livello": 19,
+          "talento": "Prova Salvezza Migliorata (Volontà)"
+        }
+      ],
+      "talenti_classe": {
+        "I": {
+          "nome": "Predatore",
+          "testo": "Scoprendo, seguendo o colpendo una creatura la può designare Preda fino a fine scena; una sola alla volta. Una volta per Round, colpendola sceglie: +1 danno ai PV; proprio spostamento di 1 Q senza Opportunità; oppure +1 alla prossima Prova di un alleato per colpirla entro fine Round, se può ricevere la segnalazione."
+        },
+        "II": {
+          "nome": "Trappola Improvvisata",
+          "testo": "Con 1 AP, materiali adatti e Sopravvivenza riuscita, o Tecnologia per un dispositivo tecnico, prepara una trappola semplice. Percezione la individua; chi la attiva tenta Riflessi. Se fallisce subisce l’effetto scelto alla preparazione: −2 alle Prove fisiche fino a fine Round oppure arresto del Movimento e perdita della parte residua. Dura fino a fine scena, attivazione o disinnesco."
+        },
+        "III": {
+          "nome": "Segugio",
+          "testo": "Dopo Percezione o Sopravvivenza riuscita sulle tracce ricava un dettaglio pertinente aggiuntivo e deducibile. Con Magistrale, nella scena successiva il gruppo non può essere sorpreso dalla Preda o dal gruppo seguito, salvo occultamento eccezionale o intervento imprevedibile."
+        },
+        "IV": {
+          "nome": "Colpo di Abbattimento",
+          "testo": "Contro la Preda A Terra, Immobilizzata o soggetta alla penalità fisica di Trappola Improvvisata o Pressione, raddoppia il danno della prima istanza dell’attacco. Una penalità generica non basta. Con Magistrale ×3; si usa il moltiplicatore più alto senza cumularli."
+        },
+        "V": {
+          "nome": "Maestro della Caccia",
+          "testo": "Una volta per combattimento, quando percepisce la Preda muoversi, attaccare un alleato o nascondersi, spende 1 AP disponibile e sceglie: attacco immediato, pagando anche le altre AP necessarie; movimento fino a 3 Q verso di essa senza Opportunità; oppure Pressione, che impone −2 alle Prove fisiche fino a fine Round se la colpisce nello stesso Round con un attacco pagato normalmente."
+        },
+        "VI": {
+          "nome": "Cacciatore Instancabile",
+          "testo": "Guidando il gruppo durante inseguimento o marcia forzata, concede +5 alla prima PS di Tempra già richiesta per sforzo, ritmo, fame, sete o terreno ostile. Non trasforma un peggioramento automatico dell’Affaticamento in una Prova."
+        }
+      },
+      "comportamento": "Designa la Preda, prepara una trappola dove possibile e sfrutta il suo effetto per Colpo di Abbattimento. Le condizioni devono verificarsi realmente.",
+      "strumenti": "Strumenti. Corredo operativo generico adatto alla Classe, senza bonus aggiuntivi ai VA. Le capacità che richiedono materiali, accessi o coperture necessitano comunque di condizioni reali.",
+      "fonte_classe": "Fonte della Classe. Giocatore v0.49 §3.5.2. L’equipaggiamento astratto e la matrice EQ sono propri di questi modelli PNG.",
+      "costruzione": "Costruzione. Incrementi automatici delle cinque Abilità di Classe e sette punti liberi a ogni Grado; i limiti sono applicati a ogni assegnazione. Priorità degli aumenti di Caratteristica: INT, SAG, COS, DES. I dadi dei PV e la selezione dei Talenti sono fissati per rendere il modello pronto."
+    },
+    "esploratore": {
+      "nome": "Esploratore",
+      "categoria": "Avventurieri",
+      "descrizione": "Ricognizione, percorsi e movimento del gruppo. Può rappresentare una guida, uno scout o un apripista di spedizione.",
+      "caratteristiche": {
+        "I": {
+          "livello": 1,
+          "FOR": 5,
+          "DES": 6,
+          "COS": 6,
+          "INT": 7,
+          "SAG": 7,
+          "CAR": 5
+        },
+        "II": {
+          "livello": 4,
+          "FOR": 5,
+          "DES": 6,
+          "COS": 6,
+          "INT": 7,
+          "SAG": 9,
+          "CAR": 5
+        },
+        "III": {
+          "livello": 8,
+          "FOR": 5,
+          "DES": 6,
+          "COS": 6,
+          "INT": 8,
+          "SAG": 10,
+          "CAR": 5
+        },
+        "IV": {
+          "livello": 12,
+          "FOR": 5,
+          "DES": 6,
+          "COS": 6,
+          "INT": 10,
+          "SAG": 10,
+          "CAR": 5
+        },
+        "V": {
+          "livello": 16,
+          "FOR": 5,
+          "DES": 6,
+          "COS": 8,
+          "INT": 10,
+          "SAG": 10,
+          "CAR": 5
+        },
+        "VI": {
+          "livello": 20,
+          "FOR": 5,
+          "DES": 8,
+          "COS": 8,
+          "INT": 10,
+          "SAG": 10,
+          "CAR": 5
+        }
+      },
+      "risorse": {
+        "I": {
+          "pv": 14,
+          "pm": 10,
+          "ini": 3,
+          "ap": 1,
+          "ar": 1,
+          "parata": 8,
+          "schivata": 8
+        },
+        "II": {
+          "pv": 20,
+          "pm": 15,
+          "ini": 3,
+          "ap": 1,
+          "ar": 1,
+          "parata": 10,
+          "schivata": 10
+        },
+        "III": {
+          "pv": 26,
+          "pm": 19,
+          "ini": 4,
+          "ap": 1,
+          "ar": 1,
+          "parata": 12,
+          "schivata": 12
+        },
+        "IV": {
+          "pv": 37,
+          "pm": 22,
+          "ini": 6,
+          "ap": 2,
+          "ar": 1,
+          "parata": 13,
+          "schivata": 13
+        },
+        "V": {
+          "pv": 45,
+          "pm": 25,
+          "ini": 6,
+          "ap": 2,
+          "ar": 1,
+          "parata": 14,
+          "schivata": 14
+        },
+        "VI": {
+          "pv": 51,
+          "pm": 28,
+          "ini": 8,
+          "ap": 2,
+          "ar": 1,
+          "parata": 17,
+          "schivata": 17
+        }
+      },
+      "nota_risorse": "Aggiungere EQ a INI, AR, Parata e Schivata; al tiro di Iniziativa si aggiunge 1d10. Sempre 1 AM. Movimento: 6/12/18 Q Base.",
+      "salvezze": {
+        "I": {
+          "tempra": 10,
+          "riflessi": 10,
+          "volonta": 9,
+          "magia": 9
+        },
+        "II": {
+          "tempra": 11,
+          "riflessi": 11,
+          "volonta": 10,
+          "magia": 11
+        },
+        "III": {
+          "tempra": 11,
+          "riflessi": 11,
+          "volonta": 10,
+          "magia": 12
+        },
+        "IV": {
+          "tempra": 12,
+          "riflessi": 12,
+          "volonta": 11,
+          "magia": 13
+        },
+        "V": {
+          "tempra": 14,
+          "riflessi": 12,
+          "volonta": 11,
+          "magia": 13
+        },
+        "VI": {
+          "tempra": 15,
+          "riflessi": 15,
+          "volonta": 13,
+          "magia": 14
+        }
+      },
+      "attacchi": {
+        "I": [
+          {
+            "arma": "Pistola",
+            "va": 7,
+            "danno": "1d6+1"
+          },
+          {
+            "arma": "Lama leggera",
+            "va": 6,
+            "danno": "1d6+1"
+          }
+        ],
+        "II": [
+          {
+            "arma": "Pistola",
+            "va": 9,
+            "danno": "1d6+2"
+          },
+          {
+            "arma": "Lama leggera",
+            "va": 6,
+            "danno": "1d6+1"
+          }
+        ],
+        "III": [
+          {
+            "arma": "Pistola",
+            "va": 10,
+            "danno": "1d6+2"
+          },
+          {
+            "arma": "Lama leggera",
+            "va": 6,
+            "danno": "1d6+1"
+          }
+        ],
+        "IV": [
+          {
+            "arma": "Pistola",
+            "va": 11,
+            "danno": "1d6+2"
+          },
+          {
+            "arma": "Lama leggera",
+            "va": 6,
+            "danno": "1d6+1"
+          }
+        ],
+        "V": [
+          {
+            "arma": "Pistola",
+            "va": 12,
+            "danno": "1d6+2"
+          },
+          {
+            "arma": "Lama leggera",
+            "va": 6,
+            "danno": "1d6+1"
+          }
+        ],
+        "VI": [
+          {
+            "arma": "Pistola",
+            "va": 15,
+            "danno": "1d6+3"
+          },
+          {
+            "arma": "Lama leggera",
+            "va": 8,
+            "danno": "1d6+2"
+          }
+        ]
+      },
+      "nota_attacchi": "Aggiungere EQ una volta al VA e al danno di ogni colpo, e alle quattro PS. Sono esclusi i bonus condizionati dei Talenti. Le portate, mani e modalità sono nella tabella degli armamenti astratti.",
+      "abilita": {
+        "Armi da lancio": [
+          6,
+          6,
+          6,
+          6,
+          6,
+          8
+        ],
+        "Armi leggere": [
+          7,
+          8,
+          9,
+          10,
+          11,
+          14
+        ],
+        "Armi medie": [
+          7,
+          7,
+          8,
+          10,
+          10,
+          10
+        ],
+        "Armi pesanti": [
+          3,
+          3,
+          3,
+          3,
+          3,
+          3
+        ],
+        "Armi da guerra": [
+          3,
+          3,
+          3,
+          3,
+          3,
+          3
+        ],
+        "Armi da mischia": [
+          6,
+          6,
+          6,
+          6,
+          6,
+          8
+        ],
+        "Corpo a corpo": [
+          5,
+          5,
+          5,
+          5,
+          5,
+          5
+        ],
+        "Difese": [
+          8,
+          10,
+          12,
+          13,
+          14,
+          17
+        ],
+        "Artefatti": [
+          7,
+          9,
+          10,
+          10,
+          10,
+          10
+        ],
+        "Occultismo": [
+          7,
+          7,
+          8,
+          10,
+          10,
+          10
+        ],
+        "Potere": [
+          5,
+          7,
+          8,
+          8,
+          8,
+          8
+        ],
+        "Rituali": [
+          5,
+          5,
+          6,
+          8,
+          8,
+          8
+        ],
+        "Atletica": [
+          8,
+          10,
+          13,
+          15,
+          17,
+          19
+        ],
+        "Furtività": [
+          9,
+          11,
+          13,
+          15,
+          17,
+          19
+        ],
+        "Percezione": [
+          11,
+          14,
+          16,
+          18,
+          20,
+          22
+        ],
+        "Sopravvivenza": [
+          11,
+          14,
+          16,
+          18,
+          20,
+          22
+        ],
+        "Cultura": [
+          5,
+          5,
+          5,
+          5,
+          5,
+          5
+        ],
+        "Intrattenere": [
+          5,
+          5,
+          5,
+          5,
+          5,
+          5
+        ],
+        "Oratoria": [
+          5,
+          5,
+          5,
+          5,
+          5,
+          5
+        ],
+        "Raggirare": [
+          5,
+          5,
+          5,
+          5,
+          5,
+          5
+        ],
+        "Medicina": [
+          7,
+          9,
+          10,
+          10,
+          10,
+          10
+        ],
+        "Pilotare": [
+          9,
+          11,
+          13,
+          15,
+          17,
+          19
+        ],
+        "Scienza": [
+          8,
+          8,
+          9,
+          11,
+          11,
+          11
+        ],
+        "Tecnologia": [
+          9,
+          10,
+          12,
+          15,
+          16,
+          17
+        ]
+      },
+      "talenti_liberi": [
+        {
+          "livello": 3,
+          "talento": "Specializzazione in Pistole"
+        },
+        {
+          "livello": 5,
+          "talento": "Parata Istintiva"
+        },
+        {
+          "livello": 7,
+          "talento": "Sempre Allerta"
+        },
+        {
+          "livello": 9,
+          "talento": "Schivata Istintiva"
+        },
+        {
+          "livello": 11,
+          "talento": "Buona Costituzione"
+        },
+        {
+          "livello": 13,
+          "talento": "Resistenza ai Veleni"
+        },
+        {
+          "livello": 15,
+          "talento": "Prova Salvezza Migliorata (Tempra)"
+        },
+        {
+          "livello": 17,
+          "talento": "Prova Salvezza Migliorata (Riflessi)"
+        },
+        {
+          "livello": 19,
+          "talento": "Prova Salvezza Migliorata (Volontà)"
+        }
+      ],
+      "talenti_classe": {
+        "I": {
+          "nome": "Apripista",
+          "testo": "Entrando in un’area sconosciuta o iniziando uno scontro in ambiente complesso indica una linea di avanzamento sicura. Prima dell’Iniziativa o all’inizio della scena fino a tre alleati entro 6 Q possono seguirla muovendosi di 1 Q senza Azioni."
+        },
+        "II": {
+          "nome": "Segni di Passaggio",
+          "testo": "Lascia segnali comprensibili agli alleati o a chi conosce il metodo, per comunicare direzione, pericolo, ritardo, presenza nemica o punto di raccolta."
+        },
+        "III": {
+          "nome": "Occhio del Terreno",
+          "testo": "Una volta per scena indica un tratto osservabile e come sfruttarlo. Il primo alleato che segue l’indicazione riduce di 2, minimo 0, le penalità ambientali alla prima Prova per percorrerlo. Nessuna Prova aggiuntiva per il beneficio; non rivela pericoli nascosti né modifica il costo del Movimento."
+        },
+        "IV": {
+          "nome": "Avanguardia",
+          "testo": "Una volta per combattimento, durante la propria Iniziativa nel primo Round, se deve ancora agire un nemico, spende 1 AP per far muovere un alleato entro 6 Q fino a 4 Q. Il movimento segue il Passo, rispetta ostacoli e Opportunità e non consuma l’AM dell’alleato. Non concede attacchi."
+        },
+        "V": {
+          "nome": "Padrone del Cammino",
+          "testo": "Una volta per sessione dichiara una rotta difficile ma praticabile, come passaggio laterale, guado o condotto. Permette di evitare uno scontro frontale, aggirare un ostacolo o ritirarsi; il pericolo della rotta rimane."
+        },
+        "VI": {
+          "nome": "Mappa Mentale",
+          "testo": "Dopo aver attraversato un’area ne ricostruisce mentalmente la struttura principale. Il gruppo torna all’ultimo punto sicuro senza nuove Prove, salvo modifiche reali dell’ambiente."
+        }
+      },
+      "comportamento": "Osserva prima di avanzare, prepara una via di ritirata e usa i Talenti per spostare il gruppo. Evita di affrontare frontalmente una minaccia superiore.",
+      "strumenti": "Strumenti. Corredo operativo generico adatto alla Classe, senza bonus aggiuntivi ai VA. Le capacità che richiedono materiali, accessi o coperture necessitano comunque di condizioni reali.",
+      "fonte_classe": "Fonte della Classe. Giocatore v0.49 §3.5.2. L’equipaggiamento astratto e la matrice EQ sono propri di questi modelli PNG.",
+      "costruzione": "Costruzione. Incrementi automatici delle cinque Abilità di Classe e sette punti liberi a ogni Grado; i limiti sono applicati a ogni assegnazione. Priorità degli aumenti di Caratteristica: SAG, INT, COS, DES. I dadi dei PV e la selezione dei Talenti sono fissati per rendere il modello pronto."
+    },
+    "lestofante": {
+      "nome": "Lestofante",
+      "categoria": "Avventurieri",
+      "descrizione": "Infiltrazione, inganno e opportunismo. Può rappresentare una spia, un ladro, un bandito o un intermediario criminale.",
+      "caratteristiche": {
+        "I": {
+          "livello": 1,
+          "FOR": 5,
+          "DES": 7,
+          "COS": 6,
+          "INT": 6,
+          "SAG": 5,
+          "CAR": 7
+        },
+        "II": {
+          "livello": 4,
+          "FOR": 5,
+          "DES": 9,
+          "COS": 6,
+          "INT": 6,
+          "SAG": 5,
+          "CAR": 7
+        },
+        "III": {
+          "livello": 8,
+          "FOR": 5,
+          "DES": 10,
+          "COS": 6,
+          "INT": 6,
+          "SAG": 5,
+          "CAR": 8
+        },
+        "IV": {
+          "livello": 12,
+          "FOR": 5,
+          "DES": 10,
+          "COS": 6,
+          "INT": 6,
+          "SAG": 5,
+          "CAR": 10
+        },
+        "V": {
+          "livello": 16,
+          "FOR": 5,
+          "DES": 10,
+          "COS": 8,
+          "INT": 6,
+          "SAG": 5,
+          "CAR": 10
+        },
+        "VI": {
+          "livello": 20,
+          "FOR": 5,
+          "DES": 10,
+          "COS": 8,
+          "INT": 8,
+          "SAG": 5,
+          "CAR": 10
+        }
+      },
+      "risorse": {
+        "I": {
+          "pv": 15,
+          "pm": 7,
+          "ini": 3,
+          "ap": 1,
+          "ar": 1,
+          "parata": 9,
+          "schivata": 9
+        },
+        "II": {
+          "pv": 22,
+          "pm": 9,
+          "ini": 5,
+          "ap": 1,
+          "ar": 1,
+          "parata": 11,
+          "schivata": 11
+        },
+        "III": {
+          "pv": 29,
+          "pm": 11,
+          "ini": 6,
+          "ap": 1,
+          "ar": 1,
+          "parata": 13,
+          "schivata": 13
+        },
+        "IV": {
+          "pv": 41,
+          "pm": 13,
+          "ini": 6,
+          "ap": 2,
+          "ar": 1,
+          "parata": 15,
+          "schivata": 15
+        },
+        "V": {
+          "pv": 50,
+          "pm": 15,
+          "ini": 6,
+          "ap": 2,
+          "ar": 1,
+          "parata": 17,
+          "schivata": 17
+        },
+        "VI": {
+          "pv": 57,
+          "pm": 17,
+          "ini": 8,
+          "ap": 2,
+          "ar": 1,
+          "parata": 19,
+          "schivata": 19
+        }
+      },
+      "nota_risorse": "Aggiungere EQ a INI, AR, Parata e Schivata; al tiro di Iniziativa si aggiunge 1d10. Sempre 1 AM. Movimento: 6/12/18 Q Base.",
+      "salvezze": {
+        "I": {
+          "tempra": 10,
+          "riflessi": 10,
+          "volonta": 10,
+          "magia": 8
+        },
+        "II": {
+          "tempra": 11,
+          "riflessi": 12,
+          "volonta": 11,
+          "magia": 9
+        },
+        "III": {
+          "tempra": 11,
+          "riflessi": 13,
+          "volonta": 12,
+          "magia": 9
+        },
+        "IV": {
+          "tempra": 12,
+          "riflessi": 14,
+          "volonta": 14,
+          "magia": 10
+        },
+        "V": {
+          "tempra": 14,
+          "riflessi": 14,
+          "volonta": 14,
+          "magia": 10
+        },
+        "VI": {
+          "tempra": 15,
+          "riflessi": 16,
+          "volonta": 16,
+          "magia": 11
+        }
+      },
+      "attacchi": {
+        "I": [
+          {
+            "arma": "Lama leggera",
+            "va": 9,
+            "danno": "1d6+1"
+          },
+          {
+            "arma": "Pistola",
+            "va": 7,
+            "danno": "1d6+1"
+          }
+        ],
+        "II": [
+          {
+            "arma": "Lama leggera",
+            "va": 12,
+            "danno": "1d6+2"
+          },
+          {
+            "arma": "Pistola",
+            "va": 9,
+            "danno": "1d6+1"
+          }
+        ],
+        "III": [
+          {
+            "arma": "Lama leggera",
+            "va": 14,
+            "danno": "1d6+3"
+          },
+          {
+            "arma": "Pistola",
+            "va": 11,
+            "danno": "1d6+2"
+          }
+        ],
+        "IV": [
+          {
+            "arma": "Lama leggera",
+            "va": 16,
+            "danno": "1d6+3"
+          },
+          {
+            "arma": "Pistola",
+            "va": 13,
+            "danno": "1d6+2"
+          }
+        ],
+        "V": [
+          {
+            "arma": "Lama leggera",
+            "va": 18,
+            "danno": "1d6+4"
+          },
+          {
+            "arma": "Pistola",
+            "va": 14,
+            "danno": "1d6+3"
+          }
+        ],
+        "VI": [
+          {
+            "arma": "Lama leggera",
+            "va": 20,
+            "danno": "1d6+4"
+          },
+          {
+            "arma": "Pistola",
+            "va": 15,
+            "danno": "1d6+3"
+          }
+        ]
+      },
+      "nota_attacchi": "Aggiungere EQ una volta al VA e al danno di ogni colpo, e alle quattro PS. Sono esclusi i bonus condizionati dei Talenti. Le portate, mani e modalità sono nella tabella degli armamenti astratti.",
+      "abilita": {
+        "Armi da lancio": [
+          7,
+          9,
+          10,
+          10,
+          10,
+          10
+        ],
+        "Armi leggere": [
+          7,
+          9,
+          11,
+          13,
+          14,
+          15
+        ],
+        "Armi medie": [
+          6,
+          6,
+          6,
+          6,
+          6,
+          8
+        ],
+        "Armi pesanti": [
+          3,
+          3,
+          3,
+          3,
+          3,
+          3
+        ],
+        "Armi da guerra": [
+          3,
+          3,
+          3,
+          3,
+          3,
+          3
+        ],
+        "Armi da mischia": [
+          9,
+          11,
+          13,
+          15,
+          17,
+          19
+        ],
+        "Corpo a corpo": [
+          5,
+          5,
+          5,
+          5,
+          5,
+          5
+        ],
+        "Difese": [
+          9,
+          11,
+          13,
+          15,
+          17,
+          19
+        ],
+        "Artefatti": [
+          5,
+          5,
+          5,
+          5,
+          5,
+          5
+        ],
+        "Occultismo": [
+          6,
+          6,
+          6,
+          6,
+          6,
+          8
+        ],
+        "Potere": [
+          3,
+          3,
+          3,
+          3,
+          3,
+          3
+        ],
+        "Rituali": [
+          4,
+          4,
+          4,
+          4,
+          4,
+          6
+        ],
+        "Atletica": [
+          6,
+          6,
+          6,
+          6,
+          6,
+          6
+        ],
+        "Furtività": [
+          12,
+          14,
+          16,
+          18,
+          20,
+          22
+        ],
+        "Percezione": [
+          7,
+          10,
+          13,
+          15,
+          16,
+          17
+        ],
+        "Sopravvivenza": [
+          5,
+          5,
+          5,
+          5,
+          5,
+          5
+        ],
+        "Cultura": [
+          7,
+          7,
+          8,
+          11,
+          11,
+          11
+        ],
+        "Intrattenere": [
+          7,
+          7,
+          8,
+          11,
+          11,
+          11
+        ],
+        "Oratoria": [
+          9,
+          11,
+          13,
+          15,
+          16,
+          17
+        ],
+        "Raggirare": [
+          12,
+          14,
+          16,
+          18,
+          20,
+          22
+        ],
+        "Medicina": [
+          5,
+          5,
+          5,
+          5,
+          5,
+          5
+        ],
+        "Pilotare": [
+          6,
+          6,
+          6,
+          6,
+          6,
+          8
+        ],
+        "Scienza": [
+          6,
+          6,
+          7,
+          7,
+          7,
+          9
+        ],
+        "Tecnologia": [
+          9,
+          11,
+          13,
+          15,
+          17,
+          19
+        ]
+      },
+      "talenti_liberi": [
+        {
+          "livello": 3,
+          "talento": "Specializzazione in Spade"
+        },
+        {
+          "livello": 5,
+          "talento": "Parata Istintiva"
+        },
+        {
+          "livello": 7,
+          "talento": "Sempre Allerta"
+        },
+        {
+          "livello": 9,
+          "talento": "Schivata Istintiva"
+        },
+        {
+          "livello": 11,
+          "talento": "Buona Costituzione"
+        },
+        {
+          "livello": 13,
+          "talento": "Resistenza ai Veleni"
+        },
+        {
+          "livello": 15,
+          "talento": "Prova Salvezza Migliorata (Tempra)"
+        },
+        {
+          "livello": 17,
+          "talento": "Prova Salvezza Migliorata (Riflessi)"
+        },
+        {
+          "livello": 19,
+          "talento": "Prova Salvezza Migliorata (Volontà)"
+        }
+      ],
+      "talenti_classe": {
+        "I": {
+          "nome": "Colpo Sleale",
+          "testo": "Una volta per Round, colpendo chi ignora la sua presenza, è ingaggiato con un altro avversario oppure ha esaurito le AP, sceglie: +2 danni; spostamento del bersaglio di 1 Q se possibile; oppure il bersaglio non effettua Opportunità fino all’Iniziativa successiva del Lestofante. Nessuna Azione aggiuntiva."
+        },
+        "II": {
+          "nome": "Filo Nascosto",
+          "testo": "Tiene occultata una piccola lama o uno strumento. Il primo utilizzo per scena di quell’oggetto contro un bersaglio impedisce a quest’ultimo Manovre di Difesa e Opportunità contro quell’azione fino alla sua completa risoluzione. Restano Azioni, AR, protezioni passive e Salvezze."
+        },
+        "III": {
+          "nome": "Opportunista",
+          "testo": "Una volta per Round, dopo che un nemico entro 6 Q fallisce una Prova, manca un attacco o termina l’ultima AP disponibile, può spendere subito 1 AP disponibile per un Passo fino a 6 Q, usare un piccolo oggetto, nascondersi dove possibile o interagire. Il Passo non consuma AM. Restano Prove e Opportunità; non anticipa AP dei Round successivi."
+        },
+        "IV": {
+          "nome": "Fumo e Specchi",
+          "testo": "Con 1 AP crea una distrazione plausibile usando rumori, luci, folla, polvere, fumo o oggetti. Fino a fine Round un alleato entro 6 Q può sfruttarla per sottrarsi alla vista raggiungendo una Copertura con il proprio Movimento."
+        },
+        "V": {
+          "nome": "Scambio Sporco",
+          "testo": "Quando applica Colpo Sleale può sostituirne il beneficio con: Disarmare un oggetto impugnato; Atterrare; −2 alle Prove fisiche fino all’Iniziativa successiva del Lestofante; oppure perdita dell’AM della prossima Iniziativa. Mantiene il danno ordinario. Disarmo e atterramento devono essere possibili; sceglie un solo effetto e non cumula la stessa penalità."
+        },
+        "VI": {
+          "nome": "Fuga tra la Folla",
+          "testo": "In ambiente affollato, in rovina o ricco di Coperture, usando un’AM può confondersi con l’ambiente. Il primo attacco contro di lui prima della propria Iniziativa successiva deve scegliere un altro bersaglio valido oppure subisce una complicazione stabilita dal Direttore."
+        }
+      },
+      "comportamento": "Colpisce bersagli impegnati, ignari o privi di AP. Tiene una piccola lama occultata per Filo Nascosto e usa le coperture per ritirarsi.",
+      "strumenti": "Strumenti. Corredo operativo generico adatto alla Classe, senza bonus aggiuntivi ai VA. Le capacità che richiedono materiali, accessi o coperture necessitano comunque di condizioni reali.",
+      "fonte_classe": "Fonte della Classe. Giocatore v0.49 §3.5.2. L’equipaggiamento astratto e la matrice EQ sono propri di questi modelli PNG.",
+      "costruzione": "Costruzione. Incrementi automatici delle cinque Abilità di Classe e sette punti liberi a ogni Grado; i limiti sono applicati a ogni assegnazione. Priorità degli aumenti di Caratteristica: DES, CAR, COS, INT. I dadi dei PV e la selezione dei Talenti sono fissati per rendere il modello pronto."
+    },
+    "paramedico": {
+      "nome": "Paramedico",
+      "categoria": "Avventurieri",
+      "descrizione": "Soccorso e stabilizzazione sul campo. Può rappresentare un sanitario di squadra, un soccorritore o un assistente medico di spedizione.",
+      "caratteristiche": {
+        "I": {
+          "livello": 1,
+          "FOR": 5,
+          "DES": 6,
+          "COS": 6,
+          "INT": 7,
+          "SAG": 7,
+          "CAR": 5
+        },
+        "II": {
+          "livello": 4,
+          "FOR": 5,
+          "DES": 6,
+          "COS": 6,
+          "INT": 7,
+          "SAG": 9,
+          "CAR": 5
+        },
+        "III": {
+          "livello": 8,
+          "FOR": 5,
+          "DES": 6,
+          "COS": 6,
+          "INT": 8,
+          "SAG": 10,
+          "CAR": 5
+        },
+        "IV": {
+          "livello": 12,
+          "FOR": 5,
+          "DES": 6,
+          "COS": 6,
+          "INT": 10,
+          "SAG": 10,
+          "CAR": 5
+        },
+        "V": {
+          "livello": 16,
+          "FOR": 5,
+          "DES": 6,
+          "COS": 8,
+          "INT": 10,
+          "SAG": 10,
+          "CAR": 5
+        },
+        "VI": {
+          "livello": 20,
+          "FOR": 5,
+          "DES": 8,
+          "COS": 8,
+          "INT": 10,
+          "SAG": 10,
+          "CAR": 5
+        }
+      },
+      "risorse": {
+        "I": {
+          "pv": 14,
+          "pm": 9,
+          "ini": 3,
+          "ap": 1,
+          "ar": 1,
+          "parata": 8,
+          "schivata": 8
+        },
+        "II": {
+          "pv": 20,
+          "pm": 13,
+          "ini": 3,
+          "ap": 1,
+          "ar": 1,
+          "parata": 10,
+          "schivata": 10
+        },
+        "III": {
+          "pv": 26,
+          "pm": 16,
+          "ini": 4,
+          "ap": 1,
+          "ar": 1,
+          "parata": 12,
+          "schivata": 12
+        },
+        "IV": {
+          "pv": 37,
+          "pm": 18,
+          "ini": 6,
+          "ap": 2,
+          "ar": 1,
+          "parata": 15,
+          "schivata": 15
+        },
+        "V": {
+          "pv": 45,
+          "pm": 20,
+          "ini": 6,
+          "ap": 2,
+          "ar": 1,
+          "parata": 16,
+          "schivata": 16
+        },
+        "VI": {
+          "pv": 51,
+          "pm": 22,
+          "ini": 8,
+          "ap": 2,
+          "ar": 1,
+          "parata": 19,
+          "schivata": 19
+        }
+      },
+      "nota_risorse": "Aggiungere EQ a INI, AR, Parata e Schivata; al tiro di Iniziativa si aggiunge 1d10. Sempre 1 AM. Movimento: 6/12/18 Q Base.",
+      "salvezze": {
+        "I": {
+          "tempra": 10,
+          "riflessi": 10,
+          "volonta": 9,
+          "magia": 9
+        },
+        "II": {
+          "tempra": 11,
+          "riflessi": 11,
+          "volonta": 10,
+          "magia": 11
+        },
+        "III": {
+          "tempra": 11,
+          "riflessi": 11,
+          "volonta": 10,
+          "magia": 12
+        },
+        "IV": {
+          "tempra": 12,
+          "riflessi": 12,
+          "volonta": 11,
+          "magia": 13
+        },
+        "V": {
+          "tempra": 14,
+          "riflessi": 12,
+          "volonta": 11,
+          "magia": 13
+        },
+        "VI": {
+          "tempra": 15,
+          "riflessi": 15,
+          "volonta": 13,
+          "magia": 14
+        }
+      },
+      "attacchi": {
+        "I": [
+          {
+            "arma": "Pistola",
+            "va": 7,
+            "danno": "1d6+1"
+          },
+          {
+            "arma": "Lama leggera",
+            "va": 6,
+            "danno": "1d6+1"
+          }
+        ],
+        "II": [
+          {
+            "arma": "Pistola",
+            "va": 8,
+            "danno": "1d6+1"
+          },
+          {
+            "arma": "Lama leggera",
+            "va": 6,
+            "danno": "1d6+1"
+          }
+        ],
+        "III": [
+          {
+            "arma": "Pistola",
+            "va": 10,
+            "danno": "1d6+1"
+          },
+          {
+            "arma": "Lama leggera",
+            "va": 6,
+            "danno": "1d6+1"
+          }
+        ],
+        "IV": [
+          {
+            "arma": "Pistola",
+            "va": 12,
+            "danno": "1d6+1"
+          },
+          {
+            "arma": "Lama leggera",
+            "va": 6,
+            "danno": "1d6+1"
+          }
+        ],
+        "V": [
+          {
+            "arma": "Pistola",
+            "va": 13,
+            "danno": "1d6+1"
+          },
+          {
+            "arma": "Lama leggera",
+            "va": 6,
+            "danno": "1d6+1"
+          }
+        ],
+        "VI": [
+          {
+            "arma": "Pistola",
+            "va": 16,
+            "danno": "1d6+2"
+          },
+          {
+            "arma": "Lama leggera",
+            "va": 8,
+            "danno": "1d6+2"
+          }
+        ]
+      },
+      "nota_attacchi": "Aggiungere EQ una volta al VA e al danno di ogni colpo, e alle quattro PS. Sono esclusi i bonus condizionati dei Talenti. Le portate, mani e modalità sono nella tabella degli armamenti astratti.",
+      "abilita": {
+        "Armi da lancio": [
+          6,
+          6,
+          6,
+          6,
+          6,
+          8
+        ],
+        "Armi leggere": [
+          7,
+          8,
+          10,
+          12,
+          13,
+          16
+        ],
+        "Armi medie": [
+          7,
+          7,
+          8,
+          10,
+          10,
+          10
+        ],
+        "Armi pesanti": [
+          3,
+          3,
+          3,
+          3,
+          3,
+          3
+        ],
+        "Armi da guerra": [
+          3,
+          3,
+          3,
+          3,
+          3,
+          3
+        ],
+        "Armi da mischia": [
+          6,
+          6,
+          6,
+          6,
+          6,
+          8
+        ],
+        "Corpo a corpo": [
+          5,
+          5,
+          5,
+          5,
+          5,
+          5
+        ],
+        "Difese": [
+          8,
+          10,
+          12,
+          15,
+          16,
+          19
+        ],
+        "Artefatti": [
+          7,
+          9,
+          10,
+          10,
+          10,
+          10
+        ],
+        "Occultismo": [
+          7,
+          7,
+          8,
+          10,
+          10,
+          10
+        ],
+        "Potere": [
+          5,
+          7,
+          8,
+          8,
+          8,
+          8
+        ],
+        "Rituali": [
+          5,
+          5,
+          6,
+          8,
+          8,
+          8
+        ],
+        "Atletica": [
+          8,
+          11,
+          13,
+          15,
+          17,
+          19
+        ],
+        "Furtività": [
+          6,
+          6,
+          6,
+          6,
+          6,
+          8
+        ],
+        "Percezione": [
+          11,
+          14,
+          16,
+          18,
+          20,
+          22
+        ],
+        "Sopravvivenza": [
+          9,
+          11,
+          13,
+          15,
+          17,
+          19
+        ],
+        "Cultura": [
+          5,
+          5,
+          5,
+          5,
+          5,
+          5
+        ],
+        "Intrattenere": [
+          5,
+          5,
+          5,
+          5,
+          5,
+          5
+        ],
+        "Oratoria": [
+          5,
+          5,
+          5,
+          5,
+          5,
+          5
+        ],
+        "Raggirare": [
+          5,
+          5,
+          5,
+          5,
+          5,
+          5
+        ],
+        "Medicina": [
+          12,
+          14,
+          16,
+          18,
+          20,
+          22
+        ],
+        "Pilotare": [
+          9,
+          10,
+          13,
+          15,
+          16,
+          16
+        ],
+        "Scienza": [
+          8,
+          8,
+          9,
+          11,
+          11,
+          11
+        ],
+        "Tecnologia": [
+          9,
+          11,
+          13,
+          15,
+          17,
+          19
+        ]
+      },
+      "talenti_liberi": [
+        {
+          "livello": 3,
+          "talento": "Specializzazione in Medicina Clinica"
+        },
+        {
+          "livello": 5,
+          "talento": "Parata Istintiva"
+        },
+        {
+          "livello": 7,
+          "talento": "Sempre Allerta"
+        },
+        {
+          "livello": 9,
+          "talento": "Schivata Istintiva"
+        },
+        {
+          "livello": 11,
+          "talento": "Buona Costituzione"
+        },
+        {
+          "livello": 13,
+          "talento": "Resistenza ai Veleni"
+        },
+        {
+          "livello": 15,
+          "talento": "Prova Salvezza Migliorata (Tempra)"
+        },
+        {
+          "livello": 17,
+          "talento": "Prova Salvezza Migliorata (Riflessi)"
+        },
+        {
+          "livello": 19,
+          "talento": "Prova Salvezza Migliorata (Volontà)"
+        }
+      ],
+      "talenti_classe": {
+        "I": {
+          "nome": "Soccorso Immediato",
+          "testo": "Arresta il Sanguinamento in 2 Round consecutivi, impegnando le proprie AP e strumenti medici. Rimane adiacente e sospende il Sanguinamento durante il trattamento; Medicina si tira alla fine del secondo Round. Un’interruzione fa riprendere il Sanguinamento e richiede di ricominciare. Restano modificatori ed esiti del trattamento."
+        },
+        "II": {
+          "nome": "Protocollo Shock",
+          "testo": "Con 1 AP e strumenti medici almeno standard risveglia un adiacente Svenuto a causa di una ferita per 1d3 Round. Poi sviene nuovamente se la causa persiste. Una volta per beneficiario per combattimento. Richiede Svenuto effettivo; 0 PV da solo non basta, e non agisce sui morti."
+        },
+        "III": {
+          "nome": "Strumentazione Efficace",
+          "testo": "Ottiene +2 Medicina per Pronto Soccorso con strumenti, in aggiunta al loro modificatore. Non permette di intervenire senza strumenti. Il bonus è condizionato e non è incluso nella tabella dei VA personali."
+        },
+        "IV": {
+          "nome": "Diagnosi sul Campo",
+          "testo": "Con 1 AP esamina sé stesso o un bersaglio chiaramente percepibile entro 3 Q: valuta Ferite, Menomazioni osservabili, Sanguinamento e pericoli deducibili. Ottiene +2 alla prossima Prova pertinente di Medicina su quel bersaglio entro fine scena. Si usa una volta e non si accumula."
+        },
+        "V": {
+          "nome": "Triage Estremo",
+          "testo": "Una volta per combattimento, dopo Tempra e conteggio delle Ferite ma prima della morte per avanzamento oltre Grave, interviene su sé stesso o un adiacente con 1 AP disponibile, anche fuori Iniziativa, e strumenti almeno standard pronti, consumando materiali. Nessuna Prova: il beneficiario resta vivo a 0 PV, Grave −8, e termina il Sanguinamento. Nessun recupero PV, guarigione delle Menomazioni o protezione dalla distruzione del corpo; l’eventuale PS per Menomazione resta dovuta."
+        },
+        "VI": {
+          "nome": "Campo Sterile",
+          "testo": "Con 10 minuti e strumenti prepara un’area di 2 Q. All’interno ottiene +2 Medicina e una volta per scena trasforma un proprio Maldestro in fallimento normale. Dura finché l’area non viene abbandonata, contaminata, distrutta o spostata. Vale anche per trattamenti autorizzati delle Menomazioni e non si trasferisce ad altri operatori."
+        }
+      },
+      "comportamento": "Resta vicino ai feriti, usa una copertura per trattarli e conserva AP per Triage Estremo ai Gradi che lo consentono. Le cure non cancellano automaticamente Ferite o Menomazioni.",
+      "strumenti": "Strumenti. Dotazione sanitaria generica: dieci applicazioni, +2 Medicina per Pronto Soccorso ed esiti indicati nelle regole condivise; soddisfa il requisito minimo di strumenti dei Talenti.",
+      "fonte_classe": "Fonte della Classe. Giocatore v0.49 §3.5.2. L’equipaggiamento astratto e la matrice EQ sono propri di questi modelli PNG.",
+      "costruzione": "Costruzione. Incrementi automatici delle cinque Abilità di Classe e sette punti liberi a ogni Grado; i limiti sono applicati a ogni assegnazione. Priorità degli aumenti di Caratteristica: SAG, INT, COS, DES. I dadi dei PV e la selezione dei Talenti sono fissati per rendere il modello pronto."
+    },
+    "artigliere": {
+      "nome": "Artigliere",
+      "categoria": "Combattenti",
+      "descrizione": "Fuoco di supporto e controllo delle linee di tiro. Il modello usa un mitragliatore generico; può rappresentare un tiratore pesante o un difensore di postazione.",
+      "caratteristiche": {
+        "I": {
+          "livello": 1,
+          "FOR": 6,
+          "DES": 5,
+          "COS": 7,
+          "INT": 7,
+          "SAG": 6,
+          "CAR": 5
+        },
+        "II": {
+          "livello": 4,
+          "FOR": 8,
+          "DES": 5,
+          "COS": 7,
+          "INT": 7,
+          "SAG": 6,
+          "CAR": 5
+        },
+        "III": {
+          "livello": 8,
+          "FOR": 10,
+          "DES": 5,
+          "COS": 7,
+          "INT": 7,
+          "SAG": 6,
+          "CAR": 5
+        },
+        "IV": {
+          "livello": 12,
+          "FOR": 10,
+          "DES": 5,
+          "COS": 7,
+          "INT": 9,
+          "SAG": 6,
+          "CAR": 5
+        },
+        "V": {
+          "livello": 16,
+          "FOR": 10,
+          "DES": 5,
+          "COS": 9,
+          "INT": 9,
+          "SAG": 6,
+          "CAR": 5
+        },
+        "VI": {
+          "livello": 20,
+          "FOR": 10,
+          "DES": 7,
+          "COS": 9,
+          "INT": 9,
+          "SAG": 6,
+          "CAR": 5
+        }
+      },
+      "risorse": {
+        "I": {
+          "pv": 19,
+          "pm": 8,
+          "ini": 2,
+          "ap": 1,
+          "ar": 3,
+          "parata": 7,
+          "schivata": 6
+        },
+        "II": {
+          "pv": 28,
+          "pm": 10,
+          "ini": 2,
+          "ap": 1,
+          "ar": 3,
+          "parata": 8,
+          "schivata": 7
+        },
+        "III": {
+          "pv": 37,
+          "pm": 12,
+          "ini": 2,
+          "ap": 1,
+          "ar": 3,
+          "parata": 9,
+          "schivata": 8
+        },
+        "IV": {
+          "pv": 51,
+          "pm": 14,
+          "ini": 4,
+          "ap": 2,
+          "ar": 3,
+          "parata": 11,
+          "schivata": 10
+        },
+        "V": {
+          "pv": 62,
+          "pm": 16,
+          "ini": 4,
+          "ap": 2,
+          "ar": 3,
+          "parata": 13,
+          "schivata": 12
+        },
+        "VI": {
+          "pv": 71,
+          "pm": 18,
+          "ini": 6,
+          "ap": 2,
+          "ar": 3,
+          "parata": 16,
+          "schivata": 15
+        }
+      },
+      "nota_risorse": "Aggiungere EQ a INI, AR, Parata e Schivata; al tiro di Iniziativa si aggiunge 1d10. Sempre 1 AM. Movimento: 5/11/17 Q Base.",
+      "salvezze": {
+        "I": {
+          "tempra": 10,
+          "riflessi": 9,
+          "volonta": 8,
+          "magia": 9
+        },
+        "II": {
+          "tempra": 11,
+          "riflessi": 10,
+          "volonta": 9,
+          "magia": 10
+        },
+        "III": {
+          "tempra": 11,
+          "riflessi": 10,
+          "volonta": 9,
+          "magia": 10
+        },
+        "IV": {
+          "tempra": 12,
+          "riflessi": 11,
+          "volonta": 10,
+          "magia": 11
+        },
+        "V": {
+          "tempra": 14,
+          "riflessi": 11,
+          "volonta": 10,
+          "magia": 11
+        },
+        "VI": {
+          "tempra": 15,
+          "riflessi": 14,
+          "volonta": 12,
+          "magia": 12
+        }
+      },
+      "attacchi": {
+        "I": [
+          {
+            "arma": "Mitragliatore",
+            "va": 9,
+            "danno": "2d6+1"
+          },
+          {
+            "arma": "Lama leggera",
+            "va": 4,
+            "danno": "1d6"
+          }
+        ],
+        "II": [
+          {
+            "arma": "Mitragliatore",
+            "va": 14,
+            "danno": "2d6+2"
+          },
+          {
+            "arma": "Lama leggera",
+            "va": 4,
+            "danno": "1d6"
+          }
+        ],
+        "III": [
+          {
+            "arma": "Mitragliatore",
+            "va": 16,
+            "danno": "2d6+2"
+          },
+          {
+            "arma": "Lama leggera",
+            "va": 4,
+            "danno": "1d6"
+          }
+        ],
+        "IV": [
+          {
+            "arma": "Mitragliatore",
+            "va": 18,
+            "danno": "2d6+3"
+          },
+          {
+            "arma": "Lama leggera",
+            "va": 4,
+            "danno": "1d6"
+          }
+        ],
+        "V": [
+          {
+            "arma": "Mitragliatore",
+            "va": 20,
+            "danno": "2d6+3"
+          },
+          {
+            "arma": "Lama leggera",
+            "va": 4,
+            "danno": "1d6"
+          }
+        ],
+        "VI": [
+          {
+            "arma": "Mitragliatore",
+            "va": 22,
+            "danno": "2d6+3"
+          },
+          {
+            "arma": "Lama leggera",
+            "va": 6,
+            "danno": "1d6+1"
+          }
+        ]
+      },
+      "nota_attacchi": "Aggiungere EQ una volta al VA e al danno di ogni colpo, e alle quattro PS. Sono esclusi i bonus condizionati dei Talenti. Le portate, mani e modalità sono nella tabella degli armamenti astratti.",
+      "abilita": {
+        "Armi da lancio": [
+          5,
+          5,
+          5,
+          5,
+          5,
+          7
+        ],
+        "Armi leggere": [
+          7,
+          9,
+          11,
+          13,
+          15,
+          18
+        ],
+        "Armi medie": [
+          11,
+          13,
+          16,
+          18,
+          20,
+          22
+        ],
+        "Armi pesanti": [
+          10,
+          14,
+          16,
+          18,
+          20,
+          22
+        ],
+        "Armi da guerra": [
+          6,
+          8,
+          10,
+          10,
+          10,
+          10
+        ],
+        "Armi da mischia": [
+          5,
+          5,
+          5,
+          5,
+          5,
+          7
+        ],
+        "Corpo a corpo": [
+          6,
+          8,
+          10,
+          10,
+          10,
+          10
+        ],
+        "Difese": [
+          7,
+          8,
+          9,
+          11,
+          13,
+          16
+        ],
+        "Artefatti": [
+          4,
+          4,
+          4,
+          4,
+          4,
+          4
+        ],
+        "Occultismo": [
+          5,
+          5,
+          5,
+          7,
+          7,
+          7
+        ],
+        "Potere": [
+          4,
+          4,
+          4,
+          4,
+          4,
+          4
+        ],
+        "Rituali": [
+          5,
+          5,
+          5,
+          7,
+          7,
+          7
+        ],
+        "Atletica": [
+          9,
+          11,
+          13,
+          15,
+          17,
+          19
+        ],
+        "Furtività": [
+          7,
+          8,
+          9,
+          10,
+          11,
+          14
+        ],
+        "Percezione": [
+          9,
+          11,
+          13,
+          15,
+          17,
+          19
+        ],
+        "Sopravvivenza": [
+          6,
+          6,
+          6,
+          6,
+          6,
+          6
+        ],
+        "Cultura": [
+          5,
+          5,
+          5,
+          5,
+          5,
+          5
+        ],
+        "Intrattenere": [
+          5,
+          5,
+          5,
+          5,
+          5,
+          5
+        ],
+        "Oratoria": [
+          5,
+          5,
+          5,
+          5,
+          5,
+          5
+        ],
+        "Raggirare": [
+          5,
+          5,
+          5,
+          5,
+          5,
+          5
+        ],
+        "Medicina": [
+          6,
+          6,
+          6,
+          6,
+          6,
+          6
+        ],
+        "Pilotare": [
+          7,
+          7,
+          7,
+          9,
+          9,
+          9
+        ],
+        "Scienza": [
+          7,
+          7,
+          7,
+          9,
+          9,
+          9
+        ],
+        "Tecnologia": [
+          9,
+          10,
+          11,
+          15,
+          16,
+          17
+        ]
+      },
+      "talenti_liberi": [
+        {
+          "livello": 3,
+          "talento": "Specializzazione in Mitragliatori"
+        },
+        {
+          "livello": 5,
+          "talento": "Parata Istintiva"
+        },
+        {
+          "livello": 7,
+          "talento": "Sempre Allerta"
+        },
+        {
+          "livello": 9,
+          "talento": "Schivata Istintiva"
+        },
+        {
+          "livello": 11,
+          "talento": "Buona Costituzione"
+        },
+        {
+          "livello": 13,
+          "talento": "Resistenza ai Veleni"
+        },
+        {
+          "livello": 15,
+          "talento": "Prova Salvezza Migliorata (Tempra)"
+        },
+        {
+          "livello": 17,
+          "talento": "Prova Salvezza Migliorata (Riflessi)"
+        },
+        {
+          "livello": 19,
+          "talento": "Prova Salvezza Migliorata (Volontà)"
+        }
+      ],
+      "talenti_classe": {
+        "I": {
+          "nome": "Ottimizzare Gittata",
+          "testo": "Con Armi medie o pesanti riduce di 2 le penalità di distanza. Si cumula con riduzioni pertinenti, senza produrre un bonus positivo, estendere la gittata massima o ridurre le Azioni richieste."
+        },
+        "II": {
+          "nome": "Postura d’Assedio",
+          "testo": "Se non utilizza l’AM nel Round considera automaticamente Imbracciata l’Arma Pesante impugnata e infligge +1 danno con essa. Il bonus è condizionato e va aggiunto alla tabella degli attacchi."
+        },
+        "III": {
+          "nome": "Ottimizzare Proiettili",
+          "testo": "La Raffica Breve consuma 2 colpi, la Media 4, la Lunga 8 e il Fuoco di Soppressione 8. Non modifica il numero dei colpi a segno."
+        },
+        "IV": {
+          "nome": "Raffica Estesa",
+          "testo": "Con Raffica Media o Lunga distribuisce i colpi fra bersagli entro 2 Q dal principale, almeno un colpo per bersaglio. Usa la penalità più alta; Difese e AR si risolvono separatamente."
+        },
+        "V": {
+          "nome": "Armaiolo da Campo",
+          "testo": "Ottiene +2 Tecnologia per manutenzione e riparazione delle armi da fuoco. Dopo un fallimento normale può rendere utilizzabile per il resto della scena un’arma Danneggiata o inutilizzabile con −2 VA. Non opera dopo un Maldestro."
+        },
+        "VI": {
+          "nome": "Fuoco di Disturbo",
+          "testo": "Una volta per Round, un bersaglio colpito da un’arma da fuoco subisce −2 al prossimo attacco effettuato entro la fine della sua Iniziativa successiva."
+        }
+      },
+      "comportamento": "Si appoggia a una posizione utile, rinuncia all’AM per Postura d’Assedio e usa le raffiche in funzione dei bersagli realmente esposti.",
+      "strumenti": "Strumenti. Corredo operativo generico adatto alla Classe, senza bonus aggiuntivi ai VA. Le capacità che richiedono materiali, accessi o coperture necessitano comunque di condizioni reali.",
+      "fonte_classe": "Fonte della Classe. Giocatore v0.49 §3.5.3. L’equipaggiamento astratto e la matrice EQ sono propri di questi modelli PNG.",
+      "costruzione": "Costruzione. Incrementi automatici delle cinque Abilità di Classe e sette punti liberi a ogni Grado; i limiti sono applicati a ogni assegnazione. Priorità degli aumenti di Caratteristica: FOR, INT, COS, DES. I dadi dei PV e la selezione dei Talenti sono fissati per rendere il modello pronto."
+    },
+    "assaltatore": {
+      "nome": "Assaltatore",
+      "categoria": "Combattenti",
+      "descrizione": "Pressione ravvicinata e protezione di una posizione. Può rappresentare un gladiatore, una guardia del corpo, un cavaliere o un combattente mercenario.",
+      "caratteristiche": {
+        "I": {
+          "livello": 1,
+          "FOR": 7,
+          "DES": 7,
+          "COS": 6,
+          "INT": 5,
+          "SAG": 6,
+          "CAR": 5
+        },
+        "II": {
+          "livello": 4,
+          "FOR": 9,
+          "DES": 7,
+          "COS": 6,
+          "INT": 5,
+          "SAG": 6,
+          "CAR": 5
+        },
+        "III": {
+          "livello": 8,
+          "FOR": 10,
+          "DES": 8,
+          "COS": 6,
+          "INT": 5,
+          "SAG": 6,
+          "CAR": 5
+        },
+        "IV": {
+          "livello": 12,
+          "FOR": 10,
+          "DES": 10,
+          "COS": 6,
+          "INT": 5,
+          "SAG": 6,
+          "CAR": 5
+        },
+        "V": {
+          "livello": 16,
+          "FOR": 10,
+          "DES": 10,
+          "COS": 8,
+          "INT": 5,
+          "SAG": 6,
+          "CAR": 5
+        },
+        "VI": {
+          "livello": 20,
+          "FOR": 10,
+          "DES": 10,
+          "COS": 8,
+          "INT": 5,
+          "SAG": 8,
+          "CAR": 5
+        }
+      },
+      "risorse": {
+        "I": {
+          "pv": 19,
+          "pm": 7,
+          "ini": 2,
+          "ap": 1,
+          "ar": 5,
+          "parata": 9,
+          "schivata": 8
+        },
+        "II": {
+          "pv": 29,
+          "pm": 8,
+          "ini": 2,
+          "ap": 1,
+          "ar": 5,
+          "parata": 11,
+          "schivata": 10
+        },
+        "III": {
+          "pv": 39,
+          "pm": 9,
+          "ini": 3,
+          "ap": 1,
+          "ar": 5,
+          "parata": 13,
+          "schivata": 12
+        },
+        "IV": {
+          "pv": 54,
+          "pm": 10,
+          "ini": 5,
+          "ap": 2,
+          "ar": 5,
+          "parata": 15,
+          "schivata": 14
+        },
+        "V": {
+          "pv": 66,
+          "pm": 11,
+          "ini": 5,
+          "ap": 2,
+          "ar": 5,
+          "parata": 17,
+          "schivata": 16
+        },
+        "VI": {
+          "pv": 76,
+          "pm": 14,
+          "ini": 5,
+          "ap": 2,
+          "ar": 5,
+          "parata": 19,
+          "schivata": 18
+        }
+      },
+      "nota_risorse": "Aggiungere EQ a INI, AR, Parata e Schivata; al tiro di Iniziativa si aggiunge 1d10. Sempre 1 AM. Movimento: 5/11/17 Q Base ai Gradi I–II, poi 6/12/18.",
+      "salvezze": {
+        "I": {
+          "tempra": 10,
+          "riflessi": 10,
+          "volonta": 8,
+          "magia": 9
+        },
+        "II": {
+          "tempra": 11,
+          "riflessi": 11,
+          "volonta": 9,
+          "magia": 10
+        },
+        "III": {
+          "tempra": 11,
+          "riflessi": 12,
+          "volonta": 9,
+          "magia": 10
+        },
+        "IV": {
+          "tempra": 12,
+          "riflessi": 14,
+          "volonta": 10,
+          "magia": 11
+        },
+        "V": {
+          "tempra": 14,
+          "riflessi": 14,
+          "volonta": 10,
+          "magia": 11
+        },
+        "VI": {
+          "tempra": 15,
+          "riflessi": 16,
+          "volonta": 12,
+          "magia": 13
+        }
+      },
+      "attacchi": {
+        "I": [
+          {
+            "arma": "Arma da guerra",
+            "va": 11,
+            "danno": "1d8+1"
+          },
+          {
+            "arma": "Pistola",
+            "va": 8,
+            "danno": "1d6+1"
+          }
+        ],
+        "II": [
+          {
+            "arma": "Arma da guerra",
+            "va": 14,
+            "danno": "1d8+2"
+          },
+          {
+            "arma": "Pistola",
+            "va": 10,
+            "danno": "1d6+1"
+          }
+        ],
+        "III": [
+          {
+            "arma": "Arma da guerra",
+            "va": 16,
+            "danno": "1d8+3"
+          },
+          {
+            "arma": "Pistola",
+            "va": 12,
+            "danno": "1d6+2"
+          }
+        ],
+        "IV": [
+          {
+            "arma": "Arma da guerra",
+            "va": 18,
+            "danno": "1d8+3"
+          },
+          {
+            "arma": "Pistola",
+            "va": 14,
+            "danno": "1d6+2"
+          }
+        ],
+        "V": [
+          {
+            "arma": "Arma da guerra",
+            "va": 20,
+            "danno": "1d8+4"
+          },
+          {
+            "arma": "Pistola",
+            "va": 16,
+            "danno": "1d6+3"
+          }
+        ],
+        "VI": [
+          {
+            "arma": "Arma da guerra",
+            "va": 22,
+            "danno": "1d8+4"
+          },
+          {
+            "arma": "Pistola",
+            "va": 18,
+            "danno": "1d6+3"
+          }
+        ]
+      },
+      "nota_attacchi": "Aggiungere EQ una volta al VA e al danno di ogni colpo, e alle quattro PS. Sono esclusi i bonus condizionati dei Talenti. Le portate, mani e modalità sono nella tabella degli armamenti astratti.",
+      "abilita": {
+        "Armi da lancio": [
+          7,
+          7,
+          8,
+          10,
+          10,
+          10
+        ],
+        "Armi leggere": [
+          9,
+          11,
+          13,
+          15,
+          17,
+          19
+        ],
+        "Armi medie": [
+          5,
+          5,
+          5,
+          5,
+          5,
+          5
+        ],
+        "Armi pesanti": [
+          7,
+          9,
+          10,
+          10,
+          10,
+          10
+        ],
+        "Armi da guerra": [
+          12,
+          14,
+          16,
+          18,
+          20,
+          22
+        ],
+        "Armi da mischia": [
+          12,
+          14,
+          16,
+          18,
+          20,
+          22
+        ],
+        "Corpo a corpo": [
+          9,
+          11,
+          13,
+          15,
+          16,
+          18
+        ],
+        "Difese": [
+          9,
+          11,
+          13,
+          15,
+          17,
+          19
+        ],
+        "Artefatti": [
+          4,
+          4,
+          4,
+          4,
+          4,
+          6
+        ],
+        "Occultismo": [
+          3,
+          3,
+          3,
+          3,
+          3,
+          3
+        ],
+        "Potere": [
+          4,
+          4,
+          4,
+          4,
+          4,
+          6
+        ],
+        "Rituali": [
+          3,
+          3,
+          3,
+          3,
+          3,
+          3
+        ],
+        "Atletica": [
+          9,
+          11,
+          13,
+          15,
+          17,
+          19
+        ],
+        "Furtività": [
+          7,
+          7,
+          8,
+          10,
+          10,
+          10
+        ],
+        "Percezione": [
+          8,
+          10,
+          13,
+          15,
+          17,
+          19
+        ],
+        "Sopravvivenza": [
+          8,
+          10,
+          13,
+          15,
+          17,
+          19
+        ],
+        "Cultura": [
+          5,
+          5,
+          5,
+          6,
+          6,
+          6
+        ],
+        "Intrattenere": [
+          5,
+          5,
+          5,
+          5,
+          5,
+          5
+        ],
+        "Oratoria": [
+          5,
+          5,
+          5,
+          5,
+          5,
+          5
+        ],
+        "Raggirare": [
+          5,
+          5,
+          5,
+          5,
+          5,
+          5
+        ],
+        "Medicina": [
+          6,
+          6,
+          6,
+          6,
+          6,
+          8
+        ],
+        "Pilotare": [
+          5,
+          5,
+          5,
+          5,
+          5,
+          5
+        ],
+        "Scienza": [
+          5,
+          5,
+          5,
+          5,
+          5,
+          5
+        ],
+        "Tecnologia": [
+          5,
+          5,
+          5,
+          5,
+          5,
+          5
+        ]
+      },
+      "talenti_liberi": [
+        {
+          "livello": 3,
+          "talento": "Specializzazione in Spade"
+        },
+        {
+          "livello": 5,
+          "talento": "Parata Istintiva"
+        },
+        {
+          "livello": 7,
+          "talento": "Sempre Allerta"
+        },
+        {
+          "livello": 9,
+          "talento": "Schivata Istintiva"
+        },
+        {
+          "livello": 11,
+          "talento": "Buona Costituzione"
+        },
+        {
+          "livello": 13,
+          "talento": "Resistenza ai Veleni"
+        },
+        {
+          "livello": 15,
+          "talento": "Prova Salvezza Migliorata (Tempra)"
+        },
+        {
+          "livello": 17,
+          "talento": "Prova Salvezza Migliorata (Riflessi)"
+        },
+        {
+          "livello": 19,
+          "talento": "Prova Salvezza Migliorata (Volontà)"
+        }
+      ],
+      "talenti_classe": {
+        "I": {
+          "nome": "Mantenere la Posizione",
+          "testo": "Ottiene +3 alle Prove o Salvezze previste per resistere o liberarsi da sbilanciamenti, spinte, spostamenti forzati, immobilizzazioni e disarmi. Se un attacco sposta senza Prova, tenta gratuitamente Tempra con +3 per evitare solo lo spostamento; danni e altre conseguenze rimangono."
+        },
+        "II": {
+          "nome": "Interposizione Armata",
+          "testo": "Prima della Prova di un attacco diretto percepito contro un alleato adiacente, spende 1 AP disponibile, anche fuori Iniziativa, e diventa bersaglio se può interporsi. Esclusi Area e attacchi inevitabili; la successiva Difesa conserva i propri costi."
+        },
+        "III": {
+          "nome": "Assalto Armato",
+          "testo": "Riduce di 2 Q complessivi, minimo 0, la penalità residua al Movimento di protezione e scudo. Non modifica penalità al VA, armi, carico, Stati o terreno. Il Movimento riportato comprende già il beneficio."
+        },
+        "IV": {
+          "nome": "Coordinazione Offensiva",
+          "testo": "Ottiene +1 VA in Ravvicinato contro un bersaglio adiacente a un alleato cosciente e capace di agire. Più alleati non aumentano il bonus."
+        },
+        "V": {
+          "nome": "Presidio di Combattimento",
+          "testo": "All’arrivo della propria Iniziativa, senza Azioni, sceglie un alleato adiacente. Entrambi hanno +2 Difese fino alla propria Iniziativa successiva mentre restano adiacenti, l’Assaltatore è cosciente e almeno uno è ingaggiato in Ravvicinato. Un solo alleato; normali costi delle Difese."
+        },
+        "VI": {
+          "nome": "Spinta d’Impatto",
+          "testo": "Una volta per Round, dopo almeno 1 danno oltre AR in Ravvicinato, spinge il bersaglio di 1 Q lontano da sé senza Azioni e senza Opportunità, se esiste spazio raggiungibile. Più spostamenti dello stesso attacco usano solo quello maggiore; restano le resistenze agli spostamenti."
+        }
+      },
+      "comportamento": "Tiene un alleato adiacente, usa lo scudo e conserva AP per Interposizione. I bonus di Coordinazione e Presidio richiedono le rispettive condizioni.",
+      "strumenti": "Strumenti. Corredo operativo generico adatto alla Classe, senza bonus aggiuntivi ai VA. Le capacità che richiedono materiali, accessi o coperture necessitano comunque di condizioni reali.",
+      "fonte_classe": "Fonte della Classe. Giocatore v0.49 §3.5.4. L’equipaggiamento astratto e la matrice EQ sono propri di questi modelli PNG.",
+      "costruzione": "Costruzione. Incrementi automatici delle cinque Abilità di Classe e sette punti liberi a ogni Grado; i limiti sono applicati a ogni assegnazione. Priorità degli aumenti di Caratteristica: FOR, DES, COS, SAG. I dadi dei PV e la selezione dei Talenti sono fissati per rendere il modello pronto."
+    },
+    "incursore": {
+      "nome": "Incursore",
+      "categoria": "Combattenti",
+      "descrizione": "Infiltrazione offensiva e attacchi rapidi. Può rappresentare un incursore militare, un sabotatore o un assassino operativo.",
+      "caratteristiche": {
+        "I": {
+          "livello": 1,
+          "FOR": 6,
+          "DES": 7,
+          "COS": 6,
+          "INT": 7,
+          "SAG": 5,
+          "CAR": 5
+        },
+        "II": {
+          "livello": 4,
+          "FOR": 6,
+          "DES": 9,
+          "COS": 6,
+          "INT": 7,
+          "SAG": 5,
+          "CAR": 5
+        },
+        "III": {
+          "livello": 8,
+          "FOR": 6,
+          "DES": 10,
+          "COS": 6,
+          "INT": 8,
+          "SAG": 5,
+          "CAR": 5
+        },
+        "IV": {
+          "livello": 12,
+          "FOR": 6,
+          "DES": 10,
+          "COS": 6,
+          "INT": 10,
+          "SAG": 5,
+          "CAR": 5
+        },
+        "V": {
+          "livello": 16,
+          "FOR": 6,
+          "DES": 10,
+          "COS": 8,
+          "INT": 10,
+          "SAG": 5,
+          "CAR": 5
+        },
+        "VI": {
+          "livello": 20,
+          "FOR": 8,
+          "DES": 10,
+          "COS": 8,
+          "INT": 10,
+          "SAG": 5,
+          "CAR": 5
+        }
+      },
+      "risorse": {
+        "I": {
+          "pv": 17,
+          "pm": 7,
+          "ini": 4,
+          "ap": 1,
+          "ar": 1,
+          "parata": 9,
+          "schivata": 9
+        },
+        "II": {
+          "pv": 25,
+          "pm": 9,
+          "ini": 6,
+          "ap": 1,
+          "ar": 1,
+          "parata": 11,
+          "schivata": 11
+        },
+        "III": {
+          "pv": 33,
+          "pm": 11,
+          "ini": 10,
+          "ap": 1,
+          "ar": 1,
+          "parata": 13,
+          "schivata": 13
+        },
+        "IV": {
+          "pv": 46,
+          "pm": 13,
+          "ini": 12,
+          "ap": 2,
+          "ar": 1,
+          "parata": 15,
+          "schivata": 15
+        },
+        "V": {
+          "pv": 56,
+          "pm": 15,
+          "ini": 12,
+          "ap": 2,
+          "ar": 1,
+          "parata": 17,
+          "schivata": 17
+        },
+        "VI": {
+          "pv": 64,
+          "pm": 17,
+          "ini": 12,
+          "ap": 2,
+          "ar": 1,
+          "parata": 18,
+          "schivata": 18
+        }
+      },
+      "nota_risorse": "Aggiungere EQ a INI, AR, Parata e Schivata; al tiro di Iniziativa si aggiunge 1d10. Sempre 1 AM. Movimento: 6/12/18 Q Base.",
+      "salvezze": {
+        "I": {
+          "tempra": 10,
+          "riflessi": 10,
+          "volonta": 8,
+          "magia": 8
+        },
+        "II": {
+          "tempra": 11,
+          "riflessi": 12,
+          "volonta": 9,
+          "magia": 9
+        },
+        "III": {
+          "tempra": 11,
+          "riflessi": 13,
+          "volonta": 9,
+          "magia": 9
+        },
+        "IV": {
+          "tempra": 12,
+          "riflessi": 14,
+          "volonta": 10,
+          "magia": 10
+        },
+        "V": {
+          "tempra": 14,
+          "riflessi": 14,
+          "volonta": 10,
+          "magia": 10
+        },
+        "VI": {
+          "tempra": 15,
+          "riflessi": 16,
+          "volonta": 12,
+          "magia": 11
+        }
+      },
+      "attacchi": {
+        "I": [
+          {
+            "arma": "Pistola",
+            "va": 9,
+            "danno": "1d6+1"
+          },
+          {
+            "arma": "Arma da guerra",
+            "va": 8,
+            "danno": "1d8+1"
+          }
+        ],
+        "II": [
+          {
+            "arma": "Pistola",
+            "va": 12,
+            "danno": "1d6+2"
+          },
+          {
+            "arma": "Arma da guerra",
+            "va": 10,
+            "danno": "1d8+1"
+          }
+        ],
+        "III": [
+          {
+            "arma": "Pistola",
+            "va": 14,
+            "danno": "1d6+3"
+          },
+          {
+            "arma": "Arma da guerra",
+            "va": 13,
+            "danno": "1d8+1"
+          }
+        ],
+        "IV": [
+          {
+            "arma": "Pistola",
+            "va": 16,
+            "danno": "1d6+3"
+          },
+          {
+            "arma": "Arma da guerra",
+            "va": 15,
+            "danno": "1d8+1"
+          }
+        ],
+        "V": [
+          {
+            "arma": "Pistola",
+            "va": 18,
+            "danno": "1d6+4"
+          },
+          {
+            "arma": "Arma da guerra",
+            "va": 16,
+            "danno": "1d8+1"
+          }
+        ],
+        "VI": [
+          {
+            "arma": "Pistola",
+            "va": 20,
+            "danno": "1d6+4"
+          },
+          {
+            "arma": "Arma da guerra",
+            "va": 19,
+            "danno": "1d8+2"
+          }
+        ]
+      },
+      "nota_attacchi": "Aggiungere EQ una volta al VA e al danno di ogni colpo, e alle quattro PS. Sono esclusi i bonus condizionati dei Talenti. Le portate, mani e modalità sono nella tabella degli armamenti astratti.",
+      "abilita": {
+        "Armi da lancio": [
+          8,
+          10,
+          11,
+          11,
+          11,
+          11
+        ],
+        "Armi leggere": [
+          9,
+          11,
+          13,
+          15,
+          17,
+          19
+        ],
+        "Armi medie": [
+          7,
+          7,
+          8,
+          10,
+          10,
+          10
+        ],
+        "Armi pesanti": [
+          6,
+          6,
+          6,
+          6,
+          6,
+          8
+        ],
+        "Armi da guerra": [
+          8,
+          10,
+          13,
+          15,
+          16,
+          19
+        ],
+        "Armi da mischia": [
+          7,
+          9,
+          11,
+          13,
+          15,
+          16
+        ],
+        "Corpo a corpo": [
+          6,
+          6,
+          6,
+          6,
+          6,
+          8
+        ],
+        "Difese": [
+          9,
+          11,
+          13,
+          15,
+          17,
+          18
+        ],
+        "Artefatti": [
+          3,
+          3,
+          3,
+          3,
+          3,
+          3
+        ],
+        "Occultismo": [
+          5,
+          5,
+          6,
+          8,
+          8,
+          8
+        ],
+        "Potere": [
+          3,
+          3,
+          3,
+          3,
+          3,
+          3
+        ],
+        "Rituali": [
+          5,
+          5,
+          6,
+          8,
+          8,
+          8
+        ],
+        "Atletica": [
+          8,
+          9,
+          11,
+          13,
+          14,
+          17
+        ],
+        "Furtività": [
+          12,
+          14,
+          16,
+          18,
+          20,
+          22
+        ],
+        "Percezione": [
+          8,
+          11,
+          13,
+          15,
+          17,
+          19
+        ],
+        "Sopravvivenza": [
+          5,
+          5,
+          5,
+          5,
+          5,
+          5
+        ],
+        "Cultura": [
+          5,
+          5,
+          5,
+          5,
+          5,
+          5
+        ],
+        "Intrattenere": [
+          5,
+          5,
+          5,
+          5,
+          5,
+          5
+        ],
+        "Oratoria": [
+          5,
+          5,
+          5,
+          5,
+          5,
+          5
+        ],
+        "Raggirare": [
+          5,
+          5,
+          5,
+          5,
+          5,
+          5
+        ],
+        "Medicina": [
+          5,
+          5,
+          5,
+          5,
+          5,
+          5
+        ],
+        "Pilotare": [
+          7,
+          7,
+          8,
+          10,
+          10,
+          10
+        ],
+        "Scienza": [
+          7,
+          7,
+          8,
+          10,
+          10,
+          10
+        ],
+        "Tecnologia": [
+          11,
+          14,
+          16,
+          18,
+          20,
+          22
+        ]
+      },
+      "talenti_liberi": [
+        {
+          "livello": 3,
+          "talento": "Specializzazione in Pistole"
+        },
+        {
+          "livello": 5,
+          "talento": "Parata Istintiva"
+        },
+        {
+          "livello": 7,
+          "talento": "Sempre Allerta"
+        },
+        {
+          "livello": 9,
+          "talento": "Schivata Istintiva"
+        },
+        {
+          "livello": 11,
+          "talento": "Buona Costituzione"
+        },
+        {
+          "livello": 13,
+          "talento": "Resistenza ai Veleni"
+        },
+        {
+          "livello": 15,
+          "talento": "Prova Salvezza Migliorata (Tempra)"
+        },
+        {
+          "livello": 17,
+          "talento": "Prova Salvezza Migliorata (Riflessi)"
+        },
+        {
+          "livello": 19,
+          "talento": "Prova Salvezza Migliorata (Volontà)"
+        }
+      ],
+      "talenti_classe": {
+        "I": {
+          "nome": "Movimento Tattico",
+          "testo": "Riduce di 2, minimo 0, solo le penalità delle proprie Prove dovute all’andatura: Passo 0, Corsa 0, Scatto −4. Le penalità degli avversari per colpirlo restano Corsa −2 e Scatto −4. Restano terreno, Stati, equipaggiamento e Manovre."
+        },
+        "II": {
+          "nome": "Attacco Silenzioso",
+          "testo": "Ottiene +2 Furtività per avvicinarsi senza essere individuato e +2 per colpire un bersaglio ignaro con un attacco ravvicinato o un’arma a distanza silenziata entro 10 Q. Si somma a Rapidità Operativa quando entrambe le condizioni si verificano. La pistola di questo modello non è silenziata."
+        },
+        "III": {
+          "nome": "Rapidità Operativa",
+          "testo": "Ottiene +2 Iniziativa permanente, già incluso. In ogni combattimento ottiene inoltre +2 al primo attacco ravvicinato o a distanza entro 10 Q: una sola Prova, indipendentemente dal Round in cui attacca."
+        },
+        "IV": {
+          "nome": "Punto Vitale",
+          "testo": "Una volta per Round, colpendo entro 10 Q con Colpo Mirato o Tiro Mirato, aggiunge +2 PV di danno dopo AR soltanto se almeno 1 danno l’ha superata. Solo prima istanza; il bonus non è moltiplicato dal Magistrale."
+        },
+        "V": {
+          "nome": "Colpisci e Sparisci",
+          "testo": "Una volta per Round nella propria Iniziativa divide il Passo prima e dopo un attacco, usando l’AM per un massimo complessivo di 6 Q. Il tratto dopo l’attacco non provoca Opportunità. Se termina dove può nascondersi tenta Furtività senza un’ulteriore AP; restano condizioni e Prova. Funziona anche se manca; l’attacco conserva i suoi costi."
+        },
+        "VI": {
+          "nome": "Piano di Riserva",
+          "testo": "Una volta per sessione, dopo un fallimento di Furtività, Tecnologia o Riflessi, ritira prima delle conseguenze e accetta il secondo risultato. Stesso tentativo, senza ulteriori Azioni o risorse; restano le regole sui nuovi tiri e sui Distintivi."
+        }
+      },
+      "comportamento": "Si avvicina senza essere individuato e usa la lama per l’attacco silenzioso. Dal V Grado sfrutta il Passo diviso per colpire e tornare a copertura.",
+      "strumenti": "Strumenti. Corredo operativo generico adatto alla Classe, senza bonus aggiuntivi ai VA. Le capacità che richiedono materiali, accessi o coperture necessitano comunque di condizioni reali.",
+      "fonte_classe": "Fonte della Classe. Giocatore v0.49 §3.5.4. L’equipaggiamento astratto e la matrice EQ sono propri di questi modelli PNG.",
+      "costruzione": "Costruzione. Incrementi automatici delle cinque Abilità di Classe e sette punti liberi a ogni Grado; i limiti sono applicati a ogni assegnazione. Priorità degli aumenti di Caratteristica: DES, INT, COS, FOR. I dadi dei PV e la selezione dei Talenti sono fissati per rendere il modello pronto."
+    },
+    "lottatore": {
+      "nome": "Lottatore",
+      "categoria": "Combattenti",
+      "descrizione": "Combattimento senz’armi, controllo del corpo e difesa. Il modello segue la Disciplina Guardia e può rappresentare un lottatore d’arena o un artista marziale.",
+      "caratteristiche": {
+        "I": {
+          "livello": 1,
+          "FOR": 7,
+          "DES": 7,
+          "COS": 6,
+          "INT": 5,
+          "SAG": 6,
+          "CAR": 5
+        },
+        "II": {
+          "livello": 4,
+          "FOR": 9,
+          "DES": 7,
+          "COS": 6,
+          "INT": 5,
+          "SAG": 6,
+          "CAR": 5
+        },
+        "III": {
+          "livello": 8,
+          "FOR": 10,
+          "DES": 8,
+          "COS": 6,
+          "INT": 5,
+          "SAG": 6,
+          "CAR": 5
+        },
+        "IV": {
+          "livello": 12,
+          "FOR": 10,
+          "DES": 10,
+          "COS": 6,
+          "INT": 5,
+          "SAG": 6,
+          "CAR": 5
+        },
+        "V": {
+          "livello": 16,
+          "FOR": 10,
+          "DES": 10,
+          "COS": 8,
+          "INT": 5,
+          "SAG": 6,
+          "CAR": 5
+        },
+        "VI": {
+          "livello": 20,
+          "FOR": 10,
+          "DES": 10,
+          "COS": 8,
+          "INT": 5,
+          "SAG": 8,
+          "CAR": 5
+        }
+      },
+      "risorse": {
+        "I": {
+          "pv": 17,
+          "pm": 10,
+          "ini": 2,
+          "ap": 1,
+          "ar": 1,
+          "parata": null,
+          "schivata": 12
+        },
+        "II": {
+          "pv": 30,
+          "pm": 14,
+          "ini": 2,
+          "ap": 1,
+          "ar": 1,
+          "parata": 15,
+          "schivata": 15
+        },
+        "III": {
+          "pv": 38,
+          "pm": 18,
+          "ini": 3,
+          "ap": 1,
+          "ar": 1,
+          "parata": 18,
+          "schivata": 18
+        },
+        "IV": {
+          "pv": 46,
+          "pm": 22,
+          "ini": 5,
+          "ap": 2,
+          "ar": 1,
+          "parata": 20,
+          "schivata": 20
+        },
+        "V": {
+          "pv": 56,
+          "pm": 26,
+          "ini": 5,
+          "ap": 2,
+          "ar": 1,
+          "parata": 23,
+          "schivata": 23
+        },
+        "VI": {
+          "pv": 64,
+          "pm": 32,
+          "ini": 5,
+          "ap": 2,
+          "ar": 1,
+          "parata": 25,
+          "schivata": 25
+        }
+      },
+      "nota_risorse": "Aggiungere EQ a INI, AR, Parata e Schivata; al tiro di Iniziativa si aggiunge 1d10. Sempre 1 AM. Movimento: 6/12/18 Q Base.",
+      "salvezze": {
+        "I": {
+          "tempra": 10,
+          "riflessi": 10,
+          "volonta": 8,
+          "magia": 9
+        },
+        "II": {
+          "tempra": 11,
+          "riflessi": 11,
+          "volonta": 9,
+          "magia": 10
+        },
+        "III": {
+          "tempra": 11,
+          "riflessi": 12,
+          "volonta": 9,
+          "magia": 10
+        },
+        "IV": {
+          "tempra": 12,
+          "riflessi": 14,
+          "volonta": 10,
+          "magia": 11
+        },
+        "V": {
+          "tempra": 14,
+          "riflessi": 14,
+          "volonta": 10,
+          "magia": 11
+        },
+        "VI": {
+          "tempra": 15,
+          "riflessi": 16,
+          "volonta": 12,
+          "magia": 13
+        }
+      },
+      "attacchi": {
+        "I": [
+          {
+            "arma": "Senz’armi",
+            "va": 12,
+            "danno": "1d6+1"
+          },
+          {
+            "arma": "Bastone",
+            "va": 9,
+            "danno": "1d6+1"
+          }
+        ],
+        "II": [
+          {
+            "arma": "Senz’armi",
+            "va": 14,
+            "danno": "1d6+1"
+          },
+          {
+            "arma": "Bastone",
+            "va": 11,
+            "danno": "1d6+1"
+          }
+        ],
+        "III": [
+          {
+            "arma": "Senz’armi",
+            "va": 16,
+            "danno": "1d8+2"
+          },
+          {
+            "arma": "Bastone",
+            "va": 13,
+            "danno": "1d6+2"
+          }
+        ],
+        "IV": [
+          {
+            "arma": "Senz’armi",
+            "va": 18,
+            "danno": "1d8+2"
+          },
+          {
+            "arma": "Bastone",
+            "va": 15,
+            "danno": "1d6+2"
+          }
+        ],
+        "V": [
+          {
+            "arma": "Senz’armi",
+            "va": 20,
+            "danno": "1d10+3"
+          },
+          {
+            "arma": "Bastone",
+            "va": 17,
+            "danno": "1d6+3"
+          }
+        ],
+        "VI": [
+          {
+            "arma": "Senz’armi",
+            "va": 22,
+            "danno": "1d10+3"
+          },
+          {
+            "arma": "Bastone",
+            "va": 19,
+            "danno": "1d6+3"
+          }
+        ]
+      },
+      "nota_attacchi": "Aggiungere EQ una volta al VA e al danno di ogni colpo, e alle quattro PS. Sono esclusi i bonus condizionati dei Talenti. Le portate, mani e modalità sono nella tabella degli armamenti astratti.",
+      "abilita": {
+        "Armi da lancio": [
+          7,
+          7,
+          8,
+          10,
+          10,
+          10
+        ],
+        "Armi leggere": [
+          7,
+          7,
+          8,
+          10,
+          10,
+          10
+        ],
+        "Armi medie": [
+          3,
+          3,
+          3,
+          3,
+          3,
+          3
+        ],
+        "Armi pesanti": [
+          5,
+          7,
+          8,
+          8,
+          8,
+          8
+        ],
+        "Armi da guerra": [
+          7,
+          9,
+          10,
+          10,
+          10,
+          10
+        ],
+        "Armi da mischia": [
+          9,
+          11,
+          13,
+          15,
+          17,
+          19
+        ],
+        "Corpo a corpo": [
+          12,
+          14,
+          16,
+          18,
+          20,
+          22
+        ],
+        "Difese": [
+          11,
+          14,
+          16,
+          18,
+          20,
+          22
+        ],
+        "Artefatti": [
+          4,
+          4,
+          4,
+          4,
+          4,
+          6
+        ],
+        "Occultismo": [
+          5,
+          5,
+          5,
+          5,
+          5,
+          5
+        ],
+        "Potere": [
+          6,
+          6,
+          6,
+          6,
+          6,
+          8
+        ],
+        "Rituali": [
+          3,
+          3,
+          3,
+          3,
+          3,
+          3
+        ],
+        "Atletica": [
+          9,
+          11,
+          13,
+          15,
+          17,
+          19
+        ],
+        "Furtività": [
+          9,
+          10,
+          13,
+          15,
+          17,
+          18
+        ],
+        "Percezione": [
+          9,
+          11,
+          13,
+          15,
+          17,
+          19
+        ],
+        "Sopravvivenza": [
+          8,
+          9,
+          11,
+          14,
+          15,
+          18
+        ],
+        "Cultura": [
+          5,
+          5,
+          5,
+          5,
+          5,
+          5
+        ],
+        "Intrattenere": [
+          5,
+          5,
+          5,
+          5,
+          5,
+          5
+        ],
+        "Oratoria": [
+          5,
+          5,
+          5,
+          5,
+          5,
+          5
+        ],
+        "Raggirare": [
+          5,
+          5,
+          5,
+          5,
+          5,
+          5
+        ],
+        "Medicina": [
+          8,
+          9,
+          11,
+          14,
+          15,
+          18
+        ],
+        "Pilotare": [
+          5,
+          5,
+          5,
+          5,
+          5,
+          5
+        ],
+        "Scienza": [
+          5,
+          5,
+          5,
+          5,
+          5,
+          5
+        ],
+        "Tecnologia": [
+          5,
+          5,
+          5,
+          5,
+          5,
+          5
+        ]
+      },
+      "talenti_liberi": [
+        {
+          "livello": 3,
+          "talento": "Buona Costituzione"
+        },
+        {
+          "livello": 5,
+          "talento": "Parata Istintiva"
+        },
+        {
+          "livello": 7,
+          "talento": "Sempre Allerta"
+        },
+        {
+          "livello": 9,
+          "talento": "Schivata Istintiva"
+        },
+        {
+          "livello": 11,
+          "talento": "Resistenza alla Paura"
+        },
+        {
+          "livello": 13,
+          "talento": "Resistenza ai Veleni"
+        },
+        {
+          "livello": 15,
+          "talento": "Prova Salvezza Migliorata (Tempra)"
+        },
+        {
+          "livello": 17,
+          "talento": "Prova Salvezza Migliorata (Riflessi)"
+        },
+        {
+          "livello": 19,
+          "talento": "Prova Salvezza Migliorata (Volontà)"
+        }
+      ],
+      "talenti_classe": {
+        "I": {
+          "nome": "Disciplina Guardia",
+          "testo": "Il danno senz’armi è 1d6 ai Gradi I–II, 1d8 ai III–IV, 1d10 ai V–VI. Difese contro Ravvicinato ottiene rispettivamente +1, +2, +3. Il bonus è già incluso nelle Difese ravvicinate della tabella. Non concede da solo una Parata a mani nude."
+        },
+        "II": {
+          "nome": "Parata a Mani Nude",
+          "testo": "Con almeno una mano libera può parare un attacco ravvicinato fisicamente contrastabile, spendendo 1 AP disponibile anche fuori Iniziativa. Successo dimezza per eccesso prima di AR, Magistrale annulla. Esclusi distanza, Area e attacchi imparabili. Parata Istintiva permette il suo uso entro il medesimo limite della Parata gratuita."
+        },
+        "III": {
+          "nome": "Raffica di Colpi",
+          "testo": "Con 1 AP effettua due attacchi senz’armi separati, ciascuno a −2 VA, contro uno o due bersagli entro portata. Prove, Difese, danni e AR separati; nessun PM e nessuna combinazione con altre Manovre offensive. Con 2 AP può eseguirla due volte."
+        },
+        "IV": {
+          "nome": "Padronanza Guardia",
+          "testo": "Il bonus della Disciplina Guardia si estende a tutti gli attacchi diretti percepibili, anche a distanza. Restano i requisiti della Difesa: non permette di parare a mani nude la distanza. Esclusi Area, effetti automatici e attacchi normalmente imparabili."
+        },
+        "V": {
+          "nome": "Combattimento Multiplo",
+          "testo": "Con 1 AP effettua una Spazzata senz’armi contro tutti gli avversari adiacenti raggiungibili: una Prova di Corpo a corpo a −4 contro due, −6 contro tre o più. Ogni bersaglio risolve separatamente Difese e AR. Nessun PM; non si combina con Raffica di Colpi. Il Magistrale segue la regola della prima istanza."
+        },
+        "VI": {
+          "nome": "Punto Debole",
+          "testo": "Con 1 AP e senza Prova studia un nemico chiaramente percepito. Il successivo attacco normale senz’armi contro di lui entro fine Iniziativa successiva infligge ×2, oppure ×3 con Magistrale. Si consuma anche se manca o perde il bersaglio. Esclusi Raffica di Colpi, Combattimento Multiplo e altre Manovre offensive; nessun PM."
+        }
+      },
+      "comportamento": "Sfrutta Parata e Schivata e sceglie fra un attacco normale, Raffica di Colpi o Spazzata. Punto Debole richiede preparazione e non si combina con le altre Manovre offensive.",
+      "strumenti": "Strumenti. Corredo operativo generico adatto alla Classe, senza bonus aggiuntivi ai VA. Le capacità che richiedono materiali, accessi o coperture necessitano comunque di condizioni reali.",
+      "fonte_classe": "Fonte della Classe. Giocatore v0.49 §3.5.5. L’equipaggiamento astratto e la matrice EQ sono propri di questi modelli PNG.",
+      "costruzione": "Costruzione. Incrementi automatici delle cinque Abilità di Classe e sette punti liberi a ogni Grado; i limiti sono applicati a ogni assegnazione. Priorità degli aumenti di Caratteristica: FOR, DES, COS, SAG. I dadi dei PV e la selezione dei Talenti sono fissati per rendere il modello pronto."
+    },
+    "soldato": {
+      "nome": "Soldato",
+      "categoria": "Combattenti",
+      "descrizione": "Combattimento di squadra e supporto tattico. Può rappresentare una guardia, un fante, un sottufficiale o un veterano.",
+      "caratteristiche": {
+        "I": {
+          "livello": 1,
+          "FOR": 5,
+          "DES": 6,
+          "COS": 7,
+          "INT": 7,
+          "SAG": 6,
+          "CAR": 5
+        },
+        "II": {
+          "livello": 4,
+          "FOR": 5,
+          "DES": 6,
+          "COS": 7,
+          "INT": 9,
+          "SAG": 6,
+          "CAR": 5
+        },
+        "III": {
+          "livello": 8,
+          "FOR": 5,
+          "DES": 6,
+          "COS": 7,
+          "INT": 10,
+          "SAG": 7,
+          "CAR": 5
+        },
+        "IV": {
+          "livello": 12,
+          "FOR": 5,
+          "DES": 6,
+          "COS": 7,
+          "INT": 10,
+          "SAG": 9,
+          "CAR": 5
+        },
+        "V": {
+          "livello": 16,
+          "FOR": 5,
+          "DES": 6,
+          "COS": 9,
+          "INT": 10,
+          "SAG": 9,
+          "CAR": 5
+        },
+        "VI": {
+          "livello": 20,
+          "FOR": 5,
+          "DES": 8,
+          "COS": 9,
+          "INT": 10,
+          "SAG": 9,
+          "CAR": 5
+        }
+      },
+      "risorse": {
+        "I": {
+          "pv": 19,
+          "pm": 8,
+          "ini": 3,
+          "ap": 1,
+          "ar": 3,
+          "parata": 9,
+          "schivata": 8
+        },
+        "II": {
+          "pv": 28,
+          "pm": 10,
+          "ini": 5,
+          "ap": 1,
+          "ar": 3,
+          "parata": 11,
+          "schivata": 10
+        },
+        "III": {
+          "pv": 37,
+          "pm": 13,
+          "ini": 6,
+          "ap": 1,
+          "ar": 3,
+          "parata": 13,
+          "schivata": 12
+        },
+        "IV": {
+          "pv": 51,
+          "pm": 17,
+          "ini": 6,
+          "ap": 2,
+          "ar": 3,
+          "parata": 15,
+          "schivata": 14
+        },
+        "V": {
+          "pv": 62,
+          "pm": 19,
+          "ini": 6,
+          "ap": 2,
+          "ar": 3,
+          "parata": 17,
+          "schivata": 16
+        },
+        "VI": {
+          "pv": 71,
+          "pm": 21,
+          "ini": 8,
+          "ap": 2,
+          "ar": 3,
+          "parata": 19,
+          "schivata": 18
+        }
+      },
+      "nota_risorse": "Aggiungere EQ a INI, AR, Parata e Schivata; al tiro di Iniziativa si aggiunge 1d10. Sempre 1 AM. Movimento: 5/11/17 Q Base.",
+      "salvezze": {
+        "I": {
+          "tempra": 10,
+          "riflessi": 10,
+          "volonta": 8,
+          "magia": 9
+        },
+        "II": {
+          "tempra": 11,
+          "riflessi": 11,
+          "volonta": 9,
+          "magia": 10
+        },
+        "III": {
+          "tempra": 11,
+          "riflessi": 11,
+          "volonta": 9,
+          "magia": 10
+        },
+        "IV": {
+          "tempra": 12,
+          "riflessi": 12,
+          "volonta": 10,
+          "magia": 12
+        },
+        "V": {
+          "tempra": 14,
+          "riflessi": 12,
+          "volonta": 10,
+          "magia": 12
+        },
+        "VI": {
+          "tempra": 15,
+          "riflessi": 15,
+          "volonta": 12,
+          "magia": 13
+        }
+      },
+      "attacchi": {
+        "I": [
+          {
+            "arma": "Fucile d’assalto",
+            "va": 10,
+            "danno": "1d8+1"
+          },
+          {
+            "arma": "Lama leggera",
+            "va": 5,
+            "danno": "1d6+1"
+          }
+        ],
+        "II": [
+          {
+            "arma": "Fucile d’assalto",
+            "va": 14,
+            "danno": "1d8+2"
+          },
+          {
+            "arma": "Lama leggera",
+            "va": 5,
+            "danno": "1d6+1"
+          }
+        ],
+        "III": [
+          {
+            "arma": "Fucile d’assalto",
+            "va": 16,
+            "danno": "1d8+3"
+          },
+          {
+            "arma": "Lama leggera",
+            "va": 5,
+            "danno": "1d6+1"
+          }
+        ],
+        "IV": [
+          {
+            "arma": "Fucile d’assalto",
+            "va": 18,
+            "danno": "1d8+3"
+          },
+          {
+            "arma": "Lama leggera",
+            "va": 5,
+            "danno": "1d6+1"
+          }
+        ],
+        "V": [
+          {
+            "arma": "Fucile d’assalto",
+            "va": 20,
+            "danno": "1d8+4"
+          },
+          {
+            "arma": "Lama leggera",
+            "va": 5,
+            "danno": "1d6+1"
+          }
+        ],
+        "VI": [
+          {
+            "arma": "Fucile d’assalto",
+            "va": 22,
+            "danno": "1d8+4"
+          },
+          {
+            "arma": "Lama leggera",
+            "va": 7,
+            "danno": "1d6+2"
+          }
+        ]
+      },
+      "nota_attacchi": "Aggiungere EQ una volta al VA e al danno di ogni colpo, e alle quattro PS. Sono esclusi i bonus condizionati dei Talenti. Le portate, mani e modalità sono nella tabella degli armamenti astratti.",
+      "abilita": {
+        "Armi da lancio": [
+          6,
+          6,
+          6,
+          6,
+          6,
+          8
+        ],
+        "Armi leggere": [
+          9,
+          11,
+          13,
+          15,
+          17,
+          19
+        ],
+        "Armi medie": [
+          11,
+          14,
+          16,
+          18,
+          20,
+          22
+        ],
+        "Armi pesanti": [
+          5,
+          5,
+          5,
+          5,
+          5,
+          5
+        ],
+        "Armi da guerra": [
+          5,
+          5,
+          5,
+          5,
+          5,
+          5
+        ],
+        "Armi da mischia": [
+          6,
+          6,
+          6,
+          6,
+          6,
+          8
+        ],
+        "Corpo a corpo": [
+          5,
+          5,
+          5,
+          5,
+          5,
+          5
+        ],
+        "Difese": [
+          9,
+          11,
+          13,
+          15,
+          17,
+          19
+        ],
+        "Artefatti": [
+          4,
+          4,
+          5,
+          7,
+          7,
+          7
+        ],
+        "Occultismo": [
+          5,
+          7,
+          8,
+          8,
+          8,
+          8
+        ],
+        "Potere": [
+          4,
+          4,
+          5,
+          7,
+          7,
+          7
+        ],
+        "Rituali": [
+          5,
+          7,
+          8,
+          8,
+          8,
+          8
+        ],
+        "Atletica": [
+          7,
+          8,
+          9,
+          11,
+          13,
+          15
+        ],
+        "Furtività": [
+          6,
+          6,
+          6,
+          6,
+          6,
+          8
+        ],
+        "Percezione": [
+          9,
+          11,
+          13,
+          15,
+          17,
+          19
+        ],
+        "Sopravvivenza": [
+          10,
+          12,
+          16,
+          18,
+          20,
+          22
+        ],
+        "Cultura": [
+          5,
+          5,
+          5,
+          5,
+          5,
+          5
+        ],
+        "Intrattenere": [
+          5,
+          5,
+          5,
+          5,
+          5,
+          5
+        ],
+        "Oratoria": [
+          7,
+          8,
+          9,
+          10,
+          11,
+          12
+        ],
+        "Raggirare": [
+          5,
+          5,
+          5,
+          5,
+          5,
+          5
+        ],
+        "Medicina": [
+          6,
+          6,
+          7,
+          9,
+          9,
+          9
+        ],
+        "Pilotare": [
+          7,
+          9,
+          10,
+          10,
+          10,
+          10
+        ],
+        "Scienza": [
+          7,
+          9,
+          10,
+          10,
+          10,
+          10
+        ],
+        "Tecnologia": [
+          8,
+          11,
+          13,
+          14,
+          15,
+          16
+        ]
+      },
+      "talenti_liberi": [
+        {
+          "livello": 3,
+          "talento": "Specializzazione in Fucili d’Assalto"
+        },
+        {
+          "livello": 5,
+          "talento": "Parata Istintiva"
+        },
+        {
+          "livello": 7,
+          "talento": "Sempre Allerta"
+        },
+        {
+          "livello": 9,
+          "talento": "Schivata Istintiva"
+        },
+        {
+          "livello": 11,
+          "talento": "Buona Costituzione"
+        },
+        {
+          "livello": 13,
+          "talento": "Resistenza ai Veleni"
+        },
+        {
+          "livello": 15,
+          "talento": "Prova Salvezza Migliorata (Tempra)"
+        },
+        {
+          "livello": 17,
+          "talento": "Prova Salvezza Migliorata (Riflessi)"
+        },
+        {
+          "livello": 19,
+          "talento": "Prova Salvezza Migliorata (Volontà)"
+        }
+      ],
+      "talenti_classe": {
+        "I": {
+          "nome": "Addestramento Militare",
+          "testo": "Ottiene +3 a Volontà contro paura, panico, Fuoco di Soppressione e altre pressioni del combattimento. Non è incluso nella Salvezza generale; il fallimento mantiene le conseguenze ordinarie."
+        },
+        "II": {
+          "nome": "Supporto d’Attacco",
+          "testo": "Una volta per Round nella propria Iniziativa, senza Azioni, designa un nemico percepito e un alleato entro 6 Q che percepisce le indicazioni. La prima Prova offensiva dell’alleato contro quel nemico ottiene +2 prima dell’Iniziativa successiva del Soldato. Si consuma anche con fallimento."
+        },
+        "III": {
+          "nome": "Coordinamento di Squadra",
+          "testo": "Una volta per Round prima della Prova di una Manovra di un alleato entro 6 Q che percepisce le indicazioni, riduce di 2 la penalità propria della Manovra, minimo 0. Nessuna Azione; non vale per sé stesso né riduce altre penalità."
+        },
+        "IV": {
+          "nome": "Supporto di Difesa",
+          "testo": "Una volta per Round nella propria Iniziativa, senza Azioni, sceglie sé stesso o un alleato entro 6 Q che percepisce le indicazioni: +2 Difese fino all’Iniziativa successiva del Soldato. Esclusi Area, attacchi inevitabili o non percepiti; restano i costi delle Difese."
+        },
+        "V": {
+          "nome": "Disciplina di Ferro",
+          "testo": "Una volta per combattimento nella propria Iniziativa, senza Azioni, sé stesso e gli alleati entro 6 Q che percepiscono le indicazioni ignorano le penalità numeriche di Ferite e Affaticamento fino all’Iniziativa successiva del Soldato. I beneficiari mantengono l’effetto se si allontanano. Nessun recupero, rimozione di Stati o protezione dalla morte."
+        },
+        "VI": {
+          "nome": "Supporto Avanzato Attacco",
+          "testo": "Migliora permanentemente Supporto d’Attacco: può assegnare il bonus a due alleati contro lo stesso nemico. Ciascuno lo usa per la propria prima Prova pertinente, rispettando durata e condizioni del Supporto."
+        }
+      },
+      "comportamento": "Designa il bersaglio per gli alleati, controlla un passaggio e usa la copertura. Il Supporto d’Attacco non migliora i suoi stessi colpi.",
+      "strumenti": "Strumenti. Corredo operativo generico adatto alla Classe, senza bonus aggiuntivi ai VA. Le capacità che richiedono materiali, accessi o coperture necessitano comunque di condizioni reali.",
+      "fonte_classe": "Fonte della Classe. Giocatore v0.49 §3.5.6. L’equipaggiamento astratto e la matrice EQ sono propri di questi modelli PNG.",
+      "costruzione": "Costruzione. Incrementi automatici delle cinque Abilità di Classe e sette punti liberi a ogni Grado; i limiti sono applicati a ogni assegnazione. Priorità degli aumenti di Caratteristica: INT, SAG, COS, DES. I dadi dei PV e la selezione dei Talenti sono fissati per rendere il modello pronto."
+    }
+  }
+}
