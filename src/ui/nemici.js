@@ -350,7 +350,7 @@ export function cartaNemico(ctx, p, { modifica, durate = [], diTurnoOra = false,
         if (!n.gs_px?.gs) return null;
         const rif = pxDiRiferimentoGs(n.gs_px.gs, dati);
         const titolo = `${dati.formato_nemici.campi.gs_px?.descrizione ?? ''}${rif ? ` PX di riferimento del GS ${n.gs_px.gs}: ${rif}.` : ''}`.trim();
-        const px = Number.isInteger(n.gs_px.px) ? ` · ${n.gs_px.px} PX${n.gs_px.per_pg ? ` per ${n.gs_px.per_pg} PG` : ''}` : rif ? ` · riferimento ${rif} PX` : '';
+        const px = Number.isInteger(n.gs_px.px) ? ` · ${n.gs_px.px} PX${n.gs_px.per_pg ? ` per ${n.gs_px.per_pg} PG` : ''}${n.gs_px.provvisorio ? ' (provvisori)' : ''}` : rif ? ` · riferimento ${rif} PX` : '';
         return [' ', h('span', { class: 'etichetta tratto-nemico tratto-gspx', title: titolo || null }, `GS ${n.gs_px.gs}`, px)];
       })()),
     // A.164 (16/10/2026): Morente del nemico, con lo stesso riquadro dei PG (src/morente.js)

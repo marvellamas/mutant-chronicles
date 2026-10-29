@@ -246,6 +246,11 @@
           "min": 1,
           "obbligatorio": false,
           "descrizione": "Numero di PG per cui valgono i PX (4 nel manuale)."
+        },
+        "provvisorio": {
+          "tipo": "vero_falso",
+          "obbligatorio": false,
+          "descrizione": "Vero quando il manuale dice «PX provvisori»: valori da verificare al tavolo, che Davide confermerà (Mostri 0.46, fauna di Iris). Solo un’indicazione: i PX valgono comunque come scritti."
         }
       }
     },
