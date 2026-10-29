@@ -4,6 +4,7 @@ import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { readdirSync, readFileSync, statSync } from 'node:fs';
 import { datiReali } from './helpers.js';
+import { aperta } from '../tools/bestiario_pagina.mjs';
 import { validaNemico } from '../src/validate.js';
 import { nuovoScontro, aggiungiNemici } from '../src/scontro.js';
 import { iniziativaCreatura, conIniziativaCreatura } from '../src/iniziativa-creature.js';
@@ -107,7 +108,7 @@ test('Dragomedusa giovane e adulto: GS, PX, valori e fonte del Manuale dei Mostr
 });
 
 test('la pagina del bestiario online ha il filtro per GS con Mito e Semidio', () => {
-  const h = readFileSync(new URL('../docs/bestiario/bestiario-online.html', import.meta.url), 'utf8');
+  const h = aperta(readFileSync(new URL('../docs/bestiario/bestiario-online.html', import.meta.url), 'utf8'));
   assert.match(h, /aria-label="Grado di Sfida"/);
   assert.match(h, /data-filtro="gs" data-valore="Mito"/);
   assert.match(h, /data-filtro="gs" data-valore="Semidio"/);

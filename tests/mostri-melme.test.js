@@ -5,6 +5,7 @@ import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import { datiReali } from './helpers.js';
+import { aperta } from '../tools/bestiario_pagina.mjs';
 import { validaNemico } from '../src/validate.js';
 
 const { dati } = await datiReali();
@@ -113,7 +114,7 @@ test('GS/PX informativo e non calcolato', () => {
 });
 
 test('la pagina del bestiario online mostra «—» per la Volontà assente, mai «undefined»', () => {
-  const pagina = readFileSync(new URL('../docs/bestiario/bestiario-online.html', import.meta.url), 'utf8');
+  const pagina = aperta(readFileSync(new URL('../docs/bestiario/bestiario-online.html', import.meta.url), 'utf8'));
   assert.ok(pagina.includes('Volontà — · Magia 9'), 'Melma grigia: Volontà —');
   assert.ok(!/undefined|NaN/.test(pagina), 'nessun undefined/NaN nella pagina');
 });

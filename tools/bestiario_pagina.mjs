@@ -337,7 +337,7 @@ const JS = `(function(){
   var dati=document.getElementById('dati-schede');
   if(!dati){avvia();return}
   var caricamento=document.getElementById('caricamento');
-  if(typeof DecompressionStream==='undefined'){
+  if(!window.DecompressionStream){
     caricamento.textContent='Questo browser non apre le schede compresse: serve una versione recente di Chrome, Safari o Firefox.';
     return;
   }
