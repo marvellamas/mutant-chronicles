@@ -2210,3 +2210,17 @@ Fonte: Manuale dei Mostri 0.46 (Word, `docs/manuali-txt/mostri-word.md`). Dettag
 - **A.198 e A.199 ancora aperte** (non decise): i dieci draghi antichi (16 × 10 Q Base) sono fuori dal campo Spazio, come il Dragomedusa; 38 schede hanno un danno con moltiplicatore (`6d10×5`, mostrato e non tirato).
 - **Nuove domande:** A.201 (nome dei draghi metallici: «di ottone» o «d'ottone»), A.202 (movimento a terra della Murena cucciolo), A.203 (ingombro della Madre delle Murene: 2 × 2 o 6 × 2 Q),
   A.204 (ordine dei due numeri dell'ingombro dei draghi: «6 × 4 Q Base»). Provvisorio nell'app: il manuale così com'è.
+
+## 29 ottobre 2026 — Lotto 143: importatore riletto su tutte le schede, modelli PNG generici
+
+Dettaglio in `docs/diff-lotto143-2026-10-29.md`. Nessuna decisione approvata cambiata.
+
+- **Importatore dei mostri** (`tools/importa-mostri.mjs`): ora legge per intero anche le schede già nel Bestiario (prima ne leggeva solo una parte e il test saltava i campi non letti).
+  AC dalla pagina del blocco che precede la scheda; AR con varianti d'equipaggiamento (primo numero, o totale dopo «=»); Parata al posto delle Difese; movimento «Terra e …», «Terra 0», «Immobile».
+  Differenze con i file: da 125 a 57 schede, tutte dichiarate (limiti dell'importatore, non errori dei file). `--verifica`: controllo incrociato di VA, danni e Abilità accanto al nome nel manuale.
+- **Sei schede corrette** (solo `ac: 1` sugli attacchi): Piovra gigante di Iris, Pseudodrago, Draghi fatati giovane e maturo, Mezzodrago rosso veterano, Dracolich blu adulto.
+- **Dieci modelli PNG generici Classe / Grado / EQ** (Mostri 0.46, Direttore §9.6) in «Crea nemico» (`data/png_generici.json`, `src/png-generici.js`): EQ si somma una volta su Iniziativa, VA e danno,
+  Parata, AR e Salvezze; niente su Caratteristiche, PV, PM, Azioni, Movimento, Abilità. Dieci modelli su venticinque; gli altri quindici (Lavoratori, Studiosi, Taumaturghi) non sono nel manuale.
+- **Test intermittente** (`calendario.test.js`, lotto 141): causa non trovata; `npm run test:ripeti` per catturarlo.
+- **Nuove domande:** A.205 (Diplomazia o Oratoria), A.206 (Parata «—» del Lottatore di I Grado), A.207 (natura e AC delle armi di umani e umanoidi), A.208 (Iniziativa degli Elementali maggiori),
+  A.209 (Parata o Schivata come Difese dei modelli PNG), A.210 (GS e PX dei modelli PNG). Provvisorio nell'app: quanto descritto nel diff.
