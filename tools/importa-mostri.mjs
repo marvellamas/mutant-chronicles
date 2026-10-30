@@ -24,7 +24,8 @@ const Q_TATTICO_IN_Q_BASE = 10; // Mostri 0.46: 1 Q Base = 1,5 m, 1 Q Tattico = 
 const ABILITA = new Set((JSON.parse(readFileSync(join(RADICE, 'data/abilita.json'), 'utf8')).abilita ?? []).map((a) => a.nome));
 const SIGLE = ['FOR', 'DES', 'COS', 'INT', 'SAG', 'CAR'];
 const NATURE = ['Naturale', 'Magico', 'Etereo'];
-const ALIAS_ABILITA = { Mischia: 'Armi da mischia', Lancio: 'Armi da lancio', Guerra: 'Armi da guerra' };
+// A.205 (30/10/2026): «Diplomazia» non è un'Abilità del Giocatore: è Oratoria, a valori invariati (Driade 13, Marinide 10)
+const ALIAS_ABILITA = { Mischia: 'Armi da mischia', Lancio: 'Armi da lancio', Guerra: 'Armi da guerra', Diplomazia: 'Oratoria' };
 
 // Pagine comuni di un blocco → creature a cui si applicano (le schede rimandano alle «pagine comuni di questo blocco»).
 // Il testo delle pagine comuni entra nelle capacità, una voce per sezione; le tabelle delle pagine comuni non si importano
@@ -393,6 +394,20 @@ function paragrafiESezioni(R, da, nonCapito) {
   return { cap, notaDescr };
 }
 
+/**
+ * A.201 (risposta di Davide del 30/10/2026): i draghi metallici hanno lo stesso nome in tutti gli stadi — Drago d’ottone, di rame,
+ * di bronzo, d’argento, d’oro. Il manuale scrive «di ottone» per giovani e adulti e «d’ottone» per cuccioli e antichi: l'importatore
+ * scrive sempre la forma di Davide e tiene l'altra come alias di ricerca (senza duplicare le creature: l'id non cambia).
+ */
+export function nomeCanonico(nome) {
+  return String(nome).replace(/^Drago (?:di|d’|d')\s?(ottone|argento|oro)\b/, 'Drago d’$1').replace(/^Drago (?:di|d’|d')\s?(rame|bronzo)\b/, 'Drago di $1');
+}
+/** L'altra forma del nome, per la ricerca: «Drago d’ottone adulto» → «Drago di ottone adulto». Rame e bronzo hanno una forma sola. */
+export function aliasDelNome(nome) {
+  const m = /^Drago d’(ottone|argento|oro)\b(.*)$/.exec(String(nome));
+  return m ? [`Drago di ${m[1]}${m[2]}`] : [];
+}
+
 export function slug(nome) {
   return nome.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/\bd[’']/g, 'di ').replace(/[’']/g, '').replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
 }
@@ -441,8 +456,8 @@ export function leggiScheda(sch, comuni = [], colonna = null, blocco = null) {
   const sottotitolo = R[1] && !/^(Campo|Dato)$/.test(R[1].t) ? R[1].t : '';
   const tab = leggiTabella(R);
   if (!tab) return { id: slug(baseNome), nome: baseNome, json: null, nonCapito: ['Nessuna tabella dei dati'], esclusa: 'nessuna tabella dei dati' };
-  const nome = colonna === null ? baseNome : nomeColonna(baseNome, tab.colonne[colonna]);
-  const o = { formato: 'mutant-nemico', versione: 1, id: slug(nome), nome, fonte: `${FONTE}, cap. ${/^7\./.test(R[0].t.replace(/^#\s*/, '')) ? '7 «Fauna di Iris»' : '8 «Catalogo delle creature»'} — ${nome}` };
+  const nome = nomeCanonico(colonna === null ? baseNome : nomeColonna(baseNome, tab.colonne[colonna]));
+  const o = { formato: 'mutant-nemico', versione: 1, id: slug(nome), nome, ...(aliasDelNome(nome).length ? { alias: aliasDelNome(nome) } : {}), fonte: `${FONTE}, cap. ${/^7\./.test(R[0].t.replace(/^#\s*/, '')) ? '7 «Fauna di Iris»' : '8 «Catalogo delle creature»'} — ${nome}` };
   const coppie = coppieColonna(tab.righe, colonna === null ? 0 : colonna);
   const k = classifica(coppie);
   const valori = k.valori.join(' | ').replace(/\s·\s/g, ' • ');

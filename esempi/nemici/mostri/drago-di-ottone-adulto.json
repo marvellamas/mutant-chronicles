@@ -2,8 +2,11 @@
   "formato": "mutant-nemico",
   "versione": 1,
   "id": "drago-di-ottone-adulto",
-  "nome": "Drago di ottone adulto",
-  "fonte": "dal Manuale dei Mostri v0.46 (Word del 27/10/2026), cap. 8 «Catalogo delle creature» — Drago di ottone adulto",
+  "nome": "Drago d’ottone adulto",
+  "alias": [
+    "Drago di ottone adulto"
+  ],
+  "fonte": "dal Manuale dei Mostri v0.46 (Word del 27/10/2026), cap. 8 «Catalogo delle creature» — Drago d’ottone adulto",
   "caratteristiche": {
     "FOR": 10,
     "DES": 5,

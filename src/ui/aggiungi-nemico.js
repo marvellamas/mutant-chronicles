@@ -18,8 +18,9 @@ import { profiloNemico, scelteCreatura, fileUmano } from '../crea-nemico.js';
 
 const numero = (n) => (n >= 0 ? `+${n}` : String(n));
 /** Testo su cui cerca il campo «Cerca» (nome, famiglia, descrizione, note). */
-const cercabile = (x) => [x.nome, x.famiglia, x.descrizione, x.note, x.sottotitolo].filter(Boolean).join(' ').toLowerCase();
-const senzaAccenti = (s) => s.normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase();
+// A.201: anche gli alias (la forma di prima di un nome rinominato) e l'apostrofo diritto della tastiera per quello curvo
+const cercabile = (x) => [x.nome, ...(x.alias ?? []), x.famiglia, x.descrizione, x.note, x.sottotitolo].filter(Boolean).join(' ').toLowerCase();
+const senzaAccenti = (s) => s.normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/[‘’‛ʼ]/g, "'").toLowerCase();
 
 /**
  * Le voci dell'elenco, dai nemici prestabiliti e dalle creature del Bestiario proposto, filtrate dalla ricerca.
@@ -35,6 +36,7 @@ export function vociAggiungiNemico(voci, BE, cerca = '') {
     chiave: `prestabilito:${v.id}`,
     tipo: 'prestabilito',
     nome: v.nemico.nome,
+    alias: v.nemico.alias ?? [],
     sottotitolo: `PV ${v.nemico.pv} · Iniziativa ${numero(v.nemico.iniziativa)}${v.nemico.ar?.totale ? ` · AR ${v.nemico.ar.totale}` : ''}`,
     origine: 'Bestiario della campagna (nemici/)',
     nemico: v.nemico,

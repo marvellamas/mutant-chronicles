@@ -2,8 +2,11 @@
   "formato": "mutant-nemico",
   "versione": 1,
   "id": "drago-di-ottone-giovane",
-  "nome": "Drago di ottone giovane",
-  "fonte": "dal Manuale dei Mostri v0.46 (Word del 27/10/2026), cap. 8 «Catalogo delle creature» — Drago di ottone giovane",
+  "nome": "Drago d’ottone giovane",
+  "alias": [
+    "Drago di ottone giovane"
+  ],
+  "fonte": "dal Manuale dei Mostri v0.46 (Word del 27/10/2026), cap. 8 «Catalogo delle creature» — Drago d’ottone giovane",
   "caratteristiche": {
     "FOR": 8,
     "DES": 5,

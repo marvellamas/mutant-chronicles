@@ -100,6 +100,6 @@ test('ingombro: dove il manuale dà un ingombro completo e uno parziale, vale il
 test('controllo incrociato: VA, danni e Abilità delle schede presenti si trovano nel manuale accanto al nome; le sole discordanze sono dichiarate', () => {
   const p = controlloIncrociato(testo, esistenti).map((x) => `${x.id}: ${x.campo}`).sort();
   // Turk e Vespe: attacco scritto in un paragrafo («Corpo a corpo 10, 1d6+3 …»), verificato a mano (VA 10, 1d6+3 e VA 11, 1d4+2);
-  // Driade e Marinide: il manuale scrive «Diplomazia», la scheda ha «Oratoria» (A.205)
-  assert.deepEqual(p, ['driade: abilità Oratoria', 'marinide: abilità Oratoria', 'turk: attacco Urto difensivo', 'vespe-del-deserto: attacco Puntura']);
+  // Driade e Marinide: il manuale scrive «Diplomazia», l'importatore la legge come Oratoria (A.205, 30/10/2026): ora coincidono
+  assert.deepEqual(p, ['turk: attacco Urto difensivo', 'vespe-del-deserto: attacco Puntura']);
 });

@@ -114,6 +114,15 @@
       "obbligatorio": true,
       "descrizione": "Nome del tipo; le copie nello scontro diventano «Nome 1», «Nome 2»…"
     },
+    "alias": {
+      "tipo": "lista",
+      "obbligatorio": false,
+      "descrizione": "Altri nomi con cui si cerca la creatura (A.201, 30/10/2026): la forma di prima di un nome rinominato («Drago di ottone» per «Drago d’ottone»). Non duplicano la creatura: l’id resta quello.",
+      "voce": {
+        "tipo": "testo",
+        "obbligatorio": true
+      }
+    },
     "fonte": {
       "tipo": "testo",
       "obbligatorio": false,

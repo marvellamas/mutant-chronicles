@@ -417,7 +417,7 @@ function scheda(v, d) {
   const bandiere = [v.boss ? '<span class="bandiera boss">Boss</span>' : null,
     v.proposta ? '<span class="bandiera proposta">Proposta, da validare con Davide</span>' : null].filter(Boolean);
 
-  const cercabile = senzaAccenti([v.titolo, v.gradoNome, v.categoria, v.gruppo, n.nome, v.boss ? 'boss' : '',
+  const cercabile = senzaAccenti([v.titolo, v.gradoNome, v.categoria, v.gruppo, n.nome, ...(n.alias ?? []), v.boss ? 'boss' : '',
     (n.attacchi ?? []).map((a) => a.nome).join(' ')].filter(Boolean).join(' '));
 
   const meta = [v.gruppo, v.riferimento].filter(Boolean).join(' · ');
