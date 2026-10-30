@@ -2284,3 +2284,11 @@ Manuale del Giocatore: ancora «Edizione consultabile 0.50», ma ritoccato il 30
 - **A.205 — RISOLTA.** «Diplomazia» è Oratoria (Driade 13, Marinide 10), anche nell'importatore.
 - **A.207 — RISOLTA.** Danni Naturali e AC 1 per colpo salvo indicazione del profilo; «Danno completo» senza bonus aggiunti (verificato su 341 nemici, le creature del Bestiario proposto, 120 profili PNG e la conversione PG → nemico: nessuna somma doppia); AC 1 non limita il numero di attacchi.
 - **Nuove domande: A.220** (le Ferite abbassano l'Iniziativa anche dei PG?) e **A.221** (il Successo Magistrale su un danno ×5), nel pacchetto `docs/pacchetto-per-davide-2026-10-30-lotto147.md`.
+
+## 30 ottobre 2026, notte — Lotto 148: A.198, A.202, A.203, A.204 applicate (`docs/diff-lotto148-2026-10-30.md`)
+
+- **A.198 — RISOLTA.** Sagome fino a **20 quadretti per lato** (era 12); i draghi antichi (10 × 16) e il Dragomedusa adulto (10 × 14) nel campo Spazio; in Q Base la sagoma del profilo, rettangolare, a 45°; in **Q Tattici** le pedine convenzionali del manuale (campo `pedina_tattica`: Dragomedusa 1 × 1 il giovane, 2 × 1 l'adulto); la **scala della mappa è dichiarata** nella scena e si legge sempre sulla mappa. Regole dell'A.172 invariate e riprovate fino a 20 (rete di sicurezza: 210 basi × 8 orientamenti, nessun difetto).
+- **A.202 — RISOLTA.** Murena cucciolo: 6 / 12 / 18 Q Base solo in forma eterea (attraversa la roccia); in overdose corporea fino alla fine del Round R+1: ferma, non attacca, non attraversa la roccia, non Schiva; poi torna eterea. L'app distingue le due forme.
+- **A.203 — RISOLTA.** Madre delle Murene: parzialmente emersa 2 × 2 e completamente emersa 6 × 2, scelte dal Direttore; la testa dà l'origine di attacchi e soffio; il cambio conserva PV, PM, Ferite, Stati e Azioni già spese.
+- **A.204 — RISOLTA.** Il corpo disteso è lunghezza × larghezza nel manuale e larghezza × lunghezza nel campo: giovane 4 × 6, adulto 6 × 10, antico 10 × 16 (cucciolo 1 × 2). **36 draghi avevano le misure al contrario** e sono stati corretti.
+- **Nuove domande: A.222–A.225** (`docs/pacchetto-per-davide-2026-10-30-lotto148.md`); la A.220 e la A.221 del lotto 147 non sono ancora nel Doc.
