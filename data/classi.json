@@ -1274,7 +1274,7 @@
         {
           "grado": 1,
           "nome": "Addestramento al Combattimento Senz’Armi",
-          "testo": "Il Lottatore sceglie permanentemente una Disciplina: Potenza, Rapidità, Controllo o Guardia. Il danno dei suoi attacchi senz’armi dipende dalla Disciplina e dal Grado nella Classe.\nDisciplina Potenza Rapidità Controllo Guardia\nGradi I–II 1d8 1d4 1d4 1d6\nGradi III–IV 1d10 1d6 1d6 1d8\nGradi V–VI 1d12 1d8 1d8 1d10\nPotenza. Dopo aver effettuato un attacco senz’armi, subisce −1 VA a Difese fino all’arrivo della propria Iniziativa successiva. Più attacchi non aumentano questa penalità.\nRapidità. Ottiene sempre +3 Iniziativa. Una volta per Round, durante la propria Iniziativa, può muoversi di 1 Q aggiuntivo senza spendere Azioni. Si applicano normalmente gli Attacchi di Opportunità. Questo movimento aggiuntivo non modifica la distanza o la continuità della normale Azione di Movimento.\nControllo. Ottiene +2 VA ai Gradi I–II, +4 VA ai Gradi III–IV e +6 VA ai Gradi V–VI alle Prove offensive di Corpo a corpo per Immobilizzare, Sbilanciare, Disarmare, Incalzare e Stordire. Restano validi costi, requisiti e penalità delle Manovre.\nGuardia. Ottiene un bonus a Difese contro gli attacchi ravvicinati: +1 VA ai Gradi I–II, +2 VA ai Gradi III–IV e +3 VA ai Gradi V–VI.",
+          "testo": "Il Lottatore sceglie permanentemente una Disciplina: Potenza, Rapidità, Controllo o Guardia. Il danno dei suoi attacchi senz’armi dipende dalla Disciplina e dal Grado nella Classe.\nDisciplina Potenza Rapidità Controllo Guardia\nGradi I–II 1d8 1d4 1d4 1d6\nGradi III–IV 1d10 1d6 1d6 1d8\nGradi V–VI 1d12 1d8 1d8 1d10\nPotenza. Dopo aver effettuato un attacco senz’armi, subisce −1 VA a Difese fino all’arrivo della propria Iniziativa successiva. Più attacchi non aumentano questa penalità.\nRapidità. Ottiene sempre +3 Iniziativa. Una volta per Round, durante la propria Iniziativa, può muoversi di 1 Q aggiuntivo senza spendere Azioni. Si applicano normalmente gli Attacchi di Opportunità. Questo movimento aggiuntivo non modifica la distanza o la continuità della normale Azione di Movimento.\nControllo. Ottiene +2 VA ai Gradi I–II, +4 VA ai Gradi III–IV e +6 VA ai Gradi V–VI alle Prove offensive di Corpo a corpo per Immobilizzare, Sbilanciare, Disarmare, Incalzare e Stordire. Restano validi costi, requisiti e penalità delle Manovre.\nGuardia. Ottiene un bonus a Difese contro gli attacchi ravvicinati: +1 VA ai Gradi I–II, +2 VA ai Gradi III–IV e +3 VA ai Gradi V–VI.\nParata a Mani Nude. Può utilizzare Difese per parare attacchi ravvicinati senza impugnare armi o scudi, purché disponga di almeno una mano libera e possa fisicamente intervenire sul colpo.\nLa Parata richiede un’Azione Principale disponibile, utilizzabile anche fuori dalla propria Iniziativa, e segue le normali regole: il successo dimezza per eccesso il danno prima dell’Armatura; il Successo Magistrale annulla il danno. Con un Fallimento Maldestro la Parata fallisce e il personaggio subisce −2 VA a tutte le Prove fino all’arrivo della propria Iniziativa successiva.\nNon permette di parare attacchi a distanza, effetti ad Area o attacchi normalmente imparabili. Se possiede Parata Istintiva, può utilizzare anche a mani nude la Parata gratuita concessa una volta per Round, entro lo stesso limite complessivo. Non richiede PM.",
           "effetti": {},
           "parametro": {
             "chiave": "disciplina",
@@ -1454,8 +1454,23 @@
         },
         {
           "specializzazione": "Comune",
-          "nome": "Parata a Mani Nude",
-          "testo": "Può utilizzare Difese per parare attacchi ravvicinati senza impugnare armi o scudi, purché disponga di almeno una mano libera e possa fisicamente intervenire sul colpo.\nLa Parata richiede un’Azione Principale disponibile, utilizzabile anche fuori dalla propria Iniziativa, e segue le normali regole: il successo dimezza per eccesso il danno prima dell’Armatura; il Successo Magistrale annulla il danno. Con un Fallimento Maldestro la Parata fallisce e il personaggio subisce −2 VA a tutte le Prove fino all’arrivo della propria Iniziativa successiva.\nNon permette di parare attacchi a distanza, effetti ad Area o attacchi normalmente imparabili. Se possiede Parata Istintiva, può utilizzare anche a mani nude la Parata gratuita concessa una volta per Round, entro lo stesso limite complessivo. Non richiede PM."
+          "nome": "Parata a Mani Nude Migliorata",
+          "nomi_precedenti": [
+            "Parata a Mani Nude"
+          ],
+          "testo": "Ottiene +2 VA alle Prove di Difese effettuate per Parare a mani nude. Il bonus si somma a quello della Disciplina Guardia quando applicabile.\nRestano i requisiti, i costi e gli effetti ordinari della Parata a Mani Nude acquisita al I Grado; il Talento non richiede PM.",
+          "effetti": {
+            "valori": [
+              {
+                "abilita": "Difese",
+                "valore": 2,
+                "ambito": "uso_specifico",
+                "uso": "Parare a mani nude",
+                "condizione": "Ottiene +2 VA alle Prove di Difese effettuate per Parare a mani nude. Il bonus si somma a quello della Disciplina Guardia quando applicabile.",
+                "fonte": "Giocatore, Lottatore (§3.4; Talenti §3.5.5; A.206, 30/10/2026)"
+              }
+            ]
+          }
         }
       ]
     },

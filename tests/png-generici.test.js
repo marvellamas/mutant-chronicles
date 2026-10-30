@@ -82,16 +82,16 @@ test('tutte le 360 combinazioni Classe × Grado × EQ passano il validatore dei 
   assert.equal(n, 360);
 });
 
-test('un dato assente resta assente: la Parata «—» del Lottatore di I Grado non diventa 0; le Difese valgono la Schivata, con l’avviso (A.206)', () => {
-  assert.equal(dati.png_generici.classi.lottatore.risorse.I.parata, null);
-  const r = profiloPng({ classe: 'lottatore', grado: 'I', eq: 1 }, dati);
-  assert.equal(r.nemico.difese, 12 + 1);
-  assert.match(r.avvisi.join(' '), /Parata è «—»/);
-  assert.match(r.avvisi.join(' '), /A\.206/);
-  // le altre 59 righe hanno la Parata scritta
-  let senza = 0;
-  for (const c of Object.values(dati.png_generici.classi)) for (const g of GRADI) if (c.risorse[g].parata === null) senza += 1;
-  assert.equal(senza, 1);
+test('A.206 (30/10/2026): il Lottatore para a mani nude fin dal I Grado — Parata 12 / 17 / 20 / 22 / 25 / 27, Schivata 12 / 15 / 18 / 20 / 23 / 25, EQ una sola volta; nessuna Parata manca più', () => {
+  const l = dati.png_generici.classi.lottatore;
+  assert.deepEqual(GRADI.map((g) => l.risorse[g].parata), [12, 17, 20, 22, 25, 27]);
+  assert.deepEqual(GRADI.map((g) => l.risorse[g].schivata), [12, 15, 18, 20, 23, 25]);
+  const r = profiloPng({ classe: 'lottatore', grado: 'I', eq: 0 }, dati);
+  assert.equal(r.nemico.difese, 12);
+  assert.doesNotMatch(r.avvisi.join(' '), /A.206|Parata è «—»/);
+  assert.equal(profiloPng({ classe: 'lottatore', grado: 'II', eq: 2 }, dati).nemico.difese, 17 + 2);
+  assert.equal(l.talenti_classe.II.nome, 'Parata a Mani Nude Migliorata');
+  for (const c of Object.values(dati.png_generici.classi)) for (const g of GRADI) assert.ok(Number.isInteger(c.risorse[g].parata), `${c.nome} ${g}`);
 });
 
 test('i dati coincidono con il manuale: rileggere il Word dà esattamente data/png_generici.json', () => {

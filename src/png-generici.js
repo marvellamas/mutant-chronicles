@@ -59,7 +59,7 @@ export function profiloPng(scelte, dati) {
     caratteristiche: { FOR: car.FOR, DES: car.DES, COS: car.COS, INT: car.INT, SAG: car.SAG, CAR: car.CAR },
     pv: R.pv, pm: R.pm,
     ar: { totale: R.ar + eq, magica: 0 },
-    difese: (R.parata ?? R.schivata) + eq,
+    difese: R.parata + eq,
     iniziativa: iniziativaCreatura(R.ini + eq),
     movimento: { passo: D.movimento.passo, corsa: D.movimento.corsa, scatto: D.movimento.scatto },
     spazio: '1 Q',
@@ -71,11 +71,8 @@ export function profiloPng(scelte, dati) {
   };
   pr.pv = [riga(fonte, R.pv, 'EQ non modifica PV e PM massimi')];
   prov('ar', R.ar); prov('iniziativa', R.ini);
-  if (R.parata === null) {
-    // il manuale scrive «—» per la Parata (il Lottatore di I Grado non la ha): Difese = Schivata, detto, e la domanda è A.206
-    prov('difese', R.schivata, 'Parata «—» nel manuale: vale la Schivata (A.206)');
-    avvisi.push(`${c.nome} ${g} Grado: nel manuale la Parata è «—»; le Difese del nemico valgono la Schivata (${R.schivata + eq}). Da confermare con Davide (A.206).`);
-  } else prov('difese', R.parata, `Parata; Schivata ${R.schivata + eq}`);
+  // A.206 (30/10/2026): la Parata a mani nude è compresa nell’Addestramento del I Grado: ogni riga ha la sua Parata
+  prov('difese', R.parata, `Parata; Schivata ${R.schivata + eq}`);
   pr.passo = [riga(fonte, D.movimento.passo, 'EQ non modifica il Movimento')];
   pr.azioni = [riga(fonte, R.ap, 'EQ non modifica le Azioni')];
   for (const k of ['tempra', 'riflessi', 'volonta', 'magia']) prov(`salvezze.${k}`, S[k]);

@@ -64,6 +64,7 @@ export const ARGOMENTI = {
   'salva-sessione.mjs': ['radice', 'config'],
   'migra-talenti.mjs': ['applica', 'ripristina', 'stato', 'cartella', 'porta', 'salvataggi', 'su'],
   'pulizia-personaggi.mjs': ['cartella', 'sposta', 'su'],
+  'migra-parata.mjs': ['cartella', 'scrivi', 'backup', 'dati-reali'],
   'dati-locali.mjs': ['radice'],
   'esito-aggiornamento.mjs': ['radice'],
   'riavvia.mjs': ['avvia', 'porta', 'radice', 'senza-avvio'],

@@ -1172,6 +1172,13 @@ function validaClassi(c, nomiAddestramenti, nomiAbilita, macrofamiglie, regole, 
       if (!isTesto(t?.nome) || !isTesto(t?.testo)) err(F, `${k}.${kt}`, 'servono "nome" e "testo"');
     });
     scelta.forEach((t, j) => {
+      // A.206: un Talento rinominato dal manuale conserva i nomi di prima; non devono coincidere con il nome di un altro Talento
+      if (t?.nomi_precedenti !== undefined) {
+        const altri = new Set([...fissi, ...scelta].filter((u) => u !== t).map((u) => u?.nome));
+        if (!Array.isArray(t.nomi_precedenti) || !t.nomi_precedenti.length || t.nomi_precedenti.some((n) => !isTesto(n) || altri.has(n) || n === t.nome)) {
+          err(F, `${k}.talenti_a_scelta[${j}].nomi_precedenti`, 'serve un elenco di nomi diversi dal nome attuale e dai nomi degli altri Talenti della Classe');
+        }
+      }
       const s = t?.specializzazione;
       if (!isTodo(s) && s !== SPECIALIZZAZIONE_COMUNE && !spec.includes(s)) {
         err(F, `${k}.talenti_a_scelta[${j}].specializzazione`, `"${s}" non è una Specializzazione della Classe né "${SPECIALIZZAZIONE_COMUNE}"`);

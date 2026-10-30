@@ -136,19 +136,42 @@ export function leggiClasse(righe, nome, categoria) {
   return c;
 }
 
+// Le risposte di Davide valgono più del manuale (docs/risposte-master.md): si applicano dopo la lettura del testo.
+// A.206 (30/10/2026): la Parata a Mani Nude è compresa nell'Addestramento al Combattimento Senz'Armi del I Grado; i VA di
+// Parata a mani nude per i Gradi I–VI sono 12 / 17 / 20 / 22 / 25 / 27 (Guardia e +2 della Parata Migliorata già inclusi);
+// al II Grado la scelta diventa «Parata a Mani Nude Migliorata»; la Schivata resta 12 / 15 / 18 / 20 / 23 / 25.
+export const PARATA_MANI_NUDE_A206 = { I: 12, II: 17, III: 20, IV: 22, V: 25, VI: 27 };
+export function conRisposteMaster(dati) {
+  const l = dati.classi?.lottatore;
+  if (!l) return dati;
+  const schivata = { I: 12, II: 15, III: 18, IV: 20, V: 23, VI: 25 };
+  for (const g of Object.keys(PARATA_MANI_NUDE_A206)) {
+    if (l.risorse[g].schivata !== schivata[g]) throw new Error(`Lottatore ${g}: la Schivata del manuale non è più ${schivata[g]}: rivedere A.206`);
+    l.risorse[g].parata = PARATA_MANI_NUDE_A206[g];
+  }
+  const guardia = l.talenti_classe.I;
+  guardia.testo = guardia.testo.replace(' Non concede da solo una Parata a mani nude.', ' La Parata a Mani Nude è compresa nell’Addestramento al Combattimento Senz’Armi del I Grado (qualunque Disciplina).');
+  l.talenti_classe.II = {
+    nome: 'Parata a Mani Nude Migliorata',
+    testo: 'Ottiene +2 VA alle Prove di Difese effettuate per Parare a mani nude, sommabile alla Disciplina Guardia; non vale per le Parate col bastone, né per Schivata, Elusione, Parate con armi o scudi. Il modello di I Grado para a mani nude con VA 12 (EQ Comune) senza alcun Talento a parte.',
+  };
+  l.risposte_master = ['A.206 (30/10/2026): Parata a Mani Nude compresa nell’Addestramento al Combattimento Senz’Armi; VA di Parata a mani nude 12 / 17 / 20 / 22 / 25 / 27 (EQ una volta sola); Schivata 12 / 15 / 18 / 20 / 23 / 25.'];
+  return dati;
+}
+
 export function importaPng(testo) {
   const righe = leggiRigheTesto(testo);
   const comuni = leggiRegole(righe);
   const classi = {};
   for (const [categoria, lista] of Object.entries(CLASSI)) for (const nome of lista) classi[slug(nome)] = leggiClasse(righe, nome, categoria);
-  return {
+  return conRisposteMaster({
     versione_manuale: 'Mostri 0.46 (Word del 27/10/2026); Direttore 0.45 §9.6',
     fonte: 'Manuale dei Mostri 0.46, cap. 8 «PNG generici Classe Grado ed EQ»; Manuale del Direttore 0.45 §9.6. Dieci dei venticinque modelli previsti: gli altri quindici (Lavoratori, Studiosi, Taumaturghi) non sono ancora compilati nel manuale.',
     gradi: GRADI,
     movimento: { passo: 6, corsa: 12, scatto: 18, nota: 'Movimento: 6/12/18 Q Base (Agente, tabella delle risorse); una AM per Round.' },
     ...comuni,
     classi,
-  };
+  });
 }
 
 // ---------- uso da riga di comando ----------

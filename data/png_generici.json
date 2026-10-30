@@ -4260,7 +4260,7 @@
           "ini": 2,
           "ap": 1,
           "ar": 1,
-          "parata": null,
+          "parata": 12,
           "schivata": 12
         },
         "II": {
@@ -4269,7 +4269,7 @@
           "ini": 2,
           "ap": 1,
           "ar": 1,
-          "parata": 15,
+          "parata": 17,
           "schivata": 15
         },
         "III": {
@@ -4278,7 +4278,7 @@
           "ini": 3,
           "ap": 1,
           "ar": 1,
-          "parata": 18,
+          "parata": 20,
           "schivata": 18
         },
         "IV": {
@@ -4287,7 +4287,7 @@
           "ini": 5,
           "ap": 2,
           "ar": 1,
-          "parata": 20,
+          "parata": 22,
           "schivata": 20
         },
         "V": {
@@ -4296,7 +4296,7 @@
           "ini": 5,
           "ap": 2,
           "ar": 1,
-          "parata": 23,
+          "parata": 25,
           "schivata": 23
         },
         "VI": {
@@ -4305,7 +4305,7 @@
           "ini": 5,
           "ap": 2,
           "ar": 1,
-          "parata": 25,
+          "parata": 27,
           "schivata": 25
         }
       },
@@ -4658,11 +4658,11 @@
       "talenti_classe": {
         "I": {
           "nome": "Disciplina Guardia",
-          "testo": "Il danno senz’armi è 1d6 ai Gradi I–II, 1d8 ai III–IV, 1d10 ai V–VI. Difese contro Ravvicinato ottiene rispettivamente +1, +2, +3. Il bonus è già incluso nelle Difese ravvicinate della tabella. Non concede da solo una Parata a mani nude."
+          "testo": "Il danno senz’armi è 1d6 ai Gradi I–II, 1d8 ai III–IV, 1d10 ai V–VI. Difese contro Ravvicinato ottiene rispettivamente +1, +2, +3. Il bonus è già incluso nelle Difese ravvicinate della tabella. La Parata a Mani Nude è compresa nell’Addestramento al Combattimento Senz’Armi del I Grado (qualunque Disciplina)."
         },
         "II": {
-          "nome": "Parata a Mani Nude",
-          "testo": "Con almeno una mano libera può parare un attacco ravvicinato fisicamente contrastabile, spendendo 1 AP disponibile anche fuori Iniziativa. Successo dimezza per eccesso prima di AR, Magistrale annulla. Esclusi distanza, Area e attacchi imparabili. Parata Istintiva permette il suo uso entro il medesimo limite della Parata gratuita."
+          "nome": "Parata a Mani Nude Migliorata",
+          "testo": "Ottiene +2 VA alle Prove di Difese effettuate per Parare a mani nude, sommabile alla Disciplina Guardia; non vale per le Parate col bastone, né per Schivata, Elusione, Parate con armi o scudi. Il modello di I Grado para a mani nude con VA 12 (EQ Comune) senza alcun Talento a parte."
         },
         "III": {
           "nome": "Raffica di Colpi",
@@ -4684,7 +4684,10 @@
       "comportamento": "Sfrutta Parata e Schivata e sceglie fra un attacco normale, Raffica di Colpi o Spazzata. Punto Debole richiede preparazione e non si combina con le altre Manovre offensive.",
       "strumenti": "Strumenti. Corredo operativo generico adatto alla Classe, senza bonus aggiuntivi ai VA. Le capacità che richiedono materiali, accessi o coperture necessitano comunque di condizioni reali.",
       "fonte_classe": "Fonte della Classe. Giocatore v0.49 §3.5.5. L’equipaggiamento astratto e la matrice EQ sono propri di questi modelli PNG.",
-      "costruzione": "Costruzione. Incrementi automatici delle cinque Abilità di Classe e sette punti liberi a ogni Grado; i limiti sono applicati a ogni assegnazione. Priorità degli aumenti di Caratteristica: FOR, DES, COS, SAG. I dadi dei PV e la selezione dei Talenti sono fissati per rendere il modello pronto."
+      "costruzione": "Costruzione. Incrementi automatici delle cinque Abilità di Classe e sette punti liberi a ogni Grado; i limiti sono applicati a ogni assegnazione. Priorità degli aumenti di Caratteristica: FOR, DES, COS, SAG. I dadi dei PV e la selezione dei Talenti sono fissati per rendere il modello pronto.",
+      "risposte_master": [
+        "A.206 (30/10/2026): Parata a Mani Nude compresa nell’Addestramento al Combattimento Senz’Armi; VA di Parata a mani nude 12 / 17 / 20 / 22 / 25 / 27 (EQ una volta sola); Schivata 12 / 15 / 18 / 20 / 23 / 25."
+      ]
     },
     "soldato": {
       "nome": "Soldato",

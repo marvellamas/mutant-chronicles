@@ -1954,7 +1954,7 @@ Il riepilogo serve alla consultazione e non sostituisce le descrizioni. I testi 
 | Artigliere | Ottimizzare Gittata; Ottimizzare Proiettili; Armaiolo da Campo | Postura d’Assedio; Raffica Estesa; Occhio del Tiratore; Bersaglio Designato; Fuoco di Disturbo |
 | Assaltatore | Mantenere la Posizione; Assalto Armato; Presidio di Combattimento | Carica Brutale; Spinta d’Impatto; Scudo Aggressivo; Interposizione Armata; Coordinazione Offensiva |
 | Incursore | Movimento Tattico; Rapidità Operativa; Colpisci e Sparisci | Attacco Silenzioso; Punto Vitale; Carica Ottimizzata; Sabotaggio Rapido; Piano di Riserva |
-| Lottatore | Addestramento al Combattimento Senz’Armi; Raffica di Colpi; Combattimento Multiplo | Punto Debole; Padronanza della Disciplina; Risorse Interiori; Tecniche Interiori Supplementari; Parata a Mani Nude |
+| Lottatore | Addestramento al Combattimento Senz’Armi; Raffica di Colpi; Combattimento Multiplo | Punto Debole; Padronanza della Disciplina; Risorse Interiori; Tecniche Interiori Supplementari; Parata a Mani Nude Migliorata |
 | Soldato | Addestramento Militare; Coordinamento di Squadra; Disciplina di Ferro | Supporto d’Attacco; Supporto di Difesa; Supporto Logistico; Base Operativa; Supporto Avanzato |
 | Agricoltore | Addestramento Rurale; Risorse del Territorio; Autosufficienza | Coltivatore Esperto; Meccanizzazione Agricola; Allevatore Esperto; Caccia, Pesca e Raccolta; Conservazione delle Provviste |
 | Artigiano | Addestramento di Bottega; Lavoro a Regola d’Arte; Capolavoro | Armaiolo; Corazzaio; Artefice di Precisione; Maestro Manifattore; Restauratore e Falsario |
@@ -2245,6 +2245,12 @@ Addestramento: Combattente. Specializzazioni: Marziale e Spirituale. Gli indiriz
 
 **I Grado — Addestramento al Combattimento Senz’Armi.** Il Lottatore sceglie permanentemente una Disciplina: Potenza, Rapidità, Controllo o Guardia. Il danno dei suoi attacchi senz’armi dipende dalla Disciplina e dal Grado nella Classe.
 
+Parata a Mani Nude. Può utilizzare Difese per parare attacchi ravvicinati senza impugnare armi o scudi, purché disponga di almeno una mano libera e possa fisicamente intervenire sul colpo.
+
+La Parata richiede un’Azione Principale disponibile, utilizzabile anche fuori dalla propria Iniziativa, e segue le normali regole: il successo dimezza per eccesso il danno prima dell’Armatura; il Successo Magistrale annulla il danno. Con un Fallimento Maldestro la Parata fallisce e il personaggio subisce −2 VA a tutte le Prove fino all’arrivo della propria Iniziativa successiva.
+
+Non permette di parare attacchi a distanza, effetti ad Area o attacchi normalmente imparabili. Se possiede Parata Istintiva, può utilizzare anche a mani nude la Parata gratuita concessa una volta per Round, entro lo stesso limite complessivo. Non richiede PM.
+
 | Disciplina | Gradi I–II | Gradi III–IV | Gradi V–VI |
 | :---: | :---: | :---: | :---: |
 | Potenza | 1d8 | 1d10 | 1d12 |
@@ -2296,11 +2302,9 @@ Le Tecniche Interiori consumano PM personali, ma non sono Incantesimi. Risorse I
 
 A Umanità 0 il personaggio non può utilizzare Risorse Interiori o le Tecniche che ne dipendono, salvo un effetto che superi espressamente questo limite (§5.21).
 
-**Comune — Parata a Mani Nude.** Può utilizzare Difese per parare attacchi ravvicinati senza impugnare armi o scudi, purché disponga di almeno una mano libera e possa fisicamente intervenire sul colpo.
+## **Comune — Parata a Mani Nude Migliorata. Ottiene \+2 VA alle Prove di Difese effettuate per Parare a mani nude. Il bonus si somma a quello della Disciplina Guardia quando applicabile.**
 
-La Parata richiede un’Azione Principale disponibile, utilizzabile anche fuori dalla propria Iniziativa, e segue le normali regole: il successo dimezza per eccesso il danno prima dell’Armatura; il Successo Magistrale annulla il danno. Con un Fallimento Maldestro la Parata fallisce e il personaggio subisce −2 VA a tutte le Prove fino all’arrivo della propria Iniziativa successiva.
-
-Non permette di parare attacchi a distanza, effetti ad Area o attacchi normalmente imparabili. Se possiede Parata Istintiva, può utilizzare anche a mani nude la Parata gratuita concessa una volta per Round, entro lo stesso limite complessivo. Non richiede PM.
+## **Restano i requisiti, i costi e gli effetti ordinari della Parata a Mani Nude acquisita al I Grado; il Talento non richiede PM.**
 
 ## **3.5.6 Soldato**
 

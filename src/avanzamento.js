@@ -31,6 +31,16 @@ import { erroriParametriTalenti } from './calc.js';
 import { avvisoIncantesimo } from './quote-incantesimi.js';
 import { competenzaDi, baseIniziale, limiteAbilita, vaPersonale, puntiUtili } from './competenze.js';
 
+/**
+ * Il Talento a scelta di una Classe dal nome salvato nel file. Un Talento rinominato dal manuale conserva i nomi di prima
+ * (nomi_precedenti): le scelte già fatte si riconducono al nuovo senza toccare il file del PG (A.206, 30/10/2026:
+ * «Parata a Mani Nude» → «Parata a Mani Nude Migliorata»).
+ */
+export function talentoAScelta(def, nome) {
+  if (!nome) return undefined;
+  return def.talenti_a_scelta.find((x) => x.nome === nome) ?? def.talenti_a_scelta.find((x) => (x.nomi_precedenti ?? []).includes(nome));
+}
+
 export const VERSIONE_PERSONAGGIO = 2;
 
 const trova = (lista, nome) => lista.find((x) => x.nome === nome);
@@ -472,7 +482,7 @@ function applicaVoce(prima, voce, dati) {
     const iFisso = av.gradi_talento_fisso.indexOf(c.grado);
     if (iFisso >= 0 && def.talenti_fissi[iFisso]) c.talenti.push({ grado: c.grado, ...def.talenti_fissi[iFisso], scelto: false, ...sceltaParametro(def.talenti_fissi[iFisso], v.parametriTalenti) });
     else if (av.gradi_talento_a_scelta.includes(c.grado)) {
-      const t = def.talenti_a_scelta.find((x) => x.nome === v.talentoClasse);
+      const t = talentoAScelta(def, v.talentoClasse);
       if (t) c.talenti.push({ grado: c.grado, ...t, scelto: true });
     }
     // §3.1 e §8.3 (29/09): il +1 di Classe si registra sempre, anche oltre il limite: la parte
@@ -677,7 +687,7 @@ function controllaVoce(prima, voce, dati) {
       for (const e of erroriParametriTalenti(iF >= 0 && def.talenti_fissi[iF] ? [def.talenti_fissi[iF]] : [], v.parametriTalenti)) err(e.campo, e.problema, e.tipo);
       // §3.2: Talento a scelta ai Gradi II, IV, VI, ciascuno una volta
       if (av.gradi_talento_a_scelta.includes(nuovoGrado)) {
-        const t = def.talenti_a_scelta.find((x) => x.nome === v.talentoClasse);
+        const t = talentoAScelta(def, v.talentoClasse);
         if (!v.talentoClasse) err('talentoClasse', `al Grado ${GRADI_ROMANI[nuovoGrado]} di ${def.nome} si sceglie un Talento fra ${def.talenti_a_scelta.map((x) => x.nome).join(', ')}`, 'incompleto');
         else if (!t) err('talentoClasse', `"${v.talentoClasse}" non è fra i Talenti a scelta di ${def.nome}`);
         else {
