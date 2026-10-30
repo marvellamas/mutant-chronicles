@@ -10,10 +10,10 @@
 // pannello. Niente automazioni al tavolo: si usa a fine partita.
 import { h } from './dom.js';
 import { avviso, avvisoErrore } from './avvisi.js';
-import { chiedi } from './finestrella.js';
+import { chiedi, chiediTesto } from './finestrella.js';
 import { registraDiretta } from '../correzioni-master.js';
 import {
-  calcolaPartita, passaggiDiLivello, frasePassaggio, haPremio, premiDellaPartita, premiPerAtto, pxIncontro, correttivoPg, deltaAssegnazione, partitaAssegnata, premioGiaDato, riepilogo, csvRiepilogo, componentiGiocatore, presentiNella,
+  calcolaPartita, passaggiDiLivello, frasePassaggio, haPremio, premiDellaPartita, premiPerAtto, pxIncontro, correttivoPg, deltaAssegnazione, partitaAssegnata, premioGiaDato, premioBloccato, rettificaPremio, riepilogo, csvRiepilogo, componentiGiocatore, presentiNella,
 } from '../px-partita.js';
 import { idStabileDiFile } from '../cartella.js';
 
@@ -158,13 +158,28 @@ function vistaPartita(ctx, st, az, salva, partita) {
     h('div', { class: 'px-campo px-premio-azioni' }, h('span', {}, `Premio di fine Atto ${partita.atto} (${fmt(premioDi(st, partita.atto))} PX)`),
       h('div', { class: 'riga-azioni' },
         h('button', { class: 'btn small', title: 'Dà il premio a tutti i personaggi presenti in questa partita', onclick: () => {
-          const m = premiDellaPartita(partita); for (const [id, v] of Object.entries(partita.partecipanti)) if (v?.presente) m[id] = true; partita.premiAtto = m; delete partita.premioAtto; salva();
+          const m = premiDellaPartita(partita); for (const [id, v] of Object.entries(partita.partecipanti)) if (v?.presente && !premioBloccato(partita, id, db.partite)) m[id] = true; partita.premiAtto = m; delete partita.premioAtto; salva();
         } }, 'A tutti i presenti'),
         h('button', { class: 'btn small ghost', onclick: () => { partita.premiAtto = {}; delete partita.premioAtto; salva(); } }, 'A nessuno')),
       h('span', { class: 'nota' }, 'Il premio è dell’Atto: lo si può dare anche a chi oggi manca (casella «Premio» in tabella).')));
-  const giaDatoA = premioGiaDato(partita, db.partite).map((id) => db.giocatori.find((g) => g.id === id)?.pg || id);
+  // A.197 (30/10/2026): il premio di fine Atto non si duplica. Se per un personaggio c'è già in un'altra partita dello stesso Atto
+  // la casella è bloccata; per correggere un'assegnazione sbagliata c'è la rettifica, con il motivo (resta nel registro).
+  const nomeGiocatore = (id) => db.giocatori.find((g) => g.id === id)?.pg || id;
+  const giaDatoA = premioGiaDato(partita, db.partite);
+  const rettifica = async (id) => {
+    const altre = db.partite.filter((m) => m.id !== partita.id && m.atto === partita.atto && haPremio(m, id));
+    for (const altra of altre) {
+      const motivo = await chiediTesto({ titolo: `Rettifica del premio dell'Atto ${partita.atto} di ${nomeGiocatore(id)}`, etichetta: `Perché il premio dato in «${altra.titolo || 'partita'}» va tolto (resta nel registro)`, conferma: 'Togli il premio da lì', massimo: 300 });
+      if (!motivo || !motivo.trim()) return;
+      try { Object.assign(db, rettificaPremio(db, { atto: partita.atto, id, dallaPartitaId: altra.id, motivo })); } catch (e) { avvisoErrore(e.message ?? String(e)); return; }
+      avviso(altra.statoAssegnazione === 'assegnata' ? `Premio tolto da «${altra.titolo || 'partita'}»: era già assegnata, per correggere i PX serve «Ri-assegna (correzione)» su quella partita.` : `Premio tolto da «${altra.titolo || 'partita'}».`, { tipo: 'info' });
+    }
+    salva();
+  };
   const avvisoPremio = giaDatoA.length
-    ? h('p', { class: 'riquadro attenzione' }, `Il premio dell’Atto ${partita.atto} risulta già dato a ${giaDatoA.join(', ')} in un’altra partita: va dato una sola volta per personaggio (decide il Direttore).`) : null;
+    ? h('div', { class: 'riquadro attenzione', role: 'alert' },
+      h('p', {}, `Il premio dell’Atto ${partita.atto} è già stato dato a ${giaDatoA.map(nomeGiocatore).join(', ')} in un’altra partita: non si dà due volte, la casella è bloccata. Per correggere un’assegnazione sbagliata usa la rettifica (con il motivo). Un premio in più deciso da te va nel «Bonus».`),
+      h('div', { class: 'riga-azioni' }, ...giaDatoA.map((id) => h('button', { class: 'btn small ghost', onclick: () => rettifica(id) }, `Rettifica: ${nomeGiocatore(id)}`)))) : null;
 
   const calc = calcolaPartita(partita, st.pxGiocatori, p(st));
   const passaggi = Object.fromEntries(passaggiDiLivello(partita, st.pxGiocatori, p(st)).map((x) => [x.id, x]));
@@ -177,6 +192,7 @@ function vistaPartita(ctx, st, az, salva, partita) {
       oninput: (e) => { part[chiave] = Number(e.target.value); az.salva(); az.ridisegna(); } });
     const finaleVal = partita.finali?.[g.id];
     const premio = haPremio(partita, g.id);
+    const bloccato = !premio && premioBloccato(partita, g.id, db.partite);
     const conta = part.presente || premio;
     return h('tr', { class: conta ? '' : 'px-assente' },
       h('td', {}, h('label', { class: 'px-check' }, h('input', { type: 'checkbox', checked: !!part.presente, onchange: (e) => { part.presente = e.target.checked; az.salva(); az.ridisegna(); } }), h('span', {}, g.pg || g.id)),
@@ -188,8 +204,9 @@ function vistaPartita(ctx, st, az, salva, partita) {
       h('td', {}, part.presente ? voto('interpretazione') : '—'),
       h('td', {}, part.presente ? voto('contributo') : '—'),
       h('td', {}, part.presente ? h('input', { type: 'number', value: part.eccezionale, class: 'px-voto', oninput: (e) => { part.eccezionale = Number(e.target.value); az.salva(); az.ridisegna(); } }) : '—'),
-      h('td', {}, h('input', { type: 'checkbox', class: 'px-premio', checked: premio, 'aria-label': `Premio di fine Atto per ${g.pg || g.id}${part.presente ? '' : ' (assente)'}`,
-        onchange: (e) => { const m = premiDellaPartita(partita); if (e.target.checked) m[g.id] = true; else delete m[g.id]; partita.premiAtto = m; delete partita.premioAtto; salva(); } })),
+      h('td', {}, h('input', { type: 'checkbox', class: 'px-premio', checked: premio, disabled: bloccato, title: bloccato ? `Già dato in un’altra partita dell’Atto ${partita.atto}: non si dà due volte` : undefined, 'aria-label': `Premio di fine Atto per ${g.pg || g.id}${part.presente ? '' : ' (assente)'}`,
+        onchange: (e) => { const m = premiDellaPartita(partita); if (e.target.checked) m[g.id] = true; else delete m[g.id]; partita.premiAtto = m; delete partita.premioAtto; salva(); } }),
+        bloccato ? h('button', { class: 'btn small ghost px-rettifica', title: 'Già dato in un’altra partita: rettifica tracciata, con il motivo', onclick: () => rettifica(g.id) }, '↩') : null),
       h('td', { class: 'px-comp', title: `voti ${fmt(c.pxVoti)} · bonus ${fmt(c.pxBonus)} · incontri ${fmt(c.pxIncontri)} · premio ${fmt(c.premio)}` }, fmt(c.totaleSuggerito)),
       h('td', {}, conta ? h('input', { type: 'number', class: 'px-finale', value: Number.isFinite(Number(finaleVal)) ? finaleVal : c.totaleSuggerito,
         oninput: (e) => { partita.finali = { ...partita.finali, [g.id]: Number(e.target.value) }; az.salva(); az.ridisegna(); } }) : '—',

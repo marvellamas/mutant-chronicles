@@ -131,6 +131,7 @@
 import { proteggiBlocchiMaster } from './src/correzioni-master.js';
 import { controllaTalentiDaTablet } from './src/talenti-tablet.js';
 import { controllaLivelloDaTablet } from './src/livello-px.js';
+import { nuoviPremiDoppi } from './src/px-partita.js';
 import { createServer } from 'node:http';
 import { readFileSync, createReadStream } from 'node:fs';
 import { readFile, writeFile, readdir, stat, mkdir, rename, copyFile, unlink, constants } from 'node:fs/promises';
@@ -1658,12 +1659,23 @@ async function apiPx(req, res, px, master) {
     try { d = JSON.parse((await leggiCorpo(req)).toString('utf8')); } catch (e) { return json(res, 400, { errore: e.message }); }
     if (!d || typeof d !== 'object' || Array.isArray(d)) return json(res, 400, { errore: 'il corpo è l’oggetto dei PX della partita' });
     await mkdir(px, { recursive: true });
+    let esito = null;
     await inCoda(dove, async () => {
+      // A.197 (30/10/2026): il premio di fine Atto non si duplica — blocco, anche da un'altra partita. Un doppione già
+      // presente nell'archivio resta finché non lo si corregge con la rettifica; non ne entrano di nuovi.
+      let vecchio = null;
+      try { vecchio = JSON.parse(await readFile(dove, 'utf8')); } catch { /* archivio nuovo */ }
+      const doppi = nuoviPremiDoppi(d.partite ?? [], vecchio?.partite ?? []);
+      if (doppi.length) { esito = doppi; return; }
       // 25/10/2026: prima di sovrascrivere, una copia di quello che c'è (al massimo una al minuto, le ultime 60):
       // l'archivio dei PX è scritto a mano dal Direttore e un salvataggio sbagliato non deve poterlo perdere
       try { await copiaStoricaPx(px, dove); } catch (e) { console.warn(`Copia storica dei PX non riuscita: ${e.message}`); }
       await scriviJson(dove, d);
     });
+    if (esito) {
+      const nomi = esito.map((x) => `${x.id} (Atto ${x.atto}: ${x.partite.map((p) => p.titolo || p.id).join(' e ')})`).join('; ');
+      return json(res, 409, { errore: `Il premio di fine Atto è già stato dato a ${nomi}: non si dà due volte. Per correggere un'assegnazione sbagliata serve la rettifica, con il motivo.`, doppi: esito });
+    }
     return json(res, 200, d);
   }
   return json(res, 405, { errore: 'metodo non ammesso' });

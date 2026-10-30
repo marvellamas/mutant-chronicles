@@ -165,6 +165,52 @@ export function premioGiaDato(partita, partite) {
 }
 
 /**
+ * A.197 (risposta di Davide del 30/10/2026): il premio di fine Atto NON si duplica. La seconda assegnazione dello stesso
+ * premio allo stesso personaggio, nello stesso Atto, è bloccata anche se si tenta da un'altra partita (prima: avviso, A.170).
+ * È un'eccezione dichiarata al principio «l'app avvisa, non blocca»: la via d'uscita è la rettifica tracciata con il motivo
+ * (`rettificaPremio`), non un permesso. Un premio aggiuntivo deciso dal Direttore si registra a parte (colonna «Bonus»),
+ * senza toccare il premio di fine Atto. Il premio spetta anche agli assenti (`haPremio`).
+ *
+ * I premi dati più di una volta: [{ atto, id, partite: [{ id, titolo }] }].
+ */
+export function premiDoppi(partite) {
+  const out = [];
+  for (const [atto, perGiocatore] of Object.entries(premiPerAtto(partite))) {
+    for (const [id, dati] of Object.entries(perGiocatore)) {
+      const ids = [...new Set(dati.map((x) => x.partitaId))];
+      if (ids.length > 1) out.push({ atto, id, partite: ids.map((pid) => ({ id: pid, titolo: dati.find((x) => x.partitaId === pid)?.titolo ?? '' })) });
+    }
+  }
+  return out;
+}
+
+/** I premi doppi di `nuove` che non lo erano già in `vecchie`: quelli che un salvataggio non deve far entrare. */
+export function nuoviPremiDoppi(nuove, vecchie) {
+  const gia = new Set(premiDoppi(vecchie).map((d) => `${d.atto}|${d.id}`));
+  return premiDoppi(nuove).filter((d) => !gia.has(`${d.atto}|${d.id}`));
+}
+
+/** Per questo giocatore il premio dell'Atto della partita è già in un'altra partita dello stesso Atto: non si può dare di nuovo. */
+export const premioBloccato = (partita, id, partite) => premioGiaDato({ ...partita, premiAtto: { [id]: true }, premioAtto: undefined }, partite).includes(id);
+
+/**
+ * La rettifica tracciata: toglie il premio di fine Atto di un giocatore da una partita (quella in cui era stato dato per
+ * errore) e lo scrive nel registro `rettifichePremi` dell'archivio, con data e motivo (obbligatorio). Non muta: restituisce
+ * l'archivio nuovo. Se la partita era già assegnata i PX non cambiano da soli: serve «Ri-assegna (correzione)».
+ */
+export function rettificaPremio(db, { atto, id, dallaPartitaId, motivo, quando = new Date().toISOString() }) {
+  const m = String(motivo ?? '').trim();
+  if (!m) throw new Error('la rettifica ha bisogno del motivo');
+  const partite = (db?.partite ?? []).map((x) => ({ ...x }));
+  const p = partite.find((x) => x.id === dallaPartitaId);
+  if (!p) throw new Error('partita non trovata');
+  if (p.atto !== atto || !haPremio(p, id)) throw new Error('in quella partita il premio di quell’Atto non c’è');
+  const premi = premiDellaPartita(p); delete premi[id]; p.premiAtto = premi; delete p.premioAtto;
+  const riga = { id: `rp-${quando}-${id}`, quando, atto, pg: id, partitaId: p.id, titolo: p.titolo ?? '', motivo: m, daRiassegnare: p.statoAssegnazione === 'assegnata' };
+  return { ...db, partite, rettifichePremi: [...(db?.rettifichePremi ?? []), riga] };
+}
+
+/**
  * Componenti e totale suggerito di un giocatore. `pxPg` sono i PX attuali del suo PG (per Titolo e livello).
  * Non assegna nulla.
  */
