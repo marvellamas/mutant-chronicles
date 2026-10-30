@@ -32,10 +32,12 @@ test('A.63 esoscheletri: NEC Rosso di formato dedicato in ore, al tavolo come ri
   assert.deepEqual([x.unita, x.massimo], ['ore', 8]);
 });
 
-test('A.64 moduli IAS: NEC Blu IAS da 1.000 Lx, 20 cariche da 50 Lx (Power Blink 2)', () => {
+test('A.64 moduli IAS (0.68): 20 cariche, ricambio 1.000 cr, 10 cr per carica; niente Lx; raccordo ai formati da completare', () => {
   for (const id of ['ias3100-generatore-blink', 'ias3200-imbracatura-antigravita', 'ias3300-mirrorshard', 'ias3400-disturbatore-metafisico', 'smorzatore-acustico-silent']) {
     const a = r(`corredi_dispositivi:${id}`).alimentazione;
-    assert.deepEqual([a.usi, a.lx_per_uso, a.usi * a.lx_per_uso], [20, 50, 1000], id);
+    assert.deepEqual([a.usi, a.lx_per_uso, a.da_definire?.length], [20, undefined, 1], id);
+    assert.match(a.descrizione, /20 cariche tecnologiche/);
+    assert.match(a.descrizione, /10 cr per carica, 200 cr da vuota/);
     nessunTodo(`corredi_dispositivi:${id}`, 'A.64');
   }
   assert.match(r('corredi_dispositivi:ias3100-generatore-blink').alimentazione.unita_usi, /Power Blink 2/);
@@ -69,20 +71,20 @@ test('A.65 dotazione: Corredo agricolo Allevamento (2 kg, 200 cr) e strumento mu
 
 test('A.66 Corredo da cucina: 30 minuti, NEC Rosso, 10 preparazioni (dall’Equipaggiamento 0.13 senza Lx)', () => {
   const c = r('esplorazione:corredo-da-cucina-da-campo');
-  assert.deepEqual([c.alimentazione.nec, c.alimentazione.usi, c.alimentazione.unita_usi, c.alimentazione.lx_per_uso], ['nec:rosso-standard', 10, 'preparazioni', undefined]);
+  assert.deepEqual([c.alimentazione.nec, c.alimentazione.usi, c.alimentazione.unita_usi, c.alimentazione.lx_per_uso], ['nec:nec-rosso-10', 10, 'cariche (preparazioni)', undefined]);
   assert.match(c.decisione, /30 minuti/);
   nessunTodo('esplorazione:corredo-da-cucina-da-campo', 'A.66');
 });
 
-test('A.67 Modulo Blu: una voce sola anche per il Gehemmapuker; migrazione del vecchio pacco; niente travaso fra NEC', () => {
-  assert.equal(r('munizioni:pacco-nec-gehemmapuker'), undefined);
+test('A.67 (0.68): il pacco del Gehemmapuker è un pacco Rosso da 50 cariche; migrazione del vecchio Modulo Blu; niente travaso fra NEC senza trasformatore', () => {
+  assert.equal(r('munizioni:pacco-nec-gehemmapuker').cella.capacita, 50);
   const g = r('armi_distanza_corporative:gehemmapuker');
   assert.equal(modoRicarica(g, dati, cat).modo, 'cella');
-  const info = infoRicarica([voce('g', 'armi_distanza_corporative:gehemmapuker', 'impugnata'), voce('m', 'nec:modulo-blu')], dati);
+  const info = infoRicarica([voce('g', 'armi_distanza_corporative:gehemmapuker', 'impugnata'), voce('m', 'munizioni:pacco-nec-gehemmapuker')], dati);
   assert.deepEqual(info.g.scorte.map((s) => s.uid), ['m']);
-  // un salvataggio con il vecchio pacco riceve il Modulo Blu
-  const s = normalizza({ ...MISHIMA_AGENTE, equipaggiamento: [voce('p', 'munizioni:pacco-nec-gehemmapuker', null, { quantita: 2 })] }, dati).scelte;
-  assert.deepEqual([s.equipaggiamento[0].rif, s.equipaggiamento[0].quantita], ['nec:modulo-blu', 2]);
+  // un salvataggio con il vecchio Modulo Blu riceve il pacco del Gehemmapuker (index.json → rif_sostituiti)
+  const s = normalizza({ ...MISHIMA_AGENTE, equipaggiamento: [voce('p', 'nec:modulo-blu', null, { quantita: 2 })] }, dati).scelte;
+  assert.deepEqual([s.equipaggiamento[0].rif, s.equipaggiamento[0].quantita], ['munizioni:pacco-nec-gehemmapuker', 2]);
   assert.equal(dati.regole.nec.travaso.ammesso, false);
 });
 

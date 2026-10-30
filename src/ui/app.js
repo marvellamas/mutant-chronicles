@@ -71,7 +71,7 @@ import { preparaStampa, preparaTab, normalizzaOpzioniStampa, versioniCompatte } 
 import { renderTab, tabFissi, ALIAS_TAB, titoloSalvataggio } from './tab.js';
 import {
   massimiSessione, allineaSessione, variaSessione, modificaSessione, stabilizzaMorente, scalaMorente, attivaArmaSessione, terminaArmaSessione, commutaContenitoreSessione, commutaStato, commutaCondizioneOggetto, commutaTalento, commutaBonusTalenti, impostaCondizioneArma, riparaOggetto, spendiPmLancio, ricaricaMatrice, attivaArtefatto, attivaTecnicaSessione, nuovoRoundSessione, terminaTecnicaSessione, usaUnaVoltaSessione, azzeraUsoSessione, nuovaSessione, convertiDistintivi, sessioneDopoLivello,
-  penalitaSessione, variaMunizioni, consumaColpi, scegliGranata, granateDiPartenza, ricaricaArma, caricaDaCarichino, preparaCarichino, variaChroma, variaIntegrita, variaNec,
+  penalitaSessione, variaMunizioni, consumaColpi, scegliGranata, granateDiPartenza, ricaricaArma, caricaDaCarichino, preparaCarichino, variaChroma, variaIntegrita, variaNec, ricaricaConTrasformatore,
 } from '../sessione.js';
 import { conOrdinale } from '../lingua.js';
 import { normalizzaCalendario, calendarioAttivo, attivaCalendario, disattivaCalendario, contaNote, fileCalendario, leggiFileCalendario, momentoCalendario } from '../calendario.js';
@@ -2368,6 +2368,8 @@ function renderSchedaInterna({ mantieniScorrimento = false } = {}) {
       integrita: (uid, delta) => cambiaSessione(variaIntegrita(stato.sessione, uid, delta, massimi)),
       // riserva di un NEC (Equipaggiamento §5.4): ore, usi o Lx
       nec: (chiave, delta) => cambiaSessione(variaNec(stato.sessione, chiave, delta, massimi)),
+      // ricarica con un trasformatore (Equipaggiamento §5.4.6): tampone, CEC di prelievo e cariche trasferite
+      trasformatore: (az) => cambiaSessione(ricaricaConTrasformatore(stato.sessione, az, massimi)),
       puntiEsperienza: (valore) => {
         stato.scelte = applicaModifica(stato.scelte, { puntiEsperienza: valore }, dati).scelte;
         persisti();

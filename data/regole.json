@@ -1824,7 +1824,7 @@
       "fonte": "E&L del 02/10/2026, decisione 14 (per-davide A.67); docs/risposte-master.md, decisione 76"
     },
     "paragrafo": "Equipaggiamento §5.4",
-    "unita": "UE",
+    "unita": "carica",
     "colori": {
       "Rosso": {
         "sigla": "UER",
@@ -1839,12 +1839,6 @@
         "impieghi": "Elettronica, sensori, comunicazioni, illuminazione e supporto vitale."
       }
     },
-    "cariche_per_ue": 10,
-    "tariffa_cr_per_ue": 10,
-    "formati_ue": {
-      "modulo": 10,
-      "banco": 100
-    },
     "elettronica_ordinaria": {
       "paragrafo": "§5.4.3",
       "testo": "Torce, comunicatori personali, mirini, visori, sensori, elettronica degli elmetti e diagnostica portatile ordinaria non richiedono conteggi energetici.",
@@ -1853,7 +1847,7 @@
     "da_convertire": {
       "domanda": "A.193",
       "testo": "riserva da convertire (A.193)",
-      "spiegazione": "La riserva salvata è in Lx; il manuale ora la conta in UE e l’equivalenza non è definita. Il valore resta nel file e si converte dopo la risposta di Davide (A.193)."
+      "spiegazione": "La riserva salvata è in Lx, in UE o in ore e il manuale ora la conta in cariche; l’equivalenza non è definita. Il valore resta nel file e si converte dopo la risposta di Davide (A.193). Una riserva salvata piena si ritrova piena."
     },
     "sostituzione": {
       "cella_o_modulo_azp": 1,
@@ -1867,56 +1861,70 @@
       "usi": [
         1
       ],
-      "lx": [
-        10,
-        100
-      ],
-      "lx_grandi": [
-        100,
-        1000
-      ],
-      "ue": [
-        1,
-        10
+      "cariche": [
+        1
       ]
     },
-    "lotto_2": {
-      "_nota": "Celle d’arma, pacchi, caricatori, trasformatori e IAS: Armamenti 0.65 §7.20.5–7.20.6, lotto 2 (docs/diff-manuali-2026-10-28.md), dopo le A.189–A.191. Fino ad allora queste voci restano in Lx con le regole qui sotto.",
-      "nec": [
-        "blu-standard",
-        "modulo-blu",
-        "stazione-per-moduli",
-        "stazione-per-banchi"
-      ],
-      "voci": [
-        "corredi_dispositivi:ias3100-generatore-blink",
-        "corredi_dispositivi:ias3200-imbracatura-antigravita",
-        "corredi_dispositivi:ias3300-mirrorshard",
-        "corredi_dispositivi:ias3400-disturbatore-metafisico",
-        "corredi_dispositivi:smorzatore-acustico-silent",
-        "armi_corporative:katana-ryujin",
-        "armi_corporative:csa-404"
-      ],
-      "file": [
-        "munizioni"
-      ],
-      "tariffa_cr_per_lx": 0.01,
-      "ricarica": {
-        "ore": 1,
-        "mezza_riserva_minuti": 30,
-        "carica_blu_ravvicinata_minuti": 12
-      },
-      "impulso_blu_lx": 50
-    },
     "frasi": [
-      "Le riserve si esprimono in Unità Energetiche Rosse, Blu o Verdi: UER, UEB e UEV.",
-      "1 UE del colore appropriato permette di ripristinare 10 cariche personali.",
+      "NEC, CEC, MEC e BEC sono accumulatori cromatici.",
+      "1 UE ripristina 10 cariche NEC.",
       "Torce, comunicatori personali, mirini, visori, sensori, elettronica degli elmetti e diagnostica portatile ordinaria non richiedono conteggi energetici.",
-      "Gli apparecchi venduti con batteria comprendono il NEC carico dichiarato: non si somma di nuovo il prezzo del ricambio.",
-      "L’energia sfusa costa 10 cr per UE, sia Rossa, Blu o Verde.",
+      "Il trasformatore personale è alimentato da una CEC dello stesso colore.",
+      "Il prelievo è consentito soltanto se nel tampone entra l’intera carica sorgente.",
       "I NEC tecnologici non richiedono Sintonizzazione."
     ],
-    "_nota": "Equipaggiamento 0.13, §5.4 (28/10/2026): riserve in Unità Energetiche per colore (UER, UEB, UEV); Modulo 10 UE, Banco 100 UE; l’elettronica personale ordinaria non si conta («alimentazione.ordinaria»). Al tavolo si segnano le ore o gli usi dei dispositivi che li hanno (verricello, utensile, tuta, riparo, fornello, postazioni medicochirurgiche) e le UE di Moduli e Banchi; le riserve salvate in Lx di un oggetto ora in UE restano nel file come «da convertire» (A.193). Catalogo in data/equipaggiamento/nec.json."
+    "_nota": "Equipaggiamento 0.22, §5.4 (30/10/2026, lotto 146; registro Revisione NEC 2.7): accumulatori NEC, CEC, MEC e BEC, cariche e non UE al tavolo; trasformatori con tampone da 100 cariche NEC; l’elettronica personale ordinaria non si conta («alimentazione.ordinaria»). Le UE restano in `ue`/`ue_per_carica` come dimensionamento. Il lotto 2 (celle e pacchi d’arma, IAS, trasformatori) è chiuso: restano «da definire» i valori elencati nei dati (campo da_definire).",
+    "formati": {
+      "nec": {
+        "cariche": [
+          1,
+          3,
+          5,
+          10
+        ],
+        "ue": [
+          0.1,
+          0.3,
+          0.5,
+          1
+        ],
+        "tariffa_cr_per_carica": 10
+      },
+      "cec": {
+        "cariche": 10,
+        "ue_per_carica": 10,
+        "tariffa_cr_per_carica": 10
+      },
+      "mec": {
+        "cariche": 10,
+        "ue_per_carica": 100,
+        "tariffa_cr_per_carica": 30
+      },
+      "bec": {
+        "cariche": 10,
+        "ue_per_carica": 1000,
+        "tariffa_cr_per_carica": 50
+      }
+    },
+    "tariffe_cr_per_carica": {
+      "nec": 10,
+      "cec": 10,
+      "mec": 30,
+      "bec": 50
+    },
+    "trasformatori": {
+      "tampone": 100,
+      "prelievo_formato": "cec",
+      "prelievo_cariche": 1,
+      "prelievo_ue": 10,
+      "minuti_per_carica": {
+        "portatile": 60,
+        "industriale": 10
+      },
+      "regola": "Il prelievo è consentito soltanto se nel tampone entra l’intera carica sorgente.",
+      "esempio": "Prelievo di una carica CEC Blu, poi ricarica di 3 + 5 cariche NEC: tampone 92, otto ore con il portatile o ottanta minuti con la stazione industriale (Equipaggiamento §5.4.6).",
+      "senza_trasformatore": "Senza un trasformatore o una stazione industriale non si travasa energia fra accumulatori (A.67, decisione 76): un caricatore generico, i PM personali e la sola vicinanza a una Matrice non bastano (§5.4.6)."
+    }
   },
   "umanita": {
     "paragrafo": "Giocatore §5.21 (0.45, 01/10/2026); Equipaggiamento §7.1",

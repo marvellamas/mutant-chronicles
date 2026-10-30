@@ -23,27 +23,30 @@ test('Katana Ryūjin (§7.1.9): profilo della Katana, +1d6 Plasma a cella da 5, 
   assert.equal(modoRicarica(k, dati, cat).modo, modoRicarica(r('armi_corporative:lancia-duskdealer'), dati, cat).modo);
 });
 
-test('§7.20.5: celle NEC Blu con riserva in Lx; carica e ricarica ai prezzi della 0.58 (0,01 cr/Lx)', () => {
-  const celle = { 'cella-ravvicinata-comune': [250, 200, 2.5], 'cella-del-fucile-al-plasma-commerciale': [500, 400, 5], 'cella-hellblazer': [750, 600, 7.5], 'cella-kep-808': [250, 200, 2.5], 'cella-intruder': [750, 600, 7.5] };
-  for (const [id, [lx, costo, ricarica]] of Object.entries(celle)) {
+test('§7.20.5 (0.68): celle in cariche, senza Lx; carica e ricarica ai prezzi dei NEC (10 cr per carica)', () => {
+  const celle = { 'cella-ravvicinata-comune': [5, 200, 50], 'cella-del-fucile-al-plasma-commerciale': [20, 800, 200], 'cella-hellblazer': [30, 1200, 300], 'cella-kep-808': [10, 400, 100], 'cella-intruder': [30, 1200, 300] };
+  for (const [id, [cariche, costo, ricarica]] of Object.entries(celle)) {
     const c = r(`munizioni:${id}`);
-    assert.deepEqual([c.cella.riserva_lx, c.costo, c.cella.ricarica_costo], [lx, costo, ricarica], id);
-    assert.equal(c.cella.ricarica_costo, c.cella.riserva_lx * 0.01, id); // «La ricarica costa 0,01 cr/Lx»
+    assert.deepEqual([c.cella.capacita, c.costo, c.cella.ricarica_costo], [cariche, costo, ricarica], id);
+    assert.equal(c.cella.ricarica_costo, c.cella.capacita * 10, id); // «10 cr per carica NEC»
+    assert.equal(c.cella.riserva_lx, undefined, id);
   }
 });
 
-test('§7.20.6: i lanciafiamme usano pacchi NEC Blu (50 Lx a getto), si ricaricano cambiando il pacco; niente combustibile', () => {
+test('§7.20.6 (0.68): i lanciafiamme usano pacchi NEC Rossi (una carica a getto), si ricaricano cambiando il pacco; niente combustibile', () => {
   const pacchi = cat.oggetti.filter((o) => o.file === 'munizioni' && o.id.startsWith('pacco-nec-'));
-  assert.equal(pacchi.length, 4); // A.67: il Gehemmapuker usa il Modulo Blu del catalogo NEC
-  assert.deepEqual([r('nec:modulo-blu').cella.capacita, r('nec:modulo-blu').compatibile_con], [50, ['armi_distanza_corporative:gehemmapuker']]);
-  for (const p of pacchi) assert.equal(p.cella.riserva_lx, p.cella.capacita * 50, p.id);
+  assert.equal(pacchi.length, 5); // con il pacco da 50 cariche del Gehemmapuker (A.190: non è più il Modulo Blu)
+  assert.deepEqual([r('munizioni:pacco-nec-gehemmapuker').cella.capacita, r('munizioni:pacco-nec-gehemmapuker').compatibile_con], [50, ['armi_distanza_corporative:gehemmapuker']]);
+  const prezzi = { 'pacco-nec-nemesis-214': [5, 200, 50], 'pacco-nec-lanciafiamme-commerciale': [10, 400, 100], 'pacco-nec-eruptor': [10, 400, 100], 'pacco-nec-purifier': [15, 600, 150], 'pacco-nec-gehemmapuker': [50, 2100, 500] };
+  for (const p of pacchi) assert.deepEqual([p.cella.capacita, p.costo, p.cella.ricarica_costo], prezzi[p.id], p.id);
+  for (const p of pacchi) assert.equal(p.cella.riserva_lx, undefined, p.id);
   assert.ok(!cat.oggetti.some((o) => o.file === 'munizioni' && /combustibile/i.test(o.id))); // la cartuccia da campeggio (esplorazione) resta
   for (const arma of ['armi_distanza:lanciafiamme', 'armi_distanza_corporative:gehemmapuker']) assert.equal(modoRicarica(r(arma), dati, cat).modo, 'cella', arma);
-  assert.ok(r('armi_distanza_corporative:gehemmapuker').note_manuale.includes('Pacco NEC Blu separato (§7.20.6).'));
+  assert.ok(r('armi_distanza_corporative:gehemmapuker').note_manuale.includes('Pacco NEC Rosso separato (§7.20.6).'));
 });
 
-test('§7.3.4: accessori a NEC Verdi; i ricambi carichi (10 compatto, 100 standard) sono le celle del catalogo NEC', () => {
-  assert.deepEqual([r('nec:verde-compatto').costo, r('nec:verde-standard').costo], [10, 100]);
+test('§7.3.4: accessori a NEC Verdi; i ricambi carichi (NEC Verde 1 a 40 cr, NEC Verde 3 a 120) sono le celle del catalogo NEC', () => {
+  assert.deepEqual([r('nec:verde-compatto').costo, r('nec:verde-standard').costo], [40, 120]);
   assert.ok(!r('accessori_armi:batteria-di-servizio') && !r('accessori_armi:nec-verde-standard-di-ricambio')); // niente doppioni
   // Armamenti 0.65, §7.3.4: elettronica ordinaria, nessun conteggio (prima 2 Lx/h, 50 ore)
   assert.deepEqual(r('accessori_armi:torcia-tattica').alimentazione, { nec: 'nec:verde-compatto', ordinaria: true, paragrafo: '§5.4.3' });

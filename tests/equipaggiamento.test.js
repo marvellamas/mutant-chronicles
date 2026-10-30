@@ -320,8 +320,8 @@ test('validatore delle armi a distanza: modalità, capacità, AC, danno dalla mu
 // --- Lotto 3: scudi (§7.4) ---------------------------------------------------------------
 
 test('lotto 3: 26 scudi del §7.4.2 con i modificatori alle Parate del §7.4.11', () => {
-  const scudi = catalogo(dati).oggetti.filter((o) => o.tipo === 'scudo' && !o.paragrafo.startsWith('§7.22'));
-  assert.equal(scudi.length, 26); // §7.4.2: «Il catalogo comprende 26 scudi»
+  const scudi = catalogo(dati).oggetti.filter((o) => o.tipo === 'scudo' && !o.paragrafo.startsWith('§7.22') && o.id !== 'scudo-punisher-wachter');
+  assert.equal(scudi.length, 26); // §7.4.2: «Il catalogo comprende 26 scudi» (la variante Wächter è del §7.4.1, 0.68)
   assert.deepEqual([...new Set(scudi.map((o) => o.catalogo))], ['Commerciale', 'Bauhaus', 'Alleanza', 'Capitol', 'Cybertronic', 'Imperial', 'Mishima', 'Fratellanza']);
   const pun = catalogo(dati).perRif.get('scudi:scudo-punisher');
   assert.deepEqual(pun.ar, { totale: 2, magica: 0 });
@@ -692,7 +692,7 @@ test('lotto 8: 14 accessori delle armi dal §7.3, con le versioni rinforzate dei
   assert.equal(r('silenziatore-rinforzato').pi, 4);
   assert.deepEqual(r('bipiede').bonus_condizionato, { va: 1, condizione: 'finché il personaggio mantiene posizione e appoggio' });
   assert.deepEqual(r('modulo-di-visione-termica').si_monta_su, ['mirino']);
-  assert.equal(catalogo(dati).perRif.get('nec:verde-compatto').costo, 10); // ricambio della Torcia tattica (§7.3.4)
+  assert.equal(catalogo(dati).perRif.get('nec:verde-compatto').costo, 40); // ricambio della Torcia tattica: NEC Verde 1 (§7.3.4, 0.68)
 });
 
 test('accessori montati su un’arma impugnata: silenziatore nel VA e nel danno, mirino, modulo sul mirino, bipiede', () => {
@@ -817,9 +817,8 @@ test('lotto 10: munizioni, celle, pacchi NEC dei lanciafiamme e compatibilità b
   assert.equal(cella.compatibile_con.length, 18); // con la Katana Ryūjin (0.58)
   assert.ok(cella.compatibile_con.includes('armi:tirapugni-concussivo'));
   // §7.20.6 (0.58): niente combustibile liquido; pacchi NEC Blu carichi, 50 Lx per getto
-  // A.67 (E&L del 02/10): il Gehemmapuker usa il Modulo Blu del catalogo NEC, una voce sola
-  assert.equal(r('pacco-nec-gehemmapuker'), undefined);
-  assert.deepEqual([catalogo(dati).perRif.get('nec:modulo-blu').costo, catalogo(dati).perRif.get('nec:modulo-blu').cella], [2100, { capacita: 50, unita: 'getti', lx_per_colpo: 50, riserva_lx: 2500, ricarica_costo: 25 }]);
+  // Armamenti 0.68 §7.20.6 (A.190): il Gehemmapuker ha un pacco Rosso da 50 cariche (non più il Modulo Blu)
+  assert.deepEqual([r('pacco-nec-gehemmapuker').costo, r('pacco-nec-gehemmapuker').cella], [2100, { capacita: 50, unita: 'getti', ricarica_costo: 500 }]);
   assert.ok(!tutti.some((o) => /combustibile|vuoto-.*(nemesis-214|eruptor|purifier|gehemmapuker)/i.test(o.id)));
   // granate standard, Fumogena ed Elettroshock sono già nel catalogo: niente doppioni
   assert.ok(!tutti.some((o) => /fumogena|elettroshock|frammentazione standard/i.test(o.nome)));

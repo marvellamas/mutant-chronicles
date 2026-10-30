@@ -12,7 +12,7 @@ const cat = catalogo(dati);
 const r = (rif) => cat.perRif.get(rif);
 const numeri = (rif) => { const o = r(rif); return [o.peso, o.costo, o.reperibilita, o.qualita ?? null, o.ps_int ?? null, o.pi ?? null]; };
 // dall'Equipaggiamento 0.13 (§5.4.3): «ordinaria» (nessun conteggio) oppure le ore della scheda
-const nec = (rif) => { const a = r(rif).alimentazione; return [a.nec, a.ordinaria ? 'ordinaria' : a.autonomia_ore]; };
+const nec = (rif) => { const a = r(rif).alimentazione; return [a.nec, a.ordinaria ? 'ordinaria' : a.autonomia_ore ?? a.usi]; };
 
 test('§3.3.1 Navigatore inerziale: 0,3 kg, 600 cr, NC, Comune 10, 2 PI; NEC Verde compatto, elettronica ordinaria', () => {
   assert.deepEqual(numeri('esplorazione:navigatore-inerziale'), [0.3, 600, 'NC', 'Comune', 10, 2]);
@@ -49,10 +49,10 @@ test('§3.7 Emergenze: estintori, nastro, toppe, schiuma con dosi e ricambi', ()
 
 test('§3.8 Attività extraveicolari: tuta, riparo, calzature; aria separata dall’energia; climatizzazione +2 Tempra', () => {
   assert.deepEqual(numeri('esplorazione:tuta-extraveicolare'), [12, 8000, 'NC', 'Non comune', 12, 6]);
-  assert.deepEqual(nec('esplorazione:tuta-extraveicolare'), ['nec:verde-standard', 40]);
+  assert.deepEqual(nec('esplorazione:tuta-extraveicolare'), ['nec:nec-verde-10', 10]); // dieci cariche, una per impiego fino a 4 ore (0.22, §5.4.8)
   assert.deepEqual([r('esplorazione:tuta-extraveicolare').applicazioni, r('esplorazione:tuta-extraveicolare').nome_applicazioni, r('esplorazione:tuta-extraveicolare').ricarica], [4, 'ore d’aria', { applicazioni: 2, costo: 100 }]);
   assert.deepEqual(numeri('esplorazione:riparo-pressurizzato'), [26, 12000, 'RA', 'Non comune', 12, 8]);
-  assert.deepEqual(nec('esplorazione:riparo-pressurizzato'), ['nec:verde-standard', 20]);
+  assert.deepEqual(nec('esplorazione:riparo-pressurizzato'), ['nec:nec-verde-10', 10]);
   assert.equal(r('esplorazione:riparo-pressurizzato').applicazioni, 8);
   assert.deepEqual(numeri('esplorazione:calzature-magnetiche'), [1.5, 600, 'NC', 'Comune', 10, 4]);
   const e = r('esplorazione:tuta-extraveicolare').effetti[0];
@@ -73,7 +73,7 @@ test('§4.1 e §4.4: la cifratura chiede il modulo; modulo senza riserva propria
   assert.deepEqual([e.abilita, e.valore, e.ambito], ['Tecnologia', 2, 'uso_specifico']);
 });
 
-test('§5.9 e §5.10: utensile laser (Rosso standard, 5 ore, nessun bonus) e analizzatore (+2 Scienza, 10 test)', () => {
+test('§5.9 e §5.10: utensile laser (NEC Rosso 5, 5 cariche, nessun bonus) e analizzatore (+2 Scienza, 10 test)', () => {
   assert.deepEqual(numeri('strumenti_professionali:utensile-laser-da-taglio-e-saldatura'), [2, 1500, 'NC', 'Non comune', 12, 4]);
   assert.deepEqual(nec('strumenti_professionali:utensile-laser-da-taglio-e-saldatura'), ['nec:rosso-standard', 5]);
   assert.equal(r('strumenti_professionali:utensile-laser-da-taglio-e-saldatura').effetti, undefined);

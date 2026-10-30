@@ -551,7 +551,7 @@
       "catalogo": "Commerciale",
       "famiglia": "Diagnostica e chirurgia",
       "nomi_alternativi": [],
-      "note_manuale": "Accoglie un paziente alla volta. Comprende scanner diagnostico standard, strumenti chirurgici e cinque set di materiali per procedura; i ricambi seguono i prezzi del Kit chirurgico. Fornisce una struttura sanitaria utilizzabile per Terapia Intensiva e per trattamenti di Menomazioni permanenti compatibili con le attrezzature presenti e le competenze del personale. Concede +3 VA a Medicina per chirurgia e trattamenti delle Ferite o delle Menomazioni; la diagnostica mantiene il +2 del proprio scanner. Si applica un solo bonus degli strumenti per Prova, senza sommare postazione, scanner e kit. Restano tempi, consumi, Talenti e limiti delle procedure effettuate. Richiede un’ora di montaggio da parte di due persone, un’area riparata di 2 × 2 Q e alimentazione continua da rete oppure Modulo Rosso separato: cinque ore di lavoro con un Modulo da 10 UER. Si annota l’autonomia; 2 UER ripristinano un’ora.",
+      "note_manuale": "Accoglie un paziente alla volta. Comprende scanner diagnostico standard, strumenti chirurgici e cinque set di materiali per procedura; i ricambi seguono i prezzi del Kit chirurgico. Fornisce una struttura sanitaria utilizzabile per Terapia Intensiva e per trattamenti di Menomazioni permanenti compatibili con le attrezzature presenti e le competenze del personale. Concede +3 VA a Medicina per chirurgia e trattamenti delle Ferite o delle Menomazioni; la diagnostica mantiene il +2 del proprio scanner. Si applica un solo bonus degli strumenti per Prova, senza sommare postazione, scanner e kit. Restano tempi, consumi, Talenti e limiti delle procedure effettuate. Richiede un’ora di montaggio da parte di due persone, un’area riparata di 2 × 2 Q e alimentazione continua da rete oppure CEC Rossa esterna, facoltativa e acquistata separatamente. Una carica copre una sessione fino a cinque ore; dieci cariche offrono fino a cinquanta ore complessive (§5.4.8). La postazione costa 28.000 cr; con una CEC carica, 29.000 cr. La CEC aggiunge 5 kg al peso dell’apparecchiatura.",
       "paragrafo": "§7.19.5",
       "versione_manuale": "Armamenti 0.65",
       "pi": 12,
@@ -583,9 +583,9 @@
         }
       ],
       "alimentazione": {
-        "nec": "nec:modulo-rosso",
-        "autonomia_ore": 5,
-        "ue_per_ora": 2,
+        "nec": "nec:cec-rosso",
+        "usi": 10,
+        "unita_usi": "cariche (sessioni da 5 ore)",
         "esterna": true,
         "paragrafo": "§5.4.8"
       }
@@ -794,16 +794,16 @@
       },
       "alimentazione": [
         {
-          "nec": "nec:modulo-rosso",
+          "nec": "nec:cec-rosso",
           "usi": 10,
-          "unita_usi": "operazioni",
+          "unita_usi": "cariche Rosse (operazioni)",
           "paragrafo": "§6.8.3"
         },
         {
-          "nec": "nec:modulo-verde",
+          "nec": "nec:cec-verde",
           "moduli": 1,
           "usi": 10,
-          "unita_usi": "giorni di degenza o stasi",
+          "unita_usi": "cariche Verdi (giorni di degenza o stasi)",
           "paragrafo": "§6.8.5"
         }
       ],
@@ -887,16 +887,16 @@
       },
       "alimentazione": [
         {
-          "nec": "nec:modulo-rosso",
+          "nec": "nec:cec-rosso",
           "usi": 10,
-          "unita_usi": "operazioni",
+          "unita_usi": "cariche Rosse (operazioni)",
           "paragrafo": "§6.8.3"
         },
         {
-          "nec": "nec:modulo-verde",
+          "nec": "nec:cec-verde",
           "moduli": 1,
           "usi": 10,
-          "unita_usi": "giorni di degenza o stasi",
+          "unita_usi": "cariche Verdi (giorni di degenza o stasi)",
           "paragrafo": "§6.8.5"
         }
       ],
@@ -980,16 +980,16 @@
       },
       "alimentazione": [
         {
-          "nec": "nec:modulo-rosso",
+          "nec": "nec:cec-rosso",
           "usi": 10,
-          "unita_usi": "operazioni",
+          "unita_usi": "cariche Rosse (operazioni)",
           "paragrafo": "§6.8.3"
         },
         {
-          "nec": "nec:modulo-verde",
+          "nec": "nec:cec-verde",
           "moduli": 1,
           "usi": 10,
-          "unita_usi": "giorni di degenza o stasi",
+          "unita_usi": "cariche Verdi (giorni di degenza o stasi)",
           "paragrafo": "§6.8.5"
         }
       ],
@@ -1062,16 +1062,16 @@
       },
       "alimentazione": [
         {
-          "nec": "nec:modulo-rosso",
+          "nec": "nec:cec-rosso",
           "usi": 10,
-          "unita_usi": "operazioni",
+          "unita_usi": "cariche Rosse (operazioni)",
           "paragrafo": "§6.8.3"
         },
         {
-          "nec": "nec:modulo-verde",
+          "nec": "nec:cec-verde",
           "moduli": 1,
           "usi": 10,
-          "unita_usi": "giorni di degenza o stasi",
+          "unita_usi": "cariche Verdi (giorni di degenza o stasi)",
           "paragrafo": "§6.8.5"
         }
       ],
@@ -1144,16 +1144,16 @@
       },
       "alimentazione": [
         {
-          "nec": "nec:modulo-rosso",
+          "nec": "nec:cec-rosso",
           "usi": 10,
-          "unita_usi": "operazioni",
+          "unita_usi": "cariche Rosse (operazioni)",
           "paragrafo": "§6.8.3"
         },
         {
-          "nec": "nec:modulo-verde",
+          "nec": "nec:cec-verde",
           "moduli": 2,
           "usi": 20,
-          "unita_usi": "giorni di degenza o stasi",
+          "unita_usi": "cariche Verdi (giorni di degenza o stasi)",
           "paragrafo": "§6.8.5"
         }
       ],
@@ -1226,16 +1226,16 @@
       },
       "alimentazione": [
         {
-          "nec": "nec:modulo-rosso",
+          "nec": "nec:cec-rosso",
           "usi": 10,
-          "unita_usi": "operazioni",
+          "unita_usi": "cariche Rosse (operazioni)",
           "paragrafo": "§6.8.3"
         },
         {
-          "nec": "nec:modulo-verde",
+          "nec": "nec:cec-verde",
           "moduli": 2,
           "usi": 20,
-          "unita_usi": "giorni di degenza o stasi",
+          "unita_usi": "cariche Verdi (giorni di degenza o stasi)",
           "paragrafo": "§6.8.5"
         }
       ],
@@ -1308,16 +1308,16 @@
       },
       "alimentazione": [
         {
-          "nec": "nec:modulo-rosso",
+          "nec": "nec:cec-rosso",
           "usi": 10,
-          "unita_usi": "operazioni",
+          "unita_usi": "cariche Rosse (operazioni)",
           "paragrafo": "§6.8.3"
         },
         {
-          "nec": "nec:modulo-verde",
+          "nec": "nec:cec-verde",
           "moduli": 3,
           "usi": 30,
-          "unita_usi": "giorni di degenza o stasi",
+          "unita_usi": "cariche Verdi (giorni di degenza o stasi)",
           "paragrafo": "§6.8.5"
         }
       ],
@@ -1390,16 +1390,16 @@
       },
       "alimentazione": [
         {
-          "nec": "nec:modulo-rosso",
+          "nec": "nec:cec-rosso",
           "usi": 10,
-          "unita_usi": "operazioni",
+          "unita_usi": "cariche Rosse (operazioni)",
           "paragrafo": "§6.8.3"
         },
         {
-          "nec": "nec:modulo-verde",
+          "nec": "nec:cec-verde",
           "moduli": 3,
           "usi": 30,
-          "unita_usi": "giorni di degenza o stasi",
+          "unita_usi": "cariche Verdi (giorni di degenza o stasi)",
           "paragrafo": "§6.8.5"
         }
       ],

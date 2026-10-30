@@ -160,16 +160,16 @@
       "catalogo": "Commerciale",
       "famiglia": "Viveri, acqua e cucina",
       "nomi_alternativi": [],
-      "note_manuale": "Fornello a Chroma, recipiente e stoviglie per quattro persone. Primo NEC Rosso standard compreso; dieci preparazioni da 30 minuti. Il fornello dispone di dieci preparazioni ordinarie, ciascuna di 30 minuti e fino a quattro persone. Si segnano soltanto le preparazioni rimaste.",
+      "note_manuale": "Fornello a Chroma, recipiente e stoviglie per quattro persone. Il fornello usa un NEC Rosso 10. Ogni preparazione consuma all’avvio una carica e copre fino a quattro persone e trenta minuti di cottura, anche per meno persone o un tempo inferiore. Oltre trenta minuti serve un’altra carica. Dieci cariche offrono dieci preparazioni ordinarie; si annotano solo le cariche rimaste.",
       "paragrafo": "§3.2",
       "versione_manuale": "Equipaggiamento 0.13",
       "peso": 1,
       "reperibilita": "CO",
       "costo": 150,
       "alimentazione": {
-        "nec": "nec:rosso-standard",
+        "nec": "nec:nec-rosso-10",
         "usi": 10,
-        "unita_usi": "preparazioni",
+        "unita_usi": "cariche (preparazioni)",
         "paragrafo": "§3.2"
       },
       "proprieta": [],
@@ -431,7 +431,7 @@
       "catalogo": "Commerciale",
       "famiglia": "Mobilità e recupero",
       "nomi_alternativi": [],
-      "note_manuale": "Cavo da 20 Q; con 1 AzP sposta il carico di 2 Q in verticale. Il freno mantiene il carico senza energia. Sostituzione della cella: 1 AzP. La riserva offre cinque ore effettive di movimento; mantenere fermo il carico non consuma autonomia.",
+      "note_manuale": "Cavo da 20 Q; con 1 AzP sposta il carico di 2 Q in verticale. Una carica copre una sessione fino a un’ora; cinque cariche offrono fino a cinque ore complessive (§5.4.8). Più sollevamenti nella stessa operazione entro un’ora condividono la carica. Il freno mantiene il carico fermo senza energia, anche dopo la sessione.",
       "paragrafo": "§3.6",
       "versione_manuale": "Equipaggiamento 0.13",
       "peso": 6,
@@ -442,7 +442,9 @@
       "costo": 2500,
       "alimentazione": {
         "nec": "nec:rosso-standard",
-        "autonomia_ore": 5,
+        "usi": 5,
+        "unita_usi": "cariche (sessioni da un’ora)",
+        "unita_precedente": "ore",
         "paragrafo": "§5.4.8"
       },
       "proprieta": []
@@ -710,7 +712,7 @@
       "catalogo": "Commerciale",
       "famiglia": "Attività extraveicolari",
       "nomi_alternativi": [],
-      "note_manuale": "Mentre è integra, chiusa e rifornita, permette di operare nel vuoto o in atmosfere irrespirabili. Isola il corpo dai contaminanti esterni trasmessi per inalazione o contatto. Comprende due bombole per 4 ore complessive d’aria, climatizzazione e controllo della pressione, comunicatore personale da 1 km, lampada frontale da 6 Q, indicatori e allarme di perdita, cinque toppe pressurizzate del §3.7 e anelli di ancoraggio. Indossarla e controllarne la chiusura richiede 5 minuti. Se già indossata e predisposta, chiudere il casco e attivare il supporto vitale richiede 1 AzP e due mani. Aria ed energia si annotano separatamente: 40 ore di batteria non aumentano le 4 ore d’aria. Non concede AR. Ricambi: bombola carica da 2 ore-persona 100 cr; sostituire una bombola richiede un minuto e due mani. Il NEC Verde dedicato offre 40 ore di funzionamento complessivo, senza ricalcolare il consumo spegnendo una singola funzione.",
+      "note_manuale": "Mentre è integra, chiusa e rifornita, permette di operare nel vuoto o in atmosfere irrespirabili. Isola il corpo dai contaminanti esterni trasmessi per inalazione o contatto. Comprende due bombole per 4 ore complessive d’aria, climatizzazione e controllo della pressione, comunicatore personale da 1 km, lampada frontale da 6 Q, indicatori e allarme di perdita, cinque toppe pressurizzate del §3.7 e anelli di ancoraggio. Indossarla e controllarne la chiusura richiede 5 minuti. Se già indossata e predisposta, chiudere il casco e attivare il supporto vitale richiede 1 AzP e due mani. Aria ed energia si annotano separatamente: 40 ore di batteria non aumentano le 4 ore d’aria. Non concede AR. Ricambi: bombola carica da 2 ore-persona 100 cr; sostituire una bombola richiede un minuto e due mani. Il NEC Verde 10 incluso carico offre dieci cariche: una per impiego fino a quattro ore, fino a 40 ore complessive (§3.8.4).",
       "paragrafo": "§3.8.1",
       "versione_manuale": "Equipaggiamento 0.13",
       "peso": 12,
@@ -720,8 +722,10 @@
       "reperibilita": "NC",
       "costo": 8000,
       "alimentazione": {
-        "nec": "nec:verde-standard",
-        "autonomia_ore": 40,
+        "nec": "nec:nec-verde-10",
+        "usi": 10,
+        "unita_usi": "cariche (impieghi da 4 ore)",
+        "unita_precedente": "ore",
         "paragrafo": "§5.4.8"
       },
       "applicazioni": 4,
@@ -752,7 +756,7 @@
       "catalogo": "Commerciale",
       "famiglia": "Attività extraveicolari",
       "nomi_alternativi": [],
-      "note_manuale": "Un involucro ripiegabile si tende su un’intelaiatura leggera formando un ambiente ermetico. Ospita due persone con il normale equipaggiamento personale. Comprende quattro bombole, un NEC Verde standard carico e cinque toppe pressurizzate. Le bombole forniscono 8 ore-persona: 8 ore per un occupante oppure 4 ore per due occupanti. Una persona impiega 10 minuti per montarlo o smontarlo. Occorrono una superficie adatta, ancoraggi utilizzabili e uno spazio di 2 × 2 Q. Offre condizioni adatte al riposo, ma non accelera il recupero e non costituisce una postazione medica. Il NEC Verde dedicato alimenta il riparo per 20 ore, indipendentemente dal numero degli occupanti.",
+      "note_manuale": "Un involucro ripiegabile si tende su un’intelaiatura leggera formando un ambiente ermetico. Ospita due persone con il normale equipaggiamento personale. Comprende quattro bombole, un NEC Verde 10 carico e cinque toppe pressurizzate. Le bombole forniscono 8 ore-persona: 8 ore per un occupante oppure 4 ore per due occupanti. Una persona impiega 10 minuti per montarlo o smontarlo. Occorrono una superficie adatta, ancoraggi utilizzabili e uno spazio di 2 × 2 Q. Offre condizioni adatte al riposo, ma non accelera il recupero e non costituisce una postazione medica. Il NEC Verde 10 offre dieci cariche: una per impiego fino a due ore, fino a 20 ore complessive, indipendentemente dal numero degli occupanti (§3.8.4).",
       "paragrafo": "§3.8.2",
       "versione_manuale": "Equipaggiamento 0.13",
       "peso": 26,
@@ -762,8 +766,10 @@
       "reperibilita": "RA",
       "costo": 12000,
       "alimentazione": {
-        "nec": "nec:verde-standard",
-        "autonomia_ore": 20,
+        "nec": "nec:nec-verde-10",
+        "usi": 10,
+        "unita_usi": "cariche (impieghi da 2 ore)",
+        "unita_precedente": "ore",
         "paragrafo": "§5.4.8"
       },
       "applicazioni": 8,

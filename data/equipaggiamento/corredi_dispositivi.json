@@ -91,7 +91,7 @@
       "catalogo": "Alleanza",
       "famiglia": "Corredi professionali",
       "nomi_alternativi": [],
-      "note_manuale": "+2 VA a Percezione per esaminare tracce materiali mediante gli strumenti del corredo e a Scienza per analisi preliminari eseguibili con una dotazione portatile. Non concede un bonus generale alla vigilanza e non sostituisce un laboratorio completo. Il corredo portatile e la valigetta comprendono ciascuno un NEC Verde standard carico, cavo e alimentatore. L’elettronica diagnostica ordinaria non richiede un registro energetico (§5.4.3); sostituzione del ricambio accessibile in 1 AzP.",
+      "note_manuale": "+2 VA a Percezione per esaminare tracce materiali mediante gli strumenti del corredo e a Scienza per analisi preliminari eseguibili con una dotazione portatile. Non concede un bonus generale alla vigilanza e non sostituisce un laboratorio completo. Il corredo portatile e la valigetta comprendono ciascuno un NEC Verde 3 carico, cavo e alimentatore. L’elettronica diagnostica ordinaria non richiede un registro energetico (§5.4.3); sostituzione del ricambio accessibile in 1 AzP.",
       "paragrafo": "§7.12",
       "versione_manuale": "Armamenti 0.65",
       "pi": 4,
@@ -422,7 +422,7 @@
       "nomi_alternativi": [
         "Manutenzione da campo"
       ],
-      "note_manuale": "Comprende utensili, strumenti diagnostici e attrezzatura per interventi su armi, armature, propulsori ed esoscheletri compatibili. Concede +2 VA a Tecnologia per diagnosi, manutenzione e riparazioni eseguibili sul campo. Il corredo fornisce gli strumenti; pezzi di ricambio e materiali necessari si conteggiano separatamente. Restano tempi, Prove e limiti delle riparazioni: il corredo non ripristina automaticamente PI. La diagnostica ordinaria usa un NEC Verde standard senza conteggio energetico (§5.4.3).",
+      "note_manuale": "Comprende utensili, strumenti diagnostici e attrezzatura per interventi su armi, armature, propulsori ed esoscheletri compatibili. Concede +2 VA a Tecnologia per diagnosi, manutenzione e riparazioni eseguibili sul campo. Il corredo fornisce gli strumenti; pezzi di ricambio e materiali necessari si conteggiano separatamente. Restano tempi, Prove e limiti delle riparazioni: il corredo non ripristina automaticamente PI. La diagnostica ordinaria usa un NEC Verde 3 senza conteggio energetico (§5.4.3).",
       "paragrafo": "§7.13.7",
       "versione_manuale": "Armamenti 0.65",
       "pi": 6,
@@ -460,7 +460,7 @@
       "catalogo": "Capitol",
       "famiglia": "Corredi professionali",
       "nomi_alternativi": [],
-      "note_manuale": "+2 VA a Percezione per esaminare tracce materiali mediante gli strumenti e a Scienza per analisi preliminari eseguibili con dotazione portatile. Non concede un bonus generale alla vigilanza e non sostituisce un laboratorio completo. Il corredo portatile e la valigetta comprendono ciascuno un NEC Verde standard carico, cavo e alimentatore. L’elettronica diagnostica ordinaria non richiede un registro energetico (§5.4.3); sostituzione del ricambio accessibile in 1 AzP.",
+      "note_manuale": "+2 VA a Percezione per esaminare tracce materiali mediante gli strumenti e a Scienza per analisi preliminari eseguibili con dotazione portatile. Non concede un bonus generale alla vigilanza e non sostituisce un laboratorio completo. Il corredo portatile e la valigetta comprendono ciascuno un NEC Verde 3 carico, cavo e alimentatore. L’elettronica diagnostica ordinaria non richiede un registro energetico (§5.4.3); sostituzione del ricambio accessibile in 1 AzP.",
       "paragrafo": "§7.13.8",
       "versione_manuale": "Armamenti 0.65",
       "pi": 4,
@@ -2446,11 +2446,13 @@
       "proprieta": [],
       "alimentazione": {
         "nec": null,
-        "descrizione": "NEC Blu specialistico IAS: 1.000 Lx = 20 cariche IAS da 50 Lx; ricambio carico 1.000 cr, ricarica 50 cr in 1 ora, sostituzione 1 minuto a sistema spento",
+        "descrizione": "Il NEC Blu nel formato specialistico IAS contiene 20 cariche tecnologiche. Una cella di ricambio carica costa 1.000 cr; il servizio di ricarica costa 10 cr per carica, 200 cr da vuota. Occorrono venti ore con trasformatore portatile o tre ore e venti minuti con stazione industriale. Raccordo ai formati standard: da completare.",
         "usi": 20,
         "unita_usi": "cariche (Blink 1, Power Blink 2)",
-        "lx_per_uso": 50,
-        "paragrafo": "§7.15.4; E&L del 02/10/2026, decisione 20"
+        "paragrafo": "§7.15.4; E&L del 02/10/2026, decisione 20",
+        "da_definire": [
+          "raccordo ai formati standard (Armamenti 0.68: «resta da completare»)"
+        ]
       },
       "effetti": [
         {
@@ -2487,11 +2489,13 @@
       "proprieta": [],
       "alimentazione": {
         "nec": null,
-        "descrizione": "NEC Blu specialistico IAS: 1.000 Lx = 20 cariche IAS da 50 Lx; ricambio carico 1.000 cr, ricarica 50 cr in 1 ora, sostituzione 1 minuto a sistema spento",
+        "descrizione": "Il NEC Blu nel formato specialistico IAS contiene 20 cariche tecnologiche. Una cella di ricambio carica costa 1.000 cr; il servizio di ricarica costa 10 cr per carica, 200 cr da vuota. Occorrono venti ore con trasformatore portatile o tre ore e venti minuti con stazione industriale. Raccordo ai formati standard: da completare.",
         "usi": 20,
         "unita_usi": "Round di volo",
-        "lx_per_uso": 50,
-        "paragrafo": "§7.15.4; E&L del 02/10/2026, decisione 20"
+        "paragrafo": "§7.15.4; E&L del 02/10/2026, decisione 20",
+        "da_definire": [
+          "raccordo ai formati standard (Armamenti 0.68: «resta da completare»)"
+        ]
       },
       "effetti": [
         {
@@ -2544,11 +2548,13 @@
       ],
       "alimentazione": {
         "nec": null,
-        "descrizione": "NEC Blu specialistico IAS: 1.000 Lx = 20 cariche IAS da 50 Lx; ricambio carico 1.000 cr, ricarica 50 cr in 1 ora, sostituzione 1 minuto a sistema spento",
+        "descrizione": "Il NEC Blu nel formato specialistico IAS contiene 20 cariche tecnologiche. Una cella di ricambio carica costa 1.000 cr; il servizio di ricarica costa 10 cr per carica, 200 cr da vuota. Occorrono venti ore con trasformatore portatile o tre ore e venti minuti con stazione industriale. Raccordo ai formati standard: da completare.",
         "usi": 20,
         "unita_usi": "minuti",
-        "lx_per_uso": 50,
-        "paragrafo": "§7.15.4; E&L del 02/10/2026, decisione 20"
+        "paragrafo": "§7.15.4; E&L del 02/10/2026, decisione 20",
+        "da_definire": [
+          "raccordo ai formati standard (Armamenti 0.68: «resta da completare»)"
+        ]
       }
     },
     {
@@ -2572,11 +2578,13 @@
       "proprieta": [],
       "alimentazione": {
         "nec": null,
-        "descrizione": "NEC Blu specialistico IAS: 1.000 Lx = 20 cariche IAS da 50 Lx; ricambio carico 1.000 cr, ricarica 50 cr in 1 ora, sostituzione 1 minuto a sistema spento",
+        "descrizione": "Il NEC Blu nel formato specialistico IAS contiene 20 cariche tecnologiche. Una cella di ricambio carica costa 1.000 cr; il servizio di ricarica costa 10 cr per carica, 200 cr da vuota. Occorrono venti ore con trasformatore portatile o tre ore e venti minuti con stazione industriale. Raccordo ai formati standard: da completare.",
         "usi": 20,
         "unita_usi": "Round",
-        "lx_per_uso": 50,
-        "paragrafo": "§7.15.4; E&L del 02/10/2026, decisione 20"
+        "paragrafo": "§7.15.4; E&L del 02/10/2026, decisione 20",
+        "da_definire": [
+          "raccordo ai formati standard (Armamenti 0.68: «resta da completare»)"
+        ]
       }
     },
     {
@@ -2600,11 +2608,13 @@
       "proprieta": [],
       "alimentazione": {
         "nec": null,
-        "descrizione": "NEC Blu specialistico IAS: 1.000 Lx = 20 cariche IAS da 50 Lx; ricambio carico 1.000 cr, ricarica 50 cr in 1 ora, sostituzione 1 minuto a sistema spento",
+        "descrizione": "Il NEC Blu nel formato specialistico IAS contiene 20 cariche tecnologiche. Una cella di ricambio carica costa 1.000 cr; il servizio di ricarica costa 10 cr per carica, 200 cr da vuota. Occorrono venti ore con trasformatore portatile o tre ore e venti minuti con stazione industriale. Raccordo ai formati standard: da completare.",
         "usi": 20,
         "unita_usi": "minuti",
-        "lx_per_uso": 50,
-        "paragrafo": "§7.15.4; E&L del 02/10/2026, decisione 20"
+        "paragrafo": "§7.15.4; E&L del 02/10/2026, decisione 20",
+        "da_definire": [
+          "raccordo ai formati standard (Armamenti 0.68: «resta da completare»)"
+        ]
       }
     },
     {

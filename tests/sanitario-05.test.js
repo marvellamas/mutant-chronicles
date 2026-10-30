@@ -39,10 +39,10 @@ test('postazioni medicochirurgiche: quattro modelli fissi e mobili, Prova, riser
   // degenza come ricovero ospedaliero (Giocatore §5.16.2: 1 stato ogni 3 giorni), tentativo settimanale condiviso (§5.16.6)
   assert.deepEqual([p('semiautomatica').cura.degenza_giorni_per_stato, p('semiautomatica').cura.tentativo_settimanale], [3, true]);
   assert.deepEqual(p('semiautomatica').cura.procedure.slice(0, 2).map((x) => [x.tempo, x.effetto]), [['10 minuti', 'Riduce la Ferita di uno stato.'], ['1 ora', 'Riduce la Ferita di due stati.']]);
-  // usi contati al tavolo: 10 operazioni dal Modulo Rosso, giorni di degenza o stasi dai Verdi; 5 cartucce chirurgiche
+  // usi contati al tavolo: 10 cariche Rosse (operazioni) dalla CEC Rossa, giorni di degenza o stasi dalle CEC Verdi; 5 cartucce chirurgiche
   const riserve = riserveNec([voce('pp', 'sanitario:postazione-automatica-professionale-fissa')], dati);
-  assert.deepEqual(riserve.map((x) => [x.chiave, x.massimo, x.unita]), [['pp', 10, 'operazioni'], ['pp#a1', 20, 'giorni di degenza o stasi']]);
-  assert.equal(riserve[1].provenienza.righe[0].fonte, '2 × Modulo Verde');
+  assert.deepEqual(riserve.map((x) => [x.chiave, x.massimo, x.unita]), [['pp', 10, 'cariche Rosse (operazioni)'], ['pp#a1', 20, 'cariche Verdi (giorni di degenza o stasi)']]);
+  assert.equal(riserve[1].provenienza.righe[0].fonte, '2 × CEC Verde');
   assert.deepEqual([p('semiautomatica').applicazioni, p('semiautomatica').nome_applicazioni], [5, 'cartucce chirurgiche']);
   assert.deepEqual([r('cartuccia-chirurgica').costo, r('ricarica-nutritiva-sanitaria').costo, r('ricarica-nutritiva-sanitaria').peso], [500, 50, 2.5]);
 });

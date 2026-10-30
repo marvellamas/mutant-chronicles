@@ -1,6 +1,7 @@
-// Lotto 1 dei manuali del 27–28/10/2026 (docs/diff-manuali-2026-10-28.md; tools/lotti/lotto_nec_ue.mjs): i NEC in
-// Unità Energetiche e l'elettronica ordinaria senza conteggi (Equipaggiamento 0.13, §5.4).
-//  - nessuna voce del catalogo ancora in Lx dove il manuale ha le UE (salvo il lotto 2: A.189–A.191);
+// NEC e accumulatori: lotto 1 (28/10, Unità Energetiche, elettronica ordinaria senza conteggi) rifatto dal lotto 2 (30/10,
+// lotto 146) sulle edizioni nuove (Equipaggiamento 0.22 §5.4, Armamenti 0.68, registro Revisione NEC 2.7): si contano le
+// cariche di NEC, pacchi, CEC, MEC e BEC; le UE sono solo dimensionamento.
+//  - nessuna voce del catalogo in Lx;
 //  - nessun contatore per l'elettronica ordinaria;
 //  - i valori calcolati dei sette PG (copie in tests/fixtures/talenti-vecchi/) identici con i dati di prima e di dopo,
 //    contatori dell'energia a parte.
@@ -19,17 +20,16 @@ const { dati } = await datiReali();
 const cat = catalogo(dati);
 const R = dati.regole.nec;
 const LX = /\bLx\b|Lx\/h|cr\/Lx|_lx\b|lx_|"lx"/;
-const lotto2 = (o) => R.lotto_2.file.includes(o.file) || R.lotto_2.voci.includes(`${o.file}:${o.id}`) || (o.file === 'nec' && R.lotto_2.nec.includes(o.id));
 
-test('nessuna voce del catalogo in Lx fuori dal lotto 2 (celle d’arma, pacchi, caricatori, IAS: A.189–A.191)', () => {
-  const inLx = cat.oggetti.filter((o) => !lotto2(o) && LX.test(JSON.stringify({ ...o, file: undefined })));
+test('nessuna voce del catalogo in Lx: né le celle d’arma, né i pacchi, né gli IAS (A.189–A.191, Armamenti 0.68)', () => {
+  const inLx = cat.oggetti.filter((o) => LX.test(JSON.stringify({ ...o, file: undefined })));
   assert.deepEqual(inLx.map((o) => o.rif), []);
-  // le dotazioni del §2.16 (Giocatore 0.50) e le regole fuori dal lotto 2
+  // le dotazioni del §2.16 (Giocatore 0.50) e le regole dei NEC
   assert.ok(!LX.test(JSON.stringify(dati.dotazioni)), 'dotazioni.json');
-  // fuori dal lotto 2 i Lx restano solo dove si parla delle riserve salvate prima (A.193) e nei passi del lotto 2
-  const { lotto_2: _l2, da_convertire: _dc, _nota, passi_tavolo: { lx: _a, lx_grandi: _b, ...passi }, ...regole } = R;
-  assert.ok(!LX.test(JSON.stringify({ ...regole, passi })), 'regole.json → nec');
-  assert.equal(R.unita, 'UE');
+  const { da_convertire: _dc, _nota, ...regole } = R;
+  assert.ok(!LX.test(JSON.stringify(regole)), 'regole.json → nec');
+  assert.equal(R.unita, 'carica');
+  assert.equal(R.lotto_2, undefined, 'il lotto 2 è chiuso');
 });
 
 test('nessun contatore per l’elettronica ordinaria; al suo posto la riga «NEC compreso, senza conteggio»', () => {
@@ -42,17 +42,20 @@ test('nessun contatore per l’elettronica ordinaria; al suo posto la riga «NEC
   }
   // torcia, comunicatore, visore e mirino ci sono
   for (const rif of ['dotazioni_personali:torcia-elettrica', 'comunicazione:comunicatore-personale', 'comunicazione:visore-notturno', 'accessori_armi:torcia-tattica', 'elmetti:elmetto-asa-recon']) assert.ok(ordinarie.some((o) => o.rif === rif), rif);
-  // i dispositivi con un contatore proprio lo tengono, in ore o usi (§5.4.8)
+  // i dispositivi con un contatore proprio lo tengono, in cariche (0.22, §5.4.8)
   const conti = (rif) => riserveNec([{ uid: 'x', rif, stato: 'zaino', quantita: 1, note: '' }], dati).map((x) => `${x.massimo} ${x.unita}`);
-  assert.deepEqual(conti('esplorazione:verricello-portatile-chroma'), ['5 ore']);
-  assert.deepEqual(conti('esplorazione:tuta-extraveicolare'), ['40 ore']);
-  assert.deepEqual(conti('esplorazione:riparo-pressurizzato'), ['20 ore']);
-  assert.deepEqual(conti('esplorazione:corredo-da-cucina-da-campo'), ['10 preparazioni']);
-  assert.deepEqual(conti('strumenti_professionali:utensile-laser-da-taglio-e-saldatura'), ['5 ore']);
-  assert.deepEqual(conti('nec:modulo-rosso'), ['10 UER']);
-  assert.deepEqual(conti('nec:banco-verde'), ['100 UEV']);
-  // il Rosso standard degli utensili: capacità da definire, nessun numero
-  assert.deepEqual(conti('nec:rosso-standard'), []);
+  assert.deepEqual(conti('esplorazione:verricello-portatile-chroma'), ['5 cariche (sessioni da un’ora)']);
+  assert.deepEqual(conti('esplorazione:tuta-extraveicolare'), ['10 cariche (impieghi da 4 ore)']);
+  assert.deepEqual(conti('esplorazione:riparo-pressurizzato'), ['10 cariche (impieghi da 2 ore)']);
+  assert.deepEqual(conti('esplorazione:corredo-da-cucina-da-campo'), ['10 cariche (preparazioni)']);
+  assert.deepEqual(conti('strumenti_professionali:utensile-laser-da-taglio-e-saldatura'), ['5 cariche (sessioni da un’ora)']);
+  // gli accumulatori in cariche: NEC, pacchi, CEC, MEC e BEC
+  assert.deepEqual(conti('nec:cec-rosso'), ['10 cariche']);
+  assert.deepEqual(conti('nec:bec-verde'), ['10 cariche']);
+  assert.deepEqual(conti('nec:rosso-standard'), ['5 cariche']);
+  assert.deepEqual(conti('nec:pacco-30-blu'), ['30 cariche']);
+  // il NEC Verde 1 e 3 dell'elettronica ordinaria non si contano
+  assert.deepEqual(conti('nec:verde-compatto'), []);
 });
 
 // --- i sette PG: valori calcolati con i dati di prima (commit c314aed) e di adesso ------------------------------
@@ -66,7 +69,7 @@ function valori(o, d) {
   const s = calcolaSchedaPersonaggio(p, d);
   const m = massimiSessione(s, o.scelte, d);
   const ses = allineaSessione(o.sessione, m);
-  const { nec: _n, ...sessioneSenzaNec } = ses;
+  const { nec: _n, trasformatori: _t, ...sessioneSenzaNec } = ses;
   return JSON.stringify({
     pv: s.pv, pm: s.pm, iniziativa: s.iniziativa, movimento: s.movimento, salvezze: s.salvezze,
     abilita: s.abilita?.map((a) => [a.nome, a.totale, a.effettivo, a.vaEquip]),
@@ -84,7 +87,7 @@ test('i sette PG: PV, PM, VA, Salvezze, AR, carico, armi, costi e sessione ident
   for (const f of files) {
     const o = JSON.parse(readFileSync(new URL(f, FIX), 'utf8'));
     assert.equal(valori(o, dati), valori(o, prima), f);
-    // C (A.193): nessuna riserva salvata sparisce dal file, anche quando non ha più contatore
+    // C (A.193): nessuna riserva salvata sparisce dal file, anche quando non ha più contatore o è «da convertire»
     const sc = calcolaSchedaPersonaggio({ creazione: o.scelte, livelli: o.livelli }, dati);
     const ses = allineaSessione(o.sessione, massimiSessione(sc, o.scelte, dati));
     for (const [k, n] of Object.entries(o.sessione?.nec ?? {})) assert.equal(ses.nec[k], n, `${f}: ${k}`);

@@ -17,6 +17,11 @@
 import { readFileSync, writeFileSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import { execFileSync } from 'node:child_process';
+import { bloccaRiscrittura } from './superato.mjs';
+
+// 30/10/2026 (lotto 146): lotto storico. Equipaggiamento 0.22 ha riscritto il modello (NEC, CEC, MEC e BEC in cariche): un rilancio
+// con --scrivi riporterebbe i dati ai Moduli e ai Banchi in UE. Il lotto in vigore è tools/lotti/lotto_nec_cariche.mjs.
+bloccaRiscrittura('lotto_nec_ue.mjs');
 
 const R = fileURLToPath(new URL('../../', import.meta.url));
 const SCRIVI = process.argv.includes('--scrivi');

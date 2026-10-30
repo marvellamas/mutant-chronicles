@@ -166,10 +166,7 @@
       "rif": "munizioni:pacco-nec-purifier"
     },
     "munizioni:serbatoio-vuoto-gehemmapuker": {
-      "rif": "nec:modulo-blu"
-    },
-    "munizioni:pacco-nec-gehemmapuker": {
-      "rif": "nec:modulo-blu"
+      "rif": "munizioni:pacco-nec-gehemmapuker"
     },
     "sanitario:set-chirurgico-di-ricambio": {
       "rif": "sanitario:cartuccia-chirurgica"
@@ -177,6 +174,33 @@
     "sanitario:confezione-da-cinque-set-chirurgici": {
       "rif": "sanitario:cartuccia-chirurgica",
       "quantita_per": 5
+    },
+    "nec:modulo-rosso": {
+      "rif": "nec:cec-rosso"
+    },
+    "nec:banco-rosso": {
+      "rif": "nec:cec-rosso"
+    },
+    "nec:modulo-blu": {
+      "rif": "munizioni:pacco-nec-gehemmapuker"
+    },
+    "nec:banco-blu": {
+      "rif": "nec:cec-blu"
+    },
+    "nec:modulo-verde": {
+      "rif": "nec:cec-verde"
+    },
+    "nec:banco-verde": {
+      "rif": "nec:cec-verde"
+    },
+    "munizioni:caricatore-da-campo": {
+      "rif": "nec:trasformatore-portatile-monocromatico"
+    },
+    "nec:stazione-per-moduli": {
+      "rif": "nec:stazione-industriale-multicromatica"
+    },
+    "nec:stazione-per-banchi": {
+      "rif": "nec:stazione-industriale-multicromatica"
     }
   },
   "_nota_rif_sostituiti": "Voci di catalogo uscite perché sostituite da un’altra scheda: al caricamento di un personaggio (src/character.js → normalizza) la voce passa al rif nuovo, con lo stato tradotto se indicato."

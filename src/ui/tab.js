@@ -31,6 +31,7 @@ import { statoMorente } from '../morente.js';
 import { testoAttivazione } from '../attivazione-arma.js';
 import { testoManifestazione } from '../manifestazione.js';
 import { descriviFerite } from '../sessione.js';
+import { elencoTrasformatori, statoTrasformatore, bersagliRicaricabili, fontiCec, pianoRicarica } from '../trasformatori.js';
 import { statoUsiTalenti } from '../usi-talenti.js';
 import { confrontoLivelloPx, fraseLivelloPx } from '../px-partita.js';
 import { statoIntegrita, oggettiRotti } from '../protezione.js';
@@ -778,6 +779,9 @@ function tavoloRigaInventario(ctx, r) {
   // NEC (Equipaggiamento 0.13, §5.4): riserva attuale come i PM dei contenitori, con − e + e la provenienza; per
   // l'elettronica ordinaria nessun contatore, solo il NEC compreso come informazione (§5.4.3)
   for (const x of riserveNec([r.voce], ctx.dati)) nodi.push(rigaNec(ctx, r, x));
+  // trasformatori (§5.4.6): tampone e ricarica di NEC e celle d'arma
+  const trasf = elencoTrasformatori([r.voce], ctx.dati)[0];
+  if (trasf && !trasf.deposito) nodi.push(pannelloTrasformatore(ctx, r, trasf));
   const senzaConteggio = infoNecSenzaConteggio(r.voce, ctx.dati);
   if (senzaConteggio) nodi.push(h('small', { class: 'nota nec-info' }, senzaConteggio.testo));
   // Magia §27.4: un Consumabile si vede anche fra i Consumabili dell'equipaggiamento, con lo stesso «Usa»
@@ -791,21 +795,67 @@ function tavoloRigaInventario(ctx, r) {
 }
 
 /**
+ * Trasformatore nella riga dell'Inventario (Equipaggiamento 0.22 §5.4.6–§5.4.7): il tampone di ogni colore e «Ricarica…».
+ * Si sceglie il colore, che cosa ricaricare (un NEC o un pacco dell'Inventario, o la cella di un'arma a energia) e, se il
+ * tampone è vuoto, la CEC da cui prelevare una carica; l'app mostra quanto si trasferisce, quanto resta nel tampone e
+ * quanto tempo ci vuole, e «Ricarica» lo scrive. Senza un trasformatore o una stazione non si travasa (A.67, decisione 76).
+ */
+function pannelloTrasformatore(ctx, r, tr) {
+  const R = ctx.dati.regole.nec ?? {};
+  const voci = normalizzaEquipaggiamento(ctx.scelte.equipaggiamento);
+  const stato = statoTrasformatore(ctx.sessione.trasformatori, tr.uid);
+  const u = ((ctx.ui.trasformatore ??= {})[tr.uid] ??= { aperto: false, colore: null, bersaglio: null, fonte: null, esito: null });
+  const colori = tr.colori === 1 ? (stato.colore ? [stato.colore] : ['Rosso', 'Blu', 'Verde']) : ['Rosso', 'Blu', 'Verde'];
+  if (!u.colore || !colori.includes(u.colore)) u.colore = colori.length === 1 ? colori[0] : null;
+  const attuali = { nec: ctx.sessione.nec, munizioni: ctx.sessione.munizioni };
+  const tutti = bersagliRicaricabili(voci, attuali, ctx.massimi.ricarica, ctx.dati);
+  const bersagli = u.colore ? tutti.filter((b) => b.colori.includes(u.colore)) : tutti;
+  const bersaglio = bersagli.find((b) => b.id === u.bersaglio) ?? null;
+  const fonti = u.colore ? fontiCec(voci, ctx.sessione.nec, u.colore, ctx.dati) : [];
+  const fonte = fonti.find((f) => f.chiave === u.fonte) ?? fonti[0] ?? null;
+  const piano = bersaglio && u.colore ? pianoRicarica({ t: tr, stato, bersaglio, colore: u.colore, fonte }, ctx.dati) : null;
+  const tamponi = tr.colori === 1 ? [stato.colore].filter(Boolean) : ['Rosso', 'Blu', 'Verde'];
+  const riga = tamponi.length ? tamponi.map((c) => `${c} ${stato.tamponi[c]} / ${tr.tampone}`).join(' · ') : 'vuoto';
+  const scegli = (k, v) => () => { u[k] = u[k] === v ? null : v; if (k === 'colore') { u.bersaglio = null; u.fonte = null; } u.esito = null; ctx.azioni.ridisegna(); };
+  const btn = (testo, attivo, onclick, titolo) => h('button', { type: 'button', class: `btn btn-piccolo scelta-btn${attivo ? ' scelta' : ''}`, 'aria-pressed': String(!!attivo), title: titolo, onclick }, testo);
+  return h('details', { class: 'trasformatore', open: u.aperto || undefined, ontoggle: (e) => { u.aperto = e.target.open; } },
+    h('summary', {}, h('strong', {}, 'Tampone'), ` ${riga} cariche NEC · ricarica `, tr.impianto === 'industriale' ? 'una carica ogni 10 minuti' : 'una carica all’ora'),
+    h('div', { class: 'corpo-consulta' },
+      h('p', { class: 'nota' }, R.trasformatori?.regola ?? '', ' ', R.trasformatori?.senza_trasformatore ?? ''),
+      h('div', { class: 'scelta-pulsanti', role: 'group', 'aria-label': 'Colore da ricaricare' }, colori.map((c) => btn(c, u.colore === c, scegli('colore', c)))),
+      u.colore ? (bersagli.length
+        ? h('div', { class: 'scelta-pulsanti', role: 'group', 'aria-label': 'Che cosa ricaricare' }, bersagli.map((b) => btn(`${b.nome}: mancano ${b.mancanti} ${b.unita}`, u.bersaglio === b.id, scegli('bersaglio', b.id))))
+        : h('p', { class: 'nota' }, `Niente da ricaricare di colore ${u.colore.toLowerCase()}: i NEC e le celle sono carichi.`)) : h('p', { class: 'nota' }, 'Scegli il colore da ricaricare.'),
+      piano?.ok && piano.preleva ? h('div', { class: 'scelta-pulsanti', role: 'group', 'aria-label': 'CEC da cui prelevare' }, fonti.map((f) => btn(`${f.nome}: ${f.cariche} → ${f.cariche - 1} cariche`, fonte?.chiave === f.chiave, scegli('fonte', f.chiave)))) : null,
+      piano ? (piano.ok
+        ? h('div', { class: 'riepilogo-trasformatore', role: 'status' },
+          h('p', {}, piano.preleva ? `Preleva 1 carica da ${piano.fonte.nome} (${piano.fonte.cariche} → ${piano.fonte.cariche - 1}): il tampone ${u.colore} sale a ${piano.tamponeInizio}.` : `Dal tampone ${u.colore}: ${piano.tamponeInizio} cariche.`),
+          h('p', {}, h('strong', {}, `Trasferisce ${piano.trasferite} cariche`), ` a ${bersaglio.nome}; nel tampone restano ${piano.tamponeDopo}.`),
+          h('p', {}, h('strong', {}, `Tempo: ${piano.durata}`), ` (${tr.impianto === 'industriale' ? 'una carica ogni 10 minuti' : 'una carica all’ora'}, velocità complessiva).`),
+          piano.avvisi.map((a) => h('p', { class: 'nota motivo' }, a)),
+          h('button', { type: 'button', class: 'btn primario', onclick: () => { u.esito = `Ricaricate ${piano.trasferite} cariche di ${bersaglio.nome} in ${piano.durata}; tampone ${u.colore} ${piano.tamponeDopo}.`; u.bersaglio = null; ctx.azioni.trasformatore({ uid: tr.uid, colore: u.colore, bersaglio, piano }); } }, `Ricarica (${piano.durata})`))
+        : h('p', { class: 'nota motivo', role: 'status' }, piano.errore)) : null,
+      u.esito ? h('p', { class: 'nota esito-aggiunta', role: 'status' }, u.esito) : null));
+}
+
+/**
  * Riserva di un NEC nella riga dell'Inventario: «NEC 87 / 100 ore» (o Lx, o usi) con i pulsanti dei
  * passi di regole.json → nec.passi_tavolo e la provenienza al tooltip (quale NEC, consumo, paragrafo).
  * Si segna a mano: «Nuova sessione» non ricarica (§5.4.6).
  */
 function rigaNec(ctx, r, x) {
   const parte = x.nome !== r.nome ? x.nome.slice(r.nome.length).trim() : '';
-  // A.193: la riserva nel file è in Lx e il manuale ora la conta in UE; nessun numero finché Davide non risponde
-  const vecchia = x.chiaveLx && !(x.chiave in (ctx.sessione.nec ?? {})) ? ctx.sessione.nec?.[x.chiaveLx] : undefined;
+  // A.193: la riserva nel file è in Lx, in UE o in ore e il manuale ora la conta in cariche; nessun numero finché Davide non risponde
+  const necSessione = ctx.sessione.nec ?? {};
+  const chiavePrima = x.chiave in necSessione ? undefined : (x.chiaviPrima ?? []).find((k) => Number.isInteger(necSessione[k]));
+  const vecchia = chiavePrima !== undefined ? necSessione[chiavePrima] : undefined;
   if (Number.isInteger(vecchia)) {
     const D = ctx.dati.regole.nec?.da_convertire ?? {};
     return h('div', { class: 'pi-voce riserva-nec da-convertire' },
       parte ? h('span', {}, `${parte}: `) : null,
       infoValore([h('em', {}, D.testo ?? 'riserva da convertire (A.193)')], {
         titolo: `Riserva: ${x.nome}`,
-        sottotitolo: `${D.spiegazione ?? ''} Nel file: ${vecchia.toLocaleString('it-IT')} Lx su un massimo di ${x.massimo} ${x.unita}.`.trim(),
+        sottotitolo: `${D.spiegazione ?? ''} Nel file: ${vecchia.toLocaleString('it-IT')} (Lx, UE o ore, secondo la versione di prima) su un massimo di ${x.massimo} ${x.unita}.`.trim(),
       }, { classe: 'valore-nec' }));
   }
   const n = ctx.sessione.nec?.[x.chiave] ?? x.massimo;
@@ -814,11 +864,11 @@ function rigaNec(ctx, r, x) {
     'aria-label': `${d > 0 ? 'Aggiungi' : 'Togli'} ${Math.abs(d)} ${x.unita} a ${x.nome}`, onclick: () => ctx.azioni.nec(x.chiave, d),
   }, d > 0 ? `+${d}` : `−${-d}`);
   return h('div', { class: `pi-voce riserva-nec${n === 0 ? ' esaurita' : ''}` },
-    h('span', {}, `${x.unita === 'Lx' || x.chiaveLx ? 'Riserva' : 'NEC'}${parte ? ` ${parte}` : ''} `),
+    h('span', {}, `${String(x.unita).startsWith('cariche') ? 'Cariche' : 'NEC'}${parte ? ` ${parte}` : ''} `),
     infoValore([h('strong', {}, n.toLocaleString('it-IT')), ` / ${x.massimo.toLocaleString('it-IT')} ${x.unita}`], {
       titolo: `Riserva: ${x.nome}`,
-      // A.67 (E&L del 02/10): niente travaso di energia fra NEC (regole.json → nec.travaso)
-      sottotitolo: `Si segna a mano (Equipaggiamento §5.4): «Nuova sessione» non ricarica.${ctx.dati.regole.nec?.travaso?.ammesso === false ? ` ${ctx.dati.regole.nec.travaso.decisione}` : ''}`,
+      // A.67 (E&L del 02/10): niente travaso fra NEC senza un trasformatore o una stazione (regole.json → nec.trasformatori)
+      sottotitolo: `Si segna a mano (Equipaggiamento §5.4): «Nuova sessione» non ricarica. ${ctx.dati.regole.nec?.trasformatori?.senza_trasformatore ?? ''}`.trim(),
       provenienza: x.provenienza,
     }, { classe: 'valore-nec' }),
     h('span', { class: 'pi-comandi' }, [...x.passi].reverse().map((p) => b(-p)), x.passi.map((p) => b(p))));

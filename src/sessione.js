@@ -13,10 +13,11 @@
 // contatore dei Round della sessione («Nuovo Round»), l'ultima attivazione { id, round } per il limite
 // di una per Round, gli effetti attivi [{ id, dal, al }] con la loro durata (al = ultimo Round, null =
 // finché non si termina). «Nuova sessione» li riporta al Round 1, senza Tecniche attive.
-// nec: riserva attuale dei NEC (Equipaggiamento 0.13, §5.4; src/equipaggiamento.js → riserveNec): UE di Moduli e
-// Banchi (chiave «uid#ue»), ore o usi degli apparecchi che li comprendono, Lx solo per le voci del lotto 2; i nuovi
-// partono carichi; «Nuova sessione» non li ricarica. L'elettronica ordinaria non si conta (§5.4.3): i valori salvati
-// prima restano nel file senza contatore, e una riserva salvata in Lx di un oggetto ora in UE è «da convertire» (A.193).
+// nec: riserva attuale dei NEC (Equipaggiamento 0.22, §5.4; src/equipaggiamento.js → riserveNec): cariche di NEC, pacchi, CEC,
+// MEC e BEC (chiave «uid#c»), cariche, usi o ore degli apparecchi che li comprendono; i nuovi partono carichi; «Nuova sessione»
+// non li ricarica. L'elettronica ordinaria non si conta (§5.4.3): i valori salvati prima restano nel file senza contatore, e una
+// riserva salvata in Lx, in UE o in ore di un oggetto ora in cariche è «da convertire» (A.193).
+// trasformatori: tampone di ogni trasformatore (Equipaggiamento §5.4.6, src/trasformatori.js): { uid: { colore, tamponi } }.
 // integrita: PI attuali degli oggetti con PI (Armamenti §7.2.1: «si annotano separatamente quelli
 // attuali»), entro 0 e i massimi del catalogo; gli oggetti nuovi partono integri (formato 7).
 // lanci: le ultime scelte del pannello «Lancia!» per ogni incantesimo (src/ui/lancio.js).
@@ -50,6 +51,7 @@ import { SENZ_ARMI } from './attacco.js';
 import { saldoIniziale } from './dotazioni.js';
 import { infoRicarica, eseguiRicarica, perOperazione, allineaCarichini, usaCarichino, riempiCarichino } from './ricarica.js';
 import { caricatori, contenitori, normalizzaEquipaggiamento, catalogo, risolvi, riserveNec, granateDaLancio } from './equipaggiamento.js';
+import { elencoTrasformatori, statoTrasformatore } from './trasformatori.js';
 import { oggettiConPi } from './protezione.js';
 import { attivaTecnica, nuovoRound, terminaTecnica, allineaTecnicheAttive, tecnicaDi } from './tecniche.js';
 import { allineaIncantesimiAttivi } from './durate-incantesimi.js';
@@ -119,8 +121,10 @@ export function massimiSessione(scheda, creazione, dati) {
     tecniche: (scheda?.tecniche ?? []).map((t) => t.id),
     // riserve dei NEC (chiave → massimo in UE, ore o usi; Lx solo per il lotto 2), Equipaggiamento §5.4
     nec: dati.equipaggiamento && dati.regole.nec ? Object.fromEntries(riserveNec(normalizzaEquipaggiamento(creazione?.equipaggiamento), dati).map((x) => [x.chiave, x.massimo])) : null,
-    // riserve in UE che nel file erano in Lx (chiave UE → chiave di prima): «da convertire», A.193
-    necDaConvertire: dati.equipaggiamento && dati.regole.nec ? Object.fromEntries(riserveNec(normalizzaEquipaggiamento(creazione?.equipaggiamento), dati).filter((x) => x.chiaveLx).map((x) => [x.chiave, x.chiaveLx])) : null,
+    // riserve in cariche che nel file erano in Lx, in UE o in ore (chiave nuova → chiavi di prima): «da convertire», A.193
+    necDaConvertire: dati.equipaggiamento && dati.regole.nec ? Object.fromEntries(riserveNec(normalizzaEquipaggiamento(creazione?.equipaggiamento), dati).filter((x) => x.chiaviPrima?.length).map((x) => [x.chiave, x.chiaviPrima])) : null,
+    // trasformatori dell'Inventario (§5.4.6): uid → colori gestiti (1 o 3), per i tamponi al tavolo
+    trasformatori: dati.equipaggiamento ? Object.fromEntries(elencoTrasformatori(normalizzaEquipaggiamento(creazione?.equipaggiamento), dati).map((t) => [t.uid, { colori: t.colori, tampone: t.tampone }])) : {},
   };
 }
 
@@ -147,15 +151,52 @@ function allineaNec(v, m) {
   if (!m.nec) return restano;
   const conti = {};
   for (const [k, max] of Object.entries(m.nec)) {
-    // riserva salvata in Lx di un oggetto che ora si conta in UE: «da convertire», nessun numero inventato (A.193)
-    const vecchia = m.necDaConvertire?.[k];
-    if (vecchia && !(k in src) && Number.isInteger(src[vecchia])) continue;
+    // riserva salvata in Lx, in UE o in ore di un oggetto che ora si conta in cariche: «da convertire», nessun numero inventato (A.193)
+    const prima = m.necDaConvertire?.[k];
+    if (prima && !(k in src) && prima.some((v) => Number.isInteger(src[v]))) continue;
     conti[k] = limita(intero(src[k], max), 0, max);
   }
   return { ...restano, ...conti };
 }
 
-/** Riserva di un NEC al tavolo: +/− manuali (ore, usi o Lx), entro 0 e il massimo (§5.4.2). */
+/**
+ * Tamponi dei trasformatori (Equipaggiamento 0.22, §5.4.6): per ogni trasformatore dell'Inventario il colore (fissato al
+ * primo uso nel monocromatico) e le cariche NEC di ogni colore, da 0 al tampone; quelli tolti spariscono.
+ */
+function allineaTrasformatori(v, m) {
+  const src = isOggetto(v) ? v : {};
+  const out = {};
+  for (const [uid, t] of Object.entries(m.trasformatori ?? {})) {
+    const x = statoTrasformatore(src, uid);
+    const tamponi = Object.fromEntries(Object.entries(x.tamponi).map(([c, n]) => [c, limita(n, 0, t.tampone)]));
+    // il monocromatico ha un solo colore; il multicromatico un tampone per colore
+    const colore = t.colori === 1 ? x.colore ?? Object.keys(tamponi).find((c) => tamponi[c] > 0) ?? null : null;
+    if (colore || Object.values(tamponi).some((n) => n > 0)) out[uid] = { colore, tamponi };
+  }
+  return out;
+}
+
+/**
+ * Ricarica con un trasformatore (§5.4.6): il piano di src/trasformatori.js → pianoRicarica, applicato alla sessione.
+ * Il tampone del colore si aggiorna (con il prelievo di una carica dalla CEC scelta, se serve), le cariche trasferite si
+ * aggiungono al NEC o al caricatore dell'arma.
+ * @param az { uid, colore, bersaglio: { tipo, chiave?, uid? }, piano }
+ */
+export function ricaricaConTrasformatore(sessione, az, m) {
+  const s = allineaSessione(sessione, m);
+  const { piano } = az;
+  if (!piano?.ok || !(az.uid in (m.trasformatori ?? {}))) return s;
+  const x = statoTrasformatore(s.trasformatori, az.uid);
+  const trasformatori = { ...s.trasformatori, [az.uid]: { colore: m.trasformatori[az.uid].colori === 1 ? az.colore : null, tamponi: { ...x.tamponi, [az.colore]: piano.tamponeDopo } } };
+  const nec = { ...s.nec };
+  if (piano.preleva && piano.fonte?.chiave in nec) nec[piano.fonte.chiave] = Math.max(0, nec[piano.fonte.chiave] - 1);
+  const munizioni = { ...s.munizioni };
+  if (az.bersaglio?.tipo === 'nec' && az.bersaglio.chiave in nec) nec[az.bersaglio.chiave] += piano.trasferite;
+  else if (az.bersaglio?.tipo === 'cella' && az.bersaglio.uid in munizioni) munizioni[az.bersaglio.uid] = { ...munizioni[az.bersaglio.uid], colpi: munizioni[az.bersaglio.uid].colpi + piano.trasferite };
+  return modificaSessione(s, { trasformatori, nec, munizioni }, m);
+}
+
+/** Riserva di un NEC al tavolo: +/− manuali (cariche, ore o usi), entro 0 e il massimo (§5.4.2). */
 export function variaNec(sessione, chiave, delta, m) {
   const s = allineaSessione(sessione, m);
   if (!(chiave in s.nec)) return s;
@@ -345,6 +386,7 @@ export function inizializzaSessione(m) {
     lanci: {},
     integrita: allineaIntegrita({}, m),
     nec: allineaNec({}, m),
+    trasformatori: {},
     condizioniArmi: {},
     round: 1,
     ultimaTecnica: null,
@@ -400,6 +442,7 @@ export function allineaSessione(sessione, m) {
     lanci: Object.fromEntries(Object.entries(isOggetto(sessione.lanci) ? sessione.lanci : {}).filter(([, v]) => isOggetto(v))),
     integrita: allineaIntegrita(sessione.integrita, m),
     nec: allineaNec(sessione.nec, m),
+    trasformatori: allineaTrasformatori(sessione.trasformatori, m),
     // condizione di ogni arma (uid → id; «integra» non si salva)
     condizioniArmi: Object.fromEntries(Object.entries(isOggetto(sessione.condizioniArmi) ? sessione.condizioniArmi : {})
       .filter(([uid, id]) => id !== 'integra' && (m.condizioniArmi ?? []).includes(id) && (!m.oggetti || m.oggetti.includes(uid)))),
