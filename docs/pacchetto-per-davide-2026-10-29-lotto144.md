@@ -1,5 +1,7 @@
 # Pacchetto per il Doc «per-davide.md» — Lotto 144 (29/10/2026)
 
+> **SUPERATO dal pacchetto `docs/pacchetto-per-davide-2026-10-30-ricognizione.md`** (30/10 pomeriggio): non applicare a parte.
+
 Da applicare da Cowork (o Marcello): Claude Code non scrive nel Doc. Si applica **sopra il Doc di oggi e i pacchetti precedenti già applicati**, sezione per sezione. Dettaglio:
 `docs/diff-lotto144-2026-10-29.md`.
 

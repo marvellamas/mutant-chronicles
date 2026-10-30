@@ -1,6 +1,6 @@
 # **ASA Scout MK4**
 
-## *SIMPLY RPG   •   Scheda del veicolo   •   Edizione 0.2   •   Ottobre 2026*
+## *SIMPLY RPG   •   Scheda del veicolo   •   Edizione 0.5   •   29 ottobre 2026*
 
 Ricognitore della Neverlost preparato da Petra. Quattro grandi ruote rinforzate, carrozzeria corazzata a pannelli modulari, cabina chiusa con vetri rinforzati e mitragliatore leggero su rotaia presso la botola superiore.
 
@@ -127,7 +127,7 @@ L’abitacolo sigillato dispone di riserva respiratoria e ricircolo. Le bombole 
 
 Si conta soltanto il tempo effettivo di funzionamento. Dopo 3 ore di uso rimangono 21 ore, conservate quando il sistema viene disattivato. La protezione richiede alimentazione disponibile e tenuta di porte, vetri e botola. Aprirli espone all’ambiente esterno; utilizzare il mitragliatore dalla botola interrompe la protezione dell’abitacolo.
 
-La ricarica del NEC non ripristina le riserve respiratorie consumate, che richiedono rifornimento o sostituzione. La quantità e il formato delle bombole devono ancora essere specificati; l’autonomia complessiva del sistema è già fissata.
+Ricaricare la CEC Verde non ripristina l’aria consumata. Le 24 ore respiratorie complessive per otto occupanti si misurano sul tempo effettivo, anche non consecutivo; il consumo energetico Verde segue invece il giorno di utilizzo. Quantità e formato delle bombole restano da specificare.
 
 # **Comunicatore ponte**
 
@@ -137,17 +137,17 @@ Il comunicatore di bordo ritrasmette le comunicazioni della squadra verso la Nev
 
 | Impianto | Configurazione |
 | :---- | :---: |
-| Trazione e sistemi ordinari | 2 Banchi Rossi ricaricabili |
-| Riserva complessiva Rossa | 200 UER; 2 Banchi da 100 UER |
-| Supporto vitale | Riserva Verde separata; formato e capacità da definire |
-| Consumo e autonomia di viaggio | Da definire per lo Scout |
-| Scorte energetiche di partenza | Da definire con il nuovo impianto |
+| Trazione e sistemi ordinari | 1 MEC Rosso; 1.000 UER; 10 cariche |
+| Consumo e autonomia di viaggio | 1 carica ogni 75 km; 750 km nominali |
+| Supporto vitale | 1 CEC Verde; 100 UEV; 10 cariche; 1 per giorno di utilizzo |
+| Ricambi installati pieni | Rosso 100 kg e 3.000 cr; Verde 5 kg e 1.000 cr |
+| Scorte energetiche di partenza | Oltre agli accumulatori installati, da indicare nell’inventario |
 
-Ogni Banco Rosso commerciale contiene cento UER, pesa 20 kg e costa 6.000 cr carico oppure 5.000 cr vuoto. I due Banchi totalizzano duecento UER e 40 kg: 12.000 cr carichi, con ricarica completa di entrambi a 2.000 cr. Si applicano compatibilità e ricarica del Manuale dell’Equipaggiamento, §5.4. La sostituzione richiede un minuto per Banco; tempi diversi richiedono una specifica dell’allestimento.
+Il MEC Rosso pieno costa 3.000 cr; ricarica completa 300 cr in due ore, 30 cr e dodici minuti per carica. La CEC Verde piena costa 1.000 cr; ricarica completa 100 cr in un’ora, 10 cr e sei minuti per carica. Dotazione energetica installata: 105 kg e 4.000 cr piena; ricarica completa 400 cr. I ricambi aggiuntivi occupano carico. Sostituzione: MEC dieci minuti con attrezzatura di movimentazione; CEC un minuto con accesso e ricambio pronto.
 
-I NEC sono riutilizzabili. La precedente dotazione a pacchi non ricaricabili da 200 km deve essere sostituita dal nuovo dimensionamento: non determina l’autonomia dell’impianto corrente.
+Il Rosso si gestisce in dieci cariche da 75 km: sommare le tratte brevi e arrotondare per eccesso una sola volta alla chiusura del viaggio o della giornata. Il Verde consuma una carica per ogni giorno in cui si usa il supporto vitale, anche per poche ore; più accensioni nello stesso giorno sono comprese. Un giorno senza uso non consuma Verde. La normale elettronica di bordo non aggiunge consumi. Esempio: giorno 1, tre ore di supporto → Verde 9 e aria 21 ore; giorno 2, altre sei ore → Verde 8 e aria 15 ore; giorno 3, nessun uso → valori invariati.
 
-Ricaricare i NEC non ripara il Motore; riparare il Motore non ricarica i NEC. Il prezzo completo, i consumi dei sistemi aggiuntivi e i costi di riparazione specifici dello Scout restano da definire.
+Ricaricare gli accumulatori non ripara il Motore; riparare il Motore non ricarica le riserve. Telaio, M606 e accumulatori standard pieni valgono complessivamente 113.000 cr; il prezzo completo con munizioni e corredo, le scorte iniziali aggiuntive e i costi di riparazione specifici restano da definire.
 
 # **Registro della spedizione**
 
@@ -179,9 +179,9 @@ Ricaricare i NEC non ripara il Motore; riparare il Motore non ricarica i NEC. Il
 
 Supporto vitale usato \_\_\_\_\_\_ h   Autonomia residua \_\_\_\_\_\_ / 24 h
 
-Autonomia di viaggio residua \_\_\_\_\_\_\_\_\_\_ (massimo da definire)   Km percorsi \_\_\_\_\_\_\_\_\_\_   Rifornimento: 2 Banchi Rossi, 200 UER complessive
+Cariche Rosse residue \_\_\_\_\_\_ / 10   Autonomia nominale massima 750 km   Km della giornata \_\_\_\_\_\_
 
-Carica Verde residua \_\_\_\_\_\_\_\_\_\_   Munizioni M606 di riserva \_\_\_\_\_\_\_\_\_\_
+Cariche Verdi residue \_\_\_\_\_\_ / 10   Giorni con supporto attivo \_\_\_\_\_\_   Munizioni M606 di riserva \_\_\_\_\_\_
 
 Data \_\_\_\_\_\_\_\_\_\_  Posizione \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_  Occupanti \_\_\_\_\_\_ / 8
 

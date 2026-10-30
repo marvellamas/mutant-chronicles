@@ -1,5 +1,7 @@
 # Pacchetto per il Doc «per-davide.md» — Lotto 146 (30/10/2026)
 
+> **SUPERATO dal pacchetto `docs/pacchetto-per-davide-2026-10-30-ricognizione.md`** (30/10 pomeriggio): non applicare a parte.
+
 Da applicare da Cowork (o Marcello): Claude Code non scrive nel Doc. Si applica **sopra il Doc del 29/10 17:18 e i pacchetti del 29/10 già applicati** (lotti 143, 144 e 145: A.205–A.213 compresi), sezione per sezione. Dettaglio: `docs/nec-lotto2-2026-10-30.md`, `docs/diff-manuali-2026-10-30.md`.
 
 ---

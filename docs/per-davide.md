@@ -1,6 +1,6 @@
 > > # **Per Davide — domande aperte ed errata dei manuali**
 
-*Aggiornato al 28 ottobre 2026\.*
+*Aggiornato al 29 ottobre 2026 (sera).*
 
 **Istruzioni per Davide (e per l’AI che usi per rispondere)**
 
@@ -28,29 +28,49 @@ Nessuna, al momento. Grazie per l’aggiornamento cumulativo dell’8 ottobre.
 
 > > ### **Personaggi e salvataggi**
 
-**A.187 — Un livello in più di quelli che danno i PX.** Il livello di un personaggio nella scheda è quello dei livelli presi con «Sali di livello», e non è legato ai PX (l’app propone, il Direttore decide). Il conto «PX → livello» è corretto e coincide con il tuo Gestore PX e con le soglie approvate (A.170): con 600 PX il 6° livello, con 720 il 7°. Se un personaggio risulta avere un livello in più di quelli che gli danno i PX (per esempio 7° con 600 PX perché ha preso il livello prima del tempo), che cosa si fa? (a) si lascia com’è, l’app lo segnala soltanto; (b) il Direttore toglie il livello in più con «Annulla l’ultimo livello» e il giocatore lo riprende quando i PX bastano; (c) i PX del personaggio si portano alla soglia del suo livello. *Nel frattempo:* l’app lo segnala (in Identità e in «Controlla lo stato») e non tocca niente.
-
-**A.188 — Le scelte conservate dopo il passaggio ai Talenti nuovi: le cambia il giocatore o serve la tua approvazione?** L’A.184 dice che «eventuali cambi delle scelte conservate richiedono l’approvazione del Direttore». Il 26/10 al tavolo hai detto invece che ogni giocatore cambia sempre i propri incantesimi, perché ti fidi. Le due cose non stanno insieme. *Nel frattempo:* vale la regola del tavolo, che è più recente: gli incantesimi li cambia sempre il giocatore, senza passare da te. Confermi che vale anche per le scelte conservate dopo il passaggio, o per quelle serve la tua approvazione?
+**A.197 — Il premio di fine Atto già dato: blocco o avviso?** Il Gestore PX v1.3 (20/10) **blocca** la seconda assegnazione del premio dello stesso Atto («non può essere duplicato»). Nell’app il pannello «PX della partita» **avvisa** («già dato a …») e lascia procedere, perché l’ultima parola è del Direttore. Vuoi il blocco come nel Gestore, o va bene l’avviso? *Nel frattempo:* avviso, come ora. (Il premio a tutti i PG, assenti compresi, è già come nel Gestore.)
 
 > > ### **Energia (NEC) dopo i manuali del 27–28/10**
 
-I manuali nuovi passano dai Lx alle Unità Energetiche (UER, UEB, UEV), con trasformatori e tampone. Quattro punti contraddicono decisioni che avevi già approvato, e due dati mancano. *Nel frattempo*, per tutti: **l’app tiene la decisione approvata** finché non rispondi.
+Il tuo registro NEC 1.6 (28/10) ha già risposto a due delle domande che avevamo messo qui (A.189 e A.191: le trovi nella sezione 3), e il Manuale dei Mostri 0.46 alla A.194. Restano cinque punti. *Nel frattempo*, per tutti: **l’app tiene la decisione approvata** finché non rispondi.
 
-**A.189 — Il trasformatore e la regola del «niente travaso».** Con la A.67 (decisione 76\) avevi deciso che «l’energia di un NEC non si riversa in un altro: si sposta solo il NEC fisico». L’Equipaggiamento 0.13 (§5.4.6) introduce il trasformatore, che preleva 1 UE da una fonte e la trasferisce negli accumulatori, conservando il resto in un tampone. La regola del travaso è superata, e il trasferimento vale solo attraverso un trasformatore o una stazione industriale? *Nel frattempo:* niente travaso, come deciso.
+**A.190 — Il pacco del Gehemmapuker.** Con la A.67 (decisione 76\) il Gehemmapuker usava un Modulo Blu da 2.500 Lx (50 getti, cambio 1 AzP). Gli Armamenti 0.65 (§7.20.6) dicono: pacco dedicato **Rosso** da 50 cariche, «non un Modulo generico da dieci UE», e tutti i lanciafiamme diventano Rossi; il tuo registro dà gli Armamenti 0.65 come allineati. Ci basta una conferma: **il pacco Rosso da 50 cariche sostituisce il Modulo Blu della decisione 76?** *Nel frattempo:* Modulo Blu, 50 getti.
 
-**A.190 — Il pacco del Gehemmapuker.** Con la A.67 (decisione 76\) il Gehemmapuker usava un Modulo Blu da 2.500 Lx (50 getti, cambio 1 AzP), una voce sola del catalogo. Gli Armamenti 0.65 (§7.20.6) dicono: pacco dedicato **Rosso** da 50 cariche, «non un Modulo generico da dieci UE», e tutti i lanciafiamme diventano Rossi. Confermi che la 0.65 sostituisce la decisione 76 su questo punto? *Nel frattempo:* Modulo Blu, 50 getti.
+**A.192 — L’energia dello Scout in UE.** Il tuo registro dice che restano da fissare l’autonomia di viaggio e i sistemi aggiuntivi dello Scout, e che i valori assenti non equivalgono a uso gratuito. Sappiamo quindi che li hai già in lista; se ti serve un punto di partenza, la nostra proposta: **500 km con i 200 UER** dei due Banchi Rossi (1 UER \= 2,5 km), **un Modulo Verde da 10 UEV** con le stesse 50 ore di supporto vitale, aria invariata (8 ore \+ 2 bombole da 8, A.101). *Nel frattempo:* l’app tiene i valori della A.101 (200 Lx/km, 500 km, Modulo Verde da 10.000 Lx), letti in proporzione: la riserva piena resta piena.
 
-**A.191 — La ricarica del NEC Blu IAS.** Con la A.64 (decisione 75\) la ricarica costava 50 cr in un’ora. Gli Armamenti 0.65 dicono 10 cr a carica (200 cr da vuota) e 20 ore col trasformatore portatile o 3 h 20 con la stazione industriale. Confermi i nuovi valori? *Nel frattempo:* 50 cr in un’ora.
+**A.193 — Le riserve già salvate in Lx.** Il tuo registro dice che nei profili di gioco i Lx sono sostituiti da cariche, riserve e autonomia direttamente utilizzabili, senza dare un’equivalenza. Per l’elettronica ordinaria (torce, comunicatori, visori…) il contatore è già sparito. Restano riserve salvate in Lx nei file di alcuni personaggi e dei mezzi (celle d’arma, Banchi, Moduli). Proposta: **si porta la stessa frazione** (una cella Plasma a metà \= 10 colpi su 20; un Banco dello Scout a 25.000 Lx su 50.000 \= 50 UER su 100). Va bene? *Nel frattempo:* l’app non converte niente: dove il file ha Lx e il manuale ha le UE, la scheda scrive «riserva da convertire (A.193)» e il valore resta nel file.
 
-**A.192 — L’energia dello Scout in UE.** Con la A.101 (decisione 94\) avevi approvato per l’ASA Scout MK4: 200 Lx/km e 500 km di autonomia, 100 Lx/ora da fermo, Modulo Verde da 10.000 Lx con supporto vitale a 200 Lx/ora, aria 8 ore fisse più due bombole da 8\. La scheda 0.4 dice 2 Banchi Rossi \= 200 UER, ma «consumo e autonomia di viaggio da definire», «riserva Verde: formato e capacità da definire», bombole «da specificare». Quali valori vuoi in UE? Proposta: **500 km con i 200 UER** (1 UER \= 2,5 km, contro i 100 km dell’autovettura), **un Modulo Verde da 10 UEV** con le stesse 50 ore di supporto vitale, aria invariata (8 ore \+ 2 bombole da 8). *Nel frattempo:* i valori della A.101, letti in proporzione (la riserva piena resta piena).
+**A.195 — La Taglia del Punisher Wächter.** Il profilo dice Taglia «Medio o Grande»; il §7.4.1 degli Armamenti dice Grande, la tabella dei profili dice Medio. Quale vale per il Wächter? (Prezzo e Reperibilità li hai già in lista da fissare, come scrivi nel registro: finché non ci sono, l’app non lo mette in vendita.) *Nel frattempo:* l’app non mostra la Taglia.
 
-**A.193 — Le riserve già salvate in Lx.** Personaggi e veicoli hanno riserve salvate in Lx (celle d’arma, NEC dei dispositivi, banchi dei mezzi). Il Manuale dei Mostri dice che «l’equivalenza UER/Lx non è definita». Proposta: per l’elettronica ordinaria il conteggio sparisce; per armi, dispositivi e mezzi si riporta la **stessa frazione** (una cella Plasma a metà \= 10 colpi su 20; un banco dello Scout a 25.000 Lx su 50.000 \= 50 UER su 100). Va bene? *Nel frattempo:* l’app non converte niente.
+**A.196 — La Neverlost nell’app.** Il Manuale dei Veicoli 0.8 e la tua scheda 1.5 descrivono la Neverlost (scale tattiche, riserve in punti, scudo, armi navali, circuito tecnomistico). Vuoi che l’app la gestisca come i veicoli dei PG (tab Veicoli, plancia, mappa in Q Tattici), o per ora resta sulla scheda e l’app serve solo per i mezzi terrestri? *Nel frattempo:* resta sulla scheda.
 
-**A.194 — Il Dragomedusa: PX e GS.** Il profilo del 25/10 dice che GS (Leggenda) e PX (100) del vecchio adulto vanno rivalutati, e che i valori secondari del giovane sono ancora da definire. Per metterlo nel Bestiario del Tavolo servono almeno i PX dell’adulto. Quali? *Nel frattempo:* nel Bestiario solo l’adulto, con «PX da definire» (il Tavolo lascia scrivere i PX dell’incontro a mano), e il giovane come nota.
+> > ### **Bestiario e mappa**
 
-**A.195 — Il Punisher Wächter: prezzo, reperibilità e Taglia.** La scheda nuova (Armamenti 0.65) lascia prezzo e REP «da definire» (il Punisher base: 6.000 cr, Molto rara) e dice Taglia «Medio o Grande», mentre il §7.4.1 dice Grande e la tabella dello stesso capitolo Medio. Quali valori? *Nel frattempo:* l’app non lo mette in vendita.
+**A.198 — Il Dragomedusa sulla mappa: è più grande di quanto l’app sappia disegnare.** Il Dragomedusa adulto occupa **14 × 10 quadretti Base**, ma con la A.167 avevamo fissato il limite a **12 per lato** (oltre, un rombo non è più una sagoma del manuale). Oggi le sue dimensioni sono scritte nella scheda come testo, quindi sulla plancia la pedina **non occupa lo spazio giusto**: se lo usi in uno scontro sulla mappa, se ne accorgono tutti. Alziamo il limite a 14 (o di più, dicci fin dove), oppure il Dragomedusa sulla mappa si rappresenta in **Q Tattici** come dice la sua scheda (1 × 1 / 2 × 1), e l’ingombro grande resta solo descritto? *Nel frattempo:* la scheda scrive le dimensioni, la pedina usa la Taglia Grande.
 
-**A.196 — La Neverlost nell’app.** Il Manuale dei Veicoli 0.8 ha la scheda completa della Neverlost (scale tattiche, riserve in punti, scudo ScE, armi navali, circuito tecnomistico). Vuoi che l’app la gestisca come i veicoli dei PG (tab Veicoli, plancia, mappa in Q Tattici), o per ora resta sulla scheda e l’app serve solo per i mezzi terrestri? *Nel frattempo:* resta sulla scheda.
+**A.199 — Il danno «4d10 × 5» del Soffio.** Il Soffio di Fulmine del Dragomedusa adulto ha un danno con un moltiplicatore, e l’app non lo tira da sola: lo mostra scritto com’è nel manuale, e il tiro lo fai tu. Preferiamo non tirare, piuttosto che tirare un numero sbagliato. Vuoi che l’app lo calcoli (4d10 e poi × 5), o che resti scritto e lo tiri tu? Ci sono altre creature con un danno di questo tipo? *Nel frattempo:* l’app lo mostra e non lo tira.
+
+**A.200 — L’Iniziativa mai negativa vale anche per i nemici umani?** La 0.46 dice che l’**Iniziativa delle creature** non è mai negativa, e 66 creature del bestiario sono passate a 0\. Nell’app ci sono anche tre **Inquisitori della Fratellanza**, che sono nemici scritti da noi e non creature del manuale: avevano −1 e li abbiamo portati a 0 anche loro, per non avere due regole diverse al tavolo. Confermi, o per i PNG umani l’Iniziativa può restare negativa? *Nel frattempo:* 0 per tutti.
+
+**A.201 — Nome dei draghi metallici: «di» o «d’»?** Il manuale scrive «Drago di ottone», «di rame», «di bronzo», «di argento», «di oro» per giovani e adulti, e «Drago d’ottone», «d’argento», «d’oro» per cuccioli e antichi (rame e bronzo sempre «di»). Qual è la forma giusta? *Nel frattempo:* nomi come nel manuale; ricerca e filtri li trovano entrambi.
+
+**A.202 — La Murena della Roccia cucciolo si muove sul terreno?** La scheda dà solo il «Movimento etereo 6 / 12 / 18 Q»; il giovane e l’adulto hanno anche il movimento sul terreno (4/8/12 e 5/10/15) e quello nella roccia. Il cucciolo ha un movimento a terra? *Nel frattempo:* nell’app il 6 / 12 / 18 vale come Passo, Corsa e Scatto.
+
+**A.203 — Madre delle Murene: quale ingombro sulla mappa?** Il manuale dà «parziale» 2 × 2 Q (fino a 4 Q restando nella roccia) e «completo» 6 × 2 Q. Quale va sulla pedina? *Nel frattempo:* 6 × 2 Q, il parziale è nella nota.
+
+**A.204 — Ordine dei numeri dell’ingombro dei draghi.** «Corpo disteso con coda 6 × 4 Q Base» (giovane), «10 × 6» (adulto), «16 × 10» (antico): è lunghezza × larghezza? L’app, per la A.167, legge «larghezza × lunghezza». *Nel frattempo:* copiato nell’ordine del manuale (giovani e adulti nel campo Spazio; gli antichi, oltre 12 Q, fuori dal campo come A.198).
+
+**A.205 — Diplomazia o Oratoria?** Nel Manuale dei Mostri 0.46 la **Driade** ha «Diplomazia 13» e il **Marinide** «Diplomazia 10» fra le Abilità; «Diplomazia» non è fra le 24 Abilità del Giocatore (esiste Oratoria). L’app ha messo Oratoria. È giusto, o la voce è un errore del manuale? *Nel frattempo:* Oratoria 13 e Oratoria 10\.
+
+**A.206 — Parata «—» del Lottatore di I Grado.** Nella tabella delle risorse dei PNG generici il Lottatore di I Grado ha la Parata scritta «—» (dal II Grado 15, 18, 20, 23, 25), la Schivata 12\. Vuol dire che non può parare al I Grado? *Nel frattempo:* le Difese del nemico valgono la Schivata, con un avviso nella procedura «Crea nemico».
+
+**A.207 — Natura e AC delle armi di umani e umanoidi.** Nelle schede del capitolo 8 (goblin, orchi, scheletri, gnoll, giganti…) la tabella dà VA e «Danno completo» (es. 1d6+2) senza dire la natura del danno né l’AC; i PNG generici dicono «danni Naturali, AC 1». Per le creature con arma vale la stessa regola? *Nel frattempo:* le schede presenti hanno natura Naturale e AC 1\.
+
+**A.208 — Iniziativa degli Elementali maggiori.** Acqua, Aria, Fuoco e Terra maggiori hanno «INI dopo l’evocatore»: nessun numero. Quale bonus a 1d10 se non c’è un evocatore? *Nel frattempo:* 0\.
+
+**A.209 — Parata o Schivata come «Difese» dei modelli PNG?** Le tabelle dei PNG generici hanno due valori (Parata e Schivata, di solito uguali o a un punto di distanza); il formato dei nemici ha un solo campo Difese. L’app prende la Parata (la Schivata è nella provenienza). È giusto? *Nel frattempo:* Parata.
+
+**A.210 — GS e PX dei modelli PNG.** Il Direttore §9.6 dice che il Grado di Classe non assegna un GS; i PX pronti (10–350 per quattro PG) sono in tabella. L’app non scrive il GS (il formato lo richiede insieme ai PX) e mette i PX nella nota del nemico. Va bene, o vuoi un campo «PX» senza GS? *Nel frattempo:* PX nella nota.
 
 > > ---
 
@@ -66,9 +86,11 @@ Le tue risposte sono nella sezione 7\. Qui c’è cosa fa l’app finché l’im
 
 > > •             **A.128 — Terreno difficile.** Coincide con quello che la mappa già fa. Passa fra le Risolte quando la mappa è in uso al tavolo.
 
-> > •             **A.174 — «Ricarica e medita».** Hai ammesso il comando unico: prima i PM già disponibili ricaricano il cristallo, poi si medita per recuperarli, con tutti i costi e i limiti dei due passaggi. L’app oggi ha «Medita» con la strada breve e fa già pagare tutti i costi; devono ancora cambiare il nome in «Ricarica e medita» e il riepilogo (PM spesi, carica ottenuta, PM effettivamente recuperati). Passa fra le Risolte quando sarà fatto.
-
 > > •             **A.176 — Incantesimi aggiunti a mano.** Hai distinto apprendimento effettivo (conta come conosciuto, anche per prerequisiti, consumabili e insegnamento) e semplice annotazione (non concede accesso alla magia, Abilità o PM). L’app oggi tiene gli incantesimi aggiunti a mano fuori dai conosciuti: da allineare. Passa fra le Risolte quando sarà fatto.
+
+> > •             **A.189 — Il trasformatore e la regola del «niente travaso»** (risposta nel tuo registro NEC 1.6, 28/10; Equipaggiamento 0.13 §5.4.6–5.4.7). Hai approvato il **trasformatore dedicato** col **tampone**: preleva 1 UE dalla fonte, ne tiene dieci cariche e trasferisce solo quelle che servono; un caricatore generico, i PM personali e la sola vicinanza a una Matrice non bastano. Tre modelli: portatile monocromatico (3.000 cr, 1 carica all’ora), portatile multicromatico (6.000 cr), stazione industriale (20.000 cr, 1 carica ogni 10 minuti). Il registro non cita la A.67 («niente travaso fra NEC»): la leggiamo come **superata nei limiti del trasformatore**. Se vuoi che resti per altri casi, dillo. L’app farà il cambio nel lotto delle armi e delle celle; fino ad allora tiene la regola vecchia.
+
+> > •             **A.191 — La ricarica del NEC Blu IAS** (risposta nel registro NEC 1.6, «Prezzi delle cariche personali»). La tariffa approvata è **10 cr per carica ripristinata**: 20 cariche (un IAS da vuoto) costano **200 cr**, e col trasformatore portatile servono 20 ore (3 ore e 20 con la stazione). Sono i valori degli Armamenti 0.65. L’app li applicherà nel lotto delle armi e delle celle; fino ad allora tiene quelli della A.64 (50 cr in un’ora).
 
 > > ---
 
@@ -138,9 +160,27 @@ Decisioni già prese o errori evidenti: l’app segue la decisione, il testo dic
 
 > > •             ~~§5.2: dice ancora «5 punti Abilità liberi a ogni Grado»; dopo la A.90 va portato a 7\.~~ — fatto nel Google Doc (verificato il 28/10).
 
+> > •             **Il Google Doc dei Mostri è fermo alla 0.23**; il riferimento è il file Word «SIMPLY\_RPG\_Manuale\_dei\_Mostri\_v0.46.docx» (lo dice anche la Revisione NEC: «Google Doc precedente non allineato per timeout»). L’app segue il Word.
+
+> > •             Mostri 0.46, fauna di Iris (7.11, 7.13–7.19): i PX sono ancora «provvisori»; l’app li ha messi com’è scritto, segnati «(provvisori)». **Lorath** Veterano 50 · **Piovra gigante** Eroe 70 · **Granchio modificato** Inesperto 20 · **Raptor di Fuoco** giovane Inesperto 20, adulto Veterano 50 · **Turk** Inesperto 20 · **Vespe del Deserto** Principiante 10 (per gruppo di 10\) · **Iena mutata** Esperto 30, **Capobranco** Veterano 50 · **Murene della Roccia** cucciolo Inesperto 20, giovane Inesperto 20, adulta Esperto 30, Madre Veterano 70\. Da confermare quando li avrai verificati al tavolo; basta dire quali cambiano (si corregge un numero per scheda). *Nel frattempo:* valgono i numeri scritti.
+
+> > •             Capitolo 1–6 della 0.46: «nei coni la larghezza finale è metà della lunghezza, anche con mezzi Q». Sulla mappa l’app lascia al master l’ampiezza finale del cono (decisione 142, A.138): va bene così, o per i coni delle creature l’app deve proporre metà della lunghezza? *Nel frattempo:* nessuna modifica.
+
+> > •             7.19.5 «Bozzoli di cristallo» ha una tabella dei dati come le creature, ma non è una creatura (PV, Difese e Salvezze mancano): nell’app non è nel Bestiario, solo nel testo.
+
+> > •             Lorath 7.11 nella 0.46 è un profilo diverso dalla 0.13 (PV 40, AR 4, Iniziativa \+2, 2 AzP, ingombro 1 × 2 Q): l’app ha preso la 0.46.
+
+> > •             Capitolo 8, «PNG generici»: sono compilati 10 modelli su 25 (mancano Lavoratori, Studiosi, Taumaturghi). Nel testo del capitolo 8 il numero «285 creature e 10 modelli PNG» è già giusto.
+
+> > ## **Sezione 6 — Risolte**
+
+Nessuna voce nuova.
+
 **Manuale dei Veicoli**
 
 > > •             Scheda «ASA Scout MK4»: il Doc si chiama «scheda v0.4», ma l’intestazione dentro dice ancora «Edizione 0.2».
+
+> > •             Il capitolo «Neverlost» del Manuale dei Veicoli 0.8 e la scheda Neverlost 1.5 (Word) dicono quasi lo stesso, con piccole differenze di formulazione: «MAN tecnologica −1» contro «MAN base −1; Assetto armonico \+1 → 0», «Distacco da un aggancio esterno» contro «Distacco da filamenti», e il registro del Veicoli ha il Circuito Bianco. Allineare i due testi.
 
 **Da rileggere (testi scritti da noi, non dal manuale)**
 
@@ -164,13 +204,21 @@ Decisioni già prese o errori evidenti: l’app segue la decisione, il testo dic
 
 > > •             Recepiti fino al 27/10: Giocatore 0.49, Magia 1.6, Armamenti 0.64, Equipaggiamento 0.8.
 
-> > •             **Lette il 28/10, da recepire a lotti:** Manuale del Giocatore 0.50, della Magia 1.7, degli Armamenti 0.65, dell’Equipaggiamento 0.13, dei Veicoli 0.8, scheda dell’ASA Scout MK4 0.4, Manuale dei Mostri 0.23 con il Dragomedusa del 25/10. Il filo comune è l’energia: niente più Lx, Unità Energetiche per colore (UER, UEB, UEV), elettronica ordinaria senza conteggi, trasformatori per ricaricare le cariche. Il Manuale del Giocatore 0.50 non contiene ancora il documento del 7/10 sui Talenti: per i Talenti resta valido il documento, con le A.181–A.185. E\&L invariato dal 15/10.
+> > •             **Lette il 28/10, da recepire a lotti:** Manuale del Giocatore 0.50, della Magia 1.7, degli Armamenti 0.65, dell’Equipaggiamento 0.13, dei Veicoli 0.8, scheda dell’ASA Scout MK4 0.4 (Google Doc) e, in Word, **Manuale dei Mostri 0.46, Manuale del Direttore 0.45, scheda Neverlost 1.5, Scudo Punisher Wächter 1.1 e Revisione NEC 1.6**; in più il Gestore PX v1.3 (html) del 20/10. Il filo comune dell’energia (UER, UEB, UEV; elettronica ordinaria senza conteggi; trasformatori) è nell’app dal 28/10 per l’elettronica; il resto (celle d’arma, trasformatori, mezzi) a lotti. Mostri 0.46 (285 creature, 10 modelli PNG, Dragomedusa con GS e PX, nuova scala del GS fino a Entità Suprema) e Direttore 0.45 (§9.3 e §9.4 già coincidenti con l’app; §9.6 PNG Classe/Grado/EQ da recepire) arrivano nei prossimi lotti. Il Manuale del Giocatore 0.50 non contiene ancora il documento del 7/10 sui Talenti: per i Talenti resta valido il documento, con le A.181–A.185. E\&L invariato dal 15/10.
 
 > > ---
 
 > > ## **6\. Risolte**
 
 Voci con risposta recepita e funzione implementata nell’app (o chiuse). La data è quella dell’implementazione.
+
+> > •             **A.187 — Si sale di livello solo con i PX** (risposta 28/10, app aggiornata il 28/10). Il pulsante «Sali al livello N» si abilita solo quando i PX che **hai assegnato tu** arrivano alla soglia del livello (A.170) e l’Atto lo consente: con 600 PX al 6° livello non si va al 7° (ne servono 720). Un totale solo suggerito non conta. Il blocco c’è anche nel server: una richiesta da un tablet che porta un personaggio oltre il livello dei suoi PX viene rifiutata, e nemmeno scrivendo l’indirizzo a mano si entra. Tu, in «Modifica master», hai «Concedi il passaggio al livello N»: chiede il motivo (obbligatorio), lo scrive nel registro del personaggio, non cambia i PX, e il giocatore non vede il motivo. Se un personaggio ha già un livello in più dei PX, la scheda lo segnala come prima e non cambia niente; in modalità master, accanto alla segnalazione, trovi «Annulla l’ultimo livello» (ti mostra prima le scelte che si perderebbero) e «Tieni come concessione» (con il motivo). I PX continuano a cambiarli solo tu.
+
+> > •             **A.188 — Incantesimi: il giocatore cambia, ma le regole valgono** (risposta 28/10, app aggiornata il 28/10). Il giocatore cambia da sé anche gli incantesimi conservati, senza chiedere a te, **ma quote, famiglie accessibili, livello massimo e requisiti valgono di nuovo**: un incantesimo fuori regola resta in grigio con il motivo e non si può prendere né mettere al posto di un altro (il server lo rifiuta anche se arriva da un tablet). Tu puoi sempre forzare, con conferma e motivo, e resta scritto. Ogni aggiunta, rimozione e sostituzione va nello storico del personaggio con data, ora e da dove è stata fatta (per esempio «Sostituito Colpo Elementale con Dardo Mistico (tablet, 28/10 21:40)»). Gli incantesimi aggiunti a mano e quelli degli artefatti restano fuori dalle quote (l’A.176 è un lavoro a parte). Per cambiare le Tecniche Interiori conservate resta la procedura già approvata. Questa regola sostituisce il requisito di approvazione della A.184 per gli incantesimi; vale al posto della libertà totale applicata il 26–27/10.
+
+> > •             **A.194 — Il Dragomedusa: PX e GS** (risposta nel Manuale dei Mostri 0.46 §7.12, app aggiornata il 29/10). Il Dragomedusa **giovane** è di GS **Mito, 200 PX**; l’**adulto** di GS **Semidio, 400 PX**, per un esemplare senza dotazione e quattro PG. Nel Bestiario ci sono tutti e due con i valori del manuale: i valori secondari del giovane completi, il Soffio di Fulmine, la Cattura con i filamenti e l’assorbimento da un banco Rosso (15/25 UER), Blu (1/2 UEB), Verde (3/5 UEV) o da una batteria mistica (3/5 PM). Con loro la scala del Grado di Sfida arriva fino a Entità Suprema (Mito 200, Semidio 400, Divinità 800, Divinità Maggiore 1.600, Entità Suprema 3.200), e la pagina del bestiario online ha il filtro per GS. Dalla stessa versione: l’Iniziativa delle creature non è mai negativa (si tira il solo d10 più il bonus), quindi 66 creature che avevano Iniziativa da −1 a −4 ora hanno 0\.
+
+> > •             **A.174 — «Ricarica e medita»** (risposta 23/10, app aggiornata il 28/10). Con un cristallo, il pulsante «Medita» diventa «Ricarica e medita» e fa i due passaggi nell’ordine giusto: **prima** ricarica il cristallo con i PM che il personaggio ha adesso (3 PM per 1, 2 con Ricarica Efficiente o Conversione Migliorata, 1 con entrambi, il Bianco sempre 2; entro la capacità; con l’Azione, il contatto, l’Addestramento e la Prova di Potere della ricarica normale), **poi** calcola la Meditazione, completata o interrotta. Se la Meditazione si interrompe, la ricarica resta. I PM che si recupereranno non si possono spendere prima: se si chiede di più, l’app si ferma e lo dice. In fondo, una riga: «Spesi 9 PM → cristallo \+3 cariche · Meditazione: recuperati 6 PM». Senza cristallo «Medita» è quella di sempre. Prima di oggi la strada breve convertiva anche i PM che la Meditazione avrebbe recuperato: non succede più.
 
 > > •             **A.175 — Guanti da Combattimento Mistico** (risposta 23/10, app già così). I Guanti sono un oggetto con una proprietà attiva e il pulsante «Attiva», senza bisogno di un Incantesimo: 3 PM dalle cariche interne, 1 AzP, 5 Round; i pugni diventano Magici con \+1 al danno. Non si paga con PM personali né con Batterie esterne.
 
@@ -1898,7 +1946,7 @@ Per Usufruitore di Magia e Ritualista, gli ampliamenti dell’elenco diventano d
 
 > > ---
 
-#### A.187 — Passaggio di livello vincolato ai PX e autorizzazione del Direttore
+> > #### **A.187 — Passaggio di livello vincolato ai PX e autorizzazione del Direttore**
 
 Approvazione di Davide con precisazione vincolante: 28 ottobre 2026\.
 
@@ -1910,13 +1958,201 @@ Un passaggio di livello prematuro può essere deciso e autorizzato soltanto dal 
 
 Per discrepanze già esistenti fra livello e PX, l’app segnala il problema e lascia la decisione al Direttore, senza modificare automaticamente livello o PX. Se il livello è stato assegnato anticipatamente per errore, il Direttore può usare «Annulla l’ultimo livello», dopo aver verificato le scelte da rimuovere. Se è una concessione intenzionale può mantenerlo registrandone il motivo. I PX si correggono soltanto se il loro totale era effettivamente sbagliato.
 
-#### A.188 — Modifica autonoma degli incantesimi conservati dopo la conversione
+> > #### **A.188 — Modifica autonoma degli incantesimi conservati dopo la conversione**
 
 Approvazione di Davide: 28 ottobre 2026\.
 
 Confermata la libertà concessa al tavolo: il giocatore può cambiare autonomamente anche gli incantesimi conservati dopo la conversione, senza approvazione preventiva del Direttore. Restano applicabili quote, famiglie accessibili, livello massimo e requisiti. Le sostituzioni devono essere registrate nello storico, così da poter ricostruire eventuali errori.
 
 Questa disposizione sostituisce il requisito di approvazione della A.184 per gli incantesimi. Per cambiare le Tecniche Interiori conservate resta la procedura già approvata, finché non viene espressamente estesa anche a loro questa libertà.
+
+#### A.189 — Trasformatore e trasferimento dell’energia
+
+30/10/2026 — Risposta approvata da Davide.
+
+La precedente regola «niente travaso» è superata limitatamente ai trasferimenti effettuati con trasformatori e impianti compatibili.
+
+Il trasformatore personale utilizza un CEC dello stesso colore: preleva una carica CEC, pari a 10 UE, e carica un tampone da 100 cariche NEC. Può prelevarla soltanto se nel tampone c’è spazio per contenerla interamente. L’energia residua rimane disponibile anche dopo lo scollegamento; il colore non cambia. Il modello multicromatico ha tamponi separati per colore.
+
+La velocità complessiva è una carica NEC all’ora per il trasformatore personale oppure una ogni dieci minuti per quello industriale. Collegare più dispositivi allo stesso apparecchio non moltiplica la velocità.
+
+Restano esclusi trasferimenti mediante semplici cavi, conversioni dai PM personali e ricariche ottenute dalla sola vicinanza a una Matrice.
+
+#### A.190 — Pacco del Gehemmapuker
+
+30/10/2026 — Risposta approvata da Davide.
+
+Confermo che il pacco Rosso sostituisce il precedente Modulo Blu.
+
+È composto da cinque NEC Rossi da 10 cariche, utilizzati in successione, con un unico contatore da 50 attacchi. Ogni attacco consuma una carica anche se manca il bersaglio; l’AC 1d3 non moltiplica il consumo.
+
+Il pacco pesa 750 g, costa 2.000 cr pieno e richiede 500 cr per una ricarica completa commerciale. La sostituzione dell’intero pacco pronto richiede 1 AzP, entrambe le mani e nessuna prova. La ricarica completa richiede 50 ore con trasformatore personale oppure 8 ore e 20 minuti con quello industriale.
+
+#### A.191 — Alimentazione e ricarica degli IAS
+
+30/10/2026 — Risposta approvata da Davide.
+
+Ogni IAS utilizza due NEC Blu da 10 cariche, consumati in successione, con un unico contatore da 20 cariche. Il passaggio al secondo NEC è automatico.
+
+Il pacco pesa 300 g; un ricambio pieno costa 800 cr. Il prezzo dell’IAS completo comprende il primo pacco pieno.
+
+La ricarica commerciale costa 10 cr per carica ripristinata, quindi 200 cr da vuoto. Richiede 20 ore con trasformatore personale oppure 3 ore e 20 minuti con quello industriale. La sostituzione del pacco pronto richiede 1 AzP, con dispositivo fermo e accessibile.
+
+#### A.192 — Autonomia e riserve dello Scout
+
+30/10/2026 — Risposta approvata da Davide.
+
+Lo Scout ha 750 km di autonomia nominale, alimentati da un MEC Rosso da 10 cariche, ciascuna corrispondente a 75 km. I tragitti brevi si sommano e l’arrotondamento del consumo si applica una sola volta alla chiusura del viaggio o della giornata.
+
+I servizi utilizzano un CEC Verde da 10 cariche. Il supporto vitale consuma una carica per ogni giorno nel quale viene utilizzato: più attivazioni nello stesso giorno non consumano ulteriori cariche. Nei giorni senza utilizzo non consuma.
+
+L’aria è una riserva distinta: 24 ore effettive, anche non consecutive, per otto occupanti. Ricaricare l’energia non ripristina l’aria. L’elettronica ordinaria di bordo non aggiunge consumi separati.
+
+La ricarica completa delle due riserve costa 400 cr e richiede due ore con postazioni indipendenti compatibili, oppure tre ore con ricariche eseguite in successione. Numero e formato delle bombole restano da definire.
+
+#### A.193 — Conversione delle riserve già salvate in Lx
+
+30/10/2026 — Risposta approvata da Davide.
+
+Confermo la conservazione della frazione di riserva residua, senza introdurre un’equivalenza universale fra Lx e UE.
+
+Per esempio, una cella a metà diventa metà della capacità prevista dal nuovo profilo. Per lo Scout si considera complessivamente la vecchia riserva di propulsione: se era al 50%, il nuovo MEC Rosso avrà cinque cariche su dieci.
+
+La conversione deve conservare il valore originale e registrare il risultato, senza arrotondare per eccesso né ripetersi alle successive aperture. Le eventuali frazioni si conservano internamente.
+
+Quando non è possibile identificare con certezza il nuovo profilo, la riserva rimane «da convertire» fino alla verifica del Direttore. Per l’elettronica ordinaria resta eliminato il contatore.
+
+#### A.195 — Taglia e disponibilità del Punisher Wächter
+
+30/10/2026 — Risposta approvata da Davide.
+
+Il manuale aggiornato chiarisce che «Medio» e «Grande» indicano la stessa categoria di scudo. Nell’app utilizziamo Medio, coerentemente con il catalogo, eventualmente mostrando «Medio, detto anche Grande». Non sono due varianti acquistabili.
+
+Il Wächter mantiene AR \+2, FOR 5, 8 PI, Qualità Rara e PS Integrità 14\.
+
+Prezzo e Reperibilità sono ora definiti: 12.000 cr, Molto rara, compresi generatore e primo NEC Blu da tre cariche pieno. La conversione di un Punisher compatibile già posseduto costa 6.000 cr, compresi montaggio e primo NEC pieno. Può quindi essere inserito nel catalogo acquistabile.
+
+#### A.196 — Gestione della Neverlost nell’app
+
+30/10/2026 — Risposta approvata da Davide.
+
+Sì, integriamo la Neverlost nella scheda dei veicoli e nella plancia, applicando il profilo aggiornato del Manuale dei Veicoli.
+
+Il combattimento utilizza i Q Tattici, con ingombro convenzionale 3 × 2\. La planimetria interna resta distinta dalla rappresentazione della nave negli scontri.
+
+La scheda deve gestire Integrità di Corpo, Propulsione e Motore, scudo energetico, armi, munizioni, postazioni ed equipaggio. Le riserve energetiche sono:
+
+Rossa: 10 BEC, 100 cariche complessive;
+
+Blu: 1 BEC, 10 cariche;
+
+Verde: 3 MEC, 30 cariche complessive.
+
+I cristalli, i PM e le funzioni tecnomistiche restano risorse e capacità separate. Le capacità massime del profilo non devono riempire automaticamente le riserve effettive della campagna.
+
+Il viaggio in Traiettoria si misura in giorni, senza conversione in chilometri.
+
+#### A.197 — Doppia assegnazione del premio di fine Atto
+
+30/10/2026 — Risposta approvata da Davide.
+
+Adottiamo il blocco della seconda assegnazione dello stesso premio allo stesso personaggio nella stessa campagna e nello stesso Atto. Il controllo deve funzionare anche tentando l’assegnazione da una partita diversa.
+
+Il premio di fine Atto spetta anche ai personaggi assenti e rimane indipendente dalla partecipazione alla singola partita.
+
+Il Direttore può correggere un’assegnazione sbagliata mediante una rettifica tracciata, indicando il motivo. Un eventuale premio aggiuntivo deciso dal Direttore va registrato separatamente, senza duplicare il premio di fine Atto.
+
+#### A.198 — Ingombro delle creature sulla mappa
+
+30/10/2026 — Risposta approvata da Davide.
+
+Estendiamo il limite delle sagome a 20 quadretti per lato, così da comprendere anche i draghi antichi da 16 × 10 Q Base.
+
+Nelle mappe in Q Base, la sagoma deve rispettare l’ingombro indicato nel profilo: il Dragomedusa adulto occupa quindi 14 × 10\. Per questi ingombri utilizziamo sagome rettangolari, orientabili anche a 45°, mantenendo coerenti movimento, distanze e spazio occupato.
+
+Nelle mappe in Q Tattici utilizziamo invece le pedine convenzionali del manuale: 1 × 1 per il Dragomedusa giovane e 2 × 1 per l’adulto. La scala della mappa deve essere esplicita; queste sagome non modificano le dimensioni effettive della creatura nei passaggi stretti.
+
+#### A.199 — Calcolo dei danni con moltiplicatore
+
+30/10/2026 — Risposta approvata da Davide.
+
+Sì, l’app deve calcolare automaticamente anche i danni con moltiplicatore, mantenendo visibili formula, risultati dei dadi e totale.
+
+Per esempio, 4d10 × 5 significa tirare quattro d10, sommarli e moltiplicare il risultato per cinque. Difese, riduzioni e Armatura si applicano successivamente, secondo le regole dell’attacco.
+
+Il supporto deve valere per tutti i profili che utilizzano queste formule, comprese creature e armi navali.
+
+Per il Dragomedusa vanno recepiti i valori aggiornati del Bestiario v0.64: Soffio giovane 8d10 × 5 Magici; adulto 12d10 × 5 Magici.
+
+#### A.200 — Iniziativa dei PNG umani
+
+30/10/2026 — Risposta approvata da Davide.
+
+Confermo 0 come minimo del bonus base di Iniziativa anche per i PNG umani, compresi i tre Inquisitori. Un valore base 0 significa tirare soltanto il d10.
+
+Occorre però distinguere il bonus base dai modificatori: Ferite, condizioni e altri effetti continuano ad applicare le proprie penalità. Il minimo 0 non deve cancellarle né impedire che il modificatore complessivo diventi negativo.
+
+Restano valide le sequenze speciali espressamente previste, come agire dopo l’evocatore.
+
+#### A.201 — Nomi dei draghi metallici
+
+30/10/2026 — Risposta approvata da Davide.
+
+Uniformiamo tutti gli stadi alle denominazioni:
+
+Drago d’ottone
+
+Drago di rame
+
+Drago di bronzo
+
+Drago d’argento
+
+Drago d’oro
+
+Manteniamo nella ricerca anche le forme precedenti come alias, senza duplicare le creature nel catalogo.
+
+#### A.202 — Movimento della Murena della Roccia cucciolo
+
+30/10/2026 — Risposta approvata da Davide.
+
+Il valore 6 / 12 / 18 Q Base indica esclusivamente Passo, Corsa e Scatto nella sua forma eterea, compreso l’attraversamento della roccia. Non assegniamo un movimento terrestre separato.
+
+Durante l’overdose il cucciolo diventa corporeo, il movimento si interrompe e non può muoversi volontariamente, attaccare, attraversare la roccia o Schivare fino al termine previsto. Successivamente torna etereo.
+
+L’app deve distinguere queste condizioni, evitando di presentare 6 / 12 / 18 come movimento terrestre sempre disponibile.
+
+#### A.203 — Ingombro della Madre delle Murene
+
+30/10/2026 — Risposta approvata da Davide.
+
+Gestiamo entrambe le configurazioni, selezionabili dal Direttore:
+
+Parzialmente emersa: sagoma 2 × 2 Q Base.
+
+Completamente emersa: sagoma 6 × 2 Q Base.
+
+Nella configurazione parziale resta disponibile la nota sull’estensione fino a 4 Q mantenendo parte del corpo nella roccia. La posizione effettiva della testa determina l’origine degli attacchi, del soffio e delle altre capacità pertinenti.
+
+Il cambio di configurazione deve conservare PV, PM, Ferite, Stati e Azioni già spese: rimane la stessa creatura.
+
+#### A.204 — Ordine delle dimensioni dei draghi
+
+30/10/2026 — Risposta approvata da Davide.
+
+Nel manuale le dimensioni del corpo disteso sono espresse come lunghezza × larghezza.
+
+L’app deve assegnare i valori ai campi corretti:
+
+Giovane: lunghezza 6 Q Base; larghezza 4 Q Base.
+
+Adulto: lunghezza 10 Q Base; larghezza 6 Q Base.
+
+Antico: lunghezza 16 Q Base; larghezza 10 Q Base.
+
+Se l’interfaccia mostra «larghezza × lunghezza», visualizzerà rispettivamente 4 × 6, 6 × 10 e 10 × 16\.
+
+L’orientamento della sagoma segue la direzione della creatura, comprese le rotazioni a 45°. Le dimensioni corporee e la pedina convenzionale in Q Tattici restano dati distinti.
 
 > > ## **8\. Prove da fare**
 
@@ -1949,6 +2185,26 @@ Apri la scheda di **Oshi Nagata** (tab **Poteri**): senza Risorse Interiori le t
 > > ### **7\. Gli avvisi sul telefono**
 
 Installa **ntfy** sul telefono, iscriviti all’argomento delle istruzioni che ti ho mandato e avvia il server: deve arrivarti una notifica. Se non arriva, dimmelo.
+
+> > ### **8\. Ricarica e medita**
+
+Scheda di un Taumaturgo con un cristallo sintonizzato e non pieno → tab **Poteri** → **Medita** → «Ricarica , poi medita». Nel conto la prima riga è la ricarica, con i soli PM che hai adesso; poi la Meditazione. Prova «Interrotta» con 0 ore: la ricarica resta, «recuperati 0 PM».
+
+> > ### **9\. Si sale di livello solo con i PX**
+
+Dal tablet, scheda di un personaggio con PX che non bastano → il pulsante «Sali al livello N» è spento e dice quanti PX mancano. Dal PC, «Modifica master» → «Concedi il passaggio al livello N» (scrivi il motivo) → dal tablet ora si sale. Sul PG con un livello in più: «Annulla l’ultimo livello» ti elenca le scelte che si perdono; «Tieni come concessione» chiede il motivo.
+
+> > ### **10\. Incantesimi: regole di nuovo valide**
+
+Dal tablet, tab Poteri → «Sostituisci» su un incantesimo di un livello → cerca uno di livello oltre il massimo: il pulsante è spento e dice perché. Uno che rientra: si sostituisce e in Identità → Storico compare la riga con ora e «tablet». Dal PC in «Modifica master» lo stesso fuori regola si può forzare, con il motivo.
+
+> > ### **11\. Bestiario: Iniziativa e Dragomedusa**
+
+Plancia → «Prepara scontro» → «+ Aggiungi nemico» → Alce, Ankheg e i due Dragomedusa → «Inizia» → «Tira per tutti con l’app»: Alce e Ankheg tirano solo il d10 (Iniziativa 0), i Dragomedusa 2 \+ d10; nella mini-scheda del Dragomedusa giovane «GS Mito · 200 PX per 4 PG», nell’adulto «GS Semidio · 400 PX per 4 PG».
+
+> > ### **12\. Bestiario: draghi e fauna di Iris**
+
+Plancia → «Prepara scontro» → «+ Aggiungi nemico» → un Drago verde adulto e un Raptor di Fuoco adulto → «Inizia» → «Attacca» dall’uno contro l’altro: il Drago mostra «6d10×5» (da tirare a mano), il Raptor «1d6+3». Nel Bestiario proposto → «Manuale dei Mostri» → «GS Mito»: i draghi giovani e adulti; i Turk e le Vespe hanno «(provvisori)» accanto ai PX.
 
 > > 
 

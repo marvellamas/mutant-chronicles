@@ -4,7 +4,7 @@
 
 ## Conduzione combattimento e manutenzione
 
-**EDIZIONE 0.8**
+**EDIZIONE 0.9**
 
 Ottobre 2026
 
@@ -28,25 +28,25 @@ Le regole comuni dei personaggi e i testi completi dei Talenti si consultano nel
 
 Capitoli e pagine di consultazione
 
-[**1 Conduzione e risorse**](#bookmark=id.cgw8w0fnm9wq)	
+[**1 Conduzione e risorse**](#bookmark=id.nkbv3zgo671p)	
 
-[**2 Movimento e manovre**](#bookmark=id.w5hx136rwox9)	
+[**2 Movimento e manovre**](#bookmark=id.h7aza0h9fz35)	
 
-[**3 Attacchi e protezioni**](#bookmark=id.uj011xiukw9o)	
+[**3 Attacchi e protezioni**](#bookmark=id.9to30fivkcee)	
 
-[**4 Strutture e Integrità**](#bookmark=id.s5knavtcwzud)	
+[**4 Strutture e Integrità**](#bookmark=id.ivdo55rc0sb2)	
 
-[**5 Collisioni e incidenti**](#bookmark=id.i6np2oyageoo)	
+[**5 Collisioni e incidenti**](#bookmark=id.nuwwq8j0e0b6)	
 
-[**6 Inseguimenti e speronamento**](#bookmark=id.d42f5godgrqo)	
+[**6 Inseguimenti e speronamento**](#bookmark=id.51hk57pw3wbk)	
 
-[**7 Riparazioni e Talenti**](#bookmark=id.iovde5z7nid)	
+[**7 Riparazioni e Talenti**](#bookmark=id.p73tbi2pfvkk)	
 
-[**8 Scheda e consultazione**](#bookmark=id.gke1ptwzbeqf)	
+[**8 Scheda e consultazione**](#bookmark=id.lgiqpe6ee11d)	
 
-[**9 Autovettura civile**](#bookmark=id.mqdzvbhe8nd4)	
+[**9 Autovettura civile**](#bookmark=id.vqh2w1r71cop)	
 
-[**10 ASA Scout MK4**](#bookmark=id.prouzjcm379y)	
+[**10 ASA Scout MK4**](#bookmark=id.jhx3owm3nahq)	
 
 # **1 Conduzione e risorse**
 
@@ -97,9 +97,9 @@ La MAN si applica a sterzate, superamento di ostacoli, frenate, recupero del con
 
 ## **1.5 Alimentazione e autonomia**
 
-I veicoli utilizzano Nuclei Energetici Cromatici installati in impianti compatibili con il modello. UER, UEB e UEV restano distinte: un Modulo contiene dieci UE e un Banco cento UE dello stesso colore. La scheda indica capacità e autonomia nelle condizioni dichiarate. Il giocatore annota soltanto il contatore principale previsto: chilometri, ore, giorni, impieghi o punti di riserva. Per i punti, il profilo dichiara il valore in UE per quell’impianto; il rapporto non è universale.
+NEC, CEC, MEC e BEC sono accumulatori cromatici. Le riserve Rosse, Blu e Verdi restano separate; UER, UEB e UEV misurano la stessa energia in ogni impiego. Una carica rappresenta invece un utilizzo calibrato per il formato e il dispositivo. Si annotano soltanto le cariche rimaste e si consulta l’autonomia già calcolata nella scheda. CEC: 100 UE e 10 cariche; MEC: 1.000 UE e 10 cariche; BEC: 10.000 UE e 10 cariche. Il profilo dichiara formato e consumo di ogni sistema, senza contatori aggiuntivi per la normale elettronica di bordo.
 
-Ricariche e ricambi richiedono una fonte dello stesso colore e un impianto adeguato. I sistemi veicolari hanno tempi propri; il trasformatore per cariche personali non diventa automaticamente una stazione navale. Una riserva più capiente aumenta l’autonomia, mentre prestazioni e contemporaneità dei sistemi dipendono dal profilo. Regole generali e catalogo: Manuale dell’Equipaggiamento, §5.4. L’energia costa 10 cr per UE; ricaricare un Modulo costa 100 cr, un Banco 1.000 cr. I formati commerciali carichi costano rispettivamente 600 e 6.000 cr; gli accumulatori specialistici mantengono il proprio prezzo d’acquisto.
+Ricarica completa CEC: 100 cr in un’ora; MEC: 300 cr in due ore; BEC: 500 cr in otto ore. Per carica ripristinata si pagano rispettivamente 10, 30 e 50 cr. Ricambi pieni: CEC 1.000 cr e 5 kg; MEC 3.000 cr e 100 kg; BEC 5.000 cr e 500 kg. Colore, connettore e impianto devono essere compatibili. Le postazioni indipendenti adeguate possono lavorare in parallelo; il trasformatore personale ricarica soltanto NEC. Prezzo e massa del mezzo completo includono gli accumulatori standard pieni, senza doppio conteggio; le scorte occupano carico. Regole generali, Integrità e sostituzione: Manuale dell’Equipaggiamento, §5.4.
 
 Si registra l’autonomia residua nell’unità indicata dalla scheda. Le condizioni di riferimento e i consumi aggiuntivi devono essere dichiarati, evitando il doppio conteggio della stessa spesa energetica. L’autovettura civile del capitolo 9 ha autonomia nominale di 1.000 km: il valore non si estende automaticamente ad altri mezzi. Batterie mistiche e Artefatti mantengono le proprie regole.
 
@@ -515,15 +515,15 @@ Autovettura chiusa a quattro ruote per strade e percorsi carrabili. È il riferi
 | :---- | :---: |
 | Equipaggio e passeggeri | 1 conducente \+ 4 passeggeri |
 | Dimensioni e ingombro | 4,5 × 1,8 m; 3 × 2 Q |
-| Massa a vuoto | 1.300 kg, compreso il NEC installato |
+| Massa a vuoto | 1.300 kg, compresa la CEC installata |
 | Carico utile | 500 kg, comprese persone e bagagli |
 | MOV e MAN | 40 Q; MAN 0 |
 | Qualità e PS Integrità | Comune; PS 10 |
 | Protezioni | AR 1; AR magica 0; Corazzato 0 |
 | Corpo / Propulsione / Motore | 12 / 8 / 8 PI |
-| Alimentazione | 1 Modulo Rosso da 10 UER |
+| Alimentazione | 1 CEC Rossa da 100 UER; 10 cariche |
 | Autonomia nominale | 1.000 km |
-| Prezzo | 20.000 cr, Modulo Rosso carico compreso |
+| Prezzo | 20.000 cr, CEC Rossa piena compresa |
 | Reperibilità | Da definire nel catalogo |
 
 | Andatura | Q per Round | km/h equivalenti | Pilotare |
@@ -534,15 +534,15 @@ Autovettura chiusa a quattro ruote per strade e percorsi carrabili. È il riferi
 
 Strade e piste carrabili compatte sono il normale ambiente di impiego. Fango profondo, macerie, forti dislivelli e passaggi stretti possono rallentare o impedire il transito. Il mezzo non possiede capacità anfibie.
 
-La dotazione comprende cinque sedili con cinture, abitacolo chiuso, vano bagagli, fari, indicatori, strumentazione e alloggiamento per il Modulo Rosso. L’AR protegge le strutture; la protezione degli occupanti segue direzione del tiro e Copertura effettiva. Armi, blindature supplementari e strumenti specialistici richiedono allestimenti dedicati.
+La dotazione comprende cinque sedili con cinture, abitacolo chiuso, vano bagagli, fari, indicatori, strumentazione e alloggiamento per la CEC Rossa. L’AR protegge le strutture; la protezione degli occupanti segue direzione del tiro e Copertura effettiva. Armi, blindature supplementari e strumenti specialistici richiedono allestimenti dedicati.
 
 ## **9.1 Autonomia e manutenzione**
 
-Il Modulo Rosso contiene dieci UER e offre mille chilometri di autonomia nominale. Motore, fari, climatizzazione e strumentazione ordinaria sono compresi. Il ricambio commerciale pesa 2 kg e costa 600 cr carico oppure 500 cr vuoto.
+La CEC Rossa contiene 100 UER in dieci cariche. Ogni carica copre 100 km, per 1.000 km nominali. Motore, fari, climatizzazione e strumentazione ordinaria sono compresi. Il ricambio pesa 5 kg e costa 1.000 cr pieno oppure 900 cr vuoto.
 
-1 UER ripristina cento chilometri di autonomia. Si sottraggono soltanto i chilometri percorsi al termine della tratta, senza un secondo registro energetico. Su strada ordinaria il consumo chilometrico è uguale alle tre andature.
+Si sommano i chilometri delle tratte brevi e, alla chiusura del viaggio o della giornata, si sottrae una carica ogni 100 km o frazione, arrotondando una sola volta. Non si arrotonda ogni singolo spostamento. I 1.000 km sono un’autonomia nominale: arrotondamenti giornalieri possono ridurla. Su strada ordinaria il consumo chilometrico è uguale alle tre andature.
 
-La stazione appropriata ricarica completamente l’autovettura in un’ora al costo di 100 cr, pari a dieci UER. Una ricarica parziale costa 10 cr per UER, che ripristina 100 km. Sostituire il Modulo dal vano accessibile richiede un minuto, mezzo fermo e ricambio pronto. Ricaricare ripristina energia, non PI; riparare il Motore non ricarica il NEC.
+La stazione appropriata ricarica completamente la CEC in un’ora al costo di 100 cr. Una carica richiede sei minuti e costa 10 cr. Sostituire la CEC richiede un minuto con mezzo fermo, vano accessibile e ricambio pronto. Ricaricare ripristina energia, non PI; riparare il Motore non ricarica l’accumulatore.
 
 | Struttura | PI massimi | Ricambi per PI |
 | :---- | :---: | :---: |
@@ -558,7 +558,7 @@ Recuperare da 0 tutte e tre le strutture costa 5.800 cr di materiali, se il mezz
 
 # **10 ASA Scout MK4**
 
-## SIMPLY RPG   •   Scheda del veicolo   •   Edizione 0.2   •   Ottobre 2026
+## SIMPLY RPG   •   Scheda del veicolo   •   Edizione 0.5   •   Ottobre 2026
 
 Ricognitore della Neverlost preparato da Petra. Quattro grandi ruote rinforzate, carrozzeria corazzata a pannelli modulari, cabina chiusa con vetri rinforzati e mitragliatore leggero su rotaia presso la botola superiore.
 
@@ -685,7 +685,7 @@ L’abitacolo sigillato dispone di riserva respiratoria e ricircolo. Le bombole 
 
 Si conta soltanto il tempo effettivo di funzionamento. Dopo 3 ore di uso rimangono 21 ore, conservate quando il sistema viene disattivato. La protezione richiede alimentazione disponibile e tenuta di porte, vetri e botola. Aprirli espone all’ambiente esterno; utilizzare il mitragliatore dalla botola interrompe la protezione dell’abitacolo.
 
-La ricarica del NEC non ripristina le riserve respiratorie consumate, che richiedono rifornimento o sostituzione. La quantità e il formato delle bombole devono ancora essere specificati; l’autonomia complessiva del sistema è già fissata.
+Ricaricare la CEC Verde non ripristina l’aria consumata. Le 24 ore respiratorie complessive per otto occupanti si misurano sul tempo effettivo, anche non consecutivo; il consumo energetico Verde segue invece il giorno di utilizzo. Quantità e formato delle bombole restano da specificare.
 
 ## **Comunicatore ponte**
 
@@ -695,17 +695,17 @@ Il comunicatore di bordo ritrasmette le comunicazioni della squadra verso la Nev
 
 | Impianto | Configurazione |
 | :---- | :---: |
-| Trazione e sistemi ordinari | 2 Banchi Rossi ricaricabili |
-| Riserva complessiva Rossa | 200 UER; 2 Banchi da 100 UER |
-| Supporto vitale | Riserva Verde separata; formato e capacità da definire |
-| Consumo e autonomia di viaggio | Da definire per lo Scout |
-| Scorte energetiche di partenza | Da definire con il nuovo impianto |
+| Trazione e sistemi ordinari | 1 MEC Rosso; 1.000 UER; 10 cariche |
+| Consumo e autonomia di viaggio | 1 carica ogni 75 km; 750 km nominali |
+| Supporto vitale | 1 CEC Verde; 100 UEV; 10 cariche; 1 per giorno di utilizzo |
+| Ricambi installati pieni | Rosso 100 kg e 3.000 cr; Verde 5 kg e 1.000 cr |
+| Scorte energetiche di partenza | Oltre agli accumulatori installati, da indicare nell’inventario |
 
-Ogni Banco Rosso commerciale contiene cento UER, pesa 20 kg e costa 6.000 cr carico oppure 5.000 cr vuoto. I due Banchi totalizzano duecento UER e 40 kg: 12.000 cr carichi, con ricarica completa di entrambi a 2.000 cr. Si applicano compatibilità e ricarica del Manuale dell’Equipaggiamento, §5.4. La sostituzione richiede un minuto per Banco; tempi diversi richiedono una specifica dell’allestimento.
+Il MEC Rosso pieno costa 3.000 cr; ricarica completa 300 cr in due ore, 30 cr e dodici minuti per carica. La CEC Verde piena costa 1.000 cr; ricarica completa 100 cr in un’ora, 10 cr e sei minuti per carica. Dotazione energetica installata: 105 kg e 4.000 cr piena; ricarica completa 400 cr. I ricambi aggiuntivi occupano carico. Sostituzione: MEC dieci minuti con attrezzatura di movimentazione; CEC un minuto con accesso e ricambio pronto.
 
-I NEC sono riutilizzabili. La precedente dotazione a pacchi non ricaricabili da 200 km deve essere sostituita dal nuovo dimensionamento: non determina l’autonomia dell’impianto corrente.
+Il Rosso si gestisce in dieci cariche da 75 km: sommare le tratte brevi e arrotondare per eccesso una sola volta alla chiusura del viaggio o della giornata. Il Verde consuma una carica per ogni giorno in cui si usa il supporto vitale, anche per poche ore; più accensioni nello stesso giorno sono comprese. Un giorno senza uso non consuma Verde. La normale elettronica di bordo non aggiunge consumi. Esempio: giorno 1, tre ore di supporto → Verde 9 e aria 21 ore; giorno 2, altre sei ore → Verde 8 e aria 15 ore; giorno 3, nessun uso → valori invariati.
 
-Ricaricare i NEC non ripara il Motore; riparare il Motore non ricarica i NEC. Il prezzo completo, i consumi dei sistemi aggiuntivi e i costi di riparazione specifici dello Scout restano da definire.
+Ricaricare gli accumulatori non ripara il Motore; riparare il Motore non ricarica le riserve. Telaio, M606 e accumulatori standard pieni valgono complessivamente 113.000 cr; il prezzo completo con munizioni e corredo, le scorte iniziali aggiuntive e i costi di riparazione specifici restano da definire.
 
 ## **Registro della spedizione**
 
@@ -737,9 +737,9 @@ Ricaricare i NEC non ripara il Motore; riparare il Motore non ricarica i NEC. Il
 
 Supporto vitale usato \_\_\_\_\_\_ h   Autonomia residua \_\_\_\_\_\_ / 24 h
 
-Autonomia di viaggio residua \_\_\_\_\_\_\_\_\_\_ (massimo da definire)   Km percorsi \_\_\_\_\_\_\_\_\_\_   Rifornimento: 2 Banchi Rossi, 200 UER complessive
+Cariche Rosse residue \_\_\_\_\_\_ / 10   Autonomia nominale massima 750 km   Km della giornata \_\_\_\_\_\_
 
-Carica Verde residua \_\_\_\_\_\_\_\_\_\_   Munizioni M606 di riserva \_\_\_\_\_\_\_\_\_\_
+Cariche Verdi residue \_\_\_\_\_\_ / 10   Giorni con supporto attivo \_\_\_\_\_\_   Munizioni M606 di riserva \_\_\_\_\_\_
 
 Data \_\_\_\_\_\_\_\_\_\_  Posizione \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_  Occupanti \_\_\_\_\_\_ / 8
 
@@ -799,25 +799,25 @@ Le velocità di viaggio e il MOV di combattimento appartengono a due regimi di g
 
 La Traiettoria è un substrato di spazio fra le pieghe dello spaziotempo. Il viaggio si misura soltanto in giorni: non possiede una velocità in km/h e la sua durata non permette di ricavare distanze nello spazio ordinario. La rotta indica direttamente i giorni della traversata.
 
-Entrare richiede cinque minuti e un punto Blu; uscire richiede cinque minuti e un punto Blu. Una rotta predisposta e sicura non richiede Prove ripetute. Per combattere, cambiare sostanzialmente rotta o avvicinarsi a un approdo si esce dalla Traiettoria. Dieci punti Blu permettono cinque traversate complete in assenza di altri consumi Blu. La durata della traversata resta espressa in giorni.
+Entrare richiede cinque minuti e una carica Blu; uscire richiede cinque minuti e una carica Blu. Una rotta predisposta e sicura non richiede Prove ripetute. Per combattere, cambiare sostanzialmente rotta o avvicinarsi a un approdo si esce dalla Traiettoria. Dieci cariche Blu permettono cinque traversate complete in assenza di altri consumi Blu. La durata della traversata resta espressa in giorni.
 
 | Riserva | Capacità | Contatore principale |
 | :---- | :---- | :---- |
-| Rossa | 20 Banchi \= 2.000 UER | 100 punti; 1 punto \= 20 UER |
-| Blu | 10 Banchi \= 1.000 UEB | 10 punti; 1 punto \= 100 UEB \= 1 Banco |
-| Verde | 3 Banchi \= 300 UEV | 30 giorni di supporto vitale, fino a 10 occupanti |
+| Rossa | 10 BEC \= 100.000 UER | 100 cariche BEC; 1.000 UER ciascuna |
+| Blu | 1 BEC \= 10.000 UEB | 10 cariche BEC; 1.000 UEB ciascuna |
+| Verde | 3 MEC \= 3.000 UEV | 30 cariche MEC; 100 UEV ciascuna; 30 giorni fino a 10 occupanti |
 
-Le riserve UER, UEB e UEV non sono intercambiabili né convertibili automaticamente in PM. Un Modulo contiene 10 UE, un Banco 100 UE dello stesso colore. I 20 Banchi Rossi contengono 2.000 UER e pesano 400 kg: 100 punti di Riserva Rossa. Costano 100.000 cr vuoti, 120.000 cr carichi; ricarica completa 20.000 cr. Un Banco Rosso ripristina cinque punti Rossi.
+Le riserve si utilizzano in successione per colore, senza consumare una carica da ogni accumulatore simultaneamente. Dieci BEC Rossi: 5.000 kg, 50.000 cr pieni, 5.000 cr di ricarica completa. Un BEC Blu: 500 kg, 5.000 cr pieno, 500 cr di ricarica. Tre MEC Verdi: 300 kg, 9.000 cr pieni, 900 cr di ricarica. Totale installato: 5.800 kg e 64.000 cr con prima carica; totale ricarica 6.400 cr. Il peso degli impianti standard è già compreso nel mezzo; non si sottrae nuovamente dalle 50 t di carico. UE e PM restano risorse distinte.
 
 | Impiego | Gestione energetica |
 | :---- | :---- |
-| Viaggio atmosferico o spaziale | Controllata / Rapida / Massima: 1 / 2 / 5 punti Rossi per ora. Autonomia: 100 / 50 / 20 ore. |
-| Supporto vitale fino a 10 occupanti | 10 UEV ripristinano un giorno; 30 giorni con riserva piena |
-| Ingresso o uscita dalla Traiettoria | 1 punto Blu per operazione |
-| Mantenimento in Traiettoria | 1 punto Rosso e 1 giorno Verde per ogni giorno di viaggio |
-| Sosta e volo stazionario | Atterrata o attraccata, motori spenti: 0 Rosso ordinario. Volo stazionario: 1 punto Rosso per ora. |
+| Viaggio atmosferico o spaziale | 1 carica Rossa: 1 ora Controllata, 30 min Rapida o 12 min Massima. Autonomie 100 / 50 / 20 ore. |
+| Supporto vitale fino a 10 occupanti | 1 carica MEC Verde per giorno di funzionamento; 30 giorni con riserva piena |
+| Ingresso o uscita dalla Traiettoria | 1 carica BEC Blu per operazione |
+| Mantenimento in Traiettoria | 1 carica BEC Rossa e 1 carica MEC Verde per giorno di viaggio |
+| Sosta e volo stazionario | Atterrata o attraccata, motori spenti: 0 Rosso ordinario. Stazionario: 1 carica Rossa per ora. |
 
-Si annotano punti Rossi, punti Blu e giorni Verdi, senza duplicare il registro in UE. Decolli, atterraggi e manovre ordinarie sono compresi nel viaggio. I consumi dei voli brevi della giornata si sommano e si arrotondano per eccesso una sola volta. Il giorno Verde si sottrae una sola volta per giorno di funzionamento, anche in sosta. All’approdo alimentato i servizi ordinari usano la fonte esterna; ricaricare le riserve resta distinto. Cannone e scudo attingono alle stesse riserve di viaggio; le manovre speciali sono comprese nella propulsione.
+Si annotano soltanto cariche Rosse, Blu e Verdi. Decolli, atterraggi e manovre ordinarie sono compresi nel viaggio. I consumi dei voli brevi della giornata si sommano e si arrotondano per eccesso una sola volta. Il Verde si sottrae una volta per giorno di funzionamento, anche in sosta. All’approdo alimentato i servizi ordinari usano la rete esterna, senza doppio consumo dalle batterie. Cannone e scudo attingono alle stesse riserve di viaggio; le manovre speciali sono comprese nella propulsione.
 
 # **Integrità e scudo energetico**
 
@@ -842,11 +842,11 @@ Prima interviene lo scudo, se pertinente. Dal danno penetrato si sottrae l’AR 
 
 ## **Scudo energetico**
 
-Attivazione: 1 AzP e 1 punto Blu per un’ora, mantenimento e rigenerazione compresi. Ogni ulteriore ora costa un altro punto Blu. Assorbe 1 danno Naturale per ogni ScE, prima dell’AR. L’eccedenza prosegue contro la struttura. Un colpo completamente assorbito non applica i PI aggiuntivi del Magistrale; se penetra, si risolve normalmente. Lo scudo ordinario non assorbe danni Magici o Eterei: occorre Ampliamento mistico dello scudo.
+Attivazione: 1 AzP e 1 carica Blu per un’ora, mantenimento e rigenerazione compresi. Ogni ulteriore ora costa un’altra carica Blu. Assorbe 1 danno Naturale per ogni ScE, prima dell’AR. L’eccedenza prosegue contro la struttura. Un colpo completamente assorbito non applica i PI aggiuntivi del Magistrale; se penetra, si risolve normalmente. Lo scudo ordinario non assorbe danni Magici o Eterei: occorre Ampliamento mistico dello scudo.
 
-Spegnere e riaccendere non ripristina gli ScE e richiede una nuova attivazione da 1 punto Blu. Le armi sincronizzate della nave possono sparare attraverso il proprio scudo. Attacchi interni, incidenti ed effetti ambientali non sono automaticamente intercettati.
+Spegnere e riaccendere non ripristina gli ScE e richiede una nuova attivazione da 1 carica Blu. Le armi sincronizzate della nave possono sparare attraverso il proprio scudo. Attacchi interni, incidenti ed effetti ambientali non sono automaticamente intercettati.
 
-Dopo tre Round consecutivi senza essere colpita, la nave recupera venti ScE per Round, fino al massimo di 200\. Un nuovo colpo interrompe il recupero. A zero ScE lo scudo non protegge, ma può rigenerarsi finché l’ora pagata è in corso. La rigenerazione è compresa nel punto Blu speso e non richiede ulteriori conteggi energetici.
+Dopo tre Round consecutivi senza essere colpita, la nave recupera venti ScE per Round, fino al massimo di 200\. Un nuovo colpo interrompe il recupero. A zero ScE lo scudo non protegge, ma può rigenerarsi finché l’ora pagata è in corso. La rigenerazione è compresa nella carica Blu spesa e non richiede ulteriori conteggi energetici.
 
 ## **Riparazioni**
 
@@ -857,10 +857,10 @@ Con strumenti e materiali adeguati, un’ora di lavoro su una struttura permette
 | Arma | Danno Naturale | Gittata efficace / massima | Consumo | Dotazione |
 | :---- | :---- | :---- | :---- | :---- |
 | 2 mitragliatori navali | 1d10 × 10 \+ 20 ciascuno | 12 / 24 Q Tattici | 20 proiettili per raffica | 600 proiettili ciascuno |
-| Cannone energetico | 3d10 × 10 | 24 / 48 Q Tattici | 1 punto Rosso per colpo | Alimentazione di bordo |
+| Cannone energetico | 3d10 × 10 | 24 / 48 Q Tattici | 1 carica Rossa per colpo | Alimentazione di bordo |
 | Lanciamissili antinave | 5d10 × 10 | 36 / 72 Q Tattici | 1 missile | 6 missili pronti |
 
-Ogni attacco costa 1 AzP e richiede Armi Pesanti. Ogni arma ha AC 1 per Round, condivisa fra tutti gli operatori. Le due torrette sono indipendenti; una raffica completa richiede un solo tiro per colpire e un solo tiro di danno. Ogni mitragliatore dispone di 30 raffiche. Le armi installate non concedono Azioni aggiuntive. Il cannone consuma il punto Rosso anche se manca il bersaglio. Mitragliatori e missili consumano soltanto le munizioni indicate.
+Ogni attacco costa 1 AzP e richiede Armi Pesanti. Ogni arma ha AC 1 per Round, condivisa fra tutti gli operatori. Le due torrette sono indipendenti; una raffica completa richiede un solo tiro per colpire e un solo tiro di danno. Ogni mitragliatore dispone di 30 raffiche. Le armi installate non concedono Azioni aggiuntive. Il cannone consuma la carica Rossa anche se manca il bersaglio. Mitragliatori e missili consumano soltanto le munizioni indicate.
 
 La postazione Armamenti permette di scegliere l’arma per ogni attacco. L’artigliere ordinario effettua al massimo un attacco con la propria AzP; dal 12° livello può effettuarne due, se non spende quelle Azioni per altre funzioni. Non si presume un turno ordinario da tre o quattro attacchi.
 
@@ -941,7 +941,7 @@ Il sostentamento ordinario costa 50 crediti per persona al giorno e comprende vi
 
 La dotazione ordinaria di riferimento è 210 giornate-persona, valore 10.500 cr: trenta giorni per sette persone o ventuno per dieci. Il registro unico sostituisce il conteggio ordinario separato di cibo, acqua e ossigeno. Le razioni personali d’emergenza sono distinte e non costituiscono automaticamente sostentamento completo. Il supporto vitale energetico ha un’autonomia separata di trenta giorni fino a dieci occupanti: con sette persone si sottraggono sette giornate-persona di consumabili e un giorno di autonomia Verde al giorno.
 
-L’equipaggiamento della squadra si ricarica attraverso moduli di servizio separati, per esempio un Modulo Rosso e uno Blu da dieci UE ciascuno. Si registrano ai rifornimenti senza frazionare i punti della riserva di bordo. La carica personale usa il trasformatore dedicato e il tampone del Manuale dell’Equipaggiamento, §5.4; i moduli di servizio non sono automaticamente aggiunti alla dotazione esistente.
+L’equipaggiamento della squadra si ricarica da CEC di servizio separate e dello stesso colore, mediante il trasformatore personale e il tampone da 100 cariche NEC del Manuale dell’Equipaggiamento, §5.4. Non si frazionano automaticamente le cariche della propulsione per alimentare dispositivi personali. Le CEC di servizio aggiuntive devono essere indicate nell’inventario.
 
 ## **Sensori e impianti**
 
@@ -949,7 +949,7 @@ Sensori: rilevamento generale nello spazio aperto fino a 10.000 km; tracciamento
 
 Comunicazioni nave–nave e nave–base entro la copertura disponibile; grandi distanze richiedono una rete o un ponte. Officina, laboratorio, infermeria, cucina, dispensa e stiva con Scout seguono l’inventario di bordo esistente. Le riserve energetiche della nave non sono sostituite automaticamente da celle portatili.
 
-Ricarica completa in otto ore all’approdo, tre riserve in parallelo. Tariffa: 10 cr/UE; 200 cr per punto Rosso, 1.000 cr per punto Blu. Pieno: Rosso 20.000 cr, Blu 10.000 cr, Verde 3.000 cr; totale 33.000 cr. Ricariche parziali sulle sole UE ripristinate. Riparazioni e sostentamento materiale separati.
+La ricarica completa richiede otto ore soltanto presso un approdo capace di servire contemporaneamente dieci BEC Rossi, un BEC Blu e tre MEC Verdi. Con meno postazioni compatibili si procede per gruppi e il tempo aumenta. Si pagano soltanto le cariche ripristinate: 50 cr per carica Rossa o Blu, 30 cr per carica Verde. Pieno 6.400 cr. Un viaggio di venti giorni in Traiettoria consuma 20 Rosse, 20 Verdi e 2 Blu: 1.000 \+ 600 \+ 100 \= 1.700 cr di energia. Sostentamento materiale e riparazioni sono separati.
 
 ## **Registro del profilo corrente**
 
@@ -957,7 +957,7 @@ Ricarica completa in otto ore all’approdo, tre riserve in parallelo. Tariffa: 
 | :---- | :---- | :---- |
 | Corpo / Propulsione / Motore | 300 / 180 / 120 PI | \_\_\_\_ / \_\_\_\_ / \_\_\_\_ |
 | Scudo energetico | 200 ScE | \_\_\_\_ |
-| Riserva Rossa / Blu / Verde | 100 punti / 10 punti / 30 giorni | \_\_\_\_ / \_\_\_\_ / \_\_\_\_ |
+| Riserva Rossa / Blu / Verde | 100 / 10 / 30 cariche | \_\_\_\_ / \_\_\_\_ / \_\_\_\_ |
 | Circuito Bianco | 120 PM | \_\_\_\_ |
 | Mitragliatore 1 / 2 | 600 / 600 proiettili | \_\_\_\_ / \_\_\_\_ |
 | Missili | 6 | \_\_\_\_ |
