@@ -96,6 +96,8 @@ export function nuovaScena({ id, nome, mappa = null, griglia = {}, colonne, righ
     annulla: [],
     // «Mappa semplice» (N3, src/mappa/semplice.js): chi crea la scena dall'app passa il valore predefinito dei dati
     ...(typeof semplice === 'boolean' ? { semplice } : {}),
+    // A.198: la scala dichiarata (Q Base o Q Tattici, src/mappa/scala.js); le scene di prima non l'hanno e sono in Q Base
+    scala: D.scale?.predefinita ?? 'base',
     // «La nebbia si apre con i PG» (12/10): acceso di base per le scene nuove create dall'app
     ...(typeof nebbiaConPg === 'boolean' ? { visuale: { automatica: nebbiaConPg } } : {}),
   };
@@ -251,6 +253,8 @@ export function validaScena(s, dati) {
   if (s.visuale !== undefined && (!isOggetto(s.visuale) || typeof s.visuale.automatica !== 'boolean')) return 'visuale: { automatica: vero o falso } atteso';
   // «Mappa semplice» (N3): facoltativo; le scene di prima non lo hanno e valgono come spento
   if (s.semplice !== undefined && typeof s.semplice !== 'boolean') return 'semplice: vero o falso atteso';
+  // A.198: la scala dichiarata; facoltativa (le scene di prima sono in Q Base)
+  if (s.scala !== undefined && !(dati?.mappa?.scale?.elenco ?? [{ id: 'base' }]).some((x) => x.id === s.scala)) return `scala: una fra ${(dati?.mappa?.scale?.elenco ?? [{ id: 'base' }]).map((x) => x.id).join(', ')}`;
   if (s.audio !== undefined && (!isOggetto(s.audio) || typeof s.audio.giocatori !== 'boolean')) return 'audio: { giocatori: vero o falso } atteso';
   // fase 2, lotto 4: luci (facoltative; scene di prima: Luce sufficiente)
   if (s.luce !== undefined) { const e = erroreLuce(s.luce, dati, (m) => mascheraValida(m, colonne, righe)); if (e) return `luce.${e}`; }

@@ -93,7 +93,8 @@ export const stessaParte = (a, b) => (a === 'avversario') === (b === 'avversario
  */
 export function areaRaggiungibile({ colonne: C, righe: R, muri, terreno, token, chi, massimo, regole, linee = null }) {
   const [w, h] = dimensioni(chi.ingombro);
-  const muro = bytePerQ(muri, C, R);
+  // A.202 (30/10/2026): in forma eterea la Murena della Roccia attraversa la roccia (i muri della mappa); il resto la ferma come tutti
+  const muro = chi.attraversaRoccia ? new Uint8Array(C * R) : bytePerQ(muri, C, R);
   // 12/10: un token libero segnato «blocca» (src/mappa/editor.js) vale come un Q di muro anche per il movimento;
   // gli altri token liberi non bloccano e restano attraversabili come un alleato di tutti.
   for (const t of token) {

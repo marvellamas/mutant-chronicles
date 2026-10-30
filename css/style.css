@@ -3115,3 +3115,7 @@ p.da-applicare { margin: 0.2rem 0 0.5rem; }
 .etichetta-origine.tipo-da_classificare { color: var(--attenzione); }
 .classifica-master { display: flex; flex-wrap: wrap; gap: 0.4rem; margin: 0.4rem 0; }
 .concessione-speciale { border-left: 3px solid var(--accento); padding-left: 0.5rem; }
+
+/* A.198 (30/10/2026): la scala della mappa (Q Base o Q Tattici) si legge sempre, in basso a destra */
+.mappa-badge-scala { bottom: 0.6rem; left: auto; right: 0.6rem; cursor: pointer; font-weight: 600; font-size: 0.85rem; }
+.mappa-regolazione-scala select { max-width: 100%; }

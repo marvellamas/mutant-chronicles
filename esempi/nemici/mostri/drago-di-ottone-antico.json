@@ -39,6 +39,8 @@
     "scatto": 30,
     "volo": 120
   },
+  "pedina_tattica": "2 × 2 Q",
+  "spazio": "10 × 16 Q",
   "taglia": "grande",
   "abilita": [
     {
@@ -168,10 +170,6 @@
     {
       "nome": "Forma umanoide di tutte e cinque le specie antiche",
       "effetto": "1 AzP e 5 PM per assumere una forma umanoide di dimensioni umane, mantenuta fino alla rinuncia volontaria. Anche ottone e rame antichi possiedono questa capacità. I cuccioli non la possiedono. Caratteristiche mentali, memoria, lingue, PV e PM attuali, Ferite e condizioni Il cambio non cura e non rigenera risorse. Restano le immunità elementali personali. In forma umanoide non usa Soffio, Presenza terrificante, ali, Coda o attacchi draconici. Non acquisisce equipaggiamento, incantesimi o competenze della persona imitata. Ritorno alla forma draconica: 1 AzP senza costo in PM, con spazio sufficiente. Il cambio non rinnova Azioni spese nello stesso Round. Gli attacchi ordinari nella forma umanoide seguono le regole comuni per ciò che usa effettivamente. Tabella (celle in ordine di lettura): Dato | Forma umanoide | Caratteristiche fisiche | FOR 5 • DES 6 • COS 5 | Difese e azioni | Difese 10 • 1 AzP + 1 AzM per Round | Movimento e ingombro | Terra 6 / 12 / 18 Q Base • 1 × 1 Q Base | Armatura | AR biologica 0; mantiene la propria quota di AR magica | Conserva."
-    },
-    {
-      "nome": "Dimensioni e scale",
-      "effetto": "Ingombro del corpo 16 × 10 Q, come scritto nel manuale («16 × 10 Q Base; pedina navale 2 × 2 Q Tattici»). Oltre il limite di 12 Q per lato della mappa (A.167): il campo Spazio non è impostato e il master regola la pedina a mano. Domanda A.198."
     }
   ],
   "note": "Drago metallico • antico • Natura Comune. Sensi e linguaggi: Scurovisione 24 Q Base; Draconico e due lingue di contatto. Il danno «NdM × k» è il risultato dei dadi moltiplicato per k; il dado non si tira da solo (A.199)."

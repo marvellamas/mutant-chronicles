@@ -15,6 +15,15 @@ export function parseSpazio(testo) {
   return m[1] ? [Number(m[1]), Number(m[2])] : [1, 1];
 }
 
+/**
+ * Lo spazio di una creatura nella configurazione scelta (A.203: la Madre delle Murene è parzialmente o completamente emersa):
+ * quello della configurazione, altrimenti quello del profilo.
+ */
+export function spazioConfigurato(scheda, configurazione = null) {
+  const c = configurazione ? (scheda?.configurazioni ?? []).find((x) => x.id === configurazione) : null;
+  return c?.spazio ?? spazioDi(scheda);
+}
+
 /** Il nome dello spazio di un profilo («2 × 2 Q»), o null se non lo indica (A.126). */
 export const spazioDi = (scheda) => (typeof scheda?.spazio === 'string' && scheda.spazio ? scheda.spazio : null);
 
@@ -45,10 +54,16 @@ export function ingombroDaTaglia(scheda, dati) {
  * oltre 3 × 3 — un intero per un quadrato (lato), [colonne, righe] per un rettangolo, nell'orientamento scritto —; senza
  * il campo, il lato della Taglia (come prima). Al massimo token.creatura_ingombro_max per lato.
  */
-export function ingombroCreatura(scheda, dati) {
-  const dim = parseSpazio(spazioDi(scheda));
+export function ingombroCreatura(scheda, dati, scala = 'base', configurazione = null) {
+  // A.198: in Q Tattici la creatura ha la pedina convenzionale del manuale (campo «pedina_tattica»); senza, 1 × 1
+  if (scala === 'tattica') {
+    const pt = parseSpazio(scheda?.pedina_tattica);
+    if (!pt) return 1;
+    return pt[0] === pt[1] ? pt[0] : [pt[0], pt[1]];
+  }
+  const dim = parseSpazio(spazioConfigurato(scheda, configurazione));
   if (!dim) return ingombroDaTaglia(scheda, dati);
-  const max = dati?.mappa?.token?.creatura_ingombro_max ?? 12;
+  const max = dati?.mappa?.token?.creatura_ingombro_max ?? 20;
   const [w, h] = dim.map((n) => Math.min(max, n));
   return w === h ? w : [w, h];
 }
@@ -60,18 +75,27 @@ export function ingombroCreatura(scheda, dati) {
  * @returns {{ lato, testo, dalProfilo, fonte, ripiego }} fonte: 'profilo' | 'taglia'; ripiego: la pedina è più
  *   piccola dello spazio dichiarato
  */
-export function spazioEffettivo(scheda, dati) {
-  const dim = parseSpazio(spazioDi(scheda));
+export function spazioEffettivo(scheda, dati, configurazione = null) {
+  const dim = parseSpazio(spazioConfigurato(scheda, configurazione));
   const lato = dim ? Math.max(...dim) : ingombroDaTaglia(scheda ?? null, dati);
   const dalProfilo = !!dim;
   const ripiego = false; // dal 18/10 la pedina ha la sagoma dichiarata (A.167)
   return {
     lato,
-    testo: dalProfilo ? spazioDi(scheda) : `${lato} × ${lato} Q`,
+    testo: dalProfilo ? spazioConfigurato(scheda, configurazione) : `${lato} × ${lato} Q`,
     dalProfilo,
     fonte: dalProfilo ? 'profilo' : 'taglia',
     ripiego,
   };
+}
+
+/**
+ * A.198: la pedina in Q Tattici del profilo («2 × 1 Q»), con la dichiarazione che non cambia le dimensioni vere:
+ * { testo, lato } oppure null se il profilo non la dà (la creatura ha 1 × 1).
+ */
+export function pedinaTattica(scheda) {
+  const d = parseSpazio(scheda?.pedina_tattica);
+  return d ? { testo: scheda.pedina_tattica, dimensioni: d } : null;
 }
 
 /**

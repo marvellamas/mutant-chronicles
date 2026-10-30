@@ -51,8 +51,8 @@ test('la scena accetta i token rettangolari e grandi delle creature, con angolo 
   assert.equal(validaScena(scena([girata]), dati), null);
   assert.deepEqual(girata.base, [10, 3]);
   assert.match(validaScena(scena([{ ...girata, base: [3, 3], ingombro: [3, 3], angolo: 0 }]), dati), /quadrata non si gira/);
-  assert.match(validaScena(scena([tok('x', [0, 0], [13, 2])]), dati), /veicoli e le creature/);
-  assert.match(validaScena(scena([tok('x', [0, 0], 13)]), dati), /ingombro/);
+  assert.match(validaScena(scena([tok('x', [0, 0], [21, 2])]), dati), /veicoli e le creature/);
+  assert.match(validaScena(scena([tok('x', [0, 0], 21)]), dati), /ingombro/);
   // i token liberi restano ai lati ammessi
   const libero = { id: 'b', rif: { tipo: 'segnaposto', id: null }, q: [0, 0], ingombro: 6, nascosto: false, nome: 'B', blocca: false };
   assert.match(validaScena(scena([libero]), dati), /ingombro/);

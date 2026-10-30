@@ -3,6 +3,14 @@
   "fonte": "docs/battlemap/specifica.md; piano tecnico in docs/battlemap/piano.md (lotto 1: scene sul server)",
   "_nota": "Parametri della mappa di battaglia del Tavolo del Master. Logica pura in src/mappa/ (scena.js, celle.js, token.js, vista.js, immagine.js); API /api/scene e /api/mappe in server.mjs. Le dimensioni del movimento (Passo, Corsa, Scatto) restano in regole.json → movimento.",
   "q_metri": 1.5,
+  "scale": {
+    "_nota": "A.198 (risposta di Davide del 30/10/2026): la mappa dichiara la sua scala. In «Q Base» 1 Q = 1,5 m e le creature hanno la sagoma del campo «spazio» del profilo (larghezza × lunghezza); in «Q Tattici» 1 Q = 15 m e le creature hanno la pedina convenzionale del manuale (campo «pedina_tattica»), che non cambia le dimensioni vere della creatura nei passaggi stretti. La scala si legge sempre sulla mappa e si sceglie finché la scena non ha creature o veicoli. Una scena senza il campo «scala» è in Q Base.",
+    "predefinita": "base",
+    "elenco": [
+      { "id": "base", "nome": "Q Base", "q_metri": 1.5, "descrizione": "scala di un incontro: 1 Q = 1,5 m; le creature hanno la sagoma del campo Spazio." },
+      { "id": "tattica", "nome": "Q Tattici", "q_metri": 15, "descrizione": "scala di un grande scontro (navi, draghi in volo): 1 Q = 15 m; le creature hanno la pedina convenzionale." }
+    ]
+  },
   "scena": {
     "_nota": "Limiti del file della scena (scene/<id>.json): li controlla src/mappa/scena.js → validaScena, anche nel server.",
     "formato": "mutant-scena",
@@ -148,8 +156,8 @@
     ],
     "ritratto_verticale": 0.2,
     "_nota_ritratto": "07/10: il ritratto riempie il cerchio dentro il bordo; delle foto più alte che larghe si tiene il quadrato a questa altezza (0 = in cima, 0,5 = al centro), dove di solito sta il viso.",
-    "creatura_ingombro_max": 12,
-    "_nota_creature": "A.126 e A.167 (risposte approvate il 15/10 e il 18/10/2026): il token di una creatura ha l’ingombro del campo «spazio» del profilo (data/formato_nemici.json → spazio: «1 Q» o «larghezza × lunghezza Q»), anche rettangolare e oltre 3 × 3, al massimo creatura_ingombro_max per lato; non si deduce dalla Taglia. Un profilo senza il campo tiene il lato della Taglia (ingombro_per_taglia), come prima; il master può sempre cambiarlo sul token. Ripiego di prima delle sagome: il quadrato ammesso più grande che non supera il lato maggiore dell’ingombro dichiarato."
+    "creatura_ingombro_max": 20,
+    "_nota_creature": "A.126, A.167 e A.198 (risposte approvate il 15/10, il 18/10 e il 30/10/2026: il limite è salito da 12 a 20 quadretti per lato): il token di una creatura ha l’ingombro del campo «spazio» del profilo (data/formato_nemici.json → spazio: «1 Q» o «larghezza × lunghezza Q»), anche rettangolare e oltre 3 × 3, al massimo creatura_ingombro_max per lato; non si deduce dalla Taglia. Un profilo senza il campo tiene il lato della Taglia (ingombro_per_taglia), come prima; il master può sempre cambiarlo sul token. Ripiego di prima delle sagome: il quadrato ammesso più grande che non supera il lato maggiore dell’ingombro dichiarato."
   },
   "movimento": {
     "_nota": "Parametri dell'area raggiungibile (§8 della specifica, lotto 5), confermati dalle risposte di Davide del 06/10/2026 (A.124, A.127, A.128, A.129; decisioni 129, 131–133 di docs/risposte-master.md). Costi in Q.",

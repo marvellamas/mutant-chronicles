@@ -175,7 +175,7 @@ test('coerenza: orfani e senza token; token nuovo valido nella scena e nella vis
   assert.equal(vistaGiocatori(conToken).token.length, 4);
   // veicoli e creature (A.167) hanno un ingombro rettangolare; il 3 × 3 si può indicare a mano
   assert.equal(validaScena({ ...conToken, token: [{ ...conToken.token[0], ingombro: [2, 1] }] }, dati), null);
-  assert.match(validaScena({ ...conToken, token: [{ ...conToken.token[0], ingombro: [13, 1] }] }, dati), /veicoli e le creature/);
+  assert.match(validaScena({ ...conToken, token: [{ ...conToken.token[0], ingombro: [dati.mappa.token.creatura_ingombro_max + 1, 1] }] }, dati), /veicoli e le creature/);
   assert.equal(validaScena({ ...conToken, token: [{ ...conToken.token[1], ingombro: 3 }] }, dati), null);
 });
 

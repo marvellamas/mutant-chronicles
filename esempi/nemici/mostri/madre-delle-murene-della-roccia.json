@@ -35,7 +35,21 @@
     "corsa": 8,
     "scatto": 12
   },
+  "configurazioni": [
+    {
+      "id": "parziale",
+      "nome": "Parzialmente emersa",
+      "spazio": "2 × 2 Q",
+      "nota": "2 × 2 Q, altezza 2 Q; può estendersi fino a 4 Q restando parzialmente nella roccia"
+    },
+    {
+      "id": "completa",
+      "nome": "Completamente emersa",
+      "spazio": "6 × 2 Q"
+    }
+  ],
   "spazio": "6 × 2 Q",
+  "origine_testa": true,
   "taglia": "grande",
   "abilita": [
     {

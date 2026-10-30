@@ -557,6 +557,12 @@ export function avanti(s, adesso, { indietroMax = 0 } = {}) {
     t = { ...t, effetti: s.effetti.filter((e) => !effettiFiniti.includes(e)) };
     for (const e of effettiFiniti) t = conRiga(t, `${e.nome} di ${e.daNome} è finito.`, adesso);
   }
+  // A.202: la forma limitata (l'overdose della Murena della Roccia cucciolo) finisce alla fine del suo ultimo Round
+  const formeFinite_ = formeFinite(s, t.round);
+  for (const f of formeFinite_) {
+    t = { ...t, partecipanti: t.partecipanti.map((x) => { if (x.id !== f.id) return x; const { forma: _f, ...resto } = x; return resto; }) };
+    t = conRiga(t, `${f.nome}: finita la forma limitata, torna ${f.torna ?? 'alla forma di partenza'}.`, adesso);
+  }
   const statiTolti = [];
   for (const d of finite) {
     const p = s.partecipanti.find((x) => x.id === d.partecipante);
@@ -567,7 +573,7 @@ export function avanti(s, adesso, { indietroMax = 0 } = {}) {
       t = conRiga(t, `${d.nome} di ${p.nome} è finito.`, adesso);
     } else t = conRiga(t, `${d.nome} di ${p?.nome ?? d.partecipante} è finito.`, adesso);
   }
-  return conVoce(t, { durateFinite: finite, effettiFiniti, statiTolti });
+  return conVoce(t, { durateFinite: finite, effettiFiniti, statiTolti, formeFinite: formeFinite_ });
 }
 
 /**
@@ -648,6 +654,8 @@ function unPassoIndietro(s, adesso) {
     const da = v.statiTolti.filter((x) => x.partecipante === p.id && !p.stati.includes(x.stato)).map((x) => x.stato);
     return da.length ? { ...p, stati: [...p.stati, ...da] } : p;
   });
+  // A.202: le forme limitate finite con quell'«Avanti» tornano com'erano (se la creatura non ne ha cambiata un'altra nel frattempo)
+  for (const f of v.formeFinite ?? []) partecipanti = partecipanti.map((p) => (p.id === f.id && !p.forma ? { ...p, forma: f.forma } : p));
   let periodici = s.periodici;
   for (const pe of v.perdite) {
     if (periodici) periodici = periodici.map((x) => (x.id === pe.id ? { ...x, ultimo: pe.ultimoPrima } : x));
@@ -952,4 +960,69 @@ export function conImmagineNemico(s, tipo, immagine) {
     return { ...p, scheda: immagine ? { ...scheda, immagine } : scheda };
   });
   return { ...s, partecipanti };
+}
+
+// ---------------------------------------------------------------------------------------------------------------------
+// A.203 e A.202 (risposte di Davide del 30/10/2026)
+
+/**
+ * A.203 — la configurazione di ingombro attuale di un nemico (la Madre delle Murene parzialmente o completamente emersa): quella
+ * scelta, altrimenti quella il cui spazio è lo Spazio del profilo (la configurazione di partenza). null se il profilo non ne ha.
+ */
+export function configurazioneAttuale(p) {
+  const lista = p?.scheda?.configurazioni ?? [];
+  if (!lista.length) return null;
+  return lista.find((x) => x.id === p.configurazione) ?? lista.find((x) => x.spazio === p.scheda?.spazio) ?? lista.at(-1);
+}
+
+/**
+ * A.203 — il Direttore cambia la configurazione di una creatura. **Cambia solo la misura**: PV, PM, Ferite, Menomazioni, Stati,
+ * durate, usi delle capacità, Azioni già spese e posto nell'Iniziativa restano esattamente quelli di prima — «rimane la stessa
+ * creatura». Il token sulla mappa segue (src/mappa/partecipanti.js → adattaToken). Una riga nel registro.
+ */
+export function cambiaConfigurazione(s, id, idConfig, adesso) {
+  const p = s.partecipanti.find((x) => x.id === id);
+  if (p?.tipo !== 'nemico') throw new Error('partecipante non trovato fra i nemici');
+  const c = (p.scheda?.configurazioni ?? []).find((x) => x.id === idConfig);
+  if (!c) throw new Error(`${p.nome}: configurazione «${idConfig}» non prevista dal profilo`);
+  if (configurazioneAttuale(p)?.id === c.id && (p.configurazione ?? c.id) === c.id) return s;
+  const t = { ...s, partecipanti: s.partecipanti.map((x) => (x.id === id ? { ...x, configurazione: c.id } : x)) };
+  return conRiga(t, `${p.nome}: ${c.nome} (${c.spazio}). PV, PM, Ferite, Stati e Azioni già spese restano.`, adesso);
+}
+
+/**
+ * A.202 — la forma attuale di una creatura (la Murena della Roccia cucciolo è eterea, in overdose corporea): la prima del
+ * profilo se non ne ha una scelta. null se il profilo non ha forme.
+ */
+export function formaAttuale(p) {
+  const forme = p?.scheda?.forme ?? [];
+  if (!forme.length) return null;
+  return forme.find((x) => x.id === p.forma?.id) ?? forme[0];
+}
+
+/**
+ * A.202 — il Direttore cambia la forma. La forma di partenza (la prima) si ripristina e basta; un'altra può avere un limite:
+ * `fino` è l'ultimo Round in cui vale (per l'overdose: il Round successivo a quello dell'assorbimento, R+1); passato quel Round
+ * la creatura torna alla forma di partenza da sola («Avanti»; «Indietro» la rimette com'era).
+ */
+export function cambiaForma(s, id, idForma, { fino = null } = {}, adesso) {
+  const p = s.partecipanti.find((x) => x.id === id);
+  if (p?.tipo !== 'nemico') throw new Error('partecipante non trovato fra i nemici');
+  const forme = p.scheda?.forme ?? [];
+  const f = forme.find((x) => x.id === idForma);
+  if (!f) throw new Error(`${p.nome}: forma «${idForma}» non prevista dal profilo`);
+  if (fino !== null && !(Number.isInteger(fino) && fino >= s.round)) throw new Error('l’ultimo Round della forma dev’essere questo Round o uno dei prossimi');
+  const prima = formaAttuale(p);
+  const iniziale = f.id === forme[0].id;
+  if (prima?.id === f.id && (iniziale || (p.forma?.fino ?? null) === fino)) return s;
+  const { forma: _f, ...resto } = p;
+  const nuovo = iniziale ? resto : { ...resto, forma: { id: f.id, ...(fino !== null ? { fino } : {}) } };
+  const t = { ...s, partecipanti: s.partecipanti.map((x) => (x.id === id ? nuovo : x)) };
+  const limite = !iniziale && fino !== null ? ` fino alla fine del Round ${fino}` : '';
+  return conRiga(t, `${p.nome}: ${f.nome}${limite}.${f.muove ? '' : ' Non si muove volontariamente.'}${f.attacca ? '' : ' Non attacca.'}${f.schiva ? '' : ' Non Schiva.'}${f.attraversa_roccia ? '' : ' Non attraversa la roccia.'}`, adesso);
+}
+
+/** Le creature la cui forma limitata è finita all'inizio del Round `round`: [{ id, nome, forma }] (per «Avanti» e «Indietro»). */
+export function formeFinite(s, round) {
+  return s.partecipanti.filter((p) => p.tipo === 'nemico' && Number.isInteger(p.forma?.fino) && p.forma.fino < round).map((p) => ({ id: p.id, nome: p.nome, forma: { ...p.forma }, torna: p.scheda?.forme?.[0]?.nome ?? null }));
 }

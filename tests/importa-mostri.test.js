@@ -74,28 +74,28 @@ test('PX provvisori della fauna di Iris: segnati come nel manuale, e solo quelli
   assert.deepEqual(tutteLeSchede.find(([, n]) => n.id === 'lorath')[1].gs_px, { gs: 'Veterano', px: 50, per_pg: 4, provvisorio: true });
 });
 
-test('creature oltre i 12 Q per lato (A.198) o con danno moltiplicato (A.199): trattate come nella parte 1 e elencate', () => {
-  const oltre = risultati.filter((r) => r.oltre12).map((r) => r.id).sort();
-  assert.equal(oltre.length, 10, 'i dieci draghi antichi (16 × 10 Q Base)');
-  for (const id of oltre) {
-    assert.match(id, /antico$/);
-    const n = tutteLeSchede.find(([, x]) => x.id === id)[1];
-    assert.equal(n.spazio, undefined, `${id}: nessun campo spazio`);
-    assert.ok(n.capacita.some((c) => c.nome === 'Dimensioni e scale' && /A\.198/.test(c.effetto)), id);
+test('A.198 e A.204: i dieci draghi antichi (16 × 10 Q Base) entrano nel campo spazio come 10 × 16 (larghezza × lunghezza), con la pedina 2 × 2 in Q Tattici; nessuna creatura resta fuori dal campo', () => {
+  assert.equal(risultati.filter((r) => r.oltre12).length, 0, 'il limite è 20: nessuna creatura oltre');
+  const antichi = tutteLeSchede.filter(([, x]) => /^drago-.*-antico$/.test(x.id));
+  assert.equal(antichi.length, 10);
+  for (const [, n] of antichi) {
+    assert.equal(n.spazio, '10 × 16 Q', n.id);
+    assert.equal(n.pedina_tattica, '2 × 2 Q', n.id);
+    assert.ok(!n.capacita.some((c) => c.nome === 'Dimensioni e scale'), n.id + ': la nota di ripiego se n’è andata');
     assert.equal(n.taglia, 'grande');
   }
   const molt = tutteLeSchede.filter(([, n]) => (n.attacchi ?? []).some((a) => /×/.test(a.danno)));
   assert.equal(molt.length, 38, 'draghi cromatici, metallici e d’ombra, Dracolich (36) e i due Dragomedusa');
   for (const [, n] of molt.filter(([, x]) => !/dragomedusa/.test(x.id))) assert.match(n.note ?? '', /A\.199/, n.id);
   // nessun lato oltre il limite in nessuna scheda nuova
-  for (const [, n] of tutteLeSchede) if (n.spazio) for (const x of n.spazio.match(/\d+/g)) assert.ok(+x <= 12, `${n.id}: ${n.spazio}`);
+  for (const [, n] of tutteLeSchede) if (n.spazio) for (const x of n.spazio.match(/\d+/g)) assert.ok(+x <= 20, `${n.id}: ${n.spazio}`);
 });
 
 test('regole comuni: Iniziativa non negativa, portata 0 Q nello spazio condiviso (A.171), draghi a Q Base e volo da Q Tattici', () => {
   const n = (id) => tutteLeSchede.find(([, x]) => x.id === id)[1];
   assert.equal(n('vespe-del-deserto').attacchi.find((a) => a.nome === 'Puntura').portata_q, 0);
   assert.deepEqual(n('drago-bianco-giovane').movimento, { passo: 8, corsa: 16, scatto: 24, volo: 80 }, '8 Q Tattici di volo = 80 Q Base');
-  assert.equal(n('drago-bianco-giovane').spazio, '6 × 4 Q');
+  assert.equal(n('drago-bianco-giovane').spazio, '4 × 6 Q', 'A.204: corpo 6 × 4 (lunghezza × larghezza) = 4 × 6 nel campo (larghezza × lunghezza)');
   assert.equal(n('drago-rosso-adulto').attacchi[0].danno, '8d10×5');
   assert.equal(n('drago-rosso-adulto').pv, 1400);
   assert.equal(n('turk').iniziativa, 0, '«1d10» senza bonus: INI 0');

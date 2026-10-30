@@ -2210,6 +2210,130 @@ Da recepire nel modello PNG generico del Bestiario: il Lottatore di I Grado può
 
 Questa decisione sostituisce la precedente proposta A.206 rimasta non approvata; la registrazione della risposta non attesta l’implementazione nell’app.
 
+#### A.208 — Iniziativa degli Elementali maggiori
+
+30/10/2026 — Risposta approvata da Davide.
+
+Con un evocatore, l’Elementale agisce immediatamente dopo di lui, secondo la propria regola specifica.
+
+Quando viene utilizzato come creatura autonoma, senza evocatore, confermo 1d10 con bonus base 0\. Restano applicabili i modificatori di condizioni ed effetti pertinenti.
+
+L’app deve distinguere le due modalità: «dopo l’evocatore» e «Iniziativa autonoma».
+
+#### A.209 — Parata e Schivata dei modelli PNG
+
+30/10/2026 — Risposta approvata da Davide.
+
+La scheda deve conservare e utilizzare entrambi i valori, mostrando separatamente Parata e Schivata. Prendere sempre la Parata come valore unico può produrre risultati sbagliati.
+
+Ogni azione difensiva deve usare il proprio valore, con i requisiti e i modificatori pertinenti. L’Elusione continua a utilizzare Riflessi.
+
+Per il Lottatore, il \+2 di Parata a Mani Nude Migliorata si applica esclusivamente quando para senza armi: non aumenta Schivata né Parata con il bastone. I bonus già compresi nei valori pronti non vanno aggiunti nuovamente.
+
+Un trattino indica una Difesa indisponibile nella configurazione descritta, non un valore numerico pari a zero.
+
+#### A.210 — PX dei modelli PNG senza GS
+
+30/10/2026 — Risposta approvata da Davide.
+
+Sì, prevediamo un campo numerico PX utilizzabile anche senza GS. Il valore deve essere visibile nella scheda e disponibile al calcolatore degli incontri.
+
+Per i modelli PNG si utilizzano i PX pronti della combinazione Classe, Grado ed EQ. Questi valori comprendono già EQ: non si applica un secondo moltiplicatore della dotazione.
+
+Quando il GS non è assegnato, mostriamo «GS non assegnato», mantenendo disponibili i PX. Non ricaviamo automaticamente il GS dal Grado di Classe.
+
+Il calcolatore produce una proposta: l’assegnazione effettiva dei PX rimane una decisione del Direttore a fine partita.
+
+#### A.211 — Chi può dichiarare appreso un incantesimo aggiunto a mano
+
+30/10/2026 — Risposta approvata da Davide.
+
+Per gli incantesimi aggiunti manualmente fuori dalle normali quote, solo il Direttore può confermare lo stato «appreso».
+
+Il giocatore può aggiungere un’annotazione e richiedere la conferma dell’apprendimento. Fino alla conferma, l’annotazione non concede nuove possibilità di lancio né vale come conoscenza per prerequisiti, creazione di Consumabili o insegnamento.
+
+Restano validi gli altri requisiti: accesso alla magia, Abilità e PM non vengono concessi automaticamente.
+
+Le normali scelte e sostituzioni degli incantesimi entro le quote continuano a seguire l’autonomia già approvata con A.188.
+
+#### A.212 — Calcolo delle concessioni speciali
+
+30/10/2026 — Risposta approvata da Davide.
+
+La concessione resta descritta in una nota, ma l’app deve permettere al Direttore di indicare separatamente i parametri necessari: Abilità e VA di lancio, costo e fonte dei PM, eventuali limiti di utilizzo.
+
+Il pulsante «Lancia\!» deve utilizzare questi parametri quando la concessione è attiva.
+
+Se una concessione non è gestibile automaticamente, deve essere indicata come «gestione manuale del Direttore». In questo caso il normale lancio automatico va disabilitato per quella concessione, evitando di applicare Abilità o costi diversi da quelli autorizzati. Il Direttore risolve il lancio e registra le risorse spese.
+
+#### A.213 — Incantesimi già aggiunti prima della distinzione
+
+30/10/2026 — Risposta approvata da Davide.
+
+Confermo la gestione provvisoria: restano «da classificare», conservando le possibilità di lancio già disponibili, finché il Direttore non li verifica.
+
+Non vengono considerati automaticamente appresi per creazione di Consumabili, prerequisiti o insegnamento. La migrazione non deve cancellarli né attribuire nuove capacità.
+
+Il Direttore può classificarli come «appreso» o «solo annotato», oppure definire una concessione speciale. Dopo la classificazione si applicano le regole corrispondenti e la decisione viene registrata nello storico.
+
+#### A.215 — Celle energetiche e caricatori rimovibili: ricarica e riempimento
+
+30/10/2026 — Risposta approvata da Davide.
+
+Precisazione approvata da Davide il 30/10/2026. La cella energetica può essere ricaricata soltanto dopo essere stata tolta dall’arma. Anche i caricatori devono poter essere tolti dall’arma, riempiti e poi reinseriti, conservando il contenuto residuo.
+
+L’app deve distinguere l’arma, il caricatore o la cella inseriti, i caricatori e le celle di scorta e le munizioni sciolte. Rimuovere un caricatore non ne cancella il contenuto: esso rimane nell’inventario con i colpi rimasti e può essere riempito fino alla propria capacità usando munizioni compatibili realmente disponibili. La cella tolta conserva analogamente le cariche residue e può essere ricaricata con un trasformatore compatibile, rispettando capacità, tempi e disponibilità energetica. Il comando di ricarica energetica non è disponibile mentre la cella è inserita nell’arma.
+
+Esempio Axis: il PG ha un solo caricatore da 15 colpi e 30 colpi sciolti. Dopo aver sparato 7 colpi, nel caricatore rimangono 8 colpi. Prima dello scontro successivo può estrarre quel medesimo caricatore, aggiungere 7 colpi dalla riserva e reinserirlo. Risultato: caricatore 15/15, riserva 23 colpi sciolti, sempre un solo caricatore. Non è necessario possedere un secondo caricatore, né consumare o eliminare gli 8 colpi già presenti.
+
+Fuori dal combattimento, con tempo e condizioni adatti, l’app deve permettere di riempire il caricatore parzialmente usato con un’unica operazione di interfaccia, mostrando quanti colpi vengono trasferiti e l’eventuale tempo necessario. Il tempo di preparazione trascorre prima del nuovo scontro; non vengono addebitate Azioni al combattimento successivo. Questo non rende istantaneo il riempimento.
+
+Durante il combattimento rimangono i costi e i limiti di estrazione, riempimento e inserimento previsti dalle regole e dalle capacità del personaggio. La possibilità di riempimento completo fuori combattimento non aumenta il numero di colpi caricabili con una singola operazione in combattimento.
+
+Le scorte devono conservare formato, compatibilità e quantità residua, distinguendo caricatori o celle pieni, parzialmente pieni e vuoti. Quelli identici possono essere raggruppati. Restano i profili specifici dei pacchi composti. Questa risposta sostituisce la precedente proposta A.215 che consentiva la ricarica della cella inserita nell’arma.
+
+#### A.217 — Conversione dei vecchi Banchi e Moduli
+
+30/10/2026 — Risposta approvata da Davide.
+
+Prima si identifica il profilo aggiornato dell’oggetto o del dispositivo; poi si conserva la frazione residua secondo A.193.
+
+Per esempio, la propulsione dello Scout va convertita nel nuovo MEC Rosso previsto dalla sua scheda, considerando complessivamente la vecchia riserva.
+
+Per un vecchio Banco generico da 100 UE, privo di un diverso profilo di destinazione, va bene la conversione in CEC dello stesso colore, conservando la frazione residua.
+
+Un vecchio Modulo da 10 UE senza corrispondenza definita resta «da convertire». Non va trasformato automaticamente in una nuova CEC né aggiunto a una CEC esistente. Il valore originale rimane conservato per la verifica del Direttore.
+
+La conversione si applica una sola volta e viene registrata.
+
+#### A.218 — Riferimento al Bestiario v0.64
+
+30/10/2026 — Risposta approvata da Davide.
+
+La v0.64 esiste: è un file di lavoro distinto che è stato consultato per preparare le risposte, ma non risulta nella cartella Drive condivisa. Non è un’inversione delle cifre della v0.46.
+
+Per A.199 possiamo citare direttamente il Manuale dei Mostri v0.46 condiviso, §7.12, che contiene già i valori confermati:
+
+Soffio del Dragomedusa giovane: 8d10 × 5 Magici;
+
+Soffio del Dragomedusa adulto: 12d10 × 5 Magici.
+
+Per questi valori non occorre attendere un altro file. Le successive correzioni esplicitamente approvate, compresa quella del Lottatore, restano valide e prevalgono sul testo precedente.
+
+#### A.219 — Chiusura della giornata e consumi dei mezzi
+
+30/10/2026 — Risposta approvata da Davide.
+
+Confermo il comando manuale del Direttore «Chiudi viaggio/giornata», utilizzabile anche senza Calendario.
+
+Il comando riepiloga quanto accumulato, mostra il consumo e applica l’arrotondamento previsto una sola volta. Una chiusura già registrata non deve addebitare nuovamente gli stessi consumi.
+
+Il Calendario di gioco può proporre la chiusura al cambio di giornata, mantenendo un’unica registrazione. La data reale del computer non determina i consumi.
+
+Si usa la misura prevista dal profilo: chilometri per la trazione dello Scout; ore o giorni per gli impieghi della Neverlost. La Traiettoria resta misurata in giorni.
+
+I consumi giornalieri, come il supporto vitale, vengono conteggiati una sola volta per giornata di gioco nella quale il sistema è stato utilizzato, anche con più attivazioni o chiusure di viaggio.
+
 > > ## **8\. Prove da fare**
 
 Le prove in sospeso. Quelle che puoi fare tu dal PC del Direttore, nessuna lunga più di qualche minuto. Per tutte: prima **Mutant.bat → 2 «Aggiorna»**, poi **1 «Avvia»**.

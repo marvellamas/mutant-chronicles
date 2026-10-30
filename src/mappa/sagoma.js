@@ -16,7 +16,7 @@
 // Questo modulo è puro (nessun browser, nessun disegno) e riusa la geometria dei veicoli ruotati: un token con
 // `angolo` e `base` [lungo, largo] ha la forma ruotata; senza, è il rettangolo allineato `ingombro`.
 // Un «token» qui è { q, ingombro, angolo?, base? } (q = Q in alto a sinistra dell'ingombro).
-import { formaRuotata, normaAngolo, retto, baseDaIngombro } from './forma.js';
+import { formaRuotata, normaAngolo, retto, baseDaIngombro, formaDi } from './forma.js';
 import { celleToken, celleToccateToken, dimensioni } from './token.js';
 
 /** Gli otto orientamenti di base (passo di 45°, data/mappa.json → token.rotazione_veicoli.passo_gradi). */
@@ -149,3 +149,30 @@ export function passoGradi(t, fine, dati) {
 export const orientamentoDiBase = (a) => ORIENTAMENTI.includes(normaAngolo(a));
 
 export { normaAngolo, retto };
+
+/**
+ * A.203 (30/10/2026): «la posizione effettiva della testa determina l'origine degli attacchi, del soffio e delle altre
+ * capacità pertinenti». La testa è all'estremità del muso: il quadretto occupato più vicino al punto in cui l'asse lungo
+ * esce dalla sagoma, nel verso in cui guarda la creatura (si orienta la creatura, 45° compresi, per metterla dove serve).
+ * Una creatura quadrata guarda in basso (come l'immagine). Restituisce [x, y].
+ */
+export function cellaTesta(t) {
+  const mie = celleToken(t);
+  if (mie.length <= 1) return mie[0] ?? [...t.q];
+  const f = formaDi(t);
+  const [w, h] = dimensioni(t.ingombro);
+  const base = f ? t.base : baseDaIngombro(t.ingombro);
+  const angolo = f ? normaAngolo(t.angolo) : (w === h ? 180 : w > h ? 90 : 180);
+  const centro = f ? [t.q[0] + f.centro[0], t.q[1] + f.centro[1]] : [t.q[0] + w / 2, t.q[1] + h / 2];
+  const rad = (angolo * Math.PI) / 180;
+  const punto = [centro[0] + Math.sin(rad) * (base[0] / 2), centro[1] - Math.cos(rad) * (base[0] / 2)];
+  let migliore = mie[0]; let d = Infinity;
+  for (const c of mie) { const dd = Math.hypot(c[0] + 0.5 - punto[0], c[1] + 0.5 - punto[1]); if (dd < d - 1e-9) { d = dd; migliore = c; } }
+  return [...migliore];
+}
+
+/** Il token ridotto al solo quadretto della testa (stessi id e riferimenti): l'origine delle linee di tiro e delle distanze. */
+export function tokenTesta(t) {
+  const { angolo: _a, base: _b, perno: _p, ...resto } = t;
+  return { ...resto, q: cellaTesta(t), ingombro: 1 };
+}

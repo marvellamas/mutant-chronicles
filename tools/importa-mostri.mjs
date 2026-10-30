@@ -19,7 +19,7 @@ const RADICE = join(dirname(fileURLToPath(import.meta.url)), '..');
 const TESTO_PREDEFINITO = join(RADICE, 'docs/manuali-txt/mostri-word.md');
 const DEST_PREDEFINITA = join(RADICE, 'esempi/nemici/mostri');
 export const FONTE = 'dal Manuale dei Mostri v0.46 (Word del 27/10/2026)';
-const LATO_MAX = 12; // data/mappa.json → creatura_ingombro_max (A.167)
+const LATO_MAX = 20; // data/mappa.json → creatura_ingombro_max (A.167, portato a 20 dalla A.198 del 30/10/2026)
 const Q_TATTICO_IN_Q_BASE = 10; // Mostri 0.46: 1 Q Base = 1,5 m, 1 Q Tattico = 15 m
 const ABILITA = new Set((JSON.parse(readFileSync(join(RADICE, 'data/abilita.json'), 'utf8')).abilita ?? []).map((a) => a.nome));
 const SIGLE = ['FOR', 'DES', 'COS', 'INT', 'SAG', 'CAR'];
@@ -49,6 +49,20 @@ export const GRUPPI_COMUNI = [
 const SEZIONI_NON_REGOLE = /^(Riferimenti del blocco|Come leggere le schede|GS e PX di riferimento|Quattro età distinte|Impiego e riferimento|Le miniere di Rutteng)$/;
 // schede che hanno una tabella dei dati ma non sono creature (ambiente, oggetti): restano fuori, dette nel rapporto
 const NON_CREATURE = { 'Bozzoli di cristallo': 'ambientazione dell’incontro a Rutteng (procedure di salvataggio), senza PV, Difese e Salvezze: non è una creatura' };
+
+// ---------- lettura del testo ----------
+/**
+ * A.202 (risposta di Davide del 30/10/2026): il 6 / 12 / 18 Q Base della Murena della Roccia cucciolo è Passo, Corsa e Scatto
+ * **in forma eterea**, attraversamento della roccia compreso; nessun movimento terrestre. Durante l'overdose è corporea: il movimento
+ * si interrompe, non può muoversi volontariamente, attaccare, attraversare la roccia né Schivare, fino alla fine del Round successivo
+ * a quello dell'assorbimento (R+1); poi torna eterea.
+ */
+const FORME_A202 = {
+  'murena-della-roccia-cucciolo': [
+    { id: 'eterea', nome: 'Eterea', muove: true, attacca: true, schiva: true, attraversa_roccia: true, nota: 'Passo, Corsa e Scatto del profilo (6 / 12 / 18 Q Base) sono in forma eterea, attraversamento della roccia compreso; nessun movimento terrestre.' },
+    { id: 'corporea', nome: 'Corporea (overdose)', muove: false, attacca: false, schiva: false, attraversa_roccia: false, nota: 'Overdose: il movimento si interrompe e non può muoversi volontariamente, attaccare, attraversare la roccia o Schivare fino alla fine del Round successivo a quello dell’assorbimento (R+1); poi torna eterea. Qualsiasi arma può colpirla, con AR 0.' },
+  ],
+};
 
 // ---------- lettura del testo ----------
 export function leggiRighe(testo) {
@@ -217,11 +231,16 @@ function leggiMovimentoRighe(righe) {
   return out;
 }
 
-function leggiSpazio(testo) {
+/**
+ * Lo spazio dal testo del manuale. `corpoDisteso`: il manuale scrive il corpo dei draghi come «lunghezza × larghezza» (6 × 4,
+ * 10 × 6, 16 × 10) e il campo Spazio si legge «larghezza × lunghezza» (A.204, 30/10/2026): in quel caso si scrivono al contrario
+ * (4 × 6, 6 × 10, 10 × 16). Per le altre creature l'ordine è quello di sempre (A.167).
+ */
+export function leggiSpazio(testo, corpoDisteso = false) {
   const re = /(\d+)\s*×\s*(\d+)\s*Q(?:\s*Base)?(?!\s*Tattici)/g;
   const m = re.exec(testo);
   if (m) {
-    const a = +m[1]; const b = +m[2];
+    const [a, b] = corpoDisteso ? [+m[2], +m[1]] : [+m[1], +m[2]];
     if (a > LATO_MAX || b > LATO_MAX) return { oltre: `${a} × ${b} Q`, grande: true };
     return { spazio: a === 1 && b === 1 ? '1 Q' : `${a} × ${b} Q`, grande: a >= 2 && b >= 2 };
   }
@@ -546,9 +565,27 @@ export function leggiScheda(sch, comuni = [], colonna = null, blocco = null) {
 
   // Spazio
   const spT = [...k.spazio, ...k.mov.map(([, v]) => v).filter((v) => /spazio|pedina/i.test(v))].join(' | ');
-  const sp = leggiSpazio(spT);
-  if (k.completo) nonCapito.push('Due ingombri nel manuale (parziale e completo): scelto il completo per il campo spazio; il parziale resta nella nota (da confermare, A.203)');
+  // A.204: i draghi (e il Dragomedusa) hanno il corpo disteso scritto «lunghezza × larghezza»
+  const corpoDisteso = /^(drago|dracolich|dragomedusa)/.test(o.id);
+  const sp = leggiSpazio(spT, corpoDisteso);
+  // A.198: la pedina convenzionale in Q Tattici («pedina navale 2 × 1 Q Tattici»), dato distinto dallo Spazio
+  { const pt = /pedina (?:navale|rappresentativa)[^0-9]{0,30}(\d+)\s*×\s*(\d+)\s*Q\s*Tattici/i.exec(spT) ?? /(?:^|[^0-9])(\d+)\s*×\s*(\d+)\s*Q Tattici/.exec(spT);
+    if (pt) o.pedina_tattica = +pt[1] === 1 && +pt[2] === 1 ? '1 Q' : `${pt[1]} × ${pt[2]} Q`; }
+  // A.203 (30/10/2026): due ingombri = due configurazioni scelte dal Direttore (parzialmente / completamente emersa)
+  if (k.completo) {
+    const par = (k.altri.find(([e]) => /^Ingombro parziale$/.test(e)) ?? [])[1] ?? '';
+    const mp = /(\d+)\s*×\s*(\d+)\s*Q/.exec(par);
+    if (mp && sp.spazio) o.configurazioni = [
+      { id: 'parziale', nome: 'Parzialmente emersa', spazio: `${mp[1]} × ${mp[2]} Q`, nota: par.replace(/\s+/g, ' ').trim() },
+      { id: 'completa', nome: 'Completamente emersa', spazio: sp.spazio },
+    ];
+    else nonCapito.push('Due ingombri nel manuale (parziale e completo): configurazioni non lette (A.203)');
+  }
   if (sp.spazio) o.spazio = sp.spazio;
+  // A.202 (30/10/2026): le forme della Murena della Roccia cucciolo
+  if (FORME_A202[o.id]) o.forme = FORME_A202[o.id];
+  // A.203: «portata 1 Q dalla testa» = gli attacchi e i soffi partono dalla testa, non dal quadretto più favorevole
+  if (R.some((r) => /portata[^.|]{0,30}dalla testa/i.test(r.t))) o.origine_testa = true;
   if (sp.oltre) nonCapito.push(`Ingombro ${sp.oltre}: oltre ${LATO_MAX} Q per lato (A.167, domanda A.198): fuori dal campo spazio, nella capacità «Dimensioni e scale»`);
   if (!sp.spazio && !sp.oltre) nonCapito.push('Ingombro non letto: campo spazio assente (vale la Taglia)');
   if (sp.grande) o.taglia = 'grande';
@@ -712,6 +749,10 @@ export function differenze(nuovo, vecchio) {
   for (const k of ['passo', 'corsa', 'scatto', 'volo']) if (nuovo.movimento?.[k] !== vecchio.movimento?.[k]) d.push(`movimento ${k}: ${vecchio.movimento?.[k]} → ${nuovo.movimento?.[k]}`);
   if ((nuovo.gs_px?.gs) !== (vecchio.gs_px?.gs) || nuovo.gs_px?.px !== vecchio.gs_px?.px) d.push(`GS/PX: ${vecchio.gs_px?.gs} ${vecchio.gs_px?.px} → ${nuovo.gs_px?.gs} ${nuovo.gs_px?.px}`);
   if ((nuovo.spazio ?? null) !== (vecchio.spazio ?? null)) d.push(`spazio: ${vecchio.spazio ?? '—'} → ${nuovo.spazio ?? '—'}`);
+  if ((nuovo.origine_testa ?? false) !== (vecchio.origine_testa ?? false)) d.push(`origine dalla testa: ${vecchio.origine_testa ?? false} → ${nuovo.origine_testa ?? false}`);
+  if ((nuovo.pedina_tattica ?? null) !== (vecchio.pedina_tattica ?? null)) d.push(`pedina in Q Tattici: ${vecchio.pedina_tattica ?? '—'} → ${nuovo.pedina_tattica ?? '—'}`);
+  if (JSON.stringify(nuovo.forme ?? null) !== JSON.stringify(vecchio.forme ?? null)) d.push(`forme: ${(vecchio.forme ?? []).length} → ${(nuovo.forme ?? []).length}`);
+  if (JSON.stringify(nuovo.configurazioni ?? null) !== JSON.stringify(vecchio.configurazioni ?? null)) d.push(`configurazioni: ${(vecchio.configurazioni ?? []).length} → ${(nuovo.configurazioni ?? []).length}`);
   const aV = (n) => (n.attacchi ?? []).map((a) => `${a.nome}:${a.va}:${a.danno}:${a.natura ?? '-'}:AC${a.ac ?? '-'}:${a.portata_q ?? a.gittata_q ?? '-'}`).join(',');
   // l'AC che il manuale non scrive per la scheda non è una differenza: l'app tratta l'assenza come AC 1 (src/attacco.js, crea-nemico.js)
   const nuovoAc = { ...nuovo, attacchi: (nuovo.attacchi ?? []).map((a, i) => (a.ac === undefined && vecchio.attacchi?.[i]?.nome === a.nome ? { ...a, ac: vecchio.attacchi[i].ac } : a)) };

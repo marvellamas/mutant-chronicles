@@ -7,10 +7,12 @@
 //   - le schede dei PG (src/tavolo.js → vistaPlancia): ritratto, PV e Stati;
 //   - il registro dei veicoli (A.91, A.105): i mezzi del gruppo e quelli di proprietà o guidati da un PG presente.
 // Funzioni pure.
-import { diTurno } from '../scontro.js';
+import { formaAttuale, diTurno } from '../scontro.js';
 import { stessaChiave, partecipanteConducente } from '../veicoli-registro.js';
 import { profiloVeicolo, movimentoMassimo } from '../veicoli.js';
 import { ingombroCreatura, ingombroVeicolo, iniziali, chiaveRif } from './token.js';
+import { scalaDi } from './scala.js';
+import { baseDaIngombro, formaDi, formaRuotata } from './forma.js';
 import { postiDi, ingombroOrientato } from './veicoli-mappa.js';
 
 /** Immagine del nemico sul token (A.131): la copia ridotta in mappe/, se c'è; altrimenti le iniziali. */
@@ -21,12 +23,14 @@ export const urlImmagineNemico = (immagine) => (immagine?.file ? `api/mappe/${en
  * del Passo da formato_nemici.json → campi.movimento.moltiplicatori; «non_consentito»: null), poi gli Stati con effetto
  * sul movimento (regole.json → stati.elenco[].movimento: nessuno, solo Passo, Passo massimo).
  */
-export function movimentoNemico(scheda, stati, dati) {
+export function movimentoNemico(scheda, stati, dati, forma = null) {
   const m = scheda?.movimento ?? {};
   const molt = dati?.formato_nemici?.campi?.movimento?.moltiplicatori ?? { corsa: 2, scatto: 3 };
   const passo = Number.isInteger(m.passo) ? m.passo : 0;
   const altro = (k) => (m[k] === 'non_consentito' ? null : Number.isInteger(m[k]) ? m[k] : passo * molt[k]);
   const r = { passo, corsa: altro('corsa'), scatto: altro('scatto') };
+  // A.202: in una forma che non si muove (l'overdose corporea) il movimento del profilo non c'è: non è un movimento terrestre
+  if (forma && forma.muove === false) return { passo: 0, corsa: null, scatto: null, fermoPer: forma.nome };
   const elenco = dati?.regole?.stati?.elenco ?? [];
   for (const id of stati ?? []) {
     const e = elenco.find((x) => x.id === id)?.movimento;
@@ -64,15 +68,17 @@ function pezzoPg(id, chiave, nomeScontro, lato, viste) {
   };
 }
 
-function pezzoNemico(p, dati) {
+function pezzoNemico(p, dati, scala = 'base') {
   const stato = nomeStato(dati);
   return {
     chiave: chiaveRif({ tipo: 'partecipante', id: p.id }), rif: { tipo: 'partecipante', id: p.id }, tipo: 'nemico', nemico: p.nemico ?? null,
     // A.126, A.167: l'ingombro del token viene dal campo «spazio» del profilo (anche rettangolare), altrimenti dalla Taglia
-    nome: p.nome, lato: p.lato === 'alleato' ? 'alleato' : 'avversario', ingombro: ingombroCreatura(p.scheda ?? null, dati),
+    nome: p.nome, lato: p.lato === 'alleato' ? 'alleato' : 'avversario', ingombro: ingombroCreatura(p.scheda ?? null, dati, scala, p.configurazione ?? null),
     iniziali: iniziali(p.scheda?.nome ?? p.nome, p.numero ?? null), ritratto: urlImmagineNemico(p.scheda?.immagine), pv: p.pv ?? null,
     aZero: (p.pv?.attuali ?? 1) <= 0, stati: (p.stati ?? []).map(stato), ferite: null,
-    movimento: movimentoNemico(p.scheda, p.stati, dati),
+    movimento: movimentoNemico(p.scheda, p.stati, dati, formaAttuale(p)),
+    // A.202 e A.203: la forma (può attraversare la roccia?) e la testa come origine degli attacchi
+    forma: formaAttuale(p)?.id ?? null, attraversaRoccia: formaAttuale(p)?.attraversa_roccia === true, testaOrigine: p.scheda?.origine_testa === true,
     // 08/10: Passo in volo del profilo (data/formato_nemici.json → movimento.volo), per «In volo» (src/mappa/volo.js)
     voloQ: Number.isInteger(p.scheda?.movimento?.volo) ? p.scheda.movimento.volo : null,
   };
@@ -115,12 +121,13 @@ const veicoloPresente = (rec, chiaviPg) => rec.proprietario?.tipo === 'gruppo'
  * @returns [{ chiave, rif, tipo, nome, lato: 'pg'|'alleato'|'avversario', ingombro, iniziali, ritratto, pv, aZero,
  *   stati: [{ id, nome }], ferite, diTurno, conducente? }]
  */
-export function pezziDellaScena({ scontro = null, bozza = null, alTavolo = [], viste = new Map(), veicoli = [] }, dati) {
+export function pezziDellaScena({ scontro = null, bozza = null, alTavolo = [], viste = new Map(), veicoli = [], scena = null }, dati) {
+  const scala = scalaDi(scena, dati);
   const partecipanti = scontro ? scontro.partecipanti : bozza ? partecipantiDaBozza(bozza, alTavolo) : [];
   const turno = scontro ? diTurno(scontro)?.id ?? null : null;
   const pezzi = partecipanti.map((p) => {
     const pezzo = p.tipo === 'pg' ? pezzoPg(p.id, p.chiave, p.nome, p.lato, viste)
-      : p.tipo === 'nemico' ? pezzoNemico(p, dati) : pezzoManuale(p);
+      : p.tipo === 'nemico' ? pezzoNemico(p, dati, scala) : pezzoManuale(p);
     return { ...pezzo, diTurno: turno === p.id };
   });
   const chiaviPg = partecipanti.filter((p) => p.tipo === 'pg').map((p) => p.chiave);
@@ -167,4 +174,50 @@ export function pezziSenzaToken(scena, pezzi) {
 export function tokenPerPezzo(pezzo, q) {
   const id = `t-${pezzo.chiave.replace(/[^A-Za-z0-9_.-]+/g, '-')}`.slice(0, 120);
   return { id, rif: { ...pezzo.rif }, q, ingombro: Array.isArray(pezzo.ingombro) ? [...pezzo.ingombro] : pezzo.ingombro, nascosto: false, ...(pezzo.tipo === 'veicolo' ? { direzione: 's' } : {}) };
+}
+
+/**
+ * A.203 e A.198: la misura di un pezzo può cambiare dopo che il token è già sulla mappa — la Madre delle Murene che passa da
+ * «parzialmente emersa» a «completamente emersa», il Direttore che sceglie un'altra configurazione. I token delle creature la
+ * cui misura non è più quella del loro pezzo, con il pezzo.
+ */
+export function tokenDaAdattare(scena, pezzi) {
+  const perChiave = new Map(pezzi.map((p) => [p.chiave, p]));
+  const out = [];
+  for (const t of scena?.token ?? []) {
+    if (t.rif?.tipo !== 'partecipante') continue;
+    const pezzo = perChiave.get(chiaveRif(t.rif));
+    if (!pezzo || pezzo.tipo !== 'nemico') continue;
+    const attuale = Array.isArray(t.base) ? t.base : baseDaIngombro(t.ingombro);
+    const voluta = baseDaIngombro(pezzo.ingombro);
+    if (attuale[0] !== voluta[0] || attuale[1] !== voluta[1]) out.push({ token: t, pezzo });
+  }
+  return out;
+}
+
+/**
+ * Il token con la misura del pezzo, **nello stesso punto**: stesso centro, stesso orientamento (angolo di 45° compreso),
+ * stessi id, nascosto, luce, sensi e posizione in quota. Cambiano solo ingombro, base e q. Il resto della creatura (PV, PM,
+ * Ferite, Stati, Azioni spese) non è nel token: sta nello scontro e qui non si tocca.
+ * @param griglia { colonne, righe } per tenere il token dentro la mappa
+ */
+export function adattaToken(token, pezzo, griglia) {
+  const nuovaBase = baseDaIngombro(pezzo.ingombro);
+  const [w, h] = Array.isArray(token.ingombro) ? token.ingombro : [token.ingombro ?? 1, token.ingombro ?? 1];
+  const prima = formaDi(token);
+  const centro = prima ? [token.q[0] + prima.centro[0], token.q[1] + prima.centro[1]] : [token.q[0] + w / 2, token.q[1] + h / 2];
+  const { angolo, base, perno, ...resto } = token;
+  const dentro = (x, y, ww, hh) => [Math.max(0, Math.min(griglia.colonne - ww, Math.round(x))), Math.max(0, Math.min(griglia.righe - hh, Math.round(y)))];
+  if (nuovaBase[0] === nuovaBase[1]) {
+    const [x, y] = dentro(centro[0] - nuovaBase[0] / 2, centro[1] - nuovaBase[0] / 2, nuovaBase[0], nuovaBase[0]);
+    return { ...resto, q: [x, y], ingombro: nuovaBase[0] };
+  }
+  if (!Number.isInteger(angolo)) {
+    const [ww, hh] = Array.isArray(pezzo.ingombro) ? pezzo.ingombro : [pezzo.ingombro, pezzo.ingombro];
+    const [x, y] = dentro(centro[0] - ww / 2, centro[1] - hh / 2, ww, hh);
+    return { ...resto, q: [x, y], ingombro: [ww, hh] };
+  }
+  const f = formaRuotata(nuovaBase, angolo);
+  const [x, y] = dentro(centro[0] - f.centro[0], centro[1] - f.centro[1], f.ingombro[0], f.ingombro[1]);
+  return { ...resto, q: [x, y], angolo, base: [...nuovaBase], ingombro: [...f.ingombro], perno: [centro[0], centro[1]] };
 }

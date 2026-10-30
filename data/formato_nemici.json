@@ -232,7 +232,87 @@
       "tipo": "testo",
       "modello": "^1 Q$|^[1-9][0-9]? × [1-9][0-9]? Q$",
       "obbligatorio": false,
-      "descrizione": "Spazio occupato sulla mappa, in Q: «1 Q» oppure «larghezza × lunghezza Q», anche rettangolare e oltre 3 × 3 (A.126, A.167 del 18/10/2026: Corazzato 1 × 2 Q, Regina Comandante 2 × 3 Q, Incubatrice 3 × 5 Q, Madre 3 × 10 Q), entro token.creatura_ingombro_max per lato. Si usa l’ingombro indicato nel profilo e non si deduce dalla Taglia; la sagoma resta quella dichiarata (una 3 × 10 occupa 30 Q) e può ruotare. Resta distinto dalla Taglia e dalla portata degli attacchi: una pedina più lunga non guadagna portata (A.133). Se manca vale il lato dalla Taglia, come prima (1 Q di norma)."
+      "descrizione": "Spazio occupato sulla mappa in Q Base, in Q: «1 Q» oppure «larghezza × lunghezza Q», anche rettangolare e fino a 20 Q per lato (A.126, A.167, A.198 del 30/10/2026: draghi antichi 10 × 16 Q, Dragomedusa adulto 10 × 14 Q). **Larghezza prima, lunghezza dopo** (A.204): il manuale scrive il corpo disteso come «lunghezza × larghezza» (drago giovane 6 × 4, adulto 10 × 6, antico 16 × 10) e nel campo si scrive al contrario (4 × 6, 6 × 10, 10 × 16); la creatura si orienta con la direzione e gira di 45°. Si usa l’ingombro del profilo e non si deduce dalla Taglia; la sagoma resta quella dichiarata (una 3 × 10 occupa 30 Q). Resta distinto dalla Taglia, dalla portata degli attacchi (una pedina più lunga non guadagna portata, A.133) e dalla pedina in Q Tattici. Se manca vale il lato dalla Taglia, come prima (1 Q di norma)."
+    },
+    "pedina_tattica": {
+      "tipo": "testo",
+      "modello": "^1 Q$|^[1-9][0-9]? × [1-9][0-9]? Q$",
+      "obbligatorio": false,
+      "descrizione": "Pedina convenzionale del manuale su una mappa in Q Tattici (A.198, 30/10/2026): «1 Q» oppure «larghezza × lunghezza Q» (Dragomedusa giovane 1 × 1, adulto 2 × 1; drago antico 2 × 2). È un dato distinto dallo Spazio: la pedina non cambia le dimensioni vere della creatura nei passaggi stretti. Senza il campo la creatura ha 1 × 1 in Q Tattici."
+    },
+    "configurazioni": {
+      "tipo": "lista",
+      "obbligatorio": false,
+      "descrizione": "Configurazioni di ingombro che il Direttore sceglie durante lo scontro (A.203, 30/10/2026: la Madre delle Murene parzialmente o completamente emersa). Cambiare configurazione cambia lo spazio sulla mappa e nient’altro: PV, PM, Ferite, Stati e Azioni già spese restano. Lo Spazio del profilo è quello della configurazione di partenza.",
+      "voce": {
+        "tipo": "oggetto",
+        "campi": {
+          "id": {
+            "tipo": "testo",
+            "obbligatorio": true,
+            "modello": "^[a-z][a-z0-9-]*$"
+          },
+          "nome": {
+            "tipo": "testo",
+            "obbligatorio": true
+          },
+          "spazio": {
+            "tipo": "testo",
+            "modello": "^1 Q$|^[1-9][0-9]? × [1-9][0-9]? Q$",
+            "obbligatorio": true,
+            "descrizione": "Spazio in Q Base di questa configurazione, larghezza × lunghezza."
+          },
+          "nota": {
+            "tipo": "testo",
+            "obbligatorio": false
+          }
+        }
+      }
+    },
+    "origine_testa": {
+      "tipo": "vero_falso",
+      "obbligatorio": false,
+      "descrizione": "Vero se gli attacchi e i soffi della creatura partono dalla testa (A.203): sulla mappa la linea di tiro e la distanza si misurano dal quadretto della testa, all’estremità del muso (si orienta la creatura per metterla dove serve). Senza il campo partono dal quadretto più favorevole (A.172)."
+    },
+    "forme": {
+      "tipo": "lista",
+      "obbligatorio": false,
+      "descrizione": "Forme in cui la creatura può trovarsi (A.202, 30/10/2026: la Murena della Roccia è eterea, e per l’overdose corporea). Ogni forma dice che cosa si può fare; il Direttore la cambia durante lo scontro. La prima è quella di partenza. Il movimento del profilo vale per la forma che lo consente.",
+      "voce": {
+        "tipo": "oggetto",
+        "campi": {
+          "id": {
+            "tipo": "testo",
+            "obbligatorio": true,
+            "modello": "^[a-z][a-z0-9-]*$"
+          },
+          "nome": {
+            "tipo": "testo",
+            "obbligatorio": true
+          },
+          "muove": {
+            "tipo": "vero_falso",
+            "obbligatorio": true,
+            "descrizione": "Può muoversi volontariamente (Passo, Corsa, Scatto del profilo)."
+          },
+          "attacca": {
+            "tipo": "vero_falso",
+            "obbligatorio": true
+          },
+          "schiva": {
+            "tipo": "vero_falso",
+            "obbligatorio": true
+          },
+          "attraversa_roccia": {
+            "tipo": "vero_falso",
+            "obbligatorio": true
+          },
+          "nota": {
+            "tipo": "testo",
+            "obbligatorio": false
+          }
+        }
+      }
     },
     "gs_px": {
       "tipo": "oggetto",

@@ -37,6 +37,7 @@ export async function salvaNemico(n) {
 
 import { capacitaDi, avvisoUsi, testoUsi } from '../capacita-nemico.js';
 import { apriTiro } from './tira-valore.js';
+import { configurazioneAttuale, cambiaConfigurazione, formaAttuale, cambiaForma } from '../scontro.js';
 import { leggiDannoMoltiplicato } from '../danno.js';
 import { spazioEffettivo } from '../mappa/token.js';
 
@@ -355,6 +356,25 @@ export function cartaNemico(ctx, p, { modifica, durate = [], diTurnoOra = false,
         const px = Number.isInteger(n.gs_px.px) ? ` · ${n.gs_px.px} PX${n.gs_px.per_pg ? ` per ${n.gs_px.per_pg} PG` : ''}${n.gs_px.provvisorio ? ' (provvisori)' : ''}` : rif ? ` · riferimento ${rif} PX` : '';
         return [' ', h('span', { class: 'etichetta tratto-nemico tratto-gspx', title: titolo || null }, `GS ${n.gs_px.gs}`, px)];
       })()),
+    // A.203 e A.202 (30/10/2026): configurazione di ingombro e forma, scelte dal Direttore; cambiano la misura o le possibilità, mai PV, Ferite, Stati o Azioni
+    (() => {
+      const conf = configurazioneAttuale(p);
+      const forma = formaAttuale(p);
+      if (!conf && !forma) return null;
+      const altre = forma ? (n.forme ?? []).filter((f) => f.id !== forma.id) : [];
+      const prima = forma ? n.forme[0] : null;
+      return h('div', { class: 'plancia-forme' },
+        conf ? h('label', { class: 'campo-forma' }, 'Configurazione ',
+          h('select', { disabled: !modifica, title: 'Cambia solo la misura sulla mappa: PV, PM, Ferite, Stati e Azioni già spese restano', onchange: (e) => modifica((x) => cambiaConfigurazione(x, p.id, e.target.value)) },
+            ...n.configurazioni.map((c) => h('option', { value: c.id, selected: c.id === conf.id }, `${c.nome} (${c.spazio})`)))) : null,
+        conf?.nota ? h('small', { class: 'nota' }, ` ${conf.nota}`) : null,
+        forma ? h('span', { class: 'etichetta tratto-nemico tratto-forma', title: forma.nota ?? null }, `Forma: ${forma.nome}${Number.isInteger(p.forma?.fino) ? ` fino al Round ${p.forma.fino}` : ''}`) : null,
+        forma && forma.id === prima.id ? altre.map((f) => h('button', { type: 'button', class: 'btn btn-piccolo', disabled: !modifica,
+          title: `${f.nome}: ${f.nota ?? ''} Dura fino alla fine del Round successivo a questo, poi la creatura torna ${prima.nome.toLowerCase()} da sola.`,
+          onclick: () => modifica((x) => cambiaForma(x, p.id, f.id, { fino: (scontro?.round ?? 1) + 1 })) }, f.nome)) : null,
+        forma && forma.id !== prima.id ? h('button', { type: 'button', class: 'btn btn-piccolo', disabled: !modifica, onclick: () => modifica((x) => cambiaForma(x, p.id, prima.id)) }, `Torna ${prima.nome.toLowerCase()}`) : null,
+        forma && forma.muove === false ? h('small', { class: 'nota' }, ' Non si muove, non attacca, non attraversa la roccia, non Schiva.') : null);
+    })(),
     // A.164 (16/10/2026): Morente del nemico, con lo stesso riquadro dei PG (src/morente.js)
     (() => {
       const mo = statoMorenteNemico(p, scontro, dati);

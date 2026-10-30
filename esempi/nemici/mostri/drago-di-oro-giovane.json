@@ -39,7 +39,8 @@
     "scatto": 24,
     "volo": 80
   },
-  "spazio": "6 × 4 Q",
+  "pedina_tattica": "1 Q",
+  "spazio": "4 × 6 Q",
   "taglia": "grande",
   "abilita": [
     {

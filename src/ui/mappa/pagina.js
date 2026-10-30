@@ -35,7 +35,8 @@ import { calibraDaQuadretto, applicaGriglia, dimensioniMappa, lineeVisibili, tes
 import { creaTela } from './canvas.js';
 import { leggiScena, salvaScena, caricaImmagine, controllaFile, preparaRidotta } from './api.js';
 import { agganciaQ, centroToken, tokenSottoPunto, disponiInFila, sovrapposti, chiaveRif, dimensioni, celleToken as celleTokenQ, tokenDentro } from '../../mappa/token.js';
-import { pezziDellaScena, pezziSenzaToken, tokenOrfani, tokenPerPezzo } from '../../mappa/partecipanti.js';
+import { scale as elencoScale, scalaDi, testoScalaScena, scalaCambiabile, conScala, qMetri } from '../../mappa/scala.js';
+import { pezziDellaScena, pezziSenzaToken, tokenOrfani, tokenPerPezzo, tokenDaAdattare, adattaToken } from '../../mappa/partecipanti.js';
 import { daBase64, inBase64, cella, conta, impostaCella } from '../../mappa/celle.js';
 import { ostacoliVista, lineaDiTiro, testoCopertura, apriNebbiaConPg } from '../../mappa/visuale.js';
 import { mappaSemplice, conSemplice, lineaSemplice, nebbiaConPg, modoNebbia } from '../../mappa/semplice.js';
@@ -72,7 +73,7 @@ import { componiMenu, unisciMenu } from '../../mappa/menu.js';
 import { diTurno, ordineIniziativa } from '../../scontro.js';
 import { statoMovimento, muoviVeicolo, cambiaConducente, scegliAndatura } from '../../veicoli-registro.js';
 import { formaRuotata, normaAngolo, baseDaIngombro, angoloDi, ruotaDi } from '../../mappa/forma.js';
-import { ruotabile, rotazioneDi, passoGradi } from '../../mappa/sagoma.js';
+import { ruotabile, rotazioneDi, passoGradi, tokenTesta } from '../../mappa/sagoma.js';
 import { ruotaSeLibero, sali, scendi, qPerScendere, veicoliVicini, aBordo, veicoloDi, veicoloFermo } from '../../mappa/veicoli-mappa.js';
 import { rigaMovimentoLibero, rigaOpportunita, senzaOpportunitaDelMovimento, rigaPorta, rigaTemplateTolti, rigaGruppo, registraRiga } from '../../scontro.js';
 import { tokenNelRettangolo, alternaSelezione, spostaGruppo } from '../../mappa/gruppo.js';
@@ -282,12 +283,18 @@ export function renderMappa(radice, ctx) {
   // «Mappa semplice» (N3; 13/10: l'interruttore è passato nelle regolazioni della mappa): sulla mappa resta solo un
   // piccolo segno quando è accesa, e un clic porta alle regolazioni
   el.semplice = h('button', { type: 'button', class: 'mappa-badge mappa-badge-semplice segno-semplice', hidden: true, onclick: () => apriRegolazioniSemplice() });
-  el.riquadro.append(el.liberoInfo, el.gruppoInfo, el.semplice);
+  // A.198: la scala della mappa si legge sempre (decide quale misura hanno le creature), in un angolo; un clic porta alle regolazioni
+  el.scalaBadge = h('button', { type: 'button', class: 'mappa-badge mappa-badge-scala', hidden: true, onclick: () => apriRegolazioniScala() });
+  el.riquadro.append(el.liberoInfo, el.gruppoInfo, el.semplice, el.scalaBadge);
   el.pannello = h('div', { class: 'mappa-pannello', 'aria-label': 'Collegamento, template, muri, nebbia, luci, vista giocatori e griglia' });
   // 13/10 (richiesta di Marcello): «Mappa semplice» sta qui, con le altre regolazioni
   el.sempliceInt = h('button', { type: 'button', role: 'switch', class: 'interruttore-mappa', onclick: () => cambiaSemplice() });
   el.pSemplice = h('div', { class: 'mappa-sezione mappa-regolazione-semplice' }, el.sempliceInt,
     h('p', { class: 'nota' }, 'Accesa: niente conteggio del movimento, Attacchi di Opportunità, Copertura dalla linea, Atletica, nebbia automatica e luci. Sposti chi vuoi dove vuoi.'));
+  // A.198: la scala della mappa: Q Base (1 Q = 1,5 m, sagome del campo Spazio) o Q Tattici (1 Q = 15 m, pedine convenzionali)
+  el.scalaScelta = h('select', { 'aria-label': 'Scala della mappa', onchange: (e) => cambiaScala(e.target.value) });
+  el.scalaNota = h('p', { class: 'nota' });
+  el.pScala = h('div', { class: 'mappa-sezione mappa-regolazione-scala' }, h('label', { class: 'campo' }, h('span', {}, 'Scala della mappa'), el.scalaScelta), el.scalaNota);
   el.cartaCorpo = h('div', { class: 'mappa-carta-corpo' });
   el.carta = h('section', { class: 'mappa-carta', 'aria-label': 'Mini-scheda del token', hidden: true },
     h('div', { class: 'mappa-carta-testa' },
@@ -558,7 +565,7 @@ export function renderMappa(radice, ctx) {
   const aggiornaBarra = () => {
     el.zoom.textContent = `${Math.round(st.cam.scala * 100)} %`;
     const g = st.scena?.griglia;
-    el.scala.textContent = g ? `${testoScala(ctx.dati)} · ${numero(g.q_px)} px per Q · ${g.colonne} × ${g.righe} Q` : testoScala(ctx.dati);
+    el.scala.textContent = g ? `${testoScala(ctx.dati, st.scena)} · ${numero(g.q_px)} px per Q · ${g.colonne} × ${g.righe} Q` : testoScala(ctx.dati, st.scena);
     const sv = iconaSalvataggio(st.salvataggio.testo, st.salvataggio.modificata);
     el.stato.textContent = sv.icona;
     el.stato.title = sv.titolo;
@@ -660,6 +667,7 @@ export function renderMappa(radice, ctx) {
   const usaScena = async (s) => {
     st.scena = s;
     aggiornaSemplice();
+    aggiornaScala();
     el.titolo.textContent = s.nome;
     document.title = `${s.nome} · Mappa · Mutant`;
     if (s.mappa?.file !== st.fileImmagine) {
@@ -731,7 +739,7 @@ export function renderMappa(radice, ctx) {
   el.blocca = h('button', { type: 'button', class: 'btn', onclick: () => bloccaGriglia() });
   el.info = h('p', { class: 'nota mappa-info' });
   el.notaBlocco = h('p', { class: 'riquadro attenzione mappa-nota-blocco', hidden: true }, 'Griglia bloccata: dimensione e scostamento non cambiano, così nebbia, muri e token restano allineati. Colore e opacità sì.');
-  svuota(el.pannello, el.secScontro, el.pSemplice, el.pTemplate, el.pMuri, el.pNebbia, el.pLuci, el.pLivelli, el.pGiocatori, el.pGriglia);
+  svuota(el.pannello, el.secScontro, el.pSemplice, el.pScala, el.pTemplate, el.pMuri, el.pNebbia, el.pLuci, el.pLivelli, el.pGiocatori, el.pGriglia);
   svuota(el.pLivelli, h('summary', { class: 'mappa-sezione-testa' }, 'Cosa si vede'), el.vociLivelli = h('div', { class: 'mappa-sezione-corpo' }));
   svuota(el.pGriglia,
     h('summary', {}, h('strong', {}, 'Griglia')),
@@ -768,7 +776,7 @@ export function renderMappa(radice, ctx) {
     el.blocca.textContent = fissa ? 'Sblocca griglia' : 'Blocca griglia';
     el.blocca.classList.toggle('primario', !fissa);
     const { larghezza, altezza } = dimensioniMappa(st.scena);
-    el.info.textContent = `${g.colonne} × ${g.righe} Q (${numero(g.colonne * ctx.dati.mappa.q_metri, 1)} × ${numero(g.righe * ctx.dati.mappa.q_metri, 1)} m) · ${testoScala(ctx.dati)} · mappa di ${Math.round(larghezza)} × ${Math.round(altezza)} px`;
+    el.info.textContent = `${g.colonne} × ${g.righe} Q (${numero(g.colonne * qMetri(st.scena, ctx.dati), 1)} × ${numero(g.righe * qMetri(st.scena, ctx.dati), 1)} m) · ${testoScala(ctx.dati, st.scena)} · mappa di ${Math.round(larghezza)} × ${Math.round(altezza)} px`;
     if (fissa && st.strumento === 'calibra') impostaStrumento('sposta');
     aggiornaBarra();
   }
@@ -818,7 +826,14 @@ export function renderMappa(radice, ctx) {
       audio.musica(musicaDi(esito.scontro));
       st.fonti = esito;
       disegnaAudio();
-      st.pezzi = pezziDellaScena(esito, ctx.dati);
+      st.pezzi = pezziDellaScena({ ...esito, scena: st.scena }, ctx.dati);
+      // A.203: se la misura di un pezzo è cambiata (altra configurazione), il token la segue nello stesso punto e con lo stesso orientamento
+      { const da = tokenDaAdattare(st.scena, st.pezzi);
+        if (da.length) {
+          st.scena = { ...st.scena, token: st.scena.token.map((x) => { const d = da.find((y) => y.token.id === x.id); return d ? adattaToken(x, d.pezzo, st.scena.griglia) : x; }) };
+          avviso(`${da.map((d) => d.pezzo.nome).join(', ')}: la misura è cambiata, il token resta dov'è e si adatta.`, { durata: 6000 });
+          salvaPresto();
+        } }
       st.mappaPezzi = new Map(st.pezzi.map((p) => [p.chiave, p]));
       // §6 del lotto: chi esce dallo scontro perde il token, con un avviso; mai con una lettura incompleta
       if ((esito.scontro || esito.bozza) && !esito.errori.length) {
@@ -2233,7 +2248,7 @@ export function renderMappa(radice, ctx) {
     const area = areaRaggiungibile({
       colonne: g.colonne, righe: g.righe, muri: muriEffettivi(st.scena), terreno: daBase64(st.scena.terreno), linee: lineeEffettive(st.scena, { larghezza: RP.larghezza_q }),
       token: st.scena.token.map((x) => ({ id: x.id, q: x.q, ingombro: x.ingombro, angolo: x.angolo, base: x.base, lato: pezzoDi(x)?.lato ?? null, blocca: !!x.blocca })),
-      chi: { id: t.id, q: t.q, ingombro: t.ingombro, angolo: t.angolo, base: t.base, lato: pz.lato }, massimo: Math.max(totale, portata), regole: regoleMovimento(t, ctx.dati),
+      chi: { id: t.id, q: t.q, ingombro: t.ingombro, angolo: t.angolo, base: t.base, lato: pz.lato, attraversaRoccia: !!pz.attraversaRoccia }, massimo: Math.max(totale, portata), regole: regoleMovimento(t, ctx.dati),
     });
     const quando = scontro ? 'del Round' : 'del turno';
     const piuAmpie = FASCE.slice(st.fascia).filter((f) => rimaste[f] > 0).map((f) => (f === 'corsa' ? 'Corri' : 'Scatta'));
@@ -2319,7 +2334,7 @@ export function renderMappa(radice, ctx) {
         const areaG = areaRaggiungibile({
           colonne: g.colonne, righe: g.righe, muri: muriEffettivi(s, { perGiocatori: true }), terreno: daBase64(s.terreno), linee: lineeEffettive(s, { perGiocatori: true, larghezza: RP.larghezza_q }),
           token: s.token.filter((x) => x.id === t.id || visibileAiGiocatori(x, s, nebbia)).map((x) => ({ id: x.id, q: x.q, ingombro: x.ingombro, angolo: x.angolo, base: x.base, lato: pezzoDi(x)?.lato ?? null, blocca: !!x.blocca })),
-          chi: { id: t.id, q: t.q, ingombro: t.ingombro, angolo: t.angolo, base: t.base, lato: pz?.lato ?? null }, massimo: info.totale, regole: regoleMovimento(t, ctx.dati),
+          chi: { id: t.id, q: t.q, ingombro: t.ingombro, angolo: t.angolo, base: t.base, lato: pz?.lato ?? null, attraversaRoccia: !!pz?.attraversaRoccia }, massimo: info.totale, regole: regoleMovimento(t, ctx.dati),
         });
         st.diretta.areaG = { per: info.area, area: areaG, celle: celleArea(areaG, info.rimaste, st.fascia), fascia: st.fascia };
       }
@@ -2571,7 +2586,9 @@ export function renderMappa(radice, ctx) {
   const cacheLinea = { chiave: null, valore: null };
   function calcolaLinea() {
     const l = st.linea;
-    const da = l ? st.scena.token.find((x) => x.id === l.da) : null;
+    const daToken = l ? st.scena.token.find((x) => x.id === l.da) : null;
+    // A.203: per le creature i cui attacchi partono dalla testa (Madre delle Murene) la linea e la distanza partono dal quadretto della testa
+    const da = daToken && pezzoDi(daToken)?.testaOrigine ? tokenTesta(daToken) : daToken;
     const a = l?.a ? st.scena.token.find((x) => x.id === l.a) : null;
     if (!da || (!a && !l.punto)) return null;
     const chiave = JSON.stringify([idDi(st.scena), l.da, l.a, l.punto, mappaSemplice(st.scena)]);
@@ -2772,6 +2789,41 @@ export function renderMappa(radice, ctx) {
       el.sempliceInt.title = v ? 'Accesa: sposti chi vuoi dove vuoi. Clic per riaccendere conteggio del movimento, Copertura dalla linea, Atletica e nebbia automatica' : 'Clic per la Mappa semplice: spegne tutte le automazioni (conteggio del movimento, Attacchi di Opportunità, Copertura dalla linea, Atletica, nebbia automatica e luci)';
       svuota(el.sempliceInt, h('span', { class: 'interruttore-mappa-pallino', 'aria-hidden': 'true' }), `Mappa semplice: ${v ? 'sì' : 'no'}`);
     }
+  }
+
+  /** A.198: scala scelta (solo finché non ci sono creature o veicoli) e segno sulla mappa. */
+  function cambiaScala(id) {
+    if (!st.scena) return;
+    const nuova = conScala(st.scena, id, ctx.dati);
+    if (!nuova) { avviso(scalaCambiabile(st.scena).motivo ?? 'scala non ammessa', { tipo: 'avviso' }); aggiornaScala(); return; }
+    st.scena = nuova;
+    salvaPresto();
+    st.pezzi = pezziDellaScena({ ...st.fonti, scena: st.scena }, ctx.dati);
+    aggiornaScala();
+    aggiornaBarra();
+    avviso(`Scala: ${testoScalaScena(st.scena, ctx.dati)}. ${id === 'tattica' ? 'Le creature entrano con la pedina convenzionale del manuale (non cambia le loro dimensioni vere nei passaggi stretti).' : 'Le creature entrano con la sagoma del loro campo Spazio.'}`, { tipo: 'info', durata: 7000 });
+    ridisegna(['aree', 'sopra']);
+  }
+  function aggiornaScala() {
+    if (!st.scena) { if (el.scalaBadge) el.scalaBadge.hidden = true; return; }
+    const attuale = scalaDi(st.scena, ctx.dati);
+    const cambiabile = scalaCambiabile(st.scena);
+    if (el.scalaBadge) {
+      el.scalaBadge.hidden = false;
+      el.scalaBadge.textContent = testoScalaScena(st.scena, ctx.dati);
+      el.scalaBadge.title = 'Scala della mappa: decide quale misura hanno le creature. Clic per le regolazioni.';
+    }
+    if (el.scalaScelta) {
+      svuota(el.scalaScelta, ...elencoScale(ctx.dati).map((x) => h('option', { value: x.id, selected: x.id === attuale }, `${x.nome} · 1 Q = ${String(x.q_metri).replace('.', ',')} m`)));
+      el.scalaScelta.disabled = !cambiabile.ok;
+      el.scalaNota.textContent = cambiabile.ok
+        ? 'Q Base: le creature hanno la sagoma del loro campo Spazio. Q Tattici: la pedina convenzionale del manuale. Si sceglie prima di mettere le creature.'
+        : `Scala bloccata: ${cambiabile.motivo}.`;
+    }
+  }
+  function apriRegolazioniScala() {
+    vaiAlGruppo('mappa');
+    el.scalaScelta?.focus?.();
   }
 
   /** Il segno «Semplice» sulla mappa porta alle regolazioni, dove sta l'interruttore (13/10). */

@@ -8,6 +8,7 @@ import { calcolaAttaccoDistanza, calcolaAttaccoRavvicinato, dichiarazioneDistanz
 import { catalogo } from './equipaggiamento.js';
 import { penalitaStatiAbilita } from './condizioni.js';
 import { leggiDannoMoltiplicato } from './danno.js';
+import { formaAttuale } from './scontro.js';
 
 /** Attacchi di un partecipante dello scontro: quelli del tipo di nemico, o quello scritto a mano. */
 export function attacchiDi(p) {
@@ -123,6 +124,9 @@ export function calcolaAttaccoNemico(p, indice, dichiarazione, dati) {
   const r = arma.tipo === 'arma_distanza'
     ? calcolaAttaccoDistanza(chi, arma, dichiarazioneDistanza(dichiarazione), dati)
     : calcolaAttaccoRavvicinato(chi, arma, dichiarazioneRavvicinato(dichiarazione), dati);
+  // A.202: in una forma che non attacca (l'overdose corporea) l'app avvisa, non blocca: decide il master
+  const forma = formaAttuale(p);
+  if (forma && forma.attacca === false) r.avvisi = [...(r.avvisi ?? []), `${p.nome} è «${forma.nome}»: in questa forma non attacca (A.202).`];
   return { attacco, arma, risultato: r };
 }
 

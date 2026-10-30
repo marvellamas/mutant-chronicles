@@ -183,7 +183,7 @@ test('validaScena: ogni problema dice dove', () => {
     [(s) => { s.token[1].id = 't-lucas'; }, /token\[1\]: id «t-lucas» ripetuto/],
     [(s) => { s.token[1].rif.id = 'pg:lucas'; }, /token\[1\]: il partecipante «pg:lucas» ha già un token/],
     [(s) => { s.token[3].q = [9, 2]; }, /^token\[3\]\.q/],
-    [(s) => { s.token[0].ingombro = 13; }, /^token\[0\]\.ingombro/],
+    [(s) => { s.token[0].ingombro = dati.mappa.token.creatura_ingombro_max + 1; }, /^token\[0\]\.ingombro/],
     [(s) => { delete s.token[4].nome; }, /^token\[4\]\.nome/],
     [(s) => { s.template[0].forma = 'stella'; }, /^template\[0\]\.forma/],
     [(s) => { s.template[1].origine = [10, 0]; }, /^template\[1\]\.origine/],

@@ -37,7 +37,7 @@ const COMUNI = (g) => [
 
 const CREATURE = [
   {
-    id: 'dragomedusa-giovane', nome: 'Dragomedusa giovane',
+    id: 'dragomedusa-giovane', nome: 'Dragomedusa giovane', pedina_tattica: '1 Q',
     caratteristiche: { FOR: 8, DES: 8, COS: 9, INT: 3, SAG: 7, CAR: 4 },
     pv: 900, pm: 80, ar: { totale: 18, magica: 4 }, difese: 12, iniziativa: 2,
     movimento: { passo: 4, corsa: 8, scatto: 12, volo: 120 },
@@ -54,7 +54,7 @@ const CREATURE = [
     note: 'Predatore energetico delle nubi di Iris, potenziato rispetto ai draghi di riferimento: predano veicoli aerei e spaziali leggeri e medi, possono mettere in difficoltà mezzi medi e pesanti modificati; le navi pesanti e da guerra richiedono normalmente più esemplari. Natura Comune, nessun incantesimo appreso, nessuna comprensione dei linguaggi; non appartiene alla Covata. Artigli: portata 1 Q Base; Morso: 2 Q Base; un attacco di ciascun tipo al massimo per Round. Il danno «NdM × 5» è il risultato dei dadi moltiplicato per 5. GS e PX per quattro PG, per un singolo esemplare senza dotazione; i valori restano da verificare al tavolo (Mostri 0.46 §7.12; A.194). Riferimento di pericolosità: preda facilmente sopraffatta un veicolo leggero; predatore favorito contro un medio ordinario; pericoloso soprattutto dopo l’aggancio contro la Neverlost.',
   },
   {
-    id: 'dragomedusa-adulto', nome: 'Dragomedusa adulto',
+    id: 'dragomedusa-adulto', nome: 'Dragomedusa adulto', spazio: '10 × 14 Q', pedina_tattica: '2 × 1 Q',
     caratteristiche: { FOR: 10, DES: 8, COS: 10, INT: 3, SAG: 8, CAR: 5 },
     pv: 1600, pm: 120, ar: { totale: 24, magica: 6 }, difese: 13, iniziativa: 2,
     movimento: { passo: 4, corsa: 8, scatto: 12, volo: 140 },
@@ -79,6 +79,10 @@ function profilo(c) {
     pv: c.pv, pm: c.pm, ar: c.ar, difese: c.difese, iniziativa: c.iniziativa,
     movimento: c.movimento,
     taglia: 'grande',
+    // A.198 e A.204 (30/10/2026): lo Spazio è in Q Base, larghezza × lunghezza (il manuale scrive «14 × 10» come lunghezza × larghezza,
+    // come per i draghi); la pedina in Q Tattici è un dato distinto. Il giovane non ha un ingombro corporeo in Q Base nel manuale.
+    ...(c.spazio ? { spazio: c.spazio } : {}),
+    pedina_tattica: c.pedina_tattica,
     gs_px: c.gs_px,
     salvezze: c.salvezze,
     azioni: { principali: 3, movimento: 1 },

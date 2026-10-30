@@ -27,6 +27,8 @@
     "volo": 140
   },
   "taglia": "grande",
+  "spazio": "10 × 14 Q",
+  "pedina_tattica": "2 × 1 Q",
   "gs_px": {
     "gs": "Semidio",
     "px": 400,

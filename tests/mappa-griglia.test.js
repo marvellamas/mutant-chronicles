@@ -127,7 +127,7 @@ test('linee visibili: solo quelle nel riquadro, niente se troppo fitte', () => {
   assert.deepEqual(qDaPunto(g, 10, 20), [0, 0]);
   assert.deepEqual(qDaPunto(g, 509, 319), [9, 5]);
   assert.equal(qDaPunto(g, 9, 20), null);
-  assert.equal(testoScala(dati), '1 Q = 1,5 m');
+  assert.equal(testoScala(dati), 'Q Base · 1 Q = 1,5 m');
 });
 
 test('scene: id dal nome e dall’ora, duplicazione, archiviata', () => {

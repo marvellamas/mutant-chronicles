@@ -36,6 +36,26 @@
     "scatto": 18
   },
   "spazio": "1 Q",
+  "forme": [
+    {
+      "id": "eterea",
+      "nome": "Eterea",
+      "muove": true,
+      "attacca": true,
+      "schiva": true,
+      "attraversa_roccia": true,
+      "nota": "Passo, Corsa e Scatto del profilo (6 / 12 / 18 Q Base) sono in forma eterea, attraversamento della roccia compreso; nessun movimento terrestre."
+    },
+    {
+      "id": "corporea",
+      "nome": "Corporea (overdose)",
+      "muove": false,
+      "attacca": false,
+      "schiva": false,
+      "attraversa_roccia": false,
+      "nota": "Overdose: il movimento si interrompe e non può muoversi volontariamente, attaccare, attraversare la roccia o Schivare fino alla fine del Round successivo a quello dell’assorbimento (R+1); poi torna eterea. Qualsiasi arma può colpirla, con AR 0."
+    }
+  ],
   "abilita": [
     {
       "nome": "Corpo a corpo",

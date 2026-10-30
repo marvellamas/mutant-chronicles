@@ -23,7 +23,7 @@ test('A.126: il lato della pedina viene dal campo «spazio» del profilo, non da
   assert.equal(campo.tipo, 'testo');
   assert.ok(new RegExp(campo.modello).test('2 × 3 Q') && new RegExp(campo.modello).test('3 × 10 Q') && new RegExp(campo.modello).test('1 Q') && !new RegExp(campo.modello).test('2 Q'));
   assert.equal(campo.obbligatorio, false);
-  assert.equal(dati.mappa.token.creatura_ingombro_max, 12);
+  assert.equal(dati.mappa.token.creatura_ingombro_max, 20);
   assert.equal(ingombroDaTaglia({ spazio: '3 × 3 Q' }, dati), 3);
   assert.equal(ingombroDaTaglia({ spazio: '2 × 2 Q' }, dati), 2);
   assert.equal(ingombroDaTaglia({ spazio: '1 Q', taglia: 'grande' }, dati), 1, 'vale il profilo, non la Taglia');
@@ -237,5 +237,5 @@ test('A.167: il campo spazio dei nemici ammette i rettangoli e il validatore ne 
   const base = JSON.parse(readFileSync(new URL('../esempi/nemici/mostri/roc.json', import.meta.url), 'utf8'));
   assert.deepEqual(validaNemico({ ...base, spazio: '3 × 10 Q' }, dati, 'x'), []);
   assert.equal(validaNemico({ ...base, spazio: '2 Q' }, dati, 'x').length, 1);
-  assert.match(validaNemico({ ...base, spazio: '13 × 2 Q' }, dati, 'x')[0].problema, /al massimo 12 Q per lato/);
+  assert.match(validaNemico({ ...base, spazio: '21 × 2 Q' }, dati, 'x')[0].problema, /al massimo 20 Q per lato/);
 });

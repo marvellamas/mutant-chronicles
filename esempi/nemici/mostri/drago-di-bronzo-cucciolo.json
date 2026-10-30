@@ -36,7 +36,8 @@
     "scatto": 18,
     "volo": 60
   },
-  "spazio": "2 × 1 Q",
+  "pedina_tattica": "1 Q",
+  "spazio": "1 × 2 Q",
   "abilita": [
     {
       "nome": "Corpo a corpo",

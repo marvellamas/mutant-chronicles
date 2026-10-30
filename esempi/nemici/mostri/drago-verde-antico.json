@@ -36,6 +36,8 @@
     "scatto": 30,
     "volo": 120
   },
+  "pedina_tattica": "2 × 2 Q",
+  "spazio": "10 × 16 Q",
   "taglia": "grande",
   "abilita": [
     {
@@ -134,10 +136,6 @@
     {
       "nome": "Presenza terrificante degli antichi",
       "effetto": "1 AzP alla propria Iniziativa, una volta per incontro, contro nemici entro 24 Q Base che percepiscono direttamente il drago. Volontà −2 per il bianco, −3 per nero e verde, −4 per blu e rosso. Fallimento: Terrorizzato per 1+1d3 Round, con effetti, scadenze e rimozione comuni. Una sola prova contro la Presenza dello stesso drago nell’incontro. I cuccioli non possiedono questa capacità."
-    },
-    {
-      "nome": "Dimensioni e scale",
-      "effetto": "Ingombro del corpo 16 × 10 Q, come scritto nel manuale («16 × 10 Q Base; pedina navale 2 × 2 Q Tattici»). Oltre il limite di 12 Q per lato della mappa (A.167): il campo Spazio non è impostato e il master regola la pedina a mano. Domanda A.198."
     },
     {
       "nome": "Abilità particolari",

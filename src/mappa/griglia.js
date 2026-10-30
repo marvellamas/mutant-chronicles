@@ -5,6 +5,7 @@ import { dimensioniGriglia } from './scena.js';
 import { daBase64, inBase64, ridimensiona } from './celle.js';
 import { dimensioni } from './token.js';
 import { lineeDi } from './muri-linee.js';
+import { testoScalaScena } from './scala.js';
 
 /** M2: un punto di un muro disegnato riportato dentro la griglia (col margine dei dati). */
 const dentroQ = (v, max, margine) => Math.max(-margine, Math.min(max + margine, v));
@@ -136,5 +137,5 @@ export function qDaPunto(griglia, mx, my) {
   return x >= 0 && y >= 0 && x < griglia.colonne && y < griglia.righe ? [x, y] : null;
 }
 
-/** Testo della scala per la barra (§4): «1 Q = 1,5 m». */
-export const testoScala = (dati) => `1 Q = ${String(dati.mappa.q_metri).replace('.', ',')} m`;
+/** Testo della scala per la barra (§4): «Q Base · 1 Q = 1,5 m» (A.198: con la scala dichiarata dalla scena, se c'è). */
+export const testoScala = (dati, scena = null) => testoScalaScena(scena, dati);
