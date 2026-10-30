@@ -94,7 +94,7 @@ test('server: la seconda assegnazione dello stesso premio è rifiutata (409) e l
   const r = await put(doppio);
   assert.equal(r.status, 409);
   const corpo = await r.json();
-  assert.match(corpo.errore, /già stato dato a a/);
+  assert.match(corpo.errore, /già stato dato a a \(Atto IV/);
   assert.equal(corpo.doppi[0].id, 'a');
   assert.deepEqual(JSON.parse(readFileSync(join(c.px, 'px.json'), 'utf8')), base1, 'l’archivio è rimasto com’era');
   // a un assente (b non è presente in nessuna delle due): stesso blocco

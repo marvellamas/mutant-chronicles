@@ -13,6 +13,7 @@ import {
 } from '../scontro.js';
 import { stessaChiave } from '../veicoli-registro.js';
 import { apriAggiungiNemico } from './aggiungi-nemico.js';
+import { baseIniziativaNemico } from '../iniziativa-creature.js';
 
 const numero = (n) => (n < 0 ? `−${-n}` : String(n));
 /** M4 (11/10): livello medio dei PG al tavolo, per le tabelle di «Crea nemico…» (8 senza nessuno al tavolo). */
@@ -121,6 +122,12 @@ export function pannelloScontro(ctx, st, { modifica, crea, prepara = null, ridis
       h('button', { type: 'button', class: 'btn btn-piccolo', onclick: () => modifica((x) => registraTiro(x, p.id, campo, tira(dado).tiro, ctx.dati)) }, `Tira ${dado.formula}`));
   };
   const baseConProvenienza = (p) => {
+    // A.200: un nemico tira con la base di scheda (mai sotto 0) più le penalità che ha adesso (Ferite, Stati): può essere negativa
+    if (p.tipo === 'nemico') {
+      const b = baseIniziativaNemico(p, ctx.dati);
+      return infoValore(h('span', {}, numero(b.base)), { titolo: `Iniziativa di ${p.nome}: ${numero(b.base)}`, sottotitolo: 'Valore della scheda (minimo 0) più le penalità attuali (A.200)',
+        provenienza: { righe: [{ fonte: 'Valore della scheda (minimo 0)', valore: b.minimo }, ...b.modifica.voci.map((x) => ({ fonte: x.etichetta, valore: x.valore }))], totale: b.base } });
+    }
     const v = vistaDi(p);
     return v?.iniziativa?.provenienza
       ? infoValore(h('span', {}, numero(p.base)), { titolo: `Iniziativa di ${p.nome}: ${numero(p.base)}`, sottotitolo: 'Valore della scheda al momento dello scontro (§2.14)', provenienza: v.iniziativa.provenienza })

@@ -1673,7 +1673,8 @@ async function apiPx(req, res, px, master) {
       await scriviJson(dove, d);
     });
     if (esito) {
-      const nomi = esito.map((x) => `${x.id} (Atto ${x.atto}: ${x.partite.map((p) => p.titolo || p.id).join(' e ')})`).join('; ');
+      const pg = (id) => (d.giocatori ?? []).find((g) => g?.id === id)?.pg || id;
+      const nomi = esito.map((x) => `${pg(x.id)} (Atto ${x.atto}: ${x.partite.map((p) => p.titolo || p.id).join(' e ')})`).join('; ');
       return json(res, 409, { errore: `Il premio di fine Atto è già stato dato a ${nomi}: non si dà due volte. Per correggere un'assegnazione sbagliata serve la rettifica, con il motivo.`, doppi: esito });
     }
     return json(res, 200, d);
