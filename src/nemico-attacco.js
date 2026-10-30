@@ -7,6 +7,7 @@
 import { calcolaAttaccoDistanza, calcolaAttaccoRavvicinato, dichiarazioneDistanza, dichiarazioneRavvicinato, voce } from './attacco.js';
 import { catalogo } from './equipaggiamento.js';
 import { penalitaStatiAbilita } from './condizioni.js';
+import { leggiDannoMoltiplicato } from './danno.js';
 
 /** Attacchi di un partecipante dello scontro: quelli del tipo di nemico, o quello scritto a mano. */
 export function attacchiDi(p) {
@@ -127,8 +128,8 @@ export function calcolaAttaccoNemico(p, indice, dichiarazione, dati) {
 
 /** «(1d8+2) ×2» → { formula: '1d8+2', moltiplicatore: 2 }; «1d8+2» → moltiplicatore 1. */
 export function leggiDanno(testo) {
-  const m = /^\((.+)\)\s*×(\d+)$/.exec(String(testo ?? '').trim());
-  return m ? { formula: m[1], moltiplicatore: Number(m[2]) } : { formula: testo ?? null, moltiplicatore: 1 };
+  // A.199: anche «8d10×5» delle creature, non solo «(8d10) ×5» (Carica, Bruciapelo…)
+  return leggiDannoMoltiplicato(testo);
 }
 
 /**

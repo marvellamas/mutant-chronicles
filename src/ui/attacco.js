@@ -409,7 +409,7 @@ function tiriDelRisultato(ctx, a, r) {
   const note = (r.provenienza?.righe ?? []).filter((x) => x.valore && !x.escluso).slice(1).map((x) => `${x.valore > 0 ? '+' : '−'}${Math.abs(x.valore)} ${x.fonte}`);
   return {
     va: r.va_finale === null || r.va_finale === undefined ? null : () => apriTiro(ctx, { genere: 'prova', nome: `${a.nome}: tiro per colpire`, va: r.va_finale, tipo: 'attacco', note }),
-    danno: (formula) => (formula ? () => apriTiro(ctx, { genere: 'danno', nome: `${a.nome}: danno`, formula: leggiDanno(formula).formula }) : null),
+    danno: (formula) => (formula ? () => { const l = leggiDanno(formula); return apriTiro(ctx, { genere: 'danno', nome: `${a.nome}: danno`, formula: l.formula, moltiplicatore: l.moltiplicatore }); } : null),
   };
 }
 

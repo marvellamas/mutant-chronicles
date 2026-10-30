@@ -36,6 +36,8 @@ export async function salvaNemico(n) {
 }
 
 import { capacitaDi, avvisoUsi, testoUsi } from '../capacita-nemico.js';
+import { apriTiro } from './tira-valore.js';
+import { leggiDannoMoltiplicato } from '../danno.js';
 import { spazioEffettivo } from '../mappa/token.js';
 
 // etichette dei campi del formato: presentazione (i campi e le regole stanno nel formato)
@@ -402,6 +404,9 @@ export function cartaNemico(ctx, p, { modifica, durate = [], diTurnoOra = false,
     n.capacita?.length ? h('details', { class: 'capacita-nemico' }, h('summary', {}, `Capacità speciali (${n.capacita.length})`),
       h('ul', { class: 'nota' }, capacitaDi(n, p.usiCapacita).map((v) => h('li', { class: v.esauriti ? 'capacita-esaurita' : null },
         h('strong', {}, v.nome), `: ${v.effetto}`,
+        // A.199: il danno con moltiplicatore si tira dall'app, con i dadi in vista; Difese e Armatura le applica «Colpito»
+        v.danno ? h('button', { type: 'button', class: 'btn btn-piccolo tira-danno-capacita', title: `Tira il danno di ${v.nome}: ${v.danno}${v.natura ? ` (${v.natura})` : ''}`,
+          onclick: () => { const l = leggiDannoMoltiplicato(v.danno); apriTiro(ctx, { genere: 'danno', nome: `${n.nome}: ${v.nome}`, formula: l.formula, moltiplicatore: l.moltiplicatore }); } }, `Tira il danno ${v.danno}`) : null,
         v.parametri.length ? h('span', { class: 'parametri-capacita' }, v.parametri.map((x) => h('span', { class: 'etichetta parametro-capacita', title: x.etichetta }, `${x.etichetta}: ${x.valore}`))) : null,
         v.usi && modifica ? h('span', { class: 'usi-capacita' },
           h('strong', { class: v.esauriti ? 'usi-finiti' : null }, ` ${v.rimasti} su ${v.usi.quanti}`),

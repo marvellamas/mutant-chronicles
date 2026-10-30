@@ -18,7 +18,7 @@
 // ha una fotografia del tipo, i propri PV attuali, Ferite, Menomazioni, PM e Stati (A.73, decisioni 7–8);
 // l'Iniziativa è quella del tipo più il dado, con le stesse regole di parità (DES e INT dalle Caratteristiche
 // del tipo; se una manca, spareggio con 1d10: A.73, decisione 6).
-import { iniziativaCreatura } from './iniziativa-creature.js';
+import { iniziativaCreatura, baseIniziativaNemico } from './iniziativa-creature.js';
 import { specTiro, motivoFuoriIntervallo } from './tiri.js';
 import { fineDurata } from './tecniche.js';
 import { segnaUso, azzeraPerRound, vistaCapacita } from './capacita-nemico.js';
@@ -259,6 +259,19 @@ export function togliPartecipante(s, id, adesso) {
 }
 
 /**
+ * A.200: nel momento in cui un nemico tira l'Iniziativa, la sua base è il valore di scheda (mai sotto 0) più le penalità che
+ * ha in quel momento (Ferite, Stati): il totale può essere negativo. I PG hanno già la loro Iniziativa effettiva.
+ * `ids`: chi sta tirando (null = tutti).
+ */
+function conBasiAggiornate(s, ids, dati) {
+  return { ...s, partecipanti: s.partecipanti.map((p) => {
+    if (p.tipo !== 'nemico' || (ids && !ids.includes(p.id))) return p;
+    const b = baseIniziativaNemico(p, dati);
+    return { ...p, base: b.base, ...(b.modifica.totale ? { modIni: b.modifica.totale } : {}), ...(!b.modifica.totale && p.modIni !== undefined ? { modIni: undefined } : {}) };
+  }) };
+}
+
+/**
  * Registra il tiro d'Iniziativa (o lo spareggio) di un partecipante: { valore, origine: 'app'|'manuale' }.
  * @param campo 'd10' oppure 'spareggio'
  */
@@ -266,11 +279,12 @@ export function registraTiro(s, id, campo, tiro, dati, adesso) {
   const spec = dadoIniziativa(dati);
   const motivo = motivoFuoriIntervallo(tiro?.valore, spec);
   if (motivo) throw new Error(motivo);
+  if (!s.partecipanti.some((x) => x.id === id)) throw new Error('partecipante non trovato');
+  if (campo === 'd10') s = conBasiAggiornate(s, [id], dati);
   const p = s.partecipanti.find((x) => x.id === id);
-  if (!p) throw new Error('partecipante non trovato');
   const t = { ...s, partecipanti: s.partecipanti.map((x) => (x.id === id ? { ...x, [campo]: { valore: tiro.valore, origine: tiro.origine } } : x)) };
   const testo = campo === 'd10'
-    ? `Iniziativa di ${p.nome}: ${p.base} + ${spec.formula} ${tiro.valore} (${tiro.origine === 'app' ? 'tirato dall’app' : 'dal vivo'}) = ${p.base + tiro.valore}.`
+    ? `Iniziativa di ${p.nome}: ${p.base}${conPenalita(p)} + ${spec.formula} ${tiro.valore} (${tiro.origine === 'app' ? 'tirato dall’app' : 'dal vivo'}) = ${p.base + tiro.valore}.`
     : `Spareggio di ${p.nome}: ${spec.formula} ${tiro.valore} (${tiro.origine === 'app' ? 'tirato dall’app' : 'dal vivo'}).`;
   return conRiga(t, testo, adesso);
 }
@@ -366,7 +380,7 @@ function voceIniziativa(s, t, adesso) {
   const d = diTurno(s);
   return {
     tipo: 'iniziativa', quando: ora(adesso), prima: { round: s.round, turno: s.turno, diTurno: d?.id ?? null, nome: d?.nome ?? null }, dopo: { round: t.round, turno: t.turno },
-    tiri: s.partecipanti.map((p) => ({ id: p.id, d10: p.d10 ?? null, spareggio: p.spareggio ?? null })), ordineAlleati: s.ordineAlleati,
+    tiri: s.partecipanti.map((p) => ({ id: p.id, d10: p.d10 ?? null, spareggio: p.spareggio ?? null, base: p.base, modIni: p.modIni })), ordineAlleati: s.ordineAlleati,
     righeInizio: s.registro.length, righe: t.registro.length, durateFinite: [], effettiFiniti: [], statiTolti: [], perdite: [],
   };
 }
@@ -374,7 +388,7 @@ function voceIniziativa(s, t, adesso) {
 /** Lo scontro con i tiri d'Iniziativa di una voce «iniziativa» (chi è entrato dopo tiene i suoi). */
 function conIniziativaDi(s, v) {
   const tiri = new Map(v.tiri.map((x) => [x.id, x]));
-  return { ...s, ordineAlleati: v.ordineAlleati, partecipanti: s.partecipanti.map((p) => (tiri.has(p.id) ? { ...p, d10: tiri.get(p.id).d10, spareggio: tiri.get(p.id).spareggio } : p)) };
+  return { ...s, ordineAlleati: v.ordineAlleati, partecipanti: s.partecipanti.map((p) => (tiri.has(p.id) ? { ...p, d10: tiri.get(p.id).d10, spareggio: tiri.get(p.id).spareggio, ...(Number.isFinite(tiri.get(p.id).base) ? { base: tiri.get(p.id).base, modIni: tiri.get(p.id).modIni } : {}) } : p)) };
 }
 
 /** Turno dello stesso partecipante nell'ordine nuovo (chi era di turno resta di turno). */
@@ -384,9 +398,11 @@ function turnoDello(t, id, ripiego) {
   return i >= 0 ? i : Math.min(ripiego, Math.max(0, ordinati.length - 1));
 }
 
+// A.200: se la base porta una penalità (Ferite, Stati) lo dice; il totale può essere negativo
+const conPenalita = (p) => (p.modIni ? ` (${p.modIni > 0 ? '+' : '−'}${Math.abs(p.modIni)} per Ferite e Stati)` : '');
 const testoTiro = (p, spec) => (p.d10.origine === 'mano'
   ? `${p.nome} ${p.base + p.d10.valore} (a mano)`
-  : `${p.nome} ${p.base} + ${spec.formula} ${p.d10.valore}${p.d10.origine === 'app' ? '' : ' (dal vivo)'} = ${p.base + p.d10.valore}`);
+  : `${p.nome} ${p.base}${conPenalita(p)} + ${spec.formula} ${p.d10.valore}${p.d10.origine === 'app' ? '' : ' (dal vivo)'} = ${p.base + p.d10.valore}`);
 
 /**
  * «Reimposta Iniziativa» per tutti (ritocchi del 07/10; Giocatore §2.14, §5.1, A.123): ogni partecipante ritira il
@@ -395,8 +411,9 @@ const testoTiro = (p, spec) => (p.d10.origine === 'mano'
  * Round non cambia). Una riga nel registro; con `indietroMax` una voce in `s.indietro`, che «Indietro» annulla.
  * @param tira () → { valore, origine } per ogni dado (Iniziativa e spareggi), di solito l'app (src/tiri.js → tira)
  */
-export function reimpostaIniziativa(s, tira, dati, adesso, { indietroMax = 0 } = {}) {
+export function reimpostaIniziativa(s0, tira, dati, adesso, { indietroMax = 0 } = {}) {
   const spec = dadoIniziativa(dati);
+  const s = conBasiAggiornate(s0, null, dati);
   const chi = diTurno(s);
   let t = { ...s, partecipanti: s.partecipanti.map((p) => { const x = tira(); return { ...p, d10: { valore: x.valore, origine: x.origine }, spareggio: null }; }) };
   for (const p of t.partecipanti) { const m = motivoFuoriIntervallo(p.d10.valore, spec); if (m) throw new Error(m); }
@@ -406,7 +423,7 @@ export function reimpostaIniziativa(s, tira, dati, adesso, { indietroMax = 0 } =
   const ordine = ordineIniziativa(t).ordinati;
   const testo = `Iniziativa reimpostata per tutti (${spec.formula}): ${ordine.map((p) => testoTiro(p, spec)).join('; ')}.${sp.testi.length ? ` Parità fra avversari: ${sp.testi.join('; ')}.` : ''}${chi ? ` Di turno resta ${chi.nome}.` : ''}`;
   t = conRiga(t, testo, adesso);
-  return indietroMax > 0 ? { ...t, indietro: [...(s.indietro ?? []), voceIniziativa(s, t, adesso)].slice(-indietroMax) } : t;
+  return indietroMax > 0 ? { ...t, indietro: [...(s.indietro ?? []), voceIniziativa(s0, t, adesso)].slice(-indietroMax) } : t;
 }
 
 /**
@@ -416,10 +433,12 @@ export function reimpostaIniziativa(s, tira, dati, adesso, { indietroMax = 0 } =
  * `tiraSpareggio` (senza, resta da tirare nella colonna «Parità»). Chi era di turno resta di turno. Una riga nel
  * registro; con `indietroMax` la voce per «Indietro».
  */
-export function reimpostaIniziativaDi(s, id, tiro, dati, adesso, { indietroMax = 0, tiraSpareggio = null } = {}) {
+export function reimpostaIniziativaDi(s0, id, tiro, dati, adesso, { indietroMax = 0, tiraSpareggio = null } = {}) {
   const spec = dadoIniziativa(dati);
+  if (!s0.partecipanti.some((x) => x.id === id)) throw new Error('partecipante non trovato');
+  const p0 = s0.partecipanti.find((x) => x.id === id);
+  const s = conBasiAggiornate(s0, [id], dati);
   const p = s.partecipanti.find((x) => x.id === id);
-  if (!p) throw new Error('partecipante non trovato');
   let d10;
   if (tiro && 'totale' in tiro) {
     if (!Number.isInteger(tiro.totale)) throw new Error('il valore d’Iniziativa scritto a mano dev’essere un numero intero');
@@ -435,10 +454,10 @@ export function reimpostaIniziativaDi(s, id, tiro, dati, adesso, { indietroMax =
   t = sp.scontro;
   t = { ...t, turno: turnoDello(t, chi?.id, s.turno) };
   const nuovo = t.partecipanti.find((x) => x.id === id);
-  const prima = p.d10 ? p.base + p.d10.valore : null;
+  const prima = p0.d10 ? p0.base + p0.d10.valore : null;
   const testo = `Iniziativa di ${p.nome} reimpostata: ${testoTiro(nuovo, spec)}${prima !== null ? ` (prima ${prima})` : ''}.${sp.testi.length ? ` Parità con un avversario: ${sp.testi.join('; ')}.` : ''}${chi ? ` Di turno resta ${chi.nome}.` : ''}`;
   t = conRiga(t, testo, adesso);
-  return indietroMax > 0 ? { ...t, indietro: [...(s.indietro ?? []), voceIniziativa(s, t, adesso)].slice(-indietroMax) } : t;
+  return indietroMax > 0 ? { ...t, indietro: [...(s.indietro ?? []), voceIniziativa(s0, t, adesso)].slice(-indietroMax) } : t;
 }
 
 /**
@@ -449,8 +468,10 @@ export function reimpostaIniziativaDi(s, id, tiro, dati, adesso, { indietroMax =
  * Parità come §5.1 (A.123): l'ordine la risolve con DES e INT; fra avversari ancora pari resta lo spareggio da tirare.
  * Chi era di turno resta di turno. Una riga nel registro.
  */
-export function registraIniziative(s, voci, dati, adesso) {
+export function registraIniziative(s0, voci, dati, adesso) {
   const spec = dadoIniziativa(dati);
+  if (!voci.length) return s0;
+  const s = conBasiAggiornate(s0, voci.map((v) => v.id), dati);
   const nuovi = new Map();
   for (const v of voci) {
     const p = s.partecipanti.find((x) => x.id === v.id);

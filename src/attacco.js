@@ -16,7 +16,7 @@ import { avvisiStati, limitiStati } from './condizioni.js';
 import { riga, provenienza, righeDaScomposizione, righeBase, rigaConDettaglio, rigaBonusCaratteristica } from './provenienza.js';
 import { tecnicheAttacco, tecnicheInCorso, mezzoAmmesso } from './tecniche.js';
 import { limiteMagistrale, esitoProva } from './prova.js';
-import { moltiplicatoreMagistrale } from './danno.js';
+import { moltiplicatoreMagistrale, leggiDannoMoltiplicato } from './danno.js';
 
 export const voce = (etichetta, valore, fonte, paragrafo = null) => ({ etichetta, valore, fonte, paragrafo });
 export const somma = (voci) => voci.reduce((s, x) => s + x.valore, 0);
@@ -679,7 +679,10 @@ export function calcolaAttaccoDistanza(personaggio, arma, dichiarazione, dati) {
   if (m === 'FS') promemoria.push(`Fuoco di Soppressione: Area ${A.modalita.area.FS}, dura fino alla tua Iniziativa successiva; chi si espone fa una PS di Volontà (§5.10).`);
 
   // 9. danno, applicazioni e colpi (§5.10, AC)
-  const base = dannoBase(arma);
+  // A.199: un danno scritto come «8d10×5» ha i dadi e il suo moltiplicatore (il più alto, §5.13); Difese e Armatura dopo
+  const lettoBase = leggiDannoMoltiplicato(dannoBase(arma));
+  const base = lettoBase.formula;
+  moltiplicatore = Math.max(moltiplicatore, lettoBase.moltiplicatore);
   // Armamenti §7.20.3: la munizione caricata stabilisce danno, AC, RS e proprietà (Abilità, VA e gittata sono del lanciatore)
   const mun = arma.dannoDaMunizione ? arma.munizioneRiferimento : null;
   if (mun) promemoria.push(`Munizione caricata: ${mun.nome}${mun.danno ? `, danno ${mun.danno}, AC ${mun.ac}` : ', nessun danno'}, RS ${mun.rs_q} Q${mun.proprieta?.length ? `; ${mun.proprieta.join(', ')}` : ''} (§7.20.3). Un colpo consuma una munizione.`);
@@ -1263,7 +1266,10 @@ export function calcolaAttaccoRavvicinato(personaggio, arma, dichiarazione, dati
     // Immobilizzare Istintivo (§8.6): la presa infligge «il normale danno senz’armi», anche se è
     // dichiarata un’arma in mano
     const mezzoDanno = id === 'immobilizzare' && !arma.senzArmi ? profiloSenzArmi(personaggio.scheda, dati) : arma;
-    const baseDanno = dannoBase(mezzoDanno);
+    // A.199: «8d10×5» → dadi 8d10 e moltiplicatore ×5 (il più alto fra quelli dell'attacco)
+    const lettoDanno = leggiDannoMoltiplicato(dannoBase(mezzoDanno));
+    const baseDanno = lettoDanno.formula;
+    moltiplicatore = Math.max(moltiplicatore, lettoDanno.moltiplicatore);
     dannoBonus += migE.danno ?? m.danno ?? 0;
     if (!baseDanno) {
       avvisi.push('Danno dell’arma non definito.');
@@ -1292,7 +1298,7 @@ export function calcolaAttaccoRavvicinato(personaggio, arma, dichiarazione, dati
     }
     if (m.dopo_armatura?.salvezza) dopo.push({ etichetta: `PS ${m.dopo_armatura.salvezza}`, testo: `Se almeno 1 danno supera l’Armatura, il bersaglio fa una PS ${m.dopo_armatura.salvezza}; se fallisce è ${m.dopo_armatura.stato} per ${m.dopo_armatura.durata} (§5.18).` });
     if (migE.dopo_armatura && !m.dopo_armatura) dopo.push({ etichetta: `+${migE.dopo_armatura} dopo l’Armatura`, testo: `${mig.nome}: +${migE.dopo_armatura} danni ai PV dopo l’Armatura, solo se almeno 1 danno la supera; non si moltiplica.` });
-    if (moltiplicatore > 1) promemoria.push(`Con un Successo Magistrale il danno ×${moltiplicatore} diventa ×${mm} (§1.6).`);
+    if (moltiplicatore > 1 && mm !== moltiplicatore) promemoria.push(`Con un Successo Magistrale il danno ×${moltiplicatore} diventa ×${mm} (§1.6).`);
     if (dati.regole.magistrale.promemoria) promemoria.push(dati.regole.magistrale.promemoria);
   }
   const effetti = [];

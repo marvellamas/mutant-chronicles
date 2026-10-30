@@ -45,7 +45,7 @@ export function apriTiro(ctx, v) {
           onclick: () => {
             const r = tiraValore(t, casuale);
             if (!r) return;
-            ultimo = esitoTiro(t, r.naturale, ctx.dati);
+            ultimo = esitoTiro(t, r.naturale, ctx.dati, r.risultati);
             ctx.azioni?.tiro?.(rigaTiro(t, ultimo), rigaRegistroScontro(ctx.scelte?.nome?.trim() || 'Il PG', ultimo, t));
             disegna();
           },

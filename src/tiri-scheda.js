@@ -49,7 +49,9 @@ export function tiroDelValore(v, dati) {
   }
   if (v.genere === 'danno') {
     const spec = specDaFormula(v.formula);
-    return { genere: 'danno', nome: v.nome ?? 'Danno', spec, va: null, modo: 'somma', titolo: `Tira il danno — ${v.formula ?? '—'}` };
+    // A.199: con un moltiplicatore (creature «8d10×5», Carica…) si tirano i dadi, si sommano e si moltiplica: Difese e Armatura dopo
+    const moltiplicatore = Number.isInteger(v.moltiplicatore) && v.moltiplicatore > 1 ? v.moltiplicatore : 1;
+    return { genere: 'danno', nome: v.nome ?? 'Danno', spec, va: null, modo: 'somma', moltiplicatore, titolo: `Tira il danno — ${v.formula ?? '—'}${moltiplicatore > 1 ? ` ×${moltiplicatore}` : ''}` };
   }
   const spec = dadoProva(dati);
   return { genere: 'prova', nome: v.nome, spec, va: v.va, modo: 'prova', tipo: v.tipo ?? null, abilita: v.abilita !== false, magistraleMigliorato: !!v.magistraleMigliorato,
@@ -61,12 +63,15 @@ export function tiroDelValore(v, dati) {
  * mancati: VA − dado, positivo se riesce).
  * @returns {{ naturale, esito, riuscita, nome, scarto, testo, riga }}
  */
-export function esitoTiro(t, naturale, dati) {
+export function esitoTiro(t, naturale, dati, risultati = null) {
   if (t.modo === 'somma') {
-    const totale = naturale + (t.genere === 'iniziativa' ? t.va : 0);
-    return { naturale, totale, esito: null, riuscita: null, nome: null, scarto: null,
-      testo: t.genere === 'iniziativa' ? `${segno(t.va)} + ${naturale} = ${totale}` : `${t.spec?.formula ?? ''} = ${naturale}`,
-      riga: `${t.nome}: ${totale}` };
+    const molt = t.genere === 'danno' && t.moltiplicatore > 1 ? t.moltiplicatore : 1;
+    const totale = molt > 1 ? naturale * molt : naturale + (t.genere === 'iniziativa' ? t.va : 0);
+    // il danno con moltiplicatore mostra i dadi, la somma e il prodotto («12d10: 5+7+… = 63 → ×5 = 315»)
+    const dadi = molt > 1 && Array.isArray(risultati) && risultati.length > 1 ? `${risultati.join('+')} = ` : '';
+    return { naturale, totale, risultati: risultati ?? undefined, moltiplicatore: molt > 1 ? molt : undefined, esito: null, riuscita: null, nome: null, scarto: null,
+      testo: t.genere === 'iniziativa' ? `${segno(t.va)} + ${naturale} = ${totale}` : molt > 1 ? `${t.spec?.formula ?? ''}: ${dadi}${naturale} → ×${molt} = ${totale}` : `${t.spec?.formula ?? ''} = ${naturale}`,
+      riga: `${t.nome}: ${totale}${molt > 1 ? ` (${naturale} ×${molt})` : ''}` };
   }
   const e = esitoProva(t.va, naturale, dati, { abilita: t.abilita, tipo: t.tipo, magistraleMigliorato: t.magistraleMigliorato });
   const scarto = t.va - naturale;

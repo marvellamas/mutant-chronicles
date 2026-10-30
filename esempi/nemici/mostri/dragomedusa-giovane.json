@@ -120,7 +120,9 @@
       "effetto": "2 AzP e 12 PM, pagati prima della risoluzione. Magico, Elettricità, 8d10 × 5 Magici, linea 12 × 1 Q Tattici (180 × 15 m) dalle fauci, anche in verticale; il danno resta costante lungo la linea. Capacità innata senza Potere, Focus, Gesto, Invocazione o Concentrazione; una emissione nel Round; se usato nel Round R torna disponibile in R + 3. Non si usa come Opportunità e non drena energia. Contro creature: Elusione gratuita con Riflessi 0, quando possibile, dimezza per eccesso prima di resistenze e AR; nessun tiro per colpire, Magistrale o seconda Difesa. Contro veicoli: una sola applicazione, localizzazione, scudo pertinente, AR, 1 PI ogni 5 danni residui o frazione, una PS Integrità e Corazzato.",
       "azioni": {
         "principali": 2
-      }
+      },
+      "danno": "8d10×5",
+      "natura": "Magico"
     },
     {
       "nome": "Fluttuazione e sopravvivenza",

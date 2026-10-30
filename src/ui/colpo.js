@@ -11,7 +11,7 @@
 import { h } from './dom.js';
 import { infoValore } from './tooltip.js';
 import { specTiro, tira } from '../tiri.js';
-import { applicaColpo, moltiplicatoreMagistrale } from '../danno.js';
+import { applicaColpo, moltiplicatoreMagistrale, leggiDannoMoltiplicato } from '../danno.js';
 import { periodicoDi } from '../periodici.js';
 
 /** «1d8+2» → spec di src/tiri.js (un gruppo di dadi più un fisso), oppure null. */
@@ -98,11 +98,14 @@ export function apriColpo(ctx, bersaglio, { applica, proposta = {}, fonti = [] }
             onchange: (e) => { st.magistrale = e.target.checked; disegna(); },
           }), ` Successo Magistrale: danno ×${moltiplicatoreMagistrale(st.moltiplicatore, ctx.dati)} sulla prima applicazione`),
         st.moltiplicatore > 1 ? h('p', { class: 'nota' }, `L’attacco ha già danno ×${st.moltiplicatore} (Carica, Bruciapelo…): con il Magistrale diventa ×${moltiplicatoreMagistrale(st.moltiplicatore, ctx.dati)}, non ×${st.moltiplicatore * 2} (§1.6).`) : null),
-      scelta('Moltiplicatore di ogni applicazione', [1, 2, 3].map((n) => ({ valore: n, etichetta: `×${n}` })), st.moltiplicatore, (v) => { st.moltiplicatore = v; }),
+      scelta('Moltiplicatore di ogni applicazione', [1, 2, 3, ...(st.moltiplicatore > 3 ? [st.moltiplicatore] : [])].map((n) => ({ valore: n, etichetta: `×${n}` })), st.moltiplicatore, (v) => { st.moltiplicatore = v; }),
       h('div', { class: 'distanza-riga' },
         h('label', {}, 'Formula ', h('input', { type: 'text', class: 'input-formula', placeholder: '1d8+2', value: st.formula, oninput: (e) => { st.formula = e.target.value; } })),
         h('button', { type: 'button', class: 'btn', title: 'Un gruppo di dadi più un fisso, per esempio «1d8+2». Il moltiplicatore lo applica l’app dopo', onclick: () => {
-          const s = specDaFormula(st.formula);
+          // A.199: «12d10×5» → dadi 12d10 e moltiplicatore ×5 (il più alto); la formula resta quella dei dadi
+          const letto = leggiDannoMoltiplicato(st.formula);
+          const s = specDaFormula(letto.formula);
+          if (s && letto.moltiplicatore > 1) { st.formula = letto.formula; st.moltiplicatore = Math.max(st.moltiplicatore, letto.moltiplicatore); }
           if (!s) { st.errore = 'Formula non riconosciuta: scrivi per esempio «1d8+2», oppure i danni dal vivo.'; disegna(); return; }
           st.errore = null;
           // solo i dadi con i bonus: moltiplicatore e Magistrale li applica applicaColpo (§5.13, passo 3)

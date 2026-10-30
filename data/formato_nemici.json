@@ -501,6 +501,16 @@
             "obbligatorio": false,
             "descrizione": "Risorsa consumata dal profilo («2 PM», «una carica»): promemoria, l’app non la scala da sé."
           },
+          "danno": {
+            "tipo": "testo",
+            "obbligatorio": false,
+            "descrizione": "Danno della capacità quando il profilo lo dà come formula, per esempio «12d10×5» (Soffio del Dragomedusa adulto, A.199): l’app lo tira a richiesta, mostrando i dadi, la somma e il prodotto; Difese e Armatura vengono dopo (§5.13). Senza il campo il danno resta scritto nella descrizione."
+          },
+          "natura": {
+            "tipo": "testo",
+            "obbligatorio": false,
+            "descrizione": "Natura del danno della capacità («Magico»), come la scrive il profilo; accompagna il campo «danno»."
+          },
           "usi": {
             "tipo": "oggetto",
             "obbligatorio": false,

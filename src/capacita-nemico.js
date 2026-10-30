@@ -57,6 +57,8 @@ export function vistaCapacita(c, usati = 0) {
     prova: testo(c?.prova),
     azioni,
     risorsa: testo(c?.risorsa),
+    danno: testo(c?.danno),
+    natura: testo(c?.natura),
     costo: testo(c?.costo),
     limiti: testo(c?.limiti),
     usi,

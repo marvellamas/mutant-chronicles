@@ -21,13 +21,27 @@ export function leggiProprieta(testo) {
 /**
  * §1.6: moltiplicatore del danno con il Successo Magistrale (×1 → ×2, ×2 → ×3, ×3 resta ×3; gli altri
  * moltiplicatori non si sommano, si usa il più alto). Regole in regole.json → magistrale.
+ * A.199 (30/10/2026): un moltiplicatore già superiore al massimo (le creature con «8d10×5») resta com'è: il Magistrale non lo
+ * abbassa. Prima `Math.min(n, massimo)` portava ×5 a ×3.
  */
 export function moltiplicatoreMagistrale(m, dati) {
   const G = dati.regole.magistrale;
   const n = Number.isInteger(m) && m > 0 ? m : 1;
   if (n <= 1) return G.raddoppio;
   if (n === 2) return G.da_x2;
-  return Math.min(n, G.massimo);
+  return Math.max(n, G.massimo);
+}
+
+/**
+ * A.199 (risposta di Davide del 30/10/2026): il danno con moltiplicatore si calcola e si mostra con la formula. «8d10×5», «8d10 × 5»,
+ * «(1d8+2) ×2», «4d10+3×5» → { formula: '8d10', moltiplicatore: 5 }: si tirano i dadi, si sommano (con i bonus ordinari) e si
+ * moltiplica; Difese e Armatura vengono dopo (§5.13). Senza moltiplicatore: { formula, moltiplicatore: 1 }.
+ */
+export function leggiDannoMoltiplicato(testo) {
+  const t = String(testo ?? '').trim();
+  const m = /^\((.+)\)\s*[×xX]\s*(\d+)$/.exec(t) ?? /^(\d*d\d+(?:\s*[+−-]\s*\d+)?)\s*[×xX]\s*(\d+)$/.exec(t);
+  if (!m) return { formula: t || null, moltiplicatore: 1 };
+  return { formula: m[1].replace(/\s+/g, ''), moltiplicatore: Number(m[2]) };
 }
 
 /** Fascia di danno finale del §5.14 e nuove Ferite per l'esito della PS di Tempra. */
