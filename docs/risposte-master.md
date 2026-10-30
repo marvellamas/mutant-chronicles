@@ -2238,3 +2238,14 @@ Dettaglio in `docs/diff-lotto143-2026-10-29.md`. Nessuna decisione approvata cam
     scelta degli incantesimi al passaggio di livello (nota «già appreso a mano»), conversione PG → nemico (gli appresi con accesso), ricerca nella scheda, stampa (foglio Poteri).
   - Provvisorio, in attesa di Davide: A.211 (chi può segnare «appreso»), A.212 (concessione solo scritta), A.213 («da classificare» e nuovi controlli).
 - **Bestiario online**: schede compresse e testi comuni scritti una volta sola; da 2,0 MB a 0,5 MB (`tools/bestiario_pagina.mjs`). Nessuna regola in gioco.
+
+## 30 ottobre 2026 — Lotto 146: celle, pacchi e trasformatori (A.189, A.191), NEC in cariche
+
+Registro «Revisione NEC» 2.7 (Doc di Davide, 29/10), Equipaggiamento 0.22 e Armamenti 0.68 (`docs/diff-manuali-2026-10-30.md`, `docs/nec-lotto2-2026-10-30.md`). Nessuna risposta nuova nella sezione 7 del Doc «per-davide.md» (ultima: A.188, 28/10).
+
+- **A.189 — RISOLTA** (registro NEC 1.6, rivista nel 2.7; applicata il 30/10). Il trasformatore dedicato ha un tampone: oggi **preleva una carica CEC (10 UE) dalla fonte, conserva 100 cariche NEC nel tampone e trasferisce solo quelle che servono**; il prelievo è consentito soltanto se nel tampone entra l'intera carica (tampone vuoto). Un caricatore generico, i PM personali e la sola vicinanza a una Matrice non bastano. Tre modelli: portatile monocromatico (3.000 cr, 1 carica all'ora), portatile multicromatico (6.000 cr), stazione industriale (20.000 cr, 1 carica ogni 10 minuti); peso, Integrità, Qualità, PS e REP dall'Equipaggiamento §5.4.7. La regola «niente travaso fra NEC» (A.67, decisione 76) resta per tutto il resto. App: tampone e «Ricarica» nell'Inventario (`src/trasformatori.js`).
+- **A.191 — RISOLTA** (registro NEC, «Prezzi delle cariche personali»; applicata il 30/10). **10 cr per carica**: un IAS da vuoto (20 cariche) 200 cr, 20 ore con il trasformatore portatile, 3 ore e 20 con la stazione industriale. Sostituisce i 50 cr in un'ora della A.64 (superata).
+- **A.190 (pacco del Gehemmapuker) — applicata dal manuale, da confermare.** Armamenti 0.68 §7.20.6: pacco dedicato Rosso da 50 cariche (2.100 cr, ricarica 500), «non un Modulo generico da dieci UE»; i lanciafiamme sono tutti Rossi. Peso e formato standard dei pacchi da 15 e 50 getti restano «da completare» nel manuale: «da definire» nei dati.
+- **A.195 (Wächter) — prezzo e Reperibilità applicati.** Armamenti 0.68 §7.4.1: 12.000 cr, MR; conversione 6.000 cr. La Taglia («Medio o Grande») resta aperta.
+- **A.193 resta aperta**: nessuna conversione delle riserve salvate in Lx, UE o ore; «riserva da convertire (A.193)».
+- **Nuovi: A.214–A.217** (`docs/pacchetto-per-davide-2026-10-30-lotto146.md`). Provvisorio nell'app: quanto descritto nel diff.
