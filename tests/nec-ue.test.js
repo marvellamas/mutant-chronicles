@@ -22,7 +22,8 @@ const R = dati.regole.nec;
 const LX = /\bLx\b|Lx\/h|cr\/Lx|_lx\b|lx_|"lx"/;
 
 test('nessuna voce del catalogo in Lx: né le celle d’arma, né i pacchi, né gli IAS (A.189–A.191, Armamenti 0.68)', () => {
-  const inLx = cat.oggetti.filter((o) => LX.test(JSON.stringify({ ...o, file: undefined })));
+  // `precedente` è la capacità di prima, tenuta apposta per convertire le riserve salvate (A.193): non è una voce in Lx
+  const inLx = cat.oggetti.filter((o) => LX.test(JSON.stringify({ ...o, file: undefined }, (k, v) => (k === 'precedente' ? undefined : v))));
   assert.deepEqual(inLx.map((o) => o.rif), []);
   // le dotazioni del §2.16 (Giocatore 0.50) e le regole dei NEC
   assert.ok(!LX.test(JSON.stringify(dati.dotazioni)), 'dotazioni.json');

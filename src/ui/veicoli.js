@@ -9,12 +9,13 @@ import { infoValore } from './tooltip.js';
 import { rigaScelte } from './pannello-passi.js';
 import {
   nuovoVeicolo, vistaVeicoloPersonaggio, pilotareDelPersonaggio, colpisciVeicolo, applicaRiparazione, conPi,
-  montaRicambio, struttureVeicolo, profiloDi, consumaRisorse, installaRicambioEnergia, munizioniArmaVeicolo,
+  montaRicambio, struttureVeicolo, profiloDi, registraViaggio, registraSupportoVitale, chiudiGiornata, ricaricaEnergia, ricaricaBombole, installaRicambioEnergia, aggiungiRicambioEnergia, testoCariche, munizioniArmaVeicolo,
   sollecitazioneFallita, eseguiCambioAndatura, movimentoMassimo, profiloVeicolo as profiloDelCatalogo,
 } from '../veicoli.js';
 import { migraVeicoli, nuovoRecord, riferimento, vede, eRiferimento, statoMovimento, muoviVeicolo, cambiaConducente, movimentoResiduo, stessaChiave, scegliAndatura, conCopie, mezzoDallaCopia } from '../veicoli-registro.js';
 import { elencoVeicoli, scriviVeicolo, aggiornaVeicolo } from './veicoli-registro.js';
 
+const num = (x, d) => (Number.isFinite(Number.parseFloat(String(x).replace(',', '.'))) ? Number.parseFloat(String(x).replace(',', '.')) : d);
 const numero = (n) => (Number.isInteger(n) ? n.toLocaleString('it-IT') : '—');
 const daDefinire = () => h('em', { class: 'da-definire' }, 'da definire');
 /** VA anche negativo, col segno meno tipografico. */
@@ -370,37 +371,51 @@ function necVeicolo(ctx, mezzo, v, aggiorna) {
   const r = v.risorse;
   if (!n && !r?.verde && !r?.aria) return null;
   const u = statoUi(ctx);
-  const c = (u.consumi ??= {})[mezzo.uid] ??= { km: '', fermo: '', supporto: '' };
+  const c = (u.consumi ??= {})[mezzo.uid] ??= { km: '', supporto: '' };
   const numeroDa = (x) => Math.max(0, Number.parseFloat(String(x).replace(',', '.')) || 0);
-  const applica = () => {
-    const esito = consumaRisorse(mezzo, { km: numeroDa(c.km), oreFermo: numeroDa(c.fermo), oreSupporto: numeroDa(c.supporto) }, ctx.dati);
-    u.consumi[mezzo.uid] = { km: '', fermo: '', supporto: '' };
-    aggiorna(esito.mezzo, [...esito.righe, ...esito.avvisi].join('; ') || null);
-  };
-  const banco = (lista, cap, colore, etichetta) => lista.map((lx, i) => h('label', { class: 'campo-veicolo' }, `${etichetta} ${lista.length > 1 ? i + 1 : ''} `,
-    h('input', { type: 'number', class: 'input-lx', min: 0, max: cap, step: 100, value: lx, 'aria-label': `Lx residui, ${etichetta} ${i + 1}`,
-      onchange: (e) => { const nuovi = [...lista]; nuovi[i] = Math.max(0, Math.min(cap, intero(e.target.value, lx))); aggiorna({ ...mezzo, energia: { ...mezzo.energia, [colore]: nuovi } }); } }), ` / ${numero(cap)} Lx `));
-  const ricambio = (colore, ric) => h('button', { type: 'button', class: 'btn btn-piccolo', disabled: !ric?.length, title: 'Installa il ricambio al posto del NEC più scarico; quello tolto resta fra i ricambi con il suo residuo (niente travaso)',
-    onclick: () => { const x = installaRicambioEnergia(mezzo, colore, ctx.dati); if (x) aggiorna(x, `${v.nome}: installato il ricambio ${colore === 'rosso' ? 'Rosso' : 'Verde'}.`); } }, 'Installa il ricambio');
+  const dopo = (esito) => aggiorna(esito.mezzo, [...esito.righe, ...(esito.avvisi ?? [])].join('; ') || null);
+  const registraKm = () => { const km = numeroDa(c.km); c.km = ''; if (km) dopo(registraViaggio(mezzo, km, ctx.dati)); };
+  const registraOre = () => { const ore = numeroDa(c.supporto); c.supporto = ''; if (ore) dopo(registraSupportoVitale(mezzo, ore, ctx.dati)); };
+  // cariche attuali: si correggono a mano (intere), le frazioni di una conversione (A.193) restano visibili accanto
+  const cariche = (colore, valore, massimo, etichetta) => h('label', { class: 'campo-veicolo' }, `${etichetta} `,
+    h('input', { type: 'number', class: 'input-d10', min: 0, max: massimo, step: 1, value: Math.floor(valore), 'aria-label': `Cariche residue, ${etichetta}`,
+      onchange: (e) => aggiorna({ ...mezzo, energia: { ...r.energia, [colore]: Math.max(0, Math.min(massimo, intero(e.target.value, Math.floor(valore)))) } }) }),
+    ` / ${massimo} cariche`, valore % 1 ? h('small', { class: 'nota' }, ` (+ ${testoCariche(valore - Math.floor(valore)).replace(/ cariche?$/, '')} di carica, dalla conversione)`) : null);
+  const daConv = (testo) => h('em', { class: 'da-definire' }, testo);
+  const ricambi = (colore, ric, daConvertire) => h('p', { class: 'nota' },
+    `Ricambi: ${ric.length ? ric.map((x) => testoCariche(x)).join(', ') : 'nessuno'} `,
+    daConvertire?.length ? daConv(`· ricambio di prima da convertire (A.193): ${daConvertire.map((x) => `${numero(x)} Lx`).join(', ')} `) : null,
+    h('button', { type: 'button', class: 'btn btn-piccolo', disabled: !ric.length, title: 'Installa il ricambio al posto dell’accumulatore installato; quello tolto resta fra i ricambi con le sue cariche (niente travaso)',
+      onclick: () => { const x = installaRicambioEnergia(mezzo, colore, ctx.dati); if (x) aggiorna(x, `${v.nome}: installato il ricambio ${colore === 'rosso' ? 'Rosso' : 'Verde'}.`); } }, 'Installa il ricambio'), ' ',
+    h('button', { type: 'button', class: 'btn btn-piccolo', title: 'Aggiunge un accumulatore di ricambio pieno (le scorte aggiuntive sono facoltative e occupano carico)',
+      onclick: () => { const x = aggiungiRicambioEnergia(mezzo, colore, ctx.dati); if (x) aggiorna(x, `${v.nome}: aggiunto un ricambio ${colore === 'rosso' ? 'Rosso' : 'Verde'} pieno.`); } }, 'Aggiungi un ricambio pieno'));
+  const ricarica = ricaricaEnergia(mezzo, ctx.dati);
+  const bombole = ricaricaBombole(mezzo, ctx.dati);
   return h('div', { class: 'nec-veicolo' },
     h('h3', {}, 'Energia e supporto vitale'),
     r?.rosso ? [
-      h('p', {}, h('strong', {}, `${r.rosso.nome}: ${numero(r.rosso.totale)} / ${numero(r.rosso.capacita)} Lx`), r.rosso.autonomiaKm !== null ? ` · ${numero(r.rosso.autonomiaKm)} km di autonomia` : ''),
-      h('p', {}, banco(r.rosso.banchi, r.rosso.capacitaBanco, 'rosso', 'Banco')),
-      h('p', { class: 'nota' }, `Ricambi: ${r.rosso.ricambi.length ? r.rosso.ricambi.map((x) => `${numero(x)} Lx`).join(', ') : 'nessuno'} `, ricambio('rosso', r.rosso.ricambi)),
-      h('p', { class: 'nota' }, 'Consumo ', Number.isInteger(r.rosso.consumoKm) ? `${r.rosso.consumoKm} Lx/km` : daDefinire(), r.rosso.consumoFermo ? ` · da fermo con i servizi ${r.rosso.consumoFermo} Lx/ora` : '', r.rosso.erogazione ? ` · erogazione massima ${numero(r.rosso.erogazione)} Lx/ora` : ''),
+      h('p', {}, h('strong', {}, `${r.rosso.nome}: `), r.rosso.daConvertire ? daConv('riserva da convertire (A.193): in attesa della verifica del Direttore')
+        : [cariche('rosso', r.rosso.cariche, r.rosso.massimo, 'Cariche Rosse'), ` · ${r.rosso.kmPerCarica} km a carica · ${numero(r.rosso.autonomiaKm)} km di autonomia (${numero(r.rosso.autonomiaNominaleKm)} nominali)`]),
+      ricambi('rosso', r.rosso.ricambi, r.rosso.ricambiDaConvertire),
+      h('p', { class: 'nota' }, `Km della giornata: ${r.rosso.kmGiornata}`, r.rosso.daAddebitare ? ` → ${testoCariche(r.rosso.daAddebitare)} Ross${r.rosso.daAddebitare === 1 ? 'a' : 'e'} alla chiusura, arrotondate una volta sola` : ' · nessuna carica da addebitare'),
     ] : n ? h('p', {}, `${n.nec}: `, daDefinire()) : null,
     r?.verde ? [
-      h('p', {}, h('strong', {}, `${r.verde.nome}: ${numero(r.verde.totale)} / ${numero(r.verde.capacita)} Lx`), ` · supporto vitale ${r.verde.consumoOra} Lx/ora, ${r.verde.ore} ore`),
-      h('p', {}, banco(r.verde.moduli, r.verde.capacita, 'verde', 'Modulo')),
-      h('p', { class: 'nota' }, `Ricambi: ${r.verde.ricambi.length ? r.verde.ricambi.map((x) => `${numero(x)} Lx`).join(', ') : 'nessuno'} `, ricambio('verde', r.verde.ricambi)),
+      h('p', {}, h('strong', {}, `${r.verde.nome}: `), r.verde.daConvertire ? daConv('riserva da convertire (A.193): in attesa della verifica del Direttore')
+        : [cariche('verde', r.verde.cariche, r.verde.massimo, 'Cariche Verdi'), ` · ${r.verde.perGiorno} carica per giorno di supporto vitale · oggi: ${r.verde.supportoOggi ? 'supporto usato' : 'non usato'}`]),
+      ricambi('verde', r.verde.ricambi, r.verde.ricambiDaConvertire),
     ] : null,
-    r?.aria ? h('p', {}, h('strong', {}, `Aria: ${r.aria.ore} / ${r.aria.massimo} ore`), ` · riserva fissa ${r.aria.fissa} h, bombole ${r.aria.bombole.map((x) => `${x} h`).join(', ') || 'nessuna'}`) : null,
+    r?.aria ? h('p', {}, h('strong', {}, 'Aria: '),
+      h('label', { class: 'campo-veicolo' }, h('input', { type: 'number', class: 'input-d10', min: 0, max: r.aria.massimo, step: 1, value: r.aria.ore, 'aria-label': 'Ore d’aria residue',
+        onchange: (e) => aggiorna({ ...mezzo, energia: { ...r.energia, aria: Math.max(0, Math.min(r.aria.massimo, num(e.target.value, r.aria.ore))) } }) })),
+      ` / ${r.aria.massimo} ore effettive · ${r.aria.bombole} bombole da ${r.aria.oreBombola} h per ${r.aria.occupanti} occupanti · riserva distinta: la ricarica dell’energia non la ripristina`) : null,
     r?.rosso || r?.verde ? h('div', { class: 'consumi-veicolo' },
-      h('label', { class: 'campo-veicolo' }, 'Viaggio (km) ', h('input', { type: 'text', inputmode: 'decimal', class: 'input-d10', value: c.km, onchange: (e) => { c.km = e.target.value; } })),
-      h('label', { class: 'campo-veicolo' }, 'Da fermo con i servizi (ore) ', h('input', { type: 'text', inputmode: 'decimal', class: 'input-d10', value: c.fermo, onchange: (e) => { c.fermo = e.target.value; } })),
-      r?.verde ? h('label', { class: 'campo-veicolo' }, 'Supporto vitale (ore) ', h('input', { type: 'text', inputmode: 'decimal', class: 'input-d10', value: c.supporto, onchange: (e) => { c.supporto = e.target.value; } })) : null,
-      h('button', { type: 'button', class: 'btn btn-piccolo', onclick: applica }, 'Consuma')) : null,
+      r?.rosso ? h('label', { class: 'campo-veicolo' }, 'Tratta (km) ', h('input', { type: 'text', inputmode: 'decimal', class: 'input-d10', value: c.km, onchange: (e) => { c.km = e.target.value; } })) : null,
+      r?.rosso ? h('button', { type: 'button', class: 'btn btn-piccolo', title: 'Somma i chilometri della giornata: le cariche si sottraggono una volta sola, con “Chiudi la giornata”', onclick: registraKm }, 'Aggiungi la tratta') : null,
+      r?.aria || r?.verde ? h('label', { class: 'campo-veicolo' }, 'Supporto vitale (ore) ', h('input', { type: 'text', inputmode: 'decimal', class: 'input-d10', value: c.supporto, onchange: (e) => { c.supporto = e.target.value; } })) : null,
+      r?.aria || r?.verde ? h('button', { type: 'button', class: 'btn btn-piccolo', title: 'Toglie le ore effettive dall’aria; la carica Verde del giorno è una sola, quante che siano le accensioni', onclick: registraOre }, 'Usa il supporto') : null,
+      h('button', { type: 'button', class: 'btn btn-piccolo btn-primario', title: 'Sottrae le cariche Rosse dei chilometri sommati (arrotondando una volta sola) e, se il supporto vitale è stato usato, una carica Verde. Per ora la chiude il Direttore con un tocco (A.219)', onclick: () => dopo(chiudiGiornata(mezzo, ctx.dati)) }, 'Chiudi la giornata'),
+      h('button', { type: 'button', class: 'btn btn-piccolo', disabled: !ricarica, title: ricarica ? ricarica.righe.join(' · ') : 'Gli accumulatori sono già carichi', onclick: () => ricarica && aggiorna(ricarica.mezzo, ricarica.righe.join('; ')) }, 'Ricarica completa'),
+      r?.aria ? h('button', { type: 'button', class: 'btn btn-piccolo', disabled: !bombole, title: bombole ? bombole.righe.join(' · ') : 'Le bombole sono piene', onclick: () => bombole && aggiorna(bombole.mezzo, bombole.righe.join('; ')) }, 'Ricarica le bombole') : null) : null,
     r?.aria?.testo ? h('p', { class: 'nota' }, r.aria.testo) : null);
 }
 
@@ -569,8 +584,8 @@ export function cartaVeicoloPlancia(ctx, rec, o) {
     v.vista.fuoriUso ? h('p', { class: 'riquadro errore' }, 'Fuori uso (§5.5): il movimento residuo prosegue.') : null,
     h('ul', { class: 'plancia-strutture-veicolo' }, v.strutture.map((s) => h('li', {}, h('strong', {}, `${s.nome}: ${s.pi} / ${s.massimi} PI`), ' ', h('span', { class: `etichetta stato-struttura stato-${s.stato}` }, s.statoNome ?? '—')))),
     h('p', { class: 'plancia-valori' }, `AR ${v.profilo.ar?.totale ?? '—'}${v.profilo.ar?.magica ? ` (magica ${v.profilo.ar.magica})` : ''} · Corazzato ${v.profilo.corazzato || 0} · andatura ${v.vista.andatura.nome}`),
-    v.risorse?.rosso ? h('p', { class: 'nota' }, `${v.risorse.rosso.nome}: ${numero(v.risorse.rosso.totale)} / ${numero(v.risorse.rosso.capacita)} Lx${v.risorse.rosso.autonomiaKm !== null ? ` · ${numero(v.risorse.rosso.autonomiaKm)} km` : ''}`) : null,
-    v.risorse?.verde ? h('p', { class: 'nota' }, `${v.risorse.verde.nome}: ${numero(v.risorse.verde.totale)} Lx · supporto vitale ${v.risorse.verde.ore} ore`) : null,
+    v.risorse?.rosso ? h('p', { class: 'nota' }, v.risorse.rosso.daConvertire ? `${v.risorse.rosso.nome}: da convertire (A.193)` : `${v.risorse.rosso.nome}: ${testoCariche(v.risorse.rosso.cariche)} su ${v.risorse.rosso.massimo} · ${numero(v.risorse.rosso.autonomiaKm)} km${v.risorse.rosso.kmGiornata ? ` · giornata: ${v.risorse.rosso.kmGiornata} km` : ''}`) : null,
+    v.risorse?.verde ? h('p', { class: 'nota' }, v.risorse.verde.daConvertire ? `${v.risorse.verde.nome}: da convertire (A.193)` : `${v.risorse.verde.nome}: ${testoCariche(v.risorse.verde.cariche)} su ${v.risorse.verde.massimo}${v.risorse.verde.supportoOggi ? ' · supporto usato oggi' : ''}`) : null,
     v.risorse?.aria ? h('p', { class: 'nota' }, `Aria: ${v.risorse.aria.ore} / ${v.risorse.aria.massimo} ore`) : null,
     h('p', {},
       scelta('Conducente', rec.conducente, (p) => o.scrivi(cambiaConducente(rec, p), p ? `${v.nome}: alla guida ${p.nome}${st.mosso ? ' (il mezzo si è già mosso in questo Round)' : ''}.` : `${v.nome}: nessun conducente.`)), ' ',

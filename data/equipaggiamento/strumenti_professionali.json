@@ -774,7 +774,10 @@
         "usi": 5,
         "unita_usi": "cariche (sessioni da un’ora)",
         "unita_precedente": "ore",
-        "paragrafo": "§5.4.8"
+        "paragrafo": "§5.4.8",
+        "precedente": {
+          "ore": 5
+        }
       },
       "effetto_breve": "Taglia metalli fino a 1 cm (10 minuti per 1 Q) e salda: strumento Standard, senza bonus.",
       "proprieta": []

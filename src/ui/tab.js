@@ -859,6 +859,9 @@ function rigaNec(ctx, r, x) {
       }, { classe: 'valore-nec' }));
   }
   const n = ctx.sessione.nec?.[x.chiave] ?? x.massimo;
+  // A.193: riserva convertita da Lx, UE o ore con la frazione residua; il valore di prima resta nel file
+  const cv = ctx.sessione.necConvertite?.[x.chiave];
+  const notaConversione = cv ? ` Convertita da ${cv.valore.toLocaleString('it-IT')} su ${cv.capacita.toLocaleString('it-IT')} (Lx, UE o ore di prima, A.193): ${String(cv.esatto).replace('.', ',')} cariche su ${cv.massimo}, segnate ${cv.applicato} per difetto; la frazione resta nel registro e il valore di prima nel file.` : '';
   const b = (d) => h('button', {
     type: 'button', class: 'btn-tavolo btn-mini', disabled: d < 0 ? n <= 0 : n >= x.massimo,
     'aria-label': `${d > 0 ? 'Aggiungi' : 'Togli'} ${Math.abs(d)} ${x.unita} a ${x.nome}`, onclick: () => ctx.azioni.nec(x.chiave, d),
@@ -868,7 +871,7 @@ function rigaNec(ctx, r, x) {
     infoValore([h('strong', {}, n.toLocaleString('it-IT')), ` / ${x.massimo.toLocaleString('it-IT')} ${x.unita}`], {
       titolo: `Riserva: ${x.nome}`,
       // A.67 (E&L del 02/10): niente travaso fra NEC senza un trasformatore o una stazione (regole.json → nec.trasformatori)
-      sottotitolo: `Si segna a mano (Equipaggiamento §5.4): «Nuova sessione» non ricarica. ${ctx.dati.regole.nec?.trasformatori?.senza_trasformatore ?? ''}`.trim(),
+      sottotitolo: `Si segna a mano (Equipaggiamento §5.4): «Nuova sessione» non ricarica. ${ctx.dati.regole.nec?.trasformatori?.senza_trasformatore ?? ''}${notaConversione}`.trim(),
       provenienza: x.provenienza,
     }, { classe: 'valore-nec' }),
     h('span', { class: 'pi-comandi' }, [...x.passi].reverse().map((p) => b(-p)), x.passi.map((p) => b(p))));

@@ -445,7 +445,10 @@
         "usi": 5,
         "unita_usi": "cariche (sessioni da un’ora)",
         "unita_precedente": "ore",
-        "paragrafo": "§5.4.8"
+        "paragrafo": "§5.4.8",
+        "precedente": {
+          "ore": 5
+        }
       },
       "proprieta": []
     },
@@ -726,7 +729,10 @@
         "usi": 10,
         "unita_usi": "cariche (impieghi da 4 ore)",
         "unita_precedente": "ore",
-        "paragrafo": "§5.4.8"
+        "paragrafo": "§5.4.8",
+        "precedente": {
+          "ore": 40
+        }
       },
       "applicazioni": 4,
       "nome_applicazioni": "ore d’aria",
@@ -770,7 +776,10 @@
         "usi": 10,
         "unita_usi": "cariche (impieghi da 2 ore)",
         "unita_precedente": "ore",
-        "paragrafo": "§5.4.8"
+        "paragrafo": "§5.4.8",
+        "precedente": {
+          "ore": 20
+        }
       },
       "applicazioni": 8,
       "nome_applicazioni": "ore-persona d’aria",

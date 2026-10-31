@@ -386,12 +386,12 @@ test('§9: il profilo dell’autovettura civile è quello della tabella del manu
   assert.deepEqual(auto.pi, { corpo: 12, propulsione: 8, motore: 8 });
   assert.deepEqual([auto.equipaggio.conducente, auto.equipaggio.passeggeri, auto.equipaggio.posti], [1, 4, 5]);
   assert.equal(auto.prezzo_cr, 20000);
-  // §9.1: 50.000 Lx ÷ 50 Lx/km = 1.000 km
-  assert.equal(auto.alimentazione.capacita_lx / auto.alimentazione.consumo_lx_km, auto.alimentazione.autonomia_km);
-  // alla velocità massima: 120 Q per Round → 108 km/h → 5.400 Lx/h, entro l’erogazione del Banco
-  const kmh = movimentoMassimo(auto, 'massima', dati).q * V.misure.km_h_per_q_round;
-  assert.equal(kmh * auto.alimentazione.consumo_lx_km, 5400);
-  assert.ok(kmh * auto.alimentazione.consumo_lx_km <= auto.alimentazione.erogazione_lx_h);
+  // Veicoli 0.10 §9.1: 1 CEC Rossa, 10 cariche da 100 km = 1.000 km nominali; nessun Lx
+  assert.equal(auto.alimentazione.cariche * auto.alimentazione.km_per_carica, auto.alimentazione.autonomia_km);
+  assert.deepEqual([auto.alimentazione.nec, auto.alimentazione.cariche, auto.alimentazione.km_per_carica, auto.alimentazione.autonomia_km], ['1 CEC Rossa', 10, 100, 1000]);
+  assert.equal(auto.alimentazione.capacita_lx, undefined);
+  // il consumo chilometrico è uguale alle tre andature: la velocità non entra nel conto
+  assert.ok(movimentoMassimo(auto, 'massima', dati).q * V.misure.km_h_per_q_round > 0);
 });
 
 test('§10: il profilo dell’ASA Scout MK4 è quello della sua scheda', () => {
@@ -416,12 +416,14 @@ test('§10: il profilo dell’ASA Scout MK4 è quello della sua scheda', () => {
   assert.deepEqual(m606.munizioni_iniziali, { caricate: 400, riserva: 800 });
   assert.ok(catalogo(dati).perRif.get(m606.rif), 'la M606 è la scheda del catalogo');
   assert.ok(m606.operatore.includes('artigliere'));
-  // le due riserve Rosse: 100.000 Lx e 20.000 Lx/h
-  assert.deepEqual([scout.alimentazione.capacita_lx, scout.alimentazione.erogazione_lx_h], [100000, 20000]);
-  // A.101: 200 Lx/km a ogni andatura, 500 km nominali; supporto vitale Verde 200 Lx/h; aria 8 + 8 + 8 ore
-  assert.equal(scout.alimentazione.capacita_lx / scout.alimentazione.consumo_lx_km, scout.alimentazione.autonomia_km);
-  assert.equal(scout.supporto_vitale.verde.consumo_lx_h, 200);
-  assert.equal(scout.supporto_vitale.aria.riserva_fissa_ore + scout.supporto_vitale.aria.bombole_ore.reduce((t, x) => t + x, 0), 24);
+  // Scout 0.6 / A.192: 1 MEC Rosso da 10 cariche, 75 km a carica = 750 km nominali; nessun Lx
+  assert.deepEqual([scout.alimentazione.nec, scout.alimentazione.cariche, scout.alimentazione.km_per_carica, scout.alimentazione.autonomia_km], ['1 MEC Rosso', 10, 75, 750]);
+  assert.equal(scout.alimentazione.cariche * scout.alimentazione.km_per_carica, scout.alimentazione.autonomia_km);
+  assert.equal(scout.alimentazione.capacita_lx, undefined);
+  // supporto vitale: 1 CEC Verde da 10 cariche, una per giorno di utilizzo; aria a parte: tre bombole da 8 ore = 24 ore
+  assert.deepEqual([scout.supporto_vitale.verde.cariche, scout.supporto_vitale.verde.carica_per_giorno], [10, 1]);
+  assert.equal(scout.supporto_vitale.aria.bombole * scout.supporto_vitale.aria.ore_per_bombola, scout.supporto_vitale.aria.ore_massime);
+  assert.equal(scout.supporto_vitale.aria.ore_massime, 24);
   assert.equal(profiloVeicolo('autovettura-civile', dati).reperibilita, 'Comune'); // A.102
 });
 

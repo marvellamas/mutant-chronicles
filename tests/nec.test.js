@@ -100,8 +100,12 @@ test('C (A.193): una riserva salvata in Lx, in UE o in ore non si perde dal file
   const s = allineaSessione({ nec: { t: 87, c: 6000, 'c#ue': 7, e: 31 } }, m);
   assert.equal(s.nec.t, 87, 'la torcia non ha più contatore, ma il valore resta nel file');
   assert.deepEqual([s.nec.c, s.nec['c#ue'], s.nec.e], [6000, 7, 31], 'Lx, UE e ore restano nel file');
+  assert.equal(s.nec['c#c'], undefined, 'un CEC senza la voce di prima non ha una capacità certa: resta da convertire');
   assert.equal(s.nec['c#c'], undefined, 'nessun numero inventato in cariche');
-  assert.equal(s.nec['e#c'], undefined, 'la tuta in ore resta da convertire');
+  // la tuta aveva 31 ore su 40 (A.193): 31/40 di 10 cariche = 7,75, segnate 7 per difetto; il valore di prima resta nel file
+  assert.equal(s.nec['e#c'], 7, 'la tuta in ore passa alle cariche per frazione');
+  assert.equal(s.nec.e, 31);
+  assert.equal(s.necConvertite['e#c'].esatto, 7.75, 'il resto resta nel registro');
   assert.equal(variaNec(s, 'c#c', -1, m).nec['c#c'], undefined);
   // un oggetto comprato dopo il passaggio parte carico in cariche
   const nuovo = allineaSessione({ nec: {} }, m);

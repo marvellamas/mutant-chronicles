@@ -176,22 +176,48 @@
       "quantita_per": 5
     },
     "nec:modulo-rosso": {
-      "rif": "nec:cec-rosso"
+      "rif": "nec:cec-rosso",
+      "precedente": {
+        "lx": 5000,
+        "ue": 10,
+        "incerto": "A.217"
+      }
     },
     "nec:banco-rosso": {
-      "rif": "nec:cec-rosso"
+      "rif": "nec:cec-rosso",
+      "precedente": {
+        "lx": 50000,
+        "ue": 100
+      }
     },
     "nec:modulo-blu": {
-      "rif": "munizioni:pacco-nec-gehemmapuker"
+      "rif": "munizioni:pacco-nec-gehemmapuker",
+      "precedente": {
+        "lx": 2500,
+        "incerto": "A.217"
+      }
     },
     "nec:banco-blu": {
-      "rif": "nec:cec-blu"
+      "rif": "nec:cec-blu",
+      "precedente": {
+        "lx": 25000,
+        "ue": 100
+      }
     },
     "nec:modulo-verde": {
-      "rif": "nec:cec-verde"
+      "rif": "nec:cec-verde",
+      "precedente": {
+        "lx": 10000,
+        "ue": 10,
+        "incerto": "A.217"
+      }
     },
     "nec:banco-verde": {
-      "rif": "nec:cec-verde"
+      "rif": "nec:cec-verde",
+      "precedente": {
+        "lx": 100000,
+        "ue": 100
+      }
     },
     "munizioni:caricatore-da-campo": {
       "rif": "nec:trasformatore-portatile-monocromatico"

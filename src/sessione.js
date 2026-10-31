@@ -123,6 +123,8 @@ export function massimiSessione(scheda, creazione, dati) {
     nec: dati.equipaggiamento && dati.regole.nec ? Object.fromEntries(riserveNec(normalizzaEquipaggiamento(creazione?.equipaggiamento), dati).map((x) => [x.chiave, x.massimo])) : null,
     // riserve in cariche che nel file erano in Lx, in UE o in ore (chiave nuova → chiavi di prima): «da convertire», A.193
     necDaConvertire: dati.equipaggiamento && dati.regole.nec ? Object.fromEntries(riserveNec(normalizzaEquipaggiamento(creazione?.equipaggiamento), dati).filter((x) => x.chiaviPrima?.length).map((x) => [x.chiave, x.chiaviPrima])) : null,
+    // capacità di prima (Lx, UE o ore) per convertire le riserve con la frazione, A.193: chiave nuova → { chiave di prima: capacità }
+    necPrecedenti: dati.equipaggiamento && dati.regole.nec ? Object.fromEntries(riserveNec(normalizzaEquipaggiamento(creazione?.equipaggiamento), dati).filter((x) => x.precedenti).map((x) => [x.chiave, x.precedenti])) : null,
     // trasformatori dell'Inventario (§5.4.6): uid → colori gestiti (1 o 3), per i tamponi al tavolo
     trasformatori: dati.equipaggiamento ? Object.fromEntries(elencoTrasformatori(normalizzaEquipaggiamento(creazione?.equipaggiamento), dati).map((t) => [t.uid, { colori: t.colori, tampone: t.tampone }])) : {},
   };
@@ -142,6 +144,39 @@ function allineaIntegrita(v, m) {
   return Object.fromEntries(Object.entries(m.integrita).map(([uid, max]) => [uid, limita(intero(src[uid], max), 0, max)]));
 }
 
+/**
+ * A.193 (risposta di Davide del 30/10/2026): una riserva salvata in Lx, in UE o in ore di un oggetto che ora si conta in
+ * cariche passa alle cariche conservando la **frazione** residua (una cella a metà vale metà della capacità nuova, senza
+ * equivalenza universale). Il valore di prima resta nel file sotto la sua chiave; le cariche si segnano per difetto, mai
+ * per eccesso, e il risultato esatto (con le frazioni) si registra in `necConvertite`. Si fa una volta sola: con la chiave
+ * nuova già nel file non si ripete. Senza la capacità di prima certa (`necPrecedenti`) la riserva resta «da convertire».
+ * @returns {{ da, valore, capacita, esatto, applicato, massimo }|null}
+ */
+export function convertiRiservaNec(src, m, chiave) {
+  const prima = m.necDaConvertire?.[chiave];
+  const cap = m.necPrecedenti?.[chiave];
+  if (!prima || !cap || chiave in src) return null;
+  const da = prima.find((k) => Number.isInteger(src[k]) && Number.isFinite(cap[k]) && cap[k] > 0);
+  if (da === undefined) return null;
+  const massimo = m.nec[chiave];
+  const esatto = Math.round(Math.max(0, Math.min(1, src[da] / cap[da])) * massimo * 1e6) / 1e6;
+  return { da, valore: src[da], capacita: cap[da], esatto, applicato: Math.min(massimo, Math.floor(esatto + 1e-9)), massimo };
+}
+
+const conConvertite = (c) => (Object.keys(c).length ? { necConvertite: c } : {});
+
+/** Registro delle conversioni fatte (chiave nuova → dettaglio) finché la riserva c'è ancora. */
+function allineaNecConvertite(sessioneNec, vecchie, m) {
+  const src = isOggetto(sessioneNec) ? sessioneNec : {};
+  const out = {};
+  for (const [k, c] of Object.entries(isOggetto(vecchie) ? vecchie : {})) if (m.nec && k in m.nec && isOggetto(c)) out[k] = c;
+  for (const k of Object.keys(m.nec ?? {})) {
+    const c = convertiRiservaNec(src, m, k);
+    if (c) out[k] = c;
+  }
+  return out;
+}
+
 /** Riserve dei NEC: i nuovi partono carichi, i valori restano entro 0 e il massimo, quelli tolti spariscono. */
 function allineaNec(v, m) {
   const src = isOggetto(v) ? v : {};
@@ -153,6 +188,8 @@ function allineaNec(v, m) {
   for (const [k, max] of Object.entries(m.nec)) {
     // riserva salvata in Lx, in UE o in ore di un oggetto che ora si conta in cariche: «da convertire», nessun numero inventato (A.193)
     const prima = m.necDaConvertire?.[k];
+    const conv = convertiRiservaNec(src, m, k);
+    if (conv) { conti[k] = limita(conv.applicato, 0, max); continue; }
     if (prima && !(k in src) && prima.some((v) => Number.isInteger(src[v]))) continue;
     conti[k] = limita(intero(src[k], max), 0, max);
   }
@@ -442,6 +479,7 @@ export function allineaSessione(sessione, m) {
     lanci: Object.fromEntries(Object.entries(isOggetto(sessione.lanci) ? sessione.lanci : {}).filter(([, v]) => isOggetto(v))),
     integrita: allineaIntegrita(sessione.integrita, m),
     nec: allineaNec(sessione.nec, m),
+    ...conConvertite(allineaNecConvertite(sessione.nec, sessione.necConvertite, m)),
     trasformatori: allineaTrasformatori(sessione.trasformatori, m),
     // condizione di ogni arma (uid → id; «integra» non si salva)
     condizioniArmi: Object.fromEntries(Object.entries(isOggetto(sessione.condizioniArmi) ? sessione.condizioniArmi : {})

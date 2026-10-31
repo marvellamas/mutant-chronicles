@@ -49,7 +49,8 @@ test('avvio del server: record creato e riferimento nel file; nessun doppione al
   assert.equal(rec.revisione, 1);
   assert.deepEqual(rec.proprietario, { tipo: 'gruppo' });
   assert.deepEqual(rec.mezzo.pi, scoutLocale.pi);
-  assert.equal(rec.mezzo.energia.rosso.reduce((x, y) => x + y, 0), 100000); // NEC di prima normalizzato
+  assert.equal(rec.mezzo.energia.rosso, 10); // NEC di prima (100.000 su 100.000 Lx): frazione piena, A.193
+  assert.deepEqual(rec.mezzo.energia_prima.nec, { lx: 100000 }, 'il valore di prima resta nel record');
   // A.113: nel file resta il riferimento con l'ultima copia, da consultare in sola lettura senza server
   const [rif] = veicoliNelFile(c, file);
   assert.deepEqual({ uid: rif.uid, rif: rif.rif, nome: rif.nome }, { uid: 'veimuu14mqa0', rif: 'veimuu14mqa0', nome: 'ASA Scout MK4' });

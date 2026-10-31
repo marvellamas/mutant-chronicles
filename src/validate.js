@@ -3008,6 +3008,23 @@ function validaVeicoli(dati, err) {
     if (!isTesto(p?.id) || !isTesto(p?.nome)) err(F, k, 'id e nome mancanti');
     else if (ids.has(p.id)) err(F, `${k}.id`, `id «${p.id}» ripetuto`);
     else ids.add(p.id);
+    // Veicoli 0.10 (§9.1, §10): energia in cariche, mai in Lx; km a carica; aria a parte; capacità di prima per la conversione (A.193)
+    if (p?.alimentazione !== undefined) {
+      const a = p.alimentazione;
+      for (const x of ['capacita_lx', 'erogazione_lx_h', 'consumo_lx_km', 'consumo_fermo_lx_h']) if (a?.[x] !== undefined) err(F, `${k}.alimentazione.${x}`, 'l’energia dei veicoli si conta in cariche (Veicoli 0.10), non in Lx');
+      if (!isIntero(a?.cariche) || a.cariche < 1) err(F, `${k}.alimentazione.cariche`, 'intero ≥ 1 atteso (cariche dell’accumulatore installato)');
+      if (!isIntero(a?.km_per_carica) || a.km_per_carica < 1) err(F, `${k}.alimentazione.km_per_carica`, 'intero ≥ 1 atteso (chilometri per carica)');
+      else if (isIntero(a?.cariche) && a.autonomia_km !== a.cariche * a.km_per_carica) err(F, `${k}.alimentazione.autonomia_km`, `${a.cariche * a.km_per_carica} atteso (cariche × km a carica)`);
+      if (!isIntero(a?.ricarica_cr_per_carica) || !isIntero(a?.ricarica_minuti_per_carica)) err(F, `${k}.alimentazione`, 'ricarica_cr_per_carica e ricarica_minuti_per_carica interi attesi');
+      if (!isOggetto(p.energia_precedente) || !isIntero(p.energia_precedente.rosso_lx) || p.energia_precedente.rosso_lx < 1) err(F, `${k}.energia_precedente.rosso_lx`, 'capacità di prima in Lx attesa (A.193), per convertire le riserve salvate');
+    }
+    if (p?.supporto_vitale !== undefined) {
+      const sv = p.supporto_vitale;
+      if (!isIntero(sv?.verde?.cariche) || !isIntero(sv?.verde?.carica_per_giorno) || sv.verde.carica_per_giorno < 1) err(F, `${k}.supporto_vitale.verde`, 'cariche e carica_per_giorno interi attesi (una carica per giorno di utilizzo)');
+      const ar = sv?.aria;
+      if (!isIntero(ar?.bombole) || !isIntero(ar?.ore_per_bombola) || ar.ore_massime !== ar.bombole * ar.ore_per_bombola) err(F, `${k}.supporto_vitale.aria`, 'ore_massime = bombole × ore_per_bombola attese (Scout 0.6: tre bombole da 8 ore = 24)');
+      if (!isIntero(p.energia_precedente?.verde_lx)) err(F, `${k}.energia_precedente.verde_lx`, 'capacità di prima del Verde in Lx attesa (A.193)');
+    }
     if (!isIntero(p?.mov_q) || p.mov_q < 1) err(F, `${k}.mov_q`, 'MOV intero ≥ 1 atteso');
     if (!isIntero(p?.man) || p.man < -2 || p.man > 2) err(F, `${k}.man`, 'MAN intero fra −2 e +2');
     // la PS Integrità viene dalla Qualità (regole.json → integrita): nel profilo si ricopia, e deve coincidere

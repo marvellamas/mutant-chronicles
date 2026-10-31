@@ -76,7 +76,10 @@
         "colore": "Verde",
         "formato": "nec1",
         "capacita_cariche": 1,
-        "uso": "elettronica_ordinaria"
+        "uso": "elettronica_ordinaria",
+        "precedente": {
+          "lx": 100
+        }
       },
       "ricarica_costo": 10,
       "proprieta": []
@@ -154,7 +157,10 @@
         "colore": "Verde",
         "formato": "nec3",
         "capacita_cariche": 3,
-        "uso": "elettronica_ordinaria"
+        "uso": "elettronica_ordinaria",
+        "precedente": {
+          "lx": 1000
+        }
       },
       "ricarica_costo": 30,
       "proprieta": []
@@ -182,7 +188,10 @@
       "nec": {
         "colore": "Rosso",
         "formato": "nec5",
-        "capacita_cariche": 5
+        "capacita_cariche": 5,
+        "precedente": {
+          "lx": 500
+        }
       },
       "ricarica_costo": 50,
       "proprieta": []
@@ -209,7 +218,10 @@
       "nec": {
         "colore": "Blu",
         "formato": "nec5",
-        "capacita_cariche": 5
+        "capacita_cariche": 5,
+        "precedente": {
+          "lx": 250
+        }
       },
       "ricarica_costo": 50,
       "proprieta": []

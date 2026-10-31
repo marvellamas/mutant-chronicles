@@ -11,7 +11,7 @@
 //     andatura: 'veloce',                  // id dell'andatura corrente
 //     conducente: 'pg:Lucas-Vane',         // chi guida: id del partecipante, o null
 //     rinforzi: { 'copriruote-petra': { montati: [3, 3, 1, 0], ricambi: [3, 3] } },
-//     energia: { rosso: [lx per banco], rosso_ricambi, verde, verde_ricambi, aria: { fissa, bombole } },
+//     energia: { modello: 'cariche', rosso, rosso_ricambi, verde, verde_ricambi, aria (ore), km_giornata, supporto_oggi },   // Veicoli 0.10; energia_prima: il valore di prima, A.193
 //     munizioni: [{ caricate, riserva } | null],   // armi di bordo (A.101); andatura_scelta: A.104
 //     ripristini: [{ struttura: 'motore', fino_a: 'fine_scena' }],   // Riparazione d'Emergenza (§7.3)
 //     avarie: 'ruota posteriore destra cerchiata' }     // note del Direttore
@@ -539,28 +539,33 @@ export function applicaRiparazione(mezzo, struttura, esito, dati, opzioni = {}) 
 // Energia, aria e munizioni del mezzo (A.101, E&L del 05/10/2026): riserve residue nel mezzo, consumi dai dati
 // del profilo (alimentazione, supporto_vitale, armi[].munizioni_iniziali). Niente ripristino automatico.
 
-/** Banchi della riserva Rossa: numero e capacità di ciascuno (alimentazione.banchi, capacita_lx). */
-function banchiRossi(alim) {
-  const n = Math.max(1, intero(alim?.banchi, 1));
-  return { n, cap: Math.floor(intero(alim?.capacita_lx) / n) };
-}
+/** Frazioni di carica senza rumore di virgola mobile: sei decimali bastano a tenere i resti della conversione (A.193). */
+const arrotonda = (n) => Math.round(n * 1e6) / 1e6;
+const num = (v, d = 0) => (Number.isFinite(v) ? v : d);
+const entro = (n, min, max, d) => Math.max(min, Math.min(max, num(n, d)));
+const somma = (l) => lista(l).filter(Number.isFinite).reduce((t, n) => t + n, 0);
 
-/** Riserve iniziali del profilo: banchi Rossi e ricambi, Modulo Verde e ricambi, aria (fissa e bombole). */
+/**
+ * Riserve iniziali del profilo, in cariche (Veicoli 0.10 §9.1 e §10): la carica Rossa, quella Verde del supporto
+ * vitale, le ore d'aria (riserva distinta, un solo contatore), i km della giornata e il segno «supporto usato oggi»
+ * che la chiusura della giornata azzera. Un profilo senza `cariche` non ha riserve.
+ */
 function energiaIniziale(profilo) {
   const a = profilo?.alimentazione;
   const sv = profilo?.supporto_vitale;
-  const e = {};
-  if (Number.isInteger(a?.capacita_lx)) {
-    const { n, cap } = banchiRossi(a);
-    e.rosso = Array(n).fill(cap);
-    e.rosso_ricambi = lista(a.ricambi_iniziali).filter(Number.isInteger);
+  const e = { modello: 'cariche' };
+  if (Number.isInteger(a?.cariche)) {
+    e.rosso = a.cariche;
+    e.rosso_ricambi = lista(a.ricambi_iniziali).filter(Number.isFinite);
+    e.km_giornata = 0;
   }
-  if (Number.isInteger(sv?.verde?.capacita_lx)) {
-    e.verde = [sv.verde.capacita_lx];
-    e.verde_ricambi = lista(sv.verde.ricambi_iniziali).filter(Number.isInteger);
+  if (Number.isInteger(sv?.verde?.cariche)) {
+    e.verde = sv.verde.cariche;
+    e.verde_ricambi = lista(sv.verde.ricambi_iniziali).filter(Number.isFinite);
+    e.supporto_oggi = false;
   }
-  if (sv?.aria) e.aria = { fissa: intero(sv.aria.riserva_fissa_ore), bombole: lista(sv.aria.bombole_ore).filter(Number.isInteger) };
-  return Object.keys(e).length ? e : null;
+  if (Number.isFinite(sv?.aria?.ore_massime)) e.aria = sv.aria.ore_massime;
+  return e.rosso !== undefined || e.verde !== undefined || e.aria !== undefined ? e : null;
 }
 
 /** Munizioni iniziali delle armi di bordo che le hanno (stesso ordine di profilo.armi; null le altre). */
@@ -569,113 +574,258 @@ function munizioniIniziali(profilo) {
   return m.some(Boolean) ? m : null;
 }
 
+/** Il mezzo ha ancora le riserve del modello di prima (banchi e moduli in Lx, aria fissa più bombole)? */
+const inLx = (v) => (isOggetto(v?.energia) && v.energia.modello !== 'cariche' && (Array.isArray(v.energia.rosso) || Array.isArray(v.energia.verde) || isOggetto(v.energia.aria))) || (!isOggetto(v?.energia) && Number.isFinite(v?.nec?.lx));
+
+/** Il valore di prima di un mezzo con le riserve in Lx, com'era nel file (A.193): resta scritto accanto alle cariche. */
+const valoreDiPrima = (v) => ({ regola: 'A.193', modello: 'lx', ...(isOggetto(v.energia) ? { energia: v.energia } : {}), ...(isOggetto(v.nec) ? { nec: v.nec } : {}) });
+
 /**
- * Riserve del mezzo salvato, nei limiti del profilo. Il vecchio «nec: { lx }» (prima del 05/10/2026) riempie i
- * banchi Rossi in ordine; le riserve che il file non ha partono dalla dotazione iniziale approvata (A.101).
+ * A.193 (risposta di Davide del 30/10/2026): le riserve salvate in Lx passano al modello a cariche conservando la
+ * **frazione** residua, senza equivalenza universale fra Lx e cariche: un MEC Rosso a metà (50.000 Lx su 100.000)
+ * diventa 5 cariche su 10. Niente arrotondamento per eccesso (le frazioni restano dentro il valore, sei decimali);
+ * il valore originale resta nel file (`energia_prima`) e dopo il primo salvataggio il mezzo è già «a cariche»: la
+ * conversione non si ripete. Se il profilo non dice con certezza la capacità di prima (`energia_precedente`) la
+ * riserva resta «da convertire» fino alla verifica del Direttore; i ricambi di prima (altri Banchi e Moduli) non
+ * hanno un profilo nuovo certo e restano «da convertire». Le ore d'aria non cambiano unità: fissa + bombole.
+ * @returns {{ energia, prima }}
+ */
+function convertiDaLx(v, profilo, base) {
+  const x = isOggetto(v.energia) ? v.energia : {};
+  const P = profilo.energia_precedente ?? {};
+  const e = { ...base };
+  const daConvertire = [];
+  const ricambi = {};
+  const converti = (chiave, lx, capLx, cariche) => {
+    if (lx === null) return;
+    if (Number.isFinite(capLx) && capLx > 0) e[chiave] = arrotonda(entro(lx / capLx, 0, 1) * cariche);
+    else { e[chiave] = null; daConvertire.push(chiave); }
+  };
+  if (base.rosso !== undefined) {
+    const lx = Array.isArray(x.rosso) ? somma(x.rosso) : Number.isFinite(v?.nec?.lx) ? v.nec.lx : null;
+    converti('rosso', lx, P.rosso_lx, base.rosso);
+    const r = lista(x.rosso_ricambi).filter(Number.isFinite);
+    if (r.length) ricambi.rosso = r;
+  }
+  if (base.verde !== undefined) {
+    converti('verde', Array.isArray(x.verde) ? somma(x.verde) : null, P.verde_lx, base.verde);
+    const r = lista(x.verde_ricambi).filter(Number.isFinite);
+    if (r.length) ricambi.verde = r;
+  }
+  if (base.aria !== undefined && isOggetto(x.aria)) e.aria = entro(num(x.aria.fissa) + somma(x.aria.bombole), 0, base.aria, base.aria);
+  if (daConvertire.length) e.da_convertire = daConvertire;
+  if (Object.keys(ricambi).length) e.ricambi_da_convertire = ricambi;
+  return { energia: e, prima: valoreDiPrima(v) };
+}
+
+/** Le riserve di un mezzo già a cariche, nei limiti del profilo. */
+function energiaLetta(x, base) {
+  const e = { modello: 'cariche' };
+  const daConvertire = lista(x.da_convertire).filter((k) => k === 'rosso' || k === 'verde');
+  if (base.rosso !== undefined) {
+    e.rosso = x.rosso === null && daConvertire.includes('rosso') ? null : entro(x.rosso, 0, base.rosso, base.rosso);
+    e.rosso_ricambi = lista(x.rosso_ricambi).filter(Number.isFinite).map((n) => entro(n, 0, base.rosso));
+    e.km_giornata = Math.max(0, arrotonda(num(x.km_giornata)));
+  }
+  if (base.verde !== undefined) {
+    e.verde = x.verde === null && daConvertire.includes('verde') ? null : entro(x.verde, 0, base.verde, base.verde);
+    e.verde_ricambi = lista(x.verde_ricambi).filter(Number.isFinite).map((n) => entro(n, 0, base.verde));
+    e.supporto_oggi = x.supporto_oggi === true;
+  }
+  if (base.aria !== undefined) e.aria = entro(x.aria, 0, base.aria, base.aria);
+  const dc = daConvertire.filter((k) => e[k] === null);
+  if (dc.length) e.da_convertire = dc;
+  if (isOggetto(x.ricambi_da_convertire)) {
+    const r = Object.fromEntries(['rosso', 'verde'].map((k) => [k, lista(x.ricambi_da_convertire[k]).filter(Number.isFinite)]).filter(([, l]) => l.length));
+    if (Object.keys(r).length) e.ricambi_da_convertire = r;
+  }
+  return e;
+}
+
+/**
+ * Riserve del mezzo salvato, nei limiti del profilo. Un mezzo con le riserve del modello di prima (energia in Lx, o
+ * il vecchio «nec: { lx }» di prima del 05/10/2026) passa alle cariche con la regola della A.193 (convertiDaLx); le
+ * riserve che il file non ha partono dalla dotazione iniziale del profilo (A.101).
  */
 function normalizzaRisorse(v, profilo) {
   const base = energiaIniziale(profilo);
-  const x = isOggetto(v?.energia) ? v.energia : {};
-  const limita = (n, max) => Math.max(0, Math.min(max, intero(n, max)));
   let energia = null;
+  let prima = isOggetto(v?.energia_prima) ? v.energia_prima : null;
   if (base) {
-    energia = {};
-    if (base.rosso) {
-      const { cap } = banchiRossi(profilo.alimentazione);
-      if (Array.isArray(x.rosso)) energia.rosso = base.rosso.map((_, i) => limita(x.rosso[i], cap));
-      else if (Number.isInteger(v?.nec?.lx)) {
-        let resto = limita(v.nec.lx, intero(profilo.alimentazione.capacita_lx));
-        energia.rosso = base.rosso.map(() => { const b = Math.min(cap, resto); resto -= b; return b; });
-      } else energia.rosso = base.rosso;
-      energia.rosso_ricambi = Array.isArray(x.rosso_ricambi) ? x.rosso_ricambi.filter(Number.isInteger).map((n) => limita(n, cap)) : base.rosso_ricambi;
-    }
-    if (base.verde) {
-      const cap = intero(profilo.supporto_vitale.verde.capacita_lx);
-      energia.verde = Array.isArray(x.verde) ? base.verde.map((_, i) => limita(x.verde[i], cap)) : base.verde;
-      energia.verde_ricambi = Array.isArray(x.verde_ricambi) ? x.verde_ricambi.filter(Number.isInteger).map((n) => limita(n, cap)) : base.verde_ricambi;
-    }
-    if (base.aria) {
-      const oreBombola = intero(profilo.supporto_vitale.bombola?.ore, Math.max(0, ...base.aria.bombole));
-      const a = isOggetto(x.aria) ? x.aria : {};
-      energia.aria = {
-        fissa: limita(a.fissa, base.aria.fissa),
-        bombole: Array.isArray(a.bombole) ? a.bombole.filter(Number.isInteger).map((n) => limita(n, oreBombola)) : base.aria.bombole,
-      };
-    }
+    if (isOggetto(v?.energia) && v.energia.modello === 'cariche') energia = energiaLetta(v.energia, base);
+    else if (inLx(v)) {
+      const c = convertiDaLx(v, profilo, base);
+      energia = c.energia;
+      prima = prima ?? c.prima;
+    } else energia = base;
   }
   const mBase = munizioniIniziali(profilo);
   const munizioni = mBase ? mBase.map((m, i) => {
     if (!m) return null;
     const y = lista(v?.munizioni)[i];
     const cap = intero(profilo.armi[i].capacita, m.caricate);
-    return isOggetto(y) ? { caricate: limita(y.caricate, cap), riserva: Math.max(0, intero(y.riserva, m.riserva)) } : m;
+    return isOggetto(y) ? { caricate: entro(y.caricate, 0, cap, cap), riserva: Math.max(0, intero(y.riserva, m.riserva)) } : m;
   }) : null;
-  return { ...(energia ? { energia } : {}), ...(munizioni ? { munizioni } : {}) };
+  return { ...(energia ? { energia } : {}), ...(prima && energia ? { energia_prima: prima } : {}), ...(munizioni ? { munizioni } : {}) };
 }
 
-/** Preleva da una lista di riserve in ordine: { riserve, mancano }. */
-function preleva(riserve, quanto) {
-  let resto = Math.max(0, quanto);
-  const out = riserve.map((r) => { const x = Math.min(r, resto); resto -= x; return r - x; });
-  return { riserve: out, mancano: resto };
+/** «3 cariche», «1 carica», «0,5 cariche»: le frazioni di una conversione restano visibili. */
+export const testoCariche = (n) => `${String(arrotonda(n)).replace('.', ',')} ${arrotonda(n) === 1 ? 'carica' : 'cariche'}`;
+
+// ogni azione sulle riserve parte dal mezzo come sta nel file: se è ancora in Lx, il valore di prima resta scritto (A.193)
+const comeMezzo = (mezzo, energia) => ({ ...mezzo, energia, ...(inLx(mezzo) && !mezzo.energia_prima ? { energia_prima: valoreDiPrima(mezzo) } : {}) });
+
+/**
+ * Veicoli 0.10 §9.1 e §10: una tratta di viaggio. I chilometri si **sommano** per la giornata e non toccano le
+ * cariche: l'arrotondamento per eccesso si fa una volta sola, in `chiudiGiornata`.
+ * @returns {{ mezzo, righe: string[], avvisi: string[] }}
+ */
+export function registraViaggio(mezzo, km, dati) {
+  const profilo = profiloDi(mezzo, dati);
+  const e = normalizzaRisorse(mezzo, profilo).energia;
+  if (!(km > 0)) return { mezzo, righe: [], avvisi: [] };
+  if (e?.rosso === undefined) return { mezzo, righe: [], avvisi: ['Il mezzo non ha una riserva Rossa a cariche nel profilo.'] };
+  const tot = arrotonda(e.km_giornata + km);
+  const kmC = profilo.alimentazione.km_per_carica;
+  const c = Math.ceil(tot / kmC - 1e-9);
+  return { mezzo: comeMezzo(mezzo, { ...e, km_giornata: tot }), righe: [`Viaggio: +${km} km, in giornata ${tot} km (a fine giornata ${testoCariche(c)} Ross${c === 1 ? 'a' : 'e'}, ${kmC} km a carica)`], avvisi: [] };
 }
 
 /**
- * A.101: consumi del mezzo. Viaggio 200 Lx/km dalla riserva Rossa (trazione e servizi in marcia), da fermo
- * con i servizi accesi 100 Lx/ora (non in marcia), supporto vitale 200 Lx/ora dal Modulo Verde e un'ora
- * d'aria per ora (prima la riserva fissa, poi le bombole). Niente travaso fra NEC.
+ * Scout 0.6: il supporto vitale acceso per qualche ora. Le **ore d'aria** (riserva distinta, 24 ore effettive anche non
+ * consecutive) scendono subito; la carica Verde no: il segno «usato oggi» fa consumare una sola carica alla chiusura
+ * della giornata, quante che siano le accensioni.
+ */
+export function registraSupportoVitale(mezzo, ore, dati) {
+  const profilo = profiloDi(mezzo, dati);
+  const e = normalizzaRisorse(mezzo, profilo).energia;
+  if (!(ore > 0)) return { mezzo, righe: [], avvisi: [] };
+  if (e?.aria === undefined && e?.verde === undefined) return { mezzo, righe: [], avvisi: ['Il mezzo non ha un supporto vitale nel profilo.'] };
+  const avvisi = [];
+  const righe = [];
+  const nuovo = { ...e };
+  if (e.aria !== undefined) {
+    nuovo.aria = Math.max(0, arrotonda(e.aria - ore));
+    righe.push(`Aria: ${ore} h effettive, restano ${nuovo.aria} h`);
+    if (e.aria < ore) avvisi.push(`Aria esaurita: mancano ${arrotonda(ore - e.aria)} ore (ricarica le bombole).`);
+  }
+  if (e.verde !== undefined) {
+    nuovo.supporto_oggi = true;
+    righe.push(e.supporto_oggi ? 'Supporto vitale già usato oggi: la carica Verde è una sola' : 'Supporto vitale usato oggi: alla chiusura della giornata 1 carica Verde');
+  }
+  return { mezzo: comeMezzo(mezzo, nuovo), righe, avvisi };
+}
+
+/**
+ * «Chiudi la giornata» (A.192, A.219 aperta: per ora un tocco del Direttore, senza Calendario). Sottrae **una volta
+ * sola** le cariche Rosse dei chilometri sommati (una ogni `km_per_carica` o frazione) e, se il supporto vitale è
+ * stato usato in giornata, una carica Verde; un giorno senza uso non consuma Verde. Azzera i km e il segno.
  * @returns {{ mezzo, righe: string[], avvisi: string[] }}
  */
-export function consumaRisorse(mezzo, { km = 0, oreFermo = 0, oreSupporto = 0 } = {}, dati) {
+export function chiudiGiornata(mezzo, dati) {
   const profilo = profiloDi(mezzo, dati);
-  const r = normalizzaRisorse(mezzo, profilo);
-  const e = r.energia ? { ...r.energia } : null;
+  const e = normalizzaRisorse(mezzo, profilo).energia;
   const righe = [];
   const avvisi = [];
   if (!e) return { mezzo, righe, avvisi: ['Il mezzo non ha riserve di energia nel profilo.'] };
-  const a = profilo.alimentazione ?? {};
-  const lxViaggio = Math.ceil(Math.max(0, km) * intero(a.consumo_lx_km));
-  const lxFermo = Math.ceil(Math.max(0, oreFermo) * intero(a.consumo_fermo_lx_h));
-  if ((lxViaggio || lxFermo) && e.rosso) {
-    const p = preleva(e.rosso, lxViaggio + lxFermo);
-    e.rosso = p.riserve;
-    if (lxViaggio) righe.push(`Viaggio: ${km} km × ${a.consumo_lx_km} Lx = ${lxViaggio} Lx Rossi`);
-    if (lxFermo) righe.push(`Da fermo con i servizi: ${oreFermo} h × ${a.consumo_fermo_lx_h} Lx = ${lxFermo} Lx Rossi`);
-    if (p.mancano) avvisi.push(`Riserva Rossa esaurita: mancano ${p.mancano} Lx (installa il ricambio).`);
-  } else if ((km || oreFermo) && !e.rosso) avvisi.push('Il mezzo non ha una riserva Rossa.');
-  if (oreSupporto > 0) {
-    const sv = profilo.supporto_vitale ?? {};
-    if (e.verde) {
-      const lx = Math.ceil(oreSupporto * intero(sv.verde?.consumo_lx_h));
-      const p = preleva(e.verde, lx);
-      e.verde = p.riserve;
-      righe.push(`Supporto vitale: ${oreSupporto} h × ${sv.verde?.consumo_lx_h} Lx = ${lx} Lx Verdi`);
-      if (p.mancano) avvisi.push(`Modulo Verde esaurito: mancano ${p.mancano} Lx.`);
-    }
-    if (e.aria) {
-      const p = preleva([e.aria.fissa, ...e.aria.bombole], Math.ceil(oreSupporto));
-      e.aria = { fissa: p.riserve[0], bombole: p.riserve.slice(1) };
-      righe.push(`Aria: ${Math.ceil(oreSupporto)} h (prima la riserva fissa, poi le bombole)`);
-      if (p.mancano) avvisi.push(`Aria esaurita: mancano ${p.mancano} ore.`);
+  const nuovo = { ...e };
+  if (e.rosso !== undefined) {
+    const kmC = profilo.alimentazione.km_per_carica;
+    const c = e.km_giornata > 0 ? Math.ceil(e.km_giornata / kmC - 1e-9) : 0;
+    if (e.rosso === null) {
+      if (c) avvisi.push('Riserva Rossa «da convertire» (A.193): le cariche non si sottraggono finché il Direttore non la verifica; i chilometri restano da addebitare.');
+    } else {
+      nuovo.rosso = Math.max(0, arrotonda(e.rosso - c));
+      nuovo.km_giornata = 0;
+      if (c) righe.push(`Giornata chiusa: ${e.km_giornata} km → ${testoCariche(c)} Ross${c === 1 ? 'a' : 'e'} (arrotondato una volta sola, ${kmC} km a carica)`);
+      if (c > e.rosso) avvisi.push(`Riserva Rossa esaurita: mancano ${testoCariche(arrotonda(c - e.rosso))} (installa il ricambio).`);
     }
   }
-  return { mezzo: { ...mezzo, energia: e }, righe, avvisi };
+  if (e.verde !== undefined) {
+    const giorno = profilo.supporto_vitale.verde.carica_per_giorno ?? 1;
+    if (e.verde === null) {
+      if (e.supporto_oggi) avvisi.push('Riserva Verde «da convertire» (A.193): la carica del giorno non si sottrae finché il Direttore non la verifica.');
+    } else if (e.supporto_oggi) {
+      nuovo.verde = Math.max(0, arrotonda(e.verde - giorno));
+      nuovo.supporto_oggi = false;
+      righe.push(`Supporto vitale usato oggi: ${testoCariche(giorno)} Verde (più accensioni nello stesso giorno contano una)`);
+      if (e.verde < giorno) avvisi.push('Riserva Verde esaurita (installa il ricambio).');
+    } else if (profilo.supporto_vitale?.verde) righe.push('Supporto vitale non usato oggi: nessuna carica Verde');
+  }
+  if (!righe.length && !avvisi.length) righe.push('Giornata chiusa: nessun consumo');
+  return { mezzo: comeMezzo(mezzo, nuovo), righe, avvisi };
+}
+
+const minutiTesto = (m) => (m >= 60 ? `${Math.floor(m / 60)} h${m % 60 ? ` ${m % 60} min` : ''}` : `${m} min`);
+
+/**
+ * Ricarica completa degli accumulatori (Veicoli 0.10 §9.1 e §10): il MEC/CEC Rosso e il CEC Verde tornano pieni, si
+ * pagano le cariche ripristinate (30 cr il MEC, 10 il CEC) e il tempo è quello di una postazione per accumulatore
+ * (Scout: 2 ore) o la somma, se sono in successione. **L'aria non si ripristina**: sono le bombole (`ricaricaBombole`).
+ * @returns {{ mezzo, righe, costo, minuti } | null} null se non c'è nulla da ricaricare
+ */
+export function ricaricaEnergia(mezzo, dati, { inSuccessione = false } = {}) {
+  const profilo = profiloDi(mezzo, dati);
+  const e = normalizzaRisorse(mezzo, profilo).energia;
+  if (!e) return null;
+  const parti = [
+    e.rosso !== undefined ? { chiave: 'rosso', nome: profilo.alimentazione.nec.replace(/^1 /, ''), max: profilo.alimentazione.cariche, a: profilo.alimentazione } : null,
+    e.verde !== undefined ? { chiave: 'verde', nome: profilo.supporto_vitale.verde.nome.replace(/^1 /, ''), max: profilo.supporto_vitale.verde.cariche, a: profilo.supporto_vitale.verde } : null,
+  ].filter(Boolean);
+  const nuovo = { ...e };
+  const righe = [];
+  const tempi = [];
+  let costo = 0;
+  for (const p of parti) {
+    if (e[p.chiave] === null) { righe.push(`${p.nome}: riserva «da convertire» (A.193), non si ricarica da qui`); continue; }
+    const manca = arrotonda(p.max - e[p.chiave]);
+    if (manca <= 0) continue;
+    const cr = Math.ceil(manca * p.a.ricarica_cr_per_carica);
+    const min = Math.ceil(manca * p.a.ricarica_minuti_per_carica);
+    nuovo[p.chiave] = p.max;
+    costo += cr;
+    tempi.push(min);
+    righe.push(`${p.nome}: +${testoCariche(manca)} (${cr} cr, ${minutiTesto(min)})`);
+  }
+  if (!tempi.length) return null;
+  const minuti = inSuccessione ? tempi.reduce((t, n) => t + n, 0) : Math.max(...tempi);
+  if (e.aria !== undefined) righe.push('L’aria non cambia: la ricarica dell’energia non ripristina le bombole');
+  return { mezzo: comeMezzo(mezzo, nuovo), righe: [`Ricarica: ${costo} cr, ${minutiTesto(minuti)}${inSuccessione ? ' in successione' : ''}`, ...righe], costo, minuti };
+}
+
+/** Ricarica delle bombole vuote o parziali (Scout 0.6): 100 cr e 20 minuti per bombola, in successione. */
+export function ricaricaBombole(mezzo, dati) {
+  const profilo = profiloDi(mezzo, dati);
+  const e = normalizzaRisorse(mezzo, profilo).energia;
+  const sv = profilo?.supporto_vitale;
+  if (e?.aria === undefined || !sv?.bombola) return null;
+  const manca = arrotonda(sv.aria.ore_massime - e.aria);
+  if (manca <= 0) return null;
+  const n = Math.ceil(manca / sv.bombola.ore);
+  const costo = n * sv.bombola.ricarica_cr;
+  const minuti = n * sv.bombola.ricarica_minuti;
+  return { mezzo: comeMezzo(mezzo, { ...e, aria: sv.aria.ore_massime }), costo, minuti, righe: [`Bombole: ${n} da ricaricare, ${costo} cr, ${minutiTesto(minuti)} in successione (+${manca} h d’aria)`] };
 }
 
 /**
- * A.101: installa un NEC di ricambio (Rosso o Verde) al posto di quello installato più scarico; quello tolto
- * va fra i ricambi con il suo residuo (niente travaso). null se non ci sono ricambi.
+ * Installa l'accumulatore di ricambio (Rosso o Verde) al posto di quello installato; quello tolto va fra i ricambi con le
+ * sue cariche (niente travaso). null se non ci sono ricambi.
  */
 export function installaRicambioEnergia(mezzo, colore, dati) {
   const r = normalizzaRisorse(mezzo, profiloDi(mezzo, dati)).energia;
   const inst = r?.[colore];
   const ric = r?.[`${colore}_ricambi`];
-  if (!inst?.length || !ric?.length) return null;
-  const i = inst.indexOf(Math.min(...inst));
-  const nuovi = [...inst];
-  const tolto = nuovi[i];
-  nuovi[i] = ric[0];
-  return { ...mezzo, energia: { ...r, [colore]: nuovi, [`${colore}_ricambi`]: [...ric.slice(1), tolto] } };
+  if (!Number.isFinite(inst) || !ric?.length) return null;
+  return comeMezzo(mezzo, { ...r, [colore]: ric[0], [`${colore}_ricambi`]: [...ric.slice(1), inst] });
+}
+
+/** Aggiunge un accumulatore di ricambio pieno (le scorte energetiche aggiuntive sono facoltative e occupano carico). */
+export function aggiungiRicambioEnergia(mezzo, colore, dati) {
+  const profilo = profiloDi(mezzo, dati);
+  const r = normalizzaRisorse(mezzo, profilo).energia;
+  const max = colore === 'rosso' ? profilo?.alimentazione?.cariche : profilo?.supporto_vitale?.verde?.cariche;
+  if (!r || !Number.isInteger(max) || r[colore] === undefined) return null;
+  return comeMezzo(mezzo, { ...r, [`${colore}_ricambi`]: [...lista(r[`${colore}_ricambi`]), max] });
 }
 
 /** Munizioni di un'arma di bordo: colpi sparati (dai caricati) o ricarica dalla riserva fino alla capacità. */
@@ -726,22 +876,24 @@ export function eseguiCambioAndatura(mezzo, dati) {
   return { ...mezzo, andatura: nuova, andatura_scelta: nuova === mezzo.andatura_scelta ? null : mezzo.andatura_scelta };
 }
 
-/** Vista delle riserve per la scheda e la stampa. */
+/** Vista delle riserve per la scheda e la stampa (cariche: Veicoli 0.10 §9.1 e §10, Scout 0.6). */
 function vistaRisorse(mezzo, profilo) {
   const r = normalizzaRisorse(mezzo, profilo);
   const e = r.energia;
   const a = profilo.alimentazione;
   const sv = profilo.supporto_vitale;
-  const somma = (l) => lista(l).reduce((t, n) => t + n, 0);
+  const dc = e?.ricambi_da_convertire ?? {};
   return {
-    rosso: e?.rosso ? {
-      nome: a.nec, banchi: e.rosso, capacitaBanco: banchiRossi(a).cap, totale: somma(e.rosso), capacita: intero(a.capacita_lx), ricambi: e.rosso_ricambi,
-      consumoKm: a.consumo_lx_km ?? null, consumoFermo: a.consumo_fermo_lx_h ?? null, erogazione: a.erogazione_lx_h ?? null,
-      autonomiaKm: Number.isInteger(a.consumo_lx_km) && a.consumo_lx_km > 0 ? Math.floor(somma(e.rosso) / a.consumo_lx_km) : null, nota: a.nota ?? null,
+    energia: e ?? null,
+    rosso: e?.rosso !== undefined ? {
+      nome: a.nec, cariche: e.rosso, massimo: a.cariche, ricambi: e.rosso_ricambi, kmPerCarica: a.km_per_carica, autonomiaNominaleKm: a.autonomia_km ?? null,
+      autonomiaKm: Number.isFinite(e.rosso) ? Math.floor(e.rosso * a.km_per_carica) : null,
+      kmGiornata: e.km_giornata, daAddebitare: e.km_giornata > 0 ? Math.ceil(e.km_giornata / a.km_per_carica - 1e-9) : 0,
+      daConvertire: e.rosso === null, ricambiDaConvertire: dc.rosso ?? [], nota: a.nota ?? null,
     } : null,
-    verde: e?.verde ? { nome: sv.verde.nome, moduli: e.verde, capacita: sv.verde.capacita_lx, totale: somma(e.verde), ricambi: e.verde_ricambi, consumoOra: sv.verde.consumo_lx_h,
-      ore: sv.verde.consumo_lx_h ? Math.floor(somma(e.verde) / sv.verde.consumo_lx_h) : null } : null,
-    aria: e?.aria ? { fissa: e.aria.fissa, bombole: e.aria.bombole, ore: e.aria.fissa + somma(e.aria.bombole), massimo: intero(sv.aria.riserva_fissa_ore) + somma(sv.aria.bombole_ore), testo: sv.testo ?? null } : null,
+    verde: e?.verde !== undefined ? { nome: sv.verde.nome, cariche: e.verde, massimo: sv.verde.cariche, ricambi: e.verde_ricambi, perGiorno: sv.verde.carica_per_giorno ?? 1,
+      supportoOggi: e.supporto_oggi === true, daConvertire: e.verde === null, ricambiDaConvertire: dc.verde ?? [] } : null,
+    aria: e?.aria !== undefined ? { ore: e.aria, massimo: intero(sv.aria.ore_massime), bombole: intero(sv.aria.bombole), oreBombola: intero(sv.aria.ore_per_bombola), occupanti: intero(sv.aria.occupanti), testo: sv.testo ?? null } : null,
     munizioni: r.munizioni ?? null,
   };
 }

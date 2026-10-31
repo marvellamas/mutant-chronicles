@@ -830,12 +830,12 @@ function foglioVeicolo(v) {
     h('p', { class: 'piccolo' }, `Ricambi: ${r.ricambi.length ? r.ricambi.map((n) => `${n}/${r.piPerPezzo}`).join(', ') : 'nessuno'}. PS Integrità ${r.ps ?? '—'}. I pezzi montati assorbono in successione, l’eccedenza va ai PI.`)));
   const n = v.nec;
   const ri = v.risorse ?? {};
-  // A.101: riserve alla stampa (banchi Rossi, Modulo Verde, aria), con lo spazio per i residui
+  // Veicoli 0.10: riserve alla stampa (cariche Rosse e Verdi, ore d’aria), con lo spazio per i residui
   const alimentazione = n || ri.verde || ri.aria ? box({ titolo: 'Energia e supporto vitale', classe: 'vei-nec' },
-    ri.rosso ? h('p', {}, `${ri.rosso.nome}: ${ri.rosso.banchi.map((x) => numeroIt(x)).join(' + ')} / ${numeroIt(ri.rosso.capacita)} Lx alla stampa · residui ________`) : n ? h('p', {}, `${n.nec}: `, daDefinireSS()) : null,
-    ri.rosso ? h('p', { class: 'piccolo' }, 'Consumo ', Number.isInteger(ri.rosso.consumoKm) ? `${ri.rosso.consumoKm} Lx/km` : daDefinireSS(), ri.rosso.consumoFermo ? ` · da fermo ${ri.rosso.consumoFermo} Lx/h` : '', ri.rosso.autonomiaKm !== null ? ` · autonomia ${numeroIt(ri.rosso.autonomiaKm)} km` : '', ri.rosso.ricambi.length ? ` · ricambi ${ri.rosso.ricambi.map((x) => numeroIt(x)).join(', ')} Lx` : '') : null,
-    ri.verde ? h('p', { class: 'piccolo' }, `${ri.verde.nome}: ${numeroIt(ri.verde.totale)} / ${numeroIt(ri.verde.capacita)} Lx, supporto vitale ${ri.verde.consumoOra} Lx/h${ri.verde.ricambi.length ? ` · ricambi ${ri.verde.ricambi.map((x) => numeroIt(x)).join(', ')} Lx` : ''}`) : null,
-    ri.aria ? h('p', { class: 'piccolo' }, `Aria: ${ri.aria.ore} / ${ri.aria.massimo} ore (fissa ${ri.aria.fissa} h, bombole ${ri.aria.bombole.join(' + ')} h) · residui ________`) : null,
+    ri.rosso ? h('p', {}, `${ri.rosso.nome}: ${ri.rosso.daConvertire ? 'da convertire (A.193)' : `${Math.floor(ri.rosso.cariche)} / ${ri.rosso.massimo} cariche alla stampa`} · residue ________ / ${ri.rosso.massimo}`) : n ? h('p', {}, `${n.nec}: `, daDefinireSS()) : null,
+    ri.rosso ? h('p', { class: 'piccolo' }, `${ri.rosso.kmPerCarica} km a carica · ${numeroIt(ri.rosso.autonomiaNominaleKm)} km nominali · km della giornata ________ (si sommano le tratte; alla chiusura della giornata si arrotonda per eccesso una volta sola)`) : null,
+    ri.verde ? h('p', { class: 'piccolo' }, `${ri.verde.nome}: ${ri.verde.daConvertire ? 'da convertire (A.193)' : `${Math.floor(ri.verde.cariche)} / ${ri.verde.massimo} cariche alla stampa`} · ${ri.verde.perGiorno} carica per giorno di supporto vitale · residue ________ / ${ri.verde.massimo} · giorni con supporto ________`) : null,
+    ri.aria ? h('p', { class: 'piccolo' }, `Aria: ${ri.aria.ore} / ${ri.aria.massimo} ore effettive (${ri.aria.bombole} bombole da ${ri.aria.oreBombola} h, riserva distinta dall’energia) · residue ________`) : null,
     ri.munizioni ? (p.armi ?? []).map((a, i) => (ri.munizioni[i] ? h('p', { class: 'piccolo' }, `${a.nome}: ${ri.munizioni[i].caricate} caricate, riserva ${ri.munizioni[i].riserva} · residui ________`) : null)) : null) : null;
   return [
     v.vista.fuoriUso ? h('p', { class: 'vei-fuori-uso' }, 'Fuori uso: Corpo principale o Motore a 0 PI. Non funziona, non esplode; il movimento residuo prosegue (§5.5).') : null,

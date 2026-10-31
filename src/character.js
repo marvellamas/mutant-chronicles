@@ -205,6 +205,8 @@ export function normalizza(scelteIn, dati) {
   for (const v of s.equipaggiamento) {
     const x = v.rif ? sostituiti[v.rif] : null;
     if (!x) continue;
+    // A.193: la voce di prima resta scritta (rif_prima) perché la riserva salvata si converte con la capacità di allora
+    if (x.precedente && !v.rif_prima) v.rif_prima = v.rif;
     v.rif = x.rif;
     if (x.stati && v.stato in x.stati) v.stato = x.stati[v.stato];
     // una confezione diventa le sue unità (A.71: cinque set chirurgici → cinque Cartucce chirurgiche)

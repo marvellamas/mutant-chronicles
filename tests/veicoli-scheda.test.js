@@ -6,7 +6,7 @@ import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import {
   nuovoVeicolo, normalizzaVeicoli, colpisciVeicolo, applicaRiparazione, vistaVeicoloPersonaggio,
-  pilotareDelPersonaggio, montaRicambio, schedaManuale, consumaRisorse, installaRicambioEnergia, munizioniArmaVeicolo,
+  pilotareDelPersonaggio, montaRicambio, schedaManuale, registraViaggio, registraSupportoVitale, chiudiGiornata, aggiungiRicambioEnergia, installaRicambioEnergia, munizioniArmaVeicolo,
   sollecitazioneFallita, eseguiCambioAndatura,
 } from '../src/veicoli.js';
 import { normalizza, serializza, deserializza, applicaModifica } from '../src/character.js';
@@ -22,7 +22,7 @@ test('aggiunta e rimozione: catalogo e scritto a mano, più veicoli, nome, salva
   const a = nuovoVeicolo('autovettura-civile', dati, { uid: 'a', nome: 'La Grigia' });
   assert.equal(a.nome, 'La Grigia');
   assert.deepEqual(a.pi, { corpo: 12, propulsione: 8, motore: 8 });
-  assert.deepEqual(a.energia, { rosso: [50000], rosso_ricambi: [] });
+  assert.deepEqual(a.energia, { modello: 'cariche', rosso: 10, rosso_ricambi: [], km_giornata: 0 });
   const s = scout();
   assert.equal(s.nome, 'ASA Scout MK4');
   assert.deepEqual(s.rinforzi['copriruote-petra'], { montati: [3, 3, 3, 3], ricambi: [3, 3] });
@@ -146,20 +146,20 @@ test('migrazione: un personaggio senza veicoli si salva e si calcola come prima'
 
 test('A.101–A.104: riserve dello Scout, consumi, ricambi, munizioni, sollecitazione e andatura scelta', () => {
   const s = scout();
-  assert.deepEqual(s.energia, { rosso: [50000, 50000], rosso_ricambi: [50000], verde: [10000], verde_ricambi: [10000], aria: { fissa: 8, bombole: [8, 8] } });
+  assert.deepEqual(s.energia, { modello: 'cariche', rosso: 10, rosso_ricambi: [], km_giornata: 0, verde: 10, verde_ricambi: [], supporto_oggi: false, aria: 24 });
   assert.deepEqual(s.munizioni, [{ caricate: 400, riserva: 800 }]);
-  // il vecchio «nec: { lx }» riempie i banchi in ordine; le altre riserve partono dalla dotazione approvata
+  // il vecchio «nec: { lx }» (70.000 su 100.000) diventa il 70% della capacità nuova, A.193; le altre riserve partono piene
   const vecchio = normalizzaVeicoli([{ uid: 'x', profilo: 'asa-scout-mk4', andatura: 'fermo', pi: { corpo: 60, propulsione: 36, motore: 24 }, nec: { lx: 70000 } }], dati)[0];
-  assert.deepEqual(vecchio.energia.rosso, [50000, 20000]);
+  assert.equal(vecchio.energia.rosso, 7);
   assert.equal(vecchio.nec, undefined);
-  // 24 ore d'aria e Verde: dopo 24 ore restano 5.200 Lx (A.101)
-  const c = consumaRisorse(s, { km: 100, oreFermo: 10, oreSupporto: 24 }, dati).mezzo;
-  assert.deepEqual(c.energia.rosso, [29000, 50000]); // 100 km × 200 + 10 h × 100 = 21.000 Lx
-  assert.deepEqual(c.energia.verde, [5200]);
-  assert.deepEqual(c.energia.aria, { fissa: 0, bombole: [0, 0] });
-  // il ricambio prende il posto del NEC più scarico, che resta fra i ricambi (niente travaso)
-  const r = installaRicambioEnergia(c, 'rosso', dati);
-  assert.deepEqual([r.energia.rosso, r.energia.rosso_ricambi], [[50000, 50000], [29000]]);
+  assert.deepEqual(vecchio.energia_prima.nec, { lx: 70000 }, 'il valore di prima resta nel file');
+  // 100 km in giornata e 24 ore di supporto: alla chiusura 2 cariche Rosse (100 km su 75 a carica) e 1 Verde; aria a zero
+  const viaggio = registraViaggio(s, 100, dati).mezzo;
+  const c = chiudiGiornata(registraSupportoVitale(viaggio, 24, dati).mezzo, dati).mezzo;
+  assert.deepEqual([c.energia.rosso, c.energia.verde, c.energia.aria, c.energia.km_giornata], [8, 9, 0, 0]);
+  // il ricambio prende il posto dell'accumulatore installato, che resta fra i ricambi con le sue cariche (niente travaso)
+  const r = installaRicambioEnergia(aggiungiRicambioEnergia(c, 'rosso', dati), 'rosso', dati);
+  assert.deepEqual([r.energia.rosso, r.energia.rosso_ricambi], [10, [8]]);
   // munizioni: sparati e ricarica dalla riserva fino a 400
   const m = munizioniArmaVeicolo(munizioniArmaVeicolo(s, 0, { sparati: 150 }, dati), 0, { ricarica: true }, dati);
   assert.deepEqual(m.munizioni, [{ caricate: 400, riserva: 650 }]);

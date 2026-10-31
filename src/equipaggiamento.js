@@ -319,6 +319,16 @@ export function coloriChroma(dati) {
  * `provenienza`: { totale, righe } come i valori calcolati (src/provenienza.js), per il tooltip.
  * @returns {{ chiave, chiaveLx?, chiaviPrima?, uid, nome, unita, massimo, passi: number[], nec: string|null, colore?, formato?, provenienza }[]}
  */
+/**
+ * Capacità di prima dell'oggetto (A.193), per convertire una riserva salvata in Lx, in UE o in ore: dalla scheda nuova
+ * (`nec.precedente`) o dalla voce uscita dal catalogo (index.json → rif_sostituiti[rif_prima].precedente). Con `incerto`
+ * (i Moduli, A.217 aperta) il profilo nuovo non è certo e la riserva resta «da convertire».
+ */
+function precedenteDi(v, d, dati) {
+  const uscita = v.rif_prima ? dati?.equipaggiamento?.indice?.rif_sostituiti?.[v.rif_prima]?.precedente : null;
+  return uscita ?? d.nec?.precedente ?? null;
+}
+
 export function riserveNec(voci, dati) {
   const R = dati?.regole?.nec;
   if (!R) return [];
@@ -338,7 +348,11 @@ export function riserveNec(voci, dati) {
         // §5.4.4: NEC da 1/3/5/10 cariche, pacchi da 20 e 30, CEC, MEC e BEC da 10 cariche
         const massimo = d.nec.capacita_cariche * q;
         const sigla = R.colori?.[d.nec.colore]?.sigla ?? '';
+        const prec = precedenteDi(v, d, dati);
+        const precedenti = prec && !prec.incerto
+          ? Object.fromEntries([[r.uid, prec.lx], [`${r.uid}#ue`, prec.ue]].filter(([, n]) => Number.isFinite(n) && n > 0).map(([k, n]) => [k, n * q])) : null;
         out.push({
+          ...(precedenti && Object.keys(precedenti).length ? { precedenti } : {}),
           chiave: `${r.uid}#c`, chiaveLx: r.uid, chiaviPrima: [r.uid, `${r.uid}#ue`], uid: r.uid, nome: r.nome, unita: 'cariche', massimo, nec: d.rif,
           colore: d.nec.colore, formato: d.nec.formato, passi: passi.cariche ?? [1],
           provenienza: { totale: `${massimo} cariche`, righe: [{ fonte: q > 1 ? `${d.nome} ×${q}` : d.nome, valore: `${d.nec.capacita_cariche} cariche`, nota: `${sigla ? `${sigla}: ` : ''}${R.colori?.[d.nec.colore]?.impieghi ?? ''} (${par(d.paragrafo)})`.trim() }] },
@@ -363,7 +377,8 @@ export function riserveNec(voci, dati) {
       (a.componenti ?? [null]).forEach((comp, i) => {
         const chiaveBase = comp ? `${base}#${i}` : base;
         out.push({
-          chiave: convertita ? `${chiaveBase}#c` : chiaveBase, ...(convertita ? { chiaviPrima: [chiaveBase] } : {}), uid: r.uid, nome: comp ? `${nomeBase} (${comp})` : nomeBase, unita, massimo, nec: a.nec,
+          chiave: convertita ? `${chiaveBase}#c` : chiaveBase, ...(convertita ? { chiaviPrima: [chiaveBase] } : {}),
+          ...(convertita && Number.isFinite(a.precedente?.ore) && a.precedente.ore > 0 ? { precedenti: { [chiaveBase]: a.precedente.ore } } : {}), uid: r.uid, nome: comp ? `${nomeBase} (${comp})` : nomeBase, unita, massimo, nec: a.nec,
           passi: usi ? (convertita ? passi.cariche ?? [1] : passi.usi ?? [1]) : passi.ore ?? [1, 5],
           provenienza: { totale: `${massimo} ${unita}`, righe: [comp ? { ...riga, fonte: `${fonte}, ${comp}` } : riga] },
         });
@@ -644,6 +659,8 @@ export function normalizzaEquipaggiamento(valore) {
       stato: typeof v.stato === 'string' ? v.stato : null,
       quantita: Number.isInteger(v.quantita) && v.quantita >= 1 ? v.quantita : 1,
       note: testo(v.note),
+      // voce di catalogo uscita e sostituita (index.json → rif_sostituiti): serve a convertire la riserva salvata (A.193)
+      ...(typeof v.rif_prima === 'string' && v.rif_prima ? { rif_prima: v.rif_prima } : {}),
     };
     if (!out.rif) {
       const p = isOggetto(v.personalizzato) ? v.personalizzato : {};
