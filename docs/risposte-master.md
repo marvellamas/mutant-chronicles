@@ -2331,3 +2331,10 @@ Manuale del Giocatore: ancora «Edizione consultabile 0.50», ma ritoccato il 30
 - **A.229 aperta**: le 20 voci di Potere che il manuale toglie a Custode, Invocatore, Mistico e Tecnomante restano negli elenchi (vale la A.185), annotate in `specializzazioni.json` → `potere_in_attesa_a229`.
 - **A.230 aperta**: Armi Inastate (Incursore) e Archi e Balestre (Invocatore) escono dagli elenchi (`per_classe_tolte`); chi le ha già le tiene con un avviso, un tablet non le sceglie di nuovo.
 - **Nuove domande, aperte: A.232–A.233** (`docs/pacchetto-per-davide-2026-11-01-lotto155.md`): A.232 Guanti con Armi da Pugno e/o Combattimento Senz'Armi; A.233 «capitolo» = Atto dei PX? e «scena» dichiarata dalla plancia (per il lotto delle frequenze).
+
+## 1 novembre 2026, sera — Lotto 156: i Guanti da Combattimento Mistico dalla scheda di Lucas 1.0 (`docs/diff-guanti-lucas-2026-11-01.md`)
+
+- Scheda «Guanti mistici di Lucas» 1.0 (regole approvate il 31/10/2026; = Armamenti 0.74 §7.24, Magia 1.11 §26.6.2) applicata al catalogo: Rara, Grado III, SnT 3, riserva Rossa da 10 PM (Cariche, Esclusiva); **nessun +1 VA passivo** (né ai pugni né ai contatti degli Incantesimi); Pugno mistico 2 PM, 1 AzP, 5 RND: +1 VA, Magico, +1 danno; Getto di fuoco 5 PM (linea 2 × 1 Q, 1d6+4 Naturale Fuoco, automatico) e Doppio getto 10 PM (Prova di Potere −2, PM spesi anche se fallisce). A.175 rispettata: proprietà attive, non incantesimi.
+- **Pronta, aspetta il file di Lucas**: nel file non c'è niente da riscrivere (PM salvati restano); verifica in sola lettura con `node tools/guanti-lucas.mjs`. Sulle copie (20/10 e 27/10): kit 8 → 9 su capacità 9.
+- **A.232 aperta**: ai pugni vale solo Combattimento Senz'Armi; Armi da Pugno no; nessun cumulo nuovo.
+- **Nuova domanda, aperta: A.234** (`docs/pacchetto-per-davide-2026-11-01-lotto156.md`): bonus di lancio (Specializzazioni di Potere, Potere Mistico) nella Prova di Potere del Doppio getto?
