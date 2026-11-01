@@ -929,7 +929,7 @@ test('lotto 12: regole di sintonizzazione, profili con riserva mistica, batterie
   assert.deepEqual(f.sintonizzazione.capacita_per_gradi, [8, 9, 10, 11, 12, 13]);
   assert.deepEqual(f.sintonizzazione.talento, { nome: 'Architetto TecnoMistico', bonus: 2 });
   assert.equal(f.sintonizzazione.potenze.Leggendaria, 6);
-  assert.equal(f.artefatti_catalogo.length, 8); // A.158: le due configurazioni della CyberArma
+  assert.equal(f.artefatti_catalogo.length, 9); // A.158 e Armamenti 0.74: originale, batteria Verde e conversione a NeC della CyberArma
   assert.deepEqual(f.artefatti_catalogo.find((a) => a.rif === 'scudi:scudo-delle-guardie-sacre'), {
     rif: 'scudi:scudo-delle-guardie-sacre', tipologia: 'Protezioni', potenza: 'Rara', sintonizzazione: 3, sintonizzabile: true, proprieta_attive: true,
     contenitore: { energia: 'Rosso', capacita_pm: 5, integrato: true, riserva: 'cariche', alimentazione: 'esclusiva' }, // Magia §26.2, Armamenti §7.5.1

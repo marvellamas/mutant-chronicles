@@ -2,6 +2,7 @@
 // valori derivati, serializzazione. Tutto ciò che è calcolato si ricava da calc.js: qui non
 // si conservano mai valori derivati.
 import { normalizzaCorrezioni, normalizzaCircostanzeMaster } from './correzioni-master.js';
+import { normalizzaProgetti } from './progetti.js';
 import {
   validaScelte, modOrdinario, modSalvezza, salvezza, puntiVita, puntiMagiaCreazione, iniziativa,
   bonusAvanzamentoSalvezze,
@@ -100,6 +101,9 @@ export function nuoveScelte() {
     // (`correzioni_master`, `circostanze_master`), scritti solo se non vuoti.
     correzioniMaster: [],
     circostanzeMaster: [],
+    // Progetti seguiti dal Direttore (01/11/2026, src/progetti.js: la CyberArma di Dimitri a Paradise): nel file a parte
+    // (`progetti_master`), scritti solo se non vuoti; il giocatore ne cambia solo la forma
+    progettiMaster: [],
   };
 }
 
@@ -234,6 +238,7 @@ export function normalizza(scelteIn, dati) {
   s.umanita = registraInstallazioni(s.umanita, s.equipaggiamento, dati, avvisi);
   s.veicoli = dati.veicoli ? normalizzaVeicoli(s.veicoli, dati, avvisi) : (Array.isArray(s.veicoli) ? s.veicoli : []);
   s.correzioniMaster = normalizzaCorrezioni(s.correzioniMaster);
+  s.progettiMaster = normalizzaProgetti(s.progettiMaster);
   s.circostanzeMaster = normalizzaCircostanzeMaster(s.circostanzeMaster);
   // Anagrafica: facoltativa; i personaggi salvati prima l'hanno vuota.
   for (const { campo } of CAMPI_ANAGRAFICA) {
@@ -485,8 +490,10 @@ export function serializza(scelte, { versioniDati, livelli, sessione, calendario
   // i blocchi del master stanno a parte, fuori dalle scelte (e solo se non vuoti: i file di prima restano identici)
   const correzioni = normalizzaCorrezioni(pulite.correzioniMaster);
   const circostanze = normalizzaCircostanzeMaster(pulite.circostanzeMaster);
+  const progetti = normalizzaProgetti(pulite.progettiMaster);
   delete pulite.correzioniMaster;
   delete pulite.circostanzeMaster;
+  delete pulite.progettiMaster;
   if (!Object.keys(pulite.parametriTalenti ?? {}).length) delete pulite.parametriTalenti;
   // Talenti v1.0: scritti solo se ci sono, così i file di prima restano identici
   if (pulite.regimeTalenti !== 2) delete pulite.regimeTalenti;
@@ -503,6 +510,7 @@ export function serializza(scelte, { versioniDati, livelli, sessione, calendario
   if (isOggetto(calendario)) file.calendario = calendario;
   if (correzioni.length) file.correzioni_master = correzioni;
   if (circostanze.length) file.circostanze_master = circostanze;
+  if (progetti.length) file.progetti_master = progetti;
   return JSON.stringify(file, null, 2);
 }
 
@@ -549,6 +557,7 @@ export function deserializza(testo) {
   if (obj.formato === FORMATO_FILE) {
     out.correzioniMaster = normalizzaCorrezioni(obj.correzioni_master);
     out.circostanzeMaster = normalizzaCircostanzeMaster(obj.circostanze_master);
+    out.progettiMaster = normalizzaProgetti(obj.progetti_master);
   }
   return { ...nuoveScelte(), ...out };
 }

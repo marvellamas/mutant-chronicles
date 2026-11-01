@@ -1484,6 +1484,23 @@ function validaEquipaggiamento(eq, nomiAbilita, idSpec, err, coloriChroma = [], 
           if (g.prova_potere !== null && g.prova_potere !== undefined && !(isOggetto(g.prova_potere) && nomiAbilita.includes(g.prova_potere.abilita) && isIntero(g.prova_potere.modificatore))) err(F, `${kg}.prova_potere`, 'servono un’Abilità esistente e un modificatore intero');
         });
       }
+      // progetti seguiti dal Direttore (CyberArma di Dimitri, Armamenti 0.74 §7.25.4; src/progetti.js)
+      if (o.progetti !== undefined) {
+        if (!Array.isArray(o.progetti)) err(F, `${k}.progetti`, 'elenco atteso');
+        else o.progetti.forEach((p, j) => {
+          const kp = `${k}.progetti[${j}]`;
+          if (!isTesto(p?.id) || !isTesto(p?.nome)) { err(F, kp, 'servono id e nome'); return; }
+          if (!Array.isArray(p.giorni) || !p.giorni.length) { err(F, `${kp}.giorni`, 'elenco dei giorni atteso'); return; }
+          p.giorni.forEach((g, n) => {
+            if (!isIntero(g?.n) || !isIntero(g?.ore) || !isIntero(g?.risorse_cr) || !isTesto(g?.lavoro)) err(F, `${kp}.giorni[${n}]`, 'servono n, ore, risorse_cr e lavoro');
+            if (!isOggetto(g?.prova) || !nomiAbilita.includes(g.prova.abilita) || !isIntero(g.prova.modificatore)) err(F, `${kp}.giorni[${n}].prova`, 'serve una Prova con un’Abilità esistente e un modificatore intero');
+            if (!isOggetto(p.esiti?.[g?.esiti]) || !['magistrale', 'successo', 'fallimento', 'maldestro'].every((e) => isTesto(p.esiti[g.esiti][e]))) err(F, `${kp}.giorni[${n}].esiti`, 'servono i quattro esiti (magistrale, successo, fallimento, maldestro)');
+          });
+          const forme = new Set((o.manifestazioni?.elenco ?? []).map((m) => m.id));
+          for (const id of p.forma?.elenco ?? []) if (!forme.has(id)) err(F, `${kp}.forma.elenco`, `la forma "${id}" non è fra le manifestazioni dell’arma`);
+          if (!isTesto(p.risultato?.rif)) err(F, `${kp}.risultato.rif`, 'serve il riferimento dell’arma che si consegna');
+        });
+      }
       // §7.8: il modulo integrato non si compra da solo; PI, Qualità e MOV sono dell'arma principale
       const modulo = o.modulo_di !== undefined;
       if (modulo) {
@@ -1802,7 +1819,10 @@ function validaEquipaggiamento(eq, nomiAbilita, idSpec, err, coloriChroma = [], 
     }
     if (a.sintonizzabile !== true) err(F, `${k}.sintonizzabile`, 'deve valere true: le proprietà attive richiedono sintonizzazione (§7.10)');
     if (a.riserva !== undefined) err(F, `${k}.riserva`, 'campo sostituito da "contenitore": { energia, capacita_pm, integrato? }');
-    if (potenzeArtefatti && potenzeArtefatti[a.potenza] !== a.sintonizzazione) err(F, `${k}.sintonizzazione`, `potenza ${a.potenza}: il costo di sintonizzazione è ${potenzeArtefatti[a.potenza] ?? 'sconosciuto'} (§7.10), trovato ${a.sintonizzazione}`);
+    // CyberArma (Armamenti 0.74 §7.25): «Le SnT 1, 2 e 3 sono regole specifiche dei diversi impieghi e non determinano
+    // automaticamente danno o Grado»: la SnT viene dall'impiego (snt_per_impiego), non dalla potenza
+    if (a.sintonizzazione_per_classe !== undefined && !(isOggetto(a.sintonizzazione_per_classe) && Object.values(a.sintonizzazione_per_classe).every((n) => isIntero(n) && n >= 1))) err(F, `${k}.sintonizzazione_per_classe`, 'serve { Classe: SnT intera ≥ 1 }');
+    if (a.snt_per_impiego !== true && potenzeArtefatti && potenzeArtefatti[a.potenza] !== a.sintonizzazione) err(F, `${k}.sintonizzazione`, `potenza ${a.potenza}: il costo di sintonizzazione è ${potenzeArtefatti[a.potenza] ?? 'sconosciuto'} (§7.10), trovato ${a.sintonizzazione}`);
     // Magia sez. 6: contenitore di Chroma (colore di regole.json → chroma.colori, non l'esausto)
     if (a.contenitore !== undefined) {
       const c = a.contenitore;

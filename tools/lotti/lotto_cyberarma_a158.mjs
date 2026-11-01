@@ -22,6 +22,12 @@
 import { readFileSync, writeFileSync } from 'node:fs';
 
 const CONTROLLA = process.argv.includes('--controlla');
+// 01/11/2026: lotto storico. La CyberArma è riscritta dagli Armamenti 0.74 e dalla scheda di Dimitri 1.0
+// (tools/lotti/lotto_cyberarma_074.mjs): rilanciato, questo lotto la riporterebbe alla A.158 del 13/10. Per forzare: --forza.
+if (!CONTROLLA && !process.argv.includes('--forza')) {
+  console.error('lotto_cyberarma_a158: lotto storico (CyberArma riscritta da lotto_cyberarma_074.mjs). Per forzare: --forza.');
+  process.exit(1);
+}
 const leggi = (p) => JSON.parse(readFileSync(new URL(`../../${p}`, import.meta.url), 'utf8'));
 const scrivi = (p, d) => writeFileSync(new URL(`../../${p}`, import.meta.url), `${JSON.stringify(d, null, 2)}\n`);
 

@@ -959,8 +959,8 @@
         "Cyber Arma",
         "Cyber-Arma"
       ],
-      "paragrafo": "§7.25",
-      "versione_manuale": "Armamenti 0.62 (A.158)",
+      "paragrafo": "§§7.25–7.25.4",
+      "versione_manuale": "Armamenti 0.74 / scheda CyberArma per Dimitri 1.0 (31/10/2026)",
       "abilita": "Armi da mischia",
       "specializzazione": "specializzazione-spade",
       "manovre": [
@@ -982,10 +982,10 @@
       "ps_int": 12,
       "reperibilita": "EP",
       "costo": null,
-      "_nota_costo": "A.158, punto 5: la CyberArma non è normalmente commercializzata e non ha un prezzo standard di catalogo (la proposta di 3.000 crediti è ritirata). Nell’app il prezzo risulta non disponibile, non zero. L’eventuale cessione la stabilisce il Direttore.",
+      "_nota_costo": "Armamenti 0.74 §7.25: non è fissato un prezzo unico per gli originali; il valore dipende da fattura, unicità, proprietà e provenienza. Nell’app il prezzo risulta non disponibile, non zero.",
       "proprieta": [],
       "manifestazioni": {
-        "fonte": "A.166, risposta approvata il 16/10/2026; Armamenti §7.25",
+        "fonte": "Armamenti 0.74 §7.25, §7.25.2; scheda per Dimitri 1.0; A.166 del 16/10/2026 per famiglia, Specializzazione e Manovre",
         "abilita": "Armi da mischia",
         "_abilita": "Si usa sempre con Armi da mischia, qualunque forma sia manifestata: non si passa ad Armi da guerra, Corpo a corpo o altro perché l’arma ordinaria corrispondente usa quell’Abilità.",
         "scelta_libera": [
@@ -998,7 +998,10 @@
         "elenco": [
           {
             "id": "lama-lunga",
-            "nome": "Lama lunga (spada)",
+            "nome": "Lama (una mano, 1 Q)",
+            "esempio": "Lama, ascia o altra forma ravvicinata a una mano",
+            "mani": 1,
+            "portata_q": 1,
             "famiglia": "Spade",
             "specializzazione": "specializzazione-spade",
             "manovre": [
@@ -1007,8 +1010,49 @@
             ]
           },
           {
+            "id": "ascia-bipenne",
+            "nome": "Ascia bipenne (due mani, 1 Q)",
+            "esempio": "Ascia bipenne o altra forma ravvicinata a due mani",
+            "mani": 2,
+            "portata_q": 1,
+            "famiglia": "Asce",
+            "specializzazione": "specializzazione-asce",
+            "manovre": [
+              "Spazzata"
+            ],
+            "due_mani_impugnatura": true
+          },
+          {
+            "id": "punta",
+            "nome": "Punta (una mano, 2 Q)",
+            "esempio": "Punta o lancia con impugnatura a una mano",
+            "mani": 1,
+            "portata_q": 2,
+            "famiglia": "Armi inastate",
+            "specializzazione": "specializzazione-armi-inastate",
+            "manovre": [
+              "Affondo"
+            ]
+          },
+          {
+            "id": "lancia",
+            "nome": "Lancia (due mani, 2 Q)",
+            "esempio": "Lancia o altra forma allungata a due mani",
+            "mani": 2,
+            "portata_q": 2,
+            "famiglia": "Armi inastate",
+            "specializzazione": "specializzazione-armi-inastate",
+            "manovre": [
+              "Affondo"
+            ],
+            "due_mani_impugnatura": true
+          },
+          {
             "id": "frusta",
-            "nome": "Frusta",
+            "nome": "Frusta (una mano, 3 Q)",
+            "esempio": "Frusta o altra manifestazione flessibile",
+            "mani": 1,
+            "portata_q": 3,
             "famiglia": "Armi flessibili",
             "specializzazione": "specializzazione-armi-flessibili",
             "manovre": [
@@ -1017,33 +1061,42 @@
             "nota": "Si usa la procedura di Immobilizzare con la Frusta (§7.1.5); la presa senza danno non acquista il bonus al danno della Specializzazione."
           },
           {
+            "id": "picca",
+            "nome": "Picca (due mani, 3 Q)",
+            "esempio": "Picca o altra manifestazione lunga a due mani",
+            "mani": 2,
+            "portata_q": 3,
+            "famiglia": "Armi inastate",
+            "specializzazione": "specializzazione-armi-inastate",
+            "manovre": [
+              "Affondo"
+            ],
+            "due_mani_impugnatura": true
+          },
+          {
             "id": "ascia",
-            "nome": "Ascia",
+            "nome": "Ascia (una mano, 1 Q)",
+            "esempio": "Ascia a una mano",
+            "mani": 1,
+            "portata_q": 1,
             "famiglia": "Asce",
             "specializzazione": "specializzazione-asce",
             "manovre": [
               "Spazzata"
             ]
-          },
-          {
-            "id": "lancia",
-            "nome": "Lancia",
-            "famiglia": "Armi inastate",
-            "specializzazione": "specializzazione-armi-inastate",
-            "manovre": [
-              "Affondo"
-            ]
           }
         ],
-        "_altre_forme": "A.166: per le forme non elencate si usa la famiglia corrispondente del catalogo, con la sua Specializzazione e le sue Manovre."
+        "_altre_forme": "A.166: per le forme non elencate si usa la famiglia corrispondente del catalogo, con la sua Specializzazione e le sue Manovre.",
+        "_forma": "La forma cambia esclusivamente mani occupate e portata: danno, Abilità, requisito FOR, durata e costi restano quelli della CyberArma; non si copiano le proprietà delle armi commerciali (Armamenti 0.74 §7.25). Le opzioni a due mani richiedono un’impugnatura esistente compatibile. La forma resta fissa: per cambiarla serve un nuovo intervento sul dispositivo (riconfigurazione, §7.25.2).",
+        "_a235": "A.235 (aperta): famiglia, Specializzazione e Manovre per forma vengono dalla A.166; gli Armamenti 0.74 dicono che la forma cambia soltanto mani e portata. Finché Davide non conferma, l’app le tiene."
       },
       "id": "cyberarma",
       "nome": "CyberArma",
-      "effetto_breve": "Artefatto TecnoMistico di Grado I: la lama si manifesta pagando con i PM personali. Solo Custodi e Tecnomanti.",
+      "effetto_breve": "Artefatto TecnoMistico dei Custodi, pezzo unico: Custode SnT 1, Tecnomante SnT 2 con i PM personali. 1d8 Magico per Tecnomante e conversioni; la forma cambia solo mani e portata.",
       "peso": 0.5,
-      "_nota_peso": "A.158, punto 1: impugnatura, condensatore di energia mistica e frammento di cristallo focalizzatore; la lama manifestata non aggiunge peso.",
+      "_nota_peso": "Armamenti 0.74 §7.25: peso, dimensioni e Integrità del supporto si registrano per esemplare. 0,5 kg, Qualità Non comune, PS Integrità 12 e 4 PI sono i valori della A.158 (13/10) e restano finché l’esemplare non ne ha di propri (A.235).",
       "uso_per_classe": {
-        "fonte": "A.158, punto 2 (approvata il 13/10/2026)",
+        "fonte": "Armamenti 0.74 §7.25 (impieghi) e A.158 (Custode)",
         "predefinito": "altre",
         "classi": [
           {
@@ -1052,7 +1105,8 @@
             "round": 15,
             "danno_extra": 1,
             "va": 0,
-            "testo": "Custode: 1 PM personale, 15 Round, evocazione compresa nell’Azione del primo attacco, +1 al danno. Il danno base segue il Grado di Custode (Giocatore §3.9.2)."
+            "sintonizzazione": 1,
+            "testo": "Custode (SnT 1): evoca l’Arma Astrale per 1 PM e 15 Round, includendo l’evocazione nell’Azione del primo attacco, +1 al danno (Maestro d’Arma). Danno base e altri benefici seguono il Grado e i Talenti del Custode (Giocatore §3.9.2)."
           },
           {
             "classe": "Tecnomante",
@@ -1060,7 +1114,8 @@
             "round": 10,
             "danno_extra": 0,
             "va": 0,
-            "testo": "Tecnomante: 1 AzP e 2 PM personali per 10 Round; 1d8 Magico più i modificatori pertinenti, senza Concentrazione e senza bonus propri al VA."
+            "sintonizzazione": 2,
+            "testo": "Tecnomante (SnT 2): 1 AzP e 2 PM personali, lama stabile per 10 Round, senza Concentrazione; 1d8 Magico più i modificatori pertinenti. Attivazione automatica dopo la Sintonizzazione; restano le normali Prove per attaccare."
           },
           {
             "classe": "altre",
@@ -1068,24 +1123,160 @@
             "cariche": null,
             "round": null,
             "danno_extra": 0,
-            "va": -2,
+            "va": 0,
             "ammesso": false,
-            "testo": "Altre Classi: il modello originale, privo di batteria, non si può utilizzare (A.158, punto 2). Serve la configurazione con Batteria Verde."
+            "testo": "Altre Classi: l’originale non si usa senza la conversione a NeC (Armamenti 0.74 §7.25)."
           }
         ]
       },
       "costruzione": {
-        "fonte": "A.158, punto 6",
-        "chi": "Un Custode con Maestro d’Arma (la ricetta è compresa nel Talento, senza Ritualista) oppure un Tecnomante con Architetto TecnoMistico.",
-        "passi": [
-          "Progettazione, solo se manca il progetto: Prova di Artefatti senza penalità, 4 ore, 100 crediti di risorse.",
-          "Assemblaggio e regolazione del condensatore: Prova di Tecnologia −4, 16 ore, 1.000 crediti di componenti (impugnatura, condensatore e frammento di cristallo focalizzatore).",
-          "Infusione di Grado I: Prova di Rituali senza penalità, 1 ora, 250 crediti di reagenti e 3 PM personali."
-        ],
-        "totali": "Con il progetto disponibile e successi ordinari: 1.250 crediti, 17 ore e 3 PM personali. Sviluppando anche il progetto: 1.350 crediti, 21 ore e 3 PM personali.",
-        "nota": "Si applicano i normali esiti Magistrali, fallimenti, Maldestri e interruzioni dei §§24.3–24.5 del Manuale della Magia. La reperibilità dei componenti la stabilisce il Direttore."
+        "fonte": "Armamenti 0.74 §7.25 («Costruzione e valore»)",
+        "chi": "Soltanto i Custodi costruiscono le CyberArmi originali (Maestro d’Arma al III Grado). Il Tecnomante può alimentare un originale esistente con i PM personali e intervenire su un esemplare esistente (batteria, modulatore, conversione a NeC); non costruisce nuovi originali.",
+        "nota": "I passi e i costi della costruzione di un originale non sono nella 0.74 (quelli della A.158 prevedevano anche il Tecnomante con Architetto TecnoMistico: A.235)."
       },
-      "_nota_a158": "Modello originale senza batteria interna. La Qualità fisica (Non comune) è distinta dal Grado mistico e non aumenta da sola la SnT. La progressione dell’Arma Astrale del Custode dipende dalla Classe e non aumenta Grado o SnT dell’oggetto. Il colore della lama dipende dal frammento focalizzatore e non aggiunge effetti elementali. Registrazione: un’unica voce di inventario fra Armi e Artefatti (Armamenti §7.25.1, Equipaggiamento §10.9)."
+      "modulatore_neurale": {
+        "sin": 1,
+        "classe": "Tecnomante",
+        "richiede": "interfaccia_neurale",
+        "fonte": "Armamenti 0.74 §7.25.2",
+        "testo": "SIN 1: +1 VA alle Prove per colpire con la CyberArma, comprese le Manovre che richiedono quel tiro, soltanto al Tecnomante con interfaccia neurale compatibile, funzionante e collegata. Non aggiunge bonus a Parate, danni o altre Prove; un solo SIN per Prova (§7.15.1)."
+      },
+      "modifiche": {
+        "fonte": "Armamenti 0.74 §7.25 e §7.25.2: prezzi indicativi su un originale esistente; si aggiungono al valore dell’arma originale",
+        "predisposizione_batteria": {
+          "cr": 1000
+        },
+        "batteria_verde_10_pm": {
+          "cr": 2000,
+          "nota": "con la predisposizione 3.000 cr"
+        },
+        "conversione_nec": {
+          "cr": 2000,
+          "nota": "NeC escluso"
+        },
+        "modulatore_neurale": {
+          "cr": 1500,
+          "ore": 8,
+          "prova": {
+            "abilita": "Tecnologia",
+            "modificatore": -2
+          },
+          "nota": "servizio completo con progetto disponibile; interfaccia e batteria escluse"
+        },
+        "riconfigurazione": {
+          "cr": 300,
+          "ore": 8,
+          "prova": {
+            "abilita": "Tecnologia",
+            "modificatore": -2
+          },
+          "nota": "nuova forma sullo stesso modulatore; il nuovo profilo sostituisce il precedente"
+        },
+        "totali": "PM personali: SnT 2; con modulatore 1.500 cr, SnT 2. Batteria interna Verde: 3.000 cr, SnT 2; con modulatore 4.500 cr. Conversione a NeC Rosso: 2.000 cr, NeC escluso, SnT 3; con modulatore 3.500 cr."
+      },
+      "progetti": [
+        {
+          "id": "paradise-dimitri",
+          "nome": "CyberArma: lavori a Paradise (Dimitri)",
+          "fonte": "Armamenti 0.74 §7.25.4; scheda «CyberArma Opzioni per Dimitri» 1.0",
+          "classe": "Tecnomante",
+          "giorni_disponibili": 3,
+          "budget": {
+            "ore": 24,
+            "cr": 400
+          },
+          "descrizione": "Preparare la scheggia Verde instabile già posseduta come focalizzatore e recuperare, adattare e installare il modulo neurale della spada Cybertronic. Configurazione a PM personali: 1 AzP e 2 PM per 10 Round, SnT 2, SIN 1 al tiro per colpire con il modulo collegato. Niente Batteria interna, conversione a NeC o altre modifiche.",
+          "forma": {
+            "chi": "giocatore",
+            "quando": "prima della lavorazione",
+            "elenco": [
+              "lama-lunga",
+              "ascia-bipenne",
+              "punta",
+              "lancia",
+              "frusta",
+              "picca"
+            ]
+          },
+          "componenti": [
+            {
+              "id": "scheggia",
+              "nome": "Scheggia instabile Verde (già posseduta)",
+              "rif": "artefatti:scheggia-instabile-da-5-pm-chroma-verde",
+              "nota": "Si lavora scarica; gli eventuali PM si possono usare prima. Con successo diventa un componente integrato: colore Verde, nessuna riserva di PM, nessuna SnT in più. Un semplice fallimento non la distrugge."
+            },
+            {
+              "id": "modulo",
+              "nome": "Modulo neurale della spada Cybertronic",
+              "rif": "armi_corporative:spada-elettrificata-csa-404",
+              "nota": "Dopo il recupero la spada perde il proprio SIN; con il circuito elettrico intatto conserva danno ordinario e scariche. Il modulo non trasferisce Elettricità alla CyberArma."
+            }
+          ],
+          "giorni": [
+            {
+              "n": 1,
+              "ore": 8,
+              "lavoro": "Studio e progetto della configurazione scelta",
+              "prova": {
+                "abilita": "Artefatti",
+                "modificatore": -2
+              },
+              "risorse_cr": 200,
+              "esiti": "progetto"
+            },
+            {
+              "n": 2,
+              "ore": 8,
+              "lavoro": "Preparazione e stabilizzazione della scheggia Verde",
+              "prova": {
+                "abilita": "Tecnologia",
+                "modificatore": -2
+              },
+              "risorse_cr": 100,
+              "esiti": "lavorazione"
+            },
+            {
+              "n": 3,
+              "ore": 8,
+              "lavoro": "Recupero del modulo, adattamento, installazione e collaudo",
+              "prova": {
+                "abilita": "Tecnologia",
+                "modificatore": -2
+              },
+              "risorse_cr": 100,
+              "esiti": "lavorazione"
+            }
+          ],
+          "esiti": {
+            "progetto": {
+              "magistrale": "Successo Magistrale: progetto magistrale, +2 VA per sempre alle Prove di Tecnologia per realizzarlo (Magia §24.3).",
+              "successo": "Successo: progetto ordinario (Magia §24.3).",
+              "fallimento": "Fallimento: nuovo tentativo con metà del tempo base e tutte le risorse di progettazione (Magia §24.3).",
+              "maldestro": "Fallimento Maldestro: nuovo tentativo con il tempo base intero e tutte le risorse (Magia §24.3)."
+            },
+            "lavorazione": {
+              "magistrale": "Successo Magistrale: lavorazione riuscita; +2 VA alla Prova di Rituali d’infusione di quell’esemplare, se ce n’è una (Magia §24.4).",
+              "successo": "Successo: lavorazione riuscita (Magia §24.4).",
+              "fallimento": "Fallimento: nuovo tentativo con metà del tempo base e materiali aggiuntivi pari al 25% del costo di lavorazione (Magia §24.4).",
+              "maldestro": "Fallimento Maldestro: nuovo tentativo con tempo intero e costo intero dei materiali; supporto e componenti restano recuperabili (Magia §24.4)."
+            }
+          },
+          "regole": [
+            "Gli eventuali nuovi tentativi devono rientrare nel tempo e nelle risorse disponibili; un semplice fallimento non distrugge automaticamente la scheggia.",
+            "Le risorse indicate sono materiali e consumabili. I componenti già posseduti e il lavoro svolto personalmente non vengono acquistati di nuovo; la tariffa del servizio completo non si somma automaticamente.",
+            "Il programma non registra come già eseguiti gli interventi e non assegna una manifestazione a Dimitri.",
+            "Il profilo del Custode di Park rimane distinto: danni e Talenti personali di Park non passano all’utilizzatore."
+          ],
+          "risultato": {
+            "rif": "armi:cyberarma",
+            "voce": {
+              "modulatore_neurale": true,
+              "focalizzatore": "Verde",
+              "configurazione": "PM personali"
+            }
+          }
+        }
+      ]
     },
     {
       "tipo": "arma_ravvicinata",
@@ -1095,8 +1286,8 @@
         "Cyber Arma",
         "Cyber-Arma"
       ],
-      "paragrafo": "§7.25",
-      "versione_manuale": "Armamenti 0.62 (A.158)",
+      "paragrafo": "§7.25 («Batteria interna opzionale»), §7.25.2",
+      "versione_manuale": "Armamenti 0.74 / scheda CyberArma per Dimitri 1.0 (31/10/2026)",
       "abilita": "Armi da mischia",
       "specializzazione": "specializzazione-spade",
       "manovre": [
@@ -1118,10 +1309,10 @@
       "ps_int": 12,
       "reperibilita": "EP",
       "costo": null,
-      "_nota_costo": "A.158, punto 5: la CyberArma non è normalmente commercializzata e non ha un prezzo standard di catalogo (la proposta di 3.000 crediti è ritirata). Nell’app il prezzo risulta non disponibile, non zero. L’eventuale cessione la stabilisce il Direttore.",
+      "_nota_costo": "Armamenti 0.74 §7.25: non è fissato un prezzo unico per gli originali; il valore dipende da fattura, unicità, proprietà e provenienza. Nell’app il prezzo risulta non disponibile, non zero.",
       "proprieta": [],
       "manifestazioni": {
-        "fonte": "A.166, risposta approvata il 16/10/2026; Armamenti §7.25",
+        "fonte": "Armamenti 0.74 §7.25, §7.25.2; scheda per Dimitri 1.0; A.166 del 16/10/2026 per famiglia, Specializzazione e Manovre",
         "abilita": "Armi da mischia",
         "_abilita": "Si usa sempre con Armi da mischia, qualunque forma sia manifestata: non si passa ad Armi da guerra, Corpo a corpo o altro perché l’arma ordinaria corrispondente usa quell’Abilità.",
         "scelta_libera": [
@@ -1134,7 +1325,10 @@
         "elenco": [
           {
             "id": "lama-lunga",
-            "nome": "Lama lunga (spada)",
+            "nome": "Lama (una mano, 1 Q)",
+            "esempio": "Lama, ascia o altra forma ravvicinata a una mano",
+            "mani": 1,
+            "portata_q": 1,
             "famiglia": "Spade",
             "specializzazione": "specializzazione-spade",
             "manovre": [
@@ -1143,8 +1337,49 @@
             ]
           },
           {
+            "id": "ascia-bipenne",
+            "nome": "Ascia bipenne (due mani, 1 Q)",
+            "esempio": "Ascia bipenne o altra forma ravvicinata a due mani",
+            "mani": 2,
+            "portata_q": 1,
+            "famiglia": "Asce",
+            "specializzazione": "specializzazione-asce",
+            "manovre": [
+              "Spazzata"
+            ],
+            "due_mani_impugnatura": true
+          },
+          {
+            "id": "punta",
+            "nome": "Punta (una mano, 2 Q)",
+            "esempio": "Punta o lancia con impugnatura a una mano",
+            "mani": 1,
+            "portata_q": 2,
+            "famiglia": "Armi inastate",
+            "specializzazione": "specializzazione-armi-inastate",
+            "manovre": [
+              "Affondo"
+            ]
+          },
+          {
+            "id": "lancia",
+            "nome": "Lancia (due mani, 2 Q)",
+            "esempio": "Lancia o altra forma allungata a due mani",
+            "mani": 2,
+            "portata_q": 2,
+            "famiglia": "Armi inastate",
+            "specializzazione": "specializzazione-armi-inastate",
+            "manovre": [
+              "Affondo"
+            ],
+            "due_mani_impugnatura": true
+          },
+          {
             "id": "frusta",
-            "nome": "Frusta",
+            "nome": "Frusta (una mano, 3 Q)",
+            "esempio": "Frusta o altra manifestazione flessibile",
+            "mani": 1,
+            "portata_q": 3,
             "famiglia": "Armi flessibili",
             "specializzazione": "specializzazione-armi-flessibili",
             "manovre": [
@@ -1153,40 +1388,42 @@
             "nota": "Si usa la procedura di Immobilizzare con la Frusta (§7.1.5); la presa senza danno non acquista il bonus al danno della Specializzazione."
           },
           {
+            "id": "picca",
+            "nome": "Picca (due mani, 3 Q)",
+            "esempio": "Picca o altra manifestazione lunga a due mani",
+            "mani": 2,
+            "portata_q": 3,
+            "famiglia": "Armi inastate",
+            "specializzazione": "specializzazione-armi-inastate",
+            "manovre": [
+              "Affondo"
+            ],
+            "due_mani_impugnatura": true
+          },
+          {
             "id": "ascia",
-            "nome": "Ascia",
+            "nome": "Ascia (una mano, 1 Q)",
+            "esempio": "Ascia a una mano",
+            "mani": 1,
+            "portata_q": 1,
             "famiglia": "Asce",
             "specializzazione": "specializzazione-asce",
             "manovre": [
               "Spazzata"
             ]
-          },
-          {
-            "id": "lancia",
-            "nome": "Lancia",
-            "famiglia": "Armi inastate",
-            "specializzazione": "specializzazione-armi-inastate",
-            "manovre": [
-              "Affondo"
-            ]
           }
         ],
-        "_altre_forme": "A.166: per le forme non elencate si usa la famiglia corrispondente del catalogo, con la sua Specializzazione e le sue Manovre."
+        "_altre_forme": "A.166: per le forme non elencate si usa la famiglia corrispondente del catalogo, con la sua Specializzazione e le sue Manovre.",
+        "_forma": "La forma cambia esclusivamente mani occupate e portata: danno, Abilità, requisito FOR, durata e costi restano quelli della CyberArma; non si copiano le proprietà delle armi commerciali (Armamenti 0.74 §7.25). Le opzioni a due mani richiedono un’impugnatura esistente compatibile. La forma resta fissa: per cambiarla serve un nuovo intervento sul dispositivo (riconfigurazione, §7.25.2).",
+        "_a235": "A.235 (aperta): famiglia, Specializzazione e Manovre per forma vengono dalla A.166; gli Armamenti 0.74 dicono che la forma cambia soltanto mani e portata. Finché Davide non conferma, l’app le tiene."
       },
       "id": "cyberarma-batteria-verde",
       "nome": "CyberArma con Batteria Verde",
-      "effetto_breve": "CyberArma modificata con Batteria Verde da 5 cariche: Grado II, una carica per attivazione. Le altre Classi la usano a −2 VA.",
+      "effetto_breve": "Originale con batteria mistica interna Verde da 10 PM (cinque attivazioni da 2 PM), SnT 2 complessiva: Custode e Tecnomante, oltre ai PM personali.",
       "peso": 0.7,
       "_nota_peso": "A.158, punto 3: peso complessivo della configurazione modificata.",
-      "munizioni": {
-        "capacita": 5,
-        "unita": "cariche",
-        "consumo": "una carica intera per attivazione, senza mezze cariche",
-        "ricarica": "2 PM di energia Spirituale immagazzinata per carica, 10 PM Verdi per le cinque cariche (A.158, punto 4)",
-        "riferimento": "Batteria Verde da 5 cariche, dedicata esclusivamente alla CyberArma"
-      },
       "uso_per_classe": {
-        "fonte": "A.158, punto 2 (approvata il 13/10/2026)",
+        "fonte": "Armamenti 0.74 §7.25",
         "predefinito": "altre",
         "classi": [
           {
@@ -1195,8 +1432,8 @@
             "round": 15,
             "danno_extra": 1,
             "va": 0,
-            "cariche": 1,
-            "testo": "Custode: 1 PM personale oppure una carica della batteria, 15 Round, evocazione compresa nell’Azione del primo attacco, +1 al danno. Il danno base segue il Grado di Custode (Giocatore §3.9.2)."
+            "sintonizzazione": 1,
+            "testo": "Custode (SnT 1): evoca l’Arma Astrale per 1 PM e 15 Round, includendo l’evocazione nell’Azione del primo attacco, +1 al danno (Maestro d’Arma). Danno base e altri benefici seguono il Grado e i Talenti del Custode (Giocatore §3.9.2). Può pagare anche con 2 PM della batteria interna (si scalano nella riserva dell’arma)."
           },
           {
             "classe": "Tecnomante",
@@ -1204,33 +1441,198 @@
             "round": 10,
             "danno_extra": 0,
             "va": 0,
-            "cariche": 1,
-            "testo": "Tecnomante: 1 AzP e 2 PM personali, oppure una carica della batteria, per 10 Round; 1d8 Magico più i modificatori pertinenti, senza Concentrazione e senza bonus propri al VA."
+            "sintonizzazione": 2,
+            "testo": "Tecnomante (SnT 2): 1 AzP e 2 PM personali, lama stabile per 10 Round, senza Concentrazione; 1d8 Magico più i modificatori pertinenti. Attivazione automatica dopo la Sintonizzazione; restano le normali Prove per attaccare. Può pagare anche con 2 PM della batteria interna (si scalano nella riserva dell’arma)."
           },
           {
             "classe": "altre",
             "pm": null,
-            "cariche": 1,
-            "round": 10,
+            "cariche": null,
+            "round": null,
             "danno_extra": 0,
-            "va": -2,
-            "ammesso": true,
-            "testo": "Altre Classi: 1 AzP e una carica della batteria per 10 Round, 1d8 Magico; −2 al VA delle Prove per colpire con l’arma, cumulativo con gli altri modificatori. Nessuna Prova di attivazione in più. Restano i requisiti d’impiego e la sintonizzazione."
+            "va": 0,
+            "ammesso": false,
+            "testo": "Altre Classi: l’originale non si usa senza la conversione a NeC (Armamenti 0.74 §7.25)."
           }
         ]
       },
-      "costruzione": {
-        "fonte": "A.158, punto 7",
-        "chi": "Un Tecnomante con Architetto TecnoMistico e almeno II Grado di Classe.",
-        "passi": [
-          "Progetto della modifica, se non disponibile: Prova di Artefatti −2, 8 ore, 200 crediti di risorse.",
-          "Adattamento e installazione: Prova di Tecnologia −2, 8 ore, 500 crediti di materiali, contenitore compreso; Chroma Verde per le cinque cariche: altri 1.000 crediti.",
-          "Reinfusione completa della configurazione di Grado II: Prova di Rituali −2, 2 ore, 500 crediti di reagenti e 6 PM personali."
-        ],
-        "totali": "Costo aggiuntivo con il progetto disponibile e successi ordinari: 2.000 crediti, 10 ore e 6 PM personali. Sviluppando anche il progetto: 2.200 crediti, 18 ore e 6 PM personali; i totali comprendono materiali, contenitore, Chroma e reagenti.",
-        "nota": "Al termine della modifica la batteria è a 0/5 cariche: la prima ricarica è separata. Una carica richiede 2 PM di energia Spirituale immagazzinata, quindi 10 PM Verdi per le cinque cariche, con le normali conversioni (i 6 PM del rituale infondono il manufatto e non caricano la batteria)."
+      "modulatore_neurale": {
+        "sin": 1,
+        "classe": "Tecnomante",
+        "richiede": "interfaccia_neurale",
+        "fonte": "Armamenti 0.74 §7.25.2",
+        "testo": "SIN 1: +1 VA alle Prove per colpire con la CyberArma, comprese le Manovre che richiedono quel tiro, soltanto al Tecnomante con interfaccia neurale compatibile, funzionante e collegata. Non aggiunge bonus a Parate, danni o altre Prove; un solo SIN per Prova (§7.15.1)."
       },
-      "_nota_a158": "La scheda mostra soltanto cariche attuali e massime (per esempio 3/5): non è una riserva di PM da spendere per Incantesimi personali, conversioni o altri oggetti. Grado finale II e SnT 2 complessivi: con una riserva integrata il Grado è il maggiore fra arma e riserva e la sintonizzazione si conta una volta sola, senza sommare due costi. Il colore energetico della batteria è distinto da quello della lama."
+      "_nota_batteria": "Armamenti 0.74 §7.25: batteria mistica interna Verde da 10 PM; a piena capacità cinque attivazioni complete da 2 PM. La SnT 2 comprende manufatto e batteria. Si applicano le normali regole delle Batterie Mistiche. Prezzo indicativo: predisposizione 1.000 cr + batteria 2.000 cr = 3.000 cr su un originale esistente.",
+      "costo_modifica": 3000
+    },
+    {
+      "tipo": "arma_ravvicinata",
+      "catalogo": "Artefatti di campagna",
+      "famiglia": "Spade",
+      "nomi_alternativi": [],
+      "paragrafo": "§7.25 («Conversione a NeC»), §7.25.2",
+      "versione_manuale": "Armamenti 0.74 / scheda CyberArma per Dimitri 1.0 (31/10/2026)",
+      "abilita": "Armi da mischia",
+      "specializzazione": "specializzazione-spade",
+      "manovre": [
+        "Affondo",
+        "Spazzata"
+      ],
+      "mani": 1,
+      "danno": {
+        "una_mano": "1d8",
+        "due_mani": null
+      },
+      "natura_danno": "Magico",
+      "portata_q": 1,
+      "gittata_q": null,
+      "for_richiesta": 3,
+      "inc": null,
+      "pi": 4,
+      "qualita": "Non comune",
+      "ps_int": 12,
+      "reperibilita": "EP",
+      "costo": null,
+      "_nota_costo": "Armamenti 0.74 §7.25: non è fissato un prezzo unico per gli originali; il valore dipende da fattura, unicità, proprietà e provenienza. Nell’app il prezzo risulta non disponibile, non zero.",
+      "proprieta": [],
+      "manifestazioni": {
+        "fonte": "Armamenti 0.74 §7.25, §7.25.2; scheda per Dimitri 1.0; A.166 del 16/10/2026 per famiglia, Specializzazione e Manovre",
+        "abilita": "Armi da mischia",
+        "_abilita": "Si usa sempre con Armi da mischia, qualunque forma sia manifestata: non si passa ad Armi da guerra, Corpo a corpo o altro perché l’arma ordinaria corrispondente usa quell’Abilità.",
+        "scelta_libera": [
+          "Custode"
+        ],
+        "_scelta_libera": "Il Custode manifesta qualsiasi tipo di arma ravvicinata. Il Tecnomante e gli altri utilizzatori ammessi usano la forma del progetto; cambiarla è una modifica del manufatto (nell’app si cambia in «Modifica master»), non una facoltà di cambio forma.",
+        "progetto": "lama-lunga",
+        "una_sola_specializzazione": true,
+        "_una_sola_specializzazione": "La Specializzazione posseduta pertinente alla forma dà i normali +1 VA e +1 danno (§8.8.1); non si cumulano Specializzazioni di forme diverse.",
+        "elenco": [
+          {
+            "id": "lama-lunga",
+            "nome": "Lama (una mano, 1 Q)",
+            "esempio": "Lama, ascia o altra forma ravvicinata a una mano",
+            "mani": 1,
+            "portata_q": 1,
+            "famiglia": "Spade",
+            "specializzazione": "specializzazione-spade",
+            "manovre": [
+              "Affondo",
+              "Spazzata"
+            ]
+          },
+          {
+            "id": "ascia-bipenne",
+            "nome": "Ascia bipenne (due mani, 1 Q)",
+            "esempio": "Ascia bipenne o altra forma ravvicinata a due mani",
+            "mani": 2,
+            "portata_q": 1,
+            "famiglia": "Asce",
+            "specializzazione": "specializzazione-asce",
+            "manovre": [
+              "Spazzata"
+            ],
+            "due_mani_impugnatura": true
+          },
+          {
+            "id": "punta",
+            "nome": "Punta (una mano, 2 Q)",
+            "esempio": "Punta o lancia con impugnatura a una mano",
+            "mani": 1,
+            "portata_q": 2,
+            "famiglia": "Armi inastate",
+            "specializzazione": "specializzazione-armi-inastate",
+            "manovre": [
+              "Affondo"
+            ]
+          },
+          {
+            "id": "lancia",
+            "nome": "Lancia (due mani, 2 Q)",
+            "esempio": "Lancia o altra forma allungata a due mani",
+            "mani": 2,
+            "portata_q": 2,
+            "famiglia": "Armi inastate",
+            "specializzazione": "specializzazione-armi-inastate",
+            "manovre": [
+              "Affondo"
+            ],
+            "due_mani_impugnatura": true
+          },
+          {
+            "id": "frusta",
+            "nome": "Frusta (una mano, 3 Q)",
+            "esempio": "Frusta o altra manifestazione flessibile",
+            "mani": 1,
+            "portata_q": 3,
+            "famiglia": "Armi flessibili",
+            "specializzazione": "specializzazione-armi-flessibili",
+            "manovre": [
+              "generali"
+            ],
+            "nota": "Si usa la procedura di Immobilizzare con la Frusta (§7.1.5); la presa senza danno non acquista il bonus al danno della Specializzazione."
+          },
+          {
+            "id": "picca",
+            "nome": "Picca (due mani, 3 Q)",
+            "esempio": "Picca o altra manifestazione lunga a due mani",
+            "mani": 2,
+            "portata_q": 3,
+            "famiglia": "Armi inastate",
+            "specializzazione": "specializzazione-armi-inastate",
+            "manovre": [
+              "Affondo"
+            ],
+            "due_mani_impugnatura": true
+          },
+          {
+            "id": "ascia",
+            "nome": "Ascia (una mano, 1 Q)",
+            "esempio": "Ascia a una mano",
+            "mani": 1,
+            "portata_q": 1,
+            "famiglia": "Asce",
+            "specializzazione": "specializzazione-asce",
+            "manovre": [
+              "Spazzata"
+            ]
+          }
+        ],
+        "_altre_forme": "A.166: per le forme non elencate si usa la famiglia corrispondente del catalogo, con la sua Specializzazione e le sue Manovre.",
+        "_forma": "La forma cambia esclusivamente mani occupate e portata: danno, Abilità, requisito FOR, durata e costi restano quelli della CyberArma; non si copiano le proprietà delle armi commerciali (Armamenti 0.74 §7.25). Le opzioni a due mani richiedono un’impugnatura esistente compatibile. La forma resta fissa: per cambiarla serve un nuovo intervento sul dispositivo (riconfigurazione, §7.25.2).",
+        "_a235": "A.235 (aperta): famiglia, Specializzazione e Manovre per forma vengono dalla A.166; gli Armamenti 0.74 dicono che la forma cambia soltanto mani e portata. Finché Davide non conferma, l’app le tiene."
+      },
+      "id": "cyberarma-nec",
+      "nome": "CyberArma convertita a NeC",
+      "effetto_breve": "Originale con la conversione a NeC Rosso: qualsiasi Classe, rispettando competenze e requisiti; 1 carica per 10 Round, SnT 3 complessiva.",
+      "peso": 0.5,
+      "_nota_peso": "Armamenti 0.74 §7.25: peso, dimensioni e Integrità del supporto si registrano per esemplare. 0,5 kg, Qualità Non comune, PS Integrità 12 e 4 PI sono i valori della A.158 (13/10) e restano finché l’esemplare non ne ha di propri (A.235).",
+      "uso_per_classe": {
+        "fonte": "Armamenti 0.74 §7.25 («Conversione a NeC»)",
+        "predefinito": "altre",
+        "classi": [
+          {
+            "classe": "altre",
+            "pm": null,
+            "cariche": null,
+            "nec": 1,
+            "round": 10,
+            "danno_extra": 0,
+            "va": 0,
+            "sintonizzazione": 3,
+            "testo": "Qualsiasi Classe (SnT 3), rispettando competenze e requisiti dell’esemplare: 1 AzP e 1 carica di un NeC Rosso compatibile, arma manifestata per 10 Round, senza PM personali né Concentrazione. Il consumo è per attivazione, non per attacco; il circuito alimenta solo questa CyberArma. La carica si scala nella riga del NeC (Inventario)."
+          }
+        ]
+      },
+      "modulatore_neurale": {
+        "sin": 1,
+        "classe": "Tecnomante",
+        "richiede": "interfaccia_neurale",
+        "fonte": "Armamenti 0.74 §7.25.2",
+        "testo": "SIN 1: +1 VA alle Prove per colpire con la CyberArma, comprese le Manovre che richiedono quel tiro, soltanto al Tecnomante con interfaccia neurale compatibile, funzionante e collegata. Non aggiunge bonus a Parate, danni o altre Prove; un solo SIN per Prova (§7.15.1)."
+      },
+      "_nota_nec": "Armamenti 0.74 §7.25: il NeC «della capacità prevista dalla scheda» non è indicato; un NeC da 10 cariche consente dieci attivazioni. Le conversioni non danno il +1 danno di Maestro d’Arma né i benefici del Custode. Prezzo indicativo della conversione: 2.000 cr, NeC escluso.",
+      "costo_modifica": 2000
     }
   ]
 }

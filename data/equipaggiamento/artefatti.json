@@ -145,9 +145,15 @@
       "rif": "armi:cyberarma",
       "tipologia": "Armi",
       "potenza": "Comune",
-      "sintonizzazione": 1,
+      "sintonizzazione": 2,
+      "sintonizzazione_per_classe": {
+        "Custode": 1,
+        "Tecnomante": 2
+      },
       "sintonizzabile": true,
-      "proprieta_attive": true
+      "proprieta_attive": true,
+      "snt_per_impiego": true,
+      "_nota": "Armamenti 0.74 §7.25: SnT 1 per il Custode, 2 per il Tecnomante (le SnT sono regole specifiche dei diversi impieghi e non determinano danno o Grado)."
     },
     {
       "rif": "armi:cyberarma-batteria-verde",
@@ -156,13 +162,25 @@
       "sintonizzazione": 2,
       "sintonizzabile": true,
       "proprieta_attive": true,
+      "snt_per_impiego": true,
       "contenitore": {
         "energia": "Verde",
-        "capacita_pm": 5,
+        "capacita_pm": 10,
         "integrato": true,
-        "riserva": "cariche",
+        "riserva": "batteria",
         "alimentazione": "esclusiva"
-      }
+      },
+      "_nota": "Armamenti 0.74 §7.25: la SnT 2 comprende l’intero manufatto e la batteria integrata, senza un secondo costo."
+    },
+    {
+      "rif": "armi:cyberarma-nec",
+      "tipologia": "Armi",
+      "potenza": "Non Comune",
+      "sintonizzazione": 3,
+      "sintonizzabile": true,
+      "proprieta_attive": true,
+      "snt_per_impiego": true,
+      "_nota": "Armamenti 0.74 §7.25: conversione a NeC, SnT 3 complessiva."
     }
   ],
   "oggetti": [

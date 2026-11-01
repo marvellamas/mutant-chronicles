@@ -20,6 +20,8 @@
 //   tipo 'circostanza' → bonus o malus di circostanza mandato dal Tavolo
 // Tutte funzioni pure: l'interfaccia è in src/ui/master.js, src/ui/tab.js e src/ui/tavolo.js.
 
+import { formaDaTablet, vociConsegnaDaTablet } from './progetti.js';
+
 const isOggetto = (v) => v !== null && typeof v === 'object' && !Array.isArray(v);
 const segno = (n) => (n > 0 ? `+${n}` : n < 0 ? `−${-n}` : '0');
 
@@ -205,7 +207,7 @@ const NOMI_CAMPI = {
   talentoLibero: 'Talento Libero', incantesimi: 'Incantesimi', incantesimiAMano: 'incantesimi aggiunti a mano', equipaggiamento: 'equipaggiamento', dotazione: 'dotazione iniziale', umanita: 'Umanità',
   concetto: 'Background', ritratto: 'ritratto', puntiEroe: 'Punti Eroe iniziali', parametriTalenti: 'parametri dei Talenti', veicoli: 'veicoli',
 };
-const SOLO_MASTER = ['correzioniMaster', 'circostanzeMaster'];
+const SOLO_MASTER = ['correzioniMaster', 'circostanzeMaster', 'progettiMaster'];
 
 /**
  * «Livello 2: Talento X → Talento Y» / «Creazione: Caratteristiche, Abilità»: che cosa è cambiato nelle scelte.
@@ -311,7 +313,7 @@ export function sessioneConCircostanzeMaster(sessione, lista, opz = {}) {
 // ---------------------------------------------------------------------------
 // File del PG e tablet aperti: i blocchi del master non si perdono
 
-export const CHIAVI_FILE = ['correzioni_master', 'circostanze_master'];
+export const CHIAVI_FILE = ['correzioni_master', 'circostanze_master', 'progetti_master'];
 
 /** I blocchi del master di un file esportato (oggetto già letto): { correzioni_master?, circostanze_master? }. */
 export function blocchiMaster(file) {
@@ -329,12 +331,23 @@ export const masterDiverso = (a, b) => JSON.stringify(blocchiMaster(a)) !== JSON
  */
 export function proteggiBlocchiMaster(nuovo, disco) {
   const px = proteggiPuntiEsperienza(nuovo, disco);
-  const base = px.file;
+  // progetti del Direttore (src/progetti.js): l'arma consegnata entra solo dal suo PC; nei progetti il tablet cambia
+  // soltanto la forma, finché è sceglibile
+  const eqPulito = vociConsegnaDaTablet(px.file?.scelte?.equipaggiamento, disco?.scelte?.equipaggiamento);
+  const tolteConsegna = (px.file?.scelte?.equipaggiamento ?? []).length !== eqPulito.length
+    || JSON.stringify(eqPulito) !== JSON.stringify(px.file?.scelte?.equipaggiamento ?? []);
+  const conForme = Array.isArray(disco?.progetti_master) ? formaDaTablet(px.file?.progetti_master, disco.progetti_master) : null;
+  const base = {
+    ...px.file,
+    ...(px.file?.scelte && tolteConsegna ? { scelte: { ...px.file.scelte, equipaggiamento: eqPulito } } : {}),
+    ...(conForme ? { progetti_master: conForme } : {}),
+  };
+  if (!conForme) delete base.progetti_master;
   const ripristinato = masterDiverso(base, disco ?? {});
-  if (!ripristinato) return { file: base, ripristinato: px.ripristinato };
+  if (!ripristinato) return { file: base, ripristinato: px.ripristinato || tolteConsegna };
   const file = { ...base };
   for (const k of CHIAVI_FILE) delete file[k];
-  return { file: { ...file, ...blocchiMaster(disco ?? {}) }, ripristinato: true };
+  return { file: { ...file, ...blocchiMaster({ ...(disco ?? {}), ...(conForme ? { progetti_master: conForme } : {}) }) }, ripristinato: true };
 }
 
 /**

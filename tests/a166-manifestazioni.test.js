@@ -48,8 +48,8 @@ test('A.166: chi sceglie la forma — il Custode sì, gli altri no', () => {
   assert.equal(manifestazioneAttiva(def(), voce({ manifestazione: 'frusta' }), ['Custode']).id, 'frusta');
   // una forma sconosciuta non inventa nulla: resta il progetto
   assert.equal(manifestazioneAttiva(def(), voce({ manifestazione: 'spadone-magico' }), ['Custode']).id, 'lama-lunga');
-  assert.equal(manifestazioniDi(def()).length, 4);
-  assert.match(testoManifestazione(manifestazioneProgetto(def())), /Lama lunga .* Spade .* Affondo, Spazzata/);
+  assert.equal(manifestazioniDi(def()).length, 7); // Armamenti 0.74 §7.25.2: sei combinazioni di mani e portata, più l'Ascia della A.166
+  assert.match(testoManifestazione(manifestazioneProgetto(def())), /Lama \(una mano, 1 Q\) .* Spade .* Affondo, Spazzata/);
 });
 
 test('A.166: la voce manifestata cambia famiglia, Specializzazione e Manovre, mai l’Abilità', () => {
@@ -78,7 +78,7 @@ test('A.166: nella scheda la forma arriva all’arma impugnata', () => {
   assert.equal(arma.abilita, 'Armi da mischia');
   assert.equal(arma.manifestazione.id, 'ascia');
   assert.deepEqual(arma.manovre, ['Spazzata']);
-  assert.equal(arma.manifestazioni.length, 4);
+  assert.equal(arma.manifestazioni.length, 7);
   // l'Agente non è un Custode: la forma la decide il progetto (qui cambiata dal Direttore sulla voce)
   assert.equal(arma.manifestazioneLibera, false);
   // una sola Specializzazione pertinente: quella della forma, e solo se posseduta

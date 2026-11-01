@@ -16,6 +16,7 @@ import { aggiungiIncantesimoAMano, incantesimoPerId, cercaIncantesimi, togliInca
 import { fasciaMaster, toccoMaster, notaCorrezione, sezioneRegistro, conMotivoMaster, bloccoLivelloMaster } from './master.js';
 import { apriTiro, sezioneTiri } from './tira-valore.js';
 import { pianoGetto } from '../getti-artefatto.js';
+import { modelliProgetto, apriProgetto, scegliForma, registraTentativo, togliUltimoTentativo, chiudiProgetto, riapriProgetto, riepilogoProgetto, formaSceglibile, avvisiConsegna, ESITI_TENTATIVO, NOMI_ESITO, ESITI_FINALI, NOMI_FINALE } from '../progetti.js';
 import { circostanzeMasterAttive } from '../correzioni-master.js';
 import { conAvviso } from './procedi.js';
 import { h, segno, svuota } from './dom.js';
@@ -3063,7 +3064,7 @@ function tabArtefatti(ctx) {
     // Magia §27: i Consumabili (e «Crea consumabile») ci sono anche senza Artefatti da sintonizzare
     return [cons.length ? null : h('section', { class: 'riquadro nessun-potere' }, h('h2', {}, 'Nessun Artefatto'),
       h('p', { class: 'nota' }, 'Gli Artefatti Mistici si acquistano e si tengono nella tab Inventario (sezione «Artefatti, cristalli e contenitori di Chroma»); qui si gestiscono sintonizzazione, attivazioni e riserve (Armamenti §7.5, §7.10).')),
-      sezioneConsumabili(ctx, cons)];
+      sezioneConsumabili(ctx, cons), sezioneProgetti(ctx)];
   }
   const rs = regoleSintonizzazione(ctx.dati);
   const cat = catalogo(ctx.dati);
@@ -3130,7 +3131,103 @@ function tabArtefatti(ctx) {
       h('p', { class: 'nota' }, 'Cristalli, batterie e contenitori: i PM si modificano anche nel riquadro Punti Magia. Un contenitore alimenta un lancio se trasportato, sintonizzato e compatibile (Magia sez. 6).'),
       dueColonne(esterni, (c) => schedaContenitore(ctx, c))) : null,
     sezioneConsumabili(ctx, cons),
+    sezioneProgetti(ctx),
   ];
+}
+
+/**
+ * Progetti seguiti dal Direttore (src/progetti.js; la CyberArma di Dimitri a Paradise, Armamenti 0.74 §7.25.4). Il
+ * Direttore, in modalità master, apre il progetto, segna gli esiti dei giorni (anche Fallimento e Maldestro), lo chiude e
+ * consegna l'arma: è l'unico modo in cui entra nell'inventario. Il giocatore sceglie la forma prima della lavorazione;
+ * il resto lo legge soltanto.
+ */
+function sezioneProgetti(ctx) {
+  const lista = ctx.scelte.progettiMaster ?? [];
+  const master = !!ctx.master;
+  if (!lista.length && !master) return null;
+  const ora = () => new Date().toISOString();
+  const data = (iso) => { const d = new Date(iso); return Number.isNaN(d.getTime()) ? (iso || '—') : d.toLocaleString('it-IT', { day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit' }); };
+  const ui = (ctx.ui.progetti ??= { modello: null, note: {}, chiusura: {}, consegna: {} });
+  const applica = (r) => { if (r.errore) { ui.errore = r.errore; ctx.azioni.ridisegna(); return; } ui.errore = null; ctx.azioni.progetti(r.lista); };
+  const modelli = modelliProgetto(ctx.dati);
+  const apri = master && modelli.length ? h('div', { class: 'riga-azioni' },
+    h('select', { 'aria-label': 'Modello di progetto', onchange: (e) => { ui.modello = e.target.value; } },
+      modelli.map((m) => h('option', { value: m.id, selected: (ui.modello ?? modelli[0].id) === m.id }, `${m.nome}${m.classe ? ` (${m.classe})` : ''}`))),
+    h('button', { type: 'button', class: 'btn', onclick: () => applica(apriProgetto(lista, ui.modello ?? modelli[0].id, ctx.dati, { quando: ora(), da: 'Direttore' })) }, 'Apri un progetto')) : null;
+  const abilita = (nome) => (ctx.tab.scheda.abilita ?? []).find((a) => a.nome === nome);
+  const scheda = (p) => {
+    const r = riepilogoProgetto(p, ctx.dati);
+    if (!r) return h('article', { class: 'arma-tab progetto' }, h('h3', {}, p.nome), h('p', { class: 'nota motivo' }, 'Il modello di questo progetto non è più nel catalogo.'));
+    const sceglibile = formaSceglibile(p);
+    const statoTesto = p.consegna ? `arma consegnata dal Direttore il ${data(p.consegna.quando)}` : p.chiuso ? `chiuso: ${NOMI_FINALE[p.chiuso.esito]} (${data(p.chiuso.quando)})` : 'aperto';
+    const forma = h('div', { class: 'progetto-forma' },
+      h('h4', {}, 'Forma della manifestazione'),
+      p.forma ? h('p', {}, h('strong', {}, r.forma?.nome ?? p.forma.id), ` · ${r.forma ? `${r.forma.mani === 2 ? 'due mani' : 'una mano'}, portata ${r.forma.portata_q} Q` : ''} · scelta ${p.forma.da === 'giocatore' ? 'dal giocatore' : 'dal Direttore'} il ${data(p.forma.quando)}`)
+        : h('p', { class: 'nota motivo' }, 'Forma non ancora scelta: la sceglie il giocatore, prima della lavorazione.'),
+      sceglibile.si ? h('ul', { class: 'elenco-talenti' }, r.forme.map((fo) => h('li', { class: `voce-talento${p.forma?.id === fo.id ? ' selezionata' : ''}` },
+        h('div', {}, h('strong', {}, fo.nome), h('span', { class: 'nota' }, ` · ${fo.esempio}${fo.due_mani_impugnatura ? ' · richiede un’impugnatura a due mani compatibile' : ''}`)),
+        p.forma?.id === fo.id ? h('span', { class: 'nota' }, '✓ scelta')
+          : h('button', { type: 'button', class: 'btn btn-piccolo', onclick: () => applica(scegliForma(lista, p.id, fo.id, ctx.dati, { quando: ora(), da: master ? 'Direttore' : 'giocatore' })) }, 'Scegli'))))
+        : p.forma ? null : h('p', { class: 'nota' }, sceglibile.motivo));
+    const giorni = h('div', { class: 'progetto-giorni' }, h('h4', {}, `Lavori: ${r.modello.giorni.length} giorni, ${r.modello.budget?.ore ?? '—'} ore, ${r.modello.budget?.cr ?? '—'} cr`),
+      r.giorni.map((g) => {
+        const a = abilita(g.prova.abilita);
+        const va = a ? (a.effettivo ?? a.totale) + g.prova.modificatore : null;
+        const k = `${p.id}#${g.n}`;
+        const ultimoOk = ['magistrale', 'successo'].includes(g.tentativi.at(-1)?.esito);
+        return h('div', { class: `progetto-giorno ${g.stato === 'riuscito' ? 'ok' : g.stato === 'da ripetere' ? 'attenzione' : ''}` },
+          h('p', {}, h('strong', {}, `Giorno ${g.n} · ${g.ore} ore · ${g.lavoro}`)),
+          h('p', { class: 'nota' }, `Prova finale: ${g.prova.abilita} ${g.prova.modificatore < 0 ? '−' : '+'}${Math.abs(g.prova.modificatore)} VA${va !== null ? ` (VA ${va})` : ''} · risorse ${g.risorse_cr} cr · ${g.stato} `,
+            va !== null ? h('button', { type: 'button', class: 'btn btn-piccolo', onclick: () => apriTiro(ctx, { genere: 'prova', nome: `${p.nome}, giorno ${g.n}: ${g.prova.abilita}`, va, note: [`${g.prova.abilita} ${va - g.prova.modificatore}`, `progetto ${g.prova.modificatore}`] }) }, 'Tira') : null),
+          g.tentativi.length ? h('ul', { class: 'progetto-tentativi' }, g.tentativi.map((x, i) => h('li', { title: g.testoEsiti[x.esito] ?? '' },
+            `Tentativo ${i + 1}: ${NOMI_ESITO[x.esito]} · ${data(x.quando)}${x.nota ? ` · ${x.nota}` : ''}`))) : null,
+          g.tentativi.length && !ultimoOk ? h('p', { class: 'nota motivo' }, g.testoEsiti[g.tentativi.at(-1).esito] ?? '') : null,
+          master && !p.chiuso ? h('div', { class: 'riga-azioni' },
+            h('input', { type: 'text', placeholder: 'nota (facoltativa)', value: ui.note[k] ?? '', oninput: (e) => { ui.note[k] = e.target.value; } }),
+            ESITI_TENTATIVO.map((e) => h('button', { type: 'button', class: `btn btn-piccolo esito-${e}`, title: g.testoEsiti[e] ?? '', onclick: () => { const nota = ui.note[k] ?? ''; ui.note[k] = ''; applica(registraTentativo(lista, p.id, g.n, e, { quando: ora(), nota })); } }, NOMI_ESITO[e])),
+            g.tentativi.length ? h('button', { type: 'button', class: 'btn btn-piccolo', onclick: () => applica(togliUltimoTentativo(lista, p.id, g.n)) }, 'Togli l’ultimo') : null) : null);
+      }),
+      h('p', { class: 'nota' }, `Stima secondo il §24 della Magia: ${r.ore} ore e ${r.cr} cr su ${r.modello.budget?.ore ?? '—'} ore e ${r.modello.budget?.cr ?? '—'} cr (le risorse si scalano a mano dai Crediti).`),
+      r.avvisi.map((x) => h('p', { class: 'nota motivo' }, `Avviso: ${x}.`)));
+    const kc = p.id;
+    const voci = ctx.scelte.equipaggiamento ?? [];
+    const comp = (id) => r.modello.componenti?.find((x) => x.id === id);
+    const opzioni = (rif) => voci.filter((v) => v.rif === rif);
+    const c = (ui.consegna[kc] ??= { provenienza: '', donatore: opzioni(comp('modulo')?.rif)[0]?.uid ?? '', scheggia: opzioni(comp('scheggia')?.rif)[0]?.uid ?? '' });
+    const nomeVoce = (v) => `${risolvi(v, catalogo(ctx.dati)).nome} (${NOMI_STATI[v.stato] ?? 'con sé'})`;
+    const chiusura = master && !p.consegna ? (p.chiuso
+      ? h('div', { class: 'riga-azioni' }, h('button', { type: 'button', class: 'btn btn-piccolo', onclick: () => applica(riapriProgetto(lista, p.id)) }, 'Riapri il progetto'))
+      : h('div', { class: 'riga-azioni' }, h('span', { class: 'sigla' }, 'Chiudi il progetto: '),
+        h('input', { type: 'text', placeholder: 'nota (facoltativa)', value: ui.chiusura[kc] ?? '', oninput: (e) => { ui.chiusura[kc] = e.target.value; } }),
+        ESITI_FINALI.map((e) => h('button', { type: 'button', class: 'btn btn-piccolo', onclick: () => { const nota = ui.chiusura[kc] ?? ''; ui.chiusura[kc] = ''; applica(chiudiProgetto(lista, p.id, e, { quando: ora(), nota })); } }, NOMI_FINALE[e])))) : null;
+    const avv = avvisiConsegna(p, ctx.dati);
+    const consegna = p.consegna
+      ? h('p', { class: 'riquadro ok' }, h('strong', {}, 'Consegnata: '), `il Direttore ha messo l’arma nell’inventario il ${data(p.consegna.quando)}${p.consegna.donatore ? '; la spada donatrice ha perso il SIN' : ''}${p.consegna.scheggia ? '; la scheggia è diventata il focalizzatore ed è uscita dall’inventario' : ''}.`)
+      : master ? h('div', { class: 'progetto-consegna' }, h('h4', {}, 'Consegna (solo il Direttore)'),
+        h('p', { class: 'nota' }, 'L’arma entra nell’inventario soltanto da qui. La provenienza dell’originale la decide il Direttore (A.231).'),
+        h('label', { class: 'campo' }, h('span', {}, 'Provenienza dell’originale'), h('input', { type: 'text', value: c.provenienza, placeholder: 'es. l’originale di Park (A.231)', oninput: (e) => { c.provenienza = e.target.value; } })),
+        h('label', { class: 'campo' }, h('span', {}, 'Spada donatrice del modulo (perde il SIN)'), h('select', { onchange: (e) => { c.donatore = e.target.value; } },
+          h('option', { value: '', selected: !c.donatore }, 'nessuna'), opzioni(comp('modulo')?.rif).map((v) => h('option', { value: v.uid, selected: c.donatore === v.uid }, nomeVoce(v))))),
+        h('label', { class: 'campo' }, h('span', {}, 'Scheggia diventata focalizzatore (esce dall’inventario)'), h('select', { onchange: (e) => { c.scheggia = e.target.value; } },
+          h('option', { value: '', selected: !c.scheggia }, 'nessuna'), opzioni(comp('scheggia')?.rif).map((v) => h('option', { value: v.uid, selected: c.scheggia === v.uid }, nomeVoce(v))))),
+        avv.length ? h('p', { class: 'nota motivo' }, `Avviso: ${avv.join('; ')}.`) : null,
+        h('button', { type: 'button', class: `btn primario${avv.length ? ' con-avviso' : ''}`,
+          onclick: () => conAvviso(ctx.azioni.storico, { azione: `consegnare l’arma del progetto «${p.nome}»`, motivo: avv.join('; ') || null,
+            fai: () => ctx.azioni.consegnaArma(p.id, { provenienza: c.provenienza, donatore: c.donatore || null, scheggia: c.scheggia || null }) }) }, 'Consegna l’arma'))
+        : h('p', { class: 'nota' }, 'L’arma entra nell’inventario soltanto quando la consegna il Direttore.');
+    return h('article', { class: 'arma-tab progetto' },
+      h('div', { class: 'arma-testa' }, h('h3', {}, p.nome, h('small', { class: 'sigla' }, ` · ${statoTesto}`))),
+      h('p', { class: 'nota' }, `Aperto dal ${p.aperto.da} il ${data(p.aperto.quando)}. ${r.modello.descrizione ?? ''}`),
+      h('details', {}, h('summary', {}, 'Regole del progetto e componenti'),
+        ...(r.modello.componenti ?? []).map((x) => h('p', {}, h('strong', {}, `${x.nome}: `), x.nota)),
+        ...(r.modello.regole ?? []).map((x) => h('p', { class: 'nota' }, x)),
+        h('p', { class: 'nota' }, `Fonte: ${r.modello.fonte}.`)),
+      forma, giorni, chiusura, consegna);
+  };
+  return sezione('Progetti', [
+    ui.errore ? h('p', { class: 'nota motivo' }, ui.errore) : null,
+    lista.length ? lista.map(scheda) : h('p', { class: 'nota' }, 'Nessun progetto aperto.'),
+    apri]);
 }
 
 /**

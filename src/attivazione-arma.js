@@ -82,13 +82,15 @@ export function testoAttivazione(def, scheda, sessione, uid) {
   const uso = usoPerClasse(def, classiDi(scheda));
   if (!uso) return null;
   const stato = statoAttivazioneArma(sessione, uid);
-  const costo = uso.cariche ? `${uso.cariche} caric${uso.cariche === 1 ? 'a' : 'he'}` : uso.pm ? `${uso.pm} PM` : null;
+  // conversione a NeC (Armamenti 0.74 §7.25): 1 carica di un NeC Rosso, che si scala nella riga del NeC
+  const costo = uso.nec ? `${uso.nec} carica NeC` : uso.cariche ? `${uso.cariche} caric${uso.cariche === 1 ? 'a' : 'he'}` : uso.pm ? `${uso.pm} PM` : null;
   return {
     classe: uso.classe,
     ammessa: uso.ammesso !== false && !!uso.round,
     costo,
     pm: uso.pm ?? null,
     cariche: uso.cariche ?? null,
+    nec: uso.nec ?? null,
     round: uso.round ?? null,
     va: uso.va ?? 0,
     dannoExtra: uso.danno_extra ?? 0,

@@ -3,6 +3,7 @@
 // di sessione (modalità tavolo) del personaggio aperto; tutto il resto si ricalcola a ogni
 // disegno con calcolaScheda / anteprima.
 import { conScorrimentoFisso, montaTornaSopra } from './scorrimento.js';
+import { consegnaArma } from '../progetti.js';
 import { aggiornaVivi } from './vivi.js';
 import { leggiStatoInstallazione, montaFasciaCopia } from './copia-di-lavoro.js';
 import { caricaDati, versioniPersonaggio, FILE_SOLO_TAVOLO } from '../rules.js';
@@ -2249,6 +2250,23 @@ function renderSchedaInterna({ mantieniScorrimento = false } = {}) {
         persisti();
       },
       // equipaggiamento: modificabile anche con livelli acquisiti (campo descrittivo della creazione)
+      // progetti seguiti dal Direttore (src/progetti.js): elenco nuovo nei blocchi del master
+      progetti: (lista) => {
+        stato.scelte = { ...stato.scelte, progettiMaster: lista };
+        persisti();
+        renderScheda({ mantieniScorrimento: true });
+      },
+      // «Consegna l'arma»: l'unico modo in cui l'arma del progetto entra nell'inventario; solo in modalità master
+      consegnaArma: (id, opz = {}) => {
+        const inMaster = modalitaMaster({ server: stato.cartella, daQuestoPc: stato.master, aperta: modalitaMasterDi(sessionStorage), id: stato.id });
+        const r = consegnaArma(stato.scelte, id, dati, { ...opz, quando: new Date().toISOString(), master: !!inMaster, uid: `e${Date.now().toString(36)}${Math.random().toString(36).slice(2, 6)}` });
+        if (r.errore) { stato.messaggioScheda = { tipo: 'attenzione', testo: r.errore }; renderScheda({ mantieniScorrimento: true }); return; }
+        const { scelte, avvisi } = applicaModifica(stato.scelte, { equipaggiamento: r.creazione.equipaggiamento }, dati);
+        stato.scelte = { ...scelte, progettiMaster: r.creazione.progettiMaster };
+        if (avvisi.length) stato.messaggioScheda = { tipo: 'attenzione', testo: avvisi.join(' ') };
+        persisti();
+        renderScheda({ mantieniScorrimento: true });
+      },
       equipaggiamento: (voci) => {
         const { scelte, avvisi } = applicaModifica(stato.scelte, { equipaggiamento: voci }, dati);
         stato.scelte = scelte;

@@ -696,6 +696,12 @@ export function normalizzaEquipaggiamento(valore) {
     if (v.sintonizzato === true) out.sintonizzato = true; // §7.10: scelta del giocatore
     // A.166: forma manifestata della CyberArma (id dell'elenco del catalogo): resta nella voce
     if (typeof v.manifestazione === 'string' && v.manifestazione) out.manifestazione = v.manifestazione;
+    // CyberArma (Armamenti 0.74 §§7.25.2–7.25.4): esemplare con il modulatore neurale; spada donatrice senza SIN;
+    // consegna del Direttore da un progetto (chi e quando: src/progetti.js → consegnaArma)
+    if (v.modulatore_neurale === true) out.modulatore_neurale = true;
+    if (isOggetto(v.sin_rimosso) && testo(v.sin_rimosso.quando)) out.sin_rimosso = { quando: v.sin_rimosso.quando, ...(testo(v.sin_rimosso.progetto) ? { progetto: v.sin_rimosso.progetto } : {}) };
+    if (isOggetto(v.esemplare)) out.esemplare = Object.fromEntries(Object.entries(v.esemplare).filter(([, x]) => typeof x === 'string' && x.trim()).map(([k, x]) => [k, x.trim().slice(0, 300)]));
+    if (isOggetto(v.consegna) && testo(v.consegna.quando) && testo(v.consegna.da)) out.consegna = { quando: v.consegna.quando, da: v.consegna.da, ...(testo(v.consegna.progetto) ? { progetto: v.consegna.progetto } : {}) };
     // A.61: armatura Capolavoro del Corazzaio, con la Contromisura scelta alla costruzione
     if (isOggetto(v.capolavoro) && testo(v.capolavoro.contromisura)) out.capolavoro = { contromisura: v.capolavoro.contromisura };
     if (Number.isInteger(v.pi_direttore) && v.pi_direttore >= 1) out.pi_direttore = v.pi_direttore; // A.47: PI fissati dal Direttore
@@ -1183,6 +1189,11 @@ export function calcolaEquipaggiamento(base, voci, dati) {
   // §7.15.1: con un Innesto di Interfaccia Neurale in uso, le armi con SIN ricevono +SIN al VA per colpire
   const interfaccia = oggetti.find((x) => x.attivo && x.def?.innesto === 'interfaccia_neurale') ?? null;
   const sin = interfaccia ? tabellaSin(dati) : new Map();
+  const sinArma = (o, d) => {
+    if (!interfaccia || o.voce?.sin_rimosso) return null;
+    if (o.voce?.modulatore_neurale && d?.modulatore_neurale && (base.classi ?? []).includes(d.modulatore_neurale.classe)) return { valore: d.modulatore_neurale.sin, fonte: `modulatore neurale, ${interfaccia.nome}` };
+    return sin.has(d?.rif) ? { valore: sin.get(d.rif).valore, fonte: interfaccia.nome } : null;
+  };
 
   // §7.3: accessori in uso montati su un'arma, oppure su un mirino montato su un'arma (moduli di
   // visione, §7.3.3). Per ogni gruppo esclusivo (mirino, riduzione del rumore, supporto, modulo di
@@ -1254,7 +1265,10 @@ export function calcolaEquipaggiamento(base, voci, dati) {
       // §7.1.3: Precisa X concede +X VA alle Prove per colpire con l'arma
       ...(d?.proprieta ?? []).filter((p) => p.effetto?.va).map((p) => ({ nome: `${nomeProprieta(p)} (${o.nome})`, valore: p.effetto.va })),
       d?.modificatore_va ? { nome: 'Modificatore VA dell’arma', valore: d.modificatore_va } : null,
-      sin.has(d?.rif) ? { nome: `SIN ${sin.get(d.rif).valore} (${interfaccia.nome}, §7.15.1)`, valore: sin.get(d.rif).valore } : null,
+      // §7.15.1: un solo SIN per Prova. La spada donatrice del modulo (CyberArma, Armamenti 0.74 §7.25.4) perde il suo
+      // SIN (`sin_rimosso` sulla voce, lo scrive la consegna del Direttore); il modulatore neurale della CyberArma dà SIN 1
+      // al solo Tecnomante con l'interfaccia collegata (§7.25.2, `modulatore_neurale` sulla voce dell'esemplare)
+      sinArma(o, d) ? { nome: `SIN ${sinArma(o, d).valore} (${sinArma(o, d).fonte}, §7.15.1)`, valore: sinArma(o, d).valore } : null,
       forPen ? { nome: `FOR ${FOR} su ${d.for_richiesta} richiesta (§7.1.6)`, valore: -forPen } : null,
       armatura ? { nome: 'Armatura (§7.11.1)', valore: armatura } : null,
       // §7.3.1: Smorzatore e Silenziatore peggiorano il VA per colpire
@@ -1447,7 +1461,9 @@ export function calcolaEquipaggiamento(base, voci, dati) {
     ];
     // §7.10; A.59: un Artefatto nel deposito comune resta sintonizzato e occupa la capacità, finché non si interrompe
     // §7.10: un Artefatto con sole proprietà passive (SnT 0) non si sintonizza
-    const elenco = artefatti.map(({ o, a }) => ({ uid: o.uid, nome: o.nome, costo: a.sintonizzazione, potenza: a.potenza, tipologia: a.tipologia, sintonizzabile: a.sintonizzabile !== false, sintonizzato: a.sintonizzabile !== false && o.voce.sintonizzato === true && !(o.deposito && rs.deposito?.interrompe !== false), deposito: o.deposito }));
+    // CyberArma (Armamenti 0.74 §7.25): la SnT dipende dall'impiego (Custode 1, Tecnomante 2), dalla Classe del personaggio
+    const sntDi = (a) => { const p = a.sintonizzazione_per_classe; const c = p ? (base.classi ?? []).find((x) => Number.isInteger(p[x])) : null; return c ? p[c] : a.sintonizzazione; };
+    const elenco = artefatti.map(({ o, a }) => ({ uid: o.uid, nome: o.nome, costo: sntDi(a), potenza: a.potenza, tipologia: a.tipologia, sintonizzabile: a.sintonizzabile !== false, sintonizzato: a.sintonizzabile !== false && o.voce.sintonizzato === true && !(o.deposito && rs.deposito?.interrompe !== false), deposito: o.deposito }));
     const usata = elenco.filter((x) => x.sintonizzato).reduce((s, x) => s + x.costo, 0);
     sintonizzazione = { capacita, usata, gradi, talento: talento ? rs.talento.nome : null, artefatti: elenco, umanita: capacita - daGradi, provenienza: provenienza(righe, capacita) };
     if (usata > capacita) avvisi.push(`Sintonizzazioni oltre la capacità: ${usata} su ${capacita}. Il personaggio sceglie quali interrompere (§7.10).`);

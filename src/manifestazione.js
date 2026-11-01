@@ -63,6 +63,9 @@ export function conManifestazione(def, voce, classi = []) {
     famiglia: m.famiglia ?? def.famiglia,
     specializzazione: m.specializzazione ?? null,
     manovre: Array.isArray(m.manovre) ? m.manovre : def.manovre,
+    // Armamenti 0.74 §7.25.2: la forma cambia mani occupate e portata (danno, Abilità, FOR, costi e durata restano)
+    ...(Number.isInteger(m.mani) ? { mani: m.mani } : {}),
+    ...(Number.isInteger(m.portata_q) ? { portata_q: m.portata_q } : {}),
     manifestazione: m,
   };
 }
