@@ -2305,3 +2305,8 @@ Manuale del Giocatore: ancora «Edizione consultabile 0.50», ma ritoccato il 30
 
 - Nessuna risposta di Davide e nessuna domanda nuova. Su richiesta di Marcello la guardia del lotto 145 passa dal comando di lancio al codice: `tools/guardia-automatica.mjs` riconosce da dentro una prova (test runner, `--test`, file di `tests/`, MUTANT_PROVA ereditata) e accende guardia e profilo temporaneo; nessuna variabile la spegne. Test `tests/guardia-automatica.test.js` con una sonda in tutti i modi di lancio e le cartelle vere identiche prima e dopo.
 - Trovato: la causa del lotto 149 (un test che si credeva protetto), e che i test della copia non tracciata `distribuzione/mutant/tests` girano senza guardia con un `node --test` nudo dalla radice e riscrivono `%APPDATA%\Mutant\dati.json`. Da decidere: togliere o spostare quella copia.
+
+## 1 novembre 2026 — Lotto 152: una sola installazione (`docs/diff-lotto152-2026-11-01.md`)
+
+- Nessuna risposta di Davide e nessuna domanda nuova. La seconda installazione `distribuzione/mutant/` (49 MB, senza dati: solo i `LEGGIMI.txt` e i sette `PersonaggiBackup/` identici) è stata **spostata**, non cancellata, in `F:\REPOS\mutant-seconda-installazione-2026-11-01\`; il pacchetto `1_scarica_o_aggiorna_app.bat` ora si ferma anche con il profilo rovinato quando sta dentro un'installazione; `tests/una-installazione.test.js` fallisce se ne ricompare una; tolto il ripiego `ATTENZIONE` del lotto 150.
+- `%APPDATA%\Mutant\dati.json` rimesso su `F:\REPOS\mutant` (zip del precedente accanto). Corretto un errore del lotto 150: le cartelle `mutant-*` in `%TEMP%` sono 49.251 (1,35 GB), non 47; la guardia automatica ora toglie il suo profilo temporaneo all'uscita.
