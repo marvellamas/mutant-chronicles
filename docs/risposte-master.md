@@ -2319,3 +2319,8 @@ Manuale del Giocatore: ancora «Edizione consultabile 0.50», ma ritoccato il 30
 - **A.195 — RISOLTA.** Wächter: Taglia «Medio, detto anche Grande», una sola voce.
 - **Esoscheletri, servoarmature e robot** (Armamenti 0.74 §7.20.5, Equipaggiamento 0.30 §5.4.8): NEC Rosso 10 (Felis, Powersuit, Iron Mastiff 10 ore; Shoa Ace Custom, Demonhunter 5 ore) o CEC Rossa (XO-102, Vulkan, Attila 10 ore; APE 5 ore), una carica per impiego; Banshee commerciale (Pacco Rosso 20, una carica per Round di volo) e Jet-Chute (NEC Rosso 1, una carica per discesa). Le ore salvate prima si convertono con la frazione (A.193).
 - **Non applicati**: Scout 0.6 (A.226); Neverlost; Giocatore 0.54 e Magia 1.11 (Talenti nel manuale con fusioni, Talenti di Classe, Indirizzi, CyberArma, Guanti di Lucas): lotto a parte. Nessuna domanda nuova.
+
+## 1 novembre 2026, notte — Lotto 154: i Talenti del Giocatore 0.54 (ricognizione, `docs/diff-talenti-054-2026-11-01.md`)
+
+- Nessuna edizione nuova e nessuna risposta di Davide. Giocatore 0.54 e Magia 1.11 confrontati con il documento del 7/10: Talenti Liberi, Maestrie e Talenti di Classe uguali; nuovi gli elenchi delle Specializzazioni per Classe (87 voci), Combattimento Senz'Armi, la tabella delle frequenze. Correzione al lotto 153: fusioni, Talenti di Classe e Indirizzi non erano novità.
+- **Nuove domande, aperte: A.229–A.231** (`docs/pacchetto-per-davide-2026-11-01-talenti054.md`): A.229 Specializzazioni di Potere per Classe contro la A.185 («fra le nove»); A.230 Specializzazioni già scelte e tolte dall'elenco (Duncan, Dimitri); A.231 la CyberArma di Dimitri (originale di Park? inventario a lavorazione riuscita). Nulla applicato.
