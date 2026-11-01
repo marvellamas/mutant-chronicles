@@ -2338,3 +2338,9 @@ Manuale del Giocatore: ancora «Edizione consultabile 0.50», ma ritoccato il 30
 - **Pronta, aspetta il file di Lucas**: nel file non c'è niente da riscrivere (PM salvati restano); verifica in sola lettura con `node tools/guanti-lucas.mjs`. Sulle copie (20/10 e 27/10): kit 8 → 9 su capacità 9.
 - **A.232 aperta**: ai pugni vale solo Combattimento Senz'Armi; Armi da Pugno no; nessun cumulo nuovo.
 - **Nuova domanda, aperta: A.234** (`docs/pacchetto-per-davide-2026-11-01-lotto156.md`): bonus di lancio (Specializzazioni di Potere, Potere Mistico) nella Prova di Potere del Doppio getto?
+
+## 1 novembre 2026, sera — Lotto 157: la CyberArma degli Armamenti 0.74 e il progetto di Dimitri (`docs/diff-cyberarma-2026-11-01.md`)
+
+- Armamenti 0.74 §§7.25–7.25.4 e scheda «CyberArma Opzioni per Dimitri» 1.0 (31/10/2026) applicati al catalogo: SnT secondo l'impiego (Custode 1, Tecnomante 2), altre Classi solo con la conversione a NeC (SnT 3, 1 carica per 10 Round), batteria interna Verde da 10 PM (SnT 2), sei forme di mani e portata, modulatore neurale SIN 1, prezzi indicativi delle modifiche, costruzione dei soli Custodi. Le risposte A.158 e A.166 sono superate dove la 0.74 dice altro; i punti dubbi vanno nella A.235.
+- **Progetto di Dimitri a Paradise**: modello nel catalogo, stato nel file del PG (`progetti_master`), seguito dal Direttore nella tab Artefatti → Progetti (giorni, esiti del §24 anche falliti, chiusura riuscito/parziale/fallito); **l'arma entra nell'inventario solo con «Consegna l'arma» del Direttore**, con chi e quando; il giocatore sceglie la forma prima della lavorazione. **Pronta, aspetta il file di Dimitri e la A.231.**
+- **Nuove domande, aperte: A.235–A.237** (`docs/pacchetto-per-davide-2026-11-01-lotto157.md`): A.235 A.158/A.166 superate dalla 0.74 (famiglie per forma, peso e Integrità per esemplare, costruzione)?; A.236 batteria interna Esclusiva?; A.237 capacità del NeC della conversione.
