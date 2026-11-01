@@ -2324,3 +2324,10 @@ Manuale del Giocatore: ancora «Edizione consultabile 0.50», ma ritoccato il 30
 
 - Nessuna edizione nuova e nessuna risposta di Davide. Giocatore 0.54 e Magia 1.11 confrontati con il documento del 7/10: Talenti Liberi, Maestrie e Talenti di Classe uguali; nuovi gli elenchi delle Specializzazioni per Classe (87 voci), Combattimento Senz'Armi, la tabella delle frequenze. Correzione al lotto 153: fusioni, Talenti di Classe e Indirizzi non erano novità.
 - **Nuove domande, aperte: A.229–A.231** (`docs/pacchetto-per-davide-2026-11-01-talenti054.md`): A.229 Specializzazioni di Potere per Classe contro la A.185 («fra le nove»); A.230 Specializzazioni già scelte e tolte dall'elenco (Duncan, Dimitri); A.231 la CyberArma di Dimitri (originale di Park? inventario a lavorazione riuscita). Nulla applicato.
+
+## 1 novembre 2026, sera — Lotto 155: le Specializzazioni del Giocatore 0.54 (`docs/diff-specializzazioni-054-2026-11-01.md`)
+
+- Nessuna edizione nuova né risposta di Davide (Giocatore 0.54, Magia 1.11; «per-davide.md» del 30/10). Applicati gli elenchi del §8.10 (87 voci, 20 Classi allungate) e Combattimento Senz'Armi (§8.8.1: +1 VA e +1 danno agli attacchi senz'armi, niente Difese né Parata; distinta dalla Parata a Mani Nude della A.206); «Indirizzi di Classe» (§3.2) al posto delle «specializzazioni» della Classe dove si leggono.
+- **A.229 aperta**: le 20 voci di Potere che il manuale toglie a Custode, Invocatore, Mistico e Tecnomante restano negli elenchi (vale la A.185), annotate in `specializzazioni.json` → `potere_in_attesa_a229`.
+- **A.230 aperta**: Armi Inastate (Incursore) e Archi e Balestre (Invocatore) escono dagli elenchi (`per_classe_tolte`); chi le ha già le tiene con un avviso, un tablet non le sceglie di nuovo.
+- **Nuove domande, aperte: A.232–A.233** (`docs/pacchetto-per-davide-2026-11-01-lotto155.md`): A.232 Guanti con Armi da Pugno e/o Combattimento Senz'Armi; A.233 «capitolo» = Atto dei PX? e «scena» dichiarata dalla plancia (per il lotto delle frequenze).
