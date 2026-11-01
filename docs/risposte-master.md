@@ -2300,3 +2300,8 @@ Manuale del Giocatore: ancora «Edizione consultabile 0.50», ma ritoccato il 30
 - **A.193 — RISOLTA.** Le riserve salvate in Lx, UE o ore passano alle cariche con la frazione residua (metà → metà della capacità nuova), senza arrotondare per eccesso e senza ripetere la conversione; il valore di prima resta nel file; profilo non certo → «da convertire». Mezzi: `energia_precedente` del profilo e `energia_prima` nel mezzo; PG: `convertiRiservaNec`, `necConvertite`, `rif_prima`. Moduli (A.217) e ricambi di prima dei mezzi (A.227) restano «da convertire».
 - **Nuove domande: A.226–A.228** (`docs/pacchetto-per-davide-2026-10-31-lotto149.md`): prezzo e dotazione dello Scout 0.6, ricambi di prima dei mezzi, frazioni della conversione. La A.219 resta aperta (il tocco c'è); la A.217 si riduce ai Moduli.
 - **Neverlost**: nessun cambio nelle versioni nuove; non è nei dati, lotto successivo.
+
+## 1 novembre 2026 — Lotto 150: la guardia sulle cartelle vere non dipende da come si lancia (`docs/diff-lotto150-2026-11-01.md`)
+
+- Nessuna risposta di Davide e nessuna domanda nuova. Su richiesta di Marcello la guardia del lotto 145 passa dal comando di lancio al codice: `tools/guardia-automatica.mjs` riconosce da dentro una prova (test runner, `--test`, file di `tests/`, MUTANT_PROVA ereditata) e accende guardia e profilo temporaneo; nessuna variabile la spegne. Test `tests/guardia-automatica.test.js` con una sonda in tutti i modi di lancio e le cartelle vere identiche prima e dopo.
+- Trovato: la causa del lotto 149 (un test che si credeva protetto), e che i test della copia non tracciata `distribuzione/mutant/tests` girano senza guardia con un `node --test` nudo dalla radice e riscrivono `%APPDATA%\Mutant\dati.json`. Da decidere: togliere o spostare quella copia.
