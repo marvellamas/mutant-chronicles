@@ -2310,3 +2310,12 @@ Manuale del Giocatore: ancora «Edizione consultabile 0.50», ma ritoccato il 30
 
 - Nessuna risposta di Davide e nessuna domanda nuova. La seconda installazione `distribuzione/mutant/` (49 MB, senza dati: solo i `LEGGIMI.txt` e i sette `PersonaggiBackup/` identici) è stata **spostata**, non cancellata, in `F:\REPOS\mutant-seconda-installazione-2026-11-01\`; il pacchetto `1_scarica_o_aggiorna_app.bat` ora si ferma anche con il profilo rovinato quando sta dentro un'installazione; `tests/una-installazione.test.js` fallisce se ne ricompare una; tolto il ripiego `ATTENZIONE` del lotto 150.
 - `%APPDATA%\Mutant\dati.json` rimesso su `F:\REPOS\mutant` (zip del precedente accanto). Corretto un errore del lotto 150: le cartelle `mutant-*` in `%TEMP%` sono 49.251 (1,35 GB), non 47; la guardia automatica ora toglie il suo profilo temporaneo all'uscita.
+
+## 1 novembre 2026, sera — Lotto 153: i completamenti dell'energia (`docs/diff-lotto153-2026-11-01.md`)
+
+- **Versioni lette**: Giocatore 0.54, Magia 1.11 (01/11 10:39), Armamenti 0.74, Equipaggiamento 0.30 (31/10 22:19–22:20), registro NEC 2.11 (31/10 10:47), «Energia per l'app» 1.0 (31/10 10:48, nuovo), Guanti di Lucas 1.0 e CyberArma per Dimitri 1.0. Il modello dell'energia non cambia; «per-davide.md» invariato, nessuna risposta nuova.
+- **A.190 — RISOLTA.** Pacco Rosso del Gehemmapuker: cinque NEC 10, 50 attacchi, 2.000 cr (era 2.100), 750 g, ricarica 500 cr; Purifier NEC 10 + NEC 5, 250 g.
+- **A.191 — RISOLTA.** IAS, Silent e RF366 sul Pacco Blu 20 (due NEC Blu 10): 800 cr (era 1.000), 300 g.
+- **A.195 — RISOLTA.** Wächter: Taglia «Medio, detto anche Grande», una sola voce.
+- **Esoscheletri, servoarmature e robot** (Armamenti 0.74 §7.20.5, Equipaggiamento 0.30 §5.4.8): NEC Rosso 10 (Felis, Powersuit, Iron Mastiff 10 ore; Shoa Ace Custom, Demonhunter 5 ore) o CEC Rossa (XO-102, Vulkan, Attila 10 ore; APE 5 ore), una carica per impiego; Banshee commerciale (Pacco Rosso 20, una carica per Round di volo) e Jet-Chute (NEC Rosso 1, una carica per discesa). Le ore salvate prima si convertono con la frazione (A.193).
+- **Non applicati**: Scout 0.6 (A.226); Neverlost; Giocatore 0.54 e Magia 1.11 (Talenti nel manuale con fusioni, Talenti di Classe, Indirizzi, CyberArma, Guanti di Lucas): lotto a parte. Nessuna domanda nuova.
