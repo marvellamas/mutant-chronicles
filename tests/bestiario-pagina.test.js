@@ -1,5 +1,6 @@
 // Bestiario online (tools/bestiario_pagina.mjs): la pagina si costruisce dai dati del repo con un comando
 // solo, contiene soltanto il bestiario e i nemici prestabiliti, e non resta indietro rispetto ai dati.
+import '../tools/guardia-subito.mjs'; // la guardia sulle cartelle vere, comunque si lanci il test
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync, readdirSync } from 'node:fs';

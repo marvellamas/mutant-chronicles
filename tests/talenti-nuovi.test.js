@@ -1,6 +1,7 @@
 // Talenti v1.0 (lotto 1 del 25/10/2026): tre categorie, posti per livello, Specializzazioni per Classe, prerequisiti
 // in ordine di livello, Talenti accorpati. Fonte: «Nuova progressione di Talenti Specializzazioni e Maestrie» v1.0 del
 // 7/10/2026 (docs/talenti-nuovi-v1.0.txt), che sui Talenti vale sul Manuale del Giocatore.
+import '../tools/guardia-subito.mjs'; // la guardia sulle cartelle vere, comunque si lanci il test
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';

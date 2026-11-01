@@ -1,6 +1,7 @@
 // A.180 (Davide, 25/10/2026): la coda mostra, per ogni modifica, il valore precedente, il valore proposto e «In attesa di
 // approvazione»; il giocatore ritira una richiesta finché è pendente; il ritiro risulta al Direttore e non tocca la scheda;
 // dopo l'approvazione un ripensamento è una richiesta nuova.
+import '../tools/guardia-subito.mjs'; // la guardia sulle cartelle vere, comunque si lanci il test
 import { test, beforeEach } from 'node:test';
 import assert from 'node:assert/strict';
 

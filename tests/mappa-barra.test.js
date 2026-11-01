@@ -1,6 +1,7 @@
 // Barra della mappa su una riga anche a 1024 px (12/10/2026, seguito dei ritocchi alla barra): i volumi in un menu
 // sotto l'altoparlante, lo stato del salvataggio in un'icona a larghezza fissa. Le prove nel browser (barra su una riga
 // a 1024 e a 1280 px, tela della stessa misura dopo 20 azioni di fila) sono nel riepilogo; qui ciò che le tiene ferme.
+import '../tools/guardia-subito.mjs'; // la guardia sulle cartelle vere, comunque si lanci il test
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';

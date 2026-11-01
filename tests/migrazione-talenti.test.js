@@ -1,6 +1,7 @@
 // Passaggio ai Talenti v1.0 (lotto 2, 25/10/2026): copia, nota nel registro del master, rimozione, regimeTalenti,
 // rapporto senza scritture, ripristino identico, e un tablet con la copia di prima che non rimette i Talenti tolti.
 // Tutto su copie in una cartella temporanea (i sette PG di tests/fixtures/talenti-vecchi/), mai su personaggi/.
+import '../tools/guardia-subito.mjs'; // la guardia sulle cartelle vere, comunque si lanci il test
 import { test, before, after } from 'node:test';
 import assert from 'node:assert/strict';
 import { mkdtempSync, rmSync, mkdirSync, readdirSync, readFileSync, copyFileSync, existsSync, writeFileSync } from 'node:fs';

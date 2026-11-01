@@ -1,4 +1,5 @@
 // A.201 (nomi dei draghi metallici) e A.205 (Diplomazia → Oratoria), risposte di Davide del 30/10/2026.
+import '../tools/guardia-subito.mjs'; // la guardia sulle cartelle vere, comunque si lanci il test
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync, readdirSync } from 'node:fs';

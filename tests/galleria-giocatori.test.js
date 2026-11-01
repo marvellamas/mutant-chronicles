@@ -1,5 +1,6 @@
 // Galleria, lato giocatori (N1, 13/10/2026): l'immagine a tutto schermo con la ✕, l'elenco delle immagini già
 // mostrate e il pulsante «Galleria» nella barra della scheda. Con il DOM finto (tests/dom-finto.js).
+import '../tools/guardia-subito.mjs'; // la guardia sulle cartelle vere, comunque si lanci il test
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';

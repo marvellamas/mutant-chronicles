@@ -1,5 +1,6 @@
 // Ritocchi del 12/10/2026 (segnalazioni di Marcello): menu «Vista» della barra della mappa, porte che si cancellano (gomma e selezione), nebbia che si apre muovendo i PG anche con «Mappa
 // semplice».
+import '../tools/guardia-subito.mjs'; // la guardia sulle cartelle vere, comunque si lanci il test
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { datiReali } from './helpers.js';

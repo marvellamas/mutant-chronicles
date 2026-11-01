@@ -2,6 +2,7 @@
 // livelli della scheda (Guarigione: 3, 6, 9…; Esorcizzare Corruzione: 3, 6, 9…) e le sue colonne
 // (Beneficiari, Stati di Ferita rimossi, Massimo stato curabile…); senza versioni accessibili il
 // pulsante resta disabilitato con «richiede livello N».
+import '../tools/guardia-subito.mjs'; // la guardia sulle cartelle vere, comunque si lanci il test
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';

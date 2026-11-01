@@ -2,6 +2,7 @@
 // in campo un nemico prestabilito). Qui si prova la parte pura: l'elenco unico con la ricerca (nemici prestabiliti di
 // nemici/ + creature del Bestiario proposto) e che aggiungere due volte di fila funzioni, con il nemico salvato nello
 // scontro (o nella bozza) e il bestiario intatto.
+import '../tools/guardia-subito.mjs'; // la guardia sulle cartelle vere, comunque si lanci il test
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';

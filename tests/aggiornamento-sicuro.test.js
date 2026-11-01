@@ -1,5 +1,6 @@
 // Rete di sicurezza intorno a ogni aggiornamento (12/10/2026, docs/diagnosi-dati-spariti-2026-10-12.md):
 // copia zip prima, controllo dopo, aggiornamento dei file che stanno fuori dalla cartella «mutant».
+import '../tools/guardia-subito.mjs'; // la guardia sulle cartelle vere, comunque si lanci il test
 import { test, after } from 'node:test';
 import assert from 'node:assert/strict';
 import { mkdtempSync, mkdirSync, writeFileSync, readFileSync, readdirSync, existsSync, rmSync } from 'node:fs';

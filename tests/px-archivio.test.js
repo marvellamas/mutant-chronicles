@@ -1,4 +1,5 @@
 // L'archivio «PX della partita» salva da solo e il giro di aggiornamento non lo sovrascrive (25/10/2026, prova di Davide).
+import '../tools/guardia-subito.mjs'; // la guardia sulle cartelle vere, comunque si lanci il test
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { creaArchivioPx, testoSalvataggio } from '../src/px-archivio.js';

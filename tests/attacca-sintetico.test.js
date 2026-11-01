@@ -1,6 +1,7 @@
 // «Attacca!» più sintetico (13/10/2026, S17, S20, S21: richiesta di Davide approvata da Marcello): un attacco normale in
 // uno o due tocchi, senza perdere nessuna opzione. Nessuna regola cambia: i VA e i danni sono quelli di src/attacco.js
 // (tests/attacco*.test.js restano com'erano); qui la presentazione, con il DOM finto, e le funzioni pure della sintesi.
+import '../tools/guardia-subito.mjs'; // la guardia sulle cartelle vere, comunque si lanci il test
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync, readdirSync } from 'node:fs';

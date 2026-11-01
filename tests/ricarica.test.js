@@ -1,4 +1,5 @@
 // Ricarica dalle riserve nella modalità tavolo (Giocatore §5.1.1; Armamenti §7.20.2; src/ricarica.js).
+import '../tools/guardia-subito.mjs'; // la guardia sulle cartelle vere, comunque si lanci il test
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { calcolaScheda } from '../src/calc.js';

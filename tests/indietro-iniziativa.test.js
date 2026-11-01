@@ -5,6 +5,7 @@
 // nemici compresi, e al Round prima. Il caso che non funzionava: un nemico **eliminato** (tolto dallo scontro). La
 // voce della pila nomina lui, non c'è più nessuno con quel id, il turno restava dov'era e il pulsante sembrava morto.
 // Adesso «Indietro» scende nella pila finché il turno (o il Round) cambia davvero, e dice che cos'è successo.
+import '../tools/guardia-subito.mjs'; // la guardia sulle cartelle vere, comunque si lanci il test
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';

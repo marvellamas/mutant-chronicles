@@ -1,5 +1,6 @@
 // File del solo calendario (src/calendario.js → fileCalendario, leggiFileCalendario; src/character.js →
 // nomeFileCalendario): export da un personaggio, import su un altro, file sbagliati rifiutati.
+import '../tools/guardia-subito.mjs'; // la guardia sulle cartelle vere, comunque si lanci il test
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { datiReali } from './helpers.js';

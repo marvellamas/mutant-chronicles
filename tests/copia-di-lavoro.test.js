@@ -1,5 +1,6 @@
 // Chi tiene l'originale (20/10/2026): i personaggi veri stanno sul PC del Direttore; ogni altra installazione è una
 // copia di lavoro e deve dirlo. Più il rapporto della pulizia che guarda DENTRO i file, non solo le date.
+import '../tools/guardia-subito.mjs'; // la guardia sulle cartelle vere, comunque si lanci il test
 import { test, before, after } from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync, writeFileSync, mkdtempSync, mkdirSync, rmSync, readdirSync, existsSync, utimesSync, unlinkSync } from 'node:fs';

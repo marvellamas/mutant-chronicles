@@ -1,4 +1,5 @@
 // Lotto elmetti: Armamenti v0.52 §7.21 (data/equipaggiamento/elmetti.json, regole.json → elmetti).
+import '../tools/guardia-subito.mjs'; // la guardia sulle cartelle vere, comunque si lanci il test
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { calcolaScheda } from '../src/calc.js';

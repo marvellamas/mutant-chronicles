@@ -1,5 +1,6 @@
 // Tavolo del Master (segnalazione di Marcello del 12/10/2026): lo scontro in corso in cima, con «Apri la mappa e continua
 // lo scontro»; più scontri aperti; scontro senza scena collegata (src/mappa/stato-scene.js → scontriInCorso).
+import '../tools/guardia-subito.mjs'; // la guardia sulle cartelle vere, comunque si lanci il test
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { datiReali } from './helpers.js';

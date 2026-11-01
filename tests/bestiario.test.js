@@ -1,5 +1,6 @@
 // Il Bestiario proposto come dati (data/bestiario.json, dal lotto tools/lotti/lotto_bestiario_dati.mjs): i dati
 // dicono gli stessi numeri del documento (docs/bestiario/bestiario.md), letti qui in modo indipendente dal lotto.
+import '../tools/guardia-subito.mjs'; // la guardia sulle cartelle vere, comunque si lanci il test
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';

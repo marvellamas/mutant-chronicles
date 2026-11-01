@@ -1,6 +1,7 @@
 // «Prima parte» del catalogo (cap. 8 del Manuale dei Mostri v0.18, le quindici schede prima dei blocchi tematici):
 // profili validi, ingombri non quadrati nelle note con A.167, attacchi senza danno come capacità, modulo tana
 // dell'Aboleth come capacità distinte, GS/PX informativo (la variante con tana solo nella nota).
+import '../tools/guardia-subito.mjs'; // la guardia sulle cartelle vere, comunque si lanci il test
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';

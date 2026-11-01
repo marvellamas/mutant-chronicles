@@ -1,5 +1,6 @@
 // Il deposito delle modifiche fatte offline e le decisioni del Direttore (22/10/2026, src/rientro.js).
 // La regola che tiene insieme tutto: niente si applica prima della conferma, e chiudere non è scartare.
+import '../tools/guardia-subito.mjs'; // la guardia sulle cartelle vere, comunque si lanci il test
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import {

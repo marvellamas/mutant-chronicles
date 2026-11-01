@@ -1,6 +1,7 @@
 // CyberArma: A.158 (risposta di Davide approvata il 13/10/2026) e Armamenti 0.62 §7.25.1.
 // Due configurazioni di catalogo, una sola voce di inventario (Armi e Artefatti), uso per Classe dai dati,
 // −2 alle altre Classi, saldo in cariche e non in PM, durata dell'attivazione in «Attacca!».
+import '../tools/guardia-subito.mjs'; // la guardia sulle cartelle vere, comunque si lanci il test
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { datiReali } from './helpers.js';

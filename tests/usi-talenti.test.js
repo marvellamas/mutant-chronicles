@@ -1,4 +1,5 @@
 // Usi limitati di Talenti/vantaggi, per scontro/sessione/giorno (27/10/2026, lotto 129, dal tavolo del 26/10).
+import '../tools/guardia-subito.mjs'; // la guardia sulle cartelle vere, comunque si lanci il test
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { vociConUso, allineaUsiTalenti, usatiDi, statoUsiTalenti, usaUnaVolta, azzeraUso } from '../src/usi-talenti.js';

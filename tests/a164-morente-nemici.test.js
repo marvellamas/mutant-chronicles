@@ -6,6 +6,7 @@
 //   - «Stabilizza» torna a Grave e spegne il contatore; un contatore spento a 0 non uccide;
 //   - senza COS l'app lo segnala e chiede il dato: non lo ricava da Tempra o PV, non vale 0, nessuno muore.
 //     Inserita a scontro in corso, contano i Round già trascorsi dall'ingresso.
+import '../tools/guardia-subito.mjs'; // la guardia sulle cartelle vere, comunque si lanci il test
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { datiReali } from './helpers.js';

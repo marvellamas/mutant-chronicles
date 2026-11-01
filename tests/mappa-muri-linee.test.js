@@ -2,6 +2,7 @@
 // src/mappa/muri-linee.js): un muro può essere un tratto, anche fuori dalla griglia e più sottile di un quadretto.
 // Si controlla che blocchino come i muri a quadretto (linea di tiro, Copertura, nebbia automatica, movimento), che si
 // cancellino, che la pila «annulla» li rimetta e che le mappe salvate prima restino valide e identiche.
+import '../tools/guardia-subito.mjs'; // la guardia sulle cartelle vere, comunque si lanci il test
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { datiReali, copia } from './helpers.js';

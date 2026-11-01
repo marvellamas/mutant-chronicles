@@ -1,5 +1,6 @@
 // Lotto 4 della ricognizione del 28/10 (Bestiario, parte 1; Manuale dei Mostri 0.46): Iniziativa delle creature mai
 // negativa, scala del GS fino a Entità Suprema, Dragomedusa giovane e adulto (A.194).
+import '../tools/guardia-subito.mjs'; // la guardia sulle cartelle vere, comunque si lanci il test
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { readdirSync, readFileSync, statSync } from 'node:fs';

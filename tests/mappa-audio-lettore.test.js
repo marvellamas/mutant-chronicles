@@ -1,6 +1,7 @@
 // Lettore dei suoni della mappa (src/ui/mappa/audio.js), con Audio, document e localStorage finti: evento → suono con
 // il volume «Effetti», muto generale, impostazioni salvate su questo PC, musica di fondo ripetuta e fermata, autoplay
 // bloccato dal browser e sblocco al primo clic, vista giocatori spenta.
+import '../tools/guardia-subito.mjs'; // la guardia sulle cartelle vere, comunque si lanci il test
 import { test, beforeEach } from 'node:test';
 import assert from 'node:assert/strict';
 import { datiReali } from './helpers.js';

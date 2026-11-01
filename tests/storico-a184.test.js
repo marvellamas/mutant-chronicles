@@ -2,6 +2,7 @@
 // le vecchie scelte (Tecniche, incantesimi) restano leggibili come storico, senza effetti attivi; quello che viene da
 // fonti indipendenti resta; se il Talento viene ripreso, le scelte si conservano entro le quote.
 // Su una copia in memoria di Oshi Nagata (tests/fixtures/talenti-vecchi/): niente cartelle reali.
+import '../tools/guardia-subito.mjs'; // la guardia sulle cartelle vere, comunque si lanci il test
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';

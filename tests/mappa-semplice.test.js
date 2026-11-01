@@ -1,6 +1,7 @@
 // «Mappa semplice» (N3), decisa da Marcello e Davide. Accesa: niente nebbia
 // automatica, niente Atletica proposta dal movimento, niente Copertura automatica, pedina spostabile liberamente; spenta:
 // come prima; le scene salvate prima (senza il campo) restano come sono. Cartelle temporanee e porta casuale.
+import '../tools/guardia-subito.mjs'; // la guardia sulle cartelle vere, comunque si lanci il test
 import { test, before, after } from 'node:test';
 import assert from 'node:assert/strict';
 import { mkdtempSync, rmSync, mkdirSync, writeFileSync, readFileSync } from 'node:fs';

@@ -1,6 +1,7 @@
 // Riga «Gradi taumaturgici» del riquadro Incantesimi nella tab Poteri (Magia sez. 1; src/incantesimi.js → gradiTaumaturgici):
 // Gradi delle Classi taumaturgiche sommati e livello massimo degli Incantesimi dalla tabella di
 // regole.json → taumaturgo.livello_massimo_per_gradi, lo stesso che usa «Lancia!».
+import '../tools/guardia-subito.mjs'; // la guardia sulle cartelle vere, comunque si lanci il test
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';

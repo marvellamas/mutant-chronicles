@@ -1,5 +1,6 @@
 // A.162 (risposta di Davide approvata il 16/10/2026): proprietà esplicita «Indistruttibile» e tre stati
 // dell'Integrità. Un PI assente non significa indistruttibile e non significa rotto.
+import '../tools/guardia-subito.mjs'; // la guardia sulle cartelle vere, comunque si lanci il test
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { datiReali, copia } from './helpers.js';

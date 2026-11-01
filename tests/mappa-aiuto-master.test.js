@@ -2,6 +2,7 @@
 // uno alla volta; muove solo il PG del turno attivo, con gli stessi controlli del tablet del giocatore; vede la mappa
 // dei giocatori; il server rifiuta ogni altra modifica; ogni suo movimento va nel registro; il ruolo si perde alla fine
 // dello scontro. Cartelle temporanee e porta casuale.
+import '../tools/guardia-subito.mjs'; // la guardia sulle cartelle vere, comunque si lanci il test
 import { test, before, after } from 'node:test';
 import assert from 'node:assert/strict';
 import { mkdtempSync, rmSync, mkdirSync, writeFileSync, readFileSync } from 'node:fs';

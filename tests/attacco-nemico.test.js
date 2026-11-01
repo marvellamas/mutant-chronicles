@@ -1,6 +1,7 @@
 // Tavolo del Master, pezzo 5: attacchi dei nemici con «Attacca!» (src/nemico-attacco.js), esito del d20
 // (src/prova.js, Giocatore §1.6–1.7), proposta per «Colpito» (pezzo 4), nemico contro nemico, partecipanti a
 // mano con un attacco e riga di registro (src/scontro.js → registraAttacco). Esempi di esempi/nemici/.
+import '../tools/guardia-subito.mjs'; // la guardia sulle cartelle vere, comunque si lanci il test
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';

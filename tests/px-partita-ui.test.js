@@ -1,5 +1,6 @@
 // Funzioni pure della tab «PX della partita» (A.161): costruttori delle partite/incontri, import dei nemici
 // dagli scontri, patch del PG per l'assegnazione. Il pannello (DOM) si prova nel browser.
+import '../tools/guardia-subito.mjs'; // la guardia sulle cartelle vere, comunque si lanci il test
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { datiReali } from './helpers.js';

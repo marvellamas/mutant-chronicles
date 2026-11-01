@@ -1,6 +1,7 @@
 // Nome del template sulla mappa (12/10/2026, punto 4 della sessione di gioco di Marcello e Davide): il nome
 // facoltativo si vede dentro l'area, largo fra 1 e 3 Q, mai fuori dall'area, accorciato con i puntini se l'area è
 // più piccola, leggibile su immagini chiare e scure (bordo bianco come i muri) e visibile ai giocatori con il template.
+import '../tools/guardia-subito.mjs'; // la guardia sulle cartelle vere, comunque si lanci il test
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';

@@ -1,5 +1,6 @@
 // Suoni della mappa (richiesta di Marcello del 07/10/2026; src/mappa/audio.js): eventi dello scontro → effetto,
 // impostazioni del PC (muto, volumi), dati validati, file degli effetti leggeri e nel progetto.
+import '../tools/guardia-subito.mjs'; // la guardia sulle cartelle vere, comunque si lanci il test
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { statSync } from 'node:fs';

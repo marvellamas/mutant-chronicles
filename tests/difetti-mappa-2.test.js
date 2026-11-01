@@ -2,6 +2,7 @@
 // si apriva con window.open, che nel suo browser sostituiva la pagina). Ora il clic apre la carta in un pannello accanto
 // alla mappa; la scheda completa e la plancia aperte dalla mappa hanno «Torna alla mappa», che rimette scena, zoom,
 // posizione, token scelto e carta aperta.
+import '../tools/guardia-subito.mjs'; // la guardia sulle cartelle vere, comunque si lanci il test
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';

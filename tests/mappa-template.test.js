@@ -1,6 +1,7 @@
 // Template ad area (fase 2, lotto 1; src/mappa/template.js). Forme dai manuali: Magia, «Gittate e geometria»
 // (Raggio, Linea, Cono; «un Q rientra nell'Area se è incluso per almeno metà»; Linee e Coni non includono il Q del
 // lanciatore), Cono Elementale (dal bordo dello spazio del Taumaturgo), Giocatore §5.10 (3 × 3 Q).
+import '../tools/guardia-subito.mjs'; // la guardia sulle cartelle vere, comunque si lanci il test
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { datiReali, copia } from './helpers.js';

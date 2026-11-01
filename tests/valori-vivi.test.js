@@ -6,6 +6,7 @@
 // NB (onestà sui limiti): questi test usano il DOM finto di tests/dom-finto.js. Provano che i nodi restano gli stessi e che
 // i loro valori cambiano; NON provano lo scorrimento, il fuoco e la tastiera di un tablet vero, che nessuno strumento qui
 // lancia con eventi reali. Per quello c'è la prova a mano elencata nel riepilogo.
+import '../tools/guardia-subito.mjs'; // la guardia sulle cartelle vere, comunque si lanci il test
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';

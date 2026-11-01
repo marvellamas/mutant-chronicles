@@ -1,5 +1,6 @@
 // Tab Poteri (docs/layout-sd.md, pezzo 4): per tutti i personaggi; con la magia i dati della tab
 // Magia di prima (PM, incantesimi, scala di Potere), senza un riquadro con la riga del manuale.
+import '../tools/guardia-subito.mjs'; // la guardia sulle cartelle vere, comunque si lanci il test
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { preparaTab } from '../src/stampa.js';

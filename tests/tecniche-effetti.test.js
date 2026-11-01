@@ -2,6 +2,7 @@
 // src/condizioni.js, src/attacco.js): i valori effettivi cambiano solo mentre la Tecnica è in corso e
 // tornano alla scadenza; «Attacca!» legge gli effetti dallo stesso punto; Imposizione si applica.
 // Personaggio: Aiko Tenzan (esempi/), Lottatrice Mishima di 5° livello, Disciplina Controllo, Grado II.
+import '../tools/guardia-subito.mjs'; // la guardia sulle cartelle vere, comunque si lanci il test
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';

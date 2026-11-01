@@ -1,6 +1,7 @@
 // Blocco «Giganti e abitanti delle montagne» (cap. 8 del Manuale dei Mostri v0.16): i dieci profili prestabiliti
 // sono validi, con gli attacchi ad area / senza VA come capacità, i poteri innati a PM come capacità con
 // risorsa, Difese = Parata per i giganti corazzati, GS/PX informativo e Spazio quadrato (2×2 o 3×3).
+import '../tools/guardia-subito.mjs'; // la guardia sulle cartelle vere, comunque si lanci il test
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';

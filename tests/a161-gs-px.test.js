@@ -1,6 +1,7 @@
 // A.161 (risposta del 16/10/2026, in attesa del lotto PX): GS e PX del Manuale dei Mostri salvati nel
 // profilo come valore informativo. La mini-scheda li mostra; l'app non calcola PX e non li unifica ai gradi
 // del bestiario proposto. Qui si controlla il campo del formato, non il calcolatore della A.161 (prossimo).
+import '../tools/guardia-subito.mjs'; // la guardia sulle cartelle vere, comunque si lanci il test
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { datiReali } from './helpers.js';

@@ -1,5 +1,6 @@
 // 19/10 (rifiniture di A.167): chi si gira e come. Le sagome quadrate non hanno comandi di rotazione; le creature
 // rettangolari ruotano solo a 45° (il passo fine è dei veicoli); il percorso mostra i quadretti veri della sagoma.
+import '../tools/guardia-subito.mjs'; // la guardia sulle cartelle vere, comunque si lanci il test
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { datiReali } from './helpers.js';

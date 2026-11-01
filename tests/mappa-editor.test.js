@@ -1,6 +1,7 @@
 // Modello unico degli oggetti della mappa (12/10/2026, src/mappa/editor.js): un solo strumento attivo, le stesse
 // azioni per muri, porte, terreno difficile e token liberi, annulla e rifai per tutto.
 // Ogni difetto della ricognizione (docs/battlemap/ricognizione-editor-2026-10-12.md) ha qui il suo test: D1…D13.
+import '../tools/guardia-subito.mjs'; // la guardia sulle cartelle vere, comunque si lanci il test
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';

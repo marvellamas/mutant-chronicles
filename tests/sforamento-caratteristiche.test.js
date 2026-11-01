@@ -7,6 +7,7 @@
 // della griglia può restringersi). La misura vera dei rettangoli, su tutte le 8 tab alle 7 larghezze richieste
 // in verticale e in orizzontale (112 combinazioni, rete di sicurezza del lotto «condizioni attive» rigirata), è
 // stata fatta nel browser: pulita ovunque, è nel riepilogo.
+import '../tools/guardia-subito.mjs'; // la guardia sulle cartelle vere, comunque si lanci il test
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';

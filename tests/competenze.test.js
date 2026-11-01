@@ -1,5 +1,6 @@
 // Categorie di competenza e limiti del VA personale (Giocatore, Doc del 29/09/2026, 23:45: §1.2.1, §2.3,
 // §2.13, §8.3, §8.4, §8.7). Gli esempi e le tabelle del manuale sono test (CLAUDE.md, principio 5).
+import '../tools/guardia-subito.mjs'; // la guardia sulle cartelle vere, comunque si lanci il test
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';

@@ -2,6 +2,7 @@
 // i nomi lunghi uscivano, i pulsanti erano disallineati e la prima scheda aveva una riga in più. Qui si controlla
 // che ogni scheda abbia la stessa struttura (miniatura in un riquadro fisso, nome, categoria, una riga di pulsanti)
 // e che il foglio di stile impedisca le sovrapposizioni.
+import '../tools/guardia-subito.mjs'; // la guardia sulle cartelle vere, comunque si lanci il test
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';

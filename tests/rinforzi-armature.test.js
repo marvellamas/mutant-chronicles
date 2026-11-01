@@ -1,5 +1,6 @@
 // Rinforzi come sottocategoria delle armature (richiesta di Davide del 02/10; Armamenti §7.11.2,
 // §7.23; regole.json → rinforzi, per-davide A.80).
+import '../tools/guardia-subito.mjs'; // la guardia sulle cartelle vere, comunque si lanci il test
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { calcolaScheda } from '../src/calc.js';

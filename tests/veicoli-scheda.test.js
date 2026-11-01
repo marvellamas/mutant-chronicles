@@ -2,6 +2,7 @@
 // Veicoli e foglio Veicoli della SS. Motore in src/veicoli.js; qui aggiunta e rimozione, colpo con
 // localizzazione e cambio di stato, riparazione, Pilotare del conducente, stampa con 0, 1 e 2 veicoli, e
 // i personaggi senza veicoli identici a prima.
+import '../tools/guardia-subito.mjs'; // la guardia sulle cartelle vere, comunque si lanci il test
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import {

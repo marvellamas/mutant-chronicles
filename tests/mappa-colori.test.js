@@ -1,4 +1,5 @@
 // Colori dei bordi dei token (decisione di Marcello del 06/10/2026; src/mappa/colori.js, data/mappa.json → colori).
+import '../tools/guardia-subito.mjs'; // la guardia sulle cartelle vere, comunque si lanci il test
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { bordoToken, assegnaColori, cambiaColore, contrasto, contornoPer, famiglia, tavolozzaPer } from '../src/mappa/colori.js';

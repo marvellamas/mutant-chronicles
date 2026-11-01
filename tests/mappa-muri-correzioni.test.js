@@ -2,6 +2,7 @@
 // salva; selezione ed eliminazione; «Raddrizza» (pochi vertici, angoli a 15°); Maiusc dritto; punto per punto; la porta
 // interrompe il muro (linea di tiro e movimento) e togliendola il muro si richiude; spessore della porta centrato o
 // adeguato al muro.
+import '../tools/guardia-subito.mjs'; // la guardia sulle cartelle vere, comunque si lanci il test
 import { test, before, after } from 'node:test';
 import assert from 'node:assert/strict';
 import { mkdtempSync, rmSync, mkdirSync, writeFileSync } from 'node:fs';

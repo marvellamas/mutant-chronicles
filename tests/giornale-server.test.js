@@ -2,6 +2,7 @@
 // fatte offline IN ATTESA (non applica niente), GET e POST /api/rientro sono la schermata del Direttore, e solo
 // dal suo PC. Tutto il giro: quattro modifiche offline di cui una in conflitto, approvazione parziale, chiusura
 // senza rispondere, e la risposta che torna al tablet.
+import '../tools/guardia-subito.mjs'; // la guardia sulle cartelle vere, comunque si lanci il test
 import { test, before, after } from 'node:test';
 import assert from 'node:assert/strict';
 import { mkdtempSync, rmSync, mkdirSync, readFileSync } from 'node:fs';

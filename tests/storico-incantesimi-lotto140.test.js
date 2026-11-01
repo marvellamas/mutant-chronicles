@@ -1,6 +1,7 @@
 // Lotto 140 (A.188, Davide 28/10): ogni aggiunta, rimozione o sostituzione di un incantesimo va nello storico con data, ora e
 // provenienza, da qualunque strada arrivi (tab Poteri, «Da scegliere», aggiunti a mano, Modifica master, creazione, Sali di
 // livello, annulla livello, correzione di un livello, Talento tolto). Il confronto è uno solo, in src/incantesimi-regole.js.
+import '../tools/guardia-subito.mjs'; // la guardia sulle cartelle vere, comunque si lanci il test
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';

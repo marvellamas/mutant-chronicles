@@ -8,6 +8,7 @@
 //  2. un tablet con la coda non vuota non deve scrivere il file nemmeno da collegato: al rientro la scrittura
 //     normale riprendeva e mandava tutto lo stato locale con un PUT, cioè le modifiche entravano nella scheda
 //     senza che Davide le avesse mai viste — esattamente ciò che il rientro deve impedire.
+import '../tools/guardia-subito.mjs'; // la guardia sulle cartelle vere, comunque si lanci il test
 import { test, beforeEach } from 'node:test';
 import assert from 'node:assert/strict';
 

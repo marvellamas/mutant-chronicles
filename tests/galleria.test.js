@@ -1,5 +1,6 @@
 // Galleria (N1, 13/10/2026): le immagini che il master mostra ai giocatori con un tocco. Qui il motore puro
 // (src/galleria.js): indice della cartella, filtri del master, galleria dei giocatori, mostra e nascondi.
+import '../tools/guardia-subito.mjs'; // la guardia sulle cartelle vere, comunque si lanci il test
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';

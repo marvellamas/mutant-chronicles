@@ -1,5 +1,6 @@
 // Migrazione dei veicoli nel registro anche senza aprire la tab Veicoli (difetto del collaudo del 05/10/2026, A.91):
 // all'avvio del server, quando la plancia legge o cambia chi è al tavolo, quando si legge il file di un PG.
+import '../tools/guardia-subito.mjs'; // la guardia sulle cartelle vere, comunque si lanci il test
 import { test, after } from 'node:test';
 import assert from 'node:assert/strict';
 import { mkdtempSync, rmSync, readdirSync, readFileSync, writeFileSync, mkdirSync, statSync } from 'node:fs';

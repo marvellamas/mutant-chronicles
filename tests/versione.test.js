@@ -1,5 +1,6 @@
 // Versione dell'app e cache-busting (docs/cache.md): src/versione.js (lettura e confronto) e
 // tools/versione.mjs (impronta del contenuto, blocco dell'importmap in index.html).
+import '../tools/guardia-subito.mjs'; // la guardia sulle cartelle vere, comunque si lanci il test
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';

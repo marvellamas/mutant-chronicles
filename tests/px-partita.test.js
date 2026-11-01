@@ -1,6 +1,7 @@
 // Motore del calcolatore «PX della partita» (A.161): formule, nessuna assegnazione senza il pulsante, totale
 // finale modificabile, la correzione sostituisce (non somma), premio di fine Atto una volta, import senza
 // doppioni, CSV. Gli esempi usano i fattori di data/px_partita.json (riferimento: gestore di Davide, §9.3).
+import '../tools/guardia-subito.mjs'; // la guardia sulle cartelle vere, comunque si lanci il test
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { datiReali } from './helpers.js';

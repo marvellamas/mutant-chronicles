@@ -1,4 +1,5 @@
 // Utility «Lancia un incantesimo» (src/lancio.js; Magia sez. 1–3, 5–7, 12.3; Giocatore §1.4, §1.7).
+import '../tools/guardia-subito.mjs'; // la guardia sulle cartelle vere, comunque si lanci il test
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { calcolaLancio, versioniLancio, contenitoriLancio } from '../src/lancio.js';

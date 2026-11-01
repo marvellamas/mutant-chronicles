@@ -1,5 +1,6 @@
 // Lotto 7 della ricognizione del 02/10 sera: A.61, armatura Capolavoro del Corazzaio (E&L del 02/10/2026,
 // decisione 4; classi.json → capolavoro_armatura; src/equipaggiamento.js → effettoCapolavoro).
+import '../tools/guardia-subito.mjs'; // la guardia sulle cartelle vere, comunque si lanci il test
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { calcolaScheda } from '../src/calc.js';

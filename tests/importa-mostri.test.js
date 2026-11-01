@@ -1,6 +1,7 @@
 // Lotto 141 (Bestiario 0.46, parte 2): l'importatore dal Word (tools/importa-mostri.mjs) e le schede che ha prodotto.
 // Il testo è docs/manuali-txt/mostri-word.md (Manuale dei Mostri 0.46). Controlli: completezza, nessun dato dedotto,
 // PX provvisori segnati, nessun identificativo duplicato né nome che si confonde, regole comuni già approvate.
+import '../tools/guardia-subito.mjs'; // la guardia sulle cartelle vere, comunque si lanci il test
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync, readdirSync } from 'node:fs';

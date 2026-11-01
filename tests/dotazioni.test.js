@@ -1,4 +1,5 @@
 // Equipaggiamento iniziale (src/dotazioni.js, Giocatore §2.16, E&L A.5–A.5.29).
+import '../tools/guardia-subito.mjs'; // la guardia sulle cartelle vere, comunque si lanci il test
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { datiReali, copia } from './helpers.js';

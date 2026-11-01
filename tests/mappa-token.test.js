@@ -1,5 +1,6 @@
 // Mappa di battaglia, lotto 3 (docs/battlemap/piano.md): token dello scontro. Aggancio alla griglia, ingombro da
 // Taglia e veicoli, «Metti tutti», sovrapposizioni, pezzi dallo scontro, dalla bozza e dal registro dei veicoli.
+import '../tools/guardia-subito.mjs'; // la guardia sulle cartelle vere, comunque si lanci il test
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { datiReali, copia } from './helpers.js';

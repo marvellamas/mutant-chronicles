@@ -2,6 +2,7 @@
 // personaggio con regimeTalenti = 2 deve dare nei valori calcolati ciò che dice il suo testo, oppure dirlo come
 // «da applicare al tavolo». Il caso di partenza: Specializzazioni in Elementi e Manifestazione (−1 PM, +1 VA) che
 // la scheda non applicava, perché il motore leggeva gli effetti solo dai Talenti Liberi (talenti_liberi.json).
+import '../tools/guardia-subito.mjs'; // la guardia sulle cartelle vere, comunque si lanci il test
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';

@@ -1,5 +1,6 @@
 // Guida della mappa dentro l'app (#/guida-mappa, src/guida.js): il markdown minimo della guida di Davide diventa
 // blocchi (titoli, paragrafi, elenchi con il numero di partenza, grassetto e codice).
+import '../tools/guardia-subito.mjs'; // la guardia sulle cartelle vere, comunque si lanci il test
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';

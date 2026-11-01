@@ -1,6 +1,7 @@
 // Token liberi e terreno difficile come oggetti (12/10/2026, punti 4 e 5 della richiesta di Davide):
 // pedine fuori dallo scontro, senza scheda e senza regole — un carro, una statua, un PNG che passa — e aree di
 // terreno che si selezionano, si spostano e si cancellano come tutto il resto.
+import '../tools/guardia-subito.mjs'; // la guardia sulle cartelle vere, comunque si lanci il test
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';

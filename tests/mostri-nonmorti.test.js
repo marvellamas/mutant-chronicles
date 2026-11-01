@@ -1,6 +1,7 @@
 // Blocco «Non morti» (cap. 8 del Manuale dei Mostri v0.16): i dieci profili prestabiliti sono validi, con
 // natura dell'attacco dai dati (Naturale/Etereo/Magico), GS/PX informativo, Spazio quadrato, immunità a
 // Sanguinamento, lo Sguardo terribile della Mummia come capacità e le presenze incorporee in volo.
+import '../tools/guardia-subito.mjs'; // la guardia sulle cartelle vere, comunque si lanci il test
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';

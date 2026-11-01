@@ -1,6 +1,7 @@
 // Lotto Stati: le 11 sintesi approvate da Davide il 05/10/2026 e A.119 (Ammalato con intensità, 06/10/2026).
 // regole.json → stati.elenco (sintesi, implica, intensita), attacco_distanza.a_terra; src/condizioni.js; src/nemico-attacco.js;
 // src/scontro.js → cambiaIntensitaNemico.
+import '../tools/guardia-subito.mjs'; // la guardia sulle cartelle vere, comunque si lanci il test
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { calcolaScheda } from '../src/calc.js';

@@ -2,6 +2,7 @@
 // Armi da mischia; dalla forma manifestata dipendono famiglia, Specializzazione pertinente e Manovre.
 // Il Custode sceglie la forma; il Tecnomante e gli altri usano quella del progetto (lama lunga).
 // Sostituisce l'associazione provvisoria di ogni CyberArma alle Spade.
+import '../tools/guardia-subito.mjs'; // la guardia sulle cartelle vere, comunque si lanci il test
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { datiReali } from './helpers.js';

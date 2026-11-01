@@ -128,6 +128,7 @@
 //                                      'scarta' } }: applica le approvate al file e registra gli esiti. Quello
 //                                      che non è nelle decisioni resta in attesa: chiudere non è scartare.
 // Nessuna cancellazione dal server: i file vecchi si tolgono a mano dalla cartella.
+import './tools/guardia-subito.mjs'; // lotto 150: la guardia sulle cartelle vere si accende da sola in una prova
 import { proteggiBlocchiMaster } from './src/correzioni-master.js';
 import { controllaTalentiDaTablet } from './src/talenti-tablet.js';
 import { controllaLivelloDaTablet } from './src/livello-px.js';

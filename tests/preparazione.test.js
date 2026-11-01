@@ -1,6 +1,7 @@
 // «Prepara scontro» del Tavolo del Master (src/preparazione.js, server.mjs): bozze in scontri/ con stato «bozza»,
 // ignorate dagli scontri aperti; duplicare ed eliminare (in scontri/archivio/); «Inizia» fa uno scontro vero con
 // l'Iniziativa tirata per tutti e il Round 1. Server su cartelle temporanee e una porta qualsiasi.
+import '../tools/guardia-subito.mjs'; // la guardia sulle cartelle vere, comunque si lanci il test
 import { test, before, after } from 'node:test';
 import assert from 'node:assert/strict';
 import { mkdtempSync, rmSync, existsSync, readFileSync } from 'node:fs';

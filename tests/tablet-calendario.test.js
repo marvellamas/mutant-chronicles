@@ -1,5 +1,6 @@
 // Difetto del tablet del 19/10/2026, punto 3: il campo delle note del Calendario è a più righe, cresce con il testo e
 // conserva il testo lungo (con gli a capo).
+import '../tools/guardia-subito.mjs'; // la guardia sulle cartelle vere, comunque si lanci il test
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';

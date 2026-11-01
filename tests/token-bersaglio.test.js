@@ -2,6 +2,7 @@
 // libero si mette la spunta «Bersaglio», e allora si può scegliere nella linea di tiro e in «Attacca!» («Attacca
 // questo bersaglio») senza scheda — niente Difese né PV: l'app dà il VA dell'attaccante e l'esito lo decide il master.
 // Il nome del token libero si legge sempre sulla mappa, anche a 1 × 1 Q, con lo stesso bordo bianco dei template.
+import '../tools/guardia-subito.mjs'; // la guardia sulle cartelle vere, comunque si lanci il test
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';

@@ -1,6 +1,7 @@
 // Blocco «Mephit e creature elementali» (cap. 8 del Manuale dei Mostri v0.23): dieci profili validi, Soffi e poteri
 // innati come capacità con costo in PM, danni misti con la seconda componente in nota, dissoluzione dei Mephit,
 // Salamandra con presa, Galeb Duhr con i massi animati, Xorn con il passaggio nella roccia.
+import '../tools/guardia-subito.mjs'; // la guardia sulle cartelle vere, comunque si lanci il test
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';

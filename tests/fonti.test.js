@@ -1,5 +1,6 @@
 // Riserve Batteria o Cariche, proprietà Esclusive o Universali, una sola fonte esterna per pagamento
 // (Magia §26.2, Armamenti §7.5 e §7.5.1; regole.json → chroma.riserve; src/fonti.js).
+import '../tools/guardia-subito.mjs'; // la guardia sulle cartelle vere, comunque si lanci il test
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { calcolaScheda } from '../src/calc.js';

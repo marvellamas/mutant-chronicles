@@ -1,6 +1,7 @@
 // Token in volo (08/10/2026; src/mappa/volo.js, data/mappa.json → volo): movimento sopra terreno difficile e token,
 // muri come ostacolo; linea di tiro senza token in mezzo né Copertura Leggera o Media; visibilità oltre la nebbia con
 // una linea di vista; ZoC con la quota; filtro dei giocatori; formato della scena.
+import '../tools/guardia-subito.mjs'; // la guardia sulle cartelle vere, comunque si lanci il test
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { datiReali } from './helpers.js';

@@ -1,6 +1,7 @@
 // I cinque bonus dell'equipaggiamento portati nei dati il 05/10/2026 (tools/lotti/lotto_bonus_equipaggiamento.mjs,
 // docs/censimento-impianti.md, «Stesso rischio altrove»): Martello Spaccateste (Stordire +1), IAS3200 (Pilotare in volo),
 // IAS3100 (SIN 2 con l'Interfaccia neurale), APE Capitol (Schivare con Pilotare −1), Utensile multiuso (Improvvisato −2).
+import '../tools/guardia-subito.mjs'; // la guardia sulle cartelle vere, comunque si lanci il test
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { calcolaScheda } from '../src/calc.js';

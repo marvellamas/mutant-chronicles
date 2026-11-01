@@ -1,6 +1,7 @@
 // Tavolo del Master, pezzo 4: il colpo applicato dalla plancia. Per un PG si riscrive il suo file in personaggi/
 // con la revisione (data di modifica: 409 se è cambiato) e la scheda lo rilegge; per un nemico i valori stanno
 // nello scontro. Ogni colpo è una riga di registro e si può annullare.
+import '../tools/guardia-subito.mjs'; // la guardia sulle cartelle vere, comunque si lanci il test
 import { test, before, after } from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync, mkdtempSync, rmSync, copyFileSync } from 'node:fs';

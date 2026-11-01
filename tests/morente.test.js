@@ -3,6 +3,7 @@
 // un contatore di Round pari alla COS intera, che cala di 1 per Round e di 1 per ogni nuova Ferita; a 0 l'app
 // avvisa e decide il master. «Stabilizza» riporta a Grave e spegne il contatore. I nemici restano come oggi
 // (A.164 aperta). Tutti i numeri stanno in regole.json → ferite.morente, non nel codice.
+import '../tools/guardia-subito.mjs'; // la guardia sulle cartelle vere, comunque si lanci il test
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';

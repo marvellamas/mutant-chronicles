@@ -1,5 +1,6 @@
 // Armamenti 0.58: Katana Ryūjin, celle NEC Blu, pacchi NEC dei lanciafiamme, NEC degli accessori
 // (tools/lotti/lotto_armamenti_058.mjs, docs/diff-manuali-2026-10-01.md).
+import '../tools/guardia-subito.mjs'; // la guardia sulle cartelle vere, comunque si lanci il test
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { catalogo } from '../src/equipaggiamento.js';

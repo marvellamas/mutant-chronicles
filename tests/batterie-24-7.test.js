@@ -1,5 +1,6 @@
 // Lotto 4 del 02/10 (docs/diff-manuali-2026-10-02.md): batterie oltre i 5 PM (Magia §24.7, Armamenti §7.5).
 // Capacità 10–30 PM colorate e 10–25 PM Bianche; prezzo 200 / 1.000 crediti per PM; SnT pari al Grado.
+import '../tools/guardia-subito.mjs'; // la guardia sulle cartelle vere, comunque si lanci il test
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { calcolaScheda } from '../src/calc.js';

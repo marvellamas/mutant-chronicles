@@ -5,6 +5,7 @@
 //
 // Due server sulle stesse cartelle: uno «master» (come la pagina aperta sul PC del server, daQuestoPc) e uno «tablet»
 // (eMaster: () => false). Le richieste sono le stesse, le risposte no.
+import '../tools/guardia-subito.mjs'; // la guardia sulle cartelle vere, comunque si lanci il test
 import { test, before, after } from 'node:test';
 import assert from 'node:assert/strict';
 import { mkdtempSync, rmSync, mkdirSync, writeFileSync, readFileSync } from 'node:fs';

@@ -1,4 +1,5 @@
 // Codice QR in locale (src/qr.js) e indirizzi per i giocatori (src/rete.js), con interfacce di rete finte.
+import '../tools/guardia-subito.mjs'; // la guardia sulle cartelle vere, comunque si lanci il test
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { restoRS, bitFormato, codeword, matriceQR, svgQR } from '../src/qr.js';

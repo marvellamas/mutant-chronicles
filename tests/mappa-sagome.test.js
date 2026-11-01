@@ -1,5 +1,6 @@
 // A.167 (18/10/2026): sagome rettangolari e ruotate delle pedine (src/mappa/sagoma.js): 1 × 2, 2 × 3, 3 × 5 e 3 × 10 a tutti
 // gli orientamenti, sovrapposizione fra sagome ruotate, passaggio in un corridoio stretto. Niente browser.
+import '../tools/guardia-subito.mjs'; // la guardia sulle cartelle vere, comunque si lanci il test
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { datiReali } from './helpers.js';

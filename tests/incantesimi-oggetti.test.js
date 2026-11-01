@@ -1,5 +1,6 @@
 // Parte A del 20/10/2026: un incantesimo che arriva da un oggetto (artefatto con un incantesimo infuso, Consumabile,
 // Pietra della Vigilanza, Guanti) si lancia come quelli conosciuti, con la riserva giusta, senza diventare conosciuto.
+import '../tools/guardia-subito.mjs'; // la guardia sulle cartelle vere, comunque si lanci il test
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { contesto, resa, clic, dati } from './scheda-aiuti.js';

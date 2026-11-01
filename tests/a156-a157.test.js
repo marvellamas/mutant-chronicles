@@ -1,5 +1,6 @@
 // A.156 e A.157 (risposte di Davide del 10/10/2026): PM persi quando l'infusione di un Consumabile fallisce, e
 // «Rituale: non consentito» che non impedisce l'infusione. L'app faceva già così: qui i numeri della risposta.
+import '../tools/guardia-subito.mjs'; // la guardia sulle cartelle vere, comunque si lanci il test
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { datiReali } from './helpers.js';

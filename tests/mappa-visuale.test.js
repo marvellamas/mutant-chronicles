@@ -1,6 +1,7 @@
 // Linea di visuale e di tiro (fase 2, lotto 3; src/mappa/visuale.js): ostacoli (muri, porte), Copertura «dal centro» (07/10)
 // (Giocatore §5.8; A.140), token in mezzo (§5.10; A.141), distanze (diagonale 1 Q), visuale dei PG e nebbia automatica,
 // tempi su una mappa grande.
+import '../tools/guardia-subito.mjs'; // la guardia sulle cartelle vere, comunque si lanci il test
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { datiReali, copia } from './helpers.js';

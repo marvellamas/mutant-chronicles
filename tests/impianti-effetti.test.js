@@ -1,6 +1,7 @@
 // Effetti degli impianti al tavolo (censimento del 04/10/2026, docs/censimento-impianti.md): condizionali con la
 // nota «+2 se …» e la casella, bonus fissi nei valori con la provenienza, attivabili (iniettori, Processore),
 // +1 danno del Braccio potenziato con la casella di «Attacca!», PG salvati prima che ricevono gli effetti.
+import '../tools/guardia-subito.mjs'; // la guardia sulle cartelle vere, comunque si lanci il test
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';

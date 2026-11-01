@@ -1,5 +1,6 @@
 // Tablet del 19/10/2026, punto 5: tabelle di consultazione del recupero dei PM (tab Poteri) e dei PV (tab Combattimento),
 // in sola lettura, con i valori dei manuali, in un blocco richiudibile e chiuso.
+import '../tools/guardia-subito.mjs'; // la guardia sulle cartelle vere, comunque si lanci il test
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';

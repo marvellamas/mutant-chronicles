@@ -1,6 +1,7 @@
 // Provenienza dei valori calcolati (src/provenienza.js): il motore dà per ogni valore la lista dei
 // contributi { fonte, valore, nota? } accanto al totale; SD e SS la stampano. La somma delle righe
 // che contano è il totale mostrato.
+import '../tools/guardia-subito.mjs'; // la guardia sulle cartelle vere, comunque si lanci il test
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { calcolaScheda } from '../src/calc.js';

@@ -1,6 +1,7 @@
 // Posizione iniziale della scena (richiesta di Marcello del 07/10/2026; src/mappa/iniziale.js): salva token, porte,
 // template e nebbia; il ripristino rimette tutto, ignora i token il cui partecipante non è più nello scontro, lascia
 // dove sono i nuovi, azzera Q usati e AzP del Round; Ctrl+Z lo annulla; il formato della scena resta valido.
+import '../tools/guardia-subito.mjs'; // la guardia sulle cartelle vere, comunque si lanci il test
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { datiReali } from './helpers.js';

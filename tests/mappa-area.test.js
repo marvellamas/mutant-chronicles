@@ -1,6 +1,7 @@
 // Mappa di battaglia, lotto 5 (docs/battlemap/piano.md): area raggiungibile (ricerca a costo minimo con muri, terreno
 // difficile, alleati, avversari e ingombri), fasce Passo/Corsa/Scatto, muri a pennello e rettangolo, movimenti nel
 // Round, pila «annulla» (Ctrl+Z) e prestazioni su 80 × 60 Q con 20 token.
+import '../tools/guardia-subito.mjs'; // la guardia sulle cartelle vere, comunque si lanci il test
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { datiReali, copia } from './helpers.js';

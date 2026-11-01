@@ -2,6 +2,7 @@
 // (src/anticipazione.js, tools/scale_anticipazione.mjs), Talenti visibili nel riquadro, Prova più
 // difficile di una categoria. Caso osservato: Lucas (Invocatore II, Incantesimi Estesi e Plurimi) con
 // Armatura di Forza al livello 6 e la Durata anticipata.
+import '../tools/guardia-subito.mjs'; // la guardia sulle cartelle vere, comunque si lanci il test
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';

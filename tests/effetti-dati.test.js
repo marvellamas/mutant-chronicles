@@ -1,4 +1,5 @@
 // Effetti degli oggetti sui VA: dati e frasi del manuale (docs/effetti-oggetti.md).
+import '../tools/guardia-subito.mjs'; // la guardia sulle cartelle vere, comunque si lanci il test
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { validaDati } from '../src/validate.js';

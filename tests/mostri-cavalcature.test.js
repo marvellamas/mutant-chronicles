@@ -1,5 +1,6 @@
 // Blocco «Cavalcature e animali da lavoro» (cap. 8 del Manuale dei Mostri v0.23): dieci profili validi, soglie di
 // carico dalla tabella finale, Impeto (capacità o attacco con formula propria), Piede saldo, Atterrare del Mastino.
+import '../tools/guardia-subito.mjs'; // la guardia sulle cartelle vere, comunque si lanci il test
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';

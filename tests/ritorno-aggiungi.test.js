@@ -1,6 +1,7 @@
 // Due ritocchi della plancia (Tavolo del Master): «← Torna al tavolo» nella scheda aperta dalla plancia
 // (src/ui/ritorno.js, sessionStorage: resiste a F5) e «Aggiungi PG al tavolo» (src/tavolo.js → pgDaAggiungere,
 // server.mjs con X-Mutant-Nuovo: non sovrascrive mai).
+import '../tools/guardia-subito.mjs'; // la guardia sulle cartelle vere, comunque si lanci il test
 import { test, before, after } from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync, mkdtempSync, rmSync, writeFileSync, readdirSync } from 'node:fs';

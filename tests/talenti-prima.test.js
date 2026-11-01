@@ -1,6 +1,7 @@
 // La nota dei Talenti di prima (27/10/2026, docs/diagnosi-nota-talenti-2026-10-27.md): tutti i Talenti del file, livello
 // per livello e con la categoria nuova; la voce «Ricostruisci la nota» rilegge lo zip del passaggio e nei personaggi
 // aggiunge solo la riga, senza toccare le scelte fatte al tavolo. Tutto su copie in una cartella temporanea.
+import '../tools/guardia-subito.mjs'; // la guardia sulle cartelle vere, comunque si lanci il test
 import { test, before, after } from 'node:test';
 import assert from 'node:assert/strict';
 import { mkdtempSync, rmSync, mkdirSync, readdirSync, readFileSync, copyFileSync, writeFileSync } from 'node:fs';

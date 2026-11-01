@@ -1,6 +1,7 @@
 // «Mappa semplice» nelle regolazioni della mappa (13/10/2026, richiesta di Marcello): l'interruttore stava in alto a
 // destra sulla mappa e nel menu «Strumenti»; ora sta nel pannello delle regolazioni, con griglia, nebbia e il resto.
 // Sulla mappa resta solo un piccolo segno «Semplice», e solo quando è accesa: la barra ha più spazio.
+import '../tools/guardia-subito.mjs'; // la guardia sulle cartelle vere, comunque si lanci il test
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';

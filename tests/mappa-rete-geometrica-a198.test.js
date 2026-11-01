@@ -4,6 +4,7 @@
 // La prova non si fida del codice: ricalcola i vertici del rettangolo ruotato e l'area che copre ogni quadretto con un metodo
 // indipendente (ritaglio di poligoni, Sutherland–Hodgman) e confronta, per ogni sagoma da 1 × 1 a 20 × 20 (210 basi) e per ognuno
 // degli otto orientamenti. Niente browser.
+import '../tools/guardia-subito.mjs'; // la guardia sulle cartelle vere, comunque si lanci il test
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { formaRuotata, celleToccate, normaAngolo } from '../src/mappa/forma.js';

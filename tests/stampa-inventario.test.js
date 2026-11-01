@@ -1,5 +1,6 @@
 // SS, foglio 4 (Inventario) e piè di pagina: sigle della Qualità dai dati (regole.json → integrita.sigle_qualita),
 // Costo e Peso senza unità (sono nell'intestazione), versioni dei manuali una volta ciascuna, la più recente.
+import '../tools/guardia-subito.mjs'; // la guardia sulle cartelle vere, comunque si lanci il test
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { versioniCompatte, siglaQualita, preparaStampa, testoPiede } from '../src/stampa.js';

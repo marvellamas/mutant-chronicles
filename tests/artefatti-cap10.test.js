@@ -1,5 +1,6 @@
 // Lotto 4 della ricognizione del 02/10 sera: capitolo 10 dell'Equipaggiamento e §26 della Magia
 // (tools/lotti/lotto_artefatti_cap10.mjs; regole.json → chroma.matrice, cristalli_matrice, schegge).
+import '../tools/guardia-subito.mjs'; // la guardia sulle cartelle vere, comunque si lanci il test
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { calcolaScheda } from '../src/calc.js';

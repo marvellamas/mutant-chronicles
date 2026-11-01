@@ -1,5 +1,6 @@
 // Difetti del tablet del 19/10/2026, punti 1 e 2: la pagina non torna in cima a ogni modifica di un valore; più PM in
 // un cristallo con un solo gesto; pulsante «torna in cima» che compare solo oltre una soglia.
+import '../tools/guardia-subito.mjs'; // la guardia sulle cartelle vere, comunque si lanci il test
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';

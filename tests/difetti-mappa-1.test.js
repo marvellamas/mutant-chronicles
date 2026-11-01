@@ -3,6 +3,7 @@
 // validava le scene con il codice vecchio (solo ingombri quadrati); la pagina riprovava il salvataggio ogni 600 ms.
 // Qui: lo Scout 4 × 2 si salva e si sposta; il server dice con quale versione è stato acceso; gli avvisi uguali non
 // si accumulano.
+import '../tools/guardia-subito.mjs'; // la guardia sulle cartelle vere, comunque si lanci il test
 import { test, before, after } from 'node:test';
 import assert from 'node:assert/strict';
 import { mkdtempSync, rmSync, mkdirSync, writeFileSync, cpSync } from 'node:fs';

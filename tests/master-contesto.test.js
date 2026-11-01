@@ -1,6 +1,7 @@
 // «Modifica master»: chi è il PC del master (13/10/2026, segnalazione urgente di Marcello: i pulsanti non si vedevano).
 // Il server riconosce il PC del master dall'indirizzo di chi chiede, come «Spegni Mutant»; l'app lo dice sempre, invece
 // di nascondere i pulsanti in silenzio.
+import '../tools/guardia-subito.mjs'; // la guardia sulle cartelle vere, comunque si lanci il test
 import { test, before, after } from 'node:test';
 import assert from 'node:assert/strict';
 import { mkdtempSync, rmSync } from 'node:fs';

@@ -1,6 +1,7 @@
 // Dopo l'aggiornamento il server riparte da solo (13/10/2026): il prompt 76 è nato perché il server era rimasto acceso
 // con il codice vecchio dopo aggiorna.bat. La decisione («serve riavviare?») è una funzione pura; la prova vera, con un
 // server di prova acceso e spento, è nel riepilogo.
+import '../tools/guardia-subito.mjs'; // la guardia sulle cartelle vere, comunque si lanci il test
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync, mkdtempSync, rmSync, writeFileSync, mkdirSync } from 'node:fs';

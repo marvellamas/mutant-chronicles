@@ -2,6 +2,7 @@
 // master), movimento rifatto dal server (illegale rifiutato), segreti (area e avvisi senza ciò che non si vede),
 // Attacchi di Opportunità nel registro, Ctrl+Z del master, notifiche instradate al tablet giusto. Cartelle temporanee
 // e porta casuale.
+import '../tools/guardia-subito.mjs'; // la guardia sulle cartelle vere, comunque si lanci il test
 import { test, before, after } from 'node:test';
 import assert from 'node:assert/strict';
 import { mkdtempSync, rmSync, mkdirSync, writeFileSync, readFileSync } from 'node:fs';

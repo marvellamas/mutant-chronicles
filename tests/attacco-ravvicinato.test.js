@@ -1,5 +1,6 @@
 // Utility «Attacca!» corpo a corpo (src/attacco.js → calcolaAttaccoRavvicinato): Manovre del §5.12,
 // Carica (§5.6), due armi (§5.7), Magistrale (§1.6), ordine del danno (§5.13), senz'armi (A.22).
+import '../tools/guardia-subito.mjs'; // la guardia sulle cartelle vere, comunque si lanci il test
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import {

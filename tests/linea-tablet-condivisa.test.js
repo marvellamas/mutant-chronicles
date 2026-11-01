@@ -5,6 +5,7 @@
 // Il server la tiene in memoria (come la diretta): la mette chi traccia, la leggono tutti
 // (GET /api/vista-giocatori/linee e il campo `linee` della vista), e sparisce quando il giocatore la toglie,
 // quando passa il turno, quando cambia il Round o quando lo scontro si chiude.
+import '../tools/guardia-subito.mjs'; // la guardia sulle cartelle vere, comunque si lanci il test
 import { test, before, after } from 'node:test';
 import assert from 'node:assert/strict';
 import { mkdtempSync, rmSync, mkdirSync, writeFileSync, readFileSync } from 'node:fs';

@@ -1,6 +1,7 @@
 // Blocco «Predatori straordinari» (cap. 8 del Manuale dei Mostri v0.23): dieci profili validi, Soffi come capacità,
 // danno misto con la seconda componente in nota, Spazio (Worg 2 × 1 Q e Roc 6 × 6 Q fuori dal campo, con A.167),
 // malattia, veleno e passaggio di fase, Remorhaz con presa e inghiottimento, Roc con presa e trasporto.
+import '../tools/guardia-subito.mjs'; // la guardia sulle cartelle vere, comunque si lanci il test
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';

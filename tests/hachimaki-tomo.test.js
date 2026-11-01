@@ -1,5 +1,6 @@
 // Equipaggiamento 0.8 §10.10 e §10.11, Magia §28.1 e §28.4: Hachimaki della Disciplina Interiore e Tomo dei Guardiani
 // nel catalogo; il −1 PM vale solo per le Tecniche Interiori, indossato e sintonizzato, e si vede nel costo.
+import '../tools/guardia-subito.mjs'; // la guardia sulle cartelle vere, comunque si lanci il test
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';

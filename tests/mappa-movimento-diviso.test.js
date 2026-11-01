@@ -1,6 +1,7 @@
 // Mappa di battaglia, lotto R6 (docs/diff-manuali-2026-10-07.md): movimento diviso solo al Passo, Corsa e Scatto in un
 // blocco unico con i Q non usati persi (A.129, decisione 133); con il Passo cominciato Corsa e Scatto restano, con i Q
 // già fatti contati nel blocco (A.136, decisione 140: risposta di Davide dell'08/10).
+import '../tools/guardia-subito.mjs'; // la guardia sulle cartelle vere, comunque si lanci il test
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { datiReali, copia } from './helpers.js';

@@ -1,6 +1,7 @@
 // «Crea nemico» del Tavolo del Master (src/crea-nemico.js): profili dal Bestiario proposto (data/bestiario.json).
 // Le creature pronte del cap. 5 calcolate dal motore coincidono con le tabelle del documento; i casi della richiesta
 // di Marcello del 03/10: Insettoide Medio con 2 Mutazioni, Umano Corrotto di livello 2, «a caso» con un seme fisso.
+import '../tools/guardia-subito.mjs'; // la guardia sulle cartelle vere, comunque si lanci il test
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';

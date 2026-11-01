@@ -3,6 +3,7 @@
 // lo scontro riletto ogni secondo e una raffica di movimenti ne segnalava sei; ora conta anche le segnalazioni locali
 // non ancora rilette, e annullando il movimento l'attacco si ritira (src/mappa/zoc.js → giaInQuestoRound;
 // src/scontro.js → rigaOpportunita, senzaOpportunitaDelMovimento).
+import '../tools/guardia-subito.mjs'; // la guardia sulle cartelle vere, comunque si lanci il test
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { attacchiDiOpportunita, avversariZoc, giaInQuestoRound } from '../src/mappa/zoc.js';

@@ -1,5 +1,6 @@
 // Covata (nove caste) e Lorath dal Manuale dei Mostri v0.13: profili prestabiliti in esempi/nemici/mostri/,
 // validi per il formato e caricati come gli altri prestabiliti dal Tavolo (vociPagina del bestiario online).
+import '../tools/guardia-subito.mjs'; // la guardia sulle cartelle vere, comunque si lanci il test
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { readdirSync, readFileSync } from 'node:fs';

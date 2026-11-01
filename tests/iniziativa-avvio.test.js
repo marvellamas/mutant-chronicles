@@ -2,6 +2,7 @@
 // d10 dal vivo controllato, totale a mano, «Tira con l'app per tutti i nemici»; chi resta vuoto è fuori dall'ordine;
 // i partecipanti aggiunti dopo si chiedono a parte; gli scontri già iniziati non cambiano (src/scontro.js →
 // registraIniziative, senzaIniziativaNuovi).
+import '../tools/guardia-subito.mjs'; // la guardia sulle cartelle vere, comunque si lanci il test
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';

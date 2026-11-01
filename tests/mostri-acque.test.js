@@ -1,6 +1,7 @@
 // Blocco «Creature delle acque e popoli sommersi» (cap. 8 del Manuale dei Mostri v0.23): dieci profili validi,
 // nuoto nelle capacità, pesci senza moto a terra, lance a una/due mani/scagliate, Rete e Stringere come
 // capacità, tossina del Chuul con tre dosi al giorno, Kuo-toa AR 3, GS/PX informativo, Spazio quadrato.
+import '../tools/guardia-subito.mjs'; // la guardia sulle cartelle vere, comunque si lanci il test
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';

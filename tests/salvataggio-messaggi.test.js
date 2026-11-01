@@ -2,6 +2,7 @@
 // 04/10/2026: con il server spento la scheda mostrava «Salvataggio nella cartella personaggi/ non
 // riuscito: NetworkError when attempting to fetch resource.», che non dice cosa fare. Ora il messaggio
 // è in parole semplici, il testo tecnico va nella console e l'app ritenta da sé finché il server torna.
+import '../tools/guardia-subito.mjs'; // la guardia sulle cartelle vere, comunque si lanci il test
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { erroreDiRete, messaggioSalvataggio, attesaRitentativo } from '../src/cartella.js';

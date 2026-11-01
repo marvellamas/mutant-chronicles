@@ -2,6 +2,7 @@
 // pulite. Più file dello stesso personaggio (la data del giorno nel nome), tutti con la stessa data di modifica (come
 // dopo un ripristino), uno solo scritto dal server (`aggiornato_il`), lo storico, config-salvataggi.json accanto; il
 // passaggio fatto due volte e il ripristino. Il controllo è sempre quello che vede l'app: il server.
+import '../tools/guardia-subito.mjs'; // la guardia sulle cartelle vere, comunque si lanci il test
 import { test, before, after } from 'node:test';
 import assert from 'node:assert/strict';
 import { mkdtempSync, rmSync, mkdirSync, readdirSync, readFileSync, writeFileSync, utimesSync, existsSync } from 'node:fs';

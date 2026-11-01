@@ -1,6 +1,7 @@
 // «Non trovo personaggi in questa cartella» (12/10/2026, docs/diagnosi-dati-spariti-2026-10-12.md):
 // all'avvio, con personaggi/ vuota e dei salvataggi disponibili, lo dicono la finestra nera, la console e il
 // Tavolo, con il percorso della cartella in uso ben visibile.
+import '../tools/guardia-subito.mjs'; // la guardia sulle cartelle vere, comunque si lanci il test
 import { test, after } from 'node:test';
 import assert from 'node:assert/strict';
 import { mkdtempSync, mkdirSync, writeFileSync, rmSync } from 'node:fs';

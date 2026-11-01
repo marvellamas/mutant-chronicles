@@ -1,5 +1,6 @@
 // Dadi nell'app: si tocca il valore e si tira (13/10/2026, S9, S15, S18). Il dado dal vivo resta il modo di base; le
 // regole non cambiano: gli esiti sono quelli di src/prova.js (§1.6, §1.7, A.78) e i dadi vengono dai dati.
+import '../tools/guardia-subito.mjs'; // la guardia sulle cartelle vere, comunque si lanci il test
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync, readdirSync } from 'node:fs';

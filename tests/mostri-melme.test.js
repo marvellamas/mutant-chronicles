@@ -1,6 +1,7 @@
 // Blocco «Melme funghi e imitatori» (cap. 8 del Manuale dei Mostri v0.18): dieci profili validi; «Volontà —» come
 // assenza esplicita (`senza_salvezza`, mai uno 0), PM — senza campo pm, Fungo stridente immobile con 0 PX,
 // acido senza Corrosivo, Scissione dei frammenti, Spazio quadrato.
+import '../tools/guardia-subito.mjs'; // la guardia sulle cartelle vere, comunque si lanci il test
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';

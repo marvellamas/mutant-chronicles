@@ -5,6 +5,7 @@
 // I casi: 1. il vecchio distribuzione\1_scarica_o_aggiorna_app.bat (fuori dalla cartella mutant, non si aggiorna
 // da solo); 2. l'aggiornamento con Git; 3. git clean / reset --hard / checkout negli script; 4. gli esempi
 // copiati «solo se mancano»; 5. da quale cartella legge il server; 6. l'elenco dei file locali completo.
+import '../tools/guardia-subito.mjs'; // la guardia sulle cartelle vere, comunque si lanci il test
 import { test, after } from 'node:test';
 import assert from 'node:assert/strict';
 import { mkdtempSync, mkdirSync, writeFileSync, readFileSync, readdirSync, existsSync, rmSync, statSync } from 'node:fs';

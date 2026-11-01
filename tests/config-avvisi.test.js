@@ -4,6 +4,7 @@
 // La prova che conta: un aggiornamento simulato che CANCELLA o SOSTITUISCE tutta la cartella dell'app — il caso
 // peggiore, quello che nessuna lista di «cartelle locali da non toccare» può garantire — e la configurazione
 // resta com'era, perché non stava lì.
+import '../tools/guardia-subito.mjs'; // la guardia sulle cartelle vere, comunque si lanci il test
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { mkdtempSync, mkdirSync, writeFileSync, readFileSync, existsSync, rmSync } from 'node:fs';

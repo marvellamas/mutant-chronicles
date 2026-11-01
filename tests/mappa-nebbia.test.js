@@ -1,5 +1,6 @@
 // Mappa di battaglia, lotto 4 (docs/battlemap/piano.md): nebbia (pennello lungo il tratto, rettangolo, tutto,
 // differenze compatte e Ctrl+Z), zoom a due dita, vista giocatori con il contesto dello scontro.
+import '../tools/guardia-subito.mjs'; // la guardia sulle cartelle vere, comunque si lanci il test
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { datiReali } from './helpers.js';

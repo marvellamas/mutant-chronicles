@@ -1,6 +1,7 @@
 // A.107 (correzioni retroattive dell'avanzamento) e A.108 (Punti Abilità liberi in eccesso), risposte approvate da
 // Davide il 05/10/2026 (E&L): src/avanzamento.js → validaCorrezione, conseguenzeCorrezione, applicaCorrezione,
 // personaggioPrimaDi, motivoEccesso, validaLivello, statoRimozione, validaRimozione.
+import '../tools/guardia-subito.mjs'; // la guardia sulle cartelle vere, comunque si lanci il test
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { calcolaScheda, validaLivello } from '../src/calc.js';

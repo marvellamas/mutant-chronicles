@@ -4,6 +4,7 @@
 //
 // Qui si blocca che l'app faccia così dappertutto: regole, creazione, avanzamento, bestiario umano
 // (costruito come PG) e conversione «PG → nemico».
+import '../tools/guardia-subito.mjs'; // la guardia sulle cartelle vere, comunque si lanci il test
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync, readdirSync } from 'node:fs';

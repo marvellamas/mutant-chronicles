@@ -1,6 +1,7 @@
 // src/dispositivi.js: l'abbinamento dispositivo (tablet) → personaggio (21/10/2026, «il tablet è una vista»;
 // esteso lo stesso giorno, pomeriggio, «le code dell'originale» parte B: il dispositivo resta nell'elenco anche
 // senza personaggio scelto o dopo «Stacca», così il Direttore lo vede e lo corregge invece di vederlo sparire).
+import '../tools/guardia-subito.mjs'; // la guardia sulle cartelle vere, comunque si lanci il test
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { normalizzaDispositivi, associazioneDi, dispositivoVisto, conAssociazione, senzaAssociazione, puoScrivere, elencoDispositivi } from '../src/dispositivi.js';

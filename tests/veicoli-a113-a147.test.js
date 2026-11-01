@@ -1,6 +1,7 @@
 // Veicoli: A.113 (permessi, sola lettura senza server, denominazioni), A.145 (tabella delle azioni),
 // A.146 (Attacchi di Opportunità) e A.147 (otto orientamenti a 45°). Risposte approvate il 15/10/2026.
 // Tutti i valori stanno nei dati; nessuna automazione nuova (CLAUDE.md).
+import '../tools/guardia-subito.mjs'; // la guardia sulle cartelle vere, comunque si lanci il test
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { datiReali } from './helpers.js';

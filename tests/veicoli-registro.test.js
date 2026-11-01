@@ -1,6 +1,7 @@
 // Registro unico dei veicoli (A.91 e A.105, E&L del 05/10/2026): src/veicoli-registro.js e server.mjs → /api/veicoli.
 // Record modificato da scheda e plancia senza perdite, conflitto di revisione, migrazione dello Scout di Pablo,
 // movimento all'Iniziativa del conducente e cambio di conducente nello stesso Round.
+import '../tools/guardia-subito.mjs'; // la guardia sulle cartelle vere, comunque si lanci il test
 import { test, before, after } from 'node:test';
 import assert from 'node:assert/strict';
 import { mkdtempSync, rmSync, readdirSync } from 'node:fs';

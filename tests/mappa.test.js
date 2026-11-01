@@ -1,4 +1,5 @@
 // Mappa di battaglia, lotto 1 (docs/battlemap/piano.md): logica pura di src/mappa/ e dati di data/mappa.json.
+import '../tools/guardia-subito.mjs'; // la guardia sulle cartelle vere, comunque si lanci il test
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';

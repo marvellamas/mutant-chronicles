@@ -1,6 +1,7 @@
 // Lotto 6 della mappa di battaglia (docs/battlemap/piano.md): barra dell'Iniziativa (src/mappa/iniziativa.js), barra
 // accanto alla mappa in tre disposizioni (src/mappa/disposizione.js), camera che resta centrata quando il riquadro
 // cambia misura (src/mappa/camera.js → mantieniCentro) e barra filtrata per i giocatori (src/mappa/vista.js).
+import '../tools/guardia-subito.mjs'; // la guardia sulle cartelle vere, comunque si lanci il test
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { barraIniziativa, barraPerGiocatori, posizioneSullaScala, tacche, avanzamentoTurno } from '../src/mappa/iniziativa.js';

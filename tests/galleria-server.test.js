@@ -1,6 +1,7 @@
 // Galleria (N1, 13/10/2026): /api/galleria sul server, su cartelle temporanee e porta casuale. Caricamento,
 // immagini messe a mano nella cartella, «Mostra ai giocatori», «Nascondi a tutti», sostituzione, galleria dei
 // giocatori e «Togli dalla galleria dei giocatori».
+import '../tools/guardia-subito.mjs'; // la guardia sulle cartelle vere, comunque si lanci il test
 import { test, before, after } from 'node:test';
 import assert from 'node:assert/strict';
 import { mkdtempSync, rmSync, mkdirSync, writeFileSync, existsSync, readFileSync } from 'node:fs';

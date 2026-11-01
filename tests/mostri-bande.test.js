@@ -1,6 +1,7 @@
 // Blocco «Bande e grandi avversari» (cap. 8 del Manuale dei Mostri v0.16): i dieci profili prestabiliti in
 // esempi/nemici/mostri/ sono validi, con Spazio e portata dai dati, GS/PX informativo e le scelte ricorrenti
 // sugli umanoidi (AR con scudo, nomi d'Abilità del catalogo, armi a distanza come attacchi distanza).
+import '../tools/guardia-subito.mjs'; // la guardia sulle cartelle vere, comunque si lanci il test
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';

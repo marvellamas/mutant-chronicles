@@ -1,6 +1,7 @@
 // Tab Artefatti (docs/layout-sd.md, pezzo 4): stessa sintonizzazione e stessi effetti di prima (il
 // confronto è con i valori del collaudo b, tests/collaudo.test.js); un Artefatto nel deposito comune
 // non è sintonizzabile e non occupa capacità.
+import '../tools/guardia-subito.mjs'; // la guardia sulle cartelle vere, comunque si lanci il test
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';

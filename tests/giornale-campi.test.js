@@ -4,6 +4,7 @@
 //      dichiarata (si sostituisce). Un campo numerico nuovo, aggiunto senza deciderlo, fa fallire questo test;
 //   2. un campo non classificato si comporta comunque da assegnazione (il default sicuro): sbagliare in questa
 //      direzione produce una domanda in più al Direttore, mai una Caratteristica falsa.
+import '../tools/guardia-subito.mjs'; // la guardia sulle cartelle vere, comunque si lanci il test
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync, readdirSync } from 'node:fs';

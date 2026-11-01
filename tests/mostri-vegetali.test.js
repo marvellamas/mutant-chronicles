@@ -1,5 +1,6 @@
 // Blocco «Vegetali e custodi delle foreste» (cap. 8 del Manuale dei Mostri v0.18): dieci profili validi, Rovi
 // viventi e poteri a PM come capacità, Abilità non del catalogo nelle note (A.169), Spazio quadrato, GS/PX.
+import '../tools/guardia-subito.mjs'; // la guardia sulle cartelle vere, comunque si lanci il test
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';

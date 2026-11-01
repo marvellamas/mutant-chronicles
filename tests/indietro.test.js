@@ -1,6 +1,7 @@
 // «Indietro» nell'Iniziativa (ritocchi del 07/10/2026, src/scontro.js → avanti, anteprimaIndietro, indietro): annulla
 // l'ultimo «Avanti» e riporta turno, Round, durate, effetti, Stati dei nemici e perdite periodiche com'erano; più passi,
 // con il limite di data/mappa.json → iniziativa.indietro_max; le modifiche fatte dopo restano e l'avviso lo dice.
+import '../tools/guardia-subito.mjs'; // la guardia sulle cartelle vere, comunque si lanci il test
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';

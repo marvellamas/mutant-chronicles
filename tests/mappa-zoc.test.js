@@ -1,4 +1,5 @@
 // Zone di controllo e Attacchi di Opportunità (07/10/2026; src/mappa/zoc.js; Giocatore §5.3, Armamenti §7.1.2).
+import '../tools/guardia-subito.mjs'; // la guardia sulle cartelle vere, comunque si lanci il test
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { portataDi, controllaZoc, avversariZoc, avversariZocInattivi, statoCheImpedisce, distanzaIngombri, celleZoc, passiInZoc, attacchiDiOpportunita, testoOpportunita } from '../src/mappa/zoc.js';

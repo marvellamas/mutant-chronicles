@@ -1,5 +1,6 @@
 // Blocco «Costrutti e Modron» (cap. 8 del Manuale dei Mostri v0.23): dieci profili validi, PM e Volontà assenti
 // con `senza_salvezza`, immunità solo negli Stati dell'app, armi della dotazione, Gas, Furia, trasferimento, Spazio.
+import '../tools/guardia-subito.mjs'; // la guardia sulle cartelle vere, comunque si lanci il test
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';

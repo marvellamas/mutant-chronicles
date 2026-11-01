@@ -1,5 +1,6 @@
 // Dati dell'utility «Lancia un incantesimo»: incantesimi.json → meccanica, regole.json → lancio,
 // effetti.lancio dei Talenti (tools/estrai_lancio.py; Magia sez. 1–3, 5–7, 12.3).
+import '../tools/guardia-subito.mjs'; // la guardia sulle cartelle vere, comunque si lanci il test
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { validaDati } from '../src/validate.js';

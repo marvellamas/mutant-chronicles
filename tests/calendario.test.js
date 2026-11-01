@@ -1,4 +1,5 @@
 // Calendario di gioco (src/calendario.js): date, avanzamento, note, ricerca, migrazione e file.
+import '../tools/guardia-subito.mjs'; // la guardia sulle cartelle vere, comunque si lanci il test
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { datiReali, copia } from './helpers.js';

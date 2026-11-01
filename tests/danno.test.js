@@ -1,6 +1,7 @@
 // Danno applicato (src/danno.js → applicaColpo), casi del Giocatore 0.45: §5.10 (AC e Difese), §5.13 (ordine,
 // mai sotto 0), §5.14 (PV a 0, nuove Ferite per fascia ed esito della Tempra, Morte), §5.24 (natura del danno,
 // Perforante e Laser, effetti delle proprietà). Nessun locativo (decisione 3 del piano).
+import '../tools/guardia-subito.mjs'; // la guardia sulle cartelle vere, comunque si lanci il test
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';

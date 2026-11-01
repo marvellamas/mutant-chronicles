@@ -1,6 +1,7 @@
 // Talenti v1.0 (25/10/2026, sera): i testi leggibili del catalogo (src/talenti-testi.js). Ogni voce che si può scegliere —
 // 39 Talenti Liberi, 72 Maestrie, 86 Specializzazioni — ha una riga breve e un testo completo che sono stringhe, non
 // vuote, senza «[object», «undefined» o «NaN» (il 25/10 il riquadro scriveva «[object Object]» per le sintesi).
+import '../tools/guardia-subito.mjs'; // la guardia sulle cartelle vere, comunque si lanci il test
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { datiReali } from './helpers.js';

@@ -1,6 +1,7 @@
 // Tavolo del Master, pezzo 1 (docs/tavolo-direttore.md): la plancia legge gli stessi valori di
 // calcolaScheda (src/tavolo.js → vistaPlancia), la selezione «al tavolo» si salva sul server e senza
 // server l'app non offre la plancia.
+import '../tools/guardia-subito.mjs'; // la guardia sulle cartelle vere, comunque si lanci il test
 import { test, before, after } from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync, mkdtempSync, rmSync } from 'node:fs';

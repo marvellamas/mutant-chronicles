@@ -7,6 +7,7 @@
 // Ogni prova lavora dentro una propria cartella "casa" finta (home), passata esplicitamente a cerca-personaggi.mjs:
 // senza, la ricerca guarderebbe anche la cartella TEMP vera del PC (dove mkdtempSync crea le cartelle di prova di
 // TUTTI i test, anche quelli già finiti) e troverebbe installazioni di altre prove, non solo quella di questo test.
+import '../tools/guardia-subito.mjs'; // la guardia sulle cartelle vere, comunque si lanci il test
 import { test, beforeEach } from 'node:test';
 import assert from 'node:assert/strict';
 import { mkdtempSync, mkdirSync, writeFileSync, readFileSync, readdirSync, existsSync, rmSync } from 'node:fs';

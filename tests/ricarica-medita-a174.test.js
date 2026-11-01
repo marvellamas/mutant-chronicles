@@ -2,6 +2,7 @@
 // ricarica con i PM che il personaggio ha adesso (rapporto dei Talenti, entro la capacità, Prova di Potere come da sola),
 // poi la Meditazione con il suo esito; un'interruzione non annulla la ricarica; mai PM spesi in anticipo. Riepilogo in una
 // riga: «Spesi 9 PM → cristallo +3 cariche · Meditazione: recuperati 4 PM».
+import '../tools/guardia-subito.mjs'; // la guardia sulle cartelle vere, comunque si lanci il test
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { contesto, resa, clic, dati } from './scheda-aiuti.js';

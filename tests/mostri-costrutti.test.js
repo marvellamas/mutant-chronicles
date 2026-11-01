@@ -1,6 +1,7 @@
 // Blocco «Costrutti e creature elementali» (cap. 8 del Manuale dei Mostri v0.16): i dieci profili prestabiliti
 // sono validi, con gli attacchi ad area (senza VA) come capacità, l'elemento nella proprietà, AR magica degli
 // Elementali, immunità come Stati, GS/PX informativo e Spazio quadrato con la nota per il Tappeto 2×1.
+import '../tools/guardia-subito.mjs'; // la guardia sulle cartelle vere, comunque si lanci il test
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';

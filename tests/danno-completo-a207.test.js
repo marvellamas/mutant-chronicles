@@ -2,6 +2,7 @@
 // indicazione del profilo. Il «Danno completo» comprende già i bonus ordinari: non si aggiungono Caratteristica o Specializzazione
 // (l'EQ dei modelli PNG resta, una volta sola). AC 1 non limita il numero di attacchi del Round.
 // Qui: nessun profilo del Tavolo somma due volte i bonus, in nessuna delle strade che producono un nemico.
+import '../tools/guardia-subito.mjs'; // la guardia sulle cartelle vere, comunque si lanci il test
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync, readdirSync } from 'node:fs';

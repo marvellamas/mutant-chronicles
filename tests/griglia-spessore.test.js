@@ -1,5 +1,6 @@
 // Spessore della griglia (13/10/2026, richiesta di Marcello): un cursore accanto all'opacità, con i gradini di
 // data/mappa.json → griglia.spessori; si salva nella scena ed è uguale per il master e per lo schermo dei giocatori.
+import '../tools/guardia-subito.mjs'; // la guardia sulle cartelle vere, comunque si lanci il test
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';

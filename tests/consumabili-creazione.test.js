@@ -1,5 +1,6 @@
 // «Crea consumabile» (Manuale della Magia §27.2, con le fasi del §24.3–24.6): costi per Grado, Magistrale, Prove fallite,
 // supporti diversi, accesso dell'Officiante, consumabile creato usabile, crediti e PM scalati, stampa, validatore.
+import '../tools/guardia-subito.mjs'; // la guardia sulle cartelle vere, comunque si lanci il test
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { calcolaScheda } from '../src/calc.js';

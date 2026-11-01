@@ -1,4 +1,5 @@
 // Mappa di battaglia, lotto 1: API /api/scene e /api/mappe di server.mjs, su cartelle temporanee e porta casuale.
+import '../tools/guardia-subito.mjs'; // la guardia sulle cartelle vere, comunque si lanci il test
 import { test, before, after } from 'node:test';
 import assert from 'node:assert/strict';
 import { mkdtempSync, rmSync, readdirSync, writeFileSync, mkdirSync } from 'node:fs';

@@ -2,6 +2,7 @@
 // 10 Punti Abilità Liberi invece di 5, per-davide A.52) e riassegnazione dei punti che con i limiti del
 // VA personale (Doc del 29/09/2026: categorie di competenza, §2.13, §8.3; per-davide A.57) non
 // aumentano più il VA.
+import '../tools/guardia-subito.mjs'; // la guardia sulle cartelle vere, comunque si lanci il test
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { calcolaScheda, validaLivello } from '../src/calc.js';

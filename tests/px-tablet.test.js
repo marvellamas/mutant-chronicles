@@ -1,5 +1,6 @@
 // F (25/10/2026, pannello PX): i PX li cambia solo il Direttore. Non basta nasconderli dall'interfaccia del
 // giocatore: un tablet non deve poterli scrivere né dal salvataggio normale né dalla coda offline.
+import '../tools/guardia-subito.mjs'; // la guardia sulle cartelle vere, comunque si lanci il test
 import { test, before, after } from 'node:test';
 import assert from 'node:assert/strict';
 import { mkdtempSync, rmSync, mkdirSync, readFileSync } from 'node:fs';

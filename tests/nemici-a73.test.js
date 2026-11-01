@@ -1,6 +1,7 @@
 // Lotto 8 (docs/diff-manuali-2026-10-02-sera.md): i nemici del Tavolo del Master secondo le risposte di Davide
 // ad A.73 (E&L del 02/10, decisioni 5–9): Ferite e Menomazioni come i PG, «Lancia!» con i PM del nemico,
 // movimento «non consentito», parità d'Iniziativa con una Caratteristica mancante, A.78 negli attacchi.
+import '../tools/guardia-subito.mjs'; // la guardia sulle cartelle vere, comunque si lanci il test
 import { test } from 'node:test';
 import { aggiungiDanno } from '../src/equipaggiamento.js';
 import assert from 'node:assert/strict';

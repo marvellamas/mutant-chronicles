@@ -1,5 +1,6 @@
 // Risposte di Davide ai 19 quesiti dell'app (Doc E&L, sezione «Risposte ai 19 quesiti dell'app»,
 // 29/09/2026). La numerazione dei test segue quella delle risposte.
+import '../tools/guardia-subito.mjs'; // la guardia sulle cartelle vere, comunque si lanci il test
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { calcolaScheda, bonusDannoCaratteristica, caratteristicaDanno } from '../src/calc.js';

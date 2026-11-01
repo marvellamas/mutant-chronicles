@@ -1,6 +1,7 @@
 // Round della scheda collegato allo scontro del Tavolo del Master (src/round-scontro.js; regole in data/regole.json →
 // durate_round): la scheda vede la sua sessione al Round dello scontro, la plancia la riallinea all'inizio e la porta al
 // Round finale alla fine. Senza server, o fuori da uno scontro, tutto come prima.
+import '../tools/guardia-subito.mjs'; // la guardia sulle cartelle vere, comunque si lanci il test
 import { test, before, after } from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync, mkdtempSync, rmSync } from 'node:fs';

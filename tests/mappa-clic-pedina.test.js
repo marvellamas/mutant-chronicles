@@ -9,6 +9,7 @@
 // sul codice di prima della correzione) e il giro completo clic sulla pedina → clic sul quadretto →
 // posizione cambiata e salvata sul server, con token liberi, template, muri disegnati, porte, un veicolo e
 // una creatura 2 × 2 in scena, dal PC del master e dal tablet del giocatore.
+import '../tools/guardia-subito.mjs'; // la guardia sulle cartelle vere, comunque si lanci il test
 import { test, before, after } from 'node:test';
 import assert from 'node:assert/strict';
 import { mkdtempSync, rmSync, mkdirSync, writeFileSync, cpSync } from 'node:fs';

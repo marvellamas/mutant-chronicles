@@ -1,5 +1,6 @@
 // A.154 e A.155 (risposte di Davide del 10/10/2026): peso della cartuccia del decontaminante e profilo fisico
 // delle pergamene. Valori nei dati; nel carico contano come gli altri oggetti, per esemplare.
+import '../tools/guardia-subito.mjs'; // la guardia sulle cartelle vere, comunque si lanci il test
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { datiReali } from './helpers.js';

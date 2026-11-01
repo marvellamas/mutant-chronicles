@@ -2,6 +2,7 @@
 // Marcello del 09/10/2026): elenco dei salvataggi, rifiuto con il server acceso, copia di sicurezza prima di toccare
 // qualunque cosa, cartelle rimesse al loro posto (le altre lasciate, i LEGGIMI conservati), zip rovinati rifiutati.
 // Cartelle temporanee e porta casuale.
+import '../tools/guardia-subito.mjs'; // la guardia sulle cartelle vere, comunque si lanci il test
 import { test, after } from 'node:test';
 import assert from 'node:assert/strict';
 import { mkdtempSync, rmSync, mkdirSync, writeFileSync, readFileSync, readdirSync, existsSync, utimesSync } from 'node:fs';

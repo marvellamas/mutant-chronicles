@@ -1,5 +1,6 @@
 // Manuale dell'Equipaggiamento 0.3, capitoli 2, 3, 4 e 6 (tools/lotti/lotto_equipaggiamento_03.mjs,
 // docs/equipaggiamento-lotti.md): schede, effetti, collegamento delle voci di dotazione (A.34).
+import '../tools/guardia-subito.mjs'; // la guardia sulle cartelle vere, comunque si lanci il test
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { catalogo, risolvi, normalizzaEquipaggiamento } from '../src/equipaggiamento.js';

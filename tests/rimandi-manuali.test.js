@@ -1,6 +1,7 @@
 // Rimandi «verranno integrati successivamente» nei testi dei dati (docs/diff-manuali-2026-10-02.md, lotto 1):
 // restano solo quelli che il manuale corrente contiene ancora; i paragrafi integrati il 01/10 sera
 // (creazione degli Artefatti, Rituali, Batteria Mistica) sono il testo nuovo, verificabile.
+import '../tools/guardia-subito.mjs'; // la guardia sulle cartelle vere, comunque si lanci il test
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { normalizza, testoManuali } from '../tools/verifica_frasi.mjs';

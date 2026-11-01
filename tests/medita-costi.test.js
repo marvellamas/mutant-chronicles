@@ -1,6 +1,7 @@
 // B del 20/10/2026 (chiarimento di Marcello sull'A.174): la scorciatoia di «Medita» unisce due azioni lecite — spendere i
 // propri PM per ricaricare il cristallo e recuperarli meditando — e deve far pagare TUTTO ciò che pagherebbero i due passaggi
 // separati. Un test per ciascun costo della ricarica (Magia sez. 6), applicato anche dalla strada breve.
+import '../tools/guardia-subito.mjs'; // la guardia sulle cartelle vere, comunque si lanci il test
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { contesto, resa, clic, dati } from './scheda-aiuti.js';

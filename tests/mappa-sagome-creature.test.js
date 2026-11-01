@@ -1,6 +1,7 @@
 // A.167 (18/10/2026), la mappa con le sagome vere delle creature: ingombro dalla scheda (Madre 3 × 10, Roc 6 × 6), scena e
 // validazione, rotazione a 45° con muri e token, movimento che tiene conto della sagoma, ZoC sui quadretti veri, luce,
 // selezione, posizione iniziale, e nessuna regressione per scene e scontri salvati col vecchio formato.
+import '../tools/guardia-subito.mjs'; // la guardia sulle cartelle vere, comunque si lanci il test
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';

@@ -1,6 +1,7 @@
 // La coda delle operazioni offline, lato tablet (21/10/2026, quarto lotto, src/ui/coda-offline.js): accoda solo
 // quello che è cambiato, la base avanza man mano, il giocatore può togliere una riga, la coda sopravvive a un
 // «riavvio» (qui: un secondo localStorage finto con lo stesso contenuto, come dopo aver chiuso e riaperto l'app).
+import '../tools/guardia-subito.mjs'; // la guardia sulle cartelle vere, comunque si lanci il test
 import { test, beforeEach } from 'node:test';
 import assert from 'node:assert/strict';
 

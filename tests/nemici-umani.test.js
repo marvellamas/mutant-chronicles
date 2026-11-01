@@ -1,6 +1,7 @@
 // Convertitore «PG → nemico» (src/nemico-da-pg.js) e bestiario umano proposto (esempi/nemici/umani/,
 // tools/genera_nemici_umani.mjs): i numeri vengono dal motore, i file sono validi e in sincronia con il
 // generatore, i tre gradi crescono in modo coerente.
+import '../tools/guardia-subito.mjs'; // la guardia sulle cartelle vere, comunque si lanci il test
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync, readdirSync } from 'node:fs';

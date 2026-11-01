@@ -1,5 +1,6 @@
 // Lotto 146 (30/10/2026): celle d'arma, pacchi e trasformatori sulle edizioni nuove (Equipaggiamento 0.22 §5.4, Armamenti 0.68
 // §7.20.5–§7.20.6, registro Revisione NEC 2.7). Valori dal manuale; un valore che il manuale non dà resta «da definire».
+import '../tools/guardia-subito.mjs'; // la guardia sulle cartelle vere, comunque si lanci il test
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { datiReali } from './helpers.js';

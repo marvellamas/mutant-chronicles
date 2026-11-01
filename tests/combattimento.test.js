@@ -1,6 +1,7 @@
 // Tab Combattimento (docs/layout-sd.md, pezzo 3): Corruzione Oscura nei valori effettivi (Giocatore
 // §5.20), armi impugnate e «Ricarica», caricatori di riserva che cambiano solo nella sessione (dalla
 // riga dell'Inventario). La disposizione nella SD è verificata nel browser.
+import '../tools/guardia-subito.mjs'; // la guardia sulle cartelle vere, comunque si lanci il test
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { calcolaScheda } from '../src/calc.js';

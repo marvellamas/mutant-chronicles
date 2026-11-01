@@ -1,5 +1,6 @@
 // Esito di una Prova con il d20 (src/prova.js → esitoProva; regole.json → prova e magistrale_naturale;
 // Giocatore §1.6 «Risultati naturali», §1.7 «Successi automatici e azioni impossibili»).
+import '../tools/guardia-subito.mjs'; // la guardia sulle cartelle vere, comunque si lanci il test
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { esitoProva } from '../src/prova.js';

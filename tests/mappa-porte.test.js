@@ -1,6 +1,7 @@
 // Porte della mappa di battaglia (fase 2, lotto 2; src/mappa/porte.js; A.125, decisione 130): stati aperta, chiusa,
 // bloccata e segreta; movimento (porta aperta = passaggio, chiusa o bloccata = muro), AzP e registro, segrete mai
 // inviate ai giocatori, formato della scena e Ctrl+Z.
+import '../tools/guardia-subito.mjs'; // la guardia sulle cartelle vere, comunque si lanci il test
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { datiReali, copia } from './helpers.js';

@@ -1,6 +1,7 @@
 // A.136 (risposta di Davide dell'08/10/2026, decisione 140): Prova facoltativa di Atletica in Corsa e Scatto in
 // «Attacca!» (src/attacco.js, regole.json → attacco_distanza.movimento.prova_atletica) e movimento del Round letto
 // dalla scena collegata allo scontro (src/mappa/annulla.js → movimentoDelRound, server.mjs → /api/movimento-round).
+import '../tools/guardia-subito.mjs'; // la guardia sulle cartelle vere, comunque si lanci il test
 import { test, before, after } from 'node:test';
 import assert from 'node:assert/strict';
 import { mkdtempSync, rmSync, writeFileSync, mkdirSync } from 'node:fs';

@@ -1,6 +1,7 @@
 // Veicoli con orientamento libero (08/10/2026): quadretti occupati dal rettangolo ruotato («almeno metà», come i
 // template), rotazione a passi, collisioni con muri e token, area di movimento, linea di tiro, discesa dei passeggeri,
 // muso nella barra dell'Iniziativa, scene di prima con la direzione a 90°.
+import '../tools/guardia-subito.mjs'; // la guardia sulle cartelle vere, comunque si lanci il test
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { datiReali } from './helpers.js';

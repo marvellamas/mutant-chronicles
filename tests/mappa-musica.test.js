@@ -1,6 +1,7 @@
 // Musica di fondo della mappa (richiesta di Marcello del 07/10/2026): cartella musica/ del server (/api/musica: elenco
 // filtrato per formato, file anche a pezzi con Range, nomi sicuri, cartella non servita come file statico), musica
 // della bozza che passa allo scontro con «Inizia», musica dello scontro e quando suona.
+import '../tools/guardia-subito.mjs'; // la guardia sulle cartelle vere, comunque si lanci il test
 import { test, before, after } from 'node:test';
 import assert from 'node:assert/strict';
 import { mkdtempSync, rmSync, writeFileSync, mkdirSync } from 'node:fs';

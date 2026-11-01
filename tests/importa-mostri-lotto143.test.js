@@ -2,6 +2,7 @@
 // Nel lotto 141 il test «legge come le schede già presenti» saltava in silenzio i campi che il parser non leggeva (`if (a.ar)`),
 // e il controllo a mano ha trovato due difetti su cinque: un valore scritto nella pagina comune (AC) e un ingombro parziale
 // al posto del completo. Qui: nessun campo numerico saltato, AC dal blocco, ingombro completo, controllo incrociato.
+import '../tools/guardia-subito.mjs'; // la guardia sulle cartelle vere, comunque si lanci il test
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync, readdirSync } from 'node:fs';

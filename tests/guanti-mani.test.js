@@ -1,6 +1,7 @@
 // Guanti da Combattimento Mistico a 0 mani (manuali del 12/10/2026: Armamenti 0.61 §7.24, Equipaggiamento 0.7
 // cap. 10, Magia 1.4 sez. 26, Giocatore 0.48 §5.13). Un oggetto può essere insieme Arma e Artefatto: i Guanti sono
 // indossati, non occupano mani, e restano un Artefatto con la sua riserva, contata una volta sola.
+import '../tools/guardia-subito.mjs'; // la guardia sulle cartelle vere, comunque si lanci il test
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { datiReali } from './helpers.js';

@@ -3,6 +3,7 @@
 //        dopo), mostrando formula, dadi e totale, per tutte le creature e le armi navali; Dragomedusa 8d10×5 e 12d10×5.
 // A.200: il minimo 0 dell'Iniziativa vale per il bonus base, non per il totale: Ferite, condizioni e altri effetti
 //        continuano a dare penalità dopo il minimo e il totale può essere negativo.
+import '../tools/guardia-subito.mjs'; // la guardia sulle cartelle vere, comunque si lanci il test
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync, readdirSync } from 'node:fs';

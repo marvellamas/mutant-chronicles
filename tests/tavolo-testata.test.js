@@ -1,5 +1,6 @@
 // Tavolo del Master, ritocchi del 09/10 (Marcello): nel riquadro «Scontro» senza scontro aperto «Nuovo scontro al volo»
 // e accanto «Prepara scontro»; la testata della pagina a gruppi con etichetta (Tavolo, Gioco, Nemici, Sessione).
+import '../tools/guardia-subito.mjs'; // la guardia sulle cartelle vere, comunque si lanci il test
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';

@@ -1,4 +1,5 @@
 // Dati dell'attacco a distanza (regole.json → attacco_distanza; Giocatore §5.2, §5.8, §5.10, §5.11).
+import '../tools/guardia-subito.mjs'; // la guardia sulle cartelle vere, comunque si lanci il test
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { validaDati } from '../src/validate.js';

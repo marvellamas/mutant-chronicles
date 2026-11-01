@@ -1,6 +1,7 @@
 // A.179 (Davide, 25/10/2026): Aura di Resistenza + Pelle di Rinoceronte = +3 contro il Ravvicinato Naturale o Magico,
 // +2 contro gli altri danni Naturali o Magici, +2 contro l'Etereo; aggiungendo Corazza Potenziata +4 / +3 / +3.
 // Il calcolo reale di calcolaAR, non la somma dei numeri dei dati.
+import '../tools/guardia-subito.mjs'; // la guardia sulle cartelle vere, comunque si lanci il test
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { calcolaScheda } from '../src/calc.js';

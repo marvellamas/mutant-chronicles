@@ -2,6 +2,7 @@
 // server mai sovrascritto, autosave solo con modifiche e con rotazione sicura, procedura unica dai tre punti («Salva
 // sessione» e «Spegni Mutant» del server, salva-sessione.bat), destinazioni assenti o in errore mai bloccanti, zip
 // «dati» senza le immagini delle mappe, notifica ntfy con allegato (verso un server finto, niente rete nei test).
+import '../tools/guardia-subito.mjs'; // la guardia sulle cartelle vere, comunque si lanci il test
 import { test, after } from 'node:test';
 import assert from 'node:assert/strict';
 import { mkdtempSync, rmSync, mkdirSync, writeFileSync, readFileSync, readdirSync, existsSync, utimesSync } from 'node:fs';

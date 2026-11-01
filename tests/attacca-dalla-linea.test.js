@@ -1,5 +1,6 @@
 // «Apri Attacca! con questo bersaglio» dalla linea di tiro (13/10/2026, P4): un tocco dalla linea al pannello già
 // pronto, con il bersaglio e la distanza. Niente di automatico in più: il resto lo sceglie il giocatore.
+import '../tools/guardia-subito.mjs'; // la guardia sulle cartelle vere, comunque si lanci il test
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';

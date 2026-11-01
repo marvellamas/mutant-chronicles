@@ -1,5 +1,6 @@
 // Stato dello scontro accanto a ogni scena dell'elenco delle mappe (09/10, src/mappa/stato-scene.js): «In corso»,
 // «Scontro terminato», «Bozza» o niente; prima le scene in corso.
+import '../tools/guardia-subito.mjs'; // la guardia sulle cartelle vere, comunque si lanci il test
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { statoScontroScena, sceneConStato, ETICHETTE_SCENA } from '../src/mappa/stato-scene.js';

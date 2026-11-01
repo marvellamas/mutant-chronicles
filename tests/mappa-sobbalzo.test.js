@@ -3,6 +3,7 @@
 // e il gruppo di destra andava a capo; nella vista giocatori il pannello del PG sotto la mappa (tablet in verticale) e la
 // barra in alto cambiavano altezza, e ogni cambio del riquadro rifaceva «Adatta allo schermo». Le prove nel browser
 // (20 azioni di fila senza cambi della tela né dello zoom) sono nel riepilogo; qui ciò che le tiene ferme.
+import '../tools/guardia-subito.mjs'; // la guardia sulle cartelle vere, comunque si lanci il test
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';

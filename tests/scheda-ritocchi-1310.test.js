@@ -1,5 +1,6 @@
 // Ritocchi della scheda del giocatore (13/10/2026, richieste di Marcello dopo la sessione del 12/10): solo
 // disposizione, salvo le Ferite «Oltre» (tests/ferite-oltre.test.js). Si rende la scheda con il DOM finto.
+import '../tools/guardia-subito.mjs'; // la guardia sulle cartelle vere, comunque si lanci il test
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';

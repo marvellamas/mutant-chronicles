@@ -4,6 +4,7 @@
 // su un PG non raddoppiava il danno, perché il moltiplicatore lo applicava soltanto il pulsante «Tira con l’app»
 // della finestra «Colpito» e non il motore. Qui si verifica la catena intera: proposta dell'attacco del nemico →
 // colpo → applicaColpo → AR → PV, con lo stesso calcolo per i PG che colpiscono i nemici.
+import '../tools/guardia-subito.mjs'; // la guardia sulle cartelle vere, comunque si lanci il test
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';

@@ -1,5 +1,6 @@
 // «Un originale solo» (20/10/2026, prima parte della pipeline dei salvataggi): un file per personaggio con un'identità
 // stabile, la lista letta dal disco, la scrittura a ogni modifica e le versioni vecchie in `personaggi/storico/`.
+import '../tools/guardia-subito.mjs'; // la guardia sulle cartelle vere, comunque si lanci il test
 import { test, before, after } from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync, writeFileSync, mkdtempSync, rmSync, readdirSync, existsSync, mkdirSync, utimesSync } from 'node:fs';

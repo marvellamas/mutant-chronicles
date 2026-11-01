@@ -1,6 +1,7 @@
 // «Tablet e personaggi scelti» (21/10/2026, «le code dell'originale», parte B): dentro «Collega i giocatori»,
 // non una tab nuova. Comprensibile senza sapere cos'è un identificativo: un dispositivo che non ha ancora
 // scelto si legge «tablet non ancora assegnato», mai un codice. Con il DOM finto (tests/dom-finto.js).
+import '../tools/guardia-subito.mjs'; // la guardia sulle cartelle vere, comunque si lanci il test
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { installaDomFinto } from './dom-finto.js';

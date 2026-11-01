@@ -1,6 +1,7 @@
 // Menu del clic destro sulla mappa (richiesta di Marcello del 07/10/2026; src/mappa/menu.js, data/mappa.json → menu):
 // riga rapida, gruppi con intestazione e «Opzioni»; solo le voci utilizzabili; gruppi vuoti nascosti; niente
 // ripetizioni; il menu non esce dal riquadro.
+import '../tools/guardia-subito.mjs'; // la guardia sulle cartelle vere, comunque si lanci il test
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { datiReali, copia } from './helpers.js';

@@ -3,6 +3,7 @@
 //  - un Taumaturgo ha una sola scelta iniziale, fra le nove Specializzazioni di Potere (e le altre del suo elenco);
 //  - gli ampliamenti di Usufruitore di Magia (le nove di Potere) e di Ritualista (Cerimoniale, Controllo Rituale) si aprono
 //    solo con il Talento posseduto.
+import '../tools/guardia-subito.mjs'; // la guardia sulle cartelle vere, comunque si lanci il test
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { datiReali } from './helpers.js';

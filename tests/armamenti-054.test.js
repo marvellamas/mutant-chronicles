@@ -1,4 +1,5 @@
 // Armamenti 0.54: KEP 808 e Colt Hammershot (tools/lotti/lotto_armamenti_054.mjs).
+import '../tools/guardia-subito.mjs'; // la guardia sulle cartelle vere, comunque si lanci il test
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { catalogo } from '../src/equipaggiamento.js';

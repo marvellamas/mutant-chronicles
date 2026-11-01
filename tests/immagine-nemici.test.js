@@ -1,5 +1,6 @@
 // Immagine dei nemici sui token della mappa (A.131, decisione di Marcello del 06/10/2026): campo facoltativo
 // «immagine» del formato dei nemici, copie nello scontro e nella bozza, token con l'immagine o con le iniziali.
+import '../tools/guardia-subito.mjs'; // la guardia sulle cartelle vere, comunque si lanci il test
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';

@@ -7,6 +7,7 @@
 // aumentavano più il VA sono stati riassegnati come farebbe «Assegna» (la copia con le regole del 27/09 è
 // in collaudo/regole-27-09/ per il test della migrazione). VA = Mod + base della categoria nella prima
 // Classe (S 7, P 6, G 5, N 3) + Corporazione + Avanzamento, entro il limite della categoria più alta.
+import '../tools/guardia-subito.mjs'; // la guardia sulle cartelle vere, comunque si lanci il test
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';

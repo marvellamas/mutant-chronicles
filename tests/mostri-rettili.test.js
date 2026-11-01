@@ -1,6 +1,7 @@
 // Blocco «Grandi rettili e predatori mostruosi» (cap. 8 del Manuale dei Mostri v0.23): dieci profili validi,
 // soffi e prese come capacità, Idra con teste e Opportunità speciali, Viverna con tre dosi al giorno, Spazio
 // quadrato (Drago tartaruga 4 × 4 Q nelle note con A.167), GS/PX informativo.
+import '../tools/guardia-subito.mjs'; // la guardia sulle cartelle vere, comunque si lanci il test
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';

@@ -1,6 +1,7 @@
 // Creature grandi e capacità dei nemici: A.126 (campo Spazio), A.133 (portata attorno all'ingombro),
 // A.126–A.138 (origine dei coni) e A.115 (capacità con parametri e usi). Risposte approvate il 15/10/2026.
 // Nessuna regressione: i nemici senza i campi nuovi restano come oggi.
+import '../tools/guardia-subito.mjs'; // la guardia sulle cartelle vere, comunque si lanci il test
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { datiReali } from './helpers.js';

@@ -1,6 +1,7 @@
 // Blocco «Bestie e predatori» (cap. 8 del Manuale dei Mostri v0.13): i dieci profili prestabiliti in
 // esempi/nemici/mostri/ sono validi, con Spazio e portata dai dati, GS/PX informativo e gli attacchi senza
 // danni (Getto di seta) come capacità. La validità generale è già nel test della Covata; qui le specificità.
+import '../tools/guardia-subito.mjs'; // la guardia sulle cartelle vere, comunque si lanci il test
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';

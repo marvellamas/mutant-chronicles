@@ -1,5 +1,6 @@
 // «Modifica master» (12/10/2026, richiesta di Davide e Marcello): il DdG cambia qualsiasi valore di un PG, con registro
 // e annulla. Le correzioni stanno a parte dal calcolo (src/correzioni-master.js) e il motore le applica dopo.
+import '../tools/guardia-subito.mjs'; // la guardia sulle cartelle vere, comunque si lanci il test
 import { test, before, after } from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync, readdirSync, mkdtempSync, rmSync, writeFileSync } from 'node:fs';

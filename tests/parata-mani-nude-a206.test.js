@@ -2,6 +2,7 @@
 // I Grado del Lottatore; il Talento a scelta diventa «Parata a Mani Nude Migliorata» (+2 VA alle Difese per parare a mani nude).
 // Le scelte già fatte del vecchio Talento si riconducono al nuovo: l'app lo fa leggendo il nome di prima, lo strumento
 // tools/migra-parata.mjs lo scrive nel file (provato su copie).
+import '../tools/guardia-subito.mjs'; // la guardia sulle cartelle vere, comunque si lanci il test
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { mkdtempSync, writeFileSync, readFileSync, readdirSync, rmSync } from 'node:fs';

@@ -2,6 +2,7 @@
 // Ricarica per Tamburo e per Serbatoio, 6 colpi; un carichino preparato trasferisce fino a 6 colpi in 1 AzP entro gli
 // spazi liberi dell'arma, il resto rimane nel carichino; si prepara dalle munizioni sciolte compatibili. Catalogo con i
 // dati della A.151 (peso, Qualità, PS Integrità, PI, Reperibilità; approvata il 09/10/2026) e validatore.
+import '../tools/guardia-subito.mjs'; // la guardia sulle cartelle vere, comunque si lanci il test
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { calcolaScheda } from '../src/calc.js';

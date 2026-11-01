@@ -1,5 +1,6 @@
 // PG d'esempio con le Tecniche Interiori (esempi/, tools/genera_esempio_tecniche.mjs): valido, wizard senza
 // avvisi, file in sincronia con il generatore, Tecniche dei tre gruppi, nessuna magia, PM per più «Attiva».
+import '../tools/guardia-subito.mjs'; // la guardia sulle cartelle vere, comunque si lanci il test
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';

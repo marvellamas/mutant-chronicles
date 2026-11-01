@@ -1,3 +1,4 @@
+import '../tools/guardia-subito.mjs'; // la guardia sulle cartelle vere, comunque si lanci il test
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { gruppiPallini, testoLivelloBase } from '../src/incantesimi.js';

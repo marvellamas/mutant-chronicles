@@ -1,6 +1,7 @@
 // Personaggi e nemici d'esempio del repo (esempi/, tools/genera_esempi.mjs) e «Carica esempi» del Tavolo del
 // Master (server.mjs → POST /api/esempi): gli esempi sono completi e coerenti con le regole attuali, e la copia
 // nelle cartelle del server non sovrascrive mai un file già presente.
+import '../tools/guardia-subito.mjs'; // la guardia sulle cartelle vere, comunque si lanci il test
 import { test, before, after } from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync, readdirSync, mkdtempSync, rmSync, writeFileSync } from 'node:fs';

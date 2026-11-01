@@ -9,6 +9,7 @@
 // effettiva, «comprese le parti che coprono meno di metà quadretto. La rotazione non deve consentire di
 // attraversare un muro con un angolo della pedina.» La portata si misura dal quadretto occupato più favorevole,
 // mai dal centro, ma senza colpire attraverso un ostacolo invalicabile.
+import '../tools/guardia-subito.mjs'; // la guardia sulle cartelle vere, comunque si lanci il test
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync, readdirSync } from 'node:fs';

@@ -20,6 +20,7 @@
 // ha sempre un'altezza massima e un proprio scorrimento, è spento dove le colonne si impilano, e la tabella resta
 // legata alla larghezza della sua colonna con le colonne fisse. La misura vera dei rettangoli (a 768, 800, 820, 912,
 // 1024, 1180 e 1280 px, verticale e orizzontale) è stata fatta nel browser con getBoundingClientRect: è nel riepilogo.
+import '../tools/guardia-subito.mjs'; // la guardia sulle cartelle vere, comunque si lanci il test
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';

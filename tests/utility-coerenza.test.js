@@ -1,6 +1,7 @@
 // Coerenza fra le etichette delle utility e il calcolo (controllo dopo la correzione di «Lancia!»):
 // le scelte mostrano i valori con i Talenti del personaggio, il Risultato mostra i valori che il calcolo
 // usa, e un Talento che cambia un numero lo dice. «Attacca!» (src/attacco.js), «Ripara» (src/riparazione.js).
+import '../tools/guardia-subito.mjs'; // la guardia sulle cartelle vere, comunque si lanci il test
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import {

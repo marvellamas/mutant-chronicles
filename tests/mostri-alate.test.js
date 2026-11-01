@@ -1,5 +1,6 @@
 // Blocco «Creature alate e piccoli predatori» (cap. 8 del Manuale dei Mostri v0.23): dieci profili validi, volo e
 // Spazio, veleni minori come capacità con la Tempra senza modificatore, sensi alternativi, GS/PX informativo.
+import '../tools/guardia-subito.mjs'; // la guardia sulle cartelle vere, comunque si lanci il test
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';

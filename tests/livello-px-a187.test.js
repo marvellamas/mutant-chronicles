@@ -1,5 +1,6 @@
 // A.187 (Davide, 28/10/2026): si sale di livello solo con i PX assegnati dal Direttore (soglie cumulative A.170, limite
 // dell'Atto), il blocco vale anche sul server, il Direttore può concedere un passaggio anticipato con motivo.
+import '../tools/guardia-subito.mjs'; // la guardia sulle cartelle vere, comunque si lanci il test
 import { test, before, after } from 'node:test';
 import assert from 'node:assert/strict';
 import { mkdtempSync, rmSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs';

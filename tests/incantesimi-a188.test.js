@@ -1,6 +1,7 @@
 // A.188 (Davide, 28/10/2026): il giocatore cambia da sé anche gli incantesimi conservati, ma quote, famiglie accessibili,
 // livello massimo e requisiti valgono di nuovo; il Direttore può forzare con conferma; ogni modifica va nello storico con
 // data, ora e provenienza; gli incantesimi a mano e quelli degli artefatti restano fuori dalle quote.
+import '../tools/guardia-subito.mjs'; // la guardia sulle cartelle vere, comunque si lanci il test
 import { test, before, after } from 'node:test';
 import assert from 'node:assert/strict';
 import { mkdtempSync, rmSync, mkdirSync, readFileSync } from 'node:fs';

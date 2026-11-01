@@ -1,6 +1,7 @@
 // Veicoli (Manuale dei Veicoli 0.2; lotto 2 di docs/ricognizione-2026-10-03.md): dati in data/veicoli.json,
 // motore puro in src/veicoli.js. Un test per ogni esempio numerico del manuale, più i casi limite:
 // PI a 0 per struttura, Corazzato contro danno basso, doppia soglia nello stesso colpo.
+import '../tools/guardia-subito.mjs'; // la guardia sulle cartelle vere, comunque si lanci il test
 import { test } from 'node:test';
 import { catalogo } from '../src/equipaggiamento.js';
 import assert from 'node:assert/strict';

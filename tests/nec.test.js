@@ -1,6 +1,7 @@
 // Equipaggiamento 0.5, cap. 5: NEC (§5.4, dal 30/10/2026 nell'edizione 0.22: accumulatori NEC, CEC, MEC e BEC in cariche,
 // tools/lotti/lotto_nec_cariche.mjs) e strumenti professionali (§§5.1–5.3, 5.5–5.8)
 // (tools/lotti/lotto_equipaggiamento_05.mjs, tools/lotti/lotto_equipaggiamento_03.mjs).
+import '../tools/guardia-subito.mjs'; // la guardia sulle cartelle vere, comunque si lanci il test
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { datiReali } from './helpers.js';

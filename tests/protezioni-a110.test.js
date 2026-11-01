@@ -1,5 +1,6 @@
 // A.110 (E&L del 05/10/2026, decisione 120): tempi per indossare e togliere le protezioni (regole.json →
 // protezioni_rapide.tempi; src/equipaggiamento.js → tempiProtezione, cambioProtezione).
+import '../tools/guardia-subito.mjs'; // la guardia sulle cartelle vere, comunque si lanci il test
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { calcolaScheda } from '../src/calc.js';

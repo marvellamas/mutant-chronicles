@@ -1,4 +1,5 @@
 // «Il master ha aggiornato la tua scheda» (25/10/2026, Test 4 di Davide): chi, su quale pagina, con quali modifiche in attesa.
+import '../tools/guardia-subito.mjs'; // la guardia sulle cartelle vere, comunque si lanci il test
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';

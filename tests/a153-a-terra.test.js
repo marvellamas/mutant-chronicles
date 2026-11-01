@@ -1,6 +1,7 @@
 // A.153 (risposta di Davide del 10/10/2026): il −2 per attaccare a distanza un bersaglio A Terra si somma alla
 // penalità della Copertura, perché postura e ostacolo sono modificatori distinti: −2, −4, −6. L'app faceva già così
 // (comportamento provvisorio dichiarato); qui si verifica con i numeri della risposta e si toglie il TODO.
+import '../tools/guardia-subito.mjs'; // la guardia sulle cartelle vere, comunque si lanci il test
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { datiReali } from './helpers.js';

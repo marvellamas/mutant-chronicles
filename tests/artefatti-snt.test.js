@@ -1,6 +1,7 @@
 // Lotto 2 del 02/10 (docs/diff-manuali-2026-10-02.md): SnT 0 per gli Artefatti con sole proprietà passive
 // (Armamenti §7.10, Magia §24.2) e risposta A.18 (Magia §24.2, §24.7): la riserva integrata alimenta
 // soltanto le funzioni del proprio Artefatto, non paga Incantesimi.
+import '../tools/guardia-subito.mjs'; // la guardia sulle cartelle vere, comunque si lanci il test
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { calcolaScheda } from '../src/calc.js';

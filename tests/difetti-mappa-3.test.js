@@ -3,6 +3,7 @@
 // spostamenti si perdevano al ricaricamento. Qui il percorso di un trascinamento come lo fa la pagina (puntatore →
 // camera → aggancio → scena → server) per PG, nemico e veicolo, su una scena collegata a una bozza e poi allo scontro
 // aperto che «Inizia» crea dalla bozza; più la nebbia del master che segue zoom e spostamenti (trovato nella verifica).
+import '../tools/guardia-subito.mjs'; // la guardia sulle cartelle vere, comunque si lanci il test
 import { test, before, after } from 'node:test';
 import assert from 'node:assert/strict';
 import { mkdtempSync, rmSync, mkdirSync, readFileSync } from 'node:fs';

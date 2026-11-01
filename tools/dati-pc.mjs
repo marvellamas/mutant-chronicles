@@ -15,6 +15,7 @@ import { readFileSync, writeFileSync, mkdirSync, renameSync, existsSync, readdir
 import { join, resolve, dirname, relative, isAbsolute } from 'node:path';
 import { tmpdir } from 'node:os';
 import { cartellaProfilo } from './config-avvisi.mjs';
+import { attivaGuardiaAutomatica } from './guardia-automatica.mjs';
 
 /** Le cartelle e i file di dati che stanno nella cartella dei dati (gli stessi di tools/file-locali.json). */
 export const CARTELLE_DATI = ['personaggi', 'tavolo', 'scontri', 'nemici', 'veicoli', 'scene', 'mappe', 'musica', 'galleria', 'px', 'salvataggi', 'autosave', 'backup-master'];
@@ -65,6 +66,7 @@ export function cartellaTemporanea(cartella, radiceApp, opz = {}) {
  *   `problema`: l'impostazione c'è ma punta a una cartella che non esiste più (si usa l'app e lo si dice).
  */
 export function cartellaDati(radiceApp, opz = {}) {
+  attivaGuardiaAutomatica(); // lotto 150: una prova che cerca le cartelle vere è già sotto guardia
   const imp = leggiImpostazione(opz);
   if (imp) {
     if (cartellaTemporanea(imp.cartella, radiceApp, opz)) return { cartella: resolve(radiceApp), fonte: 'app', impostata: imp.cartella, problema: 'La cartella dei personaggi impostata è una cartella temporanea: la ignoro' };

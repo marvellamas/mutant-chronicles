@@ -2,6 +2,7 @@
 // «Lucas» è al tavolo veniva preso per quello (conflitto «Il master ha aggiornato la tua scheda»). Ogni PG ha ora
 // un identificativo «pg» nel file; la scheda lo riconosce da quello; il nome del file è unico per PG (suffisso);
 // il server non scrive mai sopra un altro PG.
+import '../tools/guardia-subito.mjs'; // la guardia sulle cartelle vere, comunque si lanci il test
 import { test, before, after } from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync, writeFileSync, mkdtempSync, rmSync, readdirSync } from 'node:fs';

@@ -1,5 +1,6 @@
 // A.203 (la Madre delle Murene ha due configurazioni) e A.202 (la Murena della Roccia cucciolo è eterea, in overdose corporea),
 // risposte di Davide del 30/10/2026. Il punto da non sbagliare: cambiare configurazione o forma a metà scontro non azzera niente.
+import '../tools/guardia-subito.mjs'; // la guardia sulle cartelle vere, comunque si lanci il test
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';

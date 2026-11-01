@@ -1,6 +1,7 @@
 // Avvisi a Marcello con ntfy.sh (richiesta del 07/10/2026; tools/avvisi.mjs): configurazione assente, spenta o rovinata
 // (nessun invio), messaggio composto (solo PC, versione, data e ora, esito), limite delle 6 ore per l'avvio e di un giorno
 // per «Mappa aperta», invio con curl e timeout, file della cartella avvisi/.
+import '../tools/guardia-subito.mjs'; // la guardia sulle cartelle vere, comunque si lanci il test
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { mkdtempSync, mkdirSync, writeFileSync, readFileSync, existsSync } from 'node:fs';

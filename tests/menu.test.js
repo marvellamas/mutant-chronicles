@@ -1,6 +1,7 @@
 // «Un ingresso solo» (25/10/2026): Mutant.bat è l'unico programma; ogni funzione dei .bat tolti è una voce del menu;
 // il ruolo del PC sta nel profilo e sopravvive agli aggiornamenti; la fascia della copia di prova ha il nome vero del PC;
 // un PC senza ruolo si comporta come prima; la versione mostrata è quella del codice; «Aggiorna» dice che cosa è cambiato.
+import '../tools/guardia-subito.mjs'; // la guardia sulle cartelle vere, comunque si lanci il test
 import { test, before, after } from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync, mkdtempSync, rmSync, mkdirSync, writeFileSync, existsSync, cpSync, copyFileSync, readdirSync } from 'node:fs';

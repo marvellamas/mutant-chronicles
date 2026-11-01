@@ -1,6 +1,7 @@
 // Granate come munizioni dei lanciagranate (Armamenti §7.20.3; correzione di Davide del 02/10/2026,
 // tools/lotti/lotto_granate_0210.mjs): una granata è un oggetto solo, si lancia a mano o si carica; i moduli
 // integrati hanno un'alimentazione distinta; la granata caricata stabilisce danno, AC, RS e proprietà.
+import '../tools/guardia-subito.mjs'; // la guardia sulle cartelle vere, comunque si lanci il test
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { calcolaScheda } from '../src/calc.js';

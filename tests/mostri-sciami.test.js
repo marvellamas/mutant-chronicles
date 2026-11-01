@@ -1,5 +1,6 @@
 // Blocco «Sciami e piccola fauna» (cap. 8 del Manuale dei Mostri v0.23): dieci profili validi (quattro animali e
 // sei Sciami), fasce di danno per PV, immunità collettive, Spazio condiviso, Frenesia, Imitazione, veleno ofidico.
+import '../tools/guardia-subito.mjs'; // la guardia sulle cartelle vere, comunque si lanci il test
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';

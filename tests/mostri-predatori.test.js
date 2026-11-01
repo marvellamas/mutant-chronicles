@@ -1,6 +1,7 @@
 // Blocco «Predatori e grandi erbivori» (cap. 8 del Manuale dei Mostri v0.23): dieci profili validi, Assalto e
 // Impeto come capacità con la Tempra e la dimensione ammessa, attacchi con formula propria (Impeto, Calpestare)
 // con la condizione nella nota, Masso e Pietra a distanza, Tigre 2 × 1 Q nelle note (A.167), GS/PX informativo.
+import '../tools/guardia-subito.mjs'; // la guardia sulle cartelle vere, comunque si lanci il test
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';

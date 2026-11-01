@@ -1,6 +1,7 @@
 // Blocco «Popoli delle terre selvagge» (cap. 8 del Manuale dei Mostri v0.23): dieci profili validi, Lancia a una e
 // due mani, Nuoto e apnea, Kenku con Imitazione, repertori come capacità con PM, forma di Coccodrillo, Impalare,
 // Furia ferita dei Quaggoth, Orog con Parata come Difese; Spazio e Taglia (A.167).
+import '../tools/guardia-subito.mjs'; // la guardia sulle cartelle vere, comunque si lanci il test
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';

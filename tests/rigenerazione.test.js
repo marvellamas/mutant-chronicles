@@ -1,6 +1,7 @@
 // Lotto 3 del 02/10 (docs/diff-manuali-2026-10-02.md): Rigenerazione come Rituale della Magia sez. 25
 // (PM totali, ore, reagenti, Canali del §24.6, Prova di Rituali) e attivazione da Artefatto (§25.4,
 // A.39 punto 3): senza Prove, l'intero costo dalla riserva integrata, che non paga altri Incantesimi (A.18).
+import '../tools/guardia-subito.mjs'; // la guardia sulle cartelle vere, comunque si lanci il test
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { calcolaLancio, versioniLancio, aiutoCanale, attivazioneInfusa, contenitoriLancio, ripartizioneMagistrale } from '../src/lancio.js';

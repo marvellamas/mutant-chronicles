@@ -1,5 +1,6 @@
 // Manuale dell'Equipaggiamento, edizione 0.6 (08/10/2026): le voci nuove del lotto tools/lotti/lotto_equipaggiamento_edizione06.mjs,
 // un test per gruppo (§3.3.1, §3.5.1, §3.7, §3.8, §4.1 e §4.4, §5.9 e §5.10).
+import '../tools/guardia-subito.mjs'; // la guardia sulle cartelle vere, comunque si lanci il test
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { calcolaScheda } from '../src/calc.js';

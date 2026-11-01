@@ -1,6 +1,7 @@
 // Mappa di battaglia, diretta del movimento nella vista giocatori (richiesta di Marcello del 07/10/2026,
 // src/mappa/diretta.js): stato del master, filtro dei segreti (token nascosti, nebbia, ZoC, interruttori) e il flusso
 // di eventi del server (PUT e GET /api/vista-giocatori/diretta), su cartelle temporanee e porta casuale.
+import '../tools/guardia-subito.mjs'; // la guardia sulle cartelle vere, comunque si lanci il test
 import { test, before, after } from 'node:test';
 import assert from 'node:assert/strict';
 import { mkdtempSync, rmSync, mkdirSync, writeFileSync } from 'node:fs';

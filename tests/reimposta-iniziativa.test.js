@@ -1,6 +1,7 @@
 // «Reimposta Iniziativa» (ritocchi del 07/10/2026; src/scontro.js → reimpostaIniziativa, reimpostaIniziativaDi):
 // per tutti con la regola del manuale (Iniziativa + 1d10, parità come A.123) o per uno solo (ritiro o valore a mano);
 // chi è di turno resta di turno; una riga nel registro; «Indietro» la annulla.
+import '../tools/guardia-subito.mjs'; // la guardia sulle cartelle vere, comunque si lanci il test
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';

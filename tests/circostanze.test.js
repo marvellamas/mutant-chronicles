@@ -1,4 +1,5 @@
 // Bonus e malus di circostanza (primo playtest, 05/10/2026; Giocatore §1.4): src/circostanze.js e valori effettivi.
+import '../tools/guardia-subito.mjs'; // la guardia sulle cartelle vere, comunque si lanci il test
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { calcolaScheda } from '../src/calc.js';

@@ -1,6 +1,7 @@
 // Avvio con la porta occupata (richiesta di Marcello del 06/10/2026): un Mutant già acceso si riconosce dal ping e si
 // può fermare; un altro programma si dice per quello che è. Le prove usano una porta libera presa a caso, mai la 3000,
 // e fermano solo i server avviati qui (dal pid che il loro ping dichiara).
+import '../tools/guardia-subito.mjs'; // la guardia sulle cartelle vere, comunque si lanci il test
 import { test, after } from 'node:test';
 import assert from 'node:assert/strict';
 import { spawn } from 'node:child_process';

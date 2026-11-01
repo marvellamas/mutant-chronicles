@@ -1,6 +1,7 @@
 // Un PG attacca un nemico e ne applica il danno (ritocchi del 07/10/2026; src/ui/attacco-pg.js, src/colpo-nemico.js):
 // bersagli dallo scontro con Difese, AR e PV; proposta per «Colpito» dall'arma del PG (natura, Perforante, Magistrale,
 // colpi a segno); colpo sul nemico con una riga sola (attacco e colpo); annullabile; scrittura con la revisione.
+import '../tools/guardia-subito.mjs'; // la guardia sulle cartelle vere, comunque si lanci il test
 import { test, afterEach } from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';

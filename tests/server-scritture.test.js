@@ -3,6 +3,7 @@
 // file (nessuna persa, revisioni giuste, nessun 409 spurio), rinomina ritentata sugli errori di file occupato, nessun
 // temporaneo orfano, e il client che ritenta (src/ui/immagine-nemico.js → aggiornaInScontri). Cartelle temporanee e
 // porta casuale.
+import '../tools/guardia-subito.mjs'; // la guardia sulle cartelle vere, comunque si lanci il test
 import { test, before, after } from 'node:test';
 import assert from 'node:assert/strict';
 import { mkdtempSync, rmSync, mkdirSync, writeFileSync, readFileSync, readdirSync } from 'node:fs';

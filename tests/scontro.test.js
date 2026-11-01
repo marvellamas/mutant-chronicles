@@ -1,5 +1,6 @@
 // Tavolo del Master, pezzo 2 (docs/tavolo-direttore.md): ordine d'Iniziativa (Giocatore §2.14, §5.1,
 // parità comprese), Round e turni, partecipanti a mano, durate degli Stati, revisione e archivio sul server.
+import '../tools/guardia-subito.mjs'; // la guardia sulle cartelle vere, comunque si lanci il test
 import { test, before, after } from 'node:test';
 import assert from 'node:assert/strict';
 import { mkdtempSync, rmSync, existsSync, readFileSync } from 'node:fs';

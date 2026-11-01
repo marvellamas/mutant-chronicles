@@ -3,6 +3,7 @@
 // censimento dice applicato fuori da «Lancia!» (quelli di lancio: tests/talenti-lancio.test.js), con il
 // valore senza e con il Talento. I nomi dei casi sono i nomi dei Talenti: tools/effetti_talenti.py li
 // cerca in questo file per scrivere la colonna del censimento.
+import '../tools/guardia-subito.mjs'; // la guardia sulle cartelle vere, comunque si lanci il test
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import {

@@ -1,6 +1,7 @@
 // Bonus dei Talenti nei valori effettivi (docs/censimento-talenti.md, src/talenti.js, src/condizioni.js):
 // generali, situazionali con l'interruttore, usi specifici a parte, interruttore globale, non regressione
 // e migrazione dei salvataggi.
+import '../tools/guardia-subito.mjs'; // la guardia sulle cartelle vere, comunque si lanci il test
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';

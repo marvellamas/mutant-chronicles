@@ -1,6 +1,7 @@
 // Lotto 132 (27/10/2026): «i PX sembrano sfalsati di un livello». La tabella approvata (A.170) passata da ogni punto
 // dell'app che collega PX e livello: tutti dicono lo stesso livello, e il confronto con il livello preso nella scheda
 // è solo un'informazione (mai una correzione).
+import '../tools/guardia-subito.mjs'; // la guardia sulle cartelle vere, comunque si lanci il test
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { mkdtempSync, mkdirSync, writeFileSync, readFileSync, readdirSync, copyFileSync } from 'node:fs';

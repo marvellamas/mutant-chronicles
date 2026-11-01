@@ -1,6 +1,7 @@
 // «Le code dell'originale» (21/10/2026), parte C: giocatori[].pgFile (un nome di file, che invecchia) diventa
 // pgStabile (l'identificativo stabile del personaggio). Stesso difetto già tolto altrove: un livello o un nuovo
 // nome cambia il file, e un abbinamento per nome di file si stacca in silenzio.
+import '../tools/guardia-subito.mjs'; // la guardia sulle cartelle vere, comunque si lanci il test
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { migraGiocatoriAPgStabile, fileDelGiocatore } from '../src/px-partita.js';

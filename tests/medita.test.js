@@ -1,6 +1,7 @@
 // Parte C del 20/10/2026: «Medita» (dal 28/10, A.174: «Ricarica e medita», prima la ricarica e poi il recupero). Il recupero dei PM calcolato con i valori del Manuale della Magia (recupero naturale,
 // Meditazione, Recupero Mistico) e il versamento in un cristallo con la conversione (rapporto dai dati e dai Talenti), con
 // il conto in chiaro, l'avviso sul cristallo pieno senza buttare via il resto, e il registro.
+import '../tools/guardia-subito.mjs'; // la guardia sulle cartelle vere, comunque si lanci il test
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';

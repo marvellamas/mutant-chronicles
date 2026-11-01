@@ -1,5 +1,6 @@
 // A.152 (risposta di Davide del 09/10/2026): la Colt Hammershot usa proiettili da pistola; il catalogo era già
 // corretto. Nella scheda sparisce la vecchia riga «tamburo completo in 1 AzP»: vale la A.135.
+import '../tools/guardia-subito.mjs'; // la guardia sulle cartelle vere, comunque si lanci il test
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { datiReali } from './helpers.js';

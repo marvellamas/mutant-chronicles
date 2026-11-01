@@ -1,6 +1,7 @@
 // src/stato-tablet.js: la riga di stato del tablet (21/10/2026, parte D; estesa lo stesso giorno, quarto lotto,
 // «si può modificare offline»: offline non spegne più i comandi, mostra invece quante modifiche sono in coda)
 // e il messaggio del conflitto di versione (parte E).
+import '../tools/guardia-subito.mjs'; // la guardia sulle cartelle vere, comunque si lanci il test
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { rigaStatoTablet, tempoTrascorso, oraBreve, messaggioConflittoVersione, motivoSolaLettura } from '../src/stato-tablet.js';

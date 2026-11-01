@@ -6,6 +6,7 @@
 // e Schivata; le applicazioni successive avvengono all’Iniziativa di chi lo ha procurato, al massimo una volta
 // per Round.» «Questa perdita non porta i PV sotto 0 e, quando li riduce a 0, non produce immediatamente una
 // Ferita.» Più Sanguinamenti non si sommano: si usa il valore più alto. Termina solo quando viene fermato.
+import '../tools/guardia-subito.mjs'; // la guardia sulle cartelle vere, comunque si lanci il test
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';

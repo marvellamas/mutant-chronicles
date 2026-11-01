@@ -1,5 +1,6 @@
 // Lotto proprietà delle armature corporative (docs/proprieta-armature.md): effetti tipizzati nei
 // valori effettivi, promemoria per le proprietà testuali, Colpo assistito in «Attacca!».
+import '../tools/guardia-subito.mjs'; // la guardia sulle cartelle vere, comunque si lanci il test
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { calcolaScheda } from '../src/calc.js';

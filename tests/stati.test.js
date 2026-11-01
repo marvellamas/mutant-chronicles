@@ -1,4 +1,5 @@
 // Stati (§5.18, §5.5) nei valori effettivi e nelle utility (docs/ricognizione-stati.md).
+import '../tools/guardia-subito.mjs'; // la guardia sulle cartelle vere, comunque si lanci il test
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { calcolaScheda } from '../src/calc.js';

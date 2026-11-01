@@ -1,6 +1,7 @@
 // Blocco «Creature del sottosuolo» (cap. 8 del Manuale dei Mostri v0.18): i dieci profili prestabiliti sono
 // validi, con gli attacchi senza danno o con portata verticale come capacità, GS/PX informativo e Spazio
 // quadrato (il Vermeiena 1 × 2 Q resta fuori dal campo, con la nota per la A.167).
+import '../tools/guardia-subito.mjs'; // la guardia sulle cartelle vere, comunque si lanci il test
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';

@@ -1,4 +1,5 @@
 // Formato dei nemici del Tavolo del Master (data/formato_nemici.json, per-davide A.73) e validaNemico.
+import '../tools/guardia-subito.mjs'; // la guardia sulle cartelle vere, comunque si lanci il test
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';

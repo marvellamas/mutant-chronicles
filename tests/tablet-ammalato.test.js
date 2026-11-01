@@ -1,6 +1,7 @@
 // Tablet del 19/10/2026, punto 6: Ammalato non tocca le Prove Salvezza (A.119, risposta approvata da Davide: «tutte le
 // Prove di Abilità, attacchi e Difese compresi; mai alle Prove Salvezza»). Il Manuale del Giocatore non nomina Ammalato:
 // la regola è la A.119 (per-davide.md, sezione 7, «A.119 — Ammalato: intensità ed effetti nell'app»; decisione 127).
+import '../tools/guardia-subito.mjs'; // la guardia sulle cartelle vere, comunque si lanci il test
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';

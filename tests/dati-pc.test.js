@@ -2,6 +2,7 @@
 // di Windows (tools/dati-pc.mjs) e nessun modo di aggiornare tocca i dati. L'installazione di prova imita quella di
 // Davide: il pacchetto zip (1_scarica_o_aggiorna_app.bat + mutant\), i personaggi con i PX nella copia vecchia, un
 // aggiornamento che finisce in una copia nuova. Il profilo è sempre quello di prova (tests/profilo-di-prova.mjs).
+import '../tools/guardia-subito.mjs'; // la guardia sulle cartelle vere, comunque si lanci il test
 import { test, beforeEach } from 'node:test';
 import assert from 'node:assert/strict';
 import { mkdtempSync, mkdirSync, writeFileSync, readFileSync, readdirSync, statSync, existsSync, rmSync, copyFileSync } from 'node:fs';

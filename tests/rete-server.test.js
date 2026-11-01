@@ -1,5 +1,6 @@
 // Il server del Tavolo del Master ascolta su tutte le interfacce: risponde anche su un indirizzo della rete
 // locale (non 127.0.0.1), e /api/rete dà gli indirizzi per i giocatori. Cartelle temporanee, porta qualsiasi.
+import '../tools/guardia-subito.mjs'; // la guardia sulle cartelle vere, comunque si lanci il test
 import { test, before, after } from 'node:test';
 import assert from 'node:assert/strict';
 import { mkdtempSync, rmSync } from 'node:fs';

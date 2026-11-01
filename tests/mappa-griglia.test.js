@@ -1,5 +1,6 @@
 // Mappa di battaglia, lotto 2 (docs/battlemap/piano.md): camera (zoom, spostamento, adatta) e griglia (calibrazione,
 // applicazione, linee visibili), più id e duplicazione delle scene.
+import '../tools/guardia-subito.mjs'; // la guardia sulle cartelle vere, comunque si lanci il test
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { datiReali, copia } from './helpers.js';

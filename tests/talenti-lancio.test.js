@@ -1,6 +1,7 @@
 // Talenti di lancio in «Lancia!» (docs/censimento-talenti.md): i valori entrano nel risultato di
 // calcolaLancio, con la provenienza e le note del manuale; l'interruttore «Bonus dei Talenti» li spegne.
 // Caso segnalato: Lucas (Invocatore, SAG 9) con Colpo Elementale livello 1 → 1d6+2.
+import '../tools/guardia-subito.mjs'; // la guardia sulle cartelle vere, comunque si lanci il test
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';

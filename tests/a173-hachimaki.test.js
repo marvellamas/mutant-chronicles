@@ -15,6 +15,7 @@
 // provano la REGOLA — i cinque esempi della risposta restano validi come esempi della regola, perché dicono
 // che cosa fa la riduzione su un costo di 0, 1, 2, 4 e 10 PM, non che quei costi esistano ancora nella scheda.
 // I costi veri della Tecnica si leggono SEMPRE dai dati, mai scritti qui.
+import '../tools/guardia-subito.mjs'; // la guardia sulle cartelle vere, comunque si lanci il test
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { costoEffettivo } from '../src/tecniche.js';

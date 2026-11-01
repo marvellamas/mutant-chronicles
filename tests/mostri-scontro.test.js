@@ -2,6 +2,7 @@
 // aggiungere a uno scontro di prova come un nemico del bestiario: partecipante con PV e PM pieni, scheda
 // completa (GS/PX compreso, non calcolato) e scontro valido. Il test legge la cartella, quindi copre da solo
 // anche i blocchi aggiunti dopo.
+import '../tools/guardia-subito.mjs'; // la guardia sulle cartelle vere, comunque si lanci il test
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { readdirSync, readFileSync } from 'node:fs';

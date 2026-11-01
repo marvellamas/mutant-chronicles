@@ -1,5 +1,6 @@
 // Talenti v1.0 (lotto 2, 25/10/2026): il riquadro «Da scegliere» della scheda, con il DOM finto. I posti vengono da
 // postiTalenti (il conto unico); qui si prova che cosa si vede e che cosa fa ogni pulsante.
+import '../tools/guardia-subito.mjs'; // la guardia sulle cartelle vere, comunque si lanci il test
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';

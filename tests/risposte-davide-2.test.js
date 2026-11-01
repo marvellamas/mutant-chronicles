@@ -1,5 +1,6 @@
 // Risposte di Davide del 28/09/2026, seconda serie (Doc «per-davide.md», sezione 7): A.52, A.51,
 // A.43–A.50, A.13.
+import '../tools/guardia-subito.mjs'; // la guardia sulle cartelle vere, comunque si lanci il test
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { calcolaScheda } from '../src/calc.js';

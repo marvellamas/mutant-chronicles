@@ -1,6 +1,7 @@
 // Umanità (Giocatore §5.21) e impianti cibernetici (Equipaggiamento 0.5, cap. 7): registro delle
 // installazioni, fasce, effetti su PM, sintonizzazione e PS di Magia contro la Corruzione, effetti degli
 // impianti con la loro provenienza, migrazione dei file. Ipotesi in docs/ricognizione-cibernetica.md.
+import '../tools/guardia-subito.mjs'; // la guardia sulle cartelle vere, comunque si lanci il test
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';

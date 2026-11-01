@@ -1,5 +1,6 @@
 // Disciplina del Lottatore (Giocatore §3.5.5): scelta permanente al I Grado, salvata nelle scelte
 // (creazione o voce del livello), effetti strutturati in classi.json e usati da scheda e «Attacca!».
+import '../tools/guardia-subito.mjs'; // la guardia sulle cartelle vere, comunque si lanci il test
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { calcolaScheda, validaLivello } from '../src/calc.js';

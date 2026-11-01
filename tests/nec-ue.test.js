@@ -5,6 +5,7 @@
 //  - nessun contatore per l'elettronica ordinaria;
 //  - i valori calcolati dei sette PG (copie in tests/fixtures/talenti-vecchi/) identici con i dati di prima e di dopo,
 //    contatori dell'energia a parte.
+import '../tools/guardia-subito.mjs'; // la guardia sulle cartelle vere, comunque si lanci il test
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync, readdirSync } from 'node:fs';

@@ -1,5 +1,6 @@
 // Artefatti consumabili (Manuale della Magia §27, Doc dell'08/10/2026): tabella per Grado, campionario di pergamene,
 // creazione (esempio del §27.2), acquisto, «Usa» che scala, esaurito, attivazione in combattimento, validatore.
+import '../tools/guardia-subito.mjs'; // la guardia sulle cartelle vere, comunque si lanci il test
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { calcolaScheda } from '../src/calc.js';

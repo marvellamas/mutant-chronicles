@@ -1,6 +1,7 @@
 // Galleria, GIF animate (19/10/2026): la copia ridotta si fa con un canvas e fermerebbe l'animazione al primo fotogramma,
 // quindi una GIF non ha la copia ridotta e ai giocatori va l'originale (anche se in cartella è rimasto un «-ridotta»);
 // i fotogrammi si contano dai byte; il peso oltre il quale il Direttore è avvisato sta nei dati.
+import '../tools/guardia-subito.mjs'; // la guardia sulle cartelle vere, comunque si lanci il test
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { datiReali } from './helpers.js';

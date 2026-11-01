@@ -1,5 +1,6 @@
 // Mappa di battaglia, lotto 4: /api/vista-giocatori (scena in gioco, scelta del master, firma), /api/ritratti e la
 // vista filtrata con il contesto dello scontro, su cartelle temporanee e porta casuale.
+import '../tools/guardia-subito.mjs'; // la guardia sulle cartelle vere, comunque si lanci il test
 import { test, before, after } from 'node:test';
 import assert from 'node:assert/strict';
 import { mkdtempSync, rmSync, mkdirSync, writeFileSync, readFileSync } from 'node:fs';

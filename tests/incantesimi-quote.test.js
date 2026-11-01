@@ -1,6 +1,7 @@
 // Lotto 131 (27/10/2026): il conto degli incantesimi è uno solo (src/quote-incantesimi.js) e gli incantesimi presi con un
 // Talento stanno nell'elenco della tab Poteri, con la loro origine, «Togli» e «Sostituisci». Dal 28/10 (A.188) quote, famiglie
 // e livello massimo valgono di nuovo per il giocatore: l'opzione fuori regola è in grigio con il motivo (tests/incantesimi-a188.test.js).
+import '../tools/guardia-subito.mjs'; // la guardia sulle cartelle vere, comunque si lanci il test
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync, readdirSync } from 'node:fs';

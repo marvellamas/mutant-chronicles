@@ -1,5 +1,6 @@
 // Lotto 5 della ricognizione del 02/10 sera: risposte di Davide sull'equipaggiamento (E&L del 02/10/2026;
 // tools/lotti/lotto_risposte_equip_0210.mjs). Voci doppie unite con la migrazione dei salvataggi.
+import '../tools/guardia-subito.mjs'; // la guardia sulle cartelle vere, comunque si lanci il test
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { normalizza } from '../src/character.js';

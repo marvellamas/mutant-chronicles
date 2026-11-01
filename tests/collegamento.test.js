@@ -1,6 +1,7 @@
 // Tavolo del Master, pezzo 6: la scheda del giocatore collegata al server (src/collegamento.js). Rilettura del
 // proprio file quando il master lo cambia, conflitto con una modifica locale («Aggiorna» e «Tieni la mia», con
 // la revisione come nel pezzo 4), riga di registro della scelta, indicatore assente senza server.
+import '../tools/guardia-subito.mjs'; // la guardia sulle cartelle vere, comunque si lanci il test
 import { test, before, after } from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync, mkdtempSync, rmSync, copyFileSync } from 'node:fs';

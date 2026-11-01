@@ -1,6 +1,7 @@
 // A.176 (risposta di Davide del 23/10/2026): un incantesimo aggiunto a mano è APPRESO (conta come conosciuto a ogni effetto,
 // fermi restando gli altri requisiti) oppure SOLO ANNOTATO (non è appreso, non concede accesso alla magia, Abilità o PM, e
 // non si lancia). Le righe salvate prima della distinzione restano «da classificare», com'erano.
+import '../tools/guardia-subito.mjs'; // la guardia sulle cartelle vere, comunque si lanci il test
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';

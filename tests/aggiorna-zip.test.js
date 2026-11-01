@@ -1,5 +1,6 @@
 // Aggiornamento da zip senza perdere i dati di questo PC (09/10/2026): distribuzione/aggiorna-da-zip.ps1 con l'elenco
 // unico tools/file-locali.json. Solo su Windows (PowerShell e robocopy); altrove i test si saltano.
+import '../tools/guardia-subito.mjs'; // la guardia sulle cartelle vere, comunque si lanci il test
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { mkdtempSync, mkdirSync, writeFileSync, readFileSync, readdirSync, statSync, existsSync, rmSync, copyFileSync, utimesSync } from 'node:fs';

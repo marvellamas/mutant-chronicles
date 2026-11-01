@@ -1,6 +1,7 @@
 // A.197 (risposta di Davide del 30/10/2026): il premio di fine Atto non si duplica. Blocco (non più solo avviso) della seconda
 // assegnazione allo stesso personaggio nello stesso Atto, anche da un'altra partita; il premio spetta anche agli assenti;
 // rettifica tracciata con il motivo; un premio aggiuntivo si registra a parte (Bonus). Il blocco sta nel server.
+import '../tools/guardia-subito.mjs'; // la guardia sulle cartelle vere, comunque si lanci il test
 import { test, before, after } from 'node:test';
 import assert from 'node:assert/strict';
 import { mkdtempSync, rmSync, mkdirSync, readFileSync } from 'node:fs';

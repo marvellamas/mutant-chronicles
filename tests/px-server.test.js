@@ -1,5 +1,6 @@
 // /api/px (A.161): il calcolatore e l'archivio «PX della partita» stanno in px/px.json e SOLO il PC del
 // master li legge e li scrive. GET vuoto → null; PUT salva; dai tablet (non master) 403.
+import '../tools/guardia-subito.mjs'; // la guardia sulle cartelle vere, comunque si lanci il test
 import { test, before, after } from 'node:test';
 import assert from 'node:assert/strict';
 import { mkdtempSync, rmSync, mkdirSync, existsSync, readFileSync, readdirSync } from 'node:fs';

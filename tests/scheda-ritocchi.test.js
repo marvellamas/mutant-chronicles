@@ -1,5 +1,6 @@
 // Ritocchi della scheda dei giocatori (11/10/2026, richieste di Davide approvate da Marcello, S4–S32): solo
 // disposizione e presentazione. Le funzioni pure sono in src/scheda-vista.js; le tab si rendono con il DOM finto.
+import '../tools/guardia-subito.mjs'; // la guardia sulle cartelle vere, comunque si lanci il test
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync, readdirSync } from 'node:fs';

@@ -1,5 +1,6 @@
 // Dati dell'utility «Attacca!» corpo a corpo: regole.json → attacco_ravvicinato e
 // effetti.attacco_ravvicinato dei Talenti (Giocatore §1.6, §5.3–5.7, §5.12, §5.13).
+import '../tools/guardia-subito.mjs'; // la guardia sulle cartelle vere, comunque si lanci il test
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { validaDati } from '../src/validate.js';

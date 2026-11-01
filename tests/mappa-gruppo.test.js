@@ -1,6 +1,7 @@
 // Selezione multipla e spostamento di gruppo (richiesta di Marcello del 07/10/2026; src/mappa/gruppo.js): rettangolo,
 // aggiunta e rimozione (Maiusc+clic), formazione, collisioni (quadretto libero più vicino), un solo Ctrl+Z, una riga nel
 // registro. Maiusc per il token singolo è il movimento libero di sempre (src/mappa/annulla.js → muoviToken, libero).
+import '../tools/guardia-subito.mjs'; // la guardia sulle cartelle vere, comunque si lanci il test
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { datiReali } from './helpers.js';

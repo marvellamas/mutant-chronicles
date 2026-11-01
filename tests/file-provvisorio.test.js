@@ -1,6 +1,7 @@
 // File provvisorio «personaggio_liv1_….json» (05/10/2026): un PG senza nome resta nel browser e non va nella cartella;
 // quando prende il nome il server scrive un solo file con il nome giusto e toglie il provvisorio dello stesso PG
 // (versioni precedenti). La pagina iniziale mostra i provvisori rimasti come «senza nome».
+import '../tools/guardia-subito.mjs'; // la guardia sulle cartelle vere, comunque si lanci il test
 import { test, before, after } from 'node:test';
 import assert from 'node:assert/strict';
 import { writeFileSync, mkdtempSync, rmSync, readdirSync } from 'node:fs';

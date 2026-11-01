@@ -1,6 +1,7 @@
 // Selezionare e togliere un solo template (13/10/2026, richiesta di Marcello dopo la sessione del 12/10): prima si
 // potevano solo togliere tutti insieme. Ora i template sono oggetti dell'editor come muri, porte, terreno e token
 // liberi: clic, trascinamento, Canc, Ctrl+Z e Ctrl+Y, selezione multipla, pannello delle proprietà.
+import '../tools/guardia-subito.mjs'; // la guardia sulle cartelle vere, comunque si lanci il test
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';

@@ -1,6 +1,7 @@
 // Snellimento N2 (deciso da Marcello e Davide: l'app avvisa, non blocca; l'ultima parola è del master). Ogni blocco per
 // regola è diventato un avviso con «Procedi comunque»: il motore rifiuta ancora di suo, ma con `forza` / `procedi`
 // procede, e nello storico del personaggio resta «procedi comunque: …». Restano fermi gli errori veri (dati mancanti).
+import '../tools/guardia-subito.mjs'; // la guardia sulle cartelle vere, comunque si lanci il test
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { calcolaScheda, validaLivello } from '../src/calc.js';

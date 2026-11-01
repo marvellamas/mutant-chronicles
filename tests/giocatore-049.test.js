@@ -6,6 +6,7 @@
 //   2. un personaggio già salvato prende i valori nuovi da solo, perché nella sua scheda ci sono solo gli
 //      identificativi delle Tecniche, non una copia dei loro valori. È la domanda che Marcello ha posto per
 //      prima, e la risposta è nei fatti: nessuna migrazione da fare, nessun PG rimasto indietro in silenzio.
+import '../tools/guardia-subito.mjs'; // la guardia sulle cartelle vere, comunque si lanci il test
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';

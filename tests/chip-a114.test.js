@@ -1,6 +1,7 @@
 // A.114 (E&L del 05/10/2026, decisione 124): il chip del Processore si somma al modificatore degli strumenti
 // (§1.4.1) e non si somma ai benefici tecnologici equivalenti (Equipaggiamento §7.1): src/condizioni.js →
 // effettiOggettiAbilita, regole.json → impianti.chip.
+import '../tools/guardia-subito.mjs'; // la guardia sulle cartelle vere, comunque si lanci il test
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { calcolaScheda } from '../src/calc.js';

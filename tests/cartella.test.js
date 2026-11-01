@@ -2,6 +2,7 @@
 // serve l'app come `serve` e salva in personaggi/ il testo dell'export. Dal 20/10/2026 («un originale solo») il file
 // porta in più i metadati del salvataggio: versione_salvataggio, aggiornato_il, aggiornato_da (src/storico-personaggi.js).
 // Tolti quelli, il contenuto è ancora esattamente quello dell'export.
+import '../tools/guardia-subito.mjs'; // la guardia sulle cartelle vere, comunque si lanci il test
 import { test, before, after } from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync, mkdtempSync, rmSync, readdirSync } from 'node:fs';

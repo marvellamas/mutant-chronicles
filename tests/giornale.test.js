@@ -1,6 +1,7 @@
 // Il giornale delle operazioni (21/10/2026, quarto lotto: «si può modificare offline, e al rientro Davide
 // approva»). Il punto su cui si regge tutto: variazioni che si sommano senza mai un conflitto, assegnazioni
 // che sono un conflitto vero solo se cambiate da entrambe le parti, idempotenza di chi riapplica.
+import '../tools/guardia-subito.mjs'; // la guardia sulle cartelle vere, comunque si lanci il test
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { tipoCampo, operazioniDaDiff, applicaOperazione, unisciGiornale } from '../src/giornale.js';

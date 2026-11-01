@@ -1,5 +1,6 @@
 // Tavolo del Master, pezzo 3 (docs/tavolo-direttore.md): bestiario (src/nemici.js, server.mjs → /api/nemici)
 // e nemici nello scontro (src/scontro.js): copie con etichette, PV e Stati propri, Iniziativa con le parità.
+import '../tools/guardia-subito.mjs'; // la guardia sulle cartelle vere, comunque si lanci il test
 import { test, before, after } from 'node:test';
 import assert from 'node:assert/strict';
 import { mkdtempSync, rmSync, readFileSync, writeFileSync, existsSync } from 'node:fs';

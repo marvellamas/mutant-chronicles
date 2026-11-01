@@ -1,6 +1,7 @@
 // «Ripristina» con la scelta (12/10/2026, docs/diagnosi-dati-spariti-2026-10-12.md): tutti i salvataggi dei
 // quattro posti, dal più recente, con data, ora, tipo, dimensione e che cosa contengono; si sceglie quello
 // giusto, anche uno vecchio, e prima di rimetterlo si fa comunque una copia dello stato attuale.
+import '../tools/guardia-subito.mjs'; // la guardia sulle cartelle vere, comunque si lanci il test
 import { test, after } from 'node:test';
 import assert from 'node:assert/strict';
 import { mkdtempSync, mkdirSync, writeFileSync, readFileSync, readdirSync, existsSync, rmSync, utimesSync } from 'node:fs';

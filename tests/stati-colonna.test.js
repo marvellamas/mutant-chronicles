@@ -3,6 +3,7 @@
 // quella accanto. Misurato nel browser a 1280 px: menu di 215 px in una cella da 192, 112 px sopra il vicino.
 // Qui si controlla la forma (il menu sta dentro la cella dello Stato, con le note) e le regole di stile che ce lo
 // tengono a ogni larghezza; la misura vera si fa nel browser.
+import '../tools/guardia-subito.mjs'; // la guardia sulle cartelle vere, comunque si lanci il test
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';

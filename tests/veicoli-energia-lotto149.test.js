@@ -1,6 +1,7 @@
 // Lotto 149: i veicoli passano alle cariche (Veicoli 0.10 §9.1 e §10, ASA Scout MK4 0.6, registro NEC 2.10; A.192, A.193).
 // Autovettura 1.000 km con una CEC Rossa; Scout 750 km con un MEC Rosso (75 km a carica) e CEC Verde per i servizi (una carica
 // per giorno di supporto vitale); aria a parte; chiusura della giornata a un tocco (A.219 aperta); conversione per frazione.
+import '../tools/guardia-subito.mjs'; // la guardia sulle cartelle vere, comunque si lanci il test
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { datiReali } from './helpers.js';

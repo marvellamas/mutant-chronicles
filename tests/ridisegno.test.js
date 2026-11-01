@@ -1,6 +1,7 @@
 // Ritocchi alla plancia dopo la prima prova (docs/tavolo-direttore.md, «Dopo la prima prova»): il ridisegno
 // periodico non chiude le tendine né toglie il focus (src/ui/ridisegno.js), le conferme delle azioni vengono
 // dalle righe nuove del registro (src/scontro.js → righeNuove), il nemico a 0 PV ha la carta ridotta.
+import '../tools/guardia-subito.mjs'; // la guardia sulle cartelle vere, comunque si lanci il test
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';

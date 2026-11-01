@@ -1,6 +1,7 @@
 // Blocco «Capi e varianti dei popoli guerrieri» (cap. 8 del Manuale dei Mostri v0.23): dieci profili validi, AR con
 // scudo nel campo, Parata come Difese, Disciplina e Attacco coordinato degli hobgoblin, Frenesia gnoll, Urlo di
 // guerra, repertorio chiuso dell'Occhio, GS «Elite», Spazio e Taglia.
+import '../tools/guardia-subito.mjs'; // la guardia sulle cartelle vere, comunque si lanci il test
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';

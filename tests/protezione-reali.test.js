@@ -2,6 +2,7 @@
 // vera perché in .claude/launch.json il flag era «--personaggi=» invece di «--cartella=» e il server lo ignorò.
 // Tre meccanismi, un test ciascuno: (1) un flag sconosciuto ferma il programma; (2) un avvio di prova sulla cartella
 // vera si rifiuta; (3) nessuna scrittura nelle cartelle vere, con un errore chiaro.
+import '../tools/guardia-subito.mjs'; // la guardia sulle cartelle vere, comunque si lanci il test
 import { test, after } from 'node:test';
 import assert from 'node:assert/strict';
 import { spawnSync } from 'node:child_process';
@@ -12,6 +13,7 @@ import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { argomentiSconosciuti, suggerisci, fermaSeSconosciuti, ARGOMENTI } from '../tools/argomenti.mjs';
+import { guardiaAutomatica } from '../tools/guardia-automatica.mjs';
 import { cartelleReali, controllaAvvioDiProva, eAvvioDiProva, installaGuardiaScrittura, ScritturaRifiutata } from '../tools/protezione-reali.mjs';
 
 const RADICE = fileURLToPath(new URL('..', import.meta.url)).replace(/[\\/]$/, '');
@@ -158,9 +160,9 @@ test('3: la guardia rifiuta ogni scrittura nelle cartelle vere (sync, promesse, 
   assert.ok(existsSync(join(vera, 'dopo.json')), 'tolta la guardia si scrive di nuovo');
 });
 
-test('3: i test girano con la guardia: una scrittura in personaggi/ dell’app è rifiutata', (t) => {
-  // senza la guardia (node --test lanciato senza «--import ./tests/profilo-di-prova.mjs») la prova scriverebbe davvero: non si fa
-  if (!/controlla/.test(String(fs.writeFileSync))) return t.skip('guardia non installata: usare npm test');
+test('3: i test girano con la guardia: una scrittura in personaggi/ dell’app è rifiutata', () => {
+  // lotto 150: la guardia c'è comunque si lanci il test (non c'è più nulla da saltare: se manca, il test fallisce senza scrivere)
+  assert.ok(guardiaAutomatica(), 'la guardia automatica deve essere accesa in ogni prova');
   assert.throws(() => writeFileSync(join(RADICE, 'personaggi', '__prova_guardia__.json'), '{}'), (e) => e.code === 'MUTANT_CARTELLA_VERA');
   assert.equal(existsSync(join(RADICE, 'personaggi', '__prova_guardia__.json')), false);
   assert.throws(() => fs.mkdirSync(join(RADICE, 'salvataggi', 'x'), { recursive: true }), (e) => e.code === 'MUTANT_CARTELLA_VERA');

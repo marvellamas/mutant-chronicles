@@ -1,5 +1,6 @@
 // Tab Inventario (docs/layout-sd.md, pezzo 2): stato unico degli oggetti con il deposito comune, peso
 // che cambia con lo stato, PI e Ripara degli oggetti dell'Inventario, sezioni per famiglia.
+import '../tools/guardia-subito.mjs'; // la guardia sulle cartelle vere, comunque si lanci il test
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';

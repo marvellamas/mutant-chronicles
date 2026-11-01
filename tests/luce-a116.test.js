@@ -1,5 +1,6 @@
 // A.116 (E&L del 05/10/2026, decisione 125): luce e attività pratiche che richiedono la vista (regole.json →
 // illuminazione.richiede_vista; src/condizioni.js → abilitaVista, condizioniAttive; sessione.vistaAbilita).
+import '../tools/guardia-subito.mjs'; // la guardia sulle cartelle vere, comunque si lanci il test
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { calcolaScheda } from '../src/calc.js';

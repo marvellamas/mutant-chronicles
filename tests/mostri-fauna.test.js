@@ -1,5 +1,6 @@
 // Blocco «Fauna delle terre aperte» (cap. 8 del Manuale dei Mostri v0.23, ultimo del catalogo): dieci animali validi,
 // tutti 1 × 1 Q senza Taglia, Branco con il VA nel testo, Carica del Cinghiale, volo, scavo e arrampicata, GS/PX.
+import '../tools/guardia-subito.mjs'; // la guardia sulle cartelle vere, comunque si lanci il test
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync, readdirSync } from 'node:fs';

@@ -1,5 +1,6 @@
 // Equipaggiamento 0.5, cap. 6 ampliato (lotto 4): naniti medici (§6.7), postazioni medicochirurgiche (§6.8),
 // campo «cura» con i numeri delle cure, letti con il Giocatore 0.45 (§5.16.2, §5.16.6).
+import '../tools/guardia-subito.mjs'; // la guardia sulle cartelle vere, comunque si lanci il test
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { calcolaScheda } from '../src/calc.js';

@@ -1,6 +1,7 @@
 // Equipaggiamento 0.5, cap. 8 «Cataloghi e dotazioni iniziali» (lotto 4): il capitolo riassume il
 // Giocatore §2.16 senza cataloghi propri; ogni sua regola deve corrispondere ai dati e al motore
 // (tools/lotti/lotto_equipaggiamento_08.mjs → controlliCap8).
+import '../tools/guardia-subito.mjs'; // la guardia sulle cartelle vere, comunque si lanci il test
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { controlliCap8, FRASI_CAP8 } from '../tools/lotti/lotto_equipaggiamento_08.mjs';

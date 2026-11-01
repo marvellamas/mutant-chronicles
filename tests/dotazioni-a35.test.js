@@ -1,5 +1,6 @@
 // A.35 (confermata da Davide l'08/10/2026, decisione 155): l'eccedenza del valore degli armamenti ceduti torna in crediti
 // (data/dotazioni.json → scambio.eccedenza «restituita»; src/dotazioni.js → contiDotazione, saldoIniziale).
+import '../tools/guardia-subito.mjs'; // la guardia sulle cartelle vere, comunque si lanci il test
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { contiDotazione, saldoIniziale, applicaDotazione, mancanzeDotazione, vociDotazione } from '../src/dotazioni.js';

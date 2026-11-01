@@ -1,6 +1,7 @@
 // Durate degli incantesimi lanciati (src/durate-incantesimi.js; dati in incantesimi.json → meccanica.durata, dal
 // tools/durate_incantesimi.mjs; scadenza in regole.json → durate_round). Come le Tecniche: contatore della scheda o
 // Round dello scontro (src/round-scontro.js); le durate a tempo sono promemoria.
+import '../tools/guardia-subito.mjs'; // la guardia sulle cartelle vere, comunque si lanci il test
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';

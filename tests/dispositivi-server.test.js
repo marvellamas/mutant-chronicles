@@ -1,6 +1,7 @@
 // «Il tablet è una vista» (21/10/2026): GET/POST /api/dispositivo (ogni dispositivo), GET /api/dispositivi e PUT
 // /api/dispositivi/<id> (solo il Direttore), e l'enforcement su PUT /api/personaggi/<file>: chi dichiara
 // X-Mutant-Da: giocatore e porta un X-Mutant-Dispositivo scrive solo il personaggio che ha scelto.
+import '../tools/guardia-subito.mjs'; // la guardia sulle cartelle vere, comunque si lanci il test
 import { test, before, after } from 'node:test';
 import assert from 'node:assert/strict';
 import { mkdtempSync, rmSync, mkdirSync, readFileSync } from 'node:fs';

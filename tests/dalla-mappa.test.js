@@ -1,5 +1,6 @@
 // Condizioni di «Attacca!» dalla mappa (S22, deciso da Marcello e Davide): di base si mettono a mano; arrivano dalla
 // mappa solo con «Mappa semplice» spenta, con il segno «dalla mappa», e si tolgono con un tocco (src/dalla-mappa.js).
+import '../tools/guardia-subito.mjs'; // la guardia sulle cartelle vere, comunque si lanci il test
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { conLineaDallaMappa, conMovimentoDallaMappa, vociDallaMappa, togliDallaMappa, segniDopoModifica } from '../src/dalla-mappa.js';

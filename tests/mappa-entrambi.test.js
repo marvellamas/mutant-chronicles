@@ -1,5 +1,6 @@
 // «Cosa si vede», colonna «Entrambi» (prove di Marcello del 12/10/2026): un clic accende o spegne un livello sui due
 // schermi insieme; se sono diversi lo stato è misto (src/mappa/sovrapposizioni.js).
+import '../tools/guardia-subito.mjs'; // la guardia sulle cartelle vere, comunque si lanci il test
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { datiReali } from './helpers.js';

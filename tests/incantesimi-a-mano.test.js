@@ -1,5 +1,6 @@
 // Parte B del 20/10/2026: incantesimi liberi aggiunti e tolti a mano (src/incantesimi-a-mano.js): origine e data, fuori
 // dalle quote e dai liberi dell'avanzamento, sopravvivono ai livelli, avviso (non blocco) sul livello troppo alto.
+import '../tools/guardia-subito.mjs'; // la guardia sulle cartelle vere, comunque si lanci il test
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';

@@ -1,5 +1,6 @@
 // Impostazioni di Mutant su questo PC (09/10/2026): avvisi ntfy e cartella di Google Drive dalla console (tools/impostazioni.mjs,
 // tools/console.mjs), registro degli invii non riusciti (avvisi/registro.txt), aggiorna.bat che non sovrascrive.
+import '../tools/guardia-subito.mjs'; // la guardia sulle cartelle vere, comunque si lanci il test
 import { test, before, after } from 'node:test';
 import assert from 'node:assert/strict';
 import { mkdtempSync, mkdirSync, copyFileSync, writeFileSync, readFileSync, existsSync, rmSync } from 'node:fs';
