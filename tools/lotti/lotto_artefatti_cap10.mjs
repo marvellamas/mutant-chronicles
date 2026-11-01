@@ -196,6 +196,13 @@ ind.reperibilita = nuovaRep;
 
 const conta = (f) => art.oggetti.filter(f).length;
 console.log(`${controlli} controlli superati; Batterie Mistiche ${conta((o) => o.id.startsWith('batteria-da-'))}, Batterie Matrice ${conta((o) => o.id.startsWith('batteria-matrice-'))} (+${fuoriScala.length} fuori scala), Schegge ${conta((o) => o.id.startsWith('scheggia-instabile-'))}, Pietra e Guanti`);
+// 01/11/2026: i Guanti da Combattimento Mistico sono riscritti dalla scheda di Lucas 1.0 (tools/lotti/lotto_guanti_lucas.mjs):
+// rilanciato con --scrivi questo lotto li riporterebbe alla versione del 12/10 (SnT 2, riserva Verde, +1 VA passivo).
+// Per forzare: --forza (poi va rilanciato anche lotto_guanti_lucas.mjs --scrivi).
+if (process.argv.includes('--scrivi') && !process.argv.includes('--forza')) {
+  console.error('lotto_artefatti_cap10: lotto storico per i Guanti (riscritti da lotto_guanti_lucas.mjs). Per forzare: --forza.');
+  process.exit(1);
+}
 if (process.argv.includes('--scrivi')) {
   writeFileSync(p, `${JSON.stringify(art, null, 2)}\n`);
   writeFileSync(pi, `${JSON.stringify(ind, null, 2)}\n`);

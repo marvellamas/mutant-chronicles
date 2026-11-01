@@ -699,6 +699,18 @@ export function attivaArtefatto(sessione, uid, pm, m, { forza = false } = {}) {
   return modificaSessione(s, { chroma: { ...s.chroma, [uid]: { ...c, pmAttuali: Math.max(0, c.pmAttuali - pm) } }, condizioniOggetti: [...new Set([...s.condizioniOggetti, chiave])] }, m);
 }
 
+/**
+ * Uso istantaneo di una proprietà di un Artefatto (Getto di fuoco, Doppio getto dei Guanti, scheda di Lucas 1.0): i PM
+ * dalla riserva interna, senza condizioni da accendere. null se la riserva non basta; con `forza` («Procedi comunque»)
+ * la riserva scende a 0, non sotto. Il Doppio getto consuma i 10 PM anche se la Prova di Potere fallisce: si scalano qui.
+ */
+export function usaArtefatto(sessione, uid, pm, m, { forza = false } = {}) {
+  const s = allineaSessione(sessione, m);
+  const c = s.chroma[uid];
+  if (!c || (c.pmAttuali < pm && !forza)) return null;
+  return modificaSessione(s, { chroma: { ...s.chroma, [uid]: { ...c, pmAttuali: Math.max(0, c.pmAttuali - pm) } } }, m);
+}
+
 export function nuovaSessione(sessione, m) {
   // «Nuova sessione»: anche gli incantesimi in corso finiscono
   // A.159: «Nuova sessione» azzera le Ferite, quindi anche il contatore di Morente

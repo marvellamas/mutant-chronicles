@@ -735,8 +735,12 @@ function massimoDanno(testo) {
   return Number(m[1]) * Number(m[2]) + extra;
 }
 
-/** Oggetto indossato che potenzia i pugni (effetto «attacco» sugli attacchi senz'armi), o null. */
-export const pugniPotenziati = (scheda) => (scheda?.equipaggiamento?.bonusAttacco ?? []).find((b) => b.attacchi === 'senz_armi') ?? null;
+/**
+ * Oggetto indossato che dà il profilo dei pugni (Guanti da Combattimento Mistico, Armamenti §7.24), o null. Dal 01/11/2026
+ * (scheda «Guanti mistici di Lucas» 1.0) si riconosce dal profilo (`profilo_pugni` nel catalogo), non da un bonus: i
+ * Guanti non hanno più un +1 VA sempre attivo.
+ */
+export const pugniPotenziati = (scheda) => (scheda?.equipaggiamento?.pugni ?? [])[0] ?? null;
 
 /**
  * Profilo «Senz'armi»: Abilità Corpo a corpo (VA effettivo con le condizioni), portata 1 Q. Danno
@@ -752,14 +756,18 @@ export function profiloSenzArmi(scheda, dati, { onda = null } = {}) {
   const eq = scheda?.equipaggiamento ?? {};
   // «senz_armi»: solo i pugni (Guanti da Combattimento Mistico, Armamenti §7.24), non Onda Interiore
   const ravv = (b) => b.attacchi === 'tutti' || (!onda && (b.attacchi === 'ravvicinati' || b.attacchi === 'senz_armi'));
-  // attivazione accesa dei Guanti: pugni Magici e +1 al danno (Armamenti §7.24)
+  // attivazione accesa dei Guanti, il Pugno mistico (scheda di Lucas 1.0, Armamenti §7.24): per 5 Round +1 VA ai pugni,
+  // danno Magico e +1. È l'unico +1 VA dei Guanti: indossati e basta non danno nulla
   const attivazioni = onda ? [] : (eq.attivazioniAccese ?? []).filter((x) => x.attacchi === 'senz_armi');
   // Giocatore 0.54 §8.8.1: Specializzazione in Combattimento Senz'Armi, +1 VA e +1 danno agli attacchi senz'armi
   // (effetto.attacchi = 'senz_armi' nei dati); non le Difese né la Parata a mani nude, e non Onda Interiore (Vettore Distanza)
   const specSenzArmi = onda ? [] : (scheda?.specializzazioni ?? []).filter((s) => s.effetto?.attacchi === 'senz_armi');
+  // A.232 aperta (Guanti con Armi da Pugno e/o Combattimento Senz'Armi): oggi ai pugni, con o senza Guanti, vale solo
+  // Combattimento Senz'Armi; Armi da Pugno non si applica qui. Quando Davide risponde si cambia questo filtro.
   const bonusVa = [
     ...specSenzArmi.filter((s) => s.effetto.va).map((s) => voce(`Specializzazione in ${s.nome}`, s.effetto.va, 'regole')),
     ...(eq.bonusAttacco ?? []).filter(ravv).map((b) => voce(b.nome, b.valore, 'equipaggiamento')),
+    ...attivazioni.filter((x) => x.va).map((x) => voce(`${x.proprieta ?? x.nome} (${x.nome}, ${x.durata})`, x.va, 'equipaggiamento')),
   ];
   const bonusDannoEq = (eq.bonusDanno ?? []).filter(ravv).reduce((s, b) => s + b.valore, 0);
   const dannoSpec = specSenzArmi.reduce((s, x) => s + (x.effetto.danno ?? 0), 0);
@@ -787,7 +795,7 @@ export function profiloSenzArmi(scheda, dati, { onda = null } = {}) {
     ...specSenzArmi.filter((s) => s.effetto.danno).map((s) => riga(`Specializzazione in ${s.nome}`, s.effetto.danno, 'Giocatore §8.8.1')),
     ...(eq.bonusDanno ?? []).filter(ravv).map((b) => riga(b.nome, b.valore, 'effetto dell’oggetto')),
     ...dannoTec.map((e) => riga(e.talento, e.valore, 'Tecnica Interiore (§8.9)')),
-    ...attivazioni.filter((x) => x.danno).map((x) => riga(`${x.nome} (attivazione)`, x.danno, `${x.durata}, ${x.fonte}`)),
+    ...attivazioni.filter((x) => x.danno).map((x) => riga(`${x.proprieta ?? x.nome} (${x.nome}, attivazione)`, x.danno, `${x.durata}, ${x.fonte}`)),
   ] : null;
   if (onda) {
     return {

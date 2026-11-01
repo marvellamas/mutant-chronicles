@@ -1466,6 +1466,24 @@ function validaEquipaggiamento(eq, nomiAbilita, idSpec, err, coloriChroma = [], 
       else if (ids.has(o.id)) err(F, `${k}.id`, `id "${o.id}" ripetuto`);
       else { ids.add(o.id); rif.add(`${fileId}:${o.id}`); tipoDi.set(`${fileId}:${o.id}`, { tipo: o.tipo, modulo: o.modulo_di !== undefined }); }
       if (o.stesso_oggetto !== undefined) rimandi.push([F, `${k}.stesso_oggetto`, o.stesso_oggetto]);
+      // proprietà attive di un Artefatto (Guanti, scheda di Lucas 1.0): Pugno mistico a durata e getti istantanei
+      if (o.attivazione_artefatto !== undefined) {
+        const at = o.attivazione_artefatto;
+        if (!isOggetto(at) || !(isIntero(at.pm) && at.pm > 0) || !isTesto(at.azione) || !isTesto(at.durata)) err(F, `${k}.attivazione_artefatto`, 'servono pm (intero > 0), azione e durata');
+        else if (at.va !== undefined && !isIntero(at.va)) err(F, `${k}.attivazione_artefatto.va`, 'intero atteso');
+      }
+      if (o.getti_artefatto !== undefined) {
+        if (!Array.isArray(o.getti_artefatto)) err(F, `${k}.getti_artefatto`, 'elenco atteso');
+        else o.getti_artefatto.forEach((g, j) => {
+          const kg = `${k}.getti_artefatto[${j}]`;
+          if (!isTesto(g?.id) || !isTesto(g?.nome)) { err(F, kg, 'servono id e nome'); return; }
+          if (!(isIntero(g.pm) && g.pm > 0)) err(F, `${kg}.pm`, 'intero > 0 atteso');
+          if (!(isTesto(g.danno) && DADI.test(g.danno))) err(F, `${kg}.danno`, 'formula di dadi attesa');
+          if (!(isIntero(g.getti) && g.getti >= 1)) err(F, `${kg}.getti`, 'intero ≥ 1 atteso');
+          if (!isOggetto(g.area) || !isIntero(g.area.lunghezza_q) || !isIntero(g.area.larghezza_q)) err(F, `${kg}.area`, 'servono lunghezza_q e larghezza_q');
+          if (g.prova_potere !== null && g.prova_potere !== undefined && !(isOggetto(g.prova_potere) && nomiAbilita.includes(g.prova_potere.abilita) && isIntero(g.prova_potere.modificatore))) err(F, `${kg}.prova_potere`, 'servono un’Abilità esistente e un modificatore intero');
+        });
+      }
       // §7.8: il modulo integrato non si compra da solo; PI, Qualità e MOV sono dell'arma principale
       const modulo = o.modulo_di !== undefined;
       if (modulo) {

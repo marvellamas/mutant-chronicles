@@ -70,7 +70,7 @@ import { caricaImmagini, iconaPagina } from './immagini.js';
 import { preparaStampa, preparaTab, normalizzaOpzioniStampa, versioniCompatte } from '../stampa.js';
 import { renderTab, tabFissi, ALIAS_TAB, titoloSalvataggio } from './tab.js';
 import {
-  massimiSessione, allineaSessione, variaSessione, modificaSessione, stabilizzaMorente, scalaMorente, attivaArmaSessione, terminaArmaSessione, commutaContenitoreSessione, commutaStato, commutaCondizioneOggetto, commutaTalento, commutaBonusTalenti, impostaCondizioneArma, riparaOggetto, spendiPmLancio, ricaricaMatrice, attivaArtefatto, attivaTecnicaSessione, nuovoRoundSessione, terminaTecnicaSessione, usaUnaVoltaSessione, azzeraUsoSessione, nuovaSessione, convertiDistintivi, sessioneDopoLivello,
+  massimiSessione, allineaSessione, variaSessione, modificaSessione, stabilizzaMorente, scalaMorente, attivaArmaSessione, terminaArmaSessione, commutaContenitoreSessione, commutaStato, commutaCondizioneOggetto, commutaTalento, commutaBonusTalenti, impostaCondizioneArma, riparaOggetto, spendiPmLancio, ricaricaMatrice, attivaArtefatto, usaArtefatto, attivaTecnicaSessione, nuovoRoundSessione, terminaTecnicaSessione, usaUnaVoltaSessione, azzeraUsoSessione, nuovaSessione, convertiDistintivi, sessioneDopoLivello,
   penalitaSessione, variaMunizioni, consumaColpi, scegliGranata, granateDiPartenza, ricaricaArma, caricaDaCarichino, preparaCarichino, variaChroma, variaIntegrita, variaNec, ricaricaConTrasformatore,
 } from '../sessione.js';
 import { conOrdinale } from '../lingua.js';
@@ -2172,6 +2172,7 @@ function renderSchedaInterna({ mantieniScorrimento = false } = {}) {
       // Batteria Matrice (Magia §26.4) e Artefatti con attivazione a durata (Armamenti §7.24): modifiche annullabili
       ricaricaMatrice: (uid, ore, presso) => cambiaSessione(ricaricaMatrice(stato.sessione, uid, ore, presso, dati, massimi)),
       attivaArtefatto: (uid, pm, forza = false) => cambiaSessione(attivaArtefatto(stato.sessione, uid, pm, massimi, { forza })),
+      usaArtefatto: (uid, pm, forza = false) => cambiaSessione(usaArtefatto(stato.sessione, uid, pm, massimi, { forza })),
       // Tecniche Interiori (Giocatore §8.9.1, src/tecniche.js): ogni passo è una modifica annullabile
       // in uno scontro il Round è quello del server al momento dell'attivazione: si rilegge prima (vale l'ordine del server)
       attivaTecnica: async (id, opz) => {

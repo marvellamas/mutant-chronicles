@@ -21,7 +21,7 @@ test('i Guanti sono un’Arma ravvicinata e insieme un Artefatto, con 0 mani', (
   assert.equal(g.indossabile, true);
   assert.equal(g.impugnato, false);
   assert.ok(g.artefatto, 'resta un Artefatto Mistico');
-  assert.equal(g.artefatto.sintonizzazione, 2, 'SnT invariata');
+  assert.equal(g.artefatto.sintonizzazione, 3, 'SnT 3 (scheda di Lucas 1.0)');
   assert.equal(g.artefatto.contenitore.capacita_pm, 10, 'riserva invariata');
   // il profilo dei pugni dei manuali
   assert.deepEqual([g.profilo_pugni.famiglia, g.profilo_pugni.tipo_arma, g.profilo_pugni.abilita, g.profilo_pugni.caratteristica, g.profilo_pugni.portata_q],
@@ -58,12 +58,11 @@ test('i Guanti si contano una volta sola: peso, quantità e riserva', () => {
   assert.equal(contenitori.length, 1, 'una sola riserva');
   assert.equal(contenitori[0].capacita, 10);
   const info = infoArtefattoVoce(risolvi(voci[0], cat), dati);
-  assert.equal(info.sintonizzazione, 2, 'una sola SnT');
+  assert.equal(info.sintonizzazione, 3, 'una sola SnT');
 });
 
-test('gli effetti dei Guanti valgono sui pugni, non sull’arma impugnata', () => {
+test('i Guanti non hanno effetti passivi; il Pugno mistico vale sui pugni, non sull’arma impugnata', () => {
   const g = cat.perRif.get(RIF);
-  const su = (g.effetti ?? []).map((e) => e.attacchi);
-  assert.deepEqual(su, ['senz_armi', 'contatto_incantesimi'], 'solo pugni e incantesimi a contatto');
-  assert.equal(g.attivazione_artefatto.attacchi, 'senz_armi', 'anche l’attivazione a 3 PM');
+  assert.deepEqual(g.effetti ?? [], [], 'scheda di Lucas 1.0: nessun bonus sempre attivo');
+  assert.equal(g.attivazione_artefatto.attacchi, 'senz_armi', 'il Pugno mistico (2 PM) vale solo sui pugni');
 });

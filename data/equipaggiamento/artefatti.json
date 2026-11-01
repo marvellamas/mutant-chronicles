@@ -2181,52 +2181,38 @@
       "catalogo": "Artefatti di campagna",
       "famiglia": "Artefatti",
       "nomi_alternativi": [],
-      "note_manuale": "I Guanti da Combattimento Mistico sono una coppia di guanti e costituiscono un unico Artefatto Mistico da indossare sulle mani. Conferiscono +1 VA alle Prove per colpire con i pugni e alle Prove per colpire in corpo a corpo richieste dagli Incantesimi. Il beneficio passivo funziona anche senza sintonizzazione. Riserva. Cariche Verdi da 10 PM, utilizzabili soltanto per alimentare i Guanti. Spendendo 3 PM dalla riserva interna e 1 AzP, per 5 RND i danni dei pugni diventano Magici e ottengono +1 al danno. L’effetto non potenzia il danno degli Incantesimi e non si cumula con ulteriori attivazioni della stessa proprietà; una nuova attivazione rinnova la durata. Prezzo e profilo fisico sono parametri di catalogo da verificare in playtest.",
-      "paragrafo": "Equipaggiamento §10.6; Armamenti §7.24; Magia §26.6.2; Giocatore §5.13",
-      "versione_manuale": "Armamenti 0.61 / Equipaggiamento 0.7 / Magia 1.4 / Giocatore 0.48 (12/10/2026)",
+      "note_manuale": "Una coppia di guanti di cuoio morbido con innesti dorati e cristallo Rosso. Costituisce un solo Artefatto Mistico e un solo oggetto d’inventario. Potenza Rara, Grado III, SnT 3; Qualità fisica Non comune, PS Integrità 12, 4 PI, peso 0,5 kg. Riserva di 10 PM Rossi condivisa dalle due mani; le proprietà sono Esclusive: si pagano soltanto con i PM interni dei guanti. Indossati occupano 0 mani. I pugni usano Corpo a corpo (FOR), portata 1 Q e il normale danno senz’armi del personaggio. Non c’è un bonus magico sempre attivo. Per il Getto serve una mano libera; per il Doppio getto entrambe.",
+      "paragrafo": "Scheda «Guanti mistici di Lucas» 1.0; Armamenti §7.24; Equipaggiamento §10.6–10.7; Magia §26.6.2; Giocatore §5.13, §5.24",
+      "versione_manuale": "Scheda dei Guanti di Lucas 1.0 (31/10/2026) / Armamenti 0.74 / Equipaggiamento 0.30 / Magia 1.11 / Giocatore 0.54",
       "costo": 3000,
       "indossabile": true,
       "artefatto": {
         "tipologia": "Armi",
-        "potenza": "Non Comune",
-        "sintonizzazione": 2,
+        "potenza": "Rara",
+        "sintonizzazione": 3,
         "sintonizzabile": true,
         "proprieta_attive": true,
         "contenitore": {
-          "energia": "Verde",
+          "energia": "Rosso",
           "capacita_pm": 10,
           "integrato": true,
           "riserva": "cariche",
           "alimentazione": "esclusiva"
-        }
-      },
-      "effetti": [
-        {
-          "tipo": "attacco",
-          "attacchi": "senz_armi",
-          "valore": 1,
-          "ambito": "generale",
-          "condizione": "Conferiscono +1 VA alle Prove per colpire con i pugni e alle Prove per colpire in corpo a corpo richieste dagli Incantesimi.",
-          "fonte": "Armamenti §7.24"
         },
-        {
-          "tipo": "attacco",
-          "attacchi": "contatto_incantesimi",
-          "valore": 1,
-          "ambito": "generale",
-          "condizione": "Conferiscono +1 VA alle Prove per colpire con i pugni e alle Prove per colpire in corpo a corpo richieste dagli Incantesimi.",
-          "fonte": "Armamenti §7.24"
-        }
-      ],
+        "grado": "III"
+      },
+      "effetti": [],
       "attivazione_artefatto": {
-        "pm": 3,
+        "nome": "Pugno mistico",
+        "pm": 2,
         "azione": "1 AzP",
         "durata": "5 RND",
         "attacchi": "senz_armi",
+        "va": 1,
         "danno": 1,
         "natura": "Magico",
-        "condizione": "Spendendo 3 PM dalla riserva interna e 1 AzP, per 5 RND i danni dei pugni diventano Magici e ottengono +1 al danno.",
-        "fonte": "Armamenti §7.24"
+        "condizione": "Automatico. Per 5 Round: +1 VA ai pugni, danno Magico e +1 danno. Non si trasferisce a calci, armi impugnate, attacchi richiesti dagli Incantesimi o danni degli Incantesimi, né ai getti. Una nuova attivazione rinnova la durata senza sommare i bonus. Magico non significa ignorare l’Armatura.",
+        "fonte": "Scheda «Guanti mistici di Lucas» 1.0 (31/10/2026); Armamenti 0.74 §7.24; Magia 1.11 §26.6.2"
       },
       "proprieta": [],
       "reperibilita": "MR",
@@ -2248,7 +2234,66 @@
         "danno": "quello senz’armi del personaggio",
         "fonte": "Armamenti §7.24; Equipaggiamento cap. 10; Magia sez. 26; Giocatore §5.13"
       },
-      "_nota_mani": "Manuali del 12/10/2026: i Guanti sono un’Arma ravvicinata (famiglia Armi da pugno, tipo «Guanti da combattimento») e insieme un Artefatto Mistico: quantità, peso, Integrità, riserva e SnT si contano una volta sola. Sono indossati e occupano 0 mani: si può impugnare un’arma o un oggetto in ciascuna mano, oppure un’arma a due mani. Col pugno vale il profilo dei Guanti (Corpo a corpo su FOR, portata 1 Q, Manovra Stordire), con l’arma impugnata quello dell’arma; i pugni coi Guanti conservano il danno senz’armi e i benefici pertinenti (Arti Marziali, dado del Lottatore), e i poteri dei Guanti non passano alle armi impugnate. I Tirapugni ordinari restano impugnati e occupano una mano."
+      "_nota_mani": "Manuali del 12/10/2026: i Guanti sono un’Arma ravvicinata (famiglia Armi da pugno, tipo «Guanti da combattimento») e insieme un Artefatto Mistico: quantità, peso, Integrità, riserva e SnT si contano una volta sola. Sono indossati e occupano 0 mani: si può impugnare un’arma o un oggetto in ciascuna mano, oppure un’arma a due mani. Col pugno vale il profilo dei Guanti (Corpo a corpo su FOR, portata 1 Q, Manovra Stordire), con l’arma impugnata quello dell’arma; i pugni coi Guanti conservano il danno senz’armi e i benefici pertinenti (Arti Marziali, dado del Lottatore), e i poteri dei Guanti non passano alle armi impugnate. I Tirapugni ordinari restano impugnati e occupano una mano.",
+      "getti_artefatto": [
+        {
+          "id": "getto-di-fuoco",
+          "nome": "Getto di fuoco",
+          "pm": 5,
+          "azione": "1 AzP",
+          "mani_libere": 1,
+          "getti": 1,
+          "prova_potere": null,
+          "area": {
+            "forma": "linea",
+            "lunghezza_q": 2,
+            "larghezza_q": 1,
+            "partenza": "dalla casella adiacente al portatore"
+          },
+          "danno": "1d6+4",
+          "natura": "Naturale",
+          "proprieta_danno": [
+            "Fuoco"
+          ],
+          "incendiato": {
+            "salvezza": "riflessi",
+            "modificatore": 0
+          },
+          "condizione": "Automatico, senza Potere, senza Concentrazione. Linea retta di 2 × 1 Q dalla casella adiacente: investe tutti i bersagli nel primo e nel secondo Q, alleati compresi; il primo bersaglio non interrompe il getto, un ostacolo solido sì. 1d6+4 danni Naturali con proprietà Fuoco, senza FOR né i bonus del Pugno mistico.",
+          "fonte": "Scheda «Guanti mistici di Lucas» 1.0 (31/10/2026); Armamenti 0.74 §7.24; Magia 1.11 §26.6.2"
+        },
+        {
+          "id": "doppio-getto",
+          "nome": "Doppio getto",
+          "pm": 10,
+          "azione": "1 AzP",
+          "mani_libere": 2,
+          "getti": 2,
+          "prova_potere": {
+            "abilita": "Potere",
+            "modificatore": -2
+          },
+          "area": {
+            "forma": "linea",
+            "lunghezza_q": 2,
+            "larghezza_q": 1,
+            "partenza": "dalla casella adiacente al portatore"
+          },
+          "danno": "1d6+4",
+          "natura": "Naturale",
+          "proprieta_danno": [
+            "Fuoco"
+          ],
+          "incendiato": {
+            "salvezza": "riflessi",
+            "modificatore": 0
+          },
+          "pm_anche_se_fallisce": true,
+          "condizione": "Due getti, uno per mano, 5 PM ciascuno. Le due linee di 2 × 1 Q si dichiarano prima della Prova e possono coincidere o avere direzioni diverse. Con successo partono entrambi; i 10 PM si consumano al tentativo anche se la Prova fallisce. Si tira il danno una volta per getto; Elusione e Armatura separate per getto e bersaglio; una sola PS Riflessi per Incendiato per bersaglio e attacco.",
+          "fonte": "Scheda «Guanti mistici di Lucas» 1.0 (31/10/2026); Armamenti 0.74 §7.24; Magia 1.11 §26.6.2"
+        }
+      ],
+      "_nota_lucas": "Scheda 1.0 del 31/10/2026: l’energia presente si registra secondo lo stato effettivo di campagna, senza ricarica automatica; la ricarica segue le riserve mistiche Rosse (Batterie Mistiche), senza NEC, UE o trasformatori. Esempi a riserva piena: cinque Pugni mistici, due Getti singoli, un Doppio getto; un Getto e due Pugni lasciano 1 PM."
     },
     {
       "id": "pergamena-di-cura-ferite-3",

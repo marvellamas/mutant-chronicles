@@ -65,26 +65,28 @@ test('Scheggia instabile: SnT 0, senza sintonizzazione è una fonte di «Lancia!
   assert.ok(r.promemoria.some((p) => /Scheggia instabile: prima una Prova di Potere obbligatoria per estrarre/.test(p)));
 });
 
-test('Guanti da Combattimento Mistico: +1 VA ai pugni indossati, anche senza sintonizzazione; attivazione 3 PM: pugni Magici e +1 al danno', () => {
+// scheda «Guanti mistici di Lucas» 1.0 (31/10/2026): niente bonus passivo; il Pugno mistico (2 PM) dà +1 VA, Magico e +1
+test('Guanti da Combattimento Mistico: indossati non danno +1 VA; Pugno mistico 2 PM: +1 VA, pugni Magici e +1 al danno', () => {
   const senza = pg([]);
   const con = pg([voce('g', 'artefatti:guanti-da-combattimento-mistico', 'indossata')]);
   const a0 = profiloSenzArmi(senza.s, dati);
   const a1 = profiloSenzArmi(con.s, dati);
-  assert.equal(a1.vaEffettivo - a0.vaEffettivo, 1);
+  assert.equal(a1.vaEffettivo - a0.vaEffettivo, 0, 'nessun +1 VA passivo');
   // non valgono per le armi impugnate
   assert.ok(!con.s.equipaggiamento.armi.some((w) => w.scomposizione?.some((x) => /Guanti/.test(x.etichetta))));
-  // attivazione: serve la sintonizzazione; spende 3 PM dalle Cariche e accende la condizione
+  // Pugno mistico: serve la sintonizzazione; spende 2 PM dalle Cariche e accende la condizione
   const sint = pg([voce('g', 'artefatti:guanti-da-combattimento-mistico', 'indossata', { sintonizzato: true })]);
-  const s1 = attivaArtefatto(inizializzaSessione(sint.m), 'g', 3, sint.m);
-  assert.deepEqual([s1.chroma.g.pmAttuali, s1.condizioniOggetti.includes('attivazione:g')], [7, true]);
+  const s1 = attivaArtefatto(inizializzaSessione(sint.m), 'g', 2, sint.m);
+  assert.deepEqual([s1.chroma.g.pmAttuali, s1.condizioniOggetti.includes('attivazione:g')], [8, true]);
   const sch = calcolaScheda({ creazione: sint.creazione, livelli: [], sessione: s1 }, dati);
   const a2 = profiloSenzArmi(sch, dati);
   assert.equal(a2.natura, 'Magico');
-  assert.ok(a2.provenienzaDanno.righe.some((r) => /Guanti da Combattimento Mistico \(attivazione\)/.test(r.fonte) && r.valore === 1));
+  assert.equal(a2.vaEffettivo - a0.vaEffettivo, 1, '+1 VA solo con il Pugno mistico acceso');
+  assert.ok(a2.provenienzaDanno.righe.some((r) => /Pugno mistico \(Guanti da Combattimento Mistico, attivazione\)/.test(r.fonte) && r.valore === 1));
   const att = calcolaAttaccoRavvicinato({ scheda: sch, sessione: s1 }, a2, {}, dati);
   assert.equal(att.danno.natura, 'Magico');
   // riserva insufficiente: null
-  assert.equal(attivaArtefatto(modificaSessione(inizializzaSessione(sint.m), { chroma: { g: { pmAttuali: 2 } } }, sint.m), 'g', 3, sint.m), null);
+  assert.equal(attivaArtefatto(modificaSessione(inizializzaSessione(sint.m), { chroma: { g: { pmAttuali: 1 } } }, sint.m), 'g', 2, sint.m), null);
 });
 
 test('Pietra della Vigilanza: Batteria Verde 10 PM con due proprietà Universali, fonte anche per «Lancia!»', () => {
@@ -93,9 +95,12 @@ test('Pietra della Vigilanza: Batteria Verde 10 PM con due proprietà Universali
   const { s } = pg([voce('p', 'artefatti:pietra-della-vigilanza', 'trasportato', { sintonizzato: true })]);
   const c = s.equipaggiamento.contenitori.find((x) => x.uid === 'p');
   assert.deepEqual([c.riserva, c.alimentazione, c.fontePg, c.costo], ['batteria', 'universale', true, 3]);
-  // il kit individuale (Batteria Matrice 10 PM, Pietra, Guanti) occupa 8 SnT (Magia §26.1)
+  // il kit individuale (Batteria Matrice 10 PM, Pietra, Guanti) occupa 9 SnT (Magia 1.11 §26.1, scheda di Lucas 1.0): al I Grado
+  // (capacità 8) non entra: l'app avvisa e non toglie niente da sola (§7.10: sceglie il personaggio)
   const kit = pg([voce('bm', 'artefatti:batteria-matrice-da-10-pm-chroma-rosso', 'trasportato', { sintonizzato: true }), voce('p', 'artefatti:pietra-della-vigilanza', 'trasportato', { sintonizzato: true }), voce('g', 'artefatti:guanti-da-combattimento-mistico', 'indossata', { sintonizzato: true })]);
-  assert.deepEqual([kit.s.equipaggiamento.sintonizzazione.usata, kit.s.equipaggiamento.sintonizzazione.capacita], [8, 8]);
+  assert.deepEqual([kit.s.equipaggiamento.sintonizzazione.usata, kit.s.equipaggiamento.sintonizzazione.capacita], [9, 8]);
+  assert.ok(kit.s.equipaggiamento.sintonizzazione.artefatti.every((x) => x.sintonizzato), 'nessuna sintonizzazione tolta');
+  assert.ok((kit.s.equipaggiamento.avvisi ?? []).some((a) => /oltre la capacità: 9 su 8/.test(a)));
 });
 
 test('Guanti indossati: i pugni compaiono fra le armi anche con altre armi impugnate (pugni potenziati)', () => {

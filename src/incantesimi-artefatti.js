@@ -42,7 +42,8 @@ export function incantesimiDaOggetti({ voci, scheda }, dati) {
       trovato: !!incantesimoPerNome(infuso.incantesimo, dati),
     }));
     const at = r.def?.attivazione_artefatto;
-    if (at) out.push({ ...base, chiave: `${r.uid}#p`, origine: 'proprieta', proprieta: at, trovato: true });
+    // A.175: proprietà attive, non incantesimi; i Guanti (scheda di Lucas 1.0) hanno anche i getti istantanei
+    if (at) out.push({ ...base, chiave: `${r.uid}#p`, origine: 'proprieta', proprieta: at, getti: r.def?.getti_artefatto ?? [], trovato: true });
   }
   for (const x of consumabiliMistici(voci ?? [], dati)) {
     out.push({

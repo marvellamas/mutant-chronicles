@@ -15,6 +15,7 @@ import { pannelloMedita, pulsanteMedita } from './medita.js';
 import { aggiungiIncantesimoAMano, incantesimoPerId, cercaIncantesimi, togliIncantesimoAMano, avvisoLivelloAMano, origini, tipi as tipiAMano, tipoDi as tipoAMano, fraseTipo, classificaIncantesimoAMano, dataLeggibile, rigaRegistro as rigaRegistroAMano } from '../incantesimi-a-mano.js';
 import { fasciaMaster, toccoMaster, notaCorrezione, sezioneRegistro, conMotivoMaster, bloccoLivelloMaster } from './master.js';
 import { apriTiro, sezioneTiri } from './tira-valore.js';
+import { pianoGetto } from '../getti-artefatto.js';
 import { circostanzeMasterAttive } from '../correzioni-master.js';
 import { conAvviso } from './procedi.js';
 import { h, segno, svuota } from './dom.js';
@@ -2054,7 +2055,7 @@ function riquadroArmi(ctx, d, mani) {
     // scudi da imbracciare: stanno fra le Protezioni, qui sopra
     // Artefatti che potenziano i pugni (Guanti da Combattimento Mistico, Armamenti §7.24): si indossano da qui
     oggettiDisponibili(ctx, ['artefatto'], { verbo: () => 'Indossa', statoAttivo: (r) => (r.stati.includes('indossata') ? 'indossata' : null), soloNonAttivi: true,
-      filtro: (r) => (r.def?.effetti ?? []).some((e) => e.attacchi === 'senz_armi') }));
+      filtro: (r) => !!r.def?.profilo_pugni }));
 }
 
 /**
@@ -2296,7 +2297,7 @@ function schedaSenzArmi(ctx) {
       h('p', {}, h('span', { class: 'sigla' }, 'Danno '), dannoConProvenienza(a, a.danno.una_mano ?? '—'),
         h('small', { class: 'sigla' }, ` (${a.dannoOrigine === 'base' ? 'base' : a.dannoOrigine}${a.bonusCaratteristica?.bonus ? `, ${a.bonusCaratteristica.sigla} ${segno(a.bonusCaratteristica.bonus)}` : ''}${a.dannoSpecializzazione ? `, Spec. ${segno(a.dannoSpecializzazione)}` : ''})${a.natura ? ` · ${a.natura}` : ''}`)),
       h('p', {}, h('span', { class: 'sigla' }, 'Portata '), `${a.portataQ} Q`)),
-    pugniPotenziati(ctx.tab.scheda) ? h('p', { class: 'nota' }, `${pugniPotenziati(ctx.tab.scheda).nome}: +1 VA sempre; l’attivazione (PM della riserva interna) si accende nella tab Artefatti e vale qui finché dura.`) : null,
+    pugniPotenziati(ctx.tab.scheda) ? h('p', { class: 'nota' }, `${pugniPotenziati(ctx.tab.scheda).nome}: nessun bonus sempre attivo; il Pugno mistico (PM della riserva interna) si accende nella tab Artefatti e vale qui finché dura.`) : null,
     ultima ? h('p', { class: 'nota' }, `Ultima Manovra: ${ultima.nome}`) : null);
 }
 
@@ -2622,13 +2623,39 @@ function attivazioneArtefattoUiCorpo(ctx, x, r, riserva) {
   const accesa = (ctx.sessione.condizioniOggetti ?? []).includes(chiave);
   const pm = riserva ? ctx.sessione.chroma?.[riserva.uid]?.pmAttuali ?? 0 : 0;
   const motivo = x.deposito ? 'nel deposito comune' : !x.sintonizzato ? 'non sintonizzato' : !r.attivo ? 'non indossato' : pm < at.pm ? `la riserva ha ${pm} PM, ne servono ${at.pm}` : null;
+  // scheda di Lucas 1.0: il Pugno mistico è l'unico +1 VA dei Guanti; nessun bonus sempre attivo
+  const effetto = [at.va ? `+${at.va} VA ai pugni` : null, at.natura ? `danno ${at.natura}` : null, at.danno ? `+${at.danno} al danno` : null].filter(Boolean).join(', ');
   return h('div', { class: 'attivazione-infusa' },
-    h('p', {}, h('strong', {}, 'Attivazione: '), `${at.pm} PM dalla riserva interna, ${at.azione}, ${at.durata}: danni dei pugni di natura ${at.natura} e +${at.danno} al danno (${at.fonte}).`),
+    h('p', {}, h('strong', {}, `${at.nome ?? 'Attivazione'}: `), `${at.pm} PM dalla riserva interna, ${at.azione}, ${at.durata}: ${effetto}.`),
+    at.condizione ? h('p', { class: 'nota' }, at.condizione) : null,
     accesa ? h('p', { class: 'nota' }, h('strong', {}, 'Attiva'), ` · vale in «Attacca!» senz’armi; dura ${at.durata}. `,
       h('button', { type: 'button', class: 'btn btn-piccolo', onclick: () => ctx.azioni.condizioneOggetto(chiave) }, 'Termina')) : null,
     motivo && !accesa ? h('p', { class: 'nota motivo' }, `Avviso: ${motivo}. Si può attivare comunque.`) : null,
     h('button', { type: 'button', class: `btn${motivo ? ' con-avviso' : ''}`, title: motivo ?? `Scala ${at.pm} PM dalla riserva e accende l’effetto; una nuova attivazione rinnova la durata`,
-      onclick: () => conAvviso(ctx.azioni.storico, { azione: `attivare ${x.nome}`, motivo, fai: (forza) => ctx.azioni.attivaArtefatto(x.uid, at.pm, forza) }) }, accesa ? `Rinnova (−${at.pm} PM)` : `Attiva (−${at.pm} PM)`));
+      onclick: () => conAvviso(ctx.azioni.storico, { azione: `attivare ${x.nome}`, motivo, fai: (forza) => ctx.azioni.attivaArtefatto(x.uid, at.pm, forza) }) }, accesa ? `Rinnova (−${at.pm} PM)` : `Attiva (−${at.pm} PM)`),
+    (r.def.getti_artefatto ?? []).map((g) => gettoArtefattoUi(ctx, x, r, g, pm)));
+}
+
+/**
+ * Getto di fuoco e Doppio getto dei Guanti (scheda di Lucas 1.0; src/getti-artefatto.js): «Usa» scala i PM dalla riserva
+ * interna, poi i dadi del danno (uno per getto) e, per il Doppio getto, la Prova di Potere −2. Avvisa, non blocca.
+ */
+function gettoArtefattoUi(ctx, x, r, g, pm) {
+  const p = pianoGetto(g, ctx.tab.scheda, { pm, sintonizzato: x.sintonizzato, indossato: r.attivo, deposito: x.deposito });
+  const motivo = p.motivi.length ? p.motivi.join('; ') : null;
+  const ui = ((ctx.ui.getti ??= {})[x.uid] ??= {});
+  const usato = ui.ultimo === g.id;
+  return h('div', { class: 'getto-artefatto' },
+    h('p', {}, h('strong', {}, `${g.nome}: `), `${g.pm} PM dalla riserva interna, ${g.azione}${g.mani_libere ? `, ${g.mani_libere === 2 ? 'entrambe le mani libere' : 'una mano libera'}` : ''}${g.prova_potere ? `, Prova di ${g.prova_potere.abilita} ${g.prova_potere.modificatore < 0 ? '−' : '+'}${Math.abs(g.prova_potere.modificatore)} VA` : ', automatico'}. ${p.testo}`),
+    h('p', { class: 'nota' }, g.condizione),
+    motivo && !usato ? h('p', { class: 'nota motivo' }, `Avviso: ${motivo}. Si può usare comunque.`) : null,
+    h('div', { class: 'riga-azioni' },
+      h('button', { type: 'button', class: `btn${motivo ? ' con-avviso' : ''}`, title: g.pm_anche_se_fallisce ? `Scala ${g.pm} PM: si consumano anche se la Prova fallisce` : `Scala ${g.pm} PM dalla riserva`,
+        onclick: () => conAvviso(ctx.azioni.storico, { azione: `usare ${g.nome}`, motivo, fai: (forza) => { ui.ultimo = g.id; ctx.azioni.usaArtefatto(x.uid, g.pm, forza); } }) }, `Usa (−${g.pm} PM)`),
+      usato && p.prova ? h('button', { type: 'button', class: 'btn', onclick: () => apriTiro(ctx, { genere: 'prova', nome: p.prova.nome, va: p.prova.va, note: p.prova.scomposizione }) }, `Tira Potere (VA ${p.prova.va})`) : null,
+      usato ? p.danni.map((d, i) => h('button', { type: 'button', class: 'btn', onclick: () => apriTiro(ctx, { genere: 'danno', nome: `${g.nome}${p.danni.length > 1 ? ` (getto ${i + 1})` : ''}: danno`, formula: d }) },
+        `Tira il danno${p.danni.length > 1 ? ` ${i + 1}` : ''} ${d}`)) : null),
+    usato ? h('p', { class: 'nota' }, `Usato: ${g.pm} PM scalati.${g.pm_anche_se_fallisce ? ' I PM restano spesi anche se la Prova fallisce.' : ''} Fuoco (§5.24): dopo il danno residuo, PS Riflessi con modificatore 0 per evitare Incendiato, una sola per bersaglio e attacco.`) : null);
 }
 
 /**

@@ -193,6 +193,17 @@ export function condizionaliAbilita(scheda, nome) {
  *   sessione: solo per le tab, valori effettivi con le condizioni; la stampa resta a riposo }
  * @returns {{ completa, errori, scheda, fogli: {id, titolo, numero, totale, dati}[], piede: {nome, livello, versioni} }}
  */
+/**
+ * Le proprietà attive di un Artefatto in una riga per la stampa (Guanti, scheda di Lucas 1.0): l'attivazione a durata
+ * (Pugno mistico) e gli usi istantanei (Getto di fuoco, Doppio getto). Nessun bonus sempre attivo.
+ */
+export function testoAttivazioneArtefatto(def) {
+  const at = def.attivazione_artefatto;
+  const effetto = [at.va ? `+${at.va} VA ai pugni` : null, at.natura ? `danno ${at.natura}` : null, at.danno ? `+${at.danno} al danno` : null].filter(Boolean).join(', ');
+  const getti = (def.getti_artefatto ?? []).map((g) => `${g.nome}: ${g.pm} PM, ${g.azione}${g.prova_potere ? `, Prova di ${g.prova_potere.abilita} ${g.prova_potere.modificatore < 0 ? '−' : '+'}${Math.abs(g.prova_potere.modificatore)}` : ''}, ${g.getti === 2 ? 'due linee' : 'linea'} ${g.area.lunghezza_q} × ${g.area.larghezza_q} Q, ${g.danno} ${g.natura}${(g.proprieta_danno ?? []).length ? ` (${g.proprieta_danno.join(', ')})` : ''}${g.getti === 2 ? ' per getto' : ''}`);
+  return [`${at.nome ? `${at.nome}: ` : ''}${at.pm} PM dalla riserva interna, ${at.azione}, ${at.durata}: ${effetto}`, ...getti].join(' · ');
+}
+
 export function preparaStampa(personaggio, dati, { versioniDati = '', completo = false, sessione = null, registroVeicoli = null, temporanei = false, modificatori = null } = {}) {
   const p = migraPersonaggio(personaggio);
   const c = p.creazione;
@@ -703,7 +714,7 @@ export function artefattiStampa(s, creazione, dati, { conPoteri = false } = {}) 
       ar: prot ? { testo: testoAr(prot.ar), provenienza: riga(prot.provenienza) } : null,
       nonInUso: !arma && !prot && effettiPossibili,
       // Magia §24.2, §25.4: incantesimo infuso, pagato dalla riserva integrata, senza Prove
-      attivazione: def?.attivazione?.testo ?? (def?.attivazione_artefatto ? `${def.attivazione_artefatto.pm} PM dalla riserva interna, ${def.attivazione_artefatto.azione}, ${def.attivazione_artefatto.durata}: danni dei pugni di natura ${def.attivazione_artefatto.natura} e +${def.attivazione_artefatto.danno} al danno` : testoInfuso(r, dati)),
+      attivazione: def?.attivazione?.testo ?? (def?.attivazione_artefatto ? testoAttivazioneArtefatto(def) : testoInfuso(r, dati)),
       riserva: riserva ? { energia: riserva.energia, capacita: riserva.capacita } : null,
     };
   });

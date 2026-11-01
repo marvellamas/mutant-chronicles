@@ -1510,8 +1510,13 @@ export function calcolaEquipaggiamento(base, voci, dati) {
     bonusDanno: dannoEquip,
     // attivazioni di Artefatti con durata (Guanti da Combattimento Mistico, Armamenti §7.24): l'effetto vale con
     // la condizione «attivazione:<uid>» accesa al tavolo (src/condizioni.js), l'oggetto in uso e non nel deposito
+    // oggetti indossati che danno il profilo dei pugni (Guanti da Combattimento Mistico, Armamenti §7.24): li riconosce
+    // «Attacca!» (src/attacco.js → pugniPotenziati). Dal 01/11 (scheda di Lucas 1.0) i Guanti non hanno più un bonus
+    // passivo: indossati danno solo il profilo, il +1 VA viene dal Pugno mistico acceso
+    pugni: oggetti.filter((o) => o.attivo && !o.deposito && o.def?.profilo_pugni).map((o) => ({ uid: o.uid, nome: o.nome })),
     attivazioniArtefatti: oggetti.filter((o) => o.def?.attivazione_artefatto && !o.deposito)
-      .map((o) => ({ uid: o.uid, nome: o.nome, chiave: `attivazione:${o.uid}`, attivo: o.attivo, sintonizzato: o.voce.sintonizzato === true, ...o.def.attivazione_artefatto })),
+      // `nome` resta quello dell'oggetto; `proprieta` è il nome della proprietà (Pugno mistico)
+      .map((o) => ({ ...o.def.attivazione_artefatto, uid: o.uid, nome: o.nome, proprieta: o.def.attivazione_artefatto.nome ?? null, chiave: `attivazione:${o.uid}`, attivo: o.attivo, sintonizzato: o.voce.sintonizzato === true })),
     iniziativa: iniziativaEquip,
     movimentoEquip,
     contenitori: contenitoriRisolti(oggetti, dati),
