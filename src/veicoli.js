@@ -18,6 +18,8 @@
 //
 // Tutto è facoltativo salvo «profilo»: `vistaVeicolo` riempie i valori mancanti dal profilo (mezzo integro).
 import { provenienza, riga, righeRegoleAbilita } from './provenienza.js';
+// la Neverlost (A.196): riserve, Traiettoria, scudo e circuito Bianco in un modulo a parte (src/neverlost.js)
+import { eNeverlost, normalizzaNeverlost, chiudiGiornataNeverlost, ricaricaNeverlost } from './neverlost.js';
 
 const lista = (v) => (Array.isArray(v) ? v : []);
 const intero = (v, d = 0) => (Number.isInteger(v) ? v : d);
@@ -648,6 +650,17 @@ function energiaLetta(x, base) {
  * riserve che il file non ha partono dalla dotazione iniziale del profilo (A.101).
  */
 function normalizzaRisorse(v, profilo) {
+  // la Neverlost: riserve che **non** partono dalla dotazione (A.196), più scudo e circuito Bianco; munizioni come gli altri
+  if (eNeverlost(profilo)) {
+    const m = munizioniIniziali(profilo);
+    const mun = m ? m.map((x, i) => {
+      if (!x) return null;
+      const y = lista(v?.munizioni)[i];
+      const cap = intero(profilo.armi[i].capacita, x.caricate);
+      return isOggetto(y) ? { caricate: entro(y.caricate, 0, cap, cap), riserva: Math.max(0, intero(y.riserva, x.riserva)) } : x;
+    }) : null;
+    return { ...normalizzaNeverlost(v, profilo), ...(mun ? { munizioni: mun } : {}) };
+  }
   const base = energiaIniziale(profilo);
   let energia = null;
   let prima = isOggetto(v?.energia_prima) ? v.energia_prima : null;
@@ -682,6 +695,7 @@ const comeMezzo = (mezzo, energia) => ({ ...mezzo, energia, ...(inLx(mezzo) && !
  */
 export function registraViaggio(mezzo, km, dati) {
   const profilo = profiloDi(mezzo, dati);
+  if (eNeverlost(profilo)) return { mezzo, righe: [], avvisi: ['La Neverlost non conta i chilometri: si registra il tempo di volo (o i giorni di Traiettoria).'] };
   const e = normalizzaRisorse(mezzo, profilo).energia;
   if (!(km > 0)) return { mezzo, righe: [], avvisi: [] };
   if (e?.rosso === undefined) return { mezzo, righe: [], avvisi: ['Il mezzo non ha una riserva Rossa a cariche nel profilo.'] };
@@ -724,6 +738,8 @@ export function registraSupportoVitale(mezzo, ore, dati) {
  */
 export function chiudiGiornata(mezzo, dati) {
   const profilo = profiloDi(mezzo, dati);
+  // la Neverlost chiude la giornata a modo suo (volo a tempo, Verde ogni giorno, Traiettoria): src/neverlost.js
+  if (eNeverlost(profilo)) return chiudiGiornataNeverlost(mezzo, profilo);
   const e = normalizzaRisorse(mezzo, profilo).energia;
   const righe = [];
   const avvisi = [];
@@ -766,6 +782,8 @@ const minutiTesto = (m) => (m >= 60 ? `${Math.floor(m / 60)} h${m % 60 ? ` ${m %
  */
 export function ricaricaEnergia(mezzo, dati, { inSuccessione = false } = {}) {
   const profilo = profiloDi(mezzo, dati);
+  // la Neverlost: solo a un approdo che la serve, solo le cariche (non scudo né circuito Bianco)
+  if (eNeverlost(profilo)) { const r = ricaricaNeverlost(mezzo, profilo); return r ? { ...r, minuti: r.ore * 60 } : null; }
   const e = normalizzaRisorse(mezzo, profilo).energia;
   if (!e) return null;
   const parti = [
@@ -879,6 +897,7 @@ export function eseguiCambioAndatura(mezzo, dati) {
 /** Vista delle riserve per la scheda e la stampa (cariche: Veicoli 0.10 §9.1 e §10, Scout 0.6). */
 function vistaRisorse(mezzo, profilo) {
   const r = normalizzaRisorse(mezzo, profilo);
+  if (eNeverlost(profilo)) return { neverlost: true, energia: r.energia, rosso: null, verde: null, aria: null, munizioni: r.munizioni ?? null };
   const e = r.energia;
   const a = profilo.alimentazione;
   const sv = profilo.supporto_vitale;

@@ -102,10 +102,16 @@ export function pedinaTattica(scheda) {
  * Ingombro di un veicolo [colonne, righe] dal suo profilo (data/veicoli.json → profili[].dimensioni.ingombro_q,
  * «3 × 2»), oppure dalle misure in metri (1 Q = 1,5 m), oppure quello predefinito dei dati.
  */
-export function ingombroVeicolo(profilo, dati) {
+export function ingombroVeicolo(profilo, dati, scala = 'base') {
   const T = dati.mappa.token;
   const max = T.veicolo_ingombro_max;
   const limita = (n) => Math.max(1, Math.min(max, n));
+  // A.196: in Q Tattici un mezzo con la pedina convenzionale (Neverlost, «3 × 2») usa quella; le misure vere del corpo
+  // (dimensioni in metri) e la planimetria interna restano dati distinti, come le sagome dei draghi (A.198, A.204)
+  if (scala === 'tattica') {
+    const pt = /^\s*(\d+)\s*[×x]\s*(\d+)/.exec(String(profilo?.pedina_tattica ?? ''));
+    if (pt) return [limita(Number(pt[1])), limita(Number(pt[2]))];
+  }
   const m = /^\s*(\d+)\s*[×x]\s*(\d+)\s*$/.exec(String(profilo?.dimensioni?.ingombro_q ?? ''));
   if (m) return [limita(Number(m[1])), limita(Number(m[2]))];
   const d = profilo?.dimensioni;

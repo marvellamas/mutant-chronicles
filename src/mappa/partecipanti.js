@@ -134,12 +134,15 @@ export function pezziDellaScena({ scontro = null, bozza = null, alTavolo = [], v
   for (const rec of veicoli ?? []) {
     if (!veicoloPresente(rec, chiaviPg)) continue;
     const profilo = profiloVeicolo(rec.mezzo?.profilo, dati) ?? rec.mezzo?.scheda ?? null;
+    // A.196: la Neverlost combatte solo in Q Tattici; in una scena in Q Base non entra come pedina (l'interno è una
+    // planimetria a parte, una scena propria)
+    if (profilo?.scala_combattimento && profilo.scala_combattimento !== scala) continue;
     const nome = rec.mezzo?.nome ?? profilo?.nome ?? 'Veicolo';
     const guida = scontro ? partecipanteConducente(rec, scontro) : null;
     pezzi.push({
       chiave: chiaveRif({ tipo: 'veicolo', id: rec.id }), rif: { tipo: 'veicolo', id: rec.id }, tipo: 'veicolo', nome,
       // il mezzo entra in mappa con il muso in basso, come l'immagine (fase 2, lotto 5): ingombro verticale
-      lato: 'pg', ingombro: ingombroOrientato(ingombroVeicolo(profilo, dati), 's'), iniziali: iniziali(nome), ritratto: null, pv: null, aZero: false,
+      lato: 'pg', ingombro: ingombroOrientato(ingombroVeicolo(profilo, dati, scala), 's'), iniziali: iniziali(nome), ritratto: null, pv: null, aZero: false,
       // fase 2, lotto 5: immagine del token (con il muso), posti a bordo, conducente del registro (A.91)
       immagine: profilo?.mappa?.immagine ?? null, musoImmagine: profilo?.mappa?.muso_immagine ?? 's', posti: postiDi(profilo),
       conducenteChiave: rec.conducente?.chiave ?? null,

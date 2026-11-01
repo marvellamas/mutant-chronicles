@@ -14,6 +14,10 @@ import {
 } from '../veicoli.js';
 import { migraVeicoli, nuovoRecord, riferimento, vede, eRiferimento, statoMovimento, muoviVeicolo, cambiaConducente, movimentoResiduo, stessaChiave, scegliAndatura, conCopie, mezzoDallaCopia } from '../veicoli-registro.js';
 import { elencoVeicoli, scriviVeicolo, aggiornaVeicolo } from './veicoli-registro.js';
+import {
+  vistaNeverlost, registraValori, registraVolo, registraStazionario, impostaApprodo, entraTraiettoria, esciTraiettoria, traversata,
+  sparaCannone, attivaScudo, oraScudo, spegniScudo, roundSenzaColpi, usaFunzione, variaCircuito, colpoAlloScudo,
+} from '../neverlost.js';
 
 const num = (x, d) => (Number.isFinite(Number.parseFloat(String(x).replace(',', '.'))) ? Number.parseFloat(String(x).replace(',', '.')) : d);
 const numero = (n) => (Number.isInteger(n) ? n.toLocaleString('it-IT') : '—');
@@ -161,7 +165,7 @@ function pannelloAggiungi(ctx, inRegistro = null) {
   };
   return h('section', { class: 'riquadro pannello-veicolo' },
     h('h2', {}, 'Aggiungi veicolo'),
-    rigaScelte('Dal catalogo', [...profili.map((p) => ({ valore: p.id, etichetta: p.nome, riga: `MOV ${p.mov_q} Q · AR ${p.ar.totale} · ${p.equipaggio.posti} posti` })), { valore: 'mano', etichetta: 'Scritto a mano', riga: 'profilo libero' }],
+    rigaScelte('Dal catalogo', [...profili.map((p) => ({ valore: p.id, etichetta: p.nome, riga: `MOV ${p.mov_q} ${p.mov_unita ?? 'Q'} · AR ${p.ar.totale} · ${p.equipaggio.posti} posti` })), { valore: 'mano', etichetta: 'Scritto a mano', riga: 'profilo libero' }],
       a.origine, (v) => { a.origine = v; ctx.azioni.ridisegna(); }),
     h('label', { class: 'campo-veicolo' }, 'Nome (facoltativo) ', h('input', { type: 'text', value: a.nome, placeholder: a.origine === 'mano' ? 'Veicolo' : profili.find((p) => p.id === a.origine)?.nome, onchange: (e) => { a.nome = e.target.value; } })),
     a.origine === 'mano' ? h('div', { class: 'campi-veicolo' },
@@ -258,6 +262,7 @@ function schedaVeicolo(ctx, mezzo, pilotare, registro = null) {
     h('div', { class: 'veicolo-colonne' },
       h('div', {}, profiloVeicolo(v, d), pilotareVeicolo(v, d), andatureVeicolo(ctx, mezzo, v, aggiorna)),
       h('div', {}, struttureVeicoloUi(ctx, mezzo, v, aggiorna), rinforziVeicolo(mezzo, v, aggiorna, ctx), necVeicolo(ctx, mezzo, v, aggiorna), munizioniVeicolo(ctx, mezzo, v, aggiorna))),
+    v.risorse?.neverlost ? neverlostUi(ctx, mezzo, v, aggiorna) : null,
     armiEProprieta(v),
     h('div', { class: 'riga-azioni azioni-veicolo' },
       h('button', { type: 'button', class: 'btn', onclick: () => { const u = statoUi(ctx); u.colpo[mezzo.uid] = u.colpo[mezzo.uid] ? null : { modo: 'd20', d20: 10, struttura: 'corpo', danni: '', natura: 'Naturale', magistrale: false, piAggiuntivi: 0, ps: 'fallita', esposti: true }; ctx.azioni.ridisegna(); } }, 'Colpito'),
@@ -281,7 +286,7 @@ function profiloVeicolo(v, d) {
   const p = v.profilo;
   const voce = (etichetta, valore) => h('div', { class: 'voce-profilo' }, h('dt', {}, etichetta), h('dd', {}, valore));
   return h('dl', { class: 'profilo-veicolo' },
-    voce('MOV', `${numero(p.mov_q)} Q`),
+    voce('MOV', `${numero(p.mov_q)} ${p.mov_unita ?? 'Q'}`),
     voce('MAN', `${segno(p.man ?? 0)}${v.fascia ? ` (${v.fascia.nome})` : ''}`),
     voce('Corazzato', String(p.corazzato ?? 0)),
     voce('AR', `${p.ar?.totale ?? 0}${p.ar?.magica ? ` (${p.ar.magica} magica)` : ''}`),
@@ -290,6 +295,8 @@ function profiloVeicolo(v, d) {
     voce('Prezzo', v.daDefinire.prezzo ? [Number.isInteger(p.prezzo_cr) ? `${numero(p.prezzo_cr)} cr, parziale · ` : null, daDefinire()] : `${numero(p.prezzo_cr)} cr`),
     voce('Reperibilità', v.daDefinire.reperibilita ? daDefinire() : p.reperibilita),
     p.carico_kg ? voce('Carico', `${numero(p.carico_kg)} kg`) : null,
+    p.man_testo ? h('p', { class: 'nota' }, p.man_testo) : null,
+    p.mov_testo ? h('p', { class: 'nota' }, p.mov_testo) : null,
     v.todo ? h('p', { class: 'nota todo-veicolo' }, `Da chiarire con Davide: ${v.todo}`) : null);
 }
 
@@ -315,7 +322,7 @@ function andatureVeicolo(ctx, mezzo, v, aggiorna) {
   const scelta = v.andaturaScelta;
   // A.104: la scelta è l'andatura che si vuole adottare; l'attuale cambia solo quando il cambio è eseguito
   return h('div', { class: 'andature-veicolo' },
-    rigaScelte('Andatura scelta (1 AzM cambia una fascia, §2.1)', A.map((a) => ({ valore: a.id, etichetta: a.nome, riga: `${numero(a.q)} Q` })), scelta?.id ?? attuale.id,
+    rigaScelte('Andatura scelta (1 AzM cambia una fascia, §2.1)', A.map((a) => ({ valore: a.id, etichetta: a.nome, riga: `${numero(a.q)} ${v.profilo?.mov_unita ?? 'Q'}` })), scelta?.id ?? attuale.id,
       (x) => aggiorna({ ...mezzo, andatura_scelta: x === mezzo.andatura ? null : x })),
     h('p', { class: 'riga-andatura' }, h('strong', {}, `Attuale: ${attuale.nome}`), scelta ? ` · scelta: ${scelta.nome} ` : ' ',
       scelta ? h('button', { type: 'button', class: 'btn btn-piccolo', title: 'Una fascia verso quella scelta (1 AzM); il salto di due fasce richiede l’accelerazione forzata', onclick: () => { const n = eseguiCambioAndatura(mezzo, ctx.dati); aggiorna(n, `${v.nome}: andatura ${A.find((a) => a.id === n.andatura)?.nome}.`); } }, 'Esegui il cambio (1 AzM)') : null,
@@ -439,7 +446,7 @@ function armiEProprieta(v) {
   return h('div', { class: 'armi-proprieta-veicolo' },
     (p.armi ?? []).length ? h('div', { class: 'tabella-scorre' }, h('table', { class: 'tabella compatta' },
       h('thead', {}, h('tr', {}, ['Arma di bordo', 'Abilità', 'Danno', 'Gittata', 'Modalità', 'Operatore'].map((c) => h('th', {}, c)))),
-      h('tbody', {}, p.armi.map((a) => h('tr', {}, h('th', { scope: 'row' }, a.nome), h('td', {}, a.abilita), h('td', {}, a.danno), h('td', {}, `${numero(a.gittata_q)} Q`),
+      h('tbody', {}, p.armi.map((a) => h('tr', {}, h('th', { scope: 'row' }, a.nome), h('td', {}, a.abilita), h('td', {}, a.danno), h('td', {}, a.gittata_testo ?? `${numero(a.gittata_q)} Q`),
         h('td', {}, (a.modalita ?? []).join(', ')), h('td', {}, a.operatore ?? '—')))))) : null,
     [...(p.proprieta ?? []), ...(p.sistemi ?? [])].length ? h('ul', { class: 'proprieta-veicolo' }, [...(p.proprieta ?? []), ...(p.sistemi ?? [])].map((x) => h('li', {}, h('strong', {}, `${x.nome}: `), x.testo))) : null);
 }
@@ -453,7 +460,17 @@ function pannelloColpo(ctx, mezzo, v, aggiorna) {
   const danni = String(c.danni).split(/[\s,;+]+/).map((x) => intero(x, NaN)).filter(Number.isFinite);
   const colpo = { danni, natura: c.natura, magistrale: c.magistrale, piAggiuntivi: intero(c.piAggiuntivi, 0), ps: c.ps === 'riuscita' };
   const scelta = c.modo === 'd20' ? { d20: Math.min(20, Math.max(1, intero(c.d20, 1))) } : { struttura: c.struttura };
-  const r = danni.length || colpo.magistrale || colpo.piAggiuntivi ? colpisciVeicolo(mezzo, scelta, colpo, d, { occupantiEsposti: c.esposti }) : null;
+  // Neverlost (A.196): ogni applicazione passa prima dallo scudo acceso; un colpo assorbito del tutto non dà i PI del Magistrale
+  let mezzoS = mezzo;
+  const righeScudo = [];
+  let colpoS = colpo;
+  if (v.profilo.scudo && danni.length) {
+    const residui = danni.map((x) => { const s = scudoNelColpo(mezzoS, v.profilo, x, c.natura); mezzoS = s.mezzo; if (s.riga) righeScudo.push(s.riga); return s.residuo; });
+    const tutto = residui.every((x) => x === 0);
+    colpoS = { ...colpo, danni: residui.filter((x) => x > 0), magistrale: tutto ? false : colpo.magistrale, piAggiuntivi: tutto ? 0 : colpo.piAggiuntivi };
+  }
+  const rStruttura = colpoS.danni.length || colpoS.magistrale || colpoS.piAggiuntivi ? colpisciVeicolo(mezzoS, scelta, colpoS, d, { occupantiEsposti: c.esposti }) : null;
+  const r = rStruttura ? { ...rStruttura, avviso: [...righeScudo, rStruttura.avviso].join('; ') } : righeScudo.length ? { mezzo: mezzoS, soloScudo: true, avviso: righeScudo.join('; ') } : null;
   const L = d.veicoli.localizzazione;
   const nomeStr = (id) => d.veicoli.strutture.elenco.find((s) => s.id === id)?.nome ?? (id === 'occupanti' ? 'Occupanti' : id);
   return h('section', { class: 'riquadro pannello-veicolo pannello-colpo' },
@@ -478,6 +495,7 @@ function pannelloColpo(ctx, mezzo, v, aggiorna) {
 
 function dettaglioColpo(r, d) {
   if (r.occupanti) return h('p', { class: 'riquadro attenzione' }, r.avviso);
+  if (r.soloScudo) return h('p', { class: 'riquadro' }, r.avviso);
   return h('div', { class: 'dettaglio-colpo' },
     h('p', {}, h('strong', {}, `${d.veicoli.strutture.elenco.find((s) => s.id === r.localizzazione.bersaglio)?.nome}${r.localizzazione.dirottato ? ' (occupanti non esposti: il Motore, §4.2)' : ''}`)),
     h('ul', {}, [...r.esito.provenienza.righe.map((x) => h('li', {}, `${x.fonte}: ${String(x.fonte).startsWith('Applicazione') ? x.valore : segno(x.valore)} PI${x.nota ? ` · ${x.nota}` : ''}`)),
@@ -557,8 +575,8 @@ export function rigaAndature(dati, mezzo, scegli, { classe = '' } = {}) {
       const q = p ? movimentoMassimo(p, a.id, dati).q : null;
       const attuale = mezzo?.andatura === a.id, dopo = mezzo?.andatura_scelta === a.id;
       return h('button', { type: 'button', class: `btn btn-piccolo${attuale ? ' scelto' : ''}`, 'aria-pressed': String(attuale),
-        title: `${a.nome}${q !== null ? `: ${q} Q per Round` : ''}${a.pilotare ? `, Pilotare ${a.pilotare}` : ''}${dopo ? ' (scelta per i prossimi Round)' : ''}`,
-        onclick: () => scegli(a.id) }, a.nome, q !== null ? h('small', {}, ` ${q} Q`) : null, dopo ? h('small', {}, ' ⟶') : null);
+        title: `${a.nome}${q !== null ? `: ${q} ${p?.mov_unita ?? 'Q'} per Round` : ''}${a.pilotare ? `, Pilotare ${a.pilotare}` : ''}${dopo ? ' (scelta per i prossimi Round)' : ''}`,
+        onclick: () => scegli(a.id) }, a.nome, q !== null ? h('small', {}, ` ${q} ${p?.mov_unita === 'Q Tattici' ? 'QT' : 'Q'}`) : null, dopo ? h('small', {}, ' ⟶') : null);
     }));
 }
 
@@ -603,4 +621,96 @@ export function cartaVeicoloPlancia(ctx, rec, o) {
     // A.145 e A.147: le stesse tabelle della scheda, da consultare anche dalla plancia; nessun conteggio
     manovreRotazione(d),
     tabellaAzioniVeicoli(d, { categoria: v.profilo?.categoria_azioni ?? null }));
+}
+
+// --- La Neverlost (A.196): riserve, Traiettoria, scudo, circuito Bianco, postazioni ------------------------------
+
+/**
+ * Sezione della Neverlost nella tab Veicoli (src/neverlost.js). In testa, in evidenza, la regola che al tavolo si
+ * sbaglia: **le riserve non si riempiono da sole**. Poi riserve Rossa, Blu e Verde (valori registrati dal Direttore),
+ * volo e giornata, Traiettoria in giorni, cannone, scudo energetico e, a parte, il circuito Bianco con le funzioni
+ * tecnomistiche: PM che non si sommano alle cariche e non si ricaricano con loro.
+ */
+function neverlostUi(ctx, mezzo, v, aggiorna) {
+  const p = v.profilo;
+  const n = vistaNeverlost(mezzo, p);
+  const u = statoUi(ctx);
+  const c = ((u.neverlost ??= {})[mezzo.uid] ??= { minuti: '', andatura: 'controllata', ore: '', giorni: '', funzione: p.circuito_bianco.funzioni.find((x) => !x.passiva)?.id ?? '' });
+  const dopo = (esito) => aggiorna(esito.mezzo, [...esito.righe, ...(esito.avvisi ?? [])].join('; ') || null);
+  const nome = (k) => ({ rosso: 'Rossa', blu: 'Blu', verde: 'Verde' })[k];
+  const campoValore = (etichetta, valore, massimo, chiave, unita) => h('label', { class: 'campo-veicolo' }, `${etichetta} `,
+    h('input', { type: 'number', class: 'input-d10', min: 0, max: massimo, step: 1, value: valore ?? '', placeholder: 'da registrare', 'aria-label': etichetta,
+      onchange: (e) => { const x = e.target.value === '' ? null : Math.max(0, Math.min(massimo, intero(e.target.value, 0))); aggiorna(registraValori(mezzo, p, { [chiave]: x }), `${v.nome}: ${etichetta} registrata a ${x ?? 'da registrare'}.`); } }),
+    ` / ${massimo} ${unita}`, valore === null ? h('em', { class: 'da-definire' }, ' · da registrare') : null);
+  const ricarica = ricaricaEnergia(mezzo, ctx.dati);
+  const funzioni = p.circuito_bianco.funzioni;
+  const fScelta = funzioni.find((x) => x.id === c.funzione) ?? null;
+  return h('section', { class: 'neverlost-veicolo' },
+    h('h3', {}, 'Riserve della Neverlost'),
+    h('p', { class: 'riquadro attenzione regola-riserve' }, h('strong', {}, 'Le riserve non si riempiono da sole. '),
+      'Il massimo non è la riserva: le cariche attuali le registra il Direttore e cambiano solo con i consumi o con una ricarica a un approdo che serve la nave (A.196).'),
+    h('div', { class: 'riserve-neverlost' }, n.riserve.map((r) => h('p', {}, h('strong', {}, `${r.nome}: `), campoValore(`Riserva ${nome(r.colore)}`, r.cariche, r.massimo, r.colore, 'cariche'),
+      h('small', { class: 'nota' }, ` · ${r.testo}`)))),
+    h('h4', {}, 'Volo e giornata'),
+    h('div', { class: 'consumi-veicolo' },
+      h('label', { class: 'campo-veicolo' }, 'Volo (minuti) ', h('input', { type: 'text', inputmode: 'decimal', class: 'input-d10', value: c.minuti, onchange: (e) => { c.minuti = e.target.value; } })),
+      h('select', { 'aria-label': 'Andatura del volo', onchange: (e) => { c.andatura = e.target.value; } },
+        ['controllata', 'veloce', 'massima'].map((a) => h('option', { value: a, selected: c.andatura === a }, { controllata: 'Controllata (60 min a carica)', veloce: 'Rapida (30 min)', massima: 'Massima (12 min)' }[a]))),
+      h('button', { type: 'button', class: 'btn btn-piccolo', onclick: () => { const m = num(c.minuti, 0); c.minuti = ''; if (m > 0) dopo(registraVolo(mezzo, p, m, c.andatura)); } }, 'Aggiungi il volo'),
+      h('label', { class: 'campo-veicolo' }, 'Stazionario (ore) ', h('input', { type: 'text', inputmode: 'decimal', class: 'input-d10', value: c.ore, onchange: (e) => { c.ore = e.target.value; } })),
+      h('button', { type: 'button', class: 'btn btn-piccolo', onclick: () => { const o = num(c.ore, 0); c.ore = ''; if (o > 0) dopo(registraStazionario(mezzo, p, o)); } }, 'Aggiungi lo stazionario'),
+      h('label', { class: 'casella-veicolo' }, h('input', { type: 'checkbox', checked: n.approdo, onchange: (e) => aggiorna(impostaApprodo(mezzo, p, e.target.checked)) }), ' Approdo alimentato (niente Verde)'),
+      h('button', { type: 'button', class: 'btn btn-piccolo btn-primario', title: n.traiettoria.dentro ? 'Un giorno di Traiettoria: 1 carica Rossa e 1 Verde' : 'Le cariche Rosse del volo (arrotondate una volta sola) e 1 Verde per il giorno, anche in sosta', onclick: () => dopo(chiudiGiornata(mezzo, ctx.dati)) }, n.traiettoria.dentro ? 'Chiudi il giorno di Traiettoria' : 'Chiudi la giornata')),
+    h('p', { class: 'nota' }, n.traiettoria.dentro ? `In Traiettoria da ${n.traiettoria.giorni} giorni.` : `Volo della giornata: ${n.daAddebitare ? `${n.daAddebitare} carica/e Rossa/e alla chiusura` : 'nessuna carica da addebitare'}.`),
+    h('h4', {}, 'Traiettoria'),
+    h('p', { class: 'nota' }, p.energia_neverlost.traiettoria.testo),
+    h('div', { class: 'consumi-veicolo' },
+      n.traiettoria.dentro
+        ? h('button', { type: 'button', class: 'btn btn-piccolo', onclick: () => dopo(esciTraiettoria(mezzo, p)) }, 'Esci dalla Traiettoria (−1 Blu)')
+        : [h('button', { type: 'button', class: 'btn btn-piccolo', onclick: () => dopo(entraTraiettoria(mezzo, p)) }, 'Entra in Traiettoria (−1 Blu)'),
+          h('label', { class: 'campo-veicolo' }, ' oppure una traversata di ', h('input', { type: 'number', min: 1, class: 'input-d10', value: c.giorni, onchange: (e) => { c.giorni = e.target.value; } }), ' giorni '),
+          h('button', { type: 'button', class: 'btn btn-piccolo', title: 'Ingresso, i giorni chiusi uno per uno e uscita: 2 Blu, e per ogni giorno 1 Rossa e 1 Verde', onclick: () => { const g = intero(c.giorni, 0); c.giorni = ''; if (g > 0) dopo(traversata(mezzo, p, g)); } }, 'Registra la traversata')]),
+    n.traiettoria.traversate.length ? h('p', { class: 'nota' }, `Traversate: ${n.traiettoria.traversate.map((x) => `${x.giorni} giorni`).join(', ')}.`) : null,
+    h('h4', {}, 'Cannone e scudo energetico'),
+    h('div', { class: 'consumi-veicolo' },
+      h('button', { type: 'button', class: 'btn btn-piccolo', title: 'Il cannone consuma la carica anche se manca il bersaglio', onclick: () => dopo(sparaCannone(mezzo, p)) }, 'Spara il cannone (−1 Rossa)')),
+    h('p', {}, campoValore('Scudo', n.scudo.sce, n.scudo.massimo, 'sce', 'ScE'),
+      ` · ${n.scudo.attivo ? `acceso (${n.scudo.ore_pagate} ora/e pagate${n.scudo.ampliato ? ', ampliato: assorbe anche Magico ed Etereo' : ''})` : 'spento'}`),
+    h('div', { class: 'consumi-veicolo' },
+      n.scudo.attivo
+        ? [h('button', { type: 'button', class: 'btn btn-piccolo', onclick: () => dopo(oraScudo(mezzo, p)) }, 'Un’altra ora (−1 Blu)'),
+          h('button', { type: 'button', class: 'btn btn-piccolo', title: 'Dal terzo Round consecutivo senza colpi: +20 ScE per Round', onclick: () => dopo(roundSenzaColpi(mezzo, p)) }, 'Round senza colpi'),
+          h('button', { type: 'button', class: 'btn btn-piccolo', title: 'Spegnere non ripristina gli ScE; riaccendere costa un’altra carica Blu', onclick: () => aggiorna(spegniScudo(mezzo, p), `${v.nome}: scudo spento.`) }, 'Spegni')]
+        : h('button', { type: 'button', class: 'btn btn-piccolo', onclick: () => dopo(attivaScudo(mezzo, p)) }, 'Attiva lo scudo (−1 Blu, 1 ora)')),
+    h('p', { class: 'nota' }, p.scudo.testo, ' ', p.scudo.nota_magico),
+    // circuito Bianco: a parte, con i suoi PM; nessun pulsante qui tocca le cariche
+    h('div', { class: 'circuito-bianco riquadro' },
+      h('h4', {}, 'Circuito Bianco (funzioni tecnomistiche)'),
+      h('p', { class: 'nota' }, h('strong', {}, 'Separato dalle riserve: '), 'i PM del circuito non si sommano alle cariche, non si ricaricano con loro e non si convertono. ', p.circuito_bianco.testo),
+      h('p', {}, campoValore('PM del circuito', n.circuito.pm, n.circuito.massimo, 'pm', 'PM'), ' ',
+        h('button', { type: 'button', class: 'btn btn-piccolo', disabled: n.circuito.pm === null, title: 'Ricarica mistica con una fonte compatibile col Chroma Bianco (PM personali 2:1)', onclick: () => aggiorna(variaCircuito(mezzo, p, 1)) }, '+1 PM'), ' ',
+        h('button', { type: 'button', class: 'btn btn-piccolo', disabled: n.circuito.pm === null, onclick: () => aggiorna(variaCircuito(mezzo, p, -1)) }, '−1 PM')),
+      h('div', { class: 'consumi-veicolo' },
+        h('select', { 'aria-label': 'Funzione tecnomistica', onchange: (e) => { c.funzione = e.target.value; ctx.azioni.ridisegna(); } },
+          funzioni.map((x) => h('option', { value: x.id, selected: c.funzione === x.id }, `${x.nome} · ${({ pilotaggio: 'Pilotaggio', armamenti: 'Armamenti', difese_sensori: 'Difese e Sensori' })[x.postazione]}${x.passiva ? ' (passiva)' : ` · ${x.pm} PM`}`))),
+        fScelta && !fScelta.passiva ? h('button', { type: 'button', class: 'btn btn-piccolo',
+          onclick: () => { const r = usaFunzione(mezzo, p, fScelta.id); if (r.mezzo !== mezzo || r.righe.length) dopo(r); else conAvviso(ctx.azioni.storico, { azione: `usare ${fScelta.nome}`, motivo: r.avvisi.join(' '), fai: () => dopo(usaFunzione(mezzo, p, fScelta.id, { forza: true })) }); } }, `Usa (−${fScelta.pm} PM)`) : null),
+      fScelta ? h('p', { class: 'nota' }, `${fScelta.nome}: ${fScelta.testo}${fScelta.azione ? ` · ${fScelta.azione}, ${fScelta.durata}` : ''}`) : null,
+      h('ul', { class: 'proprieta-veicolo' }, p.circuito_bianco.passive_generali.map((x) => h('li', {}, h('strong', {}, `${x.nome}: `), x.testo))),
+      h('p', { class: 'nota' }, p.circuito_bianco.sintonizzazione)),
+    h('h4', {}, 'Postazioni ed equipaggio'),
+    h('ul', { class: 'proprieta-veicolo' }, p.postazioni.map((x) => h('li', {}, h('strong', {}, `${x.nome}: `), x.testo))),
+    h('p', { class: 'nota' }, p.equipaggio.testo, ' ', p.sostentamento.testo),
+    h('h4', {}, 'Manovre speciali e armi'),
+    h('ul', { class: 'proprieta-veicolo' }, p.manovre_speciali.map((x) => h('li', {}, h('strong', {}, `${x.nome}`), ` (${x.costo}): ${x.successo}`))),
+    h('p', { class: 'nota' }, p.manovre_testo, ' ', p.regole_armi.join(' ')),
+    h('h4', {}, 'Misure'),
+    h('p', { class: 'nota' }, `Corpo: ${p.dimensioni.lunghezza_m} × ${p.dimensioni.larghezza_m} m (${p.dimensioni.nota}) · Pedina di combattimento: ${p.pedina_tattica} Q Tattici · ${p.planimetria}`),
+    h('div', { class: 'consumi-veicolo' },
+      h('button', { type: 'button', class: 'btn btn-piccolo', disabled: !ricarica, title: ricarica ? ricarica.righe.join(' · ') : 'Niente da ricaricare (o riserve da registrare)', onclick: () => ricarica && aggiorna(ricarica.mezzo, ricarica.righe.join('; ')) }, 'Ricarica all’approdo')));
+}
+
+/** Per «Colpito» della Neverlost: il danno passa prima dallo scudo; torna { mezzo, residuo, riga } o null se non c'è scudo. */
+export function scudoNelColpo(mezzo, profilo, danni, natura) {
+  return profilo?.scudo ? colpoAlloScudo(mezzo, profilo, danni, natura) : null;
 }
