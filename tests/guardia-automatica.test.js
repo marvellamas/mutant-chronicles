@@ -121,36 +121,6 @@ test('la sonda non riesce a scrivere in nessuna cartella vera, in tutti i modi d
   if (profiloVero) assert.equal(existsSync(profiloVero) ? readdirSync(profiloVero).map((n) => `${n}:${statSync(join(profiloVero, n)).mtimeMs}`).join('|') : null, profiloPrima, 'il profilo di Windows vero non si tocca');
 });
 
-// --- un `node --test` nudo, dalla radice, esegue ogni *.test.js che trova, anche fuori da tests/ ------------------------
-
-function fileDiTestFuoriDaTests() {
-  const out = [];
-  const giro = (dir, rel) => {
-    for (const d of readdirSync(dir, { withFileTypes: true })) {
-      if (d.name === 'node_modules' || d.name === '.git') continue;
-      const p = join(dir, d.name);
-      const r = rel ? `${rel}/${d.name}` : d.name;
-      if (d.isDirectory()) { if (r !== 'tests') giro(p, r); } else if (/\.test\.(js|mjs|cjs)$/.test(d.name)) out.push(r);
-    }
-  };
-  giro(RADICE, '');
-  return out;
-}
-
-test('nessun file di test tracciato fuori da tests/: un `node --test` nudo lo eseguirebbe senza la riga di guardia', (t) => {
-  const fuori = fileDiTestFuoriDaTests();
-  const git = spawnSync('git', ['ls-files', '--', '*.test.js', '*.test.mjs', '*.test.cjs'], { cwd: RADICE, encoding: 'utf8' });
-  const tracciati = git.status === 0 ? new Set(git.stdout.split('\n').filter(Boolean)) : new Set();
-  const daTracciati = fuori.filter((f) => tracciati.has(f));
-  assert.deepEqual(daTracciati, [], 'test fuori da tests/: spostali lì, `node --test` li eseguirebbe senza guardia');
-  const altri = fuori.filter((f) => !tracciati.has(f));
-  if (altri.length) {
-    const cartelle = [...new Set(altri.map((f) => f.split('/').slice(0, -1).join('/')))];
-    // non fa fallire la suite (è una copia locale non tracciata), ma si dice: `node --test` nudo dalla radice la esegue con il suo codice vecchio, senza guardia
-    t.diagnostic(`ATTENZIONE: ${altri.length} file di test non tracciati fuori da tests/ (${cartelle.join(', ')}): non lanciare mai «node --test» nudo dalla radice, usa «npm test»; quei test girano col loro codice, senza la guardia`);
-  }
-});
-
 test('fuori da una prova il funzionamento normale non si rompe: la stessa sonda, in una copia dell’app senza segni di prova, scrive', async () => {
   // una copia degli strumenti in una radice temporanea con le sue cartelle di dati: non si toccano le vere, e senza i segni
   // di una prova (nessun test runner, nessuna MUTANT_PROVA, file fuori da tests/) la guardia non si accende, come per

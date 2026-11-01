@@ -53,6 +53,8 @@ rem leggera nei Desktop/Documenti/Download, come la voce P del 127) non si insta
 if exist "%DEST%\server.mjs" goto dopo_controllo_installata
 if defined MUTANT_DA_AGGIORNA goto dopo_controllo_installata
 set "TROVATA="
+rem C (01/11/2026, lotto 152): se questo pacchetto sta dentro una installazione (la cartella sopra ha server.mjs) quella e' la installazione: mai una seconda dentro la copia di lavoro, nemmeno con il profilo rovinato.
+if exist "%~dp0..\server.mjs" for %%I in ("%~dp0..") do set "TROVATA=%%~fI"
 if defined DATIPC if exist "%DATIPC%\personaggi" set "TROVATA=%DATIPC%"
 if not defined TROVATA for /f "usebackq delims=" %%T in (`powershell -NoProfile -Command "$ProgressPreference='SilentlyContinue'; $qui=(Resolve-Path '%~dp0.').Path; $basi=New-Object System.Collections.Generic.List[string]; $basi.Add([Environment]::GetFolderPath('Desktop')); $basi.Add((Join-Path (Split-Path -Parent $env:USERPROFILE) 'Public\Desktop')); $basi.Add([Environment]::GetFolderPath('MyDocuments')); $basi.Add((Join-Path $env:USERPROFILE 'Downloads')); Get-ChildItem -LiteralPath $env:USERPROFILE -Directory -Filter 'OneDrive*' -ErrorAction SilentlyContinue | ForEach-Object { $basi.Add((Join-Path $_.FullName 'Desktop')); $basi.Add((Join-Path $_.FullName 'Documents')) }; foreach ($b in ($basi | Where-Object { $_ -and (Test-Path -LiteralPath $_) } | Select-Object -Unique)) { Get-ChildItem -LiteralPath $b -Recurse -Depth 4 -Filter 'Mutant.bat' -File -ErrorAction SilentlyContinue | Where-Object { $_.DirectoryName -ne $qui -and $_.DirectoryName -notlike ($qui + '*') } | Select-Object -First 1 -ExpandProperty DirectoryName }" 2^>nul`) do if not defined TROVATA set "TROVATA=%%T"
 if not defined TROVATA goto dopo_controllo_installata

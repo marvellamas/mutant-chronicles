@@ -15,7 +15,7 @@
 // programma che cerca la cartella dei dati, quindi ogni strumento che può scriverci).
 // Non è un interruttore: non c'è nessuna variabile che la spegne. Il server vero sulla 3000 e gli strumenti del menu
 // lanciati da Davide non sono prove e scrivono normalmente.
-import { mkdtempSync } from 'node:fs';
+import { mkdtempSync, rmSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join, dirname, resolve, relative, isAbsolute } from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -54,7 +54,12 @@ export function attivaGuardiaAutomatica(opz = {}) {
   const reali = cartelleReali(radice, { profiloVero: !env.MUTANT_CONFIG_DIR });
   installaGuardiaScrittura(reali);
   env.MUTANT_PROVA = '1';
-  if (!env.MUTANT_CONFIG_DIR) env.MUTANT_CONFIG_DIR = mkdtempSync(join(tmpdir(), 'mutant-profilo-prova-'));
+  if (!env.MUTANT_CONFIG_DIR) {
+    const profilo = mkdtempSync(join(tmpdir(), 'mutant-profilo-prova-'));
+    env.MUTANT_CONFIG_DIR = profilo;
+    // il profilo di prova è di questo processo: alla fine si toglie (non si accumulano centinaia di cartelle in %TEMP%)
+    process.on('exit', () => { try { rmSync(profilo, { recursive: true, force: true }); } catch { /* resta: pazienza */ } });
+  }
   globalThis[SEGNO] = { motivo, reali };
   return globalThis[SEGNO];
 }
