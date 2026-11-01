@@ -42,6 +42,9 @@ export function controllaTalentiDaTablet(nuovo, disco, dati) {
     const uguale = JSON.stringify(v?.scelta ?? null) === JSON.stringify(x.scelta ?? null);
     if (uguale) continue;
     if (v?.chiuso) return { ok: false, stato: 403, errore: `La scelta del ${x.livello}° livello l’ha chiusa il Direttore: la cambia solo lui.` };
+    // A.230: una voce tolta dal manuale non si sceglie di nuovo da un tablet (chi l'aveva la tiene: lì la scelta non cambia)
+    const tolta = x.scelta && x.problemi.find((e) => e.tipo === 'tolta');
+    if (tolta) return { ok: false, stato: 403, errore: `${tolta.problema}. Una scelta non ammessa la può fare solo il Direttore.` };
     if (x.scelta && !x.valida) {
       const motivo = x.problemi.find((e) => e.tipo === 'violazione')?.problema ?? 'scelta non ammessa';
       return { ok: false, stato: 403, errore: `${motivo}. Una scelta non ammessa la può fare solo il Direttore.` };

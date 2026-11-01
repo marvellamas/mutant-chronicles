@@ -16,7 +16,7 @@ const SPECIALIZZAZIONI_CLASSE = 2; // §3.1
 const ABILITA_CLASSE = 5; // §3.1
 const GRADI_TALENTI_FISSI = [1, 3, 5]; // §3.2
 const TALENTI_A_SCELTA = 5; // §3.2
-const SPECIALIZZAZIONE_COMUNE = 'Comune'; // §3.2: due opzioni per Specializzazione, una Comune
+const SPECIALIZZAZIONE_COMUNE = 'Comune'; // §3.2 (Giocatore 0.54): due opzioni per Indirizzo di Classe, una Comune
 
 const isIntero = (v) => Number.isInteger(v);
 const isTesto = (v) => typeof v === 'string' && v.trim() !== '';
@@ -934,6 +934,25 @@ function validaSpecializzazioniPerClasse(dati, idSpec, err) {
   }
   for (const k of Object.keys(pc)) if (!k.startsWith('_') && !(dati.classi?.classi ?? []).some((c) => c.nome === k)) err(F, `per_classe.${k}`, `"${k}" non è una Classe`);
   for (const id of idSpec) if (!usate.has(id)) err(F, 'per_classe', `"${id}" non sta nell’elenco di nessuna Classe`);
+  // Giocatore 0.54 §8.10: voci tolte dal manuale (A.230) e voci di Potere tenute per la A.185 (A.229)
+  const classeEsiste = (k) => (dati.classi?.classi ?? []).some((c) => c.nome === k);
+  for (const [k, l] of Object.entries(isOggetto(s.per_classe_tolte) ? s.per_classe_tolte : {})) {
+    if (k.startsWith('_')) continue;
+    if (!classeEsiste(k)) { err(F, `per_classe_tolte.${k}`, `"${k}" non è una Classe`); continue; }
+    if (!Array.isArray(l)) { err(F, `per_classe_tolte.${k}`, 'elenco di id atteso'); continue; }
+    for (const id of l) {
+      if (!idSpec.has(id)) err(F, `per_classe_tolte.${k}`, `"${id}" non è una Specializzazione`);
+      else if ((pc[k] ?? []).includes(id)) err(F, `per_classe_tolte.${k}`, `"${id}" è tolta ma sta ancora nell’elenco della Classe`);
+    }
+  }
+  for (const [k, l] of Object.entries(isOggetto(s.potere_in_attesa_a229) ? s.potere_in_attesa_a229 : {})) {
+    if (k.startsWith('_')) continue;
+    if (!classeEsiste(k) || !Array.isArray(l)) { err(F, `potere_in_attesa_a229.${k}`, 'una Classe con un elenco di id atteso'); continue; }
+    for (const id of l) {
+      if (!(s.gruppi?.potere ?? []).includes(id)) err(F, `potere_in_attesa_a229.${k}`, `"${id}" non è una Specializzazione di Potere`);
+      else if (!(pc[k] ?? []).includes(id)) err(F, `potere_in_attesa_a229.${k}`, `"${id}" deve restare nell’elenco della Classe finché vale la A.185`);
+    }
+  }
   for (const [g, l] of Object.entries(isOggetto(s.gruppi) ? s.gruppi : {})) {
     if (g.startsWith('_')) continue;
     if (!Array.isArray(l) || !l.every((id) => idSpec.has(id))) err(F, `gruppi.${g}`, 'elenco di id di Specializzazioni atteso');
@@ -1132,7 +1151,7 @@ function validaClassi(c, nomiAddestramenti, nomiAbilita, macrofamiglie, regole, 
     if (!nomiAddestramenti.has(x.addestramento)) err(F, `${k}.addestramento`, `"${x.addestramento}" non è un Addestramento esistente`);
 
     const spec = Array.isArray(x.specializzazioni) ? x.specializzazioni : [];
-    if (spec.length !== SPECIALIZZAZIONI_CLASSE || !spec.every(isTesto)) err(F, `${k}.specializzazioni`, `attese ${SPECIALIZZAZIONI_CLASSE} Specializzazioni`);
+    if (spec.length !== SPECIALIZZAZIONI_CLASSE || !spec.every(isTesto)) err(F, `${k}.specializzazioni`, `attesi ${SPECIALIZZAZIONI_CLASSE} Indirizzi di Classe (§3.2)`);
 
     const ab = Array.isArray(x.abilita) ? x.abilita : [];
     if (ab.length !== ABILITA_CLASSE) err(F, `${k}.abilita`, `attese ${ABILITA_CLASSE} Abilità di Classe, trovate ${ab.length}`);
@@ -1181,7 +1200,7 @@ function validaClassi(c, nomiAddestramenti, nomiAbilita, macrofamiglie, regole, 
       }
       const s = t?.specializzazione;
       if (!isTodo(s) && s !== SPECIALIZZAZIONE_COMUNE && !spec.includes(s)) {
-        err(F, `${k}.talenti_a_scelta[${j}].specializzazione`, `"${s}" non è una Specializzazione della Classe né "${SPECIALIZZAZIONE_COMUNE}"`);
+        err(F, `${k}.talenti_a_scelta[${j}].specializzazione`, `"${s}" non è un Indirizzo della Classe né "${SPECIALIZZAZIONE_COMUNE}"`);
       }
     });
 

@@ -13,6 +13,7 @@ import { classeMacrofamiglia } from '../palette.js';
 import { componenteTiro } from './tiro.js';
 import { dettagli, bottoneScelta, contatore, stepper, sceltaParametroTalento, competenzeClasse } from './passi.js';
 import { conOrdinale, delNome } from '../lingua.js';
+import { etichettaIndirizzo } from '../talenti-testi.js';
 import { barraPassi } from './navigazione.js';
 
 const trova = (lista, nome) => lista.find((x) => x.nome === nome);
@@ -293,7 +294,7 @@ function passoGrado(c) {
           h('ul', { class: 'elenco-talenti' }, scelta.talentiAScelta.map((n) => {
             const t = def.talenti_a_scelta.find((x) => x.nome === n);
             return h('li', { class: `voce-talento${voce.talentoClasse === n ? ' selezionata' : ''}` },
-              h('div', {}, talentoClasse(c, def, t, `${t.specializzazione.startsWith('TODO(') ? '' : `${t.specializzazione} — `}${n}`)),
+              h('div', {}, talentoClasse(c, def, t, `${etichettaIndirizzo(t.specializzazione) ? `${etichettaIndirizzo(t.specializzazione)} — ` : ''}${n}`)),
               bottoneScelta(voce.talentoClasse === n, () => c.aggiornaVoce({ talentoClasse: n, tecniche: undefined, scuolaMishima: undefined })));
           })))) : null,
   ];

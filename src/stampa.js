@@ -23,7 +23,7 @@ import { gruppoTecnica, ordineGruppo, tecnicaDi, sintesiTecnica } from './tecnic
 import { vistaVeicoloPersonaggio, pilotareDelPersonaggio } from './veicoli.js';
 import { eRiferimento, stessaChiave } from './veicoli-registro.js';
 import { consumabiliMistici } from './consumabili-mistici.js';
-import { rigaBreve, primaFraseUtile } from './talenti-testi.js';
+import { rigaBreve, primaFraseUtile, etichettaIndirizzo } from './talenti-testi.js';
 
 /** Limiti di impaginazione (non regole di gioco): lunghezze massime dei testi stampati. */
 export const LIMITI_STAMPA = {
@@ -262,7 +262,9 @@ export function preparaStampa(personaggio, dati, { versioniDati = '', completo =
       })),
     })),
     talentiClasse: s.classi.flatMap((cl) => cl.talenti.map((t) => ({
-      nome: t.parametroNome ? `${t.nome} (${t.parametroNome})` : t.nome, classe: cl.nome, grado: GRADI_ROMANI[t.grado] ?? String(t.grado), scelto: !!t.scelto, ...talentoSS(t),
+      nome: t.parametroNome ? `${t.nome} (${t.parametroNome})` : t.nome, classe: cl.nome, grado: GRADI_ROMANI[t.grado] ?? String(t.grado), scelto: !!t.scelto,
+      // Giocatore 0.54 §3.2: l'Indirizzo di Classe del Talento a scelta («Indirizzo Sicurezza», «Comune»)
+      indirizzo: t.scelto ? etichettaIndirizzo(t.specializzazione) : null, ...talentoSS(t),
     }))),
     // Talenti v1.0 (lotto 2): con il regime nuovo la stampa ha tre elenchi (Talenti Liberi, Maestrie, Specializzazioni)
     regimeTalenti: s.regimeTalenti ?? 'vecchio',
@@ -280,7 +282,7 @@ export function preparaStampa(personaggio, dati, { versioniDati = '', completo =
     specializzazioni: s.specializzazioni.map((x) => ({
       id: x.id,
       nome: `Specializzazione in ${x.nome}`,
-      abilita: x.abilita.length ? x.abilita.join(', ') : 'Abilità della scheda dell’arma',
+      abilita: x.abilita.length ? x.abilita.join(', ') : x.effetto?.attacchi === 'senz_armi' ? 'Corpo a corpo, attacchi senz’armi' : 'Abilità della scheda dell’arma',
       effetto: effettoSpecializzazione(x.effetto),
       // 25/10 sera: che cosa fa, in una riga (bonus, Abilità, ambito), come nel riquadro «Da scegliere»
       riga: rigaBreve(x.id, dati),
@@ -288,6 +290,8 @@ export function preparaStampa(personaggio, dati, { versioniDati = '', completo =
       livello: x.livello,
       classe: x.classe ?? null,
       annotazione: x.annotazione ?? null,
+      // A.230: tolta dal manuale dall'elenco della Classe da cui era stata scelta; resta finché decide il Direttore
+      tolta: !!x.tolta,
     })),
     tecniche: s.tecniche.map((t) => ({ id: t.id, nome: t.nome, costo: t.costo, azione: t.azione, durata: t.durata })),
     tecnicheAmmesse: s.tecnicheAmmesse,

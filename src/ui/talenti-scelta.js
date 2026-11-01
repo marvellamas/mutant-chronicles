@@ -138,6 +138,8 @@ function postoAttivo(t, x, succ) {
       h('div', { class: 'opzione-testo' }, n.nome, h('span', { class: 'riga-talento' }, rigaBreve(x.scelta.id, t.dati)), n.scheda),
       aperte.map((s) => h('p', { class: 'nota motivo' }, `${s.quanti === 1 ? 'Resta' : 'Restano'} ${s.quanti} ${nomeSucc(s.tipo, s.quanti)} da scegliere `,
         h('button', { type: 'button', class: 'btn primario', onclick: () => { t.ui.posto = chiaveSuccessiva(s); t.ui.filtro = ''; t.azioni.ridisegna(); } }, 'Scegli'))),
+      // A.230: voce tolta dal manuale dall'elenco della Classe, già scelta: resta finché il Direttore non decide
+      x.valida && x.problemi.some((e) => e.tipo === 'tolta') ? h('p', { class: 'nota motivo' }, `${x.problemi.find((e) => e.tipo === 'tolta').problema}. Se la cambi, non la puoi riprendere.`) : null,
       !x.valida ? h('p', { class: 'nota motivo' }, `Non ammessa dalle regole: ${x.problemi.find((e) => e.tipo === 'violazione')?.problema ?? ''}${t.master ? '' : ' (l’ha forzata il Direttore)'}`) : null,
       puo ? h('button', { type: 'button', class: 'btn', onclick: () => t.azioni.svuota(x) }, 'Cambia questa scelta')
         : h('p', { class: 'nota' }, 'Il Direttore ha chiuso questa scelta: la cambia solo lui.'));

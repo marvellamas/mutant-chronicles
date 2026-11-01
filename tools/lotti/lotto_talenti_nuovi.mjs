@@ -219,6 +219,14 @@ delete rr.talento;
 
 console.log(`Talenti: ${conteggio('talento_libero')} Talenti Liberi, ${conteggio('maestria')} Maestrie, ${conteggio('superato')} superati; Specializzazioni: ${s.specializzazioni.length}; Classi con elenco: ${Object.keys(perClasse).length}`);
 for (const [c, l] of Object.entries(perClasse)) console.log(`  ${c}: ${l.length}`);
+// 01/11/2026: dal lotto delle Specializzazioni del Giocatore 0.54 (tools/lotti/lotto_specializzazioni_054.mjs) questo lotto è
+// storico: rilanciato con --scrivi riporterebbe gli elenchi per Classe al documento del 7/10 e toglierebbe Combattimento
+// Senz'Armi. Per forzare: --forza.
+if (SCRIVI && !process.argv.includes('--forza')) {
+  console.error('lotto_talenti_nuovi: lotto storico, gli elenchi delle Specializzazioni sono del Giocatore 0.54 (lotto_specializzazioni_054.mjs).');
+  console.error('Un rilancio con --scrivi li riporterebbe al 7/10. Per forzare: --forza.');
+  process.exit(1);
+}
 if (SCRIVI) {
   scrivi('data/talenti_liberi.json', t);
   scrivi('data/specializzazioni.json', s);

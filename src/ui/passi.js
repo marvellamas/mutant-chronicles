@@ -15,6 +15,7 @@ import { dotazioneApplicata } from '../dotazioni.js';
 import { postiTalenti } from '../avanzamento.js';
 import { rigaEffetto } from './talenti-scelta.js';
 import { delNome } from '../lingua.js';
+import { etichettaIndirizzo } from '../talenti-testi.js';
 
 const trova = (lista, nome) => lista.find((x) => x.nome === nome);
 const GRADI = { 1: 'I', 2: 'II', 3: 'III', 4: 'IV', 5: 'V', 6: 'VI' };
@@ -352,7 +353,8 @@ function passoClasse(ctx) {
       const pv1 = c.pv_per_grado.fisso + c.pv_per_grado.dado;
       return carta(sel,
         h('header', {}, h('h3', {}, c.nome), bottoneScelta(sel, () => ctx.aggiorna({ classe: c.nome, parametriTalenti: {}, ...(scelte.regimeTalenti === 2 ? { specializzazioneIniziale: null } : {}) }))),
-        h('p', { class: 'identita' }, c.specializzazioni.join(' / ')),
+        // Giocatore 0.54 §3.2: gli Indirizzi di Classe (indicativi), non le Specializzazioni del §8.8
+        h('p', { class: 'identita' }, `Indirizzi: ${c.specializzazioni.join(' / ')}`),
         h('p', {}, h('strong', {}, 'Abilità di Classe: '), elencoInfo('abilita', c.abilita)),
         // §2.3: le categorie che distinguono le Classi si vedono senza aprire il riquadro (04/10/2026: Davide non
         // vedeva il profilo nuovo dell'Incursore, che stava solo nel riquadro chiuso)
@@ -368,9 +370,9 @@ function passoClasse(ctx) {
         h('h4', {}, 'Talenti fissi'),
         sel ? c.talenti_fissi.filter((t) => t.grado === 1).map((t) => sceltaParametroTalento(t, scelte.parametriTalenti?.[t.nome] ?? null, (id) => ctx.aggiorna({ parametriTalenti: { ...(scelte.parametriTalenti ?? {}), [t.nome]: id } }))) : null,
         c.talenti_fissi.map((t) => talento(ctx, `tal:${c.nome}:${t.nome}`, `${GRADI[t.grado]} Grado — ${t.nome}`, t.testo)),
-        h('h4', {}, 'Talenti a scelta (Gradi II, IV, VI)'),
+        h('h4', {}, 'Talenti a scelta (Gradi II, IV, VI): due per Indirizzo e uno Comune'),
         c.talenti_a_scelta.map((t) => talento(ctx, `tal:${c.nome}:${t.nome}`,
-          `${t.specializzazione.startsWith('TODO(') ? 'Specializzazione da definire' : t.specializzazione} — ${t.nome}`, t.testo)),
+          `${etichettaIndirizzo(t.specializzazione) ?? 'Indirizzo da definire'} — ${t.nome}`, t.testo)),
         c.note?.length ? dettagli(ctx, `note:${c.nome}`, 'Note della Classe', c.note.map((n) => h('p', {}, n))) : null,
       );
     })),

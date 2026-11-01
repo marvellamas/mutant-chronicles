@@ -61,7 +61,7 @@ import { tecnicaDi, testoFine } from '../tecniche.js';
 import { statoPulsanteLancio, attivazioneInfusa, livelloVersione } from '../lancio.js';
 import { nomeRiserva, nomeAlimentazione } from '../fonti.js';
 import { tabCalendario, pannelloAttivazione, pannelloImportaCalendario, pulsanteImportaCalendario } from './calendario.js';
-import { conOrdinale } from '../lingua.js';
+import { conOrdinale, delNome } from '../lingua.js';
 import { regoleRiparazione, esitoRiparazione, vaRiparazione, riparabile } from '../riparazione.js';
 import { annullaPerdita, togliRecupero, preventivoIntervento, riabilitazione } from '../umanita.js';
 import { impiantiAttivabili, cartucceDi, impostaCartucce, somministra, statoProcessore, attivaChip, terminaChip, nuovoIntervalloChip } from '../impianti.js';
@@ -1486,7 +1486,7 @@ function tabAbilita(ctx, d) {
           riquadroCircostanze(ctx)))),
     h('div', { class: 'colonne-larghe' },
     sezione('Talenti di Classe', d.talentiClasse.map((t) => h('div', { class: 'talento' },
-      h('h3', {}, t.nome, h('span', { class: 'sigla' }, ` · ${t.classe} ${t.grado}${t.scelto ? ', a scelta' : ''}`)),
+      h('h3', {}, t.nome, h('span', { class: 'sigla' }, ` · ${t.classe} ${t.grado}${t.scelto ? `, a scelta${t.indirizzo ? ` · ${t.indirizzo}` : ''}` : ''}`)),
       paragrafi(t.frase)))),
     // 25/10 notte: il nome si tocca e apre la scheda intera del Talento, sotto, come nel riquadro «Da scegliere»
     d.talentiLiberi.length ? sezione('Talenti Liberi', d.talentiLiberi.map((t) => {
@@ -1499,7 +1499,10 @@ function tabAbilita(ctx, d) {
     })) : null),
     d.specializzazioni.length ? sezione('Specializzazioni', h('ul', {}, d.specializzazioni.map((x) => {
       const n = nomeCheSiApre(x.nome, schedaTalento(x.id, ctx.dati));
-      return h('li', {}, n.nome, x.annotazione ? ` (${x.annotazione})` : null, ` — ${x.riga || `${x.abilita}; ${x.effetto}`} (${x.livello}° livello)`, x.tavolo ? notaTavolo(x.tavolo) : null, n.scheda);
+      return h('li', {}, n.nome, x.annotazione ? ` (${x.annotazione})` : null, ` — ${x.riga || `${x.abilita}; ${x.effetto}`} (${x.livello}° livello)`,
+        // A.230: la voce non è più nell'elenco della Classe (Giocatore 0.54); resta finché il Direttore non decide
+        x.tolta ? h('p', { class: 'nota motivo' }, `Non è più nell’elenco ${delNome(x.classe)} (Giocatore 0.54): la tieni finché il Direttore non decide.`) : null,
+        x.tavolo ? notaTavolo(x.tavolo) : null, n.scheda);
     }))) : null,
     // 27/10: i Talenti di prima del passaggio ai Talenti nuovi, letti dal registro del master; li vede ogni giocatore
     riquadroTalentiDiPrima(ctx),
@@ -2291,7 +2294,7 @@ function schedaSenzArmi(ctx) {
     h('div', { class: 'arma-valori' },
       h('p', { class: 'valore-tavolo' }, h('span', {}, 'VA '), a.va === null ? h('strong', {}, '—') : valoreEffettivo(`VA senz’armi (${a.abilita})`, a.vaEffettivo, a.va, a.scomposizione, { pillola: true, provenienza: a.provenienza })),
       h('p', {}, h('span', { class: 'sigla' }, 'Danno '), dannoConProvenienza(a, a.danno.una_mano ?? '—'),
-        h('small', { class: 'sigla' }, ` (${a.dannoOrigine === 'base' ? 'base' : a.dannoOrigine}${a.bonusCaratteristica?.bonus ? `, ${a.bonusCaratteristica.sigla} ${segno(a.bonusCaratteristica.bonus)}` : ''})${a.natura ? ` · ${a.natura}` : ''}`)),
+        h('small', { class: 'sigla' }, ` (${a.dannoOrigine === 'base' ? 'base' : a.dannoOrigine}${a.bonusCaratteristica?.bonus ? `, ${a.bonusCaratteristica.sigla} ${segno(a.bonusCaratteristica.bonus)}` : ''}${a.dannoSpecializzazione ? `, Spec. ${segno(a.dannoSpecializzazione)}` : ''})${a.natura ? ` · ${a.natura}` : ''}`)),
       h('p', {}, h('span', { class: 'sigla' }, 'Portata '), `${a.portataQ} Q`)),
     pugniPotenziati(ctx.tab.scheda) ? h('p', { class: 'nota' }, `${pugniPotenziati(ctx.tab.scheda).nome}: +1 VA sempre; l’attivazione (PM della riserva interna) si accende nella tab Artefatti e vale qui finché dura.`) : null,
     ultima ? h('p', { class: 'nota' }, `Ultima Manovra: ${ultima.nome}`) : null);

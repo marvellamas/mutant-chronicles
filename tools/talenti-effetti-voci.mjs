@@ -10,7 +10,7 @@ import { caricaDati } from '../src/rules.js';
 import { deserializzaPersonaggio, normalizza } from '../src/character.js';
 import { calcolaScheda } from '../src/calc.js';
 import { massimiSessione, inizializzaSessione } from '../src/sessione.js';
-import { talentiAttacco } from '../src/attacco.js';
+import { talentiAttacco, profiloSenzArmi } from '../src/attacco.js';
 import { calcolaLancio, dichiarazioneLancio } from '../src/lancio.js';
 import { notaDaApplicare } from '../src/talenti.js';
 
@@ -109,7 +109,15 @@ export function analizzaVoci(dati) {
     if (def.categoria === 'specializzazione') {
       const e = def.effetto ?? {};
       dichiarati.push(...Object.entries(e).filter(([k]) => ['va', 'danno', 'pm'].includes(k)).map(([k, v]) => `${k} ${v > 0 ? '+' : ''}${v}`));
-      if (def.gruppo === 'armi') {
+      if (e.attacchi === 'senz_armi') {
+        // Combattimento Senz'Armi (Giocatore 0.54 §8.8.1): nel profilo «Senz'armi» di «Attacca!», non nelle armi del catalogo
+        const con = profiloSenzArmi(s, dati); const sen = profiloSenzArmi(senza, dati);
+        const dVa = (con.vaEffettivo ?? 0) - (sen.vaEffettivo ?? 0);
+        const dDanno = (n) => Number(String(n.danno.una_mano ?? '').match(/\+(\d+)$/)?.[1] ?? 0);
+        const dd = dDanno(con) - dDanno(sen);
+        if (dVa === e.va && dd === e.danno && con.dannoBase === sen.dannoBase) calcolati.push(`attacchi senz’armi: +${dVa} VA, +${dd} danno nel profilo «Senz’armi» di «Attacca!»`);
+        else problemi.push(`profilo Senz’armi: VA ${dVa} (atteso ${e.va}), danno ${dd} (atteso ${e.danno})`);
+      } else if (def.gruppo === 'armi') {
         const rif = rifArma(dati, def.id);
         if (!rif) { if (!notaDaApplicare(def)) problemi.push('nessuna arma del catalogo la usa e nessuna nota «da applicare al tavolo»'); }
         else {

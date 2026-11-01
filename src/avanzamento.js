@@ -243,7 +243,14 @@ export function controllaSceltaTalento(stato, categoria, scelta, dati, { classe 
     const cat = categoriaDi(def);
     if (cat !== categoria) { err(`${def.nome} è ${cat === 'maestria' ? 'una Maestria' : cat === 'specializzazione' ? 'una Specializzazione' : 'un Talento Libero'}, non ${categoria === 'maestria' ? 'una Maestria' : categoria === 'specializzazione' ? 'una Specializzazione' : 'un Talento Libero'}`); return errori; }
     if (categoria === 'specializzazione' && !specializzazioniAmmesse(stato, classe, dati).has(def.id)) {
-      err(`Specializzazione in ${def.nome} non è nell’elenco ${classe ? delNome(classe) : 'della Classe'} (Talenti v1.0: si sceglie dalla Classe appena aumentata)`);
+      // Giocatore 0.54 §8.10: una voce che il manuale ha tolto dall'elenco della Classe (per_classe_tolte) non è una
+      // regola infranta per chi l'aveva già scelta: resta, con un avviso, finché il Direttore non decide (A.230).
+      // Per una scelta nuova non si offre (opzioniCategoria) e un tablet non la può scrivere (src/talenti-tablet.js).
+      if (classe && (dati.specializzazioni.per_classe_tolte?.[classe] ?? []).includes(def.id)) {
+        err(`Specializzazione in ${def.nome} non è più nell’elenco ${delNome(classe)} (Giocatore 0.54): chi l’ha già scelta la tiene finché il Direttore non decide (A.230)`, 'tolta');
+      } else {
+        err(`Specializzazione in ${def.nome} non è nell’elenco ${classe ? delNome(classe) : 'della Classe'} (Talenti v1.0: si sceglie dalla Classe appena aumentata)`);
+      }
     }
   }
   // molteplicità, parametro, annotazione, prerequisiti, Risorse Interiori: le regole di sempre
@@ -262,7 +269,8 @@ function opzioniCategoria(stato, categoria, dati, { classe = null } = {}) {
     ...dati.specializzazioni.specializzazioni.map((s) => ({ ...s, specializzazione: true, parametro: null })),
   ].filter((t) => sceglibile(t, nuovo) && (!nuovo || categoriaDi(t) === categoria));
   const valori = { caratteristica: Object.keys(stato.car), salvezza: dati.caratteristiche.salvezze.map((s) => s.id) };
-  const violazioni = (scelta) => controllaSceltaTalento(stato, categoria, scelta, dati, { classe }).filter((e) => e.tipo === 'violazione');
+  // una voce tolta dal manuale (tipo «tolta», A.230) vale per chi l'aveva già, ma non si offre per una scelta nuova
+  const violazioni = (scelta) => controllaSceltaTalento(stato, categoria, scelta, dati, { classe }).filter((e) => e.tipo === 'violazione' || e.tipo === 'tolta');
   return candidati.map((t) => {
     const parametri = t.parametro ? valori[t.parametro].filter((p) => !violazioni({ id: t.id, parametro: p }).length) : null;
     const errori = t.parametro ? (parametri.length ? [] : violazioni({ id: t.id, parametro: valori[t.parametro][0] })) : violazioni({ id: t.id });
@@ -1745,7 +1753,9 @@ function schedaARiposo(personaggio, dati) {
     }),
     specializzazioni: stato.talentiLiberi.filter((t) => talentoLiberoDef(t.id, dati).specializzazione).map((t) => {
       const d = talentoLiberoDef(t.id, dati);
-      return { id: t.id, nome: d.nome, abilita: d.abilita, effetto: d.effetto, tavolo: notaDaApplicare(d), livello: t.livello, usi: d.usi ?? null, ...(t.classe ? { classe: t.classe } : {}), ...(t.annotazione ? { annotazione: t.annotazione } : {}) };
+      // A.230: voce tolta dal manuale dall'elenco della Classe da cui era stata scelta (resta, con l'avviso)
+      const tolta = !!t.classe && (dati.specializzazioni.per_classe_tolte?.[t.classe] ?? []).includes(t.id);
+      return { id: t.id, nome: d.nome, abilita: d.abilita, effetto: d.effetto, tavolo: notaDaApplicare(d), livello: t.livello, usi: d.usi ?? null, ...(t.classe ? { classe: t.classe } : {}), ...(t.annotazione ? { annotazione: t.annotazione } : {}), ...(tolta ? { tolta: true } : {}) };
     }),
     tecniche: stato.tecniche.map((x) => ({ ...catalogoTec.find((t) => t.id === x.id), livello: x.livello })),
     tecnicheAmmesse: tecnicheAmmesse(stato),

@@ -51,6 +51,17 @@ function bonusSpecializzazione(v) {
   return pezzi.length ? `${pezzi.join(' e ')}${abilita}` : '';
 }
 
+/**
+ * Giocatore 0.54 §3.2 e §3.4: le due etichette della Classe (es. Sicurezza e Spionaggio) sono gli «Indirizzi di Classe»,
+ * solo indicativi: raggruppano i Talenti a scelta (due per Indirizzo e uno Comune). Non sono le Specializzazioni del §8.8.
+ * Nei dati restano nel campo «specializzazioni» della Classe e «specializzazione» del Talento a scelta.
+ * @returns «Indirizzo Sicurezza», «Comune» o null (indirizzo da definire)
+ */
+export function etichettaIndirizzo(nome) {
+  if (typeof nome !== 'string' || !nome.trim() || nome.startsWith('TODO(')) return null;
+  return nome === 'Comune' ? 'Comune' : `Indirizzo ${nome}`;
+}
+
 /** La riga breve: che cosa fa, in una frase. Sempre una stringa non vuota per una voce del catalogo. */
 export function rigaBreve(id, dati) {
   const v = typeof id === 'string' ? voceTalento(id, dati) : id;

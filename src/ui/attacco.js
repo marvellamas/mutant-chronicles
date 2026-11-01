@@ -343,7 +343,7 @@ function corpoRavvicinato(ctx, a, intestazione) {
       R.manovre[manovraScelta]?.prova?.scelta_bersaglio ? rigaScelte('Il bersaglio si oppone con (lo sceglie lui, prima del tiro)',
         R.manovre[manovraScelta].prova.contro.map((x) => ({ valore: x, etichetta: x })), d.opposizione, (x) => imposta({ opposizione: x })) : null,
       mScelta?.va_per_bersagli ? rigaScelte(`Bersagli (${mScelta.nome})`, Object.keys(mScelta.va_per_bersagli).map(Number).map((n) => ({ valore: n, etichetta: `${n} bersagli`, riga: `${numero(vaBersagli(n))} VA${migB ? ` (${migB.nome})` : ''}` })), d.bersagli, (x) => imposta({ bersagli: x })) : null,
-      a.senzArmi ? h('p', { class: 'nota' }, `Danno senz’armi: ${a.danno.una_mano} (${a.dannoOrigine === 'base' ? `base ${a.dannoBase}` : `${a.dannoBase}, ${a.dannoOrigine}`}${a.bonusCaratteristica?.bonus ? `, ${a.bonusCaratteristica.sigla} ${a.bonusCaratteristica.bonus > 0 ? '+' : ''}${a.bonusCaratteristica.bonus}` : ''}; §5.13).`) : null,
+      a.senzArmi ? h('p', { class: 'nota' }, `Danno senz’armi: ${a.danno.una_mano} (${a.dannoOrigine === 'base' ? `base ${a.dannoBase}` : `${a.dannoBase}, ${a.dannoOrigine}`}${a.bonusCaratteristica?.bonus ? `, ${a.bonusCaratteristica.sigla} ${a.bonusCaratteristica.bonus > 0 ? '+' : ''}${a.bonusCaratteristica.bonus}` : ''}${a.dannoSpecializzazione ? `, Specializzazione in Combattimento Senz’Armi +${a.dannoSpecializzazione}` : ''}; §5.13).`) : null,
     ] },
   ];
   // S20: in cima «Attacco normale» e «Colpo Mirato» (la Manovra di sempre, §5.12), affiancati

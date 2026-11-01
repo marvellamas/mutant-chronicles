@@ -347,7 +347,7 @@ function foglioAbilita(d) {
       d.avvisoPunti ? h('p', { class: 'piccolo avviso-eccesso-stampa' }, h('strong', {}, `${d.avvisoPunti.testo}.`), ` ${d.avvisoPunti.eventi.map((e) => e.testo).join('; ')}.`) : null),
     h('div', { class: 'colonna' },
       box({ titolo: 'Talenti di Classe' }, h('ul', { class: 'elenco-talenti-stampa' }, d.talentiClasse.map((t) =>
-        talento(t, h('span', { class: 'sigla' }, ` ${t.classe} ${t.grado}${t.scelto ? ', a scelta' : ''}`))))),
+        talento(t, h('span', { class: 'sigla' }, ` ${t.classe} ${t.grado}${t.scelto ? `, a scelta${t.indirizzo ? ` · ${t.indirizzo}` : ''}` : ''}`))))),
       // Talenti v1.0 (lotto 2): regime nuovo, due elenchi (Talenti Liberi e Maestrie) più le Specializzazioni sotto;
       // regime vecchio, l'elenco unico di sempre
       ...(d.regimeTalenti === 'nuovo'

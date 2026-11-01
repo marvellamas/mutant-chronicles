@@ -35,15 +35,15 @@ function dimitriNuovo(scelte = {}) {
   return { creazione: { ...p.creazione, regimeTalenti: 2, specializzazioneIniziale: s.iniziale ?? null }, livelli };
 }
 
-test('catalogo: 39 Talenti Liberi, 72 Maestrie, 86 Specializzazioni, ogni Classe con il suo elenco', () => {
+test('catalogo: 39 Talenti Liberi, 72 Maestrie, 87 Specializzazioni, ogni Classe con il suo elenco', () => {
   const per = (c) => dati.talenti_liberi.talenti.filter((t) => t.categoria === c).length;
   assert.equal(per('talento_libero'), 39);
   assert.equal(per('maestria'), 72);
-  assert.equal(dati.specializzazioni.specializzazioni.length, 86);
+  assert.equal(dati.specializzazioni.specializzazioni.length, 87); // Giocatore 0.54: + Combattimento Senz’Armi
   assert.ok(dati.specializzazioni.specializzazioni.some((s) => s.id === 'specializzazione-sport'));
   for (const c of dati.classi.classi) assert.ok(dati.specializzazioni.per_classe[c.nome]?.length >= 10, `${c.nome}: elenco`);
   assert.equal(dati.specializzazioni.per_classe.Tecnomante.length, 25);
-  assert.equal(dati.specializzazioni.per_classe.Amministrativo.length, 10);
+  assert.equal(dati.specializzazioni.per_classe.Amministrativo.length, 15); // Giocatore 0.54 §8.10
   // le voci superate restano per i PG di prima, con la voce che le sostituisce
   assert.equal(T('raffica-breve-migliorata').sostituito_da, 'raffiche-migliorate');
   assert.equal(T('sport').sostituito_da, 'specializzazione-sport');

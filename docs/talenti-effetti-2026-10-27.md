@@ -3,7 +3,7 @@
 Generato da `node tools/talenti-effetti-voci.mjs --scrivi`; il test `tests/talenti-effetti-voci.test.js` lo ripete a ogni `npm test`.
 Per ogni voce un personaggio (Lucas, 6° livello) con `regimeTalenti = 2` la sceglie; si confronta con lo stesso personaggio senza la voce.
 
-Voci: 197 (39 Talenti Liberi, 72 Maestrie, 86 Specializzazioni). Esito ok: 197.
+Voci: 198 (39 Talenti Liberi, 72 Maestrie, 87 Specializzazioni). Esito ok: 198.
 «Vecchia maniera»: la stessa voce presa come Talento Libero dei Talenti di prima; «uguale» = stessi valori, «nuova» = la voce non esisteva.
 
 | Voce | Categoria | Effetti nel testo | Calcolati dall'app | Da applicare al tavolo | Vecchia maniera | Esito |
@@ -127,6 +127,7 @@ Voci: 197 (39 Talenti Liberi, 72 Maestrie, 86 Specializzazioni). Esito ok: 197.
 | Armi Inastate | Specializzazione | va +1; danno +1 | armi della categoria (armi:baionetta-montata): +1 VA, +1 danno nella scheda dell'arma | — | nuova | ok |
 | Armi Flessibili | Specializzazione | va +1; danno +1 | armi della categoria (armi:frusta): +1 VA, +1 danno nella scheda dell'arma | — | nuova | ok |
 | Armi da Pugno | Specializzazione | va +1; danno +1 | armi della categoria (armi:artigli): +1 VA, +1 danno nella scheda dell'arma | — | nuova | ok |
+| Combattimento Senz’Armi | Specializzazione | va +1; danno +1 | attacchi senz’armi: +1 VA, +1 danno nel profilo «Senz’armi» di «Attacca!» | — | nuova | ok |
 | Armi a Sega | Specializzazione | va +1; danno +1 | armi della categoria (armi_corporative:elettrosega-csb600): +1 VA, +1 danno nella scheda dell'arma | — | nuova | ok |
 | Scudi | Specializzazione | va +1; danno +1 | — | +1 VA e +1 danno con le armi della categoria Scudi: gli Scudi non hanno ancora un profilo d’attacco nei dati, si applica al tavolo. | nuova | ok |
 | Pistole | Specializzazione | va +1; danno +1 | armi della categoria (armi_distanza:pistola-semiautomatica): +1 VA, +1 danno nella scheda dell'arma | — | nuova | ok |

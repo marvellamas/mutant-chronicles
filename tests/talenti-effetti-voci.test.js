@@ -1,4 +1,4 @@
-// Talenti v1.0, 27/10/2026: ogni voce del catalogo (39 Talenti Liberi, 72 Maestrie, 86 Specializzazioni) scelta da un
+// Talenti v1.0, 27/10/2026: ogni voce del catalogo (39 Talenti Liberi, 72 Maestrie, 87 Specializzazioni dal Giocatore 0.54) scelta da un
 // personaggio con regimeTalenti = 2 deve dare nei valori calcolati ciò che dice il suo testo, oppure dirlo come
 // «da applicare al tavolo». Il caso di partenza: Specializzazioni in Elementi e Manifestazione (−1 PM, +1 VA) che
 // la scheda non applicava, perché il motore leggeva gli effetti solo dai Talenti Liberi (talenti_liberi.json).
@@ -15,15 +15,15 @@ import { calcolaLancio, dichiarazioneLancio } from '../src/lancio.js';
 
 const { dati } = await datiReali();
 
-test('le 197 voci: ognuna dà i suoi effetti oppure la nota «da applicare al tavolo»', () => {
+test('le 198 voci: ognuna dà i suoi effetti oppure la nota «da applicare al tavolo»', () => {
   const righe = analizzaVoci(dati);
-  assert.equal(righe.length, 197);
+  assert.equal(righe.length, 198);
   const per = (c) => righe.filter((r) => r.categoria === c).length;
-  assert.deepEqual([per('talento_libero'), per('maestria'), per('specializzazione')], [39, 72, 86]);
+  assert.deepEqual([per('talento_libero'), per('maestria'), per('specializzazione')], [39, 72, 87]);
   const difetti = righe.filter((r) => r.esito !== 'ok');
   assert.deepEqual(difetti.map((r) => `${r.id}: ${r.problemi.join(' | ') || r.confronto}`), []);
   // il documento si rigenera dagli stessi dati
-  assert.match(tabella(righe), /Esito ok: 197/);
+  assert.match(tabella(righe), /Esito ok: 198/);
 });
 
 test('ogni voce con effetti scritti non ha insieme una nota che li contraddice, e nessuna tace', () => {
