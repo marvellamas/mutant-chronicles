@@ -1100,9 +1100,9 @@
       "nomi_alternativi": [
         "Serbatoio Purifier"
       ],
-      "note_manuale": "I lanciafiamme sono emettitori termici alimentati da NEC Rossi: non impiegano combustibile liquido. Un getto consuma una carica. Ogni attacco consuma una carica anche se manca il bersaglio. AC 1d3 non moltiplica il consumo. Sostituire un pacco compatibile pronto richiede 1 AzP, entrambe le mani e nessuna Prova.",
+      "note_manuale": "I lanciafiamme sono emettitori termici alimentati da NEC Rossi: non impiegano combustibile liquido. Un getto consuma una carica. Ogni attacco consuma una carica anche se manca il bersaglio. AC 1d3 non moltiplica il consumo. Sostituire un pacco compatibile pronto richiede 1 AzP, entrambe le mani e nessuna Prova. Gli accumulatori del pacco si consumano in successione, con un solo contatore e passaggio automatico senza Azioni. I pacchi non introducono nuovi formati NEC da 15 o 50. Purifier da vuoto: 150 cr, quindici ore personale o due ore e trenta minuti industriale.",
       "paragrafo": "§7.20.6",
-      "versione_manuale": "Armamenti 0.68",
+      "versione_manuale": "Armamenti 0.74",
       "costo": 600,
       "cella": {
         "capacita": 15,
@@ -1114,17 +1114,17 @@
       ],
       "proprieta": [],
       "accumulatore": {
-        "formato": "da definire",
+        "formato": "NEC 10 + NEC 5",
         "colore": "Rosso",
         "colori": [
           "Rosso"
         ],
         "ricarica_costo": 150
       },
-      "da_definire": [
-        "peso",
-        "formato standard: il raccordo dei pacchi da 15 e 50 getti ai formati standard resta da completare (Armamenti 0.68, §7.20.5)"
-      ]
+      "peso": 0.25,
+      "pi": 2,
+      "qualita": "Comune",
+      "ps_int": 10
     },
     {
       "id": "proiettili-da-pistola-perforante-1",
@@ -1726,26 +1726,26 @@
         "armi_distanza_corporative:gehemmapuker"
       ],
       "proprieta": [],
-      "note_manuale": "I lanciafiamme sono emettitori termici alimentati da NEC Rossi: non impiegano combustibile liquido. Un getto consuma una carica. Ogni attacco consuma una carica anche se manca il bersaglio. AC 1d3 non moltiplica il consumo. Sostituire un pacco compatibile pronto richiede 1 AzP, entrambe le mani e nessuna Prova. Il pacco dedicato del Gehemmapuker contiene cinquanta cariche; non è un Modulo generico da dieci UE.",
-      "versione_manuale": "Armamenti 0.68",
-      "costo": 2100,
+      "note_manuale": "I lanciafiamme sono emettitori termici alimentati da NEC Rossi: non impiegano combustibile liquido. Un getto consuma una carica. Ogni attacco consuma una carica anche se manca il bersaglio. AC 1d3 non moltiplica il consumo. Sostituire un pacco compatibile pronto richiede 1 AzP, entrambe le mani e nessuna Prova. Gli accumulatori del pacco si consumano in successione, con un solo contatore e passaggio automatico senza Azioni. I pacchi non introducono nuovi formati NEC da 15 o 50. Gehemmapuker da vuoto: 500 cr, cinquanta ore personale o otto ore e venti minuti industriale.",
+      "versione_manuale": "Armamenti 0.74",
+      "costo": 2000,
       "cella": {
         "capacita": 50,
         "unita": "getti",
         "ricarica_costo": 500
       },
       "accumulatore": {
-        "formato": "da definire",
+        "formato": "5 NEC 10",
         "colore": "Rosso",
         "colori": [
           "Rosso"
         ],
         "ricarica_costo": 500
       },
-      "da_definire": [
-        "peso",
-        "formato standard: il raccordo dei pacchi da 15 e 50 getti ai formati standard resta da completare (Armamenti 0.68, §7.20.5)"
-      ]
+      "peso": 0.75,
+      "pi": 2,
+      "qualita": "Comune",
+      "ps_int": 10
     }
   ]
 }

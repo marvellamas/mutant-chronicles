@@ -867,7 +867,7 @@
       "nomi_alternativi": [],
       "note_manuale": "Il prezzo comprende esoscheletro, attuatori, comandi, supporti d’arma e una batteria da otto ore di funzionamento. Le armi montate sono escluse. XO-102 possiede Imbottita 2 e Stabile 2; Vulkan possiede Ignifuga 3, Imbottita 3 e Stabile 2. Nessuno dei due accetta rinforzi esterni. L’AR del telaio sostituisce quella di qualsiasi armatura indossata dal pilota: non si sommano. I danni che superano la protezione si applicano ai PV del pilota. PI, PS e deterioramento seguono le regole degli oggetti; a 0 PI il telaio è Rotto. Le Prove fisiche eseguite mediante il telaio usano Pilotare al posto di Atletica. Il movimento ordinario non impone una Prova aggiuntiva oltre alle regole già previste per la modalità scelta. Per Schivare si usa Pilotare con −2 VA nello XO-102 e −4 VA nel Vulkan. MOV è rispettivamente −1 e −2; il lancio di Incantesimi con Potere subisce −5 VA. I servocomandi soddisfano il requisito FOR delle armi pesanti montate e annullano la penalità MOV di quelle armi. Per attaccare si usa la normale Abilità dell’arma e si pagano le normali Azioni. Avere due supporti non concede attacchi aggiuntivi. I comandi richiedono entrambe le mani; durante il pilotaggio non si impugnano Scudi o altre armi manuali. Una batteria alimenta otto ore operative e richiede otto ore di ricarica. La sostituzione richiede un minuto. Una batteria di ricambio costa 1.500 per XO-102 e 3.000 per Vulkan. A energia esaurita l’AR resta, ma il telaio non può muoversi, Schivare, puntare o sparare. Uscire richiede 1 AzP e una casella adiacente libera.",
       "paragrafo": "§7.11.6",
-      "versione_manuale": "Armamenti 0.50",
+      "versione_manuale": "Armamenti 0.74",
       "categoria": "Esoscheletro",
       "ar": {
         "totale": 6,
@@ -925,10 +925,15 @@
         }
       ],
       "alimentazione": {
-        "nec": null,
-        "descrizione": "NEC Rosso di formato dedicato (Juggernaut XO-102 Steel Strider): ricarica 8 ore, ricambio 1500 cr, sostituzione 1 minuto",
-        "autonomia_ore": 8,
-        "paragrafo": "§7.11.6; E&L del 02/10/2026, decisione 18"
+        "nec": "nec:cec-rosso",
+        "descrizione": "Una CEC Rossa: una carica per impiego fino a un’ora; dieci ore massime. Si consuma una carica all’inizio dell’impiego; superata la durata coperta se ne consuma un’altra. Brevi pause, combattimenti e spostamenti entro lo stesso periodo sono compresi. Concluso l’impiego, il tempo inutilizzato non si conserva; si annotano soltanto le cariche rimaste. Il sistema spento non consuma energia. CEC Rossa: 5 kg, ricambio carico 1.000 cr; ricarica presso una stazione CEC adatta 10 cr e sei minuti per carica, 100 cr e un’ora da vuota (il trasformatore personale per NEC non ricarica CEC); sostituzione in un minuto a sistema spento. Prezzo completo invariato, primo accumulatore carico compreso.",
+        "usi": 10,
+        "unita_usi": "cariche (impieghi fino a un’ora)",
+        "paragrafo": "§7.20.5; Equipaggiamento §5.4.8",
+        "unita_precedente": "ore",
+        "precedente": {
+          "ore": 8
+        }
       }
     },
     {
@@ -940,7 +945,7 @@
       "nomi_alternativi": [],
       "note_manuale": "Il prezzo comprende esoscheletro, attuatori, comandi, supporti d’arma e una batteria da otto ore di funzionamento. Le armi montate sono escluse. XO-102 possiede Imbottita 2 e Stabile 2; Vulkan possiede Ignifuga 3, Imbottita 3 e Stabile 2. Nessuno dei due accetta rinforzi esterni. L’AR del telaio sostituisce quella di qualsiasi armatura indossata dal pilota: non si sommano. I danni che superano la protezione si applicano ai PV del pilota. PI, PS e deterioramento seguono le regole degli oggetti; a 0 PI il telaio è Rotto. Le Prove fisiche eseguite mediante il telaio usano Pilotare al posto di Atletica. Il movimento ordinario non impone una Prova aggiuntiva oltre alle regole già previste per la modalità scelta. Per Schivare si usa Pilotare con −2 VA nello XO-102 e −4 VA nel Vulkan. MOV è rispettivamente −1 e −2; il lancio di Incantesimi con Potere subisce −5 VA. I servocomandi soddisfano il requisito FOR delle armi pesanti montate e annullano la penalità MOV di quelle armi. Per attaccare si usa la normale Abilità dell’arma e si pagano le normali Azioni. Avere due supporti non concede attacchi aggiuntivi. I comandi richiedono entrambe le mani; durante il pilotaggio non si impugnano Scudi o altre armi manuali. Una batteria alimenta otto ore operative e richiede otto ore di ricarica. La sostituzione richiede un minuto. Una batteria di ricambio costa 1.500 per XO-102 e 3.000 per Vulkan. A energia esaurita l’AR resta, ma il telaio non può muoversi, Schivare, puntare o sparare. Uscire richiede 1 AzP e una casella adiacente libera.",
       "paragrafo": "§7.11.6",
-      "versione_manuale": "Armamenti 0.50",
+      "versione_manuale": "Armamenti 0.74",
       "categoria": "Esoscheletro",
       "ar": {
         "totale": 7,
@@ -1012,10 +1017,15 @@
         }
       ],
       "alimentazione": {
-        "nec": null,
-        "descrizione": "NEC Rosso di formato dedicato (Vulkan): ricarica 8 ore, ricambio 3000 cr, sostituzione 1 minuto",
-        "autonomia_ore": 8,
-        "paragrafo": "§7.11.6; E&L del 02/10/2026, decisione 18"
+        "nec": "nec:cec-rosso",
+        "descrizione": "Una CEC Rossa: una carica per impiego fino a un’ora; dieci ore massime. Si consuma una carica all’inizio dell’impiego; superata la durata coperta se ne consuma un’altra. Brevi pause, combattimenti e spostamenti entro lo stesso periodo sono compresi. Concluso l’impiego, il tempo inutilizzato non si conserva; si annotano soltanto le cariche rimaste. Il sistema spento non consuma energia. CEC Rossa: 5 kg, ricambio carico 1.000 cr; ricarica presso una stazione CEC adatta 10 cr e sei minuti per carica, 100 cr e un’ora da vuota (il trasformatore personale per NEC non ricarica CEC); sostituzione in un minuto a sistema spento. Prezzo completo invariato, primo accumulatore carico compreso.",
+        "usi": 10,
+        "unita_usi": "cariche (impieghi fino a un’ora)",
+        "paragrafo": "§7.20.5; Equipaggiamento §5.4.8",
+        "unita_precedente": "ore",
+        "precedente": {
+          "ore": 8
+        }
       }
     },
     {
@@ -2794,7 +2804,7 @@
       "nomi_alternativi": [],
       "note_manuale": "La Felis è un’armatura Pesante servoassistita indossabile, utilizzabile anche senza alimentazione e senza innesti cibernetici. Il prezzo comprende una batteria dedicata; armi e Scudi si acquistano separatamente. Imbottita 2 resta attiva anche a batteria spenta. AR 5 e PI 12 non cambiano con l’alimentazione. Assistenza muscolare 1 concede +1 VA alle Prove di Forza o Atletica per sollevare, spingere, trascinare o sfondare. Non aumenta la Caratteristica Forza, non soddisfa i requisiti delle armi e non si applica a salti, equilibrio o attacchi. Il beneficio richiede alimentazione. Colpo assistito 1 aggiunge +1 danno ordinario a una sola applicazione del danno per attacco ravvicinato, con un’arma impugnata o a mani nude. Termoregolazione 2 concede +2 alla PS Tempra contro caldo e freddo ambientali; non aumenta l’AR contro attacchi di Fuoco o Gelo. Entrambe le proprietà richiedono alimentazione. Autonomia: 8 ore di funzionamento. Ricarica completa: 8 ore. Una batteria di ricambio costa 2.000; sostituirla richiede un minuto ad armatura spenta. Accendere o spegnere la servoassistenza richiede 1 AzP. A batteria esaurita si applicano immediatamente requisito FOR e penalità della configurazione senza alimentazione.",
       "paragrafo": "§7.14.1",
-      "versione_manuale": "Armamenti 0.50",
+      "versione_manuale": "Armamenti 0.74",
       "categoria": "Pesante servoassistita",
       "ar": {
         "totale": 5,
@@ -2902,10 +2912,15 @@
         }
       ],
       "alimentazione": {
-        "nec": null,
-        "descrizione": "NEC Rosso di formato dedicato (Mk.IV Felis Pattern dei Golden Lions): ricarica 8 ore, ricambio 2000 cr, sostituzione 1 minuto",
-        "autonomia_ore": 8,
-        "paragrafo": "§7.14.1; E&L del 02/10/2026, decisione 18"
+        "nec": "nec:nec-rosso-10",
+        "descrizione": "Un NEC Rosso 10: una carica per impiego fino a un’ora; dieci ore massime. Si consuma una carica all’inizio dell’impiego; superata la durata coperta se ne consuma un’altra. Brevi pause, combattimenti e spostamenti entro lo stesso periodo sono compresi. Concluso l’impiego, il tempo inutilizzato non si conserva; si annotano soltanto le cariche rimaste. Il sistema spento non consuma energia. NEC Rosso 10: 150 g, ricambio carico 400 cr; ricarica 10 cr per carica, 100 cr da vuoto, dieci minuti per carica industriale o un’ora con trasformatore personale; sostituzione in 1 AzP a sistema spento. Prezzo completo invariato, primo accumulatore carico compreso.",
+        "usi": 10,
+        "unita_usi": "cariche (impieghi fino a un’ora)",
+        "paragrafo": "§7.20.5; Equipaggiamento §5.4.8",
+        "unita_precedente": "ore",
+        "precedente": {
+          "ore": 8
+        }
       }
     },
     {
@@ -4579,7 +4594,7 @@
       "nomi_alternativi": [],
       "note_manuale": "Imbottita 2, Assistenza muscolare 1, Colpo assistito 1 e Termoregolazione 2. L’imbottitura resta efficace anche a sistema spento; gli altri benefici richiedono alimentazione. Assistenza muscolare X concede +X VA alle Prove di Forza o Atletica per sollevare, spingere, trascinare o sfondare con il telaio. Non aumenta la Caratteristica, non soddisfa requisiti delle armi e non si applica ad attacchi o salti. Colpo assistito X aggiunge X al danno ordinario degli attacchi ravvicinati, una sola volta per applicazione di danno. Termoregolazione 2 concede +2 alle PS Tempra contro caldo e freddo ambientali; non aumenta l’AR contro attacchi termici. Lancio indica la penalità alla Prova di Potere per lanciare Incantesimi. I valori sono le penalità finali del modello, prima di altre cause. A sistema spento il telaio conserva la protezione ma usa il requisito FOR e le penalità passive indicate. Il prezzo comprende una batteria carica. Accendere o spegnere il sistema richiede 1 AzP; sostituire la batteria richiede un minuto a sistema spento. L’esoscheletro non fornisce Azioni aggiuntive.",
       "paragrafo": "§7.16.1",
-      "versione_manuale": "Armamenti 0.50",
+      "versione_manuale": "Armamenti 0.74",
       "categoria": "Pesante",
       "ar": {
         "totale": 5,
@@ -4687,10 +4702,15 @@
         }
       ],
       "alimentazione": {
-        "nec": null,
-        "descrizione": "NEC Rosso di formato dedicato (Powersuit): ricarica 8 ore, ricambio 2000 cr, sostituzione 1 minuto",
-        "autonomia_ore": 8,
-        "paragrafo": "§7.16.1; E&L del 02/10/2026, decisione 18"
+        "nec": "nec:nec-rosso-10",
+        "descrizione": "Un NEC Rosso 10: una carica per impiego fino a un’ora; dieci ore massime. Si consuma una carica all’inizio dell’impiego; superata la durata coperta se ne consuma un’altra. Brevi pause, combattimenti e spostamenti entro lo stesso periodo sono compresi. Concluso l’impiego, il tempo inutilizzato non si conserva; si annotano soltanto le cariche rimaste. Il sistema spento non consuma energia. NEC Rosso 10: 150 g, ricambio carico 400 cr; ricarica 10 cr per carica, 100 cr da vuoto, dieci minuti per carica industriale o un’ora con trasformatore personale; sostituzione in 1 AzP a sistema spento. Prezzo completo invariato, primo accumulatore carico compreso.",
+        "usi": 10,
+        "unita_usi": "cariche (impieghi fino a un’ora)",
+        "paragrafo": "§7.20.5; Equipaggiamento §5.4.8",
+        "unita_precedente": "ore",
+        "precedente": {
+          "ore": 8
+        }
       }
     },
     {
@@ -4702,7 +4722,7 @@
       "nomi_alternativi": [],
       "note_manuale": "Imbottita 2, Assistenza muscolare 2, Colpo assistito 2 e Termoregolazione 2. L’imbottitura è passiva; le altre proprietà richiedono alimentazione. Assistenza muscolare X concede +X VA alle Prove di Forza o Atletica per sollevare, spingere, trascinare o sfondare con il telaio. Non aumenta la Caratteristica, non soddisfa requisiti delle armi e non si applica ad attacchi o salti. Colpo assistito X aggiunge X al danno ordinario degli attacchi ravvicinati, una sola volta per applicazione di danno. Termoregolazione 2 concede +2 alle PS Tempra contro caldo e freddo ambientali; non aumenta l’AR contro attacchi termici. Lancio indica la penalità alla Prova di Potere per lanciare Incantesimi. I valori sono le penalità finali del modello, prima di altre cause. A sistema spento il telaio conserva la protezione ma usa il requisito FOR e le penalità passive indicate. Il prezzo comprende una batteria carica. Accendere o spegnere il sistema richiede 1 AzP; sostituire la batteria richiede un minuto a sistema spento. L’esoscheletro non fornisce Azioni aggiuntive.",
       "paragrafo": "§7.16.1",
-      "versione_manuale": "Armamenti 0.50",
+      "versione_manuale": "Armamenti 0.74",
       "categoria": "Pesante",
       "ar": {
         "totale": 6,
@@ -4810,10 +4830,15 @@
         }
       ],
       "alimentazione": {
-        "nec": null,
-        "descrizione": "NEC Rosso di formato dedicato (Shoa Ace Custom): ricarica 6 ore, ricambio 2500 cr, sostituzione 1 minuto",
-        "autonomia_ore": 6,
-        "paragrafo": "§7.16.1; E&L del 02/10/2026, decisione 18"
+        "nec": "nec:nec-rosso-10",
+        "descrizione": "Un NEC Rosso 10: una carica per impiego fino a mezz’ora; cinque ore massime. Si consuma una carica all’inizio dell’impiego; superata la durata coperta se ne consuma un’altra. Brevi pause, combattimenti e spostamenti entro lo stesso periodo sono compresi. Concluso l’impiego, il tempo inutilizzato non si conserva; si annotano soltanto le cariche rimaste. Il sistema spento non consuma energia. NEC Rosso 10: 150 g, ricambio carico 400 cr; ricarica 10 cr per carica, 100 cr da vuoto, dieci minuti per carica industriale o un’ora con trasformatore personale; sostituzione in 1 AzP a sistema spento. Prezzo completo invariato, primo accumulatore carico compreso.",
+        "usi": 10,
+        "unita_usi": "cariche (impieghi fino a mezz’ora)",
+        "paragrafo": "§7.20.5; Equipaggiamento §5.4.8",
+        "unita_precedente": "ore",
+        "precedente": {
+          "ore": 6
+        }
       }
     },
     {
@@ -4825,7 +4850,7 @@
       "nomi_alternativi": [],
       "note_manuale": "Mantiene Assistenza muscolare 2, Colpo assistito 2, Termoregolazione 2 e Imbottita 2 della Shoa Ace Custom. Comprende AR magica 1 e Sigilli d’interdizione 2: +2 alle PS Magia effettivamente richieste contro l’Oscura Simmetria. AR magica, sigilli e imbottitura restano efficaci anche a sistema spento e non richiedono Sintonizzazione. I sigilli non concedono una Salvezza dove l’effetto non la prevede. Assistenza muscolare X concede +X VA alle Prove di Forza o Atletica per sollevare, spingere, trascinare o sfondare con il telaio. Non aumenta la Caratteristica, non soddisfa requisiti delle armi e non si applica ad attacchi o salti. Colpo assistito X aggiunge X al danno ordinario degli attacchi ravvicinati, una sola volta per applicazione di danno. Termoregolazione 2 concede +2 alle PS Tempra contro caldo e freddo ambientali; non aumenta l’AR contro attacchi termici. Lancio indica la penalità alla Prova di Potere per lanciare Incantesimi. I valori sono le penalità finali del modello, prima di altre cause. A sistema spento il telaio conserva la protezione ma usa il requisito FOR e le penalità passive indicate. Il prezzo comprende una batteria carica. Accendere o spegnere il sistema richiede 1 AzP; sostituire la batteria richiede un minuto a sistema spento. L’esoscheletro non fornisce Azioni aggiuntive.",
       "paragrafo": "§7.16.1",
-      "versione_manuale": "Armamenti 0.50",
+      "versione_manuale": "Armamenti 0.74",
       "categoria": "Pesante",
       "ar": {
         "totale": 6,
@@ -4947,10 +4972,15 @@
         }
       ],
       "alimentazione": {
-        "nec": null,
-        "descrizione": "NEC Rosso di formato dedicato (Demonhunter): ricarica 6 ore, ricambio 2500 cr, sostituzione 1 minuto",
-        "autonomia_ore": 6,
-        "paragrafo": "§7.16.1; E&L del 02/10/2026, decisione 18"
+        "nec": "nec:nec-rosso-10",
+        "descrizione": "Un NEC Rosso 10: una carica per impiego fino a mezz’ora; cinque ore massime. Si consuma una carica all’inizio dell’impiego; superata la durata coperta se ne consuma un’altra. Brevi pause, combattimenti e spostamenti entro lo stesso periodo sono compresi. Concluso l’impiego, il tempo inutilizzato non si conserva; si annotano soltanto le cariche rimaste. Il sistema spento non consuma energia. NEC Rosso 10: 150 g, ricambio carico 400 cr; ricarica 10 cr per carica, 100 cr da vuoto, dieci minuti per carica industriale o un’ora con trasformatore personale; sostituzione in 1 AzP a sistema spento. Prezzo completo invariato, primo accumulatore carico compreso.",
+        "usi": 10,
+        "unita_usi": "cariche (impieghi fino a mezz’ora)",
+        "paragrafo": "§7.20.5; Equipaggiamento §5.4.8",
+        "unita_precedente": "ore",
+        "precedente": {
+          "ore": 6
+        }
       }
     },
     {

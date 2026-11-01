@@ -1600,9 +1600,9 @@
       "catalogo": "Capitol",
       "famiglia": "Dispositivi di volo",
       "nomi_alternativi": [],
-      "note_manuale": "Il propulsore permette brevi interventi in volo: superare ostacoli, raggiungere posizioni sopraelevate e condurre assalti verticali. È compatibile con la Predator, che comprende già gli attacchi strutturali. Montaggio e rimozione richiedono un minuto. Occupa lo spazio dello zaino ordinario e resta compatibile con i Rinforzi Leggeri ammessi dalla Predator. Non conferisce AR. Possiede PI e PS Integrità propri, separati dall’armatura. Il prezzo comprende il dispositivo e un serbatoio pieno. Predator e propulsore costano complessivamente 21.500. Decollo, salita, discesa e atterraggio fanno parte dello stesso movimento e consumano la distanza disponibile. Le penalità dell’armatura restano applicabili: con Predator e senza altri modificatori, le distanze sono 5/11/17 Q. Restano la continuità del percorso, l’ordine delle Azioni e la durata dei modificatori dell’andatura. Si applicano gli esiti delle Prove di volo delle regole di volo del Manuale della Magia: Magistrale +2 Q e +4 alla prossima Prova; Fallimento −2 Q; Maldestro −4 Q e −4 alla prossima Prova. Con Fallimento o Maldestro si perde la penalità per essere colpiti concessa dall’andatura e restano le proprie penalità alle altre Azioni. La penalità specifica della Prova di movimento non si somma una seconda volta a quella personale dell’andatura. Attacchi, Carica, Movimento Evasivo, Ritirata, movimento misto e Attacchi di Opportunità seguono le regole del movimento in volo. Restano il divieto di lanciare Incantesimi nella stessa Iniziativa di una Corsa o uno Scatto in volo e i limiti imposti da Stati e Concentrazione. Il dispositivo non concede Azioni o attacchi aggiuntivi. Una Prova di movimento fallita non spegne automaticamente il propulsore. Se il dispositivo si rompe, viene disattivato o l’utilizzatore diventa Svenuto, il sostegno termina e si applicano le Cadute (§5.22). L’ultima unità di autonomia sostiene fino all’inizio della propria Iniziativa successiva: occorre raggiungere un appoggio prima dell’esaurimento. A 0 PI il dispositivo perde la funzione. Il motore acceso impedisce di nascondere il proprio rumore mediante Furtività. Coperture e occultamento visivo continuano a funzionare normalmente.",
+      "note_manuale": "Il propulsore permette brevi interventi in volo: superare ostacoli, raggiungere posizioni sopraelevate e condurre assalti verticali. È compatibile con la Predator, che comprende già gli attacchi strutturali. Montaggio e rimozione richiedono un minuto. Occupa lo spazio dello zaino ordinario e resta compatibile con i Rinforzi Leggeri ammessi dalla Predator. Non conferisce AR. Possiede PI e PS Integrità propri, separati dall’armatura. Il prezzo comprende il dispositivo e il primo pacco di volo carico. Predator e propulsore costano complessivamente 21.500. Decollo, salita, discesa e atterraggio fanno parte dello stesso movimento e consumano la distanza disponibile. Le penalità dell’armatura restano applicabili: con Predator e senza altri modificatori, le distanze sono 5/11/17 Q. Restano la continuità del percorso, l’ordine delle Azioni e la durata dei modificatori dell’andatura. Si applicano gli esiti delle Prove di volo delle regole di volo del Manuale della Magia: Magistrale +2 Q e +4 alla prossima Prova; Fallimento −2 Q; Maldestro −4 Q e −4 alla prossima Prova. Con Fallimento o Maldestro si perde la penalità per essere colpiti concessa dall’andatura e restano le proprie penalità alle altre Azioni. La penalità specifica della Prova di movimento non si somma una seconda volta a quella personale dell’andatura. Attacchi, Carica, Movimento Evasivo, Ritirata, movimento misto e Attacchi di Opportunità seguono le regole del movimento in volo. Restano il divieto di lanciare Incantesimi nella stessa Iniziativa di una Corsa o uno Scatto in volo e i limiti imposti da Stati e Concentrazione. Il dispositivo non concede Azioni o attacchi aggiuntivi. Una Prova di movimento fallita non spegne automaticamente il propulsore. Se il dispositivo si rompe, viene disattivato o l’utilizzatore diventa Svenuto, il sostegno termina e si applicano le Cadute (§5.22). L’ultima unità di autonomia sostiene fino all’inizio della propria Iniziativa successiva: occorre raggiungere un appoggio prima dell’esaurimento. A 0 PI il dispositivo perde la funzione. Il motore acceso impedisce di nascondere il proprio rumore mediante Furtività. Coperture e occultamento visivo continuano a funzionare normalmente.",
       "paragrafo": "§7.13.4",
-      "versione_manuale": "Armamenti 0.50",
+      "versione_manuale": "Armamenti 0.74; Equipaggiamento 0.30",
       "pi": 6,
       "qualita": "Rara",
       "ps_int": 14,
@@ -1663,7 +1663,14 @@
           ]
         }
       ],
-      "proprieta": []
+      "proprieta": [],
+      "alimentazione": {
+        "nec": "nec:pacco-20-rosso",
+        "descrizione": "Pacco di volo da due NEC Rossi 10 in successione: un contatore da 20 cariche, passaggio automatico senza Azioni. Una carica per Round di volo o sospensione; 300 g, ricambio carico 800 cr e ricarica completa 200 cr in 20 ore personale o 3 ore e 20 minuti industriale. Sostituzione in 1 AzP a dispositivo spento e con alloggiamento accessibile. Prezzo completo 12.000 cr, primo pacco carico incluso.",
+        "usi": 20,
+        "unita_usi": "cariche (Round di volo o sospensione)",
+        "paragrafo": "§7.13.4; Equipaggiamento §5.4.8"
+      }
     },
     {
       "id": "paracadute-di-emergenza-capitol",
@@ -1770,9 +1777,9 @@
       "catalogo": "Imperial",
       "famiglia": "Dispositivi di volo",
       "nomi_alternativi": [],
-      "note_manuale": "Il Jet-Chute è un equipaggiamento speciale per la discesa rapida, dotato di frenata automatica a razzo. Il prezzo comprende imbracatura, altimetro e una carica completa. Occupa lo spazio di uno zaino; montarlo o rimuoverlo richiede un minuto. È compatibile con armature Leggere, Medie e Pesanti non servoassistite, insieme al normale equipaggiamento personale. Non trasporta passeggeri e non è compatibile con esoscheletri o con la Felis. Non consente di salire, volare in orizzontale o restare sospesi. Armarlo richiede 1 AzP, normalmente prima del salto; l’accensione della frenata è automatica. Servono almeno 35 Q di dislivello verticale libero fino al punto di arrivo, circa 52,5 metri. Sotto questa soglia il dispositivo non garantisce la protezione e si applicano le normali regole delle Cadute del Manuale del Giocatore. La discesa avviene a 60 Q per Round, fino a raggiungere il suolo. Spendendo 1 AzM si può correggere orizzontalmente la traiettoria fino a 2 Q per Round. La carica viene consumata all’accensione e serve per una sola discesa. Il dispositivo non concede Azioni aggiuntive né i benefici difensivi di Corsa o Scatto. Su un’area ampia e libera non occorre una Prova di Pilotare: l’atterraggio infligge 1d3 danni Naturali che ignorano l’AR. Imbottita non riduce questi danni. Spazi stretti, ostacoli o vento forte richiedono Pilotare con i modificatori delle circostanze. Rifornire il dispositivo costa 150 e richiede un minuto con l’attrezzatura di rifornimento. Una cartuccia completa di ricambio costa 300 e si sostituisce in un minuto. Stormtrencher e Jet-Chute costano complessivamente 14.500, escluse armi e munizioni.",
+      "note_manuale": "Il Jet-Chute è un equipaggiamento speciale per la discesa rapida, dotato di frenata automatica a propulsione NEC. Il prezzo comprende imbracatura, altimetro e il primo NEC Rosso 1 carico. Occupa lo spazio di uno zaino; montarlo o rimuoverlo richiede un minuto. È compatibile con armature Leggere, Medie e Pesanti non servoassistite, insieme al normale equipaggiamento personale. Non trasporta passeggeri e non è compatibile con esoscheletri o con la Felis. Non consente di salire, volare in orizzontale o restare sospesi. Armarlo richiede 1 AzP, normalmente prima del salto; l’accensione della frenata è automatica. Servono almeno 35 Q di dislivello verticale libero fino al punto di arrivo, circa 52,5 metri. Sotto questa soglia il dispositivo non garantisce la protezione e si applicano le normali regole delle Cadute del Manuale del Giocatore. La discesa avviene a 60 Q per Round, fino a raggiungere il suolo. Spendendo 1 AzM si può correggere orizzontalmente la traiettoria fino a 2 Q per Round. La carica viene consumata all’accensione e serve per una sola discesa. Il dispositivo non concede Azioni aggiuntive né i benefici difensivi di Corsa o Scatto. Su un’area ampia e libera non occorre una Prova di Pilotare: l’atterraggio infligge 1d3 danni Naturali che ignorano l’AR. Imbottita non riduce questi danni. Spazi stretti, ostacoli o vento forte richiedono Pilotare con i modificatori delle circostanze. Rifornire il dispositivo costa 150 e richiede un minuto con l’attrezzatura di rifornimento. Una cartuccia completa di ricambio costa 300 e si sostituisce in un minuto. Stormtrencher e Jet-Chute costano complessivamente 14.500, escluse armi e munizioni.",
       "paragrafo": "§7.14.4",
-      "versione_manuale": "Armamenti 0.50",
+      "versione_manuale": "Armamenti 0.74; Equipaggiamento 0.30",
       "pi": 6,
       "qualita": "Non comune",
       "ps_int": 12,
@@ -1801,7 +1808,14 @@
           ]
         }
       ],
-      "proprieta": []
+      "proprieta": [],
+      "alimentazione": {
+        "nec": "nec:nec-rosso-1",
+        "descrizione": "NEC Rosso 1 da 100 g: una carica all’accensione della frenata, per una discesa completa. Ricambio carico 40 cr, ricarica 10 cr in dieci minuti industriale o un’ora personale. Sostituzione in 1 AzP a dispositivo spento e con alloggiamento accessibile. Prezzo completo 6.000 cr, primo NEC carico incluso.",
+        "usi": 1,
+        "unita_usi": "cariche (discese)",
+        "paragrafo": "§7.14.4; Equipaggiamento §5.4.8"
+      }
     },
     {
       "id": "ape-capitol",
@@ -1812,7 +1826,7 @@
       "nomi_alternativi": [],
       "note_manuale": "APE Capitol è un modello originale del catalogo SIMPLY RPG, destinato al supporto pesante mobile. Il suo profilo privilegia mobilità e manovrabilità rispetto alla robustezza e all’autonomia dello Steel Strider Bauhaus. Possiede Imbottita 2 e Stabile 1, con i significati del §7.11.4. Il prezzo comprende telaio, attuatori, comandi, supporto d’arma e una batteria carica. L’arma si acquista separatamente. Nessun rinforzo esterno, propulsore Banshee o paracadute personale è compatibile. Movimento: nessuna riduzione delle distanze ordinarie. Le Prove fisiche effettuate attraverso il telaio usano Pilotare al posto di Atletica; il movimento ordinario non impone una Prova aggiuntiva oltre a quelle della modalità utilizzata. Schivare usa Pilotare −1 VA. Furtività subisce −2 VA per ingombro e rumore. Il lancio di Incantesimi con Potere subisce −5 VA. I servosistemi soddisfano il requisito FOR dell’arma montata e annullano la sua penalità al MOV. Gli attacchi usano la normale Abilità dell’arma e consumano le normali Azioni. I comandi richiedono entrambe le mani e non consentono contemporaneamente armi impugnate o Scudi. L’AR del telaio sostituisce quella dell’armatura personale. I danni che superano l’AR raggiungono i PV del pilota, secondo la procedura degli esoscheletri Bauhaus (§7.11.6). I PI restano l’Integrità dell’oggetto e non costituiscono PV aggiuntivi. La batteria alimenta sei ore operative, richiede sei ore di ricarica, si sostituisce in un minuto e costa 2.000. A energia esaurita l’AR rimane, ma il telaio non può muoversi, Schivare, puntare o sparare. Uscire richiede 1 AzP e una casella adiacente libera. A 0 PI si applica normalmente Rotto.",
       "paragrafo": "§7.13.6",
-      "versione_manuale": "Armamenti 0.50",
+      "versione_manuale": "Armamenti 0.74",
       "categoria": "Esoscheletro",
       "ar": {
         "totale": 6,
@@ -1848,10 +1862,15 @@
         }
       ],
       "alimentazione": {
-        "nec": null,
-        "descrizione": "NEC Rosso di formato dedicato (APE Capitol): ricarica 6 ore, ricambio 2000 cr, sostituzione 1 minuto",
-        "autonomia_ore": 6,
-        "paragrafo": "§7.13.6; E&L del 02/10/2026, decisione 18"
+        "nec": "nec:cec-rosso",
+        "descrizione": "Una CEC Rossa: una carica per impiego fino a mezz’ora; cinque ore massime. Si consuma una carica all’inizio dell’impiego; superata la durata coperta se ne consuma un’altra. Brevi pause, combattimenti e spostamenti entro lo stesso periodo sono compresi. Concluso l’impiego, il tempo inutilizzato non si conserva; si annotano soltanto le cariche rimaste. Il sistema spento non consuma energia. CEC Rossa: 5 kg, ricambio carico 1.000 cr; ricarica presso una stazione CEC adatta 10 cr e sei minuti per carica, 100 cr e un’ora da vuota (il trasformatore personale per NEC non ricarica CEC); sostituzione in un minuto a sistema spento. Prezzo completo invariato, primo accumulatore carico compreso.",
+        "usi": 10,
+        "unita_usi": "cariche (impieghi fino a mezz’ora)",
+        "paragrafo": "§7.20.5; Equipaggiamento §5.4.8",
+        "unita_precedente": "ore",
+        "precedente": {
+          "ore": 6
+        }
       },
       "effetti": [
         {
@@ -1874,7 +1893,7 @@
       "nomi_alternativi": [],
       "note_manuale": "L’Iron Mastiff è un robot da sicurezza e inseguimento, classificato tra gli equipaggiamenti speciali. È un modello fisso, senza versioni Leggere, Medie o Pesanti. Il prezzo comprende mascelle, sensori, pelliccia sintetica, batteria e controller abbinato; non richiede innesti né consuma UMN. I VA sono propri del robot e non dipendono dal livello del proprietario. Le mascelle attaccano con Corpo a corpo, portata 1 Q e danno 1d6+2 Naturale, usando le normali Azioni. Presa controllata e sensori Presa controllata permette di Immobilizzare con le mascelle una creatura di taglia umana o inferiore. Costa 1 AzP e richiede Corpo a corpo contrapposto a Corpo a corpo o Atletica del bersaglio; la presa iniziale non infligge danni. Liberarsi costa 1 AzP e richiede una nuova Prova contrapposta; in caso di parità la presa continua. Le mascelle restano occupate. Mordere il bersaglio trattenuto richiede una normale AzP e una nuova Prova per colpire. Sensori da pista 2 concede +2 VA a Sopravvivenza per seguire una traccia identificabile o un campione odoroso: il VA diventa 12. Terreno, interruzione e distruzione delle tracce restano rilevanti. Le ottiche infrarosse operano entro 20 Q in scarsa luce, con linea di vista e contrasto termico sufficienti. Percezione e Furtività seguono le normali Prove uniche; i sensori non riconoscono automaticamente eresia o Corruzione. Comando e autonomia operativa In modalità autonoma, il Direttore gestisce il robot secondo una direttiva semplice e persistente. Assegnare o cambiare la direttiva costa 1 AzP al referente. In comando diretto a distanza, ciascun comando costa 1 AzP al referente e utilizza le normali Azioni del robot: non ne crea di aggiuntive. Il controller trasmette audio, video e segnali entro 100 Q, purché il collegamento sia disponibile. Se il collegamento si interrompe, il robot continua l’ordine corrente; quando lo completa o non può eseguirlo, mantiene la posizione e si difende. Il robot dispone di un solo insieme di Azioni per Round, condiviso tra autonomia e comando diretto: cambiare modalità non concede un secondo turno. Controllo Parallelo del Tecnico, Grado V, permette una volta per Round, nella propria iniziativa, di impartire un comando a una sola unità senza spendere l’AzP del Tecnico; restano i normali limiti di Azioni del robot. Danni manutenzione e alimentazione I danni residui dopo l’AR riducono i PV meccanici. I PI restano separati e seguono le regole di Integrità del §7.2.1: un colpo non riduce automaticamente i PI. A 0 PV l’Iron Mastiff è fuori servizio; a 0 PI è rotto. Non respira, non sanguina e non subisce veleni o malattie biologiche; richiede riparazioni tecniche. Le altre Prove di Salvezza si applicano soltanto quando l’effetto può interessare una macchina. Il NEC Rosso dedicato garantisce 8 ore di funzionamento e richiede 8 ore per una ricarica completa. Un NEC dedicato di ricambio costa 1.000; sostituirla richiede un minuto a robot spento. Non si applicano i kit di rinforzo destinati alle armature personali.",
       "paragrafo": "§7.14.5",
-      "versione_manuale": "Armamenti 0.58",
+      "versione_manuale": "Armamenti 0.74",
       "pi": 8,
       "qualita": "Non comune",
       "ps_int": 12,
@@ -1956,7 +1975,14 @@
           ]
         }
       ],
-      "proprieta": []
+      "proprieta": [],
+      "alimentazione": {
+        "nec": "nec:nec-rosso-10",
+        "descrizione": "Un NEC Rosso 10: una carica per impiego fino a un’ora; dieci ore massime. Si consuma una carica all’inizio dell’impiego; superata la durata coperta se ne consuma un’altra. Brevi pause, combattimenti e spostamenti entro lo stesso periodo sono compresi. Concluso l’impiego, il tempo inutilizzato non si conserva; si annotano soltanto le cariche rimaste. Il sistema spento non consuma energia. NEC Rosso 10: 150 g, ricambio carico 400 cr; ricarica 10 cr per carica, 100 cr da vuoto, dieci minuti per carica industriale o un’ora con trasformatore personale; sostituzione in 1 AzP a sistema spento. Prezzo completo invariato, primo accumulatore carico compreso.",
+        "usi": 10,
+        "unita_usi": "cariche (impieghi fino a un’ora)",
+        "paragrafo": "§7.20.5; Equipaggiamento §5.4.8"
+      }
     },
     {
       "id": "howler",
@@ -2404,9 +2430,9 @@
       "catalogo": "Cybertronic",
       "famiglia": "Moduli IAS",
       "nomi_alternativi": [],
-      "note_manuale": "È consentito un solo trasferimento per Round durante la propria Iniziativa. L’AzM viene spesa interamente e non può essere suddivisa. La destinazione deve essere direttamente visibile, libera e abbastanza ampia per il personaggio e la dotazione indossata. Non sono validi mappe, immagini o telecamere remote; non si trasportano passeggeri. Gli ostacoli possono essere superati soltanto se la destinazione soddisfa queste condizioni. Power Blink: con successo avviene il trasferimento; con fallimento il personaggio resta al punto di partenza e spende comunque AzM e cariche. Con Maldestro, inoltre, il generatore perde 1 PI. SIN 2 concede +2 VA alle Prove di Pilotare del dispositivo, compensando la penalità di Power Blink; non aumenta il Blink ordinario, che è automatico. I moduli sono equipaggiamenti speciali con PI propri; non aumentano l’AR o i PI dell’armatura. Tutti i moduli IAS e lo Smorzatore Silent hanno Qualità Rara, PS Integrità 14 e Reperibilità Molto rara. Il costo comprende una cella IAS carica. Il NEC Blu nel formato specialistico IAS contiene 20 cariche tecnologiche. Una cella di ricambio costa 1.000; il servizio specifico di ricarica costa 50 e richiede un’ora. Sostituire la cella richiede un minuto con il dispositivo spento. Ogni modulo consuma secondo la propria scheda. Le cariche tecnologiche non sono PM e non richiedono Sintonizzazione. A 0 PI il modulo perde la propria funzione.",
+      "note_manuale": "È consentito un solo trasferimento per Round durante la propria Iniziativa. L’AzM viene spesa interamente e non può essere suddivisa. La destinazione deve essere direttamente visibile, libera e abbastanza ampia per il personaggio e la dotazione indossata. Non sono validi mappe, immagini o telecamere remote; non si trasportano passeggeri. Gli ostacoli possono essere superati soltanto se la destinazione soddisfa queste condizioni. Power Blink: con successo avviene il trasferimento; con fallimento il personaggio resta al punto di partenza e spende comunque AzM e cariche. Con Maldestro, inoltre, il generatore perde 1 PI. SIN 2 concede +2 VA alle Prove di Pilotare del dispositivo, compensando la penalità di Power Blink; non aumenta il Blink ordinario, che è automatico. I moduli sono equipaggiamenti speciali con PI propri; non aumentano l’AR o i PI dell’armatura. Tutti i moduli IAS e lo Smorzatore Silent hanno Qualità Rara, PS Integrità 14 e Reperibilità Molto rara. I prezzi dei dispositivi completi comprendono il primo pacco da due NEC Blu 10 carichi. Ogni modulo usa un proprio pacco da due NEC Blu 10, consumati in successione: 20 cariche tecnologiche e un solo contatore. Il passaggio al secondo NEC è automatico e non richiede Azioni. Il pacco pesa 300 g; un ricambio carico costa 800 cr. Sostituire il pacco completo richiede 1 AzP con il dispositivo spento e l’alloggiamento accessibile. Ogni modulo consuma secondo la propria scheda. Le cariche tecnologiche non sono PM e non richiedono Sintonizzazione. A 0 PI il modulo perde la propria funzione.",
       "paragrafo": "§7.15.4",
-      "versione_manuale": "Armamenti 0.58",
+      "versione_manuale": "Armamenti 0.74",
       "pi": 6,
       "qualita": "Rara",
       "ps_int": 14,
@@ -2445,14 +2471,11 @@
       ],
       "proprieta": [],
       "alimentazione": {
-        "nec": null,
-        "descrizione": "Il NEC Blu nel formato specialistico IAS contiene 20 cariche tecnologiche. Una cella di ricambio carica costa 1.000 cr; il servizio di ricarica costa 10 cr per carica, 200 cr da vuota. Occorrono venti ore con trasformatore portatile o tre ore e venti minuti con stazione industriale. Raccordo ai formati standard: da completare.",
+        "nec": "nec:pacco-20-blu",
         "usi": 20,
         "unita_usi": "cariche (Blink 1, Power Blink 2)",
-        "paragrafo": "§7.15.4; E&L del 02/10/2026, decisione 20",
-        "da_definire": [
-          "raccordo ai formati standard (Armamenti 0.68: «resta da completare»)"
-        ]
+        "paragrafo": "§7.15.4",
+        "descrizione": "Pacco da due NEC Blu 10 in successione: 20 cariche, un solo contatore, 300 g; ricambio carico 800 cr (il Pacco Blu 20 cariche del catalogo). Ricarica 10 cr per carica, 200 cr da vuoto: venti ore con trasformatore personale o tre ore e venti minuti con stazione industriale. Sostituzione 1 AzP a dispositivo spento (Armamenti 0.74, §7.15.4)."
       },
       "effetti": [
         {
@@ -2474,9 +2497,9 @@
       "catalogo": "Cybertronic",
       "famiglia": "Moduli IAS",
       "nomi_alternativi": [],
-      "note_manuale": "Occupa lo spazio dello zaino. Attivazione, decollo, salita, discesa e atterraggio fanno parte dell’AzM di volo. Rimanere sospesi richiede l’AzM. Ogni Round di funzionamento consuma una carica, anche in sospensione: 20 Round complessivi, anche non consecutivi. Movimento base 6/12/18 Q per Passo/Corsa/Scatto; ogni Q verticale costa quanto un Q orizzontale. Pilotare sostituisce Atletica: automatico al Passo in condizioni ordinarie, −2 VA in Corsa, −4 VA in Scatto. SIN 1 del modulo aggiunge +1 alle Prove pertinenti di Pilotare. Con Shock Trooper, prima di altri modificatori, il movimento effettivo è 5/11/17 Q; con Silent è 6/12/18 Q grazie all’Assetto da incursione. Prove di volo, attacchi, movimento misto, decollo, atterraggio ed esaurimento del sostegno seguono il Propulsore Banshee (§7.13.4). Un fallimento non spegne automaticamente il modulo; rottura, disattivazione, incoscienza o fine dell’energia fanno terminare il sostegno secondo quelle regole. Il funzionamento antigravitazionale è silenzioso; Furtività richiede comunque condizioni concrete e una normale Prova. I moduli sono equipaggiamenti speciali con PI propri; non aumentano l’AR o i PI dell’armatura. Tutti i moduli IAS e lo Smorzatore Silent hanno Qualità Rara, PS Integrità 14 e Reperibilità Molto rara. Il costo comprende una cella IAS carica. Il NEC Blu nel formato specialistico IAS contiene 20 cariche tecnologiche. Una cella di ricambio costa 1.000; il servizio specifico di ricarica costa 50 e richiede un’ora. Sostituire la cella richiede un minuto con il dispositivo spento. Ogni modulo consuma secondo la propria scheda. Le cariche tecnologiche non sono PM e non richiedono Sintonizzazione. A 0 PI il modulo perde la propria funzione.",
+      "note_manuale": "Occupa lo spazio dello zaino. Attivazione, decollo, salita, discesa e atterraggio fanno parte dell’AzM di volo. Rimanere sospesi richiede l’AzM. Ogni Round di funzionamento consuma una carica, anche in sospensione: 20 Round complessivi, anche non consecutivi. Movimento base 6/12/18 Q per Passo/Corsa/Scatto; ogni Q verticale costa quanto un Q orizzontale. Pilotare sostituisce Atletica: automatico al Passo in condizioni ordinarie, −2 VA in Corsa, −4 VA in Scatto. SIN 1 del modulo aggiunge +1 alle Prove pertinenti di Pilotare. Con Shock Trooper, prima di altri modificatori, il movimento effettivo è 5/11/17 Q; con Silent è 6/12/18 Q grazie all’Assetto da incursione. Prove di volo, attacchi, movimento misto, decollo, atterraggio ed esaurimento del sostegno seguono il Propulsore Banshee (§7.13.4). Un fallimento non spegne automaticamente il modulo; rottura, disattivazione, incoscienza o fine dell’energia fanno terminare il sostegno secondo quelle regole. Il funzionamento antigravitazionale è silenzioso; Furtività richiede comunque condizioni concrete e una normale Prova. I moduli sono equipaggiamenti speciali con PI propri; non aumentano l’AR o i PI dell’armatura. Tutti i moduli IAS e lo Smorzatore Silent hanno Qualità Rara, PS Integrità 14 e Reperibilità Molto rara. I prezzi dei dispositivi completi comprendono il primo pacco da due NEC Blu 10 carichi. Ogni modulo usa un proprio pacco da due NEC Blu 10, consumati in successione: 20 cariche tecnologiche e un solo contatore. Il passaggio al secondo NEC è automatico e non richiede Azioni. Il pacco pesa 300 g; un ricambio carico costa 800 cr. Sostituire il pacco completo richiede 1 AzP con il dispositivo spento e l’alloggiamento accessibile. Ogni modulo consuma secondo la propria scheda. Le cariche tecnologiche non sono PM e non richiedono Sintonizzazione. A 0 PI il modulo perde la propria funzione.",
       "paragrafo": "§7.15.4",
-      "versione_manuale": "Armamenti 0.58",
+      "versione_manuale": "Armamenti 0.74",
       "pi": 6,
       "qualita": "Rara",
       "ps_int": 14,
@@ -2488,14 +2511,11 @@
       ],
       "proprieta": [],
       "alimentazione": {
-        "nec": null,
-        "descrizione": "Il NEC Blu nel formato specialistico IAS contiene 20 cariche tecnologiche. Una cella di ricambio carica costa 1.000 cr; il servizio di ricarica costa 10 cr per carica, 200 cr da vuota. Occorrono venti ore con trasformatore portatile o tre ore e venti minuti con stazione industriale. Raccordo ai formati standard: da completare.",
+        "nec": "nec:pacco-20-blu",
         "usi": 20,
         "unita_usi": "Round di volo",
-        "paragrafo": "§7.15.4; E&L del 02/10/2026, decisione 20",
-        "da_definire": [
-          "raccordo ai formati standard (Armamenti 0.68: «resta da completare»)"
-        ]
+        "paragrafo": "§7.15.4",
+        "descrizione": "Pacco da due NEC Blu 10 in successione: 20 cariche, un solo contatore, 300 g; ricambio carico 800 cr (il Pacco Blu 20 cariche del catalogo). Ricarica 10 cr per carica, 200 cr da vuoto: venti ore con trasformatore personale o tre ore e venti minuti con stazione industriale. Sostituzione 1 AzP a dispositivo spento (Armamenti 0.74, §7.15.4)."
       },
       "effetti": [
         {
@@ -2525,9 +2545,9 @@
       "catalogo": "Cybertronic",
       "famiglia": "Moduli IAS",
       "nomi_alternativi": [],
-      "note_manuale": "Il mimetismo ottico adattivo concede +2 VA alla Prova unica di Furtività quando esistono condizioni concrete per nascondersi o muoversi senza essere individuati. Non rende invisibili, non nasconde automaticamente armi o oggetti estranei al sistema e non impone una penalità automatica agli attacchi. Più sistemi mimetici ottici non sommano i bonus: si usa il maggiore. Attivare il modulo richiede 1 AzP. Consuma una carica per minuto continuativo, fino a 20 minuti per cella. Spento conserva l’aspetto cromato ma non il beneficio mimetico. Il SIN 2 pertinente aggiunge il proprio bonus una sola volta; il SIN dell’armatura e quello del modulo non si sommano fra loro. I moduli sono equipaggiamenti speciali con PI propri; non aumentano l’AR o i PI dell’armatura. Tutti i moduli IAS e lo Smorzatore Silent hanno Qualità Rara, PS Integrità 14 e Reperibilità Molto rara. Il costo comprende una cella IAS carica. Il NEC Blu nel formato specialistico IAS contiene 20 cariche tecnologiche. Una cella di ricambio costa 1.000; il servizio specifico di ricarica costa 50 e richiede un’ora. Sostituire la cella richiede un minuto con il dispositivo spento. Ogni modulo consuma secondo la propria scheda. Le cariche tecnologiche non sono PM e non richiedono Sintonizzazione. A 0 PI il modulo perde la propria funzione.",
+      "note_manuale": "Il mimetismo ottico adattivo concede +2 VA alla Prova unica di Furtività quando esistono condizioni concrete per nascondersi o muoversi senza essere individuati. Non rende invisibili, non nasconde automaticamente armi o oggetti estranei al sistema e non impone una penalità automatica agli attacchi. Più sistemi mimetici ottici non sommano i bonus: si usa il maggiore. Attivare il modulo richiede 1 AzP. Consuma una carica per minuto continuativo, fino a 20 minuti per cella. Spento conserva l’aspetto cromato ma non il beneficio mimetico. Il SIN 2 pertinente aggiunge il proprio bonus una sola volta; il SIN dell’armatura e quello del modulo non si sommano fra loro. I moduli sono equipaggiamenti speciali con PI propri; non aumentano l’AR o i PI dell’armatura. Tutti i moduli IAS e lo Smorzatore Silent hanno Qualità Rara, PS Integrità 14 e Reperibilità Molto rara. I prezzi dei dispositivi completi comprendono il primo pacco da due NEC Blu 10 carichi. Ogni modulo usa un proprio pacco da due NEC Blu 10, consumati in successione: 20 cariche tecnologiche e un solo contatore. Il passaggio al secondo NEC è automatico e non richiede Azioni. Il pacco pesa 300 g; un ricambio carico costa 800 cr. Sostituire il pacco completo richiede 1 AzP con il dispositivo spento e l’alloggiamento accessibile. Ogni modulo consuma secondo la propria scheda. Le cariche tecnologiche non sono PM e non richiedono Sintonizzazione. A 0 PI il modulo perde la propria funzione.",
       "paragrafo": "§7.15.4",
-      "versione_manuale": "Armamenti 0.58",
+      "versione_manuale": "Armamenti 0.74",
       "pi": 4,
       "qualita": "Rara",
       "ps_int": 14,
@@ -2547,14 +2567,11 @@
         }
       ],
       "alimentazione": {
-        "nec": null,
-        "descrizione": "Il NEC Blu nel formato specialistico IAS contiene 20 cariche tecnologiche. Una cella di ricambio carica costa 1.000 cr; il servizio di ricarica costa 10 cr per carica, 200 cr da vuota. Occorrono venti ore con trasformatore portatile o tre ore e venti minuti con stazione industriale. Raccordo ai formati standard: da completare.",
+        "nec": "nec:pacco-20-blu",
         "usi": 20,
         "unita_usi": "minuti",
-        "paragrafo": "§7.15.4; E&L del 02/10/2026, decisione 20",
-        "da_definire": [
-          "raccordo ai formati standard (Armamenti 0.68: «resta da completare»)"
-        ]
+        "paragrafo": "§7.15.4",
+        "descrizione": "Pacco da due NEC Blu 10 in successione: 20 cariche, un solo contatore, 300 g; ricambio carico 800 cr (il Pacco Blu 20 cariche del catalogo). Ricarica 10 cr per carica, 200 cr da vuoto: venti ore con trasformatore personale o tre ore e venti minuti con stazione industriale. Sostituzione 1 AzP a dispositivo spento (Armamenti 0.74, §7.15.4)."
       }
     },
     {
@@ -2564,9 +2581,9 @@
       "catalogo": "Cybertronic",
       "famiglia": "Moduli IAS",
       "nomi_alternativi": [],
-      "note_manuale": "Attivazione: 1 AzP. Il campo mobile ha raggio 2 Q, centrato sull’utilizzatore, ed è bloccato da pareti e pavimenti solidi. Consuma una carica per Round, per 20 Round complessivi anche non consecutivi. Il campo impone −2 VA alla Prova di Potere per lanciare un Incantesimo quando il lanciatore è nel campo oppure il bersaglio, il punto scelto o parte dell’area dell’Incantesimo ricade nel campo. La penalità coinvolge utilizzatore, alleati e avversari; si applica una sola volta alla stessa Prova anche se più condizioni ricorrono. Più disturbatori non sommano l’interferenza. Il modulo non dissolve effetti già attivi e non interrompe automaticamente la Concentrazione. L’Interfaccia di comando non aumenta la penalità e non introduce una Prova aggiuntiva. I moduli sono equipaggiamenti speciali con PI propri; non aumentano l’AR o i PI dell’armatura. Tutti i moduli IAS e lo Smorzatore Silent hanno Qualità Rara, PS Integrità 14 e Reperibilità Molto rara. Il costo comprende una cella IAS carica. Il NEC Blu nel formato specialistico IAS contiene 20 cariche tecnologiche. Una cella di ricambio costa 1.000; il servizio specifico di ricarica costa 50 e richiede un’ora. Sostituire la cella richiede un minuto con il dispositivo spento. Ogni modulo consuma secondo la propria scheda. Le cariche tecnologiche non sono PM e non richiedono Sintonizzazione. A 0 PI il modulo perde la propria funzione.",
+      "note_manuale": "Attivazione: 1 AzP. Il campo mobile ha raggio 2 Q, centrato sull’utilizzatore, ed è bloccato da pareti e pavimenti solidi. Consuma una carica per Round, per 20 Round complessivi anche non consecutivi. Il campo impone −2 VA alla Prova di Potere per lanciare un Incantesimo quando il lanciatore è nel campo oppure il bersaglio, il punto scelto o parte dell’area dell’Incantesimo ricade nel campo. La penalità coinvolge utilizzatore, alleati e avversari; si applica una sola volta alla stessa Prova anche se più condizioni ricorrono. Più disturbatori non sommano l’interferenza. Il modulo non dissolve effetti già attivi e non interrompe automaticamente la Concentrazione. L’Interfaccia di comando non aumenta la penalità e non introduce una Prova aggiuntiva. I moduli sono equipaggiamenti speciali con PI propri; non aumentano l’AR o i PI dell’armatura. Tutti i moduli IAS e lo Smorzatore Silent hanno Qualità Rara, PS Integrità 14 e Reperibilità Molto rara. I prezzi dei dispositivi completi comprendono il primo pacco da due NEC Blu 10 carichi. Ogni modulo usa un proprio pacco da due NEC Blu 10, consumati in successione: 20 cariche tecnologiche e un solo contatore. Il passaggio al secondo NEC è automatico e non richiede Azioni. Il pacco pesa 300 g; un ricambio carico costa 800 cr. Sostituire il pacco completo richiede 1 AzP con il dispositivo spento e l’alloggiamento accessibile. Ogni modulo consuma secondo la propria scheda. Le cariche tecnologiche non sono PM e non richiedono Sintonizzazione. A 0 PI il modulo perde la propria funzione.",
       "paragrafo": "§7.15.4",
-      "versione_manuale": "Armamenti 0.58",
+      "versione_manuale": "Armamenti 0.74",
       "pi": 6,
       "qualita": "Rara",
       "ps_int": 14,
@@ -2577,14 +2594,11 @@
       ],
       "proprieta": [],
       "alimentazione": {
-        "nec": null,
-        "descrizione": "Il NEC Blu nel formato specialistico IAS contiene 20 cariche tecnologiche. Una cella di ricambio carica costa 1.000 cr; il servizio di ricarica costa 10 cr per carica, 200 cr da vuota. Occorrono venti ore con trasformatore portatile o tre ore e venti minuti con stazione industriale. Raccordo ai formati standard: da completare.",
+        "nec": "nec:pacco-20-blu",
         "usi": 20,
         "unita_usi": "Round",
-        "paragrafo": "§7.15.4; E&L del 02/10/2026, decisione 20",
-        "da_definire": [
-          "raccordo ai formati standard (Armamenti 0.68: «resta da completare»)"
-        ]
+        "paragrafo": "§7.15.4",
+        "descrizione": "Pacco da due NEC Blu 10 in successione: 20 cariche, un solo contatore, 300 g; ricambio carico 800 cr (il Pacco Blu 20 cariche del catalogo). Ricarica 10 cr per carica, 200 cr da vuoto: venti ore con trasformatore personale o tre ore e venti minuti con stazione industriale. Sostituzione 1 AzP a dispositivo spento (Armamenti 0.74, §7.15.4)."
       }
     },
     {
@@ -2594,9 +2608,9 @@
       "catalogo": "Cybertronic",
       "famiglia": "Moduli IAS",
       "nomi_alternativi": [],
-      "note_manuale": "Attivazione: 1 AzP. Consuma una carica per minuto, fino a 20 minuti per cella. Soppressione acustica 2 attenua passi, articolazioni ed equipaggiamento fissato: impone −2 VA alla Prova di Percezione dell’osservatore quando l’individuazione o localizzazione dipende da quei rumori. Se l’osservatore dispone di una visuale utile, questa penalità non si applica. Furtività e Percezione restano Prove uniche. Spari, esplosioni, parole e urti contro l’ambiente non vengono soppressi. Più sistemi di soppressione non cumulano le penalità. Il SIN 2 della Silent concede il proprio +2 a Furtività; l’Interfaccia di comando dello smorzatore non aggiunge un ulteriore bonus SIN. I moduli sono equipaggiamenti speciali con PI propri; non aumentano l’AR o i PI dell’armatura. Tutti i moduli IAS e lo Smorzatore Silent hanno Qualità Rara, PS Integrità 14 e Reperibilità Molto rara. Il costo comprende una cella IAS carica. Il NEC Blu nel formato specialistico IAS contiene 20 cariche tecnologiche. Una cella di ricambio costa 1.000; il servizio specifico di ricarica costa 50 e richiede un’ora. Sostituire la cella richiede un minuto con il dispositivo spento. Ogni modulo consuma secondo la propria scheda. Le cariche tecnologiche non sono PM e non richiedono Sintonizzazione. A 0 PI il modulo perde la propria funzione.",
+      "note_manuale": "Attivazione: 1 AzP. Consuma una carica per minuto, fino a 20 minuti per cella. Soppressione acustica 2 attenua passi, articolazioni ed equipaggiamento fissato: impone −2 VA alla Prova di Percezione dell’osservatore quando l’individuazione o localizzazione dipende da quei rumori. Se l’osservatore dispone di una visuale utile, questa penalità non si applica. Furtività e Percezione restano Prove uniche. Spari, esplosioni, parole e urti contro l’ambiente non vengono soppressi. Più sistemi di soppressione non cumulano le penalità. Il SIN 2 della Silent concede il proprio +2 a Furtività; l’Interfaccia di comando dello smorzatore non aggiunge un ulteriore bonus SIN. I moduli sono equipaggiamenti speciali con PI propri; non aumentano l’AR o i PI dell’armatura. Tutti i moduli IAS e lo Smorzatore Silent hanno Qualità Rara, PS Integrità 14 e Reperibilità Molto rara. I prezzi dei dispositivi completi comprendono il primo pacco da due NEC Blu 10 carichi. Ogni modulo usa un proprio pacco da due NEC Blu 10, consumati in successione: 20 cariche tecnologiche e un solo contatore. Il passaggio al secondo NEC è automatico e non richiede Azioni. Il pacco pesa 300 g; un ricambio carico costa 800 cr. Sostituire il pacco completo richiede 1 AzP con il dispositivo spento e l’alloggiamento accessibile. Ogni modulo consuma secondo la propria scheda. Le cariche tecnologiche non sono PM e non richiedono Sintonizzazione. A 0 PI il modulo perde la propria funzione.",
       "paragrafo": "§7.15.4",
-      "versione_manuale": "Armamenti 0.58",
+      "versione_manuale": "Armamenti 0.74",
       "pi": 4,
       "qualita": "Rara",
       "ps_int": 14,
@@ -2607,14 +2621,11 @@
       ],
       "proprieta": [],
       "alimentazione": {
-        "nec": null,
-        "descrizione": "Il NEC Blu nel formato specialistico IAS contiene 20 cariche tecnologiche. Una cella di ricambio carica costa 1.000 cr; il servizio di ricarica costa 10 cr per carica, 200 cr da vuota. Occorrono venti ore con trasformatore portatile o tre ore e venti minuti con stazione industriale. Raccordo ai formati standard: da completare.",
+        "nec": "nec:pacco-20-blu",
         "usi": 20,
         "unita_usi": "minuti",
-        "paragrafo": "§7.15.4; E&L del 02/10/2026, decisione 20",
-        "da_definire": [
-          "raccordo ai formati standard (Armamenti 0.68: «resta da completare»)"
-        ]
+        "paragrafo": "§7.15.4",
+        "descrizione": "Pacco da due NEC Blu 10 in successione: 20 cariche, un solo contatore, 300 g; ricambio carico 800 cr (il Pacco Blu 20 cariche del catalogo). Ricarica 10 cr per carica, 200 cr da vuoto: venti ore con trasformatore personale o tre ore e venti minuti con stazione industriale. Sostituzione 1 AzP a dispositivo spento (Armamenti 0.74, §7.15.4)."
       }
     },
     {

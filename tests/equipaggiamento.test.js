@@ -819,7 +819,7 @@ test('lotto 10: munizioni, celle, pacchi NEC dei lanciafiamme e compatibilità b
   assert.ok(cella.compatibile_con.includes('armi:tirapugni-concussivo'));
   // §7.20.6 (0.58): niente combustibile liquido; pacchi NEC Blu carichi, 50 Lx per getto
   // Armamenti 0.68 §7.20.6 (A.190): il Gehemmapuker ha un pacco Rosso da 50 cariche (non più il Modulo Blu)
-  assert.deepEqual([r('pacco-nec-gehemmapuker').costo, r('pacco-nec-gehemmapuker').cella], [2100, { capacita: 50, unita: 'getti', ricarica_costo: 500 }]);
+  assert.deepEqual([r('pacco-nec-gehemmapuker').costo, r('pacco-nec-gehemmapuker').cella], [2000, { capacita: 50, unita: 'getti', ricarica_costo: 500 }]);
   assert.ok(!tutti.some((o) => /combustibile|vuoto-.*(nemesis-214|eruptor|purifier|gehemmapuker)/i.test(o.id)));
   // granate standard, Fumogena ed Elettroshock sono già nel catalogo: niente doppioni
   assert.ok(!tutti.some((o) => /fumogena|elettroshock|frammentazione standard/i.test(o.nome)));

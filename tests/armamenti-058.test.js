@@ -38,7 +38,7 @@ test('§7.20.6 (0.68): i lanciafiamme usano pacchi NEC Rossi (una carica a getto
   const pacchi = cat.oggetti.filter((o) => o.file === 'munizioni' && o.id.startsWith('pacco-nec-'));
   assert.equal(pacchi.length, 5); // con il pacco da 50 cariche del Gehemmapuker (A.190: non è più il Modulo Blu)
   assert.deepEqual([r('munizioni:pacco-nec-gehemmapuker').cella.capacita, r('munizioni:pacco-nec-gehemmapuker').compatibile_con], [50, ['armi_distanza_corporative:gehemmapuker']]);
-  const prezzi = { 'pacco-nec-nemesis-214': [5, 200, 50], 'pacco-nec-lanciafiamme-commerciale': [10, 400, 100], 'pacco-nec-eruptor': [10, 400, 100], 'pacco-nec-purifier': [15, 600, 150], 'pacco-nec-gehemmapuker': [50, 2100, 500] };
+  const prezzi = { 'pacco-nec-nemesis-214': [5, 200, 50], 'pacco-nec-lanciafiamme-commerciale': [10, 400, 100], 'pacco-nec-eruptor': [10, 400, 100], 'pacco-nec-purifier': [15, 600, 150], 'pacco-nec-gehemmapuker': [50, 2000, 500] }; // Armamenti 0.74: 2.000 cr
   for (const p of pacchi) assert.deepEqual([p.cella.capacita, p.costo, p.cella.ricarica_costo], prezzi[p.id], p.id);
   for (const p of pacchi) assert.equal(p.cella.riserva_lx, undefined, p.id);
   assert.ok(!cat.oggetti.some((o) => o.file === 'munizioni' && /combustibile/i.test(o.id))); // la cartuccia da campeggio (esplorazione) resta

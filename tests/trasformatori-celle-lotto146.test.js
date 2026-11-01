@@ -36,7 +36,7 @@ test('A: celle d’arma e pacchi in cariche con peso, prezzi, REP e Integrità d
   assert.equal(r('armi_distanza_corporative:hellblazer').costo, 9000);
   assert.equal(r('armi_distanza:fucile-al-plasma').costo, 12000);
   // lanciafiamme: pacchi NEC Rossi, un getto una carica
-  for (const [id, [getti, costo, ricarica]] of Object.entries({ 'pacco-nec-nemesis-214': [5, 200, 50], 'pacco-nec-lanciafiamme-commerciale': [10, 400, 100], 'pacco-nec-eruptor': [10, 400, 100], 'pacco-nec-purifier': [15, 600, 150], 'pacco-nec-gehemmapuker': [50, 2100, 500] })) {
+  for (const [id, [getti, costo, ricarica]] of Object.entries({ 'pacco-nec-nemesis-214': [5, 200, 50], 'pacco-nec-lanciafiamme-commerciale': [10, 400, 100], 'pacco-nec-eruptor': [10, 400, 100], 'pacco-nec-purifier': [15, 600, 150], 'pacco-nec-gehemmapuker': [50, 2000, 500] })) {
     const p = r(`munizioni:${id}`);
     assert.deepEqual([p.cella.capacita, p.cella.unita, p.costo, p.cella.ricarica_costo], [getti, 'getti', costo, ricarica], id);
     assert.deepEqual(p.accumulatore.colori, ['Rosso'], id);
@@ -44,21 +44,20 @@ test('A: celle d’arma e pacchi in cariche con peso, prezzi, REP e Integrità d
   }
 });
 
-test('A: i valori che il manuale non dà restano «da definire» e sono elencati (peso e formato dei pacchi da 15 e 50 getti, raccordo degli IAS)', () => {
-  for (const id of ['pacco-nec-purifier', 'pacco-nec-gehemmapuker']) {
-    const p = r(`munizioni:${id}`);
-    assert.equal(p.peso, undefined, id);
-    assert.equal(p.da_definire.length, 2, id);
-    assert.match(p.da_definire.join(' '), /raccordo dei pacchi da 15 e 50 getti/);
-  }
+test('A (Armamenti 0.74, lotto 153): i pacchi da 15 e 50 getti e gli IAS hanno ora peso e formato del manuale: niente più «da definire»', () => {
+  // Purifier NEC 10 + NEC 5, 250 g; Gehemmapuker cinque NEC 10, 750 g (§7.20.6): nessun formato nuovo da 15 o 50
+  assert.deepEqual([r('munizioni:pacco-nec-purifier').peso, r('munizioni:pacco-nec-purifier').accumulatore.formato], [0.25, 'NEC 10 + NEC 5']);
+  assert.deepEqual([r('munizioni:pacco-nec-gehemmapuker').peso, r('munizioni:pacco-nec-gehemmapuker').accumulatore.formato], [0.75, '5 NEC 10']);
+  for (const id of ['pacco-nec-purifier', 'pacco-nec-gehemmapuker']) assert.equal(r(`munizioni:${id}`).da_definire, undefined, id);
   // quelli del manuale hanno il peso del NEC corrispondente
   assert.deepEqual(['pacco-nec-nemesis-214', 'pacco-nec-lanciafiamme-commerciale', 'pacco-nec-eruptor'].map((id) => r(`munizioni:${id}`).peso), [0.1, 0.15, 0.15]);
   for (const id of ['ias3100-generatore-blink', 'ias3200-imbracatura-antigravita', 'ias3300-mirrorshard', 'ias3400-disturbatore-metafisico', 'smorzatore-acustico-silent']) {
     const a = r(`corredi_dispositivi:${id}`).alimentazione;
     assert.equal(a.usi, 20, id);
-    assert.match(a.descrizione, /10 cr per carica, 200 cr da vuota/);
-    assert.match(a.descrizione, /venti ore con trasformatore portatile o tre ore e venti minuti con stazione industriale/);
-    assert.equal(a.da_definire.length, 1, id);
+    assert.match(a.descrizione, /10 cr per carica, 200 cr da vuoto/);
+    assert.match(a.descrizione, /venti ore con trasformatore personale o tre ore e venti minuti con stazione industriale/);
+    assert.equal(a.da_definire, undefined, id);
+    assert.equal(a.nec, 'nec:pacco-20-blu', id);
   }
 });
 

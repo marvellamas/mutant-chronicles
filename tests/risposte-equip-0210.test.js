@@ -22,23 +22,40 @@ test('A.62 Ryūjin: natura Naturale, la proprietà Plasma all’attivazione', ()
   nessunTodo('armi_corporative:katana-ryujin', 'A.62');
 });
 
-test('A.63 esoscheletri: NEC Rosso di formato dedicato in ore, al tavolo come riserva in ore', () => {
-  const ore = { 'armature_corporative:juggernaut-xo-102-steel-strider': 8, 'armature_corporative:vulkan': 8, 'corredi_dispositivi:ape-capitol': 6, 'armature_corporative:mk-iv-felis-pattern-dei-golden-lions': 8, 'armature_corporative:powersuit': 8, 'armature_corporative:shoa-ace-custom': 6, 'armature_corporative:demonhunter': 6 };
-  for (const [rif, h] of Object.entries(ore)) {
-    assert.deepEqual([r(rif).alimentazione.nec, r(rif).alimentazione.autonomia_ore], [null, h], rif);
-    assert.match(r(rif).alimentazione.descrizione, /^NEC Rosso di formato dedicato/);
+test('A.63 esoscheletri, aggiornata dal lotto 153 (Armamenti 0.74 §7.20.5, Equipaggiamento 0.30 §5.4.8): NEC Rosso 10 o CEC Rossa in cariche, 10 o 5 ore', () => {
+  const cariche = {
+    'armature_corporative:juggernaut-xo-102-steel-strider': ['nec:cec-rosso', 'un’ora'], 'armature_corporative:vulkan': ['nec:cec-rosso', 'un’ora'],
+    'corredi_dispositivi:ape-capitol': ['nec:cec-rosso', 'mezz’ora'], 'unita_robotiche:cuirassier-attila': ['nec:cec-rosso', 'un’ora'],
+    'armature_corporative:mk-iv-felis-pattern-dei-golden-lions': ['nec:nec-rosso-10', 'un’ora'], 'armature_corporative:powersuit': ['nec:nec-rosso-10', 'un’ora'],
+    'corredi_dispositivi:iron-mastiff': ['nec:nec-rosso-10', 'un’ora'],
+    'armature_corporative:shoa-ace-custom': ['nec:nec-rosso-10', 'mezz’ora'], 'armature_corporative:demonhunter': ['nec:nec-rosso-10', 'mezz’ora'],
+  };
+  for (const [rif, [nec, durata]] of Object.entries(cariche)) {
+    const a = r(rif).alimentazione;
+    assert.deepEqual([a.nec, a.usi, a.autonomia_ore], [nec, 10, undefined], rif);
+    assert.ok(a.unita_usi.includes(durata), rif);
+    assert.match(a.descrizione, durata === 'un’ora' ? /dieci ore massime/ : /cinque ore massime/, rif);
     nessunTodo(rif, 'A.63');
   }
-  const [x] = riserveNec([voce('v', 'armature_corporative:vulkan', 'indossata')], dati);
-  assert.deepEqual([x.unita, x.massimo], ['ore', 8]);
+  // le ore salvate prima (8 o 6) si convertono con la frazione (A.193): metà delle 8 ore → 5 cariche su 10
+  const [v] = riserveNec([voce('v', 'armature_corporative:vulkan', 'indossata')], dati);
+  assert.deepEqual([v.unita, v.massimo, v.chiave, v.precedenti], ['cariche (impieghi fino a un’ora)', 10, 'v#c', { v: 8 }]);
 });
 
-test('A.64 moduli IAS (0.68): 20 cariche, ricambio 1.000 cr, 10 cr per carica; niente Lx; raccordo ai formati da completare', () => {
+test('A.63 di prima (fino al lotto 152): NEC Rosso di formato dedicato in ore — ora sostituito, nessuna voce lo usa più', () => {
+  const ore = { 'armature_corporative:juggernaut-xo-102-steel-strider': 8, 'armature_corporative:vulkan': 8, 'corredi_dispositivi:ape-capitol': 6, 'armature_corporative:mk-iv-felis-pattern-dei-golden-lions': 8, 'armature_corporative:powersuit': 8, 'armature_corporative:shoa-ace-custom': 6, 'armature_corporative:demonhunter': 6 };
+  for (const [rif, h] of Object.entries(ore)) {
+    assert.notEqual(r(rif).alimentazione.autonomia_ore, h, rif);
+    assert.doesNotMatch(r(rif).alimentazione.descrizione, /formato dedicato/, rif);
+  }
+});
+
+test('A.64 moduli IAS (Armamenti 0.74 §7.15.4, lotto 153): pacco da due NEC Blu 10, 20 cariche, 300 g, ricambio 800 cr, 10 cr per carica', () => {
   for (const id of ['ias3100-generatore-blink', 'ias3200-imbracatura-antigravita', 'ias3300-mirrorshard', 'ias3400-disturbatore-metafisico', 'smorzatore-acustico-silent']) {
     const a = r(`corredi_dispositivi:${id}`).alimentazione;
-    assert.deepEqual([a.usi, a.lx_per_uso, a.da_definire?.length], [20, undefined, 1], id);
-    assert.match(a.descrizione, /20 cariche tecnologiche/);
-    assert.match(a.descrizione, /10 cr per carica, 200 cr da vuota/);
+    assert.deepEqual([a.usi, a.lx_per_uso, a.da_definire, a.nec], [20, undefined, undefined, 'nec:pacco-20-blu'], id);
+    assert.match(a.descrizione, /20 cariche, un solo contatore, 300 g; ricambio carico 800 cr/);
+    assert.match(a.descrizione, /10 cr per carica, 200 cr da vuoto/);
     nessunTodo(`corredi_dispositivi:${id}`, 'A.64');
   }
   assert.match(r('corredi_dispositivi:ias3100-generatore-blink').alimentazione.unita_usi, /Power Blink 2/);

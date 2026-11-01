@@ -1504,8 +1504,8 @@
       "nomi_alternativi": [],
       "note_manuale": "Variante tecnologica del Punisher dell’Alleanza, dotata di un generatore energetico portatile. Lo scudo non possiede proprietà magiche, non usa PM e non richiede Sintonizzazione. Nessuna penalità propria al MOV. Barriera personale: 1 AzP, senza Prova, 1 carica, 15 ScE, frontale e mobile, durata massima 3 Round. Cupola protettiva: 1 AzP, senza Prova, 3 cariche contemporaneamente, 30 ScE condivisi, semisfera a 360° di raggio 1 Q, portatore fermo, durata massima 3 Round (Armamenti 0.68, §7.4.1). Gli ScE non si rigenerano durante l’utilizzo e non si sommano fra attivazioni. Le cariche sono consumate all’attivazione: spegnimento anticipato, ScE avanzati o interruzione non le restituiscono. Il generatore contiene un accumulatore NEC Blu da tre cariche complessive. Wächter completo: 12.000 cr, Reperibilità Molto rara. Conversione di un Punisher compatibile già posseduto: 6.000 cr, compresi montaggio in officina e primo NEC Blu da tre cariche pieno.",
       "paragrafo": "§7.4.1",
-      "versione_manuale": "Armamenti 0.68",
-      "taglia": "Medio",
+      "versione_manuale": "Armamenti 0.74",
+      "taglia": "Medio, detto anche Grande",
       "mani": 1,
       "ar": {
         "totale": 2,
