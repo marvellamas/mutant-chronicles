@@ -2586,6 +2586,38 @@ Rimandi di catalogo: Bordone Templare, Vindicator, Deliverer, Castigator, Demont
 
 Salvataggi esistenti: applicare una sola volta la conservazione della frazione residua già approvata in A.193, con copia dei dati precedenti e registrazione della conversione. Guanti: CM nuove \= PM precedenti / massimo precedente × 6; riserva CyberArma: stesso criterio × 5\. Non riempire automaticamente, non arrotondare per eccesso e non aggiungere una riserva dove non era installata. Le frazioni si conservano senza attribuire un utilizzo non pagabile. I profili storici restano consultabili; i riferimenti attivi sopra riportati superano le vecchie diciture.
 
+#### A.233 — Capitolo e scena: risposta approvata da Davide (02/11/2026)
+
+Il capitolo è distinto dall’Atto dei PX: un Atto può comprendere più capitoli. Il Direttore stabilisce quando iniziano una nuova scena o un nuovo capitolo, tramite comandi nella propria plancia che rinnovano sui tablet soltanto gli utilizzi pertinenti.
+
+Gli usi per sessione si rinnovano all’inizio della partita; quelli per giorno o settimana seguono il calendario della campagna. Questi comandi non ripristinano PM, munizioni o altre risorse.
+
+#### A.228 — Frazioni delle riserve: risposta approvata da Davide (02/11/2026)
+
+La frazione esatta deve restare nella riserva effettiva anche per i personaggi, oltre che nel registro della conversione. Quindi 7,75 cariche rimangono 7,75: si possono mostrare sette cariche intere e il residuo separatamente.
+
+La frazione non diventa gratuitamente una carica intera. Ogni utilizzo richiede il costo completo previsto; il residuo resta disponibile per i successivi calcoli e per la ricarica.
+
+#### A.239 — Munizioni della Neverlost: risposta approvata da Davide (02/11/2026)
+
+La dotazione standard comprende 600 proiettili per ciascun mitragliatore e sei missili. Per la Neverlost già presente in campagna, il Direttore conferma le quantità effettivamente rimaste.
+
+Gli aggiornamenti del profilo conservano le munizioni registrate. Se il dato manca, si segnala come da verificare dal Direttore.
+
+#### Anello con Rigenerazione 9 — configurazione approvata da Davide (02/11/2026)
+
+La configurazione riutilizzabile ha una riserva Verde dedicata da 5 Cariche Mistiche e consuma 5 CM per ogni Rigenerazione 9, consentendo un utilizzo a riserva piena. La ricarica completa costa 30 PM personali con conversione 3:1, 20 PM con 2:1 oppure 10 PM con 1:1. Restano Grado III, SnT 3 e proprietà Esclusiva. Il consumo avviene al completamento delle tre ore di attivazione continua: un’interruzione precedente impedisce l’effetto senza consumare cariche. Seguono i cinque giorni previsti per la rigenerazione. I 9 PM del rituale eseguito direttamente restano invariati. Questa precisazione completa l’esempio del §25.4 del Manuale della Magia; non assegna automaticamente un anello ai personaggi.
+
+#### A.226 — Scout della campagna: risposta approvata da Davide (02/11/2026)
+
+Il nuovo standard vale come riferimento anche per lo Scout dei PG: prezzo di catalogo 126.510 crediti per la configurazione standard; riparazioni per PI: Corpo 300, Propulsione 100, Motore 300 crediti. Restano registrati munizioni, scorte e corredo già ottenuti: gli eventuali 400 colpi aggiuntivi rispetto allo standard non vengono eliminati. Le dotazioni extra si valutano separatamente. Si conservano danni, consumi e spese storiche.
+
+Precisazione di Davide: FIAT LUX è il nome personalizzato dello Scout dei PG. Le denominazioni «FIAT LUX» e «Scout dei PG» indicano la stessa istanza di veicolo, con un unico inventario, le stesse riserve, munizioni, Integrità e storico. Il nome personalizzato resta FIAT LUX; il modello di riferimento resta Scout MK4. Applicare a questa istanza gli aggiornamenti approvati senza creare un altro veicolo o duplicarne le dotazioni.
+
+#### A.227 — Ricambi precedenti dello Scout: risposta approvata da Davide (02/11/2026)
+
+Il Banco Rosso destinato alla trazione dello Scout diventa un MEC Rosso di ricambio; il Modulo Verde diventa una CEC Verde di ricambio. Si conserva la frazione residua di ciascun accumulatore, applicando la conversione una sola volta e mantenendo i dati originali nello storico. Se la frazione non è ricostruibile, il Direttore deve verificarla prima dell’utilizzo. La dicitura «nessuna scorta aggiuntiva» riguarda la dotazione standard dei nuovi veicoli e non cancella i ricambi già posseduti dallo Scout dei PG, chiamato FIAT LUX.
+
 > > ## **8\. Prove da fare**
 
 Le prove in sospeso. Quelle che puoi fare tu dal PC del Direttore, nessuna lunga più di qualche minuto. Per tutte: prima **Mutant.bat → 2 «Aggiorna»**, poi **1 «Avvia»**.

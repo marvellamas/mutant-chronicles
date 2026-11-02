@@ -1,7 +1,7 @@
 
 SIMPLY RPG
 Energia per l’app
-Riepilogo operativo delle regole approvate · versione 1.0 · 31 ottobre 2026
+Riepilogo operativo delle regole approvate · versione 1.0 · 2 novembre 2026
 L’app deve gestire cariche intere e riserve separate per colore. L’elettronica personale ordinaria non richiede un contatore. Questo riepilogo accompagna il Registro NEC 2.11 e i profili dei manuali; non attesta che l’app sia già aggiornata.
 Accumulatori e ricambi
 Formato
@@ -107,7 +107,7 @@ Apparecchio
 	Le CEC sorgenti sono separate. Il multicromatico ha tre tamponi distinti e mantiene la velocità complessiva dell’apparecchio. Costruzione: Tecnico o Tecnomante con progetto, strumenti e componenti; uso ordinario senza Prove ripetute.
 Elettronica ordinaria e integrità
 Torce, comunicatori, mirini, visori, elmetti, sensori e diagnostica ordinaria non richiedono conteggi. I rifornimenti comprendono la ricarica. In emergenza il Direttore comunica prima un’autonomia semplice, senza ricostruire consumi passati. Verde compatto diventa NEC Verde 1; Verde standard diventa NEC Verde 3.
-NEC e pacco personale: Comune, PS 10, 2 PI; CEC: Comune, PS 10, 6 PI; MEC: Non comune, PS 12, 12 PI; BEC: Rara, PS 14, 20 PI. Il pacco ha un solo valore di Integrità. A 0 PI è Rotto; non esplode automaticamente. Le riserve mistiche in PM restano separate, senza conversione automatica UE–PM.
+NEC e pacco personale: Comune, PS 10, 2 PI; CEC: Comune, PS 10, 6 PI; MEC: Non comune, PS 12, 12 PI; BEC: Rara, PS 14, 20 PI. Il pacco ha un solo valore di Integrità. A 0 PI è Rotto; non esplode automaticamente. Le Batterie Mistiche in PM e le riserve dedicate in CM restano separate, senza conversione automatica UE–PM. La ricarica delle CM segue CM mancanti × 2 × conversione; non modifica ricariche, cariche o tariffe NEC/CEC/MEC/BEC. [aggiunto il 02/11 16:23] Le riserve mistiche in PM restano separate, senza conversione automatica UE–PM.
 
 Consumi da applicare ai profili
 Profilo
