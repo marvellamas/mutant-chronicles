@@ -125,8 +125,9 @@ test('Poteri: il modulo per aggiungere c’è, chiuso; origine proposta «Aggiun
   assert.ok(!s.open, 'chiuso: non è una sezione in più da guardare');
   assert.ok(s.tutti().some((n) => n.tagName === 'INPUT' && n.getAttribute('type') === 'search'), 'campo di ricerca');
   const scelta = s.tutti().filter((n) => n.tagName === 'BUTTON' && /scelta-btn/.test(n.className));
-  // origine (da dove viene) e tipo (A.176: appreso o solo annotato, nessuno dei due preselezionato)
-  assert.deepEqual(scelta.map((b) => b.textContent), ['Aggiunto a mano', 'Concesso dal Direttore', 'Appreso', 'Solo annotato']);
+  // origine (da dove viene) e tipo (A.176: appreso o solo annotato, nessuno dei due preselezionato); A.211: dal giocatore
+  // «appreso» è una richiesta che conferma il Direttore
+  assert.deepEqual(scelta.map((b) => b.textContent), ['Aggiunto a mano', 'Concesso dal Direttore', 'Appreso (lo conferma il Direttore)', 'Solo annotato']);
   assert.match(scelta[0].className, /scelta(?!-)/);
   assert.ok(scelta.slice(2).every((b) => !/scelta(?!-)/.test(b.className)), 'il tipo non ha un valore di partenza: l’app chiede');
   assert.equal(c.ui.incantesimoAMano.origine, 'a_mano');
@@ -135,6 +136,8 @@ test('Poteri: il modulo per aggiungere c’è, chiuso; origine proposta «Aggiun
   cm.ui = {};
   resa(cm);
   assert.equal(cm.ui.incantesimoAMano.origine, 'direttore');
+  const sm = sezioneDi(resa(cm)).tutti().filter((n) => n.tagName === 'BUTTON' && /scelta-btn/.test(n.className));
+  assert.deepEqual(sm.slice(2).map((b) => b.textContent), ['Appreso', 'Solo annotato'], 'il Direttore segna «appreso» direttamente');
 });
 
 const scrivi = (nodo, testo) => (nodo.ascolti.input ?? []).forEach((f) => f({ target: { value: testo } }));
@@ -173,9 +176,10 @@ test('Poteri: cerca → tocca l’incantesimo → vedi quale hai scelto → conf
   assert.match(lista[0].quando, /^[0-9]{4}-[0-9]{2}-[0-9]{2}$/);
   assert.match(riga, /Concesso dal Direttore il .* \(prova\)\.$/);
   assert.ok(riga.startsWith(`Incantesimo ${alto.nome}: `));
-  assert.equal(c.ui.incantesimoAMano.esito, `Aggiunto come appreso: ${alto.nome}`, 'dopo la conferma l’app dice quale ha aggiunto');
-  assert.match(sezioneDi(resa(c)).textContent, new RegExp(`Aggiunto come appreso: ${alto.nome}`));
-  assert.equal(lista[0].tipo, 'appreso');
+  // A.211: dal giocatore «appreso» diventa un annotato con la richiesta al Direttore
+  assert.equal(c.ui.incantesimoAMano.esito, `Aggiunto come annotato: ${alto.nome}. Hai chiesto al Direttore di confermarlo come appreso.`, 'dopo la conferma l’app dice quale ha aggiunto');
+  assert.match(sezioneDi(resa(c)).textContent, new RegExp(`Aggiunto come annotato: ${alto.nome}`));
+  assert.deepEqual([lista[0].tipo, lista[0].richiesta], ['annotato', true]);
 });
 
 test('lotto 131, caso A: Esorcizzare Oscurità si aggiunge davvero, e Esorcizzare Corruzione (dell’artefatto) non si tocca', () => {

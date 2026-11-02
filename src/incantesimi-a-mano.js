@@ -35,8 +35,12 @@ export const tipoDi = (x) => (TIPI_VALIDI.includes(x?.tipo) ? x.tipo : 'da_class
 /** Conta come conosciuto a ogni effetto (A.176): solo l'appreso. Il «da classificare» non decide: non conta. */
 export const contaComeConosciuto = (x) => tipoDi(x) === 'appreso';
 
-/** «Appreso a mano», «Solo annotato», «Aggiunto, da classificare» (regole.json). */
+/** A.211: un annotato per cui il giocatore ha chiesto al Direttore la conferma come appreso. */
+export const richiestaAppreso = (x) => tipoDi(x) === 'annotato' && x?.richiesta === true;
+
+/** «Appreso a mano», «Solo annotato», «Annotato, appreso da confermare», «Aggiunto, da classificare» (regole.json). */
 export function etichettaTipo(x, dati) {
+  if (richiestaAppreso(x)) return dati?.regole?.incantesimi_a_mano?.richiesta?.etichetta ?? 'Annotato, appreso da confermare';
   const t = tipoDi(x);
   return t === 'da_classificare' ? dati?.regole?.incantesimi_a_mano?.da_classificare?.etichetta ?? 'Aggiunto, da classificare'
     : tipi(dati).find((y) => y.id === t)?.etichetta ?? t;
@@ -44,6 +48,7 @@ export function etichettaTipo(x, dati) {
 
 /** La frase che spiega che cosa significa il tipo (regole.json). */
 export function fraseTipo(x, dati) {
+  if (richiestaAppreso(x)) return dati?.regole?.incantesimi_a_mano?.richiesta?.frase ?? '';
   const t = tipoDi(x);
   return t === 'da_classificare' ? dati?.regole?.incantesimi_a_mano?.da_classificare?.frase ?? ''
     : tipi(dati).find((y) => y.id === t)?.frase ?? '';
@@ -107,6 +112,8 @@ export function normalizzaIncantesimiAMano(lista, dati, avvisi = []) {
       ...(typeof x.nota === 'string' && x.nota.trim() ? { nota: x.nota.trim().slice(0, 160) } : {}),
       // A.176: senza tipo (o con un tipo sconosciuto) resta «da classificare»: non si decide al posto del Direttore
       ...(TIPI_VALIDI.includes(x.tipo) ? { tipo: x.tipo } : {}),
+      // A.211: la richiesta del giocatore di confermarlo come appreso (solo per un annotato)
+      ...(x.tipo === 'annotato' && x.richiesta === true ? { richiesta: true } : {}),
       ...(typeof x.concessione === 'string' && x.concessione.trim() ? { concessione: x.concessione.trim().slice(0, dati?.regole?.incantesimi_a_mano?.concessione_max ?? 300) } : {}),
     });
   }
@@ -147,7 +154,7 @@ export function aggiungiIncantesimoAMano(lista, id, extra, dati) {
   const nome = inc.nome;
   const attuale = Array.isArray(lista) ? lista : [];
   if (attuale.some((x) => x.nome === nome)) return null;
-  const [r] = normalizzaIncantesimiAMano([{ nome, origine: extra?.origine, quando: extra?.quando ?? oggi(), nota: extra?.nota, tipo: extra?.tipo, concessione: extra?.concessione }], dati);
+  const [r] = normalizzaIncantesimiAMano([{ nome, origine: extra?.origine, quando: extra?.quando ?? oggi(), nota: extra?.nota, tipo: extra?.tipo, richiesta: extra?.richiesta, concessione: extra?.concessione }], dati);
   return r ? [...attuale, r] : null;
 }
 
@@ -161,10 +168,35 @@ export function classificaIncantesimoAMano(lista, nome, tipo, { concessione } = 
   if (!attuale.some((x) => x.nome === nome)) return null;
   return normalizzaIncantesimiAMano(attuale.map((x) => {
     if (x.nome !== nome) return x;
-    const { concessione: vecchia, ...resto } = x;
+    // la decisione del Direttore chiude la richiesta del giocatore (A.211)
+    const { concessione: vecchia, richiesta: _r, ...resto } = x;
     const nuova = concessione === undefined ? vecchia : concessione;
     return { ...resto, tipo, ...(nuova ? { concessione: nuova } : {}) };
   }), dati);
+}
+
+/**
+ * A.211 (Davide, 30/10/2026): «solo il Direttore può confermare lo stato "appreso". Il giocatore può aggiungere
+ * un'annotazione e richiedere la conferma dell'apprendimento». Che cosa può scrivere un tablet sugli incantesimi aggiunti
+ * a mano: aggiungerne come solo annotati (con o senza la richiesta), chiedere o ritirare la richiesta, toglierne; non
+ * un «appreso», non una concessione speciale (A.212), non un cambio di tipo (A.213: anche i «da classificare» li
+ * classifica il Direttore). Lo controlla il server (src/talenti-tablet.js). Pura.
+ * @returns {{ ok: true } | { ok: false, stato: 403, errore: string }}
+ */
+export function controllaAManoDaTablet(nuova, disco) {
+  const prima = new Map((Array.isArray(disco) ? disco : []).filter(isOggetto).map((x) => [x.nome, x]));
+  for (const x of Array.isArray(nuova) ? nuova : []) {
+    if (!isOggetto(x)) continue;
+    const p = prima.get(x.nome);
+    const no = (errore) => ({ ok: false, stato: 403, errore });
+    if ((x.concessione ?? '') !== (p?.concessione ?? '')) return no(`La concessione speciale su ${x.nome} la decide il Direttore (A.212).`);
+    if (!p) {
+      if (x.tipo !== 'annotato') return no(`${x.nome}: dal tablet un incantesimo si aggiunge come solo annotato; «appreso» lo conferma il Direttore (A.211).`);
+      continue;
+    }
+    if (tipoDi(x) !== tipoDi(p)) return no(`${x.nome}: appreso o annotato lo decide il Direttore (A.211).`);
+  }
+  return { ok: true };
 }
 
 /** Toglie un incantesimo aggiunto a mano (null se non c'è). */
@@ -201,6 +233,7 @@ export function risolviIncantesimiAMano(lista, { livelloMassimo = 0, accesso = f
       avviso: avvisoLivelloAMano(i, { livelloMassimo, accesso }),
       // A.176: tipo, etichetta, frase che lo spiega e se si lancia (con il motivo se no)
       tipo: tipoDi(x), etichetta: etichettaTipo(x, dati), segno: segnoTipo(x), frase: fraseTipo(x, dati),
+      ...(richiestaAppreso(x) ? { richiesta: true } : {}),
       ...(x.concessione ? { concessione: x.concessione } : {}),
       lancio: statoLancioAMano(x, { accesso }),
     }] : [];

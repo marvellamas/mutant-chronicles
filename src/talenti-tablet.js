@@ -8,6 +8,7 @@
 //    (postiTalenti → controllaSceltaTalento, il controllo unico). Le forzature le fa solo il Direttore.
 // Funzione pura: i due file come oggetti (l'export di src/character.js → serializza).
 import { postiTalenti, erroriScelteSuccessive } from './avanzamento.js';
+import { controllaAManoDaTablet } from './incantesimi-a-mano.js';
 
 const regime = (o) => (o?.scelte?.regimeTalenti === 2 ? 2 : null);
 const chiusi = (o) => (Number.isInteger(o?.scelte?.talentiChiusiFino) ? o.scelte.talentiChiusiFino : null);
@@ -18,6 +19,10 @@ const personaggio = (o) => ({ creazione: o?.scelte ?? {}, livelli: Array.isArray
  * @returns {{ ok: true } | { ok: false, stato: 403 | 409, errore: string }}
  */
 export function controllaTalentiDaTablet(nuovo, disco, dati) {
+  // A.211, A.212 (30/10/2026): gli incantesimi aggiunti a mano entrano dal tablet solo come annotati; «appreso» e
+  // concessioni li decide il Direttore
+  const aMano = controllaAManoDaTablet(nuovo?.scelte?.incantesimiAMano, disco?.scelte?.incantesimiAMano);
+  if (!aMano.ok) return aMano;
   if (!disco) return { ok: true };
   if (regime(disco) === 2 && regime(nuovo) !== 2) {
     return { ok: false, stato: 409, errore: 'Questa scheda è di prima del passaggio ai Talenti nuovi: si ricarica la versione del Direttore.' };

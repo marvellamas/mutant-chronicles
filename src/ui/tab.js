@@ -2797,10 +2797,12 @@ function sezioneIncantesimiAMano(ctx) {
       if (!ctx.master) { u.errore = `Le regole non ammettono questa sostituzione: ${verifica.motivo}. La può forzare il Direttore.`; ctx.azioni.ridisegna(); return; }
       return conMotivoMaster(ctx, { titolo: `Forzare la sostituzione di ${sost.nome}?`, testo: `Le regole non la ammettono: ${verifica.motivo}. L’app avvisa e non blocca: se la vuoi lo stesso, resta nel registro del master e nello storico come forzata.`, conferma: 'Forza la sostituzione' }, () => sostituisci(true));
     }
-    const nuova = aggiungiIncantesimoAMano(attuali, scelto.id, { origine: u.origine, nota: u.nota, tipo: u.tipo, ...(ctx.master && u.concessione.trim() ? { concessione: u.concessione } : {}) }, ctx.dati);
+    // A.211: «appreso» lo conferma solo il Direttore; dal giocatore diventa un annotato con la richiesta di conferma
+    const richiede = !ctx.master && u.tipo === 'appreso';
+    const nuova = aggiungiIncantesimoAMano(attuali, scelto.id, { origine: u.origine, nota: u.nota, tipo: richiede ? 'annotato' : u.tipo, ...(richiede ? { richiesta: true } : {}), ...(ctx.master && u.concessione.trim() ? { concessione: u.concessione } : {}) }, ctx.dati);
     if (!nuova) { u.errore = `${scelto.nome} è già fra quelli aggiunti a mano.`; ctx.azioni.ridisegna(); return; }
     const x = nuova.find((y) => y.nome === scelto.nome);
-    Object.assign(u, { cerca: '', id: null, nota: '', concessione: '', tipo: null, errore: null, esito: `Aggiunto come ${u.tipo === 'appreso' ? 'appreso' : 'solo annotato'}: ${scelto.nome}` });
+    Object.assign(u, { cerca: '', id: null, nota: '', concessione: '', tipo: null, errore: null, esito: richiede ? `Aggiunto come annotato: ${scelto.nome}. Hai chiesto al Direttore di confermarlo come appreso.` : `Aggiunto come ${u.tipo === 'appreso' ? 'appreso' : 'solo annotato'}: ${scelto.nome}` });
     ctx.azioni.incantesimiAMano(nuova, rigaRegistroAMano('aggiunto', x, ctx.dati));
   };
   const rigaRisultato = (i) => h('button', {
@@ -2838,8 +2840,8 @@ function sezioneIncantesimiAMano(ctx) {
       // A.176: il tipo è obbligatorio e non ha un valore di partenza: l'app chiede, non decide
       sost ? null : h('div', { class: 'scelta-pulsanti', role: 'group', 'aria-label': 'Appreso o solo annotato' }, tipiAMano(ctx.dati).map((t) => h('button', {
         type: 'button', class: `btn scelta-btn${u.tipo === t.id ? ' scelta' : ''}`, 'aria-pressed': String(u.tipo === t.id), title: t.frase, onclick: () => { u.tipo = t.id; u.errore = null; ctx.azioni.ridisegna(); },
-      }, t.nome))),
-      sost ? null : h('p', { class: 'nota' }, u.tipo ? fraseTipo({ tipo: u.tipo }, ctx.dati) : 'Scegli: appreso o solo annotato.'),
+      }, t.id === 'appreso' && !ctx.master ? ctx.dati.regole.incantesimi_a_mano.richiesta?.bottone_giocatore ?? t.nome : t.nome))),
+      sost ? null : h('p', { class: 'nota' }, u.tipo ? fraseTipo(!ctx.master && u.tipo === 'appreso' ? { tipo: 'annotato', richiesta: true } : { tipo: u.tipo }, ctx.dati) : 'Scegli: appreso o solo annotato.'),
       !sost && ctx.master ? h('label', { class: 'campo' }, h('span', {}, 'Concessione speciale (solo il Direttore; facoltativa): come si lancia, con quale Abilità, con quali PM, con quali limiti'),
         h('input', { type: 'text', maxlength: ctx.dati.regole.incantesimi_a_mano.concessione_max, value: u.concessione, placeholder: 'es. con Artefatti VA, 2 PM della Pietra, una volta al giorno', oninput: (e) => { u.concessione = e.target.value; } })) : null,
       sost ? null : h('label', { class: 'campo' }, h('span', {}, 'Nota (facoltativa)'),
@@ -2915,6 +2917,21 @@ async function chiediTogliIncantesimoScelto(ctx, nome) {
 }
 
 /**
+ * A.211: il giocatore chiede al Direttore di confermare come appreso un incantesimo annotato, o ritira la richiesta.
+ * Il server accetta solo questo (src/incantesimi-a-mano.js → controllaAManoDaTablet): il tipo resta «annotato».
+ */
+function richiestaDalGiocatore(ctx, nome, agg) {
+  const attuali = ctx.scelte.incantesimiAMano ?? [];
+  const chiede = !agg.richiesta;
+  const cambia = () => {
+    const nuova = attuali.map((x) => (x.nome !== nome ? x : (({ richiesta: _r, ...resto }) => (chiede ? { ...resto, richiesta: true } : resto))(x)));
+    ctx.azioni.incantesimiAMano(nuova, null);
+  };
+  return h('div', { class: 'riga-azioni' }, h('button', { type: 'button', class: 'btn btn-piccolo', onclick: cambia,
+    title: chiede ? 'Il Direttore lo conferma come appreso, o lo lascia annotato' : 'Resta solo annotato' }, chiede ? 'Chiedi al Direttore: appreso' : 'Ritira la richiesta'));
+}
+
+/**
  * A.176: i pulsanti del Direttore sulla scheda di un incantesimo aggiunto a mano — appreso o solo annotato (anche per
  * quelli «da classificare») e la concessione speciale, con la riga nello storico e nel registro del master.
  */
@@ -2968,6 +2985,7 @@ function articoloIncantesimo(ctx, i, nomeMacro) {
     agg?.concessione ? h('p', { class: 'piccolo concessione-speciale' }, h('strong', {}, 'Concessione speciale del Direttore: '), agg.concessione) : null,
     agg && agg.lancio && !agg.lancio.lanciabile ? h('p', { class: 'nota motivo', role: 'status' }, `Non si lancia: ${agg.lancio.motivo}`) : null,
     agg && ctx.master ? classificaDalMaster(ctx, i.nome, agg) : null,
+    agg && !ctx.master && tipoAMano(agg) === 'annotato' ? richiestaDalGiocatore(ctx, i.nome, agg) : null,
     agg?.avviso ? h('p', { class: 'nota motivo' }, `Avviso: ${agg.avviso}`) : null,
     i.intestazione ? h('p', { class: 'piccolo' }, i.intestazione) : null,
     i.lancio ? h('p', { class: 'piccolo' }, i.lancio) : null,

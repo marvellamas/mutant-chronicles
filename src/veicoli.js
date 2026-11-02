@@ -731,7 +731,7 @@ export function registraSupportoVitale(mezzo, ore, dati) {
 }
 
 /**
- * «Chiudi la giornata» (A.192, A.219 aperta: per ora un tocco del Direttore, senza Calendario). Sottrae **una volta
+ * «Chiudi la giornata» (A.192; A.219 risolta il 30/10: comando manuale del Direttore, anche senza Calendario). Sottrae **una volta
  * sola** le cariche Rosse dei chilometri sommati (una ogni `km_per_carica` o frazione) e, se il supporto vitale è
  * stato usato in giornata, una carica Verde; un giorno senza uso non consuma Verde. Azzera i km e il segno.
  * @returns {{ mezzo, righe: string[], avvisi: string[] }}

@@ -4390,9 +4390,15 @@
       "etichetta": "Aggiunto, da classificare",
       "frase": "Aggiunto prima della distinzione fra appreso e solo annotato: il Direttore deve dire quale dei due è. Finché non lo dice resta com'era (si lancia con le regole normali) ma non conta come conosciuto per i nuovi controlli."
     },
+    "richiesta": {
+      "etichetta": "Annotato, appreso da confermare",
+      "frase": "Il giocatore ha chiesto al Direttore di confermarlo come appreso. Finché il Direttore non conferma resta solo annotato: non si lancia e non vale come conoscenza per prerequisiti, creazione di Consumabili o insegnamento (A.211).",
+      "bottone_giocatore": "Appreso (lo conferma il Direttore)"
+    },
     "concessione_max": 300,
     "_nota_a176": "A.176 (risposta di Davide del 23/10/2026): un incantesimo che il Direttore aggiunge come realmente appreso conta come conosciuto a ogni effetto, fermi restando gli altri requisiti; uno solo annotato (pergamena, testo, Artefatto) non è appreso e non concede accesso alla magia, Abilità o PM: senza accesso alla magia resta annotato e non lanciabile. Una concessione speciale del Direttore deve dire espressamente come si lancia, con quale Abilità, con quali PM e con quali limiti (campo `concessione`).",
-    "_nota": "Incantesimi liberi aggiunti e tolti a mano dalla tab Poteri (src/incantesimi-a-mano.js, scelte.incantesimiAMano): un maestro, un ritrovamento, una concessione del Direttore. Non contano nelle quote di Classe né nei liberi dell'avanzamento; l'app avvisa se il livello base supera il livello massimo, senza bloccare. 20/10/2026."
+    "_nota": "Incantesimi liberi aggiunti e tolti a mano dalla tab Poteri (src/incantesimi-a-mano.js, scelte.incantesimiAMano): un maestro, un ritrovamento, una concessione del Direttore. Non contano nelle quote di Classe né nei liberi dell'avanzamento; l'app avvisa se il livello base supera il livello massimo, senza bloccare. 20/10/2026.",
+    "_nota_a211": "A.211 (risposta di Davide del 30/10/2026): per gli incantesimi aggiunti a mano fuori dalle quote solo il Direttore conferma lo stato «appreso». Il giocatore aggiunge un'annotazione e può chiedere la conferma (campo `richiesta`); fino alla conferma l'annotazione non concede lanci né vale come conoscenza. Il server rifiuta da un tablet un «appreso», una concessione o un cambio di tipo (src/incantesimi-a-mano.js → controllaAManoDaTablet)."
   },
   "recupero_pm": {
     "fonte": "Manuale della Magia, «Recupero naturale dei Punti Magia», «Meditazione», «Talenti di Meditazione» e sez. 6 «Convertire Potere, ricaricare e prelevare»",
