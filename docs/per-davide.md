@@ -2334,6 +2334,22 @@ Si usa la misura prevista dal profilo: chilometri per la trazione dello Scout; o
 
 I consumi giornalieri, come il supporto vitale, vengono conteggiati una sola volta per giornata di gioco nella quale il sistema è stato utilizzato, anche con più attivazioni o chiusure di viaggio.
 
+#### A.229 — Nuovi elenchi di Potere e scelte già acquisite
+
+01/11/2026 — Risposta approvata da Davide.
+
+Confermo gli elenchi aggiornati del Manuale del Giocatore v0.54, del Manuale della Magia v1.11 e del documento Talenti, Specializzazioni e Maestrie v1.1.
+
+Questi elenchi sostituiscono A.185 nella parte che rendeva disponibili tutte e nove le Specializzazioni di Potere alle Classi taumaturgiche indicate. Restano valide la singola scelta iniziale, la sequenza di creazione e le eccezioni basate sui requisiti posseduti.
+
+Per nuovi personaggi e nuove acquisizioni si applicano gli elenchi aggiornati.
+
+Per i personaggi esistenti, l’app segnala le Specializzazioni già acquisite che richiedono una verifica e le conserva operative fino alla decisione del Direttore. Il Direttore può mantenerle come eccezione oppure autorizzarne la sostituzione gratuita con una scelta consentita, senza perdere l’acquisizione spesa.
+
+Prima della modifica si conserva una copia della scheda; scelta precedente, sostituzione ed eventuale eccezione vengono registrate nello storico, così da poter ripristinare la situazione.
+
+L’aggiornamento degli elenchi non cancella incantesimi conosciuti né modifica da solo l’accesso alle famiglie magiche.
+
 > > ## **8\. Prove da fare**
 
 Le prove in sospeso. Quelle che puoi fare tu dal PC del Direttore, nessuna lunga più di qualche minuto. Per tutte: prima **Mutant.bat → 2 «Aggiorna»**, poi **1 «Avvia»**.
