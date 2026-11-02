@@ -89,11 +89,12 @@ export function riquadroTalenti(t) {
     t.master ? (P.posti.some((x) => x.chiuso)
       ? h('button', { type: 'button', class: 'btn', title: 'Il giocatore potrà di nuovo cambiare le scelte', onclick: t.azioni.riapri }, 'Riapri le scelte')
       : h('button', { type: 'button', class: 'btn', title: 'Da qui in poi le scelte fatte le cambia solo il Direttore', onclick: t.azioni.chiudi }, 'Chiudi le scelte')) : null);
-  // A.229: le Specializzazioni di Potere tolte dal manuale, ancora da decidere dal Direttore
-  const daDecidere = P.posti.filter(daDecidereA229);
+  // A.229, A.230: le Specializzazioni tolte dal manuale, ancora da decidere dal Direttore
+  const daDecidere = P.posti.filter(daDecidereDalDirettore);
+  const regole = [...new Set(daDecidere.map((x) => x.problemi.find((e) => e.tipo === 'tolta').regola))].sort().join(', ');
   return h('section', { class: `riquadro ${daFare || daDecidere.length ? 'attenzione' : 'ok'} riquadro-talenti`, 'aria-label': 'Talenti da scegliere' },
     ...testa,
-    daDecidere.length ? h('p', { class: 'nota motivo' }, `Da decidere dal Direttore (A.229): ${daDecidere.map((x) => `${descriviScelta(x.scelta, t.dati)} (${x.livello}° livello)`).join(', ')}: non ${daDecidere.length === 1 ? 'è' : 'sono'} più nell’elenco della Classe. ${t.master ? 'Aprila nei posti qui sotto: tienila come eccezione o sostituiscila gratis.' : 'Resta con i suoi effetti finché decide il Direttore.'}`) : null,
+    daDecidere.length ? h('p', { class: 'nota motivo' }, `Da decidere dal Direttore (${regole}): ${daDecidere.map((x) => `${descriviScelta(x.scelta, t.dati)} (${x.livello}° livello)`).join(', ')}: non ${daDecidere.length === 1 ? 'è' : 'sono'} più nell’elenco della Classe. ${t.master ? 'Aprila nei posti qui sotto: tienila come eccezione o sostituiscila gratis.' : 'Resta con i suoi effetti finché decide il Direttore.'}`) : null,
     t.bloccato ? h('p', { class: 'nota motivo', role: 'status' }, t.bloccato) : null,
     azioniTesta,
     ui.aperto && !t.bloccato ? corpo(t, P, succ) : null);
@@ -131,10 +132,10 @@ function corpo(t, P, succ) {
     attivo.successiva ? passoSuccessivo(t, attivo.successiva) : postoAttivo(t, attivo.posto, succ));
 }
 
-/** Il posto ha una Specializzazione di Potere tolta dal manuale, ancora da decidere dal Direttore (A.229)? */
-const daDecidereA229 = (x) => !!x.scelta && x.problemi.some((e) => e.tipo === 'tolta' && e.regola === 'A.229');
+/** Il posto ha una Specializzazione tolta dal manuale, ancora da decidere dal Direttore (A.229 per il Potere, A.230 per le altre)? */
+const daDecidereDalDirettore = (x) => !!x.scelta && x.problemi.some((e) => e.tipo === 'tolta' && e.regola);
 
-/** L'avviso (e, in «Modifica master», le due decisioni della A.229) per una Specializzazione tolta dal manuale. */
+/** L'avviso (e, in «Modifica master», le due decisioni della A.229 e della A.230) per una Specializzazione tolta dal manuale. */
 function avvisoVoceTolta(t, x) {
   if (!x.scelta || !x.valida) return [];
   const tolta = x.problemi.find((e) => e.tipo === 'tolta');
@@ -145,7 +146,6 @@ function avvisoVoceTolta(t, x) {
       t.master ? h('div', { class: 'riga-azioni' }, h('button', { type: 'button', class: 'btn', onclick: () => t.azioni.eccezione(x, { togli: true }) }, 'Togli l’eccezione')) : null];
   }
   if (!tolta) return [];
-  if (tolta.regola !== 'A.229') return [h('p', { class: 'nota motivo' }, `${tolta.problema}. Se la cambi, non la puoi riprendere.`)];
   return [h('p', { class: 'nota motivo' }, `${tolta.problema}.`),
     t.master ? h('div', { class: 'riga-azioni' },
       h('button', { type: 'button', class: 'btn primario', title: 'Resta con i suoi effetti; la decisione va nel registro del master', onclick: () => t.azioni.eccezione(x) }, 'Tienila come eccezione'),
@@ -163,12 +163,11 @@ function postoAttivo(t, x, succ) {
       aperte.map((s) => h('p', { class: 'nota motivo' }, `${s.quanti === 1 ? 'Resta' : 'Restano'} ${s.quanti} ${nomeSucc(s.tipo, s.quanti)} da scegliere `,
         h('button', { type: 'button', class: 'btn primario', onclick: () => { t.ui.posto = chiaveSuccessiva(s); t.ui.filtro = ''; t.azioni.ridisegna(); } }, 'Scegli'))),
       // voce tolta dal manuale dall'elenco della Classe, già scelta: resta, con i suoi effetti
-      //  - A.229 (Potere): decide il Direttore, eccezione o sostituzione gratuita; il giocatore non la cambia da solo
-      //  - A.230 (le altre): avviso finché il Direttore non decide
+      //  A.229 (Potere) e A.230 (le altre): decide il Direttore, eccezione o sostituzione gratuita; il giocatore non la cambia da solo
       ...avvisoVoceTolta(t, x),
       !x.valida ? h('p', { class: 'nota motivo' }, `Non ammessa dalle regole: ${x.problemi.find((e) => e.tipo === 'violazione')?.problema ?? ''}${t.master ? '' : ' (l’ha forzata il Direttore)'}`) : null,
-      daDecidereA229(x) && !t.master ? h('p', { class: 'nota' }, 'La cambia o la conferma il Direttore.')
-        : daDecidereA229(x) ? null
+      daDecidereDalDirettore(x) && !t.master ? h('p', { class: 'nota' }, 'La cambia o la conferma il Direttore.')
+        : daDecidereDalDirettore(x) ? null
           : puo ? h('button', { type: 'button', class: 'btn', onclick: () => t.azioni.svuota(x) }, 'Cambia questa scelta')
             : h('p', { class: 'nota' }, 'Il Direttore ha chiuso questa scelta: la cambia solo lui.'));
   }

@@ -221,8 +221,9 @@ function specializzazioniAmmesse(stato, classe, dati) {
 
 /**
  * Una Specializzazione che il manuale ha tolto dall'elenco della Classe (per_classe_tolte): quale risposta di Davide
- * vale per chi l'ha già. 'A.229' per le voci di Potere (risposta del 01/11/2026: decide il Direttore, eccezione o
- * sostituzione gratuita), 'A.230' per le altre (domanda aperta: avviso), null se la voce non è tolta.
+ * vale per chi l'ha già: 'A.229' per le voci di Potere (risposta del 01/11/2026), 'A.230' per le altre (risposta del
+ * 02/11/2026: «la procedura di A.229 vale anche per le altre Specializzazioni rimosse»), null se la voce non è tolta.
+ * La procedura è la stessa per tutte e due: avviso, eccezione del Direttore o sostituzione gratuita; cambia solo il numero.
  */
 export function regolaVoceTolta(id, classe, dati) {
   const S = dati.specializzazioni;
@@ -260,14 +261,13 @@ export function controllaSceltaTalento(stato, categoria, scelta, dati, { classe 
       //  - voci di Potere, A.229 (Davide, 01/11/2026): «l'app segnala le Specializzazioni già acquisite che richiedono una
       //    verifica e le conserva operative fino alla decisione del Direttore. Il Direttore può mantenerle come eccezione
       //    oppure autorizzarne la sostituzione gratuita»: con l'eccezione registrata (scelta.eccezione) non è più un avviso;
-      //  - le altre (Armi Inastate, Archi e Balestre), A.230 aperta: avviso finché il Direttore non decide.
+      //  - le altre (Armi Inastate dell'Incursore, Archi e Balestre dell'Invocatore), A.230 (Davide, 02/11/2026): la stessa
+      //    procedura della A.229, con gli stessi due pulsanti del Direttore.
       const regola = classe ? regolaVoceTolta(def.id, classe, dati) : null;
-      if (regola === 'A.229' && isOggetto(scelta.eccezione)) {
-        err(`Specializzazione in ${def.nome} non è più nell’elenco ${delNome(classe)} (Giocatore 0.54): il Direttore la tiene come eccezione (A.229)`, 'eccezione', 'A.229');
-      } else if (regola === 'A.229') {
-        err(`Specializzazione in ${def.nome} non è più nell’elenco ${delNome(classe)} (Giocatore 0.54): resta, con i suoi effetti, finché il Direttore non decide se tenerla come eccezione o sostituirla gratis con una dell’elenco (A.229)`, 'tolta', 'A.229');
-      } else if (regola === 'A.230') {
-        err(`Specializzazione in ${def.nome} non è più nell’elenco ${delNome(classe)} (Giocatore 0.54): chi l’ha già scelta la tiene finché il Direttore non decide (A.230)`, 'tolta', 'A.230');
+      if (regola && isOggetto(scelta.eccezione)) {
+        err(`Specializzazione in ${def.nome} non è più nell’elenco ${delNome(classe)} (Giocatore 0.54): il Direttore la tiene come eccezione (${regola})`, 'eccezione', regola);
+      } else if (regola) {
+        err(`Specializzazione in ${def.nome} non è più nell’elenco ${delNome(classe)} (Giocatore 0.54): resta, con i suoi effetti, finché il Direttore non decide se tenerla come eccezione o sostituirla gratis con una dell’elenco (${regola})`, 'tolta', regola);
       } else {
         err(`Specializzazione in ${def.nome} non è nell’elenco ${classe ? delNome(classe) : 'della Classe'} (Talenti v1.0: si sceglie dalla Classe appena aumentata)`);
       }
@@ -289,7 +289,7 @@ function opzioniCategoria(stato, categoria, dati, { classe = null } = {}) {
     ...dati.specializzazioni.specializzazioni.map((s) => ({ ...s, specializzazione: true, parametro: null })),
   ].filter((t) => sceglibile(t, nuovo) && (!nuovo || categoriaDi(t) === categoria));
   const valori = { caratteristica: Object.keys(stato.car), salvezza: dati.caratteristiche.salvezze.map((s) => s.id) };
-  // una voce tolta dal manuale (tipo «tolta», A.230) vale per chi l'aveva già, ma non si offre per una scelta nuova
+  // una voce tolta dal manuale (tipo «tolta», A.229 e A.230) vale per chi l'aveva già, ma non si offre per una scelta nuova
   const violazioni = (scelta) => controllaSceltaTalento(stato, categoria, scelta, dati, { classe }).filter((e) => e.tipo === 'violazione' || e.tipo === 'tolta');
   return candidati.map((t) => {
     const parametri = t.parametro ? valori[t.parametro].filter((p) => !violazioni({ id: t.id, parametro: p }).length) : null;
@@ -1390,14 +1390,15 @@ export function applicaSceltaTalento(personaggio, posto, scelta) {
 }
 
 /**
- * A.229 (Davide, 01/11/2026): «Il Direttore può mantenerle come eccezione»: la Specializzazione del posto, tolta dal
+ * A.229 (Davide, 01/11/2026) e A.230 (02/11/2026, la stessa procedura per le voci non di Potere): «Il Direttore può
+ * mantenerle come eccezione»: la Specializzazione del posto, tolta dal
  * manuale dall'elenco della Classe, resta come eccezione del Direttore (`eccezione: { quando, motivo }` sulla scelta),
  * oppure, con `togli`, torna da decidere. L'altra strada, la sostituzione gratuita, è «Cambia questa scelta» nello
  * stesso posto (applicaSceltaTalento). Solo il Direttore (src/talenti-tablet.js). Pura.
  */
 export function eccezioneSpecializzazione(personaggio, posto, { quando = new Date().toISOString(), motivo = '', togli = false } = {}) {
   const p = migraPersonaggio(personaggio);
-  if (posto.categoria !== 'specializzazione') throw new Error('l’eccezione della A.229 riguarda le Specializzazioni');
+  if (posto.categoria !== 'specializzazione') throw new Error('l’eccezione della A.229 e della A.230 riguarda le Specializzazioni');
   const attuale = posto.livello === 1 ? p.creazione.specializzazioneIniziale : p.livelli[posto.livello - 2]?.specializzazione;
   if (!isOggetto(attuale) || !attuale.id) throw new Error(`nessuna Specializzazione al ${posto.livello}° livello`);
   const { eccezione: _via, ...senza } = attuale;
@@ -1796,9 +1797,9 @@ function schedaARiposo(personaggio, dati) {
     specializzazioni: stato.talentiLiberi.filter((t) => talentoLiberoDef(t.id, dati).specializzazione).map((t) => {
       const d = talentoLiberoDef(t.id, dati);
       // voce tolta dal manuale dall'elenco della Classe da cui era stata scelta: resta, operativa, con l'avviso (A.229 per il
-      // Potere, A.230 per le altre); con l'eccezione del Direttore (A.229) resta senza avviso, con la nota
+      // Potere, A.230 per le altre); con l'eccezione del Direttore resta senza avviso, con la nota
       const regola = t.classe ? regolaVoceTolta(t.id, t.classe, dati) : null;
-      const eccezione = regola === 'A.229' && isOggetto(t.eccezione) ? t.eccezione : null;
+      const eccezione = regola && isOggetto(t.eccezione) ? { ...t.eccezione, regola } : null;
       return { id: t.id, nome: d.nome, abilita: d.abilita, effetto: d.effetto, tavolo: notaDaApplicare(d), livello: t.livello, usi: d.usi ?? null, ...(t.classe ? { classe: t.classe } : {}), ...(t.annotazione ? { annotazione: t.annotazione } : {}), ...(regola && !eccezione ? { tolta: true, regolaTolta: regola } : {}), ...(eccezione ? { eccezione } : {}) };
     }),
     tecniche: stato.tecniche.map((x) => ({ ...catalogoTec.find((t) => t.id === x.id), livello: x.livello })),

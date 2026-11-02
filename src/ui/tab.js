@@ -1502,12 +1502,10 @@ function tabAbilita(ctx, d) {
     d.specializzazioni.length ? sezione('Specializzazioni', h('ul', {}, d.specializzazioni.map((x) => {
       const n = nomeCheSiApre(x.nome, schedaTalento(x.id, ctx.dati));
       return h('li', {}, n.nome, x.annotazione ? ` (${x.annotazione})` : null, ` — ${x.riga || `${x.abilita}; ${x.effetto}`} (${x.livello}° livello)`,
-        // la voce non è più nell'elenco della Classe (Giocatore 0.54): resta, con i suoi effetti. A.229 (Potere): decide il
-        // Direttore, eccezione o sostituzione gratuita; A.230 (le altre): finché il Direttore non decide
-        x.tolta ? h('p', { class: 'nota motivo' }, x.regolaTolta === 'A.229'
-          ? `Non è più nell’elenco ${delNome(x.classe)} (Giocatore 0.54): resta con i suoi effetti finché il Direttore decide se tenerla come eccezione o sostituirla gratis (A.229).`
-          : `Non è più nell’elenco ${delNome(x.classe)} (Giocatore 0.54): la tieni finché il Direttore non decide.`) : null,
-        x.eccezione ? h('p', { class: 'nota' }, `Non è più nell’elenco ${delNome(x.classe)}: il Direttore la tiene come eccezione (A.229)${x.eccezione.motivo ? `: ${x.eccezione.motivo}` : ''}.`) : null,
+        // la voce non è più nell'elenco della Classe (Giocatore 0.54): resta, con i suoi effetti, e decide il Direttore,
+        // eccezione o sostituzione gratuita (A.229 per il Potere, A.230 per le altre: la stessa procedura)
+        x.tolta ? h('p', { class: 'nota motivo' }, `Non è più nell’elenco ${delNome(x.classe)} (Giocatore 0.54): resta con i suoi effetti finché il Direttore decide se tenerla come eccezione o sostituirla gratis (${x.regolaTolta}).`) : null,
+        x.eccezione ? h('p', { class: 'nota' }, `Non è più nell’elenco ${delNome(x.classe)}: il Direttore la tiene come eccezione (${x.eccezione.regola ?? 'A.229'})${x.eccezione.motivo ? `: ${x.eccezione.motivo}` : ''}.`) : null,
         x.tavolo ? notaTavolo(x.tavolo) : null, n.scheda);
     }))) : null,
     // 27/10: i Talenti di prima del passaggio ai Talenti nuovi, letti dal registro del master; li vede ogni giocatore

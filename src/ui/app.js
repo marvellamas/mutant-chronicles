@@ -1694,6 +1694,9 @@ function talentiBloccati() {
   return null;
 }
 
+/** Il numero della risposta di Davide che vale per la voce tolta del posto: A.229 (Potere) o A.230 (le altre). */
+const regolaDelPosto = (posto) => posto.problemi?.find((e) => (e.tipo === 'tolta' || e.tipo === 'eccezione') && e.regola)?.regola ?? 'A.229';
+
 function contestoTalenti(inMaster) {
   if (stato.scelte?.regimeTalenti !== 2) return null;
   if (stato.uiTalenti?.id !== stato.id) stato.uiTalenti = { id: stato.id, aperto: false, posto: null, filtro: '' };
@@ -1745,10 +1748,11 @@ function contestoTalenti(inMaster) {
         persisti();
         ridisegna();
       },
-      // A.229 (01/11/2026): la Specializzazione di Potere tolta dal manuale resta come eccezione del Direttore (o, con
-      // `togli`, torna da decidere). Solo in «Modifica master»; la riga va nel registro con il motivo.
+      // A.229 (01/11/2026) e A.230 (02/11/2026): la Specializzazione tolta dal manuale resta come eccezione del Direttore
+      // (o, con `togli`, torna da decidere). Solo in «Modifica master»; la riga va nel registro con il motivo.
       eccezione: async (posto, { togli = false } = {}) => {
         const nomeSp = nome(posto.scelta.id);
+        const regola = regolaDelPosto(posto);
         let motivo = '';
         if (!togli) {
           const r = await chiediTesto({ titolo: `Tenere ${nomeSp} come eccezione?`, etichetta: 'Motivo (va nel registro del master)', valore: 'decisione del Direttore', conferma: 'Tienila come eccezione' });
@@ -1756,8 +1760,8 @@ function contestoTalenti(inMaster) {
           motivo = r;
         }
         stato.masterMotivo = togli
-          ? `A.229: tolta l’eccezione su ${nomeSp} (${posto.livello}° livello): torna da decidere`
-          : `A.229: ${nomeSp} (${posto.livello}° livello) tenuta come eccezione dal Direttore${motivo.trim() ? ` — ${motivo.trim()}` : ''}`;
+          ? `${regola}: tolta l’eccezione su ${nomeSp} (${posto.livello}° livello): torna da decidere`
+          : `${regola}: ${nomeSp} (${posto.livello}° livello) tenuta come eccezione dal Direttore${motivo.trim() ? ` — ${motivo.trim()}` : ''}`;
         const p = eccezioneSpecializzazione(personaggio(), posto, { motivo, togli });
         stato.scelte = { ...stato.scelte, specializzazioneIniziale: p.creazione.specializzazioneIniziale ?? null };
         cambiaLivelli(p.livelli);
@@ -1766,8 +1770,8 @@ function contestoTalenti(inMaster) {
         ridisegna();
       },
       svuota: (posto, { a229 = false } = {}) => {
-        // A.229: «sostituzione gratuita con una scelta consentita, senza perdere l'acquisizione spesa»: il posto resta
-        if (a229) stato.masterMotivo = `A.229: sostituzione gratuita di ${nome(posto.scelta.id)} (${posto.livello}° livello), non più nell’elenco della Classe`;
+        // A.229, A.230: «sostituzione gratuita con una scelta consentita, senza perdere l'acquisizione spesa»: il posto resta
+        if (a229) stato.masterMotivo = `${regolaDelPosto(posto)}: sostituzione gratuita di ${nome(posto.scelta.id)} (${posto.livello}° livello), non più nell’elenco della Classe`;
         const primaSvuota = personaggio();
         applica(posto, null);
         // gli Incantesimi e le Tecniche che quel Talento dava e che le quote non ammettono più si tolgono, e lo si dice

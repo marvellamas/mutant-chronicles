@@ -55,7 +55,7 @@ const tolteA229 = Object.values(tolte).flat().filter((id) => potere.has(id));
 
 s.versione_manuale = 'Giocatore 0.54 (Google Doc del 01/11/2026, 10:39 UTC); Talenti v1.0 del 07/10/2026'; // la A.229 sta nelle note: la versione si legge come elenco di manuali
 s.per_classe = { _nota: `${FONTE}: a ogni Grado si sceglie una Specializzazione non ancora posseduta dall’elenco della Classe appena aumentata. Gruppi già espansi. Gli elenchi sono quelli del manuale: la A.229 sostituisce la A.185 nella parte che dava ai Taumaturghi tutte e nove le Specializzazioni di Potere.`, ...perClasse };
-s.per_classe_tolte = { _nota: `${FONTE}: voci che il manuale ha tolto dall’elenco della Classe. Non si offrono per una scelta nuova e un tablet non le sceglie. Chi le ha già le tiene, operative e segnalate: le voci di Potere (A.229) finché il Direttore le tiene come eccezione o le sostituisce gratis con una dell’elenco; le altre (Armi Inastate, Archi e Balestre) finché il Direttore non decide (A.230, aperta).`, ...tolte };
+s.per_classe_tolte = { _nota: `${FONTE}: voci che il manuale ha tolto dall’elenco della Classe. Non si offrono per una scelta nuova e un tablet non le sceglie. Chi le ha già le tiene, operative e segnalate: le voci di Potere (A.229) finché il Direttore le tiene come eccezione o le sostituisce gratis con una dell’elenco; le altre (Armi Inastate dell’Incursore, Archi e Balestre dell’Invocatore) con la stessa procedura (A.230, Davide, 02/11/2026): eccezione del Direttore o sostituzione gratuita.`, ...tolte };
 delete s.potere_in_attesa_a229;
 
 console.log(resoconto.join('\n'));
