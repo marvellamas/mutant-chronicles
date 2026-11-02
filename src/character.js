@@ -104,6 +104,9 @@ export function nuoveScelte() {
     // Progetti seguiti dal Direttore (01/11/2026, src/progetti.js: la CyberArma di Dimitri a Paradise): nel file a parte
     // (`progetti_master`), scritti solo se non vuoti; il giocatore ne cambia solo la forma
     progettiMaster: [],
+    // Lotto 165 (02/11/2026, src/sposta-punti.js): Punti Abilità Liberi della creazione spostati dal Direttore, con le sue
+    // eccezioni ({ quando, motivo?, spostati?, totale?, forzati? }); nel file solo se c'è
+    puntiDirettore: null,
   };
 }
 
@@ -259,6 +262,7 @@ export function normalizza(scelteIn, dati) {
     s.ritratto = null;
   }
   for (const k of ['puntiCaratteristica', 'puntiAbilitaLiberi', 'parametriTalenti']) if (!isOggetto(s[k])) s[k] = {};
+  if (!isOggetto(s.puntiDirettore)) s.puntiDirettore = null;
   for (const [k, v] of Object.entries(s.parametriTalenti)) if (typeof v !== 'string' || !v) delete s.parametriTalenti[k];
   // Talenti v1.0: regime e Specializzazione iniziale (i file di prima non li hanno: restano Talenti vecchi)
   if (s.regimeTalenti !== 2) s.regimeTalenti = null;
@@ -493,6 +497,7 @@ export function serializza(scelte, { versioniDati, livelli, sessione, calendario
   if (pulite.ritratto === null) delete pulite.ritratto;
   if (pulite.dotazione === null) delete pulite.dotazione;
   if (pulite.umanita === null) delete pulite.umanita;
+  if (!isOggetto(pulite.puntiDirettore)) delete pulite.puntiDirettore;
   if (!Array.isArray(pulite.veicoli) || !pulite.veicoli.length) delete pulite.veicoli;
   if (!Array.isArray(pulite.incantesimiAMano) || !pulite.incantesimiAMano.length) delete pulite.incantesimiAMano;
   // i blocchi del master stanno a parte, fuori dalle scelte (e solo se non vuoti: i file di prima restano identici)

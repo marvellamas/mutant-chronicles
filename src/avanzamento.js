@@ -657,7 +657,8 @@ function controllaVoce(prima, voce, dati) {
   const conGrado = eventi.includes('grado_classe');
   const conTalento = eventi.includes('talento_libero');
 
-  const ammesse = new Set(['livello', 'incantesimi', 'tecniche', 'scuolaMishima']);
+  // puntiDirettore (lotto 165): spostamenti ed eccezioni dei Punti Abilità decisi dal Direttore (src/sposta-punti.js)
+  const ammesse = new Set(['livello', 'incantesimi', 'tecniche', 'scuolaMishima', 'puntiDirettore']);
   if (kCar) ammesse.add('caratteristiche');
   if (conTalento) ammesse.add('talentoLibero');
   // Talenti v1.0 (regime nuovo): Maestria e Specializzazione nei livelli della progressione
@@ -854,6 +855,8 @@ function controllaTecniche(prima, dopo, v, dati) {
 // Ricalcolo e scheda
 
 /** Rigioca creazione e livelli. Restituisce lo stato finale e tutti gli errori, livello per livello. */
+export function ricalcolaAvanzamento(personaggio, dati, finoA = Infinity) { return ricalcola(personaggio, dati, finoA); }
+
 function ricalcola(personaggio, dati, finoA = Infinity) {
   const p = migraPersonaggio(personaggio);
   const { stato: iniziale, errori } = statoCreazione(p.creazione, dati);
@@ -872,7 +875,28 @@ function ricalcola(personaggio, dati, finoA = Infinity) {
     errori.push(...e.map((x) => ({ ...x, livello: stato.livello + 1, campo: `livelli[${i}].${x.campo}` })));
     stato = applicaVoce(stato, voce, dati);
   });
-  return { stato, ...separaPuntiLiberi(p, errori, finoA, dati, stato) };
+  return { stato, ...separaPuntiLiberi(p, filtraForzati(p, errori), finoA, dati, stato) };
+}
+
+/** Lotto 165: il blocco del Direttore sui Punti Abilità di un evento (1 = creazione), o null. */
+export function puntiDirettoreDi(personaggio, livello) {
+  const p = migraPersonaggio(personaggio);
+  const d = livello === 1 ? p.creazione?.puntiDirettore : p.livelli[livello - 2]?.puntiDirettore;
+  return isOggetto(d) ? d : null;
+}
+
+/**
+ * Lotto 165: i punti che il Direttore ha forzato oltre una regola (limite del VA, VA minimo) restano nel livello come sua
+ * eccezione: non sono errori della scheda e non chiedono di essere riassegnati. Si vedono nel pannello «Sposta i punti».
+ */
+function filtraForzati(p, errori) {
+  const forzati = (livello) => new Set(puntiDirettoreDi(p, livello)?.forzati ?? []);
+  return errori.filter((e) => {
+    const m = /^(?:creazione\.puntiAbilitaLiberi|livelli\[(\d+)\]\.puntiAbilita)\.(.+)$/.exec(e.campo ?? '');
+    if (!m) return true;
+    const livello = m[1] === undefined ? 1 : Number(m[1]) + 2;
+    return !forzati(livello).has(m[2]);
+  });
 }
 
 // ---------------------------------------------------------------------------
@@ -909,9 +933,15 @@ function separaPuntiLiberi(p, errori, finoA, dati, stato = null) {
   // la creazione ancora in corso (altre scelte mancanti) resta un normale «incompleto» del wizard
   const creazioneAperta = errori.some((e) => e.livello === 1 && e.campo !== 'creazione.puntiAbilitaLiberi' && !e.inattivi);
   for (const ev of eventiPuntiLiberi(p, finoA, dati)) {
-    const { livello, previsti, assegnati } = ev;
+    const { livello, assegnati } = ev;
+    // lotto 165: il totale del livello deciso dal Direttore (punti portati da un altro livello, o uno in più) vale come
+    // previsto; i punti forzati oltre il limite restano come sua eccezione, non si chiede di riassegnarli
+    const dir = puntiDirettoreDi(p, livello);
+    const previsti = Number.isInteger(dir?.totale) ? dir.totale : ev.previsti;
+    if (Number.isInteger(dir?.totale)) { togli.add(`${ev.campo}|incompleto`); togli.add(`${ev.campo}|eccesso`); }
     const aperta = livello === 1 && creazioneAperta;
-    const inattivi = aperta ? {} : inattiviDi(livello);
+    const forzati = new Set(dir?.forzati ?? []);
+    const inattivi = aperta ? {} : Object.fromEntries(Object.entries(inattiviDi(livello)).filter(([a]) => !forzati.has(a)));
     const nInattivi = somma(inattivi);
     const attivi = assegnati - nInattivi;
     if (attivi < previsti && !aperta) {

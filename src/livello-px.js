@@ -84,6 +84,6 @@ const testoValore = (v) => {
  * @returns elenco di «Etichetta: valore» (vuoto se il livello non porta scelte oltre al numero)
  */
 export function scelteDelLivello(voce) {
-  return Object.entries(voce ?? {}).filter(([k]) => k !== 'livello')
+  return Object.entries(voce ?? {}).filter(([k]) => k !== 'livello' && k !== 'puntiDirettore')
     .map(([k, v]) => [ETICHETTE_VOCE[k] ?? k, testoValore(v)]).filter(([, t]) => t).map(([e, t]) => `${e}: ${t}`);
 }

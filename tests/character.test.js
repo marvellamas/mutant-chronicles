@@ -187,8 +187,8 @@ test('serializza → deserializza restituisce le stesse scelte', () => {
 
 test('il file contiene solo le scelte, mai valori calcolati', () => {
   const obj = JSON.parse(serializza({ ...MISHIMA_AGENTE, pv: 99, abilita: [] }));
-  // il ritratto, la dotazione, i parametri dei Talenti, l'Umanità, i veicoli, gli incantesimi aggiunti a mano e i campi dei Talenti v1.0 vuoti non si scrivono (i file di prima restano identici)
-  assert.deepEqual(Object.keys(obj.scelte).sort(), Object.keys(nuoveScelte()).filter((k) => !['ritratto', 'dotazione', 'parametriTalenti', 'umanita', 'veicoli', 'incantesimiAMano', 'correzioniMaster', 'circostanzeMaster', 'progettiMaster', 'regimeTalenti', 'specializzazioneIniziale', 'talentiChiusiFino'].includes(k)).sort());
+  // il ritratto, la dotazione, i parametri dei Talenti, l'Umanità, i veicoli, gli incantesimi aggiunti a mano e i campi dei Talenti v1.0 vuoti e il blocco del Direttore sui punti (lotto 165) non si scrivono (i file di prima restano identici)
+  assert.deepEqual(Object.keys(obj.scelte).sort(), Object.keys(nuoveScelte()).filter((k) => !['ritratto', 'dotazione', 'parametriTalenti', 'umanita', 'veicoli', 'incantesimiAMano', 'correzioniMaster', 'circostanzeMaster', 'progettiMaster', 'regimeTalenti', 'specializzazioneIniziale', 'talentiChiusiFino', 'puntiDirettore'].includes(k)).sort());
 });
 
 test('deserializza: errori leggibili su file non validi', () => {

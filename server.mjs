@@ -132,6 +132,7 @@ import './tools/guardia-subito.mjs'; // lotto 150: la guardia sulle cartelle ver
 import { proteggiBlocchiMaster } from './src/correzioni-master.js';
 import { controllaTalentiDaTablet } from './src/talenti-tablet.js';
 import { controllaLivelloDaTablet } from './src/livello-px.js';
+import { controllaPuntiDaTablet } from './src/sposta-punti.js';
 import { nuoviPremiDoppi } from './src/px-partita.js';
 import { createServer } from 'node:http';
 import { readFileSync, createReadStream } from 'node:fs';
@@ -1931,6 +1932,9 @@ async function api(req, res, percorso, cartella, tavolo, scontri, nemici, radice
         const atto = await attoCorrente(px, dati.px_partita);
         const l = controllaLivelloDaTablet(o, disco, { atto, p: dati.px_partita });
         if (!l.ok) return json(res, l.stato, { errore: l.errore, livelloPx: true });
+        // lotto 165 (02/11/2026): i Punti Abilità già spesi in un livello li sposta solo il Direttore (src/sposta-punti.js)
+        const pa = controllaPuntiDaTablet(o, disco, dati);
+        if (!pa.ok) return json(res, pa.stato, { errore: pa.errore, puntiAbilita: true });
       }
       await mkdir(cartella, { recursive: true });
       // «Modifica master» (12/10): un salvataggio che non arriva dal PC del master (il tablet di un giocatore) non cambia
