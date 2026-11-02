@@ -146,16 +146,19 @@ test('L’ARMA NON ENTRA NELL’INVENTARIO SENZA L’ATTO DEL DIRETTORE', () => 
 
 test('consegna del Direttore: arma con forma, modulatore, chi e quando; spada senza SIN; scheggia uscita; SIN 1 del modulatore', () => {
   const d = dimitri();
+  // A.231: il progetto lavora sulla CyberArma che c'è già (nel file vero dal 26/10): la consegna aggiorna quella voce
+  d.creazione.equipaggiamento = [...d.creazione.equipaggiamento, { uid: 'ca1', rif: 'armi:cyberarma', stato: 'pronta', quantita: 1, note: '' }];
   const spada = d.creazione.equipaggiamento.find((v) => v.rif === 'armi_corporative:spada-elettrificata-csa-404');
   const schegge = d.creazione.equipaggiamento.filter((v) => v.rif === 'artefatti:scheggia-instabile-da-5-pm-chroma-verde');
   let r = apriProgetto([], 'paradise-dimitri', dati, { quando: Q });
   r = scegliForma(r.lista, r.progetto.id, 'lancia', dati, { quando: Q });
   const c = { ...d.creazione, progettiMaster: r.lista };
-  const k = consegnaArma(c, r.progetto.id, dati, { quando: Q, master: true, donatore: spada.uid, scheggia: schegge[0].uid, provenienza: 'da decidere (A.231)', uid: 'ca1' });
-  assert.ok(!k.errore);
+  const k = consegnaArma(c, r.progetto.id, dati, { quando: Q, master: true, donatore: spada.uid, scheggia: schegge[0].uid, provenienza: 'l’originale di Park (A.231)', uid: 'viola' });
+  assert.ok(!k.errore, k.errore);
+  assert.equal(ciber(k.creazione.equipaggiamento).length, 1, 'la stessa CyberArma, non una seconda');
   const v = k.creazione.equipaggiamento.find((x) => x.uid === 'ca1');
   assert.deepEqual([v.rif, v.manifestazione, v.modulatore_neurale, v.consegna.da, v.consegna.quando, v.consegna.progetto], ['armi:cyberarma', 'lancia', true, 'Direttore', Q, r.progetto.id]);
-  assert.equal(v.esemplare.provenienza, 'da decidere (A.231)');
+  assert.equal(v.esemplare.provenienza, 'l’originale di Park (A.231)');
   assert.equal(k.creazione.equipaggiamento.find((x) => x.uid === spada.uid).sin_rimosso.quando, Q);
   assert.equal(k.creazione.equipaggiamento.filter((x) => x.rif === 'artefatti:scheggia-instabile-da-5-pm-chroma-verde').length, schegge.length - 1);
   assert.deepEqual(k.creazione.progettiMaster[0].consegna.donatore.uid, spada.uid);
@@ -204,11 +207,18 @@ test('tablet: nei progetti cambia solo la forma, e solo finché è sceglibile; n
 
 test('Dimitri (copia): rapporto in sola lettura, file invariato', () => {
   const prima = readFileSync(FILE, 'utf8');
-  const r = rapportoCyberArma(dimitri(), dati);
+  // senza la CyberArma (la copia del 04/10): l'avviso che il Direttore la deve aggiungere e ricondurre
+  assert.ok(rapportoCyberArma(dimitri(), dati).avvisi.some((a) => /non c’è la CyberArma recuperata da Park/.test(a)));
+  // con la voce come nel file del 26/10: la stessa voce, ricondotta e aggiornata (A.231)
+  const d = dimitri();
+  d.creazione.equipaggiamento = [...d.creazione.equipaggiamento, { uid: 'emvozv1rs1re4', rif: 'armi:cyberarma', stato: 'pronta', quantita: 1, note: '' }];
+  const r = rapportoCyberArma(d, dati);
   assert.equal(readFileSync(FILE, 'utf8'), prima);
   assert.deepEqual(r.avvisi, []);
   const v = (cosa) => r.voci.find((x) => x.cosa.startsWith(cosa));
-  assert.equal(v('CyberArma nell’inventario').oggi, 'nessuna');
+  assert.match(v('CyberArma nell’inventario').oggi, /non ancora ricondotta/);
+  assert.match(v('CyberArma nell’inventario').dopo, /la stessa voce \(emvozv1rs1re4\).*nessuna seconda CyberArma/);
+  assert.match(v('Frammento Viola').dopo, /oggetto a parte/);
   assert.match(v('Sintonizzazione').dopo, /^5 \/ 11/);
   assert.match(v('CyberArma consegnata').dopo, /SIN 1 del modulatore/);
   assert.match(v('Spada Cybertronic').dopo, /senza SIN/);

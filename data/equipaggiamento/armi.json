@@ -960,7 +960,7 @@
         "Cyber-Arma"
       ],
       "paragrafo": "§§7.25–7.25.4",
-      "versione_manuale": "Armamenti 0.74 / scheda CyberArma per Dimitri 1.0 (31/10/2026)",
+      "versione_manuale": "Armamenti 0.74 (02/11/2026) / A.231, A.235",
       "abilita": "Armi da mischia",
       "specializzazione": "specializzazione-spade",
       "manovre": [
@@ -985,7 +985,7 @@
       "_nota_costo": "Armamenti 0.74 §7.25: non è fissato un prezzo unico per gli originali; il valore dipende da fattura, unicità, proprietà e provenienza. Nell’app il prezzo risulta non disponibile, non zero.",
       "proprieta": [],
       "manifestazioni": {
-        "fonte": "Armamenti 0.74 §7.25, §7.25.2; scheda per Dimitri 1.0; A.166 del 16/10/2026 per famiglia, Specializzazione e Manovre",
+        "fonte": "Armamenti 0.74 §7.25 (ritoccato il 02/11/2026); A.231 e A.235 (Davide, 02/11/2026); A.166 del 16/10/2026 per le forme",
         "abilita": "Armi da mischia",
         "_abilita": "Si usa sempre con Armi da mischia, qualunque forma sia manifestata: non si passa ad Armi da guerra, Corpo a corpo o altro perché l’arma ordinaria corrispondente usa quell’Abilità.",
         "scelta_libera": [
@@ -1058,7 +1058,7 @@
             "manovre": [
               "generali"
             ],
-            "nota": "Si usa la procedura di Immobilizzare con la Frusta (§7.1.5); la presa senza danno non acquista il bonus al danno della Specializzazione."
+            "nota": "Famiglia Armi flessibili. La forma a frusta non concede da sola Immobilizzare a distanza: le Manovre seguono la compatibilità della forma e i requisiti ordinari, senza le proprietà della frusta commerciale (A.235, che corregge la A.166)."
           },
           {
             "id": "picca",
@@ -1088,13 +1088,13 @@
         ],
         "_altre_forme": "A.166: per le forme non elencate si usa la famiglia corrispondente del catalogo, con la sua Specializzazione e le sue Manovre.",
         "_forma": "La forma cambia esclusivamente mani occupate e portata: danno, Abilità, requisito FOR, durata e costi restano quelli della CyberArma; non si copiano le proprietà delle armi commerciali (Armamenti 0.74 §7.25). Le opzioni a due mani richiedono un’impugnatura esistente compatibile. La forma resta fissa: per cambiarla serve un nuovo intervento sul dispositivo (riconfigurazione, §7.25.2).",
-        "_a235": "A.235 (aperta): famiglia, Specializzazione e Manovre per forma vengono dalla A.166; gli Armamenti 0.74 dicono che la forma cambia soltanto mani e portata. Finché Davide non conferma, l’app le tiene."
+        "_a235": "A.235 (Davide, 02/11/2026): famiglia e Specializzazione seguono la forma manifestata — Spade per una lama, Asce per un’ascia, Armi Inastate per una lancia, Armi Flessibili per una frusta — e si applica una sola Specializzazione pertinente. Restano fissi il profilo dell’utilizzatore e l’Abilità Armi da mischia (Tecnomante: 1d8 Magico, FOR 3, 1 AzP e 2 PM per 10 Round): la forma cambia mani e portata, senza importare danno, requisiti o proprietà dell’arma commerciale. Le Manovre seguono compatibilità della forma e requisiti ordinari."
       },
       "id": "cyberarma",
       "nome": "CyberArma",
       "effetto_breve": "Artefatto TecnoMistico dei Custodi, pezzo unico: Custode SnT 1, Tecnomante SnT 2 con i PM personali. 1d8 Magico per Tecnomante e conversioni; la forma cambia solo mani e portata.",
       "peso": 0.5,
-      "_nota_peso": "Armamenti 0.74 §7.25: peso, dimensioni e Integrità del supporto si registrano per esemplare. 0,5 kg, Qualità Non comune, PS Integrità 12 e 4 PI sono i valori della A.158 (13/10) e restano finché l’esemplare non ne ha di propri (A.235).",
+      "_nota_peso": "A.235 (Davide, 02/11/2026): peso e Integrità si registrano per esemplare. 0,5 kg, Qualità Non Comune, PS Integrità 12 e 4 PI sono i valori del supporto originale recuperato da Park (fissati con la A.158) e restano quelli di questa voce; non diventano obbligatori per ogni CyberArma originale. Le modifiche fisiche si annotano sul singolo esemplare (`esemplare.fisico`); la manifestazione energetica non aggiunge peso.",
       "uso_per_classe": {
         "fonte": "Armamenti 0.74 §7.25 (impieghi) e A.158 (Custode)",
         "predefinito": "altre",
@@ -1130,9 +1130,50 @@
         ]
       },
       "costruzione": {
-        "fonte": "Armamenti 0.74 §7.25 («Costruzione e valore»)",
-        "chi": "Soltanto i Custodi costruiscono le CyberArmi originali (Maestro d’Arma al III Grado). Il Tecnomante può alimentare un originale esistente con i PM personali e intervenire su un esemplare esistente (batteria, modulatore, conversione a NeC); non costruisce nuovi originali.",
-        "nota": "I passi e i costi della costruzione di un originale non sono nella 0.74 (quelli della A.158 prevedevano anche il Tecnomante con Architetto TecnoMistico: A.235)."
+        "fonte": "Armamenti 0.74 §7.25 (ritoccato il 02/11/2026); A.231 e A.235 (Davide, 02/11/2026)",
+        "chi": "Soltanto i Custodi costruiscono le CyberArmi originali. Il Tecnomante può studiare e modificare un originale esistente, senza costruirne di nuovi: è superata l’autorizzazione alla costruzione della A.158.",
+        "procedura_base": {
+          "chi": "Custode con Maestro d’Arma",
+          "passi": [
+            {
+              "fase": "Assemblaggio",
+              "prova": {
+                "abilita": "Tecnologia",
+                "modificatore": -4
+              },
+              "ore": 16,
+              "cr": 1000
+            },
+            {
+              "fase": "Infusione",
+              "prova": {
+                "abilita": "Rituali",
+                "modificatore": 0
+              },
+              "ore": 1,
+              "cr": 250,
+              "pm": 3
+            }
+          ],
+          "totale": {
+            "ore": 17,
+            "cr": 1250,
+            "pm": 3,
+            "nota": "con il progetto disponibile"
+          },
+          "progetto": {
+            "fase": "Sviluppo del progetto",
+            "prova": {
+              "abilita": "Artefatti",
+              "modificatore": 0
+            },
+            "ore": 4,
+            "cr": 100,
+            "nota": "solo se il progetto va sviluppato"
+          },
+          "nota": "Costi di realizzazione della configurazione base, non un prezzo universale di vendita. Restano gli esiti delle Prove e le particolarità dell’esemplare."
+        },
+        "nomi": "Ogni CyberArma originale ha un nome univoco derivato dal Custode che l’ha creata. Il profilo originario resta nello storico; dopo le modifiche confermate dal Direttore il profilo attuale prende il nome di chi la personalizza (Armamenti 0.74 §7.25, «Denominazione e storico»). I due nomi sono lo stesso esemplare: una sola voce fisica."
       },
       "modulatore_neurale": {
         "sin": 1,
@@ -1178,14 +1219,14 @@
         {
           "id": "paradise-dimitri",
           "nome": "CyberArma: lavori a Paradise (Dimitri)",
-          "fonte": "Armamenti 0.74 §7.25.4; scheda «CyberArma Opzioni per Dimitri» 1.0",
+          "fonte": "Armamenti 0.74 §7.25 (ritoccato il 02/11/2026); A.231 e A.235 (Davide, 02/11/2026); appunti di Dimitri v1.2; scheda «CyberArma Opzioni per Dimitri» 1.0",
           "classe": "Tecnomante",
           "giorni_disponibili": 3,
           "budget": {
             "ore": 24,
             "cr": 400
           },
-          "descrizione": "Preparare la scheggia Verde instabile già posseduta come focalizzatore e recuperare, adattare e installare il modulo neurale della spada Cybertronic. Configurazione a PM personali: 1 AzP e 2 PM per 10 Round, SnT 2, SIN 1 al tiro per colpire con il modulo collegato. Niente Batteria interna, conversione a NeC o altre modifiche.",
+          "descrizione": "Sulla CyberArma originale di Park, già nell’inventario: preparare la scheggia Verde instabile già posseduta e metterla al posto del frammento Viola, recuperare e integrare il modulo SIN della spada Cybertronic, personalizzare la forma e collaudare. Configurazione a PM personali: 1 AzP e 2 PM per 10 Round, SnT 2, SIN 1 al tiro per colpire con il modulo collegato. Batteria interna e conversione a NeC restano sviluppi successivi.",
           "forma": {
             "chi": "giocatore",
             "quando": "prima della lavorazione",
@@ -1203,20 +1244,27 @@
               "id": "scheggia",
               "nome": "Scheggia instabile Verde (già posseduta)",
               "rif": "artefatti:scheggia-instabile-da-5-pm-chroma-verde",
-              "nota": "Si lavora scarica; gli eventuali PM si possono usare prima. Con successo diventa un componente integrato: colore Verde, nessuna riserva di PM, nessuna SnT in più. Un semplice fallimento non la distrugge."
+              "nota": "Prende il posto del frammento Viola come focalizzatore. Si lavora scarica; gli eventuali PM si possono usare prima. Con successo diventa un componente integrato: colore Verde, nessuna riserva di PM, nessuna SnT in più; esce dall’inventario. Un semplice fallimento non la distrugge."
             },
             {
               "id": "modulo",
               "nome": "Modulo neurale della spada Cybertronic",
               "rif": "armi_corporative:spada-elettrificata-csa-404",
-              "nota": "Dopo il recupero la spada perde il proprio SIN; con il circuito elettrico intatto conserva danno ordinario e scariche. Il modulo non trasferisce Elettricità alla CyberArma."
+              "nota": "Il modulo trasferito viene rimosso dalla spada donatrice: la spada perde il proprio SIN; con il circuito elettrico intatto conserva danno ordinario e scariche. Il modulo non trasferisce Elettricità alla CyberArma."
+            },
+            {
+              "id": "viola",
+              "nome": "Frammento Viola estratto",
+              "rif": "artefatti:chroma-viola-frammento",
+              "esce": true,
+              "nota": "Estratto dall’esemplare di Park, resta un oggetto separato nell’inventario, con le proprie conseguenze (Corruzione) e la necessità di contenimento: le decide il Direttore (A.231)."
             }
           ],
           "giorni": [
             {
               "n": 1,
               "ore": 8,
-              "lavoro": "Studio e progetto della configurazione scelta",
+              "lavoro": "Studio e progetto",
               "prova": {
                 "abilita": "Artefatti",
                 "modificatore": -2
@@ -1227,7 +1275,7 @@
             {
               "n": 2,
               "ore": 8,
-              "lavoro": "Preparazione e stabilizzazione della scheggia Verde",
+              "lavoro": "Preparazione della scheggia Verde, sostituzione del Viola e collaudo",
               "prova": {
                 "abilita": "Tecnologia",
                 "modificatore": -2
@@ -1238,7 +1286,7 @@
             {
               "n": 3,
               "ore": 8,
-              "lavoro": "Recupero del modulo, adattamento, installazione e collaudo",
+              "lavoro": "Recupero e integrazione del modulo SIN dalla spada Cybertronic, personalizzazione della forma e collaudo finale",
               "prova": {
                 "abilita": "Tecnologia",
                 "modificatore": -2
@@ -1264,8 +1312,10 @@
           "regole": [
             "Gli eventuali nuovi tentativi devono rientrare nel tempo e nelle risorse disponibili; un semplice fallimento non distrugge automaticamente la scheggia.",
             "Le risorse indicate sono materiali e consumabili. I componenti già posseduti e il lavoro svolto personalmente non vengono acquistati di nuovo; la tariffa del servizio completo non si somma automaticamente.",
-            "Il programma non registra come già eseguiti gli interventi e non assegna una manifestazione a Dimitri.",
-            "Il profilo del Custode di Park rimane distinto: danni e Talenti personali di Park non passano all’utilizzatore."
+            "Il programma non registra come già eseguiti gli interventi: li conferma soltanto il Direttore, che rende disponibile il profilo modificato con «Consegna l’arma».",
+            "«Consegna l’arma» aggiorna lo stesso esemplare, conservandone provenienza e storico: nessuna seconda CyberArma (A.231).",
+            "Il profilo del Custode di Park rimane distinto: danni e Talenti personali di Park non passano all’utilizzatore.",
+            "La forma la sceglie il giocatore e si registra nel progetto. Batteria interna e conversione a NeC restano sviluppi successivi, non compresi in questi tre giorni."
           ],
           "risultato": {
             "rif": "armi:cyberarma",
@@ -1273,7 +1323,18 @@
               "modulatore_neurale": true,
               "focalizzatore": "Verde",
               "configurazione": "PM personali"
-            }
+            },
+            "nome": "CyberArma Dimitri",
+            "aggiorna_esemplare": true
+          },
+          "esemplare_di_partenza": {
+            "rif": "armi:cyberarma",
+            "nome": "CyberArma Park",
+            "provenienza": "CyberArma originale di Park, recuperata",
+            "focalizzatore": "Viola",
+            "corruzione": "Corruzione 1",
+            "manifestazione_precedente": "frusta",
+            "nota": "A.231: la frusta era la manifestazione usata da Park; Dimitri non acquisisce le statistiche personali di Park né le capacità del Custode. La voce già presente nell’inventario va verificata e ricondotta a questo esemplare: la sua presenza non certifica che le modifiche siano già state eseguite."
           }
         }
       ]
@@ -1287,7 +1348,7 @@
         "Cyber-Arma"
       ],
       "paragrafo": "§7.25 («Batteria interna opzionale»), §7.25.2",
-      "versione_manuale": "Armamenti 0.74 / scheda CyberArma per Dimitri 1.0 (31/10/2026)",
+      "versione_manuale": "Armamenti 0.74 (02/11/2026) / A.231, A.235",
       "abilita": "Armi da mischia",
       "specializzazione": "specializzazione-spade",
       "manovre": [
@@ -1312,7 +1373,7 @@
       "_nota_costo": "Armamenti 0.74 §7.25: non è fissato un prezzo unico per gli originali; il valore dipende da fattura, unicità, proprietà e provenienza. Nell’app il prezzo risulta non disponibile, non zero.",
       "proprieta": [],
       "manifestazioni": {
-        "fonte": "Armamenti 0.74 §7.25, §7.25.2; scheda per Dimitri 1.0; A.166 del 16/10/2026 per famiglia, Specializzazione e Manovre",
+        "fonte": "Armamenti 0.74 §7.25 (ritoccato il 02/11/2026); A.231 e A.235 (Davide, 02/11/2026); A.166 del 16/10/2026 per le forme",
         "abilita": "Armi da mischia",
         "_abilita": "Si usa sempre con Armi da mischia, qualunque forma sia manifestata: non si passa ad Armi da guerra, Corpo a corpo o altro perché l’arma ordinaria corrispondente usa quell’Abilità.",
         "scelta_libera": [
@@ -1385,7 +1446,7 @@
             "manovre": [
               "generali"
             ],
-            "nota": "Si usa la procedura di Immobilizzare con la Frusta (§7.1.5); la presa senza danno non acquista il bonus al danno della Specializzazione."
+            "nota": "Famiglia Armi flessibili. La forma a frusta non concede da sola Immobilizzare a distanza: le Manovre seguono la compatibilità della forma e i requisiti ordinari, senza le proprietà della frusta commerciale (A.235, che corregge la A.166)."
           },
           {
             "id": "picca",
@@ -1415,7 +1476,7 @@
         ],
         "_altre_forme": "A.166: per le forme non elencate si usa la famiglia corrispondente del catalogo, con la sua Specializzazione e le sue Manovre.",
         "_forma": "La forma cambia esclusivamente mani occupate e portata: danno, Abilità, requisito FOR, durata e costi restano quelli della CyberArma; non si copiano le proprietà delle armi commerciali (Armamenti 0.74 §7.25). Le opzioni a due mani richiedono un’impugnatura esistente compatibile. La forma resta fissa: per cambiarla serve un nuovo intervento sul dispositivo (riconfigurazione, §7.25.2).",
-        "_a235": "A.235 (aperta): famiglia, Specializzazione e Manovre per forma vengono dalla A.166; gli Armamenti 0.74 dicono che la forma cambia soltanto mani e portata. Finché Davide non conferma, l’app le tiene."
+        "_a235": "A.235 (Davide, 02/11/2026): famiglia e Specializzazione seguono la forma manifestata — Spade per una lama, Asce per un’ascia, Armi Inastate per una lancia, Armi Flessibili per una frusta — e si applica una sola Specializzazione pertinente. Restano fissi il profilo dell’utilizzatore e l’Abilità Armi da mischia (Tecnomante: 1d8 Magico, FOR 3, 1 AzP e 2 PM per 10 Round): la forma cambia mani e portata, senza importare danno, requisiti o proprietà dell’arma commerciale. Le Manovre seguono compatibilità della forma e requisiti ordinari."
       },
       "id": "cyberarma-batteria-verde",
       "nome": "CyberArma con Batteria Verde",
@@ -1472,7 +1533,7 @@
       "famiglia": "Spade",
       "nomi_alternativi": [],
       "paragrafo": "§7.25 («Conversione a NeC»), §7.25.2",
-      "versione_manuale": "Armamenti 0.74 / scheda CyberArma per Dimitri 1.0 (31/10/2026)",
+      "versione_manuale": "Armamenti 0.74 (02/11/2026) / A.231, A.235",
       "abilita": "Armi da mischia",
       "specializzazione": "specializzazione-spade",
       "manovre": [
@@ -1497,7 +1558,7 @@
       "_nota_costo": "Armamenti 0.74 §7.25: non è fissato un prezzo unico per gli originali; il valore dipende da fattura, unicità, proprietà e provenienza. Nell’app il prezzo risulta non disponibile, non zero.",
       "proprieta": [],
       "manifestazioni": {
-        "fonte": "Armamenti 0.74 §7.25, §7.25.2; scheda per Dimitri 1.0; A.166 del 16/10/2026 per famiglia, Specializzazione e Manovre",
+        "fonte": "Armamenti 0.74 §7.25 (ritoccato il 02/11/2026); A.231 e A.235 (Davide, 02/11/2026); A.166 del 16/10/2026 per le forme",
         "abilita": "Armi da mischia",
         "_abilita": "Si usa sempre con Armi da mischia, qualunque forma sia manifestata: non si passa ad Armi da guerra, Corpo a corpo o altro perché l’arma ordinaria corrispondente usa quell’Abilità.",
         "scelta_libera": [
@@ -1570,7 +1631,7 @@
             "manovre": [
               "generali"
             ],
-            "nota": "Si usa la procedura di Immobilizzare con la Frusta (§7.1.5); la presa senza danno non acquista il bonus al danno della Specializzazione."
+            "nota": "Famiglia Armi flessibili. La forma a frusta non concede da sola Immobilizzare a distanza: le Manovre seguono la compatibilità della forma e i requisiti ordinari, senza le proprietà della frusta commerciale (A.235, che corregge la A.166)."
           },
           {
             "id": "picca",
@@ -1600,7 +1661,7 @@
         ],
         "_altre_forme": "A.166: per le forme non elencate si usa la famiglia corrispondente del catalogo, con la sua Specializzazione e le sue Manovre.",
         "_forma": "La forma cambia esclusivamente mani occupate e portata: danno, Abilità, requisito FOR, durata e costi restano quelli della CyberArma; non si copiano le proprietà delle armi commerciali (Armamenti 0.74 §7.25). Le opzioni a due mani richiedono un’impugnatura esistente compatibile. La forma resta fissa: per cambiarla serve un nuovo intervento sul dispositivo (riconfigurazione, §7.25.2).",
-        "_a235": "A.235 (aperta): famiglia, Specializzazione e Manovre per forma vengono dalla A.166; gli Armamenti 0.74 dicono che la forma cambia soltanto mani e portata. Finché Davide non conferma, l’app le tiene."
+        "_a235": "A.235 (Davide, 02/11/2026): famiglia e Specializzazione seguono la forma manifestata — Spade per una lama, Asce per un’ascia, Armi Inastate per una lancia, Armi Flessibili per una frusta — e si applica una sola Specializzazione pertinente. Restano fissi il profilo dell’utilizzatore e l’Abilità Armi da mischia (Tecnomante: 1d8 Magico, FOR 3, 1 AzP e 2 PM per 10 Round): la forma cambia mani e portata, senza importare danno, requisiti o proprietà dell’arma commerciale. Le Manovre seguono compatibilità della forma e requisiti ordinari."
       },
       "id": "cyberarma-nec",
       "nome": "CyberArma convertita a NeC",

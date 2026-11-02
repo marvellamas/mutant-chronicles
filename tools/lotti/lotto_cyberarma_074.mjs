@@ -17,6 +17,12 @@
 //    src/progetti.js. Il progetto non consegna niente da solo: l'arma entra solo con «Consegna» del Direttore.
 //
 // Uso: node tools/lotti/lotto_cyberarma_074.mjs [--scrivi]   (senza --scrivi dice soltanto cosa cambierebbe)
+// 02/11/2026 (lotto 164): lotto storico. Le risposte A.231 e A.235 e l'Armamenti 0.74 del 02/11 sono applicate sopra questi
+// dati da tools/lotti/lotto_cyberarma_a231_a235.mjs: un rilancio con --scrivi le riporterebbe indietro.
+if (process.argv.includes('--scrivi') && !process.argv.includes('--forza')) {
+  console.error('lotto_cyberarma_074: lotto storico (A.231 e A.235 applicate da lotto_cyberarma_a231_a235.mjs). Per forzare: --forza.');
+  process.exit(1);
+}
 import fs from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import { dirname, join } from 'node:path';

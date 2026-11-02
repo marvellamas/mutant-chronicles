@@ -700,7 +700,13 @@ export function normalizzaEquipaggiamento(valore) {
     // consegna del Direttore da un progetto (chi e quando: src/progetti.js → consegnaArma)
     if (v.modulatore_neurale === true) out.modulatore_neurale = true;
     if (isOggetto(v.sin_rimosso) && testo(v.sin_rimosso.quando)) out.sin_rimosso = { quando: v.sin_rimosso.quando, ...(testo(v.sin_rimosso.progetto) ? { progetto: v.sin_rimosso.progetto } : {}) };
-    if (isOggetto(v.esemplare)) out.esemplare = Object.fromEntries(Object.entries(v.esemplare).filter(([, x]) => typeof x === 'string' && x.trim()).map(([k, x]) => [k, x.trim().slice(0, 300)]));
+    if (isOggetto(v.esemplare)) {
+      out.esemplare = Object.fromEntries(Object.entries(v.esemplare).filter(([, x]) => typeof x === 'string' && x.trim()).map(([k, x]) => [k, x.trim().slice(0, 300)]));
+      // A.231: storico dell'esemplare (profilo originario, modifiche confermate dal Direttore: data, nome, esito, interventi)
+      const storico = (Array.isArray(v.esemplare.storico) ? v.esemplare.storico : []).filter((r) => isOggetto(r) && testo(r.quando) && testo(r.cosa))
+        .map((r) => Object.fromEntries(['quando', 'nome', 'esito', 'cosa', 'da', 'progetto'].filter((k) => testo(r[k])).map((k) => [k, r[k].trim().slice(0, 300)])));
+      if (storico.length) out.esemplare.storico = storico;
+    }
     if (isOggetto(v.consegna) && testo(v.consegna.quando) && testo(v.consegna.da)) out.consegna = { quando: v.consegna.quando, da: v.consegna.da, ...(testo(v.consegna.progetto) ? { progetto: v.consegna.progetto } : {}) };
     // A.61: armatura Capolavoro del Corazzaio, con la Contromisura scelta alla costruzione
     if (isOggetto(v.capolavoro) && testo(v.capolavoro.contromisura)) out.capolavoro = { contromisura: v.capolavoro.contromisura };
@@ -803,7 +809,9 @@ export function risolvi(voce, cat) {
   const def = voce.rif ? cat.perRif.get(voce.rif) ?? null : schedaDotazione ? cat.perRif.get(schedaDotazione) ?? null : null;
   const fuoriCatalogo = !!voce.rif && !def;
   const tipo = def?.tipo ?? voce.personalizzato?.tipo ?? 'altro';
-  const nome = (schedaDotazione ? voce.personalizzato?.nome : null) ?? (def ? voce.nome_dotazione : null) ?? def?.nome ?? voce.personalizzato?.nome ?? (fuoriCatalogo ? voce.rif : 'Oggetto');
+  // A.231: un esemplare con un nome proprio («CyberArma Park», «CyberArma Dimitri») si chiama così
+  const nomeEsemplare = def && typeof voce.esemplare?.nome === 'string' && voce.esemplare.nome.trim() ? voce.esemplare.nome.trim() : null;
+  const nome = (schedaDotazione ? voce.personalizzato?.nome : null) ?? nomeEsemplare ?? (def ? voce.nome_dotazione : null) ?? def?.nome ?? voce.personalizzato?.nome ?? (fuoriCatalogo ? voce.rif : 'Oggetto');
   const effetti = fuoriCatalogo ? [] : def?.effetti ?? cat.dotazione?.[voce.dotazione_id]?.effetti ?? voce.personalizzato?.effetti ?? [];
   // un rinforzo si indossa da solo solo se la sua voce lo consente (rinforzi.json → indossabile_da_solo)
   const stati0 = statiPer(tipo, effetti).filter((s) => !(tipo === 'rinforzo' && s === 'indossata' && !def?.indossabile_da_solo));

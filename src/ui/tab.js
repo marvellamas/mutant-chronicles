@@ -16,7 +16,7 @@ import { aggiungiIncantesimoAMano, incantesimoPerId, cercaIncantesimi, togliInca
 import { fasciaMaster, toccoMaster, notaCorrezione, sezioneRegistro, conMotivoMaster, bloccoLivelloMaster } from './master.js';
 import { apriTiro, sezioneTiri } from './tira-valore.js';
 import { pianoGetto } from '../getti-artefatto.js';
-import { modelliProgetto, apriProgetto, scegliForma, registraTentativo, togliUltimoTentativo, chiudiProgetto, riapriProgetto, riepilogoProgetto, formaSceglibile, avvisiConsegna, ESITI_TENTATIVO, NOMI_ESITO, ESITI_FINALI, NOMI_FINALE } from '../progetti.js';
+import { modelliProgetto, apriProgetto, scegliForma, registraTentativo, togliUltimoTentativo, chiudiProgetto, riapriProgetto, riepilogoProgetto, formaSceglibile, avvisiConsegna, esemplariDi, storicoDi, ESITI_TENTATIVO, NOMI_ESITO, ESITI_FINALI, NOMI_FINALE } from '../progetti.js';
 import { circostanzeMasterAttive } from '../correzioni-master.js';
 import { conAvviso } from './procedi.js';
 import { h, segno, svuota } from './dom.js';
@@ -3266,7 +3266,18 @@ function sezioneProgetti(ctx) {
     const voci = ctx.scelte.equipaggiamento ?? [];
     const comp = (id) => r.modello.componenti?.find((x) => x.id === id);
     const opzioni = (rif) => voci.filter((v) => v.rif === rif);
-    const c = (ui.consegna[kc] ??= { provenienza: '', donatore: opzioni(comp('modulo')?.rif)[0]?.uid ?? '', scheggia: opzioni(comp('scheggia')?.rif)[0]?.uid ?? '' });
+    const fam = esemplariDi(voci, r.modello);
+    const c = (ui.consegna[kc] ??= { provenienza: '', donatore: opzioni(comp('modulo')?.rif)[0]?.uid ?? '', scheggia: opzioni(comp('scheggia')?.rif)[0]?.uid ?? '', esemplare: fam.length === 1 ? fam[0].uid : '' });
+    // A.231: l'esemplare su cui si lavora (la CyberArma che c'è già), con il nome e lo storico; il Direttore lo riconduce
+    const partenza = r.modello.esemplare_di_partenza;
+    const esemplari = partenza ? h('div', { class: 'progetto-esemplare' }, h('h4', {}, 'Esemplare'),
+      fam.length ? h('ul', { class: 'progetto-tentativi' }, fam.map((v) => h('li', {},
+        h('strong', {}, risolvi(v, catalogo(ctx.dati)).nome), v.esemplare?.provenienza ? ` · ${v.esemplare.provenienza}` : '',
+        v.esemplare?.focalizzatore ? ` · focalizzatore ${v.esemplare.focalizzatore}` : '', v.esemplare?.corruzione ? ` · ${v.esemplare.corruzione}` : '',
+        !v.esemplare?.nome ? h('span', { class: 'nota motivo' }, ` · da ricondurre a «${partenza.nome}»: la presenza nell’inventario non certifica le modifiche`) : null,
+        master && !v.esemplare?.nome && !p.consegna ? h('button', { type: 'button', class: 'btn btn-piccolo', title: `La voce diventa «${partenza.nome}» (${partenza.focalizzatore}, ${partenza.corruzione}); nessuna modifica eseguita (A.231)`, onclick: () => ctx.azioni.riconduciEsemplare(v.uid) }, `Riconduci a «${partenza.nome}»`) : null,
+        storicoDi(v).length ? h('ul', { class: 'nota' }, storicoDi(v).map((x) => h('li', {}, `${data(x.quando)} · ${x.nome ?? ''}${x.esito ? ` · ${x.esito}` : ''} · ${x.cosa}`))) : null)))
+        : h('p', { class: 'nota motivo' }, `Nell’inventario non c’è la CyberArma da modificare: il progetto lavora su «${partenza.nome}» (${partenza.provenienza}). Il Direttore la aggiunge (Compra, gratis) e la riconduce prima della consegna.`)) : null;
     const nomeVoce = (v) => `${risolvi(v, catalogo(ctx.dati)).nome} (${NOMI_STATI[v.stato] ?? 'con sé'})`;
     const chiusura = master && !p.consegna ? (p.chiuso
       ? h('div', { class: 'riga-azioni' }, h('button', { type: 'button', class: 'btn btn-piccolo', onclick: () => applica(riapriProgetto(lista, p.id)) }, 'Riapri il progetto'))
@@ -3275,10 +3286,12 @@ function sezioneProgetti(ctx) {
         ESITI_FINALI.map((e) => h('button', { type: 'button', class: 'btn btn-piccolo', onclick: () => { const nota = ui.chiusura[kc] ?? ''; ui.chiusura[kc] = ''; applica(chiudiProgetto(lista, p.id, e, { quando: ora(), nota })); } }, NOMI_FINALE[e])))) : null;
     const avv = avvisiConsegna(p, ctx.dati);
     const consegna = p.consegna
-      ? h('p', { class: 'riquadro ok' }, h('strong', {}, 'Consegnata: '), `il Direttore ha messo l’arma nell’inventario il ${data(p.consegna.quando)}${p.consegna.donatore ? '; la spada donatrice ha perso il SIN' : ''}${p.consegna.scheggia ? '; la scheggia è diventata il focalizzatore ed è uscita dall’inventario' : ''}.`)
+      ? h('p', { class: 'riquadro ok' }, h('strong', {}, 'Consegnata: '), `${p.consegna.aggiornato ? 'il Direttore ha confermato le modifiche sulla stessa CyberArma' : 'il Direttore ha messo l’arma nell’inventario'} il ${data(p.consegna.quando)}${p.consegna.donatore ? '; la spada donatrice ha perso il SIN' : ''}${p.consegna.scheggia ? '; la scheggia è diventata il focalizzatore ed è uscita dall’inventario' : ''}${p.consegna.estratto ? '; il frammento Viola estratto è nell’inventario, a parte' : ''}.`)
       : master ? h('div', { class: 'progetto-consegna' }, h('h4', {}, 'Consegna (solo il Direttore)'),
-        h('p', { class: 'nota' }, 'L’arma entra nell’inventario soltanto da qui. La provenienza dell’originale la decide il Direttore (A.231).'),
-        h('label', { class: 'campo' }, h('span', {}, 'Provenienza dell’originale'), h('input', { type: 'text', value: c.provenienza, placeholder: 'es. l’originale di Park (A.231)', oninput: (e) => { c.provenienza = e.target.value; } })),
+        h('p', { class: 'nota' }, r.modello.risultato?.aggiorna_esemplare ? `Le modifiche diventano valide soltanto da qui: si aggiorna la stessa CyberArma («${r.modello.risultato.nome}», provenienza e storico conservati), mai una seconda arma (A.231).` : 'L’arma entra nell’inventario soltanto da qui.'),
+        r.modello.risultato?.aggiorna_esemplare && fam.length > 1 ? h('label', { class: 'campo' }, h('span', {}, 'CyberArma da aggiornare'), h('select', { onchange: (e) => { c.esemplare = e.target.value; } },
+          h('option', { value: '', selected: !c.esemplare }, 'scegli…'), fam.map((v) => h('option', { value: v.uid, selected: c.esemplare === v.uid }, nomeVoce(v))))) : null,
+        h('label', { class: 'campo' }, h('span', {}, 'Provenienza dell’originale'), h('input', { type: 'text', value: c.provenienza, placeholder: partenza?.provenienza ?? 'es. l’originale di Park', oninput: (e) => { c.provenienza = e.target.value; } })),
         h('label', { class: 'campo' }, h('span', {}, 'Spada donatrice del modulo (perde il SIN)'), h('select', { onchange: (e) => { c.donatore = e.target.value; } },
           h('option', { value: '', selected: !c.donatore }, 'nessuna'), opzioni(comp('modulo')?.rif).map((v) => h('option', { value: v.uid, selected: c.donatore === v.uid }, nomeVoce(v))))),
         h('label', { class: 'campo' }, h('span', {}, 'Scheggia diventata focalizzatore (esce dall’inventario)'), h('select', { onchange: (e) => { c.scheggia = e.target.value; } },
@@ -3286,8 +3299,8 @@ function sezioneProgetti(ctx) {
         avv.length ? h('p', { class: 'nota motivo' }, `Avviso: ${avv.join('; ')}.`) : null,
         h('button', { type: 'button', class: `btn primario${avv.length ? ' con-avviso' : ''}`,
           onclick: () => conAvviso(ctx.azioni.storico, { azione: `consegnare l’arma del progetto «${p.nome}»`, motivo: avv.join('; ') || null,
-            fai: () => ctx.azioni.consegnaArma(p.id, { provenienza: c.provenienza, donatore: c.donatore || null, scheggia: c.scheggia || null }) }) }, 'Consegna l’arma'))
-        : h('p', { class: 'nota' }, 'L’arma entra nell’inventario soltanto quando la consegna il Direttore.');
+            fai: () => ctx.azioni.consegnaArma(p.id, { provenienza: c.provenienza, donatore: c.donatore || null, scheggia: c.scheggia || null, esemplare: c.esemplare || null }) }) }, 'Consegna l’arma'))
+        : h('p', { class: 'nota' }, 'Le modifiche diventano valide soltanto quando il Direttore consegna l’arma.');
     return h('article', { class: 'arma-tab progetto' },
       h('div', { class: 'arma-testa' }, h('h3', {}, p.nome, h('small', { class: 'sigla' }, ` · ${statoTesto}`))),
       h('p', { class: 'nota' }, `Aperto dal ${p.aperto.da} il ${data(p.aperto.quando)}. ${r.modello.descrizione ?? ''}`),
@@ -3295,7 +3308,7 @@ function sezioneProgetti(ctx) {
         ...(r.modello.componenti ?? []).map((x) => h('p', {}, h('strong', {}, `${x.nome}: `), x.nota)),
         ...(r.modello.regole ?? []).map((x) => h('p', { class: 'nota' }, x)),
         h('p', { class: 'nota' }, `Fonte: ${r.modello.fonte}.`)),
-      forma, giorni, chiusura, consegna);
+      esemplari, forma, giorni, chiusura, consegna);
   };
   return sezione('Progetti', [
     ui.errore ? h('p', { class: 'nota motivo' }, ui.errore) : null,

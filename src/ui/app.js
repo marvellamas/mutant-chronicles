@@ -3,7 +3,7 @@
 // di sessione (modalità tavolo) del personaggio aperto; tutto il resto si ricalcola a ogni
 // disegno con calcolaScheda / anteprima.
 import { conScorrimentoFisso, montaTornaSopra } from './scorrimento.js';
-import { consegnaArma } from '../progetti.js';
+import { consegnaArma, riconduciEsemplare } from '../progetti.js';
 import { aggiornaVivi } from './vivi.js';
 import { leggiStatoInstallazione, montaFasciaCopia } from './copia-di-lavoro.js';
 import { caricaDati, versioniPersonaggio, FILE_SOLO_TAVOLO } from '../rules.js';
@@ -2282,7 +2282,19 @@ function renderSchedaInterna({ mantieniScorrimento = false } = {}) {
         persisti();
         renderScheda({ mantieniScorrimento: true });
       },
-      // «Consegna l'arma»: l'unico modo in cui l'arma del progetto entra nell'inventario; solo in modalità master
+      // A.231: «Riconduci all'esemplare di Park»: la CyberArma che c'è diventa l'esemplare di partenza; solo in modalità master
+      riconduciEsemplare: (uid) => {
+        const inMaster = modalitaMaster({ server: stato.cartella, daQuestoPc: stato.master, aperta: modalitaMasterDi(sessionStorage), id: stato.id });
+        const r = riconduciEsemplare(stato.scelte, uid, dati, { quando: new Date().toISOString(), master: !!inMaster });
+        if (r.errore) { stato.messaggioScheda = { tipo: 'attenzione', testo: r.errore }; renderScheda({ mantieniScorrimento: true }); return; }
+        stato.masterMotivo = `A.231: ${r.voce.esemplare.nome} — la CyberArma dell’inventario ricondotta all’esemplare recuperato, nessuna modifica eseguita`;
+        const { scelte, avvisi } = applicaModifica(stato.scelte, { equipaggiamento: r.creazione.equipaggiamento }, dati);
+        stato.scelte = scelte;
+        stato.messaggioScheda = { tipo: avvisi.length ? 'attenzione' : 'ok', testo: avvisi.length ? avvisi.join(' ') : `Ricondotta: ${r.voce.esemplare.nome}.` };
+        persisti();
+        renderScheda({ mantieniScorrimento: true });
+      },
+      // «Consegna l'arma»: l'unico modo in cui il profilo modificato del progetto diventa disponibile; solo in modalità master
       consegnaArma: (id, opz = {}) => {
         const inMaster = modalitaMaster({ server: stato.cartella, daQuestoPc: stato.master, aperta: modalitaMasterDi(sessionStorage), id: stato.id });
         const r = consegnaArma(stato.scelte, id, dati, { ...opz, quando: new Date().toISOString(), master: !!inMaster, uid: `e${Date.now().toString(36)}${Math.random().toString(36).slice(2, 6)}` });

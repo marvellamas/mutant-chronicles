@@ -28,7 +28,8 @@ test('A.166: le quattro forme con famiglia, Specializzazione e Manovre', () => {
   assert.deepEqual([per('lancia').famiglia, per('lancia').specializzazione], ['Armi inastate', 'specializzazione-armi-inastate']);
   // le Manovre sono quelle del modello manifestato (A.166: lama lunga → Affondo e Spazzata)
   assert.deepEqual(per('lama-lunga').manovre, ['Affondo', 'Spazzata']);
-  assert.match(per('frusta').nota, /Immobilizzare con la Frusta/);
+  // A.235 (Davide, 02/11/2026) corregge questo passaggio della A.166: la frusta non dà da sola Immobilizzare a distanza
+  assert.match(per('frusta').nota, /non concede da sola Immobilizzare a distanza.*A.235/);
   // le Specializzazioni citate esistono davvero
   const idSpec = new Set(dati.specializzazioni.specializzazioni.map((s) => s.id));
   for (const m of b.elenco) assert.ok(idSpec.has(m.specializzazione), m.specializzazione);

@@ -8,7 +8,12 @@
 //     giorni: [{ n, tentativi: [{ esito, quando, nota }] }], chiuso: null | { esito, quando, nota },
 //     consegna: null | { quando, da, uid, scheggia?, donatore? } }
 //
-// Chi fa che cosa (A.231 aperta, principio «l'ultima parola è del master»):
+// A.231 (Davide, 02/11/2026): il progetto parte dalla CyberArma originale di Park già nell'inventario. Il Direttore la
+// riconduce a quell'esemplare (riconduciEsemplare: «CyberArma Park», frammento Viola, Corruzione 1; la sua presenza non
+// certifica che le modifiche siano fatte) e «Consegna l'arma» aggiorna LA STESSA voce, con provenienza e storico: mai una
+// seconda CyberArma. Il profilo diventa «CyberArma Dimitri»; il Viola estratto entra come oggetto a parte.
+//
+// Chi fa che cosa (principio «l'ultima parola è del master»):
 //  - il Direttore apre il progetto, segna gli esiti dei giorni (anche Fallimento e Maldestro), lo chiude (riuscito,
 //    parziale, fallito) e **consegna** l'arma: è l'unico modo in cui l'arma entra nell'inventario, con chi e quando;
 //  - il giocatore sceglie la forma, prima della lavorazione (come per i Talenti); un tablet non può fare altro qui
@@ -170,15 +175,52 @@ export function avvisiConsegna(p, dati) {
   return out;
 }
 
+/** Le voci dell'inventario della stessa famiglia dell'arma del modello (armi:cyberarma e le sue varianti). */
+export function esemplariDi(equipaggiamento, m) {
+  const base = m?.esemplare_di_partenza?.rif ?? m?.rif;
+  if (!base) return [];
+  return (equipaggiamento ?? []).filter((v) => typeof v?.rif === 'string' && (v.rif === base || v.rif.startsWith(`${base}-`)));
+}
+
+/** Lo storico di un esemplare (`esemplare.storico`), sempre una lista. */
+export const storicoDi = (voce) => (Array.isArray(voce?.esemplare?.storico) ? voce.esemplare.storico : []);
+
 /**
- * **L'unico modo in cui l'arma del progetto entra nell'inventario**: un atto esplicito del Direttore. Senza `master: true`
- * non fa niente. Aggiunge la voce dell'esemplare (forma scelta, modulatore neurale, focalizzatore, provenienza scritta
- * dal Direttore, `consegna` con chi e quando), toglie il SIN alla spada donatrice (§7.25.4) e, se indicata, toglie la
- * scheggia diventata componente. Scrive la consegna nel progetto.
- * @param creazione le scelte del personaggio @param opz { quando, master, donatore?, scheggia?, provenienza?, uid }
+ * A.231: «La voce già presente nell'inventario va verificata e ricondotta a questo esemplare recuperato. La sua presenza
+ * non certifica che le modifiche siano già state eseguite.» Solo il Direttore: la voce diventa l'esemplare di partenza del
+ * modello (nome, provenienza, focalizzatore, Corruzione), con la prima riga dello storico. Nessuna modifica dell'arma.
  * @returns {{ creazione, voce } | { errore }}
  */
-export function consegnaArma(creazione, id, dati, { quando, master = false, donatore = null, scheggia = null, provenienza = '', uid } = {}) {
+export function riconduciEsemplare(creazione, uid, dati, { quando, master = false, modello = 'paradise-dimitri' } = {}) {
+  if (master !== true) return { errore: 'solo il Direttore riconduce l’arma all’esemplare recuperato' };
+  const m = modelliProgetto(dati).find((x) => x.id === modello);
+  const e = m?.esemplare_di_partenza;
+  if (!e) return { errore: 'il modello non ha un esemplare di partenza' };
+  const v = (creazione.equipaggiamento ?? []).find((x) => x.uid === uid);
+  if (!v || !esemplariDi([v], m).length) return { errore: 'voce non trovata fra le CyberArme dell’inventario' };
+  if (testo(v.esemplare?.nome)) return { errore: `è già ricondotta: ${v.esemplare.nome}` };
+  const esemplare = {
+    ...(isOggetto(v.esemplare) ? v.esemplare : {}),
+    nome: e.nome, provenienza: e.provenienza, focalizzatore: e.focalizzatore, corruzione: e.corruzione, ricondotta: quando,
+    storico: [...storicoDi(v), { quando, nome: e.nome, cosa: `voce ricondotta all’esemplare recuperato: profilo originale (focalizzatore ${e.focalizzatore}, ${e.corruzione}), nessuna modifica eseguita (A.231)`, da: 'Direttore' }],
+  };
+  const voce = { ...v, esemplare };
+  return { voce, creazione: { ...creazione, equipaggiamento: creazione.equipaggiamento.map((x) => (x.uid === uid ? voce : x)) } };
+}
+
+/**
+ * **L'unico modo in cui l'arma del progetto diventa disponibile**: un atto esplicito del Direttore. Senza `master: true`
+ * non fa niente. Toglie il SIN alla spada donatrice (§7.25.4), toglie la scheggia diventata componente e scrive la
+ * consegna nel progetto.
+ *  - Modello che lavora su un esemplare esistente (`risultato.aggiorna_esemplare`, A.231): aggiorna LA STESSA voce (forma,
+ *    modulatore, focalizzatore, nome attuale, storico; provenienza conservata) e non ne crea un'altra. Quale voce:
+ *    `esemplare` (uid) o l'unica CyberArma dell'inventario; con nessuna o con più d'una si ferma e lo dice. Il frammento
+ *    Viola estratto entra come oggetto a parte (con l'uid `uid`).
+ *  - Altrimenti aggiunge la voce dell'esemplare (forma scelta, modulatore neurale, focalizzatore, provenienza, consegna).
+ * @param creazione le scelte del personaggio @param opz { quando, master, donatore?, scheggia?, provenienza?, uid, esemplare? }
+ * @returns {{ creazione, voce } | { errore }}
+ */
+export function consegnaArma(creazione, id, dati, { quando, master = false, donatore = null, scheggia = null, provenienza = '', uid, esemplare = null } = {}) {
   if (master !== true) return { errore: 'solo il Direttore consegna l’arma del progetto' };
   const lista = creazione.progettiMaster ?? [];
   const p = lista.find((x) => x.id === id);
@@ -187,6 +229,7 @@ export function consegnaArma(creazione, id, dati, { quando, master = false, dona
   const m = modelloDi(p, dati);
   if (!m) return { errore: 'modello di progetto non nel catalogo' };
   const forma = p.forma?.id ?? m.arma?.manifestazioni?.progetto ?? null;
+  if (m.risultato?.aggiorna_esemplare) return aggiornaEsemplare(creazione, lista, p, m, forma, { quando, donatore, scheggia, provenienza, uid, esemplare });
   const voce = {
     uid, rif: m.risultato?.rif ?? m.rif, stato: 'trasportato', quantita: 1, note: '',
     ...(forma ? { manifestazione: forma } : {}),
@@ -210,6 +253,77 @@ export function consegnaArma(creazione, id, dati, { quando, master = false, dona
   };
 }
 
+/** A.231: la consegna sull'esemplare che c'è già. Vedi consegnaArma. */
+function aggiornaEsemplare(creazione, lista, p, m, forma, { quando, donatore, scheggia, provenienza, uid, esemplare }) {
+  const voci = creazione.equipaggiamento ?? [];
+  const fam = esemplariDi(voci, m);
+  const nome = m.esemplare_di_partenza?.nome ?? 'l’esemplare di partenza';
+  let bersaglio = esemplare ? fam.find((v) => v.uid === esemplare) : null;
+  if (esemplare && !bersaglio) return { errore: 'la voce scelta non è una CyberArma dell’inventario' };
+  if (!bersaglio) {
+    if (fam.length > 1) return { errore: `nell’inventario ci sono ${fam.length} CyberArme: scegli quale è ${nome} (A.231: si aggiorna lo stesso esemplare, mai una seconda arma)` };
+    if (!fam.length) return { errore: `nell’inventario non c’è la CyberArma da modificare: ${nome} va aggiunta e ricondotta prima della consegna (A.231: il progetto lavora sull’esemplare recuperato)` };
+    [bersaglio] = fam;
+  }
+  const e0 = isOggetto(bersaglio.esemplare) ? bersaglio.esemplare : {};
+  const partenza = m.esemplare_di_partenza ?? {};
+  const nomePrima = testo(e0.nome) || partenza.nome || null;
+  const focPrima = testo(e0.focalizzatore) || partenza.focalizzatore || null;
+  const r = m.risultato ?? {};
+  const nomeDopo = r.nome ?? nomePrima;
+  const formaNome = (m.arma?.manifestazioni?.elenco ?? []).find((f) => f.id === forma)?.nome ?? forma;
+  const storico = [...storicoDi(bersaglio)];
+  // l'esemplare non ancora ricondotto: la riga del profilo originario c'è comunque, perché la provenienza resti ricostruibile
+  if (!storico.length && nomePrima) storico.push({ quando, nome: nomePrima, cosa: `profilo originale dell’esemplare, prima delle modifiche${focPrima ? ` (focalizzatore ${focPrima}${testo(e0.corruzione) || partenza.corruzione ? `, ${testo(e0.corruzione) || partenza.corruzione}` : ''})` : ''}`, da: 'Direttore' });
+  const interventi = [
+    r.voce?.focalizzatore ? `focalizzatore ${r.voce.focalizzatore}${focPrima && focPrima !== r.voce.focalizzatore ? ` al posto del ${focPrima}` : ''}` : null,
+    r.voce?.modulatore_neurale ? 'modulo SIN integrato (modulatore neurale)' : null,
+    formaNome ? `forma ${formaNome}` : null,
+  ].filter(Boolean).join(', ');
+  storico.push({ quando, nome: nomeDopo, esito: p.chiuso?.esito ? NOMI_FINALE[p.chiuso.esito] : 'progetto non chiuso', cosa: `«${m.nome}»: ${interventi}`, da: 'Direttore', progetto: p.id });
+  const prov = testo(provenienza) || testo(e0.provenienza) || partenza.provenienza || '';
+  const voce = {
+    ...bersaglio,
+    ...(forma ? { manifestazione: forma } : {}),
+    ...(r.voce?.modulatore_neurale ? { modulatore_neurale: true } : {}),
+    esemplare: {
+      ...e0,
+      nome: nomeDopo,
+      ...(nomePrima && nomePrima !== nomeDopo ? { nome_originale: nomePrima } : {}),
+      progetto: m.nome,
+      ...(r.voce?.focalizzatore ? { focalizzatore: r.voce.focalizzatore } : {}),
+      ...(r.voce?.configurazione ? { configurazione: r.voce.configurazione } : {}),
+      ...(prov ? { provenienza: prov } : {}),
+      storico,
+    },
+    consegna: { quando, da: 'Direttore', progetto: p.id },
+  };
+  // il frammento Viola estratto: un oggetto a parte, con le sue conseguenze (A.231)
+  const viola = m.componenti?.find((c) => c.id === 'viola');
+  const corruzione = testo(e0.corruzione) || partenza.corruzione || '';
+  const estratto = viola && focPrima === 'Viola' && r.voce?.focalizzatore && r.voce.focalizzatore !== 'Viola' ? {
+    uid, rif: viola.rif, stato: null, quantita: 1, note: '', // il frammento non ha stati propri (statoIniziale)
+    esemplare: { nome: `Frammento Viola estratto dalla ${nomePrima ?? 'CyberArma'}`, provenienza: `estratto durante «${m.nome}»`, ...(corruzione ? { corruzione } : {}), contenimento: 'conseguenze e contenimento da decidere con il Direttore (A.231)' },
+    consegna: { quando, da: 'Direttore', progetto: p.id },
+  } : null;
+  // la Corruzione era del frammento Viola: esce con lui (resta scritta nello storico, riga del profilo originario)
+  if (estratto) delete voce.esemplare.corruzione;
+  const eq = voci
+    .filter((v) => !(scheggia && v.uid === scheggia))
+    .map((v) => (v.uid === bersaglio.uid ? voce : donatore && v.uid === donatore ? { ...v, sin_rimosso: { quando, progetto: p.id } } : v));
+  const nomeDi = (u) => voci.find((v) => v.uid === u)?.rif ?? null;
+  const consegna = {
+    quando, da: 'Direttore', uid: bersaglio.uid, aggiornato: true,
+    ...(estratto ? { estratto: { uid: estratto.uid, rif: estratto.rif } } : {}),
+    ...(scheggia ? { scheggia: { uid: scheggia, rif: nomeDi(scheggia) } } : {}),
+    ...(donatore ? { donatore: { uid: donatore, rif: nomeDi(donatore) } } : {}),
+  };
+  return {
+    voce,
+    creazione: { ...creazione, equipaggiamento: [...eq, ...(estratto ? [estratto] : [])], progettiMaster: lista.map((x) => (x.id === p.id ? { ...x, consegna } : x)) },
+  };
+}
+
 // ---------------------------------------------------------------------------
 // Tablet: che cosa può scrivere chi non è sul PC del Direttore
 
@@ -228,9 +342,23 @@ export function formaDaTablet(nuovi, disco) {
 
 /**
  * Le voci consegnate dal Direttore (`consegna`) che un tablet aggiunge o cambia rispetto al disco: non passano. Così l'arma
- * del progetto non entra nell'inventario da un tablet, nemmeno copiando la voce. Torna l'equipaggiamento ripulito.
+ * del progetto non entra nell'inventario da un tablet, nemmeno copiando la voce. A.231: anche l'esemplare di una voce
+ * ricondotta o consegnata (nome, provenienza, storico) e il modulatore li scrive solo il Direttore: se il tablet li cambia,
+ * tornano quelli del disco. Torna l'equipaggiamento ripulito.
  */
 export function vociConsegnaDaTablet(nuovoEq, discoEq) {
-  const suDisco = new Map((Array.isArray(discoEq) ? discoEq : []).filter((v) => isOggetto(v?.consegna)).map((v) => [v.uid, v]));
-  return (Array.isArray(nuovoEq) ? nuovoEq : []).filter((v) => !isOggetto(v?.consegna) || JSON.stringify(suDisco.get(v.uid)?.consegna) === JSON.stringify(v.consegna));
+  const disco = new Map((Array.isArray(discoEq) ? discoEq : []).map((v) => [v?.uid, v]));
+  const delDirettore = (v) => isOggetto(v?.consegna) || storicoDi(v).length > 0;
+  const out = [];
+  for (const v of Array.isArray(nuovoEq) ? nuovoEq : []) {
+    const d = disco.get(v?.uid);
+    if (d && delDirettore(d)) {
+      // la voce del Direttore resta com'è nei suoi campi; il resto (stato, mano, sintonizzazione…) è del giocatore
+      const x = { ...v };
+      for (const k of ['esemplare', 'consegna', 'modulatore_neurale', 'manifestazione']) { if (d[k] === undefined) delete x[k]; else x[k] = d[k]; }
+      out.push(x);
+    } else if (!delDirettore(v)) out.push(v);
+    // una voce nuova (o cambiata dal tablet) con la consegna o lo storico del Direttore non passa
+  }
+  return out;
 }
