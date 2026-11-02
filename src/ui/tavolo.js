@@ -7,6 +7,7 @@ import { testoConBlocchiMaster, conCircostanzaMandata, senzaCircostanza, senzaCi
 import { chiediCircostanza } from './master.js';
 import { procediComunque } from '../storico.js';
 import { h, svuota } from './dom.js';
+import { pulsanteSchermoIntero } from './schermo-intero.js';
 import { infoValore, nascondiTooltip } from './tooltip.js';
 import { iconaPagina } from './immagini.js';
 import { riempimento } from '../interfaccia.js';
@@ -522,7 +523,9 @@ export function renderTavolo(radice, ctx) {
         : h('header', { class: 'plancia-testa plancia-testa-gruppi' },
           h('div', { class: 'riga-titolo' }, h('a', { class: 'marchio marchio-in-linea', href: '#/', title: 'Elenco dei personaggi' }, 'Mutant'),
             h('h1', { class: 'titolo-con-stemma' }, iconaPagina('combattimento', '96', { classe: 'badge-pagina', lato: 40 }), 'Tavolo del Master'),
-            aggiornato),
+            aggiornato,
+            // lotto 166: schermo intero accanto al titolo (src/ui/schermo-intero.js); nella plancia dentro la mappa c'è quello della mappa
+            pulsanteSchermoIntero()),
           testataGruppi()),
       // 13/10: la riga che dice sempre se questo è il PC del master (prima i pulsanti sparivano in silenzio)
       ctx.inMappa ? null : rigaStatoMaster(),

@@ -15,6 +15,7 @@ import { pannelloMedita, pulsanteMedita } from './medita.js';
 import { aggiungiIncantesimoAMano, incantesimoPerId, cercaIncantesimi, togliIncantesimoAMano, avvisoLivelloAMano, origini, tipi as tipiAMano, tipoDi as tipoAMano, fraseTipo, classificaIncantesimoAMano, dataLeggibile, rigaRegistro as rigaRegistroAMano } from '../incantesimi-a-mano.js';
 import { fasciaMaster, toccoMaster, notaCorrezione, sezioneRegistro, conMotivoMaster, bloccoLivelloMaster } from './master.js';
 import { pulsanteSpostaPunti } from './sposta-punti.js';
+import { pulsanteSchermoIntero } from './schermo-intero.js';
 import { apriTiro, sezioneTiri } from './tira-valore.js';
 import { pianoGetto } from '../getti-artefatto.js';
 import { modelliProgetto, apriProgetto, scegliForma, registraTentativo, togliUltimoTentativo, chiudiProgetto, riapriProgetto, riepilogoProgetto, formaSceglibile, avvisiConsegna, esemplariDi, storicoDi, ESITI_TENTATIVO, NOMI_ESITO, ESITI_FINALI, NOMI_FINALE } from '../progetti.js';
@@ -181,6 +182,8 @@ export function renderTab(ctx) {
       // Round collegato allo scontro (src/round-scontro.js): in ogni tab
       ctx.roundScontro ? h('span', { class: 'etichetta round-scontro-testa', role: 'status', title: `Round ${ctx.roundScontro.round} dallo scontro «${ctx.roundScontro.nome}»: il Round lo fa avanzare il master dalla plancia; le durate di Tecniche e Stati scadono con quel Round.` },
         `Round ${ctx.roundScontro.round}`) : null,
+      // lotto 166: schermo intero, accanto agli indicatori (src/ui/schermo-intero.js); dove il browser non lo permette non c'è
+      pulsanteSchermoIntero(),
       (() => {
         // sempre nel DOM e nascosto se non c'è niente da annullare: una modifica di valore non deve ridisegnare la scheda
         const annulla = h('button', { type: 'button', class: 'btn', hidden: !ctx.puoAnnullareSessione || undefined, onclick: azioni.annullaSessione, title: 'Annulla l’ultima modifica ai valori di sessione o al calendario' }, '↶ Annulla');

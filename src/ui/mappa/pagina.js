@@ -23,6 +23,7 @@
 import { iconaSalvataggio, pulsanteAudio, clicFuori } from '../../mappa/barra.js';
 import { conLineaDallaMappa, presetDaLinea } from '../../dalla-mappa.js';
 import { h, svuota } from '../dom.js';
+import { pulsanteSchermoIntero } from '../schermo-intero.js';
 import { avviso, avvisoErrore } from '../avvisi.js';
 import { cameraIniziale, zoomVerso, sposta, adatta, mappaDaSchermo, schermoDaMappa, rettangoloVisibile, mantieniCentro, riadattaCentro } from '../../mappa/camera.js';
 import { DISPOSIZIONI, NOMI_DISPOSIZIONI, prossimaDisposizione, normalizzaDisposizione, larghezzaBarra, trascinaBordo, chiaveSchermo, etichettaVista } from '../../mappa/disposizione.js';
@@ -273,7 +274,9 @@ export function renderMappa(radice, ctx) {
     h('span', { class: 'mappa-gruppo gruppo-suoni', role: 'group', 'aria-label': 'Suoni e salvataggio' },
       // suoni (07/10): musica di fondo dello scontro e, accanto, muto e volumi (disegnaAudio)
       el.audio = h('span', { class: 'mappa-audio', role: 'group', 'aria-label': 'Suoni' }),
-      el.stato));
+      el.stato,
+      // lotto 166: schermo intero (src/ui/schermo-intero.js), in fondo alla barra con lo stato del salvataggio
+      pulsanteSchermoIntero()));
   el.riquadro = h('div', { class: 'mappa-tela', tabindex: '0', 'aria-label': 'Mappa: rotella per lo zoom, barra spaziatrice e mouse o trascinamento per spostarsi' });
   el.suggerimento = h('div', { class: 'mappa-suggerimento', hidden: true, role: 'status' });
   el.riquadro.append(el.suggerimento);

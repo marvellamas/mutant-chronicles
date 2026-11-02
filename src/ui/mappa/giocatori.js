@@ -18,6 +18,7 @@
 import { presetDaLinea } from '../../dalla-mappa.js';
 import { CHIAVE_DALLA_MAPPA } from '../attacco.js';
 import { h, svuota } from '../dom.js';
+import { pulsanteSchermoIntero } from '../schermo-intero.js';
 // Galleria (N1, 13/10/2026): l'immagine che il master mostra, sopra la mappa, con la ✕ per chiuderla da soli
 import { collegaGalleria } from '../galleria-giocatori.js';
 import { cameraIniziale, sposta, adatta, adattaRettangolo, schermoDaMappa, rettangoloVisibile } from '../../mappa/camera.js';
@@ -78,7 +79,8 @@ export function renderGiocatori(radice, ctx) {
   el.turno = h('span', { class: 'giocatori-turno', 'aria-live': 'polite' });
   el.stato = h('span', { class: 'nota giocatori-stato' });
   el.movimento = h('span', { class: 'giocatori-movimento', 'aria-live': 'polite', hidden: true });
-  el.schermo = h('button', { type: 'button', class: 'btn btn-piccolo', title: 'Schermo intero', onclick: () => (document.fullscreenElement ? document.exitFullscreen() : document.documentElement.requestFullscreen?.()) }, 'Schermo intero');
+  // lotto 166: lo stesso pulsante di scheda, plancia e mappa del master (src/ui/schermo-intero.js), con le forme webkit
+  el.schermo = pulsanteSchermoIntero();
   el.riquadro = h('div', { class: 'mappa-tela giocatori-tela', 'aria-label': 'Mappa dei giocatori: due dita o rotella per lo zoom, trascina per spostarti, doppio tocco per vedere tutto' });
   el.messaggio = h('p', { class: 'giocatori-messaggio', hidden: true });
   el.iniziativa = h('div', { class: 'mappa-iniziativa-posto', hidden: true });
@@ -724,10 +726,11 @@ export function renderGiocatori(radice, ctx) {
   // a schermo intero (pulsante o F11, anche sul secondo monitor) solo mappa e barra dell'Iniziativa: niente testata,
   // barre né comandi; l'avviso «collegamento perso» resta (css/style.css → body.schermo-intero). F11 non avvisa la
   // pagina: si riconosce dalla finestra grande quanto lo schermo
-  const suSchermo = () => document.body.classList.toggle('schermo-intero', !!document.fullscreenElement
+  const suSchermo = () => document.body.classList.toggle('schermo-intero', !!(document.fullscreenElement || document.webkitFullscreenElement)
     || (window.innerHeight >= screen.height - 1 && window.innerWidth >= screen.width - 1));
   suSchermo();
   document.addEventListener('fullscreenchange', suSchermo);
+  document.addEventListener('webkitfullscreenchange', suSchermo);
   window.addEventListener('resize', suSchermo);
   // lo schermo del tavolo non si spegne mentre la vista è aperta (§13), dove il browser lo permette
   let blocco = null;
@@ -751,6 +754,7 @@ export function renderGiocatori(radice, ctx) {
     window.removeEventListener('keydown', suTasto);
     document.removeEventListener('visibilitychange', suVisibile);
     document.removeEventListener('fullscreenchange', suSchermo);
+    document.removeEventListener('webkitfullscreenchange', suSchermo);
     window.removeEventListener('resize', suSchermo);
     document.body.classList.remove('schermo-intero');
     blocco?.release?.().catch(() => {});

@@ -69,7 +69,8 @@
 
 *, *::before, *::after { box-sizing: border-box; }
 
-html { -webkit-text-size-adjust: 100%; }
+/* lotto 166: sfondo esplicito anche su html, così a schermo intero non compare il nero del browser */
+html { -webkit-text-size-adjust: 100%; background: var(--sfondo); }
 
 body {
   margin: 0;
@@ -2179,8 +2180,10 @@ button.mini-token { cursor: pointer; }
 /* vista giocatori a schermo intero (due schermi del master, 07/10): solo mappa e barra dell'Iniziativa */
 body.schermo-intero .testata, body.schermo-intero .barra-aggiornamento, body.schermo-intero .barra-server-vecchio, body.schermo-intero .piede { display: none; }
 body.schermo-intero main:has(> .mappa-pagina) { padding: 0; }
-body.schermo-intero .giocatori-barra > :not(.giocatori-stato) { display: none; }
-body.schermo-intero .giocatori-barra:not(:has(.giocatori-stato:not(:empty))) { display: none; }
+body.schermo-intero .giocatori-barra > :not(.giocatori-stato):not(.btn-schermo-intero) { display: none; }
+/* lotto 166: la barra vuota non occupa spazio, ma il pulsante per uscire resta, in un angolo (sul tablet non c'è Esc) */
+body.schermo-intero .giocatori-barra:not(:has(.giocatori-stato:not(:empty))) { padding: 0; margin: 0; border: 0; min-height: 0; gap: 0; }
+body.schermo-intero .giocatori-barra > .btn-schermo-intero { position: fixed; top: 0.5rem; right: 0.5rem; z-index: 30; opacity: 0.8; }
 body.schermo-intero .giocatori-pagina { gap: 0; }
 body.schermo-intero .giocatori-pagina .mappa-tela { border-radius: 0; }
 /* 07/10: barretta dei PV dei mini-token della barra dell'Iniziativa, come sui token: sul fondo, sopra il bordo */
@@ -3133,3 +3136,8 @@ p.da-applicare { margin: 0.2rem 0 0.5rem; }
 /* A.198 (30/10/2026): la scala della mappa (Q Base o Q Tattici) si legge sempre, in basso a destra */
 .mappa-badge-scala { bottom: 0.6rem; left: auto; right: 0.6rem; cursor: pointer; font-weight: 600; font-size: 0.85rem; }
 .mappa-regolazione-scala select { max-width: 100%; }
+
+/* lotto 166: il pulsante dello schermo intero (src/ui/schermo-intero.js): piccolo, ma comodo per un dito (almeno 40 px),
+   anche nelle barre che rimpiccioliscono i pulsanti tondi */
+.btn.tondo.btn-schermo-intero, .mappa-barra .btn.tondo.btn-schermo-intero { width: 2.5rem; min-width: 2.5rem; min-height: 2.5rem; height: 2.5rem; padding: 0; font-size: 1.15rem; line-height: 1; flex: none; }
+.btn-schermo-intero[hidden] { display: none; }
