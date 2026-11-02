@@ -54,6 +54,8 @@ export function attivaGuardiaAutomatica(opz = {}) {
   const reali = cartelleReali(radice, { profiloVero: !env.MUTANT_CONFIG_DIR });
   installaGuardiaScrittura(reali);
   env.MUTANT_PROVA = '1';
+  // lotto 161: la cartella temporanea delle cartelle di prova, la stessa per i processi figli (tools/protezione-reali.mjs)
+  env.MUTANT_TEMP_PROVA ??= tmpdir();
   if (!env.MUTANT_CONFIG_DIR) {
     const profilo = mkdtempSync(join(tmpdir(), 'mutant-profilo-prova-'));
     env.MUTANT_CONFIG_DIR = profilo;

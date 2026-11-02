@@ -32,4 +32,7 @@ for (const n of nomi) {
   }
   for (const p of [file, dir]) { try { fs.rmSync(p, { recursive: true, force: true }); } catch { /* la guardia non lascia toccare: va bene */ } }
 }
+// lotto 161: l'esito anche in un file (MUTANT_SONDA_ESITO), perché sotto `node --test` il test runner riscrive lo stdout del
+// processo come diagnostica TAP («# SONDA …», con le barre raddoppiate) in modo diverso da una versione di Node all'altra
+if (process.env.MUTANT_SONDA_ESITO) fs.writeFileSync(process.env.MUTANT_SONDA_ESITO, JSON.stringify(esito));
 console.log(`SONDA ${JSON.stringify(esito)}`);

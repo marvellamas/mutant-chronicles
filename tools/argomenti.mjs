@@ -70,4 +70,5 @@ export const ARGOMENTI = {
   'riavvia.mjs': ['avvia', 'porta', 'radice', 'senza-avvio'],
   'aggiorna-avviatori.mjs': ['prova', 'radice', 'salta', 'fuori'],
   'console.mjs': ['porta', 'radice'],
+  'cartella-di-prova.mjs': [],
 };

@@ -30,6 +30,8 @@
 import { readdirSync, readFileSync, statSync, existsSync } from 'node:fs';
 import { join, resolve, dirname, basename, parse } from 'node:path';
 import { homedir } from 'node:os';
+import { attivaGuardiaAutomatica } from './guardia-automatica.mjs';
+import { dentroCartella, tempProve } from './protezione-reali.mjs';
 import { leggiZip } from './salva-sessione.mjs';
 import { talentiDi } from './stato-personaggi.mjs';
 
@@ -83,6 +85,18 @@ export function radiciDischi(radiceApp, { home = homedir() } = {}) {
   return [parse(resolve(radiceApp)).root, parse(resolve(home)).root].filter((r) => r && !visti.has(r.toLowerCase()) && visti.add(r.toLowerCase()));
 }
 
+/**
+ * Lotto 161 (02/11/2026): in una PROVA (tools/guardia-automatica.mjs) la ricerca non esce dalla cartella temporanea del
+ * sistema. Sul portatile un test della console cercava «un'altra installazione con i personaggi» nel Desktop vero e
+ * trovava il repo (personaggi/ con Lucas e Oshi) e i file di Davide: un test non deve nemmeno vedere le cartelle vere.
+ * Le prove passano le loro radici (home, radici) dentro %TEMP%; tutto il resto, in una prova, non esiste. Fuori da una
+ * prova (la voce P, il controllo all'avvio di Mutant.bat) la ricerca è quella di sempre.
+ */
+export function cercaAmmessa(percorso) {
+  if (!attivaGuardiaAutomatica()) return true;
+  try { return dentroCartella(percorso, tempProve()); } catch { return false; }
+}
+
 const nomiFile = (voci) => voci.filter((v) => v.isFile()).map((v) => v.name);
 const trovaSottocartella = (voci, nome) => voci.find((v) => v.isDirectory() && v.name.trim().toLowerCase() === nome)?.name ?? null;
 
@@ -123,7 +137,7 @@ export function copieDellApp(radici, { profondita = 4, massimo = 60000, onProgre
     if (livello >= profonditaMax) return;
     for (const v of voci) if (v.isDirectory() && !eSalta(v.name) && !v.name.startsWith('.')) visita(join(dir, v.name), livello + 1, profonditaMax);
   };
-  for (const r of radici) { const [p, prof] = Array.isArray(r) ? r : [r, profondita]; visita(p, 0, prof); }
+  for (const r of radici) { const [p, prof] = Array.isArray(r) ? r : [r, profondita]; if (cercaAmmessa(p)) visita(p, 0, prof); }
   return [...trovate.values()];
 }
 
@@ -144,7 +158,7 @@ export function installazioniMutant(radiceApp, { home = homedir(), radici = null
     if (livello >= profonditaMax) return;
     for (const v of voci) if (v.isDirectory() && !eSalta(v.name) && !v.name.startsWith('.')) visita(join(dir, v.name), livello + 1, profonditaMax);
   };
-  for (const r of insieme) { const [p, prof] = Array.isArray(r) ? r : [r, 3]; visita(p, 0, prof); }
+  for (const r of insieme) { const [p, prof] = Array.isArray(r) ? r : [r, 3]; if (cercaAmmessa(p)) visita(p, 0, prof); }
   return [...trovate.values()];
 }
 
@@ -188,7 +202,7 @@ function riassuntoPx(testo, mtime) {
  */
 export function cerca({ radiceApp, dati = null, radici = null, home = homedir(), onProgress = null } = {}) {
   const copie = copieDellApp(radici ?? radiciDiRicerca(radiceApp, { dati, home }), { onProgress });
-  if (dati && existsSync(join(dati, 'personaggi')) && !copie.some((c) => norma(c) === norma(dati))) copie.unshift(resolve(dati));
+  if (dati && cercaAmmessa(dati) && existsSync(join(dati, 'personaggi')) && !copie.some((c) => norma(c) === norma(dati))) copie.unshift(resolve(dati));
   const versioni = [];
   const px = [];
   // lo storico è la copia del file PRIMA di un salvataggio: la data del file è quella della copia, non del personaggio.
@@ -211,10 +225,11 @@ export function cerca({ radiceApp, dati = null, radici = null, home = homedir(),
     // la cartella di Google Drive dei salvataggi, se scritta nella configurazione
     try { const conf = JSON.parse(readFileSync(join(c, 'config-salvataggi.json'), 'utf8')); if (typeof conf?.cartella_drive === 'string' && conf.cartella_drive.trim()) drive.add(conf.cartella_drive.trim()); } catch { /* senza configurazione */ }
   }
-  for (const d of drive) for (const z of zipIn(d)) leggiDaZip(z, aggiungi, px);
+  for (const d of drive) if (cercaAmmessa(d)) for (const z of zipIn(d)) leggiDaZip(z, aggiungi, px);
   // gli export («SALVA PG») in Documenti e Download (tutte le varianti, incluso OneDrive)
   const cartelleEsportazione = new Set([join(home, 'Documents'), join(home, 'Documenti'), join(home, 'Downloads'), join(home, 'Download'), ...cartelleUtente(home).filter((c) => /document|downloads?$/i.test(basename(c)))]);
   for (const d of cartelleEsportazione) {
+    if (!cercaAmmessa(d)) continue;
     try { for (const f of readdirSync(d).filter((x) => x.toLowerCase().endsWith('.json'))) aggiungi(leggiTesto(join(d, f)), mtimeDi(join(d, f)), join(d, f), 'export'); } catch { /* non c'è */ }
   }
   // per personaggio, dal più recente

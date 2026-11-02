@@ -72,14 +72,22 @@ function fotografia() {
 const diff = (a, b) => [...new Set([...Object.keys(a), ...Object.keys(b)])].filter((k) => a[k] !== b[k]).map((k) => `${k}: ${a[k] ?? '(non c’era)'} → ${b[k] ?? '(non c’è più)'}`);
 
 // un terminale nuovo: senza i segni che questo test ha ereditato (NODE_TEST_CONTEXT, MUTANT_PROVA), salvo quelli passati
+let nEsito = 0;
 const lancia = (args, env = {}) => {
   const { NODE_TEST_CONTEXT: _n, MUTANT_PROVA: _p, ...pulito } = process.env;
-  return spawnSync(process.execPath, args, { cwd: RADICE, encoding: 'utf8', timeout: 90000, env: { ...pulito, ...env, MUTANT_SONDA_RADICE: RADICE, MUTANT_CONFIG_DIR: join(temp, 'profilo') } });
+  const esito = join(temp, `esito-${++nEsito}.json`);
+  const r = spawnSync(process.execPath, args, { cwd: RADICE, encoding: 'utf8', timeout: 90000, env: { ...pulito, ...env, MUTANT_SONDA_RADICE: RADICE, MUTANT_CONFIG_DIR: join(temp, 'profilo'), MUTANT_SONDA_ESITO: esito } });
+  return { ...r, esito };
 };
+// lotto 161: l'esito si legge dal file che la sonda scrive (MUTANT_SONDA_ESITO). Lo stdout resta un ripiego: sotto
+// `node --test` Node 22.23 lo riscrive come «# SONDA …» con le barre raddoppiate (sul portatile il test era sempre rosso
+// per questo, con la guardia attiva), altre versioni lo lasciano com'è.
 const sonda = (r, come) => {
-  const riga = (r.stdout ?? '').split('\n').find((x) => x.startsWith('SONDA '));
+  if (r.esito && existsSync(r.esito)) return JSON.parse(readFileSync(r.esito, 'utf8'));
+  const riga = (r.stdout ?? '').split('\n').map((x) => x.replace(/^#\s*/, '')).find((x) => x.startsWith('SONDA '));
   assert.ok(riga, `${come}: la sonda non ha risposto (codice ${r.status}) ${r.stderr}`);
-  return JSON.parse(riga.slice(6));
+  const testo = riga.slice(6);
+  try { return JSON.parse(testo); } catch { return JSON.parse(testo.replace(/\\([\\#])/g, '$1')); }
 };
 const rifiutaTutto = (esito, come) => {
   for (const [cartella, prove] of Object.entries(esito)) {

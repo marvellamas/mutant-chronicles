@@ -2130,7 +2130,10 @@ if (process.argv[1] && fileURLToPath(import.meta.url) === process.argv[1]) {
   {
     const controllo = controllaAvvioDiProva({ porta, argv: process.argv.slice(2), radice: RADICE, cartelle: { personaggi: cartella, tavolo, scontri, nemici, veicoli, scene, mappe, musica, galleria, px, salvataggi: dirSalvataggi, autosave: dirAutosave, 'config-salvataggi': fileConfig } });
     if (!controllo.ok) { console.error(['', 'Mutant non parte.', ...controllo.errori, ''].join('\n')); process.exit(2); }
-    if (controllo.prova && !process.argv.includes('--dati-reali')) installaGuardiaScrittura(cartelleReali(RADICE));
+    // lotto 161: --dati-reali spegne la guardia solo per il server vero acceso apposta su un'altra porta (senza cartelle
+    // indicate); con cartelle indicate resta una prova, e una cartella con personaggi non si scrive
+    const cartelleIndicate = process.argv.slice(2).some((x) => /^--(cartella|tavolo|scontri|nemici|veicoli|scene|mappe|musica|galleria|px|salvataggi|autosave)=/.test(x));
+    if (controllo.prova && !(process.argv.includes('--dati-reali') && !cartelleIndicate)) installaGuardiaScrittura(cartelleReali(RADICE));
   }
   // l'argomento ntfy degli avvisi a Marcello (avvisi/avvisi.json); con cartelle di prova solo quello del file di prova
   const gestore = creaGestore({
