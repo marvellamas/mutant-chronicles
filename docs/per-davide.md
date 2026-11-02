@@ -2524,6 +2524,68 @@ Restano le altre conseguenze pertinenti del Magistrale e il limite alla prima is
 
 Il Magistrale richiede una Prova che possa produrlo: un Soffio risolto soltanto mediante la Salvezza dei bersagli non ottiene un Magistrale dal semplice tiro dei dadi di danno.
 
+#### A.232 — Specializzazioni applicabili ai Guanti mistici
+
+02/11/2026 — Risposta approvata da Davide.
+
+Ai pugni sferrati con i Guanti da Combattimento Mistico sono applicabili Combattimento Senz’Armi oppure Armi da Pugno, se possedute.
+
+Se il personaggio le possiede entrambe, applica un solo \+1 VA e \+1 danno: i bonus delle due Specializzazioni non si sommano sullo stesso pugno.
+
+Restano il danno senz’armi del personaggio, Arti Marziali, il dado del Lottatore e gli altri benefici pertinenti. Il Pugno mistico attivo aggiunge normalmente i propri bonus.
+
+Queste Specializzazioni non migliorano il Getto di fuoco, il Doppio getto o gli attacchi effettuati con un’arma impugnata.
+
+#### A.234 — Prova di Potere del Doppio getto
+
+02/11/2026 — Risposta approvata da Davide.
+
+Si utilizza Potere −2 VA, applicando le penalità e gli eventuali modificatori generali effettivamente pertinenti alla Prova.
+
+Non si applicano i benefici riservati al lancio degli Incantesimi: la Specializzazione Elementi non aumenta questa Prova e non riduce il costo dei getti.
+
+Potere Mistico aumenta i PM massimi personali: non concede un bonus al VA di Potere e non aumenta la riserva dei Guanti.
+
+Il costo rimane 10 PM dalla riserva interna, consumati al tentativo anche in caso di fallimento. I PM personali non possono sostituirli.
+
+#### A.236 — Batteria interna della CyberArma
+
+02/11/2026 — Risposta approvata da Davide.
+
+Confermo che la riserva interna Verde da 10 PM è dedicata esclusivamente alla CyberArma.
+
+Il Tecnomante non può prelevarne PM per Incantesimi, altre capacità, altri oggetti o conversioni in PM personali.
+
+Per il profilo del Tecnomante, ogni attivazione consuma 2 PM per 10 Round: una riserva piena permette cinque attivazioni complete. Rimane disponibile l’alternativa dei PM personali prevista dal profilo.
+
+L’installazione della batteria deve essere effettivamente realizzata e confermata: non è compresa automaticamente nel progetto iniziale dei tre giorni di Dimitri.
+
+#### A.237 — NEC della CyberArma convertita
+
+02/11/2026 — Risposta approvata da Davide.
+
+La configurazione ordinaria utilizza un NEC Rosso da 10 cariche.
+
+Ogni attivazione richiede 1 AzP e una carica, mantenendo la manifestazione per 10 Round. Il consumo è per attivazione, non per attacco: dieci cariche consentono dieci attivazioni.
+
+L’app deve collegare il consumo al NEC effettivamente inserito e conservarne la carica residua quando viene rimosso. Sostituzione e ricarica seguono le regole dei NEC e la procedura di A.215.
+
+La configurazione mantiene SnT 3 complessiva. Non converte cariche tecnologiche in PM personali o in energia per batterie mistiche.
+
+#### **Revisione approvata — Cariche Mistiche; integrazione e superamento dei riferimenti energetici precedenti in A.234 e A.236 (02/11/2026)**
+
+Davide approva la nuova denominazione e i consumi. Le Batterie Mistiche conservano PM utilizzabili dal personaggio secondo le regole ordinarie. Le riserve dedicate ai soli effetti di armi e oggetti si chiamano Cariche Mistiche (CM), con contatore CM attuali/CM massime: non alimentano Incantesimi e non sono prelevabili come PM personali. Il nome non cambia le cariche tecnologiche NEC, CEC, MEC o BEC.
+
+Guanti da Combattimento Mistico di Lucas: 6 CM Rosse complessive per la coppia. Pugno mistico/potenziamento: 1 CM, 1 AzP, durata 5 Round. Getto singolo: 3 CM e 1 AzP. Doppio getto: 6 CM e 1 AzP, entrambe le mani libere, Potere −2; le 6 CM si spendono al tentativo anche se fallisce. Restano effetti, distanze, risoluzione separata dei getti, Specializzazioni alternative della A.232 e limiti ai bonus della A.234. A piena riserva: sei potenziamenti, due getti singoli oppure un doppio; un getto e due potenziamenti lasciano 1 CM. Questo supera il vecchio contatore da 10 PM e i consumi 2/5/10 PM.
+
+CyberArma Dimitri: la futura riserva interna Verde è da 5 CM, esclusiva dell’arma; 1 CM e 1 AzP manifestano l’arma per 10 Round, cinque attivazioni complete. SnT 2 complessiva. Rimane il profilo alternativo da 2 PM personali per 10 Round. Il progetto iniziale di tre giorni NON installa questa riserva e continua a usare PM personali; il focalizzatore non diventa una batteria. Restano il nome univoco, lo storico Park/Dimitri, la singola istanza d’inventario e le altre decisioni già approvate. La conversione tecnologica A.237 resta separata: NEC Rosso 10, una carica per 10 Round, SnT 3\.
+
+Ricarica delle CM: PM personali \= CM mancanti × 2 × rapporto di conversione applicabile. Con 3:1, ogni CM costa 6 PM: Guanti vuoti 6 × 2 × 3 \= 36 PM; CyberArma vuota 5 × 2 × 3 \= 30 PM. Con 2:1 i totali sono 24 e 20 PM; con 1:1 sono 12 e 10 PM. Si ripristina soltanto quanto manca; restano colore, requisiti, Azioni, Prove ed esiti ordinari della ricarica mistica. Il ×2 non si applica alle normali Batterie in PM né agli accumulatori tecnologici. La nuova formula non modifica i PM di costruzione/infusione o i prezzi già approvati delle due ricette.
+
+Rimandi di catalogo: Bordone Templare, Vindicator, Deliverer, Castigator, Demontooth e Scudo delle Guardie Sacre conservano cinque impieghi, ora indicati come 5 CM Rosse, 1 CM per attivazione; la ricarica completa ordinaria è 30 PM. I consumabili monouso conservano l’energia sigillata e non ricaricabile. Per gli altri progetti non si deducono automaticamente nuovi costi in CM dal costo in PM di un Incantesimo: occorre la relativa scheda di progetto.
+
+Salvataggi esistenti: applicare una sola volta la conservazione della frazione residua già approvata in A.193, con copia dei dati precedenti e registrazione della conversione. Guanti: CM nuove \= PM precedenti / massimo precedente × 6; riserva CyberArma: stesso criterio × 5\. Non riempire automaticamente, non arrotondare per eccesso e non aggiungere una riserva dove non era installata. Le frazioni si conservano senza attribuire un utilizzo non pagabile. I profili storici restano consultabili; i riferimenti attivi sopra riportati superano le vecchie diciture.
+
 > > ## **8\. Prove da fare**
 
 Le prove in sospeso. Quelle che puoi fare tu dal PC del Direttore, nessuna lunga più di qualche minuto. Per tutte: prima **Mutant.bat → 2 «Aggiorna»**, poi **1 «Avvia»**.
