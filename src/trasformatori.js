@@ -44,8 +44,8 @@ export function testoDurata(minuti) {
 
 /**
  * Che cosa si può ricaricare con un trasformatore (§5.4.6, §5.4.7: «ricaricano NEC personali e non sostituiscono
- * stazioni per CEC, MEC o BEC»): i NEC e i pacchi dell'Inventario con le cariche mancanti, e la cella dell'arma a energia
- * (le cariche o i colpi che mancano al suo caricatore).
+ * stazioni per CEC, MEC o BEC»): i NEC e i pacchi dell’Inventario con le cariche mancanti, e le celle TOLTE dalle armi a energia
+ * (A.215: una cella inserita compare con `inserita` e il motivo in `rifiuto`, e pianoRicarica la rifiuta).
  * @param attuali { nec: { chiave → cariche attuali }, munizioni: { uid → { colpi } } } della sessione
  * @param ricarica massimi.ricarica: { uid arma → { modo, capacita, scorte } }
  * @returns {{ id, tipo: 'nec'|'cella', nome, colori: string[], mancanti: number, chiave?: string, uid?: string, unita: string }[]}
@@ -63,15 +63,28 @@ export function bersagliRicaricabili(voci, attuali, ricarica, dati) {
   const risolte = new Map((voci ?? []).map((v) => { const r = risolvi(v, cat); return [r.uid, r]; }));
   for (const [uid, info] of Object.entries(ricarica ?? {})) {
     if (info?.modo !== 'cella' || !Number.isInteger(info.capacita)) continue;
-    const colpi = attuali?.munizioni?.[uid]?.colpi ?? 0;
-    if (colpi >= info.capacita) continue;
+    const mun = attuali?.munizioni?.[uid] ?? {};
     const arma = risolte.get(uid);
-    const cella = (info.scorte ?? []).map((s) => risolte.get(s.uid)?.def).find((d) => d?.accumulatore);
+    const cella = (info.scorte ?? []).map((s) => risolte.get(s.uid)?.def).find((d) => d?.accumulatore)
+      ?? cat.oggetti.find((o) => o.accumulatore && o.cella && o.compatibile_con?.includes(arma?.def?.rif));
     const colori = (cella?.accumulatore?.colori ?? []).filter((c) => COLORI.includes(c));
-    out.push({ id: `cella:${uid}`, tipo: 'cella', nome: `Cella di ${arma?.nome ?? 'un’arma'}`, colori: colori.length ? colori : COLORI, mancanti: info.capacita - colpi, uid, unita: cella?.cella?.unita ?? 'colpi' });
+    const base = { tipo: 'cella', colori: colori.length ? colori : COLORI, uid, unita: cella?.cella?.unita ?? 'colpi' };
+    const nomeCella = cella?.nome ?? 'Cella';
+    // A.215: si ricaricano le celle TOLTE dall'arma, ognuna con le sue cariche
+    (Array.isArray(mun.celle) ? mun.celle : []).forEach((n, indice) => {
+      if (Number.isInteger(n) && n < info.capacita) out.push({ ...base, id: `cella:${uid}:${indice}`, indice, nome: `${nomeCella} tolta da ${arma?.nome ?? 'un’arma'} (${n}/${info.capacita})`, mancanti: info.capacita - n });
+    });
+    // la cella inserita non si ricarica: compare con il motivo, perché chi la cerca sappia che cosa fare
+    const colpi = mun.colpi ?? 0;
+    if (!mun.senzaCella && colpi < info.capacita) {
+      out.push({ ...base, id: `cella:${uid}`, inserita: true, nome: `${nomeCella} inserita in ${arma?.nome ?? 'un’arma'} (${colpi}/${info.capacita})`, mancanti: info.capacita - colpi, rifiuto: RIFIUTO_INSERITA });
+    }
   }
   return out;
 }
+
+/** A.215 (Davide, 30/10/2026): «Il comando di ricarica energetica non è disponibile mentre la cella è inserita nell'arma». */
+export const RIFIUTO_INSERITA = 'la cella è inserita nell’arma: si ricarica soltanto dopo averla tolta («Togli la cella» nella riga dell’arma, poi la ricarichi e la rimetti; A.215)';
 
 /** Le CEC dell'Inventario del colore, con le cariche che hanno ora: [{ chiave, nome, cariche }]. */
 export function fontiCec(voci, nec, colore, dati) {
@@ -95,6 +108,7 @@ export function pianoRicarica({ t, stato, bersaglio, colore, fonte }, dati) {
   const T = dati?.regole?.nec?.trasformatori ?? {};
   if (!COLORI.includes(colore)) return { ok: false, errore: 'scegli il colore da ricaricare', avvisi };
   if (!bersaglio) return { ok: false, errore: 'scegli che cosa ricaricare', avvisi };
+  if (bersaglio.inserita) return { ok: false, errore: RIFIUTO_INSERITA, avvisi };
   if (!bersaglio.colori.includes(colore)) return { ok: false, errore: `${bersaglio.nome} è ${bersaglio.colori.join(' o ')}: il colore ${colore} non è compatibile`, avvisi };
   if (t.colori === 1 && stato.colore && stato.colore !== colore) return { ok: false, errore: `il monocromatico ha il colore fissato alla costruzione: ${stato.colore}`, avvisi };
   const tampone = stato.tamponi[colore] ?? 0;

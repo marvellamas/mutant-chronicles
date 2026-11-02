@@ -92,13 +92,15 @@ test('munizioni sciolte (revolver, A.135): 2 per operazione fino alla capacità,
   assert.deepEqual(allineaSessione({ ...s, scorte: { m: 99, x: 3 } }, m).scorte, { m: 5 });
 });
 
-test('celle: una cella piena sostituisce quella esaurita', () => {
+test('celle: una cella piena sostituisce quella esaurita, che resta (A.215)', () => {
   let { m, s } = prepara([voce('f', 'armi_distanza:fucile-al-plasma', 'impugnata'), voce('c', 'munizioni:cella-del-fucile-al-plasma-commerciale', null, 1)]);
   s = variaMunizioni(s, 'f', 'colpi', -20, m);
   s = ricaricaArma(s, 'f', m);
   assert.equal(s.munizioni.f.colpi, 20);
+  // A.215: la cella tolta non si consuma: resta, vuota, e si ricarica fuori dall'arma
+  assert.deepEqual(s.munizioni.f.celle, [0]);
   s = variaMunizioni(s, 'f', 'colpi', -5, m);
-  assert.equal(stato(s, m, 'f').motivo, 'nessuna cella compatibile');
+  assert.match(stato(s, m, 'f').motivo, /^nessuna cella carica compatibile/);
 });
 
 test('senza dati di compatibilità: avviso e ricarica libera, nessun blocco', () => {

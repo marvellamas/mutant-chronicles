@@ -428,6 +428,22 @@
         }
       },
       "_nota_a151": "A.151 (risposta di Davide del 09/10/2026, ripristinata nel Doc il 10/10): Ricarica per Tamburo peso a vuoto 0,1 kg; Ricarica per Serbatoio 0,2 kg; entrambi Qualità Comune, PS Integrità 10, PI massimi 2, Reperibilità Comune (CO). Il peso delle munizioni contenute si aggiunge al peso a vuoto, e ogni cartuccia si conta una sola volta nell’inventario (nell’app le cartucce restano nella loro voce: il carichino aggiunge solo il peso a vuoto). A 0 PI il carichino è inutilizzabile finché non viene riparato (nell’app un avviso con «Procedi comunque», N2)."
+    },
+    "cambio_cella": {
+      "_nota": "A.215 (Davide, 30/10/2026): «La cella energetica può essere ricaricata soltanto dopo essere stata tolta dall’arma» e «Durante il combattimento rimangono i costi e i limiti di estrazione, riempimento e inserimento previsti dalle regole». Costi dal manuale: Armamenti 0.74 §7.20.5 («Sostituire una cella compatibile già pronta richiede 1 AzP, senza Prova, disponendo delle mani necessarie»; per le armi ravvicinate a cella §7.1.4: «Sostituire una cella pronta richiede 1 Azione Principale») e §7.20.6 per i pacchi dei lanciafiamme («Sostituire un pacco compatibile pronto richiede 1 AzP, entrambe le mani e nessuna Prova»). Il manuale non dà un costo separato per togliere soltanto la cella o per inserirla in un’arma vuota: l’app non ne inventa uno (A.243).",
+      "azione": "1 AzP, senza Prova, con le mani necessarie (Armamenti §7.20.5)",
+      "per_unita": {
+        "getti": {
+          "azione": "1 AzP, entrambe le mani, nessuna Prova (Armamenti §7.20.6)",
+          "nome": "pacco"
+        }
+      },
+      "ricarica_fuori": "Una cella tolta si ricarica con un trasformatore compatibile (tab Inventario, «Tampone»); una cella inserita no (A.215)."
+    },
+    "riempimento_caricatori": {
+      "_nota": "A.215 (Davide, 30/10/2026): «Fuori dal combattimento, con tempo e condizioni adatti, l’app deve permettere di riempire il caricatore parzialmente usato con un’unica operazione di interfaccia, mostrando quanti colpi vengono trasferiti e l’eventuale tempo necessario. Il tempo di preparazione trascorre prima del nuovo scontro; non vengono addebitate Azioni al combattimento successivo.» Esempio Axis: un solo caricatore da 15 con 8 colpi e 30 sciolti → 15/15 e 23 sciolti. Il manuale non dice quanto tempo ci vuole per riempire un caricatore: l’app non lo inventa (A.244).",
+      "quando": "fuori dal combattimento",
+      "tempo": null
     }
   },
   "oggetti": [

@@ -72,7 +72,7 @@ import { preparaStampa, preparaTab, normalizzaOpzioniStampa, versioniCompatte } 
 import { renderTab, tabFissi, ALIAS_TAB, titoloSalvataggio } from './tab.js';
 import {
   massimiSessione, allineaSessione, variaSessione, modificaSessione, stabilizzaMorente, scalaMorente, attivaArmaSessione, terminaArmaSessione, commutaContenitoreSessione, commutaStato, commutaCondizioneOggetto, commutaTalento, commutaBonusTalenti, impostaCondizioneArma, riparaOggetto, spendiPmLancio, ricaricaMatrice, attivaArtefatto, usaArtefatto, attivaTecnicaSessione, nuovoRoundSessione, terminaTecnicaSessione, usaUnaVoltaSessione, azzeraUsoSessione, nuovaSessione, convertiDistintivi, sessioneDopoLivello,
-  penalitaSessione, variaMunizioni, consumaColpi, scegliGranata, granateDiPartenza, ricaricaArma, caricaDaCarichino, preparaCarichino, variaChroma, variaIntegrita, variaNec, ricaricaConTrasformatore,
+  penalitaSessione, variaMunizioni, consumaColpi, scegliGranata, granateDiPartenza, ricaricaArma, togliCellaArma, inserisciCellaArma, riempiCaricatoriArma, caricaDaCarichino, preparaCarichino, variaChroma, variaIntegrita, variaNec, ricaricaConTrasformatore,
 } from '../sessione.js';
 import { conOrdinale } from '../lingua.js';
 import { normalizzaCalendario, calendarioAttivo, attivaCalendario, disattivaCalendario, contaNote, fileCalendario, leggiFileCalendario, momentoCalendario } from '../calendario.js';
@@ -2392,6 +2392,10 @@ function renderSchedaInterna({ mantieniScorrimento = false } = {}) {
       },
       munizioni: (uid, campo, delta) => cambiaSessione(variaMunizioni(stato.sessione, uid, campo, delta, massimi)),
       ricarica: (uid) => cambiaSessione(ricaricaArma(stato.sessione, uid, massimi)),
+      // A.215: la cella si toglie e si rimette; i caricatori si riempiono fuori dal combattimento
+      togliCella: (uid) => cambiaSessione(togliCellaArma(stato.sessione, uid, massimi)),
+      inserisciCella: (uid, scelta) => cambiaSessione(inserisciCellaArma(stato.sessione, uid, scelta, massimi)),
+      riempiCaricatori: (uid) => cambiaSessione(riempiCaricatoriArma(stato.sessione, uid, massimi)),
       // A.135: carichini rapidi
       usaCarichino: (uid) => cambiaSessione(caricaDaCarichino(stato.sessione, uid, massimi)),
       preparaCarichino: (uid) => cambiaSessione(preparaCarichino(stato.sessione, uid, massimi)),

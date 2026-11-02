@@ -131,7 +131,8 @@ test('sessione: PM dei contenitori pieni all’inizio (A.19), limitati alla capa
 test('«Ricarica» non tocca le riserve mistiche; «Nuova sessione» nemmeno; le celle sì', () => {
   const o = voce('o', 'armi_corporative:bordone-templare', 'impugnata');
   const t = voce('t', 'armi_corporative:tonfa-stella-cadente', 'impugnata'); // cella tecnologica sostituibile
-  const m = massimi([o, t]);
+  const c = { ...voce('c', 'munizioni:cella-ravvicinata-comune', null), quantita: 1 }; // una cella pronta di scorta (§7.1.4)
+  const m = massimi([o, t, c]);
   assert.deepEqual(m.caricatori, { t: 5 });
   let s = inizializzaSessione(m);
   s = variaChroma(s, 'o', -4, m);
@@ -139,7 +140,8 @@ test('«Ricarica» non tocca le riserve mistiche; «Nuova sessione» nemmeno; le
   const dopo = ricaricaArma(s, 'o', m);
   assert.equal(dopo.chroma.o.pmAttuali, 1);
   assert.equal(nuovaSessione(s, m).chroma.o.pmAttuali, 1);
-  assert.equal(ricaricaArma(s, 't', m).munizioni.t.colpi, 5);
+  // A.215: il cambio mette la cella pronta e quella tolta resta, con la sua carica
+  assert.deepEqual([ricaricaArma(s, 't', m).munizioni.t.colpi, ricaricaArma(s, 't', m).munizioni.t.celle], [5, [1]]);
 });
 
 test('sessione salvata prima: la riserva del Bordone passa da «munizioni» a «chroma» con il suo valore', () => {

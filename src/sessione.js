@@ -4,7 +4,7 @@
 // viene solo limitato al nuovo massimo, mai riazzerato. Funzioni pure.
 //
 // sessione = { pvAttuali, pmAttuali, puntiEroe, distintivi, statiAttivi: [id], ferite,
-//              affaticamento, munizioni: { uid: { colpi, riserve, parziali, vuoti } }, scorte: { uid: consumate },
+//              affaticamento, munizioni: { uid: { colpi, riserve, parziali, vuoti, celle?, senzaCella? } }, scorte: { uid: consumate },
 //              chroma: { uid: { pmAttuali, iniziale? } } (iniziale: PM impostati per un contenitore trovato, E&L 2),
 //              caricoExtra, crediti, creditiIniziali, condizioniOggetti: [uid], attacchi: { uid: scelte },
 //              lanci: { incantesimo: scelte }, integrita: { uid: piAttuali }, nec: { chiave: attuale },
@@ -49,7 +49,7 @@ import { normalizzaTemporanei } from './temporanei.js';
 import { valoreTiro } from './tiri.js';
 import { SENZ_ARMI } from './attacco.js';
 import { saldoIniziale } from './dotazioni.js';
-import { infoRicarica, eseguiRicarica, perOperazione, allineaCarichini, usaCarichino, riempiCarichino } from './ricarica.js';
+import { infoRicarica, eseguiRicarica, perOperazione, allineaCarichini, usaCarichino, riempiCarichino, togliCella, inserisciCella, riempiCaricatori } from './ricarica.js';
 import { caricatori, contenitori, normalizzaEquipaggiamento, catalogo, risolvi, riserveNec, granateDaLancio } from './equipaggiamento.js';
 import { elencoTrasformatori, statoTrasformatore } from './trasformatori.js';
 import { oggettiConPi } from './protezione.js';
@@ -229,7 +229,15 @@ export function ricaricaConTrasformatore(sessione, az, m) {
   if (piano.preleva && piano.fonte?.chiave in nec) nec[piano.fonte.chiave] = Math.max(0, nec[piano.fonte.chiave] - 1);
   const munizioni = { ...s.munizioni };
   if (az.bersaglio?.tipo === 'nec' && az.bersaglio.chiave in nec) nec[az.bersaglio.chiave] += piano.trasferite;
-  else if (az.bersaglio?.tipo === 'cella' && az.bersaglio.uid in munizioni) munizioni[az.bersaglio.uid] = { ...munizioni[az.bersaglio.uid], colpi: munizioni[az.bersaglio.uid].colpi + piano.trasferite };
+  else if (az.bersaglio?.tipo === 'cella') {
+    // A.215: «il comando di ricarica energetica non è disponibile mentre la cella è inserita nell'arma»: si ricarica
+    // soltanto una cella tolta (indice fra le celle tolte di quell'arma); una cella inserita non si tocca
+    const x = munizioni[az.bersaglio.uid];
+    const i = az.bersaglio.indice;
+    if (!x || !Number.isInteger(i) || !(i >= 0 && i < (x.celle?.length ?? 0))) return s;
+    const cap = m.caricatori?.[az.bersaglio.uid] ?? Infinity;
+    munizioni[az.bersaglio.uid] = { ...x, celle: x.celle.map((n, k) => (k === i ? Math.min(cap, n + piano.trasferite) : n)) };
+  }
   return modificaSessione(s, { trasformatori, nec, munizioni }, m);
 }
 
@@ -353,6 +361,10 @@ function voceMunizioni(v) {
   if (Number.isInteger(v.vuoti) && v.vuoti > 0) out.vuoti = v.vuoti;
   // §7.20.3: granata caricata in un lanciagranate (uid della voce)
   if (typeof v.tipo === 'string' && v.tipo) out.tipo = v.tipo;
+  // A.215: celle tolte dall'arma con le loro cariche (anche 0: una cella vuota non si consuma) e arma senza cella
+  const celle = Array.isArray(v.celle) ? v.celle.filter((n) => Number.isInteger(n) && n >= 0) : [];
+  if (celle.length) out.celle = celle;
+  if (v.senzaCella === true) { out.senzaCella = true; out.colpi = 0; }
   return out;
 }
 
@@ -393,6 +405,7 @@ function allineaMunizioni(sorgente, m) {
     if (capacita !== null) {
       x.colpi = Math.min(x.colpi, capacita);
       if (x.parziali) x.parziali = x.parziali.map((n) => Math.min(n, capacita));
+      if (x.celle) x.celle = x.celle.map((n) => Math.min(n, capacita));
     }
     out[uid] = x;
   }
@@ -626,6 +639,30 @@ export function preparaCarichino(sessione, uid, m) {
   const s = allineaSessione(sessione, m);
   const r = riempiCarichino(m.ricarica?.[uid], s.carichini ?? {}, s.scorte);
   return r ? modificaSessione(s, { carichini: r.carichini, scorte: r.consumi }, m) : s;
+}
+
+/** «Togli la cella» (A.215): la cella esce con le cariche che ha e resta fra le tolte dell'arma. */
+export function togliCellaArma(sessione, uid, m) {
+  const s = allineaSessione(sessione, m);
+  if (m.ricarica?.[uid]?.modo !== 'cella') return s;
+  const x = togliCella(s.munizioni[uid] ?? { colpi: 0, riserve: 0 });
+  return x ? modificaSessione(s, { munizioni: { ...s.munizioni, [uid]: x } }, m) : s;
+}
+
+/** «Inserisci» (A.215) in un'arma senza cella: una cella tolta o una piena di scorta (senza scelta, la più carica). */
+export function inserisciCellaArma(sessione, uid, scelta, m) {
+  const s = allineaSessione(sessione, m);
+  const info = m.ricarica?.[uid];
+  if (info?.modo !== 'cella') return s;
+  const r = inserisciCella(info, s.munizioni[uid] ?? { colpi: 0, riserve: 0 }, s.scorte, scelta);
+  return r ? modificaSessione(s, { munizioni: { ...s.munizioni, [uid]: r.munizione }, scorte: r.consumi }, m) : s;
+}
+
+/** «Riempi i caricatori» fuori dal combattimento (A.215), con le munizioni sciolte compatibili. */
+export function riempiCaricatoriArma(sessione, uid, m) {
+  const s = allineaSessione(sessione, m);
+  const r = riempiCaricatori(m.ricarica?.[uid], s.munizioni[uid], s.scorte);
+  return r ? modificaSessione(s, { munizioni: { ...s.munizioni, [uid]: r.munizione }, scorte: r.consumi }, m) : s;
 }
 
 export function ricaricaArma(sessione, uid, m) {

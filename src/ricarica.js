@@ -32,6 +32,13 @@ const eScorta = (o) => o?.tipo === 'munizioni' || !!o?.cella || eGranata(o);
  * @returns {{ modo: 'caricatore'|'inserimento'|'cella'|null, famiglia: string|null, vuoto: {rif, nome}|null }}
  */
 export function modoRicarica(def, dati, cat = catalogo(dati)) {
+  // le armi ravvicinate con cariche a cella (Armamenti §7.1.4, §7.20.5: «celle energetiche sostituibili come normali
+  // caricatori») si ricaricano come quelle a distanza a cella; le altre ravvicinate non hanno ricarica
+  if (def?.tipo === 'arma_ravvicinata' && def.munizioni?.capacita) {
+    const r0 = regole(dati) ?? {};
+    const celle = cat.oggetti.filter((o) => eScorta(o) && !eVuoto(o) && o.compatibile_con?.includes(def.rif) && ((r0.famiglie_celle ?? []).includes(o.famiglia) || o.cella));
+    return celle.length ? { modo: 'cella', famiglia: null, vuoto: null } : { modo: null, famiglia: null, vuoto: null };
+  }
   if (!def || def.tipo !== 'arma_distanza') return { modo: null, famiglia: null, vuoto: null };
   const r = regole(dati) ?? {};
   const famiglia = tabellaMunizioniArmi(dati).get(def.rif) ?? null;
@@ -84,10 +91,14 @@ export function infoRicarica(voci, dati) {
     // A.135: i carichini del tipo dell'arma (non quelli del deposito comune)
     const tipoC = info.carichino ? r.carichini?.tipi?.[info.carichino] : null;
     const carichini = tipoC ? risolte.filter((x) => x.def?.rif === tipoC.rif && !x.deposito).map((x) => ({ uid: x.uid, nome: x.nome, quantita: x.voce.quantita ?? 1 })) : [];
-    out[uid] = { ...info, capacita: def.munizioni?.capacita ?? null, scorte, ...(tipoC ? { carichini, colpiCarichino: r.carichini.colpi ?? 6 } : {}), ...(scorte.some((x) => x.granata) || (rifRiferimento && eGranata(cat.perRif.get(rifRiferimento))) ? { granate: true, rifRiferimento } : {}) };
+    // A.215: la cella o il pacco compatibile (nome e unità: «getti» per i pacchi dei lanciafiamme, §7.20.6)
+    const cellaDef = info.modo === 'cella' ? cat.oggetti.find((o) => o.cella && !eVuoto(o) && o.compatibile_con?.includes(def.rif)) : null;
+    out[uid] = { ...info, capacita: def.munizioni?.capacita ?? null, scorte, ...(cellaDef ? { cella: { rif: cellaDef.rif, nome: cellaDef.nome, unita: cellaDef.cella.unita ?? 'colpi' } } : {}), ...(tipoC ? { carichini, colpiCarichino: r.carichini.colpi ?? 6 } : {}), ...(scorte.some((x) => x.granata) || (rifRiferimento && eGranata(cat.perRif.get(rifRiferimento))) ? { granate: true, rifRiferimento } : {}) };
   };
   // le granate da lancio non hanno caricatore: si lanciano dalla quantità della voce (src/sessione.js → consumaColpi)
   for (const a of risolte.filter((x) => x.tipo === 'arma_distanza' && x.def && !eGranata(x.def))) perArma(a.uid, a.def);
+  // A.215: le armi ravvicinate a cella (spade elettrificate, tirapugni concussivo…) con le loro celle compatibili
+  for (const a of risolte.filter((x) => x.tipo === 'arma_ravvicinata' && x.def?.munizioni?.capacita && modoRicarica(x.def, dati, cat).modo === 'cella')) perArma(a.uid, a.def);
   // §7.8: i moduli integrati hanno la propria alimentazione, distinta da quella dell'arma principale
   for (const a of risolte.filter((x) => (x.tipo === 'arma_distanza' || x.tipo === 'arma_ravvicinata') && x.def)) {
     for (const m of moduliDi(a.def, cat)) if (m.tipo === 'arma_distanza') perArma(`${a.uid}:${m.id}`, m);
@@ -108,16 +119,134 @@ export function statoRicarica(info0, munizione, consumi = {}) {
   const colpi = munizione?.colpi ?? 0;
   if (!info) return { possibile: true, motivo: null, avviso: null };
   if (info.capacita === null) return { possibile: false, motivo: 'nessun caricatore nella scheda dell’arma', avviso: null };
-  if (colpi >= info.capacita) return { possibile: false, motivo: 'caricatore già pieno', avviso: null };
+  if (colpi >= info.capacita) return { possibile: false, motivo: info.modo === 'cella' ? 'già carica' : 'caricatore già pieno', avviso: null };
   if (info.modo === null) return { possibile: true, motivo: null, avviso: 'Compatibilità delle munizioni non nei dati: la ricarica non scala le riserve.' };
   if (info.modo === 'caricatore') {
     return (munizione?.riserve ?? 0) > 0 || (munizione?.parziali ?? []).some((n) => n > colpi)
       ? { possibile: true, motivo: null, avviso: null }
       : { possibile: false, motivo: 'nessun caricatore compatibile', avviso: null };
   }
+  if (info.modo === 'cella') {
+    // A.215: si cambia con la cella più carica fra quelle tolte e le piene di scorta; una cella vuota non serve
+    return migliorCella(info, munizione, consumi)
+      ? { possibile: true, motivo: null, avviso: null }
+      : { possibile: false, motivo: 'nessuna cella carica compatibile (le celle tolte si ricaricano con un trasformatore)', avviso: null };
+  }
   const tot = info.scorte.reduce((s, x) => s + disponibili(x, consumi), 0);
-  if (!tot) return { possibile: false, motivo: info.modo === 'cella' ? 'nessuna cella compatibile' : 'nessuna munizione compatibile', avviso: null };
+  if (!tot) return { possibile: false, motivo: 'nessuna munizione compatibile', avviso: null };
   return { possibile: true, motivo: null, avviso: null };
+}
+
+// ── Celle e pacchi (A.215, risposta di Davide del 30/10/2026) ──
+// «La cella energetica può essere ricaricata soltanto dopo essere stata tolta dall'arma.» «La cella tolta conserva
+// analogamente le cariche residue e può essere ricaricata con un trasformatore compatibile.» «Le scorte devono conservare
+// formato, compatibilità e quantità residua, distinguendo caricatori o celle pieni, parzialmente pieni e vuoti. Quelli
+// identici possono essere raggruppati. Restano i profili specifici dei pacchi composti.»
+// Una cella è una cosa che si sposta. Per ogni arma a cella (sessione → munizioni[uid]):
+//   colpi: le cariche della cella inserita; senzaCella: true se nell'arma non c'è nessuna cella;
+//   celle: le cariche di ognuna delle celle tolte da quell'arma e tenute (piene, parziali o vuote: una vuota non è
+//   «consumata», resta e si ricarica);
+// le celle piene mai usate restano la quantità della voce nell'Inventario, meno quelle già inserite (sessione → scorte).
+// Così una cella non si crea e non si perde: inserita + tolte + piene di scorta restano lo stesso numero.
+
+/** Le celle tolte di un'arma, con le loro cariche (entro la capacità). */
+export const celleTolte = (munizione, capacita = Infinity) => (Array.isArray(munizione?.celle) ? munizione.celle : []).filter((n) => Number.isInteger(n) && n >= 0).map((n) => Math.min(n, capacita));
+
+/** C'è una cella nell'arma? (le armi salvate prima di A.215 l'hanno sempre). */
+export const cellaInserita = (munizione) => !munizione?.senzaCella;
+
+/**
+ * La cella più carica da mettere nell'arma: fra le tolte (prima, a parità di cariche: non si tocca una scorta nuova) e
+ * le piene di scorta dell'Inventario. null se non ce n'è una con almeno una carica.
+ * @returns {{ da: 'tolta', indice, cariche } | { da: 'scorta', uid, cariche } | null}
+ */
+export function migliorCella(info, munizione, consumi = {}) {
+  const cap = info?.capacita ?? 0;
+  const tolte = celleTolte(munizione, cap).map((n, indice) => ({ da: 'tolta', indice, cariche: n })).filter((x) => x.cariche > 0);
+  const scorta = (info?.scorte ?? []).find((s) => disponibili(s, consumi) > 0);
+  const candidati = [...tolte, ...(scorta ? [{ da: 'scorta', uid: scorta.uid, cariche: cap }] : [])];
+  if (!candidati.length) return null;
+  return candidati.reduce((best, x) => (x.cariche > best.cariche ? x : best));
+}
+
+/** «Togli la cella» (A.215): la cella inserita esce con le cariche che ha e resta fra le tolte. null se non ce n'è una. */
+export function togliCella(munizione) {
+  if (!cellaInserita(munizione)) return null;
+  const m = { ...munizione };
+  m.celle = [...celleTolte(munizione), m.colpi ?? 0];
+  m.colpi = 0;
+  m.senzaCella = true;
+  return m;
+}
+
+/**
+ * «Inserisci una cella» (A.215) in un'arma senza cella: una tolta (`{ da: 'tolta', indice }`) o una piena di scorta
+ * (`{ da: 'scorta', uid }`); senza scelta, la più carica. null se non si può.
+ * @returns {{ munizione, consumi } | null}
+ */
+export function inserisciCella(info, munizione, consumi = {}, scelta = null) {
+  if (cellaInserita(munizione)) return null;
+  const s = scelta ?? migliorCella(info, munizione, consumi);
+  if (!s) return null;
+  const cap = info?.capacita ?? 0;
+  const tolte = celleTolte(munizione, cap);
+  const m = { ...munizione, celle: tolte };
+  const c = { ...consumi };
+  if (s.da === 'tolta') {
+    if (!(s.indice >= 0 && s.indice < tolte.length)) return null;
+    m.colpi = tolte[s.indice];
+    m.celle = tolte.filter((_, i) => i !== s.indice);
+  } else {
+    const scorta = (info?.scorte ?? []).find((x) => x.uid === s.uid);
+    if (!scorta || disponibili(scorta, c) <= 0) return null;
+    c[scorta.uid] = (c[scorta.uid] ?? 0) + 1;
+    m.colpi = cap;
+  }
+  delete m.senzaCella;
+  if (!m.celle.length) delete m.celle;
+  return { munizione: m, consumi: c };
+}
+
+/**
+ * Riempimento dei caricatori fuori dal combattimento (A.215): «con un'unica operazione di interfaccia» si riempiono il
+ * caricatore inserito e quelli parziali o vuoti tolti, con le munizioni sciolte compatibili davvero disponibili, nell'ordine:
+ * l'inserito, poi i parziali dal più carico, poi i vuoti. Un caricatore riempito torna fra i pieni di riserva.
+ * Esempio di Davide (Axis): un solo caricatore da 15 con 8 colpi e 30 sciolti → 15/15, 23 sciolti, sempre un caricatore.
+ * @returns {{ munizione, consumi, trasferiti: number } | null} null se non c'è niente da riempire o niente con cui farlo
+ */
+export function riempiCaricatori(info, munizione, consumi = {}) {
+  if (info?.modo !== 'caricatore' || !Number.isInteger(info.capacita)) return null;
+  const cap = info.capacita;
+  const c = { ...consumi };
+  const m = { colpi: 0, riserve: 0, ...munizione, parziali: [...(munizione?.parziali ?? [])].sort((a, b) => b - a), vuoti: munizione?.vuoti ?? 0 };
+  let trasferiti = 0;
+  const preleva = (quanti) => {
+    let presi = 0;
+    for (const s of info.scorte ?? []) {
+      const n = Math.min(quanti - presi, disponibili(s, c));
+      if (n > 0) { c[s.uid] = (c[s.uid] ?? 0) + n; presi += n; }
+      if (presi === quanti) break;
+    }
+    trasferiti += presi;
+    return presi;
+  };
+  if (m.colpi < cap) m.colpi += preleva(cap - m.colpi);
+  const parziali = [];
+  for (const n of m.parziali) {
+    const x = n + preleva(cap - n);
+    if (x >= cap) m.riserve += 1; else parziali.push(x);
+  }
+  let vuoti = 0;
+  for (let i = 0; i < m.vuoti; i++) {
+    const x = preleva(cap);
+    if (x >= cap) m.riserve += 1; else if (x > 0) parziali.push(x); else vuoti += 1;
+  }
+  if (!trasferiti) return null;
+  m.parziali = parziali.sort((a, b) => b - a);
+  m.vuoti = vuoti;
+  if (!m.parziali.length) delete m.parziali;
+  if (!m.vuoti) delete m.vuoti;
+  return { munizione: m, consumi: c, trasferiti };
 }
 
 /**
@@ -170,9 +299,15 @@ export function eseguiRicarica(info0, munizione, consumi = {}) {
     return { munizione: m, consumi: c };
   }
   if (info.modo === 'cella') {
-    const s = info.scorte.find((x) => disponibili(x, c) > 0);
-    c[s.uid] = (c[s.uid] ?? 0) + 1;
-    return { munizione: { ...m, colpi: info.capacita }, consumi: c };
+    // A.215: il cambio toglie la cella inserita (resta fra le tolte con le cariche che ha, anche vuota: non si consuma) e
+    // mette la più carica fra le tolte e le piene di scorta
+    const scelta = migliorCella(info, munizione, consumi);
+    const tolta = cellaInserita(munizione) ? togliCella({ ...munizione, colpi: m.colpi }) : { ...munizione };
+    const r = inserisciCella(info, tolta, consumi, scelta?.da === 'tolta' ? { ...scelta } : scelta);
+    if (!r) return null;
+    const pulita = { ...r.munizione };
+    for (const k of ['parziali', 'vuoti']) if (!pulita[k] || (Array.isArray(pulita[k]) && !pulita[k].length)) delete pulita[k];
+    return { munizione: pulita, consumi: r.consumi };
   }
   // inserimento: munizioni sciolte fino alla capacità, dalla prima scorta disponibile; le armi caricate direttamente si
   // fermano a 2 munizioni per operazione (4 con Ricarica Migliorata, A.135)

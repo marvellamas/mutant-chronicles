@@ -437,14 +437,15 @@ test('arma corporativa impugnata: Precisa nel VA per colpire, Difensiva nella Pa
   assert.equal(tonfa.parata.va, difese + 2); // Difensiva +2, FOR 4 ≤ 6
   assert.equal(tonfa.attivazione.natura, 'Elettricità');
   assert.deepEqual(tonfa.manovre, ['Affondo', 'Spazzata', 'Stordire']);
-  // la Spada Punisher ha cinque cariche a cella: contatore in sessione, «Ricarica» sostituisce la cella
-  const creazione = { ...MISHIMA_AGENTE, equipaggiamento: [voce('p', 'armi_corporative:spada-punisher', 'impugnata')] };
+  // la Spada Punisher ha cinque cariche a cella: contatore in sessione, «Ricarica» sostituisce la cella con una pronta
+  // (§7.1.4; A.215: la tolta resta, con le cariche che ha)
+  const creazione = { ...MISHIMA_AGENTE, equipaggiamento: [voce('p', 'armi_corporative:spada-punisher', 'impugnata'), { ...voce('cc', 'munizioni:cella-ravvicinata-comune', null), quantita: 1 }] };
   const m = massimiSessione(calcolaScheda({ creazione, livelli: [] }, dati), creazione, dati);
   assert.deepEqual(m.caricatori, { p: 5 });
   let ses = variaMunizioni(inizializzaSessione(m), 'p', 'colpi', -2, m);
   assert.equal(ses.munizioni.p.colpi, 3);
   ses = ricaricaArma(ses, 'p', m);
-  assert.equal(ses.munizioni.p.colpi, 5);
+  assert.deepEqual([ses.munizioni.p.colpi, ses.munizioni.p.celle], [5, [3]]);
   // stampa: cariche e attivazione nella riga dell'arma
   const f3 = preparaStampa(creazione, dati).fogli.find((f) => f.id === 'combattimento').dati;
   assert.equal(f3.armi.righe[0][5], '5 cariche');

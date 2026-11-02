@@ -7,7 +7,7 @@ import { datiReali } from './helpers.js';
 import { MISHIMA_AGENTE } from './personaggi.js';
 import { contesto, resa, clic } from './scheda-aiuti.js';
 import { catalogo, riserveNec } from '../src/equipaggiamento.js';
-import { massimiSessione, allineaSessione, ricaricaConTrasformatore } from '../src/sessione.js';
+import { massimiSessione, allineaSessione, ricaricaConTrasformatore, togliCellaArma, inserisciCellaArma } from '../src/sessione.js';
 import { calcolaScheda } from '../src/calc.js';
 import { elencoTrasformatori, statoTrasformatore, bersagliRicaricabili, fontiCec, pianoRicarica, testoDurata } from '../src/trasformatori.js';
 import { validaDati } from '../src/validate.js';
@@ -137,16 +137,17 @@ test('B: il prelievo si fa solo a tampone vuoto; senza una CEC del colore non si
   assert.match(dati.regole.nec.trasformatori.senza_trasformatore, /sola vicinanza a una Matrice non bastano/);
 });
 
-test('B: la ricarica scrive la sessione: cariche al NEC, tampone, una carica in meno alla CEC; la cella dell’arma risale; «da convertire» non si ricarica', () => {
+test('B: la ricarica scrive la sessione: cariche al NEC, tampone, una carica in meno alla CEC; la cella si ricarica solo tolta dall’arma (A.215); «da convertire» non si ricarica', () => {
   const equipaggiamento = [voce('t', 'nec:trasformatore-portatile-monocromatico'), voce('c', 'nec:cec-blu'), voce('w', 'nec:nec-blu-3'), voce('k', 'armi_distanza_corporative:kep-808', { stato: 'impugnata' }), voce('s', 'munizioni:cella-kep-808')];
   const creazione = { ...MISHIMA_AGENTE, equipaggiamento };
   const m = massimiSessione(calcolaScheda({ creazione, livelli: [] }, dati), creazione, dati);
   let s = allineaSessione({ nec: { 'w#c': 0 }, munizioni: { k: { colpi: 2 } } }, m);
   const voci = equipaggiamento;
   const attuali = () => ({ nec: s.nec, munizioni: s.munizioni });
-  // che cosa si può ricaricare: il NEC Blu 3 scarico (mancano 3) e la cella del KEP 808 (10 colpi, ne ha 2); la CEC non si ricarica col trasformatore
+  // che cosa si può ricaricare: il NEC Blu 3 scarico (mancano 3); la cella del KEP 808 (10 colpi, ne ha 2) compare ma è
+  // inserita: il trasformatore la rifiuta e dice perché (A.215); la CEC non si ricarica col trasformatore
   const bersagli = bersagliRicaricabili(voci, attuali(), m.ricarica, dati);
-  assert.deepEqual(bersagli.map((b) => [b.id, b.mancanti]), [['w#c', 3], ['cella:k', 8]]);
+  assert.deepEqual(bersagli.map((b) => [b.id, b.mancanti, !!b.inserita]), [['w#c', 3, false], ['cella:k', 8, true]]);
   assert.deepEqual(bersagli[1].colori, ['Rosso']);
   const t = elencoTrasformatori(voci, dati)[0];
   const fonti = fontiCec(voci, s.nec, 'Blu', dati);
@@ -154,21 +155,34 @@ test('B: la ricarica scrive la sessione: cariche al NEC, tampone, una carica in 
   const piano = pianoRicarica({ t, stato: statoTrasformatore(s.trasformatori, 't'), bersaglio: bersagli[0], colore: 'Blu', fonte: fonti[0] }, dati);
   s = ricaricaConTrasformatore(s, { uid: 't', colore: 'Blu', bersaglio: bersagli[0], piano }, m);
   assert.deepEqual([s.nec['w#c'], s.nec['c#c'], s.trasformatori.t.colore, s.trasformatori.t.tamponi.Blu], [3, 9, 'Blu', 97]);
-  // la cella dell'arma: il colore Rosso, il tampone Blu è del colore sbagliato; si fissa il colore alla prima ricarica
+  // la cella dell'arma è inserita: il trasformatore la rifiuta prima di tutto il resto, e dice perché (A.215)
   const rosso = pianoRicarica({ t, stato: statoTrasformatore(s.trasformatori, 't'), bersaglio: bersagli[1], colore: 'Rosso', fonte: null }, dati);
   assert.equal(rosso.ok, false);
-  assert.match(rosso.errore, /colore fissato alla costruzione: Blu/);
+  assert.match(rosso.errore, /inserita nell’arma/);
+  // tolta, il monocromatico (colore fissato Blu alla prima ricarica) la rifiuta per il colore: è Rossa
+  const sT = togliCellaArma(s, 'k', m);
+  const tolta = bersagliRicaricabili(voci, { nec: sT.nec, munizioni: sT.munizioni }, m.ricarica, dati).find((b) => b.id === 'cella:k:0');
+  assert.match(pianoRicarica({ t, stato: statoTrasformatore(sT.trasformatori, 't'), bersaglio: tolta, colore: 'Rosso', fonte: null }, dati).errore, /colore fissato alla costruzione: Blu/);
   // un trasformatore multicromatico lavora un colore alla volta, con un tampone per colore
   const equip2 = [voce('t', 'nec:trasformatore-portatile-multicromatico'), voce('c', 'nec:cec-rosso'), voce('k', 'armi_distanza_corporative:kep-808', { stato: 'impugnata' }), voce('s', 'munizioni:cella-kep-808')];
   const cr2 = { ...MISHIMA_AGENTE, equipaggiamento: equip2 };
   const m2 = massimiSessione(calcolaScheda({ creazione: cr2, livelli: [] }, dati), cr2, dati);
   let s2 = allineaSessione({ munizioni: { k: { colpi: 2 } } }, m2);
   const t2 = elencoTrasformatori(equip2, dati)[0];
+  // A.215: inserita non si ricarica; tolta sì
+  const dentro = bersagliRicaricabili(equip2, { nec: s2.nec, munizioni: s2.munizioni }, m2.ricarica, dati)[0];
+  const rifiuto = pianoRicarica({ t: t2, stato: statoTrasformatore(s2.trasformatori, 't'), bersaglio: dentro, colore: 'Rosso', fonte: fontiCec(equip2, s2.nec, 'Rosso', dati)[0] }, dati);
+  assert.equal(rifiuto.ok, false);
+  assert.match(rifiuto.errore, /inserita nell’arma.*A.215/);
+  s2 = togliCellaArma(s2, 'k', m2);
   const b2 = bersagliRicaricabili(equip2, { nec: s2.nec, munizioni: s2.munizioni }, m2.ricarica, dati)[0];
+  assert.deepEqual([b2.id, b2.indice, b2.mancanti, !!b2.inserita], ['cella:k:0', 0, 8, false]);
   const p2 = pianoRicarica({ t: t2, stato: statoTrasformatore(s2.trasformatori, 't'), bersaglio: b2, colore: 'Rosso', fonte: fontiCec(equip2, s2.nec, 'Rosso', dati)[0] }, dati);
   assert.deepEqual([p2.ok, p2.trasferite, p2.tamponeDopo, p2.durata], [true, 8, 92, '8 ore']);
   s2 = ricaricaConTrasformatore(s2, { uid: 't', colore: 'Rosso', bersaglio: b2, piano: p2 }, m2);
-  assert.deepEqual([s2.munizioni.k.colpi, s2.nec['c#c'], s2.trasformatori.t.tamponi.Rosso, s2.trasformatori.t.colore], [10, 9, 92, null]);
+  assert.deepEqual([s2.munizioni.k.celle, s2.munizioni.k.senzaCella, s2.nec['c#c'], s2.trasformatori.t.tamponi.Rosso, s2.trasformatori.t.colore], [[10], true, 9, 92, null]);
+  // e si rimette nell'arma
+  assert.equal(inserisciCellaArma(s2, 'k', { da: 'tolta', indice: 0 }, m2).munizioni.k.colpi, 10);
   // un piano non riuscito non cambia niente
   assert.deepEqual(ricaricaConTrasformatore(s2, { uid: 't', colore: 'Rosso', bersaglio: b2, piano: { ok: false } }, m2), s2);
   // «da convertire»: senza numero nessun bersaglio

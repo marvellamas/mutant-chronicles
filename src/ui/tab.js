@@ -47,7 +47,7 @@ import { talentiSituazionali } from '../talenti.js';
 import { schedaTalento } from '../talenti-testi.js';
 import { nomeCheSiApre } from './talento-leggibile.js';
 import { gradiTaumaturgici } from '../incantesimi.js';
-import { statoRicarica, disponibili, carichiniDi } from '../ricarica.js';
+import { statoRicarica, disponibili, carichiniDi, celleTolte, riempiCaricatori } from '../ricarica.js';
 import { leggiImpostazioni, salvaImpostazioni } from './storage.js';
 import { pannelloAttacco, presetInAttesa } from './attacco.js';
 // Galleria (N1, 13/10/2026): le immagini già mostrate dal master in questa campagna
@@ -826,7 +826,7 @@ function pannelloTrasformatore(ctx, r, tr) {
       h('p', { class: 'nota' }, R.trasformatori?.regola ?? '', ' ', R.trasformatori?.senza_trasformatore ?? ''),
       h('div', { class: 'scelta-pulsanti', role: 'group', 'aria-label': 'Colore da ricaricare' }, colori.map((c) => btn(c, u.colore === c, scegli('colore', c)))),
       u.colore ? (bersagli.length
-        ? h('div', { class: 'scelta-pulsanti', role: 'group', 'aria-label': 'Che cosa ricaricare' }, bersagli.map((b) => btn(`${b.nome}: mancano ${b.mancanti} ${b.unita}`, u.bersaglio === b.id, scegli('bersaglio', b.id))))
+        ? h('div', { class: 'scelta-pulsanti', role: 'group', 'aria-label': 'Che cosa ricaricare' }, bersagli.map((b) => btn(b.inserita ? `${b.nome}: inserita, non si ricarica` : `${b.nome}: mancano ${b.mancanti} ${b.unita}`, u.bersaglio === b.id, scegli('bersaglio', b.id), b.rifiuto)))
         : h('p', { class: 'nota' }, `Niente da ricaricare di colore ${u.colore.toLowerCase()}: i NEC e le celle sono carichi.`)) : h('p', { class: 'nota' }, 'Scegli il colore da ricaricare.'),
       piano?.ok && piano.preleva ? h('div', { class: 'scelta-pulsanti', role: 'group', 'aria-label': 'CEC da cui prelevare' }, fonti.map((f) => btn(`${f.nome}: ${f.cariche} → ${f.cariche - 1} cariche`, fonte?.chiave === f.chiave, scegli('fonte', f.chiave)))) : null,
       piano ? (piano.ok
@@ -2412,7 +2412,7 @@ const MODI_RICARICA = {
   inserimento: 'si inseriscono munizioni sciolte compatibili fino alla capacità',
   // armi caricate direttamente (A.135): il testo sta nei dati (munizioni.json → ricarica.inserimento_singolo.testo)
   singolo: 'fino a 2 cartucce per operazione, 1 AzP (A.135)',
-  cella: 'una cella piena compatibile sostituisce quella esaurita',
+  cella: 'si cambia la cella: quella tolta resta con le cariche che ha, anche vuota, e si ricarica fuori dall’arma con un trasformatore (A.215)',
 };
 
 /** Riga dei carichini di un'arma (A.135): colpi di ogni carichino, «Usa carichino» e «Prepara». */
@@ -2438,6 +2438,49 @@ function rigaCarichini(ctx, a, info, m, capacita) {
 }
 
 /**
+ * A.215 (Davide, 30/10/2026): le celle e i pacchi di un'arma. La cella inserita (o «nessuna cella»), le celle tolte con le
+ * loro cariche (piene, parziali o vuote: una vuota non si consuma, si ricarica fuori dall'arma con un trasformatore),
+ * «Togli la cella» e «Inserisci». Il costo del cambio è quello del manuale (§7.20.5, §7.20.6); per togliere soltanto o
+ * inserire in un'arma vuota il manuale non dà un costo a parte (A.243): l'app non lo inventa.
+ */
+function rigaCelle(ctx, a, info, m, capacita, azioneCella, nome = 'cella') {
+  const tolte = celleTolte(m, capacita ?? Infinity);
+  const scelte = [
+    ...tolte.map((n, indice) => ({ valore: 't:' + indice, testo: n ? 'tolt' + (nome === 'pacco' ? 'o ' : 'a ') + n + '/' + capacita : (nome === 'pacco' ? 'tolto, vuoto 0/' : 'tolta, vuota 0/') + capacita, scelta: { da: 'tolta', indice }, vuota: n === 0, cariche: n })),
+    ...(info.scorte ?? []).filter((x) => disponibili(x, ctx.sessione.scorte) > 0).map((x) => ({ valore: 's:' + x.uid, testo: x.nome + (nome === 'pacco' ? ' pieno ' : ' piena ') + capacita + '/' + capacita, scelta: { da: 'scorta', uid: x.uid }, cariche: capacita })),
+  ];
+  const u = ((ctx.ui.celle ??= {})[a.uid] ??= { scelta: null });
+  // proposta: la più carica (come «Cambia»); il giocatore ne può scegliere un'altra
+  const scelta = scelte.find((x) => x.valore === u.scelta) ?? (scelte.length ? scelte.reduce((b, x) => (x.cariche > b.cariche ? x : b)) : null);
+  const pacco = nome === 'pacco';
+  return h('div', { class: 'celle-tavolo' },
+    h('div', { class: 'riga-munizioni' },
+      m.senzaCella
+        ? [h('select', { 'aria-label': 'Cella da inserire in ' + a.nome, disabled: !scelte.length, onchange: (e) => { u.scelta = e.target.value; } },
+          scelte.map((x) => h('option', { value: x.valore, selected: scelta?.valore === x.valore }, x.testo))),
+        h('button', { type: 'button', class: 'btn', disabled: !scelta, title: 'Mette la cella scelta nell’arma (il cambio costa ' + azioneCella + ')', onclick: () => ctx.azioni.inserisciCella(a.uid, scelta.scelta) }, 'Inserisci')]
+        : h('button', { type: 'button', class: 'btn', title: (pacco ? 'Toglie il pacco con i getti che ha' : 'Toglie la cella con le cariche che ha') + ': resta con te e si ricarica fuori dall’arma (il cambio costa ' + azioneCella + ')', onclick: () => ctx.azioni.togliCella(a.uid) }, pacco ? 'Togli il pacco' : 'Togli la cella')),
+    tolte.length ? h('p', { class: 'nota riga-munizioni' },
+      (pacco ? 'Pacchi tolti: ' : 'Celle tolte: ') + tolte.map((n) => (n ? n + '/' + capacita : (pacco ? 'vuoto' : 'vuota') + ' 0/' + capacita)).join(', ')) : null,
+    h('small', { class: 'nota' }, 'Cambio: ' + azioneCella + '. ' + (ctx.dati.equipaggiamento.file.munizioni.ricarica.cambio_cella?.ricarica_fuori ?? '')));
+}
+
+/**
+ * A.215: «Riempi i caricatori» fuori dal combattimento, «con un'unica operazione», dalle munizioni sciolte compatibili:
+ * il caricatore inserito, poi i parziali e i vuoti tolti. Dice quanti colpi si trasferiscono; il tempo il manuale non lo
+ * dà (A.244) e l'app non lo inventa.
+ */
+function rigaRiempi(ctx, a, info, m, capacita) {
+  const prova = riempiCaricatori(info, m, ctx.sessione.scorte);
+  const R = ctx.dati.equipaggiamento.file.munizioni.ricarica.riempimento_caricatori ?? {};
+  if (!prova) return null;
+  const quando = R.quando ?? 'fuori dal combattimento';
+  return h('div', { class: 'riga-munizioni' },
+    h('button', { type: 'button', class: 'btn', title: 'Riempie il caricatore inserito e quelli tolti con le munizioni sciolte compatibili, ' + quando + ' (A.215)', onclick: () => ctx.azioni.riempiCaricatori(a.uid) }, 'Riempi i caricatori (+' + prova.trasferiti + ' colpi)'),
+    h('small', { class: 'nota' }, ' ' + quando + ': dopo, inserito ' + prova.munizione.colpi + '/' + capacita + ', pieni di riserva ' + prova.munizione.riserve + '.'));
+}
+
+/**
  * Modalità tavolo: colpi nel caricatore e, per le armi a distanza, ricarica dalle riserve
  * (Giocatore §5.1.1, Armamenti §7.20.2, src/ricarica.js): caricatori pieni di riserva (+/−),
  * parziali e vuoti tolti, munizioni sciolte o celle dell'inventario. «Ricarica» è disabilitato,
@@ -2451,11 +2494,17 @@ function pannelloMunizioni(ctx, a, { riserveModificabili = true } = {}) {
   }
   const m = ctx.sessione.munizioni[a.uid] ?? { colpi: 0, riserve: 0 };
   const capacita = a.munizioni?.capacita ?? null;
-  const info = a.tipo === 'arma_distanza' ? ctx.massimi.ricarica?.[a.uid] ?? null : null;
+  // le armi a distanza e, dalla A.215, le armi ravvicinate a cella (le sole ravvicinate con una voce di ricarica)
+  const info = ctx.massimi.ricarica?.[a.uid] ?? null;
   const stato = info ? statoRicarica(info, m, ctx.sessione.scorte) : { possibile: capacita !== null && m.colpi < capacita, motivo: null, avviso: null };
-  // Azione della ricarica: quella della scheda dell'arma se la dà (Balestre: «1 AzM»), altrimenti 1 AzP (Giocatore §5.1.1)
+  // Azione della ricarica: quella della scheda dell'arma se la dà (Balestre: «1 AzM»), altrimenti 1 AzP (Giocatore §5.1.1);
+  // per le celle e i pacchi il costo del manuale (munizioni.json → ricarica.cambio_cella: §7.20.5, §7.20.6)
   const voceArma = (ctx.scelte.equipaggiamento ?? []).find((v) => v.uid === String(a.uid).split(':')[0]);
-  const azioneRicarica = (voceArma?.rif ? catalogo(ctx.dati).perRif.get(voceArma.rif)?.ricarica : null) ?? '1 AzP, Giocatore §5.1.1';
+  const CC = ctx.dati.equipaggiamento.file.munizioni.ricarica.cambio_cella ?? {};
+  const cella = info?.modo === 'cella';
+  const azioneCella = cella ? (CC.per_unita?.[info?.cella?.unita]?.azione ?? CC.azione ?? '1 AzP') : null;
+  const nomeCella = cella ? (CC.per_unita?.[info?.cella?.unita]?.nome ?? 'cella') : null;
+  const azioneRicarica = azioneCella ?? (voceArma?.rif ? catalogo(ctx.dati).perRif.get(voceArma.rif)?.ricarica : null) ?? '1 AzP, Giocatore §5.1.1';
   const pulsante = (campo, d, etichetta) => h('button', {
     type: 'button', class: 'btn-tavolo', disabled: (d < 0 && m[campo] <= 0) || (campo === 'colpi' && d > 0 && capacita !== null && m.colpi >= capacita),
     'aria-label': `${d > 0 ? 'Aggiungi' : 'Togli'} ${Math.abs(d)} ${etichetta} a ${a.nome}`,
@@ -2463,11 +2512,11 @@ function pannelloMunizioni(ctx, a, { riserveModificabili = true } = {}) {
   }, d > 0 ? `+${d}` : `−${-d}`);
   return h('div', { class: 'munizioni-tavolo' },
     h('div', { class: 'riga-munizioni' },
-      h('span', {}, ETICHETTE_MUNIZIONI[a.munizioni?.unita ?? 'colpi'] ?? 'Caricatore', ' ', h('strong', {}, String(m.colpi)), capacita !== null ? ` / ${capacita}` : ''),
+      h('span', {}, cella ? (m.senzaCella ? `Nessun${nomeCella === 'pacco' ? ' pacco' : 'a cella'} nell’arma` : `${nomeCella === 'pacco' ? 'Pacco' : 'Cella'} inserit${nomeCella === 'pacco' ? 'o' : 'a'}`) : ETICHETTE_MUNIZIONI[a.munizioni?.unita ?? 'colpi'] ?? 'Caricatore', ' ', m.senzaCella ? null : h('strong', {}, String(m.colpi)), capacita !== null && !m.senzaCella ? ` / ${capacita}` : ''),
       pulsante('colpi', -1, 'colpi'),
       capacita !== null && capacita >= 10 ? pulsante('colpi', -5, 'colpi') : null,
-      capacita !== null ? h('button', { type: 'button', class: 'btn', onclick: () => ctx.azioni.ricarica(a.uid), disabled: !stato.possibile, title: stato.motivo ?? `Ricarica (${azioneRicarica})` },
-        info?.singolo ? `Ricarica +${Math.min(info.perOperazione ?? 1, capacita - m.colpi) || info.perOperazione || 1}` : 'Ricarica') : pulsante('colpi', 1, 'colpi')),
+      capacita !== null ? h('button', { type: 'button', class: 'btn', onclick: () => ctx.azioni.ricarica(a.uid), disabled: !stato.possibile, title: stato.motivo ?? `${cella ? 'Cambio' : 'Ricarica'} (${azioneRicarica})` },
+        info?.singolo ? `Ricarica +${Math.min(info.perOperazione ?? 1, capacita - m.colpi) || info.perOperazione || 1}` : cella ? (m.senzaCella ? `Inserisci ${nomeCella === 'pacco' ? 'il più carico' : 'la più carica'}` : `Cambia ${nomeCella}`) : 'Ricarica') : pulsante('colpi', 1, 'colpi')),
     stato.motivo && capacita !== null && m.colpi < capacita ? h('small', { class: 'motivo', role: 'status' }, `Ricarica: ${stato.motivo}.`) : null,
     stato.avviso ? h('small', { class: 'motivo' }, stato.avviso) : null,
     !info || info.modo === 'caricatore' || info.modo === null ? h('div', { class: 'riga-munizioni' },
@@ -2477,6 +2526,10 @@ function pannelloMunizioni(ctx, a, { riserveModificabili = true } = {}) {
       m.parziali?.length ? `Caricatori parziali: ${m.parziali.map((n) => `${n} colpi`).join(', ')}` : null,
       m.parziali?.length && m.vuoti ? ' · ' : null,
       m.vuoti ? `${info.vuoto?.nome ?? 'Caricatori vuoti'}: ×${m.vuoti}` : null) : null,
+    // A.215: la cella è una cosa che si sposta: quella inserita, quelle tolte con le loro cariche, «Togli» e «Inserisci»
+    cella ? rigaCelle(ctx, a, info, m, capacita, azioneCella, nomeCella) : null,
+    // A.215: «Riempi i caricatori» fuori dal combattimento, con le munizioni sciolte compatibili
+    info?.modo === 'caricatore' ? rigaRiempi(ctx, a, info, m, capacita) : null,
     // A.135: carichini rapidi del tipo dell'arma, con i colpi di ciascuno; «Usa carichino» (1 AzP, fino a 6 colpi entro gli
     // spazi liberi) e «Prepara» (fuori dal combattimento, dalle munizioni sciolte compatibili)
     info?.carichini?.length ? rigaCarichini(ctx, a, info, m, capacita) : null,
@@ -2487,7 +2540,7 @@ function pannelloMunizioni(ctx, a, { riserveModificabili = true } = {}) {
         info.scorte.map((x) => h('option', { value: x.uid, selected: a.granataCaricata?.uid === x.uid }, `${x.nome} ×${disponibili(x, ctx.sessione.scorte)}`))),
       h('small', { class: 'sigla' }, ' cambiare tipo scarica il lanciatore')) : null,
     info && info.modo !== 'caricatore' && info.modo !== null ? h('p', { class: 'nota riga-munizioni' },
-      info.scorte.length ? `${info.modo === 'cella' ? 'Celle' : 'Munizioni sciolte'}: ${info.scorte.map((x) => `${x.nome} ×${disponibili(x, ctx.sessione.scorte)}`).join(', ')}`
+      info.scorte.length ? `${info.modo === 'cella' ? 'Piene di scorta' : 'Munizioni sciolte'}: ${info.scorte.map((x) => `${x.nome} ×${disponibili(x, ctx.sessione.scorte)}`).join(', ')}`
         : `Nessuna ${info.modo === 'cella' ? 'cella' : 'munizione'} compatibile nell’inventario.`) : null,
     h('small', { class: 'nota' }, [
       info?.modo ? `Ricarica: ${info.singolo ? ctx.dati.equipaggiamento.file.munizioni.ricarica.inserimento_singolo?.testo ?? MODI_RICARICA.singolo : MODI_RICARICA[info.modo]}${info.singolo && info.perOperazione > 2 ? ` (tu: ${info.perOperazione}, Ricarica Migliorata)` : ''}.` : null,
