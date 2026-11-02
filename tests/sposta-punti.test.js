@@ -283,3 +283,18 @@ test('dal server: il tablet che sposta i punti di un livello si vede rifiutare (
   assert.equal((await scrivi(baseTablet, spostato, tablet)).status, 200);
   assert.equal((await scrivi(baseTablet, p, tablet)).status, 403);
 });
+
+test('nel «Calcolo» del VA i punti spostati si leggono come spostamento, la correzione a parte ha la sua riga', async () => {
+  const { righeRegoleAbilita } = await import('../src/provenienza.js');
+  const { calcolaSchedaPersonaggio } = await import('../src/avanzamento.js');
+  const corr = [{ id: 'cm-1', quando: '2026-10-20T10:00:00.000Z', chiave: 'abilita:Atletica', etichetta: 'Atletica', tipo: 'aggiungi', numero: 1, motivo: 'dono', stato: 'attiva' }];
+  const p = pg({ correzioniMaster: corr });
+  const n = applicaSpostamento(p, sposta2(p), dati);
+  const s = calcolaSchedaPersonaggio(n, dati);
+  const a = s.abilita.find((x) => x.nome === 'Atletica');
+  assert.deepEqual(a.spostatiDirettore, [{ livello: 4, punti: 2 }]);
+  const righe = righeRegoleAbilita(a, s);
+  assert.match(righe.find((r) => r.fonte === 'Avanzamento').nota, /spostati dal Direttore: \+2 nel 4° livello/);
+  assert.equal(righe.filter((r) => r.fonte === 'Correzione del master').length, 1);
+  assert.equal(righe.reduce((t, r) => t + r.valore, 0), a.totale);
+});

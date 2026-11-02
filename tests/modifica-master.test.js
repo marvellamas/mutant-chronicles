@@ -562,3 +562,16 @@ test('PG senza correzioni: nessun valore cambia, il file esportato è identico, 
     assert.equal(JSON.stringify(preparaStampa({ creazione: p.creazione, livelli: p.livelli }, dati).fogli), JSON.stringify(preparaStampa({ creazione: comePrima, livelli: p.livelli }, dati).fogli), f);
   }
 });
+
+test('lotto 165: «Sposta i punti» nella Progressione c’è solo in modalità master, accanto ai livelli con Punti Abilità', () => {
+  const p = pg();
+  const sposta = (t) => t.tutti.filter((n) => n.tagName === 'BUTTON' && /Sposta i punti/.test(n.textContent));
+  assert.equal(sposta(resa(contesto(p))).length, 0, 'il giocatore non lo vede');
+  const ctx = contesto(p, { master: true });
+  const aperti = [];
+  ctx.master = { ...Object.fromEntries(['annulla', 'esci', 'correggi', 'diretta'].map((k) => [k, () => {}])), spostaPunti: { livelli: () => [1, 4], apri: (l) => aperti.push(l) } };
+  const b = sposta(resa(ctx));
+  assert.equal(b.length, 2, 'creazione e 4° livello');
+  clic(b[1]);
+  assert.deepEqual(aperti, [4]);
+});

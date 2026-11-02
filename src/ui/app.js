@@ -22,6 +22,8 @@ import { elencoVeicoli, migraNelRegistro } from './veicoli-registro.js';
 import { eRiferimento } from '../veicoli-registro.js';
 import { provaSostituzione, rigaIncantesimi, sorgenteModifica, confrontaIncantesimi, testoVariazioneIncantesimi, nomiNelloStorico } from '../incantesimi-regole.js';
 import { permessoSalita, sfasamento, scelteDelLivello, TIPO_CONCESSIONE, CHIAVE_CONCESSIONE } from '../livello-px.js';
+import { eventiConPunti, applicaSpostamento, descriviSpostamento, controllaPuntiDaTablet } from '../sposta-punti.js';
+import { apriSpostaPunti } from './sposta-punti.js';
 import { attoCampagna, serverCartella, elencoCartella, leggiCartella, leggiCartellaConRevisione, scriviCartella, contestoMasterQui, pingMasterQui, salvaBackupMaster, leggiBackupMaster } from './cartella.js';
 import { modalitaMaster, mostraMarchio, statoContestoMaster, registro as registroMaster, nuovaCorrezione, aggiungiCorrezione, annullaCorrezione, avvisoAnnulla, registraDiretta, differenzeDirette, differenzeOggetti, ripristinoDiretta, descriviScelte, soloScelte, ripristinaScelte, masterDiverso, normalizzaCircostanzeMaster } from '../correzioni-master.js';
 import { descriviVoce, postiTalenti, applicaSceltaTalento, eccezioneSpecializzazione, scelteSuccessive, applicaSceltaSuccessiva, adattaScelteSuccessive } from '../avanzamento.js';
@@ -56,7 +58,7 @@ import { rigaStorico, testoProcedi, allineaStorico } from '../storico.js';
 import { applicaMedita } from '../medita.js';
 import { aggiungiTiro } from '../tiri-scheda.js';
 import { conAvviso } from './procedi.js';
-import { chiedi, chiediTesto } from './finestrella.js';
+import { chiedi, chiediTesto, informa } from './finestrella.js';
 import { segnaDalTavolo, arrivoDalTavolo, tornaAlTavolo, scorrimentoDaRimettere, dimenticaTavolo, segnaDallaMappa, arrivoDallaMappa, tornaAllaMappa, dimenticaMappa } from './ritorno.js';
 import { PASSI, passoVisibile, requisitoPasso } from './passi.js';
 import { inizializzaTooltip, nascondiTooltip } from './tooltip.js';
@@ -1482,6 +1484,12 @@ function renderSaliPagina() {
     vaiPasso: (i) => vai(`#/p/${stato.id}/sali/${i}`),
     async conferma() {
       if (L) {
+        // lotto 165: con il server, da un tablet i Punti Abilità già spesi li sposta solo il Direttore (lo rifiuta anche il server)
+        if (stato.cartella && !stato.master) {
+          const file = (p) => ({ scelte: p.creazione, livelli: p.livelli });
+          const no = controllaPuntiDaTablet(file(applicaCorrezione(personaggio(), L, bozza.voce)), file(personaggio()), dati);
+          if (!no.ok) { await informa({ titolo: 'Punti Abilità già spesi', contenuto: h('p', {}, `${no.errore} Le altre scelte del livello si correggono come prima, lasciando i punti dove sono.`) }); return undefined; }
+        }
         // N2: un livello dopo che diventerebbe irregolare è un avviso; gli altri errori fermano
         const err = validaCorrezione(personaggio(), L, bozza.voce, dati);
         if (err.some((e) => !e.procedibile)) return renderSaliPagina();
@@ -1638,7 +1646,9 @@ function registraModificheMaster() {
   stato.masterMotivo = null;
   let attesa = null;
   if (scelteCambiate) {
-    const descr = descriviScelte(soloSenzaOggetti(prima.personaggio), soloSenzaOggetti(), (v) => { try { return [descriviVoce(v, dati)].flat().map(String); } catch { return ['scelte del livello']; } }) ?? 'Scelte del personaggio';
+    // lotto 165: «Sposta i punti» scrive la sua riga in italiano («Spostati 2 punti da … a … nel 4° livello (PC, …)»)
+    const descr = stato.masterEtichetta ?? descriviScelte(soloSenzaOggetti(prima.personaggio), soloSenzaOggetti(), (v) => { try { return [descriviVoce(v, dati)].flat().map(String); } catch { return ['scelte del livello']; } }) ?? 'Scelte del personaggio';
+    stato.masterEtichetta = null;
     // 13/10: il motivo scritto nella finestrella dell'azione («Annulla (errore)» dell'Umanità, A.111) finisce qui
     const riga = nuovaCorrezione({ chiave: 'scelte', etichetta: descr, tipo: 'scelta', motivo: motivoOra });
     lista = aggiungiCorrezione(lista, riga);
@@ -1881,6 +1891,29 @@ function azioniMaster() {
     // scelte che si perdono) o «Tieni come concessione» (il motivo resta nel registro)
     annullaUltimoLivello: () => annullaLivello({ conferma: false }),
     scelteUltimoLivello: () => { try { return [descriviVoce(stato.livelli[stato.livelli.length - 1], stato.dati)].flat().map(String); } catch { return scelteDelLivello(stato.livelli[stato.livelli.length - 1]); } },
+    // lotto 165 (02/11/2026): «Sposta i punti» dei Punti Abilità già spesi in un livello (src/ui/sposta-punti.js). La conferma
+    // cambia le scelte: registraModificheMaster salva la copia del file di prima e scrive la riga, «Annulla» la rimette
+    spostaPunti: {
+      livelli: () => { try { return eventiConPunti(personaggio(), stato.dati).map((e) => e.livello); } catch { return []; } },
+      apri: (livello) => apriSpostaPunti({
+        personaggio: () => structuredClone(personaggio()),
+        dati: stato.dati,
+        applica: ({ bozza, decisioni, motivo }) => {
+          const quando = new Date().toISOString();
+          const prima = personaggio();
+          const etichetta = descriviSpostamento(prima, bozza, { quando });
+          if (!etichetta) return;
+          const n = applicaSpostamento(prima, bozza, stato.dati, { quando, motivo, ...decisioni });
+          stato.masterMotivo = motivo || null;
+          stato.masterEtichetta = etichetta;
+          stato.scelte = { ...stato.scelte, puntiAbilitaLiberi: n.creazione.puntiAbilitaLiberi, puntiDirettore: n.creazione.puntiDirettore ?? null };
+          cambiaLivelli(n.livelli);
+          stato.messaggioScheda = { tipo: 'ok', testo: `${etichetta}. Si annulla dal registro «Modifiche del master» (tab Identità).` };
+          persisti();
+          ridisegna();
+        },
+      }, livello),
+    },
     // 13/10: il motivo scritto in una finestrella vale per la prossima modifica registrata (anche una scelta)
     motivoProssima: (motivo) => { stato.masterMotivo = motivo || null; },
     esci: () => { esciModalitaMaster(sessionStorage); stato.masterVisto = null; ridisegna(); },

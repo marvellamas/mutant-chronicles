@@ -2608,6 +2608,20 @@ main:has(> .plancia:not(.plancia-in-mappa)) { max-width: 1912px; }
 .btn-tocco-master:hover, .btn-tocco-master:focus-visible { filter: brightness(1.15); }
 .nota-correzione-master { display: block; color: var(--attenzione); font-weight: 600; }
 .finestrella.finestrella-master { max-width: min(30rem, calc(100vw - 2rem)); }
+/* lotto 165: «Sposta i punti» del Direttore (src/ui/sposta-punti.js) */
+.finestrella.finestrella-sposta { max-width: min(36rem, calc(100vw - 2rem)); max-height: calc(100vh - 2rem); overflow-y: auto; }
+.eventi-sposta { display: flex; flex-wrap: wrap; gap: 0.35rem; margin-bottom: 0.5rem; }
+.contatore-sposta { margin: 0 0 0.5rem; }
+.contatore-sposta.da-ricollocare strong, .contatore-sposta.in-piu strong { color: var(--errore); }
+.tabella-sposta { width: 100%; }
+.tabella-sposta th[scope="row"] small { display: block; font-weight: normal; }
+.tabella-sposta .cella-punti-sposta { white-space: nowrap; text-align: center; }
+.tabella-sposta .cella-punti-sposta small { display: block; }
+.tabella-sposta .cella-punti-sposta .btn-tavolo { min-width: 2.4rem; padding: 0.3rem 0.5rem; }
+.tabella-sposta .cella-punti-sposta .valore-master { display: inline-block; min-width: 1.6rem; text-align: center; }
+.tabella-sposta .cella-va-sposta { white-space: nowrap; text-align: right; }
+.tabella-sposta tr.riga-cambiata th[scope="row"] > span { text-decoration: underline dotted; }
+.avvisi-sposta { margin: 0 0 0.6rem; padding-left: 1.1rem; }
 .corpo-master { display: grid; gap: 0.6rem; }
 .corpo-master p { margin: 0; }
 .scelta-master { display: flex; gap: 0.4rem; }

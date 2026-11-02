@@ -1701,6 +1701,13 @@ function schedaARiposo(personaggio, dati) {
   // §1.2.1, §2.3, §8.7 (29/09): base dalla prima Classe, limite dalle Classi possedute; `totale` è il VA
   // personale (grezzo limitato); equipaggiamento e condizioni si sommano dopo
   const prima = primaClasseDef(stato, dati);
+  // lotto 165: i punti che il Direttore ha spostato, per Abilità ed evento (src/sposta-punti.js): nel «Calcolo» stanno
+  // dentro i punti liberi, ma si leggono come spostamento, distinti dalle correzioni a parte («Correzione del master»)
+  const pp = migraPersonaggio(personaggio);
+  const spostati = {};
+  for (let l = 1; l <= 1 + pp.livelli.length; l++) {
+    for (const [a, v] of Object.entries(puntiDirettoreDi(pp, l)?.spostati ?? {})) if (Number.isInteger(v) && v) (spostati[a] ??= []).push({ livello: l, punti: v });
+  }
   const abilita = dati.abilita.abilita.map(({ nome, categoria, caratteristica }) => {
     const x = stato.abil[nome];
     const avanzamento = x.daClasse + x.liberi;
@@ -1714,6 +1721,7 @@ function schedaARiposo(personaggio, dati) {
       competenza: competenzaDi(prima, nome), competenzaDa: prima.nome, limite: lim.valore, limiteCategoria: lim.categoria, limiteDa: lim.classi,
       grezzo, totale: cmAbilita.valore,
       ...(cmAbilita.righe.length ? { calcolato: cmAbilita.calcolato, correzioniMaster: cmAbilita.righe } : {}),
+      ...(spostati[nome] ? { spostatiDirettore: spostati[nome] } : {}),
     };
   });
 

@@ -75,7 +75,10 @@ export function righeRegoleAbilita(a, scheda) {
   ].filter(Boolean);
   if (Number.isInteger(a.daClasse) || Number.isInteger(a.liberi)) {
     if (a.daClasse) righe.push(riga('Classe', a.daClasse, 'Avanzamento di Classe: +1 per Grado (§2.12, §8.3)'));
-    if (a.liberi) righe.push(riga('Avanzamento', a.liberi, 'punti liberi (§2.13, §8.3)'));
+    // lotto 165: i punti spostati dal Direttore sono già qui dentro: lo si dice, perché non si confondano con la sua
+    // correzione a parte (che ha la sua riga «Correzione del master»)
+    const sp = (a.spostatiDirettore ?? []).map((x) => `${x.punti > 0 ? '+' : '−'}${Math.abs(x.punti)} ${x.livello === 1 ? 'nella creazione' : `nel ${x.livello}° livello`}`);
+    if (a.liberi || sp.length) righe.push(riga('Avanzamento', a.liberi, `punti liberi (§2.13, §8.3)${sp.length ? `; spostati dal Direttore: ${sp.join(', ')}` : ''}`));
   } else if (a.avanzamento) righe.push(riga('Avanzamento', a.avanzamento));
   // §8.3: il grezzo oltre il limite resta registrato ma non conta finché il limite non sale
   if (Number.isInteger(a.grezzo) && Number.isInteger(a.limite) && a.grezzo > a.limite) {

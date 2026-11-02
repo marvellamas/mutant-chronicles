@@ -14,6 +14,7 @@ import { incantesimiDaOggetti, incantesimoDiOggetto, attivazioneOggetto } from '
 import { pannelloMedita, pulsanteMedita } from './medita.js';
 import { aggiungiIncantesimoAMano, incantesimoPerId, cercaIncantesimi, togliIncantesimoAMano, avvisoLivelloAMano, origini, tipi as tipiAMano, tipoDi as tipoAMano, fraseTipo, classificaIncantesimoAMano, dataLeggibile, rigaRegistro as rigaRegistroAMano } from '../incantesimi-a-mano.js';
 import { fasciaMaster, toccoMaster, notaCorrezione, sezioneRegistro, conMotivoMaster, bloccoLivelloMaster } from './master.js';
+import { pulsanteSpostaPunti } from './sposta-punti.js';
 import { apriTiro, sezioneTiri } from './tira-valore.js';
 import { pianoGetto } from '../getti-artefatto.js';
 import { modelliProgetto, apriProgetto, scegliForma, registraTentativo, togliUltimoTentativo, chiudiProgetto, riapriProgetto, riepilogoProgetto, formaSceglibile, avvisiConsegna, esemplariDi, storicoDi, ESITI_TENTATIVO, NOMI_ESITO, ESITI_FINALI, NOMI_FINALE } from '../progetti.js';
@@ -1380,7 +1381,9 @@ function tabIdentita(ctx, d) {
           h('th', { scope: 'row' }, `${r.livello}°`),
           h('td', {}, r.righe.length ? h('ul', { class: 'righe-livello' }, r.righe.map((x) => h('li', {}, x))) : '—',
             // A.107: un livello passato si corregge; i livelli dopo si ricalcolano
-            r.livello >= 2 && ctx.azioni.correggiLivello ? h('button', { type: 'button', class: 'btn btn-piccolo', title: 'Correggi le scelte di questo livello: i livelli successivi si ricalcolano in ordine (A.107)', onclick: () => ctx.azioni.correggiLivello(r.livello) }, 'Correggi') : null)))))),
+            r.livello >= 2 && ctx.azioni.correggiLivello ? h('button', { type: 'button', class: 'btn btn-piccolo', title: 'Correggi le scelte di questo livello: i livelli successivi si ricalcolano in ordine (A.107)', onclick: () => ctx.azioni.correggiLivello(r.livello) }, 'Correggi') : null,
+            // lotto 165: il Direttore sposta i Punti Abilità già spesi in questo livello
+            pulsanteSpostaPunti(ctx, r.livello))))))),
 
     h('details', { class: 'sezione-tab' },
       h('summary', {}, `Controllo della creazione (§2.17): ${d.checklist.filter((v) => v.ok || v.nonApplicabile).length} / ${d.checklist.length}`),
