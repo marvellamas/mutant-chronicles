@@ -2222,8 +2222,10 @@
     },
     "si_applica_a": [
       "abilita",
-      "salvezze"
+      "salvezze",
+      "iniziativa"
     ],
+    "_si_applica_a": "A.220 (Davide, 02/11/2026; Giocatore 0.54 §5.14 del 02/11): la penalità dello Stato di Ferita raggiunto si applica a VA, Prove Salvezza e Iniziativa di PG, PNG e creature; si usa il valore dello stato raggiunto, senza sommare quelli precedenti (Ferita Profonda −4: con bonus +2 l’Iniziativa è 1d10 −2). Per i nemici il minimo 0 vale sul bonus base, prima della penalità (A.200: src/iniziativa-creature.js legge la Ferita dallo scontro, non da questa lista).",
     "_nota": "§5.14: penalità cumulativa a VA e Prove Salvezza; §5.14.1: PS di Tempra per le Menomazioni al primo raggiungimento di Profonda, Seria, Grave. Usato dalla scheda stampata."
   },
   "stati": {

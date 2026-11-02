@@ -217,7 +217,7 @@ function validaEffettiCondizioni(dati, err) {
   const categorie = new Set(dati.abilita.categorie ?? []);
   for (const k of ['ferite', 'affaticamento', 'corruzione']) {
     const a = r[k]?.si_applica_a;
-    if (!Array.isArray(a) || !a.length || !a.every((x) => ['abilita', 'salvezze'].includes(x))) err(F, `${k}.si_applica_a`, 'lista di "abilita" e/o "salvezze" mancante');
+    if (!Array.isArray(a) || !a.length || !a.every((x) => ['abilita', 'salvezze', 'iniziativa'].includes(x))) err(F, `${k}.si_applica_a`, 'lista di "abilita", "salvezze" e/o "iniziativa" mancante (A.220)');
   }
   // categorie di Prove (regole.json → categorie_prove): liste di Abilità (A.16, A.51)
   const gruppi = Object.keys(r.categorie_prove ?? {}).filter((k) => !k.startsWith('_') && k !== 'TODO(Davide)');
