@@ -42,6 +42,13 @@ export function controllaTalentiDaTablet(nuovo, disco, dati) {
     const uguale = JSON.stringify(v?.scelta ?? null) === JSON.stringify(x.scelta ?? null);
     if (uguale) continue;
     if (v?.chiuso) return { ok: false, stato: 403, errore: `La scelta del ${x.livello}° livello l’ha chiusa il Direttore: la cambia solo lui.` };
+    // A.229 (01/11/2026): una Specializzazione di Potere tolta dal manuale resta finché decide il Direttore: tenerla come
+    // eccezione o sostituirla gratis. Né l'una né l'altra cosa da un tablet.
+    const daDecidere = v?.scelta && v.problemi?.find((e) => e.tipo === 'tolta' && e.regola === 'A.229');
+    if (daDecidere) return { ok: false, stato: 403, errore: `${daDecidere.problema}. La decisione è del Direttore.` };
+    if (JSON.stringify(v?.scelta?.eccezione ?? null) !== JSON.stringify(x.scelta?.eccezione ?? null) && x.scelta?.id === v?.scelta?.id) {
+      return { ok: false, stato: 403, errore: `L’eccezione sulla Specializzazione del ${x.livello}° livello la decide il Direttore (A.229).` };
+    }
     // A.230: una voce tolta dal manuale non si sceglie di nuovo da un tablet (chi l'aveva la tiene: lì la scelta non cambia)
     const tolta = x.scelta && x.problemi.find((e) => e.tipo === 'tolta');
     if (tolta) return { ok: false, stato: 403, errore: `${tolta.problema}. Una scelta non ammessa la può fare solo il Direttore.` };

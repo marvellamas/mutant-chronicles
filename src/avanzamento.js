@@ -220,6 +220,17 @@ function specializzazioniAmmesse(stato, classe, dati) {
 }
 
 /**
+ * Una Specializzazione che il manuale ha tolto dall'elenco della Classe (per_classe_tolte): quale risposta di Davide
+ * vale per chi l'ha già. 'A.229' per le voci di Potere (risposta del 01/11/2026: decide il Direttore, eccezione o
+ * sostituzione gratuita), 'A.230' per le altre (domanda aperta: avviso), null se la voce non è tolta.
+ */
+export function regolaVoceTolta(id, classe, dati) {
+  const S = dati.specializzazioni;
+  if (!(S.per_classe_tolte?.[classe] ?? []).includes(id)) return null;
+  return (S.gruppi?.potere ?? []).includes(id) ? 'A.229' : 'A.230';
+}
+
+/**
  * Il controllo unico di una scelta di Talento, per tutte e tre le categorie: lo usano la validazione dei livelli,
  * la creazione e postiTalenti (la scelta guidata del lotto 2). Errori nel formato di controllaTalentoLibero, con
  * il campo della categoria.
@@ -229,7 +240,7 @@ function specializzazioniAmmesse(stato, classe, dati) {
 export function controllaSceltaTalento(stato, categoria, scelta, dati, { classe = null } = {}) {
   const campo = CAMPO_CATEGORIA[categoria] ?? 'talentoLibero';
   const errori = [];
-  const err = (problema, tipo = 'violazione') => errori.push({ campo, problema, tipo });
+  const err = (problema, tipo = 'violazione', regola = null) => errori.push({ campo, problema, tipo, ...(regola ? { regola } : {}) });
   const nuovo = stato.regime === 'nuovo';
   if (!isOggetto(scelta) || !scelta.id) { err(`scegli ${categoria === 'maestria' ? 'una Maestria' : categoria === 'specializzazione' ? 'una Specializzazione' : 'un Talento Libero'}`, 'incompleto'); return errori; }
   const def = talentoLiberoDef(scelta.id, dati);
@@ -244,10 +255,19 @@ export function controllaSceltaTalento(stato, categoria, scelta, dati, { classe 
     if (cat !== categoria) { err(`${def.nome} è ${cat === 'maestria' ? 'una Maestria' : cat === 'specializzazione' ? 'una Specializzazione' : 'un Talento Libero'}, non ${categoria === 'maestria' ? 'una Maestria' : categoria === 'specializzazione' ? 'una Specializzazione' : 'un Talento Libero'}`); return errori; }
     if (categoria === 'specializzazione' && !specializzazioniAmmesse(stato, classe, dati).has(def.id)) {
       // Giocatore 0.54 §8.10: una voce che il manuale ha tolto dall'elenco della Classe (per_classe_tolte) non è una
-      // regola infranta per chi l'aveva già scelta: resta, con un avviso, finché il Direttore non decide (A.230).
-      // Per una scelta nuova non si offre (opzioniCategoria) e un tablet non la può scrivere (src/talenti-tablet.js).
-      if (classe && (dati.specializzazioni.per_classe_tolte?.[classe] ?? []).includes(def.id)) {
-        err(`Specializzazione in ${def.nome} non è più nell’elenco ${delNome(classe)} (Giocatore 0.54): chi l’ha già scelta la tiene finché il Direttore non decide (A.230)`, 'tolta');
+      // regola infranta per chi l'aveva già scelta: resta, operativa e segnalata. Per una scelta nuova non si offre
+      // (opzioniCategoria) e un tablet non la può scrivere (src/talenti-tablet.js).
+      //  - voci di Potere, A.229 (Davide, 01/11/2026): «l'app segnala le Specializzazioni già acquisite che richiedono una
+      //    verifica e le conserva operative fino alla decisione del Direttore. Il Direttore può mantenerle come eccezione
+      //    oppure autorizzarne la sostituzione gratuita»: con l'eccezione registrata (scelta.eccezione) non è più un avviso;
+      //  - le altre (Armi Inastate, Archi e Balestre), A.230 aperta: avviso finché il Direttore non decide.
+      const regola = classe ? regolaVoceTolta(def.id, classe, dati) : null;
+      if (regola === 'A.229' && isOggetto(scelta.eccezione)) {
+        err(`Specializzazione in ${def.nome} non è più nell’elenco ${delNome(classe)} (Giocatore 0.54): il Direttore la tiene come eccezione (A.229)`, 'eccezione', 'A.229');
+      } else if (regola === 'A.229') {
+        err(`Specializzazione in ${def.nome} non è più nell’elenco ${delNome(classe)} (Giocatore 0.54): resta, con i suoi effetti, finché il Direttore non decide se tenerla come eccezione o sostituirla gratis con una dell’elenco (A.229)`, 'tolta', 'A.229');
+      } else if (regola === 'A.230') {
+        err(`Specializzazione in ${def.nome} non è più nell’elenco ${delNome(classe)} (Giocatore 0.54): chi l’ha già scelta la tiene finché il Direttore non decide (A.230)`, 'tolta', 'A.230');
       } else {
         err(`Specializzazione in ${def.nome} non è nell’elenco ${classe ? delNome(classe) : 'della Classe'} (Talenti v1.0: si sceglie dalla Classe appena aumentata)`);
       }
@@ -274,9 +294,11 @@ function opzioniCategoria(stato, categoria, dati, { classe = null } = {}) {
   return candidati.map((t) => {
     const parametri = t.parametro ? valori[t.parametro].filter((p) => !violazioni({ id: t.id, parametro: p }).length) : null;
     const errori = t.parametro ? (parametri.length ? [] : violazioni({ id: t.id, parametro: valori[t.parametro][0] })) : violazioni({ id: t.id });
+    // per una scelta nuova una voce tolta si dice in breve: la frase di chi l'ha già («resta finché…») qui non serve
+    const motivo = errori[0]?.tipo === 'tolta' ? `Non è più nell’elenco ${delNome(classe)} (Giocatore 0.54; ${errori[0].regola})` : errori[0]?.problema ?? null;
     return {
       id: t.id, nome: t.specializzazione ? `Specializzazione in ${t.nome}` : t.nome, categoria: categoriaDi(t), specializzazione: t.specializzazione,
-      provvisorio: !!t.provvisorio, ammesso: !errori.length, motivo: errori[0]?.problema ?? null, parametri,
+      provvisorio: !!t.provvisorio, ammesso: !errori.length, motivo, parametri,
     };
   });
 }
@@ -544,6 +566,8 @@ function aggiungiTalento(stato, categoria, scelta, livello, classe, dati, sulPos
   s.talentiLiberi.push({
     id: scelta.id, parametro: scelta.parametro ?? null, livello, categoria, ...(classe ? { classe } : {}),
     ...(typeof scelta.annotazione === 'string' && scelta.annotazione.trim() ? { annotazione: scelta.annotazione.trim() } : {}),
+    // A.229: la decisione del Direttore di tenere una voce tolta dal manuale (src/avanzamento.js → eccezioneSpecializzazione)
+    ...(isOggetto(scelta.eccezione) ? { eccezione: scelta.eccezione } : {}),
   });
   aggiungiDotazione(s, scelta.id, livello, categoria, dati);
   return s;
@@ -1365,6 +1389,24 @@ export function applicaSceltaTalento(personaggio, posto, scelta) {
   return { ...p, livelli: p.livelli.map((v, k) => (k === i ? voce : v)) };
 }
 
+/**
+ * A.229 (Davide, 01/11/2026): «Il Direttore può mantenerle come eccezione»: la Specializzazione del posto, tolta dal
+ * manuale dall'elenco della Classe, resta come eccezione del Direttore (`eccezione: { quando, motivo }` sulla scelta),
+ * oppure, con `togli`, torna da decidere. L'altra strada, la sostituzione gratuita, è «Cambia questa scelta» nello
+ * stesso posto (applicaSceltaTalento). Solo il Direttore (src/talenti-tablet.js). Pura.
+ */
+export function eccezioneSpecializzazione(personaggio, posto, { quando = new Date().toISOString(), motivo = '', togli = false } = {}) {
+  const p = migraPersonaggio(personaggio);
+  if (posto.categoria !== 'specializzazione') throw new Error('l’eccezione della A.229 riguarda le Specializzazioni');
+  const attuale = posto.livello === 1 ? p.creazione.specializzazioneIniziale : p.livelli[posto.livello - 2]?.specializzazione;
+  if (!isOggetto(attuale) || !attuale.id) throw new Error(`nessuna Specializzazione al ${posto.livello}° livello`);
+  const { eccezione: _via, ...senza } = attuale;
+  const nuova = togli ? senza : { ...senza, eccezione: { quando, ...(String(motivo).trim() ? { motivo: String(motivo).trim() } : {}) } };
+  if (posto.livello === 1) return { ...p, creazione: { ...p.creazione, specializzazioneIniziale: nuova } };
+  const i = posto.livello - 2;
+  return { ...p, livelli: p.livelli.map((v, k) => (k === i ? { ...v, specializzazione: nuova } : v)) };
+}
+
 // ---------------------------------------------------------------------------
 // Talenti v1.0 (25/10/2026, sera): le scelte che un Talento apre dopo averlo preso. Oggi sono gli Incantesimi (Usufruitore di
 // Magia, Incrementare Incantesimi; Magia sez. 1) e le Tecniche Interiori (Risorse Interiori, Tecniche Interiori
@@ -1753,9 +1795,11 @@ function schedaARiposo(personaggio, dati) {
     }),
     specializzazioni: stato.talentiLiberi.filter((t) => talentoLiberoDef(t.id, dati).specializzazione).map((t) => {
       const d = talentoLiberoDef(t.id, dati);
-      // A.230: voce tolta dal manuale dall'elenco della Classe da cui era stata scelta (resta, con l'avviso)
-      const tolta = !!t.classe && (dati.specializzazioni.per_classe_tolte?.[t.classe] ?? []).includes(t.id);
-      return { id: t.id, nome: d.nome, abilita: d.abilita, effetto: d.effetto, tavolo: notaDaApplicare(d), livello: t.livello, usi: d.usi ?? null, ...(t.classe ? { classe: t.classe } : {}), ...(t.annotazione ? { annotazione: t.annotazione } : {}), ...(tolta ? { tolta: true } : {}) };
+      // voce tolta dal manuale dall'elenco della Classe da cui era stata scelta: resta, operativa, con l'avviso (A.229 per il
+      // Potere, A.230 per le altre); con l'eccezione del Direttore (A.229) resta senza avviso, con la nota
+      const regola = t.classe ? regolaVoceTolta(t.id, t.classe, dati) : null;
+      const eccezione = regola === 'A.229' && isOggetto(t.eccezione) ? t.eccezione : null;
+      return { id: t.id, nome: d.nome, abilita: d.abilita, effetto: d.effetto, tavolo: notaDaApplicare(d), livello: t.livello, usi: d.usi ?? null, ...(t.classe ? { classe: t.classe } : {}), ...(t.annotazione ? { annotazione: t.annotazione } : {}), ...(regola && !eccezione ? { tolta: true, regolaTolta: regola } : {}), ...(eccezione ? { eccezione } : {}) };
     }),
     tecniche: stato.tecniche.map((x) => ({ ...catalogoTec.find((t) => t.id === x.id), livello: x.livello })),
     tecnicheAmmesse: tecnicheAmmesse(stato),

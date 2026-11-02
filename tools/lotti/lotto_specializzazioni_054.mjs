@@ -12,7 +12,12 @@
 //    tiene, con un avviso, finché Davide non risponde alla A.230 (src/avanzamento.js → controllaSceltaTalento).
 //
 // Uso: node tools/lotti/lotto_specializzazioni_054.mjs [--scrivi]   (senza --scrivi dice soltanto cosa cambierebbe)
+//
+// STORICO dal 02/11/2026 (lotto 162): la A.229 è risposta e le voci di Potere sono uscite dagli elenchi con
+// tools/lotti/lotto_a229_specializzazioni.mjs. Un rilancio con --scrivi le rimetterebbe dentro: si ferma, salvo --forza.
 import fs from 'node:fs';
+import { bloccaRiscrittura } from './superato.mjs';
+bloccaRiscrittura('lotto_specializzazioni_054.mjs');
 import { fileURLToPath } from 'node:url';
 import { dirname, join } from 'node:path';
 

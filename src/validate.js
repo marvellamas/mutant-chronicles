@@ -934,7 +934,7 @@ function validaSpecializzazioniPerClasse(dati, idSpec, err) {
   }
   for (const k of Object.keys(pc)) if (!k.startsWith('_') && !(dati.classi?.classi ?? []).some((c) => c.nome === k)) err(F, `per_classe.${k}`, `"${k}" non è una Classe`);
   for (const id of idSpec) if (!usate.has(id)) err(F, 'per_classe', `"${id}" non sta nell’elenco di nessuna Classe`);
-  // Giocatore 0.54 §8.10: voci tolte dal manuale (A.230) e voci di Potere tenute per la A.185 (A.229)
+  // Giocatore 0.54 §8.10: voci tolte dal manuale (A.229 per il Potere, A.230 per le altre)
   const classeEsiste = (k) => (dati.classi?.classi ?? []).some((c) => c.nome === k);
   for (const [k, l] of Object.entries(isOggetto(s.per_classe_tolte) ? s.per_classe_tolte : {})) {
     if (k.startsWith('_')) continue;
@@ -945,14 +945,8 @@ function validaSpecializzazioniPerClasse(dati, idSpec, err) {
       else if ((pc[k] ?? []).includes(id)) err(F, `per_classe_tolte.${k}`, `"${id}" è tolta ma sta ancora nell’elenco della Classe`);
     }
   }
-  for (const [k, l] of Object.entries(isOggetto(s.potere_in_attesa_a229) ? s.potere_in_attesa_a229 : {})) {
-    if (k.startsWith('_')) continue;
-    if (!classeEsiste(k) || !Array.isArray(l)) { err(F, `potere_in_attesa_a229.${k}`, 'una Classe con un elenco di id atteso'); continue; }
-    for (const id of l) {
-      if (!(s.gruppi?.potere ?? []).includes(id)) err(F, `potere_in_attesa_a229.${k}`, `"${id}" non è una Specializzazione di Potere`);
-      else if (!(pc[k] ?? []).includes(id)) err(F, `potere_in_attesa_a229.${k}`, `"${id}" deve restare nell’elenco della Classe finché vale la A.185`);
-    }
-  }
+  // A.229 (Davide, 01/11/2026): gli elenchi sono quelli del manuale; le voci di Potere tenute per la A.185 sono uscite
+  if (s.potere_in_attesa_a229 !== undefined) err(F, 'potere_in_attesa_a229', 'la A.229 è risposta (01/11/2026): le voci di Potere stanno fra le tolte (per_classe_tolte), non in attesa');
   for (const [g, l] of Object.entries(isOggetto(s.gruppi) ? s.gruppi : {})) {
     if (g.startsWith('_')) continue;
     if (!Array.isArray(l) || !l.every((id) => idSpec.has(id))) err(F, `gruppi.${g}`, 'elenco di id di Specializzazioni atteso');

@@ -24,7 +24,7 @@ import { provaSostituzione, rigaIncantesimi, sorgenteModifica, confrontaIncantes
 import { permessoSalita, sfasamento, scelteDelLivello, TIPO_CONCESSIONE, CHIAVE_CONCESSIONE } from '../livello-px.js';
 import { attoCampagna, serverCartella, elencoCartella, leggiCartella, leggiCartellaConRevisione, scriviCartella, contestoMasterQui, pingMasterQui, salvaBackupMaster, leggiBackupMaster } from './cartella.js';
 import { modalitaMaster, mostraMarchio, statoContestoMaster, registro as registroMaster, nuovaCorrezione, aggiungiCorrezione, annullaCorrezione, avvisoAnnulla, registraDiretta, differenzeDirette, differenzeOggetti, ripristinoDiretta, descriviScelte, soloScelte, ripristinaScelte, masterDiverso, normalizzaCircostanzeMaster } from '../correzioni-master.js';
-import { descriviVoce, postiTalenti, applicaSceltaTalento, scelteSuccessive, applicaSceltaSuccessiva, adattaScelteSuccessive } from '../avanzamento.js';
+import { descriviVoce, postiTalenti, applicaSceltaTalento, eccezioneSpecializzazione, scelteSuccessive, applicaSceltaSuccessiva, adattaScelteSuccessive } from '../avanzamento.js';
 import { riquadroTalenti } from './talenti-scelta.js';
 import { segnaModalitaMaster, modalitaMasterDi, esciModalitaMaster } from './ritorno.js';
 import { statoSalvataggioMaster, controllaRemoto, revisioneDaScrivere, differenzeSessione, testoScelta, indicatoreCollegamento, impronta } from '../collegamento.js';
@@ -56,7 +56,7 @@ import { rigaStorico, testoProcedi, allineaStorico } from '../storico.js';
 import { applicaMedita } from '../medita.js';
 import { aggiungiTiro } from '../tiri-scheda.js';
 import { conAvviso } from './procedi.js';
-import { chiedi } from './finestrella.js';
+import { chiedi, chiediTesto } from './finestrella.js';
 import { segnaDalTavolo, arrivoDalTavolo, tornaAlTavolo, scorrimentoDaRimettere, dimenticaTavolo, segnaDallaMappa, arrivoDallaMappa, tornaAllaMappa, dimenticaMappa } from './ritorno.js';
 import { PASSI, passoVisibile, requisitoPasso } from './passi.js';
 import { inizializzaTooltip, nascondiTooltip } from './tooltip.js';
@@ -1745,7 +1745,29 @@ function contestoTalenti(inMaster) {
         persisti();
         ridisegna();
       },
-      svuota: (posto) => {
+      // A.229 (01/11/2026): la Specializzazione di Potere tolta dal manuale resta come eccezione del Direttore (o, con
+      // `togli`, torna da decidere). Solo in «Modifica master»; la riga va nel registro con il motivo.
+      eccezione: async (posto, { togli = false } = {}) => {
+        const nomeSp = nome(posto.scelta.id);
+        let motivo = '';
+        if (!togli) {
+          const r = await chiediTesto({ titolo: `Tenere ${nomeSp} come eccezione?`, etichetta: 'Motivo (va nel registro del master)', valore: 'decisione del Direttore', conferma: 'Tienila come eccezione' });
+          if (r === null) return;
+          motivo = r;
+        }
+        stato.masterMotivo = togli
+          ? `A.229: tolta l’eccezione su ${nomeSp} (${posto.livello}° livello): torna da decidere`
+          : `A.229: ${nomeSp} (${posto.livello}° livello) tenuta come eccezione dal Direttore${motivo.trim() ? ` — ${motivo.trim()}` : ''}`;
+        const p = eccezioneSpecializzazione(personaggio(), posto, { motivo, togli });
+        stato.scelte = { ...stato.scelte, specializzazioneIniziale: p.creazione.specializzazioneIniziale ?? null };
+        cambiaLivelli(p.livelli);
+        stato.messaggioScheda = { tipo: 'ok', testo: togli ? `${nomeSp}: eccezione tolta, torna da decidere.` : `${nomeSp}: tenuta come eccezione. Resta nel registro del master.` };
+        persisti();
+        ridisegna();
+      },
+      svuota: (posto, { a229 = false } = {}) => {
+        // A.229: «sostituzione gratuita con una scelta consentita, senza perdere l'acquisizione spesa»: il posto resta
+        if (a229) stato.masterMotivo = `A.229: sostituzione gratuita di ${nome(posto.scelta.id)} (${posto.livello}° livello), non più nell’elenco della Classe`;
         const primaSvuota = personaggio();
         applica(posto, null);
         // gli Incantesimi e le Tecniche che quel Talento dava e che le quote non ammettono più si tolgono, e lo si dice

@@ -1218,7 +1218,7 @@
     }
   ],
   "per_classe": {
-    "_nota": "Giocatore 0.54 §8.10 (Google Doc del 01/11/2026, 10:39 UTC); Magia 1.11 §1: a ogni Grado si sceglie una Specializzazione non ancora posseduta dall’elenco della Classe appena aumentata. Gruppi già espansi. Le voci di Potere che il manuale toglie ai Taumaturghi restano finché vale la A.185 (vedi «potere_in_attesa_a229»).",
+    "_nota": "Giocatore 0.54 §8.10 (Google Doc del 01/11/2026, 10:39 UTC); Magia 1.11 §1; A.229 (Davide, 01/11/2026): a ogni Grado si sceglie una Specializzazione non ancora posseduta dall’elenco della Classe appena aumentata. Gruppi già espansi. Gli elenchi sono quelli del manuale: la A.229 sostituisce la A.185 nella parte che dava ai Taumaturghi tutte e nove le Specializzazioni di Potere.",
     "Agente": [
       "specializzazione-pistole",
       "specializzazione-mazze-e-bastoni",
@@ -1629,12 +1629,7 @@
       "specializzazione-resistenza",
       "specializzazione-ricercare",
       "specializzazione-misticismo",
-      "specializzazione-oscura-simmetria",
-      "specializzazione-elementi",
-      "specializzazione-influenza",
-      "specializzazione-sintonia",
-      "specializzazione-esorcismo",
-      "specializzazione-trascendenza"
+      "specializzazione-oscura-simmetria"
     ],
     "Invocatore": [
       "specializzazione-elementi",
@@ -1651,11 +1646,7 @@
       "specializzazione-batterie-mistiche",
       "specializzazione-accessori-mistici",
       "specializzazione-ricercare",
-      "specializzazione-oratoria",
-      "specializzazione-cambiamento",
-      "specializzazione-sintonia",
-      "specializzazione-esorcismo",
-      "specializzazione-incantamento"
+      "specializzazione-oratoria"
     ],
     "Mistico": [
       "specializzazione-psionica",
@@ -1673,12 +1664,7 @@
       "specializzazione-controllo-rituale",
       "specializzazione-accessori-mistici",
       "specializzazione-batterie-mistiche",
-      "specializzazione-ricercare",
-      "specializzazione-elementi",
-      "specializzazione-cambiamento",
-      "specializzazione-manifestazione",
-      "specializzazione-influenza",
-      "specializzazione-incantamento"
+      "specializzazione-ricercare"
     ],
     "Tecnomante": [
       "specializzazione-manifestazione",
@@ -1699,13 +1685,7 @@
       "specializzazione-artificiere",
       "specializzazione-materie-scientifiche",
       "specializzazione-laboratorio",
-      "specializzazione-pistole",
-      "specializzazione-elementi",
-      "specializzazione-cambiamento",
-      "specializzazione-influenza",
-      "specializzazione-sintonia",
-      "specializzazione-esorcismo",
-      "specializzazione-trascendenza"
+      "specializzazione-pistole"
     ]
   },
   "gruppi": {
@@ -1787,28 +1767,23 @@
     "specializzazioni": 87
   },
   "per_classe_tolte": {
-    "_nota": "Giocatore 0.54 §8.10 (Google Doc del 01/11/2026, 10:39 UTC); Magia 1.11 §1: voci che il manuale ha tolto dall’elenco della Classe. Non si offrono per una scelta nuova; chi le ha già scelte le tiene, con un avviso, finché il Direttore non decide (A.230).",
+    "_nota": "Giocatore 0.54 §8.10 (Google Doc del 01/11/2026, 10:39 UTC); Magia 1.11 §1; A.229 (Davide, 01/11/2026): voci che il manuale ha tolto dall’elenco della Classe. Non si offrono per una scelta nuova e un tablet non le sceglie. Chi le ha già le tiene, operative e segnalate: le voci di Potere (A.229) finché il Direttore le tiene come eccezione o le sostituisce gratis con una dell’elenco; le altre (Armi Inastate, Archi e Balestre) finché il Direttore non decide (A.230, aperta).",
     "Incursore": [
       "specializzazione-armi-inastate"
     ],
     "Invocatore": [
-      "specializzazione-archi-e-balestre"
-    ]
-  },
-  "potere_in_attesa_a229": {
-    "_nota": "Giocatore 0.54 §8.10 (Google Doc del 01/11/2026, 10:39 UTC); Magia 1.11 §1: Specializzazioni di Potere che il manuale non elenca più per queste Classi. Restano negli elenchi perché la A.185 approvata dice «una scelta iniziale fra le nove»: si tolgono solo se Davide risponde così alla A.229. Solo informazione: il calcolo non le legge.",
+      "specializzazione-archi-e-balestre",
+      "specializzazione-cambiamento",
+      "specializzazione-sintonia",
+      "specializzazione-esorcismo",
+      "specializzazione-incantamento"
+    ],
     "Custode": [
       "specializzazione-elementi",
       "specializzazione-influenza",
       "specializzazione-sintonia",
       "specializzazione-esorcismo",
       "specializzazione-trascendenza"
-    ],
-    "Invocatore": [
-      "specializzazione-cambiamento",
-      "specializzazione-sintonia",
-      "specializzazione-esorcismo",
-      "specializzazione-incantamento"
     ],
     "Mistico": [
       "specializzazione-elementi",

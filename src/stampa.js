@@ -301,8 +301,11 @@ export function preparaStampa(personaggio, dati, { versioniDati = '', completo =
       livello: x.livello,
       classe: x.classe ?? null,
       annotazione: x.annotazione ?? null,
-      // A.230: tolta dal manuale dall'elenco della Classe da cui era stata scelta; resta finché decide il Direttore
+      // tolta dal manuale dall'elenco della Classe da cui era stata scelta: resta finché decide il Direttore (A.229, A.230)
       tolta: !!x.tolta,
+      regolaTolta: x.regolaTolta ?? null,
+      // A.229: tenuta come eccezione dal Direttore
+      eccezione: !!x.eccezione,
     })),
     tecniche: s.tecniche.map((t) => ({ id: t.id, nome: t.nome, costo: t.costo, azione: t.azione, durata: t.durata })),
     tecnicheAmmesse: s.tecnicheAmmesse,

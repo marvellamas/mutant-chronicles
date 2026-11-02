@@ -32,18 +32,13 @@ function elenchiManuale() {
   return out;
 }
 
-test('catalogo 0.54: 87 Specializzazioni, ogni elenco del §8.10 è nell’app (più le sole voci di Potere lasciate per la A.185)', () => {
+test('catalogo 0.54: 87 Specializzazioni, ogni elenco per Classe è esattamente quello del §8.10 (A.229 del 01/11)', () => {
   assert.equal(S.specializzazioni.length, 87);
   assert.equal(S.attesi.specializzazioni, 87);
   const man = elenchiManuale();
   assert.equal(Object.keys(man).length, 25);
-  const potere = new Set(S.gruppi.potere);
   for (const [classe, voci] of Object.entries(man)) {
-    const app = S.per_classe[classe].map(nome).map(norma);
-    for (const v of voci) assert.ok(app.includes(norma(v)), `${classe}: manca ${v}`);
-    const inPiu = S.per_classe[classe].filter((id) => !voci.map(norma).includes(norma(nome(id))));
-    assert.deepEqual(inPiu, S.potere_in_attesa_a229[classe] ?? [], `${classe}: voci in più che non sono di Potere`);
-    assert.ok(inPiu.every((id) => potere.has(id)));
+    assert.deepEqual(S.per_classe[classe].map(nome).map(norma), voci.map(norma), `${classe}: l’elenco non è quello del manuale`);
   }
   // alcuni allungamenti del 0.54 (20 Classi): un controllo a campione con i numeri del manuale
   assert.equal(S.per_classe.Incursore.length, 18);
@@ -53,17 +48,19 @@ test('catalogo 0.54: 87 Specializzazioni, ogni elenco del §8.10 è nell’app (
   assert.ok(S.per_classe.Lottatore.includes(NUOVA) && S.per_classe.Custode.includes(NUOVA));
 });
 
-test('nessuna voce di Potere tolta per sbaglio: ogni Taumaturgo ha ancora le nove (A.185; A.229 aperta)', () => {
-  for (const c of ['Arcanista', 'Custode', 'Invocatore', 'Mistico', 'Tecnomante']) {
-    for (const id of S.gruppi.potere) assert.ok(S.per_classe[c].includes(id), `${c}: ${id}`);
-  }
-  assert.deepEqual(S.potere_in_attesa_a229.Tecnomante.map(nome), ['Elementi', 'Cambiamento', 'Influenza', 'Sintonia', 'Esorcismo', 'Trascendenza']);
-  assert.equal(Object.entries(S.potere_in_attesa_a229).filter(([k]) => !k.startsWith('_')).flatMap(([, l]) => l).length, 20);
+test('A.229: le 20 voci di Potere uscite dagli elenchi di Custode, Invocatore, Mistico e Tecnomante stanno fra le tolte; l’Arcanista ha ancora le nove', () => {
+  for (const id of S.gruppi.potere) assert.ok(S.per_classe.Arcanista.includes(id), `Arcanista: ${id}`);
+  assert.equal(S.potere_in_attesa_a229, undefined, 'la A.229 è risposta: niente più voci in attesa');
+  assert.deepEqual(S.per_classe_tolte.Tecnomante.map(nome), ['Elementi', 'Cambiamento', 'Influenza', 'Sintonia', 'Esorcismo', 'Trascendenza']);
+  assert.deepEqual(S.per_classe.Tecnomante.filter((id) => S.gruppi.potere.includes(id)).map(nome), ['Manifestazione', 'Psionica', 'Incantamento']);
+  const tolteDiPotere = Object.entries(S.per_classe_tolte).filter(([k]) => !k.startsWith('_')).flatMap(([, l]) => l).filter((id) => S.gruppi.potere.includes(id));
+  assert.equal(tolteDiPotere.length, 20);
+  for (const c of ['Custode', 'Invocatore', 'Mistico', 'Tecnomante']) for (const id of S.per_classe_tolte[c].filter((x) => S.gruppi.potere.includes(x))) assert.ok(!S.per_classe[c].includes(id), `${c}: ${id}`);
 });
 
 test('voci tolte non di Potere (A.230): fuori dall’elenco, annotate a parte', () => {
   assert.deepEqual(S.per_classe_tolte.Incursore, ['specializzazione-armi-inastate']);
-  assert.deepEqual(S.per_classe_tolte.Invocatore, ['specializzazione-archi-e-balestre']);
+  assert.ok(S.per_classe_tolte.Invocatore.includes('specializzazione-archi-e-balestre'));
   assert.ok(!S.per_classe.Incursore.includes('specializzazione-armi-inastate'));
   assert.ok(!S.per_classe.Invocatore.includes('specializzazione-archi-e-balestre'));
 });

@@ -42,7 +42,7 @@ test('catalogo: 39 Talenti Liberi, 72 Maestrie, 87 Specializzazioni, ogni Classe
   assert.equal(dati.specializzazioni.specializzazioni.length, 87); // Giocatore 0.54: + Combattimento Senz’Armi
   assert.ok(dati.specializzazioni.specializzazioni.some((s) => s.id === 'specializzazione-sport'));
   for (const c of dati.classi.classi) assert.ok(dati.specializzazioni.per_classe[c.nome]?.length >= 10, `${c.nome}: elenco`);
-  assert.equal(dati.specializzazioni.per_classe.Tecnomante.length, 25);
+  assert.equal(dati.specializzazioni.per_classe.Tecnomante.length, 19); // Giocatore 0.54 §8.10, A.229 (01/11/2026)
   assert.equal(dati.specializzazioni.per_classe.Amministrativo.length, 15); // Giocatore 0.54 §8.10
   // le voci superate restano per i PG di prima, con la voce che le sostituisce
   assert.equal(T('raffica-breve-migliorata').sostituito_da, 'raffiche-migliorate');

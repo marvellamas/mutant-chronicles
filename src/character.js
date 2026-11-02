@@ -264,7 +264,15 @@ export function normalizza(scelteIn, dati) {
   if (s.regimeTalenti !== 2) s.regimeTalenti = null;
   if (!(Number.isInteger(s.talentiChiusiFino) && s.talentiChiusiFino >= 1)) s.talentiChiusiFino = null;
   if (!(isOggetto(s.specializzazioneIniziale) && typeof s.specializzazioneIniziale.id === 'string' && s.specializzazioneIniziale.id)) s.specializzazioneIniziale = null;
-  else s.specializzazioneIniziale = { id: s.specializzazioneIniziale.id, ...(typeof s.specializzazioneIniziale.annotazione === 'string' && s.specializzazioneIniziale.annotazione.trim() ? { annotazione: s.specializzazioneIniziale.annotazione.trim() } : {}) };
+  else {
+    const e = s.specializzazioneIniziale.eccezione;
+    s.specializzazioneIniziale = {
+      id: s.specializzazioneIniziale.id,
+      ...(typeof s.specializzazioneIniziale.annotazione === 'string' && s.specializzazioneIniziale.annotazione.trim() ? { annotazione: s.specializzazioneIniziale.annotazione.trim() } : {}),
+      // A.229: la Specializzazione tolta dal manuale che il Direttore tiene come eccezione (src/avanzamento.js)
+      ...(isOggetto(e) ? { eccezione: { quando: typeof e.quando === 'string' ? e.quando : null, ...(typeof e.motivo === 'string' && e.motivo.trim() ? { motivo: e.motivo.trim() } : {}) } } : {}),
+    };
+  }
   if (!Array.isArray(s.incantesimi)) s.incantesimi = [];
   s.incantesimiAMano = normalizzaIncantesimiAMano(s.incantesimiAMano, dati, avvisi);
 
