@@ -202,10 +202,13 @@ export function avvisiSpostamento(personaggio, bozza, dati) {
     const [l, abilita] = k.split('|');
     const livello = Number(l);
     if (toccati.has(livello)) {
+      // TODO(Davide) A.247: un punto forzato oltre il limite deve far salire il VA oltre il limite? Per ora resta registrato
+      // e il VA si ferma al limite delle regole (§8.3)
       const lim = limiteAllEvento(nuovo, livello, abilita, dati);
       avvisi.push({ tipo: 'limite', livello, abilita,
         testo: `${abilita} ${nelEvento(livello)}: ${diff === 1 ? '1 punto non aumenta' : `${diff} punti non aumentano`} il VA personale${lim ? `, già al limite ${lim.valore} (${lim.categoria})` : ', già al limite'} (§8.3). Forzandolo il punto resta registrato ma il VA non supera il limite.` });
     } else {
+      // TODO(Davide) A.248: questi punti li riassegna anche il giocatore («Assegna», A.107) o solo il Direttore? Per ora anche lui
       avvisi.push({ tipo: 'dopo', livello, abilita, testo: `${abilita} ${nelEvento(livello)}: ${diff === 1 ? '1 punto non aumenterebbe' : `${diff} punti non aumenterebbero`} più il VA e ${diff === 1 ? 'andrebbe riassegnato' : 'andrebbero riassegnati'} con «Assegna», nello stesso livello (A.107).` });
     }
   }
