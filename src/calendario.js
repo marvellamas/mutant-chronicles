@@ -216,6 +216,19 @@ export function ordinaNote(note, dati) {
     || String(a.creato ?? '').localeCompare(String(b.creato ?? '')));
 }
 
+/** L'ultimo giorno con qualcosa di scritto: la data più avanti fra le note (ogni contenuto del calendario è una nota:
+ *  testo, bandierina e «M» stanno nella nota). null se non c'è ancora niente. */
+export function ultimoGiornoScritto(c) {
+  let ultimo = null;
+  for (const n of c?.note ?? []) if (dataValida(n?.data) && (!ultimo || n.data > ultimo)) ultimo = n.data;
+  return ultimo;
+}
+
+/** Il giorno su cui si apre il calendario: l'ultimo scritto; senza note, come prima, il giorno di oggi del gioco. */
+export function giornoDiApertura(c) {
+  return ultimoGiornoScritto(c) ?? c.oggi.data;
+}
+
 /** Note di un giorno (e di una fascia, se indicata), in ordine. */
 export function noteDi(c, data, fascia, dati) {
   return ordinaNote(c.note.filter((n) => n.data === data && (!fascia || n.fascia === fascia)), dati);

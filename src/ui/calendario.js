@@ -7,7 +7,7 @@ import { h } from './dom.js';
 import {
   COLORI, SENZA_BANDIERINA, fasce, aggiungiGiorni, aggiungiMesi, giorniSettimana, grigliaMese, stessoMese,
   nomeData, nomeMese, GIORNI, noteDi, riepilogo, filtraNote, filtroVuoto, contaNote,
-  avanzaFascia, avanzaGiorno, aggiungiNota, modificaNota, eliminaNota, attivaCalendario, dataValida, righeCampo,
+  avanzaFascia, avanzaGiorno, aggiungiNota, modificaNota, eliminaNota, attivaCalendario, dataValida, righeCampo, giornoDiApertura, ultimoGiornoScritto,
 } from '../calendario.js';
 
 const VISTE = [
@@ -25,7 +25,8 @@ const bandierina = (dati, colore) => dati.regole.calendario.bandierine.find((b) 
 
 /** Stato dell'interfaccia (in memoria, non si salva): vista, data mostrata, filtri, bozze. */
 function statoUi(ctx) {
-  const u = ctx.ui.calendario ??= { vista: 'giorno', data: ctx.calendario.oggi.data, filtro: { colori: [], ricordare: false, testo: '' }, modifica: null, bozze: {} };
+  // all'apertura l'ultimo giorno scritto, segnato anche in Settimana e Mese (evidenza); senza note il giorno di oggi
+  const u = ctx.ui.calendario ??= { vista: 'giorno', data: giornoDiApertura(ctx.calendario), evidenza: ultimoGiornoScritto(ctx.calendario), filtro: { colori: [], ricordare: false, testo: '' }, modifica: null, bozze: {} };
   if (!dataValida(u.data)) u.data = ctx.calendario.oggi.data;
   return u;
 }
@@ -252,7 +253,7 @@ function vistaSettimana(ctx, u, apriGiorno) {
   const cal = ctx.calendario;
   return h('div', { class: 'cal-settimana' }, giorniSettimana(u.data).map((d) => {
     const tutte = noteDi(cal, d, null, dati);
-    return apribile(`cal-colonna${d === cal.oggi.data ? ' oggi' : ''}`, `${nomeData(d)}: ${testoNote(tutte.length)}`, () => apriGiorno(d),
+    return apribile(`cal-colonna${d === cal.oggi.data ? ' oggi' : ''}${d === u.evidenza ? ' aperto' : ''}`, `${nomeData(d)}: ${testoNote(tutte.length)}`, () => apriGiorno(d),
       h('p', { class: 'cal-colonna-testa' }, nomeData(d, { breve: true }), d === cal.oggi.data ? h('span', { class: 'cal-ora' }, ' · oggi') : null),
       fasce(dati).map((f) => {
         const note = tutte.filter((n) => n.fascia === f.id);
@@ -272,7 +273,7 @@ function vistaMese(ctx, u, apriGiorno) {
     grigliaMese(u.data).map((settimana) => h('div', { class: 'cal-mese-riga' }, settimana.map((d) => {
       const r = riepilogo(noteDi(cal, d, null, dati));
       const fuori = !stessoMese(d, u.data);
-      return apribile(`cal-cella${fuori ? ' fuori' : ''}${d === cal.oggi.data ? ' oggi' : ''}`, `${nomeData(d)}: ${testoNote(r.n)}`, () => apriGiorno(d),
+      return apribile(`cal-cella${fuori ? ' fuori' : ''}${d === cal.oggi.data ? ' oggi' : ''}${d === u.evidenza ? ' aperto' : ''}`, `${nomeData(d)}: ${testoNote(r.n)}`, () => apriGiorno(d),
         h('span', { class: 'cal-numero' }, String(Number(d.slice(8)))),
         h('span', { class: 'cal-segni' }, COLORI.filter((c) => r.colori.includes(c)).map((c) => pallino(dati, c)), r.ricordare ? segnoM(dati) : null),
         r.n ? h('span', { class: 'cal-quante' }, String(r.n)) : null);

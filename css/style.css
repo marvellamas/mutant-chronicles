@@ -1326,6 +1326,8 @@ body.con-sfondo::before {
 .cal-colonna:focus-visible, .cal-cella:focus-visible { outline: 3px solid var(--accento); outline-offset: 1px; }
 .cal-colonna { padding: 0.35rem; min-width: 0; min-height: 44px; }
 .cal-colonna.oggi, .cal-cella.oggi { border: 2px solid var(--accento); }
+/* l'ultimo giorno scritto, su cui si è aperto il calendario */
+.cal-colonna.aperto, .cal-cella.aperto { border: 2px dashed var(--accento); }
 .cal-colonna-testa { margin: 0 0 0.25rem; font-weight: 700; font-size: 0.9rem; }
 .cal-fascia-breve { border-top: 1px solid var(--bordo); padding: 0.15rem 0; min-width: 0; }
 .cal-fascia-breve.ora { background: var(--accento-tenue); }
