@@ -583,7 +583,7 @@ function risultato(ctx, a, r, colpi, imposta) {
         h('button', { type: 'button', class: 'btn btn-piccolo btn-calcolo', title: 'Il conto del VA finale e i promemoria', onclick: () => apriCalcoloAttacco(ctx, a, r) }, 'Calcolo')),
       h('dl', { class: 'voci griglia-voci voci-risultato' },
         h('div', {}, h('dt', {}, 'Azioni'), h('dd', {}, `${r.azioni_principali} ${r.azioni_principali === 1 ? 'Principale' : 'Principali'}${r.azioni_movimento ? ` + ${r.azioni_movimento} di Movimento` : ''}`)),
-        h('div', {}, h('dt', {}, 'Munizioni'), h('dd', {}, `${r.munizioni}${colpi !== null ? (a.granata ? ` (granate ${colpi})` : ` (nel caricatore ${colpi})`) : ''}`)),
+        h('div', {}, h('dt', {}, 'Munizioni'), h('dd', {}, `${r.munizioni}${colpi !== null ? (a.granata ? ` (granate ${colpi})` : (Number.isInteger(a.munizioni?.capacita) ? ` · caricatore (${colpi}/${a.munizioni.capacita})` : ` (nel caricatore ${colpi})`)) : ''}`)),
         h('div', {}, h('dt', {}, 'Colpi a segno'), h('dd', {}, r.colpi_a_segno ? `${r.colpi_a_segno}${r.tiri > 1 ? ' per tiro riuscito' : ' con la Prova riuscita'}` : 'nessuno: effetto ad Area')),
         r.danno_per_colpo ? null : h('div', {}, h('dt', {}, 'Danno per colpo'), h('dd', {}, '—')),
         r.dopo_armatura?.length ? h('div', {}, h('dt', {}, 'Dopo l’Armatura'), h('dd', {}, r.dopo_armatura.map((x) => x.etichetta).join(' · '), h('small', { class: 'nota' }, ' (solo se almeno 1 danno la supera)'))) : null),

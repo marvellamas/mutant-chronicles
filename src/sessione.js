@@ -4,7 +4,7 @@
 // viene solo limitato al nuovo massimo, mai riazzerato. Funzioni pure.
 //
 // sessione = { pvAttuali, pmAttuali, puntiEroe, distintivi, statiAttivi: [id], ferite,
-//              affaticamento, munizioni: { uid: { colpi, riserve, parziali, vuoti, celle?, senzaCella? } }, scorte: { uid: consumate },
+//              affaticamento, munizioni: { uid: { colpi, riserve, parziali, vuoti, celle?, senzaCella?, senzaCaricatore? } }, scorte: { uid: consumate },
 //              chroma: { uid: { pmAttuali, iniziale? } } (iniziale: PM impostati per un contenitore trovato, E&L 2),
 //              caricoExtra, crediti, creditiIniziali, condizioniOggetti: [uid], attacchi: { uid: scelte },
 //              lanci: { incantesimo: scelte }, integrita: { uid: piAttuali }, nec: { chiave: attuale },
@@ -49,7 +49,7 @@ import { normalizzaTemporanei } from './temporanei.js';
 import { valoreTiro } from './tiri.js';
 import { SENZ_ARMI } from './attacco.js';
 import { saldoIniziale } from './dotazioni.js';
-import { infoRicarica, eseguiRicarica, perOperazione, allineaCarichini, usaCarichino, riempiCarichino, togliCella, inserisciCella, riempiCaricatori } from './ricarica.js';
+import { infoRicarica, eseguiRicarica, perOperazione, allineaCarichini, usaCarichino, riempiCarichino, togliCella, inserisciCella, riempiCaricatori, togliCaricatore, inserisciCaricatore, riempiCaricatore } from './ricarica.js';
 import { caricatori, contenitori, normalizzaEquipaggiamento, catalogo, risolvi, riserveNec, granateDaLancio } from './equipaggiamento.js';
 import { elencoTrasformatori, statoTrasformatore } from './trasformatori.js';
 import { oggettiConPi } from './protezione.js';
@@ -365,6 +365,8 @@ function voceMunizioni(v) {
   const celle = Array.isArray(v.celle) ? v.celle.filter((n) => Number.isInteger(n) && n >= 0) : [];
   if (celle.length) out.celle = celle;
   if (v.senzaCella === true) { out.senzaCella = true; out.colpi = 0; }
+  // 03/11: arma a caricatore senza caricatore inserito (src/ricarica.js → togliCaricatore)
+  if (v.senzaCaricatore === true) { out.senzaCaricatore = true; out.colpi = 0; }
   return out;
 }
 
@@ -665,13 +667,35 @@ export function riempiCaricatoriArma(sessione, uid, m) {
   return r ? modificaSessione(s, { munizioni: { ...s.munizioni, [uid]: r.munizione }, scorte: r.consumi }, m) : s;
 }
 
-export function ricaricaArma(sessione, uid, m) {
+/** «Togli il caricatore» (03/11): esce con i colpi che ha e resta fra quelli di scorta. */
+export function togliCaricatoreArma(sessione, uid, m) {
+  const s = allineaSessione(sessione, m);
+  const x = togliCaricatore(m.ricarica?.[uid], s.munizioni[uid] ?? { colpi: 0, riserve: 0 });
+  return x ? modificaSessione(s, { munizioni: { ...s.munizioni, [uid]: x } }, m) : s;
+}
+
+/** «Inserisci» (03/11) in un'arma senza caricatore: quello di scorta con `colpi` colpi (senza, il più carico). */
+export function inserisciCaricatoreArma(sessione, uid, colpi, m) {
+  const s = allineaSessione(sessione, m);
+  const x = inserisciCaricatore(m.ricarica?.[uid], s.munizioni[uid] ?? { colpi: 0, riserve: 0 }, colpi ?? null);
+  return x ? modificaSessione(s, { munizioni: { ...s.munizioni, [uid]: x } }, m) : s;
+}
+
+/** Riempie un caricatore, anche in parte, con le munizioni sciolte (03/11, fuori dal combattimento): { quale, quanti }. */
+export function riempiCaricatoreArma(sessione, uid, scelta, m) {
+  const s = allineaSessione(sessione, m);
+  const r = riempiCaricatore(m.ricarica?.[uid], s.munizioni[uid], s.scorte, scelta ?? {});
+  return r ? modificaSessione(s, { munizioni: { ...s.munizioni, [uid]: r.munizione }, scorte: r.consumi }, m) : s;
+}
+
+/** «Ricarica»; per le armi a caricatore `colpi` sceglie quale caricatore di scorta entra (03/11: anche un parziale). */
+export function ricaricaArma(sessione, uid, m, colpi = null) {
   const s = allineaSessione(sessione, m);
   const capacita = m.caricatori?.[uid];
   if (capacita === null || capacita === undefined) return s;
   const info = m.ricarica?.[uid];
   if (info) {
-    const r = eseguiRicarica(info, s.munizioni[uid], s.scorte);
+    const r = eseguiRicarica(info, s.munizioni[uid], s.scorte, colpi);
     return r ? modificaSessione(s, { munizioni: { ...s.munizioni, [uid]: r.munizione }, scorte: r.consumi }, m) : s;
   }
   return modificaSessione(s, { munizioni: { ...s.munizioni, [uid]: { ...(s.munizioni[uid] ?? { riserve: 0 }), colpi: capacita } } }, m);

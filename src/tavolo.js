@@ -13,6 +13,7 @@ import { aggiungiDanno } from './equipaggiamento.js';
 import { chiaveDaFile, NOME_FILE } from './cartella.js';
 import { versioniPersonaggio } from './rules.js';
 import { alRound } from './round-scontro.js';
+import { caricatoreInserito, caricatoriDiScorta } from './ricarica.js';
 
 /**
  * Scheda compatta di un PG per la plancia.
@@ -75,9 +76,20 @@ export function vistaPlancia(testo, dati, file = null, round = null) {
       // come nella scheda digitale (src/ui/tab.js → schedaArma): il danno dell'arma, o quello della munizione
       danno: a.dannoDaMunizione ? (a.munizioneRiferimento ? `${aggiungiDanno(a.munizioneRiferimento.danno, a.bonusDanno + (a.bonusCaratteristica?.bonus ?? 0))} (mun.)` : 'munizione') : testoDanno(a.danno),
       provenienzaDanno: a.provenienzaDanno ?? null,
+      // 03/11: i colpi del caricatore, attuali su massimi («(15/30)»), e quanti caricatori di scorta ha con i loro colpi
+      ...caricatoreDi(a, sessione, massimi),
     })),
     scheda, sessione, massimi,
   };
+}
+
+/** Caricatore di un'arma nella plancia: { caricatore: { colpi, capacita, scorta: [colpi…] | senza } } o niente. */
+function caricatoreDi(a, sessione, massimi) {
+  const cap = massimi.caricatori?.[a.uid];
+  const info = massimi.ricarica?.[a.uid];
+  if (!Number.isInteger(cap) || info?.modo !== 'caricatore') return {};
+  const m = sessione.munizioni?.[a.uid] ?? { colpi: cap, riserve: 0 };
+  return { caricatore: { colpi: caricatoreInserito(m) ? m.colpi ?? 0 : null, capacita: cap, scorta: caricatoriDiScorta(m, cap) } };
 }
 
 /**

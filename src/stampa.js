@@ -15,7 +15,7 @@ import { aggiungiDanno, NOME_TESTO_PRECEDENTE, catalogo, normalizzaEquipaggiamen
 import { gradiTaumaturgici } from './incantesimi.js';
 import { saldoIniziale, crediti } from './dotazioni.js';
 import { SEZIONI_INVENTARIO, sezioneInventario, COLORI_MACROFAMIGLIE } from './palette.js';
-import { modoRicarica } from './ricarica.js';
+import { modoRicarica, caricatoreInserito, caricatoriDiScorta } from './ricarica.js';
 import { calcolaCarico, pesoVoce } from './carico.js';
 import { testoProvenienza } from './provenienza.js';
 import { attivazioneInfusa } from './lancio.js';
@@ -400,7 +400,8 @@ export function preparaStampa(personaggio, dati, { versioniDati = '', completo =
       iniziativa: identita.iniziativa, dadoIniziativa: identita.dadoIniziativa, movimento: s.movimento, azioni: s.azioni,
       salvezze: identita.salvezze, difese: difese ? { va: difese.vaEquip ?? difese.totale, caratteristica: difese.caratteristica } : null,
     },
-    armiStampa: armiStampa(sArmi, c, dati),
+    // i colpi dei caricatori (03/11): la sessione della scheda (passata come «modificatori»), altrimenti quella del file
+    armiStampa: armiStampa(sArmi, c, dati, sessione ?? modificatori ?? p.sessione),
     specializzazioni: abilita.specializzazioni,
     tecniche: abilita.tecniche,
     tecnicheAmmesse: abilita.tecnicheAmmesse,
@@ -578,7 +579,7 @@ export function preparaStampa(personaggio, dati, { versioniDati = '', completo =
  * quadratini dei colpi: una per caricatore (almeno 2) o per cella; le armi a inserimento (revolver,
  * pompa, doppiette) hanno una sola fila «colpi». I moduli integrati hanno la loro riga.
  */
-export function armiStampa(s, creazione, dati) {
+export function armiStampa(s, creazione, dati, sessione = null) {
   const pronte = s.armiAddosso ?? new Set();
   const cat = catalogo(dati);
   const voci = normalizzaEquipaggiamento(creazione?.equipaggiamento);
@@ -600,7 +601,13 @@ export function armiStampa(s, creazione, dati) {
       }
       else if (granate) colpi = { modo: 'caricatore', capacita: cap, file: 2 };
       else if (r.modo === 'cella') colpi = { modo: 'cella', capacita: cap, file: 2 };
-      else colpi = { modo: 'caricatore', capacita: cap, file: Math.max(2, 1 + (r.vuoto ? quantita(r.vuoto.rif) : 0)) };
+      else {
+        // 03/11: i caricatori con i loro colpi «(15/30)», dalla sessione del file: quello nell'arma, poi quelli di scorta;
+        // le file in più (almeno 2, o i caricatori vuoti dell'Inventario) restano da segnare a penna
+        const mun = sessione?.munizioni?.[a.uid];
+        const caricatori = mun ? [...(caricatoreInserito(mun) ? [{ dove: 'arma', colpi: Math.min(mun.colpi ?? 0, cap) }] : []), ...caricatoriDiScorta(mun, cap).map((n) => ({ dove: 'scorta', colpi: n }))] : null;
+        colpi = { modo: 'caricatore', capacita: cap, file: Math.max(2, 1 + (r.vuoto ? quantita(r.vuoto.rif) : 0), caricatori?.length ?? 0), ...(caricatori ? { caricatori } : {}) };
+      }
     } else if (Number.isInteger(cap) && cap > 0) colpi = { modo: 'cella', capacita: cap, file: 2 }; // cariche di armi ravvicinate (PM, batterie)
     const meno = (n) => (n < 0 ? `−${-n}` : String(n));
     return {

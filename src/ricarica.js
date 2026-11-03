@@ -122,9 +122,15 @@ export function statoRicarica(info0, munizione, consumi = {}) {
   if (colpi >= info.capacita) return { possibile: false, motivo: info.modo === 'cella' ? 'già carica' : 'caricatore già pieno', avviso: null };
   if (info.modo === null) return { possibile: true, motivo: null, avviso: 'Compatibilità delle munizioni non nei dati: la ricarica non scala le riserve.' };
   if (info.modo === 'caricatore') {
+    // 03/11: senza caricatore nell'arma basta un caricatore di scorta con almeno un colpo
+    if (!caricatoreInserito(munizione)) return caricatoriDiScorta(munizione, info.capacita).some((n) => n > 0)
+      ? { possibile: true, motivo: null, avviso: null } : { possibile: false, motivo: 'nessun caricatore di scorta con colpi', avviso: null };
     return (munizione?.riserve ?? 0) > 0 || (munizione?.parziali ?? []).some((n) => n > colpi)
       ? { possibile: true, motivo: null, avviso: null }
-      : { possibile: false, motivo: 'nessun caricatore compatibile', avviso: null };
+      : caricatoriDiScorta(munizione, info.capacita).length
+        // 03/11: un caricatore di scorta meno carico si mette lo stesso, ma lo sceglie il giocatore («Cambia con questo»)
+        ? { possibile: false, motivo: 'i caricatori di scorta non hanno più colpi di quello inserito: per metterne uno, sceglilo in «Cambia con questo»', avviso: null }
+        : { possibile: false, motivo: 'nessun caricatore compatibile', avviso: null };
   }
   if (info.modo === 'cella') {
     // A.215: si cambia con la cella più carica fra quelle tolte e le piene di scorta; una cella vuota non serve
@@ -230,7 +236,7 @@ export function riempiCaricatori(info, munizione, consumi = {}) {
     trasferiti += presi;
     return presi;
   };
-  if (m.colpi < cap) m.colpi += preleva(cap - m.colpi);
+  if (caricatoreInserito(m) && m.colpi < cap) m.colpi += preleva(cap - m.colpi);
   const parziali = [];
   for (const n of m.parziali) {
     const x = n + preleva(cap - n);
@@ -247,6 +253,133 @@ export function riempiCaricatori(info, munizione, consumi = {}) {
   if (!m.parziali.length) delete m.parziali;
   if (!m.vuoti) delete m.vuoti;
   return { munizione: m, consumi: c, trasferiti };
+}
+
+// ── Caricatori che si tolgono e si rimettono (richiesta di Marcello del 03/11/2026, dal tavolo) ──
+// Lo stesso modello delle celle della A.215: «un caricatore non è pieno o vuoto, ha i colpi che ha». Per ogni arma a
+// caricatore (sessione → munizioni[uid]): colpi = i colpi del caricatore inserito; senzaCaricatore: true se nell'arma non
+// c'è nessun caricatore; i caricatori di scorta stanno raggruppati come «identici» (A.215: «Quelli identici possono essere
+// raggruppati»): riserve = quanti pieni, parziali = i colpi di ognuno dei parziali, vuoti = quanti a 0. Le munizioni
+// sciolte restano la quantità della voce meno quelle già messe nei caricatori (sessione → scorte).
+// Nessuna operazione crea o perde un colpo: inserito + scorta + sciolte disponibili restano lo stesso numero (totaleColpi).
+
+/** C'è un caricatore nell'arma? (le armi salvate prima del 03/11 l'hanno sempre). */
+export const caricatoreInserito = (munizione) => !munizione?.senzaCaricatore;
+
+/** I colpi di ognuno dei caricatori di scorta, dal più carico: i pieni, i parziali, i vuoti. */
+export function caricatoriDiScorta(munizione, capacita) {
+  const cap = Number.isInteger(capacita) ? capacita : 0;
+  const pieni = Number.isInteger(munizione?.riserve) && munizione.riserve > 0 ? munizione.riserve : 0;
+  const parziali = (Array.isArray(munizione?.parziali) ? munizione.parziali : []).filter((n) => Number.isInteger(n) && n > 0).map((n) => Math.min(n, cap));
+  const vuoti = Number.isInteger(munizione?.vuoti) && munizione.vuoti > 0 ? munizione.vuoti : 0;
+  return [...Array(pieni).fill(cap), ...parziali, ...Array(vuoti).fill(0)].sort((a, b) => b - a);
+}
+
+/** Rimette i caricatori di scorta (elenco dei colpi) nella forma della sessione: pieni, parziali, vuoti. */
+function conScorta(munizione, elenco, cap) {
+  const m = { ...munizione };
+  m.riserve = elenco.filter((n) => n >= cap).length;
+  const parziali = elenco.filter((n) => n > 0 && n < cap).sort((a, b) => b - a);
+  const vuoti = elenco.filter((n) => n <= 0).length;
+  if (parziali.length) m.parziali = parziali; else delete m.parziali;
+  if (vuoti) m.vuoti = vuoti; else delete m.vuoti;
+  return m;
+}
+
+/** Totale dei colpi di un'arma: caricatore inserito, caricatori di scorta e munizioni sciolte compatibili disponibili. */
+export function totaleColpi(info, munizione, consumi = {}) {
+  const cap = info?.capacita ?? 0;
+  const inserito = caricatoreInserito(munizione) ? (munizione?.colpi ?? 0) : 0;
+  return inserito + caricatoriDiScorta(munizione, cap).reduce((s, n) => s + n, 0) + (info?.scorte ?? []).reduce((s, x) => s + disponibili(x, consumi), 0);
+}
+
+// TODO(Davide) A.249: il manuale dà il costo del cambio (1 AzP), non di togliere soltanto o di inserire in un'arma vuota.
+/** «Togli il caricatore»: esce con i colpi che ha e resta fra quelli di scorta. null se nell'arma non ce n'è uno. */
+export function togliCaricatore(info, munizione) {
+  if (info?.modo !== 'caricatore' || !caricatoreInserito(munizione)) return null;
+  const cap = info.capacita;
+  const m = conScorta(munizione, [...caricatoriDiScorta(munizione, cap), Math.min(munizione?.colpi ?? 0, cap)], cap);
+  m.colpi = 0;
+  m.senzaCaricatore = true;
+  return m;
+}
+
+/** Toglie dalla scorta il caricatore con `colpi` colpi (senza scelta il più carico): [colpi, scorta rimasta] o null. */
+function prendiDallaScorta(munizione, cap, colpi) {
+  const scorta = caricatoriDiScorta(munizione, cap);
+  const i = colpi === null || colpi === undefined ? 0 : scorta.indexOf(Math.min(colpi, cap));
+  if (i < 0 || !scorta.length) return null;
+  const [entra] = scorta.splice(i, 1);
+  return [entra, scorta];
+}
+
+/**
+ * «Inserisci» in un'arma senza caricatore: quello di scorta con `colpi` colpi (i caricatori uguali sono raggruppati, basta
+ * il numero), senza scelta il più carico. null se non c'è.
+ */
+export function inserisciCaricatore(info, munizione, colpi = null) {
+  if (info?.modo !== 'caricatore' || caricatoreInserito(munizione)) return null;
+  const p = prendiDallaScorta(munizione, info.capacita, colpi);
+  if (!p) return null;
+  const m = conScorta(munizione, p[1], info.capacita);
+  m.colpi = p[0];
+  delete m.senzaCaricatore;
+  return m;
+}
+
+/**
+ * Cambio di caricatore (1 AzP, Armamenti 0.74 §7.20.2: «Sostituire un caricatore amovibile o una cella già pronti costa
+ * 1 AzP»): entra quello di scorta scelto (anche parziale), senza scelta il più carico; quello tolto resta con i suoi colpi.
+ * TODO(Davide) A.250: un parziale di scorta conta come «pronto» (1 AzP, e l'operazione gratuita di Ricarica Esperta)? Per ora sì.
+ */
+export function cambiaCaricatore(info, munizione, colpi = null) {
+  if (info?.modo !== 'caricatore') return null;
+  if (!caricatoreInserito(munizione)) return inserisciCaricatore(info, munizione, colpi);
+  const cap = info.capacita;
+  const p = prendiDallaScorta(munizione, cap, colpi);
+  if (!p) return null;
+  const m = conScorta(munizione, [...p[1], Math.min(munizione?.colpi ?? 0, cap)], cap);
+  m.colpi = p[0];
+  return m;
+}
+
+/**
+ * Riempire UN caricatore, anche in parte, con le munizioni sciolte compatibili, fuori dal combattimento (A.215; il tempo il
+ * manuale non lo dice, A.244): `quale` = 'inserito' oppure i colpi del caricatore di scorta da riempire; `quanti` = quanti
+ * proiettili metterci (senza, fino a riempirlo). Esempio: 7 proiettili nel caricatore da 30 a 15 → 22/30.
+ * @returns {{ munizione, consumi, trasferiti, prima, dopo } | null}
+ */
+export function riempiCaricatore(info, munizione, consumi = {}, { quale = 'inserito', quanti = null } = {}) {
+  if (info?.modo !== 'caricatore' || !Number.isInteger(info.capacita)) return null;
+  const cap = info.capacita;
+  const sciolte = (info.scorte ?? []).reduce((s, x) => s + disponibili(x, consumi), 0);
+  let m = { colpi: 0, riserve: 0, ...munizione };
+  let prima;
+  let scorta = null;
+  let i = -1;
+  if (quale === 'inserito') {
+    if (!caricatoreInserito(m)) return null;
+    prima = Math.min(m.colpi ?? 0, cap);
+  } else {
+    scorta = caricatoriDiScorta(m, cap);
+    i = scorta.indexOf(Math.min(Number(quale), cap));
+    if (i < 0) return null;
+    prima = scorta[i];
+  }
+  const voluti = quanti === null || quanti === undefined ? cap - prima : Math.max(0, Math.floor(Number(quanti) || 0));
+  const n = Math.min(voluti, cap - prima, sciolte);
+  if (n <= 0) return null;
+  const c = { ...consumi };
+  let resta = n;
+  for (const s of info.scorte ?? []) {
+    const x = Math.min(resta, disponibili(s, c));
+    if (x > 0) { c[s.uid] = (c[s.uid] ?? 0) + x; resta -= x; }
+    if (!resta) break;
+  }
+  const dopo = prima + n;
+  if (quale === 'inserito') m.colpi = dopo;
+  else { scorta[i] = dopo; m = conScorta(m, scorta, cap); }
+  return { munizione: m, consumi: c, trasferiti: n, prima, dopo };
 }
 
 /**
@@ -279,24 +412,19 @@ export function perTipo(info, munizione, consumi = {}) {
  * @param info voce di infoRicarica(); con `perOperazione` (inserimento singolo) il limite di munizioni
  * @returns {{ munizione: {colpi, riserve, parziali, vuoti}, consumi: {uid: n}, inserite?: number } | null} null se non si può
  */
-export function eseguiRicarica(info0, munizione, consumi = {}) {
+export function eseguiRicarica(info0, munizione, consumi = {}, scelta = null) {
   const info = perTipo(info0, munizione, consumi);
   const m = { colpi: 0, riserve: 0, parziali: [], vuoti: 0, ...munizione, parziali: [...(munizione?.parziali ?? [])] };
-  const stato = statoRicarica(info, m, consumi);
+  // con un caricatore scelto dal giocatore (anche meno carico di quello inserito) decide la sua scelta
+  const stato = scelta !== null && info?.modo === 'caricatore' ? { possibile: true } : statoRicarica(info, m, consumi);
   if (!stato.possibile) return null;
   const c = { ...consumi };
   if (!info || info.modo === null) return { munizione: { ...m, colpi: info?.capacita ?? m.colpi }, consumi: c };
   if (info.modo === 'caricatore') {
-    // il caricatore tolto resta: vuoto se era a 0 colpi, altrimenti parziale con i colpi rimasti
-    const tolto = m.colpi;
-    if (m.riserve > 0) { m.riserve -= 1; m.colpi = info.capacita; }
-    else {
-      const i = m.parziali.indexOf(Math.max(...m.parziali));
-      m.colpi = m.parziali.splice(i, 1)[0];
-    }
-    if (tolto > 0) m.parziali.push(tolto); else m.vuoti += 1;
-    m.parziali.sort((a, b) => b - a);
-    return { munizione: m, consumi: c };
+    // il caricatore tolto resta con i suoi colpi (pieno, parziale o vuoto); entra quello scelto (03/11: anche un
+    // parziale), senza scelta il più carico
+    const r = cambiaCaricatore(info, munizione, scelta);
+    return r ? { munizione: r, consumi: c } : null;
   }
   if (info.modo === 'cella') {
     // A.215: il cambio toglie la cella inserita (resta fra le tolte con le cariche che ha, anche vuota: non si consuma) e

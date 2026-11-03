@@ -1397,7 +1397,11 @@ function cartaPg(ctx, v, r, diTurnoOra = false, colpito = null, durate = [], rou
       v.armi.length ? h('ul', { class: 'plancia-armi' }, v.armi.map((a) => h('li', {},
         h('span', {}, a.moduloDi ? `↳ ${a.nome}` : a.nome, a.rotta ? h('small', { class: 'motivo' }, ' (Rotta)') : null),
         h('span', {}, ' VA ', pillola(`VA ${a.nome}`, a.va, a.provenienza), ' · danno ',
-          a.provenienzaDanno ? infoValore(h('strong', {}, a.danno), { titolo: `Danno ${a.nome}: ${a.danno}`, provenienza: a.provenienzaDanno }) : h('strong', {}, a.danno)))))
+          a.provenienzaDanno ? infoValore(h('strong', {}, a.danno), { titolo: `Danno ${a.nome}: ${a.danno}`, provenienza: a.provenienzaDanno }) : h('strong', {}, a.danno),
+          // 03/11: i colpi del caricatore e quelli di scorta, «(15/30)»
+          a.caricatore ? h('small', { class: 'nota plancia-caricatore', title: a.caricatore.scorta.length ? `Di scorta: ${a.caricatore.scorta.map((n) => `(${n}/${a.caricatore.capacita})`).join(' · ')}` : 'Nessun caricatore di scorta' },
+            ' · ', a.caricatore.colpi === null ? 'senza caricatore' : `(${a.caricatore.colpi}/${a.caricatore.capacita})`,
+            a.caricatore.scorta.length ? ` · scorta ${a.caricatore.scorta.map((n) => `(${n}/${a.caricatore.capacita})`).join(' ')}` : '') : null))))
         : h('p', { class: 'nota' }, 'Nessuna arma in mano.'),
     ] : h('p', { class: 'nota' }, 'Il personaggio non ha ancora Corporazione, Addestramento e Classe.'));
 }

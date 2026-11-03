@@ -424,8 +424,15 @@ const COLONNE_ARMI = [
  * «colpi» per le armi a inserimento. I gruppi si affiancano quando entrano, con uno stacco largo,
  * e vanno a capo quando non entrano (un caricatore da 30 occupa tre righe).
  */
+// 03/11: «car. 1 (15/30)» con i colpi del caricatore (dalla sessione del file); senza, «car. N» da segnare a penna
+export function etichettaCaricatore(c, k) {
+  const x = c.caricatori?.[k - 1];
+  if (!x) return `car. ${k}`;
+  return `${x.dove === 'arma' ? 'nell’arma' : `car. ${k}`} (${x.colpi}/${c.capacita})`;
+}
+
 function fileColpi(c, pi = []) {
-  const etichetta = !c ? null : c.modo === 'inserimento' ? () => 'colpi' : c.modo === 'cella' ? (k) => `cella ${k}` : (k) => `car. ${k}`;
+  const etichetta = !c ? null : c.modo === 'inserimento' ? () => 'colpi' : c.modo === 'cella' ? (k) => `cella ${k}` : (k) => etichettaCaricatore(c, k);
   return h('div', { class: 'file-colpi' },
     c ? Array.from({ length: c.file }, (_, k) => h('div', { class: 'caricatore' },
       h('span', { class: 'etichetta-colpi' }, etichetta(k + 1)), quadratini(c.capacita, { compatto: true }))) : null,

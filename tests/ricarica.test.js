@@ -69,9 +69,10 @@ test('caricatore parziale: il caricatore tolto resta con i suoi colpi e si può 
   s = variaMunizioni(s, 'p', 'colpi', -12, m); // 3 colpi: si reinserisce il parziale da 7
   s = ricaricaArma(s, 'p', m);
   assert.deepEqual(s.munizioni.p, { colpi: 7, riserve: 0, parziali: [3] });
-  // un parziale con meno colpi di quelli inseriti non serve: nessun caricatore compatibile
+  // un parziale con meno colpi di quelli inseriti: «Ricarica» non lo propone da solo, lo sceglie il giocatore (03/11)
   s = variaMunizioni(s, 'p', 'colpi', -2, m); // 5 colpi, parziale da 3
-  assert.equal(stato(s, m, 'p').motivo, 'nessun caricatore compatibile');
+  assert.match(stato(s, m, 'p').motivo, /non hanno più colpi.*Cambia con questo/);
+  assert.equal(ricaricaArma(s, 'p', m, 3).munizioni.p.colpi, 3);
 });
 
 test('munizioni sciolte (revolver, A.135): 2 per operazione fino alla capacità, la scorta scende della quantità inserita', () => {
