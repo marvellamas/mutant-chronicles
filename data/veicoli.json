@@ -1401,7 +1401,9 @@
       "planimetria": "L’interno è una planimetria a parte, in Q Base: una scena propria. L’ingombro convenzionale 3 × 2 non modifica le dimensioni interne né la planimetria.",
       "mappa": {
         "immagine": "img/Tokens/Neverlost-mappa.png",
-        "muso_immagine": "s"
+        "muso_immagine": "s",
+        "ostacolo": true,
+        "_nota_ostacolo": "A.238 (03/11/2026): sulla mappa in Q Base la nave atterrata ha le dimensioni reali (34 × 20 Q) e lo scafo è un ostacolo secondo la sagoma effettiva; accessi e portelloni si gestiscono a parte. Il combattimento aereo resta in Q Tattici (pedina 3 × 2)."
       },
       "carico_kg": 50000,
       "carico_nota": "50 t, comprese persone, Scout e materiali mobili. Il peso degli impianti standard è già compreso nel mezzo.",

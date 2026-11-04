@@ -211,7 +211,12 @@ export function validaScena(s, dati) {
     // token.creatura_ingombro_max); i veicoli restano al loro massimo; i token liberi ai lati ammessi
     const rettangolo = Array.isArray(t.ingombro);
     const massimo = t.rif.tipo === 'veicolo' ? D.token.veicolo_ingombro_max : D.token.creatura_ingombro_max;
-    if (rettangolo && (!['veicolo', 'partecipante'].includes(t.rif.tipo) || t.ingombro.length !== 2 || !t.ingombro.every((n) => isIntero(n) && n >= 1 && n <= massimo))) {
+    // lotto 172 (A.238): una sagoma ruotata ha un riquadro più grande dei suoi lati (la Neverlost 34 × 20 a 45° sta in circa
+    // 38 × 38): il massimo vale per i lati veri (`base`), il riquadro deve solo essere intero e positivo
+    const lati = Array.isArray(t.base) && t.base.length === 2 && Number.isFinite(t.angolo) ? t.base : null;
+    const entro = (n) => isIntero(n) && n >= 1 && (lati ? true : n <= massimo);
+    if (lati && !lati.every((n) => isIntero(n) && n >= 1 && n <= massimo)) return `${k}.base: i lati della sagoma da 1 a ${massimo} Q`;
+    if (rettangolo && (!['veicolo', 'partecipante'].includes(t.rif.tipo) || t.ingombro.length !== 2 || !t.ingombro.every(entro))) {
       return `${k}.ingombro: [colonne, righe] solo per i veicoli e le creature, da 1 a ${massimo} Q`;
     }
     if (!rettangolo && !D.token.ingombri_ammessi.includes(t.ingombro) && !(t.rif.tipo === 'partecipante' && isIntero(t.ingombro) && t.ingombro >= 1 && t.ingombro <= D.token.creatura_ingombro_max)) {

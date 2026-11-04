@@ -1,3 +1,5 @@
+import { converti } from './distanze.js';
+import { scalaDi } from './scala.js';
 // Token in volo (fase 2, lotto 6 bis; richiesta di Marcello dell'08/10/2026). Regole in data/mappa.json → volo:
 //   - Giocatore §5.2.3: il volo lo concede una capacità, un Incantesimo o un Artefatto; Passo 6, Corsa 12, Scatto 18 Q
 //     salvo la fonte (i nemici: movimento.volo del profilo, data/formato_nemici.json); uscire dalla portata di un
@@ -18,24 +20,28 @@ export const quotaDi = (t) => (inVolo(t) && Number.isInteger(t.quota) ? t.quota 
 
 /** Il pezzo sa volare? Un nemico con movimento.volo nel profilo (src/mappa/partecipanti.js → pezzo.voloQ). */
 const voloDel = (pezzo) => pezzo?.voloQ ?? pezzo?.scheda?.movimento?.volo ?? null;
-export const sapeVolare = (pezzo) => Number.isInteger(voloDel(pezzo)) && voloDel(pezzo) > 0;
+export const sapeVolare = (pezzo) => Number.isFinite(voloDel(pezzo)) && voloDel(pezzo) > 0;
 
 /**
  * Passo, Corsa e Scatto in volo: del profilo del nemico (movimento.volo, Corsa e Scatto con i moltiplicatori del
  * formato), altrimenti quelli del Giocatore §5.2.3 (data/mappa.json → volo.movimento_predefinito); poi gli Stati con
  * effetto sul movimento (Stordito: soltanto Passo, §5.2.5).
  */
-export function movimentoInVolo(pezzo, dati) {
+export function movimentoInVolo(pezzo, dati, scena = null) {
   const molt = dati?.formato_nemici?.campi?.movimento?.moltiplicatori ?? { corsa: 2, scatto: 3 };
-  const v = voloDel(pezzo);
-  const r = Number.isInteger(v) && v > 0 ? { passo: v, corsa: v * molt.corsa, scatto: v * molt.scatto } : { ...dati.mappa.volo.movimento_predefinito };
+  // A.225: pezzo.voloQ è già nella scala della scena (src/mappa/partecipanti.js); il movimento predefinito del Giocatore
+  // §5.2.3 e il Passo massimo degli Stati sono in Q Base e si convertono qui, una volta sola
+  const qb = (n) => (scena ? converti(n, 'base', scalaDi(scena, dati), dati) : n);
+  const v = pezzo?.voloQ ?? (Number.isInteger(pezzo?.scheda?.movimento?.volo) ? qb(pezzo.scheda.movimento.volo) : null);
+  const d = dati.mappa.volo.movimento_predefinito;
+  const r = Number.isFinite(v) && v > 0 ? { passo: v, corsa: v * molt.corsa, scatto: v * molt.scatto } : { passo: qb(d.passo), corsa: qb(d.corsa), scatto: qb(d.scatto) };
   const elenco = dati?.regole?.stati?.elenco ?? [];
   for (const s of pezzo?.stati ?? []) {
     const e = elenco.find((x) => x.id === (s.id ?? s))?.movimento;
     if (!e) continue;
     if (e.nessuno) { r.passo = 0; r.corsa = null; r.scatto = null; }
     if (e.solo_passo) { r.corsa = null; r.scatto = null; }
-    if (Number.isInteger(e.passo_q)) r.passo = Math.min(r.passo, e.passo_q);
+    if (Number.isInteger(e.passo_q)) r.passo = Math.min(r.passo, qb(e.passo_q));
   }
   // a 0 PV niente movimento, come a terra
   if (pezzo?.aZero) return { passo: 0, corsa: null, scatto: null };

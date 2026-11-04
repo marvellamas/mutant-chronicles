@@ -13,7 +13,7 @@
 //     di un muro (uno dei due Q ai lati murato), non fra due muri a spigolo (entrambi murati: la diagonale li
 //     attraverserebbe); «vietata», servono liberi entrambi; «libera», i lati non contano. Le porte chiuse sono muri.
 // Funzioni pure. Con griglie da 300 × 300 Q e 300 token resta sotto i 50 ms (tests/mappa-area.test.js).
-import { dimensioni, celleToken } from './token.js';
+import { dimensioni, celleToken, celleToccateToken } from './token.js';
 import { attraversa } from './muri-linee.js';
 import { ruotato, celleToccate } from './forma.js';
 
@@ -99,7 +99,7 @@ export function areaRaggiungibile({ colonne: C, righe: R, muri, terreno, token, 
   // gli altri token liberi non bloccano e restano attraversabili come un alleato di tutti.
   for (const t of token) {
     if (!t.blocca || t.id === chi.id) continue;
-    for (const [x, y] of celleToken(t)) if (x >= 0 && y >= 0 && x < C && y < R) muro[y * C + x] = 1;
+    for (const [x, y] of celleToccateToken(t)) if (x >= 0 && y >= 0 && x < C && y < R) muro[y * C + x] = 1;
   }
   const terr = bytePerQ(terreno, C, R);
   const avv = new Uint8Array(C * R);

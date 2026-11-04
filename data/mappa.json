@@ -139,7 +139,8 @@
       2,
       3
     ],
-    "veicolo_ingombro_max": 12,
+    "veicolo_ingombro_max": 34,
+    "_nota_veicoli_max": "A.238 (risposta di Davide del 03/11/2026): la Neverlost atterrata in una scena in Q Base si rappresenta con le dimensioni reali, 34 × 20 Q Base (51 × 30 m), ruotabile anche di 45°: il limite dei veicoli sale da 12 a 34 per lato. Il limite delle creature resta 20 (A.198).",
     "rotazione_veicoli": {
       "_nota": "A.147 (risposta approvata il 15/10/2026): ← → girano il veicolo di passo_gradi (45°, gli otto orientamenti della risposta), Maiusc+← → di passo_fine_gradi per un orientamento libero scelto dal master. Con angoli non retti i quadretti occupati sono quelli coperti per almeno metà dal rettangolo ruotato (src/mappa/forma.js), e il controllo del passaggio usa l’ingombro nell’orientamento effettivo. Girare non consuma Q (data/veicoli.json → manovre_rotazione): Sterzata stretta e Inversione rapida restano promemoria della scheda.",
       "passo_gradi": 45,

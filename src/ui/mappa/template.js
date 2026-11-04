@@ -5,6 +5,7 @@
 import { h } from '../dom.js';
 import { apri } from '../finestrella.js';
 import { MISURE_FORMA, ORIENTABILI, roundRimasti, testoMisure } from '../../mappa/template.js';
+import { converti } from '../../mappa/distanze.js';
 // 13/10: testoMisure è una funzione pura (src/mappa/template.js); qui si ri-esporta, gli usi non cambiano
 export { testoMisure };
 
@@ -22,9 +23,11 @@ export function etichettaTemplate(t, regole, round) {
  * { forma, misure, colore, nome, durata, nascosto } oppure null.
  * @param bozza l'ultima usata (si riparte da lì)
  */
-export function apriMenuTemplate({ regole, bozza }) {
+export function apriMenuTemplate({ regole, bozza, scale = [], scala = null }) {
   return apri('menu-template', 'Template ad area', (fine) => {
-    const st = { forma: bozza?.forma ?? regole.forme[0], misure: { ...(bozza?.misure ?? regole.misure_proposte[regole.forme[0]][1] ?? regole.misure_proposte[regole.forme[0]][0]) }, colore: bozza?.colore ?? regole.colori[0].valore, nome: bozza?.nome ?? '', durata: bozza?.durata === undefined ? regole.durata_round_predefinita : bozza.durata, nascosto: !!bozza?.nascosto };
+    const st = { forma: bozza?.forma ?? regole.forme[0], misure: { ...(bozza?.misure ?? regole.misure_proposte[regole.forme[0]][1] ?? regole.misure_proposte[regole.forme[0]][0]) }, colore: bozza?.colore ?? regole.colori[0].valore, nome: bozza?.nome ?? '', durata: bozza?.durata === undefined ? regole.durata_round_predefinita : bozza.durata, nascosto: !!bozza?.nascosto,
+      // A.225: in che scala è scritta la misura (di solito quella della scena; un soffio «12 × 1 Q Tattici» in una scena in Q Base)
+      unita: scala ?? bozza?.unita ?? null };
     const corpo = h('div', { class: 'menu-template-corpo' });
     const disegna = () => {
       corpo.replaceChildren(...[
@@ -35,6 +38,9 @@ export function apriMenuTemplate({ regole, bozza }) {
             const scelta = MISURE_FORMA[st.forma].every((k) => st.misure[k] === m[k]);
             return h('button', { type: 'button', class: `btn btn-piccolo${scelta ? ' scelto' : ''}`, 'aria-pressed': String(scelta), onclick: () => { st.misure = { ...m }; disegna(); } }, testoMisure({ forma: st.forma, misure: m }, regole).replace(/^\S+ /, ''));
           })),
+        scale.length > 1 ? h('div', { class: 'riga-scelte', role: 'group', 'aria-label': 'Scala della misura' }, h('span', { class: 'etichetta' }, 'Misura in'),
+          scale.map((x) => h('button', { type: 'button', class: `btn btn-piccolo${st.unita === x.id ? ' scelto' : ''}`, 'aria-pressed': String(st.unita === x.id), title: x.id === scala ? 'La scala della scena: la misura si usa così com’è' : 'La misura si converte nella scala della scena (1 Q Tattico = 10 Q Base, A.225)', onclick: () => { st.unita = x.id; disegna(); } }, x.nome))) : null,
+        st.unita && scala && st.unita !== scala ? h('p', { class: 'nota' }, `Sulla mappa diventa ${testoMisure({ forma: st.forma, misure: Object.fromEntries(Object.entries(st.misure).map(([k, v]) => [k, converti(v, st.unita, scala, { mappa: { scale: { elenco: scale } } })])) }, regole).replace(/^\S+ /, '')} (${scale.find((x) => x.id === scala)?.nome ?? ''}), una volta sola (A.225).`) : null,
         h('div', { class: 'riga-scelte' }, MISURE_FORMA[st.forma].map((k) => h('label', { class: 'campo-misura' }, `${NOMI_MISURE[k]} (Q) `,
           h('input', { type: 'number', min: 1, max: regole.misura_max_q, step: 1, value: String(st.misure[k] ?? 1), onchange: (e) => { st.misure[k] = Math.max(1, Math.min(regole.misura_max_q, Math.round(Number(e.target.value) || 1))); disegna(); } })))),
         ORIENTABILI.includes(st.forma) ? h('p', { class: 'nota' }, st.forma === 'cono' ? 'Il cono parte dal centro del Q di chi lo lancia e si allarga da zero (A.138); il suo Q non è incluso. Con un token scelto si orienta verso il mouse, altrimenti con la rotella.' : 'Parte dal bordo del Q di chi lo lancia (il suo Q non è incluso): con un token scelto si orienta verso il mouse, altrimenti con la rotella.') : null,

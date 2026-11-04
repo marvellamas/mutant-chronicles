@@ -6,6 +6,7 @@
 // Si sceglie finché la scena non ha creature né veicoli: cambiare scala a pedine già messe le farebbe cambiare misura sotto
 // gli occhi di tutti (e un 14 × 10 sparirebbe in una pedina 2 × 1 in mezzo ad altre pedine).
 // Funzioni pure.
+import { templateInScala } from './template.js';
 
 /** Le scale ammesse (data/mappa.json → scale.elenco). */
 export const scale = (dati) => dati?.mappa?.scale?.elenco ?? [{ id: 'base', nome: 'Q Base', q_metri: dati?.mappa?.q_metri ?? 1.5 }];
@@ -45,5 +46,8 @@ export function conScala(scena, id, dati) {
   if (!scale(dati).some((x) => x.id === id)) return null;
   if (id === scalaDi(scena, dati)) return scena;
   if (!scalaCambiabile(scena).ok) return null;
-  return { ...scena, scala: id };
+  // A.225: i template conservano la misura com'è scritta e si riconvertono nella scala nuova (src/mappa/template.js)
+  const prima = scalaDi(scena, dati);
+  const nuova = { ...scena, scala: id };
+  return { ...nuova, template: (scena.template ?? []).map((t) => templateInScala(t, prima, nuova, dati)) };
 }

@@ -829,7 +829,8 @@ async function contestoScena(scena, { cartella, tavolo, scontri, veicoli, radice
     }
   } catch { /* nessun registro */ }
   // scontro chiuso: gli stessi pezzi, senza turno (i token hanno nome e immagine, non «?»)
-  const pezzi = chiuso ? pezziDellaScena({ scontro: chiuso, viste, veicoli: registro }, dati).map((p) => ({ ...p, diTurno: false })) : pezziDellaScena({ scontro, bozza, alTavolo, viste, veicoli: registro }, dati);
+  // A.225: con la scena, così il movimento dei pezzi è nella sua scala (Q Base o Q Tattici), come nella vista master
+  const pezzi = chiuso ? pezziDellaScena({ scontro: chiuso, viste, veicoli: registro, scena }, dati).map((p) => ({ ...p, diTurno: false })) : pezziDellaScena({ scontro, bozza, alTavolo, viste, veicoli: registro, scena }, dati);
   const immagineDi = (p) => (p.tipo === 'pg' ? (p.ritratto ? `api/ritratti/${encodeURIComponent(p.pg)}?v=${impronta(p.ritratto)}` : null) : p.ritratto);
   // colori dei bordi dei token (src/mappa/colori.js): gli stessi della vista master
   // completo: c'è uno scontro (aperto o chiuso) o una bozza vera, quindi un token senza partecipante è un orfano

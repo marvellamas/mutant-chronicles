@@ -69,12 +69,14 @@ import { celleTemplate, tokenDentro as tokenNelTemplate, nuovoTemplate, scaduto,
 import { livelliDi, livelliDati, conLivello, conTuttiILivelli, nascosti as livelliNascosti, statoEntrambi, conLivelloEntrambi } from '../../mappa/sovrapposizioni.js';
 import { portaA, muriEffettivi, lineeEffettive, porteVicine, apriChiudi, nuovaPorta, conAzione, azpNelRound, orientamento, orientamentoPorta, ruotaPorta, opposto, agganciaPorta, agganciaDiPorta, geometriaPorta, lineePerDisegno, muriPerDisegno, portaSotto, porteNellaForma } from '../../mappa/porte.js';
 import { apriMenuTemplate, sezioneTemplate, etichettaTemplate, testoMisure } from './template.js';
+import { misureDelTemplate } from '../../mappa/template.js';
 import { apriMenuToken, chiudiMenuToken, menuAperto } from './menu-token.js';
 import { componiMenu, unisciMenu } from '../../mappa/menu.js';
 import { diTurno, ordineIniziativa } from '../../scontro.js';
 import { statoMovimento, muoviVeicolo, cambiaConducente, scegliAndatura } from '../../veicoli-registro.js';
 import { formaRuotata, normaAngolo, baseDaIngombro, angoloDi, ruotaDi } from '../../mappa/forma.js';
 import { ruotabile, rotazioneDi, passoGradi, tokenTesta } from '../../mappa/sagoma.js';
+import { inQBase, testoDistanza } from '../../mappa/distanze.js';
 import { ruotaSeLibero, sali, scendi, qPerScendere, veicoliVicini, aBordo, veicoloDi, veicoloFermo } from '../../mappa/veicoli-mappa.js';
 import { rigaMovimentoLibero, rigaOpportunita, senzaOpportunitaDelMovimento, rigaPorta, rigaTemplateTolti, rigaGruppo, registraRiga } from '../../scontro.js';
 import { tokenNelRettangolo, alternaSelezione, spostaGruppo } from '../../mappa/gruppo.js';
@@ -1012,7 +1014,7 @@ export function renderMappa(radice, ctx) {
     const nuovo = attivo ?? !inVolo(t);
     cambiaToken(id, (x) => conVolo(x, nuovo, nuovo ? x.quota ?? null : null));
     const pz = pezzoDi(t);
-    const m = nuovo ? movimentoInVolo(pz ?? {}, ctx.dati) : null;
+    const m = nuovo ? movimentoInVolo(pz ?? {}, ctx.dati, st.scena) : null;
     avviso(nuovo ? `${pz?.nome ?? 'Token'} in volo: sopra terreno difficile e token (Passo ${m.passo} Q); Copertura e creature interposte come a terra, le correggi tu per le quote (A.148). Ctrl+Z annulla.` : `${pz?.nome ?? 'Token'} è atterrato.`, { tipo: 'info', chiave: 'volo' });
   }
   /** «Quota…»: l'altezza in Q del token in volo, come etichetta (e per la portata ravvicinata, A.149). */
@@ -2250,7 +2252,7 @@ export function renderMappa(radice, ctx) {
     const g = st.scena.griglia;
     const area = areaRaggiungibile({
       colonne: g.colonne, righe: g.righe, muri: muriEffettivi(st.scena), terreno: daBase64(st.scena.terreno), linee: lineeEffettive(st.scena, { larghezza: RP.larghezza_q }),
-      token: st.scena.token.map((x) => ({ id: x.id, q: x.q, ingombro: x.ingombro, angolo: x.angolo, base: x.base, lato: pezzoDi(x)?.lato ?? null, blocca: !!x.blocca })),
+      token: st.scena.token.map((x) => ({ id: x.id, q: x.q, ingombro: x.ingombro, angolo: x.angolo, base: x.base, lato: pezzoDi(x)?.lato ?? null, blocca: !!x.blocca || !!pezzoDi(x)?.ostacolo })),
       chi: { id: t.id, q: t.q, ingombro: t.ingombro, angolo: t.angolo, base: t.base, lato: pz.lato, attraversaRoccia: !!pz.attraversaRoccia }, massimo: Math.max(totale, portata), regole: regoleMovimento(t, ctx.dati),
     });
     const quando = scontro ? 'del Round' : 'del turno';
@@ -2336,7 +2338,7 @@ export function renderMappa(radice, ctx) {
         const pz = pezzoDi(t);
         const areaG = areaRaggiungibile({
           colonne: g.colonne, righe: g.righe, muri: muriEffettivi(s, { perGiocatori: true }), terreno: daBase64(s.terreno), linee: lineeEffettive(s, { perGiocatori: true, larghezza: RP.larghezza_q }),
-          token: s.token.filter((x) => x.id === t.id || visibileAiGiocatori(x, s, nebbia)).map((x) => ({ id: x.id, q: x.q, ingombro: x.ingombro, angolo: x.angolo, base: x.base, lato: pezzoDi(x)?.lato ?? null, blocca: !!x.blocca })),
+          token: s.token.filter((x) => x.id === t.id || visibileAiGiocatori(x, s, nebbia)).map((x) => ({ id: x.id, q: x.q, ingombro: x.ingombro, angolo: x.angolo, base: x.base, lato: pezzoDi(x)?.lato ?? null, blocca: !!x.blocca || !!pezzoDi(x)?.ostacolo })),
           chi: { id: t.id, q: t.q, ingombro: t.ingombro, angolo: t.angolo, base: t.base, lato: pz?.lato ?? null, attraversaRoccia: !!pz?.attraversaRoccia }, massimo: info.totale, regole: regoleMovimento(t, ctx.dati),
         });
         st.diretta.areaG = { per: info.area, area: areaG, celle: celleArea(areaG, info.rimaste, st.fascia), fascia: st.fascia };
@@ -2381,7 +2383,8 @@ export function renderMappa(radice, ctx) {
     avviso(v ? 'I giocatori vedono i PV dei nemici.' : 'I giocatori non vedono i PV dei nemici.');
   }
   // ── Template ad area (fase 2, lotto 1; §10 della specifica; src/mappa/template.js) ──
-  const RT = ctx.dati.mappa.template;
+  // A.225: il nome delle scale per il testo delle misure dichiarate in un'altra scala (12 × 1 Q Tattici → 120 × 10 Q)
+  const RT = { ...ctx.dati.mappa.template, nome_scala: (u) => elencoScale(ctx.dati).find((x) => x.id === u)?.nome ?? u };
   const celleDi = new WeakMap();
   /** Q coperti dal template (calcolati una volta per oggetto: i template cambiano solo sostituendoli). */
   const celleTpl = (t) => { if (!celleDi.has(t)) celleDi.set(t, celleTemplate(t, st.scena.griglia, RT)); return celleDi.get(t); };
@@ -2402,11 +2405,13 @@ export function renderMappa(radice, ctx) {
   /** Mini-menu, poi il piazzamento; `origine`: il Q del clic destro (l'anteprima parte da lì). */
   async function nuovoTemplateUi(origine = null) {
     if (!st.scena) return;
-    const b = await apriMenuTemplate({ regole: RT, bozza: st.tpl.bozza });
+    const b = await apriMenuTemplate({ regole: RT, bozza: st.tpl.bozza, scale: elencoScale(ctx.dati), scala: scalaDi(st.scena, ctx.dati) });
     if (!b || !st.scena) return;
     st.tpl.bozza = b;
     scriviLocale('mutant-mappa-template', b);
-    iniziaPiazzamento({ ...b, id: `tpl-${Date.now().toString(36)}${Math.random().toString(36).slice(2, 5)}` }, origine);
+    // A.225: la misura com'è scritta, nella sua unità, portata una volta nella scala della scena
+    const md = misureDelTemplate(b.misure, b.unita ?? scalaDi(st.scena, ctx.dati), st.scena, ctx.dati);
+    iniziaPiazzamento({ ...b, misure: md.misure, ...(md.dichiarate ? { dichiarate: md.dichiarate } : {}), id: `tpl-${Date.now().toString(36)}${Math.random().toString(36).slice(2, 5)}` }, origine);
   }
   function iniziaPiazzamento(base, origine = null, sposta = null) {
     const g = st.scena.griglia;
@@ -2488,9 +2493,11 @@ export function renderMappa(radice, ctx) {
     if (!a) return;
     const scontro = st.fonti?.scontro ?? null;
     const prima = st.tpl.sposta ? st.scena.template.find((t) => t.id === st.tpl.sposta) ?? null : null;
-    const t = prima ? { ...prima, origine: [...a.origine], misure: { ...a.misure }, ...(ORIENTABILI.includes(a.forma) ? { direzione: a.direzione } : {}) }
+    // A.225: se la misura è cambiata con ↑ ↓, quella nuova è nella scala della scena: la misura dichiarata di prima non vale più
+    const stessaMisura = prima && JSON.stringify(prima.misure) === JSON.stringify(a.misure);
+    const t = prima ? { ...(stessaMisura ? prima : (({ dichiarate: _d, ...r }) => r)(prima)), origine: [...a.origine], misure: { ...a.misure }, ...(ORIENTABILI.includes(a.forma) ? { direzione: a.direzione } : {}) }
       // A.126–A.138: l'esclusione dei quadretti della creatura resta anche quando il template si fissa
-      : nuovoTemplate({ id: a.id, forma: a.forma, misure: a.misure, origine: a.origine, direzione: a.direzione ?? 0, colore: a.colore, nome: a.nome, durata: a.durata, round: scontro?.round ?? null, nascosto: a.nascosto, scontro: scontro?.id ?? null, escludi: a.escludi ?? null });
+      : nuovoTemplate({ id: a.id, forma: a.forma, misure: a.misure, origine: a.origine, direzione: a.direzione ?? 0, colore: a.colore, nome: a.nome, durata: a.durata, round: scontro?.round ?? null, nascosto: a.nascosto, scontro: scontro?.id ?? null, escludi: a.escludi ?? null, dichiarate: a.dichiarate ?? null });
     st.scena = cambiaTemplateAnnullabile(st.scena, prima, t, ctx.dati);
     st.tpl.anteprima = null;
     st.tpl.sposta = null;
@@ -2671,8 +2678,13 @@ export function renderMappa(radice, ctx) {
     if (t && t.id === st.linea.da) { chiudiLinea(); return; }
     st.linea = { ...st.linea, ...bersaglioIn(m), fissa: true };
     ridisegna(['sopra']);
-    const r = calcolaLinea();
-    if (!r) return;
+    const r0 = calcolaLinea();
+    if (!r0) return;
+    // A.225: la distanza sulla mappa è in Q della scena; gittate e «Attacca!» sono in Q Base. Si converte qui, una volta
+    // sola: in Q Base resta com'è, in Q Tattici 12 Q diventano 120 Q Base (e il testo dice tutte e due)
+    const dBase = inQBase(r0.distanza, st.scena, ctx.dati);
+    const tDist = dBase === r0.distanza ? `${r0.distanza} Q` : `${testoDistanza(r0.distanza, scalaDi(st.scena, ctx.dati), ctx.dati)} (${testoDistanza(dBase, 'base', ctx.dati)})`;
+    const r = { ...r0, distanza: dBase };
     const veicoloDa = r.da;
     // fase 2, lotto 5: chi è a bordo tira dal veicolo (linea dal mezzo, attaccante il passeggero)
     const passeggero = st.linea.passeggero ? aBordo(veicoloDa).find((x) => x.id === st.linea.passeggero) ?? null : null;
@@ -2694,13 +2706,13 @@ export function renderMappa(radice, ctx) {
         try { sessionStorage.setItem(CHIAVE_DALLA_MAPPA, JSON.stringify({ nome: pezzoDi(daTok).nome, distanza: r.distanza, semplice: true, bersaglio: nomeA, bersaglioId: idAS ?? null, quando: Date.now() })); } catch { /* senza memoria: il pannello si apre vuoto */ }
         apriSchedaToken(daTok);
       } });
-      avviso([`${nomeDa} → ${nomeA}: ${r.distanza} Q.`, 'Mappa semplice: Copertura, creatura interposta e luce le decidi tu; in «Attacca!» si mettono a mano.'], { tipo: 'info', chiave: 'linea', durata: 12000, azioni: az });
+      avviso([`${nomeDa} → ${nomeA}: ${tDist}.`, 'Mappa semplice: Copertura, creatura interposta e luce le decidi tu; in «Attacca!» si mettono a mano.'], { tipo: 'info', chiave: 'linea', durata: 12000, azioni: az });
       return;
     }
     const gittata = fasciaDistanza(r.distanza, ctx.dati).va;
     const pen = { leggera: ctx.dati.regole.attacco_distanza.copertura.bersaglio.leggera, media: ctx.dati.regole.attacco_distanza.copertura.bersaglio.media }[r.copertura];
     const righe = [
-      `${nomeDa} → ${nomeA}: ${r.distanza} Q (gittata ${gittata ? `${gittata} VA` : '0'}), vista ${r.vista}, ${testoCopertura(r)}${pen ? ` (${pen} VA)` : ''}.`,
+      `${nomeDa} → ${nomeA}: ${tDist} (gittata ${gittata ? `${gittata} VA` : '0'}), vista ${r.vista}, ${testoCopertura(r)}${pen ? ` (${pen} VA)` : ''}.`,
       r.copertura === 'totale' ? 'Il bersaglio non può essere attaccato direttamente (§5.8).' : null,
       // token in mezzo: A.141 e A.144 (decisione 145) «Creatura interposta» −2 proposta in «Attacca!»; con il valore di
       // prima «protetto» il «bersaglio impegnato o protetto» del §5.10
@@ -3651,7 +3663,7 @@ export function renderMappa(radice, ctx) {
   };
   const pezzoDi = (t) => st.mappaPezzi.get(chiaveRif(t.rif)) ?? null;
   /** Il pezzo con il movimento in volo, se il token è in volo (08/10). */
-  const conMovimentoVolo = (t, pz) => (pz && inVolo(t) ? { ...pz, movimento: movimentoInVolo(pz, ctx.dati) } : pz);
+  const conMovimentoVolo = (t, pz) => (pz && inVolo(t) ? { ...pz, movimento: movimentoInVolo(pz, ctx.dati, st.scena) } : pz);
   // nome, PV e Stati al passaggio del mouse; con un token scelto, il percorso verso il quadretto sotto il puntatore
   const nascondiSuggerimento = () => { el.suggerimento.hidden = true; };
   const suggerisci = (e) => {

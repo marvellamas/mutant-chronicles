@@ -12,6 +12,7 @@ import { stessaChiave, partecipanteConducente } from '../veicoli-registro.js';
 import { profiloVeicolo, movimentoMassimo } from '../veicoli.js';
 import { ingombroCreatura, ingombroVeicolo, iniziali, chiaveRif } from './token.js';
 import { scalaDi } from './scala.js';
+import { converti, movimentoInScala } from './distanze.js';
 import { baseDaIngombro, formaDi, formaRuotata } from './forma.js';
 import { postiDi, ingombroOrientato } from './veicoli-mappa.js';
 
@@ -53,7 +54,7 @@ const vistaDi = (viste, chiave) => {
   return null;
 };
 
-function pezzoPg(id, chiave, nomeScontro, lato, viste) {
+function pezzoPg(id, chiave, nomeScontro, lato, viste, scena = null, dati = null) {
   const v = vistaDi(viste, chiave);
   const pv = v?.completa ? v.pv : null;
   return {
@@ -64,11 +65,15 @@ function pezzoPg(id, chiave, nomeScontro, lato, viste) {
     pm: v?.completa ? v.pm ?? null : null,
     aZero: pv ? pv.attuali <= 0 : false, stati: v?.completa ? v.stati : [], ferite: v?.completa ? v.ferite?.nome ?? null : null,
     // lotto 5: Passo, Corsa e Scatto effettivi dalla scheda (null finché la scheda non si legge)
-    movimento: v?.completa && v.movimento ? { ...v.movimento } : null,
+    // A.225: Passo, Corsa e Scatto della scheda sono in Q Base; in una scena in Q Tattici si dividono per 10 (una volta, qui)
+    movimento: v?.completa && v.movimento ? (dati ? movimentoInScala({ ...v.movimento }, 'base', scena, dati) : { ...v.movimento }) : null,
   };
 }
 
-function pezzoNemico(p, dati, scala = 'base') {
+function pezzoNemico(p, dati, scala = 'base', scena = null) {
+  // A.225: le distanze del profilo sono nell'unità del profilo (movimento.unita, di norma Q Base): si convertono una volta,
+  // qui, nella scala della scena; più avanti si usano così come sono
+  const unita = p.scheda?.movimento?.unita ?? 'base';
   const stato = nomeStato(dati);
   return {
     chiave: chiaveRif({ tipo: 'partecipante', id: p.id }), rif: { tipo: 'partecipante', id: p.id }, tipo: 'nemico', nemico: p.nemico ?? null,
@@ -76,11 +81,12 @@ function pezzoNemico(p, dati, scala = 'base') {
     nome: p.nome, lato: p.lato === 'alleato' ? 'alleato' : 'avversario', ingombro: ingombroCreatura(p.scheda ?? null, dati, scala, p.configurazione ?? null),
     iniziali: iniziali(p.scheda?.nome ?? p.nome, p.numero ?? null), ritratto: urlImmagineNemico(p.scheda?.immagine), pv: p.pv ?? null,
     aZero: (p.pv?.attuali ?? 1) <= 0, stati: (p.stati ?? []).map(stato), ferite: null,
-    movimento: movimentoNemico(p.scheda, p.stati, dati, formaAttuale(p)),
+    movimento: movimentoInScala(movimentoNemico(p.scheda, p.stati, dati, formaAttuale(p)), unita, scena ?? { scala }, dati),
     // A.202 e A.203: la forma (può attraversare la roccia?) e la testa come origine degli attacchi
     forma: formaAttuale(p)?.id ?? null, attraversaRoccia: formaAttuale(p)?.attraversa_roccia === true, testaOrigine: p.scheda?.origine_testa === true,
     // 08/10: Passo in volo del profilo (data/formato_nemici.json → movimento.volo), per «In volo» (src/mappa/volo.js)
-    voloQ: Number.isInteger(p.scheda?.movimento?.volo) ? p.scheda.movimento.volo : null,
+    // A.225: il volo del Dragomedusa giovane è 120 Q Base (12 Q Tattici): in Q Tattici vale 12, non 120
+    voloQ: Number.isInteger(p.scheda?.movimento?.volo) ? converti(p.scheda.movimento.volo, unita, scala, dati) : null,
   };
 }
 
@@ -126,17 +132,18 @@ export function pezziDellaScena({ scontro = null, bozza = null, alTavolo = [], v
   const partecipanti = scontro ? scontro.partecipanti : bozza ? partecipantiDaBozza(bozza, alTavolo) : [];
   const turno = scontro ? diTurno(scontro)?.id ?? null : null;
   const pezzi = partecipanti.map((p) => {
-    const pezzo = p.tipo === 'pg' ? pezzoPg(p.id, p.chiave, p.nome, p.lato, viste)
-      : p.tipo === 'nemico' ? pezzoNemico(p, dati, scala) : pezzoManuale(p);
+    const pezzo = p.tipo === 'pg' ? pezzoPg(p.id, p.chiave, p.nome, p.lato, viste, scena ?? { scala }, dati)
+      : p.tipo === 'nemico' ? pezzoNemico(p, dati, scala, scena ?? { scala }) : pezzoManuale(p);
     return { ...pezzo, diTurno: turno === p.id };
   });
   const chiaviPg = partecipanti.filter((p) => p.tipo === 'pg').map((p) => p.chiave);
   for (const rec of veicoli ?? []) {
     if (!veicoloPresente(rec, chiaviPg)) continue;
     const profilo = profiloVeicolo(rec.mezzo?.profilo, dati) ?? rec.mezzo?.scheda ?? null;
-    // A.196: la Neverlost combatte solo in Q Tattici; in una scena in Q Base non entra come pedina (l'interno è una
-    // planimetria a parte, una scena propria)
-    if (profilo?.scala_combattimento && profilo.scala_combattimento !== scala) continue;
+    // A.238 (03/11/2026): la Neverlost atterrata entra anche in una scena in Q Base, con le dimensioni vere (34 × 20 Q Base,
+    // 51 × 30 m, src/mappa/token.js → ingombroVeicolo); il combattimento aereo resta in Q Tattici. Il suo MOV è nell'unità
+    // della sua scala di combattimento (Q Tattici) e si converte qui, come ogni distanza (A.225)
+    const unitaMov = profilo?.scala_combattimento ?? 'base';
     const nome = rec.mezzo?.nome ?? profilo?.nome ?? 'Veicolo';
     const guida = scontro ? partecipanteConducente(rec, scontro) : null;
     pezzi.push({
@@ -146,12 +153,14 @@ export function pezziDellaScena({ scontro = null, bozza = null, alTavolo = [], v
       // fase 2, lotto 5: immagine del token (con il muso), posti a bordo, conducente del registro (A.91)
       immagine: profilo?.mappa?.immagine ?? null, musoImmagine: profilo?.mappa?.muso_immagine ?? 's', posti: postiDi(profilo),
       conducenteChiave: rec.conducente?.chiave ?? null,
+      // A.238: lo scafo della Neverlost è un ostacolo secondo la sagoma effettiva (profilo → mappa.ostacolo)
+      ...(profilo?.mappa?.ostacolo === true ? { ostacolo: true } : {}),
       stati: [], ferite: null, conducente: rec.conducente?.nome ?? null,
       // colore del bordo (src/mappa/colori.js): quello del PG proprietario
       proprietario: rec.proprietario?.tipo === 'gruppo' ? null : rec.proprietario?.chiave ?? null,
       // lotto 5: un solo movimento per Round, all'Iniziativa del conducente (A.105), lungo quanto l'andatura del
       // record unico (Veicoli §2.1: MOV × andatura); niente Corsa né Scatto
-      movimento: profilo ? { passo: movimentoMassimo(profilo, rec.mezzo?.andatura ?? 'controllata', dati).q, corsa: null, scatto: null } : null,
+      movimento: profilo ? movimentoInScala({ passo: movimentoMassimo(profilo, rec.mezzo?.andatura ?? 'controllata', dati).q, corsa: null, scatto: null }, unitaMov, scena ?? { scala }, dati) : null,
       andatura: rec.mezzo?.andatura ?? 'controllata',
       // A.105: il mezzo si muove all'Iniziativa del conducente
       diTurno: Boolean(guida && turno === guida.id),

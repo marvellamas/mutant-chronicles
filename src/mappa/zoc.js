@@ -8,6 +8,8 @@
 // Quindi: la ZoC di un avversario è la fascia profonda quanto la sua portata attorno al suo ingombro; il movimento che
 // esce da quella fascia (anche dopo esserci entrato: attraversare) provoca; entrare o fermarsi dentro no. La ZoC non
 // blocca: segnala. Parametri in data/mappa.json → zoc. Funzioni pure.
+import { converti } from './distanze.js';
+import { scalaDi } from './scala.js';
 import { dimensioni, chiaveRif, celleToken } from './token.js';
 import { stessaParte } from './area.js';
 import { quotaDi } from './volo.js';
@@ -18,6 +20,9 @@ export function portataDi(p, dati) {
   const portate = (p?.scheda?.attacchi ?? []).filter((a) => a.tipo === 'ravvicinato').map((a) => (Number.isInteger(a.portata_q) ? a.portata_q : Z.portata_predefinita));
   return portate.length ? Math.max(...portate) : Z.portata_predefinita;
 }
+
+/** A.225: la portata è in Q Base; in una scena in Q Tattici si divide per 10 (1 Q Base = 0,1 Q: dentro il proprio quadretto). */
+export const portataInScena = (p, scena, dati) => converti(portataDi(p, dati), 'base', scalaDi(scena, dati), dati);
 
 /** Lo Stato che impedisce al pezzo gli Attacchi di Opportunità (A.132: Stordito, Svenuto), o null. */
 export function statoCheImpedisce(p, dati) {
@@ -51,7 +56,7 @@ export function avversariZoc(scena, pezzi, idChi, dati, opzioni = {}) {
     .filter((t) => t.id !== idChi)
     .map((t) => ({ token: t, pezzo: perChiave.get(chiaveRif(t.rif)) ?? null }))
     .filter(({ token, pezzo }) => pezzo?.lato && !stessaParte(pezzo.lato, pChi.lato) && controllaZoc(pezzo, token, dati, opzioni))
-    .map((x) => ({ ...x, portata: portataDi(x.pezzo, dati), dz: dati.mappa.volo?.zoc_quota ? Math.abs(quotaDi(chi) - quotaDi(x.token)) : 0 }))
+    .map((x) => ({ ...x, portata: portataInScena(x.pezzo, scena, dati), dz: dati.mappa.volo?.zoc_quota ? Math.abs(quotaDi(chi) - quotaDi(x.token)) : 0 }))
     .filter((x) => x.dz <= x.portata);
 }
 
@@ -69,7 +74,7 @@ export function avversariZocInattivi(scena, pezzi, idChi, dati) {
     .filter((t) => t.id !== idChi && t.rif?.tipo !== 'veicolo')
     .map((t) => ({ token: t, pezzo: perChiave.get(chiaveRif(t.rif)) ?? null }))
     .filter(({ pezzo }) => pezzo?.lato && pezzo.tipo !== 'veicolo' && !pezzo.aZero && !stessaParte(pezzo.lato, pChi.lato) && statoCheImpedisce(pezzo, dati))
-    .map((x) => ({ ...x, portata: portataDi(x.pezzo, dati), stato: statoCheImpedisce(x.pezzo, dati) }));
+    .map((x) => ({ ...x, portata: portataInScena(x.pezzo, scena, dati), stato: statoCheImpedisce(x.pezzo, dati) }));
 }
 
 // A.167 (18/10): una creatura con la sagoma ruotata ha la ZoC e le distanze sui suoi quadretti veri, non sul

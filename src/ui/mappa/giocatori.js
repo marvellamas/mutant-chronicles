@@ -536,8 +536,8 @@ export function renderGiocatori(radice, ctx) {
     tela.richiedi(['sopra']);
   }
   /** 12/10 (punto 5): l'etichetta della linea di un tablet sulla mappa degli altri: chi tira, il bersaglio e l'esito. */
-  const etichettaLineaTablet = (l) => `${l.tiratore ?? '—'}${l.nome ? ` → ${l.nome}` : ''}: ${l.distanza} Q · ${l.testo}${l.interposta ? ' · creatura interposta' : ''}${l.protetto ? ' · protetto' : ''}`;
-  const testoLinea = (l) => [`${l.distanza} Q`, l.testo, l.interposta ? `creatura interposta (${ctx.dati.regole.attacco_distanza.interposta?.va ?? -2} VA, A.144)` : null, l.protetto ? 'bersaglio protetto (−4 VA, §5.10)' : null, l.luce ? `luce: ${l.luce}` : null, l.inVolo ? 'in volo' : null].filter(Boolean).join(' · ');
+  const etichettaLineaTablet = (l) => `${l.tiratore ?? '—'}${l.nome ? ` → ${l.nome}` : ''}: ${l.distanzaScena !== undefined && l.distanzaScena !== l.distanza ? `${l.distanzaScena} Q (${l.distanza} Q Base)` : `${l.distanza} Q`} · ${l.testo}${l.interposta ? ' · creatura interposta' : ''}${l.protetto ? ' · protetto' : ''}`;
+  const testoLinea = (l) => [l.distanzaScena !== undefined && l.distanzaScena !== l.distanza ? `${l.distanzaScena} Q (${l.distanza} Q Base)` : `${l.distanza} Q`, l.testo, l.interposta ? `creatura interposta (${ctx.dati.regole.attacco_distanza.interposta?.va ?? -2} VA, A.144)` : null, l.protetto ? 'bersaglio protetto (−4 VA, §5.10)' : null, l.luce ? `luce: ${l.luce}` : null, l.inVolo ? 'in volo' : null].filter(Boolean).join(' · ');
 
   const chiama = async (corpo) => {
     // A.122: il movimento dell'Aiuto-master porta il gettone del ruolo e il PG che crede di muovere (il server ricontrolla)

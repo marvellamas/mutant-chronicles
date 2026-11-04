@@ -23,6 +23,8 @@
 // quadretti (cerchio a quadretti, quadrato, rettangolo) coprono Q interi. Cono e linea non coprono il Q d'origine.
 import { daBase64, inBase64, nuovaMaschera } from './celle.js';
 import { celleToken } from './token.js';
+import { misureInScala } from './distanze.js';
+import { scalaDi } from './scala.js';
 
 const EPS = 1e-9;
 const rad = (g) => (g * Math.PI) / 180;
@@ -165,6 +167,12 @@ const qTesto = (n) => `${String(n).replace('.', ',')} Q`;
 
 /** «Raggio 2 Q», «Cono 6 × 3 Q», «Linea 5 Q», «Quadrato 3 × 3 Q», «Rettangolo 4 × 2 Q» (funzione pura, 13/10). */
 export function testoMisure(t, regole = {}) {
+  // A.225: con una misura dichiarata in un'altra scala, «Linea 12 × 1 Q Tattici → 120 × 10 Q»
+  if (t.dichiarate?.misure && typeof regole.nome_scala === 'function') {
+    const prima = testoMisure({ forma: t.forma, misure: t.dichiarate.misure }, { ...regole, nome_scala: null });
+    const dopo = testoMisure({ forma: t.forma, misure: t.misure }, { ...regole, nome_scala: null }).replace(/^\S+ /, '');
+    return `${prima.replace(/ Q$/, ` ${regole.nome_scala(t.dichiarate.unita)}`)} → ${dopo}`;
+  }
   const m = t.misure ?? {};
   const nome = regole.nomi_forme?.[t.forma] ?? t.forma;
   if (t.forma === 'cerchio') return `${nome} ${qTesto(m.raggio)}`;
@@ -174,9 +182,12 @@ export function testoMisure(t, regole = {}) {
   return `${nome} ${qTesto(m.lunghezza)}`;
 }
 
-export function nuovoTemplate({ id, forma, misure, origine, direzione = 0, colore, nome = '', durata = null, round = null, nascosto = false, scontro = null, escludi = null }) {
+export function nuovoTemplate({ id, forma, misure, origine, direzione = 0, colore, nome = '', durata = null, round = null, nascosto = false, scontro = null, escludi = null, dichiarate = null }) {
   return {
-    id, forma, origine: [...origine], misure: { ...misure }, ...(ORIENTABILI.includes(forma) ? { direzione } : {}),
+    id, forma, origine: [...origine], misure: { ...misure },
+    // A.225: la misura com'è scritta (12 × 1 Q Tattici) con la sua unità, quando non è quella della scena; `misure` è la
+    // stessa misura nella scala della scena (120 × 10 Q Base), quella che si disegna e che copre i quadretti
+    ...(dichiarate ? { dichiarate: { unita: dichiarate.unita, misure: { ...dichiarate.misure } } } : {}), ...(ORIENTABILI.includes(forma) ? { direzione } : {}),
     colore, ...(nome ? { nome } : {}), durata, fine_round: fineRound(durata, round), scontro, nascosto,
     // A.126–A.138: i quadretti della creatura esclusi dal suo cono; la chiave c'è solo quando serve
     ...(Array.isArray(escludi) && escludi.length ? { escludi: escludi.map(([x, y]) => [x, y]) } : {}),
@@ -200,6 +211,8 @@ export function ruota(t, verso, passo = 45) {
  * Misura successiva o precedente fra quelle proposte (data/mappa.json → template.misure_proposte): ↑ la più grande dopo
  * quella attuale, ↓ la più piccola prima; da una misura fuori elenco si parte dalla più vicina.
  */
+const senzaDichiarate = ({ dichiarate: _d, ...r }) => r;
+
 export function cambiaMisura(t, verso, regole) {
   const lista = regole.misure_proposte[t.forma] ?? [];
   if (!lista.length) return t;
@@ -214,8 +227,8 @@ export function cambiaMisura(t, verso, regole) {
   i = Math.max(0, Math.min(lista.length - 1, i));
   // il rettangolo tiene il suo orientamento (lato lungo in orizzontale o in verticale)
   const m = { ...lista[i] };
-  if (t.forma === 'rettangolo' && t.misure.altezza > t.misure.larghezza) return { ...t, misure: { larghezza: m.altezza, altezza: m.larghezza } };
-  return { ...t, misure: m };
+  if (t.forma === 'rettangolo' && t.misure.altezza > t.misure.larghezza) return { ...senzaDichiarate(t), misure: { larghezza: m.altezza, altezza: m.larghezza } };
+  return { ...senzaDichiarate(t), misure: m };
 }
 
 /** Template senza durata («finché non lo tolgo»). */
@@ -237,7 +250,13 @@ export function templateVisibili(lista, liv) {
 export function erroreTemplate(t, regole) {
   if (!regole.forme.includes(t.forma)) return `forma: ${regole.forme.join(', ')}`;
   const attese = MISURE_FORMA[t.forma] ?? [];
-  for (const k of attese) if (!(typeof t.misure?.[k] === 'number' && t.misure[k] > 0 && t.misure[k] <= regole.misura_max_q)) return `misure.${k}: da 0 a ${regole.misura_max_q} Q`;
+  // A.225: il massimo vale per la misura com'è scritta (12 × 1 Q Tattici); convertita in Q Base può essere fino a dieci volte tanto
+  const fattore = t.dichiarate?.misure ? (regole.fattore_scale ?? 10) : 1;
+  for (const k of attese) if (!(typeof t.misure?.[k] === 'number' && t.misure[k] > 0 && t.misure[k] <= regole.misura_max_q * fattore)) return `misure.${k}: da 0 a ${regole.misura_max_q * fattore} Q`;
+  if (t.dichiarate !== undefined) {
+    const d = t.dichiarate;
+    if (!(d && typeof d.unita === 'string' && attese.every((k) => typeof d.misure?.[k] === 'number' && d.misure[k] > 0 && d.misure[k] <= regole.misura_max_q))) return `dichiarate: { unita, misure } entro ${regole.misura_max_q} Q`;
+  }
   if (ORIENTABILI.includes(t.forma) && !(typeof t.direzione === 'number' && Number.isFinite(t.direzione))) return 'direzione: gradi';
   if (t.colore !== undefined && !/^#[0-9a-fA-F]{6}$/.test(String(t.colore))) return 'colore: #rrggbb';
   if (t.nome !== undefined && !(typeof t.nome === 'string' && t.nome.length <= 40)) return 'nome: al più 40 caratteri';
@@ -320,3 +339,26 @@ export function celleDaMaschera(base64, griglia) {
 }
 
 
+
+/**
+ * A.225: le misure di un template dichiarate nell'unità `unita` ('base' | 'tattica') portate nella scala della scena.
+ * Stessa unità: le misure così come sono, senza «dichiarate» (niente da ricordare). Unità diversa: `misure` convertite
+ * (12 × 1 Q Tattici → 120 × 10 Q Base) e `dichiarate` con la misura com'è scritta. Si chiama una volta sola, quando il
+ * template nasce: dopo, `misure` è già nella scala della scena e non si riconverte.
+ */
+export function misureDelTemplate(misure, unita, scena, dati) {
+  if (!unita || unita === scalaDi(scena, dati)) return { misure: { ...misure }, dichiarate: null };
+  return { misure: misureInScala(misure, unita, scena, dati), dichiarate: { unita, misure: { ...misure } } };
+}
+
+/**
+ * La scena cambia scala (src/mappa/scala.js → conScala): ogni template torna alla sua misura dichiarata e si riconverte
+ * nella scala nuova. Un template senza «dichiarate» era scritto nella scala di prima: è quella la sua unità.
+ */
+export function templateInScala(t, daScala, scena, dati) {
+  const unita = t.dichiarate?.unita ?? daScala;
+  const misure = t.dichiarate?.misure ?? t.misure;
+  const r = misureDelTemplate(misure, unita, scena, dati);
+  const { dichiarate: _d, ...resto } = t;
+  return { ...resto, misure: r.misure, ...(r.dichiarate ? { dichiarate: r.dichiarate } : {}) };
+}

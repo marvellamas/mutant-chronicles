@@ -18,6 +18,7 @@ import { visibileAiGiocatori, statoDiretta } from './diretta.js';
 import { diTurno } from '../scontro.js';
 import { stessaChiave } from '../veicoli-registro.js';
 import { inVolo, movimentoInVolo, regoleMovimento } from './volo.js';
+import { inQBase } from './distanze.js';
 import { lineaDiTiro, ostacoliVista, testoCopertura } from './visuale.js';
 import { luceIngombro, testoLuceBersaglio } from './luce.js';
 import { mappaSemplice, lineaSemplice } from './semplice.js';
@@ -69,7 +70,7 @@ export function permessoMovimento({ scena, pezzi, scontro = null, chiavePg, dati
   if (!pezzo.movimento) return no('Il master non ha ancora letto la tua scheda: niente movimento per ora.', ok);
   if (pezzo.aZero) return no('Sei a 0 PV: non puoi muoverti.', ok);
   // in volo (08/10): Passo, Corsa e Scatto del volo (Giocatore §5.2.3)
-  return { puo: true, motivo: null, token, pezzo: inVolo(token) ? { ...pezzo, movimento: movimentoInVolo(pezzo, dati) } : pezzo, bordo: null };
+  return { puo: true, motivo: null, token, pezzo: inVolo(token) ? { ...pezzo, movimento: movimentoInVolo(pezzo, dati, scena) } : pezzo, bordo: null };
 }
 
 /**
@@ -96,8 +97,8 @@ export function areaGiocatore({ scena, token, pezzo, pezzi, scontro = null, fasc
   const terreno = perGiocatori ? senza(daBase64(scena.terreno), nebbia) : daBase64(scena.terreno);
   const area = areaRaggiungibile({
     colonne: g.colonne, righe: g.righe, muri, terreno, linee: lineeEffettive(scena, { perGiocatori, larghezza: dati.mappa.porte.larghezza_q }),
-    token: scena.token.filter(ostacolo).map((x) => ({ id: x.id, q: x.q, ingombro: x.ingombro, angolo: x.angolo, base: x.base, lato: perChiave.get(chiaveRif(x.rif))?.lato ?? null, blocca: !!x.blocca })),
-    chi: { id: token.id, q: token.q, ingombro: token.ingombro, angolo: token.angolo, base: token.base, lato: pezzo.lato }, massimo: totale, regole: regoleMovimento(token, dati),
+    token: scena.token.filter(ostacolo).map((x) => ({ id: x.id, q: x.q, ingombro: x.ingombro, angolo: x.angolo, base: x.base, lato: perChiave.get(chiaveRif(x.rif))?.lato ?? null, blocca: !!x.blocca || !!perChiave.get(chiaveRif(x.rif))?.ostacolo })),
+    chi: { id: token.id, q: token.q, ingombro: token.ingombro, angolo: token.angolo, base: token.base, lato: pezzo.lato, attraversaRoccia: !!pezzo.attraversaRoccia }, massimo: totale, regole: regoleMovimento(token, dati),
   });
   const scelta = sf.chiusa ?? [...FASCE.slice(0, fascia)].reverse().find((f) => rimaste[f] !== null);
   const quando = scontro ? 'del Round' : 'del turno';
@@ -268,7 +269,8 @@ export function lineaPerTablet({ scena, pezzi, chiavePg, verso, visibili, dati }
   const r = semplice ? lineaSemplice(calcolata) : calcolata;
   const luce = semplice ? null : testoLuceBersaglio(luceIngombro(scena, a, dati), dati);
   return {
-    ok: true, ...(semplice ? { semplice: true } : {}), distanza: r.distanza, copertura: r.copertura, testo: semplice ? 'Mappa semplice: Copertura a mano' : testoCopertura(r), protetto: !!r.protetto, interposta: !!r.interposta, vista: r.vista, inVolo: !!r.inVolo, bersagliabile,
+    // A.225: la distanza va ad «Attacca!» in Q Base (gittate del manuale); distanzaScena è quella letta sulla mappa
+    ok: true, ...(semplice ? { semplice: true } : {}), distanza: inQBase(r.distanza, scena, dati), distanzaScena: r.distanza, copertura: r.copertura, testo: semplice ? 'Mappa semplice: Copertura a mano' : testoCopertura(r), protetto: !!r.protetto, interposta: !!r.interposta, vista: r.vista, inVolo: !!r.inVolo, bersagliabile,
     luce, nome, bersaglioId, da: { q: [...da.q], ingombro: da.ingombro }, a: { q: [...a.q], ingombro: a.ingombro },
   };
 }

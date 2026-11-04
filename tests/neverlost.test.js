@@ -152,13 +152,19 @@ test('circuito Bianco: PM separati, non toccati da cariche, giornate e ricariche
   assert.deepEqual([sparaCannone(m, P).mezzo.energia.rosso, sparaCannone(m, P).mezzo.circuito.pm], [99, 80]);
 });
 
-test('mappa: pedina 3 × 2 in Q Tattici; in Q Base non entra (la planimetria interna è un’altra scena)', () => {
+test('mappa: pedina 3 × 2 in Q Tattici; atterrata in Q Base con le dimensioni vere 34 × 20 e lo scafo ostacolo (A.238)', () => {
   assert.deepEqual(ingombroVeicolo(P, dati, 'tattica'), [3, 2]);
   const rec = { id: 'vei-nl', proprietario: { tipo: 'gruppo' }, conducente: null, mezzo: { ...nuovoVeicolo('neverlost', dati), andatura: 'controllata' } };
   const tattica = pezziDellaScena({ veicoli: [rec], scena: { scala: 'tattica' } }, dati).find((p) => p.tipo === 'veicolo');
   assert.deepEqual(tattica.ingombro, [2, 3], 'muso in basso: 2 colonne × 3 righe');
   assert.equal(tattica.movimento.passo, 8);
-  assert.equal(pezziDellaScena({ veicoli: [rec], scena: { scala: 'base' } }, dati).find((p) => p.tipo === 'veicolo'), undefined);
+  // A.238 (03/11/2026): in Q Base entra con le dimensioni reali, 34 × 20 Q Base (51 × 30 m), e lo scafo è un ostacolo; il suo MOV
+  // (8 Q Tattici) si converte (A.225): 80 Q Base
+  const base = pezziDellaScena({ veicoli: [rec], scena: { scala: 'base' } }, dati).find((p) => p.tipo === 'veicolo');
+  assert.deepEqual(base.ingombro, [20, 34], 'muso in basso: 20 colonne × 34 righe');
+  assert.equal(base.ostacolo, true);
+  assert.equal(base.movimento.passo, 80);
+  assert.deepEqual(ingombroVeicolo(P, dati, 'base'), [34, 20]);
   // le misure del corpo restano quelle vere
   assert.equal(profiloDi(rec.mezzo, dati).dimensioni.lunghezza_m, 51);
   // lo Scout non cambia
