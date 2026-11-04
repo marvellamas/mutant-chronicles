@@ -1067,7 +1067,7 @@
       "catalogo": "Fratellanza",
       "famiglia": "Scudi medi",
       "nomi_alternativi": [],
-      "note_manuale": "Scudo Medio con AR passiva +2, AR magica 0 a riposo, FOR 5 e 6 PI. Non possiede Difensiva passiva, Struttura robusta o Protezione occulta aggiuntive. Comprende la Lama retrattile e la riserva di Scudo Magico del §7.1.9. Estrarre o ritrarre la lama richiede 1 AzP. Con lama estratta gli attacchi usano Armi da Guerra, una mano, portata 1 Q e danno 1d6+1d4 Naturale; la lama non consuma cariche per colpo e non richiede Sintonizzazione. I requisiti e le regole offensive complete sono nel §7.1.9. Dopo Sintonizzazione, 1 AzP e 1 PM della riserva attivano Scudo Magico per 5 Round: il contributo dello Scudo diventa AR +4, di cui 2 magica, e concede +2 VA alla Parata ravvicinata e +1 VA a quella a distanza, che passa a −3 VA complessivo. I bonus alla Prova valgono soltanto parando con lo Scudo; l’AR rimane passiva nelle normali condizioni d’impiego. L’effetto termina alla fine del Round di attivazione +5. Una nuova attivazione rinnova la durata senza sommare i benefici. La riserva è un Chroma Rosso da 5 PM; la potenza è Rara e il costo totale di Sintonizzazione è 3, riserva compresa. Ricarica e attivazione seguono il §7.5.1. La Qualità costruttiva Rara determina PS Integrità 14 ed è distinta dalla potenza mistica.",
+      "note_manuale": "Scudo Medio con AR passiva +2, AR magica 0 a riposo, FOR 5 e 6 PI. Non possiede Difensiva passiva, Struttura robusta o Protezione occulta aggiuntive. Comprende la Lama retrattile e la riserva di Scudo Magico del §7.1.9. Estrarre o ritrarre la lama richiede 1 AzP. Con lama estratta gli attacchi usano Armi da Guerra, una mano, portata 1 Q e danno 1d6+1d4 Naturale; la lama non consuma cariche per colpo e non richiede Sintonizzazione. I requisiti e le regole offensive complete sono nel §7.1.9. Dopo Sintonizzazione, 1 AzP e 1 CM della riserva attivano Scudo Magico per 5 Round: il contributo dello Scudo diventa AR +4, di cui 2 magica, e concede +2 VA alla Parata ravvicinata e +1 VA a quella a distanza, che passa a −3 VA complessivo. I bonus alla Prova valgono soltanto parando con lo Scudo; l’AR rimane passiva nelle normali condizioni d’impiego. L’effetto termina alla fine del Round di attivazione +5. Una nuova attivazione rinnova la durata senza sommare i benefici. La riserva è un riserva Rossa da 5 CM; la potenza è Rara e il costo totale di Sintonizzazione è 3, riserva compresa. Ricarica e attivazione seguono il §7.5.1. La Qualità costruttiva Rara determina PS Integrità 14 ed è distinta dalla potenza mistica.",
       "paragrafo": "§7.4.2, §7.4.4–7.4.10",
       "versione_manuale": "Armamenti 0.50",
       "taglia": "Medio",
@@ -1085,7 +1085,7 @@
       },
       "profili_alternativi": [
         {
-          "condizione": "con Scudo Magico attivo (1 AzP e 1 PM della riserva, 5 Round)",
+          "condizione": "con Scudo Magico attivo (1 AzP e 1 CM della riserva, 5 Round)",
           "parata": {
             "ravvicinata": 2,
             "distanza": -3
@@ -1122,7 +1122,7 @@
         },
         {
           "nome": "Scudo Magico",
-          "testo": "Dopo Sintonizzazione, 1 AzP e 1 PM della riserva attivano Scudo Magico per 5 Round: il contributo dello Scudo diventa AR +4, di cui 2 magica, e concede +2 VA alla Parata ravvicinata e +1 VA a quella a distanza, che passa a −3 VA complessivo. La riserva è un Chroma Rosso da 5 PM; la potenza è Rara e il costo totale di Sintonizzazione è 3, riserva compresa (§7.4.10)."
+          "testo": "Dopo Sintonizzazione, 1 AzP e 1 CM della riserva attivano Scudo Magico per 5 Round: il contributo dello Scudo diventa AR +4, di cui 2 magica, e concede +2 VA alla Parata ravvicinata e +1 VA a quella a distanza, che passa a −3 VA complessivo. La riserva è un riserva Rossa da 5 CM; la potenza è Rara e il costo totale di Sintonizzazione è 3, riserva compresa (§7.4.10)."
         }
       ],
       "effetti": [
@@ -1131,7 +1131,7 @@
           "valore": 2,
           "magica": 2,
           "ambito": "situazionale",
-          "condizione": "Dopo Sintonizzazione, 1 AzP e 1 PM della riserva attivano Scudo Magico per 5 Round: il contributo dello Scudo diventa AR +4, di cui 2 magica, e concede +2 VA alla Parata ravvicinata e +1 VA a quella a distanza, che passa a −3 VA complessivo.",
+          "condizione": "Dopo Sintonizzazione, 1 AzP e 1 CM della riserva attivano Scudo Magico per 5 Round: il contributo dello Scudo diventa AR +4, di cui 2 magica, e concede +2 VA alla Parata ravvicinata e +1 VA a quella a distanza, che passa a −3 VA complessivo.",
           "fonte": "Armamenti §7.4.10",
           "proprieta": "Scudo Magico"
         }

@@ -12,6 +12,12 @@
 //    incantesimi del catalogo.
 //
 // Uso: node tools/lotti/lotto_guanti_lucas.mjs [--scrivi]   (senza --scrivi dice soltanto cosa cambierebbe)
+// STORICO dal 04/11/2026 (lotto 171): le riserve dedicate sono passate alle Cariche Mistiche con
+// tools/lotti/lotto_171_cariche_mistiche.mjs; un rilancio con --scrivi le riporterebbe in PM. Per forzare: --forza.
+if (process.argv.includes('--scrivi') && !process.argv.includes('--forza')) {
+  console.error('lotto_guanti_lucas: lotto storico (Cariche Mistiche applicate dal lotto 171, lotto_171_cariche_mistiche.mjs). Per forzare: --forza.');
+  process.exit(1);
+}
 import fs from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import { dirname, join } from 'node:path';

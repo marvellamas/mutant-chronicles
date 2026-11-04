@@ -38,14 +38,15 @@ const senzaGuanti = () => lucas((eq) => eq.filter((v) => v.rif !== RIF));
 test('catalogo: i valori della scheda 1.0', () => {
   const a = G.artefatto;
   assert.deepEqual([a.potenza, a.grado, a.sintonizzazione], ['Rara', 'III', 3]);
-  assert.deepEqual(a.contenitore, { energia: 'Rosso', capacita_pm: 10, integrato: true, riserva: 'cariche', alimentazione: 'esclusiva' });
+  // revisione «Cariche Mistiche» (02/11/2026, lotto 171): 6 CM Rosse per la coppia, al posto dei 10 PM
+  assert.deepEqual(a.contenitore, { energia: 'Rosso', integrato: true, riserva: 'cariche', alimentazione: 'esclusiva', capacita_cm: 6, precedente: { capacita_pm: 10, unita: 'PM', nota: 'Guanti da Combattimento Mistico' } });
   assert.deepEqual([G.qualita, G.ps_int, G.pi, G.peso, G.mani], ['Non comune', 12, 4, 0.5, 0]);
   const at = G.attivazione_artefatto;
-  assert.deepEqual([at.nome, at.pm, at.azione, at.durata, at.va, at.danno, at.natura, at.attacchi], ['Pugno mistico', 2, '1 AzP', '5 RND', 1, 1, 'Magico', 'senz_armi']);
+  assert.deepEqual([at.nome, at.cm, at.pm, at.azione, at.durata, at.va, at.danno, at.natura, at.attacchi], ['Pugno mistico', 1, undefined, '1 AzP', '5 RND', 1, 1, 'Magico', 'senz_armi']);
   const [g1, g2] = G.getti_artefatto;
-  assert.deepEqual([g1.nome, g1.pm, g1.mani_libere, g1.getti, g1.danno, g1.natura, g1.proprieta_danno, g1.prova_potere], ['Getto di fuoco', 5, 1, 1, '1d6+4', 'Naturale', ['Fuoco'], null]);
+  assert.deepEqual([g1.nome, g1.cm, g1.mani_libere, g1.getti, g1.danno, g1.natura, g1.proprieta_danno, g1.prova_potere], ['Getto di fuoco', 3, 1, 1, '1d6+4', 'Naturale', ['Fuoco'], null]);
   assert.deepEqual([g1.area.lunghezza_q, g1.area.larghezza_q], [2, 1]);
-  assert.deepEqual([g2.nome, g2.pm, g2.mani_libere, g2.getti, g2.danno, g2.prova_potere, g2.pm_anche_se_fallisce], ['Doppio getto', 10, 2, 2, '1d6+4', { abilita: 'Potere', modificatore: -2 }, true]);
+  assert.deepEqual([g2.nome, g2.cm, g2.mani_libere, g2.getti, g2.danno, g2.prova_potere, g2.cm_anche_se_fallisce], ['Doppio getto', 6, 2, 2, '1d6+4', { abilita: 'Potere', modificatore: -2 }, true]);
   // A.175: proprietà attive, non incantesimi del catalogo
   assert.ok(!dati.incantesimi.incantesimi.some((i) => /Getto di fuoco|Pugno mistico|Doppio getto/i.test(i.nome)));
   const righe = incantesimiDaOggetti({ voci: [{ uid: 'g', rif: RIF, stato: 'indossata', quantita: 1, sintonizzato: true }], scheda: null }, dati);
@@ -108,64 +109,68 @@ test('Pugno mistico: 2 PM, +1 VA, danno Magico e +1 solo finché è acceso', () 
   assert.ok(!(calcolaScheda({ ...pg, sessione: s1 }, dati).equipaggiamento.armi ?? []).filter((a) => !a.senzArmi).some((a) => a.scomposizione?.some((x) => /Pugno mistico/.test(x.etichetta))));
 });
 
-test('Getto di fuoco e Doppio getto: PM dalla riserva, mani libere, Prova di Potere −2, avvisi senza blocchi', () => {
+test('Getto di fuoco e Doppio getto: CM dalla riserva, mani libere, Prova di Potere −2, avvisi senza blocchi', () => {
   // nella copia Lucas impugna un'Axis-227 e un pugnale: due mani occupate, il Getto avvisa
   const armato = lucas();
   assert.equal(maniOccupate(armato.scheda), 2);
-  assert.ok(pianoGetto(G.getti_artefatto[0], armato.scheda, { pm: 10, sintonizzato: true, indossato: true }).motivi.some((m) => /una mano libera, ne hai 0/.test(m)));
+  assert.ok(pianoGetto(G.getti_artefatto[0], armato.scheda, { pm: 6, sintonizzato: true, indossato: true }).motivi.some((m) => /una mano libera, ne hai 0/.test(m)));
   // a mani libere (armi riposte)
   const pg = lucas((eq) => eq.map((v) => (v.stato === 'impugnata' ? { ...v, stato: 'trasportato' } : v)));
   const uid = uidGuanti(pg);
   const [getto, doppio] = G.getti_artefatto;
-  const stato = { pm: 10, sintonizzato: true, indossato: true, deposito: false };
+  const stato = { pm: 6, sintonizzato: true, indossato: true, deposito: false };
   const p1 = pianoGetto(getto, pg.scheda, stato);
   assert.equal(maniOccupate(pg.scheda), 0, 'Lucas a mani libere');
-  assert.deepEqual([p1.pm, p1.motivi, p1.prova, p1.danni], [5, [], null, ['1d6+4']]);
+  assert.deepEqual([p1.costo, p1.motivi, p1.prova, p1.danni], [{ n: 3, unita: 'CM' }, [], null, ['1d6+4']]);
   assert.match(p1.testo, /linea 2 × 1 Q; 1d6\+4 danni \(Naturale, Fuoco\)/);
   const p2 = pianoGetto(doppio, pg.scheda, stato);
   const potere = pg.scheda.abilita.find((a) => a.nome === 'Potere');
   assert.equal(p2.prova.va, (potere.effettivo ?? potere.totale) - 2);
   assert.deepEqual(p2.danni, ['1d6+4', '1d6+4'], 'un tiro di danno per getto');
   // avvisi: riserva, sintonizzazione, mani
-  const p3 = pianoGetto(doppio, pg.scheda, { pm: 5, sintonizzato: false, indossato: true });
-  assert.ok(p3.motivi.some((m) => /ne servono 10/.test(m)) && p3.motivi.some((m) => /non sintonizzato/.test(m)));
+  const p3 = pianoGetto(doppio, pg.scheda, { pm: 4.2, sintonizzato: false, indossato: true });
+  assert.ok(p3.motivi.some((m) => /la riserva ha 4,2 CM, ne servono 6/.test(m)) && p3.motivi.some((m) => /non sintonizzato/.test(m)));
   const conArma = lucas((eq) => eq.map((v) => (v.rif === 'armi_distanza_corporative:axis-227' ? { ...v, stato: 'trasportato' } : v)));
   assert.equal(maniOccupate(conArma.scheda), 1);
   assert.ok(pianoGetto(doppio, conArma.scheda, stato).motivi.some((m) => /entrambe le mani libere/.test(m)));
   assert.deepEqual(pianoGetto(getto, conArma.scheda, stato).motivi, [], 'per il Getto basta una mano');
-  // la riserva: 10 → 5 → 0; poi non basta; «Procedi comunque» scende a 0, non sotto
-  const s1 = usaArtefatto(pg.sessione, uid, 5, pg.m);
-  const s2 = usaArtefatto(s1, uid, 5, pg.m);
-  assert.deepEqual([s1.chroma[uid].pmAttuali, s2.chroma[uid].pmAttuali], [5, 0]);
-  assert.equal(usaArtefatto(s2, uid, 5, pg.m), null);
-  assert.equal(usaArtefatto(s1, uid, 10, pg.m, { forza: true }).chroma[uid].pmAttuali, 0);
-  // Doppio getto: i 10 PM si scalano al tentativo (anche se la Prova fallisce: la Prova si tira dopo)
-  assert.equal(usaArtefatto(pg.sessione, uid, 10, pg.m).chroma[uid].pmAttuali, 0);
-  // esempio della scheda: un Getto e due Pugni mistici lasciano 1 PM
-  const e = attivaArtefatto(attivaArtefatto(usaArtefatto(pg.sessione, uid, 5, pg.m), uid, 2, pg.m), uid, 2, pg.m);
+  // la riserva: 6 → 3 → 0 CM; poi non basta; «Procedi comunque» scende a 0, non sotto
+  const s1 = usaArtefatto(pg.sessione, uid, 3, pg.m);
+  const s2 = usaArtefatto(s1, uid, 3, pg.m);
+  assert.deepEqual([s1.chroma[uid].pmAttuali, s2.chroma[uid].pmAttuali], [3, 0]);
+  assert.equal(usaArtefatto(s2, uid, 3, pg.m), null);
+  assert.equal(usaArtefatto(s1, uid, 6, pg.m, { forza: true }).chroma[uid].pmAttuali, 0);
+  // Doppio getto: le 6 CM si scalano al tentativo (anche se la Prova fallisce: la Prova si tira dopo)
+  assert.equal(usaArtefatto(pg.sessione, uid, 6, pg.m).chroma[uid].pmAttuali, 0);
+  // esempio della revisione: un Getto e due Pugni mistici lasciano 1 CM; sei Pugni la vuotano
+  const e = attivaArtefatto(attivaArtefatto(usaArtefatto(pg.sessione, uid, 3, pg.m), uid, 1, pg.m), uid, 1, pg.m);
   assert.equal(e.chroma[uid].pmAttuali, 1);
+  let sei = pg.sessione;
+  for (let i = 0; i < 6; i++) sei = attivaArtefatto(sei, uid, 1, pg.m);
+  assert.equal(sei.chroma[uid].pmAttuali, 0);
+  assert.equal(attivaArtefatto(sei, uid, 1, pg.m), null);
 });
 
-test('la riserva Rossa cala e si ricarica a mano, entro i 10 PM; nessuna ricarica automatica', () => {
+test('la riserva Rossa cala e si ricarica a mano, entro le 6 CM; nessuna ricarica automatica', () => {
   const pg = lucas();
   const uid = uidGuanti(pg);
   const c = pg.scheda.equipaggiamento.contenitori.find((x) => x.uid === uid);
-  assert.deepEqual([c.energia, c.capacita, c.riserva, c.alimentazione], ['Rosso', 10, 'cariche', 'esclusiva']);
+  assert.deepEqual([c.energia, c.capacita, c.unita, c.riserva, c.alimentazione], ['Rosso', 6, 'CM', 'cariche', 'esclusiva']);
   assert.equal(c.fontePg, false, 'Esclusiva: non paga i lanci del personaggio');
-  const vuota = usaArtefatto(pg.sessione, uid, 10, pg.m);
+  const vuota = usaArtefatto(pg.sessione, uid, 6, pg.m);
   assert.equal(variaChroma(vuota, uid, 4, pg.m).chroma[uid].pmAttuali, 4);
-  assert.equal(variaChroma(vuota, uid, 15, pg.m).chroma[uid].pmAttuali, 10, 'non oltre la capacità');
-  // i PM salvati restano: niente riempimento al ricalcolo
-  const meta = modificaSessione(pg.sessione, { chroma: { ...pg.sessione.chroma, [uid]: { pmAttuali: 3 } } }, pg.m);
+  assert.equal(variaChroma(vuota, uid, 15, pg.m).chroma[uid].pmAttuali, 6, 'non oltre la capacità');
+  // le CM salvate restano: niente riempimento al ricalcolo
+  const meta = modificaSessione(pg.sessione, { chroma: { ...pg.sessione.chroma, [uid]: { pmAttuali: 3, unita: 'CM' } } }, pg.m);
   assert.equal(allineaSessione(meta, pg.m).chroma[uid].pmAttuali, 3);
 });
 
-test('Lucas (copia): kit da 9 su 9, i 10 PM restano, rapporto in sola lettura; oltre la capacità solo un avviso', () => {
+test('Lucas (copia): kit da 9 su 9, i 10 PM di prima diventano 6 CM (A.193), rapporto in sola lettura; oltre la capacità solo un avviso', () => {
   const pg = lucas();
   const r = rapportoGuanti(pg, dati);
   assert.equal(r.haGuanti, true);
   assert.deepEqual(r.kit, { usata: 9, capacita: 9 });
-  assert.equal(r.riserva, 10);
+  assert.equal(r.riserva, 6);
   assert.deepEqual(r.avvisi, []);
   assert.ok(r.voci.some((v) => v.cosa === 'Kit sintonizzato / capacità' && v.prima === '8 / 9' && v.dopo === '9 / 9'));
   assert.ok(r.daDire[0] === 'Non devi scegliere niente.');
@@ -185,7 +190,7 @@ test('Lucas (copia): kit da 9 su 9, i 10 PM restano, rapporto in sola lettura; o
 
 test('stampa: le proprietà attive dei Guanti in una riga', () => {
   const t = testoAttivazioneArtefatto(G);
-  assert.match(t, /^Pugno mistico: 2 PM dalla riserva interna, 1 AzP, 5 RND: \+1 VA ai pugni, danno Magico, \+1 al danno/);
-  assert.match(t, /Getto di fuoco: 5 PM, 1 AzP, linea 2 × 1 Q, 1d6\+4 Naturale \(Fuoco\)/);
-  assert.match(t, /Doppio getto: 10 PM, 1 AzP, Prova di Potere −2, due linee 2 × 1 Q, 1d6\+4 Naturale \(Fuoco\) per getto/);
+  assert.match(t, /^Pugno mistico: 1 CM dalla riserva interna, 1 AzP, 5 RND: \+1 VA ai pugni, danno Magico, \+1 al danno/);
+  assert.match(t, /Getto di fuoco: 3 CM, 1 AzP, linea 2 × 1 Q, 1d6\+4 Naturale \(Fuoco\)/);
+  assert.match(t, /Doppio getto: 6 CM, 1 AzP, Prova di Potere −2, due linee 2 × 1 Q, 1d6\+4 Naturale \(Fuoco\) per getto/);
 });

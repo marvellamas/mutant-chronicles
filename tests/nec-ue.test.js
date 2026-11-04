@@ -13,7 +13,7 @@ import { execFileSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
 import { datiReali } from './helpers.js';
 import { caricaDati } from '../src/rules.js';
-import { catalogo, riserveNec, infoNecSenzaConteggio } from '../src/equipaggiamento.js';
+import { catalogo, riserveNec, infoNecSenzaConteggio, contenitori } from '../src/equipaggiamento.js';
 import { calcolaSchedaPersonaggio } from '../src/avanzamento.js';
 import { massimiSessione, allineaSessione } from '../src/sessione.js';
 
@@ -72,6 +72,9 @@ function valori(o, d) {
   const m = massimiSessione(s, o.scelte, d);
   const ses = allineaSessione(o.sessione, m);
   const { nec: _n, trasformatori: _t, ...sessioneSenzaNec } = ses;
+  // lotto 171: le riserve passate alle Cariche Mistiche cambiano unità apposta (tests/cariche-mistiche.test.js le prova)
+  const inCm = new Set(contenitori(o.scelte.equipaggiamento, dati).filter((c) => c.unita === 'CM').map((c) => c.uid));
+  sessioneSenzaNec.chroma = Object.fromEntries(Object.entries(sessioneSenzaNec.chroma ?? {}).filter(([k]) => !inCm.has(k)));
   return JSON.stringify({
     pv: s.pv, pm: s.pm, iniziativa: s.iniziativa, movimento: s.movimento, salvezze: s.salvezze,
     abilita: s.abilita?.map((a) => [a.nome, a.totale, a.effettivo, a.vaEquip]),

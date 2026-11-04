@@ -22,6 +22,7 @@
 //   ricarica con i PM già disponibili, poi la Meditazione; il recupero dipende dall'esito effettivo; un'interruzione non
 //   annulla la ricarica; mai PM spesi in anticipo.
 import { rapportoConversione } from './equipaggiamento.js';
+import { pmPerGruppo, numeroRiserva } from './cariche-mistiche.js';
 import { allineaSessione, modificaSessione } from './sessione.js';
 
 const intero = (v, d = 0) => (Number.isFinite(Number(v)) ? Math.max(0, Math.floor(Number(v))) : d);
@@ -131,16 +132,21 @@ export function pianoMedita({ scheda, sessione, massimi }, scelta, dati) {
     const motivo = motivoRicarica(c, cv);
     if (c && cv) {
       const rapporto = cv.fissi?.[c.energia] ?? cv.rapporto;
+      // revisione «Cariche Mistiche» (02/11/2026): una CM costa rapporto × 2 PM personali; un gruppo = 1 CM (Armamenti 0.74)
+      const costoGruppo = pmPerGruppo(c, rapporto, dati);
+      const u = c.unita ?? 'PM';
       const pmC = sessione?.chroma?.[c.uid]?.pmAttuali ?? 0;
-      const spazio = Math.max(0, c.capacita - pmC);
-      const perPm = Math.floor(pmPrima / rapporto);
+      // gruppi interi: con una riserva a frazione (CM convertite per la A.193, 4,2 / 6) si ripristinano CM intere fino al
+      // massimo che entra (TODO(Davide) A.252: pagare e ripristinare anche la frazione mancante?)
+      const spazio = Math.max(0, Math.floor(c.capacita - pmC + 1e-9));
+      const perPm = Math.floor(pmPrima / costoGruppo);
       const richiesti = scelta?.gruppi === null || scelta?.gruppi === undefined ? Math.min(perPm, spazio) : intero(scelta.gruppi, 0);
       let gruppi = richiesti;
-      if (spazio === 0) { gruppi = 0; avvisi.push(`${c.nome} è già pieno (${pmC} / ${c.capacita}): niente da ricaricare.`); }
-      else if (gruppi > spazio) { gruppi = spazio; avvisi.push(`${c.nome} ha spazio per ${spazio} PM: mi fermo a ${spazio} ${spazio === 1 ? 'gruppo' : 'gruppi'}.`); }
+      if (spazio === 0) { gruppi = 0; avvisi.push(`${c.nome} è già pieno (${numeroRiserva(pmC)} / ${c.capacita}${u === 'CM' ? ' CM' : ''}): niente da ricaricare.`); }
+      else if (gruppi > spazio) { gruppi = spazio; avvisi.push(`${c.nome} ha spazio per ${numeroRiserva(spazio)} ${u}: mi fermo a ${spazio} ${spazio === 1 ? 'gruppo' : 'gruppi'}.`); }
       // A.174: «Non deve consentire di spendere anticipatamente PM che il personaggio deve ancora recuperare»
       if (gruppi > perPm) {
-        avvisi.push(`Non si può: ${gruppi} ${gruppi === 1 ? 'gruppo costa' : 'gruppi costano'} ${gruppi * rapporto} PM e ne hai ${pmPrima} adesso. I PM che recupererai meditando non si spendono in anticipo (A.174): ${perPm ? `al massimo ${perPm} ${perPm === 1 ? 'gruppo' : 'gruppi'}` : 'nessun gruppo'}.`);
+        avvisi.push(`Non si può: ${gruppi} ${gruppi === 1 ? 'gruppo costa' : 'gruppi costano'} ${gruppi * costoGruppo} PM e ne hai ${pmPrima} adesso. I PM che recupererai meditando non si spendono in anticipo (A.174): ${perPm ? `al massimo ${perPm} ${perPm === 1 ? 'gruppo' : 'gruppi'}` : 'nessun gruppo'}.`);
         gruppi = perPm;
       }
       if (motivo) avvisi.push(`${c.nome}: ${motivo}. Si può procedere comunque: l’ultima parola è del Direttore.`);
@@ -153,13 +159,13 @@ export function pianoMedita({ scheda, sessione, massimi }, scelta, dati) {
       const vaPotere = potere ? (potere.effettivo ?? potere.totale) : null;
       if (prova.richiesta) Object.assign(prova, { va: vaPotere, totale: vaPotere === null ? null : vaPotere + prova.penalita });
       let convertiti = inAttesa ? 0 : gruppi;
-      let spesa = inAttesa ? 0 : gruppi * rapporto;
+      let spesa = inAttesa ? 0 : gruppi * costoGruppo;
       if (inAttesa) { /* niente si sposta finché non c'è l'esito */ }
       else if (esito === 'fallimento') { convertiti = 0; spesa = 0; }
       else if (esito === 'maldestro') { convertiti = 0; }
       else if (esito === 'magistrale') {
-        const extra = gruppi + 1 <= spazio && pmPrima - spesa >= rapporto ? 1 : 0;
-        convertiti = gruppi + extra; spesa = convertiti * rapporto;
+        const extra = gruppi + 1 <= spazio && pmPrima - spesa >= costoGruppo ? 1 : 0;
+        convertiti = gruppi + extra; spesa = convertiti * costoGruppo;
       }
       const entrano = Math.min(convertiti, spazio);
       pmDopoRicarica = pmPrima - spesa;
@@ -170,15 +176,15 @@ export function pianoMedita({ scheda, sessione, massimi }, scelta, dati) {
       if (gruppi > 0) avvisi.push('Ricaricare richiede 1 AzP e il contatto con il contenitore sintonizzato; la Meditazione comincia dopo, a ricarica finita (Magia sez. 6; A.174).');
       if (pmDopoRicarica === 0 && spesa > 0) avvisi.push('Dopo la ricarica i PM personali sono a 0: Svenuto al termine dell’azione (Magia sez. 6). Chi è svenuto non medita: decide il Direttore se e quando la Meditazione può cominciare.');
       conversione = {
-        uid: c.uid, nome: c.nome, energia: c.energia, capacita: c.capacita, pmPrima: pmC, spazio, rapporto, fonteRapporto: fonteRapporto(cv, c.energia), talenti: cv.talenti,
+        uid: c.uid, nome: c.nome, energia: c.energia, capacita: c.capacita, unita: u, pmPerGruppo: costoGruppo, pmPrima: pmC, spazio, rapporto, fonteRapporto: fonteRapporto(cv, c.energia), talenti: cv.talenti,
         gruppiRichiesti: richiesti, gruppiPossibili: perPm, gruppi, convertiti, spesa, entrano, prova, esito, inAttesa, motivo,
       };
       righe.push(
         { etichetta: `1. Ricarica, conversione ${rapporto}:1`, valore: `${gruppi} ${gruppi === 1 ? 'gruppo' : 'gruppi'}`, nota: fonteRapporto(cv, c.energia) },
         ...(gruppi > 0 ? [{ etichetta: 'Azione', valore: '1 AzP', nota: 'contatto con il cristallo sintonizzato' }] : []),
         ...(prova.richiesta ? [{ etichetta: 'Prova di Potere', valore: prova.totale !== null ? `VA ${prova.va} ${prova.penalita} = ${prova.totale}` : `Potere ${prova.penalita}`, nota: inAttesa ? 'esito da indicare' : rp.conversione.nomi_esiti[esito] }] : [{ etichetta: 'Prova di Potere', valore: 'automatica', nota: 'un gruppo solo' }]),
-        { etichetta: 'PM personali spesi', valore: `−${spesa}`, nota: gruppi && !inAttesa ? `${convertiti} × ${rapporto}${esito !== 'successo' ? ` (${rp.conversione.nomi_esiti[esito]})` : ''}; dai ${pmPrima} PM che hai adesso` : inAttesa ? 'in attesa dell’esito' : null },
-        { etichetta: `Entrano in ${c.nome}`, valore: `+${entrano}`, nota: `${pmC} → ${cristallo} / ${c.capacita}` },
+        { etichetta: 'PM personali spesi', valore: `−${spesa}`, nota: gruppi && !inAttesa ? `${convertiti} × ${costoGruppo}${costoGruppo !== rapporto ? ` (${rapporto} × 2 per CM)` : ''}${esito !== 'successo' ? ` (${rp.conversione.nomi_esiti[esito]})` : ''}; dai ${pmPrima} PM che hai adesso` : inAttesa ? 'in attesa dell’esito' : null },
+        { etichetta: `Entrano in ${c.nome}`, valore: `+${entrano}`, nota: `${numeroRiserva(pmC)} → ${numeroRiserva(cristallo)} / ${c.capacita} ${u}` },
       );
     } else if (!c) avvisi.push('Destinazione non trovata: niente da ricaricare.');
   }

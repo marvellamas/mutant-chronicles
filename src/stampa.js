@@ -16,6 +16,7 @@ import { gradiTaumaturgici } from './incantesimi.js';
 import { saldoIniziale, crediti } from './dotazioni.js';
 import { SEZIONI_INVENTARIO, sezioneInventario, COLORI_MACROFAMIGLIE } from './palette.js';
 import { modoRicarica, caricatoreInserito, caricatoriDiScorta } from './ricarica.js';
+import { costoRiserva, testoCosto } from './cariche-mistiche.js';
 import { calcolaCarico, pesoVoce } from './carico.js';
 import { testoProvenienza } from './provenienza.js';
 import { attivazioneInfusa } from './lancio.js';
@@ -119,7 +120,7 @@ export function elencoZaino(zaino) {
 /** Batterie e riserve di Chroma del foglio Poteri (Magia sez. 6; decisione 5 del piano SS). */
 function riserveStampa(s) {
   return (s.equipaggiamento?.contenitori ?? []).map((c) => ({
-    nome: c.nome, energia: c.energia, capacita: c.capacita, macrofamiglie: c.macrofamiglie,
+    nome: c.nome, energia: c.energia, capacita: c.capacita, unita: c.unita ?? 'PM', macrofamiglie: c.macrofamiglie,
     regoleRimandate: c.regoleRimandate, integrato: c.integrato, sintonizzato: c.sintonizzato, costo: c.costo,
   }));
 }
@@ -200,8 +201,8 @@ export function condizionaliAbilita(scheda, nome) {
 export function testoAttivazioneArtefatto(def) {
   const at = def.attivazione_artefatto;
   const effetto = [at.va ? `+${at.va} VA ai pugni` : null, at.natura ? `danno ${at.natura}` : null, at.danno ? `+${at.danno} al danno` : null].filter(Boolean).join(', ');
-  const getti = (def.getti_artefatto ?? []).map((g) => `${g.nome}: ${g.pm} PM, ${g.azione}${g.prova_potere ? `, Prova di ${g.prova_potere.abilita} ${g.prova_potere.modificatore < 0 ? '−' : '+'}${Math.abs(g.prova_potere.modificatore)}` : ''}, ${g.getti === 2 ? 'due linee' : 'linea'} ${g.area.lunghezza_q} × ${g.area.larghezza_q} Q, ${g.danno} ${g.natura}${(g.proprieta_danno ?? []).length ? ` (${g.proprieta_danno.join(', ')})` : ''}${g.getti === 2 ? ' per getto' : ''}`);
-  return [`${at.nome ? `${at.nome}: ` : ''}${at.pm} PM dalla riserva interna, ${at.azione}, ${at.durata}: ${effetto}`, ...getti].join(' · ');
+  const getti = (def.getti_artefatto ?? []).map((g) => `${g.nome}: ${testoCosto(costoRiserva(g))}, ${g.azione}${g.prova_potere ? `, Prova di ${g.prova_potere.abilita} ${g.prova_potere.modificatore < 0 ? '−' : '+'}${Math.abs(g.prova_potere.modificatore)}` : ''}, ${g.getti === 2 ? 'due linee' : 'linea'} ${g.area.lunghezza_q} × ${g.area.larghezza_q} Q, ${g.danno} ${g.natura}${(g.proprieta_danno ?? []).length ? ` (${g.proprieta_danno.join(', ')})` : ''}${g.getti === 2 ? ' per getto' : ''}`);
+  return [`${at.nome ? `${at.nome}: ` : ''}${testoCosto(costoRiserva(at))} dalla riserva interna, ${at.azione}, ${at.durata}: ${effetto}`, ...getti].join(' · ');
 }
 
 export function preparaStampa(personaggio, dati, { versioniDati = '', completo = false, sessione = null, registroVeicoli = null, temporanei = false, modificatori = null } = {}) {
@@ -725,7 +726,7 @@ export function artefattiStampa(s, creazione, dati, { conPoteri = false } = {}) 
       nonInUso: !arma && !prot && effettiPossibili,
       // Magia §24.2, §25.4: incantesimo infuso, pagato dalla riserva integrata, senza Prove
       attivazione: def?.attivazione?.testo ?? (def?.attivazione_artefatto ? testoAttivazioneArtefatto(def) : testoInfuso(r, dati)),
-      riserva: riserva ? { energia: riserva.energia, capacita: riserva.capacita } : null,
+      riserva: riserva ? { energia: riserva.energia, capacita: riserva.capacita, unita: riserva.unita ?? 'PM' } : null,
     };
   });
   return {
@@ -738,7 +739,7 @@ export function artefattiStampa(s, creazione, dati, { conPoteri = false } = {}) 
     },
     schede,
     riserve: contenitori.filter((c) => !c.integrato).map((c) => ({
-      uid: c.uid, nome: c.nome, energia: c.energia, capacita: c.capacita, costo: c.costo, sintonizzato: c.sintonizzato, potenza: c.potenza,
+      uid: c.uid, nome: c.nome, energia: c.energia, capacita: c.capacita, unita: c.unita ?? 'PM', costo: c.costo, sintonizzato: c.sintonizzato, potenza: c.potenza,
       deposito: st.artefatti.find((x) => x.uid === c.uid)?.deposito ?? false,
     })),
     // decisione 5: i PM delle riserve si segnano nel foglio Poteri; senza foglio Poteri, qui

@@ -75,6 +75,8 @@ export const ASSEGNA_DICHIARATI = [
   'sessione.caricoExtra', // kg: il giocatore scrive il totale trasportato
   'sessione.creditiIniziali', // istantanea del saldo iniziale visto, non una somma di spese
   'sessione.chroma.*.iniziale', // PM impostati per un contenitore trovato (E&L 2): un'istantanea, non una ricarica
+  'sessione.chroma.*.prima.pmAttuali', // lotto 171: il valore in PM prima della conversione in CM (A.193), un'istantanea
+  'sessione.chroma.*.prima.capacita',
   'scelte.puntiEsperienza', // il totale dei PX, scritto a mano nell'Identità
   // riferimenti temporali: un Round non è il contatore di nessuno (lo fa avanzare lo scontro)
   'sessione.round',

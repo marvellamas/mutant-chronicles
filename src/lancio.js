@@ -161,7 +161,8 @@ export function testoEstrazione(pm, dati) {
 
 export function contenitoriLancio(personaggio, incantesimo) {
   const m = incantesimo.meccanica ?? {};
-  return (personaggio.scheda?.equipaggiamento?.contenitori ?? []).filter((c) => c.fontePg ?? !c.integrato).map((c) => {
+  // revisione «Cariche Mistiche» (lotto 171): le CM non pagano Incantesimi, mai (anche se un dato le dicesse fonte)
+  return (personaggio.scheda?.equipaggiamento?.contenitori ?? []).filter((c) => c.unita !== 'CM' && (c.fontePg ?? !c.integrato)).map((c) => {
     const pm = personaggio.sessione?.chroma?.[c.uid]?.pmAttuali ?? c.capacita ?? 0;
     const tipoPm = PM_DI_ENERGIA[c.energiaNome];
     // Magia §26.5: una Scheggia instabile non si sintonizza (SnT 0)

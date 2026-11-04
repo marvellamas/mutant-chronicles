@@ -5,7 +5,7 @@
 //
 // sessione = { pvAttuali, pmAttuali, puntiEroe, distintivi, statiAttivi: [id], ferite,
 //              affaticamento, munizioni: { uid: { colpi, riserve, parziali, vuoti, celle?, senzaCella?, senzaCaricatore? } }, scorte: { uid: consumate },
-//              chroma: { uid: { pmAttuali, iniziale? } } (iniziale: PM impostati per un contenitore trovato, E&L 2),
+//              chroma: { uid: { pmAttuali, iniziale?, unita?, prima?, daConvertire? } } (iniziale: PM impostati per un contenitore trovato, E&L 2; unita 'CM' per le Cariche Mistiche, lotto 171),
 //              caricoExtra, crediti, creditiIniziali, condizioniOggetti: [uid], attacchi: { uid: scelte },
 //              lanci: { incantesimo: scelte }, integrita: { uid: piAttuali }, nec: { chiave: attuale },
 //              round, ultimaTecnica, tecnicheAttive, note }
@@ -106,6 +106,8 @@ export function massimiSessione(scheda, creazione, dati) {
     granate: dati.equipaggiamento ? granateDaLancio(normalizzaEquipaggiamento(creazione?.equipaggiamento), dati) : {},
     // capacità di ogni contenitore di Chroma (uid → PM)
     contenitori: Object.fromEntries(contenitori(normalizzaEquipaggiamento(creazione?.equipaggiamento), dati).map((c) => [c.uid, c.capacita])),
+    // revisione «Cariche Mistiche» (lotto 171): i contenitori in CM, con la capacità in PM di prima (per la A.193)
+    contenitoriCm: Object.fromEntries(contenitori(normalizzaEquipaggiamento(creazione?.equipaggiamento), dati).filter((c) => c.unita === 'CM').map((c) => [c.uid, { capacita: c.capacita, precedente: c.precedentePm ?? null }])),
     // E&L 2 (A.19): acquistato pieno (regole.json → chroma); trovato con i PM impostati nella voce
     contenitoreNuovo: dati.regole.chroma?.contenitore_nuovo ?? 'pieno',
     contenitoriIniziali: Object.fromEntries(contenitori(normalizzaEquipaggiamento(creazione?.equipaggiamento), dati).filter((c) => c.pmIniziali !== null).map((c) => [c.uid, c.pmIniziali])),
@@ -336,10 +338,11 @@ function allineaCrediti(sessione, m) {
  */
 function allineaChroma(sorgente, munizioniPrecedenti, m) {
   const src = isOggetto(sorgente) ? sorgente : {};
-  if (!m.contenitori) return Object.fromEntries(Object.entries(src).filter(([, v]) => isOggetto(v) && Number.isInteger(v.pmAttuali)));
+  if (!m.contenitori) return Object.fromEntries(Object.entries(src).filter(([, v]) => isOggetto(v) && (Number.isFinite(v.pmAttuali) || v.daConvertire)));
   const vecchie = isOggetto(munizioniPrecedenti) ? munizioniPrecedenti : {};
   const out = {};
   for (const [uid, capacita] of Object.entries(m.contenitori)) {
+    if (m.contenitoriCm?.[uid]) { out[uid] = allineaCm(src[uid], vecchie[uid], m.contenitoriCm[uid]); continue; }
     // E&L 2: se il giocatore cambia i PM «trovato» della voce, il valore di sessione riparte da lì
     const iniziale = m.contenitoriIniziali?.[uid] ?? null;
     const valido = isOggetto(src[uid]) && Number.isInteger(src[uid].pmAttuali) && (src[uid].iniziale ?? null) === iniziale;
@@ -348,6 +351,30 @@ function allineaChroma(sorgente, munizioniPrecedenti, m) {
     out[uid] = { pmAttuali: limita(salvato, 0, capacita), ...(iniziale !== null ? { iniziale } : {}) };
   }
   return out;
+}
+
+/** Frazione senza arrotondare per eccesso (A.193): al centesimo, per difetto. */
+const perDifetto = (x) => Math.floor(x * 100 + 1e-9) / 100;
+
+/**
+ * Cariche Mistiche di un contenitore (revisione del 02/11/2026, lotto 171). Il valore salvato porta l'unità
+ * (unita: 'CM'): così un valore in PM di prima si riconosce sempre e si converte una volta sola (A.193):
+ *   CM = PM di prima / capacità di prima × capacità nuova, senza arrotondare per eccesso; il valore di prima resta in
+ *   `prima`. Senza la capacità di prima la riserva resta «da convertire» (daConvertire, a 0 finché il Direttore
+ *   non la imposta). Un contenitore nuovo parte pieno, come prima. Il numero sta in pmAttuali come per ogni
+ *   contenitore, ma l'unità è quella della voce: chi lo mostra scrive «CM» (unita del contenitore).
+ * Le CM non sono PM: nessuna funzione le somma ai PM del personaggio né alle cariche dei NEC (tests/cariche-mistiche.test.js).
+ */
+function allineaCm(v, vecchia, { capacita, precedente }) {
+  if (isOggetto(v) && v.unita === 'CM') {
+    if (v.daConvertire) return { ...v, pmAttuali: limita(Number.isFinite(v.pmAttuali) ? v.pmAttuali : 0, 0, capacita) };
+    return { ...v, pmAttuali: limita(Number.isFinite(v.pmAttuali) ? v.pmAttuali : capacita, 0, capacita) };
+  }
+  const pmPrima = isOggetto(v) && Number.isFinite(v.pmAttuali) ? v.pmAttuali : voceMunizioni(vecchia)?.colpi;
+  if (pmPrima === undefined || pmPrima === null) return { pmAttuali: capacita, unita: 'CM' };
+  const prima = { pmAttuali: pmPrima, ...(precedente ? { capacita: precedente } : {}), unita: 'PM' };
+  if (!precedente) return { pmAttuali: 0, unita: 'CM', daConvertire: true, prima };
+  return { pmAttuali: limita(perDifetto((pmPrima / precedente) * capacita), 0, capacita), unita: 'CM', prima };
 }
 
 /** Munizioni di un'arma: { colpi, riserve, parziali?, vuoti? }; i vecchi valori numerici sono i colpi. */
@@ -747,7 +774,7 @@ export function ricaricaMatrice(sessione, uid, ore, presso, dati, m) {
 }
 
 /**
- * Attivazione di un Artefatto con durata (Guanti da Combattimento Mistico, Armamenti §7.24): i PM dalla riserva
+ * Attivazione di un Artefatto con durata (Guanti da Combattimento Mistico, Armamenti §7.24): le CM (o i PM) dalla riserva
  * interna (proprietà Esclusiva) e la condizione «attivazione:<uid>» accesa, in una modifica sola. null se la
  * riserva non basta. Si termina spegnendo la condizione.
  */
@@ -866,7 +893,22 @@ export function attivaArmaSessione(sessione, uid, uso, m, { forza = false } = {}
   const s = allineaSessione(sessione, m);
   if (!uso?.round) return null;
   const modifica = {};
-  if (uso.cariche) {
+  // A.237 (Davide, 02/11/2026): la CyberArma convertita consuma una carica del NEC Rosso che ha inserito (il contatore del
+  // NEC sulla voce, Inventario), una per attivazione; la carica residua resta lì
+  if (uso.nec && !uso.conPm) {
+    const chiave = Object.keys(s.nec ?? {}).find((k) => k === uid || k.startsWith(`${uid}#`));
+    if (!chiave) { if (!forza) return null; }
+    else {
+      if (s.nec[chiave] < uso.nec && !forza) return null;
+      modifica.nec = { ...s.nec, [chiave]: Math.max(0, s.nec[chiave] - uso.nec) };
+    }
+  // revisione «Cariche Mistiche» e A.236: la batteria interna della CyberArma, 1 CM; con conPm i PM personali previsti dal profilo
+  } else if (uso.cm && !uso.conPm) {
+    const c = s.chroma[uid];
+    if (!c) return null;
+    if (c.pmAttuali < uso.cm && !forza) return null;
+    modifica.chroma = { ...s.chroma, [uid]: { ...c, pmAttuali: Math.max(0, c.pmAttuali - uso.cm) } };
+  } else if (uso.cariche) {
     const c = s.chroma[uid];
     if (!c) return null;
     if (c.pmAttuali < uso.cariche && !forza) return null;

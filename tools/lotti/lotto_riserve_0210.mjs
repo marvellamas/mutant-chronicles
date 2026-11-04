@@ -6,6 +6,12 @@
 // artefatti_catalogo[].contenitore.riserva / .alimentazione.
 //   node tools/lotti/lotto_riserve_0210.mjs           → controlli e prova a vuoto
 //   node tools/lotti/lotto_riserve_0210.mjs --scrivi  → scrive il JSON
+// STORICO dal 04/11/2026 (lotto 171): le riserve dedicate sono passate alle Cariche Mistiche con
+// tools/lotti/lotto_171_cariche_mistiche.mjs; un rilancio con --scrivi le riporterebbe in PM. Per forzare: --forza.
+if (process.argv.includes('--scrivi') && !process.argv.includes('--forza')) {
+  console.error('lotto_riserve_0210: lotto storico (Cariche Mistiche applicate dal lotto 171, lotto_171_cariche_mistiche.mjs). Per forzare: --forza.');
+  process.exit(1);
+}
 import { readFileSync, writeFileSync } from 'node:fs';
 
 const R = new URL('../../', import.meta.url);

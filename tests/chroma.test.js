@@ -72,7 +72,9 @@ test('contenitori: batterie del catalogo, riserve integrate (Bordone, Scudo dell
   assert.deepEqual(caricatori(normalizzaEquipaggiamento(voci), dati), {});
   // l'arma porta con sé il contenitore integrato, per mostrarlo accanto all'arma
   const arma = calcolaScheda({ creazione: { ...MISHIMA_AGENTE, equipaggiamento: [voci[1]] }, livelli: [] }, dati).equipaggiamento.armi[0];
-  assert.deepEqual(arma.contenitore, { energia: 'Rosso', capacita_pm: 5, integrato: true, riserva: 'cariche', alimentazione: 'esclusiva' });
+  // lotto 171: la riserva del Bordone è di 5 Cariche Mistiche (Armamenti 0.74 §7.5.1), con la capacità di prima in PM
+  assert.deepEqual(arma.contenitore, { energia: 'Rosso', integrato: true, riserva: 'cariche', alimentazione: 'esclusiva', capacita_cm: 5, precedente: { capacita_pm: 5, unita: 'PM', nota: 'Bordone Templare' } });
+  assert.deepEqual([c.b.unita, c.o.unita, c.s.unita, c.p.unita], ['PM', 'CM', 'CM', 'PM']);
 });
 
 test('migrazione: un contenitore per voce (quantità > 1 divisa), stato «trasportato» per le batterie salvate prima', () => {
@@ -107,7 +109,7 @@ test('sessione: PM dei contenitori pieni all’inizio (A.19), limitati alla capa
   assert.deepEqual(m.contenitori, { b: 5, o: 5, p: 8 });
   // TODO(Davide) A.19: un contenitore nuovo arriva pieno
   let s = inizializzaSessione(m);
-  assert.deepEqual(s.chroma, { b: { pmAttuali: 5 }, o: { pmAttuali: 5 }, p: { pmAttuali: 8 } });
+  assert.deepEqual(s.chroma, { b: { pmAttuali: 5 }, o: { pmAttuali: 5, unita: 'CM' }, p: { pmAttuali: 8 } });
   // +/− entro 0 e la capacità
   s = variaChroma(s, 'p', -6, m);
   assert.equal(s.chroma.p.pmAttuali, 2);
@@ -117,7 +119,7 @@ test('sessione: PM dei contenitori pieni all’inizio (A.19), limitati alla capa
   assert.equal(s.chroma.b.pmAttuali, 5);
   // valori salvati oltre la capacità o negativi si riportano nei limiti
   s = allineaSessione({ ...s, chroma: { b: { pmAttuali: 9 }, o: { pmAttuali: -2 }, p: { pmAttuali: 7 } } }, m);
-  assert.deepEqual(s.chroma, { b: { pmAttuali: 5 }, o: { pmAttuali: 0 }, p: { pmAttuali: 7 } });
+  assert.deepEqual([s.chroma.b, s.chroma.o.pmAttuali, s.chroma.o.unita, s.chroma.p], [{ pmAttuali: 5 }, 0, 'CM', { pmAttuali: 7 }]);
   // la capacità cambia (contenitore personalizzato da 8 a 4 PM): i PM si limitano, non si riempiono
   m = massimi([b, o, { ...p, personalizzato: { ...p.personalizzato, capacita_pm: 4 } }]);
   s = allineaSessione(s, m);
@@ -148,6 +150,7 @@ test('sessione salvata prima: la riserva del Bordone passa da «munizioni» a «
   const o = voce('o', 'armi_corporative:bordone-templare', 'impugnata');
   const m = massimi([o]);
   const s = allineaSessione({ pvAttuali: 5, pmAttuali: 3, munizioni: { o: { colpi: 2, riserve: 0 } } }, m);
-  assert.deepEqual(s.chroma, { o: { pmAttuali: 2 } });
+  // lotto 171: il valore di prima (2 su 5 PM) diventa 2 su 5 CM, e resta scritto in «prima» (A.193)
+  assert.deepEqual(s.chroma, { o: { pmAttuali: 2, unita: 'CM', prima: { pmAttuali: 2, capacita: 5, unita: 'PM' } } });
   assert.deepEqual(s.munizioni, {});
 });

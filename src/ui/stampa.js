@@ -651,14 +651,14 @@ function schedaArtefatto(d, a) {
       a.ar ? h('p', {}, h('strong', {}, `AR ${a.ar.testo}`), a.ar.provenienza ? h('span', { class: 'piccolo provenienza-art' }, ` ${a.ar.provenienza}`) : null) : null,
       a.nonInUso ? h('p', { class: 'piccolo' }, 'Non è in mano né indossato: i suoi effetti non contano ora.') : null,
       a.attivazione ? h('p', {}, h('strong', {}, 'Attivazione: '), a.attivazione, h('span', { class: 'sigla' }, ' (§7.1.4)')) : null,
-      a.riserva ? h('p', {}, puntoChroma(a.riserva.energia), h('strong', {}, 'Riserva integrata: '), `Chroma ${a.riserva.energia}, ${a.riserva.capacita} PM`,
+      a.riserva ? h('p', {}, puntoChroma(a.riserva.energia), h('strong', {}, 'Riserva integrata: '), `Chroma ${a.riserva.energia}, ${a.riserva.capacita} ${a.riserva.unita === 'CM' ? 'Cariche Mistiche (CM)' : 'PM'}`,
         d.pmQui ? quadratini(a.riserva.capacita, { compatto: true }) : h('span', { class: 'sigla' }, ` — ${rimandoPM(d)}`)) : null));
 }
 
 function rigaRiserva(d, r) {
   return h('div', { class: 'riserva-art' },
     h('p', {}, casellaSi(r.sintonizzato), ' ', puntoChroma(r.energia), h('strong', {}, r.nome),
-      h('span', { class: 'sigla' }, ` · ${r.energia} · ${r.capacita} PM${r.potenza ? ` · ${r.potenza}` : ''} · SnT ${r.costo}${r.deposito ? ' · deposito comune' : ''}${d.pmQui ? '' : ` · ${rimandoPM(d)}`}`)),
+      h('span', { class: 'sigla' }, ` · ${r.energia} · ${r.capacita} ${r.unita === 'CM' ? 'CM' : 'PM'}${r.potenza ? ` · ${r.potenza}` : ''} · SnT ${r.costo}${r.deposito ? ' · deposito comune' : ''}${d.pmQui ? '' : ` · ${rimandoPM(d)}`}`)),
     d.pmQui ? quadratini(r.capacita, { compatto: true }) : null);
 }
 
@@ -1094,7 +1094,7 @@ function riquadroRiserve(d, conversione = null) {
         d.riserve.map((r) => h('div', { class: 'f5-riserva' },
           h('span', { class: `chroma-punto chroma-${String(r.energia).toLowerCase()}`, 'aria-hidden': 'true' }),
           h('span', { class: 'f5-riserva-nome' }, h('strong', {}, abbreviaSS(r.nome)),
-            h('span', { class: 'sigla' }, abbreviaSS(` · ${r.energia} · ${r.integrato ? 'solo l’oggetto (A.18)' : r.regoleRimandate ? 'regole rimandate' : r.macrofamiglie.length >= 3 ? 'tutte le macrofamiglie' : r.macrofamiglie.join(', ') || '—'} · ${r.sintonizzato ? 'sintonizzato' : 'da sintonizzare'} (SnT ${r.costo})`))),
+            h('span', { class: 'sigla' }, abbreviaSS(` · ${r.energia}${r.unita === 'CM' ? ` · ${r.capacita} CM (Cariche Mistiche)` : ''} · ${r.integrato ? 'solo l’oggetto (A.18)' : r.regoleRimandate ? 'regole rimandate' : r.macrofamiglie.length >= 3 ? 'tutte le macrofamiglie' : r.macrofamiglie.join(', ') || '—'} · ${r.sintonizzato ? 'sintonizzato' : 'da sintonizzare'} (SnT ${r.costo})`))),
           quadratini(r.capacita, { compatto: true }))),
         conversione ? h('p', { class: 'piccolo f5-conversione' }, conversione) : null) : null);
 }

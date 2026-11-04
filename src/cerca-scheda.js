@@ -11,6 +11,8 @@
 const senzaAccenti = (s) => String(s ?? '').normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase();
 const num = (n) => (n === null || n === undefined ? null : `VA ${n}`);
 
+import { numeroRiserva } from './cariche-mistiche.js';
+
 /** Tutte le voci cercabili della scheda, nell'ordine dei gruppi. */
 export function vociScheda(scheda, sessione = {}, dati = null) {
   const v = [];
@@ -49,7 +51,7 @@ export function vociScheda(scheda, sessione = {}, dati = null) {
   // Equipaggiamento: armi, protezioni, oggetti con bonus, Artefatti con PM
   for (const a of scheda.equipaggiamento?.armi ?? []) agg('Arma', a.nome, a.va !== null && a.va !== undefined ? num(a.vaEffettivo ?? a.va) : null, 'combattimento');
   for (const p of scheda.equipaggiamento?.protezioni ?? []) agg('Protezione', p.nome, p.ar?.totale !== undefined ? `AR ${p.ar.totale}` : null, 'combattimento');
-  for (const c of scheda.equipaggiamento?.contenitori ?? []) agg('Artefatto con PM', c.nome, `${sessione.chroma?.[c.uid]?.pmAttuali ?? 0} / ${c.capacita} PM`, 'artefatti');
+  for (const c of scheda.equipaggiamento?.contenitori ?? []) agg(c.unita === 'CM' ? 'Cariche Mistiche' : 'Artefatto con PM', c.nome, `${numeroRiserva(sessione.chroma?.[c.uid]?.pmAttuali ?? 0)} / ${c.capacita} ${c.unita ?? 'PM'}`, 'artefatti');
   const visti = new Set();
   for (const e of scheda.equipaggiamento?.effettiOggetti ?? []) {
     const chiave = `${e.oggetto}|${e.abilita ?? e.beneficio ?? ''}`;
@@ -99,3 +101,4 @@ export function cercaVoci(voci, testo, { massimo = 40 } = {}) {
 
 /** Riga leggibile di un risultato: «Prova Salvezza Tempra — VA 9». */
 export const testoVoce = (v) => `${v.gruppo} ${v.nome}${v.valore ? ` — ${v.valore}` : ''}`;
+

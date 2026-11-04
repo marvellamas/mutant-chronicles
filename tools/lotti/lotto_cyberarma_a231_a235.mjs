@@ -13,6 +13,12 @@
 // La riserva della batteria interna (10 PM → 5 Cariche Mistiche, revisione del 02/11) NON è qui: lotto a parte.
 //
 // Uso: node tools/lotti/lotto_cyberarma_a231_a235.mjs [--scrivi]
+// STORICO dal 04/11/2026 (lotto 171): le riserve dedicate sono passate alle Cariche Mistiche con
+// tools/lotti/lotto_171_cariche_mistiche.mjs; un rilancio con --scrivi le riporterebbe in PM. Per forzare: --forza.
+if (process.argv.includes('--scrivi') && !process.argv.includes('--forza')) {
+  console.error('lotto_cyberarma_a231_a235: lotto storico (Cariche Mistiche applicate dal lotto 171, lotto_171_cariche_mistiche.mjs). Per forzare: --forza.');
+  process.exit(1);
+}
 import fs from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import { dirname, join } from 'node:path';

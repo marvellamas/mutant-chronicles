@@ -30,7 +30,7 @@ function dimitri() {
 }
 const ciber = (eq) => eq.filter((v) => String(v.rif ?? '').startsWith('armi:cyberarma'));
 
-test('catalogo: originale, batteria Verde 10 PM e conversione a NeC dagli Armamenti 0.74', () => {
+test('catalogo: originale, riserva Verde da 5 CM e conversione a NEC (Armamenti 0.74, revisione «Cariche Mistiche», A.236, A.237)', () => {
   const o = arma('cyberarma');
   assert.deepEqual([o.abilita, o.danno.una_mano, o.natura_danno, o.for_richiesta, o.mani, o.portata_q], ['Armi da mischia', '1d8', 'Magico', 3, 1, 1]);
   assert.equal(o.costo, null, 'nessun prezzo unico per gli originali');
@@ -43,16 +43,18 @@ test('catalogo: originale, batteria Verde 10 PM e conversione a NeC dagli Armame
   const m = o.modifiche;
   assert.deepEqual([m.predisposizione_batteria.cr, m.batteria_verde_10_pm.cr, m.conversione_nec.cr, m.modulatore_neurale.cr, m.riconfigurazione.cr], [1000, 2000, 2000, 1500, 300]);
   assert.deepEqual([o.modulatore_neurale.sin, o.modulatore_neurale.classe], [1, 'Tecnomante']);
-  // batteria interna Verde da 10 PM, SnT 2; niente più 5 cariche
+  // lotto 171: riserva interna Verde da 5 CM (era la batteria da 10 PM), SnT 2
   const b = arma('cyberarma-batteria-verde');
   assert.equal(b.munizioni, undefined);
-  assert.deepEqual([blocco('armi:cyberarma-batteria-verde').contenitore.capacita_pm, blocco('armi:cyberarma-batteria-verde').contenitore.energia, blocco('armi:cyberarma-batteria-verde').sintonizzazione], [10, 'Verde', 2]);
+  assert.deepEqual([blocco('armi:cyberarma-batteria-verde').contenitore.capacita_cm, blocco('armi:cyberarma-batteria-verde').contenitore.energia, blocco('armi:cyberarma-batteria-verde').sintonizzazione], [5, 'Verde', 2]);
   assert.equal(b.costo_modifica, 3000);
   // conversione a NeC: qualsiasi Classe, 1 carica, 10 Round, SnT 3
   const n = arma('cyberarma-nec');
   const u = usoPerClasse(n, ['Assaltatore']);
   assert.deepEqual([u.nec, u.round, u.sintonizzazione], [1, 10, 3]);
-  assert.equal(testoAttivazione(n, { classi: [{ nome: 'Assaltatore' }] }, {}, 'x').costo, '1 carica NeC');
+  assert.equal(testoAttivazione(n, { classi: [{ nome: 'Assaltatore' }] }, {}, 'x').costo, '1 carica NEC');
+  // A.237: il NEC Rosso da 10 cariche è l'alimentazione della conversione
+  assert.deepEqual([n.alimentazione.nec, n.alimentazione.usi], ['nec:nec-rosso-10', 10]);
   assert.equal(blocco('armi:cyberarma-nec').sintonizzazione, 3);
 });
 

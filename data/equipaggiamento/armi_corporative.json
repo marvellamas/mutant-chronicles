@@ -55,7 +55,7 @@
       "catalogo": "Bauhaus",
       "famiglia": "Mazze e bastoni",
       "nomi_alternativi": [],
-      "note_manuale": "Bordone Templare. Attivazione: +1d6 Magico; 5 PM; Sintonizzazione 2. Manovre compatibili: Spazzata, Stordire.",
+      "note_manuale": "Bordone Templare. Attivazione: +1d6 Magico; riserva 5 CM, 1 CM per attivazione; Sintonizzazione 2. Manovre compatibili: Spazzata, Stordire.",
       "paragrafo": "§7.1.9",
       "versione_manuale": "Armamenti 0.50",
       "abilita": "Armi da guerra",
@@ -80,7 +80,7 @@
         "Stordire"
       ],
       "attivazione": {
-        "testo": "+1d6 Magico; 5 PM; Sintonizzazione 2",
+        "testo": "+1d6 Magico; riserva 5 CM, 1 CM per attivazione; Sintonizzazione 2",
         "danno_extra": "1d6",
         "natura": "Magico",
         "sintonizzazione": 2
@@ -90,7 +90,7 @@
         "unita": "PM",
         "ricarica": "secondo il §7.5.1",
         "consumo": "un PM per attivazione",
-        "riferimento": "Chroma Rosso da 5 PM (§7.5.1)"
+        "riferimento": "riserva Rossa da 5 CM (§7.5.1)"
       }
     },
     {
@@ -699,7 +699,7 @@
       "catalogo": "Fratellanza",
       "famiglia": "Spade",
       "nomi_alternativi": [],
-      "note_manuale": "Spada Vindicator. Proprietà: Purificatrice 1. Attivazione: +1d6 Magico; 5 PM; Sintonizzazione 2. Manovre compatibili: Affondo, Spazzata.",
+      "note_manuale": "Spada Vindicator. Proprietà: Purificatrice 1. Attivazione: +1d6 Magico; riserva 5 CM, 1 CM per attivazione; Sintonizzazione 2. Manovre compatibili: Affondo, Spazzata.",
       "paragrafo": "§7.1.9",
       "versione_manuale": "Armamenti 0.50",
       "abilita": "Armi da mischia",
@@ -729,7 +729,7 @@
         "Spazzata"
       ],
       "attivazione": {
-        "testo": "+1d6 Magico; 5 PM; Sintonizzazione 2",
+        "testo": "+1d6 Magico; riserva 5 CM, 1 CM per attivazione; Sintonizzazione 2",
         "danno_extra": "1d6",
         "natura": "Magico",
         "sintonizzazione": 2
@@ -739,7 +739,7 @@
         "unita": "PM",
         "ricarica": "secondo il §7.5.1",
         "consumo": "un PM per attivazione",
-        "riferimento": "Chroma Rosso da 5 PM (§7.5.1)"
+        "riferimento": "riserva Rossa da 5 CM (§7.5.1)"
       }
     },
     {
@@ -749,7 +749,7 @@
       "catalogo": "Fratellanza",
       "famiglia": "Spade",
       "nomi_alternativi": [],
-      "note_manuale": "Spada Deliverer. Proprietà: Versatile; Purificatrice 1. Attivazione: +1d6 Magico; 5 PM; Sintonizzazione 2. Manovre compatibili: Affondo, Spazzata.",
+      "note_manuale": "Spada Deliverer. Proprietà: Versatile; Purificatrice 1. Attivazione: +1d6 Magico; riserva 5 CM, 1 CM per attivazione; Sintonizzazione 2. Manovre compatibili: Affondo, Spazzata.",
       "paragrafo": "§7.1.9",
       "versione_manuale": "Armamenti 0.50",
       "abilita": "Armi da guerra",
@@ -783,7 +783,7 @@
         "Spazzata"
       ],
       "attivazione": {
-        "testo": "+1d6 Magico; 5 PM; Sintonizzazione 2",
+        "testo": "+1d6 Magico; riserva 5 CM, 1 CM per attivazione; Sintonizzazione 2",
         "danno_extra": "1d6",
         "natura": "Magico",
         "sintonizzazione": 2
@@ -793,7 +793,7 @@
         "unita": "PM",
         "ricarica": "secondo il §7.5.1",
         "consumo": "un PM per attivazione",
-        "riferimento": "Chroma Rosso da 5 PM (§7.5.1)"
+        "riferimento": "riserva Rossa da 5 CM (§7.5.1)"
       }
     },
     {
@@ -803,7 +803,7 @@
       "catalogo": "Fratellanza",
       "famiglia": "Armi inastate",
       "nomi_alternativi": [],
-      "note_manuale": "Lancia Castigator. Proprietà: Purificatrice 1. Attivazione: +1d6 Magico; 5 PM; Sintonizzazione 2. Manovre compatibili: Affondo, Spazzata.",
+      "note_manuale": "Lancia Castigator. Proprietà: Purificatrice 1. Attivazione: +1d6 Magico; riserva 5 CM, 1 CM per attivazione; Sintonizzazione 2. Manovre compatibili: Affondo, Spazzata.",
       "paragrafo": "§7.1.9",
       "versione_manuale": "Armamenti 0.50",
       "abilita": "Armi da guerra",
@@ -833,7 +833,7 @@
         "Spazzata"
       ],
       "attivazione": {
-        "testo": "+1d6 Magico; 5 PM; Sintonizzazione 2",
+        "testo": "+1d6 Magico; riserva 5 CM, 1 CM per attivazione; Sintonizzazione 2",
         "danno_extra": "1d6",
         "natura": "Magico",
         "sintonizzazione": 2
@@ -843,7 +843,7 @@
         "unita": "PM",
         "ricarica": "secondo il §7.5.1",
         "consumo": "un PM per attivazione",
-        "riferimento": "Chroma Rosso da 5 PM (§7.5.1)"
+        "riferimento": "riserva Rossa da 5 CM (§7.5.1)"
       }
     },
     {
@@ -1581,7 +1581,7 @@
       "catalogo": "Mishima",
       "famiglia": "Spade",
       "nomi_alternativi": [],
-      "note_manuale": "Lama Demontooth. Proprietà: Precisa 1. Attivazione: +1d6 Magico; 5 PM; Sintonizzazione 2. Manovre compatibili: Affondo, Spazzata.",
+      "note_manuale": "Lama Demontooth. Proprietà: Precisa 1. Attivazione: +1d6 Magico; riserva 5 CM, 1 CM per attivazione; Sintonizzazione 2. Manovre compatibili: Affondo, Spazzata.",
       "paragrafo": "§7.1.9",
       "versione_manuale": "Armamenti 0.50",
       "abilita": "Armi da guerra",
@@ -1614,7 +1614,7 @@
         "Spazzata"
       ],
       "attivazione": {
-        "testo": "+1d6 Magico; 5 PM; Sintonizzazione 2",
+        "testo": "+1d6 Magico; riserva 5 CM, 1 CM per attivazione; Sintonizzazione 2",
         "danno_extra": "1d6",
         "natura": "Magico",
         "sintonizzazione": 2
@@ -1624,7 +1624,7 @@
         "unita": "PM",
         "ricarica": "secondo il §7.5.1",
         "consumo": "un PM per attivazione",
-        "riferimento": "Chroma Rosso da 5 PM (§7.5.1)"
+        "riferimento": "riserva Rossa da 5 CM (§7.5.1)"
       }
     },
     {

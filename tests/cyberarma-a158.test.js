@@ -34,7 +34,8 @@ test('Grado e SnT: la sintonizzazione si conta una volta sola', () => {
   // Armamenti 0.74 §7.25: SnT secondo l'impiego (Custode 1, Tecnomante 2), non secondo la potenza
   assert.deepEqual([o.snt_per_impiego, o.sintonizzazione_per_classe], [true, { Custode: 1, Tecnomante: 2 }]);
   assert.equal(b.sintonizzazione, 2, 'la SnT 2 comprende manufatto e batteria');
-  assert.deepEqual(b.contenitore, { energia: 'Verde', capacita_pm: 10, integrato: true, riserva: 'batteria', alimentazione: 'esclusiva' });
+  // revisione «Cariche Mistiche» e A.236 (lotto 171): riserva interna Verde da 5 CM, esclusiva dell'arma (non più una Batteria)
+  assert.deepEqual(b.contenitore, { energia: 'Verde', integrato: true, riserva: 'cariche', alimentazione: 'esclusiva', capacita_cm: 5, precedente: { capacita_pm: 10, unita: 'PM', nota: 'CyberArma con batteria Verde' } });
   // una sola voce di inventario: l'oggetto sta fra le armi e il blocco artefatto lo raggiunge per rif
   assert.equal(infoArtefatto(r('armi:cyberarma-batteria-verde'), dati).sintonizzazione, 2);
 });
@@ -52,7 +53,9 @@ test('uso per Classe: i numeri stanno nei dati, non nel codice', () => {
   assert.equal(usoPerClasse(b, ['Agente']).ammesso, false);
   const altreN = usoPerClasse(r('armi:cyberarma-nec'), ['Agente']);
   assert.deepEqual([altreN.ammesso, altreN.nec, altreN.round, altreN.va], [undefined, 1, 10, 0]);
-  assert.match(usoPerClasse(b, ['Custode']).testo, /2 PM della batteria interna/);
+  // lotto 171: il Tecnomante paga 1 CM della riserva interna o 2 PM personali; per il Custode la revisione non dà un costo in CM (A.251)
+  assert.deepEqual([usoPerClasse(b, ['Tecnomante']).cm, usoPerClasse(b, ['Tecnomante']).pm], [1, 2]);
+  assert.match(usoPerClasse(b, ['Custode']).testo, /A.251/);
   assert.equal(usoPerClasse({ }, ['Custode']), null, 'le armi senza il blocco non si attivano');
 });
 
@@ -62,8 +65,8 @@ test('«Attacca!»: l’arma attiva mostra costo, durata e Round che restano', (
   const b = r('armi:cyberarma-nec');
   const sessione = { ...inizializzaSessione(massimiSessione(scheda, MISHIMA_AGENTE, dati)), round: 3 };
   const prima = testoAttivazione(b, scheda, sessione, 'c1');
-  assert.deepEqual([prima.attiva, prima.costo, prima.round, prima.va], [false, '1 carica NeC', 10, 0]);
-  assert.equal(prima.sintesi, '1 carica NeC · 10 Round');
+  assert.deepEqual([prima.attiva, prima.costo, prima.round, prima.va], [false, '1 carica NEC', 10, 0]);
+  assert.equal(prima.sintesi, '1 carica NEC · 10 Round');
   // attivata al Round 3: al Round 3 restano 10 Round, al Round 12 ne resta 1, al 13 è finita
   const attiva = { ...sessione, attivazioniArmi: { c1: { dal: 3, round: 10 } } };
   assert.equal(statoAttivazioneArma(attiva, 'c1').rimasti, 10);
@@ -72,7 +75,7 @@ test('«Attacca!»: l’arma attiva mostra costo, durata e Round che restano', (
   assert.equal(statoAttivazioneArma({ ...attiva, round: 13 }, 'c1').attiva, false);
 });
 
-test('«Attiva» del Tecnomante: 2 PM personali, la durata parte dal Round e «Termina» la spegne; batteria da 10 PM', () => {
+test('«Attiva» del Tecnomante: 1 CM della riserva interna o 2 PM personali, la durata parte dal Round e «Termina» la spegne; riserva da 5 CM', () => {
   const p = deserializzaPersonaggio(readFileSync(new URL('./fixtures/talenti-vecchi/Dimitri-Orlav_liv6_2026-10-04.json', import.meta.url), 'utf8'));
   const base = normalizza(p.creazione, dati).scelte;
   const voce = { uid: 'c1', rif: 'armi:cyberarma-batteria-verde', stato: 'impugnata', quantita: 1, note: '', sintonizzato: true };
@@ -80,11 +83,16 @@ test('«Attiva» del Tecnomante: 2 PM personali, la durata parte dal Round e «T
   const scheda = calcolaScheda({ creazione, livelli: p.livelli }, dati);
   const m = massimiSessione(scheda, creazione, dati);
   const s = allineaSessione({ ...inizializzaSessione(m), round: 2 }, m);
-  assert.equal(s.chroma.c1?.pmAttuali, 10, 'la batteria interna Verde da 10 PM');
+  assert.deepEqual([s.chroma.c1?.pmAttuali, s.chroma.c1?.unita], [5, 'CM'], 'la riserva interna Verde da 5 CM (A.236)');
   const uso = usoPerClasse(r('armi:cyberarma-batteria-verde'), classiDi(scheda));
-  assert.deepEqual([uso.classe, uso.pm, uso.round], ['Tecnomante', 2, 10]);
-  const dopo = attivaArmaSessione(s, 'c1', uso, m);
+  assert.deepEqual([uso.classe, uso.cm, uso.pm, uso.round], ['Tecnomante', 1, 2, 10]);
+  // dalla riserva interna: 1 CM, i PM personali non si toccano
+  const conCm = attivaArmaSessione(s, 'c1', uso, m);
+  assert.deepEqual([conCm.chroma.c1.pmAttuali, conCm.pmAttuali], [4, s.pmAttuali]);
+  // con l'alternativa dei PM personali (A.236): 2 PM, la riserva non si tocca
+  const dopo = attivaArmaSessione(s, 'c1', { ...uso, conPm: true }, m);
   assert.equal(dopo.pmAttuali, s.pmAttuali - 2, '2 PM personali');
+  assert.equal(dopo.chroma.c1.pmAttuali, 5);
   assert.deepEqual(dopo.attivazioniArmi.c1, { dal: 2, round: 10 });
   assert.equal(allineaSessione({ ...dopo, round: 12 }, m).attivazioniArmi, undefined);
   const spenta = terminaArmaSessione(dopo, 'c1', m);

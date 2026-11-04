@@ -60,10 +60,15 @@
       "proprieta_attive": true,
       "contenitore": {
         "energia": "Rosso",
-        "capacita_pm": 5,
         "integrato": true,
         "riserva": "cariche",
-        "alimentazione": "esclusiva"
+        "alimentazione": "esclusiva",
+        "capacita_cm": 5,
+        "precedente": {
+          "capacita_pm": 5,
+          "unita": "PM",
+          "nota": "Bordone Templare"
+        }
       }
     },
     {
@@ -75,10 +80,15 @@
       "proprieta_attive": true,
       "contenitore": {
         "energia": "Rosso",
-        "capacita_pm": 5,
         "integrato": true,
         "riserva": "cariche",
-        "alimentazione": "esclusiva"
+        "alimentazione": "esclusiva",
+        "capacita_cm": 5,
+        "precedente": {
+          "capacita_pm": 5,
+          "unita": "PM",
+          "nota": "Spada Vindicator"
+        }
       }
     },
     {
@@ -90,10 +100,15 @@
       "proprieta_attive": true,
       "contenitore": {
         "energia": "Rosso",
-        "capacita_pm": 5,
         "integrato": true,
         "riserva": "cariche",
-        "alimentazione": "esclusiva"
+        "alimentazione": "esclusiva",
+        "capacita_cm": 5,
+        "precedente": {
+          "capacita_pm": 5,
+          "unita": "PM",
+          "nota": "Spada Deliverer"
+        }
       }
     },
     {
@@ -105,10 +120,15 @@
       "proprieta_attive": true,
       "contenitore": {
         "energia": "Rosso",
-        "capacita_pm": 5,
         "integrato": true,
         "riserva": "cariche",
-        "alimentazione": "esclusiva"
+        "alimentazione": "esclusiva",
+        "capacita_cm": 5,
+        "precedente": {
+          "capacita_pm": 5,
+          "unita": "PM",
+          "nota": "Lancia Castigator"
+        }
       }
     },
     {
@@ -120,10 +140,15 @@
       "proprieta_attive": true,
       "contenitore": {
         "energia": "Rosso",
-        "capacita_pm": 5,
         "integrato": true,
         "riserva": "cariche",
-        "alimentazione": "esclusiva"
+        "alimentazione": "esclusiva",
+        "capacita_cm": 5,
+        "precedente": {
+          "capacita_pm": 5,
+          "unita": "PM",
+          "nota": "Lama Demontooth"
+        }
       }
     },
     {
@@ -135,10 +160,15 @@
       "proprieta_attive": true,
       "contenitore": {
         "energia": "Rosso",
-        "capacita_pm": 5,
         "integrato": true,
         "riserva": "cariche",
-        "alimentazione": "esclusiva"
+        "alimentazione": "esclusiva",
+        "capacita_cm": 5,
+        "precedente": {
+          "capacita_pm": 5,
+          "unita": "PM",
+          "nota": "Scudo delle Guardie Sacre"
+        }
       }
     },
     {
@@ -165,10 +195,15 @@
       "snt_per_impiego": true,
       "contenitore": {
         "energia": "Verde",
-        "capacita_pm": 10,
         "integrato": true,
-        "riserva": "batteria",
-        "alimentazione": "esclusiva"
+        "riserva": "cariche",
+        "alimentazione": "esclusiva",
+        "capacita_cm": 5,
+        "precedente": {
+          "capacita_pm": 10,
+          "unita": "PM",
+          "nota": "CyberArma con batteria Verde"
+        }
       },
       "_nota": "Armamenti 0.74 §7.25: la SnT 2 comprende l’intero manufatto e la batteria integrata, senza un secondo costo."
     },
@@ -2199,9 +2234,9 @@
       "catalogo": "Artefatti di campagna",
       "famiglia": "Artefatti",
       "nomi_alternativi": [],
-      "note_manuale": "Una coppia di guanti di cuoio morbido con innesti dorati e cristallo Rosso. Costituisce un solo Artefatto Mistico e un solo oggetto d’inventario. Potenza Rara, Grado III, SnT 3; Qualità fisica Non comune, PS Integrità 12, 4 PI, peso 0,5 kg. Riserva di 10 PM Rossi condivisa dalle due mani; le proprietà sono Esclusive: si pagano soltanto con i PM interni dei guanti. Indossati occupano 0 mani. I pugni usano Corpo a corpo (FOR), portata 1 Q e il normale danno senz’armi del personaggio. Non c’è un bonus magico sempre attivo. Per il Getto serve una mano libera; per il Doppio getto entrambe.",
+      "note_manuale": "Una coppia di guanti di cuoio morbido con innesti dorati e cristallo Rosso. Costituisce un solo Artefatto Mistico e un solo oggetto d’inventario. Potenza Rara, Grado III, SnT 3; Qualità fisica Non comune, PS Integrità 12, 4 PI, peso 0,5 kg. Riserva di 6 Cariche Mistiche Rosse (CM) condivisa dalle due mani; le proprietà sono Esclusive: si pagano soltanto con le CM interne dei Guanti. Indossati occupano 0 mani. I pugni usano Corpo a corpo (FOR), portata 1 Q e il normale danno senz’armi del personaggio. Non c’è un bonus magico sempre attivo. Per il Getto serve una mano libera; per il Doppio getto entrambe.",
       "paragrafo": "Scheda «Guanti mistici di Lucas» 1.0; Armamenti §7.24; Equipaggiamento §10.6–10.7; Magia §26.6.2; Giocatore §5.13, §5.24",
-      "versione_manuale": "Scheda dei Guanti di Lucas 1.0 (31/10/2026) / Armamenti 0.74 / Equipaggiamento 0.30 / Magia 1.11 / Giocatore 0.54",
+      "versione_manuale": "Scheda dei Guanti di Lucas 1.0 (02/11/2026 16:23, Cariche Mistiche) / Armamenti 0.74 / Equipaggiamento 0.30 / Magia 1.11 / Giocatore 0.54",
       "costo": 3000,
       "indossabile": true,
       "artefatto": {
@@ -2212,17 +2247,21 @@
         "proprieta_attive": true,
         "contenitore": {
           "energia": "Rosso",
-          "capacita_pm": 10,
           "integrato": true,
           "riserva": "cariche",
-          "alimentazione": "esclusiva"
+          "alimentazione": "esclusiva",
+          "capacita_cm": 6,
+          "precedente": {
+            "capacita_pm": 10,
+            "unita": "PM",
+            "nota": "Guanti da Combattimento Mistico"
+          }
         },
         "grado": "III"
       },
       "effetti": [],
       "attivazione_artefatto": {
         "nome": "Pugno mistico",
-        "pm": 2,
         "azione": "1 AzP",
         "durata": "5 RND",
         "attacchi": "senz_armi",
@@ -2230,7 +2269,8 @@
         "danno": 1,
         "natura": "Magico",
         "condizione": "Automatico. Per 5 Round: +1 VA ai pugni, danno Magico e +1 danno. Non si trasferisce a calci, armi impugnate, attacchi richiesti dagli Incantesimi o danni degli Incantesimi, né ai getti. Una nuova attivazione rinnova la durata senza sommare i bonus. Magico non significa ignorare l’Armatura.",
-        "fonte": "Scheda «Guanti mistici di Lucas» 1.0 (31/10/2026); Armamenti 0.74 §7.24; Magia 1.11 §26.6.2"
+        "fonte": "Scheda «Guanti mistici di Lucas» 1.0 (31/10/2026); Armamenti 0.74 §7.24; Magia 1.11 §26.6.2",
+        "cm": 1
       },
       "proprieta": [],
       "reperibilita": "MR",
@@ -2257,7 +2297,6 @@
         {
           "id": "getto-di-fuoco",
           "nome": "Getto di fuoco",
-          "pm": 5,
           "azione": "1 AzP",
           "mani_libere": 1,
           "getti": 1,
@@ -2278,12 +2317,12 @@
             "modificatore": 0
           },
           "condizione": "Automatico, senza Potere, senza Concentrazione. Linea retta di 2 × 1 Q dalla casella adiacente: investe tutti i bersagli nel primo e nel secondo Q, alleati compresi; il primo bersaglio non interrompe il getto, un ostacolo solido sì. 1d6+4 danni Naturali con proprietà Fuoco, senza FOR né i bonus del Pugno mistico.",
-          "fonte": "Scheda «Guanti mistici di Lucas» 1.0 (31/10/2026); Armamenti 0.74 §7.24; Magia 1.11 §26.6.2"
+          "fonte": "Scheda «Guanti mistici di Lucas» 1.0 (31/10/2026); Armamenti 0.74 §7.24; Magia 1.11 §26.6.2",
+          "cm": 3
         },
         {
           "id": "doppio-getto",
           "nome": "Doppio getto",
-          "pm": 10,
           "azione": "1 AzP",
           "mani_libere": 2,
           "getti": 2,
@@ -2306,12 +2345,13 @@
             "salvezza": "riflessi",
             "modificatore": 0
           },
-          "pm_anche_se_fallisce": true,
-          "condizione": "Due getti, uno per mano, 5 PM ciascuno. Le due linee di 2 × 1 Q si dichiarano prima della Prova e possono coincidere o avere direzioni diverse. Con successo partono entrambi; i 10 PM si consumano al tentativo anche se la Prova fallisce. Si tira il danno una volta per getto; Elusione e Armatura separate per getto e bersaglio; una sola PS Riflessi per Incendiato per bersaglio e attacco.",
-          "fonte": "Scheda «Guanti mistici di Lucas» 1.0 (31/10/2026); Armamenti 0.74 §7.24; Magia 1.11 §26.6.2"
+          "condizione": "Due getti, uno per mano, 3 CM ciascuno. Le due linee di 2 × 1 Q si dichiarano prima della Prova (Potere −2 VA, senza i benefici del lancio degli Incantesimi: A.234) e possono coincidere o avere direzioni diverse. Con successo partono entrambi; le 6 CM si consumano al tentativo anche se la Prova fallisce. Si tira il danno una volta per getto; Elusione e Armatura separate per getto e bersaglio; una sola PS Riflessi per Incendiato per bersaglio e attacco.",
+          "fonte": "Scheda «Guanti mistici di Lucas» 1.0 (31/10/2026); Armamenti 0.74 §7.24; Magia 1.11 §26.6.2",
+          "cm": 6,
+          "cm_anche_se_fallisce": true
         }
       ],
-      "_nota_lucas": "Scheda 1.0 del 31/10/2026: l’energia presente si registra secondo lo stato effettivo di campagna, senza ricarica automatica; la ricarica segue le riserve mistiche Rosse (Batterie Mistiche), senza NEC, UE o trasformatori. Esempi a riserva piena: cinque Pugni mistici, due Getti singoli, un Doppio getto; un Getto e due Pugni lasciano 1 PM."
+      "_nota_lucas": "Scheda 1.0, revisione «Cariche Mistiche» del 02/11/2026: le CM attuali dipendono dallo stato di campagna, nessuna ricarica automatica. Ricarica: CM mancanti × 2 × rapporto (Guanti vuoti a 3:1: 36 PM). A piena riserva: sei Pugni mistici, due Getti singoli oppure un Doppio getto; un Getto e due Pugni lasciano 1 CM."
     },
     {
       "id": "pergamena-di-cura-ferite-3",

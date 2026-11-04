@@ -2,6 +2,7 @@
 // ricarica prima con i PM che il personaggio ha adesso e poi calcola il recupero della Meditazione con il suo esito. Stesso impianto di «Lancia!» e «Attiva» (src/ui/pannello-passi.js): le scelte, poi il
 // conto in chiaro con la regola o il Talento che si applica, e «Conferma» che applica tutto in una modifica annullabile e
 // lascia una riga nel registro del personaggio. Le regole stanno in src/medita.js.
+import { numeroRiserva } from '../cariche-mistiche.js';
 import { h } from './dom.js';
 import { conAvviso } from './procedi.js';
 import { rigaScelte, pannelloPassi } from './pannello-passi.js';
@@ -45,11 +46,11 @@ export function pannelloMedita(ctx) {
       contenuto: [
         rigaScelte('Cosa fai', [
           { valore: 'personali', etichetta: 'Solo Medita (nessuna ricarica)' },
-          ...contenitori.map((x) => ({ valore: x.uid, etichetta: `Ricarica ${x.nome} · ${ctx.sessione.chroma?.[x.uid]?.pmAttuali ?? 0}/${x.capacita}, poi medita`, motivo: motivoRicarica(x, cv) })),
+          ...contenitori.map((x) => ({ valore: x.uid, etichetta: `Ricarica ${x.nome} · ${numeroRiserva(ctx.sessione.chroma?.[x.uid]?.pmAttuali ?? 0)}/${x.capacita}${x.unita === 'CM' ? ' CM' : ''}, poi medita`, motivo: motivoRicarica(x, cv) })),
         ], u.destinazione, (x) => imposta({ destinazione: x, gruppi: null, esito: null })),
         contenitori.length ? null : h('p', { class: 'nota' }, 'Nessun cristallo o riserva di Chroma nell’inventario: c’è solo il recupero dei PM personali.'),
         c ? [
-          h('p', { class: 'nota' }, `Rapporto ${c.rapporto}:1 — ${c.fonteRapporto}. Ogni gruppo costa ${c.rapporto} PM personali e aggiunge 1 PM al cristallo (non oltre ${c.capacita}). Si spendono solo i ${piano.pmPrima} PM che hai adesso: quelli che recupererai meditando non si spendono in anticipo (A.174).`),
+          h('p', { class: 'nota' }, `Rapporto ${c.rapporto}:1 — ${c.fonteRapporto}. Ogni gruppo costa ${c.pmPerGruppo ?? c.rapporto} PM personali e aggiunge 1 ${c.unita ?? 'PM'} ${c.unita === 'CM' ? 'alla riserva' : 'al cristallo'} (non oltre ${c.capacita})${c.unita === 'CM' ? `: Cariche Mistiche, ${c.rapporto} × 2 per CM` : ''}. Si spendono solo i ${piano.pmPrima} PM che hai adesso: quelli che recupererai meditando non si spendono in anticipo (A.174).`),
           h('label', { class: 'campo-dado' }, `Gruppi da convertire (vuoto = quanti ne stanno: ${Math.min(c.gruppiPossibili, c.spazio)}) `,
             numero(u.gruppi, (n) => imposta({ gruppi: n }), { 'aria-label': 'Gruppi da convertire', placeholder: 'auto' })),
           c.prova.richiesta ? rigaScelte(`Esito della Prova di Potere (${c.gruppi} gruppi: Potere ${c.prova.penalita}${c.prova.totale !== null ? `, VA ${c.prova.va} ${c.prova.penalita} = ${c.prova.totale}` : ''}) — l’app non tira, indica come è andata`,

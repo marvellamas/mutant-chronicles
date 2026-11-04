@@ -83,13 +83,18 @@ export function testoAttivazione(def, scheda, sessione, uid) {
   if (!uso) return null;
   const stato = statoAttivazioneArma(sessione, uid);
   // conversione a NeC (Armamenti 0.74 §7.25): 1 carica di un NeC Rosso, che si scala nella riga del NeC
-  const costo = uso.nec ? `${uso.nec} carica NeC` : uso.cariche ? `${uso.cariche} caric${uso.cariche === 1 ? 'a' : 'he'}` : uso.pm ? `${uso.pm} PM` : null;
+  // revisione «Cariche Mistiche» (lotto 171): con la batteria interna 1 CM (A.236), con i PM personali in alternativa
+  const costo = uso.nec ? `${uso.nec} carica NEC` : uso.cm ? `${uso.cm} CM` : uso.cariche ? `${uso.cariche} caric${uso.cariche === 1 ? 'a' : 'he'}` : uso.pm ? `${uso.pm} PM` : null;
   return {
     classe: uso.classe,
     ammessa: uso.ammesso !== false && !!uso.round,
     costo,
     pm: uso.pm ?? null,
     cariche: uso.cariche ?? null,
+    cm: uso.cm ?? null,
+    // l'alternativa dei PM personali, quando il costo principale è una riserva dell'arma (A.236: «Rimane disponibile
+    // l'alternativa dei PM personali prevista dal profilo»)
+    alternativaPm: uso.cm && uso.pm ? uso.pm : null,
     nec: uso.nec ?? null,
     round: uso.round ?? null,
     va: uso.va ?? 0,

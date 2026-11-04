@@ -18,6 +18,7 @@ import { pulsanteSpostaPunti } from './sposta-punti.js';
 import { pulsanteSchermoIntero } from './schermo-intero.js';
 import { apriTiro, sezioneTiri } from './tira-valore.js';
 import { pianoGetto } from '../getti-artefatto.js';
+import { costoRiserva, numeroRiserva, testoCosto } from '../cariche-mistiche.js';
 import { modelliProgetto, apriProgetto, scegliForma, registraTentativo, togliUltimoTentativo, chiudiProgetto, riapriProgetto, riepilogoProgetto, formaSceglibile, avvisiConsegna, esemplariDi, storicoDi, ESITI_TENTATIVO, NOMI_ESITO, ESITI_FINALI, NOMI_FINALE } from '../progetti.js';
 import { circostanzeMasterAttive } from '../correzioni-master.js';
 import { conAvviso } from './procedi.js';
@@ -410,14 +411,16 @@ function menuImpostazioni(ctx) {
  * giallo, rosso; soglie in regole.json → interfaccia.barre_pv_pm). Il numero resta sempre accanto,
  * così si legge anche senza colore.
  */
-function barraRisorsa(ctx, etichetta, attuale, massimo, { classe = '', viva = null } = {}) {
+function barraRisorsa(ctx, etichetta, attuale, massimo, { classe = '', viva = null, unita = '' } = {}) {
+  // l'unità accanto al numero quando non è ovvia (Cariche Mistiche, lotto 171); le frazioni con la virgola (A.228)
+  const conta = (x) => `${numeroRiserva(x)} / ${massimo}${unita ? ` ${unita}` : ''}`;
   const col = colore(attuale, massimo, ctx.dati.regole.interfaccia.barre_pv_pm);
   const riempimentoEl = h('span', { class: `barra-riempimento ${col ?? ''}`.trim(), style: `width: ${riempimento(attuale, massimo)}%` });
   const traccia = h('span', {
     class: 'barra-traccia', role: 'meter', 'aria-label': etichetta || 'riserva',
     'aria-valuemin': 0, 'aria-valuemax': massimo, 'aria-valuenow': attuale,
   }, riempimentoEl);
-  const numeroEl = h('span', { class: 'barra-numero' }, `${attuale} / ${massimo}`);
+  const numeroEl = h('span', { class: 'barra-numero' }, conta(attuale));
   // valore vivo (src/ui/vivi.js): la barra si aggiorna da sola, senza ridisegnare la scheda
   if (viva) {
     registraVivo(viva.chiave, () => {
@@ -426,7 +429,7 @@ function barraRisorsa(ctx, etichetta, attuale, massimo, { classe = '', viva = nu
       traccia.setAttribute('aria-valuenow', x);
       riempimentoEl.className = `barra-riempimento ${c ?? ''}`.trim();
       if (riempimentoEl.style) riempimentoEl.style.width = `${riempimento(x, massimo)}%`;
-      numeroEl.textContent = `${x} / ${massimo}`;
+      numeroEl.textContent = conta(x);
     });
   }
   return h('div', { class: `barra-risorsa ${classe}`.trim() },
@@ -987,12 +990,18 @@ function cristalli(ctx) {
  * del personaggio (A.112, A.20). Chi non ne ha non vede nulla.
  */
 function cristalliCompatti(ctx) {
-  const c = cristalli(ctx);
-  if (!c.length) return null;
+  const tutti = cristalli(ctx);
+  if (!tutti.length) return null;
+  // lotto 171: le Cariche Mistiche degli oggetti in un gruppo a parte, con il loro nome: non sono PM (revisione del 02/11/2026)
+  const pm = tutti.filter((x) => x.unita !== 'CM');
+  const cm = tutti.filter((x) => x.unita === 'CM');
   return h('div', { class: 'cristalli cristalli-compatti' },
-    h('h4', {}, 'Artefatti con PM'),
-    h('p', { class: 'nota' }, 'Riserve separate: non si sommano ai PM personali.'),
-    h('ul', { class: 'elenco-cristalli' }, c.map((x) => h('li', {}, rigaCristallo(ctx, x)))));
+    pm.length ? [h('h4', {}, 'Artefatti con PM'),
+      h('p', { class: 'nota' }, 'Riserve separate: non si sommano ai PM personali.'),
+      h('ul', { class: 'elenco-cristalli' }, pm.map((x) => h('li', {}, rigaCristallo(ctx, x))))] : null,
+    cm.length ? [h('h4', {}, 'Cariche Mistiche (CM) degli oggetti'),
+      h('p', { class: 'nota' }, 'Solo per gli effetti del loro oggetto: non sono PM, non pagano Incantesimi e non sono cariche NEC.'),
+      h('ul', { class: 'elenco-cristalli' }, cm.map((x) => h('li', {}, rigaCristallo(ctx, x))))] : null);
 }
 
 /**
@@ -2109,10 +2118,16 @@ function attivazioneArmaUiCorpo(ctx, a) {
   if (!a.usoPerClasse) return null;
   const u = testoAttivazione({ uso_per_classe: a.usoPerClasse }, ctx.tab.scheda, ctx.sessione, a.uid);
   if (!u) return null;
-  const pm = u.cariche ? ctx.sessione.chroma?.[a.uid]?.pmAttuali ?? 0 : ctx.sessione.pmAttuali;
+  // lotto 171: CM della batteria interna (A.236), cariche del NEC inserito (A.237), oppure PM personali: tre riserve diverse
+  const chiaveNec = u.nec ? Object.keys(ctx.sessione.nec ?? {}).find((k) => k === a.uid || k.startsWith(`${a.uid}#`)) : null;
+  const pm = u.nec ? (chiaveNec ? ctx.sessione.nec[chiaveNec] : 0) : (u.cm || u.cariche) ? ctx.sessione.chroma?.[a.uid]?.pmAttuali ?? 0 : ctx.sessione.pmAttuali;
   const motivo = !u.ammessa ? `${a.nome}: questa configurazione non è utilizzabile dalla tua Classe`
-    : u.cariche && pm < u.cariche ? `la riserva ha ${pm} caric${pm === 1 ? 'a' : 'he'}`
-      : u.pm && pm < u.pm ? `hai ${pm} PM, ne servono ${u.pm}` : null;
+    : u.nec && !chiaveNec ? 'nessun NEC collegato all’arma nell’Inventario'
+      : u.nec && pm < u.nec ? `il NEC ha ${pm} caric${pm === 1 ? 'a' : 'he'}`
+        : u.cm && pm < u.cm ? `la riserva interna ha ${numeroRiserva(pm)} CM, ne serve ${u.cm}`
+          : u.cariche && pm < u.cariche ? `la riserva ha ${pm} caric${pm === 1 ? 'a' : 'he'}`
+            : u.pm && !u.cm && pm < u.pm ? `hai ${pm} PM, ne servono ${u.pm}` : null;
+  const motivoPm = u.alternativaPm && ctx.sessione.pmAttuali < u.alternativaPm ? `hai ${ctx.sessione.pmAttuali} PM, ne servono ${u.alternativaPm}` : null;
   return h('span', { class: `attivazione-arma${u.attiva ? ' attiva' : ''}` },
     h('small', { class: 'nota' }, ` · ${u.sintesi ?? 'non si attiva'}`),
     u.va ? h('small', { class: 'motivo' }, ` ${numero(u.va)} VA`) : null,
@@ -2120,6 +2135,8 @@ function attivazioneArmaUiCorpo(ctx, a) {
       ? h('button', { type: 'button', class: 'btn btn-piccolo', title: 'Spegne l’attivazione (il costo resta pagato)', onclick: () => ctx.azioni.terminaArma(a.uid) }, 'Termina')
       : h('button', { type: 'button', class: `btn btn-piccolo${motivo ? ' con-avviso' : ''}`, title: motivo ?? u.testo ?? `Scala ${u.costo} e fa partire ${u.round} Round`,
         onclick: () => conAvviso(ctx.azioni.storico, { azione: `attivare ${a.nome}`, motivo, fai: (forza) => ctx.azioni.attivaArma(a.uid, u, forza) }) }, u.costo ? `Attiva (−${u.costo})` : 'Attiva'),
+    !u.attiva && u.alternativaPm ? h('button', { type: 'button', class: `btn btn-piccolo${motivoPm ? ' con-avviso' : ''}`, title: motivoPm ?? `Attiva pagando ${u.alternativaPm} PM personali invece della riserva interna (A.236)`,
+      onclick: () => conAvviso(ctx.azioni.storico, { azione: `attivare ${a.nome} con i PM personali`, motivo: motivoPm, fai: (forza) => ctx.azioni.attivaArma(a.uid, { ...u, conPm: true, pm: u.alternativaPm }, forza) }) }, `con i PM (−${u.alternativaPm} PM)`) : null,
     u.testo ? infoValore('?', { titolo: `${a.nome}: attivazione`, sezioni: [{ testo: u.testo }] }, { classe: 'info-gradi' }) : null);
 }
 
@@ -2313,7 +2330,7 @@ function schedaSenzArmi(ctx) {
       h('p', {}, h('span', { class: 'sigla' }, 'Danno '), dannoConProvenienza(a, a.danno.una_mano ?? '—'),
         h('small', { class: 'sigla' }, ` (${a.dannoOrigine === 'base' ? 'base' : a.dannoOrigine}${a.bonusCaratteristica?.bonus ? `, ${a.bonusCaratteristica.sigla} ${segno(a.bonusCaratteristica.bonus)}` : ''}${a.dannoSpecializzazione ? `, Spec. ${segno(a.dannoSpecializzazione)}` : ''})${a.natura ? ` · ${a.natura}` : ''}`)),
       h('p', {}, h('span', { class: 'sigla' }, 'Portata '), `${a.portataQ} Q`)),
-    pugniPotenziati(ctx.tab.scheda) ? h('p', { class: 'nota' }, `${pugniPotenziati(ctx.tab.scheda).nome}: nessun bonus sempre attivo; il Pugno mistico (PM della riserva interna) si accende nella tab Artefatti e vale qui finché dura.`) : null,
+    pugniPotenziati(ctx.tab.scheda) ? h('p', { class: 'nota' }, `${pugniPotenziati(ctx.tab.scheda).nome}: nessun bonus sempre attivo; il Pugno mistico (1 CM della riserva interna) si accende nella tab Artefatti e vale qui finché dura.`) : null,
     ultima ? h('p', { class: 'nota' }, `Ultima Manovra: ${ultima.nome}`) : null);
 }
 
@@ -2661,13 +2678,15 @@ function rigaCristallo(ctx, c) {
   const pulsante = (d) => {
     const el = h('button', {
       type: 'button', class: 'btn-tavolo', disabled: d < 0 ? pm <= 0 : pm >= c.capacita,
-      'aria-label': `${d > 0 ? 'Aggiungi' : 'Togli'} ${Math.abs(d)} PM a ${c.nome}`,
+      'aria-label': `${d > 0 ? 'Aggiungi' : 'Togli'} ${Math.abs(d)} ${c.unita ?? 'PM'} a ${c.nome}`,
       onclick: () => ctx.azioni.chroma(c.uid, d),
     }, d > 0 ? `+${d}` : `−${-d}`);
     pulsanti.push([el, d]);
     return el;
   };
-  const stato = (x) => (x === 0 ? `Trasparente (alone ${c.energia})` : `Chroma ${c.energia}`) + (pronto ? '' : c.sintonizzato ? ' · non trasportato' : ' · non sintonizzato');
+  // Cariche Mistiche (lotto 171): l'unità sta accanto al colore, così non si scambiano per PM; una riserva da convertire lo dice
+  const da = ctx.sessione.chroma?.[c.uid]?.daConvertire;
+  const stato = (x) => (x === 0 ? `Trasparente (alone ${c.energia})` : `Chroma ${c.energia}`) + (c.unita === 'CM' ? ' · Cariche Mistiche (CM)' : '') + (da ? ' · riserva da convertire (A.193)' : '') + (pronto ? '' : c.sintonizzato ? ' · non trasportato' : ' · non sintonizzato');
   const punto = h('span', { class: `chroma-punto chroma-${c.energia.toLowerCase()}${esausto ? ' esausto' : ''}`, 'aria-hidden': 'true' });
   const sigla = h('small', { class: 'sigla' }, ` · ${stato(pm)}`);
   const bm = pulsante(-1);
@@ -2691,7 +2710,7 @@ function rigaCristallo(ctx, c) {
         onclick: () => { ctx.ui.ricaricaSidebar[c.uid] = !apertaRicarica; ctx.azioni.ridisegna(); },
       }, '⚡') : null),
     h('div', { class: 'cristallo-valori' },
-      barraRisorsa(ctx, '', pm, c.capacita, { viva: { chiave, leggi } }),
+      barraRisorsa(ctx, '', pm, c.capacita, { viva: { chiave, leggi }, unita: c.unita === 'CM' ? 'CM' : '' }),
       bm, bp),
     // 19/10: più PM in un colpo solo: «5» o «+5» aggiungono, «-3» tolgono (il tocco da ±1 resta)
     campoVariazionePm(ctx, c),
@@ -2731,16 +2750,16 @@ function pannelloChroma(ctx, c, { conPulsanti = true } = {}) {
       : regioneVivaSe(`chroma:${c.uid}`, () => {
         const x = ctx.sessione.chroma?.[c.uid]?.pmAttuali ?? 0;
         return [h('span', { class: `chroma-punto chroma-${c.energia.toLowerCase()}${x === 0 ? ' esausto' : ''}`, 'aria-hidden': 'true' }),
-          x === 0 ? `Trasparente (alone ${c.energia}) ` : `Chroma ${c.energia} `, h('strong', {}, String(x)), ` / ${c.capacita} PM`];
+          x === 0 ? `Trasparente (alone ${c.energia}) ` : `Chroma ${c.energia} `, h('strong', {}, numeroRiserva(x)), ` / ${c.capacita} ${c.unita ?? 'PM'}`];
       }, { tag: 'p', classe: 'riga-chroma-viva' }),
     h('small', { class: 'nota' }, [
       testoAlimenta(c),
-      'Si ricarica solo con Convertire Potere (Magia sez. 6): «Nuova sessione» e il riposo non la riempiono.',
+      c.unita === 'CM' ? `Cariche Mistiche: non sono PM e non pagano Incantesimi. ${ctx.dati.regole.chroma.cariche_mistiche?.ricarica?.testo ?? ''} «Nuova sessione» e il riposo non le riempiono.` : 'Si ricarica solo con Convertire Potere (Magia sez. 6): «Nuova sessione» e il riposo non la riempiono.',
     ].join(' ')));
 }
 
 /**
- * Attivazione a durata di un Artefatto (Guanti da Combattimento Mistico, Armamenti §7.24): i PM dalla riserva
+ * Attivazione a durata di un Artefatto (Guanti da Combattimento Mistico, Armamenti §7.24): le CM (o i PM) dalla riserva
  * interna e la condizione accesa in una modifica sola; «Termina» la spegne. L'effetto entra in «Attacca!».
  */
 function attivazioneArtefattoUi(ctx, x, r, riserva) {
@@ -2753,22 +2772,23 @@ function attivazioneArtefattoUiCorpo(ctx, x, r, riserva) {
   const chiave = `attivazione:${x.uid}`;
   const accesa = (ctx.sessione.condizioniOggetti ?? []).includes(chiave);
   const pm = riserva ? ctx.sessione.chroma?.[riserva.uid]?.pmAttuali ?? 0 : 0;
-  const motivo = x.deposito ? 'nel deposito comune' : !x.sintonizzato ? 'non sintonizzato' : !r.attivo ? 'non indossato' : pm < at.pm ? `la riserva ha ${pm} PM, ne servono ${at.pm}` : null;
+  const costo = costoRiserva(at);
+  const motivo = x.deposito ? 'nel deposito comune' : !x.sintonizzato ? 'non sintonizzato' : !r.attivo ? 'non indossato' : pm < costo.n ? `la riserva ha ${numeroRiserva(pm)} ${costo.unita}, ne servono ${costo.n}` : null;
   // scheda di Lucas 1.0: il Pugno mistico è l'unico +1 VA dei Guanti; nessun bonus sempre attivo
   const effetto = [at.va ? `+${at.va} VA ai pugni` : null, at.natura ? `danno ${at.natura}` : null, at.danno ? `+${at.danno} al danno` : null].filter(Boolean).join(', ');
   return h('div', { class: 'attivazione-infusa' },
-    h('p', {}, h('strong', {}, `${at.nome ?? 'Attivazione'}: `), `${at.pm} PM dalla riserva interna, ${at.azione}, ${at.durata}: ${effetto}.`),
+    h('p', {}, h('strong', {}, `${at.nome ?? 'Attivazione'}: `), `${testoCosto(costo)} dalla riserva interna, ${at.azione}, ${at.durata}: ${effetto}.`),
     at.condizione ? h('p', { class: 'nota' }, at.condizione) : null,
     accesa ? h('p', { class: 'nota' }, h('strong', {}, 'Attiva'), ` · vale in «Attacca!» senz’armi; dura ${at.durata}. `,
       h('button', { type: 'button', class: 'btn btn-piccolo', onclick: () => ctx.azioni.condizioneOggetto(chiave) }, 'Termina')) : null,
     motivo && !accesa ? h('p', { class: 'nota motivo' }, `Avviso: ${motivo}. Si può attivare comunque.`) : null,
-    h('button', { type: 'button', class: `btn${motivo ? ' con-avviso' : ''}`, title: motivo ?? `Scala ${at.pm} PM dalla riserva e accende l’effetto; una nuova attivazione rinnova la durata`,
-      onclick: () => conAvviso(ctx.azioni.storico, { azione: `attivare ${x.nome}`, motivo, fai: (forza) => ctx.azioni.attivaArtefatto(x.uid, at.pm, forza) }) }, accesa ? `Rinnova (−${at.pm} PM)` : `Attiva (−${at.pm} PM)`),
+    h('button', { type: 'button', class: `btn${motivo ? ' con-avviso' : ''}`, title: motivo ?? `Scala ${testoCosto(costo)} dalla riserva e accende l’effetto; una nuova attivazione rinnova la durata`,
+      onclick: () => conAvviso(ctx.azioni.storico, { azione: `attivare ${x.nome}`, motivo, fai: (forza) => ctx.azioni.attivaArtefatto(x.uid, costo.n, forza) }) }, accesa ? `Rinnova (−${testoCosto(costo)})` : `Attiva (−${testoCosto(costo)})`),
     (r.def.getti_artefatto ?? []).map((g) => gettoArtefattoUi(ctx, x, r, g, pm)));
 }
 
 /**
- * Getto di fuoco e Doppio getto dei Guanti (scheda di Lucas 1.0; src/getti-artefatto.js): «Usa» scala i PM dalla riserva
+ * Getto di fuoco e Doppio getto dei Guanti (scheda di Lucas 1.0; src/getti-artefatto.js): «Usa» scala le CM dalla riserva
  * interna, poi i dadi del danno (uno per getto) e, per il Doppio getto, la Prova di Potere −2. Avvisa, non blocca.
  */
 function gettoArtefattoUi(ctx, x, r, g, pm) {
@@ -2777,16 +2797,16 @@ function gettoArtefattoUi(ctx, x, r, g, pm) {
   const ui = ((ctx.ui.getti ??= {})[x.uid] ??= {});
   const usato = ui.ultimo === g.id;
   return h('div', { class: 'getto-artefatto' },
-    h('p', {}, h('strong', {}, `${g.nome}: `), `${g.pm} PM dalla riserva interna, ${g.azione}${g.mani_libere ? `, ${g.mani_libere === 2 ? 'entrambe le mani libere' : 'una mano libera'}` : ''}${g.prova_potere ? `, Prova di ${g.prova_potere.abilita} ${g.prova_potere.modificatore < 0 ? '−' : '+'}${Math.abs(g.prova_potere.modificatore)} VA` : ', automatico'}. ${p.testo}`),
+    h('p', {}, h('strong', {}, `${g.nome}: `), `${testoCosto(p.costo)} dalla riserva interna, ${g.azione}${g.mani_libere ? `, ${g.mani_libere === 2 ? 'entrambe le mani libere' : 'una mano libera'}` : ''}${g.prova_potere ? `, Prova di ${g.prova_potere.abilita} ${g.prova_potere.modificatore < 0 ? '−' : '+'}${Math.abs(g.prova_potere.modificatore)} VA` : ', automatico'}. ${p.testo}`),
     h('p', { class: 'nota' }, g.condizione),
     motivo && !usato ? h('p', { class: 'nota motivo' }, `Avviso: ${motivo}. Si può usare comunque.`) : null,
     h('div', { class: 'riga-azioni' },
-      h('button', { type: 'button', class: `btn${motivo ? ' con-avviso' : ''}`, title: g.pm_anche_se_fallisce ? `Scala ${g.pm} PM: si consumano anche se la Prova fallisce` : `Scala ${g.pm} PM dalla riserva`,
-        onclick: () => conAvviso(ctx.azioni.storico, { azione: `usare ${g.nome}`, motivo, fai: (forza) => { ui.ultimo = g.id; ctx.azioni.usaArtefatto(x.uid, g.pm, forza); } }) }, `Usa (−${g.pm} PM)`),
+      h('button', { type: 'button', class: `btn${motivo ? ' con-avviso' : ''}`, title: (g.cm_anche_se_fallisce || g.pm_anche_se_fallisce) ? `Scala ${testoCosto(p.costo)}: si consumano anche se la Prova fallisce` : `Scala ${testoCosto(p.costo)} dalla riserva`,
+        onclick: () => conAvviso(ctx.azioni.storico, { azione: `usare ${g.nome}`, motivo, fai: (forza) => { ui.ultimo = g.id; ctx.azioni.usaArtefatto(x.uid, p.costo.n, forza); } }) }, `Usa (−${testoCosto(p.costo)})`),
       usato && p.prova ? h('button', { type: 'button', class: 'btn', onclick: () => apriTiro(ctx, { genere: 'prova', nome: p.prova.nome, va: p.prova.va, note: p.prova.scomposizione }) }, `Tira Potere (VA ${p.prova.va})`) : null,
       usato ? p.danni.map((d, i) => h('button', { type: 'button', class: 'btn', onclick: () => apriTiro(ctx, { genere: 'danno', nome: `${g.nome}${p.danni.length > 1 ? ` (getto ${i + 1})` : ''}: danno`, formula: d }) },
         `Tira il danno${p.danni.length > 1 ? ` ${i + 1}` : ''} ${d}`)) : null),
-    usato ? h('p', { class: 'nota' }, `Usato: ${g.pm} PM scalati.${g.pm_anche_se_fallisce ? ' I PM restano spesi anche se la Prova fallisce.' : ''} Fuoco (§5.24): dopo il danno residuo, PS Riflessi con modificatore 0 per evitare Incendiato, una sola per bersaglio e attacco.`) : null);
+    usato ? h('p', { class: 'nota' }, `Usato: ${testoCosto(p.costo)} scalati.${(g.cm_anche_se_fallisce || g.pm_anche_se_fallisce) ? ` Le ${p.costo.unita} restano spese anche se la Prova fallisce.` : ''} Fuoco (§5.24): dopo il danno residuo, PS Riflessi con modificatore 0 per evitare Incendiato, una sola per bersaglio e attacco.`) : null);
 }
 
 /**

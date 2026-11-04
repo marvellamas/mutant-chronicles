@@ -301,7 +301,8 @@
         "pmAttuali": 5
       },
       "es-bordone": {
-        "pmAttuali": 5
+        "pmAttuali": 5,
+        "unita": "CM"
       },
       "es-batteria-10": {
         "pmAttuali": 10

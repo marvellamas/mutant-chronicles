@@ -442,6 +442,9 @@ export function contenitori(voci, dati) {
   return contenitoriRisolti((voci ?? []).map((v) => risolvi(v, cat)), dati);
 }
 
+/** L'unità di una riserva: 'CM' (Cariche Mistiche, dedicate all'oggetto) o 'PM' (Batterie). Revisione del 02/11/2026. */
+export const unitaRiserva = (c) => (Number.isInteger(c?.capacita_cm) ? 'CM' : 'PM');
+
 function contenitoriRisolti(oggetti, dati) {
   const colori = coloriChroma(dati);
   const rs = regoleSintonizzazione(dati);
@@ -457,7 +460,11 @@ function contenitoriRisolti(oggetti, dati) {
       // Magia §26.2: Batteria (fonte anche per il personaggio) o Cariche (solo l'oggetto); proprietà Esclusive o Universali
       riserva: tipoRiserva(c, dati), alimentazione: alimentazioneRiserva(c, dati), fontePg: fontePerPg(c, dati),
       energia: c.energia, energiaNome: colore.energia ?? null, macrofamiglie: colore.macrofamiglie ?? [], regoleRimandate: !!colore.regole_rimandate,
-      capacita: c.capacita_pm, potenza: a.potenza, costo: a.sintonizzazione,
+      // revisione «Cariche Mistiche» (02/11/2026, lotto 171): le riserve dedicate agli effetti dell'oggetto sono in CM, le
+      // Batterie in PM; `precedente` è la capacità in PM di prima, per convertire una volta sola i salvataggi (A.193)
+      unita: unitaRiserva(c), capacita: Number.isInteger(c.capacita_cm) ? c.capacita_cm : c.capacita_pm,
+      ...(Number.isInteger(c.capacita_cm) && Number.isInteger(c.precedente?.capacita_pm) ? { precedentePm: c.precedente.capacita_pm } : {}),
+      potenza: a.potenza, costo: a.sintonizzazione,
       // A.59: il deposito non interrompe la Sintonizzazione (artefatti.json → sintonizzazione.deposito); una batteria
       // depositata non alimenta comunque, perché non è trasportata (sotto)
       sintonizzato: r.voce.sintonizzato === true && !(r.deposito && rs?.deposito?.interrompe !== false),
@@ -1537,7 +1544,7 @@ export function calcolaEquipaggiamento(base, voci, dati) {
     // oggetti indossati che danno il profilo dei pugni (Guanti da Combattimento Mistico, Armamenti §7.24): li riconosce
     // «Attacca!» (src/attacco.js → pugniPotenziati). Dal 01/11 (scheda di Lucas 1.0) i Guanti non hanno più un bonus
     // passivo: indossati danno solo il profilo, il +1 VA viene dal Pugno mistico acceso
-    pugni: oggetti.filter((o) => o.attivo && !o.deposito && o.def?.profilo_pugni).map((o) => ({ uid: o.uid, nome: o.nome })),
+    pugni: oggetti.filter((o) => o.attivo && !o.deposito && o.def?.profilo_pugni).map((o) => ({ uid: o.uid, nome: o.nome, famiglia: o.def.profilo_pugni.famiglia ?? null })),
     attivazioniArtefatti: oggetti.filter((o) => o.def?.attivazione_artefatto && !o.deposito)
       // `nome` resta quello dell'oggetto; `proprieta` è il nome della proprietà (Pugno mistico)
       .map((o) => ({ ...o.def.attivazione_artefatto, uid: o.uid, nome: o.nome, proprieta: o.def.attivazione_artefatto.nome ?? null, chiave: `attivazione:${o.uid}`, attivo: o.attivo, sintonizzato: o.voce.sintonizzato === true })),

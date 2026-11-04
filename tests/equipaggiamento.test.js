@@ -417,7 +417,7 @@ test('lotto 4: 40 armi ravvicinate corporative in 7 cataloghi (con la Katana Ry�
   assert.deepEqual(r('tonfa-stella-cadente').proprieta[0].effetto, { parata_va: 2 });
   assert.deepEqual(r('spada-punisher').munizioni.capacita, 5);
   assert.equal(r('spada-punisher').munizioni.unita, 'cariche');
-  assert.deepEqual(r('bordone-templare').attivazione, { testo: '+1d6 Magico; 5 PM; Sintonizzazione 2', danno_extra: '1d6', natura: 'Magico', sintonizzazione: 2 });
+  assert.deepEqual(r('bordone-templare').attivazione, { testo: '+1d6 Magico; riserva 5 CM, 1 CM per attivazione; Sintonizzazione 2', danno_extra: '1d6', natura: 'Magico', sintonizzazione: 2 });
   assert.equal(r('bordone-templare').munizioni.unita, 'PM');
   assert.equal(r('spada-deathdealer').natura_danno, 'Magico');
   assert.deepEqual(r('elettrosega-csb600').manovre, ['generali']);
@@ -933,7 +933,7 @@ test('lotto 12: regole di sintonizzazione, profili con riserva mistica, batterie
   assert.equal(f.artefatti_catalogo.length, 9); // A.158 e Armamenti 0.74: originale, batteria Verde e conversione a NeC della CyberArma
   assert.deepEqual(f.artefatti_catalogo.find((a) => a.rif === 'scudi:scudo-delle-guardie-sacre'), {
     rif: 'scudi:scudo-delle-guardie-sacre', tipologia: 'Protezioni', potenza: 'Rara', sintonizzazione: 3, sintonizzabile: true, proprieta_attive: true,
-    contenitore: { energia: 'Rosso', capacita_pm: 5, integrato: true, riserva: 'cariche', alimentazione: 'esclusiva' }, // Magia §26.2, Armamenti §7.5.1
+    contenitore: { energia: 'Rosso', integrato: true, riserva: 'cariche', alimentazione: 'esclusiva', capacita_cm: 5, precedente: { capacita_pm: 5, unita: 'PM', nota: 'Scudo delle Guardie Sacre' } }, // Magia §26.2, Armamenti §7.5.1; lotto 171: 5 CM
   });
   const b = catalogo(dati).perRif.get('artefatti:batteria-da-5-pm-chroma-bianco');
   assert.deepEqual(b.artefatto, { tipologia: 'Batterie e contenitori', potenza: 'Non Comune', sintonizzazione: 2, sintonizzabile: true, proprieta_attive: true, contenitore: { energia: 'Bianco', capacita_pm: 5 } });
@@ -971,7 +971,7 @@ test('sintonizzazione: capacità per Gradi e Talento, somma dei costi, avviso ol
   const m = massimiSessione(calcolaScheda({ creazione, livelli: [] }, dati), creazione, dati);
   assert.deepEqual(m.caricatori, {});
   assert.deepEqual(m.contenitori, { b: 5, s: 5, v: 5 });
-  assert.match(testoTooltip('oggetto', 'armi_corporative:spada-deliverer', dati), /Artefatto: Armi; potenza Non Comune, SnT 2 \(costo di Sintonizzazione\); riserva integrata di 5 PM \(Chroma Rosso\)/);
+  assert.match(testoTooltip('oggetto', 'armi_corporative:spada-deliverer', dati), /Artefatto: Armi; potenza Non Comune, SnT 2 \(costo di Sintonizzazione\); riserva integrata di 5 Cariche Mistiche \(CM, Chroma Rosso\)/);
 });
 
 test('validatore degli Artefatti: costo = potenza, riferimenti, regole', () => {

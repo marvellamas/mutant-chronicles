@@ -1463,7 +1463,9 @@ function validaEquipaggiamento(eq, nomiAbilita, idSpec, err, coloriChroma = [], 
       // proprietà attive di un Artefatto (Guanti, scheda di Lucas 1.0): Pugno mistico a durata e getti istantanei
       if (o.attivazione_artefatto !== undefined) {
         const at = o.attivazione_artefatto;
-        if (!isOggetto(at) || !(isIntero(at.pm) && at.pm > 0) || !isTesto(at.azione) || !isTesto(at.durata)) err(F, `${k}.attivazione_artefatto`, 'servono pm (intero > 0), azione e durata');
+        // il costo in PM oppure in CM (revisione «Cariche Mistiche», lotto 171), uno solo
+        const costo = (x) => [x?.pm, x?.cm].filter((n) => n !== undefined);
+        if (!isOggetto(at) || costo(at).length !== 1 || !costo(at).every((n) => isIntero(n) && n > 0) || !isTesto(at.azione) || !isTesto(at.durata)) err(F, `${k}.attivazione_artefatto`, 'servono un costo (pm oppure cm, intero > 0), azione e durata');
         else if (at.va !== undefined && !isIntero(at.va)) err(F, `${k}.attivazione_artefatto.va`, 'intero atteso');
       }
       if (o.getti_artefatto !== undefined) {
@@ -1471,7 +1473,7 @@ function validaEquipaggiamento(eq, nomiAbilita, idSpec, err, coloriChroma = [], 
         else o.getti_artefatto.forEach((g, j) => {
           const kg = `${k}.getti_artefatto[${j}]`;
           if (!isTesto(g?.id) || !isTesto(g?.nome)) { err(F, kg, 'servono id e nome'); return; }
-          if (!(isIntero(g.pm) && g.pm > 0)) err(F, `${kg}.pm`, 'intero > 0 atteso');
+          if ([g.pm, g.cm].filter((n) => n !== undefined).length !== 1 || ![g.pm, g.cm].filter((n) => n !== undefined).every((n) => isIntero(n) && n > 0)) err(F, `${kg}`, 'serve un costo: pm oppure cm, intero > 0');
           if (!(isTesto(g.danno) && DADI.test(g.danno))) err(F, `${kg}.danno`, 'formula di dadi attesa');
           if (!(isIntero(g.getti) && g.getti >= 1)) err(F, `${kg}.getti`, 'intero ≥ 1 atteso');
           if (!isOggetto(g.area) || !isIntero(g.area.lunghezza_q) || !isIntero(g.area.larghezza_q)) err(F, `${kg}.area`, 'servono lunghezza_q e larghezza_q');
@@ -1823,7 +1825,15 @@ function validaEquipaggiamento(eq, nomiAbilita, idSpec, err, coloriChroma = [], 
       if (!isOggetto(c)) err(F, `${k}.contenitore`, 'serve { energia, capacita_pm, integrato? }');
       else {
         if (coloriChroma.length && !coloriChroma.includes(c.energia)) err(F, `${k}.contenitore.energia`, `"${c.energia}" non è un colore del Chroma (${coloriChroma.join(', ')})`);
-        if (!isIntero(c.capacita_pm) || c.capacita_pm < 1) err(F, `${k}.contenitore.capacita_pm`, 'intero ≥ 1 atteso');
+        // revisione «Cariche Mistiche» (02/11/2026, lotto 171): una riserva è in PM (Batterie) oppure in CM (riserve dedicate
+        // agli effetti dell'oggetto: integrate, a Cariche, Esclusive), mai tutte e due
+        const inCm = c.capacita_cm !== undefined;
+        if (inCm === (c.capacita_pm !== undefined)) err(F, `${k}.contenitore`, 'serve capacita_pm (Batteria, in PM) oppure capacita_cm (Cariche Mistiche), uno solo');
+        else if (inCm) {
+          if (!isIntero(c.capacita_cm) || c.capacita_cm < 1) err(F, `${k}.contenitore.capacita_cm`, 'intero ≥ 1 atteso');
+          if (c.integrato !== true || c.riserva !== 'cariche' || c.alimentazione !== 'esclusiva') err(F, `${k}.contenitore`, 'le Cariche Mistiche sono riserve integrate, a Cariche ed Esclusive (revisione del 02/11/2026)');
+          if (c.precedente !== undefined && !(isOggetto(c.precedente) && isIntero(c.precedente.capacita_pm) && c.precedente.capacita_pm >= 1)) err(F, `${k}.contenitore.precedente`, 'serve { capacita_pm: intero ≥ 1 } (la capacità di prima, per convertire i salvataggi, A.193)');
+        } else if (!isIntero(c.capacita_pm) || c.capacita_pm < 1) err(F, `${k}.contenitore.capacita_pm`, 'intero ≥ 1 atteso');
         if (c.integrato !== undefined && typeof c.integrato !== 'boolean') err(F, `${k}.contenitore.integrato`, 'vero o falso');
         // Magia §26.2: tipo di riserva e alimentazione delle proprietà (solo per le riserve integrate)
         if (c.riserva !== undefined && !['batteria', 'cariche'].includes(c.riserva)) err(F, `${k}.contenitore.riserva`, '"batteria" o "cariche"');
@@ -1831,7 +1841,7 @@ function validaEquipaggiamento(eq, nomiAbilita, idSpec, err, coloriChroma = [], 
         if ((c.riserva !== undefined || c.alimentazione !== undefined) && c.integrato !== true) err(F, `${k}.contenitore`, 'riserva e alimentazione si indicano per le riserve integrate in un Artefatto');
         // Magia §26.4: Batteria Matrice (Matrice d'origine sulla voce, ricarica automatica)
         if (c.matrice !== undefined && c.matrice !== true) err(F, `${k}.contenitore.matrice`, 'solo true');
-        for (const x of Object.keys(c)) if (!['energia', 'capacita_pm', 'integrato', 'riserva', 'alimentazione', 'matrice'].includes(x)) err(F, `${k}.contenitore.${x}`, 'campo sconosciuto');
+        for (const x of Object.keys(c)) if (!['energia', 'capacita_pm', 'capacita_cm', 'precedente', 'integrato', 'riserva', 'alimentazione', 'matrice'].includes(x)) err(F, `${k}.contenitore.${x}`, 'campo sconosciuto');
       }
     }
   }

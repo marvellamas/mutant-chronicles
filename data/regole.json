@@ -1815,7 +1815,20 @@
     "contenitore_nuovo": "pieno",
     "_nota_contenitore_nuovo": "E&L del 29/09, risposta 2 (A.19): un contenitore acquistato è pieno (PM attuali = capacità). Uno trovato ha la carica stabilita dal Direttore: il giocatore la imposta nella voce dell’equipaggiamento («PM attuali, se trovato»: campo pm_iniziali), senza considerarla pari alla capacità.",
     "_nota": "Magia sez. 6 e Armamenti §7.5, §7.10. «colori»: energia e macrofamiglie di Incantesimi alimentate; Viola non è un contenitore di PM ma una fonte di Corruzione passiva («contenitore»: false; regole in «corruzione.chroma_viola», risposta A.21); Trasparente non è un colore da scegliere ma il contenitore esausto (0 PM), che conserva l'alone del colore d'origine, capacità e sintonizzazione. «conversione»: rapporto ordinario 3:1, ridotto di uno per ciascun Talento posseduto fra quelli elencati (rapporto_per_talenti, indice = numero di Talenti); il Bianco resta 2:1 in entrambi i sensi. Convertire Potere e ricaricare richiedono l'Addestramento Taumaturgo; un gruppo è automatico, da due in su una sola Prova di Potere con la penalità indicata. «contenitori_per_lancio»: un solo contenitore compatibile per lancio, eventualmente con PM personali.",
-    "_nota_nec": "Magia 1.3 sez. 6 (Google Doc del 01/10/2026): il Rosso alimenta Incantesimi Fisici e riserve mistiche Rosse. I Nuclei Energetici Cromatici (NEC Rossi, Blu e Verdi) sono la fonte energetica tecnologica: usano Lx, sono ricaricabili e non richiedono Sintonizzazione (Equipaggiamento §5.4); le riserve mistiche usano PM e le regole di questa sezione. Nessuna conversione automatica Lx–PM. Solo promemoria: il catalogo dei NEC arriva con il lotto del cap. 5 dell'Equipaggiamento 0.5."
+    "_nota_nec": "Magia 1.3 sez. 6 (Google Doc del 01/10/2026): il Rosso alimenta Incantesimi Fisici e riserve mistiche Rosse. I Nuclei Energetici Cromatici (NEC Rossi, Blu e Verdi) sono la fonte energetica tecnologica: usano Lx, sono ricaricabili e non richiedono Sintonizzazione (Equipaggiamento §5.4); le riserve mistiche usano PM e le regole di questa sezione. Nessuna conversione automatica Lx–PM. Solo promemoria: il catalogo dei NEC arriva con il lotto del cap. 5 dell'Equipaggiamento 0.5.",
+    "cariche_mistiche": {
+      "_nota": "Revisione «Cariche Mistiche» approvata da Davide il 02/11/2026 (per-davide.md, sezione 7); Armamenti 0.74 §7.5.1. «Le riserve dedicate ai soli effetti di armi e oggetti si chiamano Cariche Mistiche (CM), con contatore CM attuali/CM massime: non alimentano Incantesimi e non sono prelevabili come PM personali. Il nome non cambia le cariche tecnologiche NEC, CEC, MEC o BEC.» Le Batterie Mistiche conservano PM.",
+      "sigla": "CM",
+      "nome": "Cariche Mistiche",
+      "ricarica": {
+        "fattore": 2,
+        "pm_per_gruppo": "rapporto × fattore",
+        "gruppo_cm": 1,
+        "testo": "PM personali = CM mancanti × 2 × rapporto di conversione: 6 PM per CM a 3:1, 4 a 2:1, 2 a 1:1. Un gruppo ripristina 1 CM; più gruppi, una sola Prova di Potere come per le Batterie. Il ×2 non vale per le Batterie in PM né per gli accumulatori tecnologici.",
+        "fonte": "Revisione «Cariche Mistiche» (02/11/2026); Armamenti 0.74, «Ricaricare le Cariche Mistiche Rosse integrate»"
+      },
+      "conversione_salvataggi": "A.193: CM nuove = valore di prima / capacità di prima × capacità nuova, una volta sola, senza arrotondare per eccesso; il valore di prima resta nel file (sessione.chroma[uid].prima)."
+    }
   },
   "nec": {
     "travaso": {

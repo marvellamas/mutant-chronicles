@@ -15,6 +15,7 @@ import { deserializzaPersonaggio, normalizza } from '../src/character.js';
 import { calcolaScheda } from '../src/calc.js';
 import { massimiSessione, allineaSessione } from '../src/sessione.js';
 import { profiloSenzArmi } from '../src/attacco.js';
+import { numeroRiserva } from '../src/cariche-mistiche.js';
 
 const RIF = 'artefatti:guanti-da-combattimento-mistico';
 // la voce di prima (Armamenti 0.61 / Magia 1.4, 12/10/2026), per il confronto: valori fissi, il catalogo non li ha più
@@ -30,7 +31,10 @@ export function rapportoGuanti(personaggio, dati) {
   const sessione = allineaSessione(personaggio.sessione ?? {}, m);
   const s = calcolaScheda({ ...personaggio, sessione }, dati);
   const st = s.equipaggiamento.sintonizzazione;
+  // lotto 171: la riserva è in Cariche Mistiche; il valore in PM di prima resta in sessione.chroma[uid].prima (A.193)
   const pm = sessione.chroma?.[v.uid]?.pmAttuali ?? null;
+  const primaPm = sessione.chroma?.[v.uid]?.prima?.pmAttuali ?? (sessione.chroma?.[v.uid]?.unita === 'CM' ? null : pm);
+  const cm = (x) => numeroRiserva(x);
   const pugni = profiloSenzArmi(s, dati);
   const conPugno = calcolaScheda({ ...personaggio, sessione: { ...sessione, condizioniOggetti: [...new Set([...(sessione.condizioniOggetti ?? []), `attivazione:${v.uid}`])] } }, dati);
   const pugniAccesi = profiloSenzArmi(conPugno, dati);
@@ -41,12 +45,12 @@ export function rapportoGuanti(personaggio, dati) {
     { cosa: 'Potenza e Grado', prima: `${PRIMA.potenza}, Grado ${PRIMA.grado}`, dopo: `${a.potenza}, Grado ${a.grado}` },
     { cosa: 'Sintonizzazione (SnT)', prima: String(PRIMA.sintonizzazione), dopo: String(a.sintonizzazione) },
     { cosa: 'Kit sintonizzato / capacità', prima: `${kitPrima} / ${st.capacita}`, dopo: `${st.usata} / ${st.capacita}` },
-    { cosa: 'Riserva', prima: `10 PM ${PRIMA.energia}`, dopo: `${a.contenitore.capacita_pm} PM ${a.contenitore.energia}; nel file: ${pm ?? '—'} PM (restano)` },
+    { cosa: 'Riserva', prima: `${a.contenitore.precedente?.capacita_pm ?? 10} PM ${a.contenitore.energia}${primaPm !== null ? `; nel file ${primaPm} PM` : ''}`, dopo: `${a.contenitore.capacita_cm} Cariche Mistiche (CM) ${a.contenitore.energia}; ${pm === null ? 'nel file: —' : `${cm(pm)} CM`}${primaPm !== null ? ' (la stessa frazione, A.193; il valore di prima resta nel file)' : ''}` },
     { cosa: 'Bonus sempre attivo ai pugni', prima: `+${PRIMA.vaPassivo} VA`, dopo: 'nessuno' },
     { cosa: 'Bonus ai contatti degli Incantesimi', prima: `+${PRIMA.contattoIncantesimi} VA`, dopo: 'nessuno' },
     { cosa: 'VA dei pugni, Guanti solo indossati', prima: pugni.vaEffettivo === null ? '—' : String(pugni.vaEffettivo + PRIMA.vaPassivo), dopo: pugni.vaEffettivo === null ? '—' : String(pugni.vaEffettivo) },
-    { cosa: at.nome, prima: `${PRIMA.attivazione.pm} PM: danno Magico, +${PRIMA.attivazione.danno} danno`, dopo: `${at.pm} PM: +${at.va} VA, danno Magico, +${at.danno} danno (VA dei pugni ${pugniAccesi.vaEffettivo ?? '—'})` },
-    ...(g.getti_artefatto ?? []).map((x) => ({ cosa: x.nome, prima: 'non c’era', dopo: `${x.pm} PM, ${x.danno} ${x.natura}${x.prova_potere ? `, Prova di ${x.prova_potere.abilita} ${x.prova_potere.modificatore}` : ''}` })),
+    { cosa: at.nome, prima: `${PRIMA.attivazione.pm} PM: danno Magico, +${PRIMA.attivazione.danno} danno`, dopo: `${at.cm ?? at.pm} ${at.cm ? 'CM' : 'PM'}: +${at.va} VA, danno Magico, +${at.danno} danno (VA dei pugni ${pugniAccesi.vaEffettivo ?? '—'})` },
+    ...(g.getti_artefatto ?? []).map((x) => ({ cosa: x.nome, prima: 'non c’era', dopo: `${x.cm ?? x.pm} ${x.cm ? 'CM' : 'PM'}, ${x.danno} ${x.natura}${x.prova_potere ? `, Prova di ${x.prova_potere.abilita} ${x.prova_potere.modificatore}` : ''}` })),
   ];
   const avvisi = [];
   if (st.usata > st.capacita) avvisi.push(`Il kit sintonizzato occupa ${st.usata} su ${st.capacita}: la scheda lo segnala, non toglie niente. Sceglie il personaggio cosa interrompere (§7.10).`);
@@ -55,9 +59,9 @@ export function rapportoGuanti(personaggio, dati) {
   const daDire = [
     'Non devi scegliere niente.',
     `Perdi il +1 VA che i Guanti davano sempre ai pugni e il +1 VA agli attacchi a contatto degli Incantesimi: adesso indossati non danno bonus.`,
-    `Il Pugno mistico costa ${at.pm} PM invece di ${PRIMA.attivazione.pm} e ora dà anche +1 VA ai pugni, per 5 Round.`,
-    'Guadagni il Getto di fuoco (5 PM, linea 2 × 1 Q, 1d6+4 Fuoco) e il Doppio getto (10 PM, due getti, Prova di Potere −2).',
-    `La riserva è Rossa e resta con i PM che hai adesso (${pm ?? '—'}): non si ricarica da sola.`,
+    `La riserva dei Guanti ora si conta in Cariche Mistiche (CM): 6 in tutto, solo per i Guanti; non sono PM e non pagano Incantesimi.`,
+    `Il Pugno mistico costa ${at.cm ?? at.pm} CM e dà +1 VA ai pugni, danno Magico e +1, per 5 Round; il Getto di fuoco 3 CM, il Doppio getto 6 CM (Prova di Potere −2, le CM si spendono anche se fallisce).`,
+    `Adesso hai ${pm === null ? '—' : cm(pm)} CM${primaPm !== null ? ` (avevi ${primaPm} PM su ${a.contenitore.precedente?.capacita_pm ?? 10}: stessa frazione)` : ''}: non si ricaricano da sole. Ricarica: CM mancanti × 2 × rapporto (a 3:1, 6 PM per CM; da vuoti 36 PM).`,
   ];
   return { haGuanti: true, uid: v.uid, voci, kit: { usata: st.usata, capacita: st.capacita }, riserva: pm, avvisi, daDire };
 }

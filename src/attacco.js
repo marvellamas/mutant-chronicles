@@ -747,6 +747,8 @@ export const pugniPotenziati = (scheda) => (scheda?.equipaggiamento?.pugni ?? []
  * (§5.13; E&L 12, A.22): 1d4 di base, oppure il dado più alto dei Talenti (Arti Marziali 1d6, §8.6.1;
  * Disciplina del Lottatore al suo Grado, §3.5.5), più il bonus di FOR al danno e gli altri bonus.
  */
+const norma = (x) => String(x ?? '').normalize('NFC').toLowerCase().replace(/[’']/g, '’').trim();
+
 export function profiloSenzArmi(scheda, dati, { onda = null } = {}) {
   const S = dati.regole.attacco_ravvicinato.senz_armi;
   const a = (scheda?.abilita ?? []).find((x) => x.nome === S.abilita) ?? null;
@@ -761,9 +763,16 @@ export function profiloSenzArmi(scheda, dati, { onda = null } = {}) {
   const attivazioni = onda ? [] : (eq.attivazioniAccese ?? []).filter((x) => x.attacchi === 'senz_armi');
   // Giocatore 0.54 §8.8.1: Specializzazione in Combattimento Senz'Armi, +1 VA e +1 danno agli attacchi senz'armi
   // (effetto.attacchi = 'senz_armi' nei dati); non le Difese né la Parata a mani nude, e non Onda Interiore (Vettore Distanza)
-  const specSenzArmi = onda ? [] : (scheda?.specializzazioni ?? []).filter((s) => s.effetto?.attacchi === 'senz_armi');
-  // A.232 aperta (Guanti con Armi da Pugno e/o Combattimento Senz'Armi): oggi ai pugni, con o senza Guanti, vale solo
-  // Combattimento Senz'Armi; Armi da Pugno non si applica qui. Quando Davide risponde si cambia questo filtro.
+  // A.232 (Davide, 02/11/2026): ai pugni con i Guanti da Combattimento Mistico valgono Combattimento Senz’Armi oppure la
+  // Specializzazione della famiglia dei Guanti (Armi da Pugno, profilo_pugni.famiglia nei dati); con tutte e due, un solo
+  // +1 VA e +1 danno: «i bonus delle due Specializzazioni non si sommano sullo stesso pugno». Senza Guanti resta la sola
+  // Combattimento Senz’Armi. Non migliorano i getti né le armi impugnate (quelli non passano di qui).
+  const famigliePugni = new Set((eq.pugni ?? []).map((x) => norma(x.famiglia)).filter(Boolean));
+  const candidate = onda ? [] : (scheda?.specializzazioni ?? []).filter((s) => s.effetto?.attacchi === 'senz_armi'
+    || (famigliePugni.size && famigliePugni.has(norma(s.nome)) && (s.effetto?.va || s.effetto?.danno)));
+  const specSenzArmi = candidate.length > 1
+    ? [candidate.reduce((b, s) => ((s.effetto.va ?? 0) + (s.effetto.danno ?? 0) > (b.effetto.va ?? 0) + (b.effetto.danno ?? 0) ? s : b))]
+    : candidate;
   const bonusVa = [
     ...specSenzArmi.filter((s) => s.effetto.va).map((s) => voce(`Specializzazione in ${s.nome}`, s.effetto.va, 'regole')),
     ...(eq.bonusAttacco ?? []).filter(ravv).map((b) => voce(b.nome, b.valore, 'equipaggiamento')),

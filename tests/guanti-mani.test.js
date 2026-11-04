@@ -22,7 +22,7 @@ test('i Guanti sono un’Arma ravvicinata e insieme un Artefatto, con 0 mani', (
   assert.equal(g.impugnato, false);
   assert.ok(g.artefatto, 'resta un Artefatto Mistico');
   assert.equal(g.artefatto.sintonizzazione, 3, 'SnT 3 (scheda di Lucas 1.0)');
-  assert.equal(g.artefatto.contenitore.capacita_pm, 10, 'riserva invariata');
+  assert.equal(g.artefatto.contenitore.capacita_cm, 6, 'riserva di 6 Cariche Mistiche (revisione del 02/11, lotto 171)');
   // il profilo dei pugni dei manuali
   assert.deepEqual([g.profilo_pugni.famiglia, g.profilo_pugni.tipo_arma, g.profilo_pugni.abilita, g.profilo_pugni.caratteristica, g.profilo_pugni.portata_q],
     ['Armi da pugno', 'Guanti da combattimento', 'Corpo a corpo', 'FOR', 1]);
@@ -56,7 +56,7 @@ test('i Guanti si contano una volta sola: peso, quantità e riserva', () => {
   assert.ok(righe.length <= 1, 'una sola riga nel carico');
   const contenitori = (scheda.equipaggiamento.contenitori ?? []).filter((x) => /Guanti/.test(x.nome));
   assert.equal(contenitori.length, 1, 'una sola riserva');
-  assert.equal(contenitori[0].capacita, 10);
+  assert.deepEqual([contenitori[0].capacita, contenitori[0].unita], [6, 'CM']);
   const info = infoArtefattoVoce(risolvi(voci[0], cat), dati);
   assert.equal(info.sintonizzazione, 3, 'una sola SnT');
 });

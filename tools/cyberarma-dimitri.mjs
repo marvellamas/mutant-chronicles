@@ -49,6 +49,8 @@ export function rapportoCyberArma(personaggio, dati) {
     { cosa: 'CyberArma consegnata (forma del progetto base, sintonizzata)', oggi: '—', dopo: cyber ? `VA ${cyber.vaEffettivo ?? cyber.va}${cyber.scomposizione?.some((x) => /modulatore/.test(x.etichetta)) ? ' (con SIN 1 del modulatore)' : ''}, danno ${cyber.danno?.una_mano ?? '—'} Magico, ${cyber.mani} mano/i, portata ${cyber.portataQ ?? '—'} Q` : '—' },
     { cosa: 'Sintonizzazione usata / capacità', oggi: `${st.usata} / ${st.capacita}`, dopo: `${st2.usata} / ${st2.capacita} (CyberArma SnT 2 per il Tecnomante)` },
     { cosa: 'Attivazione', oggi: '—', dopo: '1 AzP e 2 PM personali, 10 Round, senza Concentrazione' },
+    // revisione «Cariche Mistiche» e A.236 (lotto 171): la riserva interna è un'installazione a parte, in CM
+    { cosa: 'Riserva interna', oggi: 'nessuna', dopo: 'nessuna: il progetto dei tre giorni non la installa e il focalizzatore non è una batteria; se il Direttore la fa installare, Verde da 5 Cariche Mistiche (CM), 1 CM per 10 Round, solo per l’arma (A.236)' },
   ];
   const avvisi = [];
   if (!classi.includes('Tecnomante')) avvisi.push('Il personaggio non è Tecnomante: il progetto è scritto per il Tecnomante.');

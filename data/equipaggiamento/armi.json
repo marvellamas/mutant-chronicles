@@ -1480,7 +1480,7 @@
       },
       "id": "cyberarma-batteria-verde",
       "nome": "CyberArma con Batteria Verde",
-      "effetto_breve": "Originale con batteria mistica interna Verde da 10 PM (cinque attivazioni da 2 PM), SnT 2 complessiva: Custode e Tecnomante, oltre ai PM personali.",
+      "effetto_breve": "Originale con riserva interna Verde da 5 Cariche Mistiche, esclusiva dell’arma (1 CM per 10 Round, cinque attivazioni), SnT 2 complessiva; resta l’alternativa dei PM personali.",
       "peso": 0.7,
       "_nota_peso": "A.158, punto 3: peso complessivo della configurazione modificata.",
       "uso_per_classe": {
@@ -1494,7 +1494,7 @@
             "danno_extra": 1,
             "va": 0,
             "sintonizzazione": 1,
-            "testo": "Custode (SnT 1): evoca l’Arma Astrale per 1 PM e 15 Round, includendo l’evocazione nell’Azione del primo attacco, +1 al danno (Maestro d’Arma). Danno base e altri benefici seguono il Grado e i Talenti del Custode (Giocatore §3.9.2). Può pagare anche con 2 PM della batteria interna (si scalano nella riserva dell’arma)."
+            "testo": "Custode (SnT 1): evoca l’Arma Astrale per 1 PM personale e 15 Round, includendo l’evocazione nell’Azione del primo attacco, +1 al danno (Maestro d’Arma). Danno base e altri benefici seguono il Grado e i Talenti del Custode (Giocatore §3.9.2). Pagare con la riserva interna in CM: la revisione non dà il costo per il Custode (TODO(Davide) A.251)."
           },
           {
             "classe": "Tecnomante",
@@ -1503,7 +1503,8 @@
             "danno_extra": 0,
             "va": 0,
             "sintonizzazione": 2,
-            "testo": "Tecnomante (SnT 2): 1 AzP e 2 PM personali, lama stabile per 10 Round, senza Concentrazione; 1d8 Magico più i modificatori pertinenti. Attivazione automatica dopo la Sintonizzazione; restano le normali Prove per attaccare. Può pagare anche con 2 PM della batteria interna (si scalano nella riserva dell’arma)."
+            "testo": "Tecnomante (SnT 2): 1 AzP e 1 CM della riserva interna, oppure 2 PM personali; lama stabile per 10 Round, senza Concentrazione; 1d8 Magico più i modificatori pertinenti (revisione «Cariche Mistiche», A.236).",
+            "cm": 1
           },
           {
             "classe": "altre",
@@ -1524,7 +1525,7 @@
         "fonte": "Armamenti 0.74 §7.25.2",
         "testo": "SIN 1: +1 VA alle Prove per colpire con la CyberArma, comprese le Manovre che richiedono quel tiro, soltanto al Tecnomante con interfaccia neurale compatibile, funzionante e collegata. Non aggiunge bonus a Parate, danni o altre Prove; un solo SIN per Prova (§7.15.1)."
       },
-      "_nota_batteria": "Armamenti 0.74 §7.25: batteria mistica interna Verde da 10 PM; a piena capacità cinque attivazioni complete da 2 PM. La SnT 2 comprende manufatto e batteria. Si applicano le normali regole delle Batterie Mistiche. Prezzo indicativo: predisposizione 1.000 cr + batteria 2.000 cr = 3.000 cr su un originale esistente.",
+      "_nota_batteria": "Revisione «Cariche Mistiche» (02/11/2026) e A.236: riserva interna Verde da 5 CM, dedicata esclusivamente alla CyberArma: non paga Incantesimi, altre capacità, altri oggetti e non si converte in PM personali. Per il Tecnomante 1 CM e 1 AzP manifestano l’arma per 10 Round (cinque attivazioni); resta il profilo da 2 PM personali. L’installazione va fatta e confermata: il progetto iniziale dei tre giorni di Dimitri non la comprende. Ricarica a 3:1: 30 PM da vuota. Prezzo indicativo: predisposizione 1.000 cr + batteria 2.000 cr.",
       "costo_modifica": 3000
     },
     {
@@ -1692,8 +1693,15 @@
         "fonte": "Armamenti 0.74 §7.25.2",
         "testo": "SIN 1: +1 VA alle Prove per colpire con la CyberArma, comprese le Manovre che richiedono quel tiro, soltanto al Tecnomante con interfaccia neurale compatibile, funzionante e collegata. Non aggiunge bonus a Parate, danni o altre Prove; un solo SIN per Prova (§7.15.1)."
       },
-      "_nota_nec": "Armamenti 0.74 §7.25: il NeC «della capacità prevista dalla scheda» non è indicato; un NeC da 10 cariche consente dieci attivazioni. Le conversioni non danno il +1 danno di Maestro d’Arma né i benefici del Custode. Prezzo indicativo della conversione: 2.000 cr, NeC escluso.",
-      "costo_modifica": 2000
+      "_nota_nec": "A.237 (Davide, 02/11/2026): configurazione ordinaria con un NEC Rosso da 10 cariche; ogni attivazione richiede 1 AzP e una carica e mantiene la manifestazione per 10 Round: dieci cariche, dieci attivazioni. SnT 3 complessiva. Le conversioni non danno il +1 danno di Maestro d’Arma né i benefici del Custode. Prezzo indicativo della conversione: 2.000 cr, NEC escluso.",
+      "costo_modifica": 2000,
+      "alimentazione": {
+        "nec": "nec:nec-rosso-10",
+        "usi": 10,
+        "unita_usi": "cariche",
+        "descrizione": "NEC Rosso da 10 cariche: una carica per attivazione (1 AzP, 10 Round), non per attacco; la carica residua resta al NEC. Sostituzione e ricarica secondo le regole dei NEC e la A.215. Non converte cariche tecnologiche in PM o in energia mistica.",
+        "paragrafo": "A.237 (Davide, 02/11/2026); Armamenti 0.74 §7.25"
+      }
     }
   ]
 }

@@ -65,8 +65,8 @@ test('Scheggia instabile: SnT 0, senza sintonizzazione è una fonte di «Lancia!
   assert.ok(r.promemoria.some((p) => /Scheggia instabile: prima una Prova di Potere obbligatoria per estrarre/.test(p)));
 });
 
-// scheda «Guanti mistici di Lucas» 1.0 (31/10/2026): niente bonus passivo; il Pugno mistico (2 PM) dà +1 VA, Magico e +1
-test('Guanti da Combattimento Mistico: indossati non danno +1 VA; Pugno mistico 2 PM: +1 VA, pugni Magici e +1 al danno', () => {
+// scheda «Guanti mistici di Lucas» 1.0: niente bonus passivo; il Pugno mistico (1 CM dal lotto 171, Cariche Mistiche) dà +1 VA, Magico e +1
+test('Guanti da Combattimento Mistico: indossati non danno +1 VA; Pugno mistico 1 CM: +1 VA, pugni Magici e +1 al danno', () => {
   const senza = pg([]);
   const con = pg([voce('g', 'artefatti:guanti-da-combattimento-mistico', 'indossata')]);
   const a0 = profiloSenzArmi(senza.s, dati);
@@ -74,10 +74,10 @@ test('Guanti da Combattimento Mistico: indossati non danno +1 VA; Pugno mistico 
   assert.equal(a1.vaEffettivo - a0.vaEffettivo, 0, 'nessun +1 VA passivo');
   // non valgono per le armi impugnate
   assert.ok(!con.s.equipaggiamento.armi.some((w) => w.scomposizione?.some((x) => /Guanti/.test(x.etichetta))));
-  // Pugno mistico: serve la sintonizzazione; spende 2 PM dalle Cariche e accende la condizione
+  // Pugno mistico: serve la sintonizzazione; spende 1 CM dalla riserva da 6 CM e accende la condizione
   const sint = pg([voce('g', 'artefatti:guanti-da-combattimento-mistico', 'indossata', { sintonizzato: true })]);
-  const s1 = attivaArtefatto(inizializzaSessione(sint.m), 'g', 2, sint.m);
-  assert.deepEqual([s1.chroma.g.pmAttuali, s1.condizioniOggetti.includes('attivazione:g')], [8, true]);
+  const s1 = attivaArtefatto(inizializzaSessione(sint.m), 'g', 1, sint.m);
+  assert.deepEqual([s1.chroma.g.pmAttuali, s1.chroma.g.unita, s1.condizioniOggetti.includes('attivazione:g')], [5, 'CM', true]);
   const sch = calcolaScheda({ creazione: sint.creazione, livelli: [], sessione: s1 }, dati);
   const a2 = profiloSenzArmi(sch, dati);
   assert.equal(a2.natura, 'Magico');
