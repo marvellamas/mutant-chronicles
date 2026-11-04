@@ -75,7 +75,7 @@ import { componiMenu, unisciMenu } from '../../mappa/menu.js';
 import { diTurno, ordineIniziativa } from '../../scontro.js';
 import { statoMovimento, muoviVeicolo, cambiaConducente, scegliAndatura } from '../../veicoli-registro.js';
 import { formaRuotata, normaAngolo, baseDaIngombro, angoloDi, ruotaDi } from '../../mappa/forma.js';
-import { ruotabile, rotazioneDi, passoGradi, tokenTesta } from '../../mappa/sagoma.js';
+import { ruotabile, rotazioneDi, passoGradi, tokenTesta, cellaTesta, spostaTesta, testaAutomatica, testaManuale } from '../../mappa/sagoma.js';
 import { inQBase, testoDistanza } from '../../mappa/distanze.js';
 import { ruotaSeLibero, sali, scendi, qPerScendere, veicoliVicini, aBordo, veicoloDi, veicoloFermo } from '../../mappa/veicoli-mappa.js';
 import { rigaMovimentoLibero, rigaOpportunita, senzaOpportunitaDelMovimento, rigaPorta, rigaTemplateTolti, rigaGruppo, registraRiga } from '../../scontro.js';
@@ -454,6 +454,7 @@ export function renderMappa(radice, ctx) {
         const t = st.trascina?.modo === 'token' ? { id: st.trascina.token, q: st.trascina.q } : null;
         disegnaToken(c, { scena: st.scena, cam: st.cam, pezzi: st.mappaPezzi, colori: coloriMappa(el.riquadro), immagine, selezionato: st.selezionato, trascina: t, bordo: bordoDi, alone: ctx.dati.mappa.colori.alone_turno, ritrattoVerticale: ctx.dati.mappa.token.ritratto_verticale, pv: { stile: ctx.dati.mappa.pv_token, mostra: () => st.mostraPv }, zero: ctx.dati.mappa.pv_zero, volo: ctx.dati.mappa.volo, stileNome: ctx.dati.mappa.template.nome });
         disegnaSelezioneGruppo(c);
+        disegnaTeste(c);
         // fase 2, lotto 5: i quadretti liberi accanto al veicolo per «Scendi»
         if (st.scendi) {
           const g = st.scena.griglia;
@@ -1667,6 +1668,52 @@ export function renderMappa(radice, ctx) {
     dopoCambioToken();
     if (r.passeggero.ruolo === 'conducente') await conducenteNelRegistro(vTok, null);
   }
+  /**
+   * A.223 (Davide, 03/11/2026): «Sposta la testa…» del Direttore. Si sceglie con un clic un quadretto della sagoma; il token
+   * non si muove e la creatura non guadagna movimento né portata: cambia solo da dove partono distanze e linee di tiro.
+   */
+  function iniziaTesta(id) {
+    st.sceltaTesta = { id };
+    avviso('Clic su un quadretto della sagoma per metterci la testa (Esc annulla).', { tipo: 'info', chiave: 'testa', durata: 15000 });
+    ridisegna(['sopra']);
+  }
+  function testaQui(m) {
+    const tok = st.scena.token.find((t) => t.id === st.sceltaTesta.id);
+    if (!tok) { st.sceltaTesta = null; return; }
+    const r = spostaTesta(tok, qVicino(m));
+    if (r.errore) { avviso(`${r.errore[0].toUpperCase()}${r.errore.slice(1)} (Esc annulla).`, { chiave: 'testa' }); return; }
+    st.sceltaTesta = null;
+    cambiaToken(tok.id, () => r.token);
+    cacheLinea.chiave = null;
+    avviso(`Testa di ${nomeTok(tok)} spostata: distanze e linee di tiro partono da lì. Segue la creatura quando si muove o si gira. Ctrl+Z annulla.`, { tipo: 'info', chiave: 'testa' });
+  }
+  /** Il segno della testa sulle creature i cui attacchi partono dalla testa (A.203, A.223). */
+  function disegnaTeste(c) {
+    const g = st.scena.griglia;
+    for (const t of st.scena.token) {
+      if (!pezzoDi(t)?.testaOrigine) continue;
+      const [x, y] = cellaTesta(t);
+      const s = schermoDaMappa(st.cam, g.scosto_x + (x + 0.5) * g.q_px, g.scosto_y + (y + 0.5) * g.q_px);
+      const r = Math.max(5, g.q_px * st.cam.scala * 0.28);
+      c.save();
+      c.beginPath(); c.arc(s.x, s.y, r, 0, Math.PI * 2);
+      c.fillStyle = testaManuale(t) ? 'rgba(255, 176, 0, 0.9)' : 'rgba(255, 255, 255, 0.85)';
+      c.strokeStyle = '#111'; c.lineWidth = 2; c.fill(); c.stroke();
+      c.restore();
+    }
+    // in scelta: i quadretti della sagoma su cui può andare
+    if (st.sceltaTesta) {
+      const t = st.scena.token.find((x) => x.id === st.sceltaTesta.id);
+      if (!t) return;
+      c.save(); c.strokeStyle = 'rgba(255, 176, 0, 0.9)'; c.lineWidth = 2;
+      for (const [x, y] of celleTokenQ(t)) {
+        const a = schermoDaMappa(st.cam, g.scosto_x + x * g.q_px, g.scosto_y + y * g.q_px);
+        const b = schermoDaMappa(st.cam, g.scosto_x + (x + 1) * g.q_px, g.scosto_y + (y + 1) * g.q_px);
+        c.strokeRect(a.x + 1, a.y + 1, b.x - a.x - 2, b.y - a.y - 2);
+      }
+      c.restore();
+    }
+  }
   /** Linea di tiro di chi è a bordo: parte dal veicolo, dal quadretto dell'ingombro più favorevole (come i token grandi). */
   function lineaPasseggero(idVeicolo, idPasseggero) {
     iniziaLinea(idVeicolo);
@@ -2608,7 +2655,7 @@ export function renderMappa(radice, ctx) {
     const da = daToken && pezzoDi(daToken)?.testaOrigine ? tokenTesta(daToken) : daToken;
     const a = l?.a ? st.scena.token.find((x) => x.id === l.a) : null;
     if (!da || (!a && !l.punto)) return null;
-    const chiave = JSON.stringify([idDi(st.scena), l.da, l.a, l.punto, mappaSemplice(st.scena)]);
+    const chiave = JSON.stringify([idDi(st.scena), l.da, l.a, l.punto, mappaSemplice(st.scena), da.q]);
     if (cacheLinea.chiave === chiave) return cacheLinea.valore;
     const r = lineaDiTiro(st.scena, da, a ?? l.punto, ostacoliVista(st.scena, RP), RV, { contaToken: contaInLinea, volo: ctx.dati.mappa.volo.linea_di_tiro });
     cacheLinea.chiave = chiave;
@@ -3261,6 +3308,8 @@ export function renderMappa(radice, ctx) {
     if (st.daPiazzare && !st.spazio) { piazza(st.daPiazzare, m); return; }
     // fase 2, lotto 5: un clic su un quadretto accanto al veicolo fa scendere chi si è scelto
     if (st.scendi && !st.spazio) { scendiQui(m); return; }
+    // A.223: un clic su un quadretto della sagoma mette lì la testa della creatura
+    if (st.sceltaTesta && !st.spazio) { testaQui(m); return; }
     // fase 2, lotto 1: un clic fissa il template che si sta piazzando
     if (st.tpl.anteprima && !st.spazio) { aggiornaAnteprima(m); fissaTemplate(); return; }
     // fase 2, lotto 3: con la linea di tiro un clic fissa il bersaglio (un token o un Q); su chi tira, esce
@@ -3812,10 +3861,16 @@ export function renderMappa(radice, ctx) {
       linea: () => ({ testo: 'Linea di tiro', tasto: 'L', titolo: 'Distanza, vista e Copertura verso il mouse o un token (Giocatore §5.8, §5.11)', azione: () => iniziaLinea(tok.id) }),
       area: () => (mov ? { testo: st.mostraArea ? 'Nascondi area' : 'Mostra area', tasto: 'M', azione: () => cambiaMostraArea() } : null),
       zoc: () => ({ testo: st.mostraZoc ? 'Nascondi ZoC' : 'Mostra ZoC', tasto: 'Z', titolo: 'Zone di controllo degli avversari: uscendone si provoca un Attacco di Opportunità (§5.3)', azione: () => cambiaMostraZoc() }),
-      template_qui: () => ({ testo: 'Template da qui…', tasto: 'T', titolo: 'Un template con l’origine sul token (raggio, cono, linea…)', azione: () => nuovoTemplateUi([...tok.q]) }),
+      // A.203, A.223: per chi attacca dalla testa (Madre delle Murene) il template parte dal quadretto della testa
+      template_qui: () => ({ testo: 'Template da qui…', tasto: 'T', titolo: 'Un template con l’origine sul token (raggio, cono, linea…)', azione: () => nuovoTemplateUi(pz?.testaOrigine ? cellaTesta(tok) : [...tok.q]) }),
       mini_scheda: () => (pz ? { testo: 'Apri mini-scheda', tasto: 'clic', azione: () => apriCarta(tok) } : null),
       scheda_completa: () => (pg && recordPg(pz) ? { testo: 'Apri scheda completa', tasto: 'Ctrl+clic', titolo: 'La scheda del PG, con «Torna alla mappa»', azione: () => apriSchedaToken(tok) } : null),
       nascondi: () => ({ testo: tok.nascosto ? 'Mostra ai giocatori' : 'Nascondi ai giocatori', azione: () => cambiaToken(tok.id, (x) => ({ ...x, nascosto: !x.nascosto })) }),
+      // A.223: il Direttore sposta a mano il segno della testa (Madre delle Murene), o lo rimette all'estremità del muso
+      testa_token: () => (pz?.testaOrigine && celleTokenQ(tok).length > 1 ? [
+        { testo: 'Sposta la testa…', chiave: 'testa:sposta', titolo: 'Clic su un quadretto della sagoma: distanze e linee di tiro partono da lì; il token non si muove e non guadagna portata (A.223)', azione: () => iniziaTesta(tok.id) },
+        ...(testaManuale(tok) ? [{ testo: 'Testa automatica', chiave: 'testa:auto', titolo: 'Torna all’estremità del muso', azione: () => { cambiaToken(tok.id, testaAutomatica); cacheLinea.chiave = null; } }] : []),
+      ] : null),
       colore_bordo: () => (pz ? { testo: 'Colore del bordo…', azione: () => coloreBordo(tok.id) } : null),
       selezione_token: () => ({ testo: st.gruppo.has(tok.id) ? 'Togli dalla selezione' : 'Aggiungi alla selezione', tasto: 'Maiusc+clic', titolo: 'Selezione multipla: trascinando uno dei selezionati si spostano tutti, liberi e in formazione', azione: () => cambiaGruppo(alternaSelezione(!st.gruppo.size && st.selezionato && st.selezionato !== tok.id ? new Set([st.selezionato]) : st.gruppo, tok.id)) }),
       luce_token: () => ({ testo: tok.luce ? `Luce portata: ${tok.luce} Q…` : 'Porta una luce…', titolo: 'Torcia, lanterna…: la zona attorno al token diventa Luce e lo segue', azione: () => luceToken(tok) }),
@@ -3849,6 +3904,7 @@ export function renderMappa(radice, ctx) {
     if (frecciaPorta(e)) return;
     if (frecciaTokenLibero(e)) return;
     if (frecciaVeicolo(e)) return;
+    if (e.key === 'Escape' && st.sceltaTesta) { e.preventDefault(); st.sceltaTesta = null; ridisegna(['sopra']); avviso('La testa resta dov’era.', { chiave: 'testa' }); return; }
     if (e.key === 'Escape' && st.scendi) { e.preventDefault(); st.scendi = null; ridisegna(['sopra']); avviso('Discesa annullata.', { chiave: 'scendi' }); return; }
     // 07/10: le frecce spostano il gruppo selezionato di 1 Q (un Ctrl+Z per passo)
     if (st.gruppo.size && ['ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown'].includes(e.key)) {

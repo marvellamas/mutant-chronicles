@@ -159,16 +159,51 @@ export { normaAngolo, retto };
 export function cellaTesta(t) {
   const mie = celleToken(t);
   if (mie.length <= 1) return mie[0] ?? [...t.q];
+  const { centro, avanti, lato, base } = assiDelCorpo(t);
+  // A.223 (Davide, 03/11/2026): il Direttore può spostare a mano il segno della testa in una posizione plausibile sulla
+  // sagoma; la posizione si tiene nel sistema del corpo (t.testa: { avanti, lato } in Q dal centro, lungo l'asse in cui
+  // guarda e di traverso), quindi segue spostamenti e rotazioni. Senza: l'estremità del muso.
+  const o = testaManuale(t) ? t.testa : { avanti: base[0] / 2, lato: 0 };
+  const punto = [centro[0] + avanti[0] * o.avanti + lato[0] * o.lato, centro[1] + avanti[1] * o.avanti + lato[1] * o.lato];
+  // il quadretto occupato più vicino: la testa resta sempre sulla sagoma, qualunque sia il segno salvato
+  let migliore = mie[0]; let d = Infinity;
+  for (const c of mie) { const dd = Math.hypot(c[0] + 0.5 - punto[0], c[1] + 0.5 - punto[1]); if (dd < d - 1e-9) { d = dd; migliore = c; } }
+  return [...migliore];
+}
+
+/** Centro, versi (avanti = dove guarda, lato = di traverso) e base del corpo, come li usa cellaTesta. */
+function assiDelCorpo(t) {
   const f = formaDi(t);
   const [w, h] = dimensioni(t.ingombro);
   const base = f ? t.base : baseDaIngombro(t.ingombro);
   const angolo = f ? normaAngolo(t.angolo) : (w === h ? 180 : w > h ? 90 : 180);
   const centro = f ? [t.q[0] + f.centro[0], t.q[1] + f.centro[1]] : [t.q[0] + w / 2, t.q[1] + h / 2];
   const rad = (angolo * Math.PI) / 180;
-  const punto = [centro[0] + Math.sin(rad) * (base[0] / 2), centro[1] - Math.cos(rad) * (base[0] / 2)];
-  let migliore = mie[0]; let d = Infinity;
-  for (const c of mie) { const dd = Math.hypot(c[0] + 0.5 - punto[0], c[1] + 0.5 - punto[1]); if (dd < d - 1e-9) { d = dd; migliore = c; } }
-  return [...migliore];
+  return { centro, base, avanti: [Math.sin(rad), -Math.cos(rad)], lato: [Math.cos(rad), Math.sin(rad)] };
+}
+
+/** A.223: il segno della testa è stato spostato a mano dal Direttore? */
+export const testaManuale = (t) => !!t?.testa && Number.isFinite(t.testa.avanti) && Number.isFinite(t.testa.lato);
+
+/**
+ * A.223: la testa spostata a mano sul quadretto `cella` della sagoma. Restituisce { token } con il segno nel sistema del
+ * corpo, oppure { errore } se il quadretto non è della sagoma (una posizione non plausibile). Il token non si sposta,
+ * l'ingombro non cambia: si sposta solo l'origine di distanze e linee di tiro (nessun movimento né portata in più).
+ */
+export function spostaTesta(t, cella) {
+  const mie = celleToken(t);
+  if (mie.length <= 1) return { errore: 'la creatura occupa un quadretto solo: la testa è lì' };
+  if (!mie.some(([x, y]) => x === cella[0] && y === cella[1])) return { errore: 'la testa va su un quadretto della sagoma della creatura' };
+  const { centro, avanti, lato } = assiDelCorpo(t);
+  const v = [cella[0] + 0.5 - centro[0], cella[1] + 0.5 - centro[1]];
+  const arrotonda = (x) => Math.round(x * 1000) / 1000;
+  return { token: { ...t, testa: { avanti: arrotonda(v[0] * avanti[0] + v[1] * avanti[1]), lato: arrotonda(v[0] * lato[0] + v[1] * lato[1]) } } };
+}
+
+/** A.223: torna la testa automatica (l'estremità del muso). */
+export function testaAutomatica(t) {
+  const { testa: _, ...resto } = t;
+  return resto;
 }
 
 /** Il token ridotto al solo quadretto della testa (stessi id e riferimenti): l'origine delle linee di tiro e delle distanze. */

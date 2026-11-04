@@ -748,6 +748,7 @@
         "nascondi",
         "luce_token",
         "sensi_token",
+        "testa_token",
         "colore_bordo",
         "togli_token"
       ]

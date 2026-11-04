@@ -218,7 +218,8 @@ export function adattaToken(token, pezzo, griglia) {
   const [w, h] = Array.isArray(token.ingombro) ? token.ingombro : [token.ingombro ?? 1, token.ingombro ?? 1];
   const prima = formaDi(token);
   const centro = prima ? [token.q[0] + prima.centro[0], token.q[1] + prima.centro[1]] : [token.q[0] + w / 2, token.q[1] + h / 2];
-  const { angolo, base, perno, ...resto } = token;
+  // A.223: con la misura nuova la testa torna automatica (il muso è altrove)
+  const { angolo, base, perno, testa: _testa, ...resto } = token;
   const dentro = (x, y, ww, hh) => [Math.max(0, Math.min(griglia.colonne - ww, Math.round(x))), Math.max(0, Math.min(griglia.righe - hh, Math.round(y)))];
   if (nuovaBase[0] === nuovaBase[1]) {
     const [x, y] = dentro(centro[0] - nuovaBase[0] / 2, centro[1] - nuovaBase[0] / 2, nuovaBase[0], nuovaBase[0]);

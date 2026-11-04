@@ -226,6 +226,8 @@ export function validaScena(s, dati) {
       return `${k}.ingombro: ${D.token.ingombri_ammessi.join(', ')} Q per lato${t.rif.tipo === 'partecipante' ? ` (le creature fino a ${D.token.creatura_ingombro_max})` : ''}`;
     }
     if (!isQ(t.q) || !tokenDentro(t, colonne, righe)) return `${k}.q: il token deve stare tutto dentro la griglia`;
+    // A.223 (03/11): il segno della testa spostato a mano dal Direttore, nel sistema del corpo (src/mappa/sagoma.js → spostaTesta)
+    if (t.testa !== undefined && !(isOggetto(t.testa) && ['avanti', 'lato'].every((c) => Number.isFinite(t.testa[c]) && Math.abs(t.testa[c]) <= massimo))) return `${k}.testa: { avanti, lato } in Q, entro la sagoma`;
     if (typeof t.nascosto !== 'boolean') return `${k}.nascosto: vero o falso`;
     { const e = erroreLuceToken(t.luce, dati); if (e) return `${k}.${e}`; }
     // A.143: sensi speciali accesi dal master (visione notturna, termica, Vista Felina)
