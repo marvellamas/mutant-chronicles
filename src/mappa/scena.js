@@ -176,6 +176,9 @@ export function validaScena(s, dati) {
   // maschere (§5, §6)
   if (!mascheraValida(s.muri, colonne, righe)) return 'muri: maschera di Q della dimensione della griglia attesa';
   if (!mascheraValida(s.terreno, colonne, righe)) return 'terreno: maschera di Q della dimensione della griglia attesa';
+  // A.224 (03/11): la roccia, facoltativa (le scene di prima non l'hanno). Conta solo dove c'è anche il muro
+  // (src/mappa/porte.js → rocciaEffettiva): un Q tolto dai muri non resta roccia da attraversare.
+  if (s.roccia !== undefined && !mascheraValida(s.roccia, colonne, righe)) return 'roccia: maschera di Q della dimensione della griglia attesa';
   if (!isOggetto(s.nebbia) || !D.scena.nebbie_iniziali.includes(s.nebbia.iniziale)) return `nebbia.iniziale: ${D.scena.nebbie_iniziali.join(' o ')}`;
   if (!mascheraValida(s.nebbia.coperti, colonne, righe)) return 'nebbia.coperti: maschera di Q della dimensione della griglia attesa';
 

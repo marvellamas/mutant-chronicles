@@ -102,7 +102,7 @@ export const tokenLiberi = (scena) => (scena.token ?? []).filter((t) => t.rif?.t
  */
 export function oggettiScena(scena, dati = null) {
   const out = [];
-  for (const l of lineeDi(scena)) out.push({ chiave: chiaveDi('muro', l.id), tipo: 'muro', id: l.id, nome: 'Muro disegnato', punti: l.punti, spessore: l.spessore });
+  for (const l of lineeDi(scena)) out.push({ chiave: chiaveDi('muro', l.id), tipo: 'muro', id: l.id, nome: 'Muro disegnato', punti: l.punti, spessore: l.spessore, materiale: l.materiale ?? 'muro' });
   for (const p of scena.porte ?? []) out.push({ chiave: chiaveDi('porta', p.id), tipo: 'porta', id: p.id, nome: 'Porta', q: p.q, stato: p.stato, segreta: p.segreta });
   for (const a of areeTerreno(scena)) out.push({ chiave: chiaveDi('terreno', a.id), tipo: 'terreno', id: a.id, nome: 'Terreno difficile', celle: a.celle });
   for (const t of tokenLiberi(scena)) out.push({ chiave: chiaveDi('token', t.id), tipo: 'token', id: t.id, nome: t.nome || 'Token libero', q: t.q, ingombro: t.ingombro, blocca: !!t.blocca, bersaglio: !!t.bersaglio, nascosto: !!t.nascosto });
@@ -319,7 +319,8 @@ export function cambiaProprieta(scena, chiave, modifiche, dati, adesso = new Dat
   if (!r) return scena;
   const prima = { muriLinee: lineeDi(scena), porte: scena.porte ?? [], token: scena.token ?? [], template: scena.template ?? [] };
   if (r.tipo === 'muro') {
-    const muriLinee = prima.muriLinee.map((l) => (l.id === r.id ? { ...l, ...modifiche } : l));
+    // A.224: il muro ordinario non scrive il materiale (le scene di prima restano uguali)
+    const muriLinee = prima.muriLinee.map((l) => { if (l.id !== r.id) return l; const n = { ...l, ...modifiche }; if (n.materiale === 'muro' || n.materiale === undefined) delete n.materiale; return n; });
     return conVoceEditor(scena, { ...scena, muriLinee }, prima, dati, adesso);
   }
   if (r.tipo === 'porta') {
@@ -385,7 +386,7 @@ export function riassuntoSelezione(scena, chiavi, dati) {
 
 /** «Muro disegnato (Medio)», «Porta chiusa», «Terreno difficile (12 Q)», «Token libero «Statua»». */
 export function nomeOggetto(o, dati) {
-  if (o.tipo === 'muro') return `Muro disegnato (${nomeSpessore(o.spessore, dati)})`;
+  if (o.tipo === 'muro') return `Muro disegnato${o.materiale === 'roccia' ? ' di roccia' : ''} (${nomeSpessore(o.spessore, dati)})`;
   if (o.tipo === 'porta') return `Porta ${o.stato}${o.segreta ? ', segreta' : ''}`;
   if (o.tipo === 'terreno') return `Terreno difficile (${o.celle.length} Q)`;
   if (o.tipo === 'template') return `Template ${testoMisure(o, dati?.mappa?.template ?? {})}${o.nome ? ` «${o.nome}»` : ''}`;
@@ -402,7 +403,9 @@ export function nomeSpessore(q, dati) {
 /** Le proprietà modificabili di un oggetto, per il pannello: [{ chiave, etichetta, tipo, valore, valori? }]. */
 export function proprietaOggetto(o, dati) {
   if (o.tipo === 'muro') {
-    return [{ chiave: 'spessore', etichetta: 'Spessore', tipo: 'scelta', valore: o.spessore, valori: (dati?.mappa?.muri_linee?.spessori ?? []).map((s) => ({ valore: s.q, nome: s.nome })) }];
+    return [{ chiave: 'spessore', etichetta: 'Spessore', tipo: 'scelta', valore: o.spessore, valori: (dati?.mappa?.muri_linee?.spessori ?? []).map((s) => ({ valore: s.q, nome: s.nome })) },
+      // A.224: il materiale (la roccia la attraversa solo chi ha la capacità)
+      ...((dati?.mappa?.muri_linee?.materiali ?? []).length ? [{ chiave: 'materiale', etichetta: 'Materiale', tipo: 'scelta', valore: o.materiale ?? 'muro', valori: dati.mappa.muri_linee.materiali.map((m) => ({ valore: m.id, nome: m.nome })) }] : [])];
   }
   if (o.tipo === 'porta') {
     return [

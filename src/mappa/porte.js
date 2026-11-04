@@ -21,7 +21,7 @@
 // vicina, tenendo l'orientamento che avevano.
 // Le azioni dei token (aprire, chiudere) si contano come AzP del Round in scena.azioni; il registro dello scontro ha
 // la sua riga (src/scontro.js → rigaPorta). Funzioni pure.
-import { daBase64, cella, impostaCella } from './celle.js';
+import { daBase64, cella, impostaCella, nuovaMaschera } from './celle.js';
 import { celleToken } from './token.js';
 import { lineeDi, bucaConPorte, aggancioSuLinea, distanzaPuntoSegmento, tagliaLinee } from './muri-linee.js';
 
@@ -51,6 +51,21 @@ export function muriEffettivi(scena, { perGiocatori = false } = {}) {
 }
 
 /**
+ * A.224 (Davide, 03/11/2026): i Q di roccia che una creatura con la capacità attraversa. Solo dove c'è anche il muro, e mai
+ * il Q di una porta: la porta (aperta, chiusa o bloccata) è un'altra cosa, e attraversare la roccia non fa passare una porta
+ * metallica (una porta chiusa resta muro anche per lei, una aperta è già un passaggio per tutti).
+ */
+export function rocciaEffettiva(scena) {
+  const { colonne: C, righe: R } = scena.griglia;
+  const r = daBase64(scena.roccia);
+  if (!r) return nuovaMaschera(C, R);
+  const m = daBase64(scena.muri);
+  for (let i = 0; i < r.length; i++) r[i] &= m[i] ?? 0;
+  for (const p of scena.porte ?? []) impostaCella(r, C, R, p.q[0], p.q[1], false);
+  return r;
+}
+
+/**
  * I muri disegnati (M2) per il movimento: tutti, meno il vano delle porte aperte agganciate a un tratto (M3).
  * Per il movimento conta lo stato: solo la porta aperta è un passaggio, chiusa e bloccata restano muro.
  * `perGiocatori`: una porta segreta resta muro anche se aperta (nessuna fuga di informazioni).
@@ -59,7 +74,19 @@ export function lineeEffettive(scena, { perGiocatori = false, larghezza = 1 } = 
   const linee = lineeDi(scena);
   if (!linee.length) return linee;
   const aperte = (scena.porte ?? []).filter((p) => p.aggancio?.muro && p.stato === 'aperta' && !(perGiocatori && p.segreta));
-  return aperte.length ? bucaConPorte(linee, aperte, larghezza) : linee;
+  const out = aperte.length ? bucaConPorte(linee, aperte, larghezza) : linee;
+  // A.224: una porta chiusa (o bloccata) su un muro di roccia è un'altra cosa — una porta metallica: il suo battente
+  // resta un muro ordinario anche per chi attraversa la roccia (src/mappa/area.js filtra solo i tratti di roccia)
+  const roccia = new Map(linee.filter((l) => l.materiale === 'roccia').map((l) => [l.id, l]));
+  if (!roccia.size) return out;
+  const battenti = [];
+  for (const p of scena.porte ?? []) {
+    const l = roccia.get(p.aggancio?.muro);
+    if (!l || aperte.includes(p)) continue;
+    const geo = geometriaPorta(scena, p, { mappa: { porte: { larghezza_q: larghezza } } });
+    battenti.push({ id: `battente:${p.id}`, punti: estremiPorta(geo), spessore: l.spessore });
+  }
+  return battenti.length ? [...out, ...battenti] : out;
 }
 
 /** La porta blocca la linea di visuale? (prossimo lotto: data/mappa.json → porte.bloccano_vista) */

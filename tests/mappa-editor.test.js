@@ -291,7 +291,7 @@ test('D13: il pannello dice che cosa è selezionato e con quali proprietà', () 
   const uno = riassuntoSelezione(s, ['muro:m2'], dati);
   assert.equal(uno.quanti, 1);
   assert.equal(uno.testo, 'Muro disegnato (Medio)');
-  assert.deepEqual(uno.proprieta.map((p) => p.chiave), ['spessore']);
+  assert.deepEqual(uno.proprieta.map((p) => p.chiave), ['spessore', 'materiale']); // A.224: anche il materiale
   assert.equal(riassuntoSelezione(s, ['porta:p1'], dati).testo, 'Porta chiusa');
   assert.deepEqual(riassuntoSelezione(s, ['porta:p1'], dati).proprieta.map((p) => p.chiave), ['stato', 'segreta']);
   assert.equal(riassuntoSelezione(s, ['terreno:10-3'], dati).testo, 'Terreno difficile (9 Q)');

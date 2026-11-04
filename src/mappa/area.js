@@ -14,7 +14,7 @@
 //     attraverserebbe); «vietata», servono liberi entrambi; «libera», i lati non contano. Le porte chiuse sono muri.
 // Funzioni pure. Con griglie da 300 × 300 Q e 300 token resta sotto i 50 ms (tests/mappa-area.test.js).
 import { dimensioni, celleToken, celleToccateToken } from './token.js';
-import { attraversa } from './muri-linee.js';
+import { attraversa, diRoccia } from './muri-linee.js';
 import { ruotato, celleToccate } from './forma.js';
 
 /** Somme prefisse 2D di una maschera di Q (Uint8Array 0/1, un byte per Q): conteggio in un rettangolo in O(1). */
@@ -83,7 +83,8 @@ export const stessaParte = (a, b) => (a === 'avversario') === (b === 'avversario
  * Area raggiungibile del token `chi` entro `massimo` Q.
  * @param o { colonne, righe, muri, terreno (maschere di bit), token: [{ id, q, ingombro, lato }],
  *   chi: { id, q, ingombro, lato, angolo?, base? }, massimo, regole: data/mappa.json → movimento,
- *   linee?: i muri disegnati che valgono adesso (src/mappa/porte.js → lineeEffettive) }
+ *   linee?: i muri disegnati che valgono adesso (src/mappa/porte.js → lineeEffettive),
+ *   roccia?: i Q di roccia attraversabili (src/mappa/porte.js → rocciaEffettiva; A.224) }
  *   angolo e base (08/10, src/mappa/forma.js): un veicolo ruotato occupa solo i quadretti della sua forma, in ogni
  *   posizione; gli altri token con angolo e base fanno ostacolo solo con i loro quadretti
  *   lato: 'pg' | 'alleato' | 'avversario' | null (segnaposto: come un alleato di tutti)
@@ -91,10 +92,13 @@ export const stessaParte = (a, b) => (a === 'avversario') === (b === 'avversario
  *   costo e fermabile indicizzati per posizione (y × colonne + x del Q in alto a sinistra), costo Infinity se non
  *   raggiunta; migliore e precStato servono a ricostruire il percorso (percorso()).
  */
-export function areaRaggiungibile({ colonne: C, righe: R, muri, terreno, token, chi, massimo, regole, linee = null }) {
+export function areaRaggiungibile({ colonne: C, righe: R, muri, terreno, token, chi, massimo, regole, linee = null, roccia = null }) {
   const [w, h] = dimensioni(chi.ingombro);
-  // A.202 (30/10/2026): in forma eterea la Murena della Roccia attraversa la roccia (i muri della mappa); il resto la ferma come tutti
-  const muro = chi.attraversaRoccia ? new Uint8Array(C * R) : bytePerQ(muri, C, R);
+  // A.202 (30/10/2026) e A.224 (03/11/2026): in forma eterea la Murena della Roccia attraversa la roccia, cioè i Q e i muri
+  // disegnati di materiale Roccia, e nient'altro: i muri ordinari, le porte (chiuse o bloccate) e i token che bloccano la
+  // fermano come tutti. Per le altre creature la roccia è un muro.
+  const muro = bytePerQ(muri, C, R);
+  if (chi.attraversaRoccia && roccia) { const r = bytePerQ(roccia, C, R); for (let i = 0; i < C * R; i++) if (r[i]) muro[i] = 0; }
   // 12/10: un token libero segnato «blocca» (src/mappa/editor.js) vale come un Q di muro anche per il movimento;
   // gli altri token liberi non bloccano e restano attraversabili come un alleato di tutti.
   for (const t of token) {
@@ -129,7 +133,8 @@ export function areaRaggiungibile({ colonne: C, righe: R, muri, terreno, token, 
   const ferma = (x, y) => inAvv(x, y) === 0 && (regole.fermarsi_su_alleato || inAll(x, y) === 0);
   // M2 (11/10): muri disegnati. Il passo è bloccato se un tratto taglia il segmento fra il centro di un Q
   // dell'ingombro e il centro del Q corrispondente d'arrivo (per un token 1 × 1 è il centro del Q).
-  const muriDisegnati = Array.isArray(linee) && linee.length ? linee : null;
+  const lineeChe = Array.isArray(linee) ? (chi.attraversaRoccia ? linee.filter((l) => !diRoccia(l)) : linee) : null;
+  const muriDisegnati = lineeChe && lineeChe.length ? lineeChe : null;
   const celleIngombro = muriDisegnati ? (forma ?? Array.from({ length: w * h }, (_, i) => [i % w, Math.floor(i / w)])) : null;
   const tagliaIlPasso = muriDisegnati
     ? (x, y, dx, dy) => celleIngombro.some(([cx, cy]) => attraversa(muriDisegnati, [x + cx + 0.5, y + cy + 0.5], [x + cx + dx + 0.5, y + cy + dy + 0.5]))

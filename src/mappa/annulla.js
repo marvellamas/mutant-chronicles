@@ -4,7 +4,7 @@
 // scontro: un token tolto non torna se il suo partecipante non c'è più.
 // Voci della pila (scena.annulla, al più data/mappa.json → scena.annulla_max):
 //   { tipo: 'nebbia', tratti }                      src/mappa/nebbia.js
-//   { tipo: 'muri', muri, terreno }                 src/mappa/muri.js
+//   { tipo: 'muri', muri, terreno, roccia? }        src/mappa/muri.js (roccia: A.224)
 //   { tipo: 'muri-linee', aggiunte, tolte }         src/mappa/muri-linee.js (M2 dell'11/10): muri disegnati
 //   { tipo: 'movimento', movimento: id, token, da, a }
 //   { tipo: 'token', id, prima, dopo }              prima null: messo; dopo null: tolto; tutti e due: cambiato
@@ -29,6 +29,7 @@
 import { daBase64, inBase64 } from './celle.js';
 import { inverti } from './nebbia.js';
 import { lineeDi } from './muri-linee.js';
+import { rocciaDi } from './muri.js';
 import { chiaveRif } from './token.js';
 import { annullaRipristino } from './iniziale.js';
 import { annullaLuce } from './luce.js';
@@ -199,7 +200,7 @@ function annullaMovimento(scena, idMovimento) {
  *   esce dalla pila con { scena, voce, errore }.
  */
 /** I blocchi della scena che l'annulla e il rifai si scambiano (tutto il resto non cambia mai per una voce). */
-export const BLOCCHI_SCENA = ['nebbia', 'muri', 'terreno', 'muriLinee', 'porte', 'token', 'template', 'luce', 'azioni', 'movimenti', 'turni'];
+export const BLOCCHI_SCENA = ['nebbia', 'muri', 'roccia', 'terreno', 'muriLinee', 'porte', 'token', 'template', 'luce', 'azioni', 'movimenti', 'turni'];
 
 /** I blocchi che sono diversi fra due scene, nella forma che avevano nella prima: { chiave: valore }. */
 export function blocchiCambiati(prima, dopo) {
@@ -258,7 +259,9 @@ export function annullaVoce(scena, { chiaviPresenti = null } = {}) {
     case 'nebbia':
       return { scena: { ...senza, nebbia: { ...senza.nebbia, coperti: inBase64(inverti(daBase64(senza.nebbia.coperti), voce.tratti)) } }, voce, testo: 'nebbia' };
     case 'muri':
-      return { scena: { ...senza, muri: inBase64(inverti(daBase64(senza.muri), voce.muri)), terreno: inBase64(inverti(daBase64(senza.terreno), voce.terreno)) }, voce, testo: 'muri' };
+      // A.224: la voce porta anche le differenze della roccia, quando ce ne sono
+      return { scena: { ...senza, muri: inBase64(inverti(daBase64(senza.muri), voce.muri)), terreno: inBase64(inverti(daBase64(senza.terreno), voce.terreno)),
+        ...(voce.roccia?.length ? { roccia: inBase64(inverti(rocciaDi(senza), voce.roccia)) } : {}) }, voce, testo: 'muri' };
     // M2 (11/10): muri disegnati a mano libera; la voce tiene gli id aggiunti e i muri togliti per intero
     case 'muri-linee': {
       const via = new Set(voce.aggiunte ?? []);

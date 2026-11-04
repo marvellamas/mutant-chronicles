@@ -214,13 +214,16 @@ test('A.202: l’overdose finisce da sola alla fine del Round R+1 e «Indietro»
   assert.throws(() => cambiaForma(prima, id, 'corporea', { fino: 0 }, T0), /Round/);
 });
 
-test('A.202: in forma eterea la creatura attraversa la roccia sulla mappa (i muri), l’altra no', () => {
+test('A.202 con A.224: in forma eterea la creatura attraversa la roccia sulla mappa (i Q di materiale Roccia), l’altra no', () => {
   const C = 20; const R = 8;
   const muri = nuovaMaschera(C, R);
-  const metti = (x, y) => { const i = y * C + x; muri[i >> 3] |= 1 << (i & 7); };
-  for (let y = 0; y < R; y++) { metti(6, y); metti(7, y); } // una parete di roccia spessa 2
-  const chiamata = (extra) => areaRaggiungibile({ colonne: C, righe: R, muri, terreno: nuovaMaschera(C, R), token: [], chi: { id: 'm', q: [2, 3], ingombro: 1, lato: 'avversario', ...extra }, massimo: 12, regole: dati.mappa.movimento });
+  const roccia = nuovaMaschera(C, R);
+  const metti = (m, x, y) => { const i = y * C + x; m[i >> 3] |= 1 << (i & 7); };
+  for (let y = 0; y < R; y++) for (const x of [6, 7]) { metti(muri, x, y); metti(roccia, x, y); } // una parete di roccia spessa 2
+  const chiamata = (extra, conRoccia = roccia) => areaRaggiungibile({ colonne: C, righe: R, muri, roccia: conRoccia, terreno: nuovaMaschera(C, R), token: [], chi: { id: 'm', q: [2, 3], ingombro: 1, lato: 'avversario', ...extra }, massimo: 12, regole: dati.mappa.movimento });
   assert.equal(costoVerso(chiamata({}), [10, 3]), Infinity, 'la roccia ferma una creatura qualunque');
   assert.equal(costoVerso(chiamata({ attraversaRoccia: true }), [10, 3]), 8, 'la forma eterea passa: 8 Q in linea retta');
+  // A.224: un muro che non è di roccia la ferma anche in forma eterea
+  assert.equal(costoVerso(chiamata({ attraversaRoccia: true }, nuovaMaschera(C, R)), [10, 3]), Infinity, 'un muro ordinario la ferma');
   assert.equal(inBase64(muri).length > 0, true);
 });

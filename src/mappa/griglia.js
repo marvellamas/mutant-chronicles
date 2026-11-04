@@ -89,6 +89,7 @@ export function applicaGriglia(scena, cambi, dati, { mappa } = {}) {
       griglia: g,
       muri: adatta(scena.muri, false),
       terreno: adatta(scena.terreno, false),
+      ...(scena.roccia !== undefined ? { roccia: adatta(scena.roccia, false) } : {}), // A.224
       nebbia: { ...scena.nebbia, coperti: adatta(scena.nebbia.coperti, scena.nebbia.iniziale === 'coperta') },
       token: scena.token.map(dentro),
       template: scena.template.filter((t) => t.origine[0] < g.colonne && t.origine[1] < g.righe),

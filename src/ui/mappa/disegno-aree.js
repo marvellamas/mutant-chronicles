@@ -43,11 +43,19 @@ function motivo(c, tipo, colore) {
 }
 
 /** Muri (retino) e terreno difficile (puntinato) visibili al master. */
-export function disegnaMuri(c, { scena, cam, info, muri, terreno, colori, aspetto = null }) {
+export function disegnaMuri(c, { scena, cam, info, muri, terreno, colori, aspetto = null, roccia = null }) {
   const g = scena.griglia;
   const v = visibili(g, cam, info);
   // 12/10: i muri a quadretto come quelli disegnati, grigio scuro con bordo bianco (data/mappa.json → muri_linee.aspetto)
-  if (aspetto && muri) { disegnaMuriQuadretto(c, { g, cam, v, muri, aspetto }); muri = null; }
+  // A.224: i Q di roccia nel colore della roccia, sopra il grigio dei muri a quadretto
+  const disegnaRoccia = () => {
+    if (!roccia || !aspetto?.colore_roccia) return;
+    c.save(); c.beginPath(); let n = 0;
+    for (let y = v.y0; y < v.y1; y++) for (let x = v.x0; x < v.x1; x++) { const i = y * g.colonne + x; if ((roccia[i >> 3] >> (i & 7)) & 1) { c.rect(...rettQ(g, cam, x, y)); n++; } }
+    if (n) { c.globalAlpha = 0.7; c.fillStyle = aspetto.colore_roccia; c.fill(); }
+    c.restore();
+  };
+  if (aspetto && muri) { disegnaMuriQuadretto(c, { g, cam, v, muri, aspetto }); muri = null; disegnaRoccia(); }
   // M1 (11/10): muri e terreno hanno due interruttori distinti, quindi una delle due maschere puo mancare
   for (const [maschera, tipo, colore] of [[terreno, 'puntinato', colori.terreno], [muri, 'retino', colori.muro]]) {
     if (!maschera) continue;
@@ -101,8 +109,8 @@ export function disegnaMuriLinee(c, { scena, cam, linee, colore, anteprima = fal
       traccia(l);
     }
   }
-  c.strokeStyle = aspetto?.colore ?? colore;
-  for (const l of valide) { c.lineWidth = px(l.spessore ?? 0.25); traccia(l); }
+  // A.224: i muri di roccia in un altro colore (data/mappa.json → muri_linee.aspetto.colore_roccia)
+  for (const l of valide) { c.strokeStyle = l.materiale === 'roccia' && aspetto?.colore_roccia ? aspetto.colore_roccia : (aspetto?.colore ?? colore); c.lineWidth = px(l.spessore ?? 0.25); traccia(l); }
   c.restore();
 }
 

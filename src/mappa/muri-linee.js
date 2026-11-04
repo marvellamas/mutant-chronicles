@@ -153,7 +153,7 @@ export function bucaConPorte(linee, porte, larghezzaPredefinita = 1) {
     let n = 0;
     for (const [a, c] of tratti(l)) {
       for (const pezzo of pezziFuoriDaiBuchi(a, c, b)) {
-        out.push({ id: `${l.id}:${n++}`, punti: pezzo, spessore: l.spessore });
+        out.push({ id: `${l.id}:${n++}`, punti: pezzo, spessore: l.spessore, ...materialeDi(l) });
       }
     }
   }
@@ -199,7 +199,14 @@ function intervalloNelCerchio(a, b, centro, raggio) {
 export const abbastanzaLontano = (ultimo, p, minimo) => !ultimo || Math.hypot(p[0] - ultimo[0], p[1] - ultimo[1]) >= minimo;
 
 /** Muro disegnato nuovo (id dato da chi chiama, come per i template e le porte). */
-export const nuovaLinea = ({ id, punti, spessore }) => ({ id, punti: punti.map(([x, y]) => [arrotonda(x), arrotonda(y)]), spessore });
+export const nuovaLinea = ({ id, punti, spessore, materiale }) => ({ id, punti: punti.map(([x, y]) => [arrotonda(x), arrotonda(y)]), spessore, ...materialeDi({ materiale }) });
+/**
+ * A.224 (03/11/2026): il materiale del muro disegnato. Si scrive solo se non è il muro ordinario: «roccia» la attraversa chi
+ * ha la capacità (src/mappa/area.js), ma ferma la vista e le altre creature come ogni muro.
+ */
+export const MATERIALI_LINEE = ['muro', 'roccia'];
+export const materialeDi = (l) => (l?.materiale && l.materiale !== 'muro' ? { materiale: l.materiale } : {});
+export const diRoccia = (l) => l?.materiale === 'roccia';
 /** Due decimali: i file restano leggeri e leggibili (un centesimo di Q è 1,5 cm). */
 const arrotonda = (v) => Math.round(v * 100) / 100;
 
@@ -274,6 +281,7 @@ export function erroreLinea(l, regole, colonne, righe) {
   const q = (regole?.spessori ?? []).map((s) => s.q);
   if (!(typeof l.spessore === 'number' && l.spessore > 0 && l.spessore <= (regole?.spessore_max_q ?? 1))) return `spessore: da 0 a ${regole?.spessore_max_q ?? 1} Q`;
   if (q.length && !q.some((x) => Math.abs(x - l.spessore) < 1e-6)) return `spessore: uno fra ${q.join(', ')} Q`;
+  if (l.materiale !== undefined && !MATERIALI_LINEE.includes(l.materiale)) return `materiale: ${MATERIALI_LINEE.join(' o ')}, o assente`;
   return null;
 }
 
@@ -360,7 +368,7 @@ export function tagliaLinee(linee, forma, { minimo = 0.1 } = {}) {
     let n = 0;
     for (const p of pezzi) {
       if (lunghezza(p) < minimo) continue;
-      out.push(nuovaLinea({ id: `${base}-t${(Date.now() % 1e6).toString(36)}${(contatoreTagli++).toString(36)}${n++}`, punti: p, spessore: l.spessore }));
+      out.push(nuovaLinea({ id: `${base}-t${(Date.now() % 1e6).toString(36)}${(contatoreTagli++).toString(36)}${n++}`, punti: p, spessore: l.spessore, materiale: l.materiale }));
     }
   }
   return { linee: out, toccate };

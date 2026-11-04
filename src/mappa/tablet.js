@@ -11,7 +11,7 @@
 import { daBase64, cella, senza } from './celle.js';
 import { chiaveRif, dimensioni } from './token.js';
 import { areaRaggiungibile, costoVerso, percorso as percorsoArea, statoFasce, fasciaDi, celleArea } from './area.js';
-import { muriEffettivi, lineeEffettive } from './porte.js';
+import { muriEffettivi, lineeEffettive, rocciaEffettiva } from './porte.js';
 import { usatoNelRound, fasceNelRound, muoviToken } from './annulla.js';
 import { avversariZoc, attacchiDiOpportunita } from './zoc.js';
 import { visibileAiGiocatori, statoDiretta } from './diretta.js';
@@ -96,7 +96,7 @@ export function areaGiocatore({ scena, token, pezzo, pezzi, scontro = null, fasc
   const muri = perGiocatori ? senza(muriEffettivi(scena, { perGiocatori: true }), nebbia) : muriEffettivi(scena);
   const terreno = perGiocatori ? senza(daBase64(scena.terreno), nebbia) : daBase64(scena.terreno);
   const area = areaRaggiungibile({
-    colonne: g.colonne, righe: g.righe, muri, terreno, linee: lineeEffettive(scena, { perGiocatori, larghezza: dati.mappa.porte.larghezza_q }),
+    colonne: g.colonne, righe: g.righe, muri, terreno, linee: lineeEffettive(scena, { perGiocatori, larghezza: dati.mappa.porte.larghezza_q }), roccia: rocciaEffettiva(scena),
     token: scena.token.filter(ostacolo).map((x) => ({ id: x.id, q: x.q, ingombro: x.ingombro, angolo: x.angolo, base: x.base, lato: perChiave.get(chiaveRif(x.rif))?.lato ?? null, blocca: !!x.blocca || !!perChiave.get(chiaveRif(x.rif))?.ostacolo })),
     chi: { id: token.id, q: token.q, ingombro: token.ingombro, angolo: token.angolo, base: token.base, lato: pezzo.lato, attraversaRoccia: !!pezzo.attraversaRoccia }, massimo: totale, regole: regoleMovimento(token, dati),
   });

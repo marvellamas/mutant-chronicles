@@ -613,8 +613,14 @@
       "bordo": "#ffffff",
       "bordo_px": 2,
       "selezione": "#ffb000",
-      "quadretto_opacita": 0.6
+      "quadretto_opacita": 0.6,
+      "colore_roccia": "#7a5230"
     },
+    "materiali": [
+      { "id": "muro", "nome": "Muro" },
+      { "id": "roccia", "nome": "Roccia" }
+    ],
+    "_nota_materiali": "A.224 (risposta di Davide del 03/11/2026): materiale Roccia, assegnabile ai muri a quadretti (strumento Muro, «Materiale: Roccia») e ai muri disegnati come linee (lo stesso interruttore, o Seleziona → Materiale). La attraversano solo le creature che hanno la capacità, nei limiti del loro profilo (la Murena della Roccia in forma eterea, A.202: forme[].attraversa_roccia); attraversare la roccia non fa passare porte metalliche (le porte non sono mai roccia) né muri di altro materiale. La roccia blocca la visuale e resta un ostacolo per tutte le altre creature. «colore_roccia» (aspetto) è il colore dei muri di roccia sulla mappa del master.",
     "_nota_aspetto": "Muri grigio scuro con bordo bianco di «bordo_px» pixel, sulla mappa del master e dei giocatori: si vedono anche su immagini molto scure. I muri a quadretto hanno lo stesso colore, semitrasparente («quadretto_opacita») per lasciar vedere l'immagine; il terreno difficile resta puntinato nel suo colore. «selezione»: il muro selezionato.",
     "gomma_raggio_q": 0.5,
     "margine_q": 2,

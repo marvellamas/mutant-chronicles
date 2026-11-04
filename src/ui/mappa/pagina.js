@@ -67,7 +67,7 @@ import { rifaiUltima } from '../../mappa/annulla.js';
 import { luceQ, luceIngombro, testoLuceBersaglio, categorieLuce, ambienteDi, trattoLuce, rettangoloLuce, conVoceLuce, cambiaAmbiente } from '../../mappa/luce.js';
 import { celleTemplate, tokenDentro as tokenNelTemplate, nuovoTemplate, scaduto, direzioneVerso, ORIENTABILI, templateVisibili, ruota, cambiaMisura, permanente, postoNome, origineConoCreatura } from '../../mappa/template.js';
 import { livelliDi, livelliDati, conLivello, conTuttiILivelli, nascosti as livelliNascosti, statoEntrambi, conLivelloEntrambi } from '../../mappa/sovrapposizioni.js';
-import { portaA, muriEffettivi, lineeEffettive, porteVicine, apriChiudi, nuovaPorta, conAzione, azpNelRound, orientamento, orientamentoPorta, ruotaPorta, opposto, agganciaPorta, agganciaDiPorta, geometriaPorta, lineePerDisegno, muriPerDisegno, portaSotto, porteNellaForma } from '../../mappa/porte.js';
+import { portaA, muriEffettivi, lineeEffettive, rocciaEffettiva, porteVicine, apriChiudi, nuovaPorta, conAzione, azpNelRound, orientamento, orientamentoPorta, ruotaPorta, opposto, agganciaPorta, agganciaDiPorta, geometriaPorta, lineePerDisegno, muriPerDisegno, portaSotto, porteNellaForma } from '../../mappa/porte.js';
 import { apriMenuTemplate, sezioneTemplate, etichettaTemplate, testoMisure } from './template.js';
 import { misureDelTemplate } from '../../mappa/template.js';
 import { apriMenuToken, chiudiMenuToken, menuAperto } from './menu-token.js';
@@ -170,7 +170,7 @@ export function renderMappa(radice, ctx) {
     // 12/10: lo stato dell'editor (strumento attivo, selezione, evidenziazione) e l'aggancio alla griglia
     editor: statoEditor(),
     aggancia: true,
-    muri: { strumento: null, modo: 'muro', lato: 1, spessore: ctx.dati.mappa.muri_linee.predefinito, raddrizza: regoleRaddrizza(ctx.dati).predefinito, tracciato: 'mano', punti: [], cursore: null, ultimoClic: 0, selezionato: null, portaSelezionata: null, porta: { stato: ctx.dati.mappa.porte.stato_predefinito, segreta: false, verso: null } },
+    muri: { strumento: null, modo: 'muro', materiale: 'muro', lato: 1, spessore: ctx.dati.mappa.muri_linee.predefinito, raddrizza: regoleRaddrizza(ctx.dati).predefinito, tracciato: 'mano', punti: [], cursore: null, ultimoClic: 0, selezionato: null, portaSelezionata: null, porta: { stato: ctx.dati.mappa.porte.stato_predefinito, segreta: false, verso: null } },
     fascia: 1,
     area: undefined,
     percorso: null,
@@ -401,7 +401,7 @@ export function renderMappa(radice, ctx) {
       const liv = sovrapposizioni('master');
       // 12/10: dove c'è una porta il muro si interrompe (a quadretto: il suo Q; disegnato: il vano), e si disegna la porta
       const ASPETTO = ctx.dati.mappa.muri_linee.aspetto;
-      if (liv.muri || liv.terreno) disegnaMuri(c, { scena: s, cam: st.cam, info, muri: liv.muri ? muriPerDisegno(s) : null, terreno: liv.terreno ? daBase64(s.terreno) : null, colori, aspetto: ASPETTO });
+      if (liv.muri || liv.terreno) disegnaMuri(c, { scena: s, cam: st.cam, info, muri: liv.muri ? muriPerDisegno(s) : null, terreno: liv.terreno ? daBase64(s.terreno) : null, colori, aspetto: ASPETTO, roccia: liv.muri && s.roccia ? rocciaEffettiva(s) : null });
       // M2 (11/10): muri disegnati a mano libera, sotto lo stesso interruttore dei muri a quadretto
       if (liv.muri) disegnaMuriLinee(c, { scena: s, cam: st.cam, linee: lineePerDisegno(s, ctx.dati), colore: colori.muro, aspetto: ASPETTO, selezionato: st.muri.selezionato });
       // 12/10: contorno giallo su quello che è selezionato, leggero su quello sotto il puntatore, maniglie sui vertici
@@ -1758,6 +1758,11 @@ export function renderMappa(radice, ctx) {
         h('span', { class: 'nota' }, 'Come:'),
         pulsanteScelta('Pennello', M.strumento === 'pennello', () => formaMuri('pennello'), 'Dipingi per quadretti'),
         pulsanteScelta('Rettangolo', M.strumento === 'rettangolo', () => formaMuri('rettangolo'), 'Da un angolo all’altro')) : null,
+      // A.224 (03/11): il materiale, per i muri a quadretti e per quelli disegnati
+      S === 'muro' ? h('div', { class: 'mappa-azioni-token', role: 'group', 'aria-label': 'Materiale del muro' },
+        h('span', { class: 'nota' }, 'Materiale:'),
+        (ctx.dati.mappa.muri_linee.materiali ?? []).map((x) => pulsanteScelta(x.nome, M.materiale === x.id, () => { M.materiale = x.id; disegnaPannelloMuri(); },
+          x.id === 'roccia' ? 'La attraversa solo chi ha la capacità (Murena della Roccia eterea); per tutti gli altri è un muro, e ferma la vista' : 'Muro ordinario: non lo attraversa nessuno'))) : null,
       // M2 (11/10): spessore del muro disegnato
       S === 'muro' && M.strumento === 'linea' ? h('div', { class: 'mappa-azioni-token', role: 'group', 'aria-label': 'Spessore del muro' },
         h('span', { class: 'nota' }, 'Spessore:'),
@@ -1790,6 +1795,8 @@ export function renderMappa(radice, ctx) {
       (S === 'terreno' || S === 'gomma' || (S === 'muro' && M.strumento !== 'linea')) ? campoLato(M) : null,
       h('div', { class: 'mappa-azioni-token' }, pulsanteAnnulla()));
   }
+  /** A.224: il modo del pennello e del rettangolo, con il materiale scelto per il muro («roccia» o muro ordinario). */
+  const modoMuri = () => (M.modo === 'muro' && M.materiale === 'roccia' ? 'roccia' : M.modo);
   /** 12/10: la «forma» dello strumento attivo (disegna, pennello, rettangolo); si ricorda per strumento. */
   function formaMuri(f) {
     const S = st.editor.strumento;
@@ -2251,7 +2258,7 @@ export function renderMappa(radice, ctx) {
     const scelta = sf.chiusa ?? [...FASCE.slice(0, st.fascia)].reverse().find((f) => rimaste[f] !== null);
     const g = st.scena.griglia;
     const area = areaRaggiungibile({
-      colonne: g.colonne, righe: g.righe, muri: muriEffettivi(st.scena), terreno: daBase64(st.scena.terreno), linee: lineeEffettive(st.scena, { larghezza: RP.larghezza_q }),
+      colonne: g.colonne, righe: g.righe, muri: muriEffettivi(st.scena), terreno: daBase64(st.scena.terreno), linee: lineeEffettive(st.scena, { larghezza: RP.larghezza_q }), roccia: rocciaEffettiva(st.scena),
       token: st.scena.token.map((x) => ({ id: x.id, q: x.q, ingombro: x.ingombro, angolo: x.angolo, base: x.base, lato: pezzoDi(x)?.lato ?? null, blocca: !!x.blocca || !!pezzoDi(x)?.ostacolo })),
       chi: { id: t.id, q: t.q, ingombro: t.ingombro, angolo: t.angolo, base: t.base, lato: pz.lato, attraversaRoccia: !!pz.attraversaRoccia }, massimo: Math.max(totale, portata), regole: regoleMovimento(t, ctx.dati),
     });
@@ -2337,7 +2344,7 @@ export function renderMappa(radice, ctx) {
         const g = s.griglia;
         const pz = pezzoDi(t);
         const areaG = areaRaggiungibile({
-          colonne: g.colonne, righe: g.righe, muri: muriEffettivi(s, { perGiocatori: true }), terreno: daBase64(s.terreno), linee: lineeEffettive(s, { perGiocatori: true, larghezza: RP.larghezza_q }),
+          colonne: g.colonne, righe: g.righe, muri: muriEffettivi(s, { perGiocatori: true }), terreno: daBase64(s.terreno), linee: lineeEffettive(s, { perGiocatori: true, larghezza: RP.larghezza_q }), roccia: rocciaEffettiva(s),
           token: s.token.filter((x) => x.id === t.id || visibileAiGiocatori(x, s, nebbia)).map((x) => ({ id: x.id, q: x.q, ingombro: x.ingombro, angolo: x.angolo, base: x.base, lato: pezzoDi(x)?.lato ?? null, blocca: !!x.blocca || !!pezzoDi(x)?.ostacolo })),
           chi: { id: t.id, q: t.q, ingombro: t.ingombro, angolo: t.angolo, base: t.base, lato: pz?.lato ?? null, attraversaRoccia: !!pz?.attraversaRoccia }, massimo: info.totale, regole: regoleMovimento(t, ctx.dati),
         });
@@ -3273,7 +3280,7 @@ export function renderMappa(radice, ctx) {
     }
     if (d && !st.spazio && st.strumento !== 'calibra') {
       const q = qVicino(m);
-      st.trascina = { ...base, modo: 'disegno', ...d, iniziale: d.gruppo === 'nebbia' ? { nebbia: st.scena.nebbia.coperti } : d.gruppo === 'luci' ? { luce: st.scena.luce ?? null } : { muri: st.scena.muri, terreno: st.scena.terreno, muriLinee: lineeDi(st.scena) }, da: q, a: q };
+      st.trascina = { ...base, modo: 'disegno', ...d, iniziale: d.gruppo === 'nebbia' ? { nebbia: st.scena.nebbia.coperti } : d.gruppo === 'luci' ? { luce: st.scena.luce ?? null } : { muri: st.scena.muri, terreno: st.scena.terreno, roccia: st.scena.roccia ?? null, muriLinee: lineeDi(st.scena) }, da: q, a: q };
       if (d.forma === 'pennello') { passoPennello(q, q); ridisegna(['aree']); } else ridisegna(['sopra']);
       return;
     }
@@ -3390,7 +3397,7 @@ export function renderMappa(radice, ctx) {
   function aggiungiMuroDisegnato(punti) {
     const R = ctx.dati.mappa.muri_linee;
     if (lineeDi(st.scena).length >= R.linee_max) { avviso(`Troppi muri disegnati in questa scena (massimo ${R.linee_max}).`, { chiave: 'muri-linee' }); ridisegna(['sopra']); return; }
-    const linea = nuovaLinea({ id: `muro-${Date.now().toString(36)}${Math.random().toString(36).slice(2, 5)}`, punti, spessore: spessoreQ(M.spessore, ctx.dati) });
+    const linea = nuovaLinea({ id: `muro-${Date.now().toString(36)}${Math.random().toString(36).slice(2, 5)}`, punti, spessore: spessoreQ(M.spessore, ctx.dati), materiale: M.materiale });
     st.scena = conMuriLinee(st.scena, { aggiungi: [linea] }, ctx.dati);
     dopoDisegno();
   }
@@ -3436,7 +3443,7 @@ export function renderMappa(radice, ctx) {
   /** Un passo del pennello (nebbia o muri) da a ad b, senza voce di «annulla» (la voce arriva al rilascio). */
   function passoPennello(a, b) {
     if (st.trascina?.gruppo === 'muri') {
-      st.scena = muriProvvisori(st.scena, trattoMuri(st.scena, a, b, M.lato, M.modo));
+      st.scena = muriProvvisori(st.scena, trattoMuri(st.scena, a, b, M.lato, modoMuri()));
       // 12/10: la gomma taglia i muri disegnati lungo tutta la passata del pennello
       if (M.modo === 'gomma') for (const q of qLungo(a, b)) gommaMuriDisegnati(q);
     }
@@ -3542,7 +3549,7 @@ export function renderMappa(radice, ctx) {
         dopoLuci();
         return true;
       } else if (t.forma === 'linea') { chiudiMuroDisegnato(t); return true; } else {
-        st.scena = t.forma === 'rettangolo' ? rettangoloMuri(st.scena, t.da, t.a, M.modo, ctx.dati) : chiudiTrattoMuri(st.scena, t.iniziale, ctx.dati);
+        st.scena = t.forma === 'rettangolo' ? rettangoloMuri(st.scena, t.da, t.a, modoMuri(), ctx.dati) : chiudiTrattoMuri(st.scena, t.iniziale, ctx.dati);
         // 12/10: la gomma a rettangolo taglia i muri disegnati dentro il rettangolo; una voce di «annulla» per passata
         if (M.modo === 'gomma' && t.forma === 'rettangolo') gommaMuriDisegnati(t.da, t.a);
         if (M.modo === 'gomma') st.scena = conVoceMuriLinee(st.scena, t.iniziale.muriLinee, ctx.dati);
@@ -3651,7 +3658,7 @@ export function renderMappa(radice, ctx) {
     el.riquadro.classList.remove('trascina');
     if (!t) return;
     if (t.modo === 'disegno' && t.iniziale) {
-      if (t.gruppo === 'luci') { const { luce: _, ...senza } = st.scena; st.scena = t.iniziale.luce ? { ...senza, luce: t.iniziale.luce } : senza; st.luceCache = null; } else st.scena = t.gruppo === 'nebbia' ? { ...st.scena, nebbia: { ...st.scena.nebbia, coperti: t.iniziale.nebbia } } : { ...st.scena, muri: t.iniziale.muri, terreno: t.iniziale.terreno, ...(t.iniziale.muriLinee ? { muriLinee: t.iniziale.muriLinee } : {}) };
+      if (t.gruppo === 'luci') { const { luce: _, ...senza } = st.scena; st.scena = t.iniziale.luce ? { ...senza, luce: t.iniziale.luce } : senza; st.luceCache = null; } else st.scena = t.gruppo === 'nebbia' ? { ...st.scena, nebbia: { ...st.scena.nebbia, coperti: t.iniziale.nebbia } } : { ...((x) => { const { roccia: _, ...senza } = x; return t.iniziale.roccia ? { ...senza, roccia: t.iniziale.roccia } : senza; })(st.scena), muri: t.iniziale.muri, terreno: t.iniziale.terreno, ...(t.iniziale.muriLinee ? { muriLinee: t.iniziale.muriLinee } : {}) };
       ridisegna(['aree', 'sopra']);
     }
     if (t.modo === 'calibra') st.calibrazione = null;
