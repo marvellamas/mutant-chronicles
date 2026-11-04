@@ -27,6 +27,7 @@
     "volo": 120
   },
   "taglia": "grande",
+  "spazio": "4 × 6 Q",
   "pedina_tattica": "1 Q",
   "gs_px": {
     "gs": "Mito",
@@ -135,7 +136,7 @@
     },
     {
       "nome": "Dimensioni e scale",
-      "effetto": "Lunghezza indicativa 8–10 m; pedina rappresentativa 1 × 1 Q Tattici (convenzionale: nei passaggi stretti contano le dimensioni effettive e lo spazio dei filamenti). Volo 12 / 24 / 36 Q Tattici per Round (Passo in volo 120 Q Base). Terra 4 / 8 / 12 Q Base."
+      "effetto": "Ingombro corporeo di riferimento 6 × 4 Q Base (lunghezza × larghezza, 9 × 6 m; nei campi dell’app 4 × 6, A.222); pedina rappresentativa 1 × 1 Q Tattici (convenzionale: nei passaggi stretti contano le dimensioni effettive e lo spazio dei filamenti). Ingombro corporeo e portata dei filamenti restano distinti. Volo 12 / 24 / 36 Q Tattici per Round (Passo in volo 120 Q Base). Terra 4 / 8 / 12 Q Base."
     }
   ],
   "note": "Predatore energetico delle nubi di Iris, potenziato rispetto ai draghi di riferimento: predano veicoli aerei e spaziali leggeri e medi, possono mettere in difficoltà mezzi medi e pesanti modificati; le navi pesanti e da guerra richiedono normalmente più esemplari. Natura Comune, nessun incantesimo appreso, nessuna comprensione dei linguaggi; non appartiene alla Covata. Artigli: portata 1 Q Base; Morso: 2 Q Base; un attacco di ciascun tipo al massimo per Round. Il danno «NdM × 5» è il risultato dei dadi moltiplicato per 5. GS e PX per quattro PG, per un singolo esemplare senza dotazione; i valori restano da verificare al tavolo (Mostri 0.46 §7.12; A.194). Riferimento di pericolosità: preda facilmente sopraffatta un veicolo leggero; predatore favorito contro un medio ordinario; pericoloso soprattutto dopo l’aggancio contro la Neverlost."

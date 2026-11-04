@@ -37,7 +37,8 @@ const COMUNI = (g) => [
 
 const CREATURE = [
   {
-    id: 'dragomedusa-giovane', nome: 'Dragomedusa giovane', pedina_tattica: '1 Q',
+    // A.222 (Davide, 03/11/2026): ingombro corporeo 6 × 4 Q Base nel manuale (lunghezza × larghezza, 9 × 6 m), 4 × 6 nell'app
+    id: 'dragomedusa-giovane', nome: 'Dragomedusa giovane', spazio: '4 × 6 Q', pedina_tattica: '1 Q',
     caratteristiche: { FOR: 8, DES: 8, COS: 9, INT: 3, SAG: 7, CAR: 4 },
     pv: 900, pm: 80, ar: { totale: 18, magica: 4 }, difese: 12, iniziativa: 2,
     movimento: { passo: 4, corsa: 8, scatto: 12, volo: 120 },
@@ -50,7 +51,7 @@ const CREATURE = [
     ],
     contromisure: [{ nome: 'Isolante', valore: 6 }],
     g: { uer: 15, ueb: 1, uev: 3, pm: 3, pmSoffio: 12, soffio: '8d10 × 5', areaSoffio: '12 × 1 Q Tattici (180 × 15 m)', portataCattura: '2 Q Tattici (30 m)', cattura: 'VA 16', sostegno: 'fino a 2 × 2 Q Base e 500 kg; vola soltanto al proprio Passo', isolante: 6, percezione: 80, percChrom: 13,
-      dimensioni: 'Lunghezza indicativa 8–10 m; pedina rappresentativa 1 × 1 Q Tattici (convenzionale: nei passaggi stretti contano le dimensioni effettive e lo spazio dei filamenti). Volo 12 / 24 / 36 Q Tattici per Round (Passo in volo 120 Q Base). Terra 4 / 8 / 12 Q Base.' },
+      dimensioni: 'Ingombro corporeo di riferimento 6 × 4 Q Base (lunghezza × larghezza, 9 × 6 m; nei campi dell’app 4 × 6, A.222); pedina rappresentativa 1 × 1 Q Tattici (convenzionale: nei passaggi stretti contano le dimensioni effettive e lo spazio dei filamenti). Ingombro corporeo e portata dei filamenti restano distinti. Volo 12 / 24 / 36 Q Tattici per Round (Passo in volo 120 Q Base). Terra 4 / 8 / 12 Q Base.' },
     note: 'Predatore energetico delle nubi di Iris, potenziato rispetto ai draghi di riferimento: predano veicoli aerei e spaziali leggeri e medi, possono mettere in difficoltà mezzi medi e pesanti modificati; le navi pesanti e da guerra richiedono normalmente più esemplari. Natura Comune, nessun incantesimo appreso, nessuna comprensione dei linguaggi; non appartiene alla Covata. Artigli: portata 1 Q Base; Morso: 2 Q Base; un attacco di ciascun tipo al massimo per Round. Il danno «NdM × 5» è il risultato dei dadi moltiplicato per 5. GS e PX per quattro PG, per un singolo esemplare senza dotazione; i valori restano da verificare al tavolo (Mostri 0.46 §7.12; A.194). Riferimento di pericolosità: preda facilmente sopraffatta un veicolo leggero; predatore favorito contro un medio ordinario; pericoloso soprattutto dopo l’aggancio contro la Neverlost.',
   },
   {
@@ -67,7 +68,7 @@ const CREATURE = [
     ],
     contromisure: [{ nome: 'Isolante', valore: 8 }],
     g: { uer: 25, ueb: 2, uev: 5, pm: 5, pmSoffio: 20, soffio: '12d10 × 5', areaSoffio: '18 × 2 Q Tattici (270 × 30 m)', portataCattura: '4 Q Tattici (60 m)', cattura: 'VA 18', sostegno: 'fino a 3 × 3 Q Base e 1.000 kg; vola al proprio Passo, limite specifico di Passo 24 Q Base, senza Corsa o Scatto', isolante: 8, percezione: 120, percChrom: 15,
-      dimensioni: 'Lunghezza indicativa 15–20 m; pedina rappresentativa 2 × 1 Q Tattici (convenzionale); conserva l’ingombro corporeo personale di 14 × 10 Q Base. Nei passaggi stretti contano le dimensioni effettive e lo spazio dei filamenti. Volo 14 / 28 / 42 Q Tattici per Round (Passo in volo 140 Q Base). Terra 4 / 8 / 12 Q Base.' },
+      dimensioni: 'Lunghezza indicativa 15–20 m; pedina rappresentativa 2 × 1 Q Tattici (convenzionale); conserva l’ingombro corporeo personale di 14 × 10 Q Base (lunghezza × larghezza; nei campi dell’app 10 × 14, A.222). Ingombro corporeo e portata dei filamenti restano distinti. Nei passaggi stretti contano le dimensioni effettive e lo spazio dei filamenti. Volo 14 / 28 / 42 Q Tattici per Round (Passo in volo 140 Q Base). Terra 4 / 8 / 12 Q Base.' },
     note: 'Predatore energetico delle nubi di Iris, potenziato rispetto ai draghi di riferimento: predano veicoli aerei e spaziali leggeri e medi, possono mettere in difficoltà mezzi medi e pesanti modificati; le navi pesanti e da guerra richiedono normalmente più esemplari. Natura Comune, nessun incantesimo appreso, nessuna comprensione dei linguaggi; non appartiene alla Covata. Artigli: portata 2 Q Base; Morso: 3 Q Base; un attacco di ciascun tipo al massimo per Round. Il danno «NdM × 5» è il risultato dei dadi moltiplicato per 5. GS e PX per quattro PG, per un singolo esemplare senza dotazione; i valori restano da verificare al tavolo (Mostri 0.46 §7.12; A.194). Riferimento di pericolosità: preda facilmente sopraffatta un veicolo leggero; nettamente favorito contro un medio ordinario; pericoloso soprattutto dopo l’aggancio contro la Neverlost. Un adulto che preleva 25 UER dal banco Rosso della Neverlost recupera 5 PM propri; il banco da 100 UER si esaurisce in quattro prelievi dell’adulto o sette del giovane.',
   },
 ];
