@@ -6,7 +6,7 @@ import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import { datiReali } from './helpers.js';
 import { converti, inScala, inQBase, misureInScala, movimentoInScala } from '../src/mappa/distanze.js';
-import { misureDelTemplate, templateInScala, nuovoTemplate, celleTemplate, erroreTemplate, cambiaMisura, testoMisure } from '../src/mappa/template.js';
+import { CAMPI_MISURE, misureDelTemplate, templateInScala, nuovoTemplate, celleTemplate, erroreTemplate, cambiaMisura, testoMisure } from '../src/mappa/template.js';
 import { conScala } from '../src/mappa/scala.js';
 import { pezziDellaScena } from '../src/mappa/partecipanti.js';
 import { movimentoInVolo } from '../src/mappa/volo.js';
@@ -46,7 +46,7 @@ test('il soffio di 12 × 1 Q Tattici: in Q Base diventa 120 × 10 (non 1.200); i
   const n = celle.reduce((s, x) => s + x, 0);
   // larga 10 e centrata sul Q d'origine copre 11 righe (le due di bordo per metà: «almeno metà», Magia): 120 × 11
   assert.ok(n >= 1150 && n <= 1350, `circa 120 × 10 quadretti, non 1.200 × 100: ${n}`);
-  assert.match(testoMisure(t, { ...RT, nome_scala: (u) => dati.mappa.scale.elenco.find((x) => x.id === u).nome }), /Linea 12 Q Tattici → 120 Q/);
+  assert.match(testoMisure(t, { ...RT, nome_scala: (u) => dati.mappa.scale.elenco.find((x) => x.id === u).nome }), /Linea 12 × 1 Q Tattici → 120 × 10 Q/);
   // nella scala della scena: nessuna conversione, nessuna misura dichiarata da ricordare
   const tat = nuovaScena({ id: 't', nome: 'T', colonne: 40, righe: 40, dati });
   const md2 = misureDelTemplate({ lunghezza: 12, larghezza: 1 }, 'tattica', { ...tat, scala: 'tattica' }, dati);
@@ -91,4 +91,16 @@ test('«Attacca!» e zone di controllo: la distanza della mappa va in Q Base per
   assert.equal(inQBase(12, BASE, dati), 12, 'in Q Base la distanza della mappa è già quella delle gittate');
   const p = { scheda: { attacchi: [{ tipo: 'ravvicinato', portata_q: 2 }] } };
   assert.deepEqual([portataInScena(p, BASE, dati), portataInScena(p, TATTICA, dati)], [2, 0.2]);
+});
+
+test('la linea del mini-menu ha anche la larghezza (il soffio 12 × 1): senza, in Q Base verrebbe 120 × 1', () => {
+  assert.deepEqual(CAMPI_MISURE.linea, ['lunghezza', 'larghezza']);
+  const RT = dati.mappa.template;
+  const base = (m) => ({ id: 't', forma: 'linea', origine: [1, 1], direzione: 0, misure: m, colore: '#ff0000', durata: null, fine_round: null, scontro: null, nascosto: false });
+  assert.equal(erroreTemplate(base({ lunghezza: 12, larghezza: 1 }), RT), null);
+  assert.equal(erroreTemplate(base({ lunghezza: 12 }), RT), null, 'le linee salvate prima, senza larghezza');
+  assert.match(String(erroreTemplate(base({ lunghezza: 12, larghezza: 0 }), RT)), /larghezza/);
+  // una linea normale non scrive «× 1»; una larga sì
+  assert.equal(testoMisure(base({ lunghezza: 12, larghezza: 1 }), RT), `${RT.nomi_forme.linea} 12 Q`);
+  assert.equal(testoMisure(base({ lunghezza: 12, larghezza: 3 }), RT), `${RT.nomi_forme.linea} 12 × 3 Q`);
 });

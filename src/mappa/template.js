@@ -33,6 +33,11 @@ const rad = (g) => (g * Math.PI) / 180;
 export const MISURE_FORMA = {
   cerchio: ['raggio'], quadrato: ['lato'], rettangolo: ['larghezza', 'altezza'], cono: ['lunghezza', 'larghezza'], linea: ['lunghezza'],
 };
+/**
+ * Lotto 172 (A.225): i campi del mini-menu. La linea ha anche la larghezza (Magia: «lunghezza × larghezza, normalmente 1 Q»),
+ * facoltativa nei dati (senza: linea_larghezza): un soffio 12 × 1 Q Tattici in una scena in Q Base è 120 × 10, non 120 × 1.
+ */
+export const CAMPI_MISURE = { ...MISURE_FORMA, linea: ['lunghezza', 'larghezza'] };
 /** Forme che hanno una direzione. */
 export const ORIENTABILI = ['cono', 'linea'];
 
@@ -169,8 +174,10 @@ const qTesto = (n) => `${String(n).replace('.', ',')} Q`;
 export function testoMisure(t, regole = {}) {
   // A.225: con una misura dichiarata in un'altra scala, «Linea 12 × 1 Q Tattici → 120 × 10 Q»
   if (t.dichiarate?.misure && typeof regole.nome_scala === 'function') {
-    const prima = testoMisure({ forma: t.forma, misure: t.dichiarate.misure }, { ...regole, nome_scala: null });
-    const dopo = testoMisure({ forma: t.forma, misure: t.misure }, { ...regole, nome_scala: null }).replace(/^\S+ /, '');
+    // con la conversione la larghezza della linea si scrive sempre (12 × 1 → 120 × 10)
+    const senzaNome = { ...regole, nome_scala: null, linea_larghezza: NaN };
+    const prima = testoMisure({ forma: t.forma, misure: t.dichiarate.misure }, senzaNome);
+    const dopo = testoMisure({ forma: t.forma, misure: t.misure }, senzaNome).replace(/^\S+ /, '');
     return `${prima.replace(/ Q$/, ` ${regole.nome_scala(t.dichiarate.unita)}`)} → ${dopo}`;
   }
   const m = t.misure ?? {};
@@ -179,6 +186,7 @@ export function testoMisure(t, regole = {}) {
   if (t.forma === 'quadrato') return `${nome} ${m.lato} × ${qTesto(m.lato)}`;
   if (t.forma === 'rettangolo') return `${nome} ${m.larghezza} × ${qTesto(m.altezza)}`;
   if (t.forma === 'cono') return `${nome} ${m.lunghezza} × ${qTesto(m.larghezza)}`;
+  if (t.forma === 'linea' && m.larghezza !== undefined && m.larghezza !== (regole.linea_larghezza ?? 1)) return `${nome} ${m.lunghezza} × ${qTesto(m.larghezza)}`;
   return `${nome} ${qTesto(m.lunghezza)}`;
 }
 
@@ -253,6 +261,8 @@ export function erroreTemplate(t, regole) {
   // A.225: il massimo vale per la misura com'è scritta (12 × 1 Q Tattici); convertita in Q Base può essere fino a dieci volte tanto
   const fattore = t.dichiarate?.misure ? (regole.fattore_scale ?? 10) : 1;
   for (const k of attese) if (!(typeof t.misure?.[k] === 'number' && t.misure[k] > 0 && t.misure[k] <= regole.misura_max_q * fattore)) return `misure.${k}: da 0 a ${regole.misura_max_q * fattore} Q`;
+  // la larghezza della linea è facoltativa (lotto 172)
+  if (t.forma === 'linea' && t.misure?.larghezza !== undefined && !(typeof t.misure.larghezza === 'number' && t.misure.larghezza > 0 && t.misure.larghezza <= regole.misura_max_q * fattore)) return `misure.larghezza: da 0 a ${regole.misura_max_q * fattore} Q`;
   if (t.dichiarate !== undefined) {
     const d = t.dichiarate;
     if (!(d && typeof d.unita === 'string' && attese.every((k) => typeof d.misure?.[k] === 'number' && d.misure[k] > 0 && d.misure[k] <= regole.misura_max_q))) return `dichiarate: { unita, misure } entro ${regole.misura_max_q} Q`;
