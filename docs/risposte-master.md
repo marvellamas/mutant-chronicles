@@ -2405,3 +2405,14 @@ Richiesta di Marcello del 3/11, dal tavolo. Manuali, E&L e «per-davide.md» inv
 
 - **Caricatori parziali — APPLICATO.** Lo stesso modello delle celle della A.215: un caricatore si toglie con i colpi che ha, se ne mette uno di scorta scelto (anche parziale), si riempie fuori dal combattimento anche in parte; ogni caricatore mostra «(attuali/massimi)». Costi: cambio 1 AzP (Armamenti 0.74 §7.20.2, A.135); armi caricate direttamente 2 cartucce per AzP, 4 con Ricarica Migliorata o Esperta, e l'operazione gratuita del Round (A.135, A.182); riempimento senza tempo (A.244 aperta). Il totale dei colpi non cambia in nessuna operazione (test). I file salvati prima non cambiano.
 - **Nuove domande, aperte: A.249–A.250** (`docs/pacchetto-per-davide-2026-11-03-caricatori.md`): A.249 costo di togliere soltanto un caricatore o di metterlo in un'arma vuota (come la A.243 per le celle); A.250 un caricatore parziale di scorta conta come «pronto» per il cambio da 1 AzP e per l'operazione gratuita (oggi: sì).
+
+## 4 novembre 2026 — Lotto 171: Cariche Mistiche e le risposte A.232, A.234, A.236, A.237 (`docs/diff-lotto171-2026-11-04.md`)
+
+«per-davide.md» del 03/11 12:18 scaricato; manuali del 02/11 invariati (Giocatore 0.54, Magia 1.11, Armamenti 0.74, Equipaggiamento 0.30). Veicoli 0.10 e Mostri (Google Doc) ritoccati il 03/11, non letti; le risposte del 03/11 sono per un prompt dedicato.
+
+- **Revisione «Cariche Mistiche» (02/11) — APPLICATA.** Le riserve dedicate ai soli effetti di armi e oggetti sono in CM, non in PM: Guanti di Lucas 6 CM Rosse (Pugno 1, Getto 3, Doppio 6), batteria della CyberArma 5 CM Verdi (1 CM per 10 Round), Bordone, Vindicator, Deliverer, Castigator, Demontooth e Scudo delle Guardie Sacre 5 CM Rosse; Batterie, Matrice, Schegge e Pietra della Vigilanza restano in PM. Ricarica: CM mancanti × 2 × rapporto. Salvataggi: frazione della A.193 una volta sola, valore di prima conservato.
+- **A.232 — APPLICATA.** Ai pugni con i Guanti, Combattimento Senz'Armi oppure Armi da Pugno: un solo +1 VA e +1 danno.
+- **A.234 — APPLICATA** (era già così nel calcolo; ora con il test). Doppio getto: Potere −2 senza i benefici del lancio; il costo è quello della revisione, 6 CM (la risposta diceva 10 PM: vale la revisione, che la supera).
+- **A.236 — APPLICATA.** Riserva interna della CyberArma esclusiva (non paga Incantesimi né si converte in PM), alternativa dei PM personali, non compresa nel progetto dei tre giorni; in CM per la revisione (5 CM, 1 per attivazione, non 10 PM e 2 per attivazione).
+- **A.237 — APPLICATA.** CyberArma convertita: NEC Rosso da 10 cariche, una carica per attivazione, residuo conservato.
+- **Nuove domande, aperte: A.251–A.252** (`docs/pacchetto-per-davide-2026-11-04-lotto171.md`): A.251 quante CM paga il Custode con la CyberArma a batteria (oggi: 1 PM personale, nessun costo in CM); A.252 la ricarica di una riserva convertita a frazione ripristina anche la frazione (oggi: solo CM intere).

@@ -2618,6 +2618,50 @@ Precisazione di Davide: FIAT LUX è il nome personalizzato dello Scout dei PG. L
 
 Il Banco Rosso destinato alla trazione dello Scout diventa un MEC Rosso di ricambio; il Modulo Verde diventa una CEC Verde di ricambio. Si conserva la frazione residua di ciascun accumulatore, applicando la conversione una sola volta e mantenendo i dati originali nello storico. Se la frazione non è ricostruibile, il Direttore deve verificarla prima dell’utilizzo. La dicitura «nessuna scorta aggiuntiva» riguarda la dotazione standard dei nuovi veicoli e non cancella i ricambi già posseduti dallo Scout dei PG, chiamato FIAT LUX.
 
+#### A.118 — Stampa dei veicoli condivisi: risposta approvata da Davide (03/11/2026)
+
+Un veicolo del gruppo, come FIAT LUX, ha una scheda condivisa. Nella stampa complessiva del gruppo compare una sola volta. Nella stampa del singolo PG, l’inclusione è facoltativa e viene preselezionata soltanto per il conducente. Stampare ulteriori copie non duplica il veicolo nell’inventario. FIAT LUX è il nome personalizzato dello Scout dei PG; la Neverlost resta la loro nave.
+
+#### A.238 — Neverlost atterrata in una mappa a Q Base: risposta approvata da Davide (03/11/2026)
+
+La Neverlost viene rappresentata con le dimensioni reali: 34 × 20 Q Base, corrispondenti a 51 × 30 metri, con rotazione anche di 45°. L’app deve consentire questa dimensione per la sagoma della nave atterrata. Lo scafo costituisce un ostacolo secondo la sagoma effettiva; accessi e portelloni si gestiscono separatamente. Il combattimento aereo continua a utilizzare i Q Tattici.
+
+#### A.223 — Posizione della testa della Madre delle Murene: risposta approvata da Davide (03/11/2026)
+
+La testa si trova normalmente all’estremità del muso e segue spostamenti e rotazioni della creatura. Il Direttore può riposizionare manualmente il marcatore quando la posa o l’emersione parziale lo richiedono, mantenendolo in una posizione anatomicamente plausibile sulla sagoma. Distanze e linee di tiro partono dalla posizione confermata della testa. Lo spostamento del marcatore rappresenta la posizione effettiva della creatura e non concede movimento o portata aggiuntivi.
+
+#### A.222 — Ingombro del Dragomedusa: risposta approvata da Davide (03/11/2026)
+
+Nel manuale le dimensioni corporee si leggono lunghezza × larghezza; nei campi dell’app larghezza × lunghezza. Dragomedusa giovane: nuovo ingombro corporeo di riferimento 6 × 4 Q Base, cioè 9 × 6 metri; nell’app 4 × 6 Q Base. Dragomedusa adulto: 14 × 10 Q Base nel manuale; nell’app 10 × 14 Q Base. Restano le pedine convenzionali in Q Tattici: giovane 1 × 1, adulto 2 × 1\. Ingombro corporeo e portata dei filamenti rimangono distinti.
+
+#### A.224 — Roccia attraversabile: risposta approvata da Davide (03/11/2026)
+
+Introduciamo il materiale Roccia, assegnabile alle aree e alle pareti, comprese quelle disegnate come linee. Lo attraversano le creature che possiedono la relativa capacità, rispettando le limitazioni del proprio profilo. La capacità di attraversare la roccia non permette da sola di attraversare porte metalliche o pareti di altri materiali. La roccia conserva il blocco della visuale e rimane un ostacolo per le altre creature.
+
+#### A.225 — Conversione delle distanze sulla mappa: risposta approvata da Davide (03/11/2026)
+
+L’app conserva l’unità originale di ogni distanza e la converte nella scala della scena. Un Q Tattico equivale a 10 Q Base: da Q Base a Q Tattici si divide per 10, nel senso opposto si moltiplica per 10\. Una misura già espressa nella scala della scena si usa direttamente, senza convertirla nuovamente. Esempio: un soffio di 12 × 1 Q Tattici diventa 120 × 10 Q Base. La conversione vale per movimento, portate e aree degli effetti. Si conservano le frazioni esatte, senza arrotondamenti che concedano distanza aggiuntiva. Gli ingombri convenzionali delle pedine seguono invece le dimensioni dichiarate per ciascuna scala.
+
+#### A.240 — Neverlost fuori produzione e valore commerciale: precisazione di Davide (03/11/2026)
+
+La Neverlost è un modello fuori produzione con molte modifiche personalizzate. Il suo profilo è quello dello specifico esemplare della campagna e non deve essere preso come esempio, modello standard o riferimento commerciale per altre navi. Prezzo e fascia commerciale della configurazione attuale restano da definire; i prezzi dei componenti non determinano automaticamente il valore dell’intera nave. Quando sarà ampliato il Manuale dei Veicoli verrà definita una nave simile, distinta dalla Neverlost, con un proprio valore commerciale di catalogo.
+
+#### A.226 — Scout standard e FIAT LUX: integrazione di Davide (03/11/2026)
+
+Lo Scout standard non è un veicolo personalizzato: il prezzo di riferimento resta quello del modello generico, 126.510 crediti per la configurazione standard approvata. FIAT LUX è il nome dello Scout dei PG, non quello della Neverlost. Il FIAT LUX non riceve per il solo nome modifiche tecniche personalizzate. È però un esemplare antico, con ricambi difficili da trovare: il suo valore effettivo può essere inferiore al prezzo del veicolo generico. Prezzo di catalogo e valore stimato di questo esemplare vanno distinti. Davide non ha fissato una percentuale di svalutazione o un nuovo importo: la stima resta al Direttore.
+
+#### A.242 — Documento Talenti, Specializzazioni e Maestrie v1.1: condivisione autorizzata ed eseguita (03/11/2026)
+
+Davide ha autorizzato esplicitamente il caricamento della v1.1 nella cartella «E\&L – Lavoro condiviso». Il documento è ora disponibile nella cartella condivisa: https\://docs.google.com/document/d/10ztjyeX1apff5tnh3SzNiswsvXNjyX0m/edit?usp=drivesdk\&ouid=105222013024123078285\&rtpof=true\&sd=true
+
+Verifica effettuata sui contenuti: tutti i 25 elenchi di Classe della v1.1 coincidono con quelli del Giocatore 0.54. Restano valide le decisioni già approvate sulle Specializzazioni precedenti e sulla loro migrazione; questa condivisione non introduce modifiche aggiuntive agli elenchi.
+
+#### A.117 — Eretico corrotto poco efficace: risposta approvata da Davide (03/11/2026)
+
+Manteniamo ai gradi Semplice e Medio il profilo umano senza Doni automatici, confermando l’eccezione «più fragile del grado». Un umano con armamento leggero può essere poco efficace contro un personaggio ben protetto: questo, da solo, non giustifica un potenziamento automatico.
+
+Il nome e la corruzione non attribuiscono automaticamente poteri, danni Magici o altre capacità. Eventuali Doni, mutazioni o dotazioni superiori vengono assegnati esplicitamente dal Direttore e riportati nel singolo profilo.
+
 > > ## **8\. Prove da fare**
 
 Le prove in sospeso. Quelle che puoi fare tu dal PC del Direttore, nessuna lunga più di qualche minuto. Per tutte: prima **Mutant.bat → 2 «Aggiorna»**, poi **1 «Avvia»**.
