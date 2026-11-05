@@ -310,7 +310,8 @@ const creature = [
     boss: { grado: 'medio', capacita: { nome: 'Non si ferma', effetto: 'Alla soglia di fase termina gli Stati, recupera 15 PV e per il resto della Scena non subisce le penalità degli Stati di Ferita.' } } },
   { id: 'cantore-sfigurato', nome: 'Cantore Sfigurato', titolo: '5.4.3 Cantore Sfigurato', famiglia: 'umanoidi mostruosi', base: 'umanoide-mostruoso', gradi: ['semplice', 'medio', 'potente'], moduli: { corrotto: { livello: 'posseduto', minori: ['sussurro-continuo'], maggiori: ['sguardo-del-vuoto'] } } },
   { id: 'eretico-corrotto', nome: 'Eretico corrotto', titolo: '5.5.1 Eretico corrotto', famiglia: 'umani corrotti', base: 'umano', tipo_umano: 'eretico', gradi: ['minore', 'semplice', 'medio'],
-    moduli: { corrotto: { livello: 'posseduto', minori: ['sussurro-continuo'], maggiori: ['sguardo-del-vuoto'] } },
+    // A.117 (Davide, 03/11/2026, lotto 175): ai gradi Semplice e Medio il profilo umano senza Doni automatici
+    moduli: {},
     moduli_per_grado: { minore: { corrotto: { livello: 'toccato', minori: ['sussurro-continuo'], maggiori: [] } } },
     boss: { grado: 'medio', moduli: { corrotto: { livello: 'consacrato', minori: ['sussurro-continuo'], maggiori: ['sguardo-del-vuoto', 'grido-dell-oscura-simmetria'] } } } },
   // creature delle basi del §3.6–3.9 (03/10/2026); le terze di ogni famiglia e le nuove del 03/10/2026 sera

@@ -904,7 +904,7 @@ Dove gli Scavafosse si moltiplicano troppo a lungo, uno di loro smette di scavar
 
 | Valore | Medio | Potente | Molto potente | Boss (Potente) |
 | :---- | :---: | :---: | :---: | :---: |
-| Natura | Oscura Simmetria | Oscura Simmetria | Oscura Simmetria | Oscura Simmetria |
+| Natura | Oscura Simmetria | — (umano) | — (umano) | Oscura Simmetria |
 | FOR · COS · DES | 6 · 7 · 8 | 7 · 7 · 9 | 8 · 8 · 9 | 7 · 7 · 9 |
 | INT · SAG · CAR | 2 · 6 · 1 | 3 · 6 · 1 | 3 · 7 · 1 | 3 · 6 · 1 |
 | PV | 89 | 243 | 359 | 243 |
@@ -1158,9 +1158,9 @@ Artigli: natura Magico, portata 1 Q, AC 1; con la Carica, Sbalzante 1 (§3.5). C
 
 L’Eretico del bestiario umano (§3.2) è un uomo comune che ha scelto l’Oscura Simmetria; l’Eretico corrotto è quello che ne ha ricevuto i doni. Parla piano, e chi gli sta accanto sente un sussurro sotto le sue parole; quando guarda qualcuno negli occhi, quello resta fermo un istante di troppo. I più devoti portano una lama rituale che non trova ostacoli nell’acciaio.
 
-**Base:** Umano, l’Eretico del bestiario umano del grado (§3.2), con i suoi valori. **Moduli:** Corrotto, Toccato al Minore; Posseduto al Semplice e al Medio; Consacrato al Boss. **Manifestazioni:** Sussurro continuo; dal Posseduto anche Sguardo del vuoto; al Boss anche Grido dell’Oscura Simmetria.
+**Base:** Umano, l’Eretico del bestiario umano del grado (§3.2), con i suoi valori. **Moduli:** Corrotto, Toccato al Minore; nessuno al Semplice e al Medio (A.117); Consacrato al Boss. **Manifestazioni:** Sussurro continuo al Minore; al Boss anche Sguardo del vuoto e Grido dell’Oscura Simmetria.
 
-Le Manifestazioni del §4.2.4 sono i poteri di questa variante, dichiarati con la natura Oscura Simmetria e il modulo Corrotto: l’Eretico del bestiario umano resta un profilo umano senza poteri oscuri (A.79).
+Le Manifestazioni del §4.2.4 sono i poteri di questa variante, dichiarati con la natura Oscura Simmetria e il modulo Corrotto: l’Eretico del bestiario umano resta un profilo umano senza poteri oscuri (A.79). **A.117 (Davide, 03/11/2026):** ai gradi Semplice e Medio resta il profilo umano senza Doni automatici, con l’eccezione «più fragile del grado»; un umano con armamento leggero può essere poco efficace contro un personaggio ben protetto, e questo da solo non giustifica un potenziamento. Il nome e la corruzione non danno poteri, danni Magici o altre capacità: Doni, mutazioni o dotazioni superiori li assegna il Direttore e li riporta nel singolo profilo.
 
 | Valore | Minore (Recluta) | Semplice (Veterano) | Medio (Élite) | Boss (Medio, Élite) |
 | :---- | :---: | :---: | :---: | :---: |
@@ -1168,26 +1168,26 @@ Le Manifestazioni del §4.2.4 sono i poteri di questa variante, dichiarati con l
 | FOR · COS · DES | 8 · 6 · 8 | 8 · 6 · 8 | 9 · 6 · 9 | 9 · 6 · 9 |
 | INT · SAG · CAR | 5 · 5 · 7 | 5 · 5 · 7 | 5 · 5 · 7 | 5 · 5 · 7 |
 | PV | 17 | 25 | 33 | 33 |
-| AR (di cui magica) | 1 (0) | 2 (1) | 2 (1) | 3 (2) |
-| Pugnale da combattimento: VA, danno | 7, 1d6+2 | 9, 1d6+2 Magico | 11, 1d6+3 Magico | 11, 1d6+3 Etereo |
+| AR (di cui magica) | 1 (0) | 1 (0) | 1 (0) | 3 (2) |
+| Pugnale da combattimento: VA, danno | 7, 1d6+2 | 9, 1d6+2 | 11, 1d6+3 | 11, 1d6+3 Etereo |
 | Pistola semiautomatica: VA, danno, gittata | 7, 1d6, 30 Q | 9, 1d6, 30 Q | 11, 1d6+1, 30 Q | 11, 1d6+1, 30 Q |
 | VA Difese | 9 | 11 | 13 | 13 |
-| PS Tempra · Riflessi · Volontà · Magia | 11 · 12 · 11 · 8 | 12 · 13 · 12 · 9 | 12 · 13 · 12 · 9 | 12 · 13 · 12 · 9 |
+| PS Tempra · Riflessi · Volontà · Magia | 11 · 12 · 11 · 8 | 12 · 13 · 10 · 9 | 12 · 13 · 10 · 9 | 12 · 13 · 12 · 9 |
 | Iniziativa | 3 | 3 | 6 | 6 |
 | Movimento | Passo 6 Q | Passo 6 Q | Passo 6 Q | Passo 6 Q |
 | Spazio | 1 Q | 1 Q | 1 Q | 1 Q |
 | Azioni | 1 AzP, 1 Movimento | 1 AzP, 1 Movimento | 1 AzP, 1 Movimento | 1 AzP, 1 Movimento |
 | Abilità | Furtività 12, Percezione 9, Atletica 9, Tecnologia 8 | Furtività 14, Percezione 11, Atletica 11, Tecnologia 9 | Furtività 16, Percezione 13, Atletica 13, Tecnologia 10 | Furtività 16, Percezione 13, Atletica 13, Tecnologia 10 |
 | Contromisure | — | — | — | — |
-| Capacità | Sussurro continuo; Movimento Tattico | Presenza terrificante, Sussurro continuo, Sguardo del vuoto; Movimento Tattico, Attacco Silenzioso, Imboscata Migliorata, Resistenza alla Corruzione | Come il Semplice, più Rapidità Operativa e Affondo Migliorato | Come il Medio, più Grido dell’Oscura Simmetria |
+| Capacità | Sussurro continuo; Movimento Tattico | Movimento Tattico, Attacco Silenzioso, Imboscata Migliorata, Resistenza alla Corruzione | Come il Semplice, più Rapidità Operativa e Affondo Migliorato | Come il Medio, più Presenza terrificante, Sussurro continuo, Sguardo del vuoto e Grido dell’Oscura Simmetria |
 | Immunità | — | — | — | Terrorizzato |
-| Round di resistenza · Round per abbattere un PG | 1,2 · 17,6 | 1,7 · 57,5 | 1,7 · 50,2 | 2,3 · 50,2 |
+| Round di resistenza · Round per abbattere un PG | 1,2 · 17,6 | 1,4 · 57,5 | 1,4 · 50,2 | 2,3 · 50,2 |
 
-I valori umani vengono dal convertitore (Eretico Recluta, Veterano ed Élite del Tavolo del Master) senza moltiplicatori né bonus di grado (A.79); i Talenti restano capacità da applicare a mano. Chi è ferito dall’Eretico è esposto alla Corruzione Oscura: Flebile al Minore, Debole al Semplice e al Medio, Normale al Boss (§4.2.5).
+I valori umani vengono dal convertitore (Eretico Recluta, Veterano ed Élite del Tavolo del Master) senza moltiplicatori né bonus di grado (A.79); i Talenti restano capacità da applicare a mano. Chi è ferito dall’Eretico è esposto alla Corruzione Oscura: Flebile al Minore, Normale al Boss (§4.2.5); al Semplice e al Medio nessuna esposizione, salvo che il Direttore gli assegni il modulo.
 
 **Più fragile del grado.** Combatte da Incursore, con armi leggere e armatura leggera: i suoi Round di resistenza sono sotto quelli del grado. Il Direttore lo usa con l’Imboscata e la Furtività, dietro altre creature o con un gruppo di Eretici, oppure come Boss.
 
-**Comportamento.** Apre con l’Imboscata e lo Sguardo del vuoto sul personaggio più pericoloso, poi attacca con il pugnale chi è Stordito. Il Boss usa il Grido appena è ingaggiato da più di due personaggi e alla soglia di fase prova a fuggire per tornare con altri Eretici.
+**Comportamento.** Apre con l’Imboscata sul personaggio più pericoloso (il Boss anche con lo Sguardo del vuoto), poi attacca con il pugnale chi è Stordito. Il Boss usa il Grido appena è ingaggiato da più di due personaggi e alla soglia di fase prova a fuggire per tornare con altri Eretici.
 
 ## **5.6 Quadrupedi**
 
@@ -1944,7 +1944,7 @@ Le due misure delle creature del Capitolo 5, colonna per colonna, contro sette p
 | Squarciatore | Minore · Semplice · Medio | 1,6 · 2,5 · 3,8 | 1–2 · 2–4 · 3–6 | 7,4 · 5,4 · 5 |
 | Bruto della Breccia | Semplice · Medio · Potente · Boss Medio | 3,2 · 5 · 7,7 · 5 | 2–4 · 3–6 · 5–10 · 3–6 | 5,4 · 5 · 4,2 · 5 |
 | Cantore Sfigurato | Semplice · Medio · Potente | 3,2 · 5 · 7,7 | 2–4 · 3–6 · 5–10 | 5,4 · 5 · 4,2 |
-| Eretico corrotto | Minore · Semplice · Medio · Boss Medio | 1,2 · 1,7† · 1,7† · 2,3† | 1–2 · 2–4 · 3–6 · 3–6 | 17,6 · 57,5 · 50,2 · 50,2 |
+| Eretico corrotto | Minore · Semplice · Medio · Boss Medio | 1,2 · 1,4† · 1,4† · 2,3† | 1–2 · 2–4 · 3–6 · 3–6 | 17,6 · 57,5 · 50,2 · 50,2 |
 | Levriero delle Discariche | Minore · Semplice · Medio | 1,5 · 2,9 · 4,5 | 1–2 · 2–4 · 3–6 | 8,9 · 7 · 6 |
 | Cornofango | Medio · Potente · Molto potente | 9,4 oltre · 15,6 oltre · 22,7 oltre | 3–6 · 5–10 · 6–15 | 6 · 4,8 · 4,6 |
 | Lupo senz’Ombra | Semplice · Medio · Potente · Boss Medio | 3,9 · 6,2 oltre · 10,4 oltre · 6,2 oltre | 2–4 · 3–6 · 5–10 · 3–6 | 7 · 6 · 4,8 · 6 |

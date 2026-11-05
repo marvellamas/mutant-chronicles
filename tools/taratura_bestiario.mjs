@@ -429,8 +429,8 @@ export function umaniScalati(grado, pg) {
  * «centro»: dentro l'intervallo del grado della colonna.
  */
 // fuori dall'intervallo per scelta dichiarata nel testo della creatura: si stampano, non fanno fallire lo script
-// TODO(Davide) A.117: l'Eretico corrotto ai gradi Semplice e Medio impiega 50–57 Round per abbattere un PG (profilo umano senza
-// poteri oscuri, A.79): è voluto o va rafforzato?
+// A.117 risolta (Davide, 03/11/2026, lotto 175): l'Eretico corrotto ai gradi Semplice e Medio resta il profilo umano senza
+// Doni automatici, con l'eccezione «più fragile del grado» (50–57 Round per abbattere un PG): non si rafforza.
 export const ECCEZIONI = { 'eretico-corrotto': 'più fragile del grado, combatte da Incursore (§5.5.1)' };
 export function creaturePronte(dati, pgDi, umani = {}) {
   const B = dati.bestiario;

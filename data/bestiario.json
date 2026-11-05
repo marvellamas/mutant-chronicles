@@ -2939,17 +2939,7 @@
         "semplice",
         "medio"
       ],
-      "moduli": {
-        "corrotto": {
-          "livello": "posseduto",
-          "minori": [
-            "sussurro-continuo"
-          ],
-          "maggiori": [
-            "sguardo-del-vuoto"
-          ]
-        }
-      },
+      "moduli": {},
       "moduli_per_grado": {
         "minore": {
           "corrotto": {
@@ -2978,7 +2968,8 @@
       },
       "descrizione": "L’Eretico del bestiario umano (§3.2) è un uomo comune che ha scelto l’Oscura Simmetria; l’Eretico corrotto è quello che ne ha ricevuto i doni. Parla piano, e chi gli sta accanto sente un sussurro sotto le sue parole; quando guarda qualcuno negli occhi, quello resta fermo un istante di troppo. I più devoti portano una lama rituale che non trova ostacoli nell’acciaio.",
       "comportamento": "Apre con l’Imboscata e lo Sguardo del vuoto sul personaggio più pericoloso, poi attacca con il pugnale chi è Stordito. Il Boss usa il Grido appena è ingaggiato da più di due personaggi e alla soglia di fase prova a fuggire per tornare con altri Eretici.",
-      "paragrafo": "§5.5.1"
+      "paragrafo": "§5.5.1",
+      "a117": "A.117 (Davide, 03/11/2026): ai gradi Semplice e Medio il profilo umano senza Doni automatici, con l’eccezione «più fragile del grado». Il nome e la corruzione non attribuiscono poteri, danni Magici o altre capacità: Doni, mutazioni o dotazioni superiori li assegna il Direttore e li riporta nel singolo profilo."
     },
     {
       "id": "levriero-delle-discariche",
