@@ -109,3 +109,11 @@ test('tools/fiat-lux.mjs (sola lettura) segnala uno sdoppiamento: due Scout del 
   const locale = { uid: 'veilocale1', profilo: 'asa-scout-mk4', nome: 'Scout dei PG', gruppo: true };
   assert.match(quadroScout([uno], [{ file: 'Duncan.json', pg: { scelte: { veicoli: [locale] } } }]).avvisi.join(), /sarebbe un secondo veicolo/);
 });
+
+test('la scheda legge la dotazione dell’esemplare anche dal record com’è nel registro, prima di riscriverlo (prova nel browser)', () => {
+  // il registro restituisce il record così com'è nel file (riserve ancora in Lx): la vista ricava da sé la dotazione di prima
+  const v = vistaVeicoloPersonaggio(fiatLux().mezzo, dati);
+  assert.equal(v.dotazione.esemplare, true);
+  assert.match(v.dotazione.testo, /Pistola sanitaria/);
+  assert.equal(vistaVeicoloPersonaggio(nuovoVeicolo('asa-scout-mk4', dati), dati).dotazione.esemplare, false, 'uno Scout nuovo ha la dotazione standard');
+});

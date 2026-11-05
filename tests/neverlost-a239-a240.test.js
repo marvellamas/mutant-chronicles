@@ -48,3 +48,15 @@ test('A.240: la Neverlost non ha prezzo di catalogo e non diventa un modello da 
   // e lo Scout ha il suo prezzo di catalogo, non la Neverlost
   assert.equal(vistaVeicoloPersonaggio(nuovoVeicolo('asa-scout-mk4', dati), dati).valore.catalogo, 126510);
 });
+
+test('stampa: le munizioni della Neverlost si scrivono anche senza il riquadro dell’energia (prova nel browser)', async () => {
+  const { veicoliDelGruppoStampa } = await import('../src/stampa.js');
+  const { nuovoRecord } = await import('../src/veicoli-registro.js');
+  const nave = registraMunizioniVeicolo(nuovoVeicolo('neverlost', dati, { uid: 'veinave0001' }), 0, { caricate: 420, riserva: 0 }, dati);
+  const g = veicoliDelGruppoStampa([nuovoRecord(nave, { chiave: 'x' }, { gruppo: true })], dati);
+  const m = g.fogli[0].dati.veicoli[0].risorse.munizioni;
+  assert.deepEqual([m[0].caricate, m[1].da_verificare, m[3].da_verificare], [420, true, true]);
+  // la stampa scrive le munizioni in un riquadro loro quando il mezzo non ha quello dell'energia (src/ui/stampa.js)
+  const src = (await import('node:fs')).readFileSync(new URL('../src/ui/stampa.js', import.meta.url), 'utf8');
+  assert.match(src, /const munizioni = !alimentazione && righeMunizioni \? box\(\{ titolo: 'Munizioni di bordo'/);
+});

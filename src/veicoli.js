@@ -1024,6 +1024,8 @@ export function vistaVeicoloPersonaggio(mezzo, dati, { pilotare = null } = {}) {
   const profilo = profiloDi(mezzo, dati);
   if (!profilo) return null;
   const conducente = mezzo.conducente === true && pilotare !== null;
+  // A.226: valore stimato e dotazione dell'esemplare anche da un record non ancora riscritto (letto com'è dal registro)
+  const vd = valoreEDotazione(mezzo, profilo);
   const vista = vistaVeicolo({ ...mezzo, profilo: undefined, scheda: profilo }, dati, { pilotareVa: conducente ? pilotare.va : null });
   // la riga del VA personale porta con sé la provenienza dell'Abilità (tooltip della SD)
   if (vista.pilotare && pilotare?.provenienza?.righe?.length) vista.pilotare.provenienza.righe[0] = { ...vista.pilotare.provenienza.righe[0], dettaglio: pilotare.provenienza.righe };
@@ -1058,10 +1060,10 @@ export function vistaVeicoloPersonaggio(mezzo, dati, { pilotare = null } = {}) {
     valore: {
       esemplareUnico: profilo.esemplare_unico === true,
       catalogo: profilo.esemplare_unico === true ? null : Number.isInteger(profilo.prezzo_cr) ? profilo.prezzo_cr : null,
-      stimato: Number.isInteger(mezzo.valore_stimato_cr) ? mezzo.valore_stimato_cr : null,
+      stimato: Number.isInteger(vd.valore_stimato_cr) ? vd.valore_stimato_cr : null,
       nota: profilo.esemplare_unico === true ? profilo.nota_esemplare ?? null : profilo.nota_valore ?? null,
     },
-    dotazione: isOggetto(mezzo.dotazione_esemplare) ? { ...mezzo.dotazione_esemplare, esemplare: true } : profilo.dotazione ? { testo: profilo.dotazione, esemplare: false } : null,
+    dotazione: isOggetto(vd.dotazione_esemplare) ? { ...vd.dotazione_esemplare, esemplare: true } : profilo.dotazione ? { testo: profilo.dotazione, esemplare: false } : null,
   };
 }
 

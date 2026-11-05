@@ -854,18 +854,21 @@ function foglioVeicolo(v) {
   const n = v.nec;
   const ri = v.risorse ?? {};
   // Veicoli 0.10: riserve alla stampa (cariche Rosse e Verdi, ore d’aria), con lo spazio per i residui
+  const righeMunizioni = ri.munizioni ? (p.armi ?? []).map((a, i) => (ri.munizioni[i]?.da_verificare ? h('p', { class: 'piccolo' }, `${a.nome}: munizioni da verificare dal Direttore (A.239) · caricate ____ riserva ____`) : ri.munizioni[i] ? h('p', { class: 'piccolo' }, `${a.nome}: ${ri.munizioni[i].caricate} caricate, riserva ${ri.munizioni[i].riserva} · residui ________`) : null)) : null;
   const alimentazione = n || ri.verde || ri.aria ? box({ titolo: 'Energia e supporto vitale', classe: 'vei-nec' },
     ri.rosso ? h('p', {}, `${ri.rosso.nome}: ${ri.rosso.daConvertire ? 'da convertire (A.193)' : `${Math.floor(ri.rosso.cariche)} / ${ri.rosso.massimo} cariche alla stampa`} · residue ________ / ${ri.rosso.massimo}`) : n ? h('p', {}, `${n.nec}: `, daDefinireSS()) : null,
     ri.rosso ? h('p', { class: 'piccolo' }, `${ri.rosso.kmPerCarica} km a carica · ${numeroIt(ri.rosso.autonomiaNominaleKm)} km nominali · km della giornata ________ (si sommano le tratte; alla chiusura della giornata si arrotonda per eccesso una volta sola)`) : null,
     ri.verde ? h('p', { class: 'piccolo' }, `${ri.verde.nome}: ${ri.verde.daConvertire ? 'da convertire (A.193)' : `${Math.floor(ri.verde.cariche)} / ${ri.verde.massimo} cariche alla stampa`} · ${ri.verde.perGiorno} carica per giorno di supporto vitale · residue ________ / ${ri.verde.massimo} · giorni con supporto ________`) : null,
     ri.aria ? h('p', { class: 'piccolo' }, `Aria: ${ri.aria.ore} / ${ri.aria.massimo} ore effettive (${ri.aria.bombole} bombole da ${ri.aria.oreBombola} h, riserva distinta dall’energia) · residue ________`) : null,
-    ri.munizioni ? (p.armi ?? []).map((a, i) => (ri.munizioni[i]?.da_verificare ? h('p', { class: 'piccolo' }, `${a.nome}: munizioni da verificare dal Direttore (A.239) · caricate ____ riserva ____`) : ri.munizioni[i] ? h('p', { class: 'piccolo' }, `${a.nome}: ${ri.munizioni[i].caricate} caricate, riserva ${ri.munizioni[i].riserva} · residui ________`) : null)) : null) : null;
+    righeMunizioni) : null;
+  // A.239: senza il riquadro dell'energia (la Neverlost ha le sue riserve) le munizioni stanno in un riquadro loro
+  const munizioni = !alimentazione && righeMunizioni ? box({ titolo: 'Munizioni di bordo', classe: 'vei-munizioni' }, righeMunizioni) : null;
   return [
     v.vista.fuoriUso ? h('p', { class: 'vei-fuori-uso' }, 'Fuori uso: Corpo principale o Motore a 0 PI. Non funziona, non esplode; il movimento residuo prosegue (§5.5).') : null,
     h('div', { class: 'vei-colonne' },
       h('div', { class: 'colonna vei-sinistra' }, profilo, pilotare, andature),
       h('div', { class: 'colonna vei-centro' }, strutture),
-      h('div', { class: 'colonna vei-destra' }, rinforzi, armi, alimentazione,
+      h('div', { class: 'colonna vei-destra' }, rinforzi, armi, alimentazione, munizioni,
         box({ titolo: 'Avarie e note', riempitivo: true, classe: 'vei-note' }, v.avarie ? h('p', {}, v.avarie) : null, righeGuida()))),
     proprieta.length ? box({ titolo: 'Proprietà e sistemi', classe: 'vei-proprieta' }, h('ul', { class: 'piccolo' }, proprieta.map((x) => h('li', {}, h('strong', {}, `${x.nome}: `), x.testo)))) : null,
   ];
