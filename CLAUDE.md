@@ -254,6 +254,8 @@ La v1 (creazione al 1° livello) è chiusa. Oggi il progetto comprende:
 
 - **Schermo intero** (02/11 notte, lotto 166, `docs/diff-lotto166-2026-11-02.md`): un solo modulo, `src/ui/schermo-intero.js` (`pulsanteSchermoIntero`, `apiSchermoIntero`, `statoPulsante`), nella barra della scheda, nella riga del titolo della plancia, in fondo alla barra della mappa del master e nella vista giocatori. Tutta la pagina, forme con e senza webkit, nasce nascosto e compare solo con `fullscreenEnabled`/`webkitFullscreenEnabled` (iPhone no), ⛶/✕ dall'evento di cambio, 40 px, avviso se il browser rifiuta, stato non ricordato; `html` con lo sfondo dell'app. Nella vista giocatori a schermo intero resta solo la ✕ in un angolo.
 
+- **La fascia della copia di prova non toglie spazio a nessuno** (05/11, lotto 174, `docs/diff-lotto174-2026-11-05.md`): il body della mappa resta alto 100dvh in colonna anche con la fascia (tolta la regola del 20/10 `body.con-fascia-copia:has(.mappa-pagina) { height: auto }`, che schiacciava o allungava la mappa e la vista giocatori sulle sole copie); la fascia sulla mappa è una riga della colonna e il main prende il resto. Le colonne incollate delle altre pagine (PV e PM, Stati, Condizioni, riepilogo della creazione, tab a sinistra, fascia del master) partono da `--alto-fasce` (`src/ui/altezza-fasce.js`: la più alta delle righe ferme in cima, 0 sul PC del Direttore) e non finiscono più dietro la fascia. `tests/mappa-altezza-fascia.test.js` fallisce se un’altezza torna a dipendere dalla fascia o se una colonna incollata non sottrae `--alto-fasce`.
+
 Fuori perimetro per ora: tiri automatici fuori dalla plancia; manovre, inseguimenti e collisioni dei veicoli al tavolo.
 
 ## Riferimenti
