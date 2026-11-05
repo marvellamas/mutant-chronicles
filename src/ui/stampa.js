@@ -11,7 +11,7 @@ import { pallini } from './tooltip.js';
 import { testoProvenienza } from '../provenienza.js';
 import { crediti } from '../dotazioni.js';
 import { COLORI_MACROFAMIGLIE } from '../palette.js';
-import { normalizzaOpzioniStampa, fogliDaStampare, numeraPagine, testoPiede, iconaFoglio, schemaQuadratini, righeElencoIncantesimi, abbreviaSS } from '../stampa.js';
+import { normalizzaOpzioniStampa, fogliDaStampare, numeraPagine, testoPiede, iconaFoglio, schemaQuadratini, righeElencoIncantesimi, abbreviaSS, veicoliFacoltativi } from '../stampa.js';
 
 const FOGLIO_STILE = 'css/stampa.css';
 
@@ -70,10 +70,11 @@ const eccede = (corpo) => trabocca(corpo) || [...corpo.querySelectorAll('.riquad
  *   (normalizzaOpzioniStampa), cambiaOpzioni(modifica), torna() }
  * @returns {Node[]} nodi da mettere nella pagina; l'impaginazione parte da sola dopo il caricamento dello stile
  */
-export function renderStampa({ stampa, torna, opzioni = null, cambiaOpzioni = null }) {
+export function renderStampa({ stampa, torna, opzioni = null, cambiaOpzioni = null, senzaGruppo = false, testoTorna = 'Torna alla scheda' }) {
   document.body.classList.add('vista-stampa');
   const opz = normalizzaOpzioniStampa(opzioni);
-  const fogli = fogliDaStampare(stampa.fogli, opz);
+  // A.118: con senzaGruppo (stampa del gruppo) i veicoli del gruppo non entrano nel foglio del PG
+  const fogli = fogliDaStampare(stampa.fogli, opz, { senzaGruppo });
   const avvisi = h('div', { class: 'barra-avvisi' });
   // scelta per il foglio Poteri (docs/layout-ss.md, §5.3), solo se il personaggio ha la magia; la
   // preferenza resta «magia»; la stima delle pagine in più arriva dopo l'impaginazione
@@ -88,7 +89,9 @@ export function renderStampa({ stampa, torna, opzioni = null, cambiaOpzioni = nu
   const barra = h('div', { class: 'barra-stampa' },
     h('button', { type: 'button', class: 'btn primario', onclick: () => window.print() }, 'Stampa'),
     sceltaMagia,
-    h('button', { type: 'button', class: 'btn', onclick: torna }, 'Torna alla scheda'),
+    // A.118: la pagina di un veicolo del gruppo è facoltativa; preselezionata solo per il conducente
+    sceltaVeicoli(stampa, opz, cambiaOpzioni, senzaGruppo),
+    h('button', { type: 'button', class: 'btn', onclick: torna }, testoTorna),
     h('span', { class: 'nota' }, 'A4 orizzontale. Per il PDF scegli «Salva come PDF» come stampante e attiva «Grafica di sfondo».'),
     avvisi);
   if (!stampa.fogli.length) {
@@ -177,6 +180,17 @@ export function renderStampa({ stampa, torna, opzioni = null, cambiaOpzioni = nu
     if (fuori.length) avvisi.append(h('p', { class: 'motivo' }, `Non entra nella pagina: ${fuori.join(', ')}. Il carattere non si riduce: accorcia i testi nella scheda digitale.`));
   });
   return [barra, contenitore];
+}
+
+/** A.118: le spunte dei veicoli del gruppo nella barra della stampa del singolo PG. */
+function sceltaVeicoli(stampa, opz, cambiaOpzioni, senzaGruppo) {
+  if (senzaGruppo || !cambiaOpzioni) return null;
+  const fac = veicoliFacoltativi(stampa.fogli, opz);
+  if (!fac.length) return null;
+  return h('fieldset', { class: 'scelta-stampa scelta-veicoli' }, h('legend', {}, 'Veicoli del gruppo'),
+    fac.map((v) => h('label', { title: v.preselezionato ? 'Preselezionato: questo personaggio lo guida (A.118)' : 'Facoltativo: la scheda del veicolo è condivisa dal gruppo (A.118)' },
+      h('input', { type: 'checkbox', checked: v.incluso, onchange: (e) => cambiaOpzioni({ veicoli: { ...opz.veicoli, [v.id]: e.target.checked } }) }),
+      ` ${v.nome}${v.preselezionato ? ' (conducente)' : ''}`)));
 }
 
 /**

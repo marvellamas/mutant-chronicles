@@ -228,11 +228,11 @@ test('numerazione: «foglio N» fisso e «pagina P di T» reale, anche con le pa
 
 test('opzioni di stampa: predefinita «Solo elenco», valori sconosciuti ripuliti, scelta dei fogli pronta', async () => {
   const { normalizzaOpzioniStampa, fogliDaStampare, OPZIONI_STAMPA_PREDEFINITE } = await import('../src/stampa.js');
-  assert.deepEqual(normalizzaOpzioniStampa(undefined), { fogli: null, magia: 'elenco' });
+  assert.deepEqual(normalizzaOpzioniStampa(undefined), { fogli: null, magia: 'elenco', veicoli: {} });
   assert.equal(OPZIONI_STAMPA_PREDEFINITE.magia, 'elenco');
-  assert.deepEqual(normalizzaOpzioniStampa({ magia: 'completo' }), { fogli: null, magia: 'completo' });
+  assert.deepEqual(normalizzaOpzioniStampa({ magia: 'completo' }), { fogli: null, magia: 'completo', veicoli: {} });
   // un vecchio «magia» fra i fogli scelti si legge «poteri» (§5.3); la preferenza della scelta resta «magia»
-  assert.deepEqual(normalizzaOpzioniStampa({ magia: 'tutto', fogli: ['magia', 'x', 'identita'] }), { fogli: ['identita', 'poteri'], magia: 'elenco' });
+  assert.deepEqual(normalizzaOpzioniStampa({ magia: 'tutto', fogli: ['magia', 'x', 'identita'] }), { fogli: ['identita', 'poteri'], magia: 'elenco', veicoli: {} });
   const fogli = [{ id: 'identita' }, { id: 'abilita' }, { id: 'combattimento' }, { id: 'poteri' }];
   assert.equal(fogliDaStampare(fogli, null).length, 4);
   assert.deepEqual(fogliDaStampare(fogli, { fogli: ['combattimento'] }).map((f) => f.id), ['combattimento']);

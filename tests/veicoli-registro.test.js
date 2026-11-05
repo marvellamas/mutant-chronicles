@@ -175,11 +175,12 @@ test('stampa (seguito di A.91): il veicolo del registro si stampa dal record; se
   assert.equal(foglio(preparaStampa({ creazione: { ...creazione, veicoli: [scoutDiPablo()] }, livelli: [] }, dati))[0].registro, undefined);
 });
 
-test('stampa: il veicolo del gruppo si stampa solo nelle schede che lo hanno nel file, o di chi lo guida', async () => {
-  const { preparaStampa } = await import('../src/stampa.js');
+// A.118 (lotto 173): nella stampa del singolo PG il veicolo del gruppo è facoltativo e preselezionato solo per chi lo guida
+test('stampa: il veicolo del gruppo è facoltativo per ogni PG del gruppo, preselezionato solo per il conducente (A.118)', async () => {
+  const { preparaStampa, fogliDaStampare } = await import('../src/stampa.js');
   const rec = { ...nuovoRecord(scoutDiPablo(), pablo, { gruppo: true }), revisione: 2 };
   const altro = { ...copia(MISHIMA_AGENTE), nome: 'Lia' };
-  const foglio = (st) => st.fogli.find((f) => f.id === 'veicoli')?.dati.veicoli ?? [];
+  const foglio = (st) => fogliDaStampare(st.fogli, null).find((f) => f.id === 'veicoli')?.dati.veicoli ?? [];
   assert.equal(foglio(preparaStampa({ creazione: altro, livelli: [] }, dati, { registroVeicoli: { record: [rec], chi: lia } })).length, 0);
   assert.equal(foglio(preparaStampa({ creazione: altro, livelli: [] }, dati, { registroVeicoli: { record: [cambiaConducente(rec, lia)], chi: lia } })).length, 1);
 });

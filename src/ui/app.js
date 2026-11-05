@@ -41,7 +41,7 @@ import { ritiraTutte } from './coda-offline.js';
 import { sollecitaInvio } from './stato-tablet.js';
 import { difeseNemico } from '../nemico-attacco.js';
 import { leggiScontroAperto, leggiScontro, rigaScontro, leggiMovimentoRound } from './scontro.js';
-import { elencoUnito, confronta, chiaveDaFile, chiavePersonaggio, messaggioSalvataggio, attesaRitentativo, nomeFileLibero, haNome, fileProvvisorio } from '../cartella.js';
+import { elencoUnito, confronta, chiaveDaFile, chiavePersonaggio, messaggioSalvataggio, attesaRitentativo, nomeFileLibero, haNome, fileProvvisorio, ultimiPerPersonaggio } from '../cartella.js';
 import { renderTavolo } from './tavolo.js';
 // Galleria (N1, 13/10/2026): l'immagine che il master mostra, sopra la scheda, con la ✕ per chiuderla da soli
 import { collegaGalleria } from './galleria-giocatori.js';
@@ -71,7 +71,7 @@ import { renderStampa, esciDallaStampa } from './stampa.js';
 import { barraPassi, barraFondoSeServe } from './navigazione.js';
 import { cercaSfondi, applicaSfondo } from './sfondi.js';
 import { caricaImmagini, iconaPagina } from './immagini.js';
-import { preparaStampa, preparaTab, normalizzaOpzioniStampa, versioniCompatte } from '../stampa.js';
+import { preparaStampa, preparaTab, normalizzaOpzioniStampa, versioniCompatte, veicoliDelGruppoStampa } from '../stampa.js';
 import { renderTab, tabFissi, ALIAS_TAB, titoloSalvataggio } from './tab.js';
 import {
   massimiSessione, allineaSessione, variaSessione, modificaSessione, stabilizzaMorente, scalaMorente, attivaArmaSessione, terminaArmaSessione, commutaContenitoreSessione, commutaStato, commutaCondizioneOggetto, commutaTalento, commutaBonusTalenti, impostaCondizioneArma, riparaOggetto, spendiPmLancio, ricaricaMatrice, attivaArtefatto, usaArtefatto, attivaTecnicaSessione, nuovoRoundSessione, terminaTecnicaSessione, usaUnaVoltaSessione, azzeraUsoSessione, nuovaSessione, convertiDistintivi, sessioneDopoLivello,
@@ -226,6 +226,8 @@ function daIndirizzo() {
   // Tavolo del Master (docs/tavolo-direttore.md, pezzo 1): uscendo si ferma l'aggiornamento periodico
   stato.fermaTavolo?.();
   stato.fermaTavolo = null;
+  // A.118: la stampa complessiva del gruppo (dal Tavolo), con i veicoli del gruppo una volta sola
+  if (location.hash === '#/gruppo/stampa') return apriStampaGruppo();
   if (location.hash === '#/tavolo') {
     stato.id = null;
     stato.scelte = null;
@@ -237,7 +239,7 @@ function daIndirizzo() {
     document.title = 'Tavolo del Master · Mutant';
     // «← Torna al tavolo» da una scheda: la plancia rimette lo scorrimento di prima (src/ui/ritorno.js)
     const scorrimento = scorrimentoDaRimettere(sessionStorage);
-    stato.fermaTavolo = renderTavolo(radice, { dati: stato.dati, scorrimento, master: stato.master, statoMaster: stato.statoMaster, azioni: { personaggi: () => vai('#/'), apri: (r) => apriDaCartella(r, { dalTavolo: true }), modificaMaster: (r) => apriDaCartella(r, { dalTavolo: true, master: true }), mappa: (id) => vai(`#/mappa/${id}`) } });
+    stato.fermaTavolo = renderTavolo(radice, { dati: stato.dati, scorrimento, master: stato.master, statoMaster: stato.statoMaster, azioni: { personaggi: () => vai('#/'), apri: (r) => apriDaCartella(r, { dalTavolo: true }), modificaMaster: (r) => apriDaCartella(r, { dalTavolo: true, master: true }), mappa: (id) => vai(`#/mappa/${id}`), stampaGruppo: () => vai('#/gruppo/stampa') } });
     return;
   }
   // guida della mappa per il master (docs/battlemap/guida-davide.md): file statico, anche senza il server
@@ -1540,6 +1542,62 @@ function renderSaliPagina() {
 
 // ---------------------------------------------------------------------------
 // Vista di stampa: quattro fogli A4 orizzontali dai soli valori calcolati
+
+/**
+ * A.118 (Davide, 03/11/2026): la stampa complessiva del gruppo. I fogli dei personaggi al tavolo (o, senza nessuno al
+ * tavolo, di tutti quelli della cartella), ciascuno senza i veicoli del gruppo, poi un foglio «Veicoli del gruppo» con
+ * ogni veicolo del gruppo una volta sola. Solo lettura: non scrive niente nei file né nel registro.
+ */
+async function apriStampaGruppo() {
+  stato.id = null;
+  stato.scelte = null;
+  stato.livelli = [];
+  if (!stato.cartella) {
+    stato.messaggioHome = { tipo: 'attenzione', testo: 'La stampa del gruppo serve il server di Mutant: avvia l’app con avvia-server.bat (node server.mjs).' };
+    return vai('#/');
+  }
+  nascondiTooltip();
+  document.title = 'Stampa del gruppo · Mutant';
+  svuota(radice, h('p', { class: 'nota' }, 'Preparo la stampa del gruppo…'));
+  const torna = () => vai('#/tavolo');
+  const [elenco, alTavolo, record] = await Promise.all([
+    elencoCartella(),
+    fetch('api/tavolo', { cache: 'no-store' }).then((r) => (r.ok ? r.json() : {})).then((x) => x.personaggi ?? []).catch(() => []),
+    elencoVeicoli().catch(() => []),
+  ]);
+  const ultimi = ultimiPerPersonaggio(elenco ?? []);
+  const chiavi = alTavolo.length ? alTavolo : [...ultimi.keys()];
+  const parti = [];
+  let barra = null;
+  let quanti = 0;
+  for (const k of chiavi) {
+    const r = ultimi.get(k);
+    if (!r) continue;
+    try {
+      const { creazione, livelli, sessione, pg } = deserializzaPersonaggio(await leggiCartella(r.file));
+      const scelte = normalizza(creazione, stato.dati).scelte;
+      const chi = { pg: pg ?? null, chiave: chiavePersonaggio(scelte.nome ?? ''), nome: String(scelte.nome ?? '').trim() };
+      const st = preparaStampa({ creazione: scelte, livelli, sessione }, stato.dati, { versioniDati: stato.versioni, registroVeicoli: { record, chi }, modificatori: sessione });
+      const [b, contenuto] = renderStampa({ stampa: st, senzaGruppo: true, torna, testoTorna: 'Torna al Tavolo' });
+      barra ??= b;
+      parti.push(contenuto);
+      quanti += 1;
+    } catch (e) {
+      parti.push(h('p', { class: 'nota errore' }, `${r.file}: ${e.message}`));
+    }
+  }
+  const delGruppo = veicoliDelGruppoStampa(record, stato.dati, { versioniDati: stato.versioni });
+  if (delGruppo) {
+    const [b, contenuto] = renderStampa({ stampa: delGruppo, torna, testoTorna: 'Torna al Tavolo' });
+    barra ??= b;
+    parti.push(contenuto);
+  }
+  const n = delGruppo?.fogli[0]?.dati.veicoli.length ?? 0;
+  const riepilogo = h('p', { class: 'nota no-stampa riepilogo-stampa-gruppo' },
+    `Stampa del gruppo: ${quanti} ${quanti === 1 ? 'personaggio' : 'personaggi'} ${alTavolo.length ? 'al tavolo' : 'della cartella'}${n ? `, poi ${n === 1 ? 'il veicolo' : `i ${n} veicoli`} del gruppo una volta sola` : ''} (A.118).`);
+  svuota(radice, ...(barra ? [barra] : [h('div', { class: 'barra-stampa' }, h('button', { type: 'button', class: 'btn', onclick: torna }, 'Torna al Tavolo'))]), riepilogo, ...parti);
+  window.scrollTo(0, 0);
+}
 
 async function apriStampa() {
   nascondiTooltip();

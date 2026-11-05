@@ -753,28 +753,41 @@ export function artefattiStampa(s, creazione, dati, { conPoteri = false } = {}) 
  * con il server (A.91) il record unico del registro: `registro` = { record, chi, errore? } letto dall'app. Un
  * riferimento senza record raggiungibile dà una pagina che lo dice (`nonRaggiungibile`), invece di sparire.
  * null se il personaggio non ha veicoli o i dati dei veicoli non ci sono.
+ * A.118 (Davide, 03/11/2026): un veicolo del gruppo ha una scheda condivisa. Nella stampa del singolo PG la sua pagina è
+ * **facoltativa** (`facoltativo: true`) e preselezionata soltanto per il conducente (`preselezionato`): la scelta la fa
+ * fogliDaStampare con le opzioni di stampa. Nella stampa del gruppo compare una volta sola (veicoliDelGruppoStampa).
+ * Stampare non scrive niente: né il file del PG né il registro (nessuna copia in più nell'inventario).
  */
 export function veicoliStampa(s, creazione, dati, registro = null) {
   if (!dati.veicoli) return null;
   const propri = Array.isArray(creazione.veicoli) ? creazione.veicoli : [];
   const pilotare = pilotareDelPersonaggio(s.abilita, dati, { scheda: s });
   const record = registro?.record ?? [];
+  const mio = (p) => p && (stessaChiave(p.chiave, registro?.chi?.chiave) || (registro?.chi?.pg && p.pg === registro.chi.pg));
+  // A.118: il veicolo del gruppo è facoltativo; preselezionato solo per chi lo guida
+  const delGruppo = (v, conducente) => ({ ...v, facoltativo: true, preselezionato: conducente === true });
   const daRecord = (rec) => {
-    const v = vistaVeicoloPersonaggio({ ...rec.mezzo, conducente: stessaChiave(rec.conducente?.chiave, registro.chi?.chiave), gruppo: rec.proprietario?.tipo === 'gruppo' }, dati, { pilotare });
-    return v && { ...v, registro: { id: rec.id, revisione: rec.revisione, proprietario: rec.proprietario?.tipo === 'gruppo' ? 'il gruppo' : rec.proprietario?.nome ?? '—', conducente: rec.conducente?.nome ?? null } };
+    const guida = Boolean(mio(rec.conducente));
+    const v = vistaVeicoloPersonaggio({ ...rec.mezzo, conducente: guida, gruppo: rec.proprietario?.tipo === 'gruppo' }, dati, { pilotare });
+    if (!v) return null;
+    const x = { ...v, id: rec.id, registro: { id: rec.id, revisione: rec.revisione, proprietario: rec.proprietario?.tipo === 'gruppo' ? 'il gruppo' : rec.proprietario?.nome ?? '—', conducente: rec.conducente?.nome ?? null } };
+    return rec.proprietario?.tipo === 'gruppo' ? delGruppo(x, guida) : x;
   };
   const visti = new Set();
   const veicoli = propri.map((v) => {
-    if (!eRiferimento(v)) return vistaVeicoloPersonaggio(v, dati, { pilotare });
+    if (!eRiferimento(v)) {
+      const x = vistaVeicoloPersonaggio(v, dati, { pilotare });
+      return x && (x.gruppo ? delGruppo({ ...x, id: x.uid }, v.conducente === true) : { ...x, id: x.uid });
+    }
     visti.add(v.rif);
     const rec = record.find((x) => x.id === v.rif);
-    return rec ? daRecord(rec) : { nonRaggiungibile: true, nome: v.nome, rif: v.rif, motivo: registro?.errore ?? (registro ? 'non è nel registro di questo server' : 'serve il server di Mutant (Mutant.bat, voce 1)') };
+    return rec ? daRecord(rec) : { id: v.rif, nonRaggiungibile: true, nome: v.nome, rif: v.rif, motivo: registro?.errore ?? (registro ? 'non è nel registro di questo server' : 'serve il server di Mutant (Mutant.bat, voce 1)') };
   });
-  // anche quello che guida o che possiede senza riferimento nel file; un veicolo del gruppo si stampa solo nelle
-  // schede che lo hanno nel file (altrimenti due pagine in più in ogni scheda del gruppo: collaudo del 05/10/2026)
-  // TODO(Davide) A.118: in quali schede si stampa un veicolo del gruppo? Oggi in quelle che lo hanno nel file.
-  const mio = (p) => p && (stessaChiave(p.chiave, registro.chi?.chiave) || (registro.chi?.pg && p.pg === registro.chi.pg));
-  for (const rec of record) if (!visti.has(rec.id) && (mio(rec.conducente) || (rec.proprietario?.tipo === 'pg' && mio(rec.proprietario)))) veicoli.push(daRecord(rec));
+  // anche quello che guida o che possiede senza riferimento nel file, e (A.118) i veicoli del gruppo, facoltativi
+  for (const rec of record) {
+    if (visti.has(rec.id)) continue;
+    if (rec.proprietario?.tipo === 'gruppo' || mio(rec.conducente) || (rec.proprietario?.tipo === 'pg' && mio(rec.proprietario))) veicoli.push(daRecord(rec));
+  }
   const fine = veicoli.filter(Boolean);
   return fine.length ? { veicoli: fine } : null;
 }
@@ -1130,7 +1143,7 @@ export function versioniCompatte(versioni) {
 export function testoPiede(piede, n) {
   const foglio = n.parti ? `foglio ${n.foglio ?? '—'} · pagina ${n.parte}/${n.parti}` : `foglio ${n.foglio ?? '—'}${n.seguito ? ' (segue)' : ''}`;
   const pagina = n.parti ? `${n.pagina} di ${n.totale}` : `pagina ${n.pagina} di ${n.totale}`;
-  return [piede.nome, `${piede.livello}° livello`, foglio, pagina,
+  return [piede.nome, Number.isInteger(piede.livello) ? `${piede.livello}° livello` : null, foglio, pagina,
     piede.versioni ? `Dati: ${piede.versioni}` : null].filter(Boolean).join(' · ');
 }
 
@@ -1149,16 +1162,61 @@ export function normalizzaOpzioniStampa(o) {
   const x = o && typeof o === 'object' && !Array.isArray(o) ? o : {};
   const scelti = Array.isArray(x.fogli) ? x.fogli.map((id) => ALIAS_FOGLI[id] ?? id) : null;
   const fogli = scelti ? ID_FOGLI.filter((id) => scelti.includes(id)) : null;
+  // A.118: le spunte dei veicoli del gruppo (id → sì/no); senza spunta vale la preselezione del conducente
+  const veicoli = x.veicoli && typeof x.veicoli === 'object' && !Array.isArray(x.veicoli)
+    ? Object.fromEntries(Object.entries(x.veicoli).filter(([k, v]) => typeof k === 'string' && typeof v === 'boolean')) : {};
   return {
     fogli: fogli && fogli.length ? fogli : null,
     magia: SCELTE_MAGIA.includes(x.magia) ? x.magia : OPZIONI_STAMPA_PREDEFINITE.magia,
+    veicoli,
   };
 }
 
-/** I fogli da stampare secondo le opzioni (il foglio Poteri esiste solo con la magia). */
-export function fogliDaStampare(fogli, opzioni) {
+/**
+ * A.118: i veicoli che entrano nel foglio Veicoli. Quelli del PG sempre; quelli del gruppo (facoltativi) secondo la spunta
+ * (`opzioni.veicoli[id]`) o, senza spunta, la preselezione (il conducente). Con `senzaGruppo` (stampa del gruppo) i veicoli
+ * del gruppo restano fuori dal foglio del PG: li stampa una volta sola il foglio del gruppo.
+ */
+export function veicoliInclusi(veicoli, opzioni = null, { senzaGruppo = false } = {}) {
+  const scelte = normalizzaOpzioniStampa(opzioni).veicoli;
+  return (veicoli ?? []).filter((v) => !v.facoltativo || (!senzaGruppo && (scelte[v.id] ?? v.preselezionato === true)));
+}
+
+/** I fogli da stampare secondo le opzioni (il foglio Poteri esiste solo con la magia; i veicoli del gruppo, A.118). */
+export function fogliDaStampare(fogli, opzioni, { senzaGruppo = false } = {}) {
   const o = normalizzaOpzioniStampa(opzioni);
-  return o.fogli ? fogli.filter((f) => o.fogli.includes(f.id)) : fogli;
+  const scelti = o.fogli ? fogli.filter((f) => o.fogli.includes(f.id)) : fogli;
+  return scelti.flatMap((f) => {
+    if (f.id !== 'veicoli') return [f];
+    const v = veicoliInclusi(f.dati?.veicoli, o, { senzaGruppo });
+    return v.length ? [{ ...f, dati: { ...f.dati, veicoli: v } }] : [];
+  });
+}
+
+/** A.118: i veicoli del gruppo che il PG può aggiungere o togliere dalla sua stampa (le spunte della barra). */
+export const veicoliFacoltativi = (fogli, opzioni = null) => {
+  const scelte = normalizzaOpzioniStampa(opzioni).veicoli;
+  return ((fogli ?? []).find((f) => f.id === 'veicoli')?.dati?.veicoli ?? []).filter((v) => v.facoltativo)
+    .map((v) => ({ id: v.id, nome: v.nome, preselezionato: v.preselezionato === true, incluso: scelte[v.id] ?? v.preselezionato === true }));
+};
+
+/**
+ * A.118: la stampa complessiva del gruppo. I veicoli del gruppo una volta sola, quanti che siano i PG che li vedono o li
+ * hanno nel file: un foglio «Veicoli del gruppo» dai record del registro (per id, senza doppioni).
+ * @returns { fogli, piede, completa } come preparaStampa, o null se il gruppo non ha veicoli
+ */
+export function veicoliDelGruppoStampa(record, dati, { versioniDati = '' } = {}) {
+  if (!dati.veicoli) return null;
+  const visti = new Set();
+  const veicoli = [];
+  for (const rec of record ?? []) {
+    if (rec?.proprietario?.tipo !== 'gruppo' || visti.has(rec.id)) continue;
+    visti.add(rec.id);
+    const v = vistaVeicoloPersonaggio({ ...rec.mezzo, conducente: false, gruppo: true }, dati, { pilotare: null });
+    if (v) veicoli.push({ ...v, id: rec.id, registro: { id: rec.id, revisione: rec.revisione, proprietario: 'il gruppo', conducente: rec.conducente?.nome ?? null } });
+  }
+  if (!veicoli.length) return null;
+  return { completa: true, fogli: ordinaFogli([{ id: 'veicoli', titolo: 'Veicoli del gruppo', dati: { veicoli } }], dati), piede: { nome: 'Veicoli del gruppo', livello: null, versioni: versioniDati } };
 }
 
 /** Numero di incantesimi nei gruppi del foglio Poteri. */

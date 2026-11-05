@@ -412,6 +412,8 @@ export function renderTavolo(radice, ctx) {
     const btnPrepara = h('button', { type: 'button', class: 'btn', title: 'Bozze di scontro: nemici, quanti, note, difficoltà; «Inizia» le apre e chiede l’Iniziativa', onclick: preparaScontro }, 'Prepara scontro');
     const btnCrea = h('button', { type: 'button', class: 'btn', title: 'Procedura guidata dal Bestiario (base, grado, moduli), oppure tutto a caso', onclick: () => creaNemico() }, 'Crea nemico');
     const btnPersonaggi = h('button', { type: 'button', class: 'btn', title: 'L’elenco dei personaggi', onclick: () => ctx.azioni.personaggi() }, 'Personaggi');
+    // A.118: i fogli dei PG al tavolo e i veicoli del gruppo una volta sola
+    const btnStampaGruppo = ctx.azioni.stampaGruppo ? h('button', { type: 'button', class: 'btn', title: 'Stampa dei personaggi al tavolo; i veicoli del gruppo una volta sola, in fondo (A.118)', onclick: () => ctx.azioni.stampaGruppo() }, 'Stampa del gruppo') : null;
     // i pezzi della plancia nella barra della mappa (ritocchi del 06/10: a gruppi; lì le scene stanno già nel gruppo
     // «Mappa» e la guida nel pannello «?»)
     const azioniPlancia = h('div', { class: 'riga-azioni' },
@@ -429,7 +431,7 @@ export function renderTavolo(radice, ctx) {
     const guida = linkGuidaMappa('Guida della mappa');
     guida.className = 'btn'; // un pulsante come gli altri (apre la guida in una scheda nuova)
     const testataGruppi = () => h('div', { class: 'plancia-gruppi' },
-      gruppoTesta('Tavolo', 'gruppo-tavolo', btnChi, btnAggiungi, sceltaFile, btnPersonaggi),
+      gruppoTesta('Tavolo', 'gruppo-tavolo', btnChi, btnAggiungi, sceltaFile, btnPersonaggi, btnStampaGruppo),
       gruppoTesta('Gioco', 'gruppo-gioco', btnPrepara,
         h('button', { type: 'button', class: 'btn', title: 'Scene della mappa di battaglia: nuova, apri, rinomina, duplica, archivia', onclick: () => apriElencoScene(stato.scene, disegna) }, 'Mappa'),
         guida),
