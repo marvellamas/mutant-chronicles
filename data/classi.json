@@ -82,7 +82,11 @@
         {
           "grado": 3,
           "nome": "Rete di Informatori",
-          "testo": "Una volta per sessione, dedicando almeno un’ora ai propri contatti in un luogo abitato o tramite una rete di comunicazione, ottiene un’informazione attendibile e pertinente su una persona, un’organizzazione, un luogo, un crimine, un evento recente, beni o servizi. Se l’informazione è protetta e non può essere ottenuta direttamente, riceve +4 VA alla prossima Prova pertinente di Cultura, Oratoria o Raggirare effettuata per ottenerla."
+          "testo": "Una volta per sessione, dedicando almeno un’ora ai propri contatti in un luogo abitato o tramite una rete di comunicazione, ottiene un’informazione attendibile e pertinente su una persona, un’organizzazione, un luogo, un crimine, un evento recente, beni o servizi. Se l’informazione è protetta e non può essere ottenuta direttamente, riceve +4 VA alla prossima Prova pertinente di Cultura, Oratoria o Raggirare effettuata per ottenerla.",
+          "usi": {
+            "frequenza": "sessione",
+            "quantita": 1
+          }
         },
         {
           "grado": 5,
@@ -119,6 +123,10 @@
                 "fonte": "Giocatore, Agente (§3.4; Talenti §3.5.2)"
               }
             ]
+          },
+          "usi": {
+            "frequenza": "sessione",
+            "quantita": 1
           }
         }
       ],
@@ -131,6 +139,10 @@
             "attacco_distanza": {
               "promemoria": "sempre"
             }
+          },
+          "usi": {
+            "frequenza": "combattimento",
+            "quantita": 1
           }
         },
         {
@@ -198,6 +210,10 @@
             "testo": "1 volta per combattimento, dopo l’Iniziativa e prima del Round 1: si sposta gratis fino a 3 Q, senza altre azioni (terreno e Attacchi di Opportunità normali). Non se Sorpreso.",
             "rif": "Giocatore §3.5.2",
             "stato": "da_verificare"
+          },
+          "usi": {
+            "frequenza": "combattimento",
+            "quantita": 1
           }
         }
       ]
@@ -273,7 +289,11 @@
         {
           "grado": 5,
           "nome": "Maestro della Caccia",
-          "testo": "Una volta per combattimento, quando percepisce la Preda muoversi, attaccare un alleato o tentare di nascondersi, può spendere un’Azione Principale disponibile e scegliere: Attacco, Inseguimento oppure Pressione.\nAttacco: effettua immediatamente un attacco contro la Preda; eventuali ulteriori Azioni richieste dal tiro devono essere disponibili e spese. Inseguimento: si muove fino a 3 Q verso la Preda senza Attacchi di Opportunità. Pressione: se colpisce la Preda nello stesso Round, essa subisce −2 VA alle Prove fisiche fino alla fine del Round; l’attacco richiede le proprie normali Azioni."
+          "testo": "Una volta per combattimento, quando percepisce la Preda muoversi, attaccare un alleato o tentare di nascondersi, può spendere un’Azione Principale disponibile e scegliere: Attacco, Inseguimento oppure Pressione.\nAttacco: effettua immediatamente un attacco contro la Preda; eventuali ulteriori Azioni richieste dal tiro devono essere disponibili e spese. Inseguimento: si muove fino a 3 Q verso la Preda senza Attacchi di Opportunità. Pressione: se colpisce la Preda nello stesso Round, essa subisce −2 VA alle Prove fisiche fino alla fine del Round; l’attacco richiede le proprie normali Azioni.",
+          "usi": {
+            "frequenza": "combattimento",
+            "quantita": 1
+          }
         }
       ],
       "talenti_a_scelta": [
@@ -407,12 +427,20 @@
         {
           "grado": 3,
           "nome": "Occhio del Terreno",
-          "testo": "Una volta per scena, il giocatore indica un percorso o una caratteristica osservabile del terreno e spiega come intende sfruttarla. Il primo alleato che segue l’indicazione riduce di 2 punti complessivi, fino a un minimo di 0, le penalità ambientali alla prima Prova necessaria per percorrere quel tratto. Non rivela pericoli nascosti, non garantisce la sicurezza del percorso e non modifica il costo del Movimento. Non richiede una Prova aggiuntiva per ricevere il beneficio."
+          "testo": "Una volta per scena, il giocatore indica un percorso o una caratteristica osservabile del terreno e spiega come intende sfruttarla. Il primo alleato che segue l’indicazione riduce di 2 punti complessivi, fino a un minimo di 0, le penalità ambientali alla prima Prova necessaria per percorrere quel tratto. Non rivela pericoli nascosti, non garantisce la sicurezza del percorso e non modifica il costo del Movimento. Non richiede una Prova aggiuntiva per ricevere il beneficio.",
+          "usi": {
+            "frequenza": "scena",
+            "quantita": 1
+          }
         },
         {
           "grado": 5,
           "nome": "Padrone del Cammino",
-          "testo": "Una volta per sessione può dichiarare l’esistenza di una rotta difficile ma praticabile: un passaggio laterale, una via di evacuazione, un guado, una cresta, un condotto o un percorso alternativo. La rotta non annulla il pericolo, ma permette di evitare uno scontro frontale, aggirare un ostacolo o ritirarsi senza trasformare la scena in una fuga disperata."
+          "testo": "Una volta per sessione può dichiarare l’esistenza di una rotta difficile ma praticabile: un passaggio laterale, una via di evacuazione, un guado, una cresta, un condotto o un percorso alternativo. La rotta non annulla il pericolo, ma permette di evitare uno scontro frontale, aggirare un ostacolo o ritirarsi senza trasformare la scena in una fuga disperata.",
+          "usi": {
+            "frequenza": "sessione",
+            "quantita": 1
+          }
         }
       ],
       "talenti_a_scelta": [
@@ -439,7 +467,11 @@
         {
           "specializzazione": "Comune",
           "nome": "Avanguardia",
-          "testo": "Una volta per combattimento, durante la propria Iniziativa nel primo Round, se deve ancora agire almeno un nemico, può spendere un’Azione Principale per permettere a un alleato entro 6 Q di muoversi immediatamente fino a 4 Q. Lo spostamento segue le regole del Passo e non consuma l’Azione di Movimento dell’alleato. Rispetta ostacoli, terreno ed eventuali Attacchi di Opportunità e permette soltanto il movimento."
+          "testo": "Una volta per combattimento, durante la propria Iniziativa nel primo Round, se deve ancora agire almeno un nemico, può spendere un’Azione Principale per permettere a un alleato entro 6 Q di muoversi immediatamente fino a 4 Q. Lo spostamento segue le regole del Passo e non consuma l’Azione di Movimento dell’alleato. Rispetta ostacoli, terreno ed eventuali Attacchi di Opportunità e permette soltanto il movimento.",
+          "usi": {
+            "frequenza": "combattimento",
+            "quantita": 1
+          }
         }
       ]
     },
@@ -526,7 +558,11 @@
         {
           "specializzazione": "Ladro",
           "nome": "Filo Nascosto",
-          "testo": "Tiene occultata una piccola lama, un filo, un ago o un piccolo strumento. La prima volta per scena che utilizza questo oggetto contro un bersaglio, quest’ultimo non può effettuare Manovre di Difesa o Attacchi di Opportunità contro quell’azione, fino alla sua completa risoluzione. L’utilizzo richiede le normali Azioni. Restano valide l’Armatura, le protezioni passive e le eventuali Prove Salvezza."
+          "testo": "Tiene occultata una piccola lama, un filo, un ago o un piccolo strumento. La prima volta per scena che utilizza questo oggetto contro un bersaglio, quest’ultimo non può effettuare Manovre di Difesa o Attacchi di Opportunità contro quell’azione, fino alla sua completa risoluzione. L’utilizzo richiede le normali Azioni. Restano valide l’Armatura, le protezioni passive e le eventuali Prove Salvezza.",
+          "usi": {
+            "frequenza": "scena",
+            "quantita": 1
+          }
         },
         {
           "specializzazione": "Ladro",
@@ -633,7 +669,11 @@
         {
           "grado": 5,
           "nome": "Triage Estremo",
-          "testo": "Una volta per combattimento, quando il Paramedico oppure un bersaglio adiacente morirebbe per l’avanzamento delle Ferite oltre lo stato Grave, può intervenire dopo la PS di Tempra e il conteggio delle Ferite, immediatamente prima che la morte venga applicata. Spende un’Azione Principale disponibile, anche fuori dalla propria Iniziativa, e usa strumenti medici almeno standard, pronti all’uso, consumando i materiali necessari. Non effettua una Prova.\nIl beneficiario rimane vivo a 0 PV, con Ferita Grave e penalità −8. Il suo eventuale Sanguinamento termina. Il Talento non restituisce PV né elimina le Ferite o le Menomazioni; eventuali danni successivi si risolvono normalmente. Interviene esclusivamente sulla morte causata dall’avanzamento delle Ferite e non contrasta effetti che provocano direttamente la morte o la distruzione del corpo.\nTriage Estremo può intervenire anche dopo un colpo da 26+ danni, quando la morte deriva dalle Ferite accumulate. Il beneficiario effettua l’eventuale PS per Menomazione ancora dovuta per il raggiungimento di Grave; il Talento non esenta da tale Prova (§5.14.1)."
+          "testo": "Una volta per combattimento, quando il Paramedico oppure un bersaglio adiacente morirebbe per l’avanzamento delle Ferite oltre lo stato Grave, può intervenire dopo la PS di Tempra e il conteggio delle Ferite, immediatamente prima che la morte venga applicata. Spende un’Azione Principale disponibile, anche fuori dalla propria Iniziativa, e usa strumenti medici almeno standard, pronti all’uso, consumando i materiali necessari. Non effettua una Prova.\nIl beneficiario rimane vivo a 0 PV, con Ferita Grave e penalità −8. Il suo eventuale Sanguinamento termina. Il Talento non restituisce PV né elimina le Ferite o le Menomazioni; eventuali danni successivi si risolvono normalmente. Interviene esclusivamente sulla morte causata dall’avanzamento delle Ferite e non contrasta effetti che provocano direttamente la morte o la distruzione del corpo.\nTriage Estremo può intervenire anche dopo un colpo da 26+ danni, quando la morte deriva dalle Ferite accumulate. Il beneficiario effettua l’eventuale PS per Menomazione ancora dovuta per il raggiungimento di Grave; il Talento non esenta da tale Prova (§5.14.1).",
+          "usi": {
+            "frequenza": "combattimento",
+            "quantita": 1
+          }
         }
       ],
       "talenti_a_scelta": [
@@ -661,6 +701,10 @@
                 "fonte": "Giocatore, Paramedico (§3.4; Talenti §3.5.2)"
               }
             ]
+          },
+          "usi": {
+            "frequenza": "scena",
+            "quantita": 1
           }
         },
         {
@@ -671,7 +715,11 @@
         {
           "specializzazione": "Comune",
           "nome": "Controllo del Trauma",
-          "testo": "Una volta per combattimento, senza spendere Azioni Principali o PM, sceglie sé stesso oppure un bersaglio cosciente adiacente. Per 5 Round il beneficiario ignora, a scelta, la penalità da Ferite oppure i modificatori negativi dell’Affaticamento. Il Talento non modifica PV o stati di Ferita, non arresta il Sanguinamento, non elimina Menomazioni e non impedisce morte o perdita di coscienza. Quando viene scelta l’AFT, ne sospende le penalità alle Prove, comprese le PS di Tempra contro ulteriori peggioramenti, ma non modifica lo Stato posseduto (§5.19).\nSe Controllo del Trauma è già attivo e sospende la penalità generale delle Ferite, il beneficio si applica anche alle PS di Tempra per limitare nuove Ferite o evitare Menomazioni. Le penalità e gli impedimenti delle Menomazioni già presenti continuano ad applicarsi."
+          "testo": "Una volta per combattimento, senza spendere Azioni Principali o PM, sceglie sé stesso oppure un bersaglio cosciente adiacente. Per 5 Round il beneficiario ignora, a scelta, la penalità da Ferite oppure i modificatori negativi dell’Affaticamento. Il Talento non modifica PV o stati di Ferita, non arresta il Sanguinamento, non elimina Menomazioni e non impedisce morte o perdita di coscienza. Quando viene scelta l’AFT, ne sospende le penalità alle Prove, comprese le PS di Tempra contro ulteriori peggioramenti, ma non modifica lo Stato posseduto (§5.19).\nSe Controllo del Trauma è già attivo e sospende la penalità generale delle Ferite, il beneficio si applica anche alle PS di Tempra per limitare nuove Ferite o evitare Menomazioni. Le penalità e gli impedimenti delle Menomazioni già presenti continuano ad applicarsi.",
+          "usi": {
+            "frequenza": "combattimento",
+            "quantita": 1
+          }
         }
       ],
       "note": [
@@ -1209,7 +1257,11 @@
         {
           "specializzazione": "Comune",
           "nome": "Piano di Riserva",
-          "testo": "Una volta per sessione, dopo aver fallito una Prova di Furtività, una Prova di Tecnologia oppure una Prova Salvezza di Riflessi, può ritirare il dado prima che siano applicate le conseguenze. Deve accettare il secondo risultato. Si tratta dello stesso tentativo e non richiede ulteriori Azioni o risorse. Restano valide le regole generali sui nuovi tiri e sui Distintivi."
+          "testo": "Una volta per sessione, dopo aver fallito una Prova di Furtività, una Prova di Tecnologia oppure una Prova Salvezza di Riflessi, può ritirare il dado prima che siano applicate le conseguenze. Deve accettare il secondo risultato. Si tratta dello stesso tentativo e non richiede ulteriori Azioni o risorse. Restano valide le regole generali sui nuovi tiri e sui Distintivi.",
+          "usi": {
+            "frequenza": "sessione",
+            "quantita": 1
+          }
         }
       ]
     },
@@ -1558,7 +1610,11 @@
         {
           "grado": 5,
           "nome": "Disciplina di Ferro",
-          "testo": "Una volta per combattimento, il Soldato può richiamare alla disciplina sé stesso e tutti gli alleati entro 6 Q che possano percepirlo. Fino all’arrivo della sua Iniziativa successiva, i beneficiari ignorano le penalità numeriche causate dalle Ferite e dall’Affaticamento.\nI beneficiari vengono individuati all’attivazione e conservano l’effetto anche se successivamente si allontanano oltre 6 Q. Il Talento non recupera PV, non cura Ferite, non arresta il Sanguinamento e non impedisce perdita di coscienza o morte. La sospensione comprende la penalità da AFT alle Prove Salvezza, ma non modifica lo Stato di Affaticamento né impedisce i peggioramenti automatici (§5.19)."
+          "testo": "Una volta per combattimento, il Soldato può richiamare alla disciplina sé stesso e tutti gli alleati entro 6 Q che possano percepirlo. Fino all’arrivo della sua Iniziativa successiva, i beneficiari ignorano le penalità numeriche causate dalle Ferite e dall’Affaticamento.\nI beneficiari vengono individuati all’attivazione e conservano l’effetto anche se successivamente si allontanano oltre 6 Q. Il Talento non recupera PV, non cura Ferite, non arresta il Sanguinamento e non impedisce perdita di coscienza o morte. La sospensione comprende la penalità da AFT alle Prove Salvezza, ma non modifica lo Stato di Affaticamento né impedisce i peggioramenti automatici (§5.19).",
+          "usi": {
+            "frequenza": "combattimento",
+            "quantita": 1
+          }
         }
       ],
       "talenti_a_scelta": [
@@ -2283,12 +2339,20 @@
         {
           "grado": 3,
           "nome": "Resistenza Operaia",
-          "testo": "Una volta per scena, prima di effettuare una Prova fisica o lavorativa, l’Operaio può ignorare per quella Prova tutte le penalità numeriche causate da Ferite e Affaticamento.\nIl Talento non recupera PV, non elimina Ferite o condizioni e non impedisce altre conseguenze del lavoro. La sospensione delle penalità vale soltanto per la Prova fisica o lavorativa scelta e non modifica lo Stato di Affaticamento (§5.19)."
+          "testo": "Una volta per scena, prima di effettuare una Prova fisica o lavorativa, l’Operaio può ignorare per quella Prova tutte le penalità numeriche causate da Ferite e Affaticamento.\nIl Talento non recupera PV, non elimina Ferite o condizioni e non impedisce altre conseguenze del lavoro. La sospensione delle penalità vale soltanto per la Prova fisica o lavorativa scelta e non modifica lo Stato di Affaticamento (§5.19).",
+          "usi": {
+            "frequenza": "scena",
+            "quantita": 1
+          }
         },
         {
           "grado": 5,
           "nome": "Colonna Portante",
-          "testo": "Una volta per scena, quando collabora concretamente a un’attività lavorativa di gruppo, l’Operaio può permettere all’alleato responsabile di ritirare la Prova appena fallita, prima che ne siano applicate le conseguenze.\nL’alleato deve accettare il secondo risultato. Il ritiro riguarda lo stesso tentativo e non richiede ulteriori tempi o materiali. Il Talento non può essere usato dall’Operaio su sé stesso e non si applica ad attacchi, Difese, Salvezze o lancio di Incantesimi."
+          "testo": "Una volta per scena, quando collabora concretamente a un’attività lavorativa di gruppo, l’Operaio può permettere all’alleato responsabile di ritirare la Prova appena fallita, prima che ne siano applicate le conseguenze.\nL’alleato deve accettare il secondo risultato. Il ritiro riguarda lo stesso tentativo e non richiede ulteriori tempi o materiali. Il Talento non può essere usato dall’Operaio su sé stesso e non si applica ad attacchi, Difese, Salvezze o lancio di Incantesimi.",
+          "usi": {
+            "frequenza": "scena",
+            "quantita": 1
+          }
         }
       ],
       "talenti_a_scelta": [
@@ -2305,7 +2369,11 @@
         {
           "specializzazione": "Riparatore",
           "nome": "Riparazione d’Emergenza",
-          "testo": "Una volta per scena, con 1 minuto di lavoro e una Prova riuscita di Tecnologia, l’Operaio ripristina temporaneamente il funzionamento di un oggetto danneggiato: un macchinario, veicolo, dispositivo o struttura.\nL’intervento deve essere concretamente eseguibile con gli strumenti e i componenti disponibili. Sono ammessi strumenti improvvisati, con la loro normale penalità. Fino alla fine della scena, l’oggetto funziona ma impone −2 VA alle Prove effettuate utilizzandolo. Alla scadenza termina il ripristino temporaneo; restano registrati i danni e le riparazioni ordinarie intervenuti nel frattempo.\nL’intervento non recupera Integrità, non ripristina oggetti Distrutti e non sostituisce componenti essenziali mancanti.\nSui veicoli l’intervento interessa una sola struttura, anche a 0 PI se materialmente riparabile: sostituisce temporaneamente la sua penalità o il suo impedimento al funzionamento con −2 VA a Pilotare. Le altre strutture conservano le proprie condizioni e si applica la penalità peggiore. Il ripristino termina anche quando la struttura subisce una nuova perdita di PI (Manuale dei Veicoli, §7.3)."
+          "testo": "Una volta per scena, con 1 minuto di lavoro e una Prova riuscita di Tecnologia, l’Operaio ripristina temporaneamente il funzionamento di un oggetto danneggiato: un macchinario, veicolo, dispositivo o struttura.\nL’intervento deve essere concretamente eseguibile con gli strumenti e i componenti disponibili. Sono ammessi strumenti improvvisati, con la loro normale penalità. Fino alla fine della scena, l’oggetto funziona ma impone −2 VA alle Prove effettuate utilizzandolo. Alla scadenza termina il ripristino temporaneo; restano registrati i danni e le riparazioni ordinarie intervenuti nel frattempo.\nL’intervento non recupera Integrità, non ripristina oggetti Distrutti e non sostituisce componenti essenziali mancanti.\nSui veicoli l’intervento interessa una sola struttura, anche a 0 PI se materialmente riparabile: sostituisce temporaneamente la sua penalità o il suo impedimento al funzionamento con −2 VA a Pilotare. Le altre strutture conservano le proprie condizioni e si applica la penalità peggiore. Il ripristino termina anche quando la struttura subisce una nuova perdita di PI (Manuale dei Veicoli, §7.3).",
+          "usi": {
+            "frequenza": "scena",
+            "quantita": 1
+          }
         },
         {
           "specializzazione": "Riparatore",
@@ -2390,7 +2458,11 @@
         {
           "grado": 3,
           "nome": "Controllo Assoluto",
-          "testo": "Una volta per scena, prima di applicarne le conseguenze, il Pilota può trasformare un proprio fallimento ordinario in un successo normale in una Prova di Pilotare o Tecnologia relativa al veicolo. Non può modificare un 20 naturale."
+          "testo": "Una volta per scena, prima di applicarne le conseguenze, il Pilota può trasformare un proprio fallimento ordinario in un successo normale in una Prova di Pilotare o Tecnologia relativa al veicolo. Non può modificare un 20 naturale.",
+          "usi": {
+            "frequenza": "scena",
+            "quantita": 1
+          }
         },
         {
           "grado": 5,
@@ -2414,7 +2486,11 @@
         {
           "specializzazione": "Civile",
           "nome": "Atterraggio Impossibile",
-          "testo": "Una volta per scena, quando il veicolo che sta pilotando subisce un incidente dovuto a precipitazione, ribaltamento o collisione, il Pilota può limitare le conseguenze senza spendere Azioni, prima di applicare i danni.\nOgni struttura coinvolta che possiede almeno 1 PI prima dell’incidente non scende sotto 1 PI per quell’incidente. Le strutture già a 0 PI non vengono ripristinate. Gli occupanti dimezzano per eccesso il danno dopo le altre riduzioni e non vengono automaticamente espulsi dal mezzo.\nIl Talento richiede almeno 1 PI nel Corpo principale e non riduce direttamente i danni degli attacchi. Non raddrizza un mezzo ribaltato, non ripara componenti già fuori uso e non elimina impedimenti materiali (Manuale dei Veicoli, §5.7)."
+          "testo": "Una volta per scena, quando il veicolo che sta pilotando subisce un incidente dovuto a precipitazione, ribaltamento o collisione, il Pilota può limitare le conseguenze senza spendere Azioni, prima di applicare i danni.\nOgni struttura coinvolta che possiede almeno 1 PI prima dell’incidente non scende sotto 1 PI per quell’incidente. Le strutture già a 0 PI non vengono ripristinate. Gli occupanti dimezzano per eccesso il danno dopo le altre riduzioni e non vengono automaticamente espulsi dal mezzo.\nIl Talento richiede almeno 1 PI nel Corpo principale e non riduce direttamente i danni degli attacchi. Non raddrizza un mezzo ribaltato, non ripara componenti già fuori uso e non elimina impedimenti materiali (Manuale dei Veicoli, §5.7).",
+          "usi": {
+            "frequenza": "scena",
+            "quantita": 1
+          }
         },
         {
           "specializzazione": "Civile",
@@ -2446,7 +2522,11 @@
         {
           "specializzazione": "Militare",
           "nome": "Spinta al Limite",
-          "testo": "Una volta per scena, durante la propria Iniziativa, il Pilota può attivare il Talento senza spendere Azioni. Fino all’arrivo dell’Iniziativa successiva, il veicolo ottiene +2 Q di Movimento e il Pilota riceve +2 VA alle Prove di Pilotare per eseguire manovre evasive. Restano i normali costi delle manovre.\nAl termine dell’effetto effettua una Prova di Pilotare con −4 VA. Con successo non subisce perdite; con fallimento ordinario il Motore perde 1 PI; con Fallimento Maldestro ne perde 2. La perdita è diretta, senza PS Integrità e senza riduzioni di AR o Corazzato. Si aggiorna immediatamente lo stato del Motore. Il +2 Q si aggiunge dopo il moltiplicatore dell’andatura (Manuale dei Veicoli, §7.4)."
+          "testo": "Una volta per scena, durante la propria Iniziativa, il Pilota può attivare il Talento senza spendere Azioni. Fino all’arrivo dell’Iniziativa successiva, il veicolo ottiene +2 Q di Movimento e il Pilota riceve +2 VA alle Prove di Pilotare per eseguire manovre evasive. Restano i normali costi delle manovre.\nAl termine dell’effetto effettua una Prova di Pilotare con −4 VA. Con successo non subisce perdite; con fallimento ordinario il Motore perde 1 PI; con Fallimento Maldestro ne perde 2. La perdita è diretta, senza PS Integrità e senza riduzioni di AR o Corazzato. Si aggiorna immediatamente lo stato del Motore. Il +2 Q si aggiunge dopo il moltiplicatore dell’andatura (Manuale dei Veicoli, §7.4).",
+          "usi": {
+            "frequenza": "scena",
+            "quantita": 1
+          }
         },
         {
           "specializzazione": "Comune",
@@ -2555,7 +2635,11 @@
         {
           "specializzazione": "Meccatronico",
           "nome": "Sovraccarico Tecnico",
-          "testo": "Una volta per scena, il Tecnico spende un’Azione Principale per sovraccaricare un dispositivo al quale può accedere fisicamente o attraverso un collegamento autorizzato. Il dispositivo perde immediatamente 1 Integrità e riceve per 10 Round uno dei benefici seguenti: un motore o una propulsione ottiene +2 Q al Movimento; sensori o strumenti concedono +2 VA a una funzione scelta; i servomeccanismi concedono +2 VA alle operazioni fisiche assistite; un’arma installata infligge +1 danno a una sola istanza per attacco; un sistema energetico alimenta una funzione già presente, normalmente inattiva per insufficiente potenza disponibile.\nIl beneficio energetico richiede comunque una fonte di energia utilizzabile: non crea energia, cariche o PM. Il Talento non può essere utilizzato su un dispositivo con 1 o meno Integrità, né ripetuto sullo stesso dispositivo durante la medesima scena. Non concede Azioni aggiuntive.\nSui veicoli si sottrae il PI da una sola riserva: Motore per motore o impianto energetico; Propulsione per gli organi propulsivi; Corpo principale per sensori, comunicazioni, comandi e servomeccanismi integrati, salvo diversa scheda; PI propri per armi e dispositivi autonomi. Il requisito di almeno 2 PI riguarda quella riserva, senza sommare le strutture. Non si effettuano PS Integrità e AR o Corazzato non riducono la perdita. Il rinforzo di Lavoro a Regola d’Arte può ridurla, ma non elimina il requisito iniziale (Manuale dei Veicoli, §7.4)."
+          "testo": "Una volta per scena, il Tecnico spende un’Azione Principale per sovraccaricare un dispositivo al quale può accedere fisicamente o attraverso un collegamento autorizzato. Il dispositivo perde immediatamente 1 Integrità e riceve per 10 Round uno dei benefici seguenti: un motore o una propulsione ottiene +2 Q al Movimento; sensori o strumenti concedono +2 VA a una funzione scelta; i servomeccanismi concedono +2 VA alle operazioni fisiche assistite; un’arma installata infligge +1 danno a una sola istanza per attacco; un sistema energetico alimenta una funzione già presente, normalmente inattiva per insufficiente potenza disponibile.\nIl beneficio energetico richiede comunque una fonte di energia utilizzabile: non crea energia, cariche o PM. Il Talento non può essere utilizzato su un dispositivo con 1 o meno Integrità, né ripetuto sullo stesso dispositivo durante la medesima scena. Non concede Azioni aggiuntive.\nSui veicoli si sottrae il PI da una sola riserva: Motore per motore o impianto energetico; Propulsione per gli organi propulsivi; Corpo principale per sensori, comunicazioni, comandi e servomeccanismi integrati, salvo diversa scheda; PI propri per armi e dispositivi autonomi. Il requisito di almeno 2 PI riguarda quella riserva, senza sommare le strutture. Non si effettuano PS Integrità e AR o Corazzato non riducono la perdita. Il rinforzo di Lavoro a Regola d’Arte può ridurla, ma non elimina il requisito iniziale (Manuale dei Veicoli, §7.4).",
+          "usi": {
+            "frequenza": "scena",
+            "quantita": 1
+          }
         },
         {
           "specializzazione": "Informatico",
@@ -2565,6 +2649,10 @@
             "testo": "1 volta per scena, 1 AzP: un’intrusione informatica da minuti, con Tecnologia −4 VA; un solo risultato (accesso, sicurezza, credenziali, un dato, un comando). Servono punto d’accesso e strumenti; mai un’intera rete.",
             "rif": "Giocatore §3.5.11",
             "stato": "da_verificare"
+          },
+          "usi": {
+            "frequenza": "scena",
+            "quantita": 1
           }
         },
         {
@@ -2640,7 +2728,11 @@
         {
           "grado": 1,
           "nome": "Formazione Classica",
-          "testo": "Una volta per scena, prima del tiro, l’Accademico ottiene +2 VA a una Prova di Cultura o Scienza riguardante conoscenze teoriche o accademiche."
+          "testo": "Una volta per scena, prima del tiro, l’Accademico ottiene +2 VA a una Prova di Cultura o Scienza riguardante conoscenze teoriche o accademiche.",
+          "usi": {
+            "frequenza": "scena",
+            "quantita": 1
+          }
         },
         {
           "grado": 3,
@@ -2661,7 +2753,11 @@
         {
           "grado": 5,
           "nome": "Dottrina Consolidata",
-          "testo": "Una volta per scena, anche dopo il tiro, l’Accademico può ridurre di un livello la penalità di difficoltà applicata a una Prova di Cultura o Scienza: −2 diventa 0; −4 diventa −2; −6 diventa −4; −8 diventa −6. Il beneficio modifica soltanto la penalità di difficoltà e non compensa penalità da Ferite, Stati, Equipaggiamento o altre cause."
+          "testo": "Una volta per scena, anche dopo il tiro, l’Accademico può ridurre di un livello la penalità di difficoltà applicata a una Prova di Cultura o Scienza: −2 diventa 0; −4 diventa −2; −6 diventa −4; −8 diventa −6. Il beneficio modifica soltanto la penalità di difficoltà e non compensa penalità da Ferite, Stati, Equipaggiamento o altre cause.",
+          "usi": {
+            "frequenza": "scena",
+            "quantita": 1
+          }
         }
       ],
       "talenti_a_scelta": [
@@ -2693,7 +2789,11 @@
         {
           "specializzazione": "Scientifico",
           "nome": "Analisi Critica",
-          "testo": "Una volta per scena, dopo almeno un minuto di analisi, il giocatore formula un’ipotesi sulla base degli elementi disponibili. Ottiene +2 VA a una Prova pertinente di Scienza o Tecnologia per verificarla. Il successo fornisce risultati e riscontri ricavabili dall’esame: non rende vera l’ipotesi e non obbliga il Direttore a suggerire una soluzione."
+          "testo": "Una volta per scena, dopo almeno un minuto di analisi, il giocatore formula un’ipotesi sulla base degli elementi disponibili. Ottiene +2 VA a una Prova pertinente di Scienza o Tecnologia per verificarla. Il successo fornisce risultati e riscontri ricavabili dall’esame: non rende vera l’ipotesi e non obbliga il Direttore a suggerire una soluzione.",
+          "usi": {
+            "frequenza": "scena",
+            "quantita": 1
+          }
         },
         {
           "specializzazione": "Umanistico",
@@ -2708,7 +2808,11 @@
         {
           "specializzazione": "Comune",
           "nome": "Mente Enciclopedica",
-          "testo": "Una volta per scena, l’Accademico può ottenere senza tiro un’informazione generale di Cultura o Scienza che potrebbe ragionevolmente avere appreso. Informazioni rare, segrete o altamente specialistiche richiedono comunque una Prova. Ricercare informazioni non costituisce un’Abilità separata: si usa Cultura per archivi e istituzioni, Scienza per pubblicazioni e dati, Tecnologia per reti e banche dati. Con le fonti personali si usa Oratoria per domandare o persuadere e Raggirare quando si ricorre a menzogne o inganni."
+          "testo": "Una volta per scena, l’Accademico può ottenere senza tiro un’informazione generale di Cultura o Scienza che potrebbe ragionevolmente avere appreso. Informazioni rare, segrete o altamente specialistiche richiedono comunque una Prova. Ricercare informazioni non costituisce un’Abilità separata: si usa Cultura per archivi e istituzioni, Scienza per pubblicazioni e dati, Tecnologia per reti e banche dati. Con le fonti personali si usa Oratoria per domandare o persuadere e Raggirare quando si ricorre a menzogne o inganni.",
+          "usi": {
+            "frequenza": "scena",
+            "quantita": 1
+          }
         }
       ]
     },
@@ -2778,12 +2882,20 @@
         {
           "grado": 3,
           "nome": "Canali Interni",
-          "testo": "Una volta per scena, l’Amministrativo può ottenere un’autorizzazione minore, un accesso ordinario, una proroga o un appuntamento, purché siano plausibili e rientrino nelle competenze dell’organizzazione. Deve poter contattare l’ufficio o il canale competente.\nPer richieste riservate o eccezionali, lo stesso utilizzo concede +2 VA a Oratoria invece del successo automatico. Il Talento non crea qualifiche, credenziali o autorizzazioni che il personaggio non possiede."
+          "testo": "Una volta per scena, l’Amministrativo può ottenere un’autorizzazione minore, un accesso ordinario, una proroga o un appuntamento, purché siano plausibili e rientrino nelle competenze dell’organizzazione. Deve poter contattare l’ufficio o il canale competente.\nPer richieste riservate o eccezionali, lo stesso utilizzo concede +2 VA a Oratoria invece del successo automatico. Il Talento non crea qualifiche, credenziali o autorizzazioni che il personaggio non possiede.",
+          "usi": {
+            "frequenza": "scena",
+            "quantita": 1
+          }
         },
         {
           "grado": 5,
           "nome": "Macchina Amministrativa",
-          "testo": "Una volta per scena, prima che ne vengano applicate le conseguenze, l’Amministrativo può sospendere o rinviare una conseguenza legale o procedurale immediata, quando esiste una procedura plausibile: un ricorso, un’udienza, una nuova ispezione, una scadenza successiva o una verifica supplementare.\nIl Talento non cancella l’obbligo o la responsabilità originaria e non annulla crimini evidenti, condanne definitive o provvedimenti di sicurezza motivati. Il Direttore stabilisce la nuova scadenza in base alla procedura; il rinvio non termina automaticamente con la scena."
+          "testo": "Una volta per scena, prima che ne vengano applicate le conseguenze, l’Amministrativo può sospendere o rinviare una conseguenza legale o procedurale immediata, quando esiste una procedura plausibile: un ricorso, un’udienza, una nuova ispezione, una scadenza successiva o una verifica supplementare.\nIl Talento non cancella l’obbligo o la responsabilità originaria e non annulla crimini evidenti, condanne definitive o provvedimenti di sicurezza motivati. Il Direttore stabilisce la nuova scadenza in base alla procedura; il rinvio non termina automaticamente con la scena.",
+          "usi": {
+            "frequenza": "scena",
+            "quantita": 1
+          }
         }
       ],
       "talenti_a_scelta": [
@@ -2807,7 +2919,11 @@
         {
           "specializzazione": "Burocrate",
           "nome": "Rete Istituzionale",
-          "testo": "Una volta per scena, l’Amministrativo può dichiarare di conoscere un funzionario o impiegato plausibile. Se raggiungibile, il contatto può procurare informazioni non segrete, fissare un incontro o indicare il canale corretto, ma non concede automaticamente favori illegali o accessi riservati."
+          "testo": "Una volta per scena, l’Amministrativo può dichiarare di conoscere un funzionario o impiegato plausibile. Se raggiungibile, il contatto può procurare informazioni non segrete, fissare un incontro o indicare il canale corretto, ma non concede automaticamente favori illegali o accessi riservati.",
+          "usi": {
+            "frequenza": "scena",
+            "quantita": 1
+          }
         },
         {
           "specializzazione": "Contabile",
@@ -2817,7 +2933,11 @@
         {
           "specializzazione": "Contabile",
           "nome": "Pianificazione Strategica",
-          "testo": "Una volta per scena, dopo aver studiato dati, costi e risorse di un piano amministrativo, economico od organizzativo, il giocatore sceglie un’attività specifica e il personaggio incaricato di eseguirla. Prima della Prova gli concede +2 VA a una singola Prova di Abilità pertinente. Il bonus si consuma anche se la Prova fallisce; non richiede al Direttore di individuare la soluzione migliore.\nPuò riguardare, per esempio, la preparazione di un convoglio, una trattativa o un approvvigionamento. Non si applica ad attacchi, Difese, lancio di Incantesimi o Prove Salvezza."
+          "testo": "Una volta per scena, dopo aver studiato dati, costi e risorse di un piano amministrativo, economico od organizzativo, il giocatore sceglie un’attività specifica e il personaggio incaricato di eseguirla. Prima della Prova gli concede +2 VA a una singola Prova di Abilità pertinente. Il bonus si consuma anche se la Prova fallisce; non richiede al Direttore di individuare la soluzione migliore.\nPuò riguardare, per esempio, la preparazione di un convoglio, una trattativa o un approvvigionamento. Non si applica ad attacchi, Difese, lancio di Incantesimi o Prove Salvezza.",
+          "usi": {
+            "frequenza": "scena",
+            "quantita": 1
+          }
         },
         {
           "specializzazione": "Comune",
@@ -2899,24 +3019,40 @@
         {
           "grado": 1,
           "nome": "Espressione Potente",
-          "testo": "Una volta per scena, prima di una Prova di Intrattenere o Oratoria rivolta a un pubblico, l’Artista ottiene +2 VA. Se riesce, il messaggio viene compreso anche in presenza di rumore, distrazioni o pubblico poco attento, purché possa essere visto o udito e utilizzi una lingua o forma espressiva comprensibile. Il Talento non rende percepibile un messaggio impossibile da ricevere e non obbliga il pubblico a condividerlo."
+          "testo": "Una volta per scena, prima di una Prova di Intrattenere o Oratoria rivolta a un pubblico, l’Artista ottiene +2 VA. Se riesce, il messaggio viene compreso anche in presenza di rumore, distrazioni o pubblico poco attento, purché possa essere visto o udito e utilizzi una lingua o forma espressiva comprensibile. Il Talento non rende percepibile un messaggio impossibile da ricevere e non obbliga il pubblico a condividerlo.",
+          "usi": {
+            "frequenza": "scena",
+            "quantita": 1
+          }
         },
         {
           "grado": 3,
           "nome": "Impatto Emotivo",
-          "testo": "Una volta per scena, dopo almeno un minuto di esibizione o discorso e una Prova riuscita di Intrattenere o Oratoria, l’Artista sceglie un interlocutore o il pubblico che ha seguito la sua comunicazione.\nFino alla fine della scena, i soggetti coinvolti subiscono −2 VA alle Prove Sociali ostili contro l’Artista e gli alleati chiaramente associati a lui. Il beneficio non si somma con ulteriori applicazioni dello stesso Talento. Non modifica attacchi, Difese o Prove Salvezza e non obbliga qualcuno ad agire contro interessi, convinzioni o istinti fondamentali."
+          "testo": "Una volta per scena, dopo almeno un minuto di esibizione o discorso e una Prova riuscita di Intrattenere o Oratoria, l’Artista sceglie un interlocutore o il pubblico che ha seguito la sua comunicazione.\nFino alla fine della scena, i soggetti coinvolti subiscono −2 VA alle Prove Sociali ostili contro l’Artista e gli alleati chiaramente associati a lui. Il beneficio non si somma con ulteriori applicazioni dello stesso Talento. Non modifica attacchi, Difese o Prove Salvezza e non obbliga qualcuno ad agire contro interessi, convinzioni o istinti fondamentali.",
+          "usi": {
+            "frequenza": "scena",
+            "quantita": 1
+          }
         },
         {
           "grado": 5,
           "nome": "Icona",
-          "testo": "Una volta per scena, quando la sua identità artistica è conosciuta oppure dopo un’esibizione riuscita, l’Artista può ottenere automaticamente una concessione ragionevole: l’attenzione del pubblico, la possibilità di parlare o esibirsi, un breve incontro, l’accesso a un evento pubblico oppure la collaborazione ordinaria di un ammiratore o di un addetto del settore. Se la richiesta è riservata, rischiosa o insolita, non ottiene il successo automatico ma riceve +2 VA a Oratoria. Icona non concede accessi protetti, informazioni segrete o favori illegali e non obbliga nessuno ad agire contro i propri interessi."
+          "testo": "Una volta per scena, quando la sua identità artistica è conosciuta oppure dopo un’esibizione riuscita, l’Artista può ottenere automaticamente una concessione ragionevole: l’attenzione del pubblico, la possibilità di parlare o esibirsi, un breve incontro, l’accesso a un evento pubblico oppure la collaborazione ordinaria di un ammiratore o di un addetto del settore. Se la richiesta è riservata, rischiosa o insolita, non ottiene il successo automatico ma riceve +2 VA a Oratoria. Icona non concede accessi protetti, informazioni segrete o favori illegali e non obbliga nessuno ad agire contro i propri interessi.",
+          "usi": {
+            "frequenza": "scena",
+            "quantita": 1
+          }
         }
       ],
       "talenti_a_scelta": [
         {
           "specializzazione": "Scenico",
           "nome": "Carisma Artistico",
-          "testo": "Una volta per scena, dopo una Prova riuscita di Intrattenere, l’Artista ottiene +2 VA alla successiva Prova di Oratoria rivolta alla persona o al pubblico che ha seguito l’esibizione. Deve utilizzare il beneficio entro la fine della scena; il bonus si consuma anche se la Prova fallisce."
+          "testo": "Una volta per scena, dopo una Prova riuscita di Intrattenere, l’Artista ottiene +2 VA alla successiva Prova di Oratoria rivolta alla persona o al pubblico che ha seguito l’esibizione. Deve utilizzare il beneficio entro la fine della scena; il bonus si consuma anche se la Prova fallisce.",
+          "usi": {
+            "frequenza": "scena",
+            "quantita": 1
+          }
         },
         {
           "specializzazione": "Scenico",
@@ -2926,7 +3062,11 @@
         {
           "specializzazione": "Mediatico",
           "nome": "Empatia Creativa",
-          "testo": "Una volta per scena, l’Artista può effettuare una Prova di Percezione per comprendere l’emozione dominante e le aspettative di un interlocutore o di un pubblico sulla base dei segnali osservabili. Se riesce, ottiene +2 VA alla successiva Prova di Intrattenere o Oratoria rivolta a esso entro la fine della scena. Non permette di leggere i pensieri o scoprire informazioni nascoste prive di indizi. Richiede il tempo necessario a osservare e non concede un’Azione gratuita durante il combattimento."
+          "testo": "Una volta per scena, l’Artista può effettuare una Prova di Percezione per comprendere l’emozione dominante e le aspettative di un interlocutore o di un pubblico sulla base dei segnali osservabili. Se riesce, ottiene +2 VA alla successiva Prova di Intrattenere o Oratoria rivolta a esso entro la fine della scena. Non permette di leggere i pensieri o scoprire informazioni nascoste prive di indizi. Richiede il tempo necessario a osservare e non concede un’Azione gratuita durante il combattimento.",
+          "usi": {
+            "frequenza": "scena",
+            "quantita": 1
+          }
         },
         {
           "specializzazione": "Mediatico",
@@ -2956,7 +3096,11 @@
         {
           "specializzazione": "Comune",
           "nome": "Ispirazione",
-          "testo": "Una volta per scena, durante la propria Iniziativa e senza spendere Azioni, l’Artista può incoraggiare un alleato mediante parole o espressione artistica. L’alleato deve poterlo percepire e ottiene +2 al Valore della successiva Prova effettuata prima dell’inizio dell’Iniziativa successiva dell’Artista.\nIl beneficio si dichiara prima del tiro e si consuma anche se la Prova fallisce. Non si somma con Assistenza o con un’altra Ispirazione: si applica il bonus più alto."
+          "testo": "Una volta per scena, durante la propria Iniziativa e senza spendere Azioni, l’Artista può incoraggiare un alleato mediante parole o espressione artistica. L’alleato deve poterlo percepire e ottiene +2 al Valore della successiva Prova effettuata prima dell’inizio dell’Iniziativa successiva dell’Artista.\nIl beneficio si dichiara prima del tiro e si consuma anche se la Prova fallisce. Non si somma con Assistenza o con un’altra Ispirazione: si applica il bonus più alto.",
+          "usi": {
+            "frequenza": "scena",
+            "quantita": 1
+          }
         }
       ]
     },
@@ -3188,7 +3332,11 @@
         {
           "grado": 3,
           "nome": "Guida Morale",
-          "testo": "Una volta per scena, quando un alleato entro 6 Q, capace di udirlo, fallisce una Prova Salvezza di Volontà contro paura o demoralizzazione oppure di Magia contro Corruzione od Oscura Simmetria, il Predicatore può permettergli di ripeterla.\nIl Talento si utilizza immediatamente dopo il tiro e prima di applicarne le conseguenze, senza spendere Azioni Principali o PM. L’alleato deve accettare il secondo risultato. Può intervenire anche su un Fallimento Maldestro. Non può essere utilizzato dal Predicatore su sé stesso."
+          "testo": "Una volta per scena, quando un alleato entro 6 Q, capace di udirlo, fallisce una Prova Salvezza di Volontà contro paura o demoralizzazione oppure di Magia contro Corruzione od Oscura Simmetria, il Predicatore può permettergli di ripeterla.\nIl Talento si utilizza immediatamente dopo il tiro e prima di applicarne le conseguenze, senza spendere Azioni Principali o PM. L’alleato deve accettare il secondo risultato. Può intervenire anche su un Fallimento Maldestro. Non può essere utilizzato dal Predicatore su sé stesso.",
+          "usi": {
+            "frequenza": "scena",
+            "quantita": 1
+          }
         },
         {
           "grado": 5,
@@ -3216,6 +3364,10 @@
                 "fonte": "Giocatore, Predicatore (§3.6; Talenti §3.7; Talenti §3.7.5)"
               }
             ]
+          },
+          "usi": {
+            "frequenza": "scena",
+            "quantita": 1
           }
         },
         {
@@ -3340,6 +3492,10 @@
             "lancio": {
               "promemoria": "sempre"
             }
+          },
+          "usi": {
+            "frequenza": "scena",
+            "quantita": 1
           }
         },
         {
@@ -3372,6 +3528,10 @@
             "lancio": {
               "promemoria": "sempre"
             }
+          },
+          "usi": {
+            "frequenza": "scena",
+            "quantita": 1
           }
         },
         {
@@ -3383,6 +3543,10 @@
               "pm_una_volta_per_scena": -2,
               "pm_minimo": 1
             }
+          },
+          "usi": {
+            "frequenza": "scena",
+            "quantita": 1
           }
         },
         {
@@ -3393,6 +3557,10 @@
             "lancio": {
               "promemoria": "sempre"
             }
+          },
+          "usi": {
+            "frequenza": "scena",
+            "quantita": 1
           }
         },
         {
@@ -3498,7 +3666,11 @@
         {
           "grado": 5,
           "nome": "Scudo Assoluto",
-          "testo": "Una volta per scena, prima delle proprie Difese, Prove Salvezza o dell’applicazione degli effetti, il Custode può annullare completamente su di sé un singolo Incantesimo, diretto o ad Area. Deve essere cosciente e percepire la minaccia. Non richiede Azioni, PM o Prove aggiuntive.\nLa protezione comprende tutti i colpi di quel lancio e l’intera durata dei suoi eventuali effetti persistenti. L’Incantesimo continua a risolversi normalmente sugli altri bersagli e sull’ambiente. Il Talento non rimuove effetti già applicati e non protegge dalle conseguenze indirette, come il crollo di una struttura colpita."
+          "testo": "Una volta per scena, prima delle proprie Difese, Prove Salvezza o dell’applicazione degli effetti, il Custode può annullare completamente su di sé un singolo Incantesimo, diretto o ad Area. Deve essere cosciente e percepire la minaccia. Non richiede Azioni, PM o Prove aggiuntive.\nLa protezione comprende tutti i colpi di quel lancio e l’intera durata dei suoi eventuali effetti persistenti. L’Incantesimo continua a risolversi normalmente sugli altri bersagli e sull’ambiente. Il Talento non rimuove effetti già applicati e non protegge dalle conseguenze indirette, come il crollo di una struttura colpita.",
+          "usi": {
+            "frequenza": "scena",
+            "quantita": 1
+          }
         }
       ],
       "talenti_a_scelta": [
@@ -3510,7 +3682,11 @@
         {
           "specializzazione": "Guerriero",
           "nome": "Fenditura Mistica",
-          "testo": "Una volta per scena, dopo aver colpito con l’Arma Astrale ma prima di tirare il danno, il Custode può rendere Etereo il danno di quel singolo colpo. Non richiede Azioni o PM aggiuntivi. Se un attacco comprende più colpi, il beneficio si applica a uno soltanto.\nIl danno viene assorbito esclusivamente dalla componente magica dell’Armatura. Per esempio, contro AR totale 6, di cui 1 magica, la Fenditura Mistica incontra soltanto 1 AR."
+          "testo": "Una volta per scena, dopo aver colpito con l’Arma Astrale ma prima di tirare il danno, il Custode può rendere Etereo il danno di quel singolo colpo. Non richiede Azioni o PM aggiuntivi. Se un attacco comprende più colpi, il beneficio si applica a uno soltanto.\nIl danno viene assorbito esclusivamente dalla componente magica dell’Armatura. Per esempio, contro AR totale 6, di cui 1 magica, la Fenditura Mistica incontra soltanto 1 AR.",
+          "usi": {
+            "frequenza": "scena",
+            "quantita": 1
+          }
         },
         {
           "specializzazione": "Sentinella",
@@ -3651,6 +3827,10 @@
                 "fonte": "Giocatore, Invocatore (§3.8; Talenti §3.9; Talenti §3.9.3)"
               }
             ]
+          },
+          "usi": {
+            "frequenza": "combattimento",
+            "quantita": 1
           }
         },
         {
@@ -3709,6 +3889,10 @@
             "testo": "1 volta per scena: ripete una Prova di Potere fallita di un Incantesimo offensivo, prima delle conseguenze, senza nuove Azioni o PM; vale il secondo risultato (un 20 naturale conserva il Distintivo). Non per gli attacchi con armi.",
             "rif": "Giocatore §3.9.3",
             "stato": "da_verificare"
+          },
+          "usi": {
+            "frequenza": "scena",
+            "quantita": 1
           }
         }
       ],
@@ -3858,7 +4042,11 @@
         {
           "specializzazione": "Divinatore",
           "nome": "Presagio",
-          "testo": "Una volta per combattimento, dopo una Prova propria o di un alleato percepibile entro 6 Q, ma prima di applicarne le conseguenze, il Mistico può spendere 1 PM per farla ripetere. Deve essere cosciente; l’attivazione è gratuita e può avvenire anche fuori dalla propria Iniziativa. Si applica a Prove di Caratteristica, Salvezza o Abilità, comprese quelle di attacco, Difese e lancio degli Incantesimi. Non si applica a tiri per determinare quantità, danni o risultati sulle tabelle.\nLa Prova viene ripetuta con gli stessi modificatori, senza pagare nuovamente il costo dell’azione originale. Il secondo risultato è definitivo, anche se peggiore. Un 1 o 20 naturale del primo tiro concede comunque il Distintivo."
+          "testo": "Una volta per combattimento, dopo una Prova propria o di un alleato percepibile entro 6 Q, ma prima di applicarne le conseguenze, il Mistico può spendere 1 PM per farla ripetere. Deve essere cosciente; l’attivazione è gratuita e può avvenire anche fuori dalla propria Iniziativa. Si applica a Prove di Caratteristica, Salvezza o Abilità, comprese quelle di attacco, Difese e lancio degli Incantesimi. Non si applica a tiri per determinare quantità, danni o risultati sulle tabelle.\nLa Prova viene ripetuta con gli stessi modificatori, senza pagare nuovamente il costo dell’azione originale. Il secondo risultato è definitivo, anche se peggiore. Un 1 o 20 naturale del primo tiro concede comunque il Distintivo.",
+          "usi": {
+            "frequenza": "combattimento",
+            "quantita": 1
+          }
         },
         {
           "specializzazione": "Comune",
@@ -3994,7 +4182,11 @@
         {
           "grado": 5,
           "nome": "Sovrascrittura",
-          "testo": "Una volta per combattimento, prima delle Prove, il Tecnomante può convertire in Etereo qualsiasi danno prodotto da un Artefatto Mistico o TecnoMistico in un singolo attacco oppure in una singola attivazione, indipendentemente dalla natura originaria Naturale o Magica.\nPuò modificare anche l’attacco ordinario di un’arma mistica, senza attivare una proprietà. Non richiede Azioni, PM o Prove aggiuntive e conserva quantità di danno, Gittata, bersagli, Area e Durata. Se l’attivazione produce danni ripetuti, la conversione vale per l’intera durata di quell’effetto.\nL’utilizzo viene consumato anche se l’attacco o l’attivazione falliscono. Tutte le componenti del danno vengono convertite: per esempio, sia il danno Naturale dell’arma sia il suo danno Magico aggiuntivo. Il danno Etereo viene assorbito soltanto dalla componente magica delle protezioni."
+          "testo": "Una volta per combattimento, prima delle Prove, il Tecnomante può convertire in Etereo qualsiasi danno prodotto da un Artefatto Mistico o TecnoMistico in un singolo attacco oppure in una singola attivazione, indipendentemente dalla natura originaria Naturale o Magica.\nPuò modificare anche l’attacco ordinario di un’arma mistica, senza attivare una proprietà. Non richiede Azioni, PM o Prove aggiuntive e conserva quantità di danno, Gittata, bersagli, Area e Durata. Se l’attivazione produce danni ripetuti, la conversione vale per l’intera durata di quell’effetto.\nL’utilizzo viene consumato anche se l’attacco o l’attivazione falliscono. Tutte le componenti del danno vengono convertite: per esempio, sia il danno Naturale dell’arma sia il suo danno Magico aggiuntivo. Il danno Etereo viene assorbito soltanto dalla componente magica delle protezioni.",
+          "usi": {
+            "frequenza": "combattimento",
+            "quantita": 1
+          }
         }
       ],
       "talenti_a_scelta": [

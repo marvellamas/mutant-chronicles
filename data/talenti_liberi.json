@@ -577,7 +577,10 @@
       "testo": "Una volta al giorno, quando sta per subire un peggioramento dell’Affaticamento dovuto a Corsa o Scatto prolungati, marcia forzata o viaggio continuativo, può ridurlo di uno Stato, fino a un minimo di 0. Dichiara l’uso quando il peggioramento deve essere applicato; un aumento di due Stati diventa di uno. Il beneficio vale anche per un peggioramento automatico.\nNon recupera Affaticamento già accumulato e non si applica a fame, sete, privazione del sonno o altre cause.",
       "categoria": "talento_libero",
       "intestazione": "Passivo. Nessun prerequisito. Acquisibile una sola volta.",
-      "usi": { "ambito": "giorno", "quantita": 1 }
+      "usi": {
+        "frequenza": "giorno",
+        "quantita": 1
+      }
     },
     {
       "id": "movimento-fluido",
@@ -1553,7 +1556,12 @@
         "stato": "da_verificare"
       },
       "categoria": "superato",
-      "sostituito_da": "maestria-hacker"
+      "sostituito_da": "maestria-hacker",
+      "usi": {
+        "frequenza": "sessione",
+        "quantita": 1,
+        "per": "sistema"
+      }
     },
     {
       "id": "mani-abili",
@@ -1578,7 +1586,10 @@
       "testo": "Una volta per sessione, con 1 AzP e una Prova riuscita di Tecnologia, rende temporaneamente funzionante per 1d6 Round un dispositivo Rotto, anche a 0 PI. Le prove per utilizzarlo subiscono −2 VA. Non recupera PI e non funziona su un oggetto Distrutto o privo di componenti indispensabili. L’utilizzo si consuma con il tentativo.",
       "categoria": "maestria",
       "intestazione": "Attivo. Nessun prerequisito. Acquisibile una sola volta.",
-      "usi": { "ambito": "sessione", "quantita": 1 }
+      "usi": {
+        "frequenza": "sessione",
+        "quantita": 1
+      }
     },
     {
       "id": "commerciante-esperto",
@@ -1642,7 +1653,10 @@
       "testo": "Una volta al giorno, quando sta per subire un peggioramento dell’Affaticamento dovuto a fame, sete o sonno insufficiente, lo riduce di uno stato, fino a un minimo di 0. Non recupera Affaticamento già accumulato e non sostituisce cibo, acqua o riposo.",
       "categoria": "talento_libero",
       "intestazione": "Passivo. Nessun prerequisito. Acquisibile una sola volta.",
-      "usi": { "ambito": "giorno", "quantita": 1 }
+      "usi": {
+        "frequenza": "giorno",
+        "quantita": 1
+      }
     },
     {
       "id": "tiratore-imboscato",
@@ -1723,7 +1737,11 @@
       "parametro": null,
       "testo": "Una volta per scena, dichiarandolo prima della Prova, ottiene un normale successo automatico in una singola manovra acrobatica possibile del veicolo, come passaggio stretto, atterraggio o inversione. Restano Azioni e risorse richieste. Non vale per attacchi, Difese, Prove contrapposte o manovre impossibili e non produce un Magistrale.",
       "categoria": "maestria",
-      "intestazione": "Attivo. Nessun prerequisito. Acquisibile una sola volta."
+      "intestazione": "Attivo. Nessun prerequisito. Acquisibile una sola volta.",
+      "usi": {
+        "frequenza": "scena",
+        "quantita": 1
+      }
     },
     {
       "id": "risorse-interiori",
@@ -2377,7 +2395,10 @@
       },
       "categoria": "maestria",
       "intestazione": "Attivo. Requisito: capacità personale di lanciare Incantesimi. Acquisibile una sola volta.",
-      "usi": { "ambito": "scontro", "quantita": 1 }
+      "usi": {
+        "frequenza": "combattimento",
+        "quantita": 1
+      }
     },
     {
       "id": "manifestazioni-occultate",
@@ -2579,7 +2600,10 @@
       },
       "solo_regime_nuovo": true,
       "fonte_regole": "talenti_nuovi",
-      "intestazione": "Maestria passiva, acquisibile una sola volta, senza prerequisiti aggiuntivi."
+      "intestazione": "Maestria passiva, acquisibile una sola volta, senza prerequisiti aggiuntivi.",
+      "toglie_limite": [
+        "hacker"
+      ]
     },
     {
       "id": "maestria-arti-marziali-migliorate",

@@ -4467,5 +4467,43 @@
       }
     },
     "_nota": "Numeri per il pulsante «Medita» (src/medita.js): il recupero naturale per ora e per fase, il Talento Recupero Mistico; i rapporti di conversione e la Prova per gruppi sono già in chroma.conversione. La Meditazione (PM per ora, ore al giorno) è calcolata dalla scheda (scheda.magia.meditazione, regole.json → meditazione). 20/10/2026."
+  },
+  "frequenze": {
+    "fonte": "Giocatore 0.54 §3.2 (tabella delle frequenze); A.233 (Davide, 02/11/2026): il capitolo è distinto dall’Atto dei PX; scena e capitolo li comincia il Direttore dalla plancia; gli usi per sessione si rinnovano all’inizio della partita; giorno e settimana seguono il calendario della campagna; i comandi non ripristinano PM, munizioni o altre risorse.",
+    "_nota": "Le frequenze degli «usi» dei Talenti (src/usi-talenti.js). «torna»: quando torna disponibile un uso consumato, come lo legge il giocatore (nel titolo); «breve»: lo stesso sul pulsante dell’uso consumato, per non allungare la riga; «a_mano»: quando l’app non ha il momento (Calendario spento, nessun server) e il contatore si rimette con «↺».",
+    "combattimento": {
+      "nome": "per combattimento",
+      "torna": "torna al prossimo scontro",
+      "breve": "prossimo scontro"
+    },
+    "sessione": {
+      "nome": "per sessione",
+      "torna": "torna con «Nuova sessione»",
+      "breve": "nuova sessione"
+    },
+    "giorno": {
+      "nome": "al giorno",
+      "torna": "torna domani",
+      "breve": "domani",
+      "a_mano": "torna domani (senza Calendario: «↺» a mano)"
+    },
+    "settimana": {
+      "nome": "alla settimana",
+      "torna": "torna fra 7 giorni",
+      "breve": "fra 7 giorni",
+      "a_mano": "torna fra 7 giorni (senza Calendario: «↺» a mano)"
+    },
+    "scena": {
+      "nome": "per scena",
+      "torna": "torna a inizio scena",
+      "breve": "nuova scena",
+      "a_mano": "torna a inizio scena (senza server: «↺» a mano)"
+    },
+    "capitolo": {
+      "nome": "per capitolo",
+      "torna": "torna al prossimo capitolo",
+      "breve": "nuovo capitolo",
+      "a_mano": "torna al prossimo capitolo (senza server: «↺» a mano)"
+    }
   }
 }

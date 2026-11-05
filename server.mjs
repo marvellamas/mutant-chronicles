@@ -27,6 +27,9 @@
 //                                      409 con { esiste: true } («Aggiungi PG al tavolo»: non sovrascrive mai)
 //   GET /api/tavolo                    selezione del Tavolo del Master: { versione, personaggi: [nomi] }
 //   PUT /api/tavolo                    la salva in tavolo/sessione.json (fuori da git come personaggi/)
+//   GET /api/momento                   scena e capitolo della campagna (lotto 175, A.233): { scena, capitolo, ultimo? }
+//   POST /api/momento                  { azione: 'scena' | 'capitolo' | 'annulla' }, solo dal PC del master (403 dai
+//                                      tablet): numeri in tavolo/momento.json; non scrive nei file dei personaggi
 //   GET /api/scontri                   scontri e bozze in scontri/: [{ id, nome, stato, round, revisione, mtime, nemici? }]
 //   GET /api/scontri/<id>              lo scontro (src/scontro.js) o la bozza (src/preparazione.js, stato «bozza»);
 //                                      a un dispositivo che non è il PC del master arriva filtrato (12/10, punto 2:
@@ -154,6 +157,7 @@ import { validaBozza, STATO_BOZZA_ELIMINATA } from './src/preparazione.js';
 import { NOME_FILE, fileProvvisorio, ultimiPerPersonaggio, ultimiPerPg, fileAttuale, chiaveDaFile, chiavePersonaggio } from './src/cartella.js';
 import { conMetadati, serveCopia, copieDaTogliere, idPersonaggio, cartellaStorico, nomeCopiaStorica, CARTELLA_STORICO } from './src/storico-personaggi.js';
 import { associazioneDi, dispositivoVisto, conAssociazione, senzaAssociazione, puoScrivere, elencoDispositivi } from './src/dispositivi.js';
+import { normalizzaMomento, avanzaMomento, annullaMomento, momentoPubblico } from './src/momento.js';
 import { aggiungiOperazioni, normalizzaRientro, rigaOperazione, applicaDecisioni, registraDecisioni, inAttesaDi, righeRitirate, vediRitirate } from './src/rientro.js';
 import { NOME_MARCATORE, statoInstallazione, statoDaRuolo } from './src/copia-di-lavoro.js';
 import { leggiRuolo } from './tools/ruolo-pc.mjs';
@@ -1834,6 +1838,31 @@ async function api(req, res, percorso, cartella, tavolo, scontri, nemici, radice
       if (canale && prima && dopo && (prima.turno !== dopo.turno || prima.round !== dopo.round || prima.stato !== dopo.stato)) canale.pulisciLinee();
       avvisoTurnoTablet(prima, dopo, cartelle).catch(() => {});
     }));
+  }
+  // lotto 175, A.233: «Nuova scena» e «Nuovo capitolo» del Direttore. Il comando cambia soltanto due numeri: gli usi per
+  // scena o per capitolo dei PG tornano disponibili perché si ricordano il numero di quando sono stati consumati
+  // (src/usi-talenti.js). Nessun file dei personaggi si tocca: PM, munizioni e riserve restano come sono.
+  if (percorso === '/api/momento') {
+    const dove = join(tavolo, 'momento.json');
+    const leggiM = async () => { try { return normalizzaMomento(JSON.parse(await readFile(dove, 'utf8'))); } catch { return normalizzaMomento(null); } };
+    if (req.method === 'GET') return json(res, 200, momentoPubblico(await leggiM()));
+    if (req.method === 'POST') {
+      if (!req.mutantMaster) return json(res, 403, { errore: 'scena e capitolo li comincia il Direttore, dal PC del server (A.233)' });
+      let corpo;
+      try { corpo = JSON.parse((await leggiCorpo(req)).toString('utf8')); } catch (e) { return json(res, 400, { errore: e.message }); }
+      await mkdir(tavolo, { recursive: true });
+      let esito = null;
+      await inCoda(dove, async () => {
+        const m = await leggiM();
+        const nuovo = corpo?.azione === 'annulla' ? annullaMomento(m) : avanzaMomento(m, corpo?.azione, new Date().toISOString());
+        if (!nuovo) return;
+        await scriviJson(dove, nuovo);
+        esito = nuovo;
+      });
+      if (!esito) return json(res, 400, { errore: corpo?.azione === 'annulla' ? 'niente da annullare' : 'azione: scena, capitolo o annulla' });
+      return json(res, 200, momentoPubblico(esito));
+    }
+    return json(res, 405, { errore: 'metodo non ammesso' });
   }
   if (percorso === '/api/tavolo') {
     const dove = join(tavolo, 'sessione.json');

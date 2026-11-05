@@ -22,15 +22,16 @@ const isIntero = (v) => Number.isInteger(v);
 const isTesto = (v) => typeof v === 'string' && v.trim() !== '';
 const isOggetto = (v) => v !== null && typeof v === 'object' && !Array.isArray(v);
 
-// 27/10/2026 (lotto 129): un Talento, una Specializzazione/Maestria o il vantaggio di un Addestramento usabile
-// solo un certo numero di volte per scontro, sessione o giorno (src/usi-talenti.js); «ambito» è letto da sessione
-// a scontro per azzerarsi da sola, dagli altri due no (si azzerano solo a mano).
-const AMBITI_USO = ['scontro', 'sessione', 'giorno'];
+// 27/10/2026 (lotto 129): un Talento, una Specializzazione/Maestria o il vantaggio di un Addestramento usabile solo un
+// certo numero di volte (src/usi-talenti.js). Lotto 175: le sei frequenze del Giocatore 0.54 §3.2 (regole.json →
+// frequenze), al posto dei tre «ambiti»; `per` facoltativo (Hacker: «per ciascun sistema»).
+const FREQUENZE_USO = ['combattimento', 'sessione', 'giorno', 'settimana', 'scena', 'capitolo'];
 function validaUsi(F, k, usi, err) {
   if (usi === undefined) return;
-  if (!isOggetto(usi) || !AMBITI_USO.includes(usi.ambito) || !isIntero(usi.quantita) || usi.quantita < 1) {
-    err(F, `${k}.usi`, `serve { ambito: ${AMBITI_USO.join('|')}, quantita: intero ≥ 1 }`);
-  }
+  if (!isOggetto(usi) || !FREQUENZE_USO.includes(usi.frequenza) || !isIntero(usi.quantita) || usi.quantita < 1) {
+    err(F, `${k}.usi`, `serve { frequenza: ${FREQUENZE_USO.join('|')}, quantita: intero ≥ 1, per? }`);
+  } else if (usi.per !== undefined && !isTesto(usi.per)) err(F, `${k}.usi.per`, 'testo atteso: che cosa si conta a parte («sistema»)');
+  else if (usi.ambito !== undefined) err(F, `${k}.usi.ambito`, 'campo sostituito da «frequenza» (lotto 175)');
 }
 const isTodo = (v) => typeof v === 'string' && v.startsWith('TODO(');
 
@@ -1183,6 +1184,7 @@ function validaClassi(c, nomiAddestramenti, nomiAbilita, macrofamiglie, regole, 
     if (scelta.length !== TALENTI_A_SCELTA) err(F, `${k}.talenti_a_scelta`, `attesi ${TALENTI_A_SCELTA} Talenti a scelta, trovati ${scelta.length} (§3.2)`);
     [...fissi.map((t, j) => [t, `talenti_fissi[${j}]`]), ...scelta.map((t, j) => [t, `talenti_a_scelta[${j}]`])].forEach(([t, kt]) => {
       if (!isTesto(t?.nome) || !isTesto(t?.testo)) err(F, `${k}.${kt}`, 'servono "nome" e "testo"');
+      validaUsi(F, `${k}.${kt}`, t?.usi, err); // lotto 175: Talenti di Classe con un uso limitato
     });
     scelta.forEach((t, j) => {
       // A.206: un Talento rinominato dal manuale conserva i nomi di prima; non devono coincidere con il nome di un altro Talento

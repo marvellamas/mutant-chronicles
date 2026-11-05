@@ -59,7 +59,7 @@ import { allineaImpianti } from './impianti.js';
 import { allineaMorente, statoMorente, togliRound } from './morente.js';
 import { allineaAttivazioniArmi, attivaArma, terminaArma } from './attivazione-arma.js';
 import { allineaContenitori, commutaContenitore } from './schermatura.js';
-import { allineaUsiTalenti, usaUnaVolta, azzeraUso } from './usi-talenti.js';
+import { allineaUsiTalenti, usaUnaVolta, azzeraUso, vociConUso, rinnovaSessione } from './usi-talenti.js';
 
 const isOggetto = (v) => v !== null && typeof v === 'object' && !Array.isArray(v);
 const limita = (v, min, max) => Math.min(max, Math.max(min, v));
@@ -129,6 +129,8 @@ export function massimiSessione(scheda, creazione, dati) {
     necPrecedenti: dati.equipaggiamento && dati.regole.nec ? Object.fromEntries(riserveNec(normalizzaEquipaggiamento(creazione?.equipaggiamento), dati).filter((x) => x.precedenti).map((x) => [x.chiave, x.precedenti])) : null,
     // trasformatori dell'Inventario (§5.4.6): uid → colori gestiti (1 o 3), per i tamponi al tavolo
     trasformatori: dati.equipaggiamento ? Object.fromEntries(elencoTrasformatori(normalizzaEquipaggiamento(creazione?.equipaggiamento), dati).map((t) => [t.uid, { colori: t.colori, tampone: t.tampone }])) : {},
+    // lotto 175: la frequenza degli usi limitati (chiave → frequenza), per «Nuova sessione» (src/usi-talenti.js)
+    usi: Object.fromEntries(vociConUso(scheda).map((v) => [v.chiave, v.frequenza])),
   };
 }
 
@@ -834,7 +836,10 @@ export function nuovaSessione(sessione, m) {
   const { incantesimiAttivi: _inc, morente: _mor, ...resto } = allineaSessione(sessione, m);
   const temporanei = (resto.caratteristicheTemporanee ?? []).filter((x) => x.al === null);
   delete resto.caratteristicheTemporanee;
-  return { ...resto, pvAttuali: m.pv, pmAttuali: m.pm, statiAttivi: [], ferite: 0, affaticamento: 0, round: 1, ultimaTecnica: null, tecnicheAttive: [], ...(temporanei.length ? { caratteristicheTemporanee: temporanei } : {}) };
+  // A.233 (lotto 175): «Gli usi per sessione si rinnovano all'inizio della partita»; gli altri usi restano
+  const usi = rinnovaSessione(resto.usiTalenti, m.usi ?? {});
+  delete resto.usiTalenti;
+  return { ...resto, pvAttuali: m.pv, pmAttuali: m.pm, statiAttivi: [], ferite: 0, affaticamento: 0, round: 1, ultimaTecnica: null, tecnicheAttive: [], ...(temporanei.length ? { caratteristicheTemporanee: temporanei } : {}), ...(Object.keys(usi).length ? { usiTalenti: usi } : {}) };
 }
 
 /**
@@ -854,8 +859,9 @@ export function nuovoRoundSessione(sessione, m) {
 }
 
 /** Un uso in più di un Talento/vantaggio limitato (tab Combattimento, src/usi-talenti.js). */
-export function usaUnaVoltaSessione(sessione, voce, scontroId, m) {
-  return allineaSessione(usaUnaVolta(allineaSessione(sessione, m), voce, scontroId), m);
+export function usaUnaVoltaSessione(sessione, voce, momento, m, opzioni = {}) {
+  // momento: l'id dello scontro (come dal lotto 129) o { scontro, scena, capitolo, data } (lotto 175)
+  return allineaSessione(usaUnaVolta(allineaSessione(sessione, m), voce, momento, m, opzioni), m);
 }
 
 /** «Azzera» a mano un contatore di usi (src/usi-talenti.js). */

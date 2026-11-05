@@ -37,7 +37,7 @@ import { testoAttivazione } from '../attivazione-arma.js';
 import { testoManifestazione } from '../manifestazione.js';
 import { descriviFerite } from '../sessione.js';
 import { elencoTrasformatori, statoTrasformatore, bersagliRicaricabili, fontiCec, pianoRicarica } from '../trasformatori.js';
-import { statoUsiTalenti } from '../usi-talenti.js';
+import { statoUsiTalenti, quandoTorna } from '../usi-talenti.js';
 import { confrontoLivelloPx, fraseLivelloPx } from '../px-partita.js';
 import { statoIntegrita, oggettiRotti } from '../protezione.js';
 import { schermaQualcosa, statoContenitore, statoSchermatura } from '../schermatura.js';
@@ -354,7 +354,7 @@ function menuAzioni(ctx) {
       voce('Modifica creazione', () => azioni.modificaCreazione()),
       ctx.livelli.length ? voce('Annulla l’ultimo livello', azioni.annullaLivello, { pericolo: true }) : null,
       h('hr', {}),
-      voce('Nuova sessione', azioni.nuovaSessione, { titolo: 'PV e PM ai massimi, Stati, Ferite e Affaticamento a zero' }),
+      voce('Nuova sessione', azioni.nuovaSessione, { titolo: 'PV e PM ai massimi, Stati, Ferite e Affaticamento a zero, usi «per sessione» di nuovo disponibili' }),
       voce('Annulla ultima modifica', azioni.annullaSessione, { disabilitato: !ctx.puoAnnullareSessione, titolo: 'Valori di sessione o calendario' }),
       ctx.motivoNoSalita ?? ctx.avvisoSalita ? h('p', { class: 'nota' }, ctx.motivoNoSalita ?? ctx.avvisoSalita) : null));
 }
@@ -1799,20 +1799,43 @@ function riquadroCircostanze(ctx) {
  * «usi»: src/usi-talenti.js). Un contatore a tocco, come le munizioni; per scontro si azzera da solo a un
  * nuovo scontro, per sessione o al giorno solo a mano con «↺». Niente se il personaggio non ne ha nessuno.
  */
+/** Lotto 175: il momento di adesso per gli usi limitati (scontro, scena e capitolo del server, giorno del Calendario). */
+function momentoUsi(ctx) {
+  const c = ctx.calendario;
+  return { scontro: ctx.roundScontro?.id ?? null, scena: ctx.momento?.scena ?? null, capitolo: ctx.momento?.capitolo ?? null, data: c?.attivo && c.oggi?.data ? c.oggi.data : null };
+}
+
+/**
+ * Usi limitati (lotto 129; frequenze del lotto 175, Giocatore 0.54 §3.2, A.233): un tocco sul numero segna un uso, «↺» lo
+ * rimette a mano. Un uso consumato dice quando torna sul suo stesso pulsante («↻ nuova scena», «↻ domani»; la frase intera
+ * nel titolo), senza righe in più (regola dello spazio in alto). Hacker («per ciascun sistema») chiede il sistema.
+ */
 function riquadroUsiTalenti(ctx) {
-  const scontro = ctx.roundScontro?.id ?? null;
-  const voci = statoUsiTalenti(ctx.tab.scheda, ctx.sessione, scontro);
+  const momento = momentoUsi(ctx);
+  const voci = statoUsiTalenti(ctx.tab.scheda, ctx.sessione, momento);
   if (!voci.length) return null;
-  const AMBITO = { scontro: 'per scontro', sessione: 'per sessione', giorno: 'al giorno' };
-  return h('section', { class: 'riquadro riquadro-usi-talenti', 'aria-label': 'Usi per scontro, sessione o giorno' },
+  const F = ctx.dati.regole.frequenze ?? {};
+  const nomeFreq = (v) => `${F[v.frequenza]?.nome ?? v.frequenza}${v.per ? ` per ciascun ${v.per}` : ''}`;
+  const usaPer = async (v) => {
+    const s = await chiediTesto({ titolo: `${v.nome}: su quale ${v.per}?`, etichetta: v.sistemi?.length ? `Già usato su: ${v.sistemi.join(', ')}` : `Il ${v.per} su cui lo usi`, conferma: 'Segna l’uso' });
+    if (!s) return;
+    // già usato su questo sistema: lo si dice, invece di non fare niente in silenzio
+    if (v.sistemi?.some((x) => x.toLowerCase() === s.toLowerCase())) { informa({ titolo: `${v.nome}: già usato`, contenuto: h('p', {}, `Su «${s}» è già stato usato ${F[v.frequenza]?.nome ?? ''}: ${quandoTorna(v, F, momento)}.`) }); return; }
+    ctx.azioni.usaUnaVoltaTalento(v, momento, { sistema: s });
+  };
+  return h('section', { class: 'riquadro riquadro-usi-talenti', 'aria-label': 'Usi limitati' },
     h('header', { class: 'testa-gradi' }, h('h3', {}, 'Usi'),
-      infoValore('?', { titolo: 'Usi limitati', sezioni: [{ testo: 'Talenti, Specializzazioni, Maestrie o il vantaggio dell’Addestramento usabili solo un certo numero di volte. Un tocco sul numero segna un uso; per scontro torna disponibile da solo a un nuovo scontro, per sessione o al giorno solo con «↺».' }] }, { classe: 'info-gradi' })),
+      infoValore('?', { titolo: 'Usi limitati', sezioni: [{ testo: 'Talenti, Specializzazioni, Maestrie, Talenti di Classe o il vantaggio dell’Addestramento usabili solo un certo numero di volte. Un tocco sul numero segna un uso; tornano disponibili da soli: per combattimento a un nuovo scontro, per scena e per capitolo quando il Direttore li comincia, al giorno e alla settimana con il Calendario, per sessione con «Nuova sessione». «↺» li rimette a mano.' }] }, { classe: 'info-gradi' })),
     h('ul', { class: 'elenco-usi-talenti' }, voci.map((v) => {
-      const pieno = v.usati >= v.quantita;
+      const pieno = !v.per && v.usati >= v.quantita;
+      const torna = quandoTorna(v, F, momento);
       return h('li', { class: `riga-uso-talento${pieno ? ' esaurito' : ''}` },
-        h('span', { class: 'nome-uso', title: `${v.nome} · una volta ${AMBITO[v.ambito] ?? v.ambito}` }, v.nome),
-        h('button', { type: 'button', class: 'btn btn-piccolo', disabled: pieno, title: pieno ? 'Già usato: tocca «↺» per rimetterlo' : `Segna un uso (${AMBITO[v.ambito] ?? v.ambito})`, onclick: () => ctx.azioni.usaUnaVoltaTalento(v, scontro) }, `${v.usati}/${v.quantita}`),
-        v.usati > 0 ? h('button', { type: 'button', class: 'btn btn-piccolo', title: 'Azzera a mano', 'aria-label': `Azzera gli usi di ${v.nome}`, onclick: () => ctx.azioni.azzeraUsoTalento(v.chiave) }, '↺') : null);
+        h('span', { class: 'nome-uso', title: `${v.nome} · ${v.quantita === 1 ? 'una volta' : `${v.quantita} volte`} ${nomeFreq(v)}${torna ? ` · ${torna}` : ''}` }, v.nome),
+        v.per
+          ? h('button', { type: 'button', class: 'btn btn-piccolo', title: `Segna un uso su un ${v.per} (${nomeFreq(v)})${v.sistemi?.length ? `; già usato su: ${v.sistemi.join(', ')} (${torna})` : ''}`, onclick: () => usaPer(v) }, v.usati ? `${v.usati} ${v.per === 'sistema' ? (v.usati === 1 ? 'sistema' : 'sistemi') : v.per}` : 'Usa')
+          // consumato: il pulsante stesso dice quando torna, in breve («↻ nuova scena»); la frase intera nel titolo
+          : h('button', { type: 'button', class: `btn btn-piccolo${pieno ? ' uso-torna' : ''}`, disabled: pieno, title: pieno ? `Già usato (${v.usati}/${v.quantita}): ${torna}` : `Segna un uso (${nomeFreq(v)})`, onclick: () => ctx.azioni.usaUnaVoltaTalento(v, momento) }, pieno && F[v.frequenza]?.breve ? `↻ ${F[v.frequenza].breve}` : `${v.usati}/${v.quantita}`),
+        v.usati > 0 ? h('button', { type: 'button', class: 'btn btn-piccolo', title: 'Rimetti a mano', 'aria-label': `Azzera gli usi di ${v.nome}`, onclick: () => ctx.azioni.azzeraUsoTalento(v.chiave) }, '↺') : null);
     })));
 }
 

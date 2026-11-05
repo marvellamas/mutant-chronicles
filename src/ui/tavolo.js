@@ -16,7 +16,8 @@ import { vistaPlancia, testoConSessione, sessioneDaFile, pgDaAggiungere } from '
 import { riallinea, alRound, terminaDurate, collegamentoScontro, durateCarta, testoDurata } from '../round-scontro.js';
 import { rigaDurate } from './durate.js';
 import { ultimiPerPersonaggio, ultimiPerPg, chiaveDaFile, nomiCheSiConfondono } from '../cartella.js';
-import { elencoCartella, leggiCartella, leggiCartellaConRevisione, scriviCartella, creaInCartella } from './cartella.js';
+import { elencoCartella, leggiCartella, leggiCartellaConRevisione, scriviCartella, creaInCartella, leggiMomento } from './cartella.js';
+import { gruppoMomento } from './momento-plancia.js';
 import { apriColpo, specDaFormula } from './colpo.js';
 import { tira } from '../tiri.js';
 import { apriAttaccoNemico } from './attacco-nemico.js';
@@ -436,6 +437,9 @@ export function renderTavolo(radice, ctx) {
         h('button', { type: 'button', class: 'btn', title: 'Scene della mappa di battaglia: nuova, apri, rinomina, duplica, archivia', onclick: () => apriElencoScene(stato.scene, disegna) }, 'Mappa'),
         guida),
       gruppoTesta('Nemici', 'gruppo-nemici', btnCrea, btnEsempi),
+      // lotto 175 (A.233): «Nuova scena» e «Nuovo capitolo», solo sul PC del Direttore, sempre con conferma e «Annulla»
+      ctx.master ? gruppoMomento({ momento: stato.momento, dati: ctx.dati, gruppo: gruppoTesta, dopo: (m) => { stato.momento = m; disegna(); },
+        testiAlTavolo: () => alTavolo.filter((r) => r.file && stato.testi.has(r.file)).map((r) => ({ file: r.file, testo: stato.testi.get(r.file) })) }) : null,
       gruppoTesta('Sessione', 'gruppo-sessione', pulsanteSalvaSessione(), pulsanteSpegni()));
     const esitoEsempi = stato.esitoEsempi ? h('p', { class: 'riquadro attenzione', role: 'status' }, stato.esitoEsempi) : null;
     // 08/10: nel riquadro anche l'elenco «Tablet collegati» dei PG al tavolo (stesso dato dell'elenco dell'Iniziativa)
@@ -1224,6 +1228,9 @@ export function renderTavolo(radice, ctx) {
     }
     try {
       if (await aggiornaVeicoli()) cambiato = true;
+      // lotto 175 (A.233): scena e capitolo della campagna, per il gruppo «Campagna» della testata
+      const mo = await leggiMomento();
+      if (mo && JSON.stringify(mo) !== JSON.stringify(stato.momento)) { stato.momento = mo; cambiato = true; }
     } catch (e) {
       stato.errore = e.message;
     }

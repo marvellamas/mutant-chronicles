@@ -1,4 +1,5 @@
-// Usi limitati di Talenti/vantaggi, per scontro/sessione/giorno (27/10/2026, lotto 129, dal tavolo del 26/10).
+// Usi limitati di Talenti/vantaggi, per scontro/sessione/giorno (27/10/2026, lotto 129, dal tavolo del 26/10). Dal lotto 175
+// «ambito» si legge come frequenza (scontro → combattimento): tests/frequenze-a233.test.js per le sei frequenze.
 import '../tools/guardia-subito.mjs'; // la guardia sulle cartelle vere, comunque si lanci il test
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
@@ -18,7 +19,7 @@ const scheda = {
 test('vociConUso: raccoglie Talenti, Specializzazioni/Maestrie e il vantaggio con un «usi», non gli altri', () => {
   const v = vociConUso(scheda);
   assert.deepEqual(v.map((x) => x.chiave).sort(), ['incantesimi-massimizzati', 'mezzofondista', 'vantaggio']);
-  assert.deepEqual(v.find((x) => x.chiave === 'vantaggio'), { chiave: 'vantaggio', nome: 'Colpo Perentorio', ambito: 'scontro', quantita: 1 });
+  assert.deepEqual(v.find((x) => x.chiave === 'vantaggio'), { chiave: 'vantaggio', nome: 'Colpo Perentorio', frequenza: 'combattimento', quantita: 1 }); // lotto 175: «scontro» → combattimento
 });
 
 test('vociConUso: un personaggio senza vantaggio con «usi» (o senza vantaggio) non dà errore', () => {
@@ -56,12 +57,12 @@ test('usaUnaVolta: registra un uso, mai sopra la quantità, con lo scontro solo 
   const voce = { chiave: 'incantesimi-massimizzati', ambito: 'scontro', quantita: 1 };
   let s = { usiTalenti: {} };
   s = usaUnaVolta(s, voce, 's1', {});
-  assert.deepEqual(s.usiTalenti['incantesimi-massimizzati'], { usati: 1, scontro: 's1' });
+  assert.deepEqual(s.usiTalenti['incantesimi-massimizzati'], { usati: 1, frequenza: 'combattimento', scontro: 's1' });
   const dopo = usaUnaVolta(s, voce, 's1', {}); // già alla quantità: non cambia
   assert.equal(dopo, s);
   // uno scontro nuovo: si azzera da sola, quindi la si può usare di nuovo
   const terzo = usaUnaVolta(s, voce, 's2', {});
-  assert.deepEqual(terzo.usiTalenti['incantesimi-massimizzati'], { usati: 1, scontro: 's2' });
+  assert.deepEqual(terzo.usiTalenti['incantesimi-massimizzati'], { usati: 1, frequenza: 'combattimento', scontro: 's2' });
 });
 
 test('usaUnaVolta: con quantità 2, il secondo uso registra 2 e un terzo non cambia niente', () => {
@@ -87,7 +88,7 @@ test('statoUsiTalenti: la lista pronta per la tab, con «usati» già risolto', 
   const sessione = { usiTalenti: { 'incantesimi-massimizzati': { usati: 1, scontro: 's1' } } };
   const stato = statoUsiTalenti(scheda, sessione, 's1');
   const voce = stato.find((x) => x.chiave === 'incantesimi-massimizzati');
-  assert.deepEqual(voce, { chiave: 'incantesimi-massimizzati', nome: 'Incantesimi Massimizzati', ambito: 'scontro', quantita: 1, usati: 1 });
+  assert.deepEqual(voce, { chiave: 'incantesimi-massimizzati', nome: 'Incantesimi Massimizzati', frequenza: 'combattimento', quantita: 1, usati: 1 });
   // in un altro scontro, torna disponibile
   assert.equal(statoUsiTalenti(scheda, sessione, 's2').find((x) => x.chiave === 'incantesimi-massimizzati').usati, 0);
 });

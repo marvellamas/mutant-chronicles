@@ -145,3 +145,22 @@ export async function decidiRientro(pgId, decisioni) {
   if (!r.ok) throw new Error(j.errore ?? `errore ${r.status}`);
   return j;
 }
+
+/** Lotto 175 (A.233): scena e capitolo della campagna dal server, { scena, capitolo, ultimo? }; null senza server. */
+export async function leggiMomento() {
+  if (!(await serverCartella())) return null;
+  try {
+    const r = await fetch('api/momento', { cache: 'no-store' });
+    return r.ok ? await r.json() : null;
+  } catch {
+    return null;
+  }
+}
+
+/** «Nuova scena», «Nuovo capitolo» o «Annulla» del Direttore (403 dai tablet). Restituisce il momento nuovo. */
+export async function comandoMomento(azione) {
+  const r = await fetch('api/momento', { method: 'POST', body: JSON.stringify({ azione }), headers: { 'Content-Type': 'application/json' } });
+  const j = await r.json().catch(() => ({}));
+  if (!r.ok) throw new Error(j.errore ?? `errore ${r.status}`);
+  return j;
+}

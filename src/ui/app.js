@@ -26,7 +26,7 @@ import { provaSostituzione, rigaIncantesimi, sorgenteModifica, confrontaIncantes
 import { permessoSalita, sfasamento, scelteDelLivello, TIPO_CONCESSIONE, CHIAVE_CONCESSIONE } from '../livello-px.js';
 import { eventiConPunti, applicaSpostamento, descriviSpostamento, controllaPuntiDaTablet } from '../sposta-punti.js';
 import { apriSpostaPunti } from './sposta-punti.js';
-import { attoCampagna, serverCartella, elencoCartella, leggiCartella, leggiCartellaConRevisione, scriviCartella, contestoMasterQui, pingMasterQui, salvaBackupMaster, leggiBackupMaster } from './cartella.js';
+import { leggiMomento, attoCampagna, serverCartella, elencoCartella, leggiCartella, leggiCartellaConRevisione, scriviCartella, contestoMasterQui, pingMasterQui, salvaBackupMaster, leggiBackupMaster } from './cartella.js';
 import { modalitaMaster, mostraMarchio, statoContestoMaster, registro as registroMaster, nuovaCorrezione, aggiungiCorrezione, annullaCorrezione, avvisoAnnulla, registraDiretta, differenzeDirette, differenzeOggetti, ripristinoDiretta, descriviScelte, soloScelte, ripristinaScelte, masterDiverso, normalizzaCircostanzeMaster } from '../correzioni-master.js';
 import { descriviVoce, postiTalenti, applicaSceltaTalento, eccezioneSpecializzazione, scelteSuccessive, applicaSceltaSuccessiva, adattaScelteSuccessive } from '../avanzamento.js';
 import { riquadroTalenti } from './talenti-scelta.js';
@@ -168,6 +168,8 @@ async function avvia() {
   // lavorato offline: si apre da sé quando c'è qualcosa in attesa, dovunque Davide si trovi nell'app.
   if (stato.cartella && stato.master) montaRientro();
   // pezzo 6: con il server la scheda aperta controlla il proprio file (come la plancia, ogni 3 secondi)
+  // lotto 175: scena e capitolo del server prima della prima scheda (gli usi «per scena» li leggono subito)
+  if (stato.cartella) { const m = await leggiMomento(); if (m) stato.momento = { scena: m.scena, capitolo: m.capitolo }; }
   if (stato.cartella) setInterval(controllaScheda, INTERVALLO_COLLEGAMENTO_MS);
   window.addEventListener('hashchange', daIndirizzo);
   // I menu della scheda (Azioni, impostazioni) si chiudono toccando altrove
@@ -599,6 +601,19 @@ async function controllaScheda() {
     && (!voce.cartella || voce.cartella.impronta !== improntaLocale(id))) programmaCartella(id);
   aggiornaIndicatoreSalvataggio();
   await aggiornaRoundScontro();
+  await aggiornaMomento();
+}
+
+/**
+ * Lotto 175 (A.233): scena e capitolo li cambia il Direttore dalla plancia; la scheda aperta (anche sul tablet) li
+ * rilegge a ogni giro e, se sono cambiati, ridisegna: gli usi «per scena» o «per capitolo» tornano disponibili da soli.
+ */
+async function aggiornaMomento() {
+  const m = await leggiMomento();
+  if (!m || !inScheda()) return;
+  const prima = stato.momento;
+  stato.momento = { scena: m.scena, capitolo: m.capitolo };
+  if (prima && (prima.scena !== m.scena || prima.capitolo !== m.capitolo)) renderScheda({ mantieniScorrimento: true });
 }
 
 // Round collegato fra scheda e tavolo (richiesta di Marcello del 03/10, src/round-scontro.js): con il server e il PG
@@ -671,6 +686,11 @@ async function aggiornaRoundScontro() {
   flussoAvvisiScheda(chiave);
   const dati = stato.dati;
   if (!prima && coll) {
+    stato.roundFinale = null;
+    avviso(`Sei nello scontro «${coll.nome}»: il Round lo fa avanzare il master dalla plancia (Round ${coll.round}).`, { tipo: 'info', chiave: 'round-scontro' });
+  } else if (prima && coll && prima.id !== coll.id) {
+    // lotto 175: uno scontro chiuso e il successivo aperto fra due letture (meno di 3 secondi) è uno scontro nuovo: si
+    // ridisegna, così gli usi «per combattimento» tornano disponibili subito (prima restavano consumati, con lo stesso Round)
     stato.roundFinale = null;
     avviso(`Sei nello scontro «${coll.nome}»: il Round lo fa avanzare il master dalla plancia (Round ${coll.round}).`, { tipo: 'info', chiave: 'round-scontro' });
   } else if (prima && coll && coll.round !== prima.round) {
@@ -2105,6 +2125,8 @@ function renderSchedaInterna({ mantieniScorrimento = false } = {}) {
     calendario: stato.calendario,
     // Round dello scontro (src/round-scontro.js): { id, nome, round, durate, effetti, partecipanti } o null
     roundScontro: stato.scontroPg,
+    // lotto 175 (A.233): scena e capitolo del server, per gli usi «per scena» e «per capitolo»; null senza server
+    momento: stato.momento ?? null,
     // bersagli di un incantesimo con durata, nel pannello «Lancia!»: gli altri partecipanti dello scontro
     partecipanti: stato.scontroPg?.partecipanti ?? [],
     spazioQuasiEsaurito: archivio.spazioQuasiEsaurito(),
@@ -2151,7 +2173,7 @@ function renderSchedaInterna({ mantieniScorrimento = false } = {}) {
       esporta: () => esporta(stato.scelte, stato.livelli, stato.sessione, stato.calendario, assicuraPg(stato.id)),
       modificaCreazione: (passo = 0) => vaiAlPasso(passo),
       nuovaSessione: () => {
-        if (!confirm('Nuova sessione: PV e PM tornano ai massimi, Stati, Ferite e Affaticamento si azzerano, il Round torna a 1 senza Tecniche attive. Note, Punti Eroe e Distintivi restano. Procedere?')) return;
+        if (!confirm('Nuova sessione: PV e PM tornano ai massimi, Stati, Ferite e Affaticamento si azzerano, il Round torna a 1 senza Tecniche attive, gli usi «per sessione» tornano disponibili (A.233). Note, Punti Eroe, Distintivi e gli altri usi restano. Procedere?')) return;
         cambiaSessione(nuovaSessione(stato.sessione, massimi));
       },
       annullaSessione: () => {
@@ -2321,7 +2343,7 @@ function renderSchedaInterna({ mantieniScorrimento = false } = {}) {
       terminaTecnica: (id) => cambiaSessione(terminaTecnicaSessione(stato.sessione, id, massimi)),
       // Usi limitati di Talenti/vantaggi (27/10, src/usi-talenti.js): un tocco sul contatore, come le munizioni;
       // «scontro» lo passa la UI (ctx.roundScontro?.id), così si azzera da solo cambiando scontro.
-      usaUnaVoltaTalento: (voce, scontro) => cambiaSessione(usaUnaVoltaSessione(stato.sessione, voce, scontro, massimi)),
+      usaUnaVoltaTalento: (voce, momento, opzioni = {}) => cambiaSessione(usaUnaVoltaSessione(stato.sessione, voce, momento, massimi, opzioni)),
       azzeraUsoTalento: (chiave) => cambiaSessione(azzeraUsoSessione(stato.sessione, chiave, massimi)),
       convertiDistintivi: () => cambiaSessione(convertiDistintivi(stato.sessione, massimi)),
       // le note si salvano a ogni tasto; l'annullamento riporta al testo di prima della modifica
