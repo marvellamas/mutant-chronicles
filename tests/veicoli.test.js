@@ -401,10 +401,10 @@ test('§10: il profilo dell’ASA Scout MK4 è quello della sua scheda', () => {
   assert.equal(scout.equipaggio.posti, 8);
   assert.equal(scout.qualita, 'Non comune');
   assert.equal(scout.reperibilita, 'Rara');
-  // A.101 (E&L del 05/10/2026): valore della configurazione approvata 202.520 cr, somma delle voci
-  assert.equal(scout.prezzo_cr, 202520);
-  assert.equal(scout.valore_voci.reduce((t, x) => t + x.cr, 0), 202520);
-  assert.deepEqual(scout.ricambi_cr_per_pi, { corpo: 300, propulsione: 250, motore: 500 });
+  // A.226 (lotto 173): prezzo di catalogo della configurazione standard della scheda 0.6, somma delle voci (prima A.101: 202.520)
+  assert.equal(scout.prezzo_cr, 126510);
+  assert.equal(scout.valore_voci.reduce((t, x) => t + x.cr, 0), 126510);
+  assert.deepEqual(scout.ricambi_cr_per_pi, { corpo: 300, propulsione: 100, motore: 300 });
   assert.equal(scout.officina_cr_per_ora, 100);
   assert.equal(scout.corazzato, 1); // A.103: l'esempio del §4.3 con Corazzato 2 è generico
   // le andature: 30, 60, 90 Q (27, 54, 81 km/h)
@@ -414,7 +414,7 @@ test('§10: il profilo dell’ASA Scout MK4 è quello della sua scheda', () => {
   // il mitragliatore M606: Armi pesanti, 1d8+3, 600 Q, 400 colpi, 3 cr a colpo, 400 + 800 iniziali (A.101)
   const m606 = scout.armi[0];
   assert.deepEqual([m606.abilita, m606.danno, m606.gittata_q, m606.capacita, m606.cr_per_colpo, m606.prezzo_cr], ['Armi pesanti', '1d8+3', 600, 400, 3, 19000]);
-  assert.deepEqual(m606.munizioni_iniziali, { caricate: 400, riserva: 800 });
+  assert.deepEqual(m606.munizioni_iniziali, { caricate: 400, riserva: 400 }); // A.226: 400 + 400 (prima 400 + 800)
   assert.ok(catalogo(dati).perRif.get(m606.rif), 'la M606 è la scheda del catalogo');
   assert.ok(m606.operatore.includes('artigliere'));
   // Scout 0.6 / A.192: 1 MEC Rosso da 10 cariche, 75 km a carica = 750 km nominali; nessun Lx

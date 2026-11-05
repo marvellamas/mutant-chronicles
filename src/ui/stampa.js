@@ -813,7 +813,7 @@ function foglioVeicolo(v) {
         .map(([e, x]) => h('div', { class: 'massimo' }, h('span', {}, e), h('span', { class: 'valore' }, String(x))))),
     voce('Posti:', p.equipaggio?.posti ? `${p.equipaggio.posti}${p.equipaggio.passeggeri !== undefined ? ` (conducente + ${p.equipaggio.passeggeri})` : ''}` : '—',
       p.carico_kg ? ` · Carico ${numeroIt(p.carico_kg)} kg` : null, p.qualita ? ` · Qualità ${p.qualita}` : null),
-    voce('Prezzo:', v.daDefinire.prezzo ? [Number.isInteger(p.prezzo_cr) ? `${numeroIt(p.prezzo_cr)} cr, parziale · ` : null, daDefinireSS()] : `${numeroIt(p.prezzo_cr)} cr`,
+    voce(v.valore?.esemplareUnico ? 'Prezzo:' : 'Prezzo di catalogo:', v.valore?.esemplareUnico ? 'esemplare unico, non a listino (A.240)' : v.daDefinire.prezzo ? [Number.isInteger(p.prezzo_cr) ? `${numeroIt(p.prezzo_cr)} cr, parziale · ` : null, daDefinireSS()] : `${numeroIt(p.prezzo_cr)} cr${Number.isInteger(v.valore?.stimato) ? ` · valore stimato ${numeroIt(v.valore.stimato)} cr` : ''}`,
       ' · ', h('strong', {}, 'REP '), v.daDefinire.reperibilita ? daDefinireSS() : p.reperibilita),
     h('p', { class: 'piccolo' }, v.registro
       ? `Registro del Tavolo (A.91), revisione ${v.registro.revisione} · proprietario: ${v.registro.proprietario} · conducente: ${v.registro.conducente ?? '________________'}`

@@ -1103,10 +1103,10 @@
         "propulsione": 36,
         "motore": 24
       },
-      "prezzo_cr": 202520,
+      "prezzo_cr": 126510,
       "valore_voci": [
         {
-          "voce": "Telaio e sistemi fissi (con la riserva respiratoria ordinaria da 8 ore)",
+          "voce": "Telaio e sistemi fissi (comunicatore ponte, navigatore, sensori, impianto di supporto vitale)",
           "cr": 90000
         },
         {
@@ -1114,70 +1114,37 @@
           "cr": 19000
         },
         {
-          "voce": "Due Banchi Rossi installati",
-          "cr": 12000
+          "voce": "Accumulatori installati pieni (MEC Rosso 3.000, CEC Verde 1.000)",
+          "cr": 4000
         },
         {
-          "voce": "Modulo Verde installato",
-          "cr": 1100
-        },
-        {
-          "voce": "Banco Rosso di ricambio",
-          "cr": 6000
-        },
-        {
-          "voce": "Modulo Verde di ricambio",
-          "cr": 1100
-        },
-        {
-          "voce": "Due bombole supplementari",
-          "cr": 2000
-        },
-        {
-          "voce": "Munizioni: 400 caricate e 800 di riserva",
-          "cr": 3600
-        },
-        {
-          "voce": "Corredo di manutenzione da campo dello Scout",
-          "cr": 2000
-        },
-        {
-          "voce": "Kit trauma professionale",
+          "voce": "Tre bombole veicolari piene da 8 ore",
           "cr": 3000
         },
         {
-          "voce": "Pistola sanitaria",
-          "cr": 3500
+          "voce": "Munizioni e contenitori: 400 colpi caricati e 400 di riserva, due contenitori per nastro",
+          "cr": 2800
         },
         {
-          "voce": "10 cartucce di naniti medici",
-          "cr": 50000
-        },
-        {
-          "voce": "Altri accessori",
-          "cr": 9220
+          "voce": "Corredo (attrezzi, cric, ruote, cavo, estintori, pronto soccorso, razioni, acqua, lanterna, pala, teli, cavi)",
+          "cr": 7710
         }
       ],
-      "nota_valore": "Valorizzazione della dotazione, non una somma da sottrarre ai PG per un veicolo già ricevuto. Peso totale del carico non ancora verificato: alcuni accessori non hanno un peso definito (A.101).",
+      "nota_valore": "Prezzo di catalogo della configurazione standard (Scout 0.6, A.226). Un esemplare usato può valere meno (il FIAT LUX è antico, con ricambi difficili): il suo valore stimato è un campo dell’esemplare e lo decide il Direttore.",
       "valore_telaio_cr": 90000,
       "reperibilita": "Rara",
-      "decisione": "A.101 (E&L del 05/10/2026): profilo e dotazione approvati, valori della dotazione completa iniziale; durante la campagna si conservano consumi, danni e residui effettivi, senza ripristino automatico.",
+      "decisione": "A.226 (Davide, 02/11 e 03/11/2026): lo standard della scheda 0.6 è il riferimento anche per lo Scout dei PG (FIAT LUX): prezzo di catalogo 126.510 cr, riparazioni Corpo 300, Propulsione 100, Motore 300 cr per PI. Restano registrati munizioni, scorte e corredo già ottenuti (i 400 colpi in più non si tolgono); le dotazioni extra si valutano a parte; si conservano danni, consumi e spese storiche. Prima: A.101 (E&L del 05/10/2026).",
       "ricambi_cr_per_pi": {
         "corpo": 300,
-        "propulsione": 250,
-        "motore": 500
+        "propulsione": 100,
+        "motore": 300
       },
       "officina_cr_per_ora": 100,
       "kit_riparazione": {
-        "nome": "Corredo di manutenzione da campo dello Scout",
+        "nome": "Attrezzi professionali per veicoli",
         "tecnologia": 2,
         "prezzo_cr": 2000,
-        "peso_kg": 5,
-        "qualita": "Non comune",
-        "ps_integrita": 12,
-        "pi": 6,
-        "nec": "NEC Verde 1.000 Lx compreso, 25 Lx/ora, 40 ore",
-        "testo": "+2 a Tecnologia per diagnosi e riparazioni compatibili delle tre strutture. Materiali e ricambi non compresi."
+        "testo": "+2 al VA di Tecnologia per manutenzione e riparazioni veicolari compatibili; riutilizzabili. Materiali e ricambi si pagano a parte (Scout 0.6)."
       },
       "alimentazione": {
         "nec": "1 MEC Rosso",
@@ -1257,7 +1224,7 @@
           "cr_per_colpo": 3,
           "munizioni_iniziali": {
             "caricate": 400,
-            "riserva": 800
+            "riserva": 400
           },
           "inc": 6,
           "mani": 2,
@@ -1348,13 +1315,20 @@
           "km": 50
         }
       ],
-      "dotazione": "Corredo di manutenzione da campo dello Scout (2.000 cr); Kit trauma professionale (3.000 cr, 5 applicazioni, +2 a Medicina per gli impieghi pertinenti, rifornimento di 5 a 300 cr); Pistola sanitaria (3.500 cr) con 10 cartucce di naniti medici (5.000 cr ciascuna): 5 nella pistola e 5 di riserva, una dose riduce di uno lo Stato di Ferita, al massimo una ogni 24 ore per paziente; cric (400 cr), 2 ruote complete di ricambio (2.400), cavo da traino (200), 2 estintori (400), comunicatore ponte di bordo (3.500), lanterna elettrica con NEC (200), pala pieghevole (100), 2 teli mimetici (500), set di cavi e adattatori di ricarica (300), 6 copriruote Petra (900), 8 razioni da viaggio (160), 2 taniche da 20 litri piene (160); munizioni della M606; due bombole supplementari; ricambi Rosso e Verde.",
+      "dotazione": "Attrezzi professionali per veicoli (1 corredo, 2.000 cr); cric per Scout (500); 2 ruote complete di ricambio (2.000); cavo di traino con attacchi (200); 2 estintori ricaricabili da 5 dosi (800); kit di pronto soccorso standard da 5 applicazioni (1.000); 8 razioni da viaggio (160); 2 taniche d’acqua piene da 20 L (200); comunicatore ponte (compreso nel telaio); lanterna elettrica (200); pala pieghevole (50); 2 teli mimetici personali (500); 1 set di cavi e adattatori compatibili (100); 3 bombole veicolari piene da 8 ore (3.000, fuori dai 7.710 del corredo). Nessuna scorta energetica oltre agli accumulatori installati (vale per i mezzi nuovi: A.227).",
       "ambiente": "Terre del Fuoco: oltre 30 Q effettivi nel Round si effettua la PS Integrità dei copriruote. Le medie di viaggio restano quelle dei singoli settori.",
       "energia_precedente": {
         "regola": "A.193",
-        "nota": "Riserve salvate in Lx (modello del 05/10/2026): si conserva la frazione residua rispetto alla capacità di prima; i ricambi di prima restano «da convertire».",
+        "nota": "Riserve salvate in Lx (modello del 05/10/2026): si conserva la frazione residua rispetto alla capacità di prima (A.193). I ricambi di prima diventano accumulatori di ricambio del modello nuovo con la loro frazione: il Banco Rosso della trazione (50.000 Lx) un MEC Rosso, il Modulo Verde (10.000 Lx) una CEC Verde (A.227).",
         "rosso_lx": 100000,
-        "verde_lx": 10000
+        "verde_lx": 10000,
+        "ricambio_rosso_lx": 50000,
+        "ricambio_verde_lx": 10000
+      },
+      "dotazione_precedente": {
+        "regola": "A.101",
+        "testo": "Corredo di manutenzione da campo dello Scout (2.000 cr); Kit trauma professionale (3.000 cr, 5 applicazioni, +2 a Medicina per gli impieghi pertinenti, rifornimento di 5 a 300 cr); Pistola sanitaria (3.500 cr) con 10 cartucce di naniti medici (5.000 cr ciascuna): 5 nella pistola e 5 di riserva, una dose riduce di uno lo Stato di Ferita, al massimo una ogni 24 ore per paziente; cric (400 cr), 2 ruote complete di ricambio (2.400), cavo da traino (200), 2 estintori (400), comunicatore ponte di bordo (3.500), lanterna elettrica con NEC (200), pala pieghevole (100), 2 teli mimetici (500), set di cavi e adattatori di ricarica (300), 6 copriruote Petra (900), 8 razioni da viaggio (160), 2 taniche da 20 litri piene (160); munizioni della M606; due bombole supplementari; ricambi Rosso e Verde.",
+        "nota": "Dotazione ottenuta con la A.101 (05/10/2026): resta all’esemplare che l’ha avuta — munizioni (400 caricate e 800 di riserva), scorte, corredo e ricambi; le voci in più rispetto allo standard della scheda 0.6 si valutano a parte (A.226)."
       }
     },
     {

@@ -261,7 +261,7 @@ function schedaVeicolo(ctx, mezzo, pilotare, registro = null) {
     v.vista.fuoriUso ? h('p', { class: 'riquadro errore' }, 'Fuori uso: Corpo principale o Motore a 0 PI. Il mezzo non funziona, non esplode e il movimento residuo prosegue (§5.5).') : null,
     v.gruppo && !registro ? h('p', { class: 'nota' }, 'Veicolo del gruppo: senza il server le modifiche restano in questa scheda (A.91).') : null,
     h('div', { class: 'veicolo-colonne' },
-      h('div', {}, profiloVeicolo(v, d), pilotareVeicolo(v, d), andatureVeicolo(ctx, mezzo, v, aggiorna)),
+      h('div', {}, profiloVeicolo(v, d, { ctx, mezzo, aggiorna }), pilotareVeicolo(v, d), andatureVeicolo(ctx, mezzo, v, aggiorna), dotazioneVeicolo(v)),
       h('div', {}, struttureVeicoloUi(ctx, mezzo, v, aggiorna), rinforziVeicolo(mezzo, v, aggiorna, ctx), necVeicolo(ctx, mezzo, v, aggiorna), munizioniVeicolo(ctx, mezzo, v, aggiorna))),
     v.risorse?.neverlost ? neverlostUi(ctx, mezzo, v, aggiorna) : null,
     armiEProprieta(v),
@@ -283,7 +283,32 @@ function pulsanteRimuovi(ctx, mezzo) {
   } }, 'Rimuovi');
 }
 
-function profiloVeicolo(v, d) {
+/** A.226: valore stimato dell'esemplare. Lo imposta solo il Direttore (modalità master); senza, «da stimare». */
+function valoreStimato(v, { ctx, mezzo, aggiorna }) {
+  const x = v.valore.stimato;
+  const testo = Number.isInteger(x) ? `${numero(x)} cr` : h('em', { class: 'da-definire' }, 'da stimare (Direttore)');
+  if (!ctx?.master || !mezzo || !aggiorna) return testo;
+  return h('span', {}, testo, ' ', h('input', {
+    type: 'number', min: 0, step: 100, class: 'input-valore-stimato', value: Number.isInteger(x) ? x : '', placeholder: 'cr', 'aria-label': `Valore stimato di ${v.nome} (Direttore)`,
+    onchange: (e) => {
+      const t = String(e.target.value).trim();
+      const n = Number.parseInt(t, 10);
+      const { valore_stimato_cr: _via, ...resto } = mezzo;
+      aggiorna(t === '' ? resto : Number.isInteger(n) && n >= 0 ? { ...mezzo, valore_stimato_cr: n } : mezzo, t === '' ? `${v.nome}: valore stimato tolto.` : `${v.nome}: valore stimato ${numero(n)} cr.`);
+    },
+  }));
+}
+
+/** La dotazione: quella dell'esemplare, se l'ha ottenuta prima (A.226), altrimenti quella standard del profilo. */
+function dotazioneVeicolo(v) {
+  if (!v.dotazione?.testo) return null;
+  return h('details', { class: 'dotazione-veicolo' },
+    h('summary', {}, v.dotazione.esemplare ? 'Dotazione di questo esemplare' : 'Dotazione standard'),
+    h('p', { class: 'nota' }, v.dotazione.testo),
+    v.dotazione.nota ? h('p', { class: 'nota' }, v.dotazione.nota) : null);
+}
+
+function profiloVeicolo(v, d, { ctx = null, mezzo = null, aggiorna = null } = {}) {
   const p = v.profilo;
   const voce = (etichetta, valore) => h('div', { class: 'voce-profilo' }, h('dt', {}, etichetta), h('dd', {}, valore));
   return h('dl', { class: 'profilo-veicolo' },
@@ -293,7 +318,11 @@ function profiloVeicolo(v, d) {
     voce('AR', `${p.ar?.totale ?? 0}${p.ar?.magica ? ` (${p.ar.magica} magica)` : ''}`),
     voce('PS Integrità', p.ps_integrita !== null && p.ps_integrita !== undefined ? `${p.ps_integrita} (${p.qualita ?? '—'})` : daDefinire()),
     voce('Posti', p.equipaggio?.posti ? `${p.equipaggio.posti}${p.equipaggio.passeggeri !== undefined ? ` (conducente + ${p.equipaggio.passeggeri})` : ''}` : '—'),
-    voce('Prezzo', v.daDefinire.prezzo ? [Number.isInteger(p.prezzo_cr) ? `${numero(p.prezzo_cr)} cr, parziale · ` : null, daDefinire()] : `${numero(p.prezzo_cr)} cr`),
+    // A.240: un esemplare unico (la Neverlost) non è un modello di listino: niente prezzo di catalogo
+    v.valore?.esemplareUnico ? voce('Prezzo', h('em', { class: 'da-definire', title: v.valore.nota ?? '' }, 'esemplare unico, non a listino: valore da definire (A.240)'))
+      : voce('Prezzo di catalogo', v.daDefinire.prezzo ? [Number.isInteger(p.prezzo_cr) ? `${numero(p.prezzo_cr)} cr, parziale · ` : null, daDefinire()] : h('span', { title: v.valore?.nota ?? '' }, `${numero(p.prezzo_cr)} cr`)),
+    // A.226: il valore stimato è dell'esemplare e lo decide il Direttore; vuoto finché non c'è, mai dedotto
+    v.valore && !v.valore.esemplareUnico ? voce('Valore stimato', valoreStimato(v, { ctx, mezzo, aggiorna })) : null,
     voce('Reperibilità', v.daDefinire.reperibilita ? daDefinire() : p.reperibilita),
     p.carico_kg ? voce('Carico', `${numero(p.carico_kg)} kg`) : null,
     p.man_testo ? h('p', { class: 'nota' }, p.man_testo) : null,
@@ -392,7 +421,8 @@ function necVeicolo(ctx, mezzo, v, aggiorna) {
   const daConv = (testo) => h('em', { class: 'da-definire' }, testo);
   const ricambi = (colore, ric, daConvertire) => h('p', { class: 'nota' },
     `Ricambi: ${ric.length ? ric.map((x) => testoCariche(x)).join(', ') : 'nessuno'} `,
-    daConvertire?.length ? daConv(`· ricambio di prima da convertire (A.193): ${daConvertire.map((x) => `${numero(x)} Lx`).join(', ')} `) : null,
+    // A.227: il ricambio di prima si converte per frazione; se la frazione non si ricostruisce lo verifica il Direttore
+    daConvertire?.length ? daConv(`· ricambio di prima da verificare dal Direttore (A.227): ${daConvertire.map((x) => `${numero(x)} Lx`).join(', ')} `) : null,
     h('button', { type: 'button', class: 'btn btn-piccolo', disabled: !ric.length, title: 'Installa il ricambio al posto dell’accumulatore installato; quello tolto resta fra i ricambi con le sue cariche (niente travaso)',
       onclick: () => { const x = installaRicambioEnergia(mezzo, colore, ctx.dati); if (x) aggiorna(x, `${v.nome}: installato il ricambio ${colore === 'rosso' ? 'Rosso' : 'Verde'}.`); } }, 'Installa il ricambio'), ' ',
     h('button', { type: 'button', class: 'btn btn-piccolo', title: 'Aggiunge un accumulatore di ricambio pieno (le scorte aggiuntive sono facoltative e occupano carico)',

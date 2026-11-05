@@ -443,6 +443,24 @@ export function nuovoVeicolo(origine, dati, { uid = null, nome = null } = {}) {
 }
 
 /**
+ * A.226 (Davide, 02/11 e 03/11/2026): il prezzo di catalogo è del modello (Scout MK4 standard, 126.510 cr); il **valore
+ * stimato** è dell'esemplare (il FIAT LUX è antico, con ricambi difficili: può valere meno) e lo decide il Direttore:
+ * finché non c'è resta vuoto, mai dedotto da una percentuale. E un mezzo ottenuto con la dotazione di prima (A.101) la
+ * conserva: munizioni, scorte e corredo già ottenuti non si tolgono, le voci in più si valutano a parte. La dotazione di
+ * prima si copia nell'esemplare una volta sola, riconosciuta dalle riserve del modello di prima (Lx o `energia_prima`).
+ */
+function valoreEDotazione(v, profilo) {
+  const out = {};
+  if (Number.isInteger(v.valore_stimato_cr) && v.valore_stimato_cr >= 0) out.valore_stimato_cr = v.valore_stimato_cr;
+  if (isOggetto(v.dotazione_esemplare)) out.dotazione_esemplare = v.dotazione_esemplare;
+  else if (isOggetto(profilo.dotazione_precedente) && (inLx(v) || isOggetto(v.energia_prima))) {
+    const d = profilo.dotazione_precedente;
+    out.dotazione_esemplare = { regola: 'A.226', da: d.regola ?? null, testo: d.testo, nota: d.nota ?? null };
+  }
+  return out;
+}
+
+/**
  * Normalizza i veicoli salvati nelle scelte: PI fra 0 e i massimi, andatura esistente, pezzi dei rinforzi fra 0
  * e i loro PI. Un mezzo con un profilo non più nel catalogo resta com'è (con l'avviso): niente si perde.
  */
@@ -478,6 +496,7 @@ export function normalizzaVeicoli(veicoli, dati, avvisi = []) {
       rinforzi,
       ...normalizzaRisorse(v, profilo), // A.101: energia, aria e munizioni
       avarie: testo(v.avarie),
+      ...valoreEDotazione(v, profilo),
     };
     if (Array.isArray(v.ripristini) && v.ripristini.length) out.ripristini = v.ripristini.filter((r) => struttureVeicolo(dati).includes(r?.struttura));
     return out;
@@ -621,6 +640,33 @@ function convertiDaLx(v, profilo, base) {
   return { energia: e, prima: valoreDiPrima(v) };
 }
 
+/**
+ * A.227 (Davide, 02/11/2026): i ricambi di prima di un mezzo (Banchi e Moduli in Lx) diventano gli accumulatori di ricambio
+ * del modello a cariche — il Banco Rosso della trazione un MEC Rosso, il Modulo Verde una CEC Verde — conservando la
+ * **frazione** residua (un Banco a metà vale metà delle cariche del MEC). La conversione si fa una volta sola: i valori
+ * originali passano in `ricambi_prima` (lo storico) e `ricambi_da_convertire` sparisce. Se la frazione non si ricostruisce
+ * (il profilo non dice la capacità di prima del ricambio) il ricambio resta da verificare dal Direttore, senza numero.
+ * La frase «nessuna scorta aggiuntiva» della scheda 0.6 vale per i mezzi nuovi: i ricambi già posseduti non si tolgono.
+ */
+function convertiRicambi(e, base, P) {
+  const dc = isOggetto(e.ricambi_da_convertire) ? e.ricambi_da_convertire : null;
+  if (!dc) return e;
+  const out = { ...e };
+  const resta = {};
+  const prima = { ...(isOggetto(e.ricambi_prima) ? e.ricambi_prima : {}), regola: 'A.227' };
+  for (const k of ['rosso', 'verde']) {
+    const lx = lista(dc[k]).filter(Number.isFinite);
+    if (!lx.length) continue;
+    const cap = P?.[`ricambio_${k}_lx`];
+    if (base[k] === undefined || !(Number.isFinite(cap) && cap > 0)) { resta[k] = lx; continue; }
+    out[`${k}_ricambi`] = [...lista(e[`${k}_ricambi`]), ...lx.map((x) => arrotonda(entro(x / cap, 0, 1) * base[k]))];
+    prima[k] = { lx, capacita_lx: cap, cariche: base[k] };
+  }
+  if (Object.keys(resta).length) out.ricambi_da_convertire = resta; else delete out.ricambi_da_convertire;
+  if (prima.rosso || prima.verde) out.ricambi_prima = prima;
+  return out;
+}
+
 /** Le riserve di un mezzo già a cariche, nei limiti del profilo. */
 function energiaLetta(x, base) {
   const e = { modello: 'cariche' };
@@ -642,6 +688,7 @@ function energiaLetta(x, base) {
     const r = Object.fromEntries(['rosso', 'verde'].map((k) => [k, lista(x.ricambi_da_convertire[k]).filter(Number.isFinite)]).filter(([, l]) => l.length));
     if (Object.keys(r).length) e.ricambi_da_convertire = r;
   }
+  if (isOggetto(x.ricambi_prima)) e.ricambi_prima = x.ricambi_prima;
   return e;
 }
 
@@ -672,6 +719,7 @@ function normalizzaRisorse(v, profilo) {
       energia = c.energia;
       prima = prima ?? c.prima;
     } else energia = base;
+    energia = convertiRicambi(energia, base, profilo.energia_precedente);
   }
   const mBase = munizioniIniziali(profilo);
   const munizioni = mBase ? mBase.map((m, i) => {
@@ -976,6 +1024,15 @@ export function vistaVeicoloPersonaggio(mezzo, dati, { pilotare = null } = {}) {
     },
     todo: profilo['TODO(Davide)'] ?? null,
     avarie: mezzo.avarie ?? '',
+    // A.226, A.240: prezzo di catalogo del modello e valore stimato dell'esemplare, distinti; un esemplare unico
+    // (la Neverlost) non ha prezzo di catalogo
+    valore: {
+      esemplareUnico: profilo.esemplare_unico === true,
+      catalogo: profilo.esemplare_unico === true ? null : Number.isInteger(profilo.prezzo_cr) ? profilo.prezzo_cr : null,
+      stimato: Number.isInteger(mezzo.valore_stimato_cr) ? mezzo.valore_stimato_cr : null,
+      nota: profilo.esemplare_unico === true ? profilo.nota_esemplare ?? null : profilo.nota_valore ?? null,
+    },
+    dotazione: isOggetto(mezzo.dotazione_esemplare) ? { ...mezzo.dotazione_esemplare, esemplare: true } : profilo.dotazione ? { testo: profilo.dotazione, esemplare: false } : null,
   };
 }
 

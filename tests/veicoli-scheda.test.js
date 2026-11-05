@@ -87,8 +87,8 @@ test('riparazione: esito, capacità, costo dei ricambi o «da definire»', () =>
   assert.equal(mezzo.pi.motore, 8);
   assert.equal(r.minuti, 30);
   assert.equal(r.va, 2);
-  assert.equal(r.costoDaDefinire, false); // A.101: 500 cr per PI del Motore
-  assert.equal(r.costoRicambi, 1000);
+  assert.equal(r.costoDaDefinire, false); // A.226 (lotto 173): 300 cr per PI del Motore (prima 500, A.101)
+  assert.equal(r.costoRicambi, 600);
   assert.equal(applicaRiparazione(m, 'motore', 'successo', dati, { kit: true }).riparazione.va, 2, 'corredo di manutenzione: +2 a Tecnologia');
   const a = nuovoVeicolo('autovettura-civile', dati, { uid: 'a' });
   const ra = applicaRiparazione({ ...a, pi: { ...a.pi, corpo: 5 } }, 'corpo', 'successo', dati).riparazione;
@@ -148,7 +148,7 @@ test('migrazione: un personaggio senza veicoli si salva e si calcola come prima'
 test('A.101–A.104: riserve dello Scout, consumi, ricambi, munizioni, sollecitazione e andatura scelta', () => {
   const s = scout();
   assert.deepEqual(s.energia, { modello: 'cariche', rosso: 10, rosso_ricambi: [], km_giornata: 0, verde: 10, verde_ricambi: [], supporto_oggi: false, aria: 24 });
-  assert.deepEqual(s.munizioni, [{ caricate: 400, riserva: 800 }]);
+  assert.deepEqual(s.munizioni, [{ caricate: 400, riserva: 400 }]); // A.226: lo standard della scheda 0.6 per uno Scout nuovo
   // il vecchio «nec: { lx }» (70.000 su 100.000) diventa il 70% della capacità nuova, A.193; le altre riserve partono piene
   const vecchio = normalizzaVeicoli([{ uid: 'x', profilo: 'asa-scout-mk4', andatura: 'fermo', pi: { corpo: 60, propulsione: 36, motore: 24 }, nec: { lx: 70000 } }], dati)[0];
   assert.equal(vecchio.energia.rosso, 7);
@@ -163,7 +163,7 @@ test('A.101–A.104: riserve dello Scout, consumi, ricambi, munizioni, sollecita
   assert.deepEqual([r.energia.rosso, r.energia.rosso_ricambi], [10, [8]]);
   // munizioni: sparati e ricarica dalla riserva fino a 400
   const m = munizioniArmaVeicolo(munizioniArmaVeicolo(s, 0, { sparati: 150 }, dati), 0, { ricarica: true }, dati);
-  assert.deepEqual(m.munizioni, [{ caricate: 400, riserva: 650 }]);
+  assert.deepEqual(m.munizioni, [{ caricate: 400, riserva: 250 }]); // dai 400 di riserva della scheda 0.6 (A.226)
   // Terre del Fuoco: PS fallita, −1 PI al copriruota attivo; senza copriruote alla Propulsione
   assert.deepEqual(sollecitazioneFallita(s, dati).mezzo.rinforzi['copriruote-petra'].montati, [2, 3, 3, 3]);
   const nudo = { ...s, rinforzi: { 'copriruote-petra': { montati: [0, 0, 0, 0], ricambi: [] } } };

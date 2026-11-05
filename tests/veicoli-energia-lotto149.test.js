@@ -185,13 +185,14 @@ test('A.193: partendo dal record com’è nel file (ancora in Lx), la prima azio
   assert.deepEqual(salvato.energia.rosso, [25000, 25000]);
 });
 
-test('A.193: i ricambi di prima (Banchi e Moduli) e un profilo non certo restano «da convertire»', () => {
+test('A.193 e A.227: i ricambi di prima (Banchi e Moduli) passano agli accumulatori per frazione; un profilo non certo resta «da convertire»', () => {
   const salvato = lxScout({ energia: { rosso: [50000, 50000], rosso_ricambi: [50000], verde: [10000], verde_ricambi: [10000], aria: { fissa: 8, bombole: [8, 8] } } });
   const [m] = normalizzaVeicoli([salvato], dati);
-  assert.deepEqual(m.energia.rosso_ricambi, [], 'il nuovo profilo non ha scorte: nessun numero inventato');
-  assert.deepEqual(m.energia.ricambi_da_convertire, { rosso: [50000], verde: [10000] });
+  // lotto 173, A.227: il Banco Rosso di ricambio è un MEC Rosso, il Modulo Verde una CEC Verde, pieni come erano
+  assert.deepEqual([m.energia.rosso_ricambi, m.energia.verde_ricambi], [[10], [10]]);
+  assert.equal(m.energia.ricambi_da_convertire, undefined);
   const v = vistaVeicoloPersonaggio(m, dati).risorse;
-  assert.deepEqual([v.rosso.ricambiDaConvertire, v.verde.ricambiDaConvertire], [[50000], [10000]]);
+  assert.deepEqual([v.rosso.ricambiDaConvertire, v.verde.ricambiDaConvertire], [[], []]);
   // profilo senza capacità di prima nei dati: la riserva è «da convertire» fino alla verifica del Direttore
   const incerti = { ...dati, veicoli: { ...dati.veicoli, profili: dati.veicoli.profili.map((p) => (p.id === 'asa-scout-mk4' ? { ...p, energia_precedente: undefined } : p)) } };
   const [x] = normalizzaVeicoli([lxScout({ energia: { rosso: [25000, 25000], rosso_ricambi: [], verde: [5000], verde_ricambi: [], aria: { fissa: 8, bombole: [8, 8] } } })], incerti);
