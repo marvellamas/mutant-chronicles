@@ -2984,9 +2984,10 @@ p.riga-chroma-viva { display: block; }
 .fascia-copia-di-lavoro strong { font-size: 1.1rem; letter-spacing: 0.01em; }
 .fascia-copia-di-lavoro .nota-copia { opacity: 0.9; }
 @media (max-width: 600px) { .fascia-copia-di-lavoro { font-size: 0.95rem; padding: 0.4rem 0.6rem; } }
-/* la mappa occupa tutta l'altezza della finestra: con la riga sopra, tanto meno */
-body:has(.mappa-pagina) .fascia-copia-di-lavoro { position: static; }
-body.con-fascia-copia:has(.mappa-pagina) { height: auto; min-height: 100dvh; }
+/* la mappa occupa tutta l'altezza della finestra: con la riga sopra, tanto meno.
+   Il body resta alto 100dvh (colonna flex, regola della mappa): la fascia è una riga ferma della colonna
+   e il main prende l'altezza che resta. Con «height: auto» la mappa si schiacciava a 18rem (lotto 172). */
+body:has(.mappa-pagina) .fascia-copia-di-lavoro { position: static; flex: none; }
 @media print { .fascia-copia-di-lavoro { display: none; } }
 
 /* 21/10/2026 — «il tablet è una vista»: riga di stato in cima a ogni pagina del tablet (non sul PC del
