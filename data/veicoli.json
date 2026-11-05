@@ -1338,7 +1338,7 @@
       "fonte": "Manuale dei Veicoli 0.10, «Neverlost scheda del veicolo»; Neverlost scheda tecnica 1.6 (29/10/2026)",
       "tipo": "aerospaziale",
       "descrizione": "Trasporto tattico ASA tecnomistico di categoria media, molto modificato, per missioni autonome di ricognizione, ricerca, trasporto e recupero. Atmosfera e spazio; decollo verticale e volo stazionario.",
-      "decisione": "A.196 (risposta di Davide del 30/10/2026): la Neverlost entra nella scheda dei veicoli e nella plancia, col profilo aggiornato del Manuale dei Veicoli. Combattimento in Q Tattici, ingombro convenzionale 3 × 2, planimetria interna distinta; le capacità massime non riempiono automaticamente le riserve effettive; viaggio in Traiettoria in giorni.",
+      "decisione": "A.196 (risposta di Davide del 30/10/2026): la Neverlost entra nella scheda dei veicoli e nella plancia, col profilo aggiornato del Manuale dei Veicoli. Combattimento in Q Tattici, ingombro convenzionale 3 × 2, planimetria interna distinta; le capacità massime non riempiono automaticamente le riserve effettive; viaggio in Traiettoria in giorni. A.239 (02/11/2026): munizioni registrate dal Direttore, standard solo come riferimento. A.240 (03/11/2026): esemplare unico, non a listino.",
       "equipaggio": {
         "conducente": 1,
         "passeggeri": 9,
@@ -1687,7 +1687,10 @@
           "nome": "Fuori uso",
           "testo": "Un mezzo fuori uso non esplode o si decomprime automaticamente; nello spazio la perdita di propulsione non cancella l’inerzia."
         }
-      ]
+      ],
+      "esemplare_unico": true,
+      "nota_esemplare": "Modello fuori produzione con molte modifiche personalizzate: il profilo è quello della nave della campagna, non un modello standard né un riferimento commerciale per altre navi. Prezzo e fascia commerciale della configurazione attuale restano da definire; i prezzi dei componenti non fanno il valore della nave (A.240).",
+      "munizioni_nota": "Dotazione standard: 600 proiettili per ciascun mitragliatore e 6 missili (munizioni_iniziali). Per la nave della campagna le quantità rimaste le conferma il Direttore; gli aggiornamenti del profilo conservano quelle registrate e, se il dato manca, restano «da verificare dal Direttore» (A.239)."
     }
   ],
   "opportunita": {

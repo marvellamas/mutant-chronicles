@@ -420,6 +420,16 @@ function rinforziIniziali(profilo) {
 }
 
 /**
+ * A.240 (Davide, 03/11/2026): un profilo `esemplare_unico` (la Neverlost) è quello di una nave sola, non un modello di
+ * listino: non si offre per crearne un'altra quando l'esemplare c'è già (nel registro o nella scheda).
+ * @param esistenti i mezzi già presenti (record.mezzo del registro e veicoli locali della scheda)
+ */
+export function profiliCreabili(dati, esistenti = []) {
+  const presenti = new Set(lista(esistenti).map((m) => m?.profilo).filter(Boolean));
+  return lista(dati.veicoli?.profili).filter((p) => !(p.esemplare_unico === true && presenti.has(p.id)));
+}
+
+/**
  * Un mezzo nuovo per la scheda: integro, fermo, nessun conducente, NEC carico.
  * @param origine id del catalogo (veicoli.json → profili) oppure i campi di una scheda scritta a mano
  */
@@ -698,14 +708,18 @@ function energiaLetta(x, base) {
  * riserve che il file non ha partono dalla dotazione iniziale del profilo (A.101).
  */
 function normalizzaRisorse(v, profilo) {
-  // la Neverlost: riserve che **non** partono dalla dotazione (A.196), più scudo e circuito Bianco; munizioni come gli altri
+  // la Neverlost: riserve che **non** partono dalla dotazione (A.196), più scudo e circuito Bianco.
+  // A.239 (Davide, 02/11/2026): neanche le munizioni. La dotazione standard (600 proiettili per mitragliatore, 6 missili)
+  // è il riferimento del profilo; per la nave della campagna le quantità rimaste le conferma il Direttore. Gli
+  // aggiornamenti del profilo conservano quelle registrate; dove il dato manca resta «da verificare», senza numero.
   if (eNeverlost(profilo)) {
     const m = munizioniIniziali(profilo);
     const mun = m ? m.map((x, i) => {
       if (!x) return null;
       const y = lista(v?.munizioni)[i];
       const cap = intero(profilo.armi[i].capacita, x.caricate);
-      return isOggetto(y) ? { caricate: entro(y.caricate, 0, cap, cap), riserva: Math.max(0, intero(y.riserva, x.riserva)) } : x;
+      if (!isOggetto(y) || !Number.isInteger(y.caricate)) return { caricate: null, riserva: null, da_verificare: true };
+      return { caricate: entro(y.caricate, 0, cap, cap), riserva: Math.max(0, intero(y.riserva, 0)) };
     }) : null;
     return { ...normalizzaNeverlost(v, profilo), ...(mun ? { munizioni: mun } : {}) };
   }
@@ -907,13 +921,28 @@ export function munizioniArmaVeicolo(mezzo, indice, { sparati = 0, ricarica = fa
   const profilo = profiloDi(mezzo, dati);
   const m = normalizzaRisorse(mezzo, profilo).munizioni;
   const x = m?.[indice];
-  if (!x) return null;
+  // A.239: munizioni da verificare dal Direttore: non si spara né si ricarica finché non le conferma (registraMunizioniVeicolo)
+  if (!x || x.da_verificare) return null;
   const cap = intero(profilo.armi[indice].capacita, x.caricate);
   let { caricate, riserva } = x;
   if (sparati > 0) caricate = Math.max(0, caricate - sparati);
   if (ricarica) { const n = Math.min(cap - caricate, riserva); caricate += n; riserva -= n; }
   const nuove = [...m];
   nuove[indice] = { caricate, riserva };
+  return { ...mezzo, munizioni: nuove };
+}
+
+/**
+ * A.239: il Direttore conferma le munizioni di un'arma di bordo (caricate entro la capacità, riserva ≥ 0). Vale per ogni
+ * mezzo; serve soprattutto alla Neverlost, che non parte dalla dotazione. null se l'arma non ha munizioni.
+ */
+export function registraMunizioniVeicolo(mezzo, indice, { caricate, riserva = 0 }, dati) {
+  const profilo = profiloDi(mezzo, dati);
+  const m = normalizzaRisorse(mezzo, profilo).munizioni;
+  if (!m?.[indice] || !Number.isInteger(caricate) || caricate < 0 || !Number.isInteger(riserva) || riserva < 0) return null;
+  const cap = intero(profilo.armi[indice].capacita, caricate);
+  const nuove = m.map((x) => (x ? (x.da_verificare ? { da_verificare: true } : { caricate: x.caricate, riserva: x.riserva }) : null));
+  nuove[indice] = { caricate: Math.min(cap, caricate), riserva };
   return { ...mezzo, munizioni: nuove };
 }
 

@@ -10,7 +10,7 @@ import { infoValore } from './tooltip.js';
 import { rigaScelte } from './pannello-passi.js';
 import {
   nuovoVeicolo, vistaVeicoloPersonaggio, pilotareDelPersonaggio, colpisciVeicolo, applicaRiparazione, conPi,
-  montaRicambio, struttureVeicolo, profiloDi, registraViaggio, registraSupportoVitale, chiudiGiornata, ricaricaEnergia, ricaricaBombole, installaRicambioEnergia, aggiungiRicambioEnergia, testoCariche, munizioniArmaVeicolo,
+  montaRicambio, profiliCreabili, registraMunizioniVeicolo, struttureVeicolo, profiloDi, registraViaggio, registraSupportoVitale, chiudiGiornata, ricaricaEnergia, ricaricaBombole, installaRicambioEnergia, aggiungiRicambioEnergia, testoCariche, munizioniArmaVeicolo,
   sollecitazioneFallita, eseguiCambioAndatura, movimentoMassimo, profiloVeicolo as profiloDelCatalogo,
 } from '../veicoli.js';
 import { migraVeicoli, nuovoRecord, riferimento, vede, eRiferimento, statoMovimento, muoviVeicolo, cambiaConducente, movimentoResiduo, stessaChiave, scegliAndatura, conCopie, mezzoDallaCopia } from '../veicoli-registro.js';
@@ -148,7 +148,10 @@ function tabVeicoliRegistro(ctx) {
 
 function pannelloAggiungi(ctx, inRegistro = null) {
   const a = statoUi(ctx).aggiungi;
-  const profili = ctx.dati.veicoli.profili;
+  // A.240: la Neverlost è un esemplare unico: non si crea una seconda nave dal suo profilo
+  const esistenti = [...(inRegistro ? statoRegistro(ctx).record.map((r) => r.mezzo) : []), ...(ctx.scelte.veicoli ?? [])];
+  const profili = profiliCreabili(ctx.dati, esistenti);
+  if (a.origine !== 'mano' && !profili.some((p) => p.id === a.origine)) a.origine = profili[0]?.id ?? 'mano';
   const campo = (etichetta, chiave, { tipo = 'number', min = 0 } = {}) => h('label', { class: 'campo-veicolo' }, `${etichetta} `,
     h('input', { type: tipo, ...(tipo === 'number' ? { min, step: 1, inputmode: 'numeric', class: 'input-d10' } : {}), value: chiave.split('.').reduce((o, k) => o?.[k], a.scheda) ?? '',
       onchange: (e) => {
@@ -166,7 +169,7 @@ function pannelloAggiungi(ctx, inRegistro = null) {
   };
   return h('section', { class: 'riquadro pannello-veicolo' },
     h('h2', {}, 'Aggiungi veicolo'),
-    rigaScelte('Dal catalogo', [...profili.map((p) => ({ valore: p.id, etichetta: p.nome, riga: `MOV ${p.mov_q} ${p.mov_unita ?? 'Q'} · AR ${p.ar.totale} · ${p.equipaggio.posti} posti` })), { valore: 'mano', etichetta: 'Scritto a mano', riga: 'profilo libero' }],
+    rigaScelte('Dal catalogo', [...profili.map((p) => ({ valore: p.id, etichetta: p.esemplare_unico ? `${p.nome} (esemplare unico)` : p.nome, riga: `MOV ${p.mov_q} ${p.mov_unita ?? 'Q'} · AR ${p.ar.totale} · ${p.equipaggio.posti} posti` })), { valore: 'mano', etichetta: 'Scritto a mano', riga: 'profilo libero' }],
       a.origine, (v) => { a.origine = v; ctx.azioni.ridisegna(); }),
     h('label', { class: 'campo-veicolo' }, 'Nome (facoltativo) ', h('input', { type: 'text', value: a.nome, placeholder: a.origine === 'mano' ? 'Veicolo' : profili.find((p) => p.id === a.origine)?.nome, onchange: (e) => { a.nome = e.target.value; } })),
     a.origine === 'mano' ? h('div', { class: 'campi-veicolo' },
@@ -457,12 +460,33 @@ function necVeicolo(ctx, mezzo, v, aggiorna) {
     r?.aria?.testo ? h('p', { class: 'nota' }, r.aria.testo) : null);
 }
 
+/** A.239: «da verificare dal Direttore», con lo standard di riferimento; in modalità master i campi per confermarle. */
+function munizioniDaVerificare(ctx, mezzo, a, i, aggiorna) {
+  const std = a.munizioni_iniziali;
+  const campi = { caricate: '', riserva: '0' };
+  const conferma = () => {
+    const c = Number.parseInt(campi.caricate, 10);
+    const r = Number.parseInt(campi.riserva || '0', 10);
+    const x = registraMunizioniVeicolo(mezzo, i, { caricate: c, riserva: r }, ctx.dati);
+    if (x) aggiorna(x, `${a.nome}: munizioni confermate dal Direttore, ${x.munizioni[i].caricate} caricate e riserva ${x.munizioni[i].riserva} (A.239).`);
+  };
+  return h('p', { class: 'munizioni-da-verificare' }, h('strong', {}, `${a.nome}: `),
+    h('em', { class: 'da-definire' }, 'munizioni da verificare dal Direttore'),
+    std ? h('small', { class: 'nota' }, ` · dotazione standard ${std.caricate}${std.riserva ? ` + ${std.riserva}` : ''} (A.239)`) : null,
+    ctx.master ? h('span', {}, ' ',
+      h('label', {}, 'caricate ', h('input', { type: 'number', min: 0, max: a.capacita, class: 'input-d10', 'aria-label': `Munizioni caricate, ${a.nome}`, oninput: (e) => { campi.caricate = e.target.value; } })), ' ',
+      h('label', {}, 'riserva ', h('input', { type: 'number', min: 0, class: 'input-d10', value: '0', 'aria-label': `Munizioni di riserva, ${a.nome}`, oninput: (e) => { campi.riserva = e.target.value; } })), ' ',
+      h('button', { type: 'button', class: 'btn btn-piccolo', onclick: conferma }, 'Conferma')) : null);
+}
+
 function munizioniVeicolo(ctx, mezzo, v, aggiorna) {
   const m = v.risorse?.munizioni;
   if (!m) return null;
   return h('div', { class: 'munizioni-veicolo' }, (v.profilo.armi ?? []).map((a, i) => {
     const x = m[i];
     if (!x) return null;
+    // A.239: munizioni che il file non ha: le conferma il Direttore, l'app non ci mette lo standard
+    if (x.da_verificare) return munizioniDaVerificare(ctx, mezzo, a, i, aggiorna);
     const spara = (n) => aggiorna(munizioniArmaVeicolo(mezzo, i, { sparati: n }, ctx.dati));
     return h('p', {}, h('strong', {}, `${a.nome}: `), `${x.caricate} / ${a.capacita} caricate · riserva ${x.riserva} `,
       h('label', {}, 'colpi sparati ', h('input', { type: 'number', min: 1, class: 'input-d10', value: '', onchange: (e) => spara(intero(e.target.value, 0)) })), ' ',

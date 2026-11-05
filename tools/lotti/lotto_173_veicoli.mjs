@@ -9,6 +9,9 @@
 //    Il valore stimato del FIAT LUX non è nei dati: è un campo dell'esemplare, vuoto finché lo decide il Direttore.
 //  - A.227 — la capacità di prima dei ricambi (Banco Rosso 50.000 Lx → MEC Rosso; Modulo Verde 10.000 Lx → CEC Verde),
 //    per convertirli per frazione una volta sola.
+//  - A.239 — la Neverlost non parte dalla dotazione delle munizioni: le conferma il Direttore (munizioni_nota).
+//  - A.240 — la Neverlost è un esemplare unico (esemplare_unico, nota_esemplare): niente prezzo di catalogo, niente
+//    seconda nave dal suo profilo (src/veicoli.js → profiliCreabili).
 //
 // Uso: node tools/lotti/lotto_173_veicoli.mjs [--scrivi]   (senza --scrivi dice soltanto cosa cambierebbe)
 // Rilanciabile: rifà gli stessi valori.
@@ -63,6 +66,16 @@ imposta(scout, 'energia_precedente', {
   ricambio_rosso_lx: 50000,
   ricambio_verde_lx: 10000,
 }, 'scout');
+
+// --- A.239 e A.240: la Neverlost
+const nl = veicoli.profili.find((p) => p.id === 'neverlost');
+imposta(nl, 'esemplare_unico', true, 'neverlost');
+imposta(nl, 'nota_esemplare', 'Modello fuori produzione con molte modifiche personalizzate: il profilo è quello della nave della campagna, non un modello standard né un riferimento commerciale per altre navi. Prezzo e fascia commerciale della configurazione attuale restano da definire; i prezzi dei componenti non fanno il valore della nave (A.240).', 'neverlost');
+imposta(nl, 'prezzo_cr', null, 'neverlost');
+imposta(nl, 'reperibilita', null, 'neverlost');
+imposta(nl, 'munizioni_nota', 'Dotazione standard: 600 proiettili per ciascun mitragliatore e 6 missili (munizioni_iniziali). Per la nave della campagna le quantità rimaste le conferma il Direttore; gli aggiornamenti del profilo conservano quelle registrate e, se il dato manca, restano «da verificare dal Direttore» (A.239).', 'neverlost');
+const DEC_NL = ' A.239 (02/11/2026): munizioni registrate dal Direttore, standard solo come riferimento. A.240 (03/11/2026): esemplare unico, non a listino.';
+if (!String(nl.decisione).includes('A.240')) imposta(nl, 'decisione', `${nl.decisione}${DEC_NL}`, 'neverlost');
 
 scrivi('data/veicoli.json', veicoli);
 console.log(cambi.length ? `${SCRIVI ? 'Scritto' : 'Cambierebbe'}: ${cambi.join(', ')}` : 'Niente da cambiare.');
