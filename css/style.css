@@ -357,7 +357,7 @@ dl.voci.in-linea dt::after { content: ":"; }
 .inventario-colonne { container-type: inline-size; }
 @container (min-width: 46rem) {
   .inventario-colonne { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 0 1rem; align-items: start; }
-  .colonna-inventario { max-height: calc(100vh - 10rem); overflow-y: auto; overscroll-behavior: contain; padding-right: 0.25rem; }
+  .colonna-inventario { max-height: calc(100vh - var(--alto-fasce, 0px) - 10rem); overflow-y: auto; overscroll-behavior: contain; padding-right: 0.25rem; }
 }
 .gruppo-equip.sottosezione { margin-left: 0.75rem; }
 .macro-tecnica { --macro: var(--tecnica); --macro-tenue: var(--tecnica-tenue); --macro-testo: var(--tecnica-testo); }
@@ -433,8 +433,8 @@ dl.voci.in-linea dt::after { content: ":"; }
   }
   .riepilogo {
     position: sticky;
-    top: 1rem;
-    max-height: calc(100vh - 2rem);
+    top: calc(var(--alto-fasce, 0px) + 1rem);
+    max-height: calc(100vh - var(--alto-fasce, 0px) - 2rem);
     border: 1px solid var(--bordo);
     border-radius: var(--raggio);
     box-shadow: var(--ombra);
@@ -727,7 +727,7 @@ dl.voci.in-linea dt::after { content: ":"; }
 
 /* posizione delle tab: a sinistra */
 .pos-sinistra { grid-template-columns: 12rem minmax(0, 1fr); grid-template-areas: "barra barra" "nav pannello"; }
-.pos-sinistra .tab-nav [role="tablist"] { flex-direction: column; position: sticky; top: 1rem; }
+.pos-sinistra .tab-nav [role="tablist"] { flex-direction: column; position: sticky; top: calc(var(--alto-fasce, 0px) + 1rem); }
 /* in alto */
 .pos-alto .tab-nav { border-bottom: 1px solid var(--bordo); padding-bottom: 0.4rem; margin-bottom: 0.5rem; }
 .pos-alto .tab-nav [role="tablist"] { overflow-x: auto; }
@@ -744,7 +744,7 @@ dl.voci.in-linea dt::after { content: ":"; }
 /* automatica: a sinistra da ~900 px, in basso sotto */
 @media (min-width: 900px) {
   .pos-automatica { grid-template-columns: 12rem minmax(0, 1fr); grid-template-areas: "barra barra" "nav pannello"; }
-  .pos-automatica .tab-nav [role="tablist"] { flex-direction: column; position: sticky; top: 1rem; }
+  .pos-automatica .tab-nav [role="tablist"] { flex-direction: column; position: sticky; top: calc(var(--alto-fasce, 0px) + 1rem); }
 }
 @media (max-width: 899.98px) {
   .pos-automatica .tab-nav {
@@ -1191,9 +1191,9 @@ body.con-sfondo::before {
 /* PV e PM sotto le tab: solo con le tab a sinistra da 900 px; lì non si ripetono in Identità né
    nella mini-barra dell'intestazione. Su telefono e tablet (tab in basso) restano in Identità. */
 .risorse-laterali { display: none; }
-.pos-sinistra .colonna-tab { position: sticky; top: 1rem; }
+.pos-sinistra .colonna-tab { position: sticky; top: calc(var(--alto-fasce, 0px) + 1rem); }
 @media (min-width: 900px) {
-  .pos-automatica .colonna-tab { position: sticky; top: 1rem; }
+  .pos-automatica .colonna-tab { position: sticky; top: calc(var(--alto-fasce, 0px) + 1rem); }
   .pos-sinistra .risorse-laterali, .pos-automatica .risorse-laterali { display: flex; flex-direction: column; gap: 0.5rem; margin-top: 0.75rem; }
   .pos-sinistra .pv-pm-identita, .pos-automatica .pv-pm-identita,
   .pos-sinistra .riepilogo-risorse, .pos-automatica .riepilogo-risorse { display: none; }
@@ -1451,7 +1451,7 @@ body.con-sfondo::before {
 }
 @media (min-width: 601px) {
   .pos-alto { grid-template-columns: 11rem minmax(0, 1fr); grid-template-areas: "barra barra" "nav nav" "lato pannello"; }
-  .pos-alto .colonna-risorse { position: sticky; top: 0.5rem; align-self: start; }
+  .pos-alto .colonna-risorse { position: sticky; top: calc(var(--alto-fasce, 0px) + 0.5rem); align-self: start; }
 }
 @media (max-width: 600px) {
   /* telefono: striscia compatta sopra il contenuto */
@@ -1477,7 +1477,7 @@ body.con-sfondo::before {
 /* 21/10/2026: l'incollato torna (serve al tavolo), ma sicuro — vedi la nota «Parte A» sopra la regola. */
 .colonna-condizioni {
   display: flex; flex-direction: column; gap: 0.5rem; margin-top: 0.5rem;
-  position: sticky; top: 0.5rem; max-height: calc(100vh - 1rem); overflow-y: auto; scrollbar-width: thin;
+  position: sticky; top: calc(var(--alto-fasce, 0px) + 0.5rem); max-height: calc(100vh - var(--alto-fasce, 0px) - 1rem); overflow-y: auto; scrollbar-width: thin;
   background:
     linear-gradient(var(--sfondo) 30%, rgba(0, 0, 0, 0)) local,
     linear-gradient(rgba(0, 0, 0, 0), var(--sfondo) 70%) local 0 100%,
@@ -1512,7 +1512,7 @@ body.con-sfondo::before {
 /* 21/10/2026: come le Condizioni attive, l'incollato torna in forma sicura (vedi la nota «Parte A»). */
 .colonna-stati {
   display: flex; flex-direction: column; gap: 0.5rem; margin-top: 0.75rem;
-  position: sticky; top: 0.5rem; max-height: calc(100vh - 1rem); overflow-y: auto; scrollbar-width: thin;
+  position: sticky; top: calc(var(--alto-fasce, 0px) + 0.5rem); max-height: calc(100vh - var(--alto-fasce, 0px) - 1rem); overflow-y: auto; scrollbar-width: thin;
   background:
     linear-gradient(var(--sfondo) 30%, rgba(0, 0, 0, 0)) local,
     linear-gradient(rgba(0, 0, 0, 0), var(--sfondo) 70%) local 0 100%,
@@ -1967,6 +1967,9 @@ body.con-sfondo::before {
 /* la pagina della mappa occupa tutta la finestra: niente piè di pagina, niente larghezza massima */
 body:has(.mappa-pagina) { display: flex; flex-direction: column; height: 100dvh; overflow: hidden; }
 main:has(> .mappa-pagina) { max-width: none; width: 100%; padding: 0.5rem 0.75rem; flex: 1; min-height: 0; }
+/* lotto 174: le righe sopra (fascia «Copia di prova», «Nuova versione», stato del tablet) tengono la loro altezza; la
+   mappa prende quello che resta della finestra, con o senza di loro */
+body:has(.mappa-pagina) > :not(main) { flex: none; }
 body:has(.mappa-pagina) .piede { display: none; }
 
 /* Mappa di battaglia, lotto 3: token dello scontro, pannello laterale, carta indicata dalla mappa nella plancia */
@@ -2028,7 +2031,7 @@ body:has(.mappa-pagina) .piede { display: none; }
 .mappa-carta .carta-plancia { border: none; padding: 0; }
 .btn-scheda-completa { margin-top: 0.5rem; width: 100%; }
 .btn-torna-mappa { font-size: 1.15rem; padding: 0.55rem 1.2rem; min-height: 48px; }
-.plancia > .btn-torna-mappa { margin: 0.5rem 0; position: sticky; top: 0.5rem; z-index: 5; box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3); }
+.plancia > .btn-torna-mappa { margin: 0.5rem 0; position: sticky; top: calc(var(--alto-fasce, 0px) + 0.5rem); z-index: 5; box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3); }
 @media (max-width: 46rem) { .mappa-carta { width: auto; max-height: 45%; } }
 
 /* Mappa di battaglia, lotto 5: muri, area raggiungibile in tre colori, menu del clic destro, movimento nel pannello */
@@ -2582,7 +2585,7 @@ main:has(> .plancia:not(.plancia-in-mappa)) { max-width: 1912px; }
   .titolo-tab .badge-pagina { width: 36px; height: 36px; }
 }
 @media (min-width: 601px) {
-  .pos-alto .colonna-risorse { max-height: calc(100vh - 1rem); overflow-y: auto; scrollbar-width: thin; }
+  .pos-alto .colonna-risorse { max-height: calc(100vh - var(--alto-fasce, 0px) - 1rem); overflow-y: auto; scrollbar-width: thin; }
 }
 
 /* 12/10: barra della mappa su una riga anche a 1024 px. I volumi stanno in un menu sotto l'altoparlante; lo stato del
@@ -2605,7 +2608,7 @@ main:has(> .plancia:not(.plancia-in-mappa)) { max-width: 1912px; }
 @media (max-width: 46rem) { .mappa-barra { flex-wrap: wrap; } }
 
 /* ---------------------------------------------------------------- «Modifica master» (12/10/2026) */
-.fascia-master { position: sticky; top: 0; z-index: 40; display: flex; flex-wrap: wrap; align-items: center; gap: 0.4rem 0.8rem; padding: 0.5rem 0.9rem; margin-bottom: 0.5rem; background: var(--attenzione); color: #1a1205; border-radius: var(--raggio); font-size: 1rem; }
+.fascia-master { position: sticky; top: var(--alto-fasce, 0px); z-index: 40; display: flex; flex-wrap: wrap; align-items: center; gap: 0.4rem 0.8rem; padding: 0.5rem 0.9rem; margin-bottom: 0.5rem; background: var(--attenzione); color: #1a1205; border-radius: var(--raggio); font-size: 1rem; }
 .fascia-master .nota { color: inherit; opacity: 0.85; flex: 1 1 14rem; }
 .fascia-master .btn-esci-master { margin-left: auto; font-weight: 700; }
 .scheda-tab.in-master { outline: 3px solid var(--attenzione); outline-offset: 4px; border-radius: var(--raggio); }
@@ -2984,9 +2987,14 @@ p.riga-chroma-viva { display: block; }
 .fascia-copia-di-lavoro strong { font-size: 1.1rem; letter-spacing: 0.01em; }
 .fascia-copia-di-lavoro .nota-copia { opacity: 0.9; }
 @media (max-width: 600px) { .fascia-copia-di-lavoro { font-size: 0.95rem; padding: 0.4rem 0.6rem; } }
-/* la mappa occupa tutta l'altezza della finestra: con la riga sopra, tanto meno */
-body:has(.mappa-pagina) .fascia-copia-di-lavoro { position: static; }
-body.con-fascia-copia:has(.mappa-pagina) { height: auto; min-height: 100dvh; }
+/* la mappa occupa tutta l'altezza della finestra: con la riga sopra, tanto meno.
+   Lotto 174: il body della mappa resta sempre alto 100dvh, in colonna (regola della mappa, sopra); la fascia è una
+   riga ferma della colonna e il main (flex: 1) prende l'altezza che resta. Prima qui c'era
+   «body.con-fascia-copia:has(.mappa-pagina) { height: auto; min-height: 100dvh }»: senza altezza fissa del body il
+   main non aveva più un'altezza da riempire, e la tela, che si misura sul suo contenitore, si schiacciava o cresceva
+   senza fine a seconda della finestra. Nessuna regola dell'altezza della mappa deve dipendere da con-fascia-copia
+   (tests/mappa-altezza-fascia.test.js). */
+body:has(.mappa-pagina) .fascia-copia-di-lavoro { position: static; flex: none; }
 @media print { .fascia-copia-di-lavoro { display: none; } }
 
 /* 21/10/2026 — «il tablet è una vista»: riga di stato in cima a ogni pagina del tablet (non sul PC del

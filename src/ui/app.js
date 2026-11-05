@@ -6,6 +6,7 @@ import { conScorrimentoFisso, montaTornaSopra } from './scorrimento.js';
 import { consegnaArma, riconduciEsemplare } from '../progetti.js';
 import { aggiornaVivi } from './vivi.js';
 import { leggiStatoInstallazione, montaFasciaCopia } from './copia-di-lavoro.js';
+import { seguiAltezzaFasce } from './altezza-fasce.js';
 import { caricaDati, versioniPersonaggio, FILE_SOLO_TAVOLO } from '../rules.js';
 import { impiantiAttivabili, statoProcessore, attivaChip, terminaChip } from '../impianti.js';
 import { formattaErrore, trovaTodo } from '../validate.js';
@@ -140,6 +141,8 @@ async function avvia() {
   inizializzaTooltip(stato.dati);
   // pulsante fisso «torna in cima» per le pagine lunghe (regole.json → interfaccia.torna_sopra)
   montaTornaSopra(stato.dati.regole.interfaccia.torna_sopra);
+  // lotto 174: le colonne incollate si fermano sotto le righe ferme in cima (fascia «Copia di prova» e simili)
+  seguiAltezzaFasce();
   await caricaImmagini(stato.dati);
   stato.sfondi = cercaSfondi(stato.dati.corporazioni.corporazioni);
   // cartella dei personaggi (server.mjs): se il server non c'è l'app resta com'era
