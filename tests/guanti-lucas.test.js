@@ -129,7 +129,7 @@ test('Getto di fuoco e Doppio getto: CM dalla riserva, mani libere, Prova di Pot
   assert.deepEqual(p2.danni, ['1d6+4', '1d6+4'], 'un tiro di danno per getto');
   // avvisi: riserva, sintonizzazione, mani
   const p3 = pianoGetto(doppio, pg.scheda, { pm: 4.2, sintonizzato: false, indossato: true });
-  assert.ok(p3.motivi.some((m) => /la riserva ha 4,2 CM, ne servono 6/.test(m)) && p3.motivi.some((m) => /non sintonizzato/.test(m)));
+  assert.ok(p3.motivi.some((m) => /la riserva ha 4 e 0,2 CM, ne servono 6/.test(m)) && p3.motivi.some((m) => /non sintonizzato/.test(m)));
   const conArma = lucas((eq) => eq.map((v) => (v.rif === 'armi_distanza_corporative:axis-227' ? { ...v, stato: 'trasportato' } : v)));
   assert.equal(maniOccupate(conArma.scheda), 1);
   assert.ok(pianoGetto(doppio, conArma.scheda, stato).motivi.some((m) => /entrambe le mani libere/.test(m)));

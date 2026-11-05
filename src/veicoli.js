@@ -18,6 +18,7 @@
 //
 // Tutto è facoltativo salvo «profilo»: `vistaVeicolo` riempie i valori mancanti dal profilo (mezzo integro).
 import { provenienza, riga, righeRegoleAbilita } from './provenienza.js';
+import { partiRiserva } from './cariche-mistiche.js';
 // la Neverlost (A.196): riserve, Traiettoria, scudo e circuito Bianco in un modulo a parte (src/neverlost.js)
 import { eNeverlost, normalizzaNeverlost, chiudiGiornataNeverlost, ricaricaNeverlost } from './neverlost.js';
 
@@ -683,7 +684,14 @@ function normalizzaRisorse(v, profilo) {
 }
 
 /** «3 cariche», «1 carica», «0,5 cariche»: le frazioni di una conversione restano visibili. */
-export const testoCariche = (n) => `${String(arrotonda(n)).replace('.', ',')} ${arrotonda(n) === 1 ? 'carica' : 'cariche'}`;
+// A.228: «6 cariche e 0,66»: le cariche intere e il residuo, che resta per i calcoli e la ricarica ma non paga un uso
+export const testoCariche = (n) => {
+  const p = partiRiserva(arrotonda(n));
+  if (!p) return '— cariche';
+  const parola = (k) => (k === 1 ? 'carica' : 'cariche');
+  if (!p.residuo) return `${p.intere} ${parola(p.intere)}`;
+  return p.intere ? `${p.intere} ${parola(p.intere)} e ${String(p.residuo).replace('.', ',')}` : `${String(p.residuo).replace('.', ',')} di carica`;
+};
 
 // ogni azione sulle riserve parte dal mezzo come sta nel file: se è ancora in Lx, il valore di prima resta scritto (A.193)
 const comeMezzo = (mezzo, energia) => ({ ...mezzo, energia, ...(inLx(mezzo) && !mezzo.energia_prima ? { energia_prima: valoreDiPrima(mezzo) } : {}) });

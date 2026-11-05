@@ -149,9 +149,11 @@ function allineaIntegrita(v, m) {
 /**
  * A.193 (risposta di Davide del 30/10/2026): una riserva salvata in Lx, in UE o in ore di un oggetto che ora si conta in
  * cariche passa alle cariche conservando la **frazione** residua (una cella a metà vale metà della capacità nuova, senza
- * equivalenza universale). Il valore di prima resta nel file sotto la sua chiave; le cariche si segnano per difetto, mai
- * per eccesso, e il risultato esatto (con le frazioni) si registra in `necConvertite`. Si fa una volta sola: con la chiave
- * nuova già nel file non si ripete. Senza la capacità di prima certa (`necPrecedenti`) la riserva resta «da convertire».
+ * equivalenza universale). Il valore di prima resta nel file sotto la sua chiave e il dettaglio in `necConvertite`. Si fa
+ * una volta sola: con la chiave nuova già nel file non si ripete. Senza la capacità di prima certa (`necPrecedenti`) la
+ * riserva resta «da convertire».
+ * A.228 (Davide, 02/11/2026): la frazione esatta resta **nella riserva**, non solo nel registro: 31 ore su 40 di una tuta
+ * da 10 cariche sono 7,75 cariche, non 7. Mai per eccesso; la frazione non diventa gratis una carica intera (variaNec).
  * @returns {{ da, valore, capacita, esatto, applicato, massimo }|null}
  */
 export function convertiRiservaNec(src, m, chiave) {
@@ -162,16 +164,27 @@ export function convertiRiservaNec(src, m, chiave) {
   if (da === undefined) return null;
   const massimo = m.nec[chiave];
   const esatto = Math.round(Math.max(0, Math.min(1, src[da] / cap[da])) * massimo * 1e6) / 1e6;
-  return { da, valore: src[da], capacita: cap[da], esatto, applicato: Math.min(massimo, Math.floor(esatto + 1e-9)), massimo };
+  return { da, valore: src[da], capacita: cap[da], esatto, applicato: Math.min(massimo, esatto), massimo };
 }
 
 const conConvertite = (c) => (Object.keys(c).length ? { necConvertite: c } : {});
+
+/**
+ * A.228: una conversione registrata prima del 05/11/2026 aveva segnato le cariche per difetto (applicato < esatto). La
+ * frazione tolta torna nella riserva una volta sola: il segno `a228` nel registro dice che è già stata rimessa.
+ */
+const residuoDaRimettere = (c) => (isOggetto(c) && !c.a228 && Number.isFinite(c.esatto) && Number.isFinite(c.applicato) && c.esatto - c.applicato > 1e-9 ? arrotonda6(c.esatto - c.applicato) : 0);
+const arrotonda6 = (x) => Math.round(x * 1e6) / 1e6;
 
 /** Registro delle conversioni fatte (chiave nuova → dettaglio) finché la riserva c'è ancora. */
 function allineaNecConvertite(sessioneNec, vecchie, m) {
   const src = isOggetto(sessioneNec) ? sessioneNec : {};
   const out = {};
-  for (const [k, c] of Object.entries(isOggetto(vecchie) ? vecchie : {})) if (m.nec && k in m.nec && isOggetto(c)) out[k] = c;
+  for (const [k, c] of Object.entries(isOggetto(vecchie) ? vecchie : {})) {
+    if (!(m.nec && k in m.nec && isOggetto(c))) continue;
+    const r = residuoDaRimettere(c);
+    out[k] = r ? { ...c, a228: { residuo: r } } : c;
+  }
   for (const k of Object.keys(m.nec ?? {})) {
     const c = convertiRiservaNec(src, m, k);
     if (c) out[k] = c;
@@ -179,8 +192,17 @@ function allineaNecConvertite(sessioneNec, vecchie, m) {
   return out;
 }
 
+/**
+ * A.228: un − che porterebbe sotto zero una riserva con la frazione la farebbe «pagare» con il residuo (0,75 per una
+ * carica intera): non si fa. Le riserve intere restano come prima (−30 su 20 porta a 0: correzione a mano).
+ */
+const pagaColResiduo = (valore, delta) => delta < 0 && valore + delta < -1e-9 && Math.abs(valore - Math.round(valore)) > 1e-9;
+
+/** Valore di una riserva: un numero finito ≥ 0 (A.228: anche con la frazione), altrimenti il predefinito. */
+const riserva = (v, predefinito) => (typeof v === 'number' && Number.isFinite(v) && v >= 0 ? arrotonda6(v) : predefinito);
+
 /** Riserve dei NEC: i nuovi partono carichi, i valori restano entro 0 e il massimo, quelli tolti spariscono. */
-function allineaNec(v, m) {
+function allineaNec(v, m, convertite = null) {
   const src = isOggetto(v) ? v : {};
   // Equipaggiamento 0.13 (28/10/2026): una riserva che non si conta più (elettronica ordinaria, §5.4.3) o salvata in Lx
   // non si perde dal file: resta com'è, senza contatore (A.193)
@@ -193,7 +215,8 @@ function allineaNec(v, m) {
     const conv = convertiRiservaNec(src, m, k);
     if (conv) { conti[k] = limita(conv.applicato, 0, max); continue; }
     if (prima && !(k in src) && prima.some((v) => Number.isInteger(src[v]))) continue;
-    conti[k] = limita(intero(src[k], max), 0, max);
+    // A.228: la frazione tolta da una conversione di prima torna nella riserva, una volta sola
+    conti[k] = limita(arrotonda6(riserva(src[k], max) + residuoDaRimettere(convertite?.[k])), 0, max);
   }
   return { ...restano, ...conti };
 }
@@ -247,7 +270,9 @@ export function ricaricaConTrasformatore(sessione, az, m) {
 export function variaNec(sessione, chiave, delta, m) {
   const s = allineaSessione(sessione, m);
   if (!(chiave in s.nec)) return s;
-  return modificaSessione(s, { nec: { ...s.nec, [chiave]: s.nec[chiave] + delta } }, m);
+  // A.228: ogni uso costa pieno; il residuo (0,75 di una carica) non paga una carica intera, resta per la ricarica
+  if (pagaColResiduo(s.nec[chiave], delta)) return s;
+  return modificaSessione(s, { nec: { ...s.nec, [chiave]: arrotonda6(s.nec[chiave] + delta) } }, m);
 }
 
 /** PI attuali di un oggetto: +/− al tavolo, entro 0 e i massimi (la riparazione la decide il master, A.46). */
@@ -520,7 +545,7 @@ export function allineaSessione(sessione, m) {
       .filter(([uid, v]) => isOggetto(v) && (!m.caricatori || uid in m.caricatori || uid === SENZ_ARMI || (m.oggetti ?? []).includes(uid)))),
     lanci: Object.fromEntries(Object.entries(isOggetto(sessione.lanci) ? sessione.lanci : {}).filter(([, v]) => isOggetto(v))),
     integrita: allineaIntegrita(sessione.integrita, m),
-    nec: allineaNec(sessione.nec, m),
+    nec: allineaNec(sessione.nec, m, isOggetto(sessione.necConvertite) ? sessione.necConvertite : null),
     ...conConvertite(allineaNecConvertite(sessione.nec, sessione.necConvertite, m)),
     trasformatori: allineaTrasformatori(sessione.trasformatori, m),
     // condizione di ogni arma (uid → id; «integra» non si salva)
@@ -640,7 +665,9 @@ export function scegliGranata(sessione, uid, voceUid, m) {
 export function variaChroma(sessione, uid, delta, m) {
   const s = allineaSessione(sessione, m);
   if (!s.chroma[uid]) return s;
-  return modificaSessione(s, { chroma: { ...s.chroma, [uid]: { ...s.chroma[uid], pmAttuali: s.chroma[uid].pmAttuali + delta } } }, m);
+  // A.228: un uso costa pieno anche in CM: con 0,2 CM non si toglie 1 CM (il residuo resta per la ricarica)
+  if (pagaColResiduo(s.chroma[uid].pmAttuali, delta)) return s;
+  return modificaSessione(s, { chroma: { ...s.chroma, [uid]: { ...s.chroma[uid], pmAttuali: arrotonda6(s.chroma[uid].pmAttuali + delta) } } }, m);
 }
 
 /**
@@ -784,7 +811,7 @@ export function attivaArtefatto(sessione, uid, pm, m, { forza = false } = {}) {
   // N2: con `forza` («Procedi comunque») si attiva lo stesso; la riserva scende a 0, non sotto
   if (!c || (c.pmAttuali < pm && !forza)) return null;
   const chiave = `attivazione:${uid}`;
-  return modificaSessione(s, { chroma: { ...s.chroma, [uid]: { ...c, pmAttuali: Math.max(0, c.pmAttuali - pm) } }, condizioniOggetti: [...new Set([...s.condizioniOggetti, chiave])] }, m);
+  return modificaSessione(s, { chroma: { ...s.chroma, [uid]: { ...c, pmAttuali: Math.max(0, arrotonda6(c.pmAttuali - pm)) } }, condizioniOggetti: [...new Set([...s.condizioniOggetti, chiave])] }, m);
 }
 
 /**
@@ -796,7 +823,7 @@ export function usaArtefatto(sessione, uid, pm, m, { forza = false } = {}) {
   const s = allineaSessione(sessione, m);
   const c = s.chroma[uid];
   if (!c || (c.pmAttuali < pm && !forza)) return null;
-  return modificaSessione(s, { chroma: { ...s.chroma, [uid]: { ...c, pmAttuali: Math.max(0, c.pmAttuali - pm) } } }, m);
+  return modificaSessione(s, { chroma: { ...s.chroma, [uid]: { ...c, pmAttuali: Math.max(0, arrotonda6(c.pmAttuali - pm)) } } }, m);
 }
 
 export function nuovaSessione(sessione, m) {

@@ -877,14 +877,15 @@ function rigaNec(ctx, r, x) {
   const n = ctx.sessione.nec?.[x.chiave] ?? x.massimo;
   // A.193: riserva convertita da Lx, UE o ore con la frazione residua; il valore di prima resta nel file
   const cv = ctx.sessione.necConvertite?.[x.chiave];
-  const notaConversione = cv ? ` Convertita da ${cv.valore.toLocaleString('it-IT')} su ${cv.capacita.toLocaleString('it-IT')} (Lx, UE o ore di prima, A.193): ${String(cv.esatto).replace('.', ',')} cariche su ${cv.massimo}, segnate ${cv.applicato} per difetto; la frazione resta nel registro e il valore di prima nel file.` : '';
+  // A.228: la frazione resta nella riserva (7,75 si legge «7 e 0,75»); il residuo non paga un uso intero
+  const notaConversione = cv ? ` Convertita da ${cv.valore.toLocaleString('it-IT')} su ${cv.capacita.toLocaleString('it-IT')} (Lx, UE o ore di prima, A.193): ${numeroRiserva(cv.esatto)} cariche su ${cv.massimo}; la frazione resta nella riserva (A.228) e il valore di prima nel file.` : '';
   const b = (d) => h('button', {
-    type: 'button', class: 'btn-tavolo btn-mini', disabled: d < 0 ? n <= 0 : n >= x.massimo,
+    type: 'button', class: 'btn-tavolo btn-mini', disabled: d < 0 ? (n <= 0 || (n + d < -1e-9 && n % 1 > 1e-9)) : n >= x.massimo,
     'aria-label': `${d > 0 ? 'Aggiungi' : 'Togli'} ${Math.abs(d)} ${x.unita} a ${x.nome}`, onclick: () => ctx.azioni.nec(x.chiave, d),
   }, d > 0 ? `+${d}` : `−${-d}`);
   return h('div', { class: `pi-voce riserva-nec${n === 0 ? ' esaurita' : ''}` },
     h('span', {}, `${String(x.unita).startsWith('cariche') ? 'Cariche' : 'NEC'}${parte ? ` ${parte}` : ''} `),
-    infoValore([h('strong', {}, n.toLocaleString('it-IT')), ` / ${x.massimo.toLocaleString('it-IT')} ${x.unita}`], {
+    infoValore([h('strong', {}, numeroRiserva(n)), ` / ${x.massimo.toLocaleString('it-IT')} ${x.unita}`], {
       titolo: `Riserva: ${x.nome}`,
       // A.67 (E&L del 02/10): niente travaso fra NEC senza un trasformatore o una stazione (regole.json → nec.trasformatori)
       sottotitolo: `Si segna a mano (Equipaggiamento §5.4): «Nuova sessione» non ricarica. ${ctx.dati.regole.nec?.trasformatori?.senza_trasformatore ?? ''}${notaConversione}`.trim(),
@@ -2677,7 +2678,8 @@ function rigaCristallo(ctx, c) {
   const pulsanti = [];
   const pulsante = (d) => {
     const el = h('button', {
-      type: 'button', class: 'btn-tavolo', disabled: d < 0 ? pm <= 0 : pm >= c.capacita,
+      type: 'button', class: 'btn-tavolo', disabled: d < 0 ? (pm <= 0 || (pm + d < -1e-9 && pm % 1 > 1e-9)) : pm >= c.capacita,
+      ...(d < 0 && pm > 0 && pm + d < -1e-9 && pm % 1 > 1e-9 ? { title: `Il residuo di ${numeroRiserva(pm)} ${c.unita ?? 'PM'} non paga un uso intero (A.228): resta per la ricarica` } : {}),
       'aria-label': `${d > 0 ? 'Aggiungi' : 'Togli'} ${Math.abs(d)} ${c.unita ?? 'PM'} a ${c.nome}`,
       onclick: () => ctx.azioni.chroma(c.uid, d),
     }, d > 0 ? `+${d}` : `−${-d}`);
@@ -2696,7 +2698,7 @@ function rigaCristallo(ctx, c) {
     const x = leggi();
     punto.className = `chroma-punto chroma-${c.energia.toLowerCase()}${x === 0 ? ' esausto' : ''}`;
     sigla.textContent = ` · ${stato(x)}`;
-    for (const [el, d] of pulsanti) el.disabled = d < 0 ? x <= 0 : x >= c.capacita;
+    for (const [el, d] of pulsanti) el.disabled = d < 0 ? (x <= 0 || (x + d < -1e-9 && x % 1 > 1e-9)) : x >= c.capacita;
   });
   // 27/10 (lotto 129, parte D): «Ricarica dalla Matrice» anche da qui, non solo dalla tab Artefatti — stesso
   // pannello (ricaricaMatriceUi), un solo calcolo; un tocco lo apre o lo richiude, per non allungare la riga.
@@ -2733,6 +2735,9 @@ function campoVariazionePm(ctx, c) {
   const applica = () => {
     const d = variazioneDaTesto(campo.value);
     if (d === null) { campo.className = 'campo-variazione-pm non-valido'; campo.setAttribute('aria-invalid', 'true'); tieniFuoco(); return; }
+    // A.228: un uso costa pieno; con meno di quanto serve non si scala niente (il residuo resta)
+    const ora = ctx.sessione.chroma?.[c.uid]?.pmAttuali ?? 0;
+    if (ora + d < -1e-9 && ora % 1 > 1e-9) { campo.className = 'campo-variazione-pm non-valido'; campo.setAttribute('aria-invalid', 'true'); campo.title = `La riserva ha ${numeroRiserva(ora)} ${c.unita ?? 'PM'}: non basta per ${-d}`; tieniFuoco(); return; }
     // variaChroma tiene il valore fra 0 e la capacità; la scheda non si ridisegna (valore vivo)
     ctx.azioni.chroma(c.uid, d);
     tieniFuoco();

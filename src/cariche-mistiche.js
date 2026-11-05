@@ -15,13 +15,35 @@ export function costoRiserva(x) {
   return { n: Number.isInteger(x?.pm) ? x.pm : 0, unita: 'PM' };
 }
 
-/** Un valore di riserva come si legge: interi così, frazioni con la virgola (A.228: 7,75 resta 7,75). */
-export function numeroRiserva(n) {
-  if (!Number.isFinite(n)) return '—';
-  return Number.isInteger(n) ? String(n) : n.toLocaleString('it-IT', { maximumFractionDigits: 2 });
+/**
+ * A.228 (Davide, 02/11/2026): una riserva con la frazione si legge come cariche intere più il residuo, che resta per i
+ * calcoli e la ricarica ma non paga un uso: 7,75 → { intere: 7, residuo: 0,75 }. Il residuo al centesimo **per difetto**
+ * (6,6666 → 0,66): mostrare 0,67 farebbe credere a una frazione che non c'è.
+ */
+export function partiRiserva(n) {
+  if (!Number.isFinite(n)) return null;
+  const intere = Math.floor(n + 1e-9);
+  const residuo = Math.floor((n - intere) * 100 + 1e-6) / 100;
+  return { intere, residuo: residuo > 0 ? residuo : 0 };
 }
 
-/** «4,2 / 6 CM» oppure «8 / 10 PM». */
+const virgola = (x) => x.toLocaleString('it-IT', { maximumFractionDigits: 2 });
+
+/**
+ * Un valore di riserva come si legge (lotto 173, A.228): gli interi così («4»); con la frazione le unità intere e il
+ * residuo, «4 e 0,2»: si vede subito che gli usi pieni sono 4 e che lo 0,2 avanza. Sotto l'unità solo il residuo («0,75»).
+ */
+export function numeroRiserva(n) {
+  const p = partiRiserva(n);
+  if (!p) return '—';
+  if (!p.residuo) return String(p.intere);
+  return p.intere ? `${p.intere} e ${virgola(p.residuo)}` : virgola(p.residuo);
+}
+
+/** Usi pieni che una riserva permette con questo costo (A.228: il residuo non ne paga uno). */
+export const usiPieni = (n, costo) => (Number.isFinite(n) && costo > 0 ? Math.floor((n + 1e-9) / costo) : 0);
+
+/** «4 e 0,2 / 6 CM» oppure «8 / 10 PM». */
 export const testoRiserva = (n, capacita, unita = 'PM') => `${numeroRiserva(n)} / ${capacita} ${unita}`;
 
 /** «1 CM», «2 PM». */

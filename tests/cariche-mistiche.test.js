@@ -154,7 +154,7 @@ test('A.193: una riserva salvata prima si converte una volta sola, conservando l
   // 7 PM su 10 → 4,2 CM su 6, senza arrotondare per eccesso; il valore di prima resta nel file
   const s = allineaSessione({ ...lu.sessione, chroma: { ...lu.sessione.chroma, [uid]: { pmAttuali: 7 } } }, lu.m);
   assert.deepEqual(s.chroma[uid], { pmAttuali: 4.2, unita: 'CM', prima: { pmAttuali: 7, capacita: 10, unita: 'PM' } });
-  assert.equal(numeroRiserva(s.chroma[uid].pmAttuali), '4,2');
+  assert.equal(numeroRiserva(s.chroma[uid].pmAttuali), '4 e 0,2'); // lotto 173, A.228: 4 usi pieni e il residuo
   // alla seconda apertura non si riconverte
   assert.deepEqual(allineaSessione(s, lu.m).chroma[uid], s.chroma[uid]);
   // 1 PM su 10 → 0,6 CM (non 1)

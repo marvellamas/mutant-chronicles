@@ -4,6 +4,7 @@
 // mano, profilo, Pilotare del conducente con la provenienza, andature, tre strutture con PI, soglie e stato,
 // rinforzi, NEC, «Colpito», «Ripara», PI a mano, «Rimuovi». Più il promemoria del conducente per Combattimento.
 import { conAvviso } from './procedi.js';
+import { partiRiserva } from '../cariche-mistiche.js';
 import { h, segno } from './dom.js';
 import { infoValore } from './tooltip.js';
 import { rigaScelte } from './pannello-passi.js';
@@ -383,11 +384,11 @@ function necVeicolo(ctx, mezzo, v, aggiorna) {
   const dopo = (esito) => aggiorna(esito.mezzo, [...esito.righe, ...(esito.avvisi ?? [])].join('; ') || null);
   const registraKm = () => { const km = numeroDa(c.km); c.km = ''; if (km) dopo(registraViaggio(mezzo, km, ctx.dati)); };
   const registraOre = () => { const ore = numeroDa(c.supporto); c.supporto = ''; if (ore) dopo(registraSupportoVitale(mezzo, ore, ctx.dati)); };
-  // cariche attuali: si correggono a mano (intere), le frazioni di una conversione (A.193) restano visibili accanto
+  // cariche attuali: si correggono a mano (intere); il residuo di una conversione (A.193, A.228) resta visibile accanto
   const cariche = (colore, valore, massimo, etichetta) => h('label', { class: 'campo-veicolo' }, `${etichetta} `,
     h('input', { type: 'number', class: 'input-d10', min: 0, max: massimo, step: 1, value: Math.floor(valore), 'aria-label': `Cariche residue, ${etichetta}`,
       onchange: (e) => aggiorna({ ...mezzo, energia: { ...r.energia, [colore]: Math.max(0, Math.min(massimo, intero(e.target.value, Math.floor(valore)))) } }) }),
-    ` / ${massimo} cariche`, valore % 1 ? h('small', { class: 'nota' }, ` (+ ${testoCariche(valore - Math.floor(valore)).replace(/ cariche?$/, '')} di carica, dalla conversione)`) : null);
+    ` / ${massimo} cariche`, valore % 1 ? h('small', { class: 'nota', title: 'Il residuo resta nella riserva per i calcoli e la ricarica, ma non paga un uso intero (A.228)' }, ` e ${String(partiRiserva(valore).residuo).replace('.', ',')} di residuo`) : null);
   const daConv = (testo) => h('em', { class: 'da-definire' }, testo);
   const ricambi = (colore, ric, daConvertire) => h('p', { class: 'nota' },
     `Ricambi: ${ric.length ? ric.map((x) => testoCariche(x)).join(', ') : 'nessuno'} `,
