@@ -1468,6 +1468,20 @@ function validaEquipaggiamento(eq, nomiAbilita, idSpec, err, coloriChroma = [], 
         if (!isOggetto(at) || costo(at).length !== 1 || !costo(at).every((n) => isIntero(n) && n > 0) || !isTesto(at.azione) || !isTesto(at.durata)) err(F, `${k}.attivazione_artefatto`, 'servono un costo (pm oppure cm, intero > 0), azione e durata');
         else if (at.va !== undefined && !isIntero(at.va)) err(F, `${k}.attivazione_artefatto.va`, 'intero atteso');
       }
+      // lotto 173: attivazione lunga (Anello con Rigenerazione 9, Magia §25.4): le CM si consumano al completamento delle ore
+      if (o.attivazione_lunga !== undefined) {
+        const al = o.attivazione_lunga;
+        const kl = `${k}.attivazione_lunga`;
+        if (!isOggetto(al) || !isTesto(al.id) || !isTesto(al.nome)) err(F, kl, 'servono id e nome');
+        else {
+          if (!(isIntero(al.cm) && al.cm > 0)) err(F, `${kl}.cm`, 'intero > 0 atteso: le CM consumate al completamento');
+          if (!(isIntero(al.ore) && al.ore > 0)) err(F, `${kl}.ore`, 'intero > 0 atteso: le ore di attivazione continua');
+          if (al.giorni_dopo !== undefined && !(isIntero(al.giorni_dopo) && al.giorni_dopo >= 0)) err(F, `${kl}.giorni_dopo`, 'intero ≥ 0 atteso');
+          const cap = o.artefatto?.contenitore?.capacita_cm;
+          if (!isIntero(cap)) err(F, kl, 'serve una riserva in CM (artefatto.contenitore.capacita_cm)');
+          else if (isIntero(al.cm) && al.cm > cap) err(F, `${kl}.cm`, `${al.cm} CM per uso, ma la riserva ne tiene ${cap}`);
+        }
+      }
       if (o.getti_artefatto !== undefined) {
         if (!Array.isArray(o.getti_artefatto)) err(F, `${k}.getti_artefatto`, 'elenco atteso');
         else o.getti_artefatto.forEach((g, j) => {

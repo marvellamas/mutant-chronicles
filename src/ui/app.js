@@ -13,6 +13,7 @@ import { formattaErrore, trovaTodo } from '../validate.js';
 import { calcolaScheda, validaLivello } from '../calc.js';
 import { separaEsemplare, restituisciGranate, catalogo, risolvi } from '../equipaggiamento.js';
 import { descriviFerite } from '../sessione.js';
+import { avviaAttivazione, completaAttivazione, interrompiAttivazione } from '../attivazioni-lunghe.js';
 import {
   nuoveScelte, normalizza, applicaModifica, anteprima, serializza, nomeFileEsportazione, nomeFileCalendario, deserializzaPersonaggio, applicaLivello, annullaUltimoLivello,
   CAMPI_ANAGRAFICA, nuovoPg,
@@ -2294,6 +2295,12 @@ function renderSchedaInterna({ mantieniScorrimento = false } = {}) {
       ricaricaMatrice: (uid, ore, presso) => cambiaSessione(ricaricaMatrice(stato.sessione, uid, ore, presso, dati, massimi)),
       attivaArtefatto: (uid, pm, forza = false) => cambiaSessione(attivaArtefatto(stato.sessione, uid, pm, massimi, { forza })),
       usaArtefatto: (uid, pm, forza = false) => cambiaSessione(usaArtefatto(stato.sessione, uid, pm, massimi, { forza })),
+      // lotto 173: attivazione lunga (Anello con Rigenerazione 9, src/attivazioni-lunghe.js); la riga va nello storico
+      attivazioneLunga: (tipo, uid, att) => {
+        const fn = { avvia: avviaAttivazione, completa: completaAttivazione, interrompi: interrompiAttivazione }[tipo];
+        const r = fn?.(stato.sessione, uid, att, massimi, { quando: new Date().toISOString() });
+        if (r && !r.errore) cambiaSessione(rigaStorico(r.sessione, r.riga));
+      },
       // Tecniche Interiori (Giocatore §8.9.1, src/tecniche.js): ogni passo è una modifica annullabile
       // in uno scontro il Round è quello del server al momento dell'attivazione: si rilegge prima (vale l'ordine del server)
       attivaTecnica: async (id, opz) => {

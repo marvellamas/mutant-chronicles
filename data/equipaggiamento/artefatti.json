@@ -2651,6 +2651,53 @@
       "proprieta": [],
       "TODO(Davide)": "Dimensioni, peso, Integrità, SnT e profilo commerciale del Tomo non sono ancora fissati (Equipaggiamento §10.11, Magia §28.4): il peso resta «da definire» e il carico totale parziale (§1.6); per l’Integrità, se necessaria, vale il §1.7. Eventuali funzioni richiedono una scheda specifica.",
       "_nota": "Reliquia di Nathaniel legata al primo rituale e ai cinque Sigilli Spezzati; la descrizione delle visioni (copertina di metallo scuro incisa, albero e clessidra, pagine di lamine metalliche con scrittura runica) non attribuisce effetti meccanici. Il vincolo di apertura dello Scrigno del Primo Giuramento non si trasferisce al Tomo."
+    },
+    {
+      "id": "anello-di-rigenerazione-9",
+      "nome": "Anello con Rigenerazione 9",
+      "tipo": "artefatto",
+      "catalogo": "Artefatti di campagna",
+      "famiglia": "Artefatti",
+      "nomi_alternativi": [
+        "Anello di Rigenerazione"
+      ],
+      "note_manuale": "Anello con la sola Rigenerazione 9 Esclusiva (Magia §25.4): Grado III, SnT 3. Riserva Verde dedicata da 5 Cariche Mistiche (CM); ogni Rigenerazione 9 consuma 5 CM, quindi un utilizzo a riserva piena. Dopo 3 ore di attivazione continua, con contatto e condizioni della versione, consuma le 5 CM e avvia la riparazione di una Menomazione permanente con parte ancora presente; il completamento richiede altri 5 giorni. Un’interruzione prima delle 3 ore impedisce l’effetto senza consumare cariche. Ricarica della riserva vuota: 30 PM personali con conversione 3:1, 20 con 2:1, 10 con 1:1 (CM mancanti × 2 × conversione). Il personaggio sintonizzato non deve essere un Ritualista; i 9 PM del rituale eseguito direttamente restano invariati. È la configurazione dell’oggetto: non assegna un anello a nessun personaggio. Prezzo non indicato.",
+      "paragrafo": "Magia §25.4; configurazione approvata da Davide il 02/11/2026 (per-davide.md, sezione 7)",
+      "versione_manuale": "Magia 1.11 (02/11/2026 17:47)",
+      "indossabile": true,
+      "artefatto": {
+        "tipologia": "Accessori",
+        "potenza": "Rara",
+        "sintonizzazione": 3,
+        "sintonizzabile": true,
+        "proprieta_attive": true,
+        "grado": "III",
+        "contenitore": {
+          "energia": "Verde",
+          "integrato": true,
+          "riserva": "cariche",
+          "alimentazione": "esclusiva",
+          "capacita_cm": 5
+        },
+        "infusi": [
+          {
+            "incantesimo": "Rigenerazione",
+            "livello": 9
+          }
+        ]
+      },
+      "attivazione_lunga": {
+        "id": "rigenerazione-9",
+        "nome": "Rigenerazione 9",
+        "cm": 5,
+        "ore": 3,
+        "continua": true,
+        "giorni_dopo": 5,
+        "effetto_avviato": "avviata la riparazione di una Menomazione permanente con parte ancora presente",
+        "condizione": "Contatto e condizioni della versione per tutte e 3 le ore; beneficiario vivente consenziente, o incosciente soccorso. Una sola Rigenerazione attiva per beneficiario. Nessuna Prova di Potere né Rituale, nessun Successo Magistrale o Fallimento Maldestro (Magia §25.4).",
+        "fonte": "Magia 1.11 §25.4; configurazione approvata da Davide il 02/11/2026"
+      },
+      "proprieta": []
     }
   ],
   "fuori_scala": {

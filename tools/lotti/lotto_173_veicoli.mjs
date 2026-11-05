@@ -12,6 +12,9 @@
 //  - A.239 — la Neverlost non parte dalla dotazione delle munizioni: le conferma il Direttore (munizioni_nota).
 //  - A.240 — la Neverlost è un esemplare unico (esemplare_unico, nota_esemplare): niente prezzo di catalogo, niente
 //    seconda nave dal suo profilo (src/veicoli.js → profiliCreabili).
+// e in data/equipaggiamento/artefatti.json:
+//  - l'Anello con Rigenerazione 9 (configurazione del 02/11/2026, Magia §25.4): riserva Verde da 5 CM, 5 CM per uso,
+//    3 ore di attivazione continua, poi 5 giorni (attivazione_lunga, src/attivazioni-lunghe.js). Non assegnato a nessuno.
 //
 // Uso: node tools/lotti/lotto_173_veicoli.mjs [--scrivi]   (senza --scrivi dice soltanto cosa cambierebbe)
 // Rilanciabile: rifà gli stessi valori.
@@ -78,4 +81,36 @@ const DEC_NL = ' A.239 (02/11/2026): munizioni registrate dal Direttore, standar
 if (!String(nl.decisione).includes('A.240')) imposta(nl, 'decisione', `${nl.decisione}${DEC_NL}`, 'neverlost');
 
 scrivi('data/veicoli.json', veicoli);
+
+// --- Anello con Rigenerazione 9 (configurazione approvata da Davide il 02/11/2026; Magia 1.11 §25.4)
+// «non assegna automaticamente un anello ai personaggi»: è una voce del catalogo, non un oggetto consegnato.
+const artefatti = leggi('data/equipaggiamento/artefatti.json');
+const ANELLO = {
+  id: 'anello-di-rigenerazione-9',
+  nome: 'Anello con Rigenerazione 9',
+  tipo: 'artefatto',
+  catalogo: 'Artefatti di campagna',
+  famiglia: 'Artefatti',
+  nomi_alternativi: ['Anello di Rigenerazione'],
+  note_manuale: 'Anello con la sola Rigenerazione 9 Esclusiva (Magia §25.4): Grado III, SnT 3. Riserva Verde dedicata da 5 Cariche Mistiche (CM); ogni Rigenerazione 9 consuma 5 CM, quindi un utilizzo a riserva piena. Dopo 3 ore di attivazione continua, con contatto e condizioni della versione, consuma le 5 CM e avvia la riparazione di una Menomazione permanente con parte ancora presente; il completamento richiede altri 5 giorni. Un’interruzione prima delle 3 ore impedisce l’effetto senza consumare cariche. Ricarica della riserva vuota: 30 PM personali con conversione 3:1, 20 con 2:1, 10 con 1:1 (CM mancanti × 2 × conversione). Il personaggio sintonizzato non deve essere un Ritualista; i 9 PM del rituale eseguito direttamente restano invariati. È la configurazione dell’oggetto: non assegna un anello a nessun personaggio. Prezzo non indicato.',
+  paragrafo: 'Magia §25.4; configurazione approvata da Davide il 02/11/2026 (per-davide.md, sezione 7)',
+  versione_manuale: 'Magia 1.11 (02/11/2026 17:47)',
+  indossabile: true,
+  artefatto: {
+    tipologia: 'Accessori', potenza: 'Rara', sintonizzazione: 3, sintonizzabile: true, proprieta_attive: true, grado: 'III',
+    contenitore: { energia: 'Verde', integrato: true, riserva: 'cariche', alimentazione: 'esclusiva', capacita_cm: 5 },
+    infusi: [{ incantesimo: 'Rigenerazione', livello: 9 }],
+  },
+  attivazione_lunga: {
+    id: 'rigenerazione-9', nome: 'Rigenerazione 9', cm: 5, ore: 3, continua: true, giorni_dopo: 5,
+    effetto_avviato: 'avviata la riparazione di una Menomazione permanente con parte ancora presente',
+    condizione: 'Contatto e condizioni della versione per tutte e 3 le ore; beneficiario vivente consenziente, o incosciente soccorso. Una sola Rigenerazione attiva per beneficiario. Nessuna Prova di Potere né Rituale, nessun Successo Magistrale o Fallimento Maldestro (Magia §25.4).',
+    fonte: 'Magia 1.11 §25.4; configurazione approvata da Davide il 02/11/2026',
+  },
+  proprieta: [],
+};
+const i = artefatti.oggetti.findIndex((o) => o.id === ANELLO.id);
+if (i < 0 || JSON.stringify(artefatti.oggetti[i]) !== JSON.stringify(ANELLO)) cambi.push('artefatti.anello-di-rigenerazione-9');
+if (i < 0) artefatti.oggetti.push(ANELLO); else artefatti.oggetti[i] = ANELLO;
+scrivi('data/equipaggiamento/artefatti.json', artefatti);
 console.log(cambi.length ? `${SCRIVI ? 'Scritto' : 'Cambierebbe'}: ${cambi.join(', ')}` : 'Niente da cambiare.');

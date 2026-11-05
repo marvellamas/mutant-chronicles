@@ -2767,6 +2767,29 @@ function pannelloChroma(ctx, c, { conPulsanti = true } = {}) {
  * Attivazione a durata di un Artefatto (Guanti da Combattimento Mistico, Armamenti §7.24): le CM (o i PM) dalla riserva
  * interna e la condizione accesa in una modifica sola; «Termina» la spegne. L'effetto entra in «Attacca!».
  */
+/**
+ * Attivazione lunga (lotto 173): l'Anello con Rigenerazione 9 (Magia §25.4, configurazione del 02/11/2026). «Avvia» con la
+ * riserva piena dell'uso; «3 ore compiute» consuma le CM e avvia la rigenerazione; «Interrotta» non consuma niente.
+ */
+function attivazioneLungaUi(ctx, x, r, riserva) {
+  const al = r?.def?.attivazione_lunga;
+  if (!al || !riserva) return null;
+  return regioneVivaSe([`chroma:${riserva.uid}`], () => {
+    const cm = ctx.sessione.chroma?.[riserva.uid]?.pmAttuali ?? 0;
+    const corso = Boolean(ctx.sessione.attivazioniLunghe?.[x.uid]);
+    const motivo = x.deposito ? 'nel deposito comune' : !x.sintonizzato ? 'non sintonizzato' : cm + 1e-9 < al.cm ? `la riserva ha ${numeroRiserva(cm)} CM, ne servono ${al.cm}` : null;
+    return h('div', { class: 'attivazione-lunga' },
+      h('p', {}, h('strong', {}, `${al.nome}: `), `${al.cm} CM dalla riserva interna al completamento di ${al.ore} ore di attivazione continua${al.giorni_dopo ? `, poi ${al.giorni_dopo} giorni di rigenerazione` : ''}. Un'interruzione prima delle ${al.ore} ore non consuma cariche e non dà l'effetto.`),
+      al.condizione ? h('p', { class: 'nota' }, al.condizione) : null,
+      corso ? h('p', { class: 'nota' }, h('strong', {}, 'In corso'), ` · le ${al.cm} CM si consumano a ${al.ore} ore compiute.`) : null,
+      motivo && !corso ? h('p', { class: 'nota motivo' }, `Non si può avviare: ${motivo}.`) : null,
+      h('div', { class: 'riga-azioni' }, corso
+        ? [h('button', { type: 'button', class: 'btn primario', onclick: () => ctx.azioni.attivazioneLunga('completa', x.uid, al) }, `${al.ore} ore compiute (−${al.cm} CM)`), ' ',
+          h('button', { type: 'button', class: 'btn', onclick: () => ctx.azioni.attivazioneLunga('interrompi', x.uid, al) }, 'Interrotta')]
+        : h('button', { type: 'button', class: 'btn', disabled: !!motivo, title: motivo ?? `Comincia le ${al.ore} ore: le CM si consumano solo alla fine`, onclick: () => ctx.azioni.attivazioneLunga('avvia', x.uid, al) }, `Avvia (${al.ore} ore)`)));
+  });
+}
+
 function attivazioneArtefattoUi(ctx, x, r, riserva) {
   return regioneVivaSe([`chroma:${riserva?.uid ?? x.uid}`], () => attivazioneArtefattoUiCorpo(ctx, x, r, riserva));
 }
@@ -3277,6 +3300,7 @@ function tabArtefatti(ctx) {
         ? h('p', { class: 'nota' }, 'Non è in mano né indossato: i suoi effetti non contano ora.') : null,
       attivazioneInfusaUi(ctx, x, r, riserva, { conPulsante: true }),
       attivazioneArtefattoUi(ctx, x, r, riserva),
+      attivazioneLungaUi(ctx, x, r, riserva),
       riserva ? pannelloChroma(ctx, riserva, { conPulsanti: true }) : null);
   };
   // S24 (11/10/2026): la Sintonizzazione in una riga; il «?» dice quali Artefatti impegnano i punti e da dove viene la capacità

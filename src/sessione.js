@@ -583,6 +583,8 @@ export function allineaSessione(sessione, m) {
     ...(() => { const mo = morenteDi(sessione, m); return mo ? { morente: mo } : {}; })(),
     // A.158: armi attivate a Round (CyberArma, src/attivazione-arma.js); la chiave c'è solo se ce n'è una in corso
     ...(() => { const at = allineaAttivazioniArmi(sessione.attivazioniArmi, m.oggetti ?? null, sessione.round); return Object.keys(at).length ? { attivazioniArmi: at } : {}; })(),
+    // lotto 173: attivazioni lunghe in corso (Anello con Rigenerazione 9, src/attivazioni-lunghe.js); solo se ce n'è una
+    ...(() => { const al = isOggetto(sessione.attivazioniLunghe) ? Object.fromEntries(Object.entries(sessione.attivazioniLunghe).filter(([uid, x]) => isOggetto(x) && typeof x.id === 'string' && (!m.contenitori || uid in m.contenitori))) : {}; return Object.keys(al).length ? { attivazioniLunghe: al } : {}; })(),
     // A.163: «chiuso» e «contenuto riposto» dei Contenitori del Silenzio; la chiave c'è solo se se ne è toccato uno
     ...(() => { const c = allineaContenitori(sessione.contenitori, m.oggetti ?? null); return Object.keys(c).length ? { contenitori: c } : {}; })(),
     note: typeof sessione.note === 'string' ? sessione.note : '',

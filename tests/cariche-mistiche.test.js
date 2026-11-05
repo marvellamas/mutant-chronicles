@@ -48,13 +48,15 @@ test('dati: quali riserve passano alle CM, quali restano in PM; il validatore lo
     ...art.oggetti.filter((o) => o.artefatto?.contenitore).map((o) => [`artefatti:${o.id}`, o.artefatto.contenitore]),
     ...art.artefatti_catalogo.filter((a) => a.contenitore).map((a) => [a.rif, a.contenitore]),
   ];
-  const inCm = Object.fromEntries(tutti.filter(([, c]) => Number.isInteger(c.capacita_cm)).map(([r, c]) => [r, [c.capacita_cm, c.energia, c.precedente.capacita_pm]]));
+  const inCm = Object.fromEntries(tutti.filter(([, c]) => Number.isInteger(c.capacita_cm)).map(([r, c]) => [r, [c.capacita_cm, c.energia, c.precedente?.capacita_pm]]));
   assert.deepEqual(inCm, {
     'artefatti:guanti-da-combattimento-mistico': [6, 'Rosso', 10],
     'armi_corporative:bordone-templare': [5, 'Rosso', 5], 'armi_corporative:spada-vindicator': [5, 'Rosso', 5],
     'armi_corporative:spada-deliverer': [5, 'Rosso', 5], 'armi_corporative:lancia-castigator': [5, 'Rosso', 5],
     'armi_corporative:lama-demontooth': [5, 'Rosso', 5], 'scudi:scudo-delle-guardie-sacre': [5, 'Rosso', 5],
     'armi:cyberarma-batteria-verde': [5, 'Verde', 10],
+    // lotto 173: l'Anello con Rigenerazione 9 nasce in CM (configurazione del 02/11/2026), senza una capacità di prima
+    'artefatti:anello-di-rigenerazione-9': [5, 'Verde', undefined],
   });
   // le Batterie Mistiche (anche la Pietra della Vigilanza, Batteria Universale), le Matrice e le Schegge restano in PM
   const pietra = art.oggetti.find((o) => o.id === 'pietra-della-vigilanza').artefatto.contenitore;
