@@ -843,11 +843,20 @@ function foglioVeicolo(v) {
   const armi = (p.armi ?? []).length ? box({ titolo: 'Armi di bordo', classe: 'vei-armi' },
     p.armi.map((a) => h('p', {}, h('strong', {}, a.nome), ` · ${[a.abilita, a.danno, Number.isInteger(a.gittata_q) ? `${numeroIt(a.gittata_q)} Q` : null, (a.modalita ?? []).join(', '), a.operatore].filter(Boolean).join(' · ')}`))) : null;
   const proprieta = [...(p.proprieta ?? []), ...(p.sistemi ?? [])];
-  const strutture = v.strutture.map((s) => box({ titolo: s.nome, classe: `vei-struttura stato-${s.stato}` },
-    h('div', { class: 'vei-pi' }, h('span', { class: 'etichetta-colpi' }, 'PI'), quadratini(s.massimi, { compatto: true, pieni: s.massimi - s.pi, perRiga: s.massimi > 30 ? 15 : 10 }),
-      h('span', { class: 'sigla' }, ` ${s.pi}/${s.massimi}`)),
+  // lotto 177: i PI a quadratini con la scala del mezzo (src/stampa.js → scalaPiVeicolo). Fino a 150 caselle una
+  // casella vale 1 PI, come sempre; alla Neverlost (300 + 180 + 120 PI) ne servirebbero 600, e con «1 casella = 5 PI»
+  // il foglio entra senza rimpicciolire niente: il numero esatto si scrive nello spazio accanto.
+  const perCasella = v.scalaPi?.perCasella ?? 1;
+  const strutture = v.strutture.map((s) => {
+    const sc = v.scalaPi?.strutture?.[s.struttura ?? s.nome] ?? { caselle: s.massimi, pieni: s.massimi - s.pi };
+    return box({ titolo: s.nome, classe: `vei-struttura stato-${s.stato}` },
+      h('div', { class: 'vei-pi' }, h('span', { class: 'etichetta-colpi' }, 'PI'),
+        quadratini(sc.caselle, { compatto: true, pieni: sc.pieni, perRiga: sc.caselle > 30 ? 15 : 10 }),
+        h('span', { class: 'sigla' }, ` ${s.pi}/${s.massimi}`)),
+      perCasella > 1 ? h('p', { class: 'piccolo vei-scala-pi' }, `1 casella = ${perCasella} PI · PI attuali ____________ / ${s.massimi}`) : null,
     h('p', {}, h('strong', {}, `Stato: ${s.statoNome ?? '—'}`), s.fuoriUso ? ' · fuori uso' : s.penalita ? ` · Pilotare ${segno(s.penalita)}` : s.parziale ? ` · Pilotare ${segno(s.parziale)}` : ' · nessuna penalità'),
-    h('p', { class: 'piccolo vei-soglie' }, s.soglie.map((x) => `${x.nome} ${x.da === x.a ? x.da : `${x.da}–${x.a}`}${x.penalita === null ? ' fuori uso' : x.penalita ? ` ${segno(x.penalita)}` : ''}`).join(' · '))));
+      h('p', { class: 'piccolo vei-soglie' }, s.soglie.map((x) => `${x.nome} ${x.da === x.a ? x.da : `${x.da}–${x.a}`}${x.penalita === null ? ' fuori uso' : x.penalita ? ` ${segno(x.penalita)}` : ''}`).join(' · ')));
+  });
   const rinforzi = v.rinforzi.map((r) => box({ titolo: `${r.nome} (${r.struttura})`, classe: 'vei-rinforzo' },
     h('div', { class: 'vei-pezzi' }, r.montati.map((n, i) => h('div', { class: 'vei-pezzo' }, h('span', { class: 'sigla' }, `pezzo ${i + 1}`), quadratini(r.piPerPezzo, { compatto: true, pieni: r.piPerPezzo - n })))),
     h('p', { class: 'piccolo' }, `Ricambi: ${r.ricambi.length ? r.ricambi.map((n) => `${n}/${r.piPerPezzo}`).join(', ') : 'nessuno'}. PS Integrità ${r.ps ?? '—'}. I pezzi montati assorbono in successione, l’eccedenza va ai PI.`)));

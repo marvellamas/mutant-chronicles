@@ -578,7 +578,20 @@
       "Corpo principale o Motore a 0 PI rendono il veicolo fuori uso. Il mezzo non esplode automaticamente e il suo movimento non si annulla istantaneamente (§5.5).",
       "Perdere PI non infligge automaticamente danni agli occupanti, salvo un colpo che li interessi o un incidente effettivo.",
       "Gli esoscheletri indossabili mantengono i propri profili e le proprie regole nel Manuale degli Armamenti; non ricevono automaticamente queste tre riserve."
-    ]
+    ],
+    "stampa": {
+      "_nota": "Lotto 177 (06/11/2026): quadratini dei PI nella scheda da stampare. Fino a caselle_massime_totali caselle una casella vale 1 PI; oltre, si prende il primo passo dei passi che rientra nel limite, uguale per tutte le strutture del mezzo («1 casella = 5 PI»). È una scelta di presentazione per la carta, come i NEC del foglio 4: il valore esatto resta nella SD e si scrive nello spazio accanto. Serve alla Neverlost (300 + 180 + 120 PI), che con una casella per PI non entrava nel foglio.",
+      "caselle_massime_totali": 150,
+      "passi": [
+        1,
+        2,
+        5,
+        10,
+        20,
+        25,
+        50
+      ]
+    }
   },
   "localizzazione": {
     "paragrafo": "§4.2",

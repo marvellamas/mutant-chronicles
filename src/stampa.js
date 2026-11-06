@@ -788,8 +788,17 @@ export function veicoliStampa(s, creazione, dati, registro = null) {
     if (visti.has(rec.id)) continue;
     if (rec.proprietario?.tipo === 'gruppo' || mio(rec.conducente) || (rec.proprietario?.tipo === 'pg' && mio(rec.proprietario))) veicoli.push(daRecord(rec));
   }
-  const fine = veicoli.filter(Boolean);
+  // lotto 177: i quadratini dei PI con la scala del mezzo (la Neverlost ne avrebbe 600 e non entrerebbe)
+  const fine = veicoli.filter(Boolean).map((v) => (Array.isArray(v.strutture) ? { ...v, scalaPi: conScalaPi(v.strutture, dati) } : v));
   return fine.length ? { veicoli: fine } : null;
+}
+
+/** La scala dei PI di un mezzo e le caselle di ogni struttura: `{ perCasella, strutture: { <id>: { caselle, pieni } } }`. */
+function conScalaPi(strutture, dati) {
+  const scala = scalaPiVeicolo(strutture.map((s) => s.massimi), dati);
+  const per = {};
+  for (const s of strutture) per[s.struttura ?? s.nome] = { caselle: scala.caselle(s.massimi), pieni: scala.pieni(s.massimi - s.pi) };
+  return { perCasella: scala.perCasella, strutture: per };
 }
 
 /**
@@ -971,6 +980,29 @@ export function quadratiniNec(r, nomeOggetto = r.nome) {
   if (r.massimo <= 50) return { etichetta, caselle: r.massimo, perCasella: 1, unita: r.unita, massimo: r.massimo };
   const perCasella = r.massimo / 10;
   return { etichetta, caselle: 10, perCasella, unita: r.unita, massimo: r.massimo };
+}
+
+/**
+ * Quadratini dei PI delle strutture di un veicolo nella SS (foglio Veicoli, lotto 177): una casella per PI finché
+ * le caselle del mezzo stanno entro il limite (`data/veicoli.json` → strutture.stampa); oltre, il primo passo che
+ * rientra, uguale per tutte le strutture dello stesso mezzo («1 casella = 5 PI»). Come per i NEC del foglio 4 è una
+ * scelta di presentazione per la carta: il valore esatto resta nella SD e si scrive nello spazio accanto.
+ * Serve alla Neverlost, che con 300 + 180 + 120 PI avrebbe 600 caselle e non entrerebbe nel foglio.
+ * @returns {{ perCasella, caselle(massimi), pieni(persi) }}
+ */
+export function scalaPiVeicolo(massimi, dati) {
+  const S = dati?.veicoli?.strutture?.stampa ?? {};
+  const passi = Array.isArray(S.passi) && S.passi.length ? S.passi : [1];
+  const limite = Number.isFinite(S.caselle_massime_totali) ? S.caselle_massime_totali : Infinity;
+  const lista = (Array.isArray(massimi) ? massimi : [massimi]).map((m) => Math.max(0, Math.floor(Number(m) || 0)));
+  const totale = (p) => lista.reduce((s, m) => s + Math.ceil(m / p), 0);
+  const perCasella = passi.find((p) => totale(p) <= limite) ?? passi[passi.length - 1];
+  return {
+    perCasella,
+    caselle: (m) => Math.ceil(Math.max(0, Math.floor(Number(m) || 0)) / perCasella),
+    // una casella si annerisce solo quando il blocco di PI che rappresenta è perso per intero
+    pieni: (persi) => Math.floor(Math.max(0, Math.floor(Number(persi) || 0)) / perCasella),
+  };
 }
 
 /** Sigla della Qualità costruttiva per la SS (regole.json → integrita.sigle_qualita); senza sigla il nome. */
