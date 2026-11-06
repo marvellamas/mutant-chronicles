@@ -10,6 +10,7 @@
 import { iniziativaCreatura } from './iniziativa-creature.js';
 import { aggiungiDanno, catalogo } from './equipaggiamento.js';
 import { profiloPng, proponiNomePng, proponiDescrizionePng } from './png-generici.js';
+import { testoPerProfilo } from './descrizioni-bestiario.js';
 
 const riga = (fonte, valore, nota) => ({ fonte, valore, ...(nota ? { nota } : {}) });
 const clona = (x) => JSON.parse(JSON.stringify(x));
@@ -267,7 +268,9 @@ export function profiloNemico(scelte, dati, { umani = {} } = {}) {
   n.id = scelte.id ?? idDaNome(n.nome);
   n.fonte = `Bestiario, proposta: ${ricetta ? `${ricetta.nome} (${ricetta.paragrafo}), ` : ''}${base.nome} ${scelte.boss ? `Boss ${g.nome}` : g.nome}${moduliTesto(scelte, dati)}`;
   const descr = String(scelte.descrizione ?? '').trim() || proponiDescrizione(scelte, dati);
-  n.note = [descr, `Natura: ${natura[0]}.`, ricetta?.comportamento ? `Comportamento: ${ricetta.comportamento}` : null,
+  // lotto 177 (dopo la A.117): descrizione e comportamento di questo grado, non quelli di tutti i gradi insieme
+  const comportamento = ricetta ? testoPerProfilo(ricetta.comportamento, { grado: g.id, boss: Boolean(scelte.boss) }, dati) : '';
+  n.note = [descr, `Natura: ${natura[0]}.`, comportamento ? `Comportamento: ${comportamento}` : null,
     'Bestiario proposto, da validare con Davide (TODO(Davide)).'].filter(Boolean).join(' ');
   for (const k of Object.keys(P)) if (k.startsWith('salvezze.') || k === 'pv' || k === 'ar' || k === 'difese' || k === 'iniziativa' || k === 'passo') P[k].totale = valoreCampo(n, k);
   n._bestiario = {
@@ -317,7 +320,8 @@ export function proponiDescrizione(scelte, dati) {
   if (scelte.png) return proponiDescrizionePng(scelte.png, dati);
   const BE = B(dati);
   const ricetta = scelte.creatura ? BE.creature.find((x) => x.id === scelte.creatura) : null;
-  if (ricetta) return ricetta.descrizione;
+  // lotto 177 (dopo la A.117): di una creatura pronta si legge il testo del suo grado, non quello di tutti
+  if (ricetta) return testoPerProfilo(ricetta.descrizione, { grado: scelte.grado, boss: Boolean(scelte.boss) }, dati);
   const base = BE.basi[scelte.base];
   const mut = (scelte.mutazioni ?? []).map((id) => BE.moduli.mutazioni.find((m) => m.id === id)).filter(Boolean);
   const corr = BE.moduli.corrotto.livelli.find((x) => x.id === scelte.corrotto?.livello);

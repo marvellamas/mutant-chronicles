@@ -1156,7 +1156,7 @@ Artigli: natura Magico, portata 1 Q, AC 1; con la Carica, Sbalzante 1 (§3.5). C
 
 ### **5.5.1 Eretico corrotto**
 
-L’Eretico del bestiario umano (§3.2) è un uomo comune che ha scelto l’Oscura Simmetria; l’Eretico corrotto è quello che ne ha ricevuto i doni. Parla piano, e chi gli sta accanto sente un sussurro sotto le sue parole; quando guarda qualcuno negli occhi, quello resta fermo un istante di troppo. I più devoti portano una lama rituale che non trova ostacoli nell’acciaio.
+L’Eretico del bestiario umano (§3.2) è un uomo comune che ha scelto l’Oscura Simmetria; l’Eretico corrotto è quello che ne ha ricevuto i doni. Al grado Minore parla piano, e chi gli sta accanto sente un sussurro sotto le sue parole. Ai gradi Semplice e Medio i doni non si vedono: sono uomini addestrati e devoti, pericolosi per la lama e per il mestiere, e niente altro (A.117). Il Boss è l’unico che li porta per intero: quando guarda qualcuno negli occhi, quello resta fermo un istante di troppo, e la sua lama rituale non trova ostacoli nell’acciaio.
 
 **Base:** Umano, l’Eretico del bestiario umano del grado (§3.2), con i suoi valori. **Moduli:** Corrotto, Toccato al Minore; nessuno al Semplice e al Medio (A.117); Consacrato al Boss. **Manifestazioni:** Sussurro continuo al Minore; al Boss anche Sguardo del vuoto e Grido dell’Oscura Simmetria.
 

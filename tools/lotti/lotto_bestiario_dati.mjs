@@ -387,6 +387,17 @@ const bestiario = {
   creature,
   // capacità delle basi che in «Attacca!» valgono come un Talento (src/nemico-attacco.js): §3.9, «come con Spazzata Migliorata»
   capacita_come_talenti: { 'Spazzata del gigante': ['spazzata-migliorata'] },
+  // Lotto 177 (06/11/2026), dopo la A.117: una descrizione non deve promettere una capacità che quel grado non ha.
+  // I nomi delle Manifestazioni e delle Mutazioni li riconosce già src/descrizioni-bestiario.js dai dati; qui stanno
+  // le parole con cui i nostri testi narrativi alludono a una capacità senza chiamarla per nome.
+  parole_capacita: {
+    'sussurro-continuo': ['sussurro'],
+    'sguardo-del-vuoto': ['guarda qualcuno negli occhi'],
+    'grido-dell-oscura-simmetria': ['Grido'],
+    'presenza-terrificante': ['presenza terrificante'],
+    'danno-magico': ['non trova ostacoli nell’acciaio'],
+    'attacco-etereo': ['Etereo'],
+  },
   tabelle: tabelleCasuali,
 };
 

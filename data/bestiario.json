@@ -2966,10 +2966,9 @@
           }
         }
       },
-      "descrizione": "L’Eretico del bestiario umano (§3.2) è un uomo comune che ha scelto l’Oscura Simmetria; l’Eretico corrotto è quello che ne ha ricevuto i doni. Parla piano, e chi gli sta accanto sente un sussurro sotto le sue parole; quando guarda qualcuno negli occhi, quello resta fermo un istante di troppo. I più devoti portano una lama rituale che non trova ostacoli nell’acciaio.",
-      "comportamento": "Apre con l’Imboscata e lo Sguardo del vuoto sul personaggio più pericoloso, poi attacca con il pugnale chi è Stordito. Il Boss usa il Grido appena è ingaggiato da più di due personaggi e alla soglia di fase prova a fuggire per tornare con altri Eretici.",
-      "paragrafo": "§5.5.1",
-      "a117": "A.117 (Davide, 03/11/2026): ai gradi Semplice e Medio il profilo umano senza Doni automatici, con l’eccezione «più fragile del grado». Il nome e la corruzione non attribuiscono poteri, danni Magici o altre capacità: Doni, mutazioni o dotazioni superiori li assegna il Direttore e li riporta nel singolo profilo."
+      "descrizione": "L’Eretico del bestiario umano (§3.2) è un uomo comune che ha scelto l’Oscura Simmetria; l’Eretico corrotto è quello che ne ha ricevuto i doni. Al grado Minore parla piano, e chi gli sta accanto sente un sussurro sotto le sue parole. Ai gradi Semplice e Medio i doni non si vedono: sono uomini addestrati e devoti, pericolosi per la lama e per il mestiere, e niente altro (A.117). Il Boss è l’unico che li porta per intero: quando guarda qualcuno negli occhi, quello resta fermo un istante di troppo, e la sua lama rituale non trova ostacoli nell’acciaio.",
+      "comportamento": "Apre con l’Imboscata sul personaggio più pericoloso (il Boss anche con lo Sguardo del vuoto), poi attacca con il pugnale chi è Stordito. Il Boss usa il Grido appena è ingaggiato da più di due personaggi e alla soglia di fase prova a fuggire per tornare con altri Eretici.",
+      "paragrafo": "§5.5.1"
     },
     {
       "id": "levriero-delle-discariche",
@@ -3283,6 +3282,26 @@
   "capacita_come_talenti": {
     "Spazzata del gigante": [
       "spazzata-migliorata"
+    ]
+  },
+  "parole_capacita": {
+    "sussurro-continuo": [
+      "sussurro"
+    ],
+    "sguardo-del-vuoto": [
+      "guarda qualcuno negli occhi"
+    ],
+    "grido-dell-oscura-simmetria": [
+      "Grido"
+    ],
+    "presenza-terrificante": [
+      "presenza terrificante"
+    ],
+    "danno-magico": [
+      "non trova ostacoli nell’acciaio"
+    ],
+    "attacco-etereo": [
+      "Etereo"
     ]
   },
   "tabelle": {

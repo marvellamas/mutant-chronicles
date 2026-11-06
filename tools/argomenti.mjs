@@ -71,4 +71,5 @@ export const ARGOMENTI = {
   'aggiorna-avviatori.mjs': ['prova', 'radice', 'salta', 'fuori'],
   'console.mjs': ['porta', 'radice'],
   'cartella-di-prova.mjs': [],
+  'descrizioni-bestiario.mjs': ['profili'],
 };
