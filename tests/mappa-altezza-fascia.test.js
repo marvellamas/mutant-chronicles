@@ -124,11 +124,12 @@ test('le colonne incollate delle altre pagine si fermano sotto le fasce e ne sot
   }
 });
 
-test('altezzaCoperta: la riga più alta fra quelle incollate in cima, non la somma; 0 senza righe', () => {
+// lotto 177: le righe in cima si impilano, quindi coprono la somma e non più la più alta
+test('altezzaCoperta: quanto coprono in tutto le righe incollate in cima; 0 senza righe', () => {
   assert.equal(altezzaCoperta([]), 0);
   assert.equal(altezzaCoperta(undefined), 0);
   assert.equal(altezzaCoperta([{ position: 'sticky', top: '0px', altezza: 41.6 }]), 42);
-  assert.equal(altezzaCoperta([{ position: 'sticky', top: '0px', altezza: 42 }, { position: 'sticky', top: '0px', altezza: 30 }]), 42);
+  assert.equal(altezzaCoperta([{ position: 'sticky', top: '0px', altezza: 42 }, { position: 'sticky', top: '0px', altezza: 30 }]), 72);
   // sulla mappa la fascia è static: non copre niente, occupa il suo posto nella colonna
   assert.equal(altezzaCoperta([{ position: 'static', top: 'auto', altezza: 42 }]), 0);
   // la pillola del rientro sulla mappa è fixed in basso: non copre l’alto

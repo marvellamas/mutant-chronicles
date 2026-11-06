@@ -902,8 +902,13 @@ details.sezione-tab > summary { font-weight: 700; cursor: pointer; min-height: 4
 .pillola-condizionale input[role="switch"]:focus-visible { outline: 2px solid var(--accento); outline-offset: 2px; }
 
 @media (max-width: 600px) {
-  /* su telefono i menu diventano un pannello a tutta larghezza, senza uscire dallo schermo */
-  .menu-voci { position: fixed; left: 0.75rem; right: 0.75rem; top: 4.5rem; width: auto; max-width: none; max-height: calc(100vh - 11rem); overflow-y: auto; }
+  /* su telefono i menu diventano un pannello a tutta larghezza, senza uscire dallo schermo.
+     Lotto 177: con le righe ferme in cima (fascia «Copia di prova», stato del tablet) il pannello partiva a 4,5rem
+     e le copriva; ora scende sotto di loro (--alto-fasce, 0 dove non ce ne sono: sul PC del Direttore niente cambia). */
+  .menu-voci {
+    position: fixed; left: 0.75rem; right: 0.75rem; top: calc(4.5rem + var(--alto-fasce, 0px)); width: auto; max-width: none;
+    max-height: calc(100vh - 11rem - var(--alto-fasce, 0px)); overflow-y: auto;
+  }
   .barra-titolo h1 { font-size: 1.2rem; }
   .valore-tavolo strong { font-size: 1.8rem; }
   .griglia-tavolo { grid-template-columns: 1fr 1fr; }
