@@ -138,21 +138,21 @@ test('A.193: uno Scout al 50% ha il MEC Rosso a 5 cariche su 10; il valore di pr
   assert.equal(m.energia.modello, 'cariche');
   assert.deepEqual(m.energia_prima.energia, salvato.energia, 'il valore originale si conserva');
   assert.equal(m.energia_prima.regola, 'A.193');
-  // un'Autovettura a un quarto: 12.500 Lx su 50.000 → 2,5 cariche, senza arrotondare per eccesso
+  // un'Autovettura a un quarto: 12.500 Lx su 50.000 → 2,5 cariche, che con la A.252 salgono a 3
   const [a] = normalizzaVeicoli([{ uid: 'a', profilo: 'autovettura-civile', andatura: 'fermo', pi: { corpo: 12, propulsione: 8, motore: 8 }, energia: { rosso: [12500], rosso_ricambi: [] } }], dati);
-  assert.equal(a.energia.rosso, 2.5);
+  assert.equal(a.energia.rosso, 3);
+  assert.deepEqual(a.energia.esatte_prima, { rosso: 2.5 }, 'il conto esatto resta nello storico del mezzo');
 });
 
-test('A.193: niente arrotondamento per eccesso — le frazioni restano dentro e la scheda mostra le cariche intere', () => {
+test('A.193 e A.252: il conto esatto si fa come prima, poi la riserva sale all’intero superiore', () => {
   const [m] = normalizzaVeicoli([lxScout({ energia: { rosso: [50000, 16666], rosso_ricambi: [], verde: [10000], verde_ricambi: [], aria: { fissa: 8, bombole: [8, 8] } } })], dati);
-  assert.equal(m.energia.rosso, 6.6666, '66.666 su 100.000 = 6,6666 cariche, non 7');
+  assert.equal(m.energia.rosso, 7, '66.666 su 100.000 = 6,6666 cariche → 7 (A.252)');
   const v = vistaVeicoloPersonaggio(m, dati).risorse.rosso;
-  assert.equal(v.cariche, 6.6666);
-  assert.equal(Math.floor(v.cariche), 6);
-  assert.equal(v.autonomiaKm, 499, '6,6666 × 75 km, per difetto');
-  // la chiusura della giornata sottrae dalle cariche con la frazione
+  assert.equal(v.cariche, 7);
+  assert.equal(v.autonomiaKm, 525, '7 × 75 km');
+  // la chiusura della giornata sottrae cariche intere, e la riserva resta intera
   const c = chiudiGiornata(registraViaggio(m, 10, dati).mezzo, dati).mezzo;
-  assert.equal(c.energia.rosso, 5.6666);
+  assert.equal(c.energia.rosso, 6, '10 km = 1 carica intera, da 7 a 6');
 });
 
 test('A.193: la conversione non si ripete — riaprire e salvare più volte lascia le cariche dove sono', () => {
@@ -221,18 +221,18 @@ const sessione = (equipaggiamento, nec) => {
 };
 
 test('A.193 sui PG: una cella a metà vale metà della capacità nuova; il valore di prima resta, il resto va nel registro', () => {
-  // NEC Rosso standard (ora NEC 5, 5 cariche): 250 Lx su 500 = metà = 2,5 cariche; dal lotto 173 (A.228) la frazione resta
-  // nella riserva, non solo nel registro
+  // NEC Rosso standard (ora NEC 5, 5 cariche): 250 Lx su 500 = metà = 2,5 cariche, che con la A.252 salgono a 3;
+  // il conto esatto resta nel registro, cioè nello storico
   const { m, s } = sessione([voce('n', 'nec:rosso-standard')], { n: 250 });
-  assert.equal(s.nec['n#c'], 2.5);
+  assert.equal(s.nec['n#c'], 3);
   assert.equal(s.nec.n, 250, 'il valore di prima resta nel file');
-  assert.deepEqual(s.necConvertite['n#c'], { da: 'n', valore: 250, capacita: 500, esatto: 2.5, applicato: 2.5, massimo: 5 });
-  // un NEC Blu standard (NEC Blu 5): 125 Lx su 250 → anch'esso metà = 2,5 cariche; il Verde standard non ha più contatore (§5.4.3)
-  assert.equal(sessione([voce('v', 'nec:blu-standard')], { v: 125 }).s.nec['v#c'], 2.5);
+  assert.deepEqual(s.necConvertite['n#c'], { da: 'n', valore: 250, capacita: 500, esatto: 2.5, applicato: 3, massimo: 5, a252: { prima: 2.5 } });
+  // un NEC Blu standard (NEC Blu 5): 125 Lx su 250 → anch'esso metà = 2,5 → 3; il Verde standard non ha più contatore (§5.4.3)
+  assert.equal(sessione([voce('v', 'nec:blu-standard')], { v: 125 }).s.nec['v#c'], 3);
   assert.equal(sessione([voce('v', 'nec:verde-standard')], { v: 1000 }).s.nec['v#c'], undefined);
-  // la tuta: 31 ore su 40 → 7,75 cariche su 10
+  // la tuta: 31 ore su 40 → 7,75 cariche su 10 → 8
   const t = sessione([voce('t', 'esplorazione:tuta-extraveicolare')], { t: 31 }).s;
-  assert.deepEqual([t.nec['t#c'], t.necConvertite['t#c'].esatto], [7.75, 7.75]);
+  assert.deepEqual([t.nec['t#c'], t.necConvertite['t#c'].esatto], [8, 7.75]);
   // una riserva piena resta piena, una vuota vuota, un valore oltre la capacità di prima si ferma al massimo
   assert.equal(sessione([voce('n', 'nec:rosso-standard')], { n: 500 }).s.nec['n#c'], 5);
   assert.equal(sessione([voce('n', 'nec:rosso-standard')], { n: 0 }).s.nec['n#c'], 0);
@@ -247,10 +247,10 @@ test('A.193 sui PG: la conversione non si ripete alle aperture successive e le f
   const { m, s } = sessione(eq, { n: 250 });
   // si usa una carica, poi si riapre più volte: né il valore né il registro si toccano
   const dopo = variaNec(s, 'n#c', -1, m);
-  assert.equal(dopo.nec['n#c'], 1.5, 'un uso costa una carica intera; il residuo resta');
+  assert.equal(dopo.nec['n#c'], 2, 'un uso costa una carica intera: da 3 a 2');
   let x = dopo;
   for (let i = 0; i < 3; i++) x = allineaSessione(JSON.parse(JSON.stringify(x)), m);
-  assert.equal(x.nec['n#c'], 1.5, 'non si riconverte da 250 Lx');
+  assert.equal(x.nec['n#c'], 2, 'non si riconverte da 250 Lx e non risale all’intero della conversione');
   assert.equal(x.nec.n, 250);
   assert.equal(x.necConvertite['n#c'].esatto, 2.5, 'il registro della conversione resta quello');
   // se la riserva si toglie dal catalogo del PG, sparisce anche il suo registro

@@ -18,7 +18,7 @@
 //
 // Tutto è facoltativo salvo «profilo»: `vistaVeicolo` riempie i valori mancanti dal profilo (mezzo integro).
 import { provenienza, riga, righeRegoleAbilita } from './provenienza.js';
-import { partiRiserva } from './cariche-mistiche.js';
+import { partiRiserva, interoRiserva, conFrazione } from './cariche-mistiche.js';
 // la Neverlost (A.196): riserve, Traiettoria, scudo e circuito Bianco in un modulo a parte (src/neverlost.js)
 import { eNeverlost, normalizzaNeverlost, chiudiGiornataNeverlost, ricaricaNeverlost } from './neverlost.js';
 
@@ -630,7 +630,12 @@ function convertiDaLx(v, profilo, base) {
   const ricambi = {};
   const converti = (chiave, lx, capLx, cariche) => {
     if (lx === null) return;
-    if (Number.isFinite(capLx) && capLx > 0) e[chiave] = arrotonda(entro(lx / capLx, 0, 1) * cariche);
+    // A.252 (06/11/2026): la riserva non tiene frazioni — il conto esatto sale all'intero superiore, una volta sola
+    if (Number.isFinite(capLx) && capLx > 0) {
+      const esatte = arrotonda(entro(lx / capLx, 0, 1) * cariche);
+      e[chiave] = interoRiserva(esatte);
+      if (conFrazione(esatte)) (e.esatte_prima ??= {})[chiave] = esatte;
+    }
     else { e[chiave] = null; daConvertire.push(chiave); }
   };
   if (base.rosso !== undefined) {
@@ -669,8 +674,10 @@ function convertiRicambi(e, base, P) {
     if (!lx.length) continue;
     const cap = P?.[`ricambio_${k}_lx`];
     if (base[k] === undefined || !(Number.isFinite(cap) && cap > 0)) { resta[k] = lx; continue; }
-    out[`${k}_ricambi`] = [...lista(e[`${k}_ricambi`]), ...lx.map((x) => arrotonda(entro(x / cap, 0, 1) * base[k]))];
-    prima[k] = { lx, capacita_lx: cap, cariche: base[k] };
+    // A.252: i ricambi convertiti salgono all'intero superiore; le cariche esatte restano in ricambi_prima (storico)
+    const esatte = lx.map((x) => arrotonda(entro(x / cap, 0, 1) * base[k]));
+    out[`${k}_ricambi`] = [...lista(e[`${k}_ricambi`]), ...esatte.map(interoRiserva)];
+    prima[k] = { lx, capacita_lx: cap, cariche: base[k], esatte };
   }
   if (Object.keys(resta).length) out.ricambi_da_convertire = resta; else delete out.ricambi_da_convertire;
   if (prima.rosso || prima.verde) out.ricambi_prima = prima;
@@ -680,20 +687,29 @@ function convertiRicambi(e, base, P) {
 /** Le riserve di un mezzo già a cariche, nei limiti del profilo. */
 function energiaLetta(x, base) {
   const e = { modello: 'cariche' };
+  // A.252 (06/11/2026): una riserva salvata con la frazione (conversioni dei lotti 149 e 173) sale all'intero superiore
+  // una volta sola; il valore di prima resta in `esatte_prima`, cioè nello storico del mezzo
+  const esattePrima = { ...(isOggetto(x.esatte_prima) ? x.esatte_prima : {}) };
+  const intera = (chiave, n) => {
+    if (!conFrazione(n)) return n;
+    if (!(chiave in esattePrima)) esattePrima[chiave] = n;
+    return interoRiserva(n);
+  };
   const daConvertire = lista(x.da_convertire).filter((k) => k === 'rosso' || k === 'verde');
   if (base.rosso !== undefined) {
-    e.rosso = x.rosso === null && daConvertire.includes('rosso') ? null : entro(x.rosso, 0, base.rosso, base.rosso);
-    e.rosso_ricambi = lista(x.rosso_ricambi).filter(Number.isFinite).map((n) => entro(n, 0, base.rosso));
+    e.rosso = x.rosso === null && daConvertire.includes('rosso') ? null : intera('rosso', entro(x.rosso, 0, base.rosso, base.rosso));
+    e.rosso_ricambi = lista(x.rosso_ricambi).filter(Number.isFinite).map((n, i) => intera(`rosso_ricambi.${i}`, entro(n, 0, base.rosso)));
     e.km_giornata = Math.max(0, arrotonda(num(x.km_giornata)));
   }
   if (base.verde !== undefined) {
-    e.verde = x.verde === null && daConvertire.includes('verde') ? null : entro(x.verde, 0, base.verde, base.verde);
-    e.verde_ricambi = lista(x.verde_ricambi).filter(Number.isFinite).map((n) => entro(n, 0, base.verde));
+    e.verde = x.verde === null && daConvertire.includes('verde') ? null : intera('verde', entro(x.verde, 0, base.verde, base.verde));
+    e.verde_ricambi = lista(x.verde_ricambi).filter(Number.isFinite).map((n, i) => intera(`verde_ricambi.${i}`, entro(n, 0, base.verde)));
     e.supporto_oggi = x.supporto_oggi === true;
   }
   if (base.aria !== undefined) e.aria = entro(x.aria, 0, base.aria, base.aria);
   const dc = daConvertire.filter((k) => e[k] === null);
   if (dc.length) e.da_convertire = dc;
+  if (Object.keys(esattePrima).length) e.esatte_prima = esattePrima;
   if (isOggetto(x.ricambi_da_convertire)) {
     const r = Object.fromEntries(['rosso', 'verde'].map((k) => [k, lista(x.ricambi_da_convertire[k]).filter(Number.isFinite)]).filter(([, l]) => l.length));
     if (Object.keys(r).length) e.ricambi_da_convertire = r;
@@ -745,8 +761,10 @@ function normalizzaRisorse(v, profilo) {
   return { ...(energia ? { energia } : {}), ...(prima && energia ? { energia_prima: prima } : {}), ...(munizioni ? { munizioni } : {}) };
 }
 
-/** «3 cariche», «1 carica», «0,5 cariche»: le frazioni di una conversione restano visibili. */
-// A.228: «6 cariche e 0,66»: le cariche intere e il residuo, che resta per i calcoli e la ricarica ma non paga un uso
+/**
+ * «3 cariche», «1 carica». Dalla A.252 le riserve sono intere: la forma con il residuo («6 cariche e 0,66») resta per
+ * i valori di prima nello storico delle conversioni, dove dice da dove si viene.
+ */
 export const testoCariche = (n) => {
   const p = partiRiserva(arrotonda(n));
   if (!p) return '— cariche';

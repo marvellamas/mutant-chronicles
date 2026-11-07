@@ -52,21 +52,23 @@ test('A.226: lo standard della scheda 0.6 è il catalogo; il FIAT LUX tiene quel
   assert.equal(normalizzaVeicoli([nuovo], dati)[0].dotazione_esemplare, undefined);
 });
 
-test('A.227: il Banco Rosso diventa un MEC Rosso e il Modulo Verde una CEC Verde, con la frazione, una volta sola', () => {
+test('A.227 e A.252: il Banco Rosso diventa un MEC Rosso e il Modulo Verde una CEC Verde, in cariche intere, una volta sola', () => {
   const r = riapri(fiatLux());
   const e = r.mezzo.energia;
   assert.deepEqual([e.rosso, e.rosso_ricambi, e.verde, e.verde_ricambi], [10, [10], 10, [10]]);
   assert.equal(e.ricambi_da_convertire, undefined);
-  assert.deepEqual(e.ricambi_prima, { regola: 'A.227', rosso: { lx: [50000], capacita_lx: 50000, cariche: 10 }, verde: { lx: [10000], capacita_lx: 10000, cariche: 10 } });
+  assert.deepEqual(e.ricambi_prima, { regola: 'A.227', rosso: { lx: [50000], capacita_lx: 50000, cariche: 10, esatte: [10] }, verde: { lx: [10000], capacita_lx: 10000, cariche: 10, esatte: [10] } });
   // riaprendo non si riconverte e non si aggiungono ricambi
   const due = riapri(riapri(r));
   assert.deepEqual(due.mezzo.energia, e);
-  // un ricambio a metà vale metà delle cariche; a 6.666 Lx su 10.000 la frazione resta (A.228)
+  // un ricambio a metà vale metà delle cariche; a 6.666 Lx su 10.000 fanno 6,666 cariche, che con la A.252
+  // salgono a 7: le cariche esatte restano in ricambi_prima, cioè nello storico
   const meta = fiatLux();
   meta.mezzo.energia.rosso_ricambi = [25000];
   meta.mezzo.energia.verde_ricambi = [6666];
   const m = riapri(meta).mezzo.energia;
-  assert.deepEqual([m.rosso_ricambi, m.verde_ricambi], [[5], [6.666]]);
+  assert.deepEqual([m.rosso_ricambi, m.verde_ricambi], [[5], [7]]);
+  assert.deepEqual(m.ricambi_prima.verde.esatte, [6.666]);
   // senza la capacità di prima la frazione non si ricostruisce: resta da verificare dal Direttore, senza numero
   const senza = structuredClone(dati);
   delete senza.veicoli.profili.find((p) => p.id === 'asa-scout-mk4').energia_precedente.ricambio_verde_lx;

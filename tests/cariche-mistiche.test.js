@@ -150,17 +150,17 @@ test('PM, cariche NEC e CM insieme: tre riserve distinte, che non si sommano e n
   assert.match(t, /10 \/ 10(?! CM)/);
 });
 
-test('A.193: una riserva salvata prima si converte una volta sola, conservando la frazione; senza la capacità di prima resta «da convertire»', () => {
+test('A.193 e A.252: una riserva salvata prima si converte una volta sola e sale all’intero superiore; senza la capacità di prima resta «da convertire»', () => {
   const lu = pg(FILE_LUCAS);
   const uid = uidDi(lu, RIF_G);
-  // 7 PM su 10 → 4,2 CM su 6, senza arrotondare per eccesso; il valore di prima resta nel file
+  // 7 PM su 10 → 4,2 CM su 6 → 5 CM (A.252: intero superiore, una volta sola); il valore di prima resta nel file
   const s = allineaSessione({ ...lu.sessione, chroma: { ...lu.sessione.chroma, [uid]: { pmAttuali: 7 } } }, lu.m);
-  assert.deepEqual(s.chroma[uid], { pmAttuali: 4.2, unita: 'CM', prima: { pmAttuali: 7, capacita: 10, unita: 'PM' } });
-  assert.equal(numeroRiserva(s.chroma[uid].pmAttuali), '4 e 0,2'); // lotto 173, A.228: 4 usi pieni e il residuo
-  // alla seconda apertura non si riconverte
+  assert.deepEqual(s.chroma[uid], { pmAttuali: 5, unita: 'CM', prima: { pmAttuali: 7, capacita: 10, unita: 'PM', cm_esatte: 4.2 } });
+  assert.equal(numeroRiserva(s.chroma[uid].pmAttuali), '5');
+  // alla seconda apertura non si riconverte e non sale di nuovo
   assert.deepEqual(allineaSessione(s, lu.m).chroma[uid], s.chroma[uid]);
-  // 1 PM su 10 → 0,6 CM (non 1)
-  assert.equal(allineaSessione({ ...lu.sessione, chroma: { [uid]: { pmAttuali: 1 } } }, lu.m).chroma[uid].pmAttuali, 0.6);
+  // 1 PM su 10 → 0,6 CM → 1 CM
+  assert.equal(allineaSessione({ ...lu.sessione, chroma: { [uid]: { pmAttuali: 1 } } }, lu.m).chroma[uid].pmAttuali, 1);
   // senza la capacità di prima la corrispondenza non è certa: «da convertire», a 0, con il valore di prima conservato
   const senza = structuredClone(lu.m);
   senza.contenitoriCm[uid].precedente = null;

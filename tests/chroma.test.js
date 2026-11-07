@@ -151,6 +151,6 @@ test('sessione salvata prima: la riserva del Bordone passa da «munizioni» a «
   const m = massimi([o]);
   const s = allineaSessione({ pvAttuali: 5, pmAttuali: 3, munizioni: { o: { colpi: 2, riserve: 0 } } }, m);
   // lotto 171: il valore di prima (2 su 5 PM) diventa 2 su 5 CM, e resta scritto in «prima» (A.193)
-  assert.deepEqual(s.chroma, { o: { pmAttuali: 2, unita: 'CM', prima: { pmAttuali: 2, capacita: 5, unita: 'PM' } } });
+  assert.deepEqual(s.chroma, { o: { pmAttuali: 2, unita: 'CM', prima: { pmAttuali: 2, capacita: 5, unita: 'PM', cm_esatte: 2 } } });
   assert.deepEqual(s.munizioni, {});
 });

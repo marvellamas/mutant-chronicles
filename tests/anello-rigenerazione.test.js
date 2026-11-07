@@ -53,10 +53,14 @@ test('a riserva piena un uso; le 5 CM si consumano solo a tre ore compiute; inte
   assert.equal(r.sessione.chroma.an.pmAttuali, 0);
   assert.match(r.riga, /3 ore compiute, −5 CM/);
   assert.match(r.riga, /altri 5 giorni/);
-  // a riserva vuota (o non piena) non si avvia: il residuo non paga un uso (A.228)
+  // a riserva vuota (o non piena) non si avvia: l'uso costa 5 CM intere
   assert.match(avviaAttivazione(r.sessione, 'an', AL, m).errore, /ne servono 5/);
-  const quasi = allineaSessione({ chroma: { an: { pmAttuali: 4.2, unita: 'CM' } } }, m);
-  assert.match(avviaAttivazione(quasi, 'an', AL, m).errore, /ne servono 5/);
+  const quattro = allineaSessione({ chroma: { an: { pmAttuali: 4, unita: 'CM' } } }, m);
+  assert.match(avviaAttivazione(quattro, 'an', AL, m).errore, /ne servono 5/);
+  // A.252: una riserva salvata con la frazione sale all'intero superiore, e allora l'uso si paga
+  const conFraz = allineaSessione({ chroma: { an: { pmAttuali: 4.2, unita: 'CM' } } }, m);
+  assert.equal(conFraz.chroma.an.pmAttuali, 5);
+  assert.equal(avviaAttivazione(conFraz, 'an', AL, m).errore, undefined);
   // senza un avvio non si «completa» niente
   assert.match(completaAttivazione(s, 'an', AL, m).errore, /nessuna attivazione in corso/);
 });

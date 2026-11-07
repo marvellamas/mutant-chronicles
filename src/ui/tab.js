@@ -18,7 +18,7 @@ import { pulsanteSpostaPunti } from './sposta-punti.js';
 import { pulsanteSchermoIntero } from './schermo-intero.js';
 import { apriTiro, sezioneTiri } from './tira-valore.js';
 import { pianoGetto } from '../getti-artefatto.js';
-import { costoRiserva, numeroRiserva, testoCosto } from '../cariche-mistiche.js';
+import { costoRiserva, numeroRiserva, testoCosto, interoRiserva } from '../cariche-mistiche.js';
 import { modelliProgetto, apriProgetto, scegliForma, registraTentativo, togliUltimoTentativo, chiudiProgetto, riapriProgetto, riepilogoProgetto, formaSceglibile, avvisiConsegna, esemplariDi, storicoDi, ESITI_TENTATIVO, NOMI_ESITO, ESITI_FINALI, NOMI_FINALE } from '../progetti.js';
 import { circostanzeMasterAttive } from '../correzioni-master.js';
 import { conAvviso } from './procedi.js';
@@ -877,10 +877,10 @@ function rigaNec(ctx, r, x) {
   const n = ctx.sessione.nec?.[x.chiave] ?? x.massimo;
   // A.193: riserva convertita da Lx, UE o ore con la frazione residua; il valore di prima resta nel file
   const cv = ctx.sessione.necConvertite?.[x.chiave];
-  // A.228: la frazione resta nella riserva (7,75 si legge «7 e 0,75»); il residuo non paga un uso intero
-  const notaConversione = cv ? ` Convertita da ${cv.valore.toLocaleString('it-IT')} su ${cv.capacita.toLocaleString('it-IT')} (Lx, UE o ore di prima, A.193): ${numeroRiserva(cv.esatto)} cariche su ${cv.massimo}; la frazione resta nella riserva (A.228) e il valore di prima nel file.` : '';
+  // A.252 (06/11/2026): il conto esatto resta nello storico e la riserva sale all'intero superiore, una volta sola
+  const notaConversione = cv ? ` Convertita da ${cv.valore.toLocaleString('it-IT')} su ${cv.capacita.toLocaleString('it-IT')} (Lx, UE o ore di prima, A.193): ${numeroRiserva(cv.esatto)} cariche su ${cv.massimo}, arrotondate una volta sola a ${Math.min(cv.massimo, Math.ceil(cv.esatto - 1e-9))} (A.252); il valore di prima resta nel file.` : '';
   const b = (d) => h('button', {
-    type: 'button', class: 'btn-tavolo btn-mini', disabled: d < 0 ? (n <= 0 || (n + d < -1e-9 && n % 1 > 1e-9)) : n >= x.massimo,
+    type: 'button', class: 'btn-tavolo btn-mini', disabled: d < 0 ? n <= 0 : n >= x.massimo,
     'aria-label': `${d > 0 ? 'Aggiungi' : 'Togli'} ${Math.abs(d)} ${x.unita} a ${x.nome}`, onclick: () => ctx.azioni.nec(x.chiave, d),
   }, d > 0 ? `+${d}` : `−${-d}`);
   return h('div', { class: `pi-voce riserva-nec${n === 0 ? ' esaurita' : ''}` },
@@ -2701,8 +2701,8 @@ function rigaCristallo(ctx, c) {
   const pulsanti = [];
   const pulsante = (d) => {
     const el = h('button', {
-      type: 'button', class: 'btn-tavolo', disabled: d < 0 ? (pm <= 0 || (pm + d < -1e-9 && pm % 1 > 1e-9)) : pm >= c.capacita,
-      ...(d < 0 && pm > 0 && pm + d < -1e-9 && pm % 1 > 1e-9 ? { title: `Il residuo di ${numeroRiserva(pm)} ${c.unita ?? 'PM'} non paga un uso intero (A.228): resta per la ricarica` } : {}),
+      // A.252 (06/11/2026): le riserve sono intere; un − che porterebbe sotto zero resta spento, come sempre
+      type: 'button', class: 'btn-tavolo', disabled: d < 0 ? pm <= 0 : pm >= c.capacita,
       'aria-label': `${d > 0 ? 'Aggiungi' : 'Togli'} ${Math.abs(d)} ${c.unita ?? 'PM'} a ${c.nome}`,
       onclick: () => ctx.azioni.chroma(c.uid, d),
     }, d > 0 ? `+${d}` : `−${-d}`);
@@ -2758,9 +2758,9 @@ function campoVariazionePm(ctx, c) {
   const applica = () => {
     const d = variazioneDaTesto(campo.value);
     if (d === null) { campo.className = 'campo-variazione-pm non-valido'; campo.setAttribute('aria-invalid', 'true'); tieniFuoco(); return; }
-    // A.228: un uso costa pieno; con meno di quanto serve non si scala niente (il residuo resta)
+    // A.252: le riserve sono intere; questo controllo resta per un file aperto prima dell'arrotondamento
     const ora = ctx.sessione.chroma?.[c.uid]?.pmAttuali ?? 0;
-    if (ora + d < -1e-9 && ora % 1 > 1e-9) { campo.className = 'campo-variazione-pm non-valido'; campo.setAttribute('aria-invalid', 'true'); campo.title = `La riserva ha ${numeroRiserva(ora)} ${c.unita ?? 'PM'}: non basta per ${-d}`; tieniFuoco(); return; }
+    if (ora + d < -1e-9 && Math.abs(ora - Math.round(ora)) > 1e-9) { campo.className = 'campo-variazione-pm non-valido'; campo.setAttribute('aria-invalid', 'true'); campo.title = `La riserva ha ${numeroRiserva(ora)} ${c.unita ?? 'PM'}: non basta per ${-d}`; tieniFuoco(); return; }
     // variaChroma tiene il valore fra 0 e la capacità; la scheda non si ridisegna (valore vivo)
     ctx.azioni.chroma(c.uid, d);
     tieniFuoco();
@@ -2782,8 +2782,27 @@ function pannelloChroma(ctx, c, { conPulsanti = true } = {}) {
       }, { tag: 'p', classe: 'riga-chroma-viva' }),
     h('small', { class: 'nota' }, [
       testoAlimenta(c),
+      notaConversioneCm(ctx.sessione.chroma?.[c.uid]),
       c.unita === 'CM' ? `Cariche Mistiche: non sono PM e non pagano Incantesimi. ${ctx.dati.regole.chroma.cariche_mistiche?.ricarica?.testo ?? ''} «Nuova sessione» e il riposo non le riempiono.` : 'Si ricarica solo con Convertire Potere (Magia sez. 6): «Nuova sessione» e il riposo non la riempiono.',
     ].join(' ')));
+}
+
+/**
+ * Da dove viene una riserva in CM convertita (A.193) e, dalla A.252, a quanto è salita: il valore di prima resta scritto
+ * nel file e si legge qui, sotto il contenitore. Niente da dire per una riserva che non è stata convertita.
+ */
+function notaConversioneCm(stato) {
+  if (!stato) return '';
+  const p = stato.prima;
+  // il numero da dire è quello a cui è stata arrotondata, non quello di adesso (che intanto si è speso)
+  if (p && Number.isFinite(p.cm_esatte)) {
+    return ` Convertita da ${p.pmAttuali} PM su ${p.capacita} (A.193): ${numeroRiserva(p.cm_esatte)} CM, arrotondate una volta sola a ${interoRiserva(p.cm_esatte)} (A.252).`;
+  }
+  if (stato.a252 && Number.isFinite(stato.a252.prima)) {
+    return ` Era ${numeroRiserva(stato.a252.prima)}: arrotondata una volta sola a ${interoRiserva(stato.a252.prima)} (A.252).`;
+  }
+  if (p && p.pmAttuali !== undefined && !stato.daConvertire) return ` Convertita da ${p.pmAttuali} PM (A.193).`;
+  return '';
 }
 
 /**

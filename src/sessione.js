@@ -60,6 +60,7 @@ import { allineaMorente, statoMorente, togliRound } from './morente.js';
 import { allineaAttivazioniArmi, attivaArma, terminaArma } from './attivazione-arma.js';
 import { allineaContenitori, commutaContenitore } from './schermatura.js';
 import { allineaUsiTalenti, usaUnaVolta, azzeraUso, vociConUso, rinnovaSessione } from './usi-talenti.js';
+import { interoRiserva, conFrazione } from './cariche-mistiche.js';
 
 const isOggetto = (v) => v !== null && typeof v === 'object' && !Array.isArray(v);
 const limita = (v, min, max) => Math.min(max, Math.max(min, v));
@@ -154,8 +155,9 @@ function allineaIntegrita(v, m) {
  * equivalenza universale). Il valore di prima resta nel file sotto la sua chiave e il dettaglio in `necConvertite`. Si fa
  * una volta sola: con la chiave nuova già nel file non si ripete. Senza la capacità di prima certa (`necPrecedenti`) la
  * riserva resta «da convertire».
- * A.228 (Davide, 02/11/2026): la frazione esatta resta **nella riserva**, non solo nel registro: 31 ore su 40 di una tuta
- * da 10 cariche sono 7,75 cariche, non 7. Mai per eccesso; la frazione non diventa gratis una carica intera (variaNec).
+ * A.252 (Davide, 06/11/2026, supera la A.228): nella riserva non resta nessuna frazione. Il conto esatto si fa come
+ * prima (31 ore su 40 di una tuta da 10 cariche sono 7,75 cariche) e poi sale all'intero superiore, una volta sola: 8.
+ * L'esatto resta nel registro `necConvertite`, cioè nello storico, e dice da dove si viene.
  * @returns {{ da, valore, capacita, esatto, applicato, massimo }|null}
  */
 export function convertiRiservaNec(src, m, chiave) {
@@ -166,16 +168,26 @@ export function convertiRiservaNec(src, m, chiave) {
   if (da === undefined) return null;
   const massimo = m.nec[chiave];
   const esatto = Math.round(Math.max(0, Math.min(1, src[da] / cap[da])) * massimo * 1e6) / 1e6;
-  return { da, valore: src[da], capacita: cap[da], esatto, applicato: Math.min(massimo, esatto), massimo };
+  const applicato = Math.min(massimo, interoRiserva(esatto));
+  // il segno `a252` dice che l'arrotondamento è già stato fatto: spendendo cariche la riserva non deve risalire
+  return { da, valore: src[da], capacita: cap[da], esatto, applicato, massimo, ...(conFrazione(esatto) ? { a252: { prima: esatto } } : {}) };
 }
 
 const conConvertite = (c) => (Object.keys(c).length ? { necConvertite: c } : {});
 
 /**
- * A.228: una conversione registrata prima del 05/11/2026 aveva segnato le cariche per difetto (applicato < esatto). La
- * frazione tolta torna nella riserva una volta sola: il segno `a228` nel registro dice che è già stata rimessa.
+ * A.252 (06/11/2026): una conversione registrata prima aveva lasciato nella riserva un valore non intero — per difetto
+ * (lotto 149) o con la frazione (A.228, lotto 173). Ora la riserva sale all'intero superiore dell'esatto, **una volta
+ * sola**: il segno `a252` nel registro dice che è già stata portata lì, e il valore di prima resta scritto.
+ * @returns {number} quanto aggiungere alla riserva salvata, 0 se non c'è niente da fare
  */
-const residuoDaRimettere = (c) => (isOggetto(c) && !c.a228 && Number.isFinite(c.esatto) && Number.isFinite(c.applicato) && c.esatto - c.applicato > 1e-9 ? arrotonda6(c.esatto - c.applicato) : 0);
+function daPortareAllIntero(c, salvato) {
+  if (!isOggetto(c) || c.a252 || !Number.isFinite(c.esatto)) return 0;
+  const ora = Number.isFinite(salvato) ? salvato : c.applicato;
+  if (!Number.isFinite(ora)) return 0;
+  const voluto = Math.min(interoRiserva(c.esatto), Number.isFinite(c.massimo) ? c.massimo : Infinity);
+  return voluto - ora > 1e-9 ? arrotonda6(voluto - ora) : 0;
+}
 const arrotonda6 = (x) => Math.round(x * 1e6) / 1e6;
 
 /** Registro delle conversioni fatte (chiave nuova → dettaglio) finché la riserva c'è ancora. */
@@ -184,8 +196,9 @@ function allineaNecConvertite(sessioneNec, vecchie, m) {
   const out = {};
   for (const [k, c] of Object.entries(isOggetto(vecchie) ? vecchie : {})) {
     if (!(m.nec && k in m.nec && isOggetto(c))) continue;
-    const r = residuoDaRimettere(c);
-    out[k] = r ? { ...c, a228: { residuo: r } } : c;
+    const r = daPortareAllIntero(c, isOggetto(sessioneNec) ? sessioneNec[k] : undefined);
+    // A.252: la riserva sale all'intero superiore una volta sola; il valore di prima resta qui, nello storico
+    out[k] = r ? { ...c, a252: { prima: arrotonda6((Number.isFinite(sessioneNec?.[k]) ? sessioneNec[k] : c.applicato)), aggiunto: r } } : c;
   }
   for (const k of Object.keys(m.nec ?? {})) {
     const c = convertiRiservaNec(src, m, k);
@@ -195,12 +208,12 @@ function allineaNecConvertite(sessioneNec, vecchie, m) {
 }
 
 /**
- * A.228: un − che porterebbe sotto zero una riserva con la frazione la farebbe «pagare» con il residuo (0,75 per una
- * carica intera): non si fa. Le riserve intere restano come prima (−30 su 20 porta a 0: correzione a mano).
+ * A.252: le riserve sono intere, quindi un − non può più essere «pagato» con un residuo (il controllo della A.228 non
+ * ha più niente da trovare). Resta solo per i file aperti prima dell'arrotondamento, dentro lo stesso giro.
  */
-const pagaColResiduo = (valore, delta) => delta < 0 && valore + delta < -1e-9 && Math.abs(valore - Math.round(valore)) > 1e-9;
+const pagaColResiduo = (valore, delta) => delta < 0 && valore + delta < -1e-9 && conFrazione(valore);
 
-/** Valore di una riserva: un numero finito ≥ 0 (A.228: anche con la frazione), altrimenti il predefinito. */
+/** Valore di una riserva: un numero finito ≥ 0, altrimenti il predefinito. */
 const riserva = (v, predefinito) => (typeof v === 'number' && Number.isFinite(v) && v >= 0 ? arrotonda6(v) : predefinito);
 
 /** Riserve dei NEC: i nuovi partono carichi, i valori restano entro 0 e il massimo, quelli tolti spariscono. */
@@ -217,8 +230,10 @@ function allineaNec(v, m, convertite = null) {
     const conv = convertiRiservaNec(src, m, k);
     if (conv) { conti[k] = limita(conv.applicato, 0, max); continue; }
     if (prima && !(k in src) && prima.some((v) => Number.isInteger(src[v]))) continue;
-    // A.228: la frazione tolta da una conversione di prima torna nella riserva, una volta sola
-    conti[k] = limita(arrotonda6(riserva(src[k], max) + residuoDaRimettere(convertite?.[k])), 0, max);
+    // A.252: la riserva di una conversione di prima sale all'intero superiore, una volta sola; e nessun valore salvato
+    // resta con la frazione (un file del lotto 173 ha 7,75: diventa 8 e non sale più)
+    const salvato = riserva(src[k], max);
+    conti[k] = limita(interoRiserva(arrotonda6(salvato + daPortareAllIntero(convertite?.[k], salvato))), 0, max);
   }
   return { ...restano, ...conti };
 }
@@ -395,13 +410,19 @@ const perDifetto = (x) => Math.floor(x * 100 + 1e-9) / 100;
 function allineaCm(v, vecchia, { capacita, precedente }) {
   if (isOggetto(v) && v.unita === 'CM') {
     if (v.daConvertire) return { ...v, pmAttuali: limita(Number.isFinite(v.pmAttuali) ? v.pmAttuali : 0, 0, capacita) };
-    return { ...v, pmAttuali: limita(Number.isFinite(v.pmAttuali) ? v.pmAttuali : capacita, 0, capacita) };
+    const n = Number.isFinite(v.pmAttuali) ? v.pmAttuali : capacita;
+    // A.252: una riserva salvata con la frazione (4,2 CM del lotto 171) sale all'intero superiore una volta sola, e il
+    // valore di prima resta scritto qui, nello storico del contenitore
+    if (conFrazione(n)) return { ...v, pmAttuali: limita(interoRiserva(n), 0, capacita), a252: { prima: n } };
+    return { ...v, pmAttuali: limita(n, 0, capacita) };
   }
   const pmPrima = isOggetto(v) && Number.isFinite(v.pmAttuali) ? v.pmAttuali : voceMunizioni(vecchia)?.colpi;
   if (pmPrima === undefined || pmPrima === null) return { pmAttuali: capacita, unita: 'CM' };
   const prima = { pmAttuali: pmPrima, ...(precedente ? { capacita: precedente } : {}), unita: 'PM' };
   if (!precedente) return { pmAttuali: 0, unita: 'CM', daConvertire: true, prima };
-  return { pmAttuali: limita(perDifetto((pmPrima / precedente) * capacita), 0, capacita), unita: 'CM', prima };
+  // A.252: il conto esatto (7 PM su 10 di una riserva da 6 CM = 4,2) sale all'intero superiore: 5 CM su 6
+  const esatte = perDifetto((pmPrima / precedente) * capacita);
+  return { pmAttuali: limita(interoRiserva(esatte), 0, capacita), unita: 'CM', prima: { ...prima, cm_esatte: esatte } };
 }
 
 /** Munizioni di un'arma: { colpi, riserve, parziali?, vuoti? }; i vecchi valori numerici sono i colpi. */

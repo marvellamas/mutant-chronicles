@@ -72,4 +72,5 @@ export const ARGOMENTI = {
   'console.mjs': ['porta', 'radice'],
   'cartella-di-prova.mjs': [],
   'descrizioni-bestiario.mjs': ['profili'],
+  'riserve-intere.mjs': ['scrivi'],
 };
