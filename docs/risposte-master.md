@@ -2515,3 +2515,25 @@ Risposte ricevute il 06/11 e **da applicare** (una per lotto o raggruppate, nell
 - **A.259 — RISPOSTA, da applicare**. Ogni Capolavoro ha il suo uso per sessione (non uno per personaggio): strumento
   principale di una prova pertinente e non offensiva, un solo Capolavoro per prova, un solo ritiro con il secondo
   risultato; se l'oggetto passa a un altro resta usato fino alla sessione dopo.
+
+## 7 novembre 2026 — Lotto 179: A.247 e A.248 applicate (`docs/diff-lotto179-2026-11-07.md`)
+
+Secondo lotto delle risposte del 06/11. I manuali non sono cambiati: solo le due risposte che riguardano «Sposta i punti»
+del lotto 165.
+
+- **A.247 — RISOLTA** *(Davide, 06/11/2026)*. **Un punto che il Direttore forza oltre il limite fa salire il VA davvero.**
+  Il limite della categoria (§8.3) non cambia: l'eccezione vale per quell'Abilità di quel personaggio, e un punto non
+  forzato continua a fermarsi al limite. **Supera il comportamento del lotto 165** (02/11), in cui il punto restava
+  registrato e il VA si fermava al limite. La forzatura chiede una conferma che mostra per esteso la riga che resterà
+  scritta («Forza l'eccezione», non un «Procedi comunque»), e lascia nel registro «Modifiche del master» una riga a sé:
+  «Eccezione al limite (A.247): Difese nel 4° livello da VA 11 a VA 12, oltre il limite 11 (Professionali) — forzata dal
+  Direttore (PC, 07/11 19:33)». Nella scheda e nel foglio 2 della stampa il VA d'eccezione ha accanto un **✦**; il
+  «Calcolo» ha la riga «Eccezione del Direttore (A.247)». Regola in `src/competenze.js` (`limiteConEccezioni`,
+  `oltreIlLimite`), eccezioni per Abilità in `stato.abil[nome].oltre` → `abilita[].oltreLimite`.
+- **A.248 — RISOLTA** *(Davide, 06/11/2026)*. I punti divenuti inefficaci dopo una forzatura del Direttore **li riassegna
+  il giocatore**, nello stesso livello in cui erano stati spesi e con i limiti di allora: l'app faceva già così dalla
+  A.107 e non è cambiato nulla nelle regole. Mancava la registrazione, aggiunta ora: «Riassegnati 1 Punto Abilità del 4°
+  livello: Atletica 1 (PC, 07/11 19:37)» nello storico del personaggio (`descriviRiassegnazione` in
+  `src/sposta-punti.js`, scrittura in `src/ui/app.js` alla conferma di «Assegna»).
+
+Nessuna domanda nuova: il primo numero libero resta **A.260**.

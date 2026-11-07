@@ -53,6 +53,30 @@ export function vaPersonale(grezzo, limite) {
 }
 
 /**
+ * A.247 (Davide, 06/11/2026): «Se il Direttore, dopo l'avviso del sistema, forza deliberatamente l'assegnazione di un
+ * punto oltre il limite, il VA dell'Abilità aumenta realmente oltre il limite.» Le unità concesse alzano il limite di
+ * quell'Abilità per quel personaggio: il limite della categoria non cambia, e tutto il resto continua a rispettarlo
+ * (un punto non forzato di un altro livello non passa lo stesso).
+ * @param oltre unità concesse dal Direttore (0 = nessuna eccezione)
+ */
+export function limiteConEccezioni(limite, oltre = 0) {
+  if (limite === null || limite === undefined) return limite;
+  const n = Number.isInteger(oltre) && oltre > 0 ? oltre : 0;
+  return limite + n;
+}
+
+/**
+ * Quante unità una forzatura concede oltre il limite: quanto il VA passa il limite dopo i punti, meno quanto lo
+ * passava già (le eccezioni concesse prima non si contano due volte).
+ */
+export function oltreIlLimite(grezzoPrima, limite, punti) {
+  if (limite === null || limite === undefined) return 0;
+  const dopo = Math.max(0, grezzoPrima + punti - limite);
+  const prima = Math.max(0, grezzoPrima - limite);
+  return Math.max(0, dopo - prima);
+}
+
+/**
  * §2.13 e §8.3: punti liberi che aumentano davvero il VA personale, partendo dal grezzo prima dei punti
  * (dopo i +1 di Classe dello stesso evento). Gli altri sono inattivi: non si spendono.
  * @returns {{ utili, inattivi }}

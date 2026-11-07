@@ -1,7 +1,7 @@
 // Motore di calcolo: funzioni pure. Le costanti numeriche arrivano dai dati (data/*.json);
 // qui stanno solo le formule, ciascuna con il paragrafo del Manuale del Giocatore.
 import { calcolaSchedaPersonaggio } from './avanzamento.js';
-import { competenzaDi, baseIniziale, limiteAbilita, vaPersonale, puntiUtili } from './competenze.js';
+import { competenzaDi, baseIniziale, limiteAbilita, vaPersonale, puntiUtili, limiteConEccezioni, oltreIlLimite } from './competenze.js';
 
 // Avanzamento di livello (cap. 8): la validazione di un livello sta in avanzamento.js.
 export { validaLivello } from './avanzamento.js';
@@ -177,7 +177,12 @@ function abilitaScomposte(car, corp, classe, scelte, dati) {
     const daClasse = classe.abilita.includes(nome) ? bonusClasse : 0;
     const scelti = scelte.puntiAbilitaLiberi?.[nome] ?? 0;
     const vaPrimaDeiLiberi = valoreAbilita({ ...componenti, avanzamento: daClasse });
-    const { utili: liberi, inattivi } = Number.isInteger(scelti) && scelti > 0 ? puntiUtili(vaPrimaDeiLiberi, lim.valore, scelti) : { utili: 0, inattivi: 0 };
+    // A.247: in un'Abilità forzata dal Direttore i punti entrano tutti e il VA passa davvero il limite (lotto 165:
+    // la forzatura della creazione sta in scelte.puntiDirettore.forzati)
+    const forzata = (scelte.puntiDirettore?.forzati ?? []).includes(nome);
+    const oltreLimite = forzata && Number.isInteger(scelti) && scelti > 0 ? oltreIlLimite(vaPrimaDeiLiberi, lim.valore, scelti) : 0;
+    const limEff = limiteConEccezioni(lim.valore, oltreLimite);
+    const { utili: liberi, inattivi } = Number.isInteger(scelti) && scelti > 0 ? puntiUtili(vaPrimaDeiLiberi, limEff, scelti) : { utili: 0, inattivi: 0 };
     const avanzamento = daClasse + liberi;
     const grezzo = valoreAbilita({ ...componenti, avanzamento });
     return {
@@ -185,7 +190,9 @@ function abilitaScomposte(car, corp, classe, scelte, dati) {
       competenza, competenzaDa: classe.nome, limite: lim.valore, limiteCategoria: lim.categoria, limiteDa: lim.classi,
       // §2.13: il VA prima dei punti liberi (dopo il +1 di Classe) decide VA ≥ 1 e punti utili
       vaPrimaDeiLiberi, grezzo, inattivi,
-      totale: vaPersonale(grezzo, lim.valore),
+      // A.247: il VA vero, con l'eccezione concessa; `oltreLimite` dice di quanto passa il limite della categoria
+      totale: vaPersonale(grezzo, limEff),
+      ...(oltreLimite ? { oltreLimite } : {}),
     };
   });
 }

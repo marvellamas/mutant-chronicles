@@ -80,9 +80,16 @@ export function righeRegoleAbilita(a, scheda) {
     const sp = (a.spostatiDirettore ?? []).map((x) => `${x.punti > 0 ? '+' : '−'}${Math.abs(x.punti)} ${x.livello === 1 ? 'nella creazione' : `nel ${x.livello}° livello`}`);
     if (a.liberi || sp.length) righe.push(riga('Avanzamento', a.liberi, `punti liberi (§2.13, §8.3)${sp.length ? `; spostati dal Direttore: ${sp.join(', ')}` : ''}`));
   } else if (a.avanzamento) righe.push(riga('Avanzamento', a.avanzamento));
-  // §8.3: il grezzo oltre il limite resta registrato ma non conta finché il limite non sale
-  if (Number.isInteger(a.grezzo) && Number.isInteger(a.limite) && a.grezzo > a.limite) {
-    righe.push(riga(`Limite ${a.limiteCategoria ?? ''} ${a.limite}`.replace('  ', ' '), a.limite - a.grezzo,
+  // A.247 (06/11/2026): le unità che il Direttore ha forzato restano nel VA, e la riga lo dice. Quello che resta oltre
+  // (§8.3) continua a non contare finché il limite non sale.
+  const oltreConcesso = Number.isInteger(a.oltreLimite) ? a.oltreLimite : 0;
+  if (oltreConcesso) {
+    righe.push(riga(`Eccezione del Direttore (A.247)`, 0,
+      `${oltreConcesso === 1 ? '1 punto forzato' : `${oltreConcesso} punti forzati`} oltre il limite ${a.limite}${a.limiteCategoria ? ` (${a.limiteCategoria})` : ''}: il VA sale davvero`));
+  }
+  const limiteVero = Number.isInteger(a.limite) ? a.limite + oltreConcesso : a.limite;
+  if (Number.isInteger(a.grezzo) && Number.isInteger(limiteVero) && a.grezzo > limiteVero) {
+    righe.push(riga(`Limite ${a.limiteCategoria ?? ''} ${a.limite}`.replace('  ', ' '), limiteVero - a.grezzo,
       `VA grezzo ${a.grezzo} oltre il limite del VA personale${a.limiteDa?.length ? ` (${a.limiteDa.join(', ')})` : ''} (§8.3, §8.7)`));
   }
   // «Modifica master»: il valore da regole è quello prima delle correzioni, che seguono una per riga

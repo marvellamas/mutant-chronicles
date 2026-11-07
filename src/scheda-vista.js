@@ -56,7 +56,11 @@ export function formulaVa(a) {
  *   effettivo, scomposizione
  */
 export function contoVa(a) {
-  const limitato = a.limite !== null && a.limite !== undefined && a.grezzo > a.limite;
+  // A.247 (06/11/2026): le unità forzate dal Direttore alzano il limite di questa Abilità, quindi il VA non è «limitato»
+  // finché resta entro l'eccezione concessa
+  const oltreLimite = Number.isInteger(a.oltreLimite) && a.oltreLimite > 0 ? a.oltreLimite : 0;
+  const limiteVero = a.limite === null || a.limite === undefined ? null : a.limite + oltreLimite;
+  const limitato = limiteVero !== null && a.grezzo > limiteVero;
   const colonne = [
     { voce: `Mod ${a.caratteristica}`, sigla: 'Mod', valore: a.mod, testo: segno(a.mod) },
     { voce: `Base${a.competenza ? ` (competenza ${a.competenza})` : ''}`, sigla: 'Base', valore: a.base, testo: String(a.base) },
@@ -71,6 +75,8 @@ export function contoVa(a) {
     grezzo: a.grezzo,
     limite: a.limite ?? null,
     limitato,
+    oltreLimite,
+    limiteVero,
     // colonna «Equip» della riga di prima: equipaggiamento indossato (§7.11.1)
     equip: a.equip ?? 0,
     daRegole: a.totale,

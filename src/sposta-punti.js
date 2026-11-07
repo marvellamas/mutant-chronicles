@@ -202,13 +202,13 @@ export function avvisiSpostamento(personaggio, bozza, dati) {
     const [l, abilita] = k.split('|');
     const livello = Number(l);
     if (toccati.has(livello)) {
-      // TODO(Davide) A.247: un punto forzato oltre il limite deve far salire il VA oltre il limite? Per ora resta registrato
-      // e il VA si ferma al limite delle regole (§8.3)
+      // A.247 (Davide, 06/11/2026): forzandolo, il VA dell'Abilità sale davvero oltre il limite e l'eccezione resta
+      // scritta come riga a sé nel registro «Modifiche del master» (descriviEccezioni)
       const lim = limiteAllEvento(nuovo, livello, abilita, dati);
       avvisi.push({ tipo: 'limite', livello, abilita,
-        testo: `${abilita} ${nelEvento(livello)}: ${diff === 1 ? '1 punto non aumenta' : `${diff} punti non aumentano`} il VA personale${lim ? `, già al limite ${lim.valore} (${lim.categoria})` : ', già al limite'} (§8.3). Forzandolo il punto resta registrato ma il VA non supera il limite.` });
+        testo: `${abilita} ${nelEvento(livello)}: ${diff === 1 ? '1 punto va' : `${diff} punti vanno`} oltre il limite del VA personale${lim ? ` ${lim.valore} (${lim.categoria})` : ''} (§8.3). Forzandolo, il VA passa davvero il limite (A.247) e l'eccezione va nel registro.` });
     } else {
-      // TODO(Davide) A.248: questi punti li riassegna anche il giocatore («Assegna», A.107) o solo il Direttore? Per ora anche lui
+      // A.248 (Davide, 06/11/2026): questi punti li riassegna anche il giocatore, con «Assegna», nello stesso livello (come A.107)
       avvisi.push({ tipo: 'dopo', livello, abilita, testo: `${abilita} ${nelEvento(livello)}: ${diff === 1 ? '1 punto non aumenterebbe' : `${diff} punti non aumenterebbero`} più il VA e ${diff === 1 ? 'andrebbe riassegnato' : 'andrebbero riassegnati'} con «Assegna», nello stesso livello (A.107).` });
     }
   }
@@ -233,6 +233,61 @@ export function decisioniConferma(personaggio, bozza, avvisi) {
 const due = (n) => String(n).padStart(2, '0');
 /** «02/11 21:40» nell'ora locale. */
 export const dataOra = (iso) => { const d = new Date(iso); return Number.isNaN(d.getTime()) ? '' : `${due(d.getDate())}/${due(d.getMonth() + 1)} ${due(d.getHours())}:${due(d.getMinutes())}`; };
+
+/**
+ * A.248 (Davide, 06/11/2026): «I punti che diventano inefficaci in seguito a una modifica forzata del Direttore possono
+ * essere riassegnati dal giocatore nello stesso livello originario, rispettando le normali regole di assegnazione. La
+ * riassegnazione va registrata.» La riga da scrivere nello storico: dice che cosa è stato assegnato e dove, e chi l'ha
+ * fatto lo aggiunge chi la scrive (src/incantesimi-regole.js → rigaIncantesimi: «(tablet, 07/11 18:20)»).
+ * @param evento { livello, riassegna } l'evento a cui i punti appartengono
+ * @param punti { Abilità: n } quelli messi adesso
+ */
+export function descriviRiassegnazione(evento, punti) {
+  const voci = Object.entries(punti ?? {}).filter(([, n]) => Number.isInteger(n) && n > 0).sort(([a], [b]) => a.localeCompare(b));
+  const quanti = voci.reduce((s2, [, n]) => s2 + n, 0);
+  if (!quanti) return '';
+  const dove = evento?.livello === 1 ? 'della creazione' : `del ${evento?.livello}° livello`;
+  return `${evento?.riassegna ? 'Riassegnati' : 'Assegnati'} ${quanti === 1 ? '1 Punto Abilità' : `${quanti} Punti Abilità`} ${dove}: ${voci.map(([a, n]) => `${a} ${n}`).join(', ')}`;
+}
+
+/**
+ * A.247 (Davide, 06/11/2026): «Se il Direttore, dopo l'avviso del sistema, forza deliberatamente l'assegnazione di un
+ * punto oltre il limite, il VA dell'Abilità aumenta realmente oltre il limite. L'operazione deve essere registrata come
+ * eccezione esplicita.» Qui si scrive quella riga, una per Abilità portata oltre il limite in questa conferma: dice
+ * l'Abilità, l'evento, da che VA a che VA, qual era il limite e di chi è l'eccezione. Non basta la riga dello
+ * spostamento, che direbbe solo che dei punti si sono mossi.
+ * @param prima il personaggio com'era, `dopo` quello che si sta per salvare (da applicaSpostamento)
+ * @returns string[] una riga per eccezione nuova (vuoto se non ce ne sono)
+ */
+export function descriviEccezioni(prima, dopo, dati, { quando = new Date().toISOString(), dove = 'PC', chi = 'il Direttore' } = {}) {
+  const va = (pg) => {
+    const m = new Map();
+    try {
+      for (const a of calcolaSchedaPersonaggio(migraPersonaggio(pg), dati).abilita ?? []) m.set(a.nome, a);
+    } catch { /* un personaggio non calcolabile non produce righe */ }
+    return m;
+  };
+  const vPrima = va(prima);
+  const vDopo = va(dopo);
+  const p = migraPersonaggio(dopo);
+  const righe = [];
+  for (let livello = 1; livello <= 1 + p.livelli.length; livello++) {
+    const forzateDopo = puntiDirettoreDi(p, livello)?.forzati ?? [];
+    if (!forzateDopo.length) continue;
+    const forzatePrima = new Set(puntiDirettoreDi(migraPersonaggio(prima), livello)?.forzati ?? []);
+    for (const a of forzateDopo) {
+      const d = vDopo.get(a);
+      const q = vPrima.get(a);
+      if (!d || !Number.isInteger(d.oltreLimite) || d.oltreLimite <= 0) continue;
+      // già scritta in una conferma precedente, e da allora non è cambiata nulla: non si ripete
+      if (forzatePrima.has(a) && q && q.oltreLimite === d.oltreLimite && q.totale === d.totale) continue;
+      const cat = d.limiteCategoria ? ` (${dati.regole.competenze.categorie[d.limiteCategoria]?.nome ?? d.limiteCategoria})` : '';
+      const daChi = /^il /.test(chi) ? `dal ${chi.slice(3)}` : /^la /.test(chi) ? `dalla ${chi.slice(3)}` : `da ${chi}`;
+      righe.push(`Eccezione al limite (A.247): ${a} ${nelEvento(livello)} da VA ${q?.totale ?? '—'} a VA ${d.totale}, oltre il limite ${d.limite}${cat} — forzata ${daChi} (${dove}, ${dataOra(quando)})`);
+    }
+  }
+  return righe;
+}
 
 /**
  * La riga del registro, in italiano: «Spostati 2 punti da Atletica a Furtività nel 4° livello (PC, 02/11 21:40)».

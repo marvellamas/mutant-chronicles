@@ -7,6 +7,7 @@ import { h, segno } from './dom.js';
 import { apri, chiedi } from './finestrella.js';
 import {
   statoPannello, spostaInBozza, avvisiSpostamento, decisioniConferma, totaliBozza, nelEvento,
+  applicaSpostamento, descriviEccezioni,
 } from '../sposta-punti.js';
 
 const punti = (n) => (n === 1 ? '1 punto' : `${n} punti`);
@@ -37,17 +38,29 @@ export function apriSpostaPunti(azioni, livello = null) {
     };
     const conferma = async () => {
       const avvisi = avvisiSpostamento(p, st.bozza, azioni.dati);
+      const decisioni = decisioniConferma(p, st.bozza, avvisi);
+      // A.247: se si forza un limite il VA sale davvero, quindi la conferma dice per esteso che cosa cambierà e che cosa
+      // resterà scritto nel registro: non un «Procedi comunque» qualunque
+      const eccezioni = avvisi.some((a) => a.tipo === 'limite')
+        ? descriviEccezioni(p, applicaSpostamento(p, st.bozza, azioni.dati, { motivo: st.motivo.trim(), ...decisioni }), azioni.dati,
+          { dove: azioni.dove ?? 'PC', chi: azioni.chi ?? 'il Direttore' })
+        : [];
       if (avvisi.length) {
-        const ok = await apri('finestrella-master', 'Avviso: procedere comunque?', (f) => [
+        const ok = await apri('finestrella-master', eccezioni.length ? 'Forzare l’eccezione al limite?' : 'Avviso: procedere comunque?', (f) => [
           h('ul', { class: 'avvisi-sposta' }, avvisi.map((a) => h('li', {}, a.testo))),
+          eccezioni.length
+            ? h('div', { class: 'eccezione-conferma' },
+              h('p', {}, eccezioni.length === 1 ? 'Confermando, il VA passa il limite e nel registro resta questa riga:' : 'Confermando, i VA passano il limite e nel registro restano queste righe:'),
+              h('ul', { class: 'avvisi-sposta' }, eccezioni.map((r) => h('li', {}, r))))
+            : null,
           h('p', { class: 'nota' }, 'L’app avvisa e non blocca: l’ultima parola è del Direttore. La decisione resta scritta nel livello e nel registro.'),
           h('div', { class: 'riga-azioni finestrella-azioni' },
             h('button', { type: 'button', class: 'btn', onclick: () => f(false) }, 'Torna agli spostamenti'),
-            h('button', { type: 'button', class: 'btn primario', onclick: () => f(true) }, 'Procedi comunque')),
+            h('button', { type: 'button', class: 'btn primario', onclick: () => f(true) }, eccezioni.length ? 'Forza l’eccezione' : 'Procedi comunque')),
         ]);
         if (!ok) return;
       }
-      azioni.applica({ bozza: st.bozza, decisioni: decisioniConferma(p, st.bozza, avvisi), motivo: st.motivo.trim() });
+      azioni.applica({ bozza: st.bozza, decisioni, motivo: st.motivo.trim() });
       fine(true);
     };
     const disegna = () => {

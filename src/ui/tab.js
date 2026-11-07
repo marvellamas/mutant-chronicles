@@ -1434,7 +1434,8 @@ function apriCalcolo(ctx, a) {
       h('thead', {}, h('tr', {}, c.colonne.map((x) => h('th', { title: x.voce }, x.sigla)), h('th', { title: 'Equipaggiamento indossato (§7.11.1)' }, 'Equip'))),
       h('tbody', {}, h('tr', {}, c.colonne.map((x) => h('td', {}, x.testo)), h('td', {}, c.equip ? segno(c.equip) : '0')))),
     h('p', { class: 'nota' }, c.formula),
-    c.limitato ? h('p', {}, h('span', { class: 'al-limite' }, '⚑ '), `Mod + Base + Corp + Avanz fa ${c.grezzo}: oltre il limite ${c.limite} della categoria (§8.3), conta ${c.limite}.`) : null,
+    c.limitato ? h('p', {}, h('span', { class: 'al-limite' }, '⚑ '), `Mod + Base + Corp + Avanz fa ${c.grezzo}: oltre il limite ${c.limiteVero ?? c.limite} della categoria (§8.3), conta ${c.limiteVero ?? c.limite}.`) : null,
+    c.oltreLimite ? h('p', {}, h('span', { class: 'eccezione-limite' }, '✦ '), `${c.oltreLimite === 1 ? '1 punto forzato' : `${c.oltreLimite} punti forzati`} dal Direttore oltre il limite ${c.limite} (A.247): il VA sale davvero, il limite della categoria resta ${c.limite}.`) : null,
     h('p', {}, 'Valore da regole: ', h('strong', {}, numero(c.daRegole))),
     a.provenienza ? [h('p', { class: 'tooltip-etichetta' }, 'Conto del VA'), listaProvenienza(a.provenienza, 'VA')]
       : c.condizioni.length ? h('ul', { class: 'tooltip-provenienza' }, c.condizioni.map((x) => h('li', {}, h('span', {}, x.voce), h('strong', {}, x.testo)))) : null,
@@ -1467,8 +1468,11 @@ function tabAbilita(ctx, d) {
       cat.abilita.map((a) => h('tr', { class: a.diClasse ? 'di-classe' : null },
         h('th', { scope: 'row' }, info('abilita', a.nome), h('span', { class: 'sigla' }, ` ${a.caratteristica}`),
           a.competenza ? h('span', { class: 'sigla', title: `Competenza ${a.competenza} (prima Classe, §2.3)` }, ` ${a.competenza}`) : null, a.diClasse ? ' •' : null,
-          // §8.3: VA grezzo oltre il limite del VA personale
-          a.limite !== null && a.grezzo > a.limite ? h('span', { class: 'al-limite', title: `VA grezzo ${a.grezzo} oltre il limite ${a.limite} (§8.3): conta ${a.limite}` }, ' ⚑') : null,
+          // §8.3: VA grezzo oltre il limite del VA personale (il segno resta solo se il VA è davvero tagliato)
+          a.limite !== null && a.grezzo > a.limite + (a.oltreLimite ?? 0) ? h('span', { class: 'al-limite', title: `VA grezzo ${a.grezzo} oltre il limite ${a.limite} (§8.3): conta ${a.limite + (a.oltreLimite ?? 0)}` }, ' ⚑') : null,
+          // A.247 (06/11/2026): il VA passa il limite perché il Direttore l'ha forzato. Il limite della categoria non è
+          // cambiato: è un'eccezione di questo personaggio, e il segno lo dice senza aggiungere una riga
+          a.oltreLimite ? h('span', { class: 'eccezione-limite', title: `Eccezione del Direttore (A.247): ${a.oltreLimite === 1 ? '1 punto forzato' : `${a.oltreLimite} punti forzati`} oltre il limite ${a.limite}${a.limiteCategoria ? ` (${a.limiteCategoria})` : ''} della categoria, che non cambia` }, ' ✦') : null,
           // punti liberi ricevuti in un evento con punti in eccesso (E&L del 03/10/2026)
           liberiInEccesso(eccesso, a.nome) ? h('span', { class: 'liberi-eccesso', title: `Punti liberi: ${liberiInEccesso(eccesso, a.nome)}. ${eccesso.testo}` }, ` ✱ liberi: ${liberiInEccesso(eccesso, a.nome)}`) : null),
         h('td', { class: 'cella-va' }, h('span', { class: 'va-con-usi' }, valoreEffettivo(a.nome, a.effettivo, a.totale, a.scomposizione, {
@@ -1500,7 +1504,7 @@ function tabAbilita(ctx, d) {
         sezione('Abilità',
           eccesso ? avvisoPuntiEccesso(ctx, eccesso) : null,
           h('div', { class: 'abilita-affiancate' }, tabella(d.categorie.slice(0, meta)), tabella(d.categorie.slice(meta))),
-          h('p', { class: 'nota' }, `• Abilità di Classe. S / P / G / N: competenza nella prima Classe (§2.3). ⚑: VA oltre il limite della categoria (§8.3). ▼/▲: il VA mostrato comprende le condizioni della sessione. «Calcolo» apre il conto del VA.${eccesso ? ' ✱: punti liberi ricevuti in un evento con punti in eccesso.' : ''}`))),
+          h('p', { class: 'nota' }, `• Abilità di Classe. S / P / G / N: competenza nella prima Classe (§2.3). ⚑: VA oltre il limite della categoria (§8.3). ✦: eccezione del Direttore, il VA passa il limite (A.247). ▼/▲: il VA mostrato comprende le condizioni della sessione. «Calcolo» apre il conto del VA.${eccesso ? ' ✱: punti liberi ricevuti in un evento con punti in eccesso.' : ''}`))),
       h('aside', { class: 'colonna-condizioni', 'aria-label': 'Condizioni attive' },
         h('section', { class: 'riquadro condizioni-attive' },
           h('h2', {}, 'Condizioni attive'),

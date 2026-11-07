@@ -108,7 +108,9 @@ test('superare un massimo: avviso con il motivo; forzato con conferma, resta com
   b = spostaInBozza(p, spostaInBozza(p, b, 4, 'Sopravvivenza', -2), 4, 'Atletica', 4);
   const avvisi = avvisiSpostamento(p, b, dati);
   assert.deepEqual(avvisi.map((a) => [a.tipo, a.abilita]), [['limite', 'Atletica']]);
-  assert.match(avvisi[0].testo, /Atletica nel 4° livello: 2 punti non aumentano il VA personale, già al limite 9 \(.+\) \(§8\.3\)/);
+  // A.247 (lotto 179): l'avviso dice che il VA passerà davvero il limite, non più che il punto resta senza effetto
+  assert.match(avvisi[0].testo, /Atletica nel 4° livello: 2 punti vanno oltre il limite del VA personale 9 \(.+\) \(§8\.3\)/);
+  assert.match(avvisi[0].testo, /il VA passa davvero il limite \(A\.247\)/);
   // nel pannello l'avviso sta sulla riga dell'Abilità
   assert.equal(statoPannello(p, b, 4, dati).righe.find((r) => r.nome === 'Atletica').avvisi.length, 1);
   const d = decisioniConferma(p, b, avvisi);
@@ -116,9 +118,11 @@ test('superare un massimo: avviso con il motivo; forzato con conferma, resta com
   const n = applicaSpostamento(p, b, dati, d);
   assert.deepEqual(n.livelli[2].puntiDirettore.forzati, ['Atletica']);
   const s = calcolaScheda(n, dati);
-  // forzato: niente errori né punti da riassegnare; il VA non supera il limite delle regole
+  // forzato: niente errori né punti da riassegnare. A.247 (06/11/2026, lotto 179): il VA sale **davvero** oltre il
+  // limite — prima si fermava a 9, cioè al limite delle regole
   assert.deepEqual([s.errori, s.completamenti, s.eccessi], [[], [], []]);
-  assert.equal(va(n, 'Atletica'), 9);
+  assert.equal(va(n, 'Atletica'), 11, 'i 2 punti forzati valgono: 9 + 2');
+  assert.equal(calcolaScheda(n, dati).abilita.find((x) => x.nome === 'Atletica').oltreLimite, 2, 'e la scheda dice che è un’eccezione');
   // senza la forzatura la scheda chiederebbe di riassegnarli
   const senza = applicaSpostamento(p, b, dati);
   assert.deepEqual(puntiDaCompletare(senza, dati).map((x) => [x.livello, x.inattivi]), [[4, { 'Atletica': 2 }]]);

@@ -18,6 +18,9 @@
 //   tipo 'gratis'    → oggetto dato dal DdG in «Compra», senza scalare i crediti
 //   tipo 'concessione' → passaggio di livello anticipato concesso dal DdG (A.187, src/livello-px.js): i PX non cambiano
 //   tipo 'circostanza' → bonus o malus di circostanza mandato dal Tavolo
+//   tipo 'eccezione'  → eccezione dichiarata dal DdG: un punto Abilità forzato oltre il limite (A.247, lotto 179). Non
+//                       cambia da sé nessun valore (lo fa lo spostamento dei punti): è la riga che dice che quel VA è
+//                       un'eccezione, con l'Abilità, l'evento, da che VA a che VA e il limite passato.
 // Tutte funzioni pure: l'interfaccia è in src/ui/master.js, src/ui/tab.js e src/ui/tavolo.js.
 
 import { formaDaTablet, vociConsegnaDaTablet } from './progetti.js';
@@ -26,7 +29,7 @@ const isOggetto = (v) => v !== null && typeof v === 'object' && !Array.isArray(v
 const segno = (n) => (n > 0 ? `+${n}` : n < 0 ? `−${-n}` : '0');
 
 export const TIPI_CALCOLO = ['aggiungi', 'imposta'];
-export const TIPI = [...TIPI_CALCOLO, 'diretta', 'scelta', 'gratis', 'circostanza', 'concessione'];
+export const TIPI = [...TIPI_CALCOLO, 'diretta', 'scelta', 'gratis', 'circostanza', 'concessione', 'eccezione'];
 export const FONTE = 'Correzione del master';
 
 /** L'elenco pulito: solo righe ben formate, nell'ordine in cui sono state fatte. */

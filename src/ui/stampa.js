@@ -335,7 +335,9 @@ function foglioAbilita(d) {
       h('tr', { class: 'categoria' }, h('th', { colspan: 7 }, cat.nome)),
       cat.abilita.map((a) => h('tr', {},
         h('th', { scope: 'row' }, `${a.nome} `, h('span', { class: 'sigla' }, a.competenza ? `${a.caratteristica} ${a.competenza}` : a.caratteristica), a.diClasse ? ' •' : null,
-          a.limite !== null && a.grezzo > a.limite ? ' ⚑' : null),
+          // ⚑ solo se il VA è davvero tagliato; ✦ se il Direttore ha forzato l'eccezione (A.247)
+          a.limite !== null && a.grezzo > a.limite + (a.oltreLimite ?? 0) ? ' ⚑' : null,
+          a.oltreLimite ? ' ✦' : null),
         h('td', {}, segno(a.mod)), h('td', {}, String(a.base)), h('td', {}, String(a.corporazione)),
         h('td', {}, String(a.avanzamento)), h('td', { title: a.equip ? 'Equipaggiamento indossato (§7.11.1)' : null }, a.equip ? segno(a.equip) : '0'),
         h('td', { class: 'va' }, String(a.va),
@@ -354,7 +356,7 @@ function foglioAbilita(d) {
   return h('div', { class: 'f2-griglia' },
     box({ titolo: 'Abilità', tinta: 'accento', forte: true, classe: 'f2-abilita' },
       h('div', { class: 'abilita-affiancate' }, tabellaAbilita(d.categorie.slice(0, meta)), tabellaAbilita(d.categorie.slice(meta))),
-      h('p', { class: 'piccolo' }, '• Abilità di Classe. S / P / G / N: competenza (§2.3). VA = Mod + Base + Corp + Av. (Avanzamento), al massimo il limite (⚑: VA grezzo oltre il limite, §8.3), + Eq. (equipaggiamento indossato).'),
+      h('p', { class: 'piccolo' }, '• Abilità di Classe. S / P / G / N: competenza (§2.3). VA = Mod + Base + Corp + Av. (Avanzamento), al massimo il limite (⚑: VA grezzo oltre il limite, §8.3; ✦: eccezione del Direttore, il VA passa il limite, A.247), + Eq. (equipaggiamento indossato).'),
       // bonus condizionali accanto al VA (in apice): fuori dal valore, con la condizione
       condizionaliStampa(d.categorie),
       // punti liberi in eccesso (E&L del 03/10/2026): l'avviso resta sulla carta finché non si tolgono

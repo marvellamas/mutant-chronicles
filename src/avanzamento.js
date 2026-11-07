@@ -29,7 +29,7 @@ import { notaDaApplicare } from './talenti.js';
 import { umanita, pmConUmanita } from './umanita.js';
 import { erroriParametriTalenti } from './calc.js';
 import { avvisoIncantesimo } from './quote-incantesimi.js';
-import { competenzaDi, baseIniziale, limiteAbilita, vaPersonale, puntiUtili } from './competenze.js';
+import { competenzaDi, baseIniziale, limiteAbilita, vaPersonale, puntiUtili, limiteConEccezioni, oltreIlLimite } from './competenze.js';
 
 /**
  * Il Talento a scelta di una Classe dal nome salvato nel file. Un Talento rinominato dal manuale conserva i nomi di prima
@@ -313,7 +313,8 @@ function statoCreazione(creazione, dati) {
   const classe = trova(dati.classi.classi, creazione.classe);
   const car = Object.fromEntries(Object.entries(s1.caratteristiche).map(([k, c]) => [k, c.valore]));
   // i punti liberi inattivi (§2.13: non aumentano il VA personale) non entrano nel grezzo
-  const abil = Object.fromEntries(s1.abilita.map((a) => [a.nome, { daClasse: a.daClasse, liberi: a.liberi }]));
+  // A.247: l'eccezione concessa alla creazione viaggia con lo stato (oltre), così il VA resta sopra il limite
+  const abil = Object.fromEntries(s1.abilita.map((a) => [a.nome, { daClasse: a.daClasse, liberi: a.liberi, ...(a.oltreLimite ? { oltre: a.oltreLimite } : {}) }]));
   const inattivi = s1.abilita.filter((a) => a.inattivi > 0).map((a) => ({ livello: 1, abilita: a.nome, punti: a.inattivi }));
   const { fisso, dado } = classe.pv_per_grado;
   const pvCreazione = fisso + (dati.regole.creazione.dado_pv_massimizzato ? dado : 0);
@@ -546,10 +547,22 @@ function applicaVoce(prima, voce, dati) {
 
   // §8.3: Punti Abilità Liberi, dopo Caratteristiche e Grado del livello; entrano solo quelli che
   // aumentano il VA personale, gli altri restano inattivi (da riassegnare, non accantonati)
+  // A.247 (Davide, 06/11/2026): in un'Abilità che il Direttore ha forzato, dopo l'avviso, i punti entrano tutti e il VA
+  // passa davvero il limite; l'eccezione resta attaccata all'Abilità (stato.abil[a].oltre)
+  const forzateQui = new Set(Array.isArray(v.puntiDirettore?.forzati) ? v.puntiDirettore.forzati : []);
   for (const [a, p] of Object.entries(isOggetto(v.puntiAbilita) ? v.puntiAbilita : {})) {
     if (!(a in stato.abil) || !Number.isInteger(p) || p <= 0) continue;
     const x = stato.abil[a];
-    const { utili, inattivi } = puntiUtili(grezzoDi(stato, a, x.daClasse + x.liberi, dati), limiteDi(stato, a, dati).valore, p);
+    const grezzoPrima = grezzoDi(stato, a, x.daClasse + x.liberi, dati);
+    const lim = limiteDi(stato, a, dati).valore;
+    const limEff = limiteConEccezioni(lim, x.oltre ?? 0);
+    if (forzateQui.has(a)) {
+      const concesse = oltreIlLimite(grezzoPrima, limEff, p);
+      if (concesse) x.oltre = (x.oltre ?? 0) + concesse;
+      x.liberi += p;
+      continue;
+    }
+    const { utili, inattivi } = puntiUtili(grezzoPrima, limEff, p);
     x.liberi += utili;
     if (inattivi) stato.inattivi.push({ livello: n, abilita: a, punti: inattivi });
   }
@@ -1059,7 +1072,9 @@ export function statoCompletamento(personaggio, bozza, dati) {
       nome, categoria, caratteristica, mod: modDi(stato, caratteristica, dati), base: baseIniziale(prima, nome, dati.regole),
       competenza: competenzaDi(prima, nome), limite: lim.valore, limiteCategoria: lim.categoria, limiteDa: lim.classi, grezzo,
       corporazione: stato.corp.abilita_bonus.includes(nome) ? 1 : 0, avanzamento, daClasse: x.daClasse,
-      totale: vaPersonale(grezzo, lim.valore), punti, motivoPiu, inattivi: ev.inattivi?.[nome] ?? 0,
+      // A.247: anche qui il VA è quello vero, eccezioni del Direttore comprese
+      totale: vaPersonale(grezzo, limiteConEccezioni(lim.valore, x.oltre ?? 0)), punti, motivoPiu, inattivi: ev.inattivi?.[nome] ?? 0,
+      ...(x.oltre ? { oltreLimite: x.oltre } : {}),
     };
   });
   return { ...ev, rimasti, errori: validaCompletamento(p, ev.livello, pa, dati), abilita };
@@ -1714,7 +1729,9 @@ function schedaARiposo(personaggio, dati) {
     const componenti = { mod: caratteristiche[caratteristica].mod, base: baseIniziale(prima, nome, dati.regole), corporazione: stato.corp.abilita_bonus.includes(nome) ? 1 : 0, avanzamento };
     const lim = limiteDi(stato, nome, dati);
     const grezzo = valoreAbilita(componenti);
-    const cmAbilita = corretto(vaPersonale(grezzo, lim.valore), `abilita:${nome}`);
+    // A.247: le unità che il Direttore ha forzato alzano il limite di questa Abilità (il limite della categoria resta)
+    const oltreLimite = x.oltre ?? 0;
+    const cmAbilita = corretto(vaPersonale(grezzo, limiteConEccezioni(lim.valore, oltreLimite)), `abilita:${nome}`);
     return {
       nome, categoria, caratteristica, ...componenti, daClasse: x.daClasse, liberi: x.liberi,
       ...(caratteristiche[caratteristica].temporaneo !== undefined ? { caratteristicaTemporanea: { sigla: caratteristica, valore: caratteristiche[caratteristica].valore, base: caratteristiche[caratteristica].base } } : {}),
@@ -1722,6 +1739,7 @@ function schedaARiposo(personaggio, dati) {
       grezzo, totale: cmAbilita.valore,
       ...(cmAbilita.righe.length ? { calcolato: cmAbilita.calcolato, correzioniMaster: cmAbilita.righe } : {}),
       ...(spostati[nome] ? { spostatiDirettore: spostati[nome] } : {}),
+      ...(oltreLimite ? { oltreLimite } : {}),
     };
   });
 

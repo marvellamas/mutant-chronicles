@@ -24,7 +24,7 @@ import { elencoVeicoli, migraNelRegistro } from './veicoli-registro.js';
 import { eRiferimento } from '../veicoli-registro.js';
 import { provaSostituzione, rigaIncantesimi, sorgenteModifica, confrontaIncantesimi, testoVariazioneIncantesimi, nomiNelloStorico } from '../incantesimi-regole.js';
 import { permessoSalita, sfasamento, scelteDelLivello, TIPO_CONCESSIONE, CHIAVE_CONCESSIONE } from '../livello-px.js';
-import { eventiConPunti, applicaSpostamento, descriviSpostamento, controllaPuntiDaTablet } from '../sposta-punti.js';
+import { eventiConPunti, applicaSpostamento, descriviSpostamento, descriviEccezioni, descriviRiassegnazione, controllaPuntiDaTablet } from '../sposta-punti.js';
 import { apriSpostaPunti } from './sposta-punti.js';
 import { leggiMomento, attoCampagna, serverCartella, elencoCartella, leggiCartella, leggiCartellaConRevisione, scriviCartella, contestoMasterQui, pingMasterQui, salvaBackupMaster, leggiBackupMaster } from './cartella.js';
 import { modalitaMaster, mostraMarchio, statoContestoMaster, registro as registroMaster, nuovaCorrezione, aggiungiCorrezione, annullaCorrezione, avvisoAnnulla, registraDiretta, differenzeDirette, differenzeOggetti, ripristinoDiretta, descriviScelte, soloScelte, ripristinaScelte, masterDiverso, normalizzaCircostanzeMaster } from '../correzioni-master.js';
@@ -1401,6 +1401,12 @@ function renderCompletaPagina() {
       stato.scelte = p.creazione;
       stato.livelli = p.livelli;
       stato.completa = null;
+      // A.248 (Davide, 06/11/2026): «La riassegnazione va registrata.» Una riga nello storico con chi l'ha fatta,
+      // quando, in quale evento e dove sono andati i punti
+      {
+        const testo = descriviRiassegnazione(ev, bozza.punti);
+        if (testo) stato.sessione = rigaStorico(stato.sessione, rigaIncantesimi(testo, sorgenteIncantesimi()));
+      }
       persisti();
       const restano = puntiDaCompletare(personaggio(), dati).reduce((s, c) => s + c.mancanti, 0);
       stato.messaggioScheda = { tipo: 'ok', testo: `Punti Abilità ${ev.livello === 1 ? 'della creazione' : `${conOrdinale('del', ev.livello)} livello`} ${ev.riassegna ? 'riassegnati' : 'assegnati'}.${restano ? ` Ne restano ${restano} da assegnare.` : ''}` };
@@ -1734,6 +1740,11 @@ function registraModificheMaster() {
     // 13/10: il motivo scritto nella finestrella dell'azione («Annulla (errore)» dell'Umanità, A.111) finisce qui
     const riga = nuovaCorrezione({ chiave: 'scelte', etichetta: descr, tipo: 'scelta', motivo: motivoOra });
     lista = aggiungiCorrezione(lista, riga);
+    // A.247: ogni eccezione al limite ha la sua riga, con l'Abilità, l'evento, da che VA a che VA e il limite passato
+    for (const testo of stato.masterEccezioni ?? []) {
+      lista = aggiungiCorrezione(lista, nuovaCorrezione({ chiave: 'eccezione-limite', etichetta: testo, tipo: 'eccezione', motivo: motivoOra }));
+    }
+    stato.masterEccezioni = null;
     // la copia del file com'era prima: «Annulla» rimette le scelte da lì
     attesa = { id: stato.id, riga: riga.id, nome: stato.scelte.nome, testo: prima.testo };
   }
@@ -1986,6 +1997,8 @@ function azioniMaster() {
           const etichetta = descriviSpostamento(prima, bozza, { quando });
           if (!etichetta) return;
           const n = applicaSpostamento(prima, bozza, stato.dati, { quando, motivo, ...decisioni });
+          // A.247: una forzatura oltre il limite lascia la sua riga nel registro, a parte da quella dello spostamento
+          stato.masterEccezioni = descriviEccezioni(prima, n, stato.dati, { quando });
           stato.masterMotivo = motivo || null;
           stato.masterEtichetta = etichetta;
           stato.scelte = { ...stato.scelte, puntiAbilitaLiberi: n.creazione.puntiAbilitaLiberi, puntiDirettore: n.creazione.puntiDirettore ?? null };

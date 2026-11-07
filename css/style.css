@@ -202,6 +202,9 @@ main:has(> .scheda-tab.larghezza-piena) { max-width: 1650px; }
 .avviso-eccesso > p:first-child strong { font-size: 1.05rem; }
 .avviso-eccesso ul { margin: 0.3rem 0; padding-left: 1.2rem; }
 .liberi-eccesso { color: var(--errore); font-size: 0.85em; font-weight: 600; white-space: nowrap; }
+/* A.247 (06/11/2026): il VA passa il limite perché il Direttore ha forzato l'assegnazione. Non è un errore e non è il
+   limite che cambia: un segno accanto al numero, non una riga in più (regola dello spazio in alto, CLAUDE.md). */
+.eccezione-limite { color: var(--accento); font-size: 0.9em; font-weight: 700; white-space: nowrap; cursor: help; }
 
 .contatore { display: inline-block; padding: 0.35rem 0.8rem; border-radius: 999px; margin: 0.25rem 0.5rem 0.25rem 0; background: var(--superficie); border: 1px solid var(--bordo); }
 .contatore strong { font-size: 1.15rem; }
