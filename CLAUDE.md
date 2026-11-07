@@ -270,6 +270,10 @@ La v1 (creazione al 1° livello) è chiusa. Oggi il progetto comprende:
 
 - **I PI dei veicoli nella scheda da stampare** (06/11, lotto 177): fino a 150 caselle una casella vale 1 PI; oltre, il primo passo che rientra (`data/veicoli.json` → `strutture.stampa`, `src/stampa.js` → `scalaPiVeicolo`), uguale per tutte le strutture del mezzo, con la riga «1 casella = 5 PI · PI attuali ____ / 300» e una casella annerita solo a blocco perso per intero. La Neverlost (300 + 180 + 120 PI) passa da 600 a 120 caselle e il suo foglio entra; Scout e Autovettura non cambiano. Test `tests/stampa-neverlost-pi.test.js`.
 
+- **Niente frazioni nelle riserve** (07/11, lotto 178, A.252, `docs/diff-lotto178-2026-11-07.md`): CM e NEC si contano e si consumano **solo in quantità intere**. Una frazione nata da una conversione di regole di prima sale all'intero superiore **una volta sola** (4,2 / 6 → 5 / 6) e il valore di prima resta nello storico: regola unica in `src/cariche-mistiche.js` → `interoRiserva` (`conFrazione` la riconosce), applicata da `allineaCm`, `convertiRiservaNec`/`allineaNec` (segno `a252` nel registro: spendendo, la riserva non risale) e, per i mezzi, `convertiDaLx`, `convertiRicambi` ed `energiaLetta` (`esatte_prima`, `ricambi_prima`). **Supera la A.228 e parte della A.193**; resta valido che un uso costa pieno e che la conversione non si ripete. Non tocca ciò che riserve di cariche non è: PM personali, proiettili, PI, km della giornata, minuti di volo, ore d'aria. Ricarica invariata: 1 CM = 6 PM a 3:1, 4 a 2:1, 2 a 1:1. `node tools/riserve-intere.mjs <personaggi> [<veicoli>]` (sola lettura; `--scrivi` arrotonda, scrive una riga nello storico e non si ripete). Test `tests/frazioni-a252.test.js` (sostituisce `frazioni-a228`).
+
+- **Le diciassette risposte del 06/11** (A.243–A.259): registrate in `docs/risposte-master.md`; applicata solo la A.252 (lotto 178), le altre sedici restano da applicare.
+
 Fuori perimetro per ora: tiri automatici fuori dalla plancia; manovre, inseguimenti e collisioni dei veicoli al tavolo.
 
 ## Riferimenti

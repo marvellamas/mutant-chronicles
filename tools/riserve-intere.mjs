@@ -16,6 +16,7 @@ import { caricaDati } from '../src/rules.js';
 import { deserializzaPersonaggio, normalizza, serializza } from '../src/character.js';
 import { calcolaScheda } from '../src/calc.js';
 import { massimiSessione, allineaSessione } from '../src/sessione.js';
+import { rigaStorico } from '../src/storico.js';
 import { conFrazione, interoRiserva, numeroRiserva } from '../src/cariche-mistiche.js';
 import { normalizzaVeicoli } from '../src/veicoli.js';
 import { fermaSeSconosciuti, ARGOMENTI } from './argomenti.mjs';
@@ -77,13 +78,12 @@ async function personaggi(cartella, dati) {
     console.log(` ${f}`);
     for (const r of prima) console.log(`   ${riga(r)}`);
     if (!SCRIVI) continue;
-    // allineaSessione applica da sé la A.252 e scrive il valore di prima nello storico delle conversioni
-    const sessione = allineaSessione(pg.sessione, m);
-    const storico = [...(pg.scelte.storico ?? []), {
-      quando: QUANDO, cosa: `A.252: riserve portate a cariche intere — ${prima.map(riga).join('; ')}`, da: 'tools/riserve-intere.mjs',
-    }];
-    const fuori = serializzaPersonaggio({ ...pg, scelte: { ...pg.scelte, storico }, sessione });
-    await writeFile(join(cartella, f), `${JSON.stringify(fuori, null, 2)}\n`);
+    // allineaSessione applica da sé la A.252 (e scrive il valore di prima accanto alla riserva); qui si aggiunge la
+    // riga leggibile nello storico del personaggio, che dice da dove si viene
+    const sessione = rigaStorico(allineaSessione(pg.sessione, m), `A.252: riserve portate a cariche intere — ${prima.map(riga).join('; ')}`, new Date(QUANDO));
+    const vecchio = JSON.parse(testo);
+    const fuori = serializza(scelte, { versioniDati: vecchio.versioni_dati, livelli: pg.livelli, sessione, calendario: pg.calendario, pg: pg.pg });
+    await writeFile(join(cartella, f), fuori.endsWith('\n') ? fuori : `${fuori}\n`);
     scritti += 1;
   }
   console.log(`${file.length} file, ${conFrazioni} con riserve da arrotondare${SCRIVI ? `, ${scritti} scritti` : ''}.`);
