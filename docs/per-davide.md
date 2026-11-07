@@ -2710,6 +2710,74 @@ Manteniamo ai gradi Semplice e Medio il profilo umano senza Doni automatici, con
 
 Il nome e la corruzione non attribuiscono automaticamente poteri, danni Magici o altre capacità. Eventuali Doni, mutazioni o dotazioni superiori vengono assegnati esplicitamente dal Direttore e riportati nel singolo profilo.
 
+> > #### A.243 — Sostituzione della cella: risposta approvata da Davide (06/11/2026)
+
+> > ## **Estrarre soltanto la cella costa 1 AzP; inserire una cella pronta in un’arma vuota costa 1 AzP; la sostituzione diretta di una cella con un’altra resta un’unica operazione da 1 AzP complessivo. La cella estratta conserva esattamente la carica residua.**
+
+> > #### A.244 — Riempimento dei caricatori fuori dal combattimento: risposta approvata da Davide (06/11/2026)
+
+> > ## **Fuori dal combattimento, riempire i caricatori richiede 1 minuto ogni 50 colpi trasferiti, o frazione, calcolato sul totale dell’operazione. I caricatori devono essere estratti e le munizioni devono essere realmente disponibili.**
+
+> > #### A.245 — Punti Integrità delle celle: risposta approvata da Davide (06/11/2026)
+
+> > ## **Ogni singola cella possiede 2 PI. Una cella danneggiata deve essere separata dalla pila. A 0 PI è distrutta e inutilizzabile, normalmente non riparabile: l’evento va registrato e la cella va rimossa dalle scorte utilizzabili.**
+
+> > #### A.246 — Corruzione del frammento viola: risposta approvata da Davide (06/11/2026)
+
+> > ## **La Corruzione segue il frammento viola rimosso: la CyberArma perde Corruzione 1, mentre il frammento estratto la conserva. Lo stato precedente resta consultabile nello storico.**
+
+> > #### A.247 — Aumento oltre il limite di un’Abilità: risposta approvata da Davide (06/11/2026)
+
+> > ## **Se il Direttore, dopo l’avviso del sistema, forza deliberatamente l’assegnazione di un punto oltre il limite, il VA dell’Abilità aumenta realmente oltre il limite. L’operazione deve essere registrata come eccezione esplicita.**
+
+> > #### A.248 — Riassegnazione dei punti divenuti inefficaci: risposta approvata da Davide (06/11/2026)
+
+> > ## **I punti che diventano inefficaci in seguito a una modifica forzata del Direttore possono essere riassegnati dal giocatore nello stesso livello originario, rispettando le normali regole di assegnazione. La riassegnazione va registrata.**
+
+> > #### A.249 — Sostituzione del caricatore: risposta approvata da Davide (06/11/2026)
+
+> > ## **Estrarre soltanto il caricatore costa 1 AzP; inserirne uno in un’arma vuota costa 1 AzP; la sostituzione diretta resta un’unica operazione da 1 AzP complessivo. Il caricatore estratto conserva esattamente i colpi residui.**
+
+> > #### A.250 — Caricatore parzialmente pieno come caricatore pronto: risposta approvata da Davide (06/11/2026)
+
+> > ## **Un caricatore compatibile, accessibile e con almeno un colpo è considerato pronto anche se non è pieno. Ha lo stesso costo d’azione e beneficia normalmente di Ricarica Rapida o Ricarica Esperta; il numero esatto di colpi residui deve essere conservato.**
+
+> > #### A.251 — CyberArma modificata e PM personali: risposta approvata da Davide (06/11/2026)
+
+> > ## **La sola sostituzione del cristallo e l’inserimento di una SIN consentono ancora di alimentare la CyberArma con i PM personali. L’inserimento di una riserva interna di CM oppure la conversione a NeC impediscono invece l’uso dei PM personali e fanno perdere le proprietà da Custode. Configurazione CM: 1 CM \+ 1 AzP ogni 10 colpi; conversione NeC rossa: 1 carica \+ 1 AzP ogni 10 colpi. Cristallo e SIN possono coesistere con l’alimentazione a PM personali; CM e NeC sono conversioni energetiche alternative.**
+
+> > #### A.252 — Frazioni di CM e NeC: risposta approvata da Davide (06/11/2026)
+
+> > ## **CM e NeC si consumano solo in quantità intere. Le eventuali frazioni prodotte dalla conversione di regole pregresse vanno arrotondate una sola volta all’intero superiore: per esempio 4,2/6 diventa 5/6. Ricaricare 1 CM costa rispettivamente 6, 4 o 2 PM con conversione 3:1, 2:1 o 1:1. Questa decisione supera la A.228 e le parti della A.193 che mantenevano frazioni nelle riserve effettive; il valore precedente resta soltanto nello storico.**
+
+> > #### A.253 — Decollo e atterraggio della Neverlost: risposta approvata da Davide (06/11/2026)
+
+> > ## **A terra la Neverlost non rulla e ha movimento 0\. Il decollo verticale è una manovra complessa: 1 AzM \+ 1 AzP del pilota; normalmente non richiede prova, salvo spazio ristretto, attacco in corso o danni. Nel round di decollo sale in stazionamento senza spostamento orizzontale; dal round successivo usa i movimenti della scala tattica 8/16/24, senza convertirli in 80/160/240 sulla mappa terrestre: si passa alla scala tattica o si esce dalla mappa. L’atterraggio è una manovra complessa e conclude il movimento.**
+
+> > #### A.254 — Posizione della testa della Madre delle Murene: risposta approvata da Davide (06/11/2026)
+
+> > ## **Il Direttore può collocare la testa in qualunque casella occupata dalla sagoma corrente, anche centrale, purché la posizione sia anatomicamente plausibile rispetto alla posa o all’emersione parziale; mai fuori dalla sagoma. La posizione può cambiare quando la creatura si muove, ruota, cambia configurazione o assume una nuova posa, non fra un attacco e l’altro per ottenere una linea più favorevole. Il segnalino modifica soltanto l’origine di attacchi, soffio, aura ed effetti centrati sulla testa, non movimento, spazio occupato o portata.**
+
+> > #### A.255 — Murena eterea all’interno della roccia: risposta approvata da Davide (06/11/2026)
+
+> > ## **La Murena eterea può terminare il movimento dentro la roccia. Finché è completamente immersa non ha linea di vista o d’effetto verso l’esterno, non può attaccare né essere normalmente bersagliata e non percepisce automaticamente oltre la parete. Per attaccare deve emergere quanto basta e spendere il normale movimento; se non lo esaurisce può rientrare con il movimento residuo. Se viene eccezionalmente resa corporea nella roccia, viene spostata nella casella libera più vicina alla superficie, diventa corporea e Prona, senza attacchi di opportunità; a parità di distanza decide il Direttore.**
+
+> > #### A.256 — Prezzo di vendita degli artefatti: risposta approvata da Davide (06/11/2026)
+
+> > ## **Il prezzo di vendita si calcola come costo completo di costruzione × 3 × coefficiente di rarità. Coefficienti: Comune 1; Non comune 1,5; Raro 2; Molto raro 3; Leggendario 5; Unico o reliquia senza prezzo di catalogo. Il risultato si arrotonda per eccesso ai 50 cr successivi. L’Anello della Rigenerazione 9, con costo di costruzione di 1.500 cr e rarità Molto rara, vale quindi 13.500 cr. Rarità e reperibilità restano separate: disporre del denaro non garantisce che l’oggetto sia disponibile.**
+
+> > #### A.257 — Valore complessivo della FIAT LUX: risposta approvata da Davide (06/11/2026)
+
+> > ## **Il prezzo di catalogo dello Scout standard resta 126.510 cr. Il valore corrente della FIAT LUX comprende base, equipaggiamento installato o assegnato, dotazione portatile a bordo, munizioni e consumabili residui, accumulatori di ricambio e loro stato o carica. Vanno mostrati separatamente modello base, dotazione extra e valore totale dell’esemplare. Kit trauma, pistola medica, cartucce di naniti, 400 colpi aggiuntivi e ricambi rossi o verdi restano inventario del gruppo, ma concorrono al totale finché sono a bordo o assegnati; il valore cambia quando vengono consumati, rimossi o trasferiti.**
+
+> > #### A.258 — Eretici e vecchio catalogo dei nemici: chiarimento provvisorio approvato da Davide (06/11/2026)
+
+> > ## **Gli Eretici generici presenti nei dati precedenti non sono creature canoniche del nostro bestiario. Come chiarimento provvisorio dei soli dati attualmente visibili nell’app, finché non saranno sostituiti, gli Eretici Minori mantengono Toccato e i Boss mantengono Consacrato, mentre i profili ordinari Semplici o Medi non ricevono doni automatici. Questa indicazione non approva né canonizza quei profili: gli Eretici e tutte le altre creature nemiche inserite in precedenza da Marcello devono essere superati dalle creature create da noi per il Manuale. Gli Eretici come creature dell’Oscura Simmetria devono ancora essere completati. La A.258 non va quindi interpretata come convalida del catalogo esistente.**
+
+> > #### A.259 — Uso dei Capolavori: risposta approvata da Davide (06/11/2026)
+
+> > ## **Ogni singolo Capolavoro concede un proprio uso una volta per sessione, non una volta per personaggio. Deve essere lo strumento principale di una prova pertinente e non offensiva. Nella stessa prova si può usare un solo Capolavoro e ripetere il tiro una sola volta, accettando il secondo risultato. Se l’oggetto viene trasferito, resta già usato fino alla sessione successiva.**
+
 > > ## **8\. Prove da fare**
 
 Le prove in sospeso. Quelle che puoi fare tu dal PC del Direttore, nessuna lunga più di qualche minuto. Per tutte: prima **Mutant.bat → 2 «Aggiorna»**, poi **1 «Avvia»**.

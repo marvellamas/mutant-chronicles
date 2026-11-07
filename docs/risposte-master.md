@@ -2451,3 +2451,67 @@ Manuali e «per-davide.md» invariati dal 03/11 (Giocatore 0.54 §3.2 per le fre
 - **A.117 — RISOLTA** *(Davide, 03/11/2026)*. Ai gradi Semplice e Medio l'Eretico corrotto resta il profilo umano senza Doni automatici, con l'eccezione «più fragile del grado»; nome e corruzione non danno poteri, danni Magici o altre capacità; i Doni li assegna il Direttore nel singolo profilo. **L'app non faceva così**: dava ai due gradi il modulo Corrotto «Posseduto» (la domanda li aveva descritti male); corretto (`data/bestiario.json`, generatore, §5.5.1, pagina online). Minore e Boss non cambiano (A.258).
 - **A.233 — RISOLTA** *(02/11)*. Il capitolo è distinto dall'Atto dei PX; scena e capitolo li comincia il Direttore dalla plancia («Nuova scena…», «Nuovo capitolo…», con conferma che conta gli usi e «Annulla»); rinnovano solo gli usi pertinenti e non toccano PM, munizioni o altre risorse (cambiano due numeri sul server, non i file dei PG); usi per sessione con «Nuova sessione»; giorno e settimana dal Calendario. Frequenze del §3.2 applicate: `usi: { frequenza, quantita, per? }`, 58 voci dal testo del catalogo, Hacker per sistema, Pilotaggio Acrobatico per scena.
 - **Nuove domande, aperte: A.258–A.259** (`docs/pacchetto-per-davide-2026-11-05-lotto175.md`): A.258 l'Eretico corrotto Minore (Toccato) e Boss (Consacrato) tengono il modulo? (oggi sì); A.259 Capolavoro «una volta per sessione» è del personaggio o di ciascun Capolavoro? (oggi al tavolo).
+
+
+## 7 novembre 2026 — Lotto 178: le diciassette risposte del 06/11, A.252 applicata (`docs/diff-lotto178-2026-11-07.md`)
+
+Manuali invariati dal 03/11 (Giocatore 0.54, Magia 1.11, Armamenti 0.74, Equipaggiamento 0.30, Veicoli 0.10, Scout 0.6,
+Neverlost 1.6, Mostri Word 0.46, E&L del 15/10). «per-davide.md» del 06/11 08:32 UTC: **Davide ha risposto a tutte e
+diciassette le domande aperte** (A.243–A.259), in coda alla sezione 7. Le prime 2.712 righe del Doc sono identiche alla
+copia di prima: le risposte sono l'unica aggiunta. Questo lotto applica **soltanto la A.252**, che ribalta una decisione
+appena presa; le altre sedici sono registrate qui e vanno applicate nei lotti successivi.
+
+- **A.252 — RISOLTA** *(Davide, 06/11/2026)*. **CM e NEC si consumano solo in quantità intere.** Le frazioni prodotte
+  dalla conversione delle regole di prima si arrotondano **una sola volta all'intero superiore** (4,2/6 → 5/6); il valore
+  precedente resta soltanto nello storico. Ricaricare 1 CM costa 6 PM a 3:1, 4 a 2:1, 2 a 1:1 (l'app faceva già così:
+  CM × 2 × rapporto). **Questa decisione supera la A.228 e le parti della A.193 che mantenevano le frazioni nelle riserve
+  effettive**: quelle due restano valide per il resto (un uso costa sempre pieno; la conversione non si ripete e non
+  arrotonda per eccesso al momento di convertire). Non riguarda i conteggi che non sono riserve di cariche: PM personali,
+  proiettili e PI restano come sono.
+
+Risposte ricevute il 06/11 e **da applicare** (una per lotto o raggruppate, nell'ordine che decide Marcello):
+
+- **A.243 — RISPOSTA, da applicare**. Estrarre soltanto la cella costa 1 AzP; inserirne una pronta in un'arma vuota 1 AzP;
+  la sostituzione diretta resta un'unica operazione da 1 AzP. La cella estratta conserva la carica residua (già così).
+- **A.244 — RISPOSTA, da applicare**. Riempire i caricatori fuori dal combattimento costa 1 minuto ogni 50 colpi
+  trasferiti, o frazione, sul totale dell'operazione; i caricatori vanno estratti e le munizioni realmente disponibili.
+- **A.245 — RISPOSTA, da applicare**. Ogni cella ha 2 PI suoi; una cella danneggiata si separa dalla pila; a 0 PI è
+  distrutta, non riparabile, si registra e si toglie dalle scorte utilizzabili.
+- **A.246 — RISPOSTA, da applicare (l'app fa già così)**. La Corruzione segue il frammento Viola rimosso: la CyberArma
+  perde Corruzione 1, il frammento la conserva, lo stato di prima resta nello storico.
+- **A.247 — RISPOSTA, da applicare**. Un punto forzato dal Direttore oltre il limite **aumenta davvero il VA**
+  (oggi il VA si ferma al limite); l'operazione si registra come eccezione esplicita.
+- **A.248 — RISPOSTA, da applicare (l'app fa già così)**. I punti divenuti inefficaci dopo una forzatura del Direttore li
+  riassegna anche il giocatore, nello stesso livello, con le regole normali; la riassegnazione si registra.
+- **A.249 — RISPOSTA, da applicare**. Come la A.243 per i caricatori: estrarre 1 AzP, inserire in un'arma vuota 1 AzP,
+  sostituzione diretta 1 AzP; il caricatore estratto conserva i colpi.
+- **A.250 — RISPOSTA, da applicare (l'app fa già così)**. Un caricatore compatibile e accessibile con almeno un colpo è
+  «pronto» anche se non pieno: stesso costo d'azione e beneficio di Ricarica Rapida o Esperta; i colpi residui si
+  conservano.
+- **A.251 — RISPOSTA, da applicare**. Cristallo e SIN lasciano la CyberArma a PM personali; una riserva interna di CM o la
+  conversione a NEC **impediscono i PM personali e fanno perdere le proprietà da Custode**. Configurazione CM: 1 CM + 1 AzP
+  ogni 10 colpi; NEC Rossa: 1 carica + 1 AzP ogni 10 colpi.
+- **A.253 — RISPOSTA, da applicare**. A terra la Neverlost ha movimento 0 e non rulla; decollo verticale = manovra
+  complessa (1 AzM + 1 AzP del pilota), senza prova salvo spazio ristretto, attacco o danni; nel Round del decollo sale
+  senza spostamento orizzontale, poi **8/16/24 in scala tattica, senza convertirli in 80/160/240** sulla mappa terrestre;
+  l'atterraggio è una manovra complessa e chiude il movimento.
+- **A.254 — RISPOSTA, da applicare (in parte già così)**. La testa va in qualunque casella della sagoma, anche centrale,
+  purché plausibile, mai fuori; si sposta quando la creatura si muove, ruota, cambia configurazione o posa, **non fra un
+  attacco e l'altro** per cercare una linea migliore; cambia solo l'origine di attacchi, soffio, aura ed effetti centrati.
+- **A.255 — RISPOSTA, da applicare**. La Murena eterea può fermarsi nella roccia: immersa non ha linea di vista o
+  d'effetto, non attacca e non è bersagliabile; per attaccare emerge spendendo movimento e può rientrare con il residuo.
+  Resa corporea nella roccia: spostata nella casella libera più vicina alla superficie, corporea e Prona, senza Attacchi
+  di Opportunità.
+- **A.256 — RISPOSTA, da applicare**. Prezzo di vendita degli Artefatti = costo di costruzione × 3 × coefficiente di
+  rarità (Comune 1; Non comune 1,5; Raro 2; Molto raro 3; Leggendario 5; Unico o reliquia senza prezzo), arrotondato per
+  eccesso ai 50 cr. **L'Anello con Rigenerazione 9: costruzione 1.500 cr, Molto raro → 13.500 cr.** Rarità e reperibilità
+  restano separate.
+- **A.257 — RISPOSTA, da applicare**. Il valore corrente del FIAT LUX comprende base, equipaggiamento, dotazione a bordo,
+  munizioni e consumabili residui, ricambi e loro carica, mostrati separati: modello base, dotazione extra, totale
+  dell'esemplare. Le dotazioni restano inventario del gruppo ma concorrono al totale finché sono a bordo.
+- **A.258 — RISPOSTA provvisoria, da applicare (l'app fa già così)**. Gli Eretici dei dati di prima non sono creature
+  canoniche: finché non saranno sostituiti, Minori con Toccato e Boss con Consacrato, Semplici e Medi senza doni. Non
+  canonizza quei profili: vanno superati dalle creature del Manuale.
+- **A.259 — RISPOSTA, da applicare**. Ogni Capolavoro ha il suo uso per sessione (non uno per personaggio): strumento
+  principale di una prova pertinente e non offensiva, un solo Capolavoro per prova, un solo ritiro con il secondo
+  risultato; se l'oggetto passa a un altro resta usato fino alla sessione dopo.
