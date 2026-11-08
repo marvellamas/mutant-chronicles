@@ -11,6 +11,9 @@
 //  - Maestria Hacker: `toglie_limite: ['hacker']` («Il precedente limite … viene eliminato»).
 // Restano «Da applicare al tavolo» (nessun contatore) le voci il cui limite non è un numero di usi di chi le possiede:
 // AL_TAVOLO qui sotto, con il motivo.
+// Il Capolavoro era fra questi fino al 08/11/2026: la A.259 ne ha fatto un numero («ogni singolo Capolavoro concede
+// un proprio uso una volta per sessione»), quindi adesso ha il suo «usi» con «per: 'capolavoro'» e l'app lo conta
+// (lotto 183, tools/lotti/lotto_183_capolavori.mjs, src/capolavori.js).
 //
 // Uso: node tools/lotti/lotto_175_frequenze.mjs [--scrivi]   (senza --scrivi dice soltanto cosa cambierebbe)
 // Rilanciabile.
@@ -30,7 +33,6 @@ export const AL_TAVOLO = {
   'Protocollo Shock': 'il limite è per beneficiario («ogni beneficiario può ricevere questo intervento una volta per combattimento»): il Talento si usa su più persone',
   'Fede Incrollabile': 'il limite è «per ciascun beneficiario»: il Talento si usa su più alleati',
   Consolazione: 'il limite è di chi riceve («ogni creatura può ricevere Consolazione una sola volta per scena»)',
-  Capolavoro: 'vale per ciascun Capolavoro creato («una volta per sessione permette di ripetere una di queste Prove»): non è un uso unico del personaggio',
   'Interposizione Armata': 'nessun limite («senza ulteriori limiti per Round o per combattimento»)',
 };
 const DA_AMBITO = { scontro: 'combattimento', sessione: 'sessione', giorno: 'giorno' };

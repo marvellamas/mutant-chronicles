@@ -715,8 +715,16 @@ export function normalizzaEquipaggiamento(valore) {
       if (storico.length) out.esemplare.storico = storico;
     }
     if (isOggetto(v.consegna) && testo(v.consegna.quando) && testo(v.consegna.da)) out.consegna = { quando: v.consegna.quando, da: v.consegna.da, ...(testo(v.consegna.progetto) ? { progetto: v.consegna.progetto } : {}) };
-    // A.61: armatura Capolavoro del Corazzaio, con la Contromisura scelta alla costruzione
-    if (isOggetto(v.capolavoro) && testo(v.capolavoro.contromisura)) out.capolavoro = { contromisura: v.capolavoro.contromisura };
+    // A.61: armatura Capolavoro del Corazzaio, con la Contromisura scelta alla costruzione.
+    // A.259 (06/11/2026): il Capolavoro dell'Artigiano è un oggetto con «capolavoro», e il suo uso per sessione sta
+    // **qui, sulla voce**, non nella sessione del personaggio: un Capolavoro trasferito resta già usato
+    // (src/capolavori.js). Senza questa riga il segno si perderebbe a ogni normalizzazione.
+    if (isOggetto(v.capolavoro)) {
+      const c = {};
+      if (testo(v.capolavoro.contromisura)) c.contromisura = v.capolavoro.contromisura;
+      if (isOggetto(v.capolavoro.usato)) c.usato = { ...(testo(v.capolavoro.usato.quando) ? { quando: v.capolavoro.usato.quando } : {}) };
+      if (Object.keys(c).length || v.capolavoro.artigiano === true) out.capolavoro = { ...c, ...(v.capolavoro.artigiano === true ? { artigiano: true } : {}) };
+    }
     if (Number.isInteger(v.pi_direttore) && v.pi_direttore >= 1) out.pi_direttore = v.pi_direttore; // A.47: PI fissati dal Direttore
     if (Number.isInteger(v.pm_iniziali) && v.pm_iniziali >= 0) out.pm_iniziali = v.pm_iniziali; // E&L 2 (A.19): contenitore trovato
     if (testo(v.matrice)) out.matrice = v.matrice.trim().slice(0, 80); // Magia §26.4: Matrice d'origine di una Batteria Matrice

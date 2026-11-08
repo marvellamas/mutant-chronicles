@@ -4532,5 +4532,36 @@
     "reperibilita_separata": "Rarità e reperibilità restano separate: disporre del denaro non garantisce che l’oggetto sia disponibile. L’app mostra la Reperibilità accanto al prezzo e non fa sembrare comprabile ciò che non è reperibile.",
     "prezzo_dichiarato": "Dove il manuale dà già un prezzo di catalogo, resta quello: la formula dà il prezzo di vendita calcolato, che l’app mostra accanto, e diventa il prezzo quando il catalogo non ne ha.",
     "TODO(Davide)": "A.261: la formula non ritrova i prezzi di catalogo già scritti nei manuali (Batteria da 5 PM Rossa: creazione 650, Comune → 1.950 cr calcolati, catalogo 1.000; le pergamene del §27.3 hanno Vendita = Creazione × 2, la formula darebbe × 3). La formula sostituisce quei prezzi o vale solo dove un prezzo non c’è? L’app tiene i prezzi dichiarati e mostra accanto il calcolo. A.262: la tabella della A.256 non dà il coefficiente dell’«Epica» (Grado V, §10.1), che nei dati esiste: l’app non calcola un prezzo per gli Artefatti Epici e lo dice."
+  },
+  "capolavoro": {
+    "versione_manuale": "Giocatore 0.54 (Artigiano, Talento di Grado V)",
+    "fonte": "A.259 (Davide, 06/11/2026); classi.json → Artigiano → Capolavoro",
+    "_nota": "Il contatore sta sull’oggetto, non sul personaggio: è il punto che decide tutto il resto. Se stesse sulla scheda, passando il Capolavoro a un compagno l’uso tornerebbe disponibile, e la regola dice il contrario.",
+    "frequenza": "sessione",
+    "per_oggetto": true,
+    "quantita": 1,
+    "uno_per_prova": true,
+    "ripetizioni_per_prova": 1,
+    "tiene_il_secondo": true,
+    "trasferimento": "resta già usato fino alla sessione successiva",
+    "bonus_va": 1,
+    "testi": {
+      "riga": "Ogni Capolavoro ha il suo uso: una volta per sessione, non una per personaggio.",
+      "ripeti": "Ripeti il tiro con il Capolavoro",
+      "secondo": "Vale il secondo risultato, anche se è peggiore del primo.",
+      "gia_usato": "Già usato in questa sessione: torna alla prossima sessione.",
+      "gia_ripetuto": "In questa prova il tiro è già stato ripetuto: si ripete una volta sola.",
+      "altro_in_prova": "In questa prova è già stato usato un Capolavoro: se ne usa uno solo.",
+      "trasferito": "Trasferito già usato: l’uso è dell’oggetto, non di chi lo porta (A.259)."
+    },
+    "al_tavolo": {
+      "testo": "Lo decide il tavolo: che la prova sia pertinente, che il Capolavoro ne sia lo strumento principale e che non sia offensiva.",
+      "non_giudica": [
+        "la prova è pertinente",
+        "l’oggetto è lo strumento principale",
+        "la prova non è offensiva"
+      ]
+    },
+    "rinnovo": "Gli usi dei Capolavori si rinnovano con «Nuova sessione», come gli altri usi per sessione (A.233)."
   }
 }

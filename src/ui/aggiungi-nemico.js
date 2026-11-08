@@ -15,6 +15,7 @@ import { avviso, avvisoErrore } from './avvisi.js';
 import { nascondiTooltip } from './tooltip.js';
 import { apriCreaNemico, caricaUmano } from './crea-nemico.js';
 import { profiloNemico, scelteCreatura, fileUmano } from '../crea-nemico.js';
+import { segnoProvvisoria } from '../provvisorie.js';
 
 const numero = (n) => (n >= 0 ? `+${n}` : String(n));
 /** Testo su cui cerca il campo «Cerca» (nome, famiglia, descrizione, note). */
@@ -30,7 +31,7 @@ const senzaAccenti = (s) => s.normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/
  * @param cerca testo cercato (anche vuoto)
  * @returns [{ chiave, tipo: 'prestabilito' | 'creatura', nome, sottotitolo, origine, nemico?, creatura?, gradi? }]
  */
-export function vociAggiungiNemico(voci, BE, cerca = '') {
+export function vociAggiungiNemico(voci, BE, cerca = '', dati = null) {
   const q = senzaAccenti(cerca.trim());
   const prestabiliti = (voci ?? []).filter((v) => v.nemico).map((v) => ({
     chiave: `prestabilito:${v.id}`,
@@ -41,6 +42,8 @@ export function vociAggiungiNemico(voci, BE, cerca = '') {
     origine: 'Bestiario della campagna (nemici/)',
     nemico: v.nemico,
     file: v.file,
+    // A.258 (06/11/2026): le creature che non vengono da un manuale di Davide sono provvisorie e verranno sostituite
+    provvisoria: dati ? segnoProvvisoria(v.nemico, dati) : null,
   }));
   const creature = (BE?.creature ?? []).map((c) => ({
     chiave: `creatura:${c.id}`,
@@ -52,6 +55,8 @@ export function vociAggiungiNemico(voci, BE, cerca = '') {
     descrizione: c.descrizione,
     creatura: c,
     gradi: c.gradi,
+    // A.258: il Bestiario proposto non viene dai manuali: è tutto provvisorio
+    provvisoria: dati ? segnoProvvisoria(c, dati) : null,
   }));
   const tutte = [...prestabiliti, ...creature];
   if (!q) return tutte;
@@ -75,7 +80,7 @@ export function apriAggiungiNemico(ctx, { voci = [], livello = 8, dove = '', des
   const finestra = h('dialog', { class: 'pannello-scheda aggiungi-nemico', 'aria-labelledby': 'aggiungi-nemico-titolo' });
   finestra.addEventListener('close', () => { nascondiTooltip(); finestra.remove(); });
 
-  const elenco = () => vociAggiungiNemico(voci, BE, st.cerca);
+  const elenco = () => vociAggiungiNemico(voci, BE, st.cerca, dati);
   const sceltaDi = () => elenco().find((x) => x.chiave === st.scelta) ?? null;
 
   const scegli = (x) => {
@@ -134,7 +139,9 @@ export function apriAggiungiNemico(ctx, { voci = [], livello = 8, dove = '', des
       },
       h('span', { class: 'voce-nemico-nome' }, x.nome),
       h('span', { class: 'voce-nemico-dati' }, x.sottotitolo),
-      h('span', { class: 'nota voce-nemico-origine' }, x.origine)),
+      h('span', { class: 'nota voce-nemico-origine' }, x.origine,
+        // A.258: un segno discreto, non un allarme: una sigla accanto all'origine, con il motivo nel titolo
+        x.provvisoria ? h('span', { class: 'sigla provvisoria', title: x.provvisoria.titolo }, ` · ${x.provvisoria.sigla}`) : null)),
       // il Grado si sceglie qui, sulla voce scelta: resta tutto in un posto
       scelto && x.tipo === 'creatura' ? h('div', { class: 'voce-nemico-grado' },
         h('label', {}, 'Grado ', h('select', { onchange: (e) => { st.grado = e.target.value; } },

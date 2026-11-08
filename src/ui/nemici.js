@@ -18,6 +18,7 @@ import { nemicoDaPg } from '../nemico-da-pg.js';
 import { elencoCartella, leggiCartella } from './cartella.js';
 import { ultimiPerPersonaggio } from '../cartella.js';
 import { rigaDurate } from './durate.js';
+import { segnoProvvisoria } from '../provvisorie.js';
 
 const numero = (n) => (n < 0 ? `−${-n}` : String(n));
 
@@ -320,7 +321,9 @@ export function cartaNemico(ctx, p, { modifica, durate = [], diTurnoOra = false,
         h('img', { src: urlImmagine(n.immagine), alt: '', class: 'ritratto-plancia' })) : null,
       h('div', {},
         h('h2', {}, p.nome),
-        h('p', { class: 'nota' }, h('span', { class: 'nome-lato' }, p.lato), ` · ${n.nome}`, n.fonte ? ` · ${n.fonte}` : '')),
+        h('p', { class: 'nota' }, h('span', { class: 'nome-lato' }, p.lato), ` · ${n.nome}`, n.fonte ? ` · ${n.fonte}` : '',
+          // A.258 (06/11/2026): segno discreto per una creatura provvisoria, che verrà sostituita
+          (() => { const pv = dati ? segnoProvvisoria(n, dati) : null; return pv ? h('span', { class: 'sigla provvisoria', title: pv.titolo }, ` · ${pv.sigla}`) : null; })())),
       // pezzo 4: «Colpito» (src/ui/colpo.js)
       h('span', { class: 'pulsanti-carta' },
         p.pv.attuali === 0 && onRiduci ? h('button', { type: 'button', class: 'btn btn-piccolo', title: 'Riduci la mini-scheda a una riga, in fondo', onclick: () => onRiduci(true) }, 'Riduci') : null,

@@ -14,6 +14,7 @@ import { validaNemico, formattaErrore } from '../validate.js';
 import { provenienza, riga } from '../provenienza.js';
 import { catalogo } from '../equipaggiamento.js';
 import { testoMovimento } from '../nemici.js';
+import { segnoProvvisoria } from '../provvisorie.js';
 import {
   profiloNemico, scelteCreatura, fileUmano, SUFFISSO_UMANO, aCaso, ritiraPasso, mutazioniAmmesse,
   roundResistenza, proponiNome, proponiDescrizione, idDaNome,
@@ -237,7 +238,9 @@ export function apriCreaNemico(ctx, { voci = [], salvato = () => {}, destinazion
     return [
       st.casuale ? pannelloCasuale() : null,
       h('p', {}, h('strong', {}, n.nome), h('small', { class: 'nota' }, ` · nemici/${n.id}.json`)),
-      h('p', { class: 'nota' }, n.fonte, ' · ', s.png ? `PX pronti per quattro PG: ${pxPng(s.png.grado, s.png.eq, dati)} (già con EQ)` : `${s.boss ? 'Boss (etichetta), ' : ''}circa ${virgola(r.round.grado)} Round di resistenza contro 7 PG del grado: ${BE.equilibrato.etichetta ?? 'stima'}`),
+      h('p', { class: 'nota' }, n.fonte,
+        // A.258 (06/11/2026): quello che si crea dal Bestiario proposto è provvisorio e verrà sostituito
+        (() => { const pv = segnoProvvisoria(n, dati); return pv ? h('span', { class: 'sigla provvisoria', title: pv.titolo }, ` · ${pv.sigla}`) : null; })(), ' · ', s.png ? `PX pronti per quattro PG: ${pxPng(s.png.grado, s.png.eq, dati)} (già con EQ)` : `${s.boss ? 'Boss (etichetta), ' : ''}circa ${virgola(r.round.grado)} Round di resistenza contro 7 PG del grado: ${BE.equilibrato.etichetta ?? 'stima'}`),
       r.avvisi.length ? h('div', { class: 'riquadro attenzione' }, h('ul', {}, r.avvisi.map((x) => h('li', {}, x)))) : null,
       h('div', { class: 'griglia-ritocchi' }, CAMPI_RITOCCO.map(([p, e]) => cella(p, e))),
       h('p', { class: 'nota' }, `Caratteristiche: ${Object.entries(n.caratteristiche ?? {}).map(([k, v]) => `${k} ${v}`).join(' · ')}.`),

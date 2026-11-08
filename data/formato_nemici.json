@@ -735,5 +735,22 @@
     "altro_utilizzatore": "altri",
     "capacita_specifica": null,
     "_nota": "A.84: colonna di regole.json → lancio.penalita_livello per ciascun regime; la capacità specifica segue il profilo e resta un promemoria."
+  },
+  "provvisorie": {
+    "fonte": "A.258 (Davide, 06/11/2026), chiarimento provvisorio",
+    "_nota": "Una creatura è provvisoria quando non viene da un manuale di Davide: si riconosce dalla sua «fonte», non da un elenco scritto a mano, così resta vera anche quando arrivano creature nuove. Niente si cancella e niente si disattiva: finché non arrivano le creature nuove queste servono al tavolo (A.258). Il segno è un’indicazione discreta, non un allarme.",
+    "fonti_canoniche": [
+      "dal Manuale dei Mostri"
+    ],
+    "sigla": "provvisoria",
+    "titolo": "Creatura provvisoria: non è canonica del bestiario e verrà sostituita da quelle create per il Manuale (A.258).",
+    "testo": "Provvisoria (A.258): verrà sostituita.",
+    "dove": [
+      "bestiario",
+      "pagina online",
+      "crea nemico",
+      "mini-scheda"
+    ],
+    "eretici": "Gli Eretici come creature dell’Oscura Simmetria devono ancora essere completati: i profili attuali restano come sono, al Minore con «Toccato» e al Boss con «Consacrato», e ai gradi Semplice e Medio senza Doni (A.117)."
   }
 }

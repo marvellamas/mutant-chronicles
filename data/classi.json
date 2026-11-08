@@ -2048,7 +2048,13 @@
         {
           "grado": 5,
           "nome": "Capolavoro",
-          "testo": "Prima di costruire un oggetto pertinente alle proprie competenze, l’Artigiano può dichiarare di voler realizzare un Capolavoro. La lavorazione richiede il doppio del tempo, il 50% di materiali in più e una Prova pertinente con −6 VA.\nCon successo, il Capolavoro ottiene +2 Integrità massima oltre a Lavoro a Regola d’Arte; concede +1 VA alle Prove non offensive nelle quali viene utilizzato come strumento principale; una volta per sessione permette di ripetere una di queste Prove, accettando il secondo risultato.\nCon un fallimento normale viene realizzato un oggetto normale, consumando comunque tempo e materiali aggiuntivi. Con un Fallimento Maldestro si applica anche una complicazione pertinente, secondo le regole delle Prove di Abilità.\nLavoro a Regola d’Arte e Capolavoro concedono complessivamente +3 PI massimi all’oggetto costruito. La PS Integrità resta quella della sua Qualità (Manuale degli Armamenti, §7.2.1). Tempi, costi e procedure generali di costruzione verranno integrati successivamente nel Manuale degli Equipaggiamenti."
+          "testo": "Prima di costruire un oggetto pertinente alle proprie competenze, l’Artigiano può dichiarare di voler realizzare un Capolavoro. La lavorazione richiede il doppio del tempo, il 50% di materiali in più e una Prova pertinente con −6 VA.\nCon successo, il Capolavoro ottiene +2 Integrità massima oltre a Lavoro a Regola d’Arte; concede +1 VA alle Prove non offensive nelle quali viene utilizzato come strumento principale; una volta per sessione permette di ripetere una di queste Prove, accettando il secondo risultato.\nCon un fallimento normale viene realizzato un oggetto normale, consumando comunque tempo e materiali aggiuntivi. Con un Fallimento Maldestro si applica anche una complicazione pertinente, secondo le regole delle Prove di Abilità.\nLavoro a Regola d’Arte e Capolavoro concedono complessivamente +3 PI massimi all’oggetto costruito. La PS Integrità resta quella della sua Qualità (Manuale degli Armamenti, §7.2.1). Tempi, costi e procedure generali di costruzione verranno integrati successivamente nel Manuale degli Equipaggiamenti.",
+          "usi": {
+            "frequenza": "sessione",
+            "quantita": 1,
+            "per": "capolavoro"
+          },
+          "_nota_usi": "A.259 (Davide, 06/11/2026): «Ogni singolo Capolavoro concede un proprio uso una volta per sessione, non una volta per personaggio.» Il «per» guarda l’oggetto: il contatore sta sulla voce dell’oggetto (voce.capolavoro.usato), non nella sessione del personaggio, perché un Capolavoro trasferito resta già usato fino alla sessione successiva. Prima della A.259 il Capolavoro era fra i «Da applicare al tavolo» della A.233, perché il limite non si riduceva a un numero: adesso si riduce."
         }
       ],
       "talenti_a_scelta": [

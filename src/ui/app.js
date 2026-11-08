@@ -14,6 +14,7 @@ import { calcolaScheda, validaLivello } from '../calc.js';
 import { separaEsemplare, restituisciGranate, catalogo, risolvi } from '../equipaggiamento.js';
 import { descriviFerite } from '../sessione.js';
 import { avviaAttivazione, completaAttivazione, interrompiAttivazione } from '../attivazioni-lunghe.js';
+import { usaCapolavoro, rinnovaCapolavori, daRinnovare as daRinnovareCapolavori } from '../capolavori.js';
 import {
   nuoveScelte, normalizza, applicaModifica, anteprima, serializza, nomeFileEsportazione, nomeFileCalendario, deserializzaPersonaggio, applicaLivello, annullaUltimoLivello,
   CAMPI_ANAGRAFICA, nuovoPg,
@@ -2186,8 +2187,25 @@ function renderSchedaInterna({ mantieniScorrimento = false } = {}) {
       esporta: () => esporta(stato.scelte, stato.livelli, stato.sessione, stato.calendario, assicuraPg(stato.id)),
       modificaCreazione: (passo = 0) => vaiAlPasso(passo),
       nuovaSessione: () => {
-        if (!confirm('Nuova sessione: PV e PM tornano ai massimi, Stati, Ferite e Affaticamento si azzerano, il Round torna a 1 senza Tecniche attive, gli usi «per sessione» tornano disponibili (A.233). Note, Punti Eroe, Distintivi e gli altri usi restano. Procedere?')) return;
+        // A.259: gli usi dei Capolavori stanno sulle voci degli oggetti, non nella sessione: si rinnovano qui
+        const capolavori = daRinnovareCapolavori(stato.scelte.equipaggiamento);
+        if (!confirm(`Nuova sessione: PV e PM tornano ai massimi, Stati, Ferite e Affaticamento si azzerano, il Round torna a 1 senza Tecniche attive, gli usi «per sessione» tornano disponibili (A.233)${capolavori ? `, compres${capolavori === 1 ? 'o 1 Capolavoro' : `i ${capolavori} Capolavori`} (A.259)` : ''}. Note, Punti Eroe, Distintivi e gli altri usi restano. Procedere?`)) return;
+        if (capolavori) stato.scelte = applicaModifica(stato.scelte, { equipaggiamento: rinnovaCapolavori(stato.scelte.equipaggiamento) }, stato.dati).scelte;
         cambiaSessione(nuovaSessione(stato.sessione, massimi));
+      },
+      // A.259: l'inventario come sta ADESSO. Il ctx della scheda si rifà a ogni disegno, ma una finestrella aperta
+      // tiene quello di quando è stata aperta: senza questa lettura viva mostrerebbe un Capolavoro già usato come
+      // ancora disponibile finché non si ricarica.
+      equipaggiamentoOra: () => stato.scelte.equipaggiamento,
+      // A.259 (Davide, 06/11/2026): un Capolavoro usato in una prova. Il segno va **sulla voce dell'oggetto**, così
+      // resta anche se l'oggetto passa a un compagno: l'uso è dell'oggetto, non di chi lo porta.
+      usaCapolavoro: (uid, prova) => {
+        const r = usaCapolavoro(stato.scelte.equipaggiamento, uid, stato.dati, { quando: new Date().toISOString(), prova });
+        if (r.errore) return { errore: r.errore };
+        stato.scelte = applicaModifica(stato.scelte, { equipaggiamento: r.equipaggiamento }, stato.dati).scelte;
+        persisti();
+        renderScheda({ mantieniScorrimento: true });
+        return { prova: r.prova };
       },
       annullaSessione: () => {
         if (!stato.precedenteTavolo) return;

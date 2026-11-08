@@ -6,6 +6,8 @@
 import { h } from './dom.js';
 import { apri } from './finestrella.js';
 import { tiroDelValore, esitoTiro, tiraValore, siTira, rigaTiro, rigaRegistroScontro, tiriRecenti } from '../tiri-scheda.js';
+import { eCapolavoro, giaUsato, puoUsare, esitoRipetizione, testoAlTavolo, quandoTorna } from '../capolavori.js';
+import { catalogo, risolvi } from '../equipaggiamento.js';
 
 const segno = (n) => (n > 0 ? `+${n}` : n < 0 ? `−${-n}` : '0');
 const quando = (iso) => { const d = new Date(iso); return Number.isNaN(d.getTime()) ? '' : d.toLocaleTimeString('it-IT', { hour: '2-digit', minute: '2-digit' }); };
@@ -28,6 +30,27 @@ export function apriTiro(ctx, v) {
   return apri('finestrella-tiro', t.titolo, (fine) => {
     const corpo = h('div', { class: 'corpo-tiro' });
     let ultimo = null;
+    // A.259 (Davide, 06/11/2026): i Capolavori di questo personaggio. Una finestrella è **una prova**: qui dentro si
+    // usa un solo Capolavoro e si ripete il tiro una volta sola, e vale il secondo risultato anche se è peggiore.
+    // Quello che l'app non giudica (pertinenza, strumento principale, prova non offensiva) è scritto accanto al
+    // pulsante: lo decide il tavolo.
+    let prova = {};
+    let primo = null;
+    // le voci dei Capolavori di questo personaggio, con il nome risolto dal catalogo
+    const capolavori = () => (ctx.azioni?.equipaggiamentoOra?.() ?? ctx.scelte?.equipaggiamento ?? []).filter(eCapolavoro)
+      .map((voce) => ({ voce, nome: risolvi(voce, catalogo(ctx.dati)).nome ?? voce.uid, usato: giaUsato(voce) }));
+    const usaIlCapolavoro = (x) => {
+      const r = ctx.azioni?.usaCapolavoro?.(x.voce.uid, prova);
+      if (!r || r.errore) { ultimo = ultimo; return; }
+      prova = r.prova;
+      primo = ultimo;
+      const t2 = tiraValore(t, casuale);
+      if (!t2) return;
+      ultimo = esitoTiro(t, t2.naturale, ctx.dati, t2.risultati);
+      const e = esitoRipetizione(primo, ultimo, ctx.dati);
+      ctx.azioni?.tiro?.(rigaTiro(t, ultimo), `${rigaRegistroScontro(ctx.scelte?.nome?.trim() || 'Il PG', ultimo, t)} (ripetuto con il Capolavoro «${x.nome}»: ${e.testo})`);
+      disegna();
+    };
     const disegna = () => corpo.replaceChildren(...[
       (v.note ?? []).length ? h('p', { class: 'nota note-tiro' }, 'Nel valore: ', v.note.join(' · ')) : null,
       puo.si ? null : h('p', { class: 'riquadro attenzione' }, puo.motivo),
@@ -38,6 +61,18 @@ export function apriTiro(ctx, v) {
           ? h('p', { class: 'nome-esito' }, h('strong', {}, ultimo.nome), h('span', { class: 'scarto-tiro' }, ` · scarto ${segno(ultimo.scarto)}`))
           : h('p', { class: 'nome-esito' }, h('strong', {}, String(ultimo.totale))),
         h('p', { class: 'nota' }, ultimo.testo)) : null,
+      // A.259: i Capolavori, solo quando c'è già un tiro da ripetere (si ripete un tiro, non se ne comincia uno)
+      ultimo && capolavori().length ? h('div', { class: 'capolavori-tiro' },
+        primo ? h('p', { class: 'nota riquadro' }, h('strong', {}, 'Tiro ripetuto con il Capolavoro: '),
+          `primo ${primo.naturale}, secondo ${ultimo.naturale}. ${esitoRipetizione(primo, ultimo, ctx.dati).testo}`)
+          : h('ul', { class: 'elenco-capolavori' }, capolavori().map((x) => {
+            const ok = puoUsare(x.voce, prova, ctx.dati);
+            return h('li', {},
+              h('button', { type: 'button', class: 'btn btn-piccolo', disabled: !ok.si, title: ok.si ? null : ok.motivo, onclick: () => usaIlCapolavoro(x) },
+                `Ripeti con ${x.nome}`),
+              h('small', { class: 'nota' }, x.usato ? ` · ${quandoTorna(ctx.dati)}` : ''));
+          })),
+        primo ? null : h('p', { class: 'nota' }, testoAlTavolo(ctx.dati))) : null,
       h('div', { class: 'riga-azioni finestrella-azioni' },
         h('button', { type: 'button', class: 'btn', onclick: () => fine(true) }, 'Chiudi'),
         h('button', {

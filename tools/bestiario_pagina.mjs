@@ -18,6 +18,7 @@ import { deflateRawSync, inflateRawSync } from 'node:zlib';
 import { caricaDati } from '../src/rules.js';
 import { testoMovimento } from '../src/nemici.js';
 import { profiloNemico, scelteCreatura, SUFFISSO_UMANO } from '../src/crea-nemico.js';
+import { segnoProvvisoria } from '../src/provvisorie.js';
 import { blocchiHtml } from './bestiario_html.mjs';
 
 const RADICE = new URL('../', import.meta.url);
@@ -219,6 +220,8 @@ display:grid;gap:14px;grid-template-columns:repeat(auto-fill,minmax(20rem,1fr));
 background:var(--pannello);color:var(--tenue)}
 .bandiera.proposta{background:var(--spia-sfondo);color:var(--spia)}
 .bandiera.boss{background:var(--accento);color:#fff}
+/* A.258: creatura provvisoria, che verrà sostituita: un'indicazione discreta, non un allarme */
+.bandiera.provvisoria{background:transparent;color:var(--tenue);border:1px solid var(--linea);text-transform:none;letter-spacing:0}
 .valori{display:flex;flex-wrap:wrap;gap:.35em .9em;margin:.7em 0 0;padding:0;list-style:none;
 border-top:1px solid var(--linea);padding-top:.6em}
 .valori li{font-size:.88rem}
@@ -414,8 +417,12 @@ function scheda(v, d) {
     ['AR', `${n.ar.totale}${n.ar.magica ? ` (di cui magica ${n.ar.magica})` : ''}`],
     ['Difese', n.difese], ['Iniziativa', numero(n.iniziativa)]].filter(Boolean);
 
+  // A.258 (Davide, 06/11/2026): una creatura che non viene da un manuale è provvisoria e verrà sostituita da quelle
+  // create per il Manuale. Un'indicazione discreta accanto alle altre bandiere, non un allarme.
+  const pv = segnoProvvisoria(n, d);
   const bandiere = [v.boss ? '<span class="bandiera boss">Boss</span>' : null,
-    v.proposta ? '<span class="bandiera proposta">Proposta, da validare con Davide</span>' : null].filter(Boolean);
+    v.proposta ? '<span class="bandiera proposta">Proposta, da validare con Davide</span>' : null,
+    pv ? `<span class="bandiera provvisoria" title="${esc(pv.titolo)}">${esc(pv.testo)}</span>` : null].filter(Boolean);
 
   const cercabile = senzaAccenti([v.titolo, v.gradoNome, v.categoria, v.gruppo, n.nome, ...(n.alias ?? []), v.boss ? 'boss' : '',
     (n.attacchi ?? []).map((a) => a.nome).join(' ')].filter(Boolean).join(' '));

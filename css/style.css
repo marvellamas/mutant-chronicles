@@ -321,6 +321,9 @@ dl.voci.in-linea dt::after { content: ":"; }
 .tabella tr.di-classe th[scope="row"] { font-weight: 700; }
 .tabella tfoot td { color: var(--tenue); font-size: 0.8rem; text-align: left; }
 .sigla { color: var(--tenue); font-size: 0.8em; font-weight: 400; }
+/* A.258 (08/11/2026): creatura provvisoria, che verrà sostituita. Un'indicazione, non un allarme: la stessa sigla
+   tenue del resto, in corsivo per distinguerla dal nome e dall'origine. */
+.sigla.provvisoria { font-style: italic; }
 .etichetta { display: inline-block; margin-left: 0.4rem; padding: 0 0.4rem; border-radius: 4px; background: var(--accento-tenue); color: var(--accento); font-size: 0.7rem; font-weight: 600; vertical-align: middle; }
 
 .tabella .formula { display: none; font-weight: 400; color: var(--tenue); font-size: 0.78rem; }
