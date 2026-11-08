@@ -2537,3 +2537,30 @@ del lotto 165.
   `src/sposta-punti.js`, scrittura in `src/ui/app.js` alla conferma di «Assegna»).
 
 Nessuna domanda nuova: il primo numero libero resta **A.260**.
+
+## 8 novembre 2026 — Lotto 180: celle e caricatori, A.243, A.244, A.245, A.249 e A.250 (`docs/diff-lotto180-2026-11-08.md`)
+
+Terzo lotto delle risposte del 06/11. I manuali non sono cambiati. Buona parte del comportamento c'era già dai lotti 163
+(A.215) e del 03/11 (caricatori parziali): qui si aggiunge solo ciò che mancava.
+
+- **A.243 e A.249 — RISOLTE** *(Davide, 06/11/2026)*. Stesse tre regole per celle, pacchi e caricatori: **estrarre
+  soltanto 1 AzP**, **inserirne uno pronto in un'arma vuota 1 AzP**, **sostituzione diretta un'unica operazione da 1 AzP
+  complessivo** (non la somma dei primi due). Quello che esce conserva esattamente la carica o i colpi residui.
+  Dati in `munizioni.json` → `ricarica.costi_operazioni`, motore `costoOperazione` in `src/ricarica.js`; i tre costi si
+  leggono nella scheda. Superano il «il manuale non dà un costo separato: l'app non ne inventa uno» del lotto 163.
+- **A.250 — RISOLTA** *(Davide, 06/11/2026)*. Un caricatore (o una cella) con **almeno un colpo** è pronto anche se non
+  è pieno: stesso costo d'azione e stesso beneficio di Ricarica Rapida o Esperta, colpi residui conservati. L'app faceva
+  già così dal 03/11 in via provvisoria; la novità è che **un caricatore vuoto non è pronto** e non entra più da solo
+  (`caricatore_pronto.colpi_minimo`, `eProntoColpi`).
+- **A.244 — RISOLTA** *(Davide, 06/11/2026)*. Fuori dal combattimento, **1 minuto ogni 50 colpi trasferiti, o frazione,
+  sul totale dell'operazione** (120 colpi = 3 minuti, non 3 × 1): `minutiRiempimento`, detto prima di confermare. Due
+  condizioni, controllate entrambe: i caricatori devono essere **estratti** (quello nell'arma non si riempie più) e le
+  munizioni **davvero disponibili**; altrimenti l'app lo dice e non trasferisce (`motivoRiempimento`). Cambia l'esempio
+  dell'Axis della A.215, dove si riempiva il caricatore inserito: ora si toglie, si riempie, si rimette.
+- **A.245 — RISOLTA** *(Davide, 06/11/2026)*. **Ogni cella ha 2 PI suoi**, non quelli della voce dell'Inventario. Una
+  cella danneggiata **si separa dalla pila** e si segue da sola; a **0 PI** è distrutta e inutilizzabile, resta scritta
+  ma esce dalle scorte utilizzabili (non si propone, non si inserisce, non si ricarica) e l'evento va nello storico.
+  «Normalmente non riparabile»: il Direttore può decidere altrimenti, l'app non lo propone. Nel file una cella intera
+  resta il numero delle sue cariche e diventa `{ c, pi }` solo da danneggiata: nessuna migrazione.
+
+Nessuna domanda nuova: il primo numero libero resta **A.260**.
