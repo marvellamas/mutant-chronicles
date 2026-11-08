@@ -1834,7 +1834,11 @@ function validaEquipaggiamento(eq, nomiAbilita, idSpec, err, coloriChroma = [], 
     // CyberArma (Armamenti 0.74 §7.25): «Le SnT 1, 2 e 3 sono regole specifiche dei diversi impieghi e non determinano
     // automaticamente danno o Grado»: la SnT viene dall'impiego (snt_per_impiego), non dalla potenza
     if (a.sintonizzazione_per_classe !== undefined && !(isOggetto(a.sintonizzazione_per_classe) && Object.values(a.sintonizzazione_per_classe).every((n) => isIntero(n) && n >= 1))) err(F, `${k}.sintonizzazione_per_classe`, 'serve { Classe: SnT intera ≥ 1 }');
-    if (a.snt_per_impiego !== true && potenzeArtefatti && potenzeArtefatti[a.potenza] !== a.sintonizzazione) err(F, `${k}.sintonizzazione`, `potenza ${a.potenza}: il costo di sintonizzazione è ${potenzeArtefatti[a.potenza] ?? 'sconosciuto'} (§7.10), trovato ${a.sintonizzazione}`);
+    // A.256 e A.263 (06 e 08/11/2026): una rarità decisa da una risposta può non stare nella tabella del §7.10
+    // (l'Anello con Rigenerazione 9 è «Molto rara» con la SnT 3 della configurazione approvata). L'eccezione va
+    // dichiarata nei dati, con la regola e il motivo: «snt_eccezione»; altrimenti resta un errore.
+    if (a.snt_eccezione !== undefined && !(isOggetto(a.snt_eccezione) && isTesto(a.snt_eccezione.regola) && isTesto(a.snt_eccezione.motivo))) err(F, `${k}.snt_eccezione`, 'serve { regola, motivo }: la risposta che la decide e perché (§7.10)');
+    if (a.snt_per_impiego !== true && !isOggetto(a.snt_eccezione) && potenzeArtefatti && potenzeArtefatti[a.potenza] !== a.sintonizzazione) err(F, `${k}.sintonizzazione`, `potenza ${a.potenza}: il costo di sintonizzazione è ${potenzeArtefatti[a.potenza] ?? 'sconosciuto'} (§7.10), trovato ${a.sintonizzazione}`);
     // Magia sez. 6: contenitore di Chroma (colore di regole.json → chroma.colori, non l'esausto)
     if (a.contenitore !== undefined) {
       const c = a.contenitore;

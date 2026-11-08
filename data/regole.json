@@ -4505,5 +4505,32 @@
       "breve": "nuovo capitolo",
       "a_mano": "torna al prossimo capitolo (senza server: «↺» a mano)"
     }
+  },
+  "prezzi_artefatti": {
+    "versione_manuale": "Magia 1.11 / Equipaggiamento 0.30 / Armamenti 0.74",
+    "fonte": "A.256 (Davide, 06/11/2026); Equipaggiamento §10.1 (il Grado determina la potenza magica); Armamenti §7.10 (classificazione di potenza)",
+    "formula": "costo completo di costruzione × 3 × coefficiente di rarità, arrotondato per eccesso ai 50 cr successivi",
+    "moltiplicatore": 3,
+    "arrotondamento": {
+      "ai_cr": 50,
+      "modo": "eccesso"
+    },
+    "coefficienti": {
+      "Comune": 1,
+      "Non Comune": 1.5,
+      "Rara": 2,
+      "Molto Rara": 3,
+      "Leggendaria": 5
+    },
+    "senza_prezzo": "Unico o reliquia",
+    "esempio": {
+      "nome": "Anello con Rigenerazione 9",
+      "costruzione_cr": 1500,
+      "rarita": "Molto Rara",
+      "vendita_cr": 13500
+    },
+    "reperibilita_separata": "Rarità e reperibilità restano separate: disporre del denaro non garantisce che l’oggetto sia disponibile. L’app mostra la Reperibilità accanto al prezzo e non fa sembrare comprabile ciò che non è reperibile.",
+    "prezzo_dichiarato": "Dove il manuale dà già un prezzo di catalogo, resta quello: la formula dà il prezzo di vendita calcolato, che l’app mostra accanto, e diventa il prezzo quando il catalogo non ne ha.",
+    "TODO(Davide)": "A.261: la formula non ritrova i prezzi di catalogo già scritti nei manuali (Batteria da 5 PM Rossa: creazione 650, Comune → 1.950 cr calcolati, catalogo 1.000; le pergamene del §27.3 hanno Vendita = Creazione × 2, la formula darebbe × 3). La formula sostituisce quei prezzi o vale solo dove un prezzo non c’è? L’app tiene i prezzi dichiarati e mostra accanto il calcolo. A.262: la tabella della A.256 non dà il coefficiente dell’«Epica» (Grado V, §10.1), che nei dati esiste: l’app non calcola un prezzo per gli Artefatti Epici e lo dice."
   }
 }

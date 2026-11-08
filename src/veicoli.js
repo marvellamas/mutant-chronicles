@@ -371,6 +371,8 @@ export function andaturaResidua(idAndatura, ambiente, dati) {
 // solo informativa) e `conducente` (true se lo guida il personaggio). Senza server; con il server il veicolo è un
 // record del registro unico e qui resta il riferimento { uid, rif, nome } (A.91, src/veicoli-registro.js).
 
+import { valoreEsemplare, vociDotazioneExtra } from './valore-veicolo.js';
+
 const isOggetto = (v) => v !== null && typeof v === 'object' && !Array.isArray(v);
 const testo = (v) => (typeof v === 'string' ? v.trim() : '');
 let progressivo = 0;
@@ -465,7 +467,9 @@ function valoreEDotazione(v, profilo) {
   if (isOggetto(v.dotazione_esemplare)) out.dotazione_esemplare = v.dotazione_esemplare;
   else if (isOggetto(profilo.dotazione_precedente) && (inLx(v) || isOggetto(v.energia_prima))) {
     const d = profilo.dotazione_precedente;
-    out.dotazione_esemplare = { regola: 'A.226', da: d.regola ?? null, testo: d.testo, nota: d.nota ?? null };
+    // A.257: con la dotazione di prima entrano anche le quantità delle voci in più, da cui parte il conto del valore
+    const voci = Object.fromEntries(vociDotazioneExtra(profilo).filter((x) => !isOggetto(x.dalle_munizioni) && typeof x.dal_rinforzo !== 'string' && !isOggetto(x.accumulatore)).map((x) => [x.id, Number.isInteger(x.quantita) ? x.quantita : 0]));
+    out.dotazione_esemplare = { regola: 'A.226', da: d.regola ?? null, testo: d.testo, nota: d.nota ?? null, ...(Object.keys(voci).length ? { voci } : {}) };
   }
   return out;
 }
@@ -1080,6 +1084,8 @@ export function vistaVeicoloPersonaggio(mezzo, dati, { pilotare = null } = {}) {
       catalogo: profilo.esemplare_unico === true ? null : Number.isInteger(profilo.prezzo_cr) ? profilo.prezzo_cr : null,
       stimato: Number.isInteger(vd.valore_stimato_cr) ? vd.valore_stimato_cr : null,
       nota: profilo.esemplare_unico === true ? profilo.nota_esemplare ?? null : profilo.nota_valore ?? null,
+      // A.257: modello base, dotazione extra e totale dell'esemplare, mostrati separatamente; il conto segue l'inventario
+      esemplare: valoreEsemplare({ ...mezzo, ...vd }, profilo, dati),
     },
     dotazione: isOggetto(vd.dotazione_esemplare) ? { ...vd.dotazione_esemplare, esemplare: true } : profilo.dotazione ? { testo: profilo.dotazione, esemplare: false } : null,
   };

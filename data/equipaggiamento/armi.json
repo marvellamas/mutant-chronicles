@@ -1315,7 +1315,9 @@
             "Il programma non registra come già eseguiti gli interventi: li conferma soltanto il Direttore, che rende disponibile il profilo modificato con «Consegna l’arma».",
             "«Consegna l’arma» aggiorna lo stesso esemplare, conservandone provenienza e storico: nessuna seconda CyberArma (A.231).",
             "Il profilo del Custode di Park rimane distinto: danni e Talenti personali di Park non passano all’utilizzatore.",
-            "La forma la sceglie il giocatore e si registra nel progetto. Batteria interna e conversione a NeC restano sviluppi successivi, non compresi in questi tre giorni."
+            "La forma la sceglie il giocatore e si registra nel progetto. Batteria interna e conversione a NeC restano sviluppi successivi, non compresi in questi tre giorni.",
+            "L’alimentazione scelta decide se l’arma consegnata può ancora usare i PM personali: cristallo e SIN sì, riserva interna di CM e conversione a NeC no, e in più fanno perdere le proprietà da Custode (A.251).",
+            "L’alimentazione scelta decide se l’arma consegnata può ancora usare i PM personali: cristallo e SIN sì, riserva interna di CM e conversione a NeC no, e in più fanno perdere le proprietà da Custode (A.251)."
           ],
           "risultato": {
             "rif": "armi:cyberarma",
@@ -1335,9 +1337,95 @@
             "corruzione": "Corruzione 1",
             "manifestazione_precedente": "frusta",
             "nota": "A.231: la frusta era la manifestazione usata da Park; Dimitri non acquisisce le statistiche personali di Park né le capacità del Custode. La voce già presente nell’inventario va verificata e ricondotta a questo esemplare: la sua presenza non certifica che le modifiche siano già state eseguite."
+          },
+          "alimentazione": {
+            "fonte": "A.251 (Davide, 06/11/2026); Armamenti 0.74 §§7.25–7.25.4",
+            "chi": "giocatore",
+            "quando": "prima della lavorazione",
+            "elenco": [
+              "cristallo",
+              "sin",
+              "riserva_cm",
+              "nec"
+            ],
+            "comprese": [
+              "cristallo",
+              "sin"
+            ],
+            "predefinita": "cristallo",
+            "solo_direttore": [
+              "riserva_cm",
+              "nec"
+            ],
+            "_nota": "A.251: la scelta dice cosa si perde prima di confermare. Cristallo e SIN sono comprese nei tre giorni e tengono i PM personali; la riserva interna di CM e la conversione a NeC restano sviluppi successivi (descrizione del progetto), fanno perdere i PM personali e le proprietà da Custode e le autorizza soltanto il Direttore, con la conferma in chiaro."
           }
         }
-      ]
+      ],
+      "alimentazione_modifiche": {
+        "fonte": "A.251 (Davide, 06/11/2026); Armamenti 0.74 §§7.25–7.25.4",
+        "_nota": "A.251: due famiglie di modifiche che non si comportano allo stesso modo. Cristallo sostituito e SIN inserita non toccano l’alimentazione: l’arma continua a potersi alimentare con i PM personali e le due cose possono coesistere con quell’alimentazione. Riserva interna di CM e conversione a NeC sono conversioni energetiche alternative: impediscono l’uso dei PM personali, fanno perdere le proprietà da Custode e non si cumulano fra loro. La scelta non si torna indietro facilmente: va detta in chiaro prima di confermare, perché chi la fa da un tablet non ha il manuale davanti.",
+        "pm_personali_predefiniti": true,
+        "perdite": [
+          "l’alimentazione con i PM personali",
+          "le proprietà da Custode"
+        ],
+        "famiglie": [
+          {
+            "id": "cristallo",
+            "nome": "Cristallo sostituito",
+            "conversione": false,
+            "pm_personali": true,
+            "proprieta_custode": true,
+            "testo": "Il cristallo focalizzatore è sostituito. L’arma continua a potersi alimentare con i PM personali e conserva le proprietà da Custode; coesiste con la SIN."
+          },
+          {
+            "id": "sin",
+            "nome": "Modulo SIN inserito",
+            "conversione": false,
+            "pm_personali": true,
+            "proprieta_custode": true,
+            "testo": "Il modulo neurale SIN è inserito (§7.25.2). L’arma continua a potersi alimentare con i PM personali e conserva le proprietà da Custode; coesiste con il cristallo sostituito."
+          },
+          {
+            "id": "riserva_cm",
+            "nome": "Riserva interna di CM",
+            "conversione": true,
+            "pm_personali": false,
+            "proprieta_custode": false,
+            "voce": "armi:cyberarma-batteria-verde",
+            "consumo": {
+              "cm": 1,
+              "azione": "1 AzP",
+              "ogni_colpi": 10,
+              "testo": "1 CM + 1 AzP ogni 10 colpi"
+            },
+            "testo": "Conversione energetica: la riserva interna di Cariche Mistiche alimenta l’arma. Si perdono l’alimentazione con i PM personali e le proprietà da Custode. Consumo: 1 CM + 1 AzP ogni 10 colpi. Non si cumula con la conversione a NeC."
+          },
+          {
+            "id": "nec",
+            "nome": "Conversione a NeC",
+            "conversione": true,
+            "pm_personali": false,
+            "proprieta_custode": false,
+            "voce": "armi:cyberarma-nec",
+            "consumo": {
+              "cariche": 1,
+              "colore": "Rosso",
+              "azione": "1 AzP",
+              "ogni_colpi": 10,
+              "testo": "1 carica NeC Rossa + 1 AzP ogni 10 colpi"
+            },
+            "testo": "Conversione energetica: un NeC Rosso compatibile alimenta l’arma. Si perdono l’alimentazione con i PM personali e le proprietà da Custode. Consumo: 1 carica + 1 AzP ogni 10 colpi. Non si cumula con la riserva interna di CM."
+          }
+        ],
+        "non_cumulabili": [
+          "riserva_cm",
+          "nec"
+        ],
+        "TODO(Davide)": "A.260: la A.251 misura il consumo delle due conversioni «ogni 10 colpi», la A.236 del 02/11 diceva «1 CM per 10 Round». L’app applica la A.251, che è la più recente: 10 colpi. Da confermare."
+      },
+      "unico": true,
+      "_nota_unico": "Armamenti 0.74 §7.25: «Ogni originale è un pezzo unico». Rarità «Unico o reliquia» della A.256: senza prezzo di catalogo. Il valore dipende da fattura, unicità, proprietà e provenienza, e lo decide il Direttore."
     },
     {
       "tipo": "arma_ravvicinata",
@@ -1489,12 +1577,15 @@
         "classi": [
           {
             "classe": "Custode",
-            "pm": 1,
-            "round": 15,
+            "pm": null,
+            "round": null,
             "danno_extra": 1,
             "va": 0,
             "sintonizzazione": 1,
-            "testo": "Custode (SnT 1): evoca l’Arma Astrale per 1 PM personale e 15 Round, includendo l’evocazione nell’Azione del primo attacco, +1 al danno (Maestro d’Arma). Danno base e altri benefici seguono il Grado e i Talenti del Custode (Giocatore §3.9.2). Pagare con la riserva interna in CM: la revisione non dà il costo per il Custode (TODO(Davide) A.251)."
+            "testo": "Custode: con questa conversione si perdono le proprietà da Custode e l’alimentazione con i PM personali (A.251). L’impiego del Custode non è disponibile su un esemplare convertito.",
+            "ogni_colpi": 10,
+            "ammesso": false,
+            "cm": null
           },
           {
             "classe": "Tecnomante",
@@ -1503,8 +1594,9 @@
             "danno_extra": 0,
             "va": 0,
             "sintonizzazione": 2,
-            "testo": "Tecnomante (SnT 2): 1 AzP e 1 CM della riserva interna, oppure 2 PM personali; lama stabile per 10 Round, senza Concentrazione; 1d8 Magico più i modificatori pertinenti (revisione «Cariche Mistiche», A.236).",
-            "cm": 1
+            "testo": "Tecnomante (SnT 2): 1 AzP e 1 CM della riserva interna, oppure 2 PM personali; lama stabile, 1 CM ogni 10 colpi, senza Concentrazione; 1d8 Magico più i modificatori pertinenti (revisione «Cariche Mistiche», A.236). (A.251: 1 CM + 1 AzP ogni 10 colpi; si perdono i PM personali e le proprietà da Custode) (A.251: 1 CM + 1 AzP ogni 10 colpi; si perdono i PM personali e le proprietà da Custode)",
+            "cm": 1,
+            "ogni_colpi": 10
           },
           {
             "classe": "altre",
@@ -1526,7 +1618,14 @@
         "testo": "SIN 1: +1 VA alle Prove per colpire con la CyberArma, comprese le Manovre che richiedono quel tiro, soltanto al Tecnomante con interfaccia neurale compatibile, funzionante e collegata. Non aggiunge bonus a Parate, danni o altre Prove; un solo SIN per Prova (§7.15.1)."
       },
       "_nota_batteria": "Revisione «Cariche Mistiche» (02/11/2026) e A.236: riserva interna Verde da 5 CM, dedicata esclusivamente alla CyberArma: non paga Incantesimi, altre capacità, altri oggetti e non si converte in PM personali. Per il Tecnomante 1 CM e 1 AzP manifestano l’arma per 10 Round (cinque attivazioni); resta il profilo da 2 PM personali. L’installazione va fatta e confermata: il progetto iniziale dei tre giorni di Dimitri non la comprende. Ricarica a 3:1: 30 PM da vuota. Prezzo indicativo: predisposizione 1.000 cr + batteria 2.000 cr.",
-      "costo_modifica": 3000
+      "costo_modifica": 3000,
+      "alimentazione_modifiche_rif": {
+        "famiglia": "riserva_cm",
+        "rif": "armi:cyberarma",
+        "fonte": "A.251 (Davide, 06/11/2026); Armamenti 0.74 §§7.25–7.25.4"
+      },
+      "unico": true,
+      "_nota_unico": "Armamenti 0.74 §7.25: «Ogni originale è un pezzo unico». Rarità «Unico o reliquia» della A.256: senza prezzo di catalogo. Il valore dipende da fattura, unicità, proprietà e provenienza, e lo decide il Direttore."
     },
     {
       "tipo": "arma_ravvicinata",
@@ -1682,7 +1781,8 @@
             "danno_extra": 0,
             "va": 0,
             "sintonizzazione": 3,
-            "testo": "Qualsiasi Classe (SnT 3), rispettando competenze e requisiti dell’esemplare: 1 AzP e 1 carica di un NeC Rosso compatibile, arma manifestata per 10 Round, senza PM personali né Concentrazione. Il consumo è per attivazione, non per attacco; il circuito alimenta solo questa CyberArma. La carica si scala nella riga del NeC (Inventario)."
+            "testo": "Qualsiasi Classe (SnT 3), rispettando competenze e requisiti dell’esemplare: 1 AzP e 1 carica di un NeC Rosso compatibile, arma manifestata per 10 colpi, senza PM personali né Concentrazione. Il consumo è per attivazione, non per attacco; il circuito alimenta solo questa CyberArma. La carica si scala nella riga del NeC (Inventario). (A.251: 1 carica + 1 AzP ogni 10 colpi; si perdono i PM personali e le proprietà da Custode) (A.251: 1 carica + 1 AzP ogni 10 colpi; si perdono i PM personali e le proprietà da Custode)",
+            "ogni_colpi": 10
           }
         ]
       },
@@ -1701,7 +1801,14 @@
         "unita_usi": "cariche",
         "descrizione": "NEC Rosso da 10 cariche: una carica per attivazione (1 AzP, 10 Round), non per attacco; la carica residua resta al NEC. Sostituzione e ricarica secondo le regole dei NEC e la A.215. Non converte cariche tecnologiche in PM o in energia mistica.",
         "paragrafo": "A.237 (Davide, 02/11/2026); Armamenti 0.74 §7.25"
-      }
+      },
+      "alimentazione_modifiche_rif": {
+        "famiglia": "nec",
+        "rif": "armi:cyberarma",
+        "fonte": "A.251 (Davide, 06/11/2026); Armamenti 0.74 §§7.25–7.25.4"
+      },
+      "unico": true,
+      "_nota_unico": "Armamenti 0.74 §7.25: «Ogni originale è un pezzo unico». Rarità «Unico o reliquia» della A.256: senza prezzo di catalogo. Il valore dipende da fattura, unicità, proprietà e provenienza, e lo decide il Direttore."
     }
   ]
 }

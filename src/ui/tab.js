@@ -19,7 +19,9 @@ import { pulsanteSchermoIntero } from './schermo-intero.js';
 import { apriTiro, sezioneTiri } from './tira-valore.js';
 import { pianoGetto } from '../getti-artefatto.js';
 import { costoRiserva, numeroRiserva, testoCosto, interoRiserva } from '../cariche-mistiche.js';
-import { modelliProgetto, apriProgetto, scegliForma, registraTentativo, togliUltimoTentativo, chiudiProgetto, riapriProgetto, riepilogoProgetto, formaSceglibile, avvisiConsegna, esemplariDi, storicoDi, ESITI_TENTATIVO, NOMI_ESITO, ESITI_FINALI, NOMI_FINALE } from '../progetti.js';
+import { prezzoArtefatto } from '../prezzi-artefatti.js';
+import { alimentazioneSceglibile } from '../cyberarma.js';
+import { modelliProgetto, apriProgetto, scegliForma, scegliAlimentazione, registraTentativo, togliUltimoTentativo, chiudiProgetto, riapriProgetto, riepilogoProgetto, formaSceglibile, avvisiConsegna, esemplariDi, storicoDi, ESITI_TENTATIVO, NOMI_ESITO, ESITI_FINALI, NOMI_FINALE } from '../progetti.js';
 import { circostanzeMasterAttive } from '../correzioni-master.js';
 import { conAvviso } from './procedi.js';
 import { h, segno, svuota } from './dom.js';
@@ -3364,6 +3366,19 @@ function tabArtefatti(ctx) {
   }));
   const contenitori = eq.contenitori ?? [];
   const esterni = contenitori.filter((c) => !c.integrato);
+  const nf = (n) => n.toLocaleString('it-IT');
+  /** A.256: la riga del prezzo nella scheda di un Artefatto. null quando non c'è niente da dire. */
+  const rigaPrezzoArtefatto = (c, def) => {
+    const pz = prezzoArtefatto(def, c.dati, { numero: nf });
+    if (pz.unico) return h('p', { class: 'nota' }, h('strong', {}, 'Prezzo: '), h('span', { title: def._nota_unico ?? '' }, 'esemplare unico o reliquia, senza prezzo di catalogo (A.256)'));
+    if (pz.cr === null) return pz.motivo ? h('p', { class: 'nota' }, h('strong', {}, 'Prezzo: '), pz.motivo) : null;
+    return h('p', { class: 'nota' }, h('strong', {}, 'Prezzo: '),
+      `${nf(pz.cr)} cr`,
+      pz.fonte === 'A.256' ? h('span', { title: `A.256: ${pz.conto}` }, ' · prezzo di vendita calcolato (A.256)')
+        : pz.vendita !== null && pz.vendita !== pz.catalogo ? h('span', { title: `A.256: ${pz.conto}` }, ` · vendita calcolata ${nf(pz.vendita)} cr (A.256)`) : null,
+      pz.rarita ? h('span', { class: 'sigla' }, ` · rarità ${pz.rarita}`) : null,
+      h('span', { class: 'nota', title: pz.nota ?? '' }, pz.reperibilita ? ` · REP ${pz.reperibilita}` : ' · reperibilità non indicata'));
+  };
   const scheda = (x) => {
     const r = perUid.get(x.uid);
     const def = r?.def;
@@ -3374,6 +3389,9 @@ function tabArtefatti(ctx) {
       h('div', { class: 'arma-testa' },
         h('h3', {}, def ? info('oggetto', def.rif, x.nome) : x.nome, h('small', { class: 'sigla' }, ` · ${x.tipologia ?? 'Artefatto'}${x.potenza ? ` · ${x.potenza}` : ''}`))),
       h('p', { class: 'nota' }, `Nell’Inventario: ${NOMI_STATI[r?.voce.stato] ?? 'con sé'}. SnT ${x.costo}.`),
+      // A.256 (Davide, 06/11/2026): prezzo di vendita = costruzione × 3 × coefficiente di rarità, ai 50 cr per
+      // eccesso; un pezzo unico o una reliquia non ha prezzo di catalogo. Rarità e reperibilità restano separate.
+      def ? rigaPrezzoArtefatto(ctx, def) : null,
       // §7.10: con sole proprietà passive SnT 0, nessuna sintonizzazione; Magia §26.5: Schegge instabili SnT 0
       !x.sintonizzabile ? h('p', { class: 'nota' }, def?.artefatto?.scheggia ? 'Scheggia instabile: SnT 0, non si sintonizza; estrarre PM richiede una Prova di Potere (Magia §26.5).' : 'Sole proprietà passive: SnT 0, si usano senza sintonizzazione (Armamenti §7.10).')
         : h('label', { class: `stato-tavolo${x.sintonizzato ? ' attivo' : ''}`, title: x.deposito ? 'Nel deposito comune la Sintonizzazione resta e occupa la capacità; togli la spunta per interromperla (A.59). Una batteria depositata non alimenta.' : null },
@@ -3456,6 +3474,32 @@ function sezioneProgetti(ctx) {
         p.forma?.id === fo.id ? h('span', { class: 'nota' }, '✓ scelta')
           : h('button', { type: 'button', class: 'btn btn-piccolo', onclick: () => applica(scegliForma(lista, p.id, fo.id, ctx.dati, { quando: ora(), da: master ? 'Direttore' : 'giocatore' })) }, 'Scegli'))))
         : p.forma ? null : h('p', { class: 'nota' }, sceglibile.motivo));
+    // A.251 (Davide, 06/11/2026): cristallo e SIN tengono i PM personali; la riserva interna di CM e la
+    // conversione a NeC li fanno perdere, insieme alle proprietà da Custode, e non si cumulano fra loro. La
+    // scelta non si torna indietro facilmente: che cosa si perde si legge prima di confermare, in chiaro.
+    const alimSceglibile = alimentazioneSceglibile(p);
+    const alimentazione = r.alimentazioni.length ? h('div', { class: 'progetto-forma progetto-alimentazione' },
+      h('h4', {}, 'Alimentazione'),
+      r.alimentazione
+        ? h('p', {}, h('strong', {}, r.alimentazione.nome),
+          h('span', { class: 'nota' }, ` · scelta ${p.alimentazione.da === 'giocatore' ? 'dal giocatore' : 'dal Direttore'} il ${data(p.alimentazione.quando)}`),
+          h('br'), h('span', { class: r.alimentazione.conversione ? 'nota motivo' : 'nota' }, r.alimentazione.perdite),
+          r.alimentazione.consumo ? h('span', { class: 'nota' }, ` Consumo: ${r.alimentazione.consumo.testo}.`) : null)
+        : h('p', { class: 'nota' }, 'Non scelta: l’arma consegnata resta a PM personali, come il progetto base (A.251).'),
+      alimSceglibile.si ? h('ul', { class: 'elenco-talenti' }, r.alimentazioni.map((o) => {
+        const scelta = p.alimentazione?.id === o.id;
+        const puo = o.sceglibile && (!o.soloDirettore || master);
+        return h('li', { class: `voce-talento${scelta ? ' selezionata' : ''}` },
+          h('div', {}, h('strong', {}, o.nome), h('span', { class: 'nota' }, `${o.compresa ? ' · compresa nei giorni del progetto' : ' · sviluppo successivo'}${o.consumo ? ` · ${o.consumo.testo}` : ''}`)),
+          h('div', { class: o.conversione ? 'nota motivo' : 'nota' }, o.perdite),
+          scelta ? h('span', { class: 'nota' }, '✓ scelta')
+            : h('button', { type: 'button', class: `btn btn-piccolo${o.conversione ? ' con-avviso' : ''}`, disabled: !puo, title: puo ? o.testo : o.motivo ?? '',
+              onclick: () => conAvviso(ctx.azioni.storico, {
+                azione: `scegliere l’alimentazione «${o.nome}» per «${p.nome}»`,
+                motivo: o.conversione ? `${o.perdite} Le due conversioni non si cumulano fra loro. Consumo: ${o.consumo?.testo ?? '—'}.` : null,
+                fai: () => applica(scegliAlimentazione(lista, p.id, o.id, ctx.dati, { quando: ora(), da: master ? 'Direttore' : 'giocatore', master })),
+              }) }, 'Scegli'));
+      })) : h('p', { class: 'nota' }, alimSceglibile.motivo)) : null;
     const giorni = h('div', { class: 'progetto-giorni' }, h('h4', {}, `Lavori: ${r.modello.giorni.length} giorni, ${r.modello.budget?.ore ?? '—'} ore, ${r.modello.budget?.cr ?? '—'} cr`),
       r.giorni.map((g) => {
         const a = abilita(g.prova.abilita);
@@ -3522,7 +3566,7 @@ function sezioneProgetti(ctx) {
         ...(r.modello.componenti ?? []).map((x) => h('p', {}, h('strong', {}, `${x.nome}: `), x.nota)),
         ...(r.modello.regole ?? []).map((x) => h('p', { class: 'nota' }, x)),
         h('p', { class: 'nota' }, `Fonte: ${r.modello.fonte}.`)),
-      esemplari, forma, giorni, chiusura, consegna);
+      esemplari, forma, alimentazione, giorni, chiusura, consegna);
   };
   return sezione('Progetti', [
     ui.errore ? h('p', { class: 'nota motivo' }, ui.errore) : null,

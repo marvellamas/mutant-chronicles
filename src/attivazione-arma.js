@@ -97,12 +97,17 @@ export function testoAttivazione(def, scheda, sessione, uid) {
     alternativaPm: uso.cm && uso.pm ? uso.pm : null,
     nec: uso.nec ?? null,
     round: uso.round ?? null,
+    // A.251 (Davide, 06/11/2026): per le conversioni energetiche della CyberArma il consumo si conta in colpi, non
+    // in Round: «1 CM + 1 AzP ogni 10 colpi», «1 carica + 1 AzP ogni 10 colpi». Vale sulla A.236, più vecchia.
+    ogniColpi: Number.isInteger(uso.ogni_colpi) && uso.ogni_colpi >= 1 ? uso.ogni_colpi : null,
     va: uso.va ?? 0,
     dannoExtra: uso.danno_extra ?? 0,
     testo: uso.testo ?? null,
     attiva: !!stato?.attiva,
     rimasti: stato?.rimasti ?? 0,
     // «1 PM · 15 Round» oppure «attiva · 7 Round»
-    sintesi: stato?.attiva ? `attiva · ${stato.rimasti} Round` : costo && uso.round ? `${costo} · ${uso.round} Round` : null,
+    sintesi: stato?.attiva ? `attiva · ${stato.rimasti} Round`
+      : costo && Number.isInteger(uso.ogni_colpi) ? `${costo} · ${uso.ogni_colpi} colpi`
+        : costo && uso.round ? `${costo} · ${uso.round} Round` : null,
   };
 }

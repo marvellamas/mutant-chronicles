@@ -5,6 +5,7 @@
 // rinforzi, NEC, «Colpito», «Ripara», PI a mano, «Rimuovi». Più il promemoria del conducente per Combattimento.
 import { conAvviso } from './procedi.js';
 import { partiRiserva } from '../cariche-mistiche.js';
+import { cambiaDotazioneExtra } from '../valore-veicolo.js';
 import { h, segno } from './dom.js';
 import { infoValore } from './tooltip.js';
 import { rigaScelte } from './pannello-passi.js';
@@ -264,7 +265,7 @@ function schedaVeicolo(ctx, mezzo, pilotare, registro = null) {
     v.vista.fuoriUso ? h('p', { class: 'riquadro errore' }, 'Fuori uso: Corpo principale o Motore a 0 PI. Il mezzo non funziona, non esplode e il movimento residuo prosegue (§5.5).') : null,
     v.gruppo && !registro ? h('p', { class: 'nota' }, 'Veicolo del gruppo: senza il server le modifiche restano in questa scheda (A.91).') : null,
     h('div', { class: 'veicolo-colonne' },
-      h('div', {}, profiloVeicolo(v, d, { ctx, mezzo, aggiorna }), pilotareVeicolo(v, d), andatureVeicolo(ctx, mezzo, v, aggiorna), dotazioneVeicolo(v)),
+      h('div', {}, profiloVeicolo(v, d, { ctx, mezzo, aggiorna }), pilotareVeicolo(v, d), andatureVeicolo(ctx, mezzo, v, aggiorna), dotazioneVeicolo(v), valoreEsemplareUi(v, d, { ctx, mezzo, aggiorna })),
       h('div', {}, struttureVeicoloUi(ctx, mezzo, v, aggiorna), rinforziVeicolo(mezzo, v, aggiorna, ctx), necVeicolo(ctx, mezzo, v, aggiorna), munizioniVeicolo(ctx, mezzo, v, aggiorna))),
     v.risorse?.neverlost ? neverlostUi(ctx, mezzo, v, aggiorna) : null,
     armiEProprieta(v),
@@ -309,6 +310,46 @@ function dotazioneVeicolo(v) {
     h('summary', {}, v.dotazione.esemplare ? 'Dotazione di questo esemplare' : 'Dotazione standard'),
     h('p', { class: 'nota' }, v.dotazione.testo),
     v.dotazione.nota ? h('p', { class: 'nota' }, v.dotazione.nota) : null);
+}
+
+/**
+ * A.257 (Davide, 06/11/2026): il valore corrente dell'esemplare in tre righe — modello base, dotazione extra,
+ * totale — non un numero solo. Non è un numero scritto una volta: le voci che si contano da munizioni, pezzi dei
+ * rinforzi e riserve seguono quelle (e si cambiano lì); le altre hanno − e + perché il valore cambia quando
+ * vengono consumate, rimosse o trasferite. Restano inventario del gruppo: concorrono finché sono a bordo.
+ */
+function valoreEsemplareUi(v, d, { ctx = null, mezzo = null, aggiorna = null } = {}) {
+  const e = v.valore?.esemplare;
+  if (!e) return null;
+  const profilo = v.profilo;
+  const cr = (n) => (Number.isInteger(n) ? `${numero(n)} cr` : h('em', { class: 'da-definire' }, 'da stimare'));
+  const meno = (r, n) => {
+    if (!mezzo || !aggiorna) return null;
+    const x = cambiaDotazioneExtra(mezzo, profilo, r.id, r.quantita + n);
+    if (x.errore) return h('span', { class: 'nota', title: x.errore }, '');
+    return h('button', {
+      type: 'button', class: 'btn btn-piccolo', disabled: r.quantita + n < 0, 'aria-label': `${n < 0 ? 'Togli' : 'Aggiungi'} ${r.nome}`,
+      title: n < 0 ? `Consumata, rimossa o trasferita: esce dal valore (A.257)` : 'Rimessa a bordo o assegnata: rientra nel valore (A.257)',
+      onclick: () => aggiorna(x.mezzo, `${v.nome}: ${r.nome} ${r.quantita} → ${x.quantita}; il valore dell’esemplare cambia (A.257).`),
+    }, n < 0 ? '−' : '+');
+  };
+  const righe = e.extra.righe.map((r) => h('li', { class: 'voce-valore' },
+    h('span', {}, h('strong', {}, r.nome), h('span', { class: 'sigla' }, ` ×${r.quantita}`),
+      h('span', { class: 'nota' }, ` · ${numero(r.crUnitario)} cr l’uno`),
+      r.cariche ? h('span', { class: 'nota' }, ` · cariche ${r.cariche.join(', ')} su ${r.capacita}${r.calo ? `, −${numero(r.calo)} cr per ${r.mancanti} cariche mancanti` : ''}`) : null),
+    h('span', { class: 'valore-voce' }, ' · ', h('strong', {}, cr(r.cr)), ' ',
+      r.da === 'dotazione' ? h('span', { class: 'riga-azioni' }, meno(r, -1), meno(r, +1))
+        : h('span', { class: 'nota' }, r.da === 'munizioni' ? 'dalle munizioni' : r.da === 'rinforzo' ? 'dai pezzi del rinforzo' : 'dalle riserve del mezzo')),
+    r.nota ? h('p', { class: 'nota' }, r.nota) : null));
+  return h('details', { class: 'valore-esemplare', open: true },
+    h('summary', {}, 'Valore di questo esemplare'),
+    h('dl', { class: 'righe-valore' },
+      h('div', { class: 'voce-profilo' }, h('dt', {}, e.base.nome), h('dd', { title: e.base.da ?? '' }, cr(e.base.cr), e.base.da ? h('span', { class: 'nota' }, ` · ${e.base.da}`) : null)),
+      h('div', { class: 'voce-profilo' }, h('dt', {}, e.extra.nome), h('dd', {}, cr(e.extra.cr))),
+      h('div', { class: 'voce-profilo totale-valore' }, h('dt', {}, e.totale.nome), h('dd', {}, cr(e.totale.cr)))),
+    e.base.nota ? h('p', { class: 'nota motivo' }, e.base.nota) : null,
+    righe.length ? h('ul', { class: 'elenco-valore' }, righe) : null,
+    h('p', { class: 'nota' }, d.valore?._nota ?? ''));
 }
 
 function profiloVeicolo(v, d, { ctx = null, mezzo = null, aggiorna = null } = {}) {

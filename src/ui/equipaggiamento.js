@@ -8,6 +8,7 @@
 import { conAvviso } from './procedi.js';
 import { h } from './dom.js';
 import { info } from './tooltip.js';
+import { prezzoArtefatto } from '../prezzi-artefatti.js';
 import {
   TIPI, NOMI_TIPI, STATI, NOMI_STATI, catalogo, risolvi, opzioniCascata, cercaNelCatalogo, statoIniziale, puoMontare, rinforzoCompatibile, infoArtefattoVoce,
   regoleSintonizzazione, coloriChroma, testoEffettoOggetto, regolaCapolavoro, AMBITI_EFFETTO, NOMI_AMBITI, statiInventario, testoCura,
@@ -288,8 +289,15 @@ function datiOggetto(ctx, r) {
   const d = r.def ?? {};
   const rep = d.reperibilita ? ctx.dati.equipaggiamento?.indice?.reperibilita?.[d.reperibilita] ?? null : null;
   const peso = pesoVoce(r);
+  // A.256 (Davide, 06/11/2026): costo completo di costruzione × 3 × coefficiente di rarità, arrotondato per
+  // eccesso ai 50 cr. Il prezzo dichiarato dal manuale resta (A.261); il calcolo si legge accanto, e un pezzo
+  // unico o una reliquia non ha prezzo di catalogo. Rarità e reperibilità restano separate.
+  const pz = d.artefatto || d.unico || Number.isFinite(d.creazione_cr) ? prezzoArtefatto(d, ctx.dati, { numero: (n) => n.toLocaleString('it-IT') }) : null;
   const parti = [
     Number.isFinite(d.costo) ? `costo ${d.costo.toLocaleString('it-IT')}` : null,
+    pz?.unico ? h('span', { title: d._nota_unico ?? pz.nota ?? null }, 'senza prezzo di catalogo (A.256)')
+      : pz && pz.vendita !== null && pz.vendita !== pz.catalogo ? h('span', { title: `A.256: ${pz.conto}${pz.nota ? ` — ${pz.nota}` : ''}` }, `vendita ${pz.vendita.toLocaleString('it-IT')}${pz.catalogo === null ? ' (A.256)' : ' calcolata (A.256)'}`)
+        : pz && pz.vendita === null && pz.catalogo === null && pz.motivo ? h('span', { class: 'da-definire' }, pz.motivo) : null,
     // Equipaggiamento §7.1: costo UMN registrato all'installazione e servizio d'installazione a parte
     Number.isInteger(d.umn) ? h('span', { title: 'Costo in Umanità, registrato quando l’impianto passa a «Installato» (Giocatore §5.21): toglierlo non lo restituisce.' }, `UMN ${d.umn}`) : null,
     Number.isFinite(d.installazione_costo) ? `installazione ${d.installazione_costo.toLocaleString('it-IT')}` : null,
@@ -508,15 +516,21 @@ function bottoneCompra(ctx, scelto, nuovaVoce, etichetta = 'Compra') {
     return h('button', { type: 'button', class: 'btn primario btn-gratis', title: 'Dato dal DdG: nessun credito scalato; la riga va nel registro «Modifiche del master»',
       onclick: () => { const voce = nuovaVoce(); ctx.gratis(voce, `${scelto.nome ?? 'oggetto'}${voce.quantita > 1 ? ` ×${voce.quantita}` : ''}`); } }, `${etichetta} gratis (dato dal DdG)`);
   }
-  const costo = Number.isFinite(scelto.costo) ? scelto.costo : null;
-  const motivo = costo === null ? 'Prezzo di catalogo assente: aggiungi l’oggetto e scala i crediti a mano.'
+  // A.256: senza prezzo di catalogo vale quello di vendita calcolato (costruzione × 3 × rarità, ai 50 cr)
+  const pz = scelto.artefatto || scelto.unico || Number.isFinite(scelto.creazione_cr) ? prezzoArtefatto(scelto, ctx.dati, { numero: (n) => n.toLocaleString('it-IT') }) : null;
+  const costo = Number.isFinite(scelto.costo) ? scelto.costo : Number.isFinite(pz?.vendita) ? pz.vendita : null;
+  const motivo = pz?.unico ? 'Esemplare unico o reliquia: senza prezzo di catalogo (A.256). Lo assegna il Direttore.'
+    : costo === null ? 'Prezzo di catalogo assente: aggiungi l’oggetto e scala i crediti a mano.'
     : !Number.isInteger(ctx.crediti) ? 'Crediti non tracciati: applica prima la dotazione iniziale, oppure aggiungi l’oggetto e annota la spesa a mano.'
       : null;
   // N2: i crediti che non bastano avvisano; con «Procedi comunque» l'oggetto si compra e i crediti vanno a 0
+  // A.256: «Rarità e reperibilità restano separate: disporre del denaro non garantisce che l’oggetto sia
+  // disponibile.» Un prezzo non fa sembrare comprabile ciò che non è reperibile: avvisa, non blocca.
+  const avvisoRep = !motivo && pz && pz.catalogo === null && !scelto.reperibilita ? 'Reperibilità non indicata: il prezzo di vendita non garantisce un venditore (A.256). Il Direttore decide se l’oggetto si trova.' : null;
   const avvisoCrediti = !motivo && ctx.crediti < costo ? `Crediti insufficienti: ne hai ${ctx.crediti.toLocaleString('it-IT')}, ne servono ${costo.toLocaleString('it-IT')}` : null;
   return h('button', {
-    type: 'button', class: `btn${avvisoCrediti ? ' con-avviso' : ''}`, disabled: !!motivo, title: motivo ?? avvisoCrediti,
-    onclick: () => conAvviso(ctx.storico ?? null, { azione: `comprare ${scelto.nome ?? 'un oggetto'}`, motivo: avvisoCrediti, fai: () => ctx.compra(nuovaVoce(), costo) }),
+    type: 'button', class: `btn${avvisoCrediti || avvisoRep ? ' con-avviso' : ''}`, disabled: !!motivo, title: motivo ?? [avvisoRep, avvisoCrediti].filter(Boolean).join(' '),
+    onclick: () => conAvviso(ctx.storico ?? null, { azione: `comprare ${scelto.nome ?? 'un oggetto'}`, motivo: [avvisoRep, avvisoCrediti].filter(Boolean).join(' ') || null, fai: () => ctx.compra(nuovaVoce(), costo) }),
   }, costo === null ? etichetta : `${etichetta} (−${costo.toLocaleString('it-IT')} crediti)`);
 }
 

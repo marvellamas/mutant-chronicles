@@ -20,6 +20,8 @@
 //    (src/correzioni-master.js → proteggiBlocchiMaster con formaDaTablet e vociConsegnaDaTablet).
 // L'app avvisa, non blocca, quando il Direttore procede (forma non scelta, progetto non riuscito, budget superato).
 
+import { famigliaAlimentazione, opzioniAlimentazione, perditeAlimentazione, alimentazioneSceglibile } from './cyberarma.js';
+
 const isOggetto = (v) => v !== null && typeof v === 'object' && !Array.isArray(v);
 const testo = (v) => (typeof v === 'string' ? v.trim() : '');
 
@@ -55,6 +57,8 @@ export function normalizzaProgetti(v) {
     id: p.id, modello: p.modello, rif: testo(p.rif) || null, nome: testo(p.nome) || p.modello,
     aperto: isOggetto(p.aperto) ? { quando: testo(p.aperto.quando), da: testo(p.aperto.da) || 'Direttore' } : { quando: '', da: 'Direttore' },
     forma: isOggetto(p.forma) && testo(p.forma.id) ? { id: p.forma.id, quando: testo(p.forma.quando), da: testo(p.forma.da) || 'giocatore' } : null,
+    // A.251: l'alimentazione scelta (cristallo, SIN, riserva di CM, conversione a NeC)
+    alimentazione: isOggetto(p.alimentazione) && testo(p.alimentazione.id) ? { id: p.alimentazione.id, quando: testo(p.alimentazione.quando), da: testo(p.alimentazione.da) || 'giocatore' } : null,
     giorni: (Array.isArray(p.giorni) ? p.giorni : []).filter((g) => Number.isInteger(g?.n)).map((g) => ({
       n: g.n, tentativi: (Array.isArray(g.tentativi) ? g.tentativi : []).filter((t) => ESITI_TENTATIVO.includes(t?.esito)).map((t) => ({ esito: t.esito, quando: testo(t.quando), ...(testo(t.nota) ? { nota: testo(t.nota) } : {}) })),
     })),
@@ -68,7 +72,7 @@ export function apriProgetto(lista, modelloId, dati, { quando, da = 'Direttore' 
   const m = modelliProgetto(dati).find((x) => x.id === modelloId);
   if (!m) return { errore: `modello di progetto «${modelloId}» non nel catalogo` };
   const n = (lista ?? []).filter((p) => p.modello === modelloId).length + 1;
-  const p = { id: `${modelloId}-${n}`, modello: m.id, rif: m.rif, nome: m.nome, aperto: { quando, da }, forma: null, giorni: m.giorni.map((g) => ({ n: g.n, tentativi: [] })), chiuso: null, consegna: null };
+  const p = { id: `${modelloId}-${n}`, modello: m.id, rif: m.rif, nome: m.nome, aperto: { quando, da }, forma: null, alimentazione: null, giorni: m.giorni.map((g) => ({ n: g.n, tentativi: [] })), chiuso: null, consegna: null };
   return { lista: [...(lista ?? []), p], progetto: p };
 }
 
@@ -94,6 +98,23 @@ export function scegliForma(lista, id, formaId, dati, { quando, da = 'giocatore'
     if (!ok.si) return { errore: ok.motivo };
     if (!formeDi(modelloDi(p, dati)).some((f) => f.id === formaId)) return { errore: `forma «${formaId}» non prevista dal progetto` };
     return { progetto: { ...p, forma: { id: formaId, quando, da } } };
+  });
+}
+
+/**
+ * Il giocatore (o il Direttore) scegle l'alimentazione, prima della lavorazione (A.251, Davide 06/11/2026).
+ * Le due conversioni energetiche (riserva interna di CM, conversione a NeC) le autorizza soltanto il Direttore:
+ * fanno perdere l'alimentazione con i PM personali e le proprietà da Custode, e la scelta non si torna indietro
+ * facilmente. Chi sceglie deve aver letto che cosa si perde: lo dice `perditeAlimentazione`.
+ */
+export function scegliAlimentazione(lista, id, famigliaId, dati, { quando, da = 'giocatore', master = false } = {}) {
+  return cambia(lista, id, (p) => {
+    const ok = alimentazioneSceglibile(p);
+    if (!ok.si) return { errore: ok.motivo };
+    const opz = opzioniAlimentazione(modelloDi(p, dati), dati, { master }).find((o) => o.id === famigliaId);
+    if (!opz) return { errore: `alimentazione «${famigliaId}» non prevista dal progetto` };
+    if (!opz.sceglibile) return { errore: `${opz.nome}: ${opz.motivo}` };
+    return { progetto: { ...p, alimentazione: { id: famigliaId, quando, da } } };
   });
 }
 
@@ -158,7 +179,10 @@ export function riepilogoProgetto(p, dati) {
   const avvisi = [];
   if (ore > (m.budget?.ore ?? Infinity)) avvisi.push(`le ore stimate (${ore}) superano il tempo disponibile (${m.budget.ore}): i nuovi tentativi devono rientrare nel tempo e nelle risorse`);
   if (cr > (m.budget?.cr ?? Infinity)) avvisi.push(`le risorse stimate (${cr} cr) superano quelle previste (${m.budget.cr} cr)`);
-  return { modello: m, forme: formeDi(m), forma: formeDi(m).find((f) => f.id === p.forma?.id) ?? null, giorni, ore, cr, tuttiRiusciti, avvisi };
+  // A.251: le alimentazioni proponibili e quella scelta, con che cosa si perde
+  const alimentazioni = opzioniAlimentazione(m, dati, { master: true });
+  const alimentazione = alimentazioni.find((o) => o.id === p.alimentazione?.id) ?? null;
+  return { modello: m, forme: formeDi(m), forma: formeDi(m).find((f) => f.id === p.forma?.id) ?? null, alimentazioni, alimentazione, giorni, ore, cr, tuttiRiusciti, avvisi };
 }
 
 /**
@@ -169,6 +193,9 @@ export function avvisiConsegna(p, dati) {
   const r = riepilogoProgetto(p, dati);
   const out = [];
   if (!p.forma) out.push('la forma non è stata scelta: si consegna con la forma del progetto base');
+  // A.251: con una conversione energetica l'arma consegnata non si alimenta più con i PM personali
+  const al = p.alimentazione?.id ? perditeAlimentazione(p.alimentazione.id, dati) : null;
+  if (al?.conversione) out.push(`alimentazione «${al.nome}»: l’arma consegnata perde ${al.perde.join(' e ')} (A.251)`);
   if (r && !r.tuttiRiusciti) out.push('non tutti i giorni hanno un esito riuscito');
   if (!p.chiuso) out.push('il progetto non è chiuso');
   else if (p.chiuso.esito !== 'riuscito') out.push(`il progetto è chiuso come «${NOMI_FINALE[p.chiuso.esito]}»`);
@@ -229,15 +256,18 @@ export function consegnaArma(creazione, id, dati, { quando, master = false, dona
   const m = modelloDi(p, dati);
   if (!m) return { errore: 'modello di progetto non nel catalogo' };
   const forma = p.forma?.id ?? m.arma?.manifestazioni?.progetto ?? null;
-  if (m.risultato?.aggiorna_esemplare) return aggiornaEsemplare(creazione, lista, p, m, forma, { quando, donatore, scheggia, provenienza, uid, esemplare });
+  // A.251: l'alimentazione scelta decide quale profilo si consegna. Con una conversione energetica (riserva interna
+  // di CM, conversione a NeC) la voce è quella della conversione: senza, l'arma consegnata sarebbe sbagliata.
+  const al = alimentazioneConsegnata(p, dati);
+  if (m.risultato?.aggiorna_esemplare) return aggiornaEsemplare(creazione, lista, p, m, forma, { quando, donatore, scheggia, provenienza, uid, esemplare, al });
   const voce = {
-    uid, rif: m.risultato?.rif ?? m.rif, stato: 'trasportato', quantita: 1, note: '',
+    uid, rif: al?.rif ?? m.risultato?.rif ?? m.rif, stato: 'trasportato', quantita: 1, note: '',
     ...(forma ? { manifestazione: forma } : {}),
     ...(m.risultato?.voce?.modulatore_neurale ? { modulatore_neurale: true } : {}),
     esemplare: {
       progetto: m.nome,
       ...(m.risultato?.voce?.focalizzatore ? { focalizzatore: m.risultato.voce.focalizzatore } : {}),
-      ...(m.risultato?.voce?.configurazione ? { configurazione: m.risultato.voce.configurazione } : {}),
+      ...(al?.configurazione ? { configurazione: al.configurazione, alimentazione: al.alimentazione } : m.risultato?.voce?.configurazione ? { configurazione: m.risultato.voce.configurazione } : {}),
       ...(testo(provenienza) ? { provenienza: testo(provenienza) } : {}),
     },
     consegna: { quando, da: 'Direttore', progetto: p.id },
@@ -253,8 +283,24 @@ export function consegnaArma(creazione, id, dati, { quando, master = false, dona
   };
 }
 
+/**
+ * A.251: che cosa si consegna secondo l'alimentazione scelta. Con una conversione energetica il profilo è quello
+ * della conversione (`voce` della famiglia nei dati) e l'esemplare porta scritto che non si alimenta più con i PM
+ * personali e ha perso le proprietà da Custode. Senza scelta, o con cristallo e SIN, resta il profilo del progetto.
+ * @returns {{ rif, configurazione, alimentazione } | null}
+ */
+export function alimentazioneConsegnata(p, dati) {
+  const f = p?.alimentazione?.id ? famigliaAlimentazione(p.alimentazione.id, dati) : null;
+  if (!f) return null;
+  return {
+    rif: f.conversione === true ? f.voce ?? null : null,
+    configurazione: f.nome,
+    alimentazione: { id: f.id, pm_personali: f.pm_personali !== false, proprieta_custode: f.proprieta_custode !== false, ...(f.conversione === true ? { conversione: true } : {}) },
+  };
+}
+
 /** A.231: la consegna sull'esemplare che c'è già. Vedi consegnaArma. */
-function aggiornaEsemplare(creazione, lista, p, m, forma, { quando, donatore, scheggia, provenienza, uid, esemplare }) {
+function aggiornaEsemplare(creazione, lista, p, m, forma, { quando, donatore, scheggia, provenienza, uid, esemplare, al = null }) {
   const voci = creazione.equipaggiamento ?? [];
   const fam = esemplariDi(voci, m);
   const nome = m.esemplare_di_partenza?.nome ?? 'l’esemplare di partenza';
@@ -279,11 +325,14 @@ function aggiornaEsemplare(creazione, lista, p, m, forma, { quando, donatore, sc
     r.voce?.focalizzatore ? `focalizzatore ${r.voce.focalizzatore}${focPrima && focPrima !== r.voce.focalizzatore ? ` al posto del ${focPrima}` : ''}` : null,
     r.voce?.modulatore_neurale ? 'modulo SIN integrato (modulatore neurale)' : null,
     formaNome ? `forma ${formaNome}` : null,
+    // A.251: l'alimentazione, con la perdita quando è una conversione
+    al ? `alimentazione ${al.configurazione}${al.alimentazione.conversione ? ' (niente PM personali, niente proprietà da Custode)' : ''}` : null,
   ].filter(Boolean).join(', ');
   storico.push({ quando, nome: nomeDopo, esito: p.chiuso?.esito ? NOMI_FINALE[p.chiuso.esito] : 'progetto non chiuso', cosa: `«${m.nome}»: ${interventi}`, da: 'Direttore', progetto: p.id });
   const prov = testo(provenienza) || testo(e0.provenienza) || partenza.provenienza || '';
   const voce = {
     ...bersaglio,
+    ...(al?.rif ? { rif: al.rif } : {}),
     ...(forma ? { manifestazione: forma } : {}),
     ...(r.voce?.modulatore_neurale ? { modulatore_neurale: true } : {}),
     esemplare: {
@@ -292,7 +341,7 @@ function aggiornaEsemplare(creazione, lista, p, m, forma, { quando, donatore, sc
       ...(nomePrima && nomePrima !== nomeDopo ? { nome_originale: nomePrima } : {}),
       progetto: m.nome,
       ...(r.voce?.focalizzatore ? { focalizzatore: r.voce.focalizzatore } : {}),
-      ...(r.voce?.configurazione ? { configurazione: r.voce.configurazione } : {}),
+      ...(al?.configurazione ? { configurazione: al.configurazione, alimentazione: al.alimentazione } : r.voce?.configurazione ? { configurazione: r.voce.configurazione } : {}),
       ...(prov ? { provenienza: prov } : {}),
       storico,
     },

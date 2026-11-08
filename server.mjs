@@ -1971,7 +1971,10 @@ async function api(req, res, percorso, cartella, tavolo, scontri, nemici, radice
       // né cancella le correzioni e i bonus del master: nel file restano quelli che ci sono già
       let masterRipristinato = false;
       if (!req.mutantMaster) {
-        const p = proteggiBlocchiMaster(o, await fileAttualeDelPg(cartella, file, typeof o.pg === 'string' ? o.pg : null));
+        // A.251: le conversioni dell'alimentazione della CyberArma le decide il Direttore, e per riconoscerle
+        // servono i dati del catalogo (src/cyberarma.js → alimentazioneDaTablet)
+        const { dati: datiProtezione } = await datiDelServer(radice);
+        const p = proteggiBlocchiMaster(o, await fileAttualeDelPg(cartella, file, typeof o.pg === 'string' ? o.pg : null), datiProtezione);
         if (p.ripristinato) { masterRipristinato = true; corpo = Buffer.from(JSON.stringify(p.file, null, 2), 'utf8'); }
       }
       // «un originale solo» (20/10): il file che si sta per sovrascrivere va nello storico, e quello nuovo porta la sua

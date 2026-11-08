@@ -24,6 +24,7 @@
 // Tutte funzioni pure: l'interfaccia è in src/ui/master.js, src/ui/tab.js e src/ui/tavolo.js.
 
 import { formaDaTablet, vociConsegnaDaTablet } from './progetti.js';
+import { alimentazioneDaTablet } from './cyberarma.js';
 
 const isOggetto = (v) => v !== null && typeof v === 'object' && !Array.isArray(v);
 const segno = (n) => (n > 0 ? `+${n}` : n < 0 ? `−${-n}` : '0');
@@ -332,14 +333,18 @@ export const masterDiverso = (a, b) => JSON.stringify(blocchiMaster(a)) !== JSON
  * @param nuovo file che il tablet vuole scrivere (oggetto) @param disco file che c'è già (oggetto o null)
  * @returns {{ file, ripristinato: boolean }}
  */
-export function proteggiBlocchiMaster(nuovo, disco) {
+export function proteggiBlocchiMaster(nuovo, disco, dati = null) {
   const px = proteggiPuntiEsperienza(nuovo, disco);
   // progetti del Direttore (src/progetti.js): l'arma consegnata entra solo dal suo PC; nei progetti il tablet cambia
   // soltanto la forma, finché è sceglibile
   const eqPulito = vociConsegnaDaTablet(px.file?.scelte?.equipaggiamento, disco?.scelte?.equipaggiamento);
   const tolteConsegna = (px.file?.scelte?.equipaggiamento ?? []).length !== eqPulito.length
     || JSON.stringify(eqPulito) !== JSON.stringify(px.file?.scelte?.equipaggiamento ?? []);
-  const conForme = Array.isArray(disco?.progetti_master) ? formaDaTablet(px.file?.progetti_master, disco.progetti_master) : null;
+  // A.251: dal tablet si sceglie un'alimentazione, ma non una conversione energetica (riserva di CM, NeC): fa
+  // perdere i PM personali e le proprietà da Custode, e la autorizza il Direttore (src/cyberarma.js)
+  const conForme = Array.isArray(disco?.progetti_master)
+    ? alimentazioneDaTablet(px.file?.progetti_master, formaDaTablet(px.file?.progetti_master, disco.progetti_master), dati)
+    : null;
   const base = {
     ...px.file,
     ...(px.file?.scelte && tolteConsegna ? { scelte: { ...px.file.scelte, equipaggiamento: eqPulito } } : {}),

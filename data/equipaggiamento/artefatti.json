@@ -183,7 +183,8 @@
       "sintonizzabile": true,
       "proprieta_attive": true,
       "snt_per_impiego": true,
-      "_nota": "Armamenti 0.74 §7.25: SnT 1 per il Custode, 2 per il Tecnomante (le SnT sono regole specifiche dei diversi impieghi e non determinano danno o Grado)."
+      "_nota": "Armamenti 0.74 §7.25: SnT 1 per il Custode, 2 per il Tecnomante (le SnT sono regole specifiche dei diversi impieghi e non determinano danno o Grado).",
+      "TODO(Davide)": "A.265: la CyberArma originale ha SnT 1 nell’impiego del Custode e 2 in quello del Tecnomante, e il §7.10 lega la potenza al SnT. Nei dati la potenza è «Comune» (SnT 1) mentre il campo «sintonizzazione» della voce è 2. Qual è la potenza dell’originale? L’app lascia «Comune» e non ne deduce un prezzo: è un pezzo unico."
     },
     {
       "rif": "armi:cyberarma-batteria-verde",
@@ -210,12 +211,13 @@
     {
       "rif": "armi:cyberarma-nec",
       "tipologia": "Armi",
-      "potenza": "Non Comune",
+      "potenza": "Rara",
       "sintonizzazione": 3,
       "sintonizzabile": true,
       "proprieta_attive": true,
       "snt_per_impiego": true,
-      "_nota": "Armamenti 0.74 §7.25: conversione a NeC, SnT 3 complessiva."
+      "_nota": "Armamenti 0.74 §7.25: conversione a NeC, SnT 3 complessiva.",
+      "_nota_potenza": "Armamenti 0.74 §7.10: la classificazione di potenza e il costo SnT vanno insieme (Comune 1, Non Comune 2, Rara 3…). Questa voce ha SnT 3: la potenza è Rara. Prima diceva «Non Comune», che vale per SnT 2 (lotto 157)."
     }
   ],
   "oggetti": [
@@ -2225,7 +2227,9 @@
       "qualita": "Non comune",
       "ps_int": 12,
       "pi": 4,
-      "peso": 0.2
+      "peso": 0.2,
+      "creazione_cr": 2100,
+      "_nota_creazione": "Magia 1.11 §26.6.1: supporto 100 + Chroma Verde da 10 PM 1.000 + reagenti di Grado III 1.000 = 2.100 cr con progetto posseduto. Serve al prezzo di vendita della A.256."
     },
     {
       "id": "guanti-da-combattimento-mistico",
@@ -2351,7 +2355,9 @@
           "cm_anche_se_fallisce": true
         }
       ],
-      "_nota_lucas": "Scheda 1.0, revisione «Cariche Mistiche» del 02/11/2026: le CM attuali dipendono dallo stato di campagna, nessuna ricarica automatica. Ricarica: CM mancanti × 2 × rapporto (Guanti vuoti a 3:1: 36 PM). A piena riserva: sei Pugni mistici, due Getti singoli oppure un Doppio getto; un Getto e due Pugni lasciano 1 CM."
+      "_nota_lucas": "Scheda 1.0, revisione «Cariche Mistiche» del 02/11/2026: le CM attuali dipendono dallo stato di campagna, nessuna ricarica automatica. Ricarica: CM mancanti × 2 × rapporto (Guanti vuoti a 3:1: 36 PM). A piena riserva: sei Pugni mistici, due Getti singoli oppure un Doppio getto; un Getto e due Pugni lasciano 1 CM.",
+      "creazione_cr": 2300,
+      "_nota_creazione": "Magia 1.11 §26.6.2 ed Equipaggiamento §10.7: supporto 100 + adattamento 200 + riserva Rossa da 6 CM 1.000 + reagenti di Grado III 1.000 = 2.300 cr con progetto posseduto. Serve al prezzo di vendita della A.256."
     },
     {
       "id": "pergamena-di-cura-ferite-3",
@@ -2597,7 +2603,9 @@
       "_nota_integrita": "A.162: proprietà Indistruttibile attiva. Il danneggiamento non toglie PI e non rompe lo Scrigno, e **non consente di forzarne l’apertura**: le autorizzazioni di apertura seguono la sua scheda. La proprietà non si estende ai Sigilli né al contenuto.",
       "effetto_breve": "Scrigno indistruttibile: il danneggiamento non lo apre. Le autorizzazioni di apertura seguono la sua scheda.",
       "proprieta": [],
-      "_nota": "Artefatto di campagna del Manuale della Magia §28.2. Peso, prezzo e Reperibilità non sono indicati dai manuali: restano da completare. La schermatura dei Contenitori del Silenzio è un’altra cosa (A.163, §10.13)."
+      "_nota": "Artefatto di campagna del Manuale della Magia §28.2. Peso, prezzo e Reperibilità non sono indicati dai manuali: restano da completare. La schermatura dei Contenitori del Silenzio è un’altra cosa (A.163, §10.13).",
+      "unico": true,
+      "_nota_unico": "Equipaggiamento §10.12: «reliquia di campagna, priva di prezzo ordinario di catalogo»; Magia §28.2: «Non è prevista una normale ricetta commerciale per riprodurre questa reliquia». Rarità «Unico o reliquia» della A.256: senza prezzo di catalogo."
     },
     {
       "id": "hachimaki-della-disciplina-interiore",
@@ -2633,7 +2641,9 @@
       "qualita": "Non comune",
       "ps_int": 12,
       "pi": 2,
-      "peso": 0.05
+      "peso": 0.05,
+      "creazione_cr": 800,
+      "_nota_creazione": "Magia 1.11 §28.1.1: supporto 50 + adattamento e ricamo 150 + Chroma Verde lavorato 100 + reagenti 500 = 800 cr con progetto disponibile. Serve al prezzo di vendita della A.256."
     },
     {
       "id": "tomo-dei-guardiani",
@@ -2650,7 +2660,9 @@
       "effetto_breve": "Reliquia di campagna: non concede Incantesimi, bonus o riserve di PM. Le conoscenze che rivela seguono gli eventi della campagna.",
       "proprieta": [],
       "TODO(Davide)": "Dimensioni, peso, Integrità, SnT e profilo commerciale del Tomo non sono ancora fissati (Equipaggiamento §10.11, Magia §28.4): il peso resta «da definire» e il carico totale parziale (§1.6); per l’Integrità, se necessaria, vale il §1.7. Eventuali funzioni richiedono una scheda specifica.",
-      "_nota": "Reliquia di Nathaniel legata al primo rituale e ai cinque Sigilli Spezzati; la descrizione delle visioni (copertina di metallo scuro incisa, albero e clessidra, pagine di lamine metalliche con scrittura runica) non attribuisce effetti meccanici. Il vincolo di apertura dello Scrigno del Primo Giuramento non si trasferisce al Tomo."
+      "_nota": "Reliquia di Nathaniel legata al primo rituale e ai cinque Sigilli Spezzati; la descrizione delle visioni (copertina di metallo scuro incisa, albero e clessidra, pagine di lamine metalliche con scrittura runica) non attribuisce effetti meccanici. Il vincolo di apertura dello Scrigno del Primo Giuramento non si trasferisce al Tomo.",
+      "unico": true,
+      "_nota_unico": "Equipaggiamento §10.11 e Magia §28.4: reliquia di Nathaniel, senza profilo commerciale. Rarità «Unico o reliquia» della A.256: senza prezzo di catalogo."
     },
     {
       "id": "anello-di-rigenerazione-9",
@@ -2667,7 +2679,7 @@
       "indossabile": true,
       "artefatto": {
         "tipologia": "Accessori",
-        "potenza": "Rara",
+        "potenza": "Molto Rara",
         "sintonizzazione": 3,
         "sintonizzabile": true,
         "proprieta_attive": true,
@@ -2684,7 +2696,11 @@
             "incantesimo": "Rigenerazione",
             "livello": 9
           }
-        ]
+        ],
+        "snt_eccezione": {
+          "regola": "A.256 (06/11/2026); A.263 aperta",
+          "motivo": "La A.256 dice l’Anello «Molto rara» e ne calcola il prezzo; la configurazione approvata del 02/11 gli dà Grado III e SnT 3. La tabella del §7.10 vorrebbe SnT 4 per una Molto Rara: l’app tiene la SnT della configurazione approvata e aspetta la A.263."
+        }
       },
       "attivazione_lunga": {
         "id": "rigenerazione-9",
@@ -2697,7 +2713,10 @@
         "condizione": "Contatto e condizioni della versione per tutte e 3 le ore; beneficiario vivente consenziente, o incosciente soccorso. Una sola Rigenerazione attiva per beneficiario. Nessuna Prova di Potere né Rituale, nessun Successo Magistrale o Fallimento Maldestro (Magia §25.4).",
         "fonte": "Magia 1.11 §25.4; configurazione approvata da Davide il 02/11/2026"
       },
-      "proprieta": []
+      "proprieta": [],
+      "creazione_cr": 1500,
+      "_nota_prezzo": "A.256 (Davide, 06/11/2026): costo completo di costruzione 1.500 cr, rarità Molto rara → prezzo di vendita 1.500 × 3 × 3 = 13.500 cr. Prima nei dati la potenza era «Rara» (configurazione del 02/11: Grado III, SnT 3) e il prezzo non c’era.",
+      "TODO(Davide)": "A.263: la A.256 dice l’Anello «Molto rara», mentre la configurazione approvata del 02/11 gli dà Grado III e SnT 3, e i manuali legano Grado III → potenza Rara (Equipaggiamento §10.1) e Molto Rara → SnT 4 (Armamenti §7.10). Cambiano Grado e SnT, o la rarità dell’Anello è un’eccezione alle due tabelle? L’app applica la A.256 per la rarità e il prezzo, e tiene Grado III e SnT 3 della configurazione approvata."
     }
   ],
   "fuori_scala": {
