@@ -2564,3 +2564,45 @@ Terzo lotto delle risposte del 06/11. I manuali non sono cambiati. Buona parte d
   resta il numero delle sue cariche e diventa `{ c, pi }` solo da danneggiata: nessuna migrazione.
 
 Nessuna domanda nuova: il primo numero libero resta **A.260**.
+
+## 08/11/2026 (lotto 181) — La CyberArma e i prezzi: A.251, A.256, A.257
+
+Applicate le tre risposte del 06/11 che riguardano la CyberArma e i prezzi. Manuali invariati (Giocatore 0.54, Magia
+1.11, Armamenti 0.74, Equipaggiamento 0.30); esito in `docs/diff-lotto181-2026-11-08.md`.
+
+- **A.251 — RISOLTA** *(Davide, 06/11/2026)*. Due famiglie di modifiche. **Cristallo sostituito** e **modulo SIN
+  inserito** lasciano l'arma alimentabile con i **PM personali** e le proprietà da Custode, e coesistono con quella
+  alimentazione. **Riserva interna di CM** e **conversione a NeC** impediscono i PM personali e fanno perdere le
+  proprietà da Custode; sono alternative e **non si cumulano**. Consumi: 1 CM + 1 AzP **ogni 10 colpi**; 1 carica NeC
+  Rossa + 1 AzP ogni 10 colpi. Dati in `armi.json` → `cyberarma.alimentazione_modifiche`, motore in
+  `src/cyberarma.js`; nel progetto (lotto 157) la scelta dell'alimentazione dice in chiaro che cosa si perde prima di
+  confermare, le conversioni le autorizza solo il Direttore (il server le rifiuta da un tablet) e l'arma consegnata
+  prende il profilo della conversione scelta. Chiude il TODO della A.251 sul Custode: con una conversione l'impiego
+  del Custode non esiste più. **La misura in colpi supera il «per 10 Round» della A.236** (A.260 per la conferma).
+- **A.256 — RISOLTA** *(Davide, 06/11/2026)*. **Prezzo di vendita = costo completo di costruzione × 3 × coefficiente
+  di rarità**, arrotondato per eccesso ai 50 cr successivi; Comune 1, Non comune 1,5, Raro 2, Molto raro 3,
+  Leggendario 5, «Unico o reliquia» senza prezzo di catalogo. Regole in `regole.json` → `prezzi_artefatti`, motore in
+  `src/prezzi-artefatti.js`. **Rarità corrette nei dati**: l'**Anello con Rigenerazione 9** da «Rara» a **«Molto
+  Rara»** (con il costo di costruzione 1.500 cr → **13.500 cr**) e la **CyberArma convertita a NeC** da «Non Comune» a
+  **«Rara»** (SnT 3, §7.10); ricontrollate tutte le altre 55 voci con una potenza, nessun'altra era sbagliata.
+  Segnati «Unico o reliquia» lo Scrigno del Primo Giuramento, il Tomo dei Guardiani e le tre voci della CyberArma. I
+  prezzi dichiarati dai manuali restano e il calcolo si legge accanto (A.261); la Reperibilità sta sempre accanto al
+  prezzo e comprare ciò che non è reperibile avvisa, non blocca.
+- **A.257 — RISOLTA** *(Davide, 06/11/2026)*. Il valore corrente dell'esemplare si calcola e si mostra in **tre righe
+  separate**: modello base, dotazione extra, totale. Per il FIAT LUX: **126.510 + 62.600 = 189.110 cr**. **Non è un
+  numero scritto una volta: segue l'inventario** — le voci che si contano da munizioni, pezzi dei rinforzi e riserve
+  cambiano dove stanno, le altre hanno − e + nella riga, e consumare, rimuovere o trasferire abbassa il totale. Un
+  accumulatore di ricambio conta il suo stato (A.264). Dati in `veicoli.json` → `valore` e
+  `dotazione_precedente.voci`, motore in `src/valore-veicolo.js`. **Supera la parte della A.226** in cui il valore
+  stimato restava vuoto perché non era fissato come calcolarlo; il valore stimato del Direttore resta e prende il
+  posto della riga del modello base.
+
+- **Nuove domande, aperte: A.260–A.265** (`docs/pacchetto-per-davide-2026-11-08-lotto181.md`): A.260 il consumo delle
+  conversioni in colpi o in Round (oggi colpi, A.251); A.261 la formula del prezzo contro i prezzi di catalogo già
+  scritti nei manuali (oggi vincono i dichiarati); A.262 il coefficiente dell'«Epica» (oggi nessun prezzo calcolato);
+  A.263 Grado e SnT dell'Anello, Molto raro ma Grado III e SnT 3 (oggi come la configurazione approvata, con
+  l'eccezione dichiarata nei dati); A.264 di quanto cala il valore di un accumulatore di ricambio scarico (oggi le
+  cariche mancanti alla tariffa di ricarica); A.265 la potenza della CyberArma originale, con SnT 1 e 2 (oggi
+  «Comune», nessun prezzo: pezzo unico).
+
+Il primo numero libero diventa **A.266**.
