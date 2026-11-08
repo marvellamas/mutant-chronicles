@@ -2606,3 +2606,42 @@ Applicate le tre risposte del 06/11 che riguardano la CyberArma e i prezzi. Manu
   «Comune», nessun prezzo: pezzo unico).
 
 Il primo numero libero diventa **A.266**.
+
+## 08/11/2026 (lotto 182) — La mappa: A.253, A.254, A.255
+
+Applicate le tre risposte del 06/11 sulla mappa. Manuali invariati; esito in `docs/diff-lotto182-2026-11-08.md`.
+
+- **A.253 — RISOLTA** *(Davide, 06/11/2026)*. **A terra la Neverlost non rulla: movimento 0.** Il **decollo
+  verticale** è una manovra complessa, **1 AzM + 1 AzP del pilota**, normalmente senza prova, che serve con spazio
+  ristretto, attacco in corso o danni; nel Round del decollo sale in **stazionamento** senza spostamento orizzontale
+  e dal Round successivo è in volo da sola. **I movimenti della scala tattica (8/16/24) non si convertono** sulla
+  mappa terrestre: l'app non mostra un numero di quadretti, dice che non si convertono e offre le due strade (scala
+  tattica, o fuori dalla mappa). L'**atterraggio** è una manovra complessa e conclude il movimento. Dati in
+  `veicoli.json` → `volo` e `profili[neverlost].volo_andature`, motore in `src/volo-veicolo.js`, voci «Decolla…» e
+  «Atterra» nel menu del token. **Supera la parte della A.238** in cui l'andatura si convertiva (8 Q Tattici = 80 Q
+  Base): era un difetto. Dimensioni 34 × 20, rotazione a 45°, scafo ostacolo e combattimento aereo in Q Tattici
+  restano come nella A.238.
+- **A.254 — RISOLTA** *(Davide, 06/11/2026)*. **Conferma la A.223**: la testa va in qualunque quadretto della sagoma
+  corrente, anche centrale, e mai fuori (l'app lo rifiutava già). **Aggiunge** che la posizione cambia quando la
+  creatura si muove, ruota, cambia configurazione o assume una posa nuova, **non fra un attacco e l'altro** per
+  ottenere una linea più favorevole: ogni attacco lascia la sua riga marcata nel registro
+  (`haAttaccatoNelRound` in `src/scontro.js`) e l'app lo segnala spostando la testa nello stesso Round — **avvisa,
+  non blocca**, perché una posa nuova e una linea cercata non si distinguono e la plausibilità anatomica la giudica
+  il Direttore. Il segnalino sposta soltanto l'origine di attacchi, soffio, aura ed effetti centrati sulla testa.
+  Dati in `mappa.json` → `testa`.
+- **A.255 — RISOLTA** *(Davide, 06/11/2026)*. La Murena eterea **può terminare il movimento dentro la roccia**.
+  **Completamente immersa** (ogni quadretto della sagoma è roccia; con uno fuori vale tutto il normale): niente
+  linea di vista o d'effetto verso l'esterno, non attacca, non è normalmente bersagliata, non percepisce oltre la
+  parete. Per attaccare **emerge spendendo il normale movimento** e con il residuo rientra nello stesso Round (è il
+  movimento di sempre, nessuna regola nuova). **Resa corporea nella roccia**: l'app **propone** le caselle libere
+  più vicine alla superficie, Prona e senza attacchi di opportunità, e a parità di distanza sceglie il Direttore.
+  Dati in `mappa.json` → `roccia`, motore in `src/mappa/roccia.js`, voce «Resa corporea: proponi l'uscita…».
+
+- **Coda del lotto, la cache delle risposte dell'API.** La diagnosi del lotto 180 era sbagliata:
+  `/api/personaggi/<file>` aveva già `Cache-Control: no-cache` e l'app lo chiede con `cache: 'no-store'`.
+  Ricontrollate tutte le risposte del server: l'unica davvero sbagliata era **`/api/ritratti/<chiave>`**, con
+  `public, max-age=86400` su un nome che è la chiave del PG e non il contenuto (un ritratto cambiato restava vecchio
+  fino a un giorno, su ogni tablet): adesso `no-cache` con un **ETag** sul contenuto e un 304 quando non è cambiato.
+  Le immagini della mappa restano `immutable` ed è giusto, perché il loro nome porta l'impronta del contenuto.
+
+Nessuna domanda nuova: il primo numero libero resta **A.266**.
