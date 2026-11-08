@@ -864,8 +864,19 @@ export function attaccoManuale(a) {
  * @param a { attaccante, bersaglio, arma, va, tiri: [{ valore, origine, esito }], esito }
  */
 export function registraAttacco(s, a, adesso) {
-  return conRiga(s, testoAttacco(a), adesso);
+  const t = conRiga(s, testoAttacco(a), adesso);
+  // A.254 (06/11/2026): la riga porta chi ha attaccato e in che Round, per sapere se la testa di una creatura si può
+  // ancora spostare (non fra un attacco e l'altro per cercare una linea più favorevole)
+  if (a?.attaccante) t.registro[t.registro.length - 1].attacco = { da: a.attaccante };
+  return t;
 }
+
+/**
+ * A.254: il partecipante `nome` ha già attaccato in questo Round? Si legge dal registro, dove ogni attacco lascia la
+ * sua riga (registraAttacco). Serve a dire al Direttore che la testa non si sposta fra un attacco e l'altro.
+ */
+export const haAttaccatoNelRound = (s, nome, round = null) => (s?.registro ?? [])
+  .some((r) => r.round === (Number.isInteger(round) ? round : s?.round) && r.attacco?.da === nome);
 
 /** Testo della riga dell'attacco (anche in testa alla riga del colpo, quando un PG colpisce un nemico dalla scheda). */
 export function testoAttacco(a) {

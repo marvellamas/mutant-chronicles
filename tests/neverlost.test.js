@@ -157,13 +157,17 @@ test('mappa: pedina 3 × 2 in Q Tattici; atterrata in Q Base con le dimensioni v
   const rec = { id: 'vei-nl', proprietario: { tipo: 'gruppo' }, conducente: null, mezzo: { ...nuovoVeicolo('neverlost', dati), andatura: 'controllata' } };
   const tattica = pezziDellaScena({ veicoli: [rec], scena: { scala: 'tattica' } }, dati).find((p) => p.tipo === 'veicolo');
   assert.deepEqual(tattica.ingombro, [2, 3], 'muso in basso: 2 colonne × 3 righe');
-  assert.equal(tattica.movimento.passo, 8);
-  // A.238 (03/11/2026): in Q Base entra con le dimensioni reali, 34 × 20 Q Base (51 × 30 m), e lo scafo è un ostacolo; il suo MOV
-  // (8 Q Tattici) si converte (A.225): 80 Q Base
+  // A.253 (Davide, 06/11/2026; lotto 182): un mezzo nuovo è a terra, e **a terra non rulla**: movimento 0 in
+  // qualunque scala. Prima (A.238) la pedina in Q Tattici portava il MOV 8 anche da ferma.
+  assert.equal(tattica.movimento.passo, 0);
+  assert.equal(tattica.statoVolo.id, 'a_terra');
+  // A.238 (03/11/2026): in Q Base entra con le dimensioni reali, 34 × 20 Q Base (51 × 30 m), e lo scafo è un ostacolo.
+  // A.253 supera la parte della A.238 sulla conversione del MOV: i movimenti in volo **non si convertono** (niente 80 Q
+  // Base), e a terra il movimento è 0.
   const base = pezziDellaScena({ veicoli: [rec], scena: { scala: 'base' } }, dati).find((p) => p.tipo === 'veicolo');
   assert.deepEqual(base.ingombro, [20, 34], 'muso in basso: 20 colonne × 34 righe');
   assert.equal(base.ostacolo, true);
-  assert.equal(base.movimento.passo, 80);
+  assert.equal(base.movimento.passo, 0, 'a terra: movimento 0, non 80 Q Base convertiti (A.253)');
   assert.deepEqual(ingombroVeicolo(P, dati, 'base'), [34, 20]);
   // le misure del corpo restano quelle vere
   assert.equal(profiloDi(rec.mezzo, dati).dimensioni.lunghezza_m, 51);

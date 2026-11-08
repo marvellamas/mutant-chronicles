@@ -1293,7 +1293,13 @@ async function apiRitratto(req, res, percorso, { cartella, radice }) {
   const m = /^data:(image\/(?:png|jpeg|webp|gif));base64,(.+)$/.exec(vista?.ritratto ?? '');
   if (!m) return json(res, 404, { errore: 'ritratto non trovato' });
   const corpo = Buffer.from(m[2], 'base64');
-  res.writeHead(200, { 'Content-Type': m[1], 'Content-Length': corpo.length, 'Cache-Control': 'public, max-age=86400' });
+  // lotto 182 (08/11/2026): il ritratto si chiama con la chiave del personaggio, non con il suo contenuto, quindi un
+  // «max-age» teneva in cache il ritratto vecchio fino a un giorno dopo averlo cambiato (su ogni tablet). Adesso:
+  // «no-cache» più un ETag sul contenuto, così la risposta è sempre fresca e un ritratto che non è cambiato costa un
+  // 304 invece dell'immagine intera.
+  const etag = `"${createHash('sha256').update(corpo).digest('hex').slice(0, 16)}"`;
+  if (req.headers['if-none-match'] === etag) { res.writeHead(304, { ETag: etag, 'Cache-Control': 'no-cache' }); return res.end(); }
+  res.writeHead(200, { 'Content-Type': m[1], 'Content-Length': corpo.length, 'Cache-Control': 'no-cache', ETag: etag });
   return res.end(corpo);
 }
 

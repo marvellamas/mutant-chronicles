@@ -1461,7 +1461,7 @@
       "carico_nota": "50 t, comprese persone, Scout e materiali mobili. Il peso degli impianti standard è già compreso nel mezzo.",
       "mov_q": 8,
       "mov_unita": "Q Tattici",
-      "mov_testo": "MOV di combattimento in Q Tattici: 8 / 16 / 24 per Round (Controllata, Rapida, Massima). Fuori dal regime tattico il MOV atmosferico di riferimento è 400 / 800 / 1.200 Q Base per Round. Velocità di viaggio e MOV di combattimento sono regimi distinti: all’inizio dello scontro si usa il MOV tattico, senza convertirlo.",
+      "mov_testo": "MOV di combattimento in Q Tattici: 8 / 16 / 24 per Round (Controllata, Rapida, Massima). Fuori dal regime tattico il MOV atmosferico di riferimento è 400 / 800 / 1.200 Q Base per Round. Velocità di viaggio e MOV di combattimento sono regimi distinti: all’inizio dello scontro si usa il MOV tattico, senza convertirlo. A.253 (06/11/2026): a terra la nave non rulla e ha movimento 0; il decollo verticale è una manovra complessa (1 AzM + 1 AzP) e nel suo Round sale in stazionamento senza spostamento orizzontale; dal Round successivo valgono 8 / 16 / 24 Q Tattici, che non si convertono sulla mappa in Q Base. A.253 (06/11/2026): a terra la nave non rulla e ha movimento 0; il decollo verticale è una manovra complessa (1 AzM + 1 AzP) e nel suo Round sale in stazionamento senza spostamento orizzontale; dal Round successivo valgono 8 / 16 / 24 Q Tattici, che non si convertono sulla mappa in Q Base. A.253 (06/11/2026): a terra la nave non rulla e ha movimento 0; il decollo verticale è una manovra complessa (1 AzM + 1 AzP) e nel suo Round sale in stazionamento senza spostamento orizzontale; dal Round successivo valgono 8 / 16 / 24 Q Tattici, che non si convertono sulla mappa in Q Base.",
       "velocita_kmh": {
         "atmosferico": {
           "controllata": 360,
@@ -1768,7 +1768,18 @@
       ],
       "esemplare_unico": true,
       "nota_esemplare": "Modello fuori produzione con molte modifiche personalizzate: il profilo è quello della nave della campagna, non un modello standard né un riferimento commerciale per altre navi. Prezzo e fascia commerciale della configurazione attuale restano da definire; i prezzi dei componenti non fanno il valore della nave (A.240).",
-      "munizioni_nota": "Dotazione standard: 600 proiettili per ciascun mitragliatore e 6 missili (munizioni_iniziali). Per la nave della campagna le quantità rimaste le conferma il Direttore; gli aggiornamenti del profilo conservano quelle registrate e, se il dato manca, restano «da verificare dal Direttore» (A.239)."
+      "munizioni_nota": "Dotazione standard: 600 proiettili per ciascun mitragliatore e 6 missili (munizioni_iniziali). Per la nave della campagna le quantità rimaste le conferma il Direttore; gli aggiornamenti del profilo conservano quelle registrate e, se il dato manca, restano «da verificare dal Direttore» (A.239).",
+      "vola": true,
+      "volo_andature": {
+        "fonte": "A.253 (Davide, 06/11/2026); scheda tecnica della Neverlost 1.6",
+        "unita": "tattica",
+        "per_andatura": {
+          "controllata": 8,
+          "veloce": 16,
+          "massima": 24
+        },
+        "_nota": "I movimenti della scala tattica, 8 / 16 / 24 Q Tattici per Round. Non si convertono in Q Base (A.253): su una mappa terrestre si passa alla scala tattica o si esce dalla mappa."
+      }
     }
   ],
   "opportunita": {
@@ -1868,5 +1879,74 @@
       "TODO(Davide)": "A.264: la A.257 dice che lo stato o la carica di un accumulatore di ricambio contano nel valore, ma non come. L’app toglie dal prezzo pieno le cariche mancanti alla tariffa di ricarica dei dati (MEC 30 cr per carica, CEC 10). Va bene o il calo è diverso?"
     },
     "esemplare_unico": "Un esemplare unico (la Neverlost) non ha prezzo di catalogo: la riga del modello base resta vuota e il totale si mostra solo con il valore stimato del Direttore (A.240)."
+  },
+  "volo": {
+    "versione_manuale": "Veicoli 0.10; scheda tecnica della Neverlost 1.6",
+    "fonte": "A.253 (Davide, 06/11/2026); A.238 (03/11/2026) per le dimensioni in Q Base",
+    "_nota": "Regole dei mezzi che volano (profilo con «vola: true»). Lo stato sta nel record del mezzo: mezzo.volo = { stato, dal_round? }. Tre stati: «a_terra», «stazionamento» (il Round del decollo) e «in_volo».",
+    "stati": [
+      {
+        "id": "a_terra",
+        "nome": "A terra",
+        "mov_q": 0,
+        "nota": "A terra non rulla e ha movimento 0: non si sposta di un quadretto stando a terra. Lo sposta soltanto il Direttore, a mano, se la storia lo richiede."
+      },
+      {
+        "id": "stazionamento",
+        "nome": "In stazionamento",
+        "mov_q": 0,
+        "nota": "Il Round del decollo: sale in stazionamento, senza spostamento orizzontale."
+      },
+      {
+        "id": "in_volo",
+        "nome": "In volo",
+        "mov_q": null,
+        "nota": "Dal Round successivo al decollo usa i movimenti della sua scala di combattimento."
+      }
+    ],
+    "iniziale": "a_terra",
+    "decollo": {
+      "nome": "Decollo verticale",
+      "manovra": "complessa",
+      "azioni": {
+        "azm": 1,
+        "azp": 1
+      },
+      "testo_azioni": "1 AzM + 1 AzP del pilota",
+      "prova": null,
+      "prova_nei_casi": [
+        {
+          "id": "spazio_ristretto",
+          "nome": "Spazio ristretto"
+        },
+        {
+          "id": "attacco_in_corso",
+          "nome": "Attacco in corso"
+        },
+        {
+          "id": "danni",
+          "nome": "Danni al mezzo"
+        }
+      ],
+      "testo_prova": "Normalmente non richiede prova; la richiede con spazio ristretto, attacco in corso o danni.",
+      "nel_round": "sale in stazionamento, senza spostamento orizzontale",
+      "porta_a": "stazionamento"
+    },
+    "atterraggio": {
+      "nome": "Atterraggio",
+      "manovra": "complessa",
+      "conclude_movimento": true,
+      "testo": "L’atterraggio è una manovra complessa e conclude il movimento del Round.",
+      "porta_a": "a_terra"
+    },
+    "senza_conversione": {
+      "_nota": "A.253: i movimenti della scala tattica non si convertono sulla mappa terrestre. 8/16/24 Q Tattici non diventano 80/160/240 Q Base: la conversione della A.225 e del lotto 149 qui non si applica, e se l’app la applica è un difetto. L’app non mostra un numero di quadretti inventato: dice che non si convertono e quali sono le due strade.",
+      "titolo": "I movimenti in volo non si convertono",
+      "testo": "In volo la nave usa i movimenti della sua scala di combattimento, che su questa mappa non si convertono (A.253).",
+      "strade": [
+        "passare alla scala tattica (regolazioni della mappa → Scala)",
+        "uscire dalla mappa: il volo si gioca fuori dalla scena terrestre"
+      ]
+    }
   }
 }

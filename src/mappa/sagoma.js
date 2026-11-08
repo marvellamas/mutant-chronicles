@@ -189,15 +189,37 @@ export const testaManuale = (t) => !!t?.testa && Number.isFinite(t.testa.avanti)
  * A.223: la testa spostata a mano sul quadretto `cella` della sagoma. Restituisce { token } con il segno nel sistema del
  * corpo, oppure { errore } se il quadretto non è della sagoma (una posizione non plausibile). Il token non si sposta,
  * l'ingombro non cambia: si sposta solo l'origine di distanze e linee di tiro (nessun movimento né portata in più).
+ *
+ * A.254 (Davide, 06/11/2026) conferma che va bene **qualunque** quadretto della sagoma corrente, anche centrale, e mai
+ * uno fuori; aggiunge che la posizione cambia quando la creatura si muove, ruota, cambia configurazione o assume una
+ * posa nuova, **non fra un attacco e l'altro per ottenere una linea più favorevole**. Quello l'app non lo sa
+ * distinguere da una posa nuova: con `haAttaccato` torna anche un `avviso`, e l'ultima parola resta del Direttore.
+ * La plausibilità anatomica la giudica il Direttore: l'app non la indovina.
  */
-export function spostaTesta(t, cella) {
+export function spostaTesta(t, cella, { haAttaccato = false, dati = null } = {}) {
   const mie = celleToken(t);
   if (mie.length <= 1) return { errore: 'la creatura occupa un quadretto solo: la testa è lì' };
-  if (!mie.some(([x, y]) => x === cella[0] && y === cella[1])) return { errore: 'la testa va su un quadretto della sagoma della creatura' };
+  if (!mie.some(([x, y]) => x === cella[0] && y === cella[1])) return { errore: 'la testa va su un quadretto della sagoma della creatura (A.254: mai fuori dalla sagoma)' };
   const { centro, avanti, lato } = assiDelCorpo(t);
   const v = [cella[0] + 0.5 - centro[0], cella[1] + 0.5 - centro[1]];
   const arrotonda = (x) => Math.round(x * 1000) / 1000;
-  return { token: { ...t, testa: { avanti: arrotonda(v[0] * avanti[0] + v[1] * avanti[1]), lato: arrotonda(v[0] * lato[0] + v[1] * lato[1]) } } };
+  const token = { ...t, testa: { avanti: arrotonda(v[0] * avanti[0] + v[1] * avanti[1]), lato: arrotonda(v[0] * lato[0] + v[1] * lato[1]) } };
+  return { token, ...(haAttaccato ? { avviso: avvisoTestaFraAttacchi(dati) } : {}) };
+}
+
+/** A.254: il testo dell'avviso quando la creatura ha già attaccato in questo Round. */
+export function avvisoTestaFraAttacchi(dati) {
+  const T = dati?.mappa?.testa?.non_fra_attacchi;
+  return T?.avviso ?? 'La testa non si sposta fra un attacco e l’altro per ottenere una linea più favorevole (A.254). Si sposta quando la creatura si muove, ruota, cambia configurazione o assume una posa nuova.';
+}
+
+/**
+ * A.254: la testa si può spostare adesso? Torna { si: true } quando la creatura non ha ancora attaccato in questo
+ * Round; altrimenti { si: false, motivo } — un avviso, non un divieto: il Direttore può procedere lo stesso, perché
+ * una posa nuova o una rotazione sono motivi legittimi che l'app non distingue da una linea di tiro cercata.
+ */
+export function testaSpostabile({ haAttaccato = false } = {}, dati = null) {
+  return haAttaccato ? { si: false, motivo: avvisoTestaFraAttacchi(dati) } : { si: true, motivo: null };
 }
 
 /** A.223: torna la testa automatica (l'estremità del muso). */

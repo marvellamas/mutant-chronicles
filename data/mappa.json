@@ -7,8 +7,18 @@
     "_nota": "A.198 (risposta di Davide del 30/10/2026): la mappa dichiara la sua scala. In «Q Base» 1 Q = 1,5 m e le creature hanno la sagoma del campo «spazio» del profilo (larghezza × lunghezza); in «Q Tattici» 1 Q = 15 m e le creature hanno la pedina convenzionale del manuale (campo «pedina_tattica»), che non cambia le dimensioni vere della creatura nei passaggi stretti. La scala si legge sempre sulla mappa e si sceglie finché la scena non ha creature o veicoli. Una scena senza il campo «scala» è in Q Base.",
     "predefinita": "base",
     "elenco": [
-      { "id": "base", "nome": "Q Base", "q_metri": 1.5, "descrizione": "scala di un incontro: 1 Q = 1,5 m; le creature hanno la sagoma del campo Spazio." },
-      { "id": "tattica", "nome": "Q Tattici", "q_metri": 15, "descrizione": "scala di un grande scontro (navi, draghi in volo): 1 Q = 15 m; le creature hanno la pedina convenzionale." }
+      {
+        "id": "base",
+        "nome": "Q Base",
+        "q_metri": 1.5,
+        "descrizione": "scala di un incontro: 1 Q = 1,5 m; le creature hanno la sagoma del campo Spazio."
+      },
+      {
+        "id": "tattica",
+        "nome": "Q Tattici",
+        "q_metri": 15,
+        "descrizione": "scala di un grande scontro (navi, draghi in volo): 1 Q = 15 m; le creature hanno la pedina convenzionale."
+      }
     ]
   },
   "scena": {
@@ -617,8 +627,14 @@
       "colore_roccia": "#7a5230"
     },
     "materiali": [
-      { "id": "muro", "nome": "Muro" },
-      { "id": "roccia", "nome": "Roccia" }
+      {
+        "id": "muro",
+        "nome": "Muro"
+      },
+      {
+        "id": "roccia",
+        "nome": "Roccia"
+      }
     ],
     "_nota_materiali": "A.224 (risposta di Davide del 03/11/2026): materiale Roccia, assegnabile ai muri a quadretti (strumento Muro, «Materiale: Roccia») e ai muri disegnati come linee (lo stesso interruttore, o Seleziona → Materiale). La attraversano solo le creature che hanno la capacità, nei limiti del loro profilo (la Murena della Roccia in forma eterea, A.202: forme[].attraversa_roccia); attraversare la roccia non fa passare porte metalliche (le porte non sono mai roccia) né muri di altro materiale. La roccia blocca la visuale e resta un ostacolo per tutte le altre creature. «colore_roccia» (aspetto) è il colore dei muri di roccia sulla mappa del master.",
     "_nota_aspetto": "Muri grigio scuro con bordo bianco di «bordo_px» pixel, sulla mappa del master e dei giocatori: si vedono anche su immagini molto scure. I muri a quadretto hanno lo stesso colore, semitrasparente («quadretto_opacita») per lasciar vedere l'immagine; il terreno difficile resta puntinato nel suo colore. «selezione»: il muro selezionato.",
@@ -699,14 +715,17 @@
           "titolo": "Azioni",
           "voci": [
             "attacca",
-            "porta_token"
+            "porta_token",
+            "uscita_roccia"
           ]
         },
         {
           "titolo": "Veicolo",
           "voci": [
             "sali",
-            "ruota_veicolo"
+            "ruota_veicolo",
+            "decolla",
+            "atterra"
           ]
         },
         {
@@ -1055,5 +1074,52 @@
       "effetti": 0.8
     },
     "giocatori_predefinito": false
+  },
+  "testa": {
+    "fonte": "A.254 (Davide, 06/11/2026), che precisa la A.223 (03/11/2026)",
+    "_nota": "Conferma la A.223: qualunque quadretto della sagoma corrente, anche centrale, mai fuori. Aggiunge quando la posizione può cambiare, e che il segno sposta soltanto l’origine degli effetti centrati sulla testa.",
+    "dove": "qualunque quadretto occupato dalla sagoma corrente, anche centrale",
+    "mai_fuori": "La testa non esce mai dalla sagoma.",
+    "plausibile": "La posizione dev’essere anatomicamente plausibile rispetto alla posa o all’emersione parziale: lo giudica il Direttore.",
+    "cambia_quando": [
+      "la creatura si muove",
+      "la creatura ruota",
+      "la creatura cambia configurazione",
+      "la creatura assume una nuova posa"
+    ],
+    "non_fra_attacchi": {
+      "avviso": "La testa non si sposta fra un attacco e l’altro per ottenere una linea più favorevole (A.254). Si sposta quando la creatura si muove, ruota, cambia configurazione o assume una posa nuova.",
+      "quando": "la creatura ha già attaccato in questo Round"
+    },
+    "sposta_solo": "origine di attacchi, soffio, aura ed effetti centrati sulla testa",
+    "non_sposta": [
+      "movimento",
+      "spazio occupato",
+      "portata"
+    ]
+  },
+  "roccia": {
+    "fonte": "A.255 (Davide, 06/11/2026); A.224 (03/11/2026) per il materiale Roccia, A.202 per la forma eterea",
+    "_nota": "Chi attraversa la roccia (la Murena della Roccia in forma eterea) può terminarci il movimento. «Completamente immersa» vuol dire che ogni quadretto della sua sagoma è roccia: con un solo quadretto fuori è emersa, e vale tutto il normale.",
+    "immersione": {
+      "nome": "Immersa nella roccia",
+      "completa_se": "ogni quadretto occupato è roccia",
+      "puo_fermarsi": true,
+      "vista": false,
+      "effetto": false,
+      "attacca": false,
+      "bersagliabile": false,
+      "percepisce_oltre": false,
+      "testo": "Completamente immersa: nessuna linea di vista o d’effetto verso l’esterno, non può attaccare né essere normalmente bersagliata, non percepisce automaticamente oltre la parete.",
+      "per_attaccare": "Per attaccare deve emergere quanto basta, spendendo il normale movimento; se non lo esaurisce può rientrare con il movimento residuo nello stesso Round."
+    },
+    "resa_corporea": {
+      "_nota": "Caso eccezionale: la forma corporea non attraversa la roccia, quindi dentro la parete non ci può stare.",
+      "sposta_a": "la casella libera più vicina alla superficie",
+      "stato": "Prona",
+      "senza_opportunita": true,
+      "decide_il_direttore": "A parità di distanza sceglie il Direttore: l’app propone le caselle, non ne sceglie una da sola.",
+      "testo": "Resa corporea nella roccia: si sposta nella casella libera più vicina alla superficie, diventa corporea e Prona, senza attacchi di opportunità."
+    }
   }
 }

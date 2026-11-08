@@ -13,6 +13,7 @@ import { profiloVeicolo, movimentoMassimo } from '../veicoli.js';
 import { ingombroCreatura, ingombroVeicolo, iniziali, chiaveRif } from './token.js';
 import { scalaDi } from './scala.js';
 import { converti, movimentoInScala } from './distanze.js';
+import { vola, movimentoInScena as voloInScena, statoVolo } from '../volo-veicolo.js';
 import { baseDaIngombro, formaDi, formaRuotata } from './forma.js';
 import { postiDi, ingombroOrientato } from './veicoli-mappa.js';
 
@@ -160,13 +161,37 @@ export function pezziDellaScena({ scontro = null, bozza = null, alTavolo = [], v
       proprietario: rec.proprietario?.tipo === 'gruppo' ? null : rec.proprietario?.chiave ?? null,
       // lotto 5: un solo movimento per Round, all'Iniziativa del conducente (A.105), lungo quanto l'andatura del
       // record unico (Veicoli §2.1: MOV × andatura); niente Corsa né Scatto
-      movimento: profilo ? movimentoInScala({ passo: movimentoMassimo(profilo, rec.mezzo?.andatura ?? 'controllata', dati).q, corsa: null, scatto: null }, unitaMov, scena ?? { scala }, dati) : null,
+      // A.253 (06/11/2026): un mezzo che vola non passa di qui. A terra ha movimento 0 (non rulla) e in volo i suoi
+      // movimenti **non si convertono** nella scala della scena: la conversione della A.225 qui non si applica, e
+      // mostrare un numero di quadretti sarebbe inventarlo (src/volo-veicolo.js → movimentoInScena).
+      ...movimentoDelMezzo(profilo, rec.mezzo, unitaMov, scena ?? { scala }, dati, scontro?.round ?? null),
       andatura: rec.mezzo?.andatura ?? 'controllata',
       // A.105: il mezzo si muove all'Iniziativa del conducente
       diTurno: Boolean(guida && turno === guida.id),
     });
   }
   return pezzi;
+}
+
+/**
+ * A.253: il movimento del mezzo nella scena, con il caso dei mezzi che volano.
+ *  - mezzo che non vola: come sempre, l'andatura del record convertita nella scala della scena (A.225);
+ *  - mezzo che vola a terra o in stazionamento: movimento 0, con il motivo;
+ *  - mezzo in volo in una scena di un'altra scala: **nessun numero**, e le due strade (`movimentoNonConvertibile`).
+ * @returns le chiavi da mettere nel pezzo: { movimento, statoVolo?, movimentoNonConvertibile? }
+ */
+function movimentoDelMezzo(profilo, mezzo, unitaMov, scena, dati, round = null) {
+  if (!profilo) return { movimento: null };
+  if (!vola(profilo)) {
+    return { movimento: movimentoInScala({ passo: movimentoMassimo(profilo, mezzo?.andatura ?? 'controllata', dati).q, corsa: null, scatto: null }, unitaMov, scena, dati) };
+  }
+  const v = voloInScena(profilo, mezzo, scalaDi(scena, dati), dati, { round });
+  const stato = statoVolo(mezzo, dati, { round });
+  const comune = { statoVolo: stato ? { id: stato.id, nome: stato.nome, nota: stato.nota ?? null } : null };
+  if (!v) return { movimento: null, ...comune };
+  if (v.convertibile) return { movimento: { passo: v.q, corsa: null, scatto: null, unita: v.unita }, ...comune, ...(v.motivo ? { motivoMovimento: v.motivo } : {}) };
+  // niente passo: chi disegna l'area non ha un numero da usare, e la plancia mostra l'avviso con le due strade
+  return { movimento: { passo: null, corsa: null, scatto: null, unita: v.da }, ...comune, movimentoNonConvertibile: v };
 }
 
 /** Token della scena il cui pezzo non c'è più (uscito dallo scontro, veicolo non più presente). Segnaposto esclusi. */

@@ -16,6 +16,7 @@
 // server il veicolo condiviso è in sola lettura e si consulta l'ultima copia (riferimento → copia, qui sotto). Le tre
 // denominazioni ufficiali sono Corpo principale, Propulsione e Motore (data/veicoli.json → strutture.elenco).
 import { normalizzaVeicoli, andaturaResidua, andaturaDi, eseguiCambioAndatura } from './veicoli.js';
+import { decolla, atterra, finisciStazionamento } from './volo-veicolo.js';
 
 export const FORMATO_VEICOLO = 'mutant-veicolo';
 export const VERSIONE_VEICOLO = 1;
@@ -248,6 +249,33 @@ export function muoviVeicolo(rec, scontro, diTurno, opzioni = {}) {
   // N2: con `opzioni.forza` il master muove lo stesso (fuori turno, già mosso, andatura Fermo); servono scontro e conducente
   if (!st.puo && !(opzioni.forza && scontro && rec.conducente)) throw new Error(st.motivo);
   return { ...rec, movimento: { scontro: scontro.id, round: scontro.round, da: rec.conducente.nome } };
+}
+
+/**
+ * A.253 (Davide, 06/11/2026): il decollo verticale di un mezzo che vola. Manovra complessa, 1 AzM + 1 AzP del pilota,
+ * normalmente senza prova (la chiedono spazio ristretto, attacco in corso o danni). Nel Round del decollo il mezzo sale
+ * in stazionamento, senza spostamento orizzontale. Il profilo serve per sapere se il mezzo vola.
+ * @returns {{ rec, testo, azioni, prova }}
+ */
+export function decollaVeicolo(rec, profilo, dati, { round = null, casi = [] } = {}) {
+  const r = decolla(rec?.mezzo, profilo, dati, { round, casi });
+  if (r.errore) throw new Error(r.errore);
+  const v = rec.mezzo?.nome ?? profilo?.nome ?? 'Il veicolo';
+  return { rec: { ...rec, mezzo: r.mezzo }, azioni: r.azioni, prova: r.prova, testo: `${v}: ${r.testo}` };
+}
+
+/** A.253: l'atterraggio, manovra complessa che conclude il movimento del Round. */
+export function atterraVeicolo(rec, profilo, dati, { round = null } = {}) {
+  const r = atterra(rec?.mezzo, profilo, dati, { round });
+  if (r.errore) throw new Error(r.errore);
+  const v = rec.mezzo?.nome ?? profilo?.nome ?? 'Il veicolo';
+  return { rec: { ...rec, mezzo: r.mezzo }, concludeMovimento: r.concludeMovimento, testo: `${v}: ${r.testo}` };
+}
+
+/** A.253: dal Round successivo al decollo il mezzo è in volo (lo stazionamento dura il Round del decollo). */
+export function voloDalRoundDopo(rec, profilo, dati, { round = null } = {}) {
+  const r = finisciStazionamento(rec?.mezzo, profilo, dati, { round });
+  return r.errore ? rec : { ...rec, mezzo: r.mezzo };
 }
 
 /** Cambio di conducente: il movimento già eseguito nel Round resta (niente secondo movimento). */

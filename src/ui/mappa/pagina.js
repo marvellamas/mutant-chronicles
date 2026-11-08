@@ -73,7 +73,11 @@ import { misureDelTemplate } from '../../mappa/template.js';
 import { apriMenuToken, chiudiMenuToken, menuAperto } from './menu-token.js';
 import { componiMenu, unisciMenu } from '../../mappa/menu.js';
 import { diTurno, ordineIniziativa } from '../../scontro.js';
-import { statoMovimento, muoviVeicolo, cambiaConducente, scegliAndatura } from '../../veicoli-registro.js';
+import { statoMovimento, muoviVeicolo, cambiaConducente, scegliAndatura, decollaVeicolo, atterraVeicolo } from '../../veicoli-registro.js';
+import { vola as mezzoVola, statoVolo, regoleVolo } from '../../volo-veicolo.js';
+import { profiloVeicolo as profiloVeicoloCatalogo } from '../../veicoli.js';
+import { statoImmersione, motivoNonAttacca, immersoNellaRoccia, resaCorporeaNellaRoccia } from '../../mappa/roccia.js';
+import { haAttaccatoNelRound } from '../../scontro.js';
 import { formaRuotata, normaAngolo, baseDaIngombro, angoloDi, ruotaDi } from '../../mappa/forma.js';
 import { ruotabile, rotazioneDi, passoGradi, tokenTesta, cellaTesta, spostaTesta, testaAutomatica, testaManuale } from '../../mappa/sagoma.js';
 import { inQBase, testoDistanza } from '../../mappa/distanze.js';
@@ -1535,6 +1539,58 @@ export function renderMappa(radice, ctx) {
       ridisegna(['aree', 'sopra']);
     } catch (e) { avvisoErrore(`Andatura non salvata: ${e.message}`); }
   }
+  /** Il profilo del veicolo di un record (catalogo o scheda scritta a mano). */
+  const profiloDelVeicolo = (rec) => profiloVeicoloCatalogo(rec?.mezzo?.profilo, ctx.dati) ?? rec?.mezzo?.scheda ?? null;
+  /**
+   * A.253 (Davide, 06/11/2026): «Decolla…». Manovra complessa, 1 AzM + 1 AzP del pilota; normalmente senza prova, ma
+   * con spazio ristretto, attacco in corso o danni la prova serve e lo chiede al Direttore prima di procedere. Nel
+   * Round del decollo il mezzo sale in stazionamento, senza spostamento orizzontale.
+   */
+  async function decollaUi(t) {
+    const rec = recordVeicolo(t);
+    const prof = profiloDelVeicolo(rec);
+    if (!rec || !prof) { avvisoErrore('Registro del veicolo non trovato: il decollo si segna dalla sua scheda.'); return; }
+    const D = regoleVolo(ctx.dati)?.decollo;
+    const casi = (D?.prova_nei_casi ?? []).map((c) => c.nome).join(', ');
+    const ok = await chiedi({
+      titolo: `Far decollare ${nomeTok(t)}?`,
+      testo: `${D?.nome ?? 'Decollo verticale'}: manovra complessa, ${D?.testo_azioni ?? '1 AzM + 1 AzP'}. ${D?.testo_prova ?? ''} In questo Round ${D?.nel_round ?? 'sale in stazionamento'}: non si sposta di lato. Se serve la prova, tiratela al tavolo prima di confermare (${casi}).`,
+      si: 'Decolla',
+    });
+    if (!ok) return;
+    let r;
+    try { r = decollaVeicolo(rec, prof, ctx.dati, { round: st.fonti?.scontro?.round ?? null }); } catch (e) { avvisoErrore(e.message); return; }
+    try {
+      const { record } = await aggiornaVeicolo(rec, r.rec);
+      if (st.fonti) st.fonti.veicoli = st.fonti.veicoli.map((x) => (x.id === record.id ? record : x));
+      avviso(r.testo, { tipo: 'info', chiave: 'volo' });
+      rigaVeicolo(`Mappa: ${r.testo}`);
+      await aggiornaFonti();
+      invalidaArea();
+      disegnaPannelli();
+      ridisegna(['aree', 'sopra']);
+    } catch (e) { avvisoErrore(`Decollo non salvato: ${e.message}`); }
+  }
+  /** A.253: «Atterra». Manovra complessa che conclude il movimento del Round. */
+  async function atterraUi(t) {
+    const rec = recordVeicolo(t);
+    const prof = profiloDelVeicolo(rec);
+    if (!rec || !prof) { avvisoErrore('Registro del veicolo non trovato: l’atterraggio si segna dalla sua scheda.'); return; }
+    const ok = await chiedi({ titolo: `Far atterrare ${nomeTok(t)}?`, testo: 'Manovra complessa: conclude il movimento del Round (A.253). A terra il mezzo non rulla e ha movimento 0.', si: 'Atterra' });
+    if (!ok) return;
+    let r;
+    try { r = atterraVeicolo(rec, prof, ctx.dati, { round: st.fonti?.scontro?.round ?? null }); } catch (e) { avvisoErrore(e.message); return; }
+    try {
+      const { record } = await aggiornaVeicolo(rec, r.rec);
+      if (st.fonti) st.fonti.veicoli = st.fonti.veicoli.map((x) => (x.id === record.id ? record : x));
+      avviso(`${r.testo}${r.concludeMovimento ? ' Il movimento del Round è concluso.' : ''}`, { tipo: 'info', chiave: 'volo' });
+      rigaVeicolo(`Mappa: ${r.testo}`);
+      await aggiornaFonti();
+      invalidaArea();
+      disegnaPannelli();
+      ridisegna(['aree', 'sopra']);
+    } catch (e) { avvisoErrore(`Atterraggio non salvato: ${e.message}`); }
+  }
   /** Le andature come pulsanti di un avviso (veicolo fermo). */
   const azioniAndatura = (t) => ctx.dati.veicoli.andature.elenco.filter((a) => a.moltiplicatore > 0).map((a) => ({ testo: a.nome, fai: () => andaturaUi(t, a.id) }));
   /**
@@ -1680,12 +1736,48 @@ export function renderMappa(radice, ctx) {
   function testaQui(m) {
     const tok = st.scena.token.find((t) => t.id === st.sceltaTesta.id);
     if (!tok) { st.sceltaTesta = null; return; }
-    const r = spostaTesta(tok, qVicino(m));
+    // A.254 (Davide, 06/11/2026): la testa si sposta quando la creatura si muove, ruota, cambia configurazione o
+    // assume una posa nuova, non fra un attacco e l'altro per cercare una linea più favorevole. L'app non sa
+    // distinguere una posa nuova da una linea cercata: se la creatura ha già attaccato in questo Round lo dice,
+    // e l'ultima parola resta del Direttore (Ctrl+Z annulla).
+    const r = spostaTesta(tok, qVicino(m), { haAttaccato: haGiaAttaccato(tok), dati: ctx.dati });
     if (r.errore) { avviso(`${r.errore[0].toUpperCase()}${r.errore.slice(1)} (Esc annulla).`, { chiave: 'testa' }); return; }
     st.sceltaTesta = null;
     cambiaToken(tok.id, () => r.token);
     cacheLinea.chiave = null;
+    if (r.avviso) { avviso(`${r.avviso} Spostata lo stesso: Ctrl+Z annulla.`, { chiave: 'testa' }); return; }
     avviso(`Testa di ${nomeTok(tok)} spostata: distanze e linee di tiro partono da lì. Segue la creatura quando si muove o si gira. Ctrl+Z annulla.`, { tipo: 'info', chiave: 'testa' });
+  }
+  /**
+   * A.255 (Davide, 06/11/2026): una creatura **resa corporea dentro la roccia** va spostata nella casella libera più
+   * vicina alla superficie, diventa Prona e non provoca attacchi di opportunità. A parità di distanza decide il
+   * Direttore: l'app propone le caselle e non ne sceglie una da sola.
+   */
+  function uscitaDallaRocciaUi(tok) {
+    const pz = pezzoDi(tok);
+    const g = st.scena.griglia;
+    const muro = muroQ();
+    const altri = st.scena.token.filter((t) => t.id !== tok.id && t.blocca !== false);
+    const occupato = (x, y) => altri.some((t) => celleTokenQ(t).some(([a, b]) => a === x && b === y));
+    const r = resaCorporeaNellaRoccia(tok, st.scena, ctx.dati, { colonne: g.colonne, righe: g.righe, muro, occupato });
+    if (!r) { avviso(`${nomeTok(tok)} non è dentro la roccia.`, { tipo: 'info', chiave: 'roccia' }); return; }
+    if (r.nessuna) { avvisoErrore(`Nessuna casella libera fuori dalla roccia per ${nomeTok(tok)}: la sceglie il Direttore a mano.`); return; }
+    const azioni = r.proposte.slice(0, 6).map(([x, y]) => ({
+      testo: `${x + 1}, ${y + 1}`,
+      fai: () => {
+        cambiaToken(tok.id, (t) => ({ ...t, q: [x, y] }));
+        avviso(`${nomeTok(tok)} in ${x + 1}, ${y + 1}: corporea e ${r.stato}, senza attacchi di opportunità (A.255). Lo Stato ${r.stato} si segna nella plancia. Ctrl+Z annulla.`, { tipo: 'info', chiave: 'roccia' });
+        rigaVeicolo(`Mappa: ${nomeTok(tok)} resa corporea nella roccia → ${x + 1}, ${y + 1}, ${r.stato}, senza attacchi di opportunità (A.255).`);
+      },
+    }));
+    avviso(`${r.testo} ${r.pariMerito ? `${r.proposte.length} caselle a pari distanza: ${r.decideIlDirettore}` : 'Una sola casella a quella distanza.'}`,
+      { tipo: 'info', chiave: 'roccia', durata: 20000, azioni });
+  }
+  /** A.254: la creatura di questo token ha già attaccato in questo Round? (dal registro dello scontro) */
+  function haGiaAttaccato(tok) {
+    const sc = st.fonti?.scontro;
+    const nome = pezzoDi(tok)?.nome ?? null;
+    return !!sc && !!nome && haAttaccatoNelRound(sc, nome);
   }
   /** Il segno della testa sulle creature i cui attacchi partono dalla testa (A.203, A.223). */
   function disegnaTeste(c) {
@@ -3798,10 +3890,15 @@ export function renderMappa(radice, ctx) {
     const id = tok.rif?.id;
     const nome = pz?.nome ?? tok.nome ?? tok.id;
     const ultimaVoce = st.scena.annulla.at(-1);
-    const motivoFermo = !mov ? 'Senza movimento: pezzo fuori dallo scontro o senza scheda' : null;
+    // A.253 (06/11/2026): in volo, su una mappa di un'altra scala, i movimenti non si convertono: niente numero di
+    // quadretti, le due strade (src/volo-veicolo.js → movimentoInScena; src/mappa/partecipanti.js)
+    const nonConv = pz?.movimentoNonConvertibile ?? null;
+    const motivoFermo = nonConv ? `${nonConv.testo} Due strade: ${nonConv.strade.join('; ')}.`
+      : pz?.motivoMovimento && mov?.passo === 0 ? pz.motivoMovimento
+        : !mov ? 'Senza movimento: pezzo fuori dallo scontro o senza scheda' : null;
     // le voci del token (data/mappa.json → menu.token dice ordine e gruppi; qui solo cosa fanno e quando si possono usare)
     const fabbriche = {
-      passo: () => ({ testo: 'Passo', azione: () => cambiaFascia(1), scelta: st.fascia === 1, disabilitata: !mov, titolo: motivoFermo ?? `Area fino al Passo (${mov.passo} Q)` }),
+      passo: () => ({ testo: 'Passo', azione: () => cambiaFascia(1), scelta: st.fascia === 1, disabilitata: !mov || !Number.isFinite(mov.passo) || mov.passo === 0, titolo: motivoFermo ?? `Area fino al Passo (${mov.passo} Q)` }),
       corsa: () => ({ testo: 'Corsa', azione: () => cambiaFascia(2), scelta: st.fascia === 2, disabilitata: !Number.isFinite(mov?.corsa) || bloccata('corsa'), titolo: motivoFermo ?? (bloccata('corsa') ? titoloBloccata : 'Amplia l’area fino alla Corsa (un blocco unico: i Q non usati si perdono)') }),
       scatto: () => ({ testo: 'Scatto', azione: () => cambiaFascia(3), scelta: st.fascia === 3, disabilitata: !Number.isFinite(mov?.scatto) || bloccata('scatto'), titolo: motivoFermo ?? (bloccata('scatto') ? titoloBloccata : 'Amplia l’area fino allo Scatto (un blocco unico: i Q non usati si perdono)') }),
       libero: () => ({ testo: 'Libero', azione: () => cambiaFascia(LIBERO), scelta: st.fascia === LIBERO, titolo: 'In qualunque quadretto, senza area e senza conteggio (scorciatoia: tieni premuto Maiusc)' }),
@@ -3829,6 +3926,32 @@ export function renderMappa(radice, ctx) {
         return ctx.dati.veicoli.andature.elenco.map((a) => ({ testo: `Andatura ${a.nome}`, chiave: `andatura:${a.id}`, scelta: rec.mezzo?.andatura === a.id, titolo: rec.mezzo?.andatura === a.id ? 'Andatura attuale' : 'Nello scontro: una fascia per Round (Veicoli §2.1)', azione: () => andaturaUi(tok, a.id) }));
       },
       // 19/10: solo per chi si gira (veicoli e creature rettangolari); le creature solo a 45°, il passo fine è dei veicoli
+      // A.253 (Davide, 06/11/2026): decollo e atterraggio di un mezzo che vola, manovre complesse del pilota
+      decolla: () => {
+        const rec = tok.rif.tipo === 'veicolo' ? recordVeicolo(tok) : null;
+        const prof = rec ? profiloDelVeicolo(rec) : null;
+        if (!rec || !mezzoVola(prof)) return null;
+        const stato = statoVolo(rec.mezzo, ctx.dati, { round: st.fonti?.scontro?.round ?? null });
+        const D = regoleVolo(ctx.dati)?.decollo;
+        return { testo: 'Decolla…', chiave: 'volo:decolla', tasto: D?.testo_azioni ?? null, disabilitata: stato?.id !== 'a_terra',
+          titolo: stato?.id !== 'a_terra' ? `${nomeTok(tok)} non è a terra: è ${(stato?.nome ?? '—').toLowerCase()}` : `${D?.nome ?? 'Decollo'}: manovra complessa, ${D?.testo_azioni ?? ''}. ${D?.testo_prova ?? ''}`,
+          azione: () => decollaUi(tok) };
+      },
+      atterra: () => {
+        const rec = tok.rif.tipo === 'veicolo' ? recordVeicolo(tok) : null;
+        const prof = rec ? profiloDelVeicolo(rec) : null;
+        if (!rec || !mezzoVola(prof)) return null;
+        const stato = statoVolo(rec.mezzo, ctx.dati, { round: st.fonti?.scontro?.round ?? null });
+        return { testo: 'Atterra', chiave: 'volo:atterra', disabilitata: stato?.id === 'a_terra',
+          titolo: stato?.id === 'a_terra' ? `${nomeTok(tok)} è già a terra` : 'Manovra complessa: conclude il movimento del Round (A.253)',
+          azione: () => atterraUi(tok) };
+      },
+      // A.255: compare solo quando la creatura è dentro la roccia ma la sua forma attuale non la attraversa
+      uscita_roccia: () => {
+        if (!pz || pz.attraversaRoccia === true) return null;
+        if (!immersoNellaRoccia(tok, st.scena)) return null;
+        return { testo: 'Resa corporea: proponi l’uscita…', chiave: 'roccia:uscita', titolo: 'Spostata nella casella libera più vicina alla superficie, corporea e Prona, senza attacchi di opportunità (A.255). A parità di distanza sceglie il Direttore.', azione: () => uscitaDallaRocciaUi(tok) };
+      },
       ruota_veicolo: () => {
         const rot = rotazioneDi(tok);
         if (!rot) return null;
@@ -3845,6 +3968,10 @@ export function renderMappa(radice, ctx) {
       scendi_bordo: () => (tok.rif.tipo === 'veicolo' && aBordo(tok).length ? aBordo(tok).map((x) => ({ testo: `${nomeTok(x)}${x.ruolo === 'conducente' ? ' (conducente)' : ''}…`, chiave: `scendi:${x.id}`, titolo: 'Scende: poi un clic su un quadretto libero accanto al veicolo', azione: () => iniziaScendi(tok.id, x.id) })) : null),
       linea_bordo: () => (tok.rif.tipo === 'veicolo' && aBordo(tok).length ? aBordo(tok).map((x) => ({ testo: nomeTok(x), chiave: `linea:${x.id}`, titolo: 'Linea di tiro dal veicolo, dal suo quadretto più favorevole', azione: () => lineaPasseggero(tok.id, x.id) })) : null),
       attacca: () => {
+        // A.255 (Davide, 06/11/2026): completamente immersa nella roccia non attacca: deve prima emergere, spendendo
+        // il normale movimento (e con il residuo può rientrare nello stesso Round)
+        const immersa = motivoNonAttacca(tok, st.scena, ctx.dati, { pezzo: pz });
+        if (immersa && conScontro && st.planciaBarra?.puoAttaccare?.(id)) return { testo: 'Attacca!', disabilitata: true, titolo: immersa };
         if (conScontro && st.planciaBarra?.puoAttaccare?.(id)) return { testo: 'Attacca!', titolo: 'Il pannello «Attacca!» del nemico; con la linea di tiro fissata, bersaglio, distanza e Copertura già scelti', azione: () => st.planciaBarra.attaccaContro(id, st.linea?.da === tok.id ? st.scena.token.find((x) => x.id === st.linea.a)?.rif?.id ?? null : null) };
         if (pg && recordPg(pz)) return { testo: 'Attacca! (scheda)', titolo: 'L’attacco di un PG si fa dalla sua scheda, tab Combattimento; con la linea di tiro fissata, il bersaglio è già scelto', azione: () => {
           // ritocchi del 07/10: con la linea di tiro da questo token, il bersaglio (nemico dello scontro) già proposto
