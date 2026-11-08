@@ -7,6 +7,11 @@
 import fs from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import { dirname, join } from 'node:path';
+import { bloccaRiscrittura } from './superato.mjs';
+
+// Dal lotto 180 (08/11/2026) i costi delle operazioni, il tempo del riempimento e i PI delle celle li scrive
+// tools/lotti/lotto_180_celle_caricatori.mjs (A.243, A.244, A.245, A.249, A.250): questo lotto li riporterebbe indietro.
+bloccaRiscrittura('lotto_a215_celle');
 
 const R = join(dirname(fileURLToPath(import.meta.url)), '..', '..');
 const F = join(R, 'data/equipaggiamento/munizioni.json');

@@ -10,6 +10,7 @@
 // Il monocromatico ha un colore fissato alla costruzione (si fissa al primo uso) e un solo tampone; il multicromatico ha
 // tre tamponi distinti, uno per colore, e lavora un colore alla volta.
 import { catalogo, risolvi, riserveNec } from './equipaggiamento.js';
+import { celleDettaglio, piMassimiCella } from './ricarica.js';
 
 const COLORI = ['Rosso', 'Blu', 'Verde'];
 const FORMATI_PERSONALI = /^(nec\d+|pacco\d+)$/;
@@ -51,6 +52,7 @@ export function testoDurata(minuti) {
  * @returns {{ id, tipo: 'nec'|'cella', nome, colori: string[], mancanti: number, chiave?: string, uid?: string, unita: string }[]}
  */
 export function bersagliRicaricabili(voci, attuali, ricarica, dati) {
+  const piCella = piMassimiCella(dati);
   const cat = catalogo(dati);
   const out = [];
   for (const x of riserveNec(voci, dati)) {
@@ -71,8 +73,11 @@ export function bersagliRicaricabili(voci, attuali, ricarica, dati) {
     const base = { tipo: 'cella', colori: colori.length ? colori : COLORI, uid, unita: cella?.cella?.unita ?? 'colpi' };
     const nomeCella = cella?.nome ?? 'Cella';
     // A.215: si ricaricano le celle TOLTE dall'arma, ognuna con le sue cariche
-    (Array.isArray(mun.celle) ? mun.celle : []).forEach((n, indice) => {
-      if (Number.isInteger(n) && n < info.capacita) out.push({ ...base, id: `cella:${uid}:${indice}`, indice, nome: `${nomeCella} tolta da ${arma?.nome ?? 'un’arma'} (${n}/${info.capacita})`, mancanti: info.capacita - n });
+    // A.245: una cella distrutta (0 PI) non si ricarica; una danneggiata sì, e si vede che lo è
+    celleDettaglio(mun, info.capacita, piCella).forEach((x, indice) => {
+      if (x.rotta || x.cariche >= info.capacita) return;
+      const pi = x.pi < piCella ? ` · ${x.pi}/${piCella} PI` : '';
+      out.push({ ...base, id: `cella:${uid}:${indice}`, indice, nome: `${nomeCella} tolta da ${arma?.nome ?? 'un’arma'} (${x.cariche}/${info.capacita})${pi}`, mancanti: info.capacita - x.cariche });
     });
     // la cella inserita non si ricarica: compare con il motivo, perché chi la cerca sappia che cosa fare
     const colpi = mun.colpi ?? 0;

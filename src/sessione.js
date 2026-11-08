@@ -49,7 +49,7 @@ import { normalizzaTemporanei } from './temporanei.js';
 import { valoreTiro } from './tiri.js';
 import { SENZ_ARMI } from './attacco.js';
 import { saldoIniziale } from './dotazioni.js';
-import { infoRicarica, eseguiRicarica, perOperazione, allineaCarichini, usaCarichino, riempiCarichino, togliCella, inserisciCella, riempiCaricatori, togliCaricatore, inserisciCaricatore, riempiCaricatore } from './ricarica.js';
+import { infoRicarica, eseguiRicarica, perOperazione, allineaCarichini, usaCarichino, riempiCarichino, togliCella, inserisciCella, variaPiCella, separaCellaDiScorta, riempiCaricatori, togliCaricatore, inserisciCaricatore, riempiCaricatore } from './ricarica.js';
 import { caricatori, contenitori, normalizzaEquipaggiamento, catalogo, risolvi, riserveNec, granateDaLancio } from './equipaggiamento.js';
 import { elencoTrasformatori, statoTrasformatore } from './trasformatori.js';
 import { oggettiConPi } from './protezione.js';
@@ -103,6 +103,9 @@ export function massimiSessione(scheda, creazione, dati) {
     // carichini della lista (A.135): uid della voce → quantità; colpi di ogni carichino
     carichini: dati.equipaggiamento ? quantitaCarichini(normalizzaEquipaggiamento(creazione?.equipaggiamento), dati) : {},
     colpiCarichino: dati.equipaggiamento?.file?.munizioni?.ricarica?.carichini?.colpi ?? 6,
+    // regole della ricarica (costi delle operazioni, tempo del riempimento, PI delle celle: A.243–A.245, A.249, A.250)
+    regoleRicarica: dati.equipaggiamento?.file?.munizioni?.ricarica ?? null,
+    piCella: dati.equipaggiamento?.file?.munizioni?.ricarica?.integrita_celle?.pi_max ?? 2,
     // granate da lancio della lista (uid → quantità): un lancio a mano consuma una granata (Armamenti §7.20.3)
     granate: dati.equipaggiamento ? granateDaLancio(normalizzaEquipaggiamento(creazione?.equipaggiamento), dati) : {},
     // capacità di ogni contenitore di Chroma (uid → PM)
@@ -278,7 +281,7 @@ export function ricaricaConTrasformatore(sessione, az, m) {
     const i = az.bersaglio.indice;
     if (!x || !Number.isInteger(i) || !(i >= 0 && i < (x.celle?.length ?? 0))) return s;
     const cap = m.caricatori?.[az.bersaglio.uid] ?? Infinity;
-    munizioni[az.bersaglio.uid] = { ...x, celle: x.celle.map((n, k) => (k === i ? Math.min(cap, n + piano.trasferite) : n)) };
+    munizioni[az.bersaglio.uid] = { ...x, celle: x.celle.map((n, k) => { if (k !== i) return n; const c = Number.isInteger(n) ? n : n.c; const nuovo = Math.min(cap, c + piano.trasferite); return Number.isInteger(n) ? nuovo : { ...n, c: nuovo }; }) };
   }
   return modificaSessione(s, { trasformatori, nec, munizioni }, m);
 }
@@ -437,8 +440,10 @@ function voceMunizioni(v) {
   // §7.20.3: granata caricata in un lanciagranate (uid della voce)
   if (typeof v.tipo === 'string' && v.tipo) out.tipo = v.tipo;
   // A.215: celle tolte dall'arma con le loro cariche (anche 0: una cella vuota non si consuma) e arma senza cella
-  const celle = Array.isArray(v.celle) ? v.celle.filter((n) => Number.isInteger(n) && n >= 0) : [];
+  // A.245: una cella intera è il numero delle sue cariche, una danneggiata è { c, pi } (src/ricarica.js)
+  const celle = Array.isArray(v.celle) ? v.celle.filter((x) => (Number.isInteger(x) && x >= 0) || (isOggetto(x) && Number.isInteger(x.c) && x.c >= 0)) : [];
   if (celle.length) out.celle = celle;
+  if (Number.isInteger(v.piCella) && v.piCella >= 0) out.piCella = v.piCella;
   if (v.senzaCella === true) { out.senzaCella = true; out.colpi = 0; }
   // 03/11: arma a caricatore senza caricatore inserito (src/ricarica.js → togliCaricatore)
   if (v.senzaCaricatore === true) { out.senzaCaricatore = true; out.colpi = 0; }
@@ -482,7 +487,7 @@ function allineaMunizioni(sorgente, m) {
     if (capacita !== null) {
       x.colpi = Math.min(x.colpi, capacita);
       if (x.parziali) x.parziali = x.parziali.map((n) => Math.min(n, capacita));
-      if (x.celle) x.celle = x.celle.map((n) => Math.min(n, capacita));
+      if (x.celle) x.celle = x.celle.map((n) => (Number.isInteger(n) ? Math.min(n, capacita) : { ...n, c: Math.min(n.c, capacita) }));
     }
     out[uid] = x;
   }
@@ -726,8 +731,31 @@ export function preparaCarichino(sessione, uid, m) {
 export function togliCellaArma(sessione, uid, m) {
   const s = allineaSessione(sessione, m);
   if (m.ricarica?.[uid]?.modo !== 'cella') return s;
-  const x = togliCella(s.munizioni[uid] ?? { colpi: 0, riserve: 0 });
+  const x = togliCella(s.munizioni[uid] ?? { colpi: 0, riserve: 0 }, m.piCella ?? 2);
   return x ? modificaSessione(s, { munizioni: { ...s.munizioni, [uid]: x } }, m) : s;
+}
+
+/**
+ * A.245 (Davide, 06/11/2026): i PI di una cella («quale» = 'inserita' o l'indice fra le tolte). A 0 PI la cella è
+ * distrutta: resta scritta ma esce dalle scorte utilizzabili. Chi chiama registra l'evento nello storico.
+ * @returns {{ sessione, cella, distrutta } } o { sessione } se non è cambiato niente
+ */
+export function variaPiCellaArma(sessione, uid, quale, delta, m) {
+  const s = allineaSessione(sessione, m);
+  if (m.ricarica?.[uid]?.modo !== 'cella') return { sessione: s };
+  const r = variaPiCella(s.munizioni[uid] ?? { colpi: 0, riserve: 0 }, quale, delta, m.piCella ?? 2);
+  if (!r) return { sessione: s };
+  return { sessione: modificaSessione(s, { munizioni: { ...s.munizioni, [uid]: r.munizione } }, m), cella: r.cella, distrutta: r.distrutta };
+}
+
+/** A.245: una cella della pila che si danneggia esce dalla quantità e si segue da sola, con i suoi PI. */
+export function separaCellaArma(sessione, uid, scortaUid, danno, m) {
+  const s = allineaSessione(sessione, m);
+  const info = m.ricarica?.[uid];
+  if (info?.modo !== 'cella') return { sessione: s };
+  const r = separaCellaDiScorta(info, s.munizioni[uid] ?? { colpi: 0, riserve: 0 }, s.scorte, scortaUid ?? null, danno ?? 1, m.piCella ?? 2);
+  if (!r) return { sessione: s };
+  return { sessione: modificaSessione(s, { munizioni: { ...s.munizioni, [uid]: r.munizione }, scorte: r.consumi }, m), cella: r.cella, distrutta: r.cella.rotta };
 }
 
 /** «Inserisci» (A.215) in un'arma senza cella: una cella tolta o una piena di scorta (senza scelta, la più carica). */
@@ -735,14 +763,14 @@ export function inserisciCellaArma(sessione, uid, scelta, m) {
   const s = allineaSessione(sessione, m);
   const info = m.ricarica?.[uid];
   if (info?.modo !== 'cella') return s;
-  const r = inserisciCella(info, s.munizioni[uid] ?? { colpi: 0, riserve: 0 }, s.scorte, scelta);
+  const r = inserisciCella(info, s.munizioni[uid] ?? { colpi: 0, riserve: 0 }, s.scorte, scelta, m.piCella ?? 2);
   return r ? modificaSessione(s, { munizioni: { ...s.munizioni, [uid]: r.munizione }, scorte: r.consumi }, m) : s;
 }
 
 /** «Riempi i caricatori» fuori dal combattimento (A.215), con le munizioni sciolte compatibili. */
 export function riempiCaricatoriArma(sessione, uid, m) {
   const s = allineaSessione(sessione, m);
-  const r = riempiCaricatori(m.ricarica?.[uid], s.munizioni[uid], s.scorte);
+  const r = riempiCaricatori(m.ricarica?.[uid], s.munizioni[uid], s.scorte, m.regoleRicarica);
   return r ? modificaSessione(s, { munizioni: { ...s.munizioni, [uid]: r.munizione }, scorte: r.consumi }, m) : s;
 }
 
@@ -763,7 +791,7 @@ export function inserisciCaricatoreArma(sessione, uid, colpi, m) {
 /** Riempie un caricatore, anche in parte, con le munizioni sciolte (03/11, fuori dal combattimento): { quale, quanti }. */
 export function riempiCaricatoreArma(sessione, uid, scelta, m) {
   const s = allineaSessione(sessione, m);
-  const r = riempiCaricatore(m.ricarica?.[uid], s.munizioni[uid], s.scorte, scelta ?? {});
+  const r = riempiCaricatore(m.ricarica?.[uid], s.munizioni[uid], s.scorte, scelta ?? {}, m.regoleRicarica);
   return r ? modificaSessione(s, { munizioni: { ...s.munizioni, [uid]: r.munizione }, scorte: r.consumi }, m) : s;
 }
 

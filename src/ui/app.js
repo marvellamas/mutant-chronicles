@@ -76,7 +76,7 @@ import { preparaStampa, preparaTab, normalizzaOpzioniStampa, versioniCompatte, v
 import { renderTab, tabFissi, ALIAS_TAB, titoloSalvataggio } from './tab.js';
 import {
   massimiSessione, allineaSessione, variaSessione, modificaSessione, stabilizzaMorente, scalaMorente, attivaArmaSessione, terminaArmaSessione, commutaContenitoreSessione, commutaStato, commutaCondizioneOggetto, commutaTalento, commutaBonusTalenti, impostaCondizioneArma, riparaOggetto, spendiPmLancio, ricaricaMatrice, attivaArtefatto, usaArtefatto, attivaTecnicaSessione, nuovoRoundSessione, terminaTecnicaSessione, usaUnaVoltaSessione, azzeraUsoSessione, nuovaSessione, convertiDistintivi, sessioneDopoLivello,
-  penalitaSessione, variaMunizioni, consumaColpi, scegliGranata, granateDiPartenza, ricaricaArma, togliCellaArma, inserisciCellaArma, riempiCaricatoriArma, togliCaricatoreArma, inserisciCaricatoreArma, riempiCaricatoreArma, caricaDaCarichino, preparaCarichino, variaChroma, variaIntegrita, variaNec, ricaricaConTrasformatore,
+  penalitaSessione, variaMunizioni, consumaColpi, scegliGranata, granateDiPartenza, ricaricaArma, togliCellaArma, inserisciCellaArma, variaPiCellaArma, separaCellaArma, riempiCaricatoriArma, togliCaricatoreArma, inserisciCaricatoreArma, riempiCaricatoreArma, caricaDaCarichino, preparaCarichino, variaChroma, variaIntegrita, variaNec, ricaricaConTrasformatore,
 } from '../sessione.js';
 import { conOrdinale } from '../lingua.js';
 import { normalizzaCalendario, calendarioAttivo, attivaCalendario, disattivaCalendario, contaNote, fileCalendario, leggiFileCalendario, momentoCalendario } from '../calendario.js';
@@ -2547,6 +2547,21 @@ function renderSchedaInterna({ mantieniScorrimento = false } = {}) {
       togliCaricatore: (uid) => cambiaSessione(togliCaricatoreArma(stato.sessione, uid, massimi)),
       inserisciCaricatore: (uid, colpi) => cambiaSessione(inserisciCaricatoreArma(stato.sessione, uid, colpi, massimi)),
       riempiCaricatore: (uid, scelta) => cambiaSessione(riempiCaricatoreArma(stato.sessione, uid, scelta, massimi)),
+      // A.245: i PI di una cella; a 0 PI è distrutta, esce dalle scorte utilizzabili e l'evento va nello storico
+      variaPiCella: (uid, quale, delta, nome) => {
+        const r = variaPiCellaArma(stato.sessione, uid, quale, delta, massimi);
+        stato.sessione = r.sessione;
+        if (r.distrutta) stato.sessione = rigaStorico(stato.sessione, `Cella distrutta (0 PI, A.245): ${nome ?? 'una cella'} — fuori dalle scorte utilizzabili, normalmente non riparabile.`);
+        persisti();
+        renderScheda({ mantieniScorrimento: true });
+      },
+      separaCella: (uid, scortaUid, nome) => {
+        const r = separaCellaArma(stato.sessione, uid, scortaUid, 1, massimi);
+        stato.sessione = r.sessione;
+        if (r.cella) stato.sessione = rigaStorico(stato.sessione, `Cella danneggiata (A.245): ${nome ?? 'una cella'} separata dalla pila, ${r.cella.pi} PI.`);
+        persisti();
+        renderScheda({ mantieniScorrimento: true });
+      },
       // A.215: la cella si toglie e si rimette; i caricatori si riempiono fuori dal combattimento
       togliCella: (uid) => cambiaSessione(togliCellaArma(stato.sessione, uid, massimi)),
       inserisciCella: (uid, scelta) => cambiaSessione(inserisciCellaArma(stato.sessione, uid, scelta, massimi)),

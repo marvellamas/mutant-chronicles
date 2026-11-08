@@ -50,7 +50,10 @@ import { talentiSituazionali } from '../talenti.js';
 import { schedaTalento } from '../talenti-testi.js';
 import { nomeCheSiApre } from './talento-leggibile.js';
 import { gradiTaumaturgici } from '../incantesimi.js';
-import { statoRicarica, disponibili, carichiniDi, celleTolte, riempiCaricatori, caricatoriDiScorta } from '../ricarica.js';
+import {
+  statoRicarica, disponibili, carichiniDi, celleTolte, riempiCaricatori, caricatoriDiScorta,
+  costoOperazione, eProntoColpi, minutiRiempimento, testoMinuti, celleDettaglio, piMassimiCella, motivoRiempimento,
+} from '../ricarica.js';
 import { leggiImpostazioni, salvaImpostazioni } from './storage.js';
 import { pannelloAttacco, presetInAttesa } from './attacco.js';
 // Galleria (N1, 13/10/2026): le immagini già mostrate dal master in questa campagna
@@ -2507,9 +2510,15 @@ function rigaCarichini(ctx, a, info, m, capacita) {
  * inserire in un'arma vuota il manuale non dà un costo a parte (A.243): l'app non lo inventa.
  */
 function rigaCelle(ctx, a, info, m, capacita, azioneCella, nome = 'cella') {
-  const tolte = celleTolte(m, capacita ?? Infinity);
+  const piMax = piMassimiCella(ctx.dati);
+  const dett = celleDettaglio(m, capacita ?? Infinity, piMax);
+  const tolte = dett.map((x) => x.cariche);
+  const costi = { estrazione: costoOperazione(ctx.dati, 'estrazione', info), inserimento: costoOperazione(ctx.dati, 'inserimento', info), sostituzione: costoOperazione(ctx.dati, 'sostituzione', info) };
   const scelte = [
-    ...tolte.map((n, indice) => ({ valore: 't:' + indice, testo: n ? 'tolt' + (nome === 'pacco' ? 'o ' : 'a ') + n + '/' + capacita : (nome === 'pacco' ? 'tolto, vuoto 0/' : 'tolta, vuota 0/') + capacita, scelta: { da: 'tolta', indice }, vuota: n === 0, cariche: n })),
+    // A.245: una cella distrutta (0 PI) non si inserisce; A.250: con almeno una carica è pronta
+    ...dett.map((x, indice) => ({ valore: 't:' + indice, cariche: x.cariche, rotta: x.rotta, pi: x.pi, scelta: { da: 'tolta', indice }, vuota: x.cariche === 0,
+      testo: (x.cariche ? 'tolt' + (nome === 'pacco' ? 'o ' : 'a ') + x.cariche + '/' + capacita : (nome === 'pacco' ? 'tolto, vuoto 0/' : 'tolta, vuota 0/') + capacita)
+        + (x.rotta ? ' · distrutta' : x.pi < piMax ? ' · ' + x.pi + '/' + piMax + ' PI' : '') })).filter((x) => !x.rotta),
     ...(info.scorte ?? []).filter((x) => disponibili(x, ctx.sessione.scorte) > 0).map((x) => ({ valore: 's:' + x.uid, testo: x.nome + (nome === 'pacco' ? ' pieno ' : ' piena ') + capacita + '/' + capacita, scelta: { da: 'scorta', uid: x.uid }, cariche: capacita })),
   ];
   const u = ((ctx.ui.celle ??= {})[a.uid] ??= { scelta: null });
@@ -2521,11 +2530,39 @@ function rigaCelle(ctx, a, info, m, capacita, azioneCella, nome = 'cella') {
       m.senzaCella
         ? [h('select', { 'aria-label': 'Cella da inserire in ' + a.nome, disabled: !scelte.length, onchange: (e) => { u.scelta = e.target.value; } },
           scelte.map((x) => h('option', { value: x.valore, selected: scelta?.valore === x.valore }, x.testo))),
-        h('button', { type: 'button', class: 'btn', disabled: !scelta, title: 'Mette la cella scelta nell’arma (il cambio costa ' + azioneCella + ')', onclick: () => ctx.azioni.inserisciCella(a.uid, scelta.scelta) }, 'Inserisci')]
-        : h('button', { type: 'button', class: 'btn', title: (pacco ? 'Toglie il pacco con i getti che ha' : 'Toglie la cella con le cariche che ha') + ': resta con te e si ricarica fuori dall’arma (il cambio costa ' + azioneCella + ')', onclick: () => ctx.azioni.togliCella(a.uid) }, pacco ? 'Togli il pacco' : 'Togli la cella')),
-    tolte.length ? h('p', { class: 'nota riga-munizioni' },
-      (pacco ? 'Pacchi tolti: ' : 'Celle tolte: ') + tolte.map((n) => (n ? n + '/' + capacita : (pacco ? 'vuoto' : 'vuota') + ' 0/' + capacita)).join(', ')) : null,
-    h('small', { class: 'nota' }, 'Cambio: ' + azioneCella + '. ' + (ctx.dati.equipaggiamento.file.munizioni.ricarica.cambio_cella?.ricarica_fuori ?? '')));
+        h('button', { type: 'button', class: 'btn', disabled: !scelta, title: 'Mette ' + (pacco ? 'il pacco scelto' : 'la cella scelta') + ' nell’arma vuota: ' + costi.inserimento.azione + ' (A.243)', onclick: () => ctx.azioni.inserisciCella(a.uid, scelta.scelta) }, 'Inserisci')]
+        : h('button', { type: 'button', class: 'btn', title: (pacco ? 'Toglie il pacco con i getti che ha' : 'Toglie la cella con le cariche che ha') + ': ' + costi.estrazione.azione + ' (A.243), resta con te e si ricarica fuori dall’arma', onclick: () => ctx.azioni.togliCella(a.uid) }, pacco ? 'Togli il pacco' : 'Togli la cella')),
+    rigaPiCelle(ctx, a, m, dett, capacita, piMax, pacco, info),
+    h('small', { class: 'nota' }, 'Togliere ' + costi.estrazione.azione + ' · inserire ' + costi.inserimento.azione + ' · sostituire, una sola operazione e non la somma dei due, ' + costi.sostituzione.azione + ' (A.243). '
+      + (ctx.dati.equipaggiamento.file.munizioni.ricarica.cambio_cella?.ricarica_fuori ?? '')));
+}
+
+/**
+ * A.245 (Davide, 06/11/2026): ogni cella ha i suoi PI (2). Una cella danneggiata si **separa dalla pila** e si segue da
+ * sola; a 0 PI è distrutta e inutilizzabile, esce dalle scorte e la riga va nello storico (non si cancella in silenzio).
+ * «Normalmente non riparabile»: il + resta, per il Direttore, ma non è la cosa che l'app propone.
+ */
+function rigaPiCelle(ctx, a, m, dett, capacita, piMax, pacco, info) {
+  const nome = pacco ? 'pacco' : 'cella';
+  const pila = (info?.scorte ?? []).filter((x) => disponibili(x, ctx.sessione.scorte) > 0);
+  const riga = (chiave, etichetta, cariche, pi, rotta) => h('li', { class: rotta ? 'cella-rotta' : null },
+    h('span', {}, etichetta + ' ' + cariche + '/' + capacita + ' · '),
+    h('button', { type: 'button', class: 'btn btn-piccolo', disabled: pi <= 0, title: 'Un PI in meno', onclick: () => ctx.azioni.variaPiCella(a.uid, chiave, -1, etichetta + ' ' + cariche + '/' + capacita) }, '−'),
+    h('strong', { class: 'pi-cella' }, pi + '/' + piMax + ' PI'),
+    h('button', { type: 'button', class: 'btn btn-piccolo', disabled: pi >= piMax, title: rotta ? 'Una cella distrutta normalmente non si ripara (A.245): lo decide il Direttore' : 'Un PI in più', onclick: () => ctx.azioni.variaPiCella(a.uid, chiave, +1, etichetta) }, '+'),
+    rotta ? h('span', { class: 'nota motivo' }, ' distrutta: fuori dalle scorte utilizzabili (A.245)') : null);
+  const inserita = !m.senzaCella;
+  const piDentro = Number.isInteger(m.piCella) ? m.piCella : piMax;
+  const righe = [
+    ...(inserita ? [riga('inserita', pacco ? 'nel lanciafiamme' : 'nell’arma', Math.min(m.colpi ?? 0, capacita), piDentro, piDentro <= 0)] : []),
+    ...dett.map((x, i) => riga(i, pacco ? 'pacco tolto' : 'cella tolta', x.cariche, x.pi, x.rotta)),
+  ];
+  if (!righe.length && !pila.length) return null;
+  return h('div', { class: 'pi-celle' },
+    righe.length ? h('ul', { class: 'elenco-pi-celle' }, righe) : null,
+    pila.length ? h('p', { class: 'nota riga-munizioni' },
+      h('span', {}, 'Nella pila: ' + pila.map((x) => x.nome + ' ×' + disponibili(x, ctx.sessione.scorte)).join(', ') + ' · '),
+      h('button', { type: 'button', class: 'btn btn-piccolo', title: (pacco ? 'Un pacco danneggiato esce' : 'Una cella danneggiata esce') + ' dalla pila e si segue da solo, con i suoi PI (A.245)', onclick: () => ctx.azioni.separaCella(a.uid, pila[0].uid, pila[0].nome) }, pacco ? 'Danneggia un pacco' : 'Danneggia una cella')) : null);
 }
 
 /** «(15/30)»: i colpi di un caricatore, attuali su massimi (richiesta di Marcello del 03/11). */
@@ -2554,21 +2591,25 @@ function rigaCaricatori(ctx, a, info, m, capacita, azione) {
   const dentro = !m.senzaCaricatore;
   const scelta = gruppi.find((g) => g.colpi === u.scelta) ?? gruppi.find((g) => g.colpi > 0) ?? gruppi[0] ?? null;
   const sciolte = (info.scorte ?? []).reduce((s, x) => s + disponibili(x, ctx.sessione.scorte), 0);
-  // riempire: l'inserito o uno di scorta non pieno; quanti: fino a riempirlo, entro le sciolte
-  const daRiempire = [...(dentro && m.colpi < capacita ? [{ valore: 'inserito', testo: 'quello nell’arma ' + colpiCaricatore(m.colpi, capacita), colpi: m.colpi }] : []),
-    ...gruppi.filter((g) => g.colpi < capacita).map((g) => ({ valore: String(g.colpi), testo: 'di scorta ' + colpiCaricatore(g.colpi, capacita), colpi: g.colpi }))];
+  // A.244: si riempiono solo i caricatori ESTRATTI; quello nell'arma va tolto prima
+  const daRiempire = gruppi.filter((g) => g.colpi < capacita).map((g) => ({ valore: String(g.colpi), testo: 'di scorta ' + colpiCaricatore(g.colpi, capacita), colpi: g.colpi }));
   const r = daRiempire.find((x) => x.valore === u.riempi) ?? daRiempire[0] ?? null;
   const spazio = r ? Math.min(capacita - r.colpi, sciolte) : 0;
   const quanti = Math.min(Math.max(1, Number(u.quanti) || spazio), spazio);
   const R = ctx.dati.equipaggiamento.file.munizioni.ricarica.riempimento_caricatori ?? {};
+  const minuti = minutiRiempimento(quanti, ctx.dati);
+  const costi = { estrazione: costoOperazione(ctx.dati, 'estrazione', info), inserimento: costoOperazione(ctx.dati, 'inserimento', info), sostituzione: costoOperazione(ctx.dati, 'sostituzione', info) };
   return h('div', { class: 'caricatori-tavolo' },
     h('p', { class: 'nota riga-munizioni' }, 'Di scorta: ', gruppi.length ? h('strong', {}, testoScorta(gruppi, capacita)) : 'nessuno'),
     h('div', { class: 'riga-munizioni' },
-      dentro ? h('button', { type: 'button', class: 'btn', title: 'Toglie il caricatore con i colpi che ha: resta fra quelli di scorta (il manuale dà il costo del cambio, ' + azione + ')', onclick: () => ctx.azioni.togliCaricatore(a.uid) }, 'Togli il caricatore') : null,
+      dentro ? h('button', { type: 'button', class: 'btn', title: 'Toglie il caricatore con i colpi che ha: ' + costi.estrazione.azione + ' (A.249), resta fra quelli di scorta', onclick: () => ctx.azioni.togliCaricatore(a.uid) }, 'Togli il caricatore') : null,
       gruppi.length ? [
         h('select', { 'aria-label': 'Caricatore di scorta da mettere in ' + a.nome, onchange: (e) => { u.scelta = Number(e.target.value); ctx.azioni.ridisegna?.(); } },
           gruppi.map((g) => h('option', { value: String(g.colpi), selected: scelta?.colpi === g.colpi }, colpiCaricatore(g.colpi, capacita) + (g.quanti > 1 ? ' ×' + g.quanti : '')))),
-        h('button', { type: 'button', class: 'btn', disabled: !scelta, title: (dentro ? 'Cambia il caricatore con quello scelto' : 'Mette nell’arma il caricatore scelto') + ' (' + azione + ')',
+        h('button', { type: 'button', class: 'btn', disabled: !scelta || !eProntoColpi(scelta.colpi, ctx.dati),
+          title: !scelta ? '' : !eProntoColpi(scelta.colpi, ctx.dati) ? 'Un caricatore vuoto non è pronto (A.250)'
+            : (dentro ? 'Sostituzione diretta: fuori il vecchio, dentro il nuovo — ' + costi.sostituzione.azione + ' in tutto, non la somma di togliere e inserire (A.249)' : 'Mette nell’arma il caricatore scelto: ' + costi.inserimento.azione + ' (A.249)')
+              + (scelta.colpi < capacita ? '. Un parziale con almeno un colpo è pronto come un pieno (A.250)' : ''),
           onclick: () => (dentro ? ctx.azioni.ricarica(a.uid, scelta.colpi) : ctx.azioni.inserisciCaricatore(a.uid, scelta.colpi)) }, dentro ? 'Cambia con questo' : 'Inserisci'),
       ] : null),
     r && spazio > 0 ? h('div', { class: 'riga-munizioni' },
@@ -2577,9 +2618,11 @@ function rigaCaricatori(ctx, a, info, m, capacita, azione) {
         daRiempire.map((x) => h('option', { value: x.valore, selected: r.valore === x.valore }, x.testo))),
       h('span', {}, ' con '),
       h('input', { type: 'number', min: '1', max: String(spazio), value: String(quanti), class: 'campo-numero', 'aria-label': 'Proiettili sciolti da mettere nel caricatore di ' + a.nome, onchange: (e) => { u.quanti = Number(e.target.value); ctx.azioni.ridisegna?.(); } }),
-      h('button', { type: 'button', class: 'btn', title: 'Mette i proiettili sciolti nel caricatore scelto, ' + (R.quando ?? 'fuori dal combattimento'),
-        onclick: () => { ctx.azioni.riempiCaricatore(a.uid, { quale: r.valore === 'inserito' ? 'inserito' : Number(r.valore), quanti }); u.quanti = null; } }, 'Metti ' + quanti + (quanti === 1 ? ' proiettile' : ' proiettili')),
-      h('small', { class: 'nota' }, ' ' + (R.quando ?? 'fuori dal combattimento') + ': ' + colpiCaricatore(r.colpi, capacita) + ' → ' + colpiCaricatore(r.colpi + quanti, capacita) + '; sciolti ' + sciolte + ' → ' + (sciolte - quanti) + '. Il tempo il manuale non lo dice (A.244): l’app non lo segna.')) : null);
+      h('button', { type: 'button', class: 'btn', title: 'Mette i proiettili sciolti nel caricatore estratto scelto, ' + (R.quando ?? 'fuori dal combattimento') + ': ' + testoMinuti(minuti),
+        onclick: () => { ctx.azioni.riempiCaricatore(a.uid, { quale: Number(r.valore), quanti }); u.quanti = null; } }, 'Metti ' + quanti + (quanti === 1 ? ' proiettile' : ' proiettili') + ' · ' + testoMinuti(minuti)),
+      h('small', { class: 'nota' }, ' ' + (R.quando ?? 'fuori dal combattimento') + ': ' + colpiCaricatore(r.colpi, capacita) + ' → ' + colpiCaricatore(r.colpi + quanti, capacita) + '; sciolti ' + sciolte + ' → ' + (sciolte - quanti) + '. Tempo: ' + testoMinuti(minuti) + ' (' + (R.tempo?.testo ?? '1 minuto ogni 50 colpi') + ', A.244).')) : null,
+    dentro && m.colpi < capacita ? h('small', { class: 'nota motivo' }, 'Il caricatore nell’arma si riempie solo da estratto: ' + (motivoRiempimento(info, m, ctx.sessione.scorte, { quale: 'inserito' }) ?? '') + '.') : null,
+    !sciolte && daRiempire.length ? h('small', { class: 'nota motivo' }, (motivoRiempimento(info, m, ctx.sessione.scorte) ?? '') + '.') : null);
 }
 
 /**
@@ -2588,13 +2631,14 @@ function rigaCaricatori(ctx, a, info, m, capacita, azione) {
  * dà (A.244) e l'app non lo inventa.
  */
 function rigaRiempi(ctx, a, info, m, capacita) {
-  const prova = riempiCaricatori(info, m, ctx.sessione.scorte);
+  const prova = riempiCaricatori(info, m, ctx.sessione.scorte, ctx.dati);
   const R = ctx.dati.equipaggiamento.file.munizioni.ricarica.riempimento_caricatori ?? {};
   if (!prova) return null;
   const quando = R.quando ?? 'fuori dal combattimento';
+  const minuti = prova.minuti ?? minutiRiempimento(prova.trasferiti, ctx.dati);
   return h('div', { class: 'riga-munizioni' },
-    h('button', { type: 'button', class: 'btn', title: 'Riempie il caricatore inserito e quelli tolti con le munizioni sciolte compatibili, ' + quando + ' (A.215)', onclick: () => ctx.azioni.riempiCaricatori(a.uid) }, 'Riempi i caricatori (+' + prova.trasferiti + ' colpi)'),
-    h('small', { class: 'nota' }, ' ' + quando + ': dopo, ' + [m.senzaCaricatore ? null : 'nell’arma ' + colpiCaricatore(prova.munizione.colpi, capacita), gruppiScorta(prova.munizione, capacita).length ? 'di scorta ' + testoScorta(gruppiScorta(prova.munizione, capacita), capacita) : null].filter(Boolean).join(', ') + '. Il tempo il manuale non lo dice (A.244).'));
+    h('button', { type: 'button', class: 'btn', title: 'Riempie i caricatori estratti con le munizioni sciolte compatibili, ' + quando + ': ' + prova.trasferiti + ' colpi, ' + testoMinuti(minuti) + ' (A.215, A.244)', onclick: () => ctx.azioni.riempiCaricatori(a.uid) }, 'Riempi i caricatori (+' + prova.trasferiti + ' colpi · ' + testoMinuti(minuti) + ')'),
+    h('small', { class: 'nota' }, ' ' + quando + ': dopo, ' + (gruppiScorta(prova.munizione, capacita).length ? 'di scorta ' + testoScorta(gruppiScorta(prova.munizione, capacita), capacita) : 'niente di scorta') + '. Tempo: ' + testoMinuti(minuti) + ' (' + (R.tempo?.testo ?? '1 minuto ogni 50 colpi') + ', A.244).'));
 }
 
 /**
