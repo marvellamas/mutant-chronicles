@@ -2645,3 +2645,34 @@ Applicate le tre risposte del 06/11 sulla mappa. Manuali invariati; esito in `do
   Le immagini della mappa restano `immutable` ed è giusto, perché il loro nome porta l'impronta del contenuto.
 
 Nessuna domanda nuova: il primo numero libero resta **A.266**.
+
+## 08/11/2026 (lotto 183) — Le ultime due: A.259 e A.258
+
+Applicate le ultime due risposte del 06/11. **Con questo lotto non resta più niente di Davide da applicare.**
+Manuali invariati; esito in `docs/diff-lotto183-2026-11-08.md`.
+
+- **A.259 — RISOLTA** *(Davide, 06/11/2026)*. **Ogni singolo Capolavoro concede un proprio uso una volta per
+  sessione**, non uno per personaggio. **Il contatore sta sulla voce dell'oggetto** (`voce.capolavoro.usato`), non
+  nella sessione del personaggio: lo decide l'ultimo punto della risposta, perché un Capolavoro trasferito resta già
+  usato fino alla sessione successiva. Nel catalogo il Talento lo dichiara con
+  `usi: { frequenza: 'sessione', quantita: 1, per: 'capolavoro' }` — il «per» guarda l'oggetto, come Hacker guarda
+  il sistema (lotto 175). Nella stessa prova **un solo Capolavoro** e **una sola ripetizione**, e **vale il secondo
+  risultato anche se è peggiore**: in `esitoRipetizione` non esiste nessun confronto fra i due numeri. Quello che
+  l'app non giudica (prova pertinente, strumento principale, prova non offensiva) è scritto accanto al pulsante.
+  «Nuova sessione» li rinnova e dice quanti. Dati in `regole.json` → `capolavoro`, motore in `src/capolavori.js`,
+  interfaccia nella finestrella del tiro. **Il Capolavoro esce dai «Da applicare al tavolo» della A.233**
+  (`AL_TAVOLO` del lotto 175). Chiuso anche un difetto trovato nella prova: la finestrella leggeva l'inventario del
+  disegno di prima, quindi un Capolavoro appena usato risultava ancora disponibile finché non si ricaricava.
+- **A.258 — RISOLTA** *(chiarimento **provvisorio** di Davide, 06/11/2026)*. **Nessun profilo toccato**: verificato
+  uno per uno che l'Eretico corrotto **Minore** abbia «Toccato», il **Boss** «Consacrato» e **Semplice** e **Medio**
+  nessun Dono (A.117). Poiché il chiarimento è provvisorio, dove si vede una creatura che non viene da un manuale di
+  Davide compare una sigla tenue, «provvisoria», con il rimando alla A.258: elenco del bestiario, pagina online,
+  «Crea nemico», mini-scheda. Una creatura è provvisoria **quando non viene da un manuale**, riconosciuta dalla sua
+  `fonte` e non da un elenco scritto a mano (`formato_nemici.json` → `provvisorie`, `src/provvisorie.js`): resta
+  vero anche quando arrivano le creature nuove. **Niente si cancella e niente si disattiva.** Il conto: delle 341
+  schede di nemici, **309 vengono dal Manuale dei Mostri 0.46** e **32 erano state inserite da Marcello** (30 umani
+  «costruito come PG», fra cui gli Eretici, e 2 esempi del Tavolo), più il **Bestiario proposto** per intero (8
+  basi, 22 creature pronte, i moduli). Gli Eretici come creature dell'Oscura Simmetria restano da completare.
+
+Nessuna domanda nuova: il primo numero libero resta **A.266**. Restano aperte le sei del lotto 181 (A.260–A.265) e
+la A.246, che è una decisione del Direttore al tavolo.
