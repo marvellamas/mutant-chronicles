@@ -13,7 +13,7 @@ import { contesto, resa, clic } from './scheda-aiuti.js';
 import { calcolaScheda } from '../src/calc.js';
 import {
   massimiSessione, allineaSessione, inizializzaSessione, variaMunizioni, ricaricaArma, togliCellaArma, inserisciCellaArma,
-  riempiCaricatoriArma, ricaricaConTrasformatore,
+  riempiCaricatoriArma, togliCaricatoreArma, inserisciCaricatoreArma, ricaricaConTrasformatore,
 } from '../src/sessione.js';
 import { statoRicarica, disponibili, celleTolte } from '../src/ricarica.js';
 import { elencoTrasformatori, statoTrasformatore, bersagliRicaricabili, fontiCec, pianoRicarica, RIFIUTO_INSERITA } from '../src/trasformatori.js';
@@ -100,7 +100,8 @@ test('Gehemmapuker: il pacco si cambia a 1 AzP con entrambe le mani (§7.20.6); 
   const bottone = r.tutti.find((n) => n.tagName === 'BUTTON' && n.textContent === 'Cambia pacco');
   assert.ok(bottone, 'il pulsante del cambio del pacco');
   assert.match(bottone.attributi?.title ?? bottone.title ?? '', /entrambe le mani/);
-  assert.match(r.testo(), /Cambio: 1 AzP, entrambe le mani, nessuna Prova \(Armamenti §7\.20\.6\)/);
+  // A.243 (lotto 180): i tre costi, e la sostituzione che non è la somma di togliere e inserire
+  assert.match(r.testo(), /Togliere 1 AzP · inserire 1 AzP · sostituire, una sola operazione e non la somma dei due, 1 AzP, entrambe le mani, nessuna Prova \(Armamenti §7\.20\.6\)/);
   clic(bottone);
   assert.ok(c.chiamate.some(([n, uid]) => n === 'ricarica' && uid === 'xg'));
 });
@@ -122,7 +123,11 @@ test('caricatori: l’esempio dell’Axis — 8 colpi, 30 sciolti, «Riempi i ca
   assert.equal(m.ricarica.a.modo, 'caricatore');
   s = variaMunizioni(s, 'a', 'colpi', -7, m);
   assert.equal(s.munizioni.a.colpi, 8);
+  // A.244 (06/11/2026, lotto 180): il caricatore si riempie solo da estratto — prima si toglie dall'arma
+  assert.deepEqual(riempiCaricatoriArma(s, 'a', m), s, 'con il caricatore nell’arma non si riempie niente');
+  s = togliCaricatoreArma(s, 'a', m);
   s = riempiCaricatoriArma(s, 'a', m);
+  s = inserisciCaricatoreArma(s, 'a', 15, m);
   assert.deepEqual([s.munizioni.a.colpi, s.munizioni.a.riserve, s.scorte.pp, s.munizioni.a.parziali, s.munizioni.a.vuoti], [15, 0, 7, undefined, undefined]);
   assert.equal(30 - s.scorte.pp, 23);
   // un caricatore parziale e uno vuoto tolti: si riempiono anche loro, finché ci sono munizioni, e tornano fra i pieni

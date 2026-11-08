@@ -75,10 +75,10 @@ test('un riempimento può essere parziale: 7 proiettili nel caricatore vuoto da 
   s = riempiCaricatoreArma(s, 'f', { quale: 7, quanti: 100 }, m);
   assert.deepEqual(caricatoriDiScorta(s.munizioni.f, 30), [30]);
   assert.equal(totale(s, m, 'f'), t0);
-  // nell'arma: dopo 10 colpi sparati se ne rimettono 4
+  // A.244 (06/11/2026, lotto 180): il caricatore nell'arma non si riempie — va estratto prima, e il totale non cambia
   s = consumaColpi(s, 'f', 10, m);
-  s = riempiCaricatoreArma(s, 'f', { quale: 'inserito', quanti: 4 }, m);
-  assert.equal(s.munizioni.f.colpi, 24);
+  assert.deepEqual(riempiCaricatoreArma(s, 'f', { quale: 'inserito', quanti: 4 }, m), s);
+  assert.equal(s.munizioni.f.colpi, 20);
   assert.equal(totale(s, m, 'f'), t0 - 10);
 });
 
