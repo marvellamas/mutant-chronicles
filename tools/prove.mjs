@@ -1,4 +1,4 @@
-// Lotto 185 (05/11→09/11/2026): `npm test` deve dare lo stesso esito ogni volta, su macchina carica e scarica.
+// Lotto 185 (09/11/2026): `npm test` deve dare lo stesso esito ogni volta, su macchina carica e scarica.
 //
 // Perché prima no. `node --test` apre un processo di Node per ogni file e ne tiene in volo tanti quanti sono i core
 // (32 su questo PC). Sedici di quei file, oltre al loro, avviano processi veri: `node server.mjs`, strumenti in Node,
