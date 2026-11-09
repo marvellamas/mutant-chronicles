@@ -1407,6 +1407,12 @@
           }
         ],
         "_nota_voci": "A.257 (06/11/2026): le voci in più rispetto allo standard, con quantità e prezzo unitario, per il conto del valore dell’esemplare. I prezzi vengono dalla dotazione di prima (A.101, 05/10/2026) e dal profilo (copriruote 150 cr il pezzo, colpi M606 3 cr, MEC Rosso 3.000, CEC Verde 1.000). Le bombole non ci sono: la scheda 0.6 ne comprende già tre. Questo supera la parte della A.226 in cui il valore stimato restava vuoto perché non c’era modo di calcolarlo: il valore stimato del Direttore resta e prende il posto del modello base."
+      },
+      "nome_esemplare": {
+        "nome": "FIAT LUX",
+        "solo_gruppo": true,
+        "rif": "A.226",
+        "nota": "L’esemplare dei PG si chiama FIAT LUX (A.226, risposte del 02 e 03/11/2026); «ASA Scout MK4» è il modello di riferimento. Il nome è dell’esemplare: il modello nei dati non cambia."
       }
     },
     {

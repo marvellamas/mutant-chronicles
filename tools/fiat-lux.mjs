@@ -44,7 +44,9 @@ export function quadroScout(record, personaggi) {
     const mun = (n.mezzo.munizioni ?? [])[0];
     return {
       id: r.id, nome: r.mezzo.nome, proprietario: r.proprietario?.tipo === 'gruppo' ? 'il gruppo' : r.proprietario?.nome ?? '—', conducente: r.conducente?.nome ?? '—',
-      nomeDaImpostare: r.proprietario?.tipo === 'gruppo' && r.mezzo.nome !== 'FIAT LUX',
+      // lotto 185: il nome dell'esemplare lo mostra la scheda da sé (src/veicoli.js → nomiVeicolo), senza riscrivere
+      // il record; qui resta l'informazione di che nome porta il file, per chi legge il registro.
+      nomeNelRecord: r.proprietario?.tipo === 'gruppo' && r.mezzo.nome !== 'FIAT LUX' ? r.mezzo.nome : null,
       munizioni: mun ? `${mun.caricate} caricate e ${mun.riserva} di riserva` : '—',
       rosso: Number.isFinite(e.rosso) ? testoCariche(e.rosso) : 'da convertire', verde: Number.isFinite(e.verde) ? testoCariche(e.verde) : 'da convertire',
       ricambi: [...(e.rosso_ricambi ?? []).map((x) => `MEC Rosso ${testoCariche(x)}`), ...(e.verde_ricambi ?? []).map((x) => `CEC Verde ${testoCariche(x)}`)],
@@ -68,7 +70,7 @@ if (import.meta.url === `file://${process.argv[1]?.replace(/\\/g, '/').replace(/
   console.log(`Scout MK4 nel registro: ${q.righe.length}`);
   for (const r of q.righe) {
     console.log(`- ${r.nome} (${r.id}) · proprietario ${r.proprietario} · conducente ${r.conducente}`);
-    if (r.nomeDaImpostare) console.log('  Nome: da impostare a «FIAT LUX» (tab Veicoli, il nome in alto; A.226)');
+    if (r.nomeNelRecord) console.log(`  Nome nel file: «${r.nomeNelRecord}». La scheda scrive «FIAT LUX» con «Modello: ASA Scout MK4» accanto (A.226, lotto 185): il file non va riscritto. Per un nome diverso, il campo in alto nella tab Veicoli.`);
     console.log(`  Munizioni M606: ${r.munizioni} · Rosso ${r.rosso} · Verde ${r.verde}`);
     console.log(`  Ricambi: ${r.ricambi.length ? r.ricambi.join(', ') : 'nessuno'}${r.ricambiDaVerificare ? ` · da verificare dal Direttore: ${JSON.stringify(r.ricambiDaVerificare)}` : ''}`);
     console.log(`  Dotazione: ${r.dotazione} · valore stimato: ${r.valoreStimato}`);

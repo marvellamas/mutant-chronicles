@@ -198,7 +198,8 @@ function schedaSolaLettura(ctx, riferimentoVeicolo, pilotare) {
   const quando = c.aggiornato ? new Date(c.aggiornato).toLocaleString('it-IT', { day: '2-digit', month: '2-digit', hour: '2-digit', minute: '2-digit' }) : null;
   return h('section', { class: 'sezione-tab scheda-veicolo sola-lettura' },
     h('header', { class: 'testa-veicolo' }, h('h2', {}, v.nome),
-      h('span', { class: 'sigla' }, v.manuale ? 'scritto a mano' : `${v.profilo.nome} · ${v.profilo.paragrafo}`),
+      // lotto 185 (A.226): anche nella vista in sola lettura il modello si legge accanto al nome dell'esemplare
+      h('span', { class: 'sigla', title: v.nomi?.nota ?? null }, v.manuale ? 'scritto a mano' : `${v.nomi?.modello ? `Modello: ${v.nomi.modello}` : v.profilo.nome} · ${v.profilo.paragrafo}`),
       h('span', { class: 'etichetta etichetta-sola-lettura' }, 'sola lettura')),
     h('p', { class: 'riquadro attenzione' }, P.avviso_sola_lettura ?? 'Veicolo condiviso in sola lettura (A.113).'),
     h('p', { class: 'nota' }, `Ultima copia${quando ? ` del ${quando}` : ''} (revisione ${c.revisione ?? 0}) · proprietario: ${c.proprietario?.tipo === 'gruppo' ? 'il gruppo' : c.proprietario?.nome ?? '—'} · conducente: ${c.conducente?.nome ?? 'nessuno'}`),
@@ -256,8 +257,10 @@ function schedaVeicolo(ctx, mezzo, pilotare, registro = null) {
   const aggiorna = registro ? registro.aggiorna : (nuovo, messaggio = null) => salva(ctx, sostituisci(ctx, nuovo), messaggio);
   return h('section', { class: `sezione-tab scheda-veicolo${v.vista.fuoriUso ? ' fuori-uso' : ''}`, dataset: { uid: mezzo.uid } },
     h('header', { class: 'testa-veicolo' },
-      h('h2', {}, h('input', { type: 'text', class: 'nome-veicolo', value: v.nome, 'aria-label': 'Nome del veicolo', onchange: (e) => aggiorna({ ...mezzo, nome: e.target.value.trim() || p.nome }) })),
-      h('span', { class: 'sigla' }, v.manuale ? 'scritto a mano' : `${p.nome} · ${p.paragrafo}`),
+      // lotto 185 (A.226): il nome dell'esemplare in evidenza; svuotando il campo si torna al nome deciso o al
+      // modello, invece di scrivere il modello come se fosse il nome dell'esemplare.
+      h('h2', {}, h('input', { type: 'text', class: 'nome-veicolo', value: v.nome, 'aria-label': 'Nome dell’esemplare', onchange: (e) => aggiorna({ ...mezzo, nome: e.target.value.trim() }) })),
+      h('span', { class: 'sigla', title: v.nomi?.nota ?? null }, v.manuale ? 'scritto a mano' : `${v.nomi?.modello ? `Modello: ${v.nomi.modello}` : p.nome} · ${p.paragrafo}${v.nomi?.decisione ? ` · ${v.nomi.decisione}` : ''}`),
       h('label', { class: 'casella-veicolo' }, h('input', { type: 'checkbox', checked: v.gruppo, onchange: (e) => (registro ? registro.gruppo(e.target.checked) : aggiorna({ ...mezzo, gruppo: e.target.checked })) }), ' Veicolo del gruppo'),
       h('label', { class: 'casella-veicolo' }, h('input', { type: 'checkbox', checked: mezzo.conducente === true, onchange: (e) => (registro ? registro.guida(e.target.checked) : aggiorna({ ...mezzo, conducente: e.target.checked })) }), ' Lo guido io'),
       registro ? registro.rimuovi : pulsanteRimuovi(ctx, mezzo)),

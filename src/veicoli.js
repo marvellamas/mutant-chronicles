@@ -1037,6 +1037,29 @@ export function montaRicambio(mezzo, idRinforzo) {
 }
 
 /**
+ * Il nome dell'esemplare e, a parte, il modello (lotto 185, A.226).
+ *
+ * Nel registro il record nasce con `nome` copiato dal profilo (`nuovoVeicolo`), quindi il titolo della scheda era il
+ * nome del modello — «ASA Scout MK4» — e il nome vero dell'esemplare non si vedeva. Adesso: in evidenza il nome
+ * dell'esemplare, il modello accanto come riferimento. Tre casi, in quest'ordine:
+ *   1. il record ha un nome suo, diverso dal modello → quello, con il modello come riferimento;
+ *   2. non ce l'ha, e il profilo dichiara come si chiama il suo esemplare (`nome_esemplare`, dato del profilo: per lo
+ *      Scout «FIAT LUX» quando il mezzo è del gruppo, A.226) → quello, con il modello come riferimento;
+ *   3. né l'uno né l'altro → il modello fa da nome, e non si ripete come riferimento.
+ * Non scrive niente: il record resta com'è e il modello nei dati non cambia.
+ * @returns { nome, proprio, modello, decisione, nota } — `modello` è null quando è già il nome, `proprio` è il nome
+ *   scritto nel record (null se non c'è), `decisione` il numero della risposta quando il nome viene da lì.
+ */
+export function nomiVeicolo(mezzo, profilo) {
+  const proprio = String(mezzo?.nome ?? '').trim() || null;
+  const modello = profilo?.nome ?? null;
+  if (proprio && proprio !== modello) return { nome: proprio, proprio, modello, decisione: null, nota: null };
+  const dec = profilo?.nome_esemplare ?? null;
+  if (dec?.nome && (dec.solo_gruppo !== true || mezzo?.gruppo === true)) return { nome: dec.nome, proprio: null, modello, decisione: dec.rif ?? null, nota: dec.nota ?? null };
+  return { nome: modello ?? 'Veicolo', proprio, modello: null, decisione: null, nota: null };
+}
+
+/**
  * Vista di un mezzo del personaggio per la scheda e la stampa: profilo, PI e stato delle tre strutture con le
  * soglie già calcolate (§4.4), tabella delle andature (§2.1, §3.1), Pilotare del personaggio se è il conducente,
  * rinforzi, NEC, campi «da definire» del profilo. null se il profilo non c'è più.
@@ -1051,9 +1074,11 @@ export function vistaVeicoloPersonaggio(mezzo, dati, { pilotare = null } = {}) {
   const vista = vistaVeicolo({ ...mezzo, profilo: undefined, scheda: profilo }, dati, { pilotareVa: conducente ? pilotare.va : null });
   // la riga del VA personale porta con sé la provenienza dell'Abilità (tooltip della SD)
   if (vista.pilotare && pilotare?.provenienza?.righe?.length) vista.pilotare.provenienza.righe[0] = { ...vista.pilotare.provenienza.righe[0], dettaglio: pilotare.provenienza.righe };
+  const nomi = nomiVeicolo(mezzo, profilo); // lotto 185: nome dell'esemplare in evidenza, modello come riferimento
   return {
     uid: mezzo.uid,
-    nome: mezzo.nome || profilo.nome,
+    nome: nomi.nome,
+    nomi,
     gruppo: mezzo.gruppo === true,
     conducente,
     manuale: !mezzo.profilo,
