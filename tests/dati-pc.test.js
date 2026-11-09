@@ -15,6 +15,7 @@ import { annotaPrima, confrontaPersonaggi, personaggiDalServer, personaggiAdesso
 import { cerca, radiciDischi, copieDellApp, risolviPercorsoManuale, installazioniMutant, puliscePercorso } from '../tools/cerca-personaggi.mjs';
 import { voceCerca, voceStato } from '../tools/console.mjs';
 import { creaZip } from '../tools/salva-sessione.mjs';
+import { attendiServer } from './attesa-server.js';
 
 const REPO = new URL('..', import.meta.url).pathname.replace(/^\/([A-Za-z]:)/, '$1');
 const windows = process.platform === 'win32';
@@ -89,14 +90,11 @@ test('B: il server di una copia nuova trova i personaggi della cartella impostat
   scriviImpostazione(vecchia);
   const porta = 3200 + Math.floor(Math.random() * 500);
   // il server.mjs del repository è «la copia nuova»: senza --cartella, deve leggere i personaggi dal profilo
-  const p = spawn(process.execPath, [join(REPO, 'server.mjs'), `--porta=${porta}`, '--solo-locale', '--senza-avvisi'], { env: { ...process.env, TEMP: join(r, 'altro-temp'), TMP: join(r, 'altro-temp') }, stdio: 'ignore' }); // il «Temp» del server è un'altra cartella: la copia vecchia non è temporanea (lotto 138)
+  // lotto 185: stdout e stderr aperti, così se il server esce (porta occupata, flag sbagliato) il rosso dice perché
+  const p = spawn(process.execPath, [join(REPO, 'server.mjs'), `--porta=${porta}`, '--solo-locale', '--senza-avvisi'], { env: { ...process.env, TEMP: join(r, 'altro-temp'), TMP: join(r, 'altro-temp') }, stdio: ['ignore', 'pipe', 'pipe'] }); // il «Temp» del server è un'altra cartella: la copia vecchia non è temporanea (lotto 138)
   try {
-    let lista = null;
-    for (let i = 0; i < 60 && !lista; i++) {
-      await new Promise((ok) => setTimeout(ok, 250));
-      try { lista = await (await fetch(`http://127.0.0.1:${porta}/api/personaggi`)).json(); } catch { /* non ancora */ }
-    }
-    assert.ok(lista, 'il server risponde');
+    // attesa senza budget a caso: finisce appena il server risponde, o appena il processo esce (tests/attesa-server.js)
+    const lista = await attendiServer(async () => { try { const q = await fetch(`http://127.0.0.1:${porta}/api/personaggi`); return q.ok ? await q.json() : null; } catch { return null; } }, { figlio: p });
     assert.equal(lista.length, fixture.length);
     const avvio = await (await fetch(`http://127.0.0.1:${porta}/api/avvio`)).json();
     assert.equal(avvio.percorso, join(vecchia, 'personaggi'));

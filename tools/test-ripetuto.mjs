@@ -16,7 +16,9 @@ mkdirSync(dir, { recursive: true });
 const rossi = new Map(); // nome del test o del file → giri in cui è rosso
 for (let i = 1; i <= N; i += 1) {
   const t0 = Date.now();
-  const r = spawnSync(process.execPath, ['--import', './tests/profilo-di-prova.mjs', '--test', ...(conc ? [`--test-concurrency=${conc}`] : []), 'tests/**/*.test.js'], { cwd: RADICE, encoding: 'utf8', maxBuffer: 256 * 1024 * 1024 });
+  // lotto 185: la suite si lancia come `npm test`, cioè dai due passaggi di tools/prove.mjs (processi a parte).
+  // `--concorrenza=` qui è quella del primo passaggio, l'unica che conta per i test che avviano processi.
+  const r = spawnSync(process.execPath, ['tools/prove.mjs', ...(conc ? [`--concorrenza=${conc}`] : [])], { cwd: RADICE, encoding: 'utf8', maxBuffer: 256 * 1024 * 1024 });
   const out = `${r.stdout}\n${r.stderr}`;
   const falliti = [...new Set(out.split('\n').filter((l) => /^✖ /.test(l)).map((l) => l.replace(/\s*\(\d+(\.\d+)?ms\)\s*$/, '')))];
   falliti.forEach((f) => rossi.set(f, [...(rossi.get(f) ?? []), i]));

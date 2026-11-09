@@ -46,7 +46,7 @@ test('1: il server e gli strumenti si fermano davvero con un flag inventato (cod
   assert.equal(r.status, 2);
   assert.match(r.stderr, /non conosco «--personaggi»: forse intendevi «--cartella»\?/);
   assert.doesNotMatch(r.stdout, /Mutant è acceso|http:\/\/localhost/);
-  for (const tool of ['salva-sessione', 'migra-talenti', 'pulizia-personaggi', 'dati-locali', 'esito-aggiornamento', 'aggiorna-avviatori', 'console', 'riavvia']) {
+  for (const tool of ['salva-sessione', 'migra-talenti', 'pulizia-personaggi', 'dati-locali', 'esito-aggiornamento', 'aggiorna-avviatori', 'console', 'riavvia', 'prove']) {
     const t = lancia(`tools/${tool}.mjs`, '--personaggi=X');
     assert.equal(t.status, 2, `${tool}: deve fermarsi`);
     assert.match(t.stderr, /non conosco «--personaggi»/, tool);

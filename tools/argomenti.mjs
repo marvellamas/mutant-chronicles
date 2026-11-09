@@ -73,4 +73,5 @@ export const ARGOMENTI = {
   'cartella-di-prova.mjs': [],
   'descrizioni-bestiario.mjs': ['profili'],
   'riserve-intere.mjs': ['scrivi'],
+  'prove.mjs': ['concorrenza', 'solo'],
 };

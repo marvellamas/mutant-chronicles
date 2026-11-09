@@ -17,6 +17,7 @@ import { installazioniMutant, cercaAmmessa } from '../tools/cerca-personaggi.mjs
 import { guardiaAutomatica } from '../tools/guardia-automatica.mjs';
 import { controllaSeSbagliata } from '../tools/ripara-installazione.mjs';
 import { homedir } from 'node:os';
+import { attendiServer } from './attesa-server.js';
 
 const REPO = fileURLToPath(new URL('..', import.meta.url)).replace(/[\\/]$/, '');
 const FIX = join(REPO, 'tests', 'fixtures', 'talenti-vecchi');
@@ -134,13 +135,11 @@ test('un server di prova con --cartella= sulla cartella con personaggi: legge, n
   const prima = impronta(zip);
   const profilo = mkdtempSync(join(tempProve(), 'mutant-prof-srv-'));
   const porta = 3700 + Math.floor(Math.random() * 200);
-  const p = spawn(process.execPath, [join(REPO, 'server.mjs'), `--porta=${porta}`, '--solo-locale', '--senza-avvisi', `--cartella=${join(zip, 'personaggi')}`], { env: { ...process.env, MUTANT_CONFIG_DIR: profilo }, stdio: 'ignore' });
+  // lotto 185: stdout e stderr aperti, così se il server esce il rosso dice perché
+  const p = spawn(process.execPath, [join(REPO, 'server.mjs'), `--porta=${porta}`, '--solo-locale', '--senza-avvisi', `--cartella=${join(zip, 'personaggi')}`], { env: { ...process.env, MUTANT_CONFIG_DIR: profilo }, stdio: ['ignore', 'pipe', 'pipe'] });
   try {
-    let lista = null;
-    for (let i = 0; i < 80 && !lista; i++) {
-      await new Promise((ok) => setTimeout(ok, 250));
-      try { const r = await fetch(`http://127.0.0.1:${porta}/api/personaggi`); if (r.ok) lista = await r.json(); } catch { /* non ancora */ }
-    }
+    // attesa senza budget a caso (tests/attesa-server.js): finisce appena risponde, o appena il processo esce
+    const lista = await attendiServer(async () => { try { const r = await fetch(`http://127.0.0.1:${porta}/api/personaggi`); return r.ok ? await r.json() : null; } catch { return null; } }, { figlio: p });
     assert.ok(Array.isArray(lista), 'l’elenco si legge');
     assert.deepEqual(lista.map((x) => x.file).sort(), [...PG].sort());
     const file = lista[0].file;

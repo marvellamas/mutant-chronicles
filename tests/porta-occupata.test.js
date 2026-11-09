@@ -11,6 +11,7 @@ import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { chiOccupa, testoDomanda, risposteSi, pidDaNetstat } from '../src/porta-occupata.js';
+import { attendiCondizione } from './attesa-server.js';
 
 test('testoDomanda: versione e ora di avvio; un server di prima senza versione', () => {
   const avviato = new Date(2026, 9, 6, 12, 50, 40).toISOString();
@@ -54,13 +55,15 @@ function avvia(porta, ...altri) {
   const fine = new Promise((ok) => f.on('exit', (codice) => ok(codice)));
   return { f, testo: () => out, fine };
 }
-const attendi = async (cond, ms = 8000) => { const t = Date.now() + ms; while (Date.now() < t) { if (await cond()) return true; await new Promise((ok) => setTimeout(ok, 100)); } return false; };
+// lotto 185: l'attesa finisce appena la condizione è vera e si arrende appena il processo esce, con codice e output
+// (prima aspettava comunque otto secondi e poi il rosso diceva solo «false»). Il limite vero è il `timeout` del test.
+const attendi = (cond, avviato = null) => attendiCondizione(cond, { figlio: avviato?.f ?? null, ms: 25000, cosa: 'il server di prova' });
 
 test('un Mutant già acceso: il ping lo dice; senza finestra non si ferma; con --sostituisci si ferma e si riparte', { timeout: 30000 }, async () => {
   const porta = await portaLibera();
   assert.notEqual(porta, 3000);
   const primo = avvia(porta);
-  assert.ok(await attendi(async () => (await chiOccupa(porta)).tipo === 'mutant'), primo.testo());
+  await attendi(async () => (await chiOccupa(porta)).tipo === 'mutant', primo);
   const chi = await chiOccupa(porta);
   assert.equal(chi.pid, primo.f.pid);
   assert.match(chi.avviato, /^\d{4}-\d\d-\d\dT/);
@@ -72,7 +75,7 @@ test('un Mutant già acceso: il ping lo dice; senza finestra non si ferma; con -
   assert.equal((await chiOccupa(porta)).pid, primo.f.pid);
   // --sostituisci: il primo si ferma, il terzo prende la porta
   const terzo = avvia(porta, '--sostituisci');
-  assert.ok(await attendi(async () => (await chiOccupa(porta)).pid === terzo.f.pid), terzo.testo());
+  await attendi(async () => (await chiOccupa(porta)).pid === terzo.f.pid, terzo);
   await primo.fine;
   assert.match(terzo.testo(), /Fermato\. Riparto/);
 });

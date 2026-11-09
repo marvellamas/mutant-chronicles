@@ -1,6 +1,7 @@
 # Dipendenze e cache di Node (solo per i test: nessuna dipendenza a runtime)
 node_modules/
 .npm/
+.cache/
 npm-debug.log*
 *.log
 coverage/
