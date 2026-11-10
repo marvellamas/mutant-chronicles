@@ -1,5 +1,5 @@
 {
-  "versione_manuale": "Armamenti 0.52",
+  "versione_manuale": "Armamenti 0.74",
   "fonte": "Manuale degli Armamenti v0.50, §7.8 Cataloghi corporativi delle armi a distanza (pp. 36–52): armi, moduli integrati, munizioni di riferimento dei lanciatori; lotto 5",
   "_nota": "Generato da tools/lotti/lotto5_armi_distanza_corporative.mjs; da qui in poi si modifica questo file. I moduli integrati (modulo_di) non si comprano da soli: la scheda li mostra come profilo aggiuntivo dell’arma impugnata, con alimentazione separata; PI, Qualità e MOV sono quelli dell’arma. «munizioni_riferimento» sono i dati della munizione dei lanciatori (danno, AC, RS), non bonus del lanciatore. Specializzazioni: risposte di Davide A.11 (le 16 armi senza Specializzazione dichiarata, Panzerknacker nei Fucili d’Assalto) e A.12 (conferma delle assegnazioni per analogia con il §7.7) del 28/09/2026. I moduli integrati tengono la propria Specializzazione. «specializzazione_danno»: false quando la Specializzazione dà solo il +1 VA (SA30, Danno calibrato).",
   "modalita": {

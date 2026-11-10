@@ -1,5 +1,5 @@
 {
-  "versione_manuale": "Armamenti 0.52",
+  "versione_manuale": "Armamenti 0.74",
   "fonte": "Manuale degli Armamenti v0.50: armature dei cataloghi Bauhaus (§7.11.5–7.11.6), Alleanza (§7.11.7), Capitol (§7.13.1–7.13.3), Imperial (§7.14.1–7.14.3), Cybertronic (§7.15.2–7.15.3), Mishima (§7.16.1–7.16.4) e Fratellanza (§7.17.2–7.17.5), pp. 64–103; lotto 6",
   "_nota": "Generato da tools/lotti/lotto6_armature_corporative.mjs; da qui in poi si modifica questo file. «penalita» sono le penalità effettive del modello (categoria del §7.11.1 con gli effetti delle proprietà native), prima di rinforzi e FOR insufficiente. «profili_alternativi» delle armature servoassistite: il profilo a sistema spento, con FOR e penalità proprie. I rinforzi non sono ancora nel catalogo: «rinforzi_ammessi» dice solo quali kit accetta il modello.",
   "note_per_catalogo": {

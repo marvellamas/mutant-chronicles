@@ -1,5 +1,5 @@
 {
-  "versione_manuale": "Armamenti 0.55",
+  "versione_manuale": "Armamenti 0.74",
   "fonte": "Manuale degli Armamenti v0.55, §7.23 Catalogo dei rinforzi (regole del §7.11.2), §§7.23.10–7.23.11",
   "_nota": "Generato da tools/lotti/lotto_rinforzi_723.py. Un rinforzo «in uso» e montato su un’armatura indossata ne aumenta AR e FOR richiesta, se l’armatura ammette la sua categoria («rinforzi_ammessi», e «compatibile_con» del rinforzo); le sue proprietà valgono solo in quel caso. Una Leggera portata fisicamente ad AR 3 o più usa le penalità della Media (§7.11.2, §7.23.4). Proprietà uguali o benefici equivalenti presenti su più oggetti non si sommano: si usa il maggiore applicabile. (§7.23.9) Armamenti 0.55 (30/09, a mano: il generatore legge fino al §7.23.9): «abbinamento_ottimizzato» elenca le armature con cui la combinazione conserva la categoria originaria anche ad AR 3 o più (§7.23.10: soprabiti ASA e BLEU, nove rinforzi dedicati); Mantello Venusiano del §7.23.11.",
   "oggetti": [

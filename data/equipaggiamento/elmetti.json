@@ -1,5 +1,5 @@
 {
-  "versione_manuale": "Armamenti 0.52",
+  "versione_manuale": "Armamenti 0.74",
   "fonte": "Manuale degli Armamenti v0.52 (Google Doc), §7.21 «Elmetti e modifiche»: testo in docs/manuali-txt/armamenti.md.",
   "_nota": "Generato da tools/lotti/lotto_elmetti.mjs. Gli elmetti non forniscono AR (§7.21.1): «ar» vale 0. Le modifiche sono accessori che si montano sull’elmetto indossato o sull’armatura indossata (per il suo elmetto standard) e contano solo montate. Nessun peso: il manuale non lo dà (A.30). Le regole d’uso sono in regole.json → elmetti.",
   "oggetti": [

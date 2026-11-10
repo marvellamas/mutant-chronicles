@@ -1,5 +1,5 @@
 {
-  "versione_manuale": "Armamenti 0.50",
+  "versione_manuale": "Armamenti 0.74",
   "fonte": "Manuale degli Armamenti v0.50, §7.3 Mirini e accessori delle armi (pp. 19–22); lotto 8",
   "_nota": "Generato da tools/lotti/lotto8_accessori_armi.mjs; da qui in poi si modifica questo file. Un accessorio ha effetto quando è «in uso» e montato (montato_su) su un oggetto attivo del tipo indicato in «si_monta_su»: arma a distanza impugnata, oppure mirino montato su un’arma impugnata. «effetto_arma» si applica sempre al VA per colpire e al danno; «bonus_condizionato» solo nella condizione indicata; «mirino» riduce la sola penalità di distanza. Per ogni «gruppo_esclusivo» vale un solo accessorio per arma.",
   "oggetti": [

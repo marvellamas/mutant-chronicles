@@ -1,5 +1,5 @@
 {
-  "versione_manuale": "Armamenti 0.50",
+  "versione_manuale": "Armamenti 0.74",
   "fonte": "Manuale degli Armamenti v0.50, §7.11.1–7.11.3 (armature commerciali civili); lotto 1 dal pilota di estrazione",
   "_nota": "Le penalità dipendono dalla categoria (tabella «categorie», §7.11.1); un oggetto può indicare «penalita» proprie che sostituiscono quelle della categoria. «agilita» vale per Schivata e Prove fisiche di Atletica o Furtività ostacolate; «movimento_q» si sottrae al budget di movimento.",
   "categorie": {
