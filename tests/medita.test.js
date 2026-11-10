@@ -2,7 +2,7 @@
 // Meditazione, Recupero Mistico) e il versamento in un cristallo con la conversione (rapporto dai dati e dai Talenti), con
 // il conto in chiaro, l'avviso sul cristallo pieno senza buttare via il resto, e il registro.
 import '../tools/guardia-subito.mjs'; // la guardia sulle cartelle vere, comunque si lanci il test
-import { testoEdizione } from '../tools/manuali.mjs';
+import { testoManuale } from '../tools/manuali.mjs';
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
@@ -14,7 +14,7 @@ import { rapportoConversione } from '../src/equipaggiamento.js';
 import { validaDati } from '../src/validate.js';
 
 const norm = (t) => String(t).replace(/[’‘]/g, "'").replace(/\\/g, '').replace(/\*/g, '').replace(/\s+/g, ' ').trim();
-const magia = norm(testoEdizione('magia', '1.7'));
+const magia = norm(testoManuale('magia'));
 
 const ESEMPIO = 'Fratello-Anselmo-Viri_liv3_2026-10-02.json';
 const voce = (uid, rif, extra = {}) => ({ uid, rif, stato: 'trasportato', quantita: 1, note: '', sintonizzato: true, ...extra });
