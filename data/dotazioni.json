@@ -1,5 +1,5 @@
 {
-  "versione_manuale": "Giocatore 0.45 (Google Doc del 01/10/2026)",
+  "versione_manuale": "Giocatore 0.54 (Google Doc del 09/11/2026)",
   "fonte": "Manuale del Giocatore §2.16, §§2.16.1–2.16.29 (Google Doc del 27/09/2026); risposte del master E&L A.5–A.5.29 (docs/risposte-master.md, decisioni 12–19)",
   "_nota": "Generato da tools/genera_dotazioni.py; da qui in poi si può correggere a mano. «testo», «introduzione» e «note» sono copiati dal Doc. Un’opzione ha uno o più «oggetti»: «rif» del catalogo oppure «dotazione» (oggetti_dotazione, non ancora a catalogo). «for_dichiarata» è il requisito di FOR scritto nel §2.16: il validatore lo confronta con quello del catalogo. «munizioni» segue l’arma scelta; «segue» lega un’opzione a quella di un altro gruppo; «sotto» (negli oggetti) chiede una scelta ulteriore.",
   "introduzione": [
@@ -62,7 +62,7 @@
       }
     ],
     "note": [
-      "Torcia e comunicatore personale comprendono ciascuno un NEC Verde compatto carico, cavo e alimentatore. Consumi, ricambi e ricarica sono nel Manuale dell’Equipaggiamento, §5.4. L’elettronica ordinaria non richiede conteggio energetico; la ricarica rientra nei normali rifornimenti (Manuale dell’Equipaggiamento, §5.4).",
+      "Torcia e comunicatore personale comprendono ciascuno un NEC Verde 1 carico, cavo e alimentatore. Consumi, ricambi e ricarica sono nel Manuale dell’Equipaggiamento, §5.4. L’elettronica ordinaria non richiede conteggio energetico; la ricarica rientra nei normali rifornimenti (Manuale dell’Equipaggiamento, §5.4).",
       "I NEC usano riserve distinte UER, UEB e UEV. Per le armi si annotano cariche o colpi: 1 UE dello stesso colore ripristina dieci cariche personali mediante trasformatore dedicato, conservando il resto nel tampone. Torce, comunicatori, mirini, visori, elmetti e corredi elettronici ordinari non richiedono un conteggio energetico. I rifornimenti comprendono la loro ricarica; armi, scudi, mezzi e dispositivi speciali mantengono il contatore della scheda. Regole generali, tempi, prezzi e gestione del campo: Manuale dell’Equipaggiamento, §5.4. Le batterie mistiche restano in PM e seguono Sintonizzazione e ricarica del Manuale della Magia, senza conversione automatica da UE.",
       "Le scorte iniziali comprendono tre giorni di cibo e due litri d’acqua. L’acqua copre un giorno di consumo ordinario e richiede rifornimenti durante il viaggio."
     ]
@@ -189,7 +189,7 @@
       "note": [
         "Requisiti: entrambe le armi da fuoco, il Randello e l’Armatura civile leggera richiedono FOR 3; il Coltello richiede FOR 2.",
         "L’armatura concede AR 1. L’elmetto standard incluso non aggiunge AR.",
-        "Il registratore comprende NEC Verde compatto carico, cavo e alimentatore. Il binocolo non richiede NEC. L’elettronica ordinaria non richiede conteggio energetico; la ricarica rientra nei normali rifornimenti (Manuale dell’Equipaggiamento, §5.4).",
+        "Il registratore comprende NEC Verde 1 carico, cavo e alimentatore. Il binocolo non richiede NEC. L’elettronica ordinaria non richiede conteggio energetico; la ricarica rientra nei normali rifornimenti (Manuale dell’Equipaggiamento, §5.4).",
         "I profili commerciali indicano il riferimento per il modello corporativo assegnato di base (§2.16.27)."
       ]
     },
@@ -451,7 +451,7 @@
         "Lo strumento specialistico si sceglie liberamente:",
         "Corredo da assalto verticale: comprende imbracatura, corda da 20 Q, discensore, moschettoni e ancoraggi. Concede +2 VA ad Atletica per arrampicarsi o calarsi usando il corredo.",
         "Corredo di sopravvivenza ambientale: si sceglie un ambiente fra Artico, Forestale, Desertico, Urbano, Pianure, Sottosuolo e Apocalittico. Concede i benefici previsti dalla propria scheda.",
-        "Rilevatore ambientale: segnala carenza d’ossigeno, gas nocivi conosciuti dal dispositivo e radiazioni nel punto esaminato. Comprende NEC Verde compatto carico, cavo e alimentatore. L’elettronica ordinaria non richiede conteggio energetico; la ricarica rientra nei normali rifornimenti (Manuale dell’Equipaggiamento, §5.4).",
+        "Rilevatore ambientale: segnala carenza d’ossigeno, gas nocivi conosciuti dal dispositivo e radiazioni nel punto esaminato. Comprende NEC Verde 1 carico, cavo e alimentatore. L’elettronica ordinaria non richiede conteggio energetico; la ricarica rientra nei normali rifornimenti (Manuale dell’Equipaggiamento, §5.4).",
         "Requisiti: pistola e armatura richiedono FOR 3; il Coltello richiede FOR 2.",
         "L’armatura concede AR 1; l’elmetto standard non aggiunge AR. Il binocolo non richiede batterie.",
         "Il Corredo di orientamento concede +1 VA a Sopravvivenza per orientarsi, quando esistono riferimenti utilizzabili. Questo bonus non si somma a quello del Corredo di sopravvivenza ambientale.",
@@ -593,7 +593,7 @@
         "Gli Abiti eleganti concedono +1 VA a Oratoria negli ambienti formali appropriati, secondo la propria scheda.",
         "Il Monocolo periscopico permette di osservare oltre un bordo o un angolo senza esporre la testa, purché l’ottica raggiunga una posizione con visuale. Non richiede batterie.",
         "Corredo da scasso. Comprende grimaldelli, attrezzi di precisione, sonde e un’interfaccia portatile per serrature elettroniche compatibili. Si utilizza con Furtività per scassinare serrature e dispositivi meccanici e con Tecnologia per intervenire sulle serrature elettroniche.",
-        "L’interfaccia comprende un NEC Verde standard carico, cavo e alimentatore (Manuale dell’Equipaggiamento, §5.5). Restano necessarie le normali Prove e l’accesso ai componenti interessati. L’elettronica ordinaria non richiede conteggio energetico; la ricarica rientra nei normali rifornimenti (Manuale dell’Equipaggiamento, §5.4).",
+        "L’interfaccia comprende un NEC Verde 3 carico, cavo e alimentatore (Manuale dell’Equipaggiamento, §5.5). Restano necessarie le normali Prove e l’accesso ai componenti interessati. L’elettronica ordinaria non richiede conteggio energetico; la ricarica rientra nei normali rifornimenti (Manuale dell’Equipaggiamento, §5.4).",
         "Corredo da camuffamento. Comprende trucchi, parrucche, barbe finte, piccoli accessori e materiali per modificare l’aspetto personale. Si utilizza con Raggirare per preparare e sostenere un travestimento o un’impersonificazione. Il beneficio riguarda il camuffamento effettivamente realizzato; documenti falsi e credenziali richiedono risorse separate.",
         "I profili commerciali indicano il riferimento per il modello corporativo assegnato di base (§2.16.27)."
       ]
@@ -1145,7 +1145,7 @@
         "Requisiti: FOR 3 per pistola, Pugnale da combattimento e armatura.",
         "L’Armatura civile leggera concede AR 1 e richiede FOR 3; l’elmetto standard incluso non aggiunge AR.",
         "Il Silenziatore rende inudibile lo sparo, applicando −2 VA al tiro e −1 danno. Restano percepibili gli eventuali impatti e gli altri indizi dell’attacco.",
-        "Il Corredo da scasso Standard comprende grimaldelli, utensili di precisione, sonde e un’interfaccia elettronica compatibile. Si usa Furtività per le serrature meccaniche e Tecnologia per quelle elettroniche, effettuando le normali Prove. L’interfaccia comprende un NEC Verde standard carico, cavo e caricatore (Manuale dell’Equipaggiamento, §5.5). L’elettronica ordinaria non richiede conteggio energetico; la ricarica rientra nei normali rifornimenti (Manuale dell’Equipaggiamento, §5.4).",
+        "Il Corredo da scasso Standard comprende grimaldelli, utensili di precisione, sonde e un’interfaccia elettronica compatibile. Si usa Furtività per le serrature meccaniche e Tecnologia per quelle elettroniche, effettuando le normali Prove. L’interfaccia comprende un NEC Verde 3 carico, cavo e alimentatore (Manuale dell’Equipaggiamento, §5.5). L’elettronica ordinaria non richiede conteggio energetico; la ricarica rientra nei normali rifornimenti (Manuale dell’Equipaggiamento, §5.4).",
         "Il Corredo da assalto verticale comprende imbracatura, corda da 20 Q, discensore, moschettoni e ancoraggi. Concede +2 VA ad Atletica per arrampicate e discese effettuate utilizzandolo.",
         "I profili commerciali indicano il riferimento per il modello corporativo assegnato di base (§2.16.27)."
       ]
@@ -1399,7 +1399,7 @@
         "Requisiti: FOR 4 per la Carabina, FOR 5 per il Fucile d’assalto, FOR 2 per il Coltello; FOR 3 o 5 per l’armatura scelta.",
         "L’Armatura civile leggera concede AR 1 e richiede FOR 3; l’elmetto standard incluso non aggiunge AR.",
         "L’Armatura civile media concede AR 3 e richiede FOR 5. Conserva le normali penalità: −1 VA agli attacchi e alle Prove di Agilità, −1 Q al Movimento e −3 VA al lancio tramite Potere.",
-        "Il Comunicatore da squadra comprende microfono, auricolare, NEC Verde standard carico, cavo e caricatore. Ha una portata nominale di 10 km; collegandosi a un comunicatore personale, la comunicazione bidirezionale resta limitata dalla portata del dispositivo più debole. Le distanze previste dai Talenti di comando restano quelle indicate nei Talenti. L’elettronica ordinaria non richiede conteggio energetico; la ricarica rientra nei normali rifornimenti (Manuale dell’Equipaggiamento, §5.4).",
+        "Il Comunicatore da squadra comprende microfono, auricolare, NEC Verde 3 carico, cavo e alimentatore. Ha una portata nominale di 10 km; collegandosi a un comunicatore personale, la comunicazione bidirezionale resta limitata dalla portata del dispositivo più debole. Le distanze previste dai Talenti di comando restano quelle indicate nei Talenti. L’elettronica ordinaria non richiede conteggio energetico; la ricarica rientra nei normali rifornimenti (Manuale dell’Equipaggiamento, §5.4).",
         "Il Kit di pronto soccorso Standard non concede bonus a Medicina: un successo arresta il Sanguinamento; un Magistrale recupera anche 1d4 PV. Ogni tentativo consuma un’applicazione.",
         "I profili commerciali indicano il riferimento per il modello corporativo assegnato di base (§2.16.27)."
       ]
@@ -1663,9 +1663,9 @@
         "Pistola e armatura richiedono FOR 3. L’armatura concede AR 1; l’elmetto standard incluso non aggiunge AR.",
         "Requisiti delle armi da mischia: FOR 2 per il Coltello; FOR 4 per il Martello.",
         "Il Corredo artigianale professionale viene dedicato a un mestiere, per esempio sartoria, pelletteria, falegnameria o lavorazione manuale dei metalli. Concede +2 VA a Tecnologia per lavorare e riparare i prodotti di quel mestiere.",
-        "Il Corredo di manutenzione da campo concede +2 VA a Tecnologia per diagnosi, manutenzione e riparazioni eseguibili sul campo di armi, armature, propulsori ed esoscheletri compatibili. La diagnostica comprende NEC Verde standard carico, cavo e alimentatore. L’elettronica ordinaria non richiede conteggio energetico; la ricarica rientra nei normali rifornimenti (Manuale dell’Equipaggiamento, §5.4).",
-        "La Lampada frontale illumina fino a 6 Q, lasciando libere le mani. Comprende NEC Verde compatto carico, cavo e alimentatore. L’elettronica ordinaria non richiede conteggio energetico; la ricarica rientra nei normali rifornimenti (Manuale dell’Equipaggiamento, §5.4).",
-        "Il Registratore audiovisivo permette di documentare manufatti, difetti e lavorazioni, conservando immagini e suoni effettivamente ripresi. Comprende NEC Verde compatto carico, cavo e alimentatore. L’elettronica ordinaria non richiede conteggio energetico; la ricarica rientra nei normali rifornimenti (Manuale dell’Equipaggiamento, §5.4).",
+        "Il Corredo di manutenzione da campo concede +2 VA a Tecnologia per diagnosi, manutenzione e riparazioni eseguibili sul campo di armi, armature, propulsori ed esoscheletri compatibili. La diagnostica comprende NEC Verde 3 carico, cavo e alimentatore. L’elettronica ordinaria non richiede conteggio energetico; la ricarica rientra nei normali rifornimenti (Manuale dell’Equipaggiamento, §5.4).",
+        "La Lampada frontale illumina fino a 6 Q, lasciando libere le mani. Comprende NEC Verde 1 carico, cavo e alimentatore. L’elettronica ordinaria non richiede conteggio energetico; la ricarica rientra nei normali rifornimenti (Manuale dell’Equipaggiamento, §5.4).",
+        "Il Registratore audiovisivo permette di documentare manufatti, difetti e lavorazioni, conservando immagini e suoni effettivamente ripresi. Comprende NEC Verde 1 carico, cavo e alimentatore. L’elettronica ordinaria non richiede conteggio energetico; la ricarica rientra nei normali rifornimenti (Manuale dell’Equipaggiamento, §5.4).",
         "Si applica un solo modificatore pertinente degli strumenti, senza sommare i bonus dei corredi. Materiali da lavorare e ricambi restano separati."
       ]
     },
@@ -1812,7 +1812,7 @@
         "La Cassetta degli attrezzi comprende chiavi, cacciaviti, pinze, martello, lime e strumenti di misura meccanici. Consente gli interventi compatibili con questi utensili, con modificatore degli strumenti 0 al VA.",
         "Il Corredo da assalto verticale comprende imbracatura, corda da 20 Q, discensore, moschettoni e ancoraggi. Concede +2 VA ad Atletica per arrampicate e discese effettuate utilizzandolo.",
         "La Maschera filtrante concede +2 alle PS di Tempra contro veleni e agenti patogeni inalati. Richiede aria con ossigeno sufficiente; la sostituzione ordinaria dei filtri rientra nella manutenzione.",
-        "La Lampada frontale illumina fino a 6 Q, lasciando libere le mani. Comprende NEC Verde compatto carico, cavo e alimentatore. L’elettronica ordinaria non richiede conteggio energetico; la ricarica rientra nei normali rifornimenti (Manuale dell’Equipaggiamento, §5.4).",
+        "La Lampada frontale illumina fino a 6 Q, lasciando libere le mani. Comprende NEC Verde 1 carico, cavo e alimentatore. L’elettronica ordinaria non richiede conteggio energetico; la ricarica rientra nei normali rifornimenti (Manuale dell’Equipaggiamento, §5.4).",
         "Si applica un solo modificatore pertinente degli strumenti, senza sommare i bonus dei corredi. Materiali da lavorare e ricambi restano separati."
       ]
     },
@@ -1949,7 +1949,7 @@
         "La Cassetta degli attrezzi comprende chiavi, cacciaviti, pinze, martello, lime e strumenti di misura meccanici. Consente gli interventi compatibili con questi utensili, con modificatore degli strumenti 0 al VA.",
         "Ricambi e attrezzature richiesti dalla specifica riparazione restano necessari.",
         "Il Corredo di orientamento concede +1 VA a Sopravvivenza per orientarsi, quando esistono riferimenti utilizzabili. Il Binocolo concede +1 VA a Percezione per esaminare dettagli lontani, con luce e visuale sufficienti.",
-        "Il Comunicatore da squadra ha portata nominale di 10 km; con un comunicatore personale, la comunicazione bidirezionale resta limitata a 1 km, in condizioni favorevoli. Comprende NEC Verde standard carico, cavo e alimentatore. L’elettronica ordinaria non richiede conteggio energetico; la ricarica rientra nei normali rifornimenti (Manuale dell’Equipaggiamento, §5.4).",
+        "Il Comunicatore da squadra ha portata nominale di 10 km; con un comunicatore personale, la comunicazione bidirezionale resta limitata a 1 km, in condizioni favorevoli. Comprende NEC Verde 3 carico, cavo e alimentatore. L’elettronica ordinaria non richiede conteggio energetico; la ricarica rientra nei normali rifornimenti (Manuale dell’Equipaggiamento, §5.4).",
         "Il veicolo non è compreso nella dotazione iniziale del Pilota. Il Direttore di Gioco decide se e quali veicoli fornire al gruppo in base alla campagna (§2.16.30).",
         "Si applica un solo modificatore pertinente degli strumenti, senza sommare i bonus dei corredi. Materiali da lavorare e ricambi restano separati."
       ]
@@ -2078,10 +2078,10 @@
         "Pistola e armatura richiedono FOR 3. L’armatura concede AR 1; l’elmetto standard incluso non aggiunge AR.",
         "Requisito del Coltello: FOR 2.",
         "Il Corredo elettronico e informatico Standard comprende un terminale portatile con programmi di diagnostica e configurazione; un multimetro, sonde e utensili di precisione; cavi e adattatori per collegarsi fisicamente a sistemi compatibili, entro 2 Q.",
-        "Permette diagnosi, configurazione e interventi portatili compatibili con i componenti disponibili. È Standard: modificatore degli strumenti 0 al VA. Intrusioni e controllo dei dispositivi richiedono comunque accesso utilizzabile, compatibilità e normali Prove. L’intero corredo usa un solo NEC Verde standard carico nel terminale; cavi e alimentatore compresi (Manuale dell’Equipaggiamento, §5.7). L’elettronica ordinaria non richiede conteggio energetico; la ricarica rientra nei normali rifornimenti (Manuale dell’Equipaggiamento, §5.4).",
-        "Il Corredo di manutenzione da campo concede +2 VA a Tecnologia per diagnosi, manutenzione e riparazioni eseguibili sul campo di armi, armature, propulsori ed esoscheletri compatibili. La diagnostica comprende NEC Verde standard carico, cavo e alimentatore. L’elettronica ordinaria non richiede conteggio energetico; la ricarica rientra nei normali rifornimenti (Manuale dell’Equipaggiamento, §5.4).",
-        "Il Kit di videosorveglianza comprende una videocamera e un monitor palmare, collegati entro 1 km. Usa vista e udito ordinari, richiede illuminazione sufficiente e non concede bonus automatici a Percezione. Tutti i componenti comprendono NEC Verdi compatti carichi, cavi e alimentatori. L’elettronica ordinaria non richiede conteggio energetico; la ricarica rientra nei normali rifornimenti (Manuale dell’Equipaggiamento, §5.4).",
-        "La Lampada frontale illumina fino a 6 Q, lasciando libere le mani. Comprende NEC Verde compatto carico, cavo e alimentatore. L’elettronica ordinaria non richiede conteggio energetico; la ricarica rientra nei normali rifornimenti (Manuale dell’Equipaggiamento, §5.4).",
+        "Permette diagnosi, configurazione e interventi portatili compatibili con i componenti disponibili. È Standard: modificatore degli strumenti 0 al VA. Intrusioni e controllo dei dispositivi richiedono comunque accesso utilizzabile, compatibilità e normali Prove. L’intero corredo usa un solo NEC Verde 3 carico nel terminale; cavi e alimentatore compresi (Manuale dell’Equipaggiamento, §5.7). L’elettronica ordinaria non richiede conteggio energetico; la ricarica rientra nei normali rifornimenti (Manuale dell’Equipaggiamento, §5.4).",
+        "Il Corredo di manutenzione da campo concede +2 VA a Tecnologia per diagnosi, manutenzione e riparazioni eseguibili sul campo di armi, armature, propulsori ed esoscheletri compatibili. La diagnostica comprende NEC Verde 3 carico, cavo e alimentatore. L’elettronica ordinaria non richiede conteggio energetico; la ricarica rientra nei normali rifornimenti (Manuale dell’Equipaggiamento, §5.4).",
+        "Il Kit di videosorveglianza comprende una videocamera e un monitor palmare, collegati entro 1 km. Usa vista e udito ordinari, richiede illuminazione sufficiente e non concede bonus automatici a Percezione. Tutti i componenti comprendono NEC Verdi 1 carichi, cavi e alimentatori. L’elettronica ordinaria non richiede conteggio energetico; la ricarica rientra nei normali rifornimenti (Manuale dell’Equipaggiamento, §5.4).",
+        "La Lampada frontale illumina fino a 6 Q, lasciando libere le mani. Comprende NEC Verde 1 carico, cavo e alimentatore. L’elettronica ordinaria non richiede conteggio energetico; la ricarica rientra nei normali rifornimenti (Manuale dell’Equipaggiamento, §5.4).",
         "Si applica un solo modificatore pertinente degli strumenti, senza sommare i bonus dei corredi. Materiali da lavorare e ricambi restano separati."
       ]
     },
@@ -2215,7 +2215,7 @@
         "Per il Corredo di analisi da campo si sceglie un ambito, per esempio chimica, biologia o geologia. Comprende strumenti di misura, ottiche, test e materiale ordinario per il campionamento; concede +2 VA a Scienza per analisi preliminari realmente eseguibili, normalmente in 10 minuti.",
         "Il Binocolo concede +1 VA a Percezione per distinguere dettagli lontani; il Corredo di orientamento concede +1 VA a Sopravvivenza quando sono disponibili riferimenti utilizzabili.",
         "Il Registratore audiovisivo registra immagini e suoni effettivamente rilevati.",
-        "I dispositivi comprendono NEC carichi, cavi e alimentatori. Il Corredo di analisi usa un Verde standard; il terminale palmare un Verde compatto. L’elettronica ordinaria non richiede conteggio energetico: ricarica e manutenzione rientrano nei normali rifornimenti (Manuale dell’Equipaggiamento, §§5.4 e 5.7).",
+        "I dispositivi comprendono NEC carichi, cavi e alimentatori. Il Corredo di analisi usa un NEC Verde 3; il terminale palmare un NEC Verde 1. L’elettronica ordinaria non richiede conteggio energetico: ricarica e manutenzione rientrano nei normali rifornimenti (Manuale dell’Equipaggiamento, §§5.4 e 5.7).",
         "I consumabili ordinari di scrittura, trucco, manutenzione e analisi si reintegrano durante il normale rifornimento; applicazioni mediche e set chirurgici si conteggiano separatamente."
       ]
     },
@@ -2346,7 +2346,7 @@
         "Gli Abiti eleganti concedono +1 VA a Oratoria nelle situazioni formali appropriate.",
         "Il Registratore audiovisivo registra immagini e suoni effettivamente rilevati.",
         "Il Comunicatore da squadra sostituisce il Comunicatore personale della dotazione comune. Ha portata nominale di 10 km; con un comunicatore personale la comunicazione bidirezionale è limitata a 1 km, in condizioni favorevoli.",
-        "I dispositivi comprendono NEC carichi, cavi e alimentatori. Il terminale palmare usa un Verde compatto. L’elettronica ordinaria non richiede conteggio energetico: ricarica e manutenzione rientrano nei normali rifornimenti (Manuale dell’Equipaggiamento, §§5.4 e 5.7).",
+        "I dispositivi comprendono NEC carichi, cavi e alimentatori. Il terminale palmare usa un NEC Verde 1. L’elettronica ordinaria non richiede conteggio energetico: ricarica e manutenzione rientrano nei normali rifornimenti (Manuale dell’Equipaggiamento, §§5.4 e 5.7).",
         "I consumabili ordinari di scrittura, trucco, manutenzione e analisi si reintegrano durante il normale rifornimento; applicazioni mediche e set chirurgici si conteggiano separatamente."
       ]
     },
@@ -2485,7 +2485,7 @@
         "Lo Strumento musicale portatile è uno strumento a scelta, con custodia e accessori ordinari necessari. Il Corredo scenico comprende un costume, trucco, piccoli oggetti di scena e materiale di manutenzione adatti alla performance scelta. Il Terminale per produzione multimediale è un dispositivo portatile con programmi per scrivere, montare e preparare contenuti audio e video.",
         "Le tre opzioni sono Standard, con modificatore degli strumenti 0 al VA. Gli Abiti eleganti concedono +1 VA a Oratoria nelle situazioni formali appropriate.",
         "Il Registratore audiovisivo registra immagini e suoni effettivamente rilevati. La diffusione richiede canali e collegamenti disponibili; i Talenti che agiscono su registrazioni o trasmissioni seguono le proprie regole.",
-        "I dispositivi comprendono NEC carichi, cavi e alimentatori. Terminale per produzione multimediale e Strumento musicale elettronico utilizzano ciascuno un NEC Verde compatto . Lo strumento acustico non richiede NEC. Profili, pesi, prezzi e Integrità degli strumenti artistici sono nel Manuale dell’Equipaggiamento, §5.8; il Registratore segue il §4.3 dello stesso volume. L’elettronica ordinaria non richiede conteggio energetico; la ricarica rientra nei normali rifornimenti (Manuale dell’Equipaggiamento, §5.4).",
+        "I dispositivi comprendono NEC carichi, cavi e alimentatori. Terminale per produzione multimediale e Strumento musicale elettronico utilizzano ciascuno un NEC Verde 1. Lo strumento acustico non richiede NEC. Profili, pesi, prezzi e Integrità degli strumenti artistici sono nel Manuale dell’Equipaggiamento, §5.8; il Registratore segue il §4.3 dello stesso volume. L’elettronica ordinaria non richiede conteggio energetico; la ricarica rientra nei normali rifornimenti (Manuale dell’Equipaggiamento, §5.4).",
         "I consumabili ordinari di scrittura, trucco, manutenzione e analisi si reintegrano durante il normale rifornimento; applicazioni mediche e set chirurgici si conteggiano separatamente."
       ]
     },
@@ -2618,7 +2618,7 @@
         "Il Kit trauma Professionale concede +2 VA a Medicina per il primo soccorso. Con successo arresta il Sanguinamento e recupera 1d4 PV; con esito Magistrale si raddoppia il risultato del dado. Ogni tentativo consuma un’applicazione.",
         "Lo Scanner diagnostico portatile rileva automaticamente i parametri vitali di base con 1 Azione Principale. Una diagnosi richiede almeno 1 minuto e una Prova di Medicina con +2 VA, limitata alle anomalie rilevabili; il bonus non si trasferisce alle cure.",
         "Il Kit chirurgico da campo concede +2 VA a Medicina per le procedure sul campo pertinenti. Richiede 10 minuti di preparazione, un piano stabile e condizioni appropriate; ogni procedura consuma un set all’inizio, anche in caso di fallimento o interruzione. L’anestesia ordinaria è inclusa; restano necessari i Talenti e gli altri requisiti della procedura.",
-        "La Lampada frontale illumina fino a 6 Q a mani libere e include un Verde compatto da 100 ore. Lo Scanner include un Verde standard da 40 ore. Cavi e alimentatori sono compresi. Applicazioni mediche e set chirurgici restano consumi separati."
+        "La Lampada frontale illumina fino a 6 Q a mani libere e include un NEC Verde 1 carico. Lo Scanner include un NEC Verde 3 carico. Cavi e alimentatori sono compresi. L’elettronica ordinaria non richiede conteggio energetico; la ricarica rientra nei normali rifornimenti (Manuale dell’Equipaggiamento, §5.4). Applicazioni mediche e set chirurgici restano consumi separati."
       ]
     },
     "Predicatore": {
@@ -2773,7 +2773,7 @@
         "Il testo e il simbolo della tradizione sono oggetti ordinari: non hanno proprietà magiche e non concedono accesso automatico agli Incantesimi. L’abito cerimoniale usa il profilo degli Abiti eleganti: +1 VA a Oratoria nelle situazioni cerimoniali o formali appropriate.",
         "Il Kit di pronto soccorso Standard contiene 5 applicazioni e non concede bonus al VA. Con successo arresta il Sanguinamento; con esito Magistrale recupera anche 1d4 PV. Ogni tentativo consuma un’applicazione.",
         "Per il Corredo di sopravvivenza ambientale si sceglie Artico, Forestale, Desertico, Urbano, Pianure, Sottosuolo oppure Apocalittico. Concede +2 VA a Sopravvivenza per gli impieghi pertinenti alla versione scelta; non aggiunge acqua, viveri o medicinali alla dotazione.",
-        "La Lanterna elettrica illumina un raggio di 6 Q e comprende NEC Verde standard carico, cavo e alimentatore. Le applicazioni mediche si conteggiano e reintegrano separatamente. L’elettronica ordinaria non richiede conteggio energetico; la ricarica rientra nei normali rifornimenti (Manuale dell’Equipaggiamento, §5.4)."
+        "La Lanterna elettrica illumina un raggio di 6 Q e comprende NEC Verde 3 carico, cavo e alimentatore. Le applicazioni mediche si conteggiano e reintegrano separatamente. L’elettronica ordinaria non richiede conteggio energetico; la ricarica rientra nei normali rifornimenti (Manuale dell’Equipaggiamento, §5.4)."
       ]
     },
     "Arcanista": {

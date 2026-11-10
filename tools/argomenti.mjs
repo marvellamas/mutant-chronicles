@@ -75,4 +75,5 @@ export const ARGOMENTI = {
   'riserve-intere.mjs': ['scrivi'],
   'prove.mjs': ['concorrenza', 'solo'],
   'ricognizione-manuali.mjs': ['drive'],
+  'lotto_189_edizioni.mjs': ['file', 'scrivi'],
 };
