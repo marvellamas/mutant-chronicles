@@ -4,7 +4,7 @@
 // non ancora rilette, e annullando il movimento l'attacco si ritira (src/mappa/zoc.js → giaInQuestoRound;
 // src/scontro.js → rigaOpportunita, senzaOpportunitaDelMovimento).
 import '../tools/guardia-subito.mjs'; // la guardia sulle cartelle vere, comunque si lanci il test
-import { testoEdizione } from '../tools/manuali.mjs';
+import { righeManuale } from '../tools/manuali.mjs';
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { attacchiDiOpportunita, avversariZoc, giaInQuestoRound } from '../src/mappa/zoc.js';
@@ -40,9 +40,10 @@ function giocaMovimenti(percorsi, { scontro = scontroVuoto(), riletto = (s) => s
 }
 
 test('Giocatore §5.3: «una sola volta per Round» nel testo del manuale', async () => {
-  const { readFileSync } = await import('node:fs');
-  const testo = testoEdizione('giocatore', '0.50');
-  assert.match(testo, /può essere effettuato anche senza Azioni disponibili e \*\*una sola volta per Round\*\*/);
+  // Lotto 189: il Giocatore 0.54 è esportato in testo semplice, senza i grassetti del Markdown. La frase si cerca
+  // nel testo spogliato dei segni (righeManuale), non nella forma di una sola esportazione.
+  const testo = righeManuale('giocatore').join('\n');
+  assert.match(testo, /può essere effettuato anche senza Azioni disponibili e una sola volta per Round/);
 });
 
 test('un movimento che entra ed esce due volte dalla ZoC dello stesso nemico: un solo attacco', () => {

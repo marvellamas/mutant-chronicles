@@ -1,7 +1,7 @@
 // Tablet del 19/10/2026, punto 5: tabelle di consultazione del recupero dei PM (tab Poteri) e dei PV (tab Combattimento),
 // in sola lettura, con i valori dei manuali, in un blocco richiudibile e chiuso.
 import '../tools/guardia-subito.mjs'; // la guardia sulle cartelle vere, comunque si lanci il test
-import { testoEdizione } from '../tools/manuali.mjs';
+import { testoManuale, testoEdizione, celleManuale, rigaNelManuale } from '../tools/manuali.mjs';
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
@@ -9,8 +9,13 @@ import { contesto, resa, ESEMPI, dati } from './scheda-aiuti.js';
 import { validaDati } from '../src/validate.js';
 
 const norm = (t) => String(t).replace(/[’‘]/g, "'").replace(/\\/g, '').replace(/\*/g, '').replace(/\s+/g, ' ').trim();
-const giocatore = norm(testoEdizione('giocatore', '0.50'));
-const magia = norm(testoEdizione('magia', '1.7'));
+// Lotto 189: i dati dichiarano l'edizione corrente, quindi il confronto la chiede. Il Giocatore 0.54 è esportato
+// in testo semplice e la Magia 1.11 in Markdown: le righe di tabella si confrontano per celle (`rigaNelManuale`),
+// che è l'unica forma che vale per tutt'e due.
+const giocatore = norm(testoManuale('giocatore'));
+const celleGiocatore = celleManuale('giocatore');
+const magia = norm(testoManuale('magia'));
+const rigaGiocatore = (valori, quale) => assert.ok(rigaNelManuale(celleGiocatore, valori), `${quale}: la riga «${valori.join(' · ')}» non è nel Manuale del Giocatore`);
 const T = dati.regole.tabelle_consultazione;
 const nei = (manuale, testo, quale) => assert.ok(manuale.includes(norm(testo)), `${quale}: «${testo}» non è nel manuale`);
 
@@ -44,9 +49,9 @@ test('recupero dei PM: righe e parametri uguali al Manuale della Magia', () => {
 
 test('recupero dei PV: tabella e Riposo completo per COS uguali al Manuale del Giocatore (§5.16.1), kit in §5.15', () => {
   const pv = T.recupero_pv;
-  for (const r of pv.righe) nei(giocatore, `| ${r.condizione} | ${r.recupero} | ${r.limite} |`, `PV ${r.condizione}`);
+  for (const r of pv.righe) rigaGiocatore([r.condizione, r.recupero, r.limite], `PV ${r.condizione}`);
   const mod = (m) => (m > 0 ? `+${m}` : String(m).replace('-', '−'));
-  for (const r of pv.riposo_completo.righe) nei(giocatore, `| ${r.cos} | ${mod(r.mod)} | ${r.pv} |`, `COS ${r.cos}`);
+  for (const r of pv.riposo_completo.righe) rigaGiocatore([r.cos, mod(r.mod), r.pv], `COS ${r.cos}`);
   assert.deepEqual(pv.riposo_completo.righe.map((r) => r.pv), [1, 1, 1, 5, 10, 20, 30, 40, 50, 60]);
   for (const frase of [
     'I recuperi non superano i PV massimi e possono cumularsi nello stesso giorno se il tempo viene realmente trascorso nelle diverse condizioni. Un Sanguinamento attivo impedisce il recupero.',

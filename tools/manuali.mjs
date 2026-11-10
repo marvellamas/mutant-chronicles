@@ -119,6 +119,39 @@ export function righeManuale(id) {
 }
 
 /**
+ * Le **celle** di un manuale, nell'ordine in cui si leggono: una per voce, senza i segni del Markdown.
+ *
+ * Perché serve. Una tabella dei Doc si esporta in due forme: Markdown, dove una riga è `| a | b | c |`, e testo
+ * semplice, dove le stesse tre celle stanno su tre righe separate da tabulazioni. Un controllo scritto su una
+ * delle due si rompe sull'altra senza che il manuale sia cambiato: il 10/11 `tests/tablet-tabelle.test.js` cercava
+ * `| Attività pesante | Nessuno | …` in un manuale esportato in testo semplice. Qui le barre e le tabulazioni
+ * diventano la stessa cosa — un confine fra celle — e la forma smette di contare.
+ */
+export function celleManuale(id) {
+  return testoManuale(id)
+    .replace(/\r/g, '')
+    .replace(/\\([^A-Za-z0-9\s])/g, '$1')
+    .replace(/\*/g, '')
+    .replace(/^#+\s*/gm, '')
+    .replace(/[|\t]/g, '\n')
+    .split('\n')
+    .map((c) => c.replace(/[ ]+/g, ' ').trim())
+    .filter((c) => c && !/^[-: ]+$/.test(c) && !/^\[[^\]]*\]\(#bookmark=/.test(c));
+}
+
+/**
+ * Vero se quelle celle compaiono **di fila** fra le celle del manuale: una riga di tabella, qualunque sia la forma
+ * dell'esportazione. Il confronto è sul testo normalizzato dalla stessa `celleManuale`.
+ */
+export function rigaNelManuale(celle, valori) {
+  const v = valori.map((x) => String(x).replace(/[|\t]/g, ' ').replace(/[ ]+/g, ' ').trim()).filter(Boolean);
+  for (let i = 0; i + v.length <= celle.length; i++) {
+    if (v.every((x, k) => celle[i + k] === x)) return true;
+  }
+  return false;
+}
+
+/**
  * Il testo di una **edizione precisa** di un manuale, anche superata: `testoEdizione('giocatore', '0.50')`.
  *
  * Serve a chi confronta i dati con il manuale da cui quei dati sono stati copiati. Ogni file di `data/` dichiara la

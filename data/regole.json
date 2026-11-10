@@ -1,5 +1,5 @@
 {
-  "versione_manuale": "Giocatore 0.46 (Google Doc del 06/10/2026, 18:20 UTC); Magia 1.3; Equipaggiamento 0.1; E&L del 06/10/2026",
+  "versione_manuale": "Giocatore 0.54; Magia 1.11; Equipaggiamento 0.30 (Google Doc del 09/11/2026); E&L del 06/10/2026",
   "fonte": "Giocatore §1.2.3, §2.1, §2.3, §2.10, §2.12–2.15, §3.3, §1.8.3, §5.2.6, §5.5, §5.9, §5.14, §5.18, §5.19, cap. 8; Magia sezioni 1 e 11; Equipaggiamento §1.6, §1.7; docs/risposte-master.md",
   "creazione": {
     "punti_caratteristica": 5,
@@ -1531,8 +1531,8 @@
     },
     "contenitori_per_lancio": 1,
     "riserve": {
-      "paragrafo": "Magia 1.3 §26.2, Armamenti 0.58 §7.5 (Google Doc del 02/10/2026)",
-      "_nota": "Ogni riserva è Batteria o Cariche; ogni proprietà infusa è Esclusiva o Universale (src/fonti.js). Le riserve a sé (batterie del catalogo) sono Batterie; le riserve integrate senza indicazione sono Cariche con proprietà Esclusive («integrata_predefinita», «proprieta_predefinita»: schede anteriori alla distinzione, armi con Chroma integrato del §7.5.1, risposta A.18). «fonti_esterne_per_pagamento»: una sola fonte esterna per lancio o attivazione, eventualmente con PM personali; la riserva di un Artefatto è esterna rispetto al personaggio.",
+      "paragrafo": "Magia 1.11 §26.2, Armamenti 0.74 §7.5 (Google Doc del 09/11/2026)",
+      "_nota": "Ogni riserva è Batteria o Cariche Mistiche (CM); ogni proprietà infusa è Esclusiva o Universale (src/fonti.js). Le riserve a sé (batterie del catalogo) sono Batterie; le riserve integrate senza indicazione sono Cariche Mistiche con proprietà Esclusive («integrata_predefinita», «proprieta_predefinita»: schede anteriori alla distinzione, armi con Chroma integrato del §7.5.1, risposta A.18). «fonti_esterne_per_pagamento»: una sola fonte esterna per lancio o attivazione, eventualmente con PM personali; la riserva di un Artefatto è esterna rispetto al personaggio.",
       "tipi": {
         "batteria": {
           "nome": "Batteria",
@@ -1540,7 +1540,7 @@
           "testo": "Alimenta l’Artefatto ed è una fonte esterna per gli Incantesimi compatibili del personaggio; segue le normali regole di conversione."
         },
         "cariche": {
-          "nome": "Cariche",
+          "nome": "Cariche Mistiche (CM)",
           "fonte_per_pg": false,
           "testo": "Alimenta soltanto il proprio Artefatto. Non si possono prelevare PM per Incantesimi personali o convertirli in PM personali."
         }
@@ -1551,7 +1551,7 @@
           "fonti": [
             "interna"
           ],
-          "testo": "Soltanto la riserva interna del medesimo oggetto, sia essa Batteria o Cariche."
+          "testo": "Soltanto la riserva interna del medesimo oggetto, sia essa Batteria o Cariche Mistiche."
         },
         "universale": {
           "nome": "Universale",
@@ -1567,10 +1567,10 @@
       "proprieta_predefinita": "esclusiva",
       "fonti_esterne_per_pagamento": 1,
       "frasi": [
-        "Sia Batterie sia Cariche si misurano in PM.",
+        "Le riserve dedicate agli effetti di armi e oggetti si chiamano Cariche Mistiche (CM): si registra una sola coppia CM attuali/CM massime e si spendono le CM indicate dalla singola proprietà.",
         "In un singolo lancio o attivazione si usa al massimo una riserva esterna, eventualmente integrata con PM personali.",
         "La riserva dell’Artefatto è esterna rispetto al personaggio: non può essere sommata a un’altra Batteria nello stesso pagamento.",
-        "Le schede anteriori a questa distinzione che prevedono una riserva utilizzabile soltanto dall’oggetto conservano quel funzionamento: si registrano come Cariche e le relative proprietà come Esclusive, finché una scheda specifica dispone diversamente."
+        "Le schede anteriori a questa distinzione che prevedono una riserva utilizzabile soltanto dall’oggetto conservano quel funzionamento: si registrano come Cariche Mistiche (CM) e le relative proprietà come Esclusive, finché una scheda specifica dispone diversamente."
       ]
     },
     "matrice": {

@@ -63,6 +63,9 @@ const SOSTITUZIONI = {
     ['si registrano come Cariche e le relative proprietà come Esclusive', 'si registrano come Cariche Mistiche (CM) e le relative proprietà come Esclusive'],
     ['sia essa Batteria o Cariche.', 'sia essa Batteria o Cariche Mistiche.'],
     ['"nome": "Cariche",', '"nome": "Cariche Mistiche (CM)",'],
+    ['"paragrafo": "Magia 1.3 §26.2, Armamenti 0.58 §7.5 (Google Doc del 02/10/2026)"', '"paragrafo": "Magia 1.11 §26.2, Armamenti 0.74 §7.5 (Google Doc del 09/11/2026)"'],
+    ['Ogni riserva è Batteria o Cariche; ogni proprietà infusa', 'Ogni riserva è Batteria o Cariche Mistiche (CM); ogni proprietà infusa'],
+    ['sono Batterie; le riserve integrate senza indicazione sono Cariche con proprietà Esclusive', 'sono Batterie; le riserve integrate senza indicazione sono Cariche Mistiche con proprietà Esclusive'],
   ],
   // Magia §25.4 (1.7 → 1.11): l'Artefatto con Rigenerazione consuma Cariche Mistiche, non PM, quindi
   // un'interruzione non consuma «risorse». Il motore lo fa già (lotto 173, `src/attivazioni-lunghe.js`).
