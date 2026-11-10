@@ -1,5 +1,5 @@
 {
-  "versione_manuale": "Equipaggiamento 0.22",
+  "versione_manuale": "Equipaggiamento 0.30",
   "fonte": "Manuale dell’Equipaggiamento 0.22, §5.4 Accumulatori cromatici (Google Doc del 29/10/2026); registro «Revisione NEC» 2.7",
   "_nota": "Formati del §5.4.4 e trasformatori del §5.4.7 dell’Equipaggiamento 0.22 (tools/lotti/lotto_nec_cariche.mjs, 30/10/2026). «nec»: colore, formato (nec1, nec3, nec5, nec10, pacco20, pacco30, cec, mec, bec), capacita_cariche e, per l’elettronica ordinaria, uso «elettronica_ordinaria» (ricambio senza conteggio, §5.4.3); «ricarica_costo»: ricarica completa a 10 cr per carica NEC e CEC, 30 MEC, 50 BEC; «costo»: carico; «costo_vuoto». «trasformatore»: tampone da 100 cariche NEC, minuti per carica. Moduli, Banchi, contenitori e stazioni non ci sono più (index.json → rif_sostituiti).",
   "oggetti": [

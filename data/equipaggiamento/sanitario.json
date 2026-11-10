@@ -1,5 +1,5 @@
 {
-  "versione_manuale": "Equipaggiamento 0.5",
+  "versione_manuale": "Equipaggiamento 0.30",
   "fonte": "Manuale degli Armamenti v0.50, §7.19 Equipaggiamento sanitario (pp. 109–113), lotto 11; Manuale dell’Equipaggiamento 0.5, cap. 6 (Google Doc del 01/10/2026): stesse schede e valori dei §§6.1–6.6, ricariche, ricambi, farmaci e antidoti, naniti medici (§6.7) e postazioni medicochirurgiche (§6.8)",
   "_nota": "Generato da tools/lotti/lotto11_sanitario.mjs; da qui in poi si modifica questo file. «applicazioni» è il contatore della modalità tavolo (con «nome_applicazioni»: dosi, set); «ricarica» il costo per ripristinarlo. «strumenti» è il modificatore degli strumenti alla Prova indicata: resta un promemoria, non entra nei VA. La UMC si monta su un’armatura; ne vale una sola per personaggio.",
   "oggetti": [

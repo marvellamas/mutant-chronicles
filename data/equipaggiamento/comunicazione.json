@@ -1,5 +1,5 @@
 {
-  "versione_manuale": "Equipaggiamento 0.6",
+  "versione_manuale": "Equipaggiamento 0.30",
   "fonte": "Manuale dell’Equipaggiamento 0.5, cap. 4 (Google Doc del 01/10/2026)",
   "_nota": "Generato da tools/lotti/lotto_equipaggiamento_03.mjs (docs/equipaggiamento-lotti.md). Solo i campi che la scheda dà: un dato mancante è assente, mai 0 (Equipaggiamento §1.11). Catalogo Commerciale. Gli effetti numerici seguono docs/effetti-oggetti.md; il resto è testo in «note_manuale». «alimentazione»: NEC del catalogo (nec.json), consumo e autonomia o usi (Equipaggiamento 0.5, §5.4.7).",
   "oggetti": [

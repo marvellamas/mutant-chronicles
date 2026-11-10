@@ -166,7 +166,7 @@ export function importaPng(testo) {
   const classi = {};
   for (const [categoria, lista] of Object.entries(CLASSI)) for (const nome of lista) classi[slug(nome)] = leggiClasse(righe, nome, categoria);
   return conRisposteMaster({
-    versione_manuale: 'Mostri 0.46 (Word del 27/10/2026); Direttore 0.45 §9.6',
+    versione_manuale: 'Mostri 0.47 (Word del 10/11/2026); Direttore 0.46 §9.6',
     fonte: 'Manuale dei Mostri 0.46, cap. 8 «PNG generici Classe Grado ed EQ»; Manuale del Direttore 0.45 §9.6. Dieci dei venticinque modelli previsti: gli altri quindici (Lavoratori, Studiosi, Taumaturghi) non sono ancora compilati nel manuale.',
     gradi: GRADI,
     movimento: { passo: 6, corsa: 12, scatto: 18, nota: 'Movimento: 6/12/18 Q Base (Agente, tabella delle risorse); una AM per Round.' },

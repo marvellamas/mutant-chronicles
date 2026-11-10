@@ -1,5 +1,5 @@
 {
-  "versione_manuale": "Equipaggiamento 0.5",
+  "versione_manuale": "Equipaggiamento 0.30",
   "fonte": "Manuale dell’Equipaggiamento 0.5, cap. 7 Dispositivi specialistici (Google Doc del 01/10/2026); Umanità: Manuale del Giocatore 0.45, §5.21",
   "_nota": "Generato da tools/lotti/lotto_equipaggiamento_07.mjs (docs/ricognizione-cibernetica.md). Tipo «impianto»: stati «installato» (effetti attivi, costo UMN registrato in scelte.umanita, src/umanita.js) e «zaino» (posseduto, non installato). Standard nel catalogo Commerciale, CYBERTRONIC nel catalogo Cybertronic (metà UMN, prezzo maggiore). «installazione_costo»: servizio da pagare a parte (§7.1). I chip (tipo «altro») contano solo con un Processore installato («richiede_innesto»). Effetti nello schema di docs/effetti-oggetti.md; «beneficio» per i benefici equivalenti che non si sommano (§7.1, «Cumulo»).",
   "oggetti": [
