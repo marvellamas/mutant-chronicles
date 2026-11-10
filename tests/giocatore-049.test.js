@@ -7,7 +7,7 @@
 //      identificativi delle Tecniche, non una copia dei loro valori. È la domanda che Marcello ha posto per
 //      prima, e la risposta è nei fatti: nessuna migrazione da fare, nessun PG rimasto indietro in silenzio.
 import '../tools/guardia-subito.mjs'; // la guardia sulle cartelle vere, comunque si lanci il test
-import { testoEdizione } from '../tools/manuali.mjs';
+import { righeManuale } from '../tools/manuali.mjs';
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
@@ -18,10 +18,10 @@ import { datiReali } from './helpers.js';
 
 const { dati } = await datiReali();
 const tecnica = (id) => dati.tecniche_interiori.tecniche.find((t) => t.id === id);
-const manuale = testoEdizione('giocatore', '0.50');
+
 
 test('la versione dichiarata nei dati è quella del manuale applicato', () => {
-  assert.equal(dati.tecniche_interiori.versione_manuale, 'Giocatore 0.49');
+  assert.equal(dati.tecniche_interiori.versione_manuale, 'Giocatore 0.54');
 });
 
 test('0.49: le undici Tecniche riequilibrate hanno i valori del manuale', () => {
@@ -47,14 +47,21 @@ test('0.49: le undici Tecniche riequilibrate hanno i valori del manuale', () => 
   }
 });
 
-test('0.49: costo e durata di OGNI Tecnica combaciano con la sua scheda nel manuale', () => {
-  // la garanzia vera: non si fida dell'elenco qui sopra, rilegge il manuale salvato scheda per scheda
-  const righe = manuale.split('\n');
+test('0.54: costo e durata di OGNI Tecnica combaciano con la sua scheda nel manuale', () => {
+  // la garanzia vera: non si fida dell'elenco qui sopra, rilegge il manuale salvato scheda per scheda.
+  //
+  // Lotto 189: il lettore era scritto sulla forma del Markdown — titoli `#### Nome`, etichette `**Costo:**` — e sul
+  // Giocatore 0.54, esportato in testo semplice, trovava zero schede e passava comunque. Adesso legge le righe
+  // spogliate dei segni (righeManuale): la scheda inizia dalla riga che è **soltanto** il nome della Tecnica (è il
+  // titolo, in tutt'e due le esportazioni) e finisce al nome della Tecnica successiva. Il numero minimo di schede
+  // controllate resta l'unica difesa contro un lettore che non legge più niente.
+  const righe = righeManuale('giocatore');
+  const nomi = new Set(dati.tecniche_interiori.tecniche.map((x) => x.nome.toLowerCase()));
   const scheda = (nome) => {
-    const i = righe.findIndex((r) => r.trim().toLowerCase() === `#### ${nome}`.toLowerCase());
+    const i = righe.findIndex((r) => r.toLowerCase() === nome.toLowerCase());
     if (i < 0) return null;
     let fine = righe.length;
-    for (let k = i + 1; k < righe.length; k++) if (/^#{1,4} /.test(righe[k])) { fine = k; break; }
+    for (let k = i + 1; k < righe.length; k++) if (nomi.has(righe[k].toLowerCase()) || /^\d+(\.\d+)+\s/.test(righe[k])) { fine = k; break; }
     return righe.slice(i + 1, fine).join('\n');
   };
   const numero = (s) => (s ? Number(String(s).replace(/[^\d]/g, '')) : null);
@@ -64,13 +71,13 @@ test('0.49: costo e durata di OGNI Tecnica combaciano con la sua scheda nel manu
     if (!s) continue;
     controllate++;
     if (!Array.isArray(t.opzioni_costo)) {
-      const costo = /\*\*Costo:\*\*\s*([^.]*)\./.exec(s)?.[1]?.trim();
+      const costo = /(?:^|\n|\. )Costo:\s*([^.]*)\./.exec(s)?.[1]?.trim();
       if (costo && !/variabil/i.test(costo)) {
         const n = /gratuit|nessun costo/i.test(costo) ? 0 : numero(costo);
         if (Number.isInteger(n)) assert.equal(t.costo_pm, n, `${t.id}: il manuale dice ${n} PM`);
       }
     }
-    const durata = /\*\*Durata:\*\*\s*([^.]*)\./.exec(s)?.[1]?.trim();
+    const durata = /(?:^|\n|\. )Durata:\s*([^.]*)\./.exec(s)?.[1]?.trim();
     if (durata && /round/i.test(durata)) assert.equal(t.durata_round, numero(durata), `${t.id}: il manuale dice ${durata}`);
   }
   assert.ok(controllate >= 25, `schede controllate nel manuale: ${controllate}`);

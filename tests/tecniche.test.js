@@ -30,7 +30,7 @@ test('dati: 28 Tecniche con costo in PM e tipo di durata; Imposizione con la tab
   // testi 0.49 (§8.9.2, §8.9.3)
   assert.match(T('pelle-di-rinoceronte').testo, /\+1 AR non magica/);
   assert.match(T('aura-di-resistenza').testo, /Corazza Potenziata/);
-  assert.equal(dati.tecniche_interiori.versione_manuale, 'Giocatore 0.49');
+  assert.equal(dati.tecniche_interiori.versione_manuale, 'Giocatore 0.54');
 });
 
 test('§8.9.1: si pagano solo PM personali; con PM insufficienti la Tecnica non si attiva, le batterie non contano', () => {
