@@ -3,6 +3,7 @@
 // tab Combattimento. «Usa» apre una finestrella con l'effetto e l'atto della scheda: «Attivazione completata» toglie un
 // esemplare (§27.4) e registra l'effetto a durata fra gli «Incantesimi in corso»; «Interrotta» non consuma (§27.1).
 import { h } from './dom.js';
+import { dettagliRicordati } from './apribili.js';
 import { chiedi } from './finestrella.js';
 import { conAvviso } from './procedi.js';
 import { info } from './tooltip.js';
@@ -160,5 +161,5 @@ export function pannelloCreaConsumabile(ctx) {
           } }, piano.irregolari?.length ? 'Registra comunque' : 'Registra la creazione')));
   }
   disegna();
-  return h('details', { class: 'crea-consumabile' }, h('summary', {}, 'Crea consumabile (Magia §27.2)'), corpo);
+  return dettagliRicordati('crea-consumabile', { class: 'crea-consumabile' }, h('summary', {}, 'Crea consumabile (Magia §27.2)'), corpo);
 }

@@ -12,9 +12,10 @@ const senzaAccenti = (s) => String(s ?? '').normalize('NFD').replace(/[̀-ͯ]/g,
 const num = (n) => (n === null || n === undefined ? null : `VA ${n}`);
 
 import { numeroRiserva } from './cariche-mistiche.js';
+import { vociProgetti } from './progetti.js';
 
 /** Tutte le voci cercabili della scheda, nell'ordine dei gruppi. */
-export function vociScheda(scheda, sessione = {}, dati = null) {
+export function vociScheda(scheda, sessione = {}, dati = null, { progetti = null, equipaggiamento = null } = {}) {
   const v = [];
   const agg = (gruppo, nome, valore, tab, extra = {}) => { if (nome) v.push({ gruppo, nome: String(nome), valore: valore ?? null, tab, cerca: String(nome), ...extra }); };
 
@@ -73,6 +74,12 @@ export function vociScheda(scheda, sessione = {}, dati = null) {
     agg('Stato attivo', st?.nome ?? id, st?.effetto_breve ?? null, 'combattimento');
   }
   if (sessione.note) agg('Note', 'Note del personaggio', String(sessione.note).slice(0, 60), 'identita', { testo: sessione.note });
+  // Lotto 186 (B): un'arma che esiste solo come progetto non consegnato. Chi la cerca fra gli oggetti non la trova:
+  // qui almeno trova scritto che esiste come progetto e che cosa manca perché diventi un oggetto.
+  for (const x of vociProgetti(progetti, dati, { equipaggiamento })) {
+    agg('Progetto del Direttore', x.nome, x.stato, 'artefatti', { testo: `${x.testo} Progetto «${x.nomeProgetto}».`, cerca: x.nome });
+    if (x.nomeProgetto !== x.nome) agg('Progetto del Direttore', x.nomeProgetto, x.stato, 'artefatti', { testo: x.testo, cerca: x.nome });
+  }
   return v;
 }
 

@@ -411,3 +411,54 @@ export function vociConsegnaDaTablet(nuovoEq, discoEq) {
   }
   return out;
 }
+
+/**
+ * Lotto 186, parte B (10/11/2026, dal tavolo del 9/11). Davide aveva configurato il progetto della CyberArma di
+ * Dimitri e poi cercato l'arma fra gli oggetti, senza trovarla: non è un difetto, è la regola del lotto 157 —
+ * **l'arma del progetto non esiste per nessuno finché il Direttore non preme «Consegna l'arma»** — ma il pannello
+ * non lo diceva dove si guarda, e chi cercava l'oggetto non trovava niente, nemmeno una spiegazione.
+ *
+ * Qui la frase, una sola, usata in tre posti: in cima alla scheda del progetto, nella ricerca della scheda e
+ * nell'Inventario. Niente regole nuove: dice quello che l'app già fa.
+ * @returns { titolo, testo, nome } con `nome` il nome che avrà l'arma, oppure null se è già consegnata
+ */
+export function avvisoNonConsegnata(p, dati, { equipaggiamento = null } = {}) {
+  if (!p || p.consegna) return null;
+  const m = modelloDi(p, dati);
+  if (!m) return null;
+  const nome = m.risultato?.nome ?? m.arma?.nome ?? p.nome;
+  const aggiorna = m.risultato?.aggiorna_esemplare === true;
+  // il progetto che aggiorna un esemplare non crea niente: senza quell'arma nell'inventario, alla consegna si ferma
+  const senzaEsemplare = aggiorna && Array.isArray(equipaggiamento) && !esemplariDi(equipaggiamento, m).length;
+  if (senzaEsemplare) {
+    return {
+      nome,
+      titolo: 'Quest’arma non è nell’inventario di nessuno',
+      testo: `Questo progetto non crea un’arma nuova: lavora su «${m.esemplare_di_partenza?.nome ?? nome}», che deve già essere nell’inventario del personaggio (A.231). Qui non ce n’è nessuna: va aggiunta e ricondotta, e poi il Direttore preme «Consegna l’arma». Finché non lo fa, l’arma non compare da nessuna parte.`,
+    };
+  }
+  return {
+    nome,
+    titolo: aggiorna ? 'Le modifiche non sono ancora sull’arma' : 'Quest’arma non è ancora nell’inventario di nessuno',
+    testo: aggiorna
+      ? `«${nome}» non ha ancora le modifiche di questo progetto: l’arma resta com’era finché il Direttore non preme «Consegna l’arma», qui sotto. Configurare il progetto non cambia l’inventario di nessuno.`
+      : `«${nome}» non è nell’inventario di nessun personaggio e non comparirà finché il Direttore non preme «Consegna l’arma», qui sotto. Configurare il progetto non crea l’oggetto.`,
+  };
+}
+
+/**
+ * Le voci dei progetti per «Cerca nella scheda» (parte B): chi cerca il nome dell'arma, o del progetto, deve sapere
+ * che esiste come progetto non consegnato invece di non trovare niente.
+ * @returns [{ nome, nomeProgetto, stato, testo, consegnata }]
+ */
+export function vociProgetti(progetti, dati, { equipaggiamento = null } = {}) {
+  return (progetti ?? []).map((p) => {
+    const a = avvisoNonConsegnata(p, dati, { equipaggiamento });
+    const m = modelloDi(p, dati);
+    const nome = m?.risultato?.nome ?? p.nome;
+    if (!a) {
+      return { nome, nomeProgetto: p.nome, consegnata: true, stato: `consegnata dal Direttore${p.consegna?.quando ? ` il ${String(p.consegna.quando).slice(8, 10)}/${String(p.consegna.quando).slice(5, 7)}` : ''}`, testo: `Arma del progetto «${p.nome}», consegnata: è nell’inventario.` };
+    }
+    return { nome, nomeProgetto: p.nome, consegnata: false, stato: 'progetto non ancora consegnato', testo: `${a.titolo}. ${a.testo}` };
+  });
+}

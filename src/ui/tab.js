@@ -21,7 +21,7 @@ import { pianoGetto } from '../getti-artefatto.js';
 import { costoRiserva, numeroRiserva, testoCosto, interoRiserva } from '../cariche-mistiche.js';
 import { prezzoArtefatto } from '../prezzi-artefatti.js';
 import { alimentazioneSceglibile } from '../cyberarma.js';
-import { modelliProgetto, apriProgetto, scegliForma, scegliAlimentazione, registraTentativo, togliUltimoTentativo, chiudiProgetto, riapriProgetto, riepilogoProgetto, formaSceglibile, avvisiConsegna, esemplariDi, storicoDi, ESITI_TENTATIVO, NOMI_ESITO, ESITI_FINALI, NOMI_FINALE } from '../progetti.js';
+import { modelliProgetto, apriProgetto, scegliForma, scegliAlimentazione, registraTentativo, togliUltimoTentativo, chiudiProgetto, riapriProgetto, riepilogoProgetto, formaSceglibile, avvisiConsegna, avvisoNonConsegnata, esemplariDi, storicoDi, ESITI_TENTATIVO, NOMI_ESITO, ESITI_FINALI, NOMI_FINALE } from '../progetti.js';
 import { circostanzeMasterAttive } from '../correzioni-master.js';
 import { conAvviso } from './procedi.js';
 import { h, segno, svuota } from './dom.js';
@@ -51,6 +51,7 @@ import { provenienzaCarico } from '../carico.js';
 import { talentiSituazionali } from '../talenti.js';
 import { schedaTalento } from '../talenti-testi.js';
 import { nomeCheSiApre } from './talento-leggibile.js';
+import { dettagliRicordati } from './apribili.js';
 import { gradiTaumaturgici } from '../incantesimi.js';
 import {
   statoRicarica, disponibili, carichiniDi, celleTolte, riempiCaricatori, caricatoriDiScorta,
@@ -957,6 +958,18 @@ function riquadroCarico(ctx, { compatto = false } = {}) {
  * di ogni oggetto, PI e Ripara nella riga e «Aggiungi» accanto a ogni categoria; sotto il catalogo, con «Aggiungi» e
  * «Compra»; in basso il riquadro Integrità.
  */
+/**
+ * Lotto 186 (B): nell'Inventario, le armi che esistono solo come progetto del Direttore e non sono ancora oggetti.
+ * Davide aveva configurato il progetto della CyberArma e poi l'aveva cercata fra gli oggetti senza trovarla, e
+ * l'Inventario non diceva niente. Una riga quieta per progetto, finché non è consegnato.
+ */
+function righeProgettiNonConsegnati(ctx) {
+  const lista = (ctx.scelte.progettiMaster ?? []).map((p) => avvisoNonConsegnata(p, ctx.dati, { equipaggiamento: ctx.scelte.equipaggiamento ?? [] })).filter(Boolean);
+  if (!lista.length) return null;
+  return h('div', { class: 'riquadro attenzione progetti-non-consegnati' },
+    lista.map((a) => h('p', {}, h('strong', {}, `${a.titolo}: `), a.testo, ' ', h('span', { class: 'nota' }, 'Il progetto sta nella tab Artefatti.'))));
+}
+
 function tabInventario(ctx) {
   const d = ctx.tab.tab.find((t) => t.id === 'combattimento')?.dati ?? null;
   const applicata = dotazioneApplicata(ctx.scelte.equipaggiamento);
@@ -967,6 +980,8 @@ function tabInventario(ctx) {
     d?.avvisiEquipaggiamento?.length ? h('div', { class: 'riquadro attenzione' },
       h('p', {}, h('strong', {}, 'Equipaggiamento da controllare (avvisi, non blocchi: decide il master):')),
       h('ul', {}, d.avvisiEquipaggiamento.map((a) => h('li', {}, a)))) : null,
+    // Lotto 186 (B): un'arma in lavorazione non è un oggetto. Chi la cerca qui deve leggere perché non c'è.
+    righeProgettiNonConsegnati(ctx),
     sezione('Oggetti',
       h('p', { class: 'nota' }, 'Solo gli oggetti impugnati, imbracciati o indossati cambiano i valori. Il deposito comune tiene l’oggetto fuori dal carico e fuori dal tavolo.',
         applicata ? ' La dotazione iniziale (§2.16) si cambia dal passo Equipaggiamento della creazione.' : null),
@@ -1143,7 +1158,7 @@ function campiPiDirettore(ctx) {
     });
     ctx.azioni.equipaggiamento(voci);
   };
-  return h('details', { class: 'pi-direttore' },
+  return dettagliRicordati('pi-direttore', { class: 'pi-direttore' },
     h('summary', {}, `Oggetti senza PI a catalogo (${lista.length}): PI definiti dal Direttore`),
     h('p', { class: 'nota' }, 'Senza PI a catalogo un oggetto non è indistruttibile e non vale 0: se serve tenerne l’Integrità, il Direttore fissa i PI per analogia con oggetti comparabili (A.47).'),
     h('ul', {}, lista.map((x) => h('li', {}, h('label', {}, `${x.nome}: PI `,
@@ -1396,7 +1411,7 @@ function tabIdentita(ctx, d) {
     // «Modifiche del master» (12/10/2026): il registro, in sola lettura per i giocatori; in modalità master con «Annulla»
     sezioneRegistro(ctx, ctx.registroMaster ?? []),
     // N2: storico del personaggio (src/storico.js): le volte in cui si è proceduto nonostante un avviso
-    (() => { const righe = allineaStorico(ctx.sessione.storico).slice().reverse(); return righe.length ? h('details', { class: 'sezione-tab storico-pg' }, h('summary', {}, `Storico (${righe.length})`),
+    (() => { const righe = allineaStorico(ctx.sessione.storico).slice().reverse(); return righe.length ? dettagliRicordati('storico-pg', { class: 'sezione-tab storico-pg' }, h('summary', {}, `Storico (${righe.length})`),
       h('ul', {}, righe.map((x) => h('li', {}, h('small', { class: 'nota' }, `${new Date(x.quando).toLocaleString('it-IT', { day: '2-digit', month: '2-digit', hour: '2-digit', minute: '2-digit' })} · `), x.testo)))) : null; })(),
 
     sezione('Progressione',
@@ -1410,7 +1425,7 @@ function tabIdentita(ctx, d) {
             // lotto 165: il Direttore sposta i Punti Abilità già spesi in questo livello
             pulsanteSpostaPunti(ctx, r.livello))))))),
 
-    h('details', { class: 'sezione-tab' },
+    dettagliRicordati('controllo-creazione', { class: 'sezione-tab' },
       h('summary', {}, `Controllo della creazione (§2.17): ${d.checklist.filter((v) => v.ok || v.nonApplicabile).length} / ${d.checklist.length}`),
       h('ul', { class: 'checklist' }, d.checklist.map((v) => h('li', { class: v.nonApplicabile ? 'na' : v.ok ? 'ok' : 'ko' },
         h('span', { class: 'spunta', 'aria-hidden': 'true' }, v.nonApplicabile ? '–' : v.ok ? '✓' : '✗'),
@@ -1524,7 +1539,7 @@ function tabAbilita(ctx, d) {
       paragrafi(t.frase)))),
     // 25/10 notte: il nome si tocca e apre la scheda intera del Talento, sotto, come nel riquadro «Da scegliere»
     d.talentiLiberi.length ? sezione('Talenti Liberi', d.talentiLiberi.map((t) => {
-      const n = nomeCheSiApre(t.nome, schedaTalento(t.id, ctx.dati));
+      const n = nomeCheSiApre(t.nome, schedaTalento(t.id, ctx.dati), { chiave: 'talento-libero:' + t.id });
       return h('div', { class: 'talento' },
         h('h3', {}, n.nome, t.parametro ? ` (${t.parametro})` : null, t.annotazione ? ` — ${t.annotazione}` : null,
           h('span', { class: 'sigla' }, ` · ${t.livello}° livello`), t.provvisorio ? h('span', { class: 'etichetta' }, 'provvisorio') : null),
@@ -1532,7 +1547,7 @@ function tabAbilita(ctx, d) {
         paragrafi(t.frase), t.tavolo ? notaTavolo(t.tavolo) : null, n.scheda);
     })) : null),
     d.specializzazioni.length ? sezione('Specializzazioni', h('ul', {}, d.specializzazioni.map((x) => {
-      const n = nomeCheSiApre(x.nome, schedaTalento(x.id, ctx.dati));
+      const n = nomeCheSiApre(x.nome, schedaTalento(x.id, ctx.dati), { chiave: 'specializzazione:' + x.id });
       return h('li', {}, n.nome, x.annotazione ? ` (${x.annotazione})` : null, ` — ${x.riga || `${x.abilita}; ${x.effetto}`} (${x.livello}° livello)`,
         // la voce non è più nell'elenco della Classe (Giocatore 0.54): resta, con i suoi effetti, e decide il Direttore,
         // eccezione o sostituzione gratuita (A.229 per il Potere, A.230 per le altre: la stessa procedura)
@@ -2207,7 +2222,7 @@ function riquadroMorente(ctx) {
     h('p', { class: 'azioni-morente' },
       h('button', { type: 'button', class: 'btn btn-piccolo', title: 'Toglie 1 Round al contatore: una nuova Ferita fuori scontro, o la correzione del master', onclick: () => ctx.azioni.scalaMorente(1) }, '−1 Round'),
       h('button', { type: 'button', class: 'btn primario btn-piccolo', title: R.stabilizza?.nota ?? 'Riporta a Grave e spegne il contatore', onclick: () => ctx.azioni.stabilizza() }, R.stabilizza?.etichetta ?? 'Stabilizza')),
-    mo.vie.length ? h('details', { class: 'vie-morente' }, h('summary', {}, 'Come si stabilizza'),
+    mo.vie.length ? dettagliRicordati('vie-morente', { class: 'vie-morente' }, h('summary', {}, 'Come si stabilizza'),
       h('ul', {}, mo.vie.map((v) => h('li', {}, h('small', { class: 'nota' }, v))))) : null);
 }
 
@@ -3020,7 +3035,7 @@ function tabPoteri(ctx, d) {
     sezioneDaArtefatti(ctx),
     // 19/10: tabella di consultazione del recupero dei PM, richiudibile e chiusa (sola lettura), per chi ha una riserva di PM
     ctx.massimi.pm ? tabellaRecuperoPm(ctx) : null,
-    ...(p.in_arrivo ?? []).map((x) => h('details', { class: 'sezione-tab in-arrivo' },
+    ...(p.in_arrivo ?? []).map((x) => dettagliRicordati(`in-arrivo:${x.nome}`, { class: 'sezione-tab in-arrivo' },
       h('summary', {}, h('h2', {}, x.nome)), h('p', { class: 'nota' }, x.nota))),
   ];
 }
@@ -3559,10 +3574,13 @@ function sezioneProgetti(ctx) {
           onclick: () => conAvviso(ctx.azioni.storico, { azione: `consegnare l’arma del progetto «${p.nome}»`, motivo: avv.join('; ') || null,
             fai: () => ctx.azioni.consegnaArma(p.id, { provenienza: c.provenienza, donatore: c.donatore || null, scheggia: c.scheggia || null, esemplare: c.esemplare || null }) }) }, 'Consegna l’arma'))
         : h('p', { class: 'nota' }, 'Le modifiche diventano valide soltanto quando il Direttore consegna l’arma.');
+    // lotto 186 (B): in cima, dove si guarda, che l'arma non è ancora di nessuno finché non si consegna
+    const nonConsegnata = avvisoNonConsegnata(p, ctx.dati, { equipaggiamento: ctx.scelte.equipaggiamento ?? [] });
     return h('article', { class: 'arma-tab progetto' },
       h('div', { class: 'arma-testa' }, h('h3', {}, p.nome, h('small', { class: 'sigla' }, ` · ${statoTesto}`))),
+      nonConsegnata ? h('p', { class: 'riquadro attenzione avviso-non-consegnata' }, h('strong', {}, `${nonConsegnata.titolo}. `), nonConsegnata.testo) : null,
       h('p', { class: 'nota' }, `Aperto dal ${p.aperto.da} il ${data(p.aperto.quando)}. ${r.modello.descrizione ?? ''}`),
-      h('details', {}, h('summary', {}, 'Regole del progetto e componenti'),
+      dettagliRicordati(`progetto-regole:${r.modello?.id ?? r.id ?? ''}`, {}, h('summary', {}, 'Regole del progetto e componenti'),
         ...(r.modello.componenti ?? []).map((x) => h('p', {}, h('strong', {}, `${x.nome}: `), x.nota)),
         ...(r.modello.regole ?? []).map((x) => h('p', { class: 'nota' }, x)),
         h('p', { class: 'nota' }, `Fonte: ${r.modello.fonte}.`)),

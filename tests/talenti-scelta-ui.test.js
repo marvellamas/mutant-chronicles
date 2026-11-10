@@ -200,8 +200,11 @@ test('25/10 notte: in alto l’elenco di tutti i posti in ordine, l’attuale «
 
 test('25/10 notte: l’elenco dei Talenti della scheda usa lo stesso tocco sul nome', () => {
   const tab = readFileSync(new URL('../src/ui/tab.js', import.meta.url), 'utf8');
-  assert.match(tab, /nomeCheSiApre\(t\.nome, schedaTalento\(t\.id, ctx\.dati\)\)/);
-  assert.match(tab, /nomeCheSiApre\(x\.nome, schedaTalento\(x\.id, ctx\.dati\)\)/);
+  // lotto 186 (A): lo stesso tocco, e ogni nome porta la sua chiave — senza, un ridisegno lo richiude
+  assert.match(tab, /nomeCheSiApre\(t\.nome, schedaTalento\(t\.id, ctx\.dati\), \{ chiave: /);
+  assert.match(tab, /nomeCheSiApre\(x\.nome, schedaTalento\(x\.id, ctx\.dati\), \{ chiave: /);
+  const scelta = readFileSync(new URL('../src/ui/talenti-scelta.js', import.meta.url), 'utf8');
+  for (const m of scelta.matchAll(/nomeCheSiApre\([^\n]*/g)) assert.match(m[0], /chiave:/, `senza chiave si richiude: ${m[0].slice(0, 70)}`);
 });
 
 test('app.js: la scelta passa dal salvataggio normale; offline e coda bloccano; i PG nuovi nascono nei Talenti v1.0', () => {

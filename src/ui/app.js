@@ -75,6 +75,7 @@ import { cercaSfondi, applicaSfondo } from './sfondi.js';
 import { caricaImmagini, iconaPagina } from './immagini.js';
 import { preparaStampa, preparaTab, normalizzaOpzioniStampa, versioniCompatte, veicoliDelGruppoStampa } from '../stampa.js';
 import { renderTab, tabFissi, ALIAS_TAB, titoloSalvataggio } from './tab.js';
+import { dimenticaApribili } from './apribili.js';
 import {
   massimiSessione, allineaSessione, variaSessione, modificaSessione, stabilizzaMorente, scalaMorente, attivaArmaSessione, terminaArmaSessione, commutaContenitoreSessione, commutaStato, commutaCondizioneOggetto, commutaTalento, commutaBonusTalenti, impostaCondizioneArma, riparaOggetto, spendiPmLancio, ricaricaMatrice, attivaArtefatto, usaArtefatto, attivaTecnicaSessione, nuovoRoundSessione, terminaTecnicaSessione, usaUnaVoltaSessione, azzeraUsoSessione, nuovaSessione, convertiDistintivi, sessioneDopoLivello,
   penalitaSessione, variaMunizioni, consumaColpi, scegliGranata, granateDiPartenza, ricaricaArma, togliCellaArma, inserisciCellaArma, variaPiCellaArma, separaCellaArma, riempiCaricatoriArma, togliCaricatoreArma, inserisciCaricatoreArma, riempiCaricatoreArma, caricaDaCarichino, preparaCarichino, variaChroma, variaIntegrita, variaNec, ricaricaConTrasformatore,
@@ -324,6 +325,8 @@ function daIndirizzo() {
       return vai('#/');
     }
     const { scelte, avvisi } = normalizza(salvato.scelte, stato.dati);
+    // lotto 186 (A): le chiavi di ciò che era aperto valgono per il personaggio che si stava leggendo, non per questo
+    dimenticaApribili();
     stato.id = id;
     // «il tablet è una vista» (21/10/2026, parte C): il PG che la scheda mostra adesso, per spegnere i comandi
     // quando non è il proprio («gli altri li vede, in sola lettura»)

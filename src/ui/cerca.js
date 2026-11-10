@@ -39,7 +39,7 @@ export function cercaNellaScheda(ctx) {
   }, '🔍');
   if (!st.aperta) return icona;
 
-  const voci = vociScheda(ctx.tab.scheda, ctx.sessione, ctx.dati);
+  const voci = vociScheda(ctx.tab.scheda, ctx.sessione, ctx.dati, { progetti: ctx.scelte?.progettiMaster ?? null, equipaggiamento: ctx.scelte?.equipaggiamento ?? null });
   const risultati = cercaVoci(voci, st.testo);
   const vai = (v) => {
     chiudi();

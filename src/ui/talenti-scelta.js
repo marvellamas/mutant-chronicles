@@ -157,7 +157,7 @@ function postoAttivo(t, x, succ) {
   if (x.scelta) {
     const puo = !x.chiuso || t.master;
     const aperte = succ.filter((s) => s.livello === x.livello);
-    const n = nomeCheSiApre(descriviScelta(x.scelta, t.dati), schedaTalento(x.scelta.id, t.dati));
+    const n = nomeCheSiApre(descriviScelta(x.scelta, t.dati), schedaTalento(x.scelta.id, t.dati), { chiave: 'scelta:' + x.livello + ':' + x.scelta.id });
     return h('div', { class: 'posto-attivo' }, titolo,
       h('div', { class: 'opzione-testo' }, n.nome, h('span', { class: 'riga-talento' }, rigaBreve(x.scelta.id, t.dati)), n.scheda),
       aperte.map((s) => h('p', { class: 'nota motivo' }, `${s.quanti === 1 ? 'Resta' : 'Restano'} ${s.quanti} ${nomeSucc(s.tipo, s.quanti)} da scegliere `,
@@ -208,7 +208,7 @@ function opzione(t, posto, o, ammessa) {
     if (ok) t.azioni.scegli(posto, scelta(), { forzata: o.motivo });
   };
   // 25/10 notte: il nome si tocca e apre la scheda intera del Talento, sotto, sul posto (src/ui/talento-leggibile.js)
-  const n = nomeCheSiApre(o.nome, schedaTalento(o.id, t.dati), { dopo: h('span', { class: 'sigla' }, ` · ${nomeCategoria(def?.categoria) || nomeDi(posto.categoria)}`) });
+  const n = nomeCheSiApre(o.nome, schedaTalento(o.id, t.dati), { chiave: `opzione:${o.id}`, dopo: h('span', { class: 'sigla' }, ` · ${nomeCategoria(def?.categoria) || nomeDi(posto.categoria)}`) });
   return h('li', { class: `opzione-talento${ammessa ? '' : ' bloccato'}` },
     h('div', { class: 'opzione-testo' },
       n.nome,
@@ -241,7 +241,8 @@ function passoSuccessivo(t, s) {
       });
       if (ok) t.azioni.scegliSuccessiva(s, o.id, { forzata: o.motivo });
     };
-    const n = nomeCheSiApre(o.nome, comeScheda(tx.testo), { dopo: h('span', { class: 'sigla' }, ` · ${o.gruppo}${o.livelloBase ? ` · liv. base ${o.livelloBase}` : ''}`) });
+    // le Tecniche Interiori e gli Incantesimi che un Talento apre: è quello che il giocatore legge prima di scegliere
+    const n = nomeCheSiApre(o.nome, comeScheda(tx.testo), { chiave: `successiva:${s.tipo}:${o.id}`, dopo: h('span', { class: 'sigla' }, ` · ${o.gruppo}${o.livelloBase ? ` · liv. base ${o.livelloBase}` : ''}`) });
     return h('li', { class: `opzione-talento${ammessa ? '' : ' bloccato'}` },
       h('div', { class: 'opzione-testo' },
         n.nome,

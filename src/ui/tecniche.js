@@ -7,6 +7,7 @@ import { conAvviso } from './procedi.js';
 import { h } from './dom.js';
 import { registraVivo, regioneViva } from './vivi.js';
 import { info } from './tooltip.js';
+import { dettagliRicordati } from './apribili.js';
 import { rigaScelte, interruttore, pannelloPassi } from './pannello-passi.js';
 import { haRisorseInteriori, tecnicaDi, statoAttivazione, costoEffettivo, roundAttuale, inScadenza, testoFine, costoTecnica, gruppoTecnica, ordineGruppo, tecnicheInCorso, righeInCorso, sintesiTecnica, curaTecnica } from '../tecniche.js';
 
@@ -32,7 +33,7 @@ export function sezioneStoricoScelte(ctx) {
   const tecniche = (st?.tecniche ?? []).map((x) => x.nome ?? x.id);
   const incantesimi = st?.incantesimi ?? [];
   if (!tecniche.length && !incantesimi.length) return null;
-  return h('details', { class: 'sezione-tab storico-scelte' },
+  return dettagliRicordati('storico-scelte', { class: 'sezione-tab storico-scelte' },
     h('summary', {}, `Scelte in storico (${tecniche.length + incantesimi.length}): senza effetti`),
     h('p', { class: 'nota' }, 'Dipendevano da un Talento che non è stato ripreso: restano scritte ma non valgono. Se riprendi il Talento, tornano attive entro le quote.'),
     tecniche.length ? h('p', {}, h('strong', {}, 'Tecniche Interiori: '), tecniche.join(', ')) : null,
@@ -109,7 +110,7 @@ function schedaTecnica(ctx, t) {
     h('dl', { class: 'voci griglia-voci voci-tecnica' },
       [['Costo', t.costo], ...(costoEffettivo(ctx.tab.scheda, t, minima).sconto ? [['Costo con la fascia', `${testoCosto(t, ctx.tab.scheda)} (${costoEffettivo(ctx.tab.scheda, t, minima).fonte}: −${costoEffettivo(ctx.tab.scheda, t, minima).sconto} PM, Equipaggiamento §10.10)`]] : []), ['Azione', t.azione], ['Bersaglio', t.bersaglio], ['Durata', t.durata]]
         .map(([k, v]) => h('div', {}, h('dt', {}, k), h('dd', {}, v)))),
-    h('details', { class: 'testo-tecnica' }, h('summary', {}, 'Testo della scheda'),
+    dettagliRicordati(`tecnica:${t.id}`, { class: 'testo-tecnica' }, h('summary', {}, 'Testo della scheda'),
       String(t.testo).split('\n').map((p) => h('p', { class: 'piccolo' }, p))));
 }
 

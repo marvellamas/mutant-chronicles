@@ -4,6 +4,7 @@
 // mano, profilo, Pilotare del conducente con la provenienza, andature, tre strutture con PI, soglie e stato,
 // rinforzi, NEC, «Colpito», «Ripara», PI a mano, «Rimuovi». Più il promemoria del conducente per Combattimento.
 import { conAvviso } from './procedi.js';
+import { dettagliRicordati } from './apribili.js';
 import { partiRiserva } from '../cariche-mistiche.js';
 import { cambiaDotazioneExtra } from '../valore-veicolo.js';
 import { h, segno } from './dom.js';
@@ -234,7 +235,7 @@ export function tabellaAzioniVeicoli(dati, { categoria = null, aperta = false } 
 function manovreRotazione(dati) {
   const M = dati.veicoli?.manovre_rotazione;
   if (!M) return null;
-  return h('details', { class: 'manovre-rotazione' },
+  return dettagliRicordati('manovre-rotazione', { class: 'manovre-rotazione' },
     h('summary', {}, 'Curve, sterzate e inversioni (A.147)'),
     h('table', { class: 'tabella-azioni' }, h('tbody', {}, M.manovre.map((x) => h('tr', {},
       h('th', { scope: 'row' }, x.nome),
@@ -309,7 +310,7 @@ function valoreStimato(v, { ctx, mezzo, aggiorna }) {
 /** La dotazione: quella dell'esemplare, se l'ha ottenuta prima (A.226), altrimenti quella standard del profilo. */
 function dotazioneVeicolo(v) {
   if (!v.dotazione?.testo) return null;
-  return h('details', { class: 'dotazione-veicolo' },
+  return dettagliRicordati('dotazione-veicolo', { class: 'dotazione-veicolo' },
     h('summary', {}, v.dotazione.esemplare ? 'Dotazione di questo esemplare' : 'Dotazione standard'),
     h('p', { class: 'nota' }, v.dotazione.testo),
     v.dotazione.nota ? h('p', { class: 'nota' }, v.dotazione.nota) : null);
