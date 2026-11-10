@@ -1,5 +1,5 @@
 {
-  "versione_manuale": "Giocatore 0.43; Magia 1.1 + Google Doc del 27/09/2026; Talenti v1.0 del 07/10/2026",
+  "versione_manuale": "Giocatore 0.54; Magia 1.11; Talenti v1.0 del 07/10/2026",
   "fonte": "Manuale del Giocatore §8.6 (8.6.1–8.6.10); Manuale della Magia sezioni 1, 2, 3, 6 (32 Talenti magici e mistici)",
   "_nota": "molteplicita: una | per_caratteristica | per_salvezza_max2 | illimitata | limitata (con max_acquisizioni). parametro: null | caratteristica | salvezza. prerequisiti: id di Talenti o condizioni di «condizioni_prerequisiti», eventualmente precedute da «non:». effetti solo per i Talenti che modificano valori della scheda.",
   "attesi": {
@@ -319,7 +319,8 @@
         ]
       },
       "categoria": "superato",
-      "sostituito_da": "specializzazione-sport"
+      "sostituito_da": "specializzazione-sport",
+      "fonte_edizione": "Giocatore 0.50"
     },
     {
       "id": "visione-perfetta",
@@ -712,7 +713,8 @@
       "parametro": null,
       "testo": "Un utilizzo per Round, durante la propria Iniziativa. Una volta per Round, durante la propria Iniziativa, estrae un’arma accessibile senza spendere Azioni. Questa estrazione non impone la penalità per incorporare l’operazione nell’attacco. Restano necessari accessibilità dell’arma e requisiti dell’impugnatura. Ogni Talento di preparazione rapida ha il proprio utilizzo distinto.",
       "categoria": "superato",
-      "sostituito_da": "preparazione-rapida"
+      "sostituito_da": "preparazione-rapida",
+      "fonte_edizione": "Giocatore 0.50"
     },
     {
       "id": "cambio-rapido",
@@ -724,7 +726,8 @@
       "parametro": null,
       "testo": "Un utilizzo per Round, durante la propria Iniziativa.\nUna volta per Round, durante la propria Iniziativa, ripone l’arma utilizzata ed estrae un’altra arma accessibile senza spendere Azioni. Questo cambio non impone la penalità per incorporare l’operazione nell’attacco. Restano i requisiti dell’impugnatura. Ogni Talento di preparazione rapida ha il proprio utilizzo distinto.",
       "categoria": "superato",
-      "sostituito_da": "preparazione-rapida"
+      "sostituito_da": "preparazione-rapida",
+      "fonte_edizione": "Giocatore 0.50"
     },
     {
       "id": "imbracciatura-rapida",
@@ -743,7 +746,8 @@
         }
       },
       "categoria": "superato",
-      "sostituito_da": "preparazione-rapida"
+      "sostituito_da": "preparazione-rapida",
+      "fonte_edizione": "Giocatore 0.50"
     },
     {
       "id": "ricarica-rapida",
@@ -755,7 +759,8 @@
       "parametro": null,
       "testo": "Un utilizzo per Round, durante la propria Iniziativa. Una volta per Round, durante la propria Iniziativa, esegue senza spendere Azioni una singola operazione di ricarica che normalmente richiede 1 AzM oppure 1 AzP. Deve disporre delle munizioni, delle mani libere e degli altri requisiti necessari. Non si applica a procedure che richiedono più Azioni, a conversioni di PM o a ricariche mistiche. Ogni Talento di preparazione rapida ha il proprio utilizzo distinto.",
       "categoria": "superato",
-      "sostituito_da": "ricarica-esperta"
+      "sostituito_da": "ricarica-esperta",
+      "fonte_edizione": "Giocatore 0.50"
     },
     {
       "id": "ricarica-migliorata",
@@ -767,7 +772,8 @@
       "parametro": null,
       "testo": "Quando una ricarica prevede l’inserimento di una munizione alla volta, può inserirne fino a tre con la stessa operazione, senza superare la capacità dell’arma. Il costo ordinario dell’operazione resta quello previsto dall’arma, normalmente 1 AzP. Con Ricarica Rapida può inserire fino a tre munizioni gratuitamente una volta per Round, durante la propria Iniziativa. Se incorpora la ricarica nell’attacco, può inserirne fino a tre applicando −4 VA a tutte le Prove per colpire di quell’attacco; resta il limite di una sola operazione incorporata. Non modifica la sostituzione di caricatori, celle o serbatoi completi, le ricariche di PM o le procedure che richiedono più Azioni per una singola munizione. Non concede attacchi aggiuntivi. Un’arma con capacità di sei munizioni da inserire singolarmente richiede due operazioni da tre.",
       "categoria": "superato",
-      "sostituito_da": "ricarica-esperta"
+      "sostituito_da": "ricarica-esperta",
+      "fonte_edizione": "Giocatore 0.50"
     },
     {
       "id": "pistolero",
@@ -833,7 +839,8 @@
         }
       },
       "categoria": "superato",
-      "sostituito_da": "raffiche-migliorate"
+      "sostituito_da": "raffiche-migliorate",
+      "fonte_edizione": "Giocatore 0.50"
     },
     {
       "id": "raffica-media-migliorata",
@@ -854,7 +861,8 @@
         }
       },
       "categoria": "superato",
-      "sostituito_da": "raffiche-migliorate"
+      "sostituito_da": "raffiche-migliorate",
+      "fonte_edizione": "Giocatore 0.50"
     },
     {
       "id": "raffica-lunga-migliorata",
@@ -875,7 +883,8 @@
         }
       },
       "categoria": "superato",
-      "sostituito_da": "raffiche-migliorate"
+      "sostituito_da": "raffiche-migliorate",
+      "fonte_edizione": "Giocatore 0.50"
     },
     {
       "id": "fuoco-di-soppressione-migliorato",
@@ -915,7 +924,8 @@
         }
       },
       "categoria": "superato",
-      "sostituito_da": "maestria-tiro-ravvicinato-migliorato"
+      "sostituito_da": "maestria-tiro-ravvicinato-migliorato",
+      "fonte_edizione": "Giocatore 0.50"
     },
     {
       "id": "tiro-ravvicinato-migliorato",
@@ -934,7 +944,8 @@
         }
       },
       "categoria": "superato",
-      "sostituito_da": "maestria-tiro-ravvicinato-migliorato"
+      "sostituito_da": "maestria-tiro-ravvicinato-migliorato",
+      "fonte_edizione": "Giocatore 0.50"
     },
     {
       "id": "tiro-a-bruciapelo-migliorato",
@@ -1181,7 +1192,8 @@
       },
       "categoria": "superato",
       "sostituito_da": "maestria-arti-marziali-migliorate",
-      "riga": "+1 VA agli attacchi senz’armi e alle Prove di Difese contro attacchi Ravvicinati mentre combatte senz’armi; da solo non permette di parare a mani nude."
+      "riga": "+1 VA agli attacchi senz’armi e alle Prove di Difese contro attacchi Ravvicinati mentre combatte senz’armi; da solo non permette di parare a mani nude.",
+      "fonte_edizione": "Giocatore 0.50"
     },
     {
       "id": "colpo-di-opportunita-istintivo",
@@ -1291,7 +1303,8 @@
         }
       },
       "categoria": "superato",
-      "sostituito_da": "maestria-immobilizzare-migliorato"
+      "sostituito_da": "maestria-immobilizzare-migliorato",
+      "fonte_edizione": "Giocatore 0.50"
     },
     {
       "id": "immobilizzare-migliorato",
@@ -1308,7 +1321,8 @@
         }
       },
       "categoria": "superato",
-      "sostituito_da": "maestria-immobilizzare-migliorato"
+      "sostituito_da": "maestria-immobilizzare-migliorato",
+      "fonte_edizione": "Giocatore 0.50"
     },
     {
       "id": "sbilanciare-migliorato",
@@ -1561,7 +1575,8 @@
         "frequenza": "sessione",
         "quantita": 1,
         "per": "sistema"
-      }
+      },
+      "fonte_edizione": "Giocatore 0.50"
     },
     {
       "id": "mani-abili",

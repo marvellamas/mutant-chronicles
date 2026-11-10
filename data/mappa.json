@@ -1,5 +1,5 @@
 {
-  "versione_manuale": "Mappa di battaglia, specifica bozza 2 (Google Doc del 06/10/2026); Giocatore 0.43 §2.14, §5.1",
+  "versione_manuale": "Mappa di battaglia, specifica bozza 2 (Google Doc del 06/10/2026); Giocatore 0.54 §2.14, §5.1",
   "fonte": "docs/battlemap/specifica.md; piano tecnico in docs/battlemap/piano.md (lotto 1: scene sul server)",
   "_nota": "Parametri della mappa di battaglia del Tavolo del Master. Logica pura in src/mappa/ (scena.js, celle.js, token.js, vista.js, immagine.js); API /api/scene e /api/mappe in server.mjs. Le dimensioni del movimento (Passo, Corsa, Scatto) restano in regole.json → movimento.",
   "q_metri": 1.5,

@@ -3,9 +3,8 @@
 // (regole.json → attacco_distanza, «frasi»).
 // Uso:  node tools/verifica_frasi.mjs     → elenca le frasi non trovate ed esce con codice 1
 // Lo usa anche tests/effetti-oggetti.test.js.
-import { readFileSync, readdirSync } from 'node:fs';
-import { join } from 'node:path';
-import { voci, percorsoManuale, CARTELLA_TESTI } from './manuali.mjs';
+import { readFileSync } from 'node:fs';
+import { voci, percorsoManuale, testoEdizione } from './manuali.mjs';
 import { fileURLToPath } from 'node:url';
 
 const RADICE = new URL('../', import.meta.url);
@@ -45,16 +44,13 @@ export function testoTalentiNuovi() {
  * il Getto acido. Adesso si leggono solo le versioni correnti, quelle del registro (tools/manuali.json).
  */
 export function testoManuali() {
-  // Prima le versioni correnti del registro, poi le edizioni superate che restano in cartella con la versione nel
-  // nome. Servono tutt'e due finché i dati dichiarano edizioni vecchie (data/*.json → `versione_manuale`: Giocatore
-  // 0.45 e 0.46, Magia 1.3…): le loro frasi vengono da lì, non dalla 0.54. Quali dati siano indietro lo dice
-  // `node tools/ricognizione-manuali.mjs`; riportarli all'edizione corrente è un lotto a sé.
-  const correnti = voci().map((v) => percorsoManuale(v.id));
-  const superate = readdirSync(CARTELLA_TESTI)
-    .filter((f) => f.endsWith('.md'))
-    .map((f) => join(CARTELLA_TESTI, f))
-    .filter((p) => !correnti.includes(p));
-  return [...correnti, ...superate].map((p) => normalizza(readFileSync(p, 'utf8'))).join('\n');
+  // Lotto 189: **soltanto** le versioni correnti del registro. Il lotto 188 leggeva anche le edizioni superate
+  // rimaste in cartella, perché i dati dichiaravano ancora Giocatore 0.45 e 0.46, Magia 1.3…: era una rete che
+  // teneva in piedi il controllo e insieme ne nascondeva il senso. Adesso i dati citano l'edizione corrente, e una
+  // frase che il manuale di oggi non dice più salta fuori. Le poche voci che citano apposta un'edizione vecchia —
+  // i Talenti superati dalla 0.54, che i personaggi conservano — lo dichiarano nel dato con `fonte_edizione`, e
+  // `frasiMancanti` va a cercarle là: dichiarato, non in silenzio.
+  return voci().map((v) => normalizza(readFileSync(percorsoManuale(v.id), 'utf8'))).join('\n');
 }
 
 /**
@@ -79,7 +75,12 @@ export function frasiEffetti() {
   for (const t of leggi('data/talenti_liberi.json').talenti) {
     // Talenti v1.0 (25/10/2026): le voci scritte dal file dei Talenti nuovi si confrontano con quel file
     const fonte = t.fonte_regole === 'talenti_nuovi' ? 'talenti_nuovi' : 'manuali';
-    (t.effetti?.valori ?? []).forEach((e, i) => { for (const k of ['condizione', 'nota']) if (e[k]) out.push({ dove: `talenti_liberi:${t.id} effetti.valori[${i}].${k}`, frase: e[k], fonte }); });
+    // Lotto 189: una voce **superata** cita apposta l'edizione in cui esisteva (`fonte_edizione`). Hacker e Sport
+    // sono stati riorganizzati dalla 0.54 — Hacker è diventato una Maestria senza limite d'uso, Sport una
+    // Specializzazione — e nei dati restano, con il loro `sostituito_da`, perché i personaggi che le possiedono le
+    // tengono. Il loro testo è quello della 0.50 e deve restarlo: segnalarlo come «sparito dal manuale» sarebbe un
+    // falso allarme, cancellarlo sarebbe perdere quello che il personaggio ha in mano.
+    (t.effetti?.valori ?? []).forEach((e, i) => { for (const k of ['condizione', 'nota']) if (e[k]) out.push({ dove: `talenti_liberi:${t.id} effetti.valori[${i}].${k}`, frase: e[k], fonte, edizione: t.fonte_edizione ?? null }); });
   }
   for (const c of leggi('data/classi.json').classi) {
     for (const t of [...c.talenti_fissi, ...c.talenti_a_scelta]) {
@@ -155,11 +156,33 @@ export function frasiEffetti() {
   return out;
 }
 
+/**
+ * Il testo dell'edizione dichiarata da una voce («Giocatore 0.50»), normalizzato e letto una volta sola.
+ * Lotto 189: serve alle voci superate, che citano apposta l'edizione in cui esistevano.
+ */
+const NOMI_MANUALE = { Giocatore: 'giocatore', Magia: 'magia', Armamenti: 'armamenti', Equipaggiamento: 'equipaggiamento', Veicoli: 'veicoli', Mostri: 'mostri', Direttore: 'direttore' };
+const cacheEdizioni = new Map();
+function testoDellEdizione(etichetta) {
+  if (cacheEdizioni.has(etichetta)) return cacheEdizioni.get(etichetta);
+  const m = /^(\w+)\s+(\d+(?:\.\d+)*)$/.exec(String(etichetta).trim());
+  const id = m && NOMI_MANUALE[m[1]];
+  let t = null;
+  if (id) try { t = normalizza(testoEdizione(id, m[2])); } catch { t = null; }
+  cacheEdizioni.set(etichetta, t);
+  return t;
+}
+
 /** Frasi che non compaiono nei manuali. */
 export function frasiMancanti() {
   const testo = testoManuali();
   const talenti = testoTalentiNuovi();
-  return frasiEffetti().filter((x) => !(x.fonte === 'talenti_nuovi' ? talenti : testo).includes(normalizza(x.frase)));
+  return frasiEffetti().filter((x) => {
+    const frase = normalizza(x.frase);
+    if ((x.fonte === 'talenti_nuovi' ? talenti : testo).includes(frase)) return false;
+    // una voce superata vale se la frase sta nell'edizione che la voce dichiara
+    const sua = x.edizione ? testoDellEdizione(x.edizione) : null;
+    return !(sua && sua.includes(frase));
+  });
 }
 
 if (process.argv[1] === fileURLToPath(import.meta.url)) {
