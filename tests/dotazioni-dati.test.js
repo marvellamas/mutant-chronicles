@@ -1,5 +1,6 @@
 // Dati dell'equipaggiamento iniziale (data/dotazioni.json, Giocatore §2.16, E&L A.5–A.5.29).
 import '../tools/guardia-subito.mjs'; // la guardia sulle cartelle vere, comunque si lanci il test
+import { testoEdizione } from '../tools/manuali.mjs';
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
@@ -26,7 +27,7 @@ test('dotazioni.json: la dotazione comune ha gli 11 oggetti del §2.16.1', () =>
 
 test('dotazioni.json: il testo è copiato dal §2.16 del Manuale del Giocatore', () => {
   const norm = (s) => s.replace(/\\/g, '').replace(/\*\*/g, '').replace(/\s+/g, ' ');
-  const doc = norm(readFileSync(new URL('../docs/manuali-txt/giocatore.md', import.meta.url), 'utf8'));
+  const doc = norm(testoEdizione('giocatore', '0.50'));
   const frasi = [...d.comune.note, ...d.scambio.testo, ...d.corporativi.testo, ...d.crediti.testo];
   for (const c of Object.values(d.classi)) {
     frasi.push(c.introduzione, ...c.note);

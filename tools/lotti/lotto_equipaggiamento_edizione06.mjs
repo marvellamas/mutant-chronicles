@@ -1,5 +1,5 @@
 // Lotto «Equipaggiamento 0.6» del 09/10/2026 (docs/diff-davide-2026-10-08.md, lotto 6): le voci nuove dell'edizione 0.6
-// del Manuale dell'Equipaggiamento (08/10/2026 13:24), con i numeri del manuale (docs/manuali-txt/equipaggiamento.md):
+// del Manuale dell'Equipaggiamento (08/10/2026 13:24), con i numeri del manuale (docs/manuali-txt/equipaggiamento-0.30.md):
 //   §3.3.1 navigatore inerziale; §3.5.1 decontaminazione; §3.7 estintori, nastro tecnico, toppe, schiuma strutturale;
 //   §3.8 tuta extraveicolare, riparo pressurizzato, calzature magnetiche; §4.4 modulo di cifratura, rilevatore di
 //   sorveglianza; §5.9 utensile laser; §5.10 analizzatore alimentare; le sette righe nuove della tabella NEC (§5.4) come

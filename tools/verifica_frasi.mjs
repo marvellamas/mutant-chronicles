@@ -4,12 +4,28 @@
 // Uso:  node tools/verifica_frasi.mjs     → elenca le frasi non trovate ed esce con codice 1
 // Lo usa anche tests/effetti-oggetti.test.js.
 import { readFileSync, readdirSync } from 'node:fs';
+import { join } from 'node:path';
+import { voci, percorsoManuale, CARTELLA_TESTI } from './manuali.mjs';
 import { fileURLToPath } from 'node:url';
 
 const RADICE = new URL('../', import.meta.url);
 
-/** Testo confrontabile: senza escape e grassetti del Markdown esportato, spazi compattati. */
-export const normalizza = (t) => String(t).replace(/\\/g, '').replace(/\*\*/g, '').replace(/\s+/g, ' ').trim();
+/**
+ * Testo confrontabile: senza escape e grassetti del Markdown esportato, spazi compattati.
+ *
+ * Lotto 188: i manuali arrivano in due forme — certi Doc sono esportati in Markdown (le tabelle con le barre
+ * verticali), altri in testo semplice (le celle su righe separate). Le frasi dei dati copiate da una tabella
+ * portano le barre. Senza toglierle, una frase giusta risulta «non trovata» soltanto perché la copia salvata di
+ * quel manuale è in un'altra forma: non è il manuale a essere cambiato, è l'esportazione. Qui le barre e i
+ * trattini di contorno delle tabelle spariscono da tutt'e due le parti, così il confronto è sul testo.
+ */
+export const normalizza = (t) => String(t)
+  .replace(/\\/g, '')
+  .replace(/\*\*/g, '')
+  .replace(/^[ \t]*\|?[ \t:-]*\|[ \t:-]*$/gm, ' ') // righe di contorno delle tabelle Markdown
+  .replace(/\|/g, ' ')
+  .replace(/\s+/g, ' ')
+  .trim();
 
 /**
  * Testo del file dei Talenti nuovi (v1.0 del 07/10/2026, docs/talenti-nuovi-v1.0.txt, estratto dal PDF di
@@ -20,11 +36,25 @@ export function testoTalentiNuovi() {
   return normalizza(readFileSync(new URL('docs/talenti-nuovi-v1.0.txt', RADICE), 'utf8'));
 }
 
-/** Testo dei manuali, normalizzato. */
+/**
+ * Testo dei manuali **correnti**, normalizzato.
+ *
+ * Lotto 188: prima si leggeva tutta la cartella `docs/manuali-txt/`, versioni vecchie comprese. Così una frase dei
+ * dati risultava «trovata nel manuale» anche quando il manuale non la diceva più: bastava che la dicesse
+ * un'edizione di quattro versioni fa rimasta sul disco. È lo stesso difetto che ha fatto descrivere un Lorath con
+ * il Getto acido. Adesso si leggono solo le versioni correnti, quelle del registro (tools/manuali.json).
+ */
 export function testoManuali() {
-  const cartella = new URL('docs/manuali-txt/', RADICE);
-  return readdirSync(cartella).filter((f) => f.endsWith('.md'))
-    .map((f) => normalizza(readFileSync(new URL(f, cartella), 'utf8'))).join('\n');
+  // Prima le versioni correnti del registro, poi le edizioni superate che restano in cartella con la versione nel
+  // nome. Servono tutt'e due finché i dati dichiarano edizioni vecchie (data/*.json → `versione_manuale`: Giocatore
+  // 0.45 e 0.46, Magia 1.3…): le loro frasi vengono da lì, non dalla 0.54. Quali dati siano indietro lo dice
+  // `node tools/ricognizione-manuali.mjs`; riportarli all'edizione corrente è un lotto a sé.
+  const correnti = voci().map((v) => percorsoManuale(v.id));
+  const superate = readdirSync(CARTELLA_TESTI)
+    .filter((f) => f.endsWith('.md'))
+    .map((f) => join(CARTELLA_TESTI, f))
+    .filter((p) => !correnti.includes(p));
+  return [...correnti, ...superate].map((p) => normalizza(readFileSync(p, 'utf8'))).join('\n');
 }
 
 /**

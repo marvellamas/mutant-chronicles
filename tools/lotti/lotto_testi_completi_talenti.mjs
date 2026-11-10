@@ -12,11 +12,12 @@
 //   node tools/lotti/lotto_testi_completi_talenti.mjs            mostra che cosa cambierebbe
 //   node tools/lotti/lotto_testi_completi_talenti.mjs --scrivi   scrive data/talenti_liberi.json
 import { readFileSync, writeFileSync } from 'node:fs';
+import { testoEdizione } from '../manuali.mjs';
 import { fileURLToPath } from 'node:url';
 
 const RADICE = fileURLToPath(new URL('../../', import.meta.url));
 const FILE = `${RADICE}data/talenti_liberi.json`;
-const gio = readFileSync(`${RADICE}docs/manuali-txt/giocatore.md`, 'utf8');
+const gio = testoEdizione('giocatore', '0.50');
 const mag = readFileSync(`${RADICE}docs/manuali-txt/talenti-magici-mistici.md`, 'utf8');
 
 // file del 7/10, «Le Maestrie che riuniscono più capacità» e «Altri adeguamenti»: le frasi sulle condizioni della voce

@@ -13,10 +13,11 @@ if (process.argv.includes('--scrivi') && !process.argv.includes('--forza')) {
   process.exit(1);
 }
 import { readFileSync, writeFileSync } from 'node:fs';
+import { testoManuale } from '../manuali.mjs';
 
 const R = new URL('../../', import.meta.url);
 const pulisci = (t) => String(t).replace(/\\/g, '').replace(/\*\*/g, '').replace(/\s+/g, ' ');
-const arm = pulisci(readFileSync(new URL('docs/manuali-txt/armamenti.md', R), 'utf8'));
+const arm = pulisci(testoManuale('armamenti'));
 let controlli = 0;
 const verifica = (cond, msg) => { if (!cond) throw new Error(`controllo: ${msg}`); controlli++; };
 

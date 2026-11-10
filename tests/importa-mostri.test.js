@@ -1,7 +1,8 @@
 // Lotto 141 (Bestiario 0.46, parte 2): l'importatore dal Word (tools/importa-mostri.mjs) e le schede che ha prodotto.
-// Il testo è docs/manuali-txt/mostri-word.md (Manuale dei Mostri 0.46). Controlli: completezza, nessun dato dedotto,
+// Il testo è docs/manuali-txt/mostri-0.47.md (Manuale dei Mostri 0.46). Controlli: completezza, nessun dato dedotto,
 // PX provvisori segnati, nessun identificativo duplicato né nome che si confonde, regole comuni già approvate.
 import '../tools/guardia-subito.mjs'; // la guardia sulle cartelle vere, comunque si lanci il test
+import { testoManuale } from '../tools/manuali.mjs';
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync, readdirSync } from 'node:fs';
@@ -10,7 +11,7 @@ import { validaNemico } from '../src/validate.js';
 import { importa, leggiEsistenti, leggiRighe, dividi, leggiScheda, norm, slug } from '../tools/importa-mostri.mjs';
 
 const { dati } = await datiReali();
-const testo = readFileSync(new URL('../docs/manuali-txt/mostri-word.md', import.meta.url), 'utf8');
+const testo = testoManuale('mostri');
 const { risultati } = importa(testo);
 const esistenti = leggiEsistenti();
 const dirMostri = new URL('../esempi/nemici/mostri/', import.meta.url);

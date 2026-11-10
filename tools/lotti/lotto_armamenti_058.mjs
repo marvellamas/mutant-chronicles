@@ -1,5 +1,5 @@
 // Lotto 1 dell'aggiornamento del 01/10/2026: Manuale degli Armamenti 0.58 (Google Doc del 01/10, 10:17 UTC).
-// Diff in docs/diff-manuali-2026-10-01.md; testo in docs/manuali-txt/armamenti.md.
+// Diff in docs/diff-manuali-2026-10-01.md; testo in docs/manuali-txt/armamenti-0.74.md.
 //   node tools/lotti/lotto_armamenti_058.mjs            prova a vuoto
 //   node tools/lotti/lotto_armamenti_058.mjs --scrivi   scrive i JSON (idempotente)
 // Contenuto:

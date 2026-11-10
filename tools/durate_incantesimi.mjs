@@ -3,17 +3,18 @@
 // tabella delle versioni dà la durata (i valori restano nelle versioni, uno per livello), con o senza Concentrazione,
 // le modalità con durate diverse e, per gli incantesimi senza colonna, se l'effetto è istantaneo, dura fino a una
 // condizione o è una procedura. Marchio Psichico: la seconda tabella del manuale (durate di inseguimento e di
-// combattimento) mancava nelle versioni e si aggiunge qui, letta da docs/manuali-txt/magia.md.
+// combattimento) mancava nelle versioni e si aggiunge qui, letta da docs/manuali-txt/magia-1.11.md.
 // Regole di scadenza: data/regole.json → durate_round (Magia, «Scadenze e interruzione degli effetti»).
 //   node tools/durate_incantesimi.mjs           → controlli e riepilogo per tipo
 //   node tools/durate_incantesimi.mjs --scrivi  → scrive data/incantesimi.json
 import { readFileSync, writeFileSync } from 'node:fs';
+import { testoManuale } from './manuali.mjs';
 
 const R = new URL('../', import.meta.url);
 const file = new URL('data/incantesimi.json', R);
 const testo = readFileSync(file, 'utf8');
 const dati = JSON.parse(testo);
-const md = readFileSync(new URL('docs/manuali-txt/magia.md', R), 'utf8').split(/\r?\n/);
+const md = testoManuale('magia').split(/\r?\n/);
 const scrivi = process.argv.includes('--scrivi');
 const pulisci = (s) => String(s).replace(/\*\*/g, '').replace(/\\/g, '').trim();
 const livello = (r) => Number(r?.Livello ?? r?.['Livello e PM']);

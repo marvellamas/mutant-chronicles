@@ -1,8 +1,9 @@
 // Lotto 143 (C): i dieci modelli PNG generici Classe / Grado / EQ del Manuale dei Mostri 0.46 (Direttore 0.45 §9.6)
-// → data/png_generici.json. Legge docs/manuali-txt/mostri-word.md e scrive solo ciò che il manuale dice: nessun valore
+// → data/png_generici.json. Legge docs/manuali-txt/mostri-0.47.md e scrive solo ciò che il manuale dice: nessun valore
 // calcolato o dedotto, un dato assente resta assente. Rilanciabile: senza --scrivi mostra soltanto cosa cambierebbe.
 //   node tools/importa-png-generici.mjs [--scrivi] [--testo=file] [--dest=file]
 import { readFileSync, writeFileSync, existsSync } from 'node:fs';
+import { testoManuale } from './manuali.mjs';
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
@@ -177,7 +178,7 @@ export function importaPng(testo) {
 // ---------- uso da riga di comando ----------
 if (process.argv[1] && fileURLToPath(import.meta.url) === process.argv[1]) {
   const a = Object.fromEntries(process.argv.slice(2).map((x) => { const m = x.match(/^--([^=]+)(?:=(.*))?$/); return m ? [m[1], m[2] ?? true] : [x, true]; }));
-  const testo = readFileSync(a.testo ?? join(RADICE, 'docs/manuali-txt/mostri-word.md'), 'utf8');
+  const testo = (a.testo ? readFileSync(a.testo, 'utf8') : testoManuale('mostri'));
   const dati = importaPng(testo);
   const dest = a.dest ?? join(RADICE, 'data/png_generici.json');
   const nuovo = JSON.stringify(dati, null, 2) + '\n';

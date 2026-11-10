@@ -7,7 +7,7 @@ Scrive il campo «effetti» delle armature di data/equipaggiamento/armature_corp
 Censimento e classificazione: docs/proprieta-armature.md. Schema: docs/effetti-oggetti.md.
 
 Per ogni effetto la «condizione» è una frase del manuale presa dal testo della proprietà; lo script
-controlla che esista nel testo del Doc (docs/manuali-txt/armamenti.md) e si ferma se non la trova.
+controlla che esista nel testo del Doc (docs/manuali-txt/armamenti-0.74.md) e si ferma se non la trova.
 """
 import json
 import re

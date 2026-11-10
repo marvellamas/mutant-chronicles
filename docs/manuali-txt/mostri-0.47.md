@@ -1,12 +1,12 @@
-<!-- Manuale dei Mostri v0.46 (Word, SIMPLY_RPG_Manuale_dei_Mostri_v0.46.docx, Drive 1qScWOJpDjNSw7j5rNUlHGTKPbsUiEgvG, creato il 27/10/2026 21:33 UTC). Testo estratto dal .docx paragrafo per paragrafo (le tabelle sono una cella per riga). Salvato il 28/10/2026, ricognizione. -->
+<!-- Manuale dei Mostri v0.47 (Word, SIMPLY_RPG_Manuale_dei_Mostri_v0.47.docx, Drive 1qScWOJpDjNSw7j5rNUlHGTKPbsUiEgvG, modificato il 10/11/2026 09:42 UTC). Testo estratto dal .docx con tools/estrai-docx.mjs, paragrafo per paragrafo (le tabelle una cella per riga). Salvato il 10/11/2026, lotto 188. -->
 
 SIMPLY RPG
 
-Manuale dei Mostri
+# Manuale dei Mostri
 
 Bestiario e avversari per il Direttore
 
-VERSIONE 0.46  •  COVATA E CATALOGO DEL BESTIARIO  •  OTTOBRE 2026
+VERSIONE 0.47  •  COVATA E CATALOGO DEL BESTIARIO  •  NOVEMBRE 2026
 
 Il Manuale dei Mostri raccoglie creature, avversari e strumenti per costruire gli incontri di Simply RPG. Ogni scheda deve permettere al Direttore di capire che cosa vuole la creatura, come agisce e quali regole applicare, senza ricostruirne i valori durante la partita.
 
@@ -1272,7 +1272,7 @@ Predatore energetico delle nubi di Iris
 
 Predatore energetico di Iris, potenziato rispetto ai draghi di riferimento. Entrambi gli stadi predano veicoli aerei e spaziali leggeri e medi; possono mettere in difficoltà mezzi medi e pesanti modificati. Le navi pesanti e da guerra richiedono normalmente più esemplari. La Neverlost è un veicolo medio molto modificato.
 
-Aspetto draconico con ali membranose simili all’ombrello di una medusa e lunghi filamenti prensili. Un adulto mantiene il corpo indicativo di 15–20 m del profilo precedente. Vive fra le nubi e le tempeste chromatiche, sopravvive nello spazio vicino a Iris e cerca soprattutto fonti al Chroma. Non appartiene alla Covata. I filamenti catturano e drenano: non infliggono frustate o stritolamento.
+Aspetto draconico con ali membranose simili all’ombrello di una medusa e lunghi filamenti prensili. Le dimensioni del giovane e dell’adulto sono precisate nella sezione seguente. Vive fra le nubi e le tempeste chromatiche, sopravvive nello spazio vicino a Iris e cerca soprattutto fonti al Chroma. Non appartiene alla Covata. I filamenti catturano e drenano: non infliggono frustate o stritolamento.
 
 Valore
 
@@ -1338,7 +1338,7 @@ I PX riguardano un singolo esemplare senza dotazione. Le capacità innate sono g
 
 ## Dimensioni e scale
 
-Giovane: lunghezza indicativa 8–10 m e pedina rappresentativa 1 × 1 Q Tattici. Adulto: 15–20 m e pedina rappresentativa 2 × 1 Q Tattici; conserva l’ingombro corporeo personale di 14 × 10 Q Base. L’ingombro tattico è convenzionale: nei passaggi stretti contano le dimensioni effettive e lo spazio dei filamenti. Un Q Base vale 1,5 m; un Q Tattico vale 15 m.
+Giovane: corpo 6 × 4 Q Base (lunghezza × larghezza), pari a 9 × 6 m, e pedina rappresentativa 1 × 1 Q Tattici. Adulto: corpo 14 × 10 Q Base (lunghezza × larghezza), pari a 21 × 15 m, e pedina rappresentativa 2 × 1 Q Tattici. Nei campi dell’app le dimensioni sono registrate larghezza × lunghezza: rispettivamente 4 × 6 e 10 × 14 Q Base. L’ingombro tattico è convenzionale: nei passaggi stretti contano le dimensioni effettive e lo spazio dei filamenti. Ingombro corporeo e portata dei filamenti rimangono distinti. Un Q Base vale 1,5 m; un Q Tattico vale 15 m.
 
 # Dragomedusa caratteristiche e competenze
 

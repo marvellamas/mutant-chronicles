@@ -2,7 +2,7 @@
 """Catalogo dei rinforzi (Manuale degli Armamenti v0.53, §7.23).
 
 Uso:  python tools/lotti/lotto_rinforzi_723.py
-Riscrive data/equipaggiamento/rinforzi.json dal testo del Doc (docs/manuali-txt/armamenti.md):
+Riscrive data/equipaggiamento/rinforzi.json dal testo del Doc (docs/manuali-txt/armamenti-0.74.md):
 - i due profili di categoria del §7.23.1 (Rinforzo Leggero e Pesante, gli oggetti del lotto 9, stessi id);
 - i quattro modelli commerciali del §7.23.2 (profilo della categoria, descrizione dalla tabella);
 - i soprabiti corporativi di base del §7.23.3 (stessi id del lotto 9, nomi del §7.23.3);

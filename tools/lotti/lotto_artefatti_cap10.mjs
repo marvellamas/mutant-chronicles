@@ -13,13 +13,14 @@
 //   node tools/lotti/lotto_artefatti_cap10.mjs           → controlli e prova a vuoto
 //   node tools/lotti/lotto_artefatti_cap10.mjs --scrivi  → scrive i JSON
 import { readFileSync, writeFileSync } from 'node:fs';
+import { testoManuale } from '../manuali.mjs';
 
 const R = new URL('../../', import.meta.url);
 const pulisci = (t) => String(t).replace(/\\/g, '').replace(/\*\*/g, '').trim();
-const righe = readFileSync(new URL('docs/manuali-txt/equipaggiamento.md', R), 'utf8').split('\n');
+const righe = testoManuale('equipaggiamento').split('\n');
 const testoEq = righe.map(pulisci).join(' ').replace(/\s+/g, ' ');
-const testoMag = pulisci(readFileSync(new URL('docs/manuali-txt/magia.md', R), 'utf8')).replace(/\s+/g, ' ');
-const testoArm = pulisci(readFileSync(new URL('docs/manuali-txt/armamenti.md', R), 'utf8')).replace(/\s+/g, ' ');
+const testoMag = pulisci(testoManuale('magia')).replace(/\s+/g, ' ');
+const testoArm = pulisci(testoManuale('armamenti')).replace(/\s+/g, ' ');
 let controlli = 0;
 const verifica = (cond, msg) => { if (!cond) throw new Error(`controllo: ${msg}`); controlli++; };
 const frase = (testo, f, dove) => { verifica(testo.includes(f), `${dove}: «${f.slice(0, 50)}…»`); return f; };

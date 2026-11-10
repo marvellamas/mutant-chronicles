@@ -5,6 +5,7 @@
 // Qui si blocca che l'app faccia così dappertutto: regole, creazione, avanzamento, bestiario umano
 // (costruito come PG) e conversione «PG → nemico».
 import '../tools/guardia-subito.mjs'; // la guardia sulle cartelle vere, comunque si lanci il test
+import { testoManuale } from '../tools/manuali.mjs';
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync, readdirSync } from 'node:fs';
@@ -36,7 +37,7 @@ test('A.160: 7 punti alla creazione e a ogni Grado, nei dati e per tutti', () =>
 });
 
 test('A.160: il manuale corretto (Mostri 0.9 §5.2) dice 7, non più 5', () => {
-  const testo = readFileSync(new URL('../docs/manuali-txt/mostri.md', import.meta.url), 'utf8');
+  const testo = testoManuale('mostri');
   const i = testo.indexOf('5.2 Umani e altri utilizzatori');
   assert.ok(i > 0, 'il §5.2 c’è');
   const paragrafo = testo.slice(i, i + 1200);

@@ -9,6 +9,7 @@
 //   node tools/lotti/lotto_sintonizzazione_0210.mjs           → controlli e prova a vuoto
 //   node tools/lotti/lotto_sintonizzazione_0210.mjs --scrivi  → scrive i JSON
 import { readFileSync, writeFileSync } from 'node:fs';
+import { testoManuale } from '../manuali.mjs';
 
 const R = new URL('../../', import.meta.url);
 const leggi = (p) => readFileSync(new URL(p, R), 'utf8');
@@ -17,9 +18,9 @@ const scrivi = process.argv.includes('--scrivi');
 let controlli = 0;
 const verifica = (cond, msg) => { if (!cond) throw new Error(`controllo: ${msg}`); controlli++; };
 
-const arm = leggi('docs/manuali-txt/armamenti.md').split('\n');
-const mag = leggi('docs/manuali-txt/magia.md').split('\n');
-const gio = leggi('docs/manuali-txt/giocatore.md').split('\n');
+const arm = testoManuale('armamenti').split('\n');
+const mag = testoManuale('magia').split('\n');
+const gio = testoManuale('giocatore').split('\n');
 const GRADI = ['I', 'II', 'III', 'IV', 'V', 'VI'];
 
 /** Righe di una tabella Markdown che segue il titolo indicato: [[celle]] senza intestazione e separatore. */

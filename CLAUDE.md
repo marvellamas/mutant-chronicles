@@ -19,6 +19,22 @@ Si confronta il `modifiedTime` di ciascuno con il registro.
 
 Drive si usa **in sola lettura**: mai scrivere nei Doc di Davide, nemmeno commenti (`docs/protocollo-davide.md`). Se un Doc non è leggibile, segnalarlo subito senza inventare.
 
+### Protocollo dei manuali (concordato con Davide il 10/11/2026, lotto 188)
+
+**Perché.** Il 9/11 al tavolo un Lorath è stato descritto con il Getto acido invece del veleno paralizzante: su Drive convivevano due Manuali dei Mostri, e quello con il numero più basso (0.23) aveva la data di modifica più recente. Lo stesso, più in silenzio, era già successo con gli Armamenti, che fra la 0.50 e la 0.74 avevano cambiato ID senza che nessuno lo dichiarasse. Una regola senza il suo perché, fra sei mesi, qualcuno la toglie: il perché è questo.
+
+Le sette regole:
+
+1. **Un solo file corrente per manuale.** Due file dello stesso manuale nella cartella di lavoro sono un errore, non una scelta.
+2. **Un cambio di ID si sa prima e si fa dichiarato.** Un ID nuovo senza preavviso vale come un manuale sparito.
+3. **Versione nel nome e nella prima pagina, e devono coincidere.** Vale per il file su Drive e per il testo salvato in `docs/manuali-txt/`.
+4. **Comanda il numero di versione, non la data.** Quale file sia corrente lo dice il numero di versione; `modifiedTime` resta informazione. *Con un'avvertenza imparata il 10/11:* «stesso numero» non vuol dire «stesso testo» — il 09/11 Magia 1.11 ed Equipaggiamento 0.30 sono cambiati senza cambiare numero. Quale file è corrente lo dice la versione; **se** è cambiato lo dice l'impronta del testo salvato (`tools/manuali.mjs`, `improntaTesto`), mai la data.
+5. **Superato significa fuori dalla cartella di lavoro**: nella cartella «ARCHIVIO — Manuali superati», con il prefisso `ARCHIVIO —`. Un archiviato non è mai un doppione.
+6. **Una riga per versione in coda alla sezione 7 del Doc «Per Davide» a ogni pubblicazione**, non cumulativa.
+7. **I manuali su Drive li tocca solo Davide; i Markdown e i JSON solo noi.** Mai scrivere nei suoi Doc, nemmeno un commento.
+
+**Come si applica nel repo.** Il registro è `tools/manuali.json` (chiave: ID di Drive + numero di versione) e si legge solo da `tools/manuali.mjs`: chi legge un manuale chiama `testoManuale('magia')`, mai un percorso scritto a mano. In `docs/manuali-txt/` ogni manuale porta **la versione nel nome**: non esistono più `giocatore.md`, `magia.md`, `armamenti.md`, `equipaggiamento.md`, `revisione-nec.md` e `mostri.md`, che erano rimasti indietro di quattro, sei e ventiquattro versioni mentre i generatori li leggevano. Due controlli stanno in `npm test` (`tests/manuali-versioni-188.test.js`): la versione del nome e quella della prima pagina devono coincidere, e nessuno strumento può leggere un manuale per un percorso senza versione. Il controllo dei doppioni e il confronto con Drive hanno bisogno della rete, quindi non stanno nei test ma in `node tools/ricognizione-manuali.mjs`, che **si ferma e lo dice** invece di scegliere da sé quale file valga. Il testo di un `.docx` si estrae con `tools/estrai-docx.mjs` (la forma — titoli `#`, un paragrafo per riga — la leggono gli importatori dei Mostri: chi la cambia li rilegge).
+
 ## Glossario
 
 - **SD** = scheda digitale: la scheda a tab dell'app, con la modalità tavolo (`src/ui/tab.js`). Otto tab in una riga in alto (branch `layout-sd`, esito in `docs/layout-sd.md`; ritocchi dell'11/10, S4–S32, funzioni pure in `src/scheda-vista.js`). Accanto al titolo di ogni tab la testata con Punti Eroe (valore e «−»), Distintivi e Crediti; nella colonna di sinistra PV, Ferite e PM e, sotto, gli Stati attivi in sola lettura (in Combattimento Affaticamento e Corruzione; nell'Inventario il Carico sopra i PV):

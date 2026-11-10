@@ -15,6 +15,7 @@
 //   node tools/lotti/lotto_nec_ue.mjs            prova a vuoto: dice che cosa cambierebbe
 //   node tools/lotti/lotto_nec_ue.mjs --scrivi   scrive
 import { readFileSync, writeFileSync } from 'node:fs';
+import { testoManuale } from '../manuali.mjs';
 import { fileURLToPath } from 'node:url';
 import { execFileSync } from 'node:child_process';
 import { bloccaRiscrittura } from './superato.mjs';
@@ -261,7 +262,7 @@ if (SCRIVI) writeFileSync(`${R}data/regole.json`, `${JSON.stringify(regole, null
 
 // --- dotazioni.json: le righe del §2.16 del Giocatore 0.49 → 0.50 --------------------------------------------------
 const giocatore049 = execFileSync('git', ['-C', R, 'show', '76290cc:docs/manuali-txt/giocatore.md'], { encoding: 'utf8', maxBuffer: 1e8 }).split('\n');
-const giocatore050 = readFileSync(`${R}docs/manuali-txt/giocatore.md`, 'utf8').split('\n');
+const giocatore050 = testoManuale('giocatore').split('\n');
 if (giocatore049.length !== giocatore050.length) throw new Error('il Giocatore 0.50 non ha più le stesse righe della 0.49: l’abbinamento riga per riga non vale');
 const coppie = new Map();
 // tutte le righe cambiate del Giocatore (0.49 → 0.50 riscrive solo le frasi sui NEC): una riga delle dotazioni copiata

@@ -1,5 +1,5 @@
 // Lotto «Magia §27» del 09/10/2026 (docs/diff-davide-2026-10-08.md, lotto 5): Artefatti consumabili del Manuale della
-// Magia (Google Doc dell'08/10/2026 21:33, docs/manuali-txt/magia.md, §27):
+// Magia (Google Doc dell'08/10/2026 21:33, docs/manuali-txt/magia-1.11.md, §27):
 //   - artefatti.json → «consumabili»: regole comuni (SnT 0, Cariche Esclusive sigillate, consumo al completamento,
 //     supporto standard da 25 cr, PM = 3 × Grado + costo base, Magistrale) e la tabella dei costi per Grado I–VI con i
 //     livelli della versione del §24.2;

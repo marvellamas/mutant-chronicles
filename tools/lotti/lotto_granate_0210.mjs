@@ -15,6 +15,7 @@
 //   node tools/lotti/lotto_granate_0210.mjs           → controlli e prova a vuoto
 //   node tools/lotti/lotto_granate_0210.mjs --scrivi  → scrive i JSON
 import { readFileSync, writeFileSync } from 'node:fs';
+import { testoManuale } from '../manuali.mjs';
 
 const R = new URL('../../', import.meta.url);
 const leggi = (p) => readFileSync(new URL(p, R), 'utf8');
@@ -23,7 +24,7 @@ const scrivi = process.argv.includes('--scrivi');
 let controlli = 0;
 const verifica = (cond, msg) => { if (!cond) throw new Error(`controllo: ${msg}`); controlli++; };
 
-const arm = leggi('docs/manuali-txt/armamenti.md').split('\n');
+const arm = testoManuale('armamenti').split('\n');
 /** Righe della tabella che segue il titolo indicato: [{ colonna: valore }]. */
 function tabella(titolo) {
   const i = arm.findIndex((r) => pulisci(r).replace(/^#+\s*/, '') === titolo);
@@ -44,7 +45,7 @@ const testo = g.dopo.join(' ');
 verifica(testo.includes('si acquistano singole o in confezioni da cinque, senza sconto'), 'confezioni da cinque senza sconto');
 verifica(testo.includes('Le granate a frammentazione hanno Sbilanciante e Sbalzante 1; Elettroshock ha Elettricità'), 'proprietà');
 verifica(testo.includes('La granata a frammentazione standard e la Fumogena hanno PI 4, Qualità Comune e PS Integrità 10; Elettroshock ha PI 4, Qualità Non comune e PS Integrità 12'), 'PI, Qualità e PS');
-verifica(testo.includes('il lancio a mano usa Armi da Lancio, VA 0, FOR 3, gittata massima FOR × 3 Q e INC 8') || leggi('docs/manuali-txt/armamenti.md').includes('Il lancio a mano usa Armi da Lancio, VA 0, FOR 3, gittata massima FOR × 3 Q e INC 8'), 'lancio a mano');
+verifica(testo.includes('il lancio a mano usa Armi da Lancio, VA 0, FOR 3, gittata massima FOR × 3 Q e INC 8') || testoManuale('armamenti').includes('Il lancio a mano usa Armi da Lancio, VA 0, FOR 3, gittata massima FOR × 3 Q e INC 8'), 'lancio a mano');
 const num = (s) => Number(String(s).replace(/[^\d]/g, ''));
 const rs = (s) => num(s);
 const PROPRIETA = { 'Frammentazione standard': ['Sbilanciante', 'Sbalzante 1'], 'Frammentazione pesante': ['Sbilanciante', 'Sbalzante 1'], Fumogena: [], Elettroshock: ['Elettricità'] };

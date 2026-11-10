@@ -1,4 +1,4 @@
-// Importatore del Manuale dei Mostri (lotto 141, 29/10/2026): legge il testo del Word (docs/manuali-txt/mostri-word.md) e
+// Importatore del Manuale dei Mostri (lotto 141, 29/10/2026): legge il testo del Word (docs/manuali-txt/mostri-0.47.md) e
 // produce le schede dei nemici (formato data/formato_nemici.json), invece di trascriverle a mano.
 //
 // Regole del lavoro:
@@ -11,12 +11,13 @@
 //
 // Uso:  node tools/importa-mostri.mjs [--testo=file.md] [--dest=cartella] [--scrivi] [--aggiorna=id,id] [--json=file]
 import { readFileSync, writeFileSync, readdirSync, existsSync, mkdirSync } from 'node:fs';
+import { percorsoManuale } from './manuali.mjs';
 import { fileURLToPath } from 'node:url';
 import { join, dirname } from 'node:path';
 import { iniziativaCreatura } from '../src/iniziativa-creature.js';
 
 const RADICE = join(dirname(fileURLToPath(import.meta.url)), '..');
-const TESTO_PREDEFINITO = join(RADICE, 'docs/manuali-txt/mostri-word.md');
+const TESTO_PREDEFINITO = percorsoManuale('mostri');
 const DEST_PREDEFINITA = join(RADICE, 'esempi/nemici/mostri');
 export const FONTE = 'dal Manuale dei Mostri v0.46 (Word del 27/10/2026)';
 const LATO_MAX = 20; // data/mappa.json → creatura_ingombro_max (A.167, portato a 20 dalla A.198 del 30/10/2026)

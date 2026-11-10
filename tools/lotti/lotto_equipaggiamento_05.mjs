@@ -1,5 +1,5 @@
 // Lotto 2 dell'aggiornamento del 01/10/2026: Manuale dell'Equipaggiamento 0.5, capitolo 5 (Google Doc del
-// 01/10/2026, 08:32 UTC; testo in docs/manuali-txt/equipaggiamento.md). Convenzioni in
+// 01/10/2026, 08:32 UTC; testo in docs/manuali-txt/equipaggiamento-0.30.md). Convenzioni in
 // docs/equipaggiamento-lotti.md, effetti in docs/effetti-oggetti.md.
 //   node tools/lotti/lotto_equipaggiamento_05.mjs --parte nec|strumenti|alimentazione            prova a vuoto
 //   node tools/lotti/lotto_equipaggiamento_05.mjs --parte nec|strumenti|alimentazione --scrivi   scrive (idempotente)

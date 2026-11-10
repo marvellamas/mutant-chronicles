@@ -1,0 +1,38 @@
+{
+  "_nota": "Registro dei manuali: un posto solo dice quale versione è corrente e dove sta il suo testo. La chiave è ID di Drive + numero di versione; la data è informazione, non criterio (lotto 188, 10/11/2026). Chi legge un manuale passa da tools/manuali.mjs, mai da un percorso scritto a mano.",
+  "_protocollo": "docs/manuali-drive.md e la sezione «Protocollo dei manuali» di CLAUDE.md",
+  "cartella_lavoro": "1p4jh2tKIN9kRimD4ifzth_YjWUZTH6-6",
+  "cartella_archivio": "1tVAzASERKxCEZPCrAf-LFHiYLqhey9Rc",
+  "controllato": "2026-11-10",
+  "manuali": [
+    { "id": "giocatore", "nome": "Manuale del Giocatore", "drive": "110LNyYLZFWRGYuym836EqKYOUvoQRYvqBzm_2bJqybc", "formato": "doc", "versione": "0.54", "testo": "giocatore-0.54.md", "modificato": "2026-11-09T13:25:56Z" },
+    { "id": "magia", "nome": "Manuale della Magia", "drive": "1F5npdIujLUEVcHVX6CvF5jOHNMG5LS7dx0tgklDpzAY", "formato": "doc", "versione": "1.11", "testo": "magia-1.11.md", "modificato": "2026-11-09T14:53:23Z" },
+    { "id": "armamenti", "nome": "Manuale degli Armamenti", "drive": "1eDZJHfgBIYPvzKg78tEGwiLtrI_6gzpQOIfJA9aYiYg", "formato": "doc", "versione": "0.74", "testo": "armamenti-0.74.md", "modificato": "2026-11-09T18:06:49Z" },
+    { "id": "equipaggiamento", "nome": "Manuale dell’Equipaggiamento", "drive": "1bvTeJphQ6BNKazpV5twivvRbqkHrRowNBDZ_RakQiXA", "formato": "doc", "versione": "0.30", "testo": "equipaggiamento-0.30.md", "modificato": "2026-11-09T18:00:29Z" },
+    { "id": "veicoli", "nome": "Manuale dei Veicoli", "drive": "1lo_c3KLK7kntJwv195v5aD2ieuMfRuaThsDhPJCX3T4", "formato": "doc", "versione": "0.10", "testo": "veicoli-0.10.md", "modificato": "2026-11-03T11:37:10Z" },
+    { "id": "mostri", "nome": "Manuale dei Mostri", "drive": "1qScWOJpDjNSw7j5rNUlHGTKPbsUiEgvG", "formato": "docx", "versione": "0.47", "testo": "mostri-0.47.md", "modificato": "2026-11-10T09:42:11Z", "nota": "Il Google Doc 0.23 è archiviato: vale il Word (lotto 187 su Drive, lotto 188 nel repo)." },
+    { "id": "direttore", "nome": "Manuale del Direttore", "drive": "1lfwR5Z9pIqfoASAuNt1Ia01sOj8OOb-5", "formato": "docx", "versione": "0.46", "testo": "direttore-0.46.md", "modificato": "2026-10-29T17:23:23Z" },
+    { "id": "talenti", "nome": "Talenti, Specializzazioni e Maestrie", "drive": "10ztjyeX1apff5tnh3SzNiswsvXNjyX0m", "formato": "docx", "versione": "1.1", "testo": "talenti-specializzazioni-maestrie-1.1.md", "modificato": "2026-11-03T11:33:41Z", "nota": "Sui Talenti vale su quello che dice il Manuale del Giocatore (regola di precedenza del 25/10)." },
+    { "id": "revisione-nec", "nome": "Revisione NEC — registro unico", "drive": "1AJyKJ0qQOGmGh12hBUI8g2gmoFDMHgk_", "formato": "docx", "versione": "2.11", "testo": "revisione-nec-2.11.md", "modificato": "2026-10-31T10:47:53Z" },
+    { "id": "energia", "nome": "Energia — riepilogo per l’app", "drive": "1s9saJZl1DpK5o1IMUMyct75jOdwWSrnH", "formato": "docx", "versione": "1.0", "testo": "energia-riepilogo-app-1.0.md", "modificato": "2026-11-02T16:23:56Z" }
+  ],
+  "schede": [
+    { "id": "asa-scout", "nome": "ASA Scout MK4 — scheda", "drive": "1DgvIVekDypu7UKHup-SHSSKCzuK_R-l75Xd9kPsRhHY", "formato": "doc", "versione": "0.6", "testo": "asa-scout-mk4-0.6.md", "modificato": "2026-10-30T17:38:33Z" },
+    { "id": "neverlost", "nome": "Neverlost — scheda tecnologica", "drive": "1MWn5jv3XB6W5h1JQyZEnnWDyeQfe_EbZ", "formato": "docx", "versione": "1.6", "testo": "neverlost-scheda-tecnologica-1.6.md", "modificato": "2026-10-29T17:23:03Z" },
+    { "id": "wachter", "nome": "Scudo Punisher Wächter", "drive": "1mDFtahzSrrkSKowJif9iagT_peIqIBRE", "formato": "docx", "versione": "1.2", "testo": "punisher-wachter-1.2.md", "modificato": "2026-10-29T17:23:13Z" },
+    { "id": "guanti-lucas", "nome": "Guanti mistici di Lucas — scheda", "drive": "1SbF2U8eRSZiA11_B9KNODeptNYDCVO4s", "formato": "docx", "versione": "1.0", "testo": "guanti-mistici-lucas-1.0.md", "modificato": "2026-11-02T16:23:49Z" },
+    { "id": "cyberarma-dimitri", "nome": "CyberArma Opzioni per Dimitri", "drive": "1pcumz4X6IDT0ITeAb7kE6tUf-RsBhs1o-bC5xAqmJC0", "formato": "doc", "versione": "1.0", "testo": "cyberarma-dimitri-1.0.md", "modificato": "2026-11-02T16:15:21Z" }
+  ],
+  "scambio": [
+    { "id": "per-davide", "nome": "per-davide.md (domande a Davide)", "drive": "1Jg5rqbBtcHGE1E10xYElO_qCDCwh8K87LAInovtpF6A", "formato": "doc", "testo": "../per-davide.md", "modificato": "2026-11-06T08:32:48Z", "nota": "Fonte unica delle domande; lo scrive solo Davide (e Cowork per il pacchetto). docs/protocollo-davide.md." },
+    { "id": "e-l", "nome": "E&L — Risposte e correzioni approvate", "drive": "1VaqZaAe4NK5P8A956Eahua_ZT60eh3ohnR2xSqh-tVs", "formato": "doc", "testo": "../risposte-master-2026-09-26.md", "modificato": "2026-10-15T23:21:09Z" }
+  ],
+  "archiviati": [
+    { "nome": "ARCHIVIO — Manuale dei Mostri 0.23 — SUPERATO", "drive": "11Uxmz9GM2vU2knngtIPk_80532ABlHC3xL8ZvAXX7rE", "versione": "0.23", "archiviato": "2026-11-10", "motivo": "Superato dal Word 0.47. È il file che il 9/11 fece descrivere il Lorath con il Getto acido invece del veleno paralizzante: aveva il numero più basso e la data più recente." }
+  ],
+  "senza_versione": [
+    { "testo": "talenti-magici-mistici.md", "nota": "Doc di Davide del 27/09 senza numero di versione: non è un manuale del registro, lo legge il solo lotto storico dei testi dei Talenti." },
+    { "testo": "layout-app-davide.md", "nota": "Appunti di layout, non un manuale." },
+    { "testo": "modifiche-layout-app.md", "nota": "Appunti di layout, non un manuale." }
+  ]
+}

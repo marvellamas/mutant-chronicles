@@ -7,6 +7,7 @@
 //      identificativi delle Tecniche, non una copia dei loro valori. È la domanda che Marcello ha posto per
 //      prima, e la risposta è nei fatti: nessuna migrazione da fare, nessun PG rimasto indietro in silenzio.
 import '../tools/guardia-subito.mjs'; // la guardia sulle cartelle vere, comunque si lanci il test
+import { testoEdizione } from '../tools/manuali.mjs';
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
@@ -17,7 +18,7 @@ import { datiReali } from './helpers.js';
 
 const { dati } = await datiReali();
 const tecnica = (id) => dati.tecniche_interiori.tecniche.find((t) => t.id === id);
-const manuale = readFileSync(new URL('../docs/manuali-txt/giocatore.md', import.meta.url), 'utf8');
+const manuale = testoEdizione('giocatore', '0.50');
 
 test('la versione dichiarata nei dati è quella del manuale applicato', () => {
   assert.equal(dati.tecniche_interiori.versione_manuale, 'Giocatore 0.49');

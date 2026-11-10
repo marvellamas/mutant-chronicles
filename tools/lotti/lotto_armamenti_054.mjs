@@ -1,7 +1,7 @@
 // Lotto «Armamenti 0.54» (Doc del 28/09, 16:59): KEP 808 (Alleanza, Armi leggere) e Colt
 // Hammershot (Capitol, Revolver) nel catalogo delle armi a distanza corporative, più la cella
 // KEP 808 (§7.20.5). Stesso schema del lotto 5; valori dalle tabelle del Doc, testo in
-// docs/manuali-txt/armamenti.md.
+// docs/manuali-txt/armamenti-0.74.md.
 //   node tools/lotti/lotto_armamenti_054.mjs            prova a vuoto
 //   node tools/lotti/lotto_armamenti_054.mjs --scrivi   scrive i JSON (idempotente)
 //

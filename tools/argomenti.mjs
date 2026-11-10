@@ -74,4 +74,5 @@ export const ARGOMENTI = {
   'descrizioni-bestiario.mjs': ['profili'],
   'riserve-intere.mjs': ['scrivi'],
   'prove.mjs': ['concorrenza', 'solo'],
+  'ricognizione-manuali.mjs': ['drive'],
 };

@@ -1,6 +1,6 @@
 // Lotti del Manuale dell'Equipaggiamento: capitoli 2, 3 e 4 dalla 0.5 (Google Doc del 01/10/2026: alimentazione
 // NEC, §3.2 con il NEC Rosso, nuovo §3.6), capitolo 6 dalla 0.3 (28–29/09/2026; il cap. 6 della 0.5 è del lotto 4).
-// Ricognizione in docs/equipaggiamento-lotti.md. Testo del Doc in docs/manuali-txt/equipaggiamento.md.
+// Ricognizione in docs/equipaggiamento-lotti.md. Testo del Doc in docs/manuali-txt/equipaggiamento-0.30.md.
 //   node tools/lotti/lotto_equipaggiamento_03.mjs --capitolo 2            prova a vuoto
 //   node tools/lotti/lotto_equipaggiamento_03.mjs --capitolo 2 --scrivi   scrive il JSON (idempotente)
 //

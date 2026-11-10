@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Genera data/dotazioni.json dal Manuale del Giocatore §2.16 (docs/manuali-txt/giocatore.md).
+"""Genera data/dotazioni.json dal Manuale del Giocatore §2.16 (docs/manuali-txt/giocatore-0.54.md).
 
 Non fa parte dell'app. Uso:  python tools/genera_dotazioni.py
 Il testo (righe delle tabelle e paragrafi) si copia dal Doc così com'è; la struttura per il passo

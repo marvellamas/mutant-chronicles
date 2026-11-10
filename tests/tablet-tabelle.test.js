@@ -1,6 +1,7 @@
 // Tablet del 19/10/2026, punto 5: tabelle di consultazione del recupero dei PM (tab Poteri) e dei PV (tab Combattimento),
 // in sola lettura, con i valori dei manuali, in un blocco richiudibile e chiuso.
 import '../tools/guardia-subito.mjs'; // la guardia sulle cartelle vere, comunque si lanci il test
+import { testoEdizione } from '../tools/manuali.mjs';
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
@@ -8,8 +9,8 @@ import { contesto, resa, ESEMPI, dati } from './scheda-aiuti.js';
 import { validaDati } from '../src/validate.js';
 
 const norm = (t) => String(t).replace(/[’‘]/g, "'").replace(/\\/g, '').replace(/\*/g, '').replace(/\s+/g, ' ').trim();
-const giocatore = norm(readFileSync(new URL('../docs/manuali-txt/giocatore.md', import.meta.url), 'utf8'));
-const magia = norm(readFileSync(new URL('../docs/manuali-txt/magia.md', import.meta.url), 'utf8'));
+const giocatore = norm(testoEdizione('giocatore', '0.50'));
+const magia = norm(testoEdizione('magia', '1.7'));
 const T = dati.regole.tabelle_consultazione;
 const nei = (manuale, testo, quale) => assert.ok(manuale.includes(norm(testo)), `${quale}: «${testo}» non è nel manuale`);
 

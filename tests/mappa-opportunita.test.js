@@ -4,6 +4,7 @@
 // non ancora rilette, e annullando il movimento l'attacco si ritira (src/mappa/zoc.js → giaInQuestoRound;
 // src/scontro.js → rigaOpportunita, senzaOpportunitaDelMovimento).
 import '../tools/guardia-subito.mjs'; // la guardia sulle cartelle vere, comunque si lanci il test
+import { testoEdizione } from '../tools/manuali.mjs';
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { attacchiDiOpportunita, avversariZoc, giaInQuestoRound } from '../src/mappa/zoc.js';
@@ -40,7 +41,7 @@ function giocaMovimenti(percorsi, { scontro = scontroVuoto(), riletto = (s) => s
 
 test('Giocatore §5.3: «una sola volta per Round» nel testo del manuale', async () => {
   const { readFileSync } = await import('node:fs');
-  const testo = readFileSync(new URL('../docs/manuali-txt/giocatore.md', import.meta.url), 'utf8');
+  const testo = testoEdizione('giocatore', '0.50');
   assert.match(testo, /può essere effettuato anche senza Azioni disponibili e \*\*una sola volta per Round\*\*/);
 });
 

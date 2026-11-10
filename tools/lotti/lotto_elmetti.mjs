@@ -1,4 +1,4 @@
-// Lotto elmetti: Manuale degli Armamenti v0.52 §7.21 (Google Doc, testo in docs/manuali-txt/armamenti.md).
+// Lotto elmetti: Manuale degli Armamenti v0.52 §7.21 (Google Doc, testo in docs/manuali-txt/armamenti-0.74.md).
 // Scrive data/equipaggiamento/elmetti.json: l'elmetto standard di ricambio (§7.21.4), le 15 modifiche
 // commerciali (accessori che si montano sull'elmetto o sull'elmetto standard dell'armatura) e i 15
 // elmetti corporativi (§7.21.5, Commando §7.21.6). Effetti tipizzati per le proprietà con un numero
@@ -121,7 +121,7 @@ for (const [corp, modello, props, rep, costo] of CORPORATIVI) {
 
 const file = {
   versione_manuale: V,
-  fonte: 'Manuale degli Armamenti v0.52 (Google Doc), §7.21 «Elmetti e modifiche»: testo in docs/manuali-txt/armamenti.md.',
+  fonte: 'Manuale degli Armamenti v0.52 (Google Doc), §7.21 «Elmetti e modifiche»: testo in docs/manuali-txt/armamenti-0.74.md.',
   _nota: 'Generato da tools/lotti/lotto_elmetti.mjs. Gli elmetti non forniscono AR (§7.21.1): «ar» vale 0. Le modifiche sono accessori che si montano sull’elmetto indossato o sull’armatura indossata (per il suo elmetto standard) e contano solo montate. Nessun peso: il manuale non lo dà (A.30). Le regole d’uso sono in regole.json → elmetti.',
   oggetti,
 };
