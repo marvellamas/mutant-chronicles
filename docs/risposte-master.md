@@ -2676,3 +2676,22 @@ Manuali invariati; esito in `docs/diff-lotto183-2026-11-08.md`.
 
 Nessuna domanda nuova: il primo numero libero resta **A.266**. Restano aperte le sei del lotto 181 (A.260–A.265) e
 la A.246, che è una decisione del Direttore al tavolo.
+
+## 10/11/2026 — Lotto 189: i dati tornano a citare l'edizione corrente
+
+Chiusa la distanza scoperta dal lotto 188 fra quello che i file di `data/` dichiaravano e i manuali correnti.
+Tutti e 40 i file dichiarano adesso l'edizione corrente del loro manuale, e `tests/edizioni-dati-189.test.js`
+fallisce se uno torna indietro senza dichiarare l'eccezione in `tools/manuali.json` → `edizioni_in_attesa`.
+
+**Domanda nuova, aperta: A.266 — il Giocatore 0.54 conta ancora i NEC in UE.** La nota del §2.16.1 dice: «I NEC
+usano riserve distinte UER, UEB e UEV. Per le armi si annotano cariche o colpi: **1 UE dello stesso colore
+ripristina dieci cariche personali mediante trasformatore dedicato**, conservando il resto nel tampone». È il
+modello in Unità Energetiche del lotto 1 del 27–28/10. L'Equipaggiamento 0.30 §5.4 e il registro Revisione NEC 2.11
+contano invece le **cariche**, e il registro dichiara di sostituire «le precedenti equivalenze dei Moduli da 10 UE,
+Banchi da 100 UE e contatori in punti»; il trasformatore dell'app segue quel modello dal lotto 146 (A.193): preleva
+una carica CEC e riempie un **tampone da 100 cariche NEC**. Due manuali correnti dicono numeri diversi su una regola
+che il giocatore legge alla creazione: l'app non sceglie da sola e il testo del §2.16.1 resta quello del manuale.
+`TODO(Davide)` in `data/dotazioni.json` → `comune`.
+
+Il primo numero libero diventa **A.267**. Restano aperte le sei del lotto 181 (A.260–A.265), la nuova A.266 e la
+A.246, che è una decisione del Direttore al tavolo.

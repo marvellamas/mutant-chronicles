@@ -9,6 +9,7 @@
 import { readFileSync, writeFileSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import { normalizza, testoManuali } from '../verifica_frasi.mjs';
+import { versioneManuale } from '../manuali.mjs';
 
 const RADICE = new URL('../../', import.meta.url);
 
@@ -40,7 +41,10 @@ export function controlliCap8(dati) {
   const vietati = (testo.match(/"sanitario:(naniti-medici|postazione-[a-z-]+-(fissa|mobile))"/g) ?? []);
   c('§8.2', 'naniti e postazioni medicochirurgiche non sono dotazioni gratuite', !vietati.length, vietati.join(', '));
   // §8: le dotazioni sono quelle del Giocatore (§§2.16.1–2.16.30), alla versione corrente
-  c('§8', 'dotazioni dal Manuale del Giocatore 0.45', /Giocatore 0\.45/.test(dati.dotazioni.versione_manuale ?? ''), dati.dotazioni.versione_manuale);
+  // Lotto 189: l'edizione corrente la dice il registro, non un numero scritto qui: il controllo è «dotazioni.json
+  // dichiara l'edizione corrente del Giocatore», e chi aggiorna il manuale non deve ricordarsi di questa riga.
+  const edizioneGiocatore = versioneManuale('giocatore');
+  c('§8', `dotazioni dal Manuale del Giocatore ${edizioneGiocatore}`, new RegExp(`Giocatore ${edizioneGiocatore.replace('.', '\\.')}`).test(dati.dotazioni.versione_manuale ?? ''), dati.dotazioni.versione_manuale);
   // §8.1 «Dispositivo alimentato»: il NEC previsto dalla scheda è compreso e del catalogo
   const cat = dati.equipaggiamento;
   const perRif = new Map(Object.entries(cat.file).flatMap(([f, x]) => (x.oggetti ?? []).map((o) => [`${f}:${o.id}`, o])));

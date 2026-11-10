@@ -13,6 +13,7 @@
   ],
   "_nota_oggetti_dotazione": "Voci della dotazione del §2.16 senza modello di armamento. Con «rif» hanno una scheda di catalogo (Manuale dell’Equipaggiamento 0.3–0.5, cap. 2–6, tools/lotti/lotto_equipaggiamento_03.mjs; cap. 5, tools/lotti/lotto_equipaggiamento_05.mjs; Corredo di manutenzione da campo: Armamenti §7.13.7): nome della dotazione, peso, prezzo, Qualità, PI ed effetti dalla scheda, anche per i personaggi già salvati (risolvi() tramite dotazione_id). Senza «rif» restano «da definire» (A.34: peso assente non è 0 kg, prezzo assente non dà credito di scambio). Nessun oggetto della dotazione che non sia un armamento assegnato si cede nello scambio iniziale (§2.16.29).",
   "comune": {
+    "TODO(Davide)": "A.266: la nota del §2.16.1 del Giocatore 0.54 descrive ancora i NEC in Unità Energetiche — «1 UE dello stesso colore ripristina dieci cariche personali mediante trasformatore dedicato» — mentre l’Equipaggiamento 0.30 §5.4 e il registro Revisione NEC 2.11 contano le cariche e dicono che quel registro «sostituisce le precedenti equivalenze dei Moduli da 10 UE e dei Banchi da 100 UE». Il trasformatore dell’app segue il lotto 146 (A.193): preleva una carica CEC e riempie un tampone da 100 cariche NEC. Due manuali correnti dicono numeri diversi su una regola che il giocatore legge alla creazione: non si sceglie da soli. Il testo resta quello del manuale finché Davide non risponde.",
     "paragrafo": "2.16.1",
     "oggetti": [
       {

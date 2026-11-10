@@ -49,7 +49,6 @@ const SOSTITUZIONI = {
     ['NEC Verde standard carico', 'NEC Verde 3 carico'],
     ['un NEC Verde compatto .', 'un NEC Verde 1.'],
     ['cavo e caricatore', 'cavo e alimentatore'],
-    
     ['Il Corredo di analisi usa un Verde standard; il terminale palmare un Verde compatto.', 'Il Corredo di analisi usa un NEC Verde 3; il terminale palmare un NEC Verde 1.'],
     ['Il terminale palmare usa un Verde compatto.', 'Il terminale palmare usa un NEC Verde 1.'],
     ['include un Verde compatto da 100 ore', 'include un NEC Verde 1 carico'],
@@ -128,7 +127,8 @@ for (const [file, coppie] of Object.entries(SOSTITUZIONI)) {
   let t = leggi(file);
   for (const [da, verso] of coppie) {
     const n = t.split(da).length - 1;
-    if (!n) { cambi.push(`  ⚠ ${file}: «${da.slice(0, 60)}…» non c'è più`); continue; }
+    // rilanciarlo non deve spaventare: se la frase nuova c'è già, la sostituzione è fatta e non manca niente
+    if (!n) { if (!t.includes(verso)) cambi.push(`  ⚠ ${file}: «${da.slice(0, 60)}…» non c'è più, e nemmeno la frase nuova`); continue; }
     t = t.split(da).join(verso);
     cambi.push(`  ${file}: ${n} × «${da.slice(0, 55)}…»`);
   }

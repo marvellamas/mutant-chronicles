@@ -34,5 +34,11 @@
     { "testo": "talenti-magici-mistici.md", "nota": "Doc di Davide del 27/09 senza numero di versione: non è un manuale del registro, lo legge il solo lotto storico dei testi dei Talenti." },
     { "testo": "layout-app-davide.md", "nota": "Appunti di layout, non un manuale." },
     { "testo": "modifiche-layout-app.md", "nota": "Appunti di layout, non un manuale." }
-  ]
+  ],
+  "_edizioni_in_attesa": "Lotto 189: i file di `data/` che restano a un'edizione precedente perché il manuale nuovo cambia una regola ancora da decidere. Si scrive { \"data/x.json\": { \"<manuale>\": { \"motivo\": \"…\", \"domanda\": \"A.n\" } } }, e `tools/edizioni-dati.mjs` non li segnala più. Un'eccezione senza motivo non è un'eccezione: è un file dimenticato. Oggi è vuoto — tutti e 40 i file dichiarano l'edizione corrente.",
+  "edizioni_in_attesa": {},
+  "_edizioni_citate": "Le edizioni superate che restano in `docs/manuali-txt/` perché un dato o uno strumento le cita ancora, con chi le cita. Quando nessuno le cita più si possono archiviare: l'elenco serve a saperlo senza cercarlo a mano.",
+  "edizioni_citate": {
+    "giocatore-0.50.md": "data/talenti_liberi.json (`fonte_edizione` delle 15 voci superate dalla 0.54) e tools/lotti/lotto_testi_completi_talenti.mjs"
+  }
 }
