@@ -62,6 +62,19 @@ recepisce sta guardando gli stessi file o versioni già cambiate.
 non far passare 48 KB di base64 dentro la conversazione: è completo (finisce con il piè di pagina «DIRETTORE 1»),
 ma non ha l'impronta delle altre. Chi lo recepisce lo riestragga con `estrai-docx.mjs`, che è la forma canonica.
 
+## Che cosa ne è stato (lotto 191, 12/11/2026)
+
+Il lotto 191 ha riscaricato tutti e sette e riconfrontato le impronte: **cinque coincidono** (Giocatore, Magia,
+Armamenti, Equipaggiamento, Mostri), il **Direttore** è stato riestratto con `estrai-docx.mjs` come questo file
+chiedeva — `526ace0ead74a2ca`, 21.356 byte, stesso documento verificato sul contenuto — e i **Veicoli sono
+cambiati**: alle 14:12 del 12/11 Davide ha ripubblicato il manuale, rinominandolo «v0.18» (quindi la regola 3 è
+tornata rispettata e il numero non è più da indovinare) e cambiando indice e figure, non regole.
+
+I sei coincidenti sono stati recepiti in `docs/manuali-txt/` con la versione nel nome; i Veicoli no, perché il
+testo non è più quello su cui sono scritte le conclusioni del 190. Il perché, e tutto il resto, in
+`docs/diff-lotto191-2026-11-12.md`. L'estrazione delle immagini, che qui era descritta a parole, è ora uno
+strumento: `tools/estrai-doc-markdown.mjs`.
+
 ## L'impronta che ci dà Davide
 
 Il JSON dichiara `sha256_manuale_mostri: "d7bd1fb11314dbc123978212d0d5c9ee7065e6447d4779eb80a812a11251169a"`.

@@ -13,7 +13,7 @@
 import { readFileSync, readdirSync } from 'node:fs';
 import { join } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { RADICE, registro, voce } from './manuali.mjs';
+import { RADICE, registro, voce, testoManuale, testoEdizione, righeDiTesto, celleDiTesto } from './manuali.mjs';
 
 /** Come si scrive un manuale dentro `versione_manuale` → il suo id nel registro. */
 export const NOMI = {
@@ -76,6 +76,42 @@ export function quadroEdizioni(radice = RADICE) {
 /** Le righe fuori posto, pronte da stampare. */
 export const edizioniArretrate = (radice = RADICE) => quadroEdizioni(radice)
   .flatMap((r) => r.fuori.map((m) => ({ file: r.file, manuale: m.id, citate: m.citate, corrente: m.corrente })));
+
+/**
+ * L'edizione di un manuale **da cui i dati del repo vengono davvero** (lotto 191).
+ *
+ * Perché serve. Un manuale si recepisce (il testo entra in `docs/manuali-txt/` e il registro lo dichiara corrente)
+ * prima che i dati si rigenerino: fra i due momenti passa un lotto. In quel mezzo, chi confronta un dato con «il
+ * manuale» deve leggere l'edizione **da cui quel dato è stato copiato**, non la corrente — altrimenti un controllo
+ * giusto diventa rosso solo perché Davide ha pubblicato, e l'unica via per farlo tornare verde sarebbe spegnerlo.
+ * L'edizione non si scrive nel controllo: la dice `edizioni_in_attesa`, con il suo motivo e il suo lotto. Quando il
+ * lotto rigenera i dati e toglie l'eccezione, questa funzione torna a dare la corrente da sé.
+ *
+ * Si ferma se due file dichiarano edizioni diverse dello stesso manuale: a quel punto «il manuale dei dati» non
+ * esiste più come cosa sola, e chi legge deve saperlo invece di prendere la prima.
+ */
+export function edizioneDeiDati(id, radice = RADICE) {
+  const corrente = voce(id).versione;
+  const viste = new Set();
+  for (const r of quadroEdizioni(radice)) {
+    for (const m of r.manuali) {
+      if (m.id !== id || m.allineata || !m.eccezione) continue;
+      for (const v of m.citate) if (v !== corrente) viste.add(v);
+    }
+  }
+  if (viste.size > 1) throw new Error(`i dati dichiarano più edizioni di «${id}»: ${[...viste].join(', ')} — «il manuale dei dati» non è più una cosa sola`);
+  return viste.size ? [...viste][0] : corrente;
+}
+
+/** Il testo dell'edizione da cui i dati vengono: la corrente, o quella dichiarata in attesa. */
+export function testoDeiDati(id, radice = RADICE) {
+  const v = edizioneDeiDati(id, radice);
+  return v === voce(id).versione ? testoManuale(id) : testoEdizione(id, v);
+}
+
+/** Le righe piatte e le celle dell'edizione da cui i dati vengono (come `righeManuale`/`celleManuale`). */
+export const righeDeiDati = (id, radice = RADICE) => righeDiTesto(testoDeiDati(id, radice));
+export const celleDeiDati = (id, radice = RADICE) => celleDiTesto(testoDeiDati(id, radice));
 
 if (process.argv[1] === fileURLToPath(import.meta.url)) {
   const quadro = quadroEdizioni();

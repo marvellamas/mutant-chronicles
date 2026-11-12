@@ -89,6 +89,22 @@ export function doppioni(files) {
   return out;
 }
 
+/**
+ * I recepimenti in attesa: un'edizione che su Drive c'è, che sappiamo quale è, e che **non** è in cartella, con
+ * il motivo per cui non lo è (lotto 191: il Veicoli 0.18, cambiato dopo la ricognizione del 190).
+ *
+ * Non è un errore e non ferma niente: è il contrario di un controllo che diventa verde per sbaglio. Senza questa
+ * riga, un registro che dice «Veicoli 0.10» sembrerebbe aggiornato, e nessuno saprebbe che su Drive c'è la 0.18.
+ */
+export const recepimentiInAttesa = () => [...registro().manuali, ...registro().schede]
+  .filter((v) => v.recepimento_in_attesa)
+  .map((v) => ({ id: v.id, nome: v.nome, in_cartella: v.versione, su_drive: v.recepimento_in_attesa.versione, motivo: v.recepimento_in_attesa.motivo, documento: v.recepimento_in_attesa.documento ?? null }));
+
+/** I manuali il cui confronto è stato fatto senza la riga di registro di Davide: una differenza ambigua è un'ipotesi. */
+export const confrontiAllaCieca = () => [...registro().manuali, ...registro().schede]
+  .filter((v) => v.confronto)
+  .map((v) => ({ id: v.id, nome: v.nome, versione: v.versione, confronto: v.confronto }));
+
 /** Le righe da stampare, e se c'è qualcosa che deve fermare chi legge. */
 export function referto(files = null) {
   const righe = quadro(files);
@@ -131,6 +147,20 @@ function stampa(r, conDrive) {
     for (const x of r.diverse) console.log(`  ${x.nome}: registro ${x.disco}, Drive ${x.drive} («${x.titolo}»)`);
   }
   if (!r.fermati && !r.diverse.length) console.log(conDrive ? '\nTutto in ordine: un file corrente per manuale, versioni coincidenti.' : '\nRepo in ordine. Per il confronto con Drive: --drive=<elenco.json>.');
+  const attesa = recepimentiInAttesa();
+  if (attesa.length) {
+    console.log('\nSappiamo di non sapere — su Drive c’è un’edizione più recente che in cartella non è, e si sa perché:');
+    for (const x of attesa) {
+      console.log(`  ${x.nome}: in cartella ${x.in_cartella}, su Drive ${x.su_drive}${x.documento ? ` (${x.documento})` : ''}`);
+      console.log(`    ${x.motivo}`);
+    }
+  }
+  const cieche = confrontiAllaCieca();
+  if (cieche.length) {
+    console.log('\nConfrontati alla cieca — in sezione 7 del Doc non c’è la riga di registro di questa pubblicazione,');
+    console.log('quindi per questi manuali una differenza ambigua è un’ipotesi, non una certezza:');
+    for (const x of cieche) console.log(`  ${x.nome} ${x.versione}: ${x.confronto}`);
+  }
   console.log('\nNota: la data non decide niente. Un manuale può cambiare senza cambiare numero (è successo il 09/11 a');
   console.log('Magia 1.11 ed Equipaggiamento 0.30): il confronto che se ne accorge è l’impronta del testo salvato.');
 }

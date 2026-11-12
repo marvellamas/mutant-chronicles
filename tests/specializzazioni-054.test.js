@@ -2,7 +2,7 @@
 // elenchi delle Specializzazioni per Classe dal Giocatore 0.54 §8.10, Combattimento Senz'Armi (§8.8.1), voci tolte
 // tenute a chi le ha già (A.230), voci di Potere lasciate finché vale la A.185 (A.229), «Indirizzi di Classe» (§3.2).
 import '../tools/guardia-subito.mjs'; // la guardia sulle cartelle vere, comunque si lanci il test
-import { righeManuale } from '../tools/manuali.mjs';
+import { righeDeiDati } from '../tools/edizioni-dati.mjs';
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
@@ -23,7 +23,7 @@ const NUOVA = 'specializzazione-combattimento-senz-armi';
 /** Elenchi del §8.10 letti dal testo del manuale salvato (stesso taglio di tools/lotti/lotto_specializzazioni_054.mjs). */
 function elenchiManuale() {
   // lotto 188: righe piatte dal registro, così la forma dell'esportazione (Markdown o testo semplice) non conta
-  const righe = righeManuale('giocatore');
+  const righe = righeDeiDati('giocatore');
   const i0 = righe.findIndex((r, k) => k > 1000 && r.startsWith('8.10 Cataloghi delle acquisizioni'));
   const b = righe.slice(i0, i0 + 160).map((r) => r.replace(/\t/g, '').trim()).filter(Boolean);
   const out = {};

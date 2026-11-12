@@ -94,11 +94,28 @@ test('i file del registro esistono tutti e il registro è l’unico posto che di
   assert.equal(new Set(drive).size, drive.length, 'due voci con lo stesso ID di Drive');
 });
 
+// Il numero non si scrive qui: lo dice il registro. Dal lotto 191 i manuali cambiano edizione a lotti interi, e un
+// numero scritto in un test è un posto in più da ricordare — cioè un posto in cui restare indietro in silenzio.
 test('testoManuale legge davvero la versione corrente, e un id sbagliato si ferma', () => {
-  assert.match(testoManuale('mostri').slice(0, 400), /VERSIONE 0\.47/);
-  assert.match(testoManuale('giocatore').slice(0, 400), /EDIZIONE CONSULTABILE 0\.54/);
-  assert.match(percorsoManuale('magia').replace(/\\/g, '/'), /magia-1\.11\.md$/);
+  for (const id of ['mostri', 'giocatore', 'magia', 'armamenti', 'equipaggiamento', 'veicoli', 'direttore']) {
+    const v = registro().manuali.find((x) => x.id === id).versione;
+    assert.equal(versioneDichiarata(testoManuale(id)), v, `${id}: la prima pagina del testo letto deve dire ${v}`);
+    assert.ok(percorsoManuale(id).replace(/\\/g, '/').endsWith(`${id}-${v}.md`), `${id}: il percorso deve portare la versione ${v}`);
+  }
   assert.throws(() => testoManuale('mostri-vecchio'), /non è nel registro/);
+});
+
+// Lotto 191: un'edizione che su Drive c'è e in cartella no si dichiara, con il motivo. Non è un errore — è il
+// contrario di un controllo che diventa verde per sbaglio: senza la riga, un registro fermo a un'edizione
+// precedente sembrerebbe aggiornato.
+test('un recepimento in attesa è dichiarato con il motivo, e non si confonde con la versione in cartella', async () => {
+  const { recepimentiInAttesa } = await import('../tools/ricognizione-manuali.mjs');
+  for (const x of recepimentiInAttesa()) {
+    assert.ok(x.motivo && x.motivo.length > 40, `${x.id}: un recepimento in attesa senza motivo è un manuale dimenticato`);
+    assert.notEqual(x.su_drive, x.in_cartella, `${x.id}: se le due versioni coincidono non c'è niente in attesa`);
+    // il testo in cartella resta quello della versione del registro: l'attesa non cambia che cosa si legge
+    assert.equal(versioneDichiarata(testoManuale(x.id)), x.in_cartella);
+  }
 });
 
 // --- la ricognizione (parte D): le funzioni pure si provano qui, la rete no ------------------------------------

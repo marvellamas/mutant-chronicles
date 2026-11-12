@@ -1,7 +1,7 @@
 // Lotto 143 (C): i dieci modelli PNG generici Classe / Grado / EQ (Mostri 0.46, Direttore 0.45 §9.6) in «Crea nemico».
 // L'esempio numerico del manuale è un test (Assaltatore III con EQ Rara); i PX del manuale tornano con la formula del §9.6.
 import '../tools/guardia-subito.mjs'; // la guardia sulle cartelle vere, comunque si lanci il test
-import { testoManuale } from '../tools/manuali.mjs';
+import { testoDeiDati } from '../tools/edizioni-dati.mjs';
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
@@ -13,7 +13,7 @@ import { importaPng } from '../tools/importa-png-generici.mjs';
 
 const { dati } = await datiReali();
 const GRADI = ['I', 'II', 'III', 'IV', 'V', 'VI'];
-const testo = testoManuale('mostri');
+const testo = testoDeiDati('mostri');
 
 test('dieci modelli, sei righe di Grado ciascuno, Avventurieri e Combattenti nell’ordine del manuale', () => {
   const classi = classiPng(dati);

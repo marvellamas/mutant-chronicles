@@ -5,7 +5,7 @@ import '../tools/guardia-subito.mjs'; // la guardia sulle cartelle vere, comunqu
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { controlliCap8, FRASI_CAP8 } from '../tools/lotti/lotto_equipaggiamento_08.mjs';
-import { normalizza as norm, testoManuali } from '../tools/verifica_frasi.mjs';
+import { normalizza as norm, testoManualiDeiDati } from '../tools/verifica_frasi.mjs';
 import { vociDotazione, contiDotazione, armamentiCedibili, creditiIniziali, acquistabili } from '../src/dotazioni.js';
 import { datiReali } from './helpers.js';
 
@@ -16,7 +16,7 @@ test('cap. 8: ogni regola corrisponde a dati e motore; le frasi sono nel Doc', (
   const esiti = controlliCap8(dati);
   assert.deepEqual(esiti.filter((e) => !e.ok).map((e) => `${e.paragrafo} ${e.regola}: ${e.dettaglio}`), []);
   assert.equal(esiti.length, 7);
-  const doc = testoManuali();
+  const doc = testoManualiDeiDati();
   assert.deepEqual(FRASI_CAP8.filter((f) => !doc.includes(norm(f))), []);
   assert.match(dati.regole.dotazioni_iniziali.paragrafo, /Equipaggiamento 0\.5, cap\. 8/);
 });

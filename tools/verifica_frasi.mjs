@@ -5,6 +5,7 @@
 // Lo usa anche tests/effetti-oggetti.test.js.
 import { readFileSync } from 'node:fs';
 import { voci, percorsoManuale, testoEdizione } from './manuali.mjs';
+import { quadroEdizioni } from './edizioni-dati.mjs';
 import { fileURLToPath } from 'node:url';
 
 const RADICE = new URL('../', import.meta.url);
@@ -51,6 +52,27 @@ export function testoManuali() {
   // i Talenti superati dalla 0.54, che i personaggi conservano — lo dichiarano nel dato con `fonte_edizione`, e
   // `frasiMancanti` va a cercarle là: dichiarato, non in silenzio.
   return voci().map((v) => normalizza(readFileSync(percorsoManuale(v.id), 'utf8'))).join('\n');
+}
+
+/**
+ * Le edizioni che i dati **dichiarano** di citare mentre aspettano il lotto che li rigenera: `[{ id, versione }]`,
+ * ricavate da `tools/manuali.json` → `edizioni_in_attesa` (lotto 191).
+ *
+ * Perché non è il difetto del 188 che torna. Allora si leggeva *tutta* la cartella `docs/manuali-txt/`: una frase
+ * risultava trovata perché la diceva un'edizione di quattro versioni fa rimasta lì per caso, e nessuno lo sapeva.
+ * Qui l'elenco non viene dalla cartella ma dalle eccezioni dichiarate, ognuna con il suo motivo e il suo lotto, e
+ * `tests/edizioni-dati-189.test.js` pretende quel motivo. Quando il lotto B rigenera i dati e l'eccezione sparisce,
+ * l'edizione sparisce da qui da sé: la rete si scioglie senza che nessuno debba ricordarsene.
+ */
+export function edizioniDichiarate() {
+  const fuori = [];
+  for (const r of quadroEdizioni()) {
+    for (const m of r.manuali) {
+      if (!m.eccezione || m.allineata) continue;
+      for (const v of m.citate) if (v !== m.corrente) fuori.push({ id: m.id, versione: v, file: r.file });
+    }
+  }
+  return fuori;
 }
 
 /**
@@ -161,6 +183,7 @@ export function frasiEffetti() {
  * Lotto 189: serve alle voci superate, che citano apposta l'edizione in cui esistevano.
  */
 const NOMI_MANUALE = { Giocatore: 'giocatore', Magia: 'magia', Armamenti: 'armamenti', Equipaggiamento: 'equipaggiamento', Veicoli: 'veicoli', Mostri: 'mostri', Direttore: 'direttore' };
+const NOME_DI = Object.fromEntries(Object.entries(NOMI_MANUALE).map(([n, i]) => [i, n]));
 const cacheEdizioni = new Map();
 function testoDellEdizione(etichetta) {
   if (cacheEdizioni.has(etichetta)) return cacheEdizioni.get(etichetta);
@@ -172,23 +195,59 @@ function testoDellEdizione(etichetta) {
   return t;
 }
 
-/** Frasi che non compaiono nei manuali. */
-export function frasiMancanti() {
+/**
+ * Frasi che non compaiono in nessun manuale, e quelle che compaiono soltanto nell'edizione dichiarata dal dato:
+ * `{ mancanti, nellEdizioneDichiarata }`.
+ *
+ * Lotto 191: fra il recepimento di un manuale (questo lotto) e la rigenerazione dei dati (i lotti B e seguenti) una
+ * frase copiata dall'edizione di prima può non stare più nel manuale corrente, perché Davide l'ha riscritta. Non è
+ * un errore dei dati: è la distanza, e la distanza è dichiarata in `edizioni_in_attesa`. Si cerca prima nei manuali
+ * correnti; una frase che si trova soltanto nell'edizione dichiarata si conta a parte e **si dice**, invece di
+ * passare in silenzio (sarebbe il difetto del 188) o di diventare rossa (sarebbe una bugia al contrario).
+ */
+/**
+ * Il testo in cui una frase dei dati può legittimamente stare: i manuali correnti **più** le edizioni dichiarate
+ * in `edizioni_in_attesa` (lotto 191). Lo usa chi controlla che una frase scritta in un dato venga da un manuale.
+ *
+ * Non è tutta la cartella, come leggeva il 188: è la corrente più quelle che un'eccezione dichiara, con il motivo e
+ * il lotto che la chiuderà. Appena i dati si rigenerano, l'elenco si svuota da sé.
+ */
+export function testoManualiDeiDati() {
+  const altre = edizioniDichiarate().map((e) => testoDellEdizione(`${NOME_DI[e.id]} ${e.versione}`)).filter(Boolean);
+  return [testoManuali(), ...new Set(altre)].join('\n');
+}
+
+export function esitoFrasi() {
   const testo = testoManuali();
   const talenti = testoTalentiNuovi();
-  return frasiEffetti().filter((x) => {
+  const dichiarate = edizioniDichiarate()
+    .map((e) => ({ ...e, etichetta: `${NOME_DI[e.id]} ${e.versione}` }))
+    .map((e) => ({ ...e, testo: testoDellEdizione(e.etichetta) }))
+    .filter((e) => e.testo);
+  const mancanti = [];
+  const nellEdizioneDichiarata = [];
+  for (const x of frasiEffetti()) {
     const frase = normalizza(x.frase);
-    if ((x.fonte === 'talenti_nuovi' ? talenti : testo).includes(frase)) return false;
-    // una voce superata vale se la frase sta nell'edizione che la voce dichiara
+    if ((x.fonte === 'talenti_nuovi' ? talenti : testo).includes(frase)) continue;
+    // una voce superata vale se la frase sta nell'edizione che la voce dichiara (lotto 189)
     const sua = x.edizione ? testoDellEdizione(x.edizione) : null;
-    return !(sua && sua.includes(frase));
-  });
+    if (sua && sua.includes(frase)) continue;
+    const dove = dichiarate.find((e) => e.testo.includes(frase));
+    if (dove) nellEdizioneDichiarata.push({ ...x, edizione_trovata: dove.etichetta });
+    else mancanti.push(x);
+  }
+  return { mancanti, nellEdizioneDichiarata };
 }
+
+/** Frasi che non compaiono in nessun manuale, né corrente né dichiarato. */
+export const frasiMancanti = () => esitoFrasi().mancanti;
 
 if (process.argv[1] === fileURLToPath(import.meta.url)) {
   const tutte = frasiEffetti();
-  const mancanti = frasiMancanti();
+  const { mancanti, nellEdizioneDichiarata } = esitoFrasi();
   for (const m of mancanti) console.log(`NON TROVATA  ${m.dove}\n  «${m.frase}»`);
+  for (const m of nellEdizioneDichiarata) console.log(`SOLO NELL’EDIZIONE DICHIARATA (${m.edizione_trovata})  ${m.dove}\n  «${m.frase}»`);
   console.log(`${tutte.length - mancanti.length} frasi su ${tutte.length} trovate nei manuali (quelle dei Talenti v1.0 nel file dei Talenti nuovi).`);
+  if (nellEdizioneDichiarata.length) console.log(`Di queste, ${nellEdizioneDichiarata.length} si trovano solo nell’edizione che il dato dichiara: il manuale nuovo le ha riscritte, e i dati si rigenerano nel lotto segnato in edizioni_in_attesa.`);
   process.exitCode = mancanti.length ? 1 : 0;
 }

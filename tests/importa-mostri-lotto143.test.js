@@ -3,13 +3,13 @@
 // e il controllo a mano ha trovato due difetti su cinque: un valore scritto nella pagina comune (AC) e un ingombro parziale
 // al posto del completo. Qui: nessun campo numerico saltato, AC dal blocco, ingombro completo, controllo incrociato.
 import '../tools/guardia-subito.mjs'; // la guardia sulle cartelle vere, comunque si lanci il test
-import { testoManuale } from '../tools/manuali.mjs';
+import { testoDeiDati } from '../tools/edizioni-dati.mjs';
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync, readdirSync } from 'node:fs';
 import { importa, leggiEsistenti, leggiRighe, dividi, differenze, controlloIncrociato, norm } from '../tools/importa-mostri.mjs';
 
-const testo = testoManuale('mostri');
+const testo = testoDeiDati('mostri');
 const { risultati } = importa(testo);
 const esistenti = leggiEsistenti();
 const dir = new URL('../esempi/nemici/mostri/', import.meta.url);

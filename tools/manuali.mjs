@@ -105,8 +105,11 @@ export function versioniChePartono() {
  * il 10/11 `tests/specializzazioni-054.test.js` cercava una riga «8.10 Cataloghi…» che nel Markdown è
  * «## **8.10 Cataloghi…**». Chi legge la struttura di un manuale passa di qui, e la forma smette di contare.
  */
-export function righeManuale(id) {
-  return testoManuale(id)
+export const righeManuale = (id) => righeDiTesto(testoManuale(id));
+
+/** Le stesse righe piatte, da un testo qualunque: serve a chi legge un'edizione precisa (lotto 191). */
+export function righeDiTesto(testo) {
+  return String(testo)
     .replace(/\r/g, '')
     .split('\n')
     .map((r) => r
@@ -127,8 +130,11 @@ export function righeManuale(id) {
  * `| Attività pesante | Nessuno | …` in un manuale esportato in testo semplice. Qui le barre e le tabulazioni
  * diventano la stessa cosa — un confine fra celle — e la forma smette di contare.
  */
-export function celleManuale(id) {
-  return testoManuale(id)
+export const celleManuale = (id) => celleDiTesto(testoManuale(id));
+
+/** Le stesse celle, da un testo qualunque: serve a chi legge un'edizione precisa (lotto 191). */
+export function celleDiTesto(testo) {
+  return String(testo)
     .replace(/\r/g, '')
     .replace(/\\([^A-Za-z0-9\s])/g, '$1')
     .replace(/\*/g, '')

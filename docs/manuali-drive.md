@@ -9,7 +9,16 @@ Dal 26 settembre 2026 i manuali vivono come Google Doc nella cartella Drive di D
 
 ## Registro
 
-Ultimo controllo: **10 novembre 2026 (lotto 188)**: ricognizione completa della cartella di lavoro, 27 voci in una
+Ultimo controllo: **12 novembre 2026 (lotti 190 e 191)**. Il 190 ha fatto la ricognizione dei sette manuali che
+Davide ha riscritto l'11 e il 12/11 (`docs/ricognizione-manuali-2026-11-12-lotto190.md`); il 191 li ha recepiti nel
+repo (`docs/diff-lotto191-2026-11-12.md`). Lo stato: **Giocatore 0.62, Magia 1.17, Armamenti 0.83, Equipaggiamento
+0.41, Mostri 0.66, Direttore 0.49** in cartella; **Veicoli** fermo alla 0.10 con il recepimento della 0.18 in
+attesa dichiarata, perché il testo su Drive è cambiato dopo la ricognizione. Sei dei sette sono stati **confrontati
+alla cieca**: in sezione 7 del Doc «Per Davide» ci sono tre righe di registro su ventisette pubblicazioni. Undici
+edizioni superate che nessuno cita più sono in `docs/manuali-txt/archivio/`. Tutti e 40 i file di `data/` restano
+alle edizioni di prima, dichiarate in `edizioni_in_attesa`: li rigenerano i lotti B–G della proposta del 190.
+
+Controllo precedente: **10 novembre 2026 (lotto 188)**: ricognizione completa della cartella di lavoro, 27 voci in una
 pagina sola. Lo stato: **dieci manuali** (Giocatore 0.54, Magia 1.11, Armamenti 0.74, Equipaggiamento 0.30, Veicoli
 0.10, **Mostri 0.47**, Direttore 0.46, Talenti/Specializzazioni/Maestrie 1.1, Revisione NEC 2.11, Energia 1.0),
 **cinque schede** (ASA Scout 0.6, Neverlost 1.6, Wächter 1.2, Guanti di Lucas 1.0, CyberArma Dimitri 1.0), **i due
@@ -150,7 +159,7 @@ Il 28/10 mattina la ricerca restituì 5 file e un `nextPageToken`: non fu seguit
 1. Per ognuno dei Doc del registro leggere `modifiedTime` e confrontarlo con il registro: i sei storici (quattro manuali, E&L e per-davide.md) **e i cinque Doc e il PDF trovati il 04/10** (Veicoli, ASA Scout MK4, Mostri, Talenti magici e mistici, Modifiche Layout APP, Prontuario). Ogni tanto elencare anche la cartella (`parentId = '1p4jh2tKIN9kRimD4ifzth_YjWUZTH6-6'`, con la paginazione: la prima pagina non li mostra tutti) per accorgersi dei Doc nuovi.
 2. Se sono tutti uguali: "manuali e risposte invariati", fine.
 3. Se diverso:
-   a. leggere il Doc e salvarne il testo in `docs/manuali-txt/<manuale>.md` (una copia per manuale, sovrascritta; la precedente resta in Git);
+   a. leggere il Doc e salvarne il testo in `docs/manuali-txt/<manuale>-<versione>.md` — **la versione nel nome, e uguale a quella della prima pagina** (regola 3) — e aggiornare `tools/manuali.json`. Un solo testo corrente per manuale (regola 1): l'edizione superata resta in cartella **solo se un dato o uno strumento la cita**, dichiarato in `edizioni_citate`; quando nessuno la cita più va in `docs/manuali-txt/archivio/` (lotto 191), non cancellata. Se il testo nuovo non si recepisce — per esempio perché e cambiato dopo la ricognizione su cui si sta lavorando — si dichiara `recepimento_in_attesa` con il motivo, e la ricognizione lo stampa sotto «Sappiamo di non sapere»;
    b. `git diff` sul file per vedere esattamente cosa è cambiato, paragrafo per paragrafo;
    c. classificare ogni differenza: **regola** (tocca calcolo o dati → JSON da aggiornare), **testo** (descrizioni, Talenti, schede → JSON da aggiornare, solo testo), **cosmetica** (nessuna azione);
    d. aggiornare i JSON interessati, con `versione_manuale` = titolo + data di modifica del Doc;
@@ -159,7 +168,9 @@ Il 28/10 mattina la ricerca restituì 5 file e un `nextPageToken`: non fu seguit
    g. riepilogo: manuale, paragrafi cambiati, cosa è stato applicato, cosa resta da decidere.
    Per il Doc «per-davide.md» il testo (export Markdown) va in `docs/per-davide.md`, sovrascritto; le risposte nuove sono in coda, nella sezione 7.
    Per il Doc E&L il testo va in `docs/risposte-master-2026-09-26.md` (intestazione di una riga, poi il testo del Doc) e ogni voce nuova diventa una decisione datata in `docs/risposte-master.md`.
-4. Come si scarica il testo: strumento Drive `download_file_content` con `exportMimeType: "text/markdown"`. Il risultato è JSON con il testo in base64 nel campo `content`. Per i manuali grandi lo strumento lo salva da solo in un file di `tool-results` della sessione: si decodifica da lì con uno script, senza ricopiarlo a mano. Per un confronto con un PDF c'è `tools/confronta_doc_pdf.py`.
+4. Come si scarica e si estrae il testo. **Google Doc:** `download_file_content` con `exportMimeType: "text/markdown"`, poi `node tools/estrai-doc-markdown.mjs <esportazione> <destinazione.md>` — l'esportazione **incolla le immagini dentro il testo** come base64 in coda (762 KB su 1,2 MB per gli Armamenti 0.83), e lo strumento le toglie contandole, lasciando i richiami `![][imageN]` dove erano. **Word:** `download_file_content` senza `exportMimeType`, poi `node tools/estrai-docx.mjs <file.docx|file.json> <destinazione.md>`; la forma dell'uscita (titoli `#`, un paragrafo per riga) la leggono gli importatori dei Mostri, chi la cambia li rilegge. Per i file grandi lo strumento di Drive salva da sé in `tool-results` della sessione: i due strumenti accettano anche quel JSON. Per un confronto con un PDF c'è `tools/confronta_doc_pdf.py`.
+6. Se della pubblicazione **non c'è la riga di registro** in sezione 7 del Doc «Per Davide», il confronto è alla cieca: si scrive `confronto` nella voce del registro, perché per quel manuale una differenza ambigua è un'ipotesi e non una certezza (lotto 191).
+7. Fra il recepimento di un manuale e la rigenerazione dei dati passa un lotto: in quel mezzo ogni file di `data/` che resta indietro si dichiara in `edizioni_in_attesa` con il motivo e il lotto, e chi confronta un dato con il manuale legge l'edizione da cui quel dato viene (`edizioneDeiDati`, `testoDeiDati` in `tools/edizioni-dati.mjs`), non la corrente.
 5. Le tabelle dei Doc sono strutturate: per i cataloghi, l'estrazione può passare dal Doc (export HTML/DOCX) invece che da pdfplumber sul PDF. Da valutare quando arriva il primo catalogo modificato.
 
 ## Regole

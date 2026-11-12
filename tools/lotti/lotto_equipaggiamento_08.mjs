@@ -9,7 +9,9 @@
 import { readFileSync, writeFileSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import { normalizza, testoManuali } from '../verifica_frasi.mjs';
-import { versioneManuale } from '../manuali.mjs';
+// L'edizione da cui i dati vengono davvero, non la corrente: fra il recepimento di un manuale e la rigenerazione
+// dei dati passa un lotto, e in quel mezzo il confronto va fatto con l'edizione dichiarata (lotto 191).
+import { edizioneDeiDati } from '../edizioni-dati.mjs';
 
 const RADICE = new URL('../../', import.meta.url);
 
@@ -43,7 +45,7 @@ export function controlliCap8(dati) {
   // §8: le dotazioni sono quelle del Giocatore (§§2.16.1–2.16.30), alla versione corrente
   // Lotto 189: l'edizione corrente la dice il registro, non un numero scritto qui: il controllo è «dotazioni.json
   // dichiara l'edizione corrente del Giocatore», e chi aggiorna il manuale non deve ricordarsi di questa riga.
-  const edizioneGiocatore = versioneManuale('giocatore');
+  const edizioneGiocatore = edizioneDeiDati('giocatore');
   c('§8', `dotazioni dal Manuale del Giocatore ${edizioneGiocatore}`, new RegExp(`Giocatore ${edizioneGiocatore.replace('.', '\\.')}`).test(dati.dotazioni.versione_manuale ?? ''), dati.dotazioni.versione_manuale);
   // §8.1 «Dispositivo alimentato»: il NEC previsto dalla scheda è compreso e del catalogo
   const cat = dati.equipaggiamento;

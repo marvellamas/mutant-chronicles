@@ -7,7 +7,7 @@ import { calcolaScheda } from '../src/calc.js';
 import { catalogo } from '../src/equipaggiamento.js';
 import { massimiSessione, inizializzaSessione } from '../src/sessione.js';
 import { preparaStampa, schemaQuadratini } from '../src/stampa.js';
-import { normalizza, testoManuali } from '../tools/verifica_frasi.mjs';
+import { normalizza, testoManualiDeiDati } from '../tools/verifica_frasi.mjs';
 import { datiReali } from './helpers.js';
 import { ARCANISTA } from './personaggi.js';
 
@@ -30,7 +30,7 @@ test('Magia §24.7: taglie, prezzi per PM, Grado e SnT, reperibilità', () => {
   ]);
   for (const b of batterie) assert.equal(b.costo, b.artefatto.contenitore.capacita_pm * (b.artefatto.contenitore.energia === 'Bianco' ? 1000 : 200), b.id);
   // le frasi della nota sono del manuale
-  const manuali = testoManuali();
+  const manuali = testoManualiDeiDati();
   const nuove = batterie.filter((b) => b.artefatto.contenitore.capacita_pm > 5);
   assert.equal(nuove.length, 19);
   for (const f of nuove[0].note_manuale.split(/(?<=\.)\s+/)) assert.ok(manuali.includes(normalizza(f)), f);
