@@ -79,4 +79,5 @@ export const ARGOMENTI = {
   'edizioni-dati.mjs': [],
   'lotto_192_profilo_abilita.mjs': ['scrivi'],
   'lotto_193_morente.mjs': ['scrivi'],
+  'adegua-abilita.mjs': ['cartella', 'salvataggi', 'applica', 'annulla', 'stato'],
 };

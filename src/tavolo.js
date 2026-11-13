@@ -42,7 +42,11 @@ export function vistaPlancia(testo, dati, file = null, round = null) {
   const ar = eq.arEffettiva ?? eq.ar ?? null;
   const difese = scheda.abilita.find((a) => a.nome === (eq.abilitaDifese ?? 'Difese')) ?? null;
   const grado = (n, stati) => ({ grado: n ?? 0, nome: stati?.[n ?? 0]?.nome ?? null });
+  // lotto 194: a che punto è l'adeguamento delle Abilità di questo PG (la plancia lo mostra al Direttore)
+  let adeguamento = null;
+  try { adeguamento = statoPerPlancia({ scelte, livelli, correzioni_master: scelte.correzioniMaster ?? [] }, dati); } catch { adeguamento = null; }
   return {
+    adeguamento,
     ...base,
     completa: true,
     corporazione: scheda.corporazione,

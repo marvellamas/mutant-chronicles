@@ -51,6 +51,7 @@ import { provenienzaCarico } from '../carico.js';
 import { talentiSituazionali } from '../talenti.js';
 import { schedaTalento } from '../talenti-testi.js';
 import { nomeCheSiApre } from './talento-leggibile.js';
+import { riquadroAdeguamento, riquadroNotaDiPrima } from './adeguamento.js';
 import { dettagliRicordati } from './apribili.js';
 import { gradiTaumaturgici } from '../incantesimi.js';
 import {
@@ -1536,6 +1537,8 @@ function tabAbilita(ctx, d) {
     h('div', { class: 'abilita-layout' },
       h('div', { class: 'abilita-principale' },
         sezione('Abilità',
+          // lotto 194: l'adeguamento aperto sta in testa, perché al tavolo è la cosa da fare adesso
+          riquadroAdeguamento(ctx),
           eccesso ? avvisoPuntiEccesso(ctx, eccesso) : null,
           h('div', { class: 'abilita-affiancate' }, tabella(d.categorie.slice(0, meta)), tabella(d.categorie.slice(meta))),
           rigaProfiloAbilita(ctx),
@@ -1572,6 +1575,8 @@ function tabAbilita(ctx, d) {
     }))) : null,
     // 27/10: i Talenti di prima del passaggio ai Talenti nuovi, letti dal registro del master; li vede ogni giocatore
     riquadroTalentiDiPrima(ctx),
+    // lotto 194: le Abilità di prima dell'adeguamento, per chi è già stato adeguato (la nota resta anche dopo)
+    riquadroNotaDiPrima(ctx),
     // Tecniche Interiori: nella tab Poteri, con «Attiva» (richiesta di Davide del 02/10)
     d.tecniche.length || d.tecnicheAmmesse ? h('p', { class: 'nota rimando-tecniche' }, `Tecniche Interiori (${d.tecniche.length} / ${d.tecnicheAmmesse}): vedi Poteri.`) : null,
   ];

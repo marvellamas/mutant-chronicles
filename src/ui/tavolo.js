@@ -1369,7 +1369,11 @@ function cartaPg(ctx, v, r, diTurnoOra = false, colpito = null, durate = [], rou
       v.ritratto ? h('img', { class: 'ritratto-plancia', src: v.ritratto, alt: '' }) : null,
       h('div', {},
         h('h2', {}, h('button', { type: 'button', class: 'btn-link nome-plancia', title: `Apri ${v.nome} (le modifiche si fanno nella sua scheda)`, onclick: apri }, v.nome)),
-        h('p', { class: 'nota' }, `${v.livello}° livello · ${v.completa ? [v.corporazione, v.classi.map((c) => `${c.nome} ${c.grado}`).join(', ')].filter(Boolean).join(' · ') : 'scheda incompleta'}`)),
+        h('p', { class: 'nota' }, `${v.livello}° livello · ${v.completa ? [v.corporazione, v.classi.map((c) => `${c.nome} ${c.grado}`).join(', ')].filter(Boolean).join(' · ') : 'scheda incompleta'}`),
+        // lotto 194: a che punto è l'adeguamento delle Abilità, così il Direttore non passa la serata a chiedere
+        v.adeguamento && v.adeguamento.stato !== 'adeguato'
+          ? h('p', { class: `nota adeguamento-plancia adeguamento-${v.adeguamento.stato.replace(' ', '-')}` }, `Abilità: ${v.adeguamento.testo}`)
+          : null),
       v.completa && colpito && ctx.scontroAperto?.() ? pulsanteColpito(ctx, () => colpito(v, r)) : null),
     // «Modifica master» (12/10/2026): solo sul PC del server; apre la scheda in modalità master
     ctx.master !== true ? h('p', { class: 'plancia-master nota non-master', title: ctx.statoMaster?.motivo ?? null }, RIGA_CARTA_NON_MASTER) : h('p', { class: 'plancia-master' },

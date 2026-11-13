@@ -28,6 +28,7 @@ import { permessoSalita, sfasamento, scelteDelLivello, TIPO_CONCESSIONE, CHIAVE_
 import { eventiConPunti, applicaSpostamento, descriviSpostamento, descriviEccezioni, descriviRiassegnazione, controllaPuntiDaTablet } from '../sposta-punti.js';
 import { apriSpostaPunti } from './sposta-punti.js';
 import { leggiMomento, attoCampagna, serverCartella, elencoCartella, leggiCartella, leggiCartellaConRevisione, scriviCartella, contestoMasterQui, pingMasterQui, salvaBackupMaster, leggiBackupMaster } from './cartella.js';
+import { confermaAssegnazione, assegna as assegnaAdeguamento, adeguamentoAperto, puntiDellEvento, conPunti } from '../adeguamento-abilita.js';
 import { modalitaMaster, mostraMarchio, statoContestoMaster, registro as registroMaster, nuovaCorrezione, aggiungiCorrezione, annullaCorrezione, avvisoAnnulla, registraDiretta, differenzeDirette, differenzeOggetti, ripristinoDiretta, descriviScelte, soloScelte, ripristinaScelte, masterDiverso, normalizzaCircostanzeMaster } from '../correzioni-master.js';
 import { descriviVoce, postiTalenti, applicaSceltaTalento, eccezioneSpecializzazione, scelteSuccessive, applicaSceltaSuccessiva, adattaScelteSuccessive } from '../avanzamento.js';
 import { riquadroTalenti } from './talenti-scelta.js';
@@ -387,6 +388,15 @@ function testoSalvataggioFallito() {
   return archivio.erroreSalvataggio() === 'quota'
     ? 'Spazio del browser esaurito: le ultime modifiche NON sono salvate. Usa «SALVA PG (Esporta JSON)» subito, poi esporta e rimuovi i personaggi vecchi (o i ritratti) dalla pagina iniziale.'
     : 'Il browser non permette il salvataggio: usa «SALVA PG (Esporta JSON)» per non perdere il personaggio.';
+}
+
+/**
+ * Lotto 194: il personaggio come file, per i motori che lavorano sui file (src/adeguamento-abilita.js). Le
+ * correzioni del master in memoria viaggiano con le scelte (`scelte.correzioniMaster`); nel file stanno a parte.
+ */
+function fileDelPersonaggio() {
+  const { correzioniMaster, ...scelte } = stato.scelte ?? {};
+  return { scelte, livelli: stato.livelli ?? [], ...(Array.isArray(correzioniMaster) && correzioniMaster.length ? { correzioni_master: correzioniMaster } : {}) };
 }
 
 function persisti() {
@@ -2175,8 +2185,38 @@ function renderSchedaInterna({ mantieniScorrimento = false } = {}) {
     livelloPx: infoLivelloPx(),
     // Talenti v1.0 (lotto 2): il riquadro «Da scegliere» (src/ui/talenti-scelta.js); i posti da postiTalenti, il conto unico
     talenti: contestoTalenti(inMaster),
+    // Lotto 194: l'adeguamento delle Abilità (§8.3.1). Il pannello legge il file com'è adesso; la bozza è il numero
+    // che il giocatore vede, non un'aggiunta a qualcosa di nascosto, così «−» torna indietro senza ricominciare.
+    fileAdeguamento: () => fileDelPersonaggio(),
+    bozzaAdeguamento: stato.bozzaAdeguamento ?? null,
     azioni: {
       vaiTab,
+      // Lotto 194: l'adeguamento delle Abilità, una scelta alla volta
+      adeguamento: {
+        punto: (nome, delta) => {
+          const file = fileDelPersonaggio();
+          const ap = adeguamentoAperto(file, dati);
+          if (!ap) return;
+          const bozza = stato.bozzaAdeguamento ?? puntiDellEvento(file, ap.livello);
+          stato.bozzaAdeguamento = assegnaAdeguamento(file, bozza, nome, delta, dati);
+          renderScheda({ mantieniScorrimento: true });
+        },
+        azzera: () => { stato.bozzaAdeguamento = {}; renderScheda({ mantieniScorrimento: true }); },
+        conferma: () => {
+          const file = fileDelPersonaggio();
+          const ap = adeguamentoAperto(file, dati);
+          if (!ap) return;
+          const bozza = stato.bozzaAdeguamento ?? puntiDellEvento(file, ap.livello);
+          const esito = confermaAssegnazione(file, bozza, dati);
+          if (!esito.ok) { stato.messaggioScheda = { tipo: 'errore', testo: esito.motivo }; renderScheda({ mantieniScorrimento: true }); return; }
+          stato.scelte = { ...esito.file.scelte, correzioniMaster: esito.file.correzioni_master ?? stato.scelte.correzioniMaster };
+          stato.livelli = esito.file.livelli;
+          stato.bozzaAdeguamento = null;
+          persisti();
+          stato.messaggioScheda = { tipo: 'ok', testo: 'Adeguamento confermato: la scheda è quella nuova. La nota di prima resta, se qualcosa non torna.' };
+          renderScheda({ mantieniScorrimento: true });
+        },
+      },
       // 08/10: «Muovi il PG sulla mappa» (riquadro «Scontro in corso»): la vista tablet della scena dello scontro, con il PG
       muoviSullaMappa: stato.scontroPg && chiaveCartellaAperta() ? () => vai(urlMuovi(chiaveCartellaAperta(), stato.scontroPg.id, stato.id)) : null,
       // A.136: in «Attacca!» la Corsa o lo Scatto del PG nel Round, dalla scena dello scontro
