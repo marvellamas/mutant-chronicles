@@ -2716,3 +2716,34 @@ compensa (e con che cosa)? Serve prima dell'adeguamento al tavolo. `TODO(Davide)
 
 Il primo numero libero diventa **A.268**. Restano aperte le sei del lotto 181 (A.260–A.265), la nuova A.267 e la
 A.246, che è una decisione del Direttore al tavolo.
+
+## 13/11/2026 — lotto 193, il Morente e tre risposte già scritte nel Doc E&L
+
+**A.159 applicata per intero** (§§5.14.2–5.14.3 del Giocatore 0.62 e registrazione completa approvata nel Doc
+E&L). Il Morente c'era dal 16/10; questo lotto ha chiuso quattro distanze: il contatore **esaurito** e quello
+**disattivato** da una stabilizzazione sono due stati distinti e non si confondono più; la **morte la registra il
+Direttore** e si annulla (l'app non la dichiara da sé); chi soccorre vede **prima di spendere l'azione** se quello
+che sta per fare stabilizza, con accanto le sette cose che non stabilizzano e il perché; l'**UMC Automatica**
+interviene solo a fine attacco e non resuscita. Aggiornata la frase del §5.14 riscritta dal manuale nuovo («Ogni
+nuova Ferita fa avanzare di uno stato **fino a Morente**»). *Scelta dichiarata:* la registrazione, al punto 9, dice
+che a 0 con contatore attivo «il personaggio passa a Morto»; l'app si ferma un passo prima e mette il comando in
+mano al Direttore, perché l'ultima parola è del master e un tocco sbagliato non può essere definitivo. È nel
+pacchetto per il Doc, per esteso: se Davide preferisce, si cambia.
+
+**Tre risposte trovate già scritte nel Doc E&L** (blocco «Adeguamento approvato delle Abilità e passaggio al
+livello 8», 11/11/2026), che stavamo per chiedere a voce:
+
+- **la destinazione dei sette PG è il livello 8**, con tre Gradi complessivi, e il monte è **7 × 3 = 21 punti
+  liberi**, inclusi quelli dei livelli 1, 4 e 8. Non 14;
+- **Oshi Nagata** è già stato ricreato come Assaltatore II e al livello 8 passa ad **Assaltatore III**:
+  l'adeguamento non ripristina Gradi o benefici da Lestofante;
+- **i due che ricevono l'avanzamento senza PX non si chiedono a Davide**: «i nomi non sono stati specificati e non
+  devono essere dedotti o inventati. La funzione straordinaria è disponibile al Direttore». È una scelta del
+  Direttore al tavolo, come la A.246.
+
+Lo stesso blocco **conferma il lotto 192**: approva i venticinque profili 4/7/9/4, le sette correzioni singole e i
+casi numerici del multiclasse (Pilotare e Tecnologia 13, Medicina 18), e aggiunge che con i profili nuovi Cultura è
+P in entrambe le Classi dell'esempio e usa limite 20.
+
+Nessuna domanda nuova: il primo numero libero resta **A.268**. Restano aperte le sei del lotto 181 (A.260–A.265),
+la A.267 del lotto 192 e la A.246, che è una decisione del Direttore al tavolo.
