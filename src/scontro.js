@@ -802,11 +802,14 @@ export function morenteDopoColpo(s, p, feritePrima, feriteDopo, dati) {
 export function stabilizzaNemico(s, id, dati, adesso) {
   const p = s.partecipanti.find((x) => x.id === id);
   if (p?.tipo !== 'nemico') throw new Error('partecipante non trovato fra i nemici');
-  if (!p.morente) return s;
+  if (!p.morente || p.morente.attivo === false) return s;
   const grave = Math.max(0, gradoMorente(dati) - 1);
   const nome = dati.regole.ferite.stati[grave - 1]?.nome ?? 'Grave';
-  const t = { ...s, partecipanti: s.partecipanti.map((x) => (x.id === id ? { ...x, ferite: grave, morente: undefined } : x)) };
-  return conRiga(t, `${p.nome}: stabilizzato, torna a ${nome} e il contatore si spegne (A.164).`, adesso);
+  // lotto 193: il contatore si **disattiva**, non sparisce — anche per un nemico. Un contatore disattivato a 0
+  // non è un contatore esaurito, e la plancia del Direttore deve poterlo distinguere (§5.14.2).
+  const mo = { ...p.morente, attivo: false, quando: adesso ?? new Date().toISOString() };
+  const t = { ...s, partecipanti: s.partecipanti.map((x) => (x.id === id ? { ...x, ferite: grave, morente: mo } : x)) };
+  return conRiga(t, `${p.nome}: stabilizzato, torna a ${nome} e il contatore si disattiva (§5.14.2).`, adesso);
 }
 
 /** A.164: toglie (o rimette) Round al contatore di un nemico Morente: nuove Ferite fuori turno, correzioni. */

@@ -77,7 +77,7 @@ import { preparaStampa, preparaTab, normalizzaOpzioniStampa, versioniCompatte, v
 import { renderTab, tabFissi, ALIAS_TAB, titoloSalvataggio } from './tab.js';
 import { dimenticaApribili } from './apribili.js';
 import {
-  massimiSessione, allineaSessione, variaSessione, modificaSessione, stabilizzaMorente, scalaMorente, attivaArmaSessione, terminaArmaSessione, commutaContenitoreSessione, commutaStato, commutaCondizioneOggetto, commutaTalento, commutaBonusTalenti, impostaCondizioneArma, riparaOggetto, spendiPmLancio, ricaricaMatrice, attivaArtefatto, usaArtefatto, attivaTecnicaSessione, nuovoRoundSessione, terminaTecnicaSessione, usaUnaVoltaSessione, azzeraUsoSessione, nuovaSessione, convertiDistintivi, sessioneDopoLivello,
+  massimiSessione, allineaSessione, variaSessione, modificaSessione, stabilizzaMorente, scalaMorente, registraMorte, annullaMorte, attivaArmaSessione, terminaArmaSessione, commutaContenitoreSessione, commutaStato, commutaCondizioneOggetto, commutaTalento, commutaBonusTalenti, impostaCondizioneArma, riparaOggetto, spendiPmLancio, ricaricaMatrice, attivaArtefatto, usaArtefatto, attivaTecnicaSessione, nuovoRoundSessione, terminaTecnicaSessione, usaUnaVoltaSessione, azzeraUsoSessione, nuovaSessione, convertiDistintivi, sessioneDopoLivello,
   penalitaSessione, variaMunizioni, consumaColpi, scegliGranata, granateDiPartenza, ricaricaArma, togliCellaArma, inserisciCellaArma, variaPiCellaArma, separaCellaArma, riempiCaricatoriArma, togliCaricatoreArma, inserisciCaricatoreArma, riempiCaricatoreArma, caricaDaCarichino, preparaCarichino, variaChroma, variaIntegrita, variaNec, ricaricaConTrasformatore,
 } from '../sessione.js';
 import { conOrdinale } from '../lingua.js';
@@ -2243,6 +2243,24 @@ function renderSchedaInterna({ mantieniScorrimento = false } = {}) {
         if (!nuova) return;
         cambiaSessione(nuova);
         stato.messaggioScheda = { tipo: 'ok', testo: dati.regole.ferite.morente?.stabilizza?.nota ?? 'Stabilizzato: si torna a Grave.' };
+        renderScheda({ mantieniScorrimento: true });
+      },
+      // Lotto 193: la morte la **registra il Direttore**, non l'app, e si annulla. Il contatore esaurito
+      // resta un avviso: un tocco sbagliato nel momento più teso della serata non può essere definitivo.
+      registraMorte: async () => {
+        const R = dati.regole.ferite.morente?.morte ?? {};
+        const nome = stato.scelte?.nome || 'questo personaggio';
+        const ok = await chiedi({ titolo: R.registra ?? 'Registra la morte', testo: (R.conferma ?? 'Registrare la morte di {nome}?').replace('{nome}', nome), si: R.registra ?? 'Registra', pericolo: true });
+        if (!ok) return;
+        cambiaSessione(registraMorte(stato.sessione, massimi, { da: stato.master ? 'Direttore' : null }));
+        stato.messaggioScheda = { tipo: 'avviso', testo: R.nota ?? 'Morte registrata: si può annullare.' };
+        renderScheda({ mantieniScorrimento: true });
+      },
+      annullaMorte: () => {
+        const nuova = annullaMorte(stato.sessione, massimi);
+        if (!nuova) return;
+        cambiaSessione(nuova);
+        stato.messaggioScheda = { tipo: 'ok', testo: 'Morte annullata: il personaggio torna com’era.' };
         renderScheda({ mantieniScorrimento: true });
       },
       commutaStato: (id) => cambiaSessione(commutaStato(stato.sessione, id, massimi)),

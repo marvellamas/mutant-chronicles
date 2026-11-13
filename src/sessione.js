@@ -30,7 +30,9 @@
 // chroma: PM attuali di ogni contenitore di Chroma (Magia sez. 6), limitati alla sua capacità. Non
 // si ricaricano con «Ricarica» né con «Nuova sessione»: solo convertendo PM (Magia sez. 6, §7.5.1).
 // ferite: 0 = nessuna, 1…5 = gli Stati di Ferita di regole.json (§5.14), 6 = oltre Grave (Morente).
-// morente: contatore di Morente (A.159, src/morente.js), { dal: Round d'ingresso, iniziale: COS, tolti? }.
+// morente: contatore di Morente (A.159, src/morente.js), { dal: Round d'ingresso, iniziale: COS, tolti? };
+//   dal lotto 193 `attivo: false` segna il contatore **disattivato** da una stabilizzazione, che non è un
+//   contatore esaurito. morte: la morte registrata dal Direttore, { registrata, quando, da?, motivo? }.
 // C'è solo quando il personaggio è Morente; i Round che restano si ricavano dal Round corrente.
 // affaticamento: indice in regole.json → affaticamento.stati (§5.19), 0 = Riposato.
 // corruzione: indice in regole.json → corruzione.stati (§5.20), 0 = Umano; «Nuova sessione» non lo azzera.
@@ -540,7 +542,10 @@ function morenteDi(sessione, m) {
 function statiConMorente(sessione, m) {
   const attivi = Array.isArray(sessione.statiAttivi) ? [...new Set(sessione.statiAttivi.filter((id) => m.stati.includes(id)))] : [];
   const stato = m.morente?.stato;
-  const entra = !isOggetto(sessione.morente) && !!morenteDi(sessione, m);
+  // lotto 193: un contatore disattivato dalla stabilizzazione non è un ingresso; un episodio nuovo sì
+  const prima = isOggetto(sessione.morente) && sessione.morente.attivo !== false;
+  const adesso = morenteDi(sessione, m);
+  const entra = !prima && !!adesso && adesso.attivo !== false;
   if (entra && stato && m.stati.includes(stato) && !attivi.includes(stato)) attivi.push(stato);
   return attivi;
 }
@@ -609,6 +614,9 @@ export function allineaSessione(sessione, m) {
     ...(() => { const t = allineaTiri(sessione.tiri); return t.length ? { tiri: t } : {}; })(),
     // A.159: contatore di Morente (src/morente.js); la chiave c'è solo quando il personaggio è Morente
     ...(() => { const mo = morenteDi(sessione, m); return mo ? { morente: mo } : {}; })(),
+    // Lotto 193: la morte **registrata dal Direttore** (src/morente.js). La chiave c'è solo se l'ha registrata:
+    // il contatore esaurito da solo non la scrive mai, e «Annulla la morte» la toglie.
+    ...(isOggetto(sessione.morte) && sessione.morte.registrata === true ? { morte: { ...sessione.morte, registrata: true } } : {}),
     // A.158: armi attivate a Round (CyberArma, src/attivazione-arma.js); la chiave c'è solo se ce n'è una in corso
     ...(() => { const at = allineaAttivazioniArmi(sessione.attivazioniArmi, m.oggetti ?? null, sessione.round); return Object.keys(at).length ? { attivazioniArmi: at } : {}; })(),
     // lotto 173: attivazioni lunghe in corso (Anello con Rigenerazione 9, src/attivazioni-lunghe.js); solo se ce n'è una
@@ -949,11 +957,31 @@ export function descriviFerite(n, dati) {
  * Stato di Ferita) e il contatore si spegne. Non concede nulla: PV, PM, applicazioni e cartucce si segnano
  * a parte. null se il personaggio non è Morente.
  */
-export function stabilizzaMorente(sessione, m) {
+export function stabilizzaMorente(sessione, m, { quando = null } = {}) {
   const s = allineaSessione(sessione, m);
-  if (!s.morente) return null;
-  // il gradino torna a Grave: allineaSessione spegne da sé il contatore (src/morente.js)
-  return modificaSessione(s, { ferite: Math.max(0, m.ferite - 1), morente: null }, m);
+  if (!s.morente || s.morente.attivo === false) return null;
+  // Lotto 193: il contatore si **disattiva**, non sparisce. Un contatore disattivato a 0 non è un contatore
+  // esaurito, e la scheda deve poterlo dire: «stabilizzato», non «morto» (§5.14.2, A.159 punto 9).
+  const mo = { ...s.morente, attivo: false, quando: quando ?? new Date().toISOString() };
+  return modificaSessione(s, { ferite: Math.max(0, m.ferite - 1), morente: mo, morte: null }, m);
+}
+
+/**
+ * Lotto 193 (§5.14.2 e CLAUDE.md): la morte la **registra il Direttore**, non l'app. Il contatore esaurito è
+ * un avviso; questo comando è l'unico modo in cui un personaggio risulta morto, e `annullaMorte` lo disfa.
+ * Un tocco sbagliato nel momento più teso della serata non può essere definitivo.
+ */
+export function registraMorte(sessione, m, { da = null, motivo = null, quando = null } = {}) {
+  const s = allineaSessione(sessione, m);
+  const morte = { registrata: true, quando: quando ?? new Date().toISOString(), ...(da ? { da } : {}), ...(motivo ? { motivo } : {}) };
+  return modificaSessione(s, { morte }, m);
+}
+
+/** Lotto 193: toglie la morte registrata. Il contatore e le Ferite restano come erano. */
+export function annullaMorte(sessione, m) {
+  const s = allineaSessione(sessione, m);
+  if (!isOggetto(s.morte) || s.morte.registrata !== true) return null;
+  return modificaSessione(s, { morte: null }, m);
 }
 
 /**

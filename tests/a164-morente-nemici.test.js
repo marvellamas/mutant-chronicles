@@ -96,13 +96,17 @@ test('A.164: «Stabilizza» torna a Grave e spegne il contatore; a 0 è un avvis
   const finito = { ...s.partecipanti[0], morente: togliRound(s.partecipanti[0].morente, COS, dati) };
   const v = statoMorenteNemico(finito, { round: 1, turno: 0 }, dati);
   assert.equal(v.round, 0);
-  assert.equal(v.morto, true);
-  assert.match(v.avviso, /decide il master/);
+  // lotto 193: anche per un nemico il contatore esaurito è un avviso, non una morte registrata
+  assert.equal(v.esaurito, true);
+  assert.equal(v.morto, false);
+  assert.match(v.avviso, /registra il Direttore/);
   // «Stabilizza»
   const dopo = stabilizzaNemico(s, 'n1', dati);
   assert.equal(dopo.partecipanti[0].ferite, GRADO - 1, 'torna a Grave');
-  assert.equal(dopo.partecipanti[0].morente, undefined, 'contatore spento');
-  assert.equal(statoMorenteNemico(dopo.partecipanti[0], dopo, dati), null, 'un contatore spento non uccide');
+  assert.equal(dopo.partecipanti[0].morente.attivo, false, 'contatore disattivato, non sparito (lotto 193)');
+  assert.equal(statoMorenteNemico(dopo.partecipanti[0], { round: 1, turno: 0 }, dati).disattivato, true);
+  assert.equal(statoMorenteNemico(dopo.partecipanti[0], { round: 1, turno: 0 }, dati).morto, false);
+  assert.equal(statoMorenteNemico(dopo.partecipanti[0], dopo, dati).morto, false, 'un contatore spento non uccide');
   assert.match(dopo.registro.at(-1).testo, /stabilizzato/);
   // «−1 Round» a mano
   const meno = scalaMorenteNemico(s, 'n1', 1, dati);

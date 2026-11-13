@@ -2225,20 +2225,57 @@ function riquadroMorente(ctx) {
   const mo = statoMorente(ctx.sessione, ctx.dati);
   if (!mo) return null;
   const R = ctx.dati.regole.ferite.morente ?? {};
-  return h('section', { class: `riquadro riquadro-morente${mo.morto ? ' morente-zero' : ''}`, 'aria-label': mo.nome },
+  // Lotto 193, il contatore **disattivato** da una stabilizzazione: una riga sola, e nessun numero grande.
+  // Non è un contatore che corre: è il ricordo che questo personaggio è stato salvato, e serve perché nessuno
+  // lo scambi per un contatore esaurito (§5.14.2, A.159 punto 9).
+  if (mo.disattivato) {
+    return h('section', { class: 'riquadro riquadro-morente morente-salvo', 'aria-label': mo.etichetta },
+      h('p', { class: 'nota' }, h('strong', {}, `${mo.etichetta}. `), mo.avviso ?? ''));
+  }
+  const morte = R.morte ?? {};
+  // le tre cose che chi sta morendo deve capire in dieci secondi, nell'ordine in cui servono
+  return h('section', { class: `riquadro riquadro-morente${mo.esaurito || mo.morteRegistrata ? ' morente-zero' : ''}`, 'aria-label': mo.nome },
     h('header', { class: 'testa-gradi' }, h('h3', {}, mo.nome),
-      h('span', { class: 'contatore-morente' }, `${mo.round} Round`),
+      h('span', { class: 'contatore-morente' }, mo.cosMancante ? '—' : `${mo.round} Round`),
       infoValore('?', { titolo: `${mo.nome} (${mo.paragrafo ?? '§5.14'})`,
-        sezioni: [{ testo: mo.promemoria ?? '' }, ...mo.vie.map((v) => ({ testo: v })),
+        sezioni: [{ testo: mo.promemoria ?? '' }, { etichetta: 'UMC Automatica', testo: R.umc_automatica?.testo ?? '' },
+          { etichetta: R.sospensione?.nome ?? 'Stasi', testo: R.sospensione?.testo ?? '' },
           R.stabilizza?.nota ? { etichetta: R.stabilizza.etichetta ?? 'Stabilizza', testo: R.stabilizza.nota } : null].filter((x) => x && x.testo) },
       { classe: 'info-gradi' })),
-    h('p', { class: 'nota' }, `Contatore partito da ${mo.iniziale} (COS intera). Cala di 1 a ogni Round e di 1 per ogni nuova Ferita.`),
-    mo.morto ? h('p', { class: 'nota avviso-gradi', role: 'status' }, mo.avviso) : null,
+    // 1. quanto resta  2. che cosa succede al prossimo turno
+    h('p', { class: 'nota' }, mo.cosMancante
+      ? (mo.avviso ?? '')
+      : `Partito da ${mo.iniziale} (COS intera). Al tuo prossimo turno ${mo.round <= 1 ? 'il contatore si esaurisce' : `restano ${mo.round - 1} Round`}: cala di 1 a ogni Round e di 1 per ogni nuova Ferita. Sei Svenuto e mantieni −8.`),
+    mo.esaurito || mo.morteRegistrata ? h('p', { class: 'nota avviso-gradi', role: 'status' }, mo.avviso) : null,
     h('p', { class: 'azioni-morente' },
       h('button', { type: 'button', class: 'btn btn-piccolo', title: 'Toglie 1 Round al contatore: una nuova Ferita fuori scontro, o la correzione del master', onclick: () => ctx.azioni.scalaMorente(1) }, '−1 Round'),
-      h('button', { type: 'button', class: 'btn primario btn-piccolo', title: R.stabilizza?.nota ?? 'Riporta a Grave e spegne il contatore', onclick: () => ctx.azioni.stabilizza() }, R.stabilizza?.etichetta ?? 'Stabilizza')),
-    mo.vie.length ? dettagliRicordati('vie-morente', { class: 'vie-morente' }, h('summary', {}, 'Come si stabilizza'),
-      h('ul', {}, mo.vie.map((v) => h('li', {}, h('small', { class: 'nota' }, v))))) : null);
+      h('button', { type: 'button', class: 'btn primario btn-piccolo', title: R.stabilizza?.nota ?? 'Riporta a Grave e spegne il contatore', onclick: () => ctx.azioni.stabilizza() }, R.stabilizza?.etichetta ?? 'Stabilizza'),
+      // la morte la registra il Direttore, e si annulla: l'app non la dichiara da sé
+      mo.morteRegistrata
+        ? h('button', { type: 'button', class: 'btn btn-piccolo', title: 'Toglie la morte registrata: il personaggio torna com’era', onclick: () => ctx.azioni.annullaMorte() }, morte.annulla ?? 'Annulla la morte')
+        : mo.esaurito ? h('button', { type: 'button', class: 'btn btn-piccolo pericolo', title: morte.nota ?? '', onclick: () => ctx.azioni.registraMorte() }, morte.registra ?? 'Registra la morte') : null),
+    // 3. che cosa possono fare gli altri — prima di spendere l'azione
+    vieDiSoccorso(ctx, mo));
+}
+
+/**
+ * Lotto 193 (§5.14.3): quello che gli altri possono fare, **prima** di spendere l'azione. Chi soccorre deve
+ * vedere se quello che sta per fare stabilizza o no: è la differenza fra salvarlo e sprecare il turno.
+ * Due elenchi, e il primo che si legge è «stabilizza» oppure «non stabilizza».
+ */
+function vieDiSoccorso(ctx, mo) {
+  const si = (mo.interventi ?? []).filter((v) => v.stabilizza);
+  const no = mo.nonStabilizzano ?? [];
+  if (!si.length && !no.length) return null;
+  return dettagliRicordati('vie-morente', { class: 'vie-morente' }, h('summary', {}, 'Come si stabilizza'),
+    si.length ? h('ul', { class: 'vie-si' }, si.map((v) => h('li', {},
+      h('strong', {}, v.nome), h('small', { class: 'nota' }, ` — ${v.costo}${v.prova ? `, ${v.prova}` : ''}${v.richiede ? `. ${v.richiede}` : ''}`),
+      Array.isArray(v.esiti) && v.esiti.length
+        ? h('ul', { class: 'esiti-via' }, v.esiti.map((e) => h('li', {}, h('small', { class: 'nota' }, `${e.esito}: ${e.effetto}`))))
+        : null,
+      v.talenti?.length ? h('ul', { class: 'esiti-via' }, v.talenti.map((x) => h('li', {}, h('small', { class: 'nota' }, x)))) : null))) : null,
+    no.length ? [h('p', { class: 'nota' }, h('strong', {}, 'Non stabilizza:')),
+      h('ul', { class: 'vie-no' }, no.map((x) => h('li', {}, h('small', { class: 'nota' }, h('strong', {}, `${x.nome}. `), x.perche))))] : null);
 }
 
 /**

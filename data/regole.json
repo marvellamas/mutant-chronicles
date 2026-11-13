@@ -2227,7 +2227,7 @@
     ],
     "oltre": "Morente",
     "oltre_penalita_come": "Grave",
-    "oltre_avviso": "Oltre Grave il personaggio è Morente: mantiene i malus di Grave, sviene e ha i Round del contatore per essere stabilizzato (A.159).",
+    "oltre_avviso": "Oltre Grave il personaggio è Morente: mantiene i malus di Grave (−8), sviene e ha i Round del contatore per essere stabilizzato (§5.14.2). Il colpo che lo fa entrare lascia il contatore pieno.",
     "_nota_oltre": "A.159 (risposta di Davide del 14/10/2026, che supera la decisione provvisoria di Marcello del 13/10): oltre Grave non è più la morte immediata ma lo Stato Morente del blocco «morente» qui sotto. oltre_penalita_come indica lo Stato di Ferita da cui prendere la penalità (Grave, −8).",
     "morente": {
       "nome": "Morente",
@@ -2240,7 +2240,15 @@
         "etichetta": "Morente",
         "unita": "Round",
         "primo_decremento": "dopo un Round completo, alla stessa posizione d'Iniziativa dell'ingresso",
-        "_primo_decremento": "A.164 (16/10/2026): il primo Round si compie alla stessa posizione d'Iniziativa in cui si è entrati in Morente, non al semplice cambio di Round; poi si perde un Round per ogni altro Round intero. Per questo il contatore salva anche il turno d'ingresso (src/morente.js → roundTrascorsi)."
+        "_primo_decremento": "A.164 (16/10/2026): il primo Round si compie alla stessa posizione d'Iniziativa in cui si è entrati in Morente, non al semplice cambio di Round; poi si perde un Round per ogni altro Round intero. Per questo il contatore salva anche il turno d'ingresso (src/morente.js → roundTrascorsi).",
+        "disattivato": {
+          "etichetta": "Contatore disattivato",
+          "testo": "Stabilizzato: il contatore è spento, non esaurito. Un contatore disattivato a 0 non è una morte."
+        },
+        "esaurito": {
+          "etichetta": "Contatore esaurito",
+          "testo": "Il contatore attivo è arrivato a 0. La morte la registra il Direttore: l’app non la dichiara da sé."
+        }
       },
       "cos_mancante": {
         "etichetta": "COS da inserire",
@@ -2270,8 +2278,126 @@
         "Le cure che ridanno solo PV non stabilizzano; la Stasi sospende il contatore senza azzerarlo."
       ],
       "promemoria_contatore": "Il contatore parte dalla COS intera e cala di 1 per ogni Round passato e di 1 per ogni nuova Ferita. Il colpo che fa entrare in Morente lascia il contatore pieno. A 0 decide il master.",
-      "paragrafo": "§5.14 (A.159, risposta approvata il 14/10/2026)",
-      "_nota": "Le regole dell'app si fermano qui: contatore visibile, «−1» a mano, «Stabilizza» e il promemoria delle vie. Niente Prove automatiche né procedure guidate (CLAUDE.md: l'app aiuta il tavolo e non lo rallenta). I nemici restano come oggi: A.164 aperta."
+      "paragrafo": "§§5.14.2–5.14.3 (Giocatore 0.62; A.159, registrazione approvata nel Doc E&L)",
+      "_nota": "Le regole dell'app si fermano qui: contatore visibile, «−1» a mano, «Stabilizza» e il promemoria delle vie. Niente Prove automatiche né procedure guidate (CLAUDE.md: l'app aiuta il tavolo e non lo rallenta). I nemici restano come oggi: A.164 aperta.",
+      "interventi": [
+        {
+          "id": "medicina",
+          "nome": "Stabilizzazione d’emergenza (Medicina)",
+          "stabilizza": true,
+          "costo": "1 AzP in ciascuno di 2 Round consecutivi",
+          "prova": "Medicina con −2 VA (urgenza), più i modificatori di strumenti e Talenti",
+          "richiede": "soccorritore adiacente e con accesso al paziente, kit medico almeno Standard; consuma 1 applicazione all’inizio",
+          "esiti": [
+            {
+              "esito": "Successo Magistrale",
+              "effetto": "Morente → Grave, contatore disattivato, recupera 1d4 PV fino al massimo"
+            },
+            {
+              "esito": "Successo",
+              "effetto": "Morente → Grave, contatore disattivato. Nessun PV"
+            },
+            {
+              "esito": "Fallimento",
+              "effetto": "Nessuna stabilizzazione: il contatore continua"
+            },
+            {
+              "esito": "Fallimento Maldestro",
+              "effetto": "Nessuna stabilizzazione e 1 Round in meno, subito"
+            }
+          ],
+          "note": "Il contatore continua durante il trattamento. Un’interruzione impedisce la Prova e non restituisce i materiali; si può riprovare ricominciando e consumando un’altra applicazione. Non arresta il Sanguinamento e non elimina Menomazioni.",
+          "talenti": [
+            "Soccorso Immediato (Paramedico): l’intervento scende a 1 AzP, con la stessa Prova, gli stessi materiali e gli stessi esiti.",
+            "Stabilizzazione (Medico): +2 VA alla Prova.",
+            "Triage Estremo: stabilizza senza Prova con 1 AzP e strumenti almeno Standard, una volta per combattimento; arresta anche il Sanguinamento."
+          ]
+        },
+        {
+          "id": "guarigione",
+          "nome": "Guarigione d’emergenza (incantesimo di livello 3 o superiore)",
+          "stabilizza": true,
+          "costo": "3 PM e 1 AzP, a Contatto",
+          "prova": "la normale Prova di lancio",
+          "richiede": "conoscere Guarigione almeno al livello 3; un solo bersaglio vivente",
+          "esiti": [
+            {
+              "esito": "Lancio riuscito",
+              "effetto": "Morente → Grave, contatore disattivato, recupera 1 PV fino al massimo"
+            }
+          ],
+          "note": "Non arresta il Sanguinamento e non elimina Menomazioni. Si può usare anche se il paziente ha già ricevuto Guarigione ordinaria nelle 24 ore precedenti, e non consuma quel limite. Nell’impiego d’emergenza il ritorno è sempre a Grave, anche con una versione superiore."
+        },
+        {
+          "id": "cartuccia-stabilizzante",
+          "nome": "Cartuccia Stabilizzante",
+          "stabilizza": true,
+          "costo": "1 AzP (nessuna Azione con l’UMC Automatica)",
+          "prova": "UMC Passiva: Medicina oppure Tecnologia. UMC Attiva: nessuna Prova. UMC Automatica: nessuna Prova",
+          "richiede": "una cartuccia carica in un dispositivo compatibile; il paziente dev’essere ancora vivo",
+          "esiti": [
+            {
+              "esito": "Somministrazione riuscita",
+              "effetto": "Morente → Grave (−8), contatore disattivato. Nessun PV"
+            }
+          ],
+          "note": "Non recupera PV, non arresta il Sanguinamento, non elimina Menomazioni. Una sola somministrazione rapida per paziente per Round, condivisa fra dispositivi, UMC, impianti e postazioni.",
+          "rif": "sanitario:cartuccia-stabilizzante"
+        }
+      ],
+      "non_stabilizzano": [
+        {
+          "nome": "Recuperare PV",
+          "perche": "Il recupero dei PV non disattiva il contatore: Cura Ferite, Corpo Adattivo, Psicometabolismo, cartuccia Curativa e spray rimarginanti lasciano il personaggio Morente."
+        },
+        {
+          "nome": "Arrestare il Sanguinamento",
+          "perche": "Cartuccia Coagulante ed emostatica fermano il Sanguinamento, non il contatore. Sono effetti distinti e possono servire tutti e due."
+        },
+        {
+          "nome": "Riposo e cura ordinaria delle Ferite",
+          "perche": "Le procedure ordinarie di recupero riprendono dopo la stabilizzazione, non al posto suo."
+        },
+        {
+          "nome": "Protocollo Shock, Cura Spirituale",
+          "perche": "Tolgono lo Stato Svenuto, non il contatore di Morente."
+        },
+        {
+          "nome": "Naniti, Intervento Mirato, Terapia Intensiva",
+          "perche": "Restano trattamenti con i loro tempi: non diventano interventi istantanei."
+        },
+        {
+          "nome": "Imposizione della Mano Curativa",
+          "perche": "Mantiene i 5 minuti per curare una Ferita: non ha una modalità rapida."
+        },
+        {
+          "nome": "Rigenerazione",
+          "perche": "Riguarda le Menomazioni. Non è una stabilizzazione d’emergenza né una resurrezione."
+        }
+      ],
+      "_interventi": "Lotto 193: §5.14.3 e registrazione A.159 del Doc E&L. `stabilizza` è la sola cosa che chi soccorre deve leggere prima di spendere l’azione; `non_stabilizzano` sono gli errori che il manuale nomina per primi. L’app li mostra e basta: non tira le Prove e non applica gli esiti (CLAUDE.md: propone, non impone).",
+      "morte": {
+        "registra": "Registra la morte",
+        "annulla": "Annulla la morte",
+        "conferma": "Registrare la morte di {nome}? La decisione è del Direttore e si può annullare.",
+        "nota": "L’app non dichiara morto nessuno da sé: il contatore esaurito è un avviso. La morte la registra il Direttore e si annulla (CLAUDE.md: l’app propone, non impone; avverte, non blocca).",
+        "registrata": "Morte registrata dal Direttore"
+      },
+      "umc_automatica": {
+        "nome": "UMC Automatica",
+        "quando": "alla fine dell’intero attacco",
+        "testo": "L’UMC Automatica con protocollo Morente abilitato e una Cartuccia Stabilizzante carica interviene senza Azioni né Prova, ma soltanto dopo tutti i colpi, i danni e le Ferite dell’intero attacco, e soltanto se il paziente è ancora vivo.",
+        "non_interviene": [
+          "fra un colpo e l’altro dello stesso attacco",
+          "se il contatore si è esaurito durante l’attacco: il dispositivo non resuscita",
+          "se la somministrazione rapida del Round è già stata usata (il primo momento utile è il Round successivo)"
+        ],
+        "limite": "Una sola somministrazione rapida per paziente per Round, condivisa fra dispositivi, UMC, impianti e postazioni."
+      },
+      "sospensione": {
+        "nome": "Stasi",
+        "testo": "La Stasi sospende il decorso del contatore senza azzerarlo e senza stabilizzare: all’uscita riprende dai Round residui. Serve ancora una cura specifica."
+      }
     },
     "si_applica_a": [
       "abilita",
@@ -3500,7 +3626,7 @@
       "Quando i PV raggiungono 0 il personaggio non sviene automaticamente e può continuare ad agire.",
       "Non può scendere sotto 0 PV; i danni successivi producono Ferite.",
       "Ogni volta che un personaggio già a 0 PV subisce un danno finale positivo, effettua una PS di Tempra con i modificatori applicabili.",
-      "Ogni nuova Ferita fa avanzare di uno stato.",
+      "Ogni nuova Ferita fa avanzare di uno stato fino a Morente.",
       "I danni Eterei sono assorbiti soltanto dalle protezioni magiche o dalla componente magica dell’Armatura."
     ]
   },

@@ -93,8 +93,10 @@ test('a 0 Round: avviso, nessun blocco e nessuna cancellazione', () => {
   const finito = modificaSessione(s, { morente: togliRound(s.morente, COS, dati) }, m);
   const mo = statoMorente(finito, dati);
   assert.equal(mo.round, 0);
-  assert.equal(mo.morto, true);
-  assert.match(mo.avviso, /decide il master/);
+  // lotto 193: il contatore attivo arrivato a 0 è **esaurito**, non morto. La morte la registra il Direttore.
+  assert.equal(mo.esaurito, true);
+  assert.equal(mo.morto, false, 'l’app non dichiara morto nessuno da sé');
+  assert.match(mo.avviso, /registra il Direttore/);
   assert.equal(finito.ferite, GRADO, 'la scheda resta com’è: niente cancellazioni');
   assert.ok(finito.pvAttuali >= 0);
 });
@@ -103,8 +105,11 @@ test('«Stabilizza» riporta a Grave e spegne il contatore', () => {
   const s = con(GRADO);
   const dopo = stabilizzaMorente(s, m);
   assert.equal(dopo.ferite, GRADO - 1, 'torna a Grave');
-  assert.equal(dopo.morente, undefined, 'il contatore non c’è più');
-  assert.equal(statoMorente(dopo, dati), null);
+  // lotto 193: il contatore si **disattiva** e resta come ricordo, così nessuno lo scambia per uno esaurito
+  assert.equal(dopo.morente.attivo, false, 'il contatore è disattivato');
+  assert.equal(statoMorente(dopo, dati).disattivato, true);
+  assert.equal(statoMorente(dopo, dati).esaurito, false);
+  assert.equal(statoMorente(dopo, dati).morto, false);
   assert.equal(descriviFerite(dopo.ferite, dati).penalita, -8, 'resta a −8');
   assert.equal(stabilizzaMorente(con(GRADO - 1), m), null, 'chi non è Morente non si stabilizza');
   // un nuovo episodio apre un contatore nuovo e pieno (A.159, punto 2)

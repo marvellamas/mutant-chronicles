@@ -78,4 +78,5 @@ export const ARGOMENTI = {
   'lotto_189_edizioni.mjs': ['file', 'scrivi'],
   'edizioni-dati.mjs': [],
   'lotto_192_profilo_abilita.mjs': ['scrivi'],
+  'lotto_193_morente.mjs': ['scrivi'],
 };

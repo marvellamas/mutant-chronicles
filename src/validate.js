@@ -579,6 +579,38 @@ function validaRegole(r, err, dati = {}) {
     }
     if (!isTesto(mo.morto?.avviso)) err(F, 'ferite.morente.morto.avviso', 'avviso da mostrare a 0 Round mancante (non è un blocco)');
     if (!Array.isArray(mo.vie) || !mo.vie.length || !mo.vie.every(isTesto)) err(F, 'ferite.morente.vie', 'elenco delle vie di stabilizzazione (solo testo) mancante');
+    // Lotto 193 (§5.14.3): gli interventi che chi soccorre legge prima di spendere l'azione. «stabilizza» non
+    // può mancare e non può essere altro che vero o falso: una voce senza quel campo è una voce che non
+    // risponde alla sola domanda per cui l'elenco esiste.
+    if (!Array.isArray(mo.interventi) || !mo.interventi.length) err(F, 'ferite.morente.interventi', 'elenco degli interventi mancante (§5.14.3)');
+    else {
+      mo.interventi.forEach((v, i) => {
+        const K = `ferite.morente.interventi[${i}]${isTesto(v?.id) ? ` (${v.id})` : ''}`;
+        if (!isTesto(v?.id) || !isTesto(v?.nome)) err(F, K, 'servono id e nome');
+        if (typeof v?.stabilizza !== 'boolean') err(F, `${K}.stabilizza`, 'vero o falso: è la prima cosa che chi soccorre deve leggere');
+        if (!isTesto(v?.costo)) err(F, `${K}.costo`, 'quanto costa l’intervento (Azioni, PM, materiali)');
+      });
+      if (!mo.interventi.some((v) => v?.stabilizza === true)) err(F, 'ferite.morente.interventi', 'nessun intervento stabilizza: da Morente non si uscirebbe più');
+    }
+    if (!Array.isArray(mo.non_stabilizzano) || !mo.non_stabilizzano.length) err(F, 'ferite.morente.non_stabilizzano', 'elenco di quello che NON stabilizza mancante (§5.14.3: recuperare PV e arrestare il Sanguinamento)');
+    else mo.non_stabilizzano.forEach((v, i) => {
+      if (!isTesto(v?.nome) || !isTesto(v?.perche)) err(F, `ferite.morente.non_stabilizzano[${i}]`, 'servono nome e perché: un divieto senza motivo non si ricorda');
+    });
+    // il contatore esaurito e quello disattivato finiscono sullo stesso numero: i due testi non possono mancare
+    // né coincidere, altrimenti la scheda direbbe la stessa cosa a chi è morto e a chi è stato salvato
+    for (const k of ['esaurito', 'disattivato']) {
+      if (!isTesto(mo.contatore?.[k]?.etichetta) || !isTesto(mo.contatore?.[k]?.testo)) err(F, `ferite.morente.contatore.${k}`, 'servono etichetta e testo (lotto 193)');
+    }
+    if (isTesto(mo.contatore?.esaurito?.testo) && mo.contatore.esaurito.testo === mo.contatore?.disattivato?.testo) {
+      err(F, 'ferite.morente.contatore', 'contatore esaurito e contatore disattivato non possono dire la stessa cosa');
+    }
+    // la morte la registra il Direttore, e si annulla
+    for (const k of ['registra', 'annulla', 'conferma', 'nota']) {
+      if (!isTesto(mo.morte?.[k])) err(F, `ferite.morente.morte.${k}`, 'testo mancante (lotto 193: la morte la registra il Direttore e si annulla)');
+    }
+    if (!isTesto(mo.umc_automatica?.quando) || !Array.isArray(mo.umc_automatica?.non_interviene) || !mo.umc_automatica.non_interviene.length) {
+      err(F, 'ferite.morente.umc_automatica', 'quando interviene e i casi in cui non interviene (§5.14.3)');
+    }
   }
   const st = r.stati?.elenco;
   if (!Array.isArray(st) || !st.length) err(F, 'stati.elenco', 'elenco {nome, durata} mancante');

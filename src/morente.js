@@ -57,8 +57,18 @@ export function contatoreIniziale(scheda, dati) {
  * @returns { dal, iniziale, tolti? } oppure null (non Morente, o regole/COS mancanti)
  */
 export function allineaMorente(morente, ferite, round, m) {
-  if (!m?.morente || ferite < m.ferite) return null; // sotto il gradino: non è Morente, il contatore si spegne
-  const r = Number.isInteger(round) && round >= 1 ? round : 1;
+  if (!m?.morente) return null;
+  const r0 = Number.isInteger(round) && round >= 1 ? round : 1;
+  // Lotto 193 (§5.14.2, «Stabilizzazione» e «Nuovo episodio»): un contatore **disattivato** da una
+  // stabilizzazione non è un contatore che si spegne da sé. Resta come ricordo — serve a non far sembrare
+  // morto chi è salvo — e non conta più Round. Una nuova Ferita oltre Grave apre un episodio nuovo, con un
+  // contatore nuovo e pieno sulla COS di adesso.
+  if (isOggetto(morente) && morente.attivo === false) {
+    if (ferite < m.ferite) return morente;
+    return { dal: r0, iniziale: Number.isInteger(m.cos) && m.cos > 0 ? m.cos : null };
+  }
+  if (ferite < m.ferite) return null; // sotto il gradino: non è Morente, il contatore si spegne
+  const r = r0;
   if (isOggetto(morente) && (Number.isInteger(morente.iniziale) || morente.iniziale === null)) {
     const dal = Number.isInteger(morente.dal) && morente.dal >= 1 ? morente.dal : r;
     const tolti = Math.max(0, intero(morente.tolti, 0));
@@ -116,8 +126,15 @@ export function roundRimasti(morente, round, turno = null) {
 
 /**
  * Stato da mostrare nella scheda e nella plancia.
+ *
+ * Lotto 193. Tre cose che finiscono sullo stesso numero e **non** sono la stessa cosa (§5.14.2, A.159 punto 9):
+ *   - `esaurito`: il contatore **attivo** è arrivato a 0. È un avviso, non una morte;
+ *   - `disattivato`: il contatore è stato spento da una stabilizzazione riuscita. Il paziente è salvo, e 0
+ *     qui non vuol dire niente. Confondere i due è il peggiore errore possibile in questo punto del gioco;
+ *   - `morteRegistrata`: la morte l'ha **registrata il Direttore**. Solo questa è una morte, e si annulla.
+ *
  * @returns null se il personaggio non è Morente, altrimenti
- *   { nome, round, iniziale, morto, etichetta, avviso, promemoria, vie, paragrafo }
+ *   { nome, round, iniziale, esaurito, disattivato, morteRegistrata, etichetta, avviso, interventi, … }
  */
 export function statoMorente(sessione, dati, { turno = null, round = null } = {}) {
   const mo = isOggetto(sessione) ? sessione.morente : null;
@@ -127,7 +144,10 @@ export function statoMorente(sessione, dati, { turno = null, round = null } = {}
   const rimasti = roundRimasti(mo, r, turno);
   // A.164: senza COS non si conta nulla e non si dichiara morto nessuno: si chiede il dato
   const cosMancante = rimasti === null;
-  const morto = rimasti === 0;
+  const disattivato = mo.attivo === false;
+  // il contatore esaurito è quello **attivo** arrivato a 0: uno spento dalla stabilizzazione non lo è mai
+  const esaurito = !disattivato && rimasti === 0;
+  const morteRegistrata = isOggetto(sessione?.morte) && sessione.morte.registrata === true;
   const unita = R.contatore?.unita ?? 'Round';
   return {
     nome: R.nome,
@@ -137,15 +157,70 @@ export function statoMorente(sessione, dati, { turno = null, round = null } = {}
     turno: Number.isInteger(mo.turno) ? mo.turno : null,
     trascorsi: roundTrascorsi(mo, r, turno),
     cosMancante,
-    morto,
+    esaurito,
+    disattivato,
+    morteRegistrata,
+    // chi legge un solo campo deve leggere quello giusto: `morto` è vero **solo** se il Direttore l'ha registrata
+    morto: morteRegistrata,
+    sospeso: mo.sospeso === true,
     etichetta: cosMancante
       ? `${R.contatore?.etichetta ?? R.nome} — ${R.cos_mancante?.etichetta ?? 'COS da inserire'}`
-      : `${R.contatore?.etichetta ?? R.nome} — ${rimasti} ${unita}`,
-    avviso: cosMancante ? R.cos_mancante?.avviso ?? null : morto ? R.morto?.avviso ?? null : null,
+      : disattivato
+        ? R.contatore?.disattivato?.etichetta ?? 'Contatore disattivato'
+        : `${R.contatore?.etichetta ?? R.nome} — ${rimasti} ${unita}`,
+    avviso: cosMancante ? R.cos_mancante?.avviso ?? null
+      : morteRegistrata ? R.morte?.registrata ?? R.morto?.avviso ?? null
+        : disattivato ? R.contatore?.disattivato?.testo ?? null
+          : esaurito ? R.contatore?.esaurito?.testo ?? R.morto?.avviso ?? null : null,
     promemoria: R.promemoria_contatore ?? null,
     vie: Array.isArray(R.vie) ? R.vie : [],
+    interventi: interventiMorente(dati),
+    nonStabilizzano: Array.isArray(R.non_stabilizzano) ? R.non_stabilizzano : [],
     paragrafo: R.paragrafo ?? null,
   };
+}
+
+/**
+ * Lotto 193 (§5.14.3): gli interventi, con `stabilizza` vero o falso. È la sola cosa che chi soccorre deve
+ * leggere **prima** di spendere l'azione: è la differenza fra salvarlo e sprecare il turno.
+ */
+export const interventiMorente = (dati) => (Array.isArray(regoleMorente(dati)?.interventi) ? regoleMorente(dati).interventi : []);
+
+/** Quello che **non** stabilizza, con il motivo (recuperare PV e arrestare il Sanguinamento compresi). */
+export const nonStabilizzano = (dati) => (Array.isArray(regoleMorente(dati)?.non_stabilizzano) ? regoleMorente(dati).non_stabilizzano : []);
+
+/**
+ * «Questo stabilizza?», per id o per nome, prima di spendere l'azione.
+ * @returns { stabilizza, nome, perche, costo?, prova?, richiede? } — null se non si sa che cos'è.
+ */
+export function stabilizzaConQuesto(che, dati) {
+  const chiave = String(che ?? '').trim().toLowerCase();
+  if (!chiave) return null;
+  const pari = (x) => String(x ?? '').trim().toLowerCase() === chiave;
+  const i = interventiMorente(dati).find((x) => pari(x.id) || pari(x.nome));
+  if (i) return { stabilizza: i.stabilizza === true, nome: i.nome, perche: null, costo: i.costo ?? null, prova: i.prova ?? null, richiede: i.richiede ?? null };
+  const n = nonStabilizzano(dati).find((x) => pari(x.nome));
+  if (n) return { stabilizza: false, nome: n.nome, perche: n.perche ?? null, costo: null, prova: null, richiede: null };
+  return null;
+}
+
+/**
+ * Lotto 193 (§5.14.3, A.159 punto 8): può intervenire l'UMC Automatica?
+ * Interviene **soltanto alla fine dell'intero attacco**, non fra un colpo e l'altro, e non salva un contatore
+ * già esaurito: il dispositivo non resuscita. Vale il limite di una somministrazione rapida per Round.
+ * @returns { interviene, motivo }
+ */
+export function umcAutomatica({ stato = null, fineAttacco = false, cartuccia = true, protocollo = true, giaSomministrato = false } = {}, dati) {
+  const R = regoleMorente(dati)?.umc_automatica ?? null;
+  const no = (motivo) => ({ interviene: false, motivo });
+  if (!R) return no('le regole non prevedono l’UMC Automatica');
+  if (!stato) return no('il paziente non è Morente');
+  if (!protocollo) return no('il protocollo Morente non è abilitato sul dispositivo');
+  if (!cartuccia) return no('non c’è una Cartuccia Stabilizzante carica');
+  if (!fineAttacco) return no(R.non_interviene?.[0] ?? 'non interviene fra un colpo e l’altro dello stesso attacco');
+  if (stato.esaurito || stato.morteRegistrata) return no(R.non_interviene?.[1] ?? 'il contatore si è esaurito durante l’attacco: il dispositivo non resuscita');
+  if (giaSomministrato) return no(R.non_interviene?.[2] ?? 'la somministrazione rapida del Round è già stata usata: il primo momento utile è il Round successivo');
+  return { interviene: true, motivo: R.testo ?? null };
 }
 
 /**
