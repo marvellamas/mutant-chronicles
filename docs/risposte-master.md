@@ -2747,3 +2747,23 @@ P in entrambe le Classi dell'esempio e usa limite 20.
 
 Nessuna domanda nuova: il primo numero libero resta **A.268**. Restano aperte le sei del lotto 181 (A.260–A.265),
 la A.267 del lotto 192 e la A.246, che è una decisione del Direttore al tavolo.
+
+## 13/11/2026 — lotto 194, la procedura dell'adeguamento delle Abilità
+
+Costruita la procedura del §8.3.1 e del blocco «Adeguamento approvato delle Abilità e passaggio al livello 8»
+(Doc E&L dell'11/11): nota di prima su ogni personaggio, contrassegno `regimeAbilita = 2` del lotto 192, punti
+liberi azzerati e riassegnati dal giocatore sul tablet, annullamento per singolo personaggio. **Nessun file vero
+toccato**: al tavolo la si lancia con i giocatori.
+
+Due cose da sapere prima della serata, e nessuna delle due è una domanda nuova:
+
+- **i sette sono al livello 6 (Lucas al 7)**, con 2 Gradi, non al 7 come dà per scontato il blocco approvato. Il
+  monte è «7 punti per Grado» (§8.3.1): oggi fa **14**, al livello 8 farà **21**. La procedura lo calcola dai dati
+  e lo dichiara personaggio per personaggio, invece di scrivere 21 nel codice; il §8.3.1 dice anche l'ordine —
+  prima le salite, poi categorie e basi, poi la redistribuzione. Quando farli salire lo decide Davide;
+- la **A.267** (un'Abilità che scende di categoria perde base e il VA scende) resta aperta ed è il punto in cui la
+  procedura **si ferma e lo dice**, senza scrivere niente. Nessuno dei sette la subisce; il Predicatore d'esempio
+  del repo sì, ed è il caso su cui il controllo è provato.
+
+Il primo numero libero resta **A.268**. Restano aperte le sei del lotto 181 (A.260–A.265), la A.267 e la A.246,
+che è una decisione del Direttore al tavolo.
