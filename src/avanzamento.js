@@ -29,7 +29,7 @@ import { notaDaApplicare } from './talenti.js';
 import { umanita, pmConUmanita } from './umanita.js';
 import { erroriParametriTalenti } from './calc.js';
 import { avvisoIncantesimo } from './quote-incantesimi.js';
-import { competenzaDi, baseIniziale, limiteAbilita, vaPersonale, puntiUtili, limiteConEccezioni, oltreIlLimite } from './competenze.js';
+import { competenzaDi, baseIniziale, limiteAbilita, vaPersonale, puntiUtili, limiteConEccezioni, oltreIlLimite, profiloCompetenze, regimeAbilitaNuovo } from './competenze.js';
 
 /**
  * Il Talento a scelta di una Classe dal nome salvato nel file. Un Talento rinominato dal manuale conserva i nomi di prima
@@ -126,7 +126,9 @@ const massimoCaratteristica = (livello, dati) => fascia(dati.regole.avanzamento.
 // possedute (src/competenze.js). Il grezzo comprende tutti i +1 di Classe e i soli punti liberi utili.
 const classiDef = (stato, dati) => stato.classi.map((c) => ({ def: trova(dati.classi.classi, c.nome), grado: c.grado }));
 const primaClasseDef = (stato, dati) => trova(dati.classi.classi, stato.classi[0].nome);
-const limiteDi = (stato, nomeAbilita, dati) => limiteAbilita(nomeAbilita, classiDef(stato, dati), dati.regole);
+// lotto 192: il profilo delle Abilita sta nello stato, risolto una volta dalla creazione (`statoCreazione`):
+// tutti i livelli di un personaggio usano lo stesso, e un personaggio non dichiarato resta al profilo di prima.
+const limiteDi = (stato, nomeAbilita, dati) => limiteAbilita(nomeAbilita, classiDef(stato, dati), stato.profilo);
 
 // ---------------------------------------------------------------------------
 // Stato accumulato durante il ricalcolo
@@ -330,6 +332,9 @@ function statoCreazione(creazione, dati) {
       talentiLiberi: [],
       // Talenti v1.0: 'nuovo' con scelte.regimeTalenti = 2, altrimenti i Talenti di prima
       regime: regimeTalentiNuovo(creazione) ? 'nuovo' : 'vecchio',
+      // lotto 192: il profilo delle Abilita (4/7/9/4 con scelte.regimeAbilita = 2, altrimenti 2/6/12/4)
+      profilo: profiloCompetenze(dati.regole, creazione),
+      regimeAbilita: regimeAbilitaNuovo(creazione) ? 'nuovo' : 'vecchio',
       dotazioniTecniche: [],
       tecniche: [],
       incantesimi: [...(creazione.incantesimi ?? [])],
@@ -773,7 +778,7 @@ function controllaVoce(prima, voce, dati) {
       if (inattivi) {
         errori.push({
           campo: `puntiAbilita.${a}`, tipo: 'violazione', inattivi,
-          problema: `${inattivi === 1 ? '1 punto non aumenta' : `${inattivi} punti non aumentano`} il VA personale: VA ${Math.min(va, lim.valore)}, limite ${lim.valore} (${dati.regole.competenze.categorie[lim.categoria].nome}, §8.3)`,
+          problema: `${inattivi === 1 ? '1 punto non aumenta' : `${inattivi} punti non aumentano`} il VA personale: VA ${Math.min(va, lim.valore)}, limite ${lim.valore} (${conGradoApplicato.profilo.categorie[lim.categoria].nome}, §8.3)`,
         });
       }
       if (va < minimo) err(`puntiAbilita.${a}`, `VA ${va} prima dei punti liberi: serve almeno ${minimo} (§2.13)`);
@@ -803,7 +808,7 @@ function grezzoDi(stato, nomeAbilita, avanzamento, dati) {
   const a = trova(dati.abilita.abilita, nomeAbilita);
   return valoreAbilita({
     mod: modDi(stato, a.caratteristica, dati),
-    base: baseIniziale(primaClasseDef(stato, dati), nomeAbilita, dati.regole),
+    base: baseIniziale(primaClasseDef(stato, dati), nomeAbilita, stato.profilo),
     corporazione: stato.corp.abilita_bonus.includes(nomeAbilita) ? 1 : 0,
     avanzamento,
   });
@@ -1038,7 +1043,7 @@ export function validaCompletamento(personaggio, livello, punti, dati) {
     const lv = Number(l);
     if (lv === livello) {
       const L = limiteDi(statoEvento, a, dati);
-      err(`puntiAbilita.${a}`, `${n === 1 ? '1 punto non aumenta' : `${n} punti non aumentano`} il VA personale di ${a}: già al limite ${L.valore} (${dati.regole.competenze.categorie[L.categoria]?.nome ?? L.categoria}, §8.3)`);
+      err(`puntiAbilita.${a}`, `${n === 1 ? '1 punto non aumenta' : `${n} punti non aumentano`} il VA personale di ${a}: già al limite ${L.valore} (${statoEvento.profilo.categorie[L.categoria]?.nome ?? L.categoria}, §8.3)`);
     }
     else if (lv > livello && n > (primaI.get(k) ?? 0)) err(`puntiAbilita.${a}`, `renderebbe inattivi ${n - (primaI.get(k) ?? 0)} punti di ${a} ${conOrdinale('del', lv)} livello (§8.3)`);
   }
@@ -1069,8 +1074,8 @@ export function statoCompletamento(personaggio, bozza, dati) {
     const motivoPiu = rimasti <= 0 ? 'Nessun Punto Abilità da assegnare rimasto.'
       : validaCompletamento(p, ev.livello, { ...pa, [nome]: punti + 1 }, dati).find((e) => e.tipo === 'violazione')?.problema ?? null;
     return {
-      nome, categoria, caratteristica, mod: modDi(stato, caratteristica, dati), base: baseIniziale(prima, nome, dati.regole),
-      competenza: competenzaDi(prima, nome), limite: lim.valore, limiteCategoria: lim.categoria, limiteDa: lim.classi, grezzo,
+      nome, categoria, caratteristica, mod: modDi(stato, caratteristica, dati), base: baseIniziale(prima, nome, stato.profilo),
+      competenza: competenzaDi(prima, nome, stato.profilo), limite: lim.valore, limiteCategoria: lim.categoria, limiteDa: lim.classi, grezzo,
       corporazione: stato.corp.abilita_bonus.includes(nome) ? 1 : 0, avanzamento, daClasse: x.daClasse,
       // A.247: anche qui il VA è quello vero, eccezioni del Direttore comprese
       totale: vaPersonale(grezzo, limiteConEccezioni(lim.valore, x.oltre ?? 0)), punti, motivoPiu, inattivi: ev.inattivi?.[nome] ?? 0,
@@ -1726,7 +1731,7 @@ function schedaARiposo(personaggio, dati) {
   const abilita = dati.abilita.abilita.map(({ nome, categoria, caratteristica }) => {
     const x = stato.abil[nome];
     const avanzamento = x.daClasse + x.liberi;
-    const componenti = { mod: caratteristiche[caratteristica].mod, base: baseIniziale(prima, nome, dati.regole), corporazione: stato.corp.abilita_bonus.includes(nome) ? 1 : 0, avanzamento };
+    const componenti = { mod: caratteristiche[caratteristica].mod, base: baseIniziale(prima, nome, stato.profilo), corporazione: stato.corp.abilita_bonus.includes(nome) ? 1 : 0, avanzamento };
     const lim = limiteDi(stato, nome, dati);
     const grezzo = valoreAbilita(componenti);
     // A.247: le unità che il Direttore ha forzato alzano il limite di questa Abilità (il limite della categoria resta)
@@ -1735,7 +1740,7 @@ function schedaARiposo(personaggio, dati) {
     return {
       nome, categoria, caratteristica, ...componenti, daClasse: x.daClasse, liberi: x.liberi,
       ...(caratteristiche[caratteristica].temporaneo !== undefined ? { caratteristicaTemporanea: { sigla: caratteristica, valore: caratteristiche[caratteristica].valore, base: caratteristiche[caratteristica].base } } : {}),
-      competenza: competenzaDi(prima, nome), competenzaDa: prima.nome, limite: lim.valore, limiteCategoria: lim.categoria, limiteDa: lim.classi,
+      competenza: competenzaDi(prima, nome, stato.profilo), competenzaDa: prima.nome, limite: lim.valore, limiteCategoria: lim.categoria, limiteDa: lim.classi,
       grezzo, totale: cmAbilita.valore,
       ...(cmAbilita.righe.length ? { calcolato: cmAbilita.calcolato, correzioniMaster: cmAbilita.righe } : {}),
       ...(spostati[nome] ? { spostatiDirettore: spostati[nome] } : {}),
@@ -1846,6 +1851,15 @@ function schedaARiposo(personaggio, dati) {
     talenti: stato.classi.flatMap((c) => talentiClasse.get(c.nome).map((t) => ({ ...t, classe: c.nome }))),
     // Talenti v1.0: "nuovo" (tre categorie) o "vecchio" (i Talenti di prima)
     regimeTalenti: stato.regime,
+    // Lotto 192: a quale profilo delle Abilità sta questo personaggio, e i numeri di quel profilo. La scheda lo
+    // scrive, perché un VA diverso da quello di un compagno di pari Grado non deve sembrare un errore.
+    regimeAbilita: stato.regimeAbilita,
+    profiloAbilita: {
+      chiave: stato.profilo.chiave,
+      numero: Object.fromEntries(Object.entries(stato.profilo.categorie).map(([k, c]) => [k, c.numero])),
+      punti_base_totali: stato.profilo.punti_base_totali,
+      nome: `${Object.values(stato.profilo.categorie).map((c) => c.numero).join('/')}`,
+    },
     talentiLiberi: stato.talentiLiberi.filter((t) => !talentoLiberoDef(t.id, dati).specializzazione).map((t) => {
       const d = talentoLiberoDef(t.id, dati);
       return { id: t.id, nome: d.nome, categoria: categoriaDi(d), parametro: t.parametro, annotazione: t.annotazione ?? null, livello: t.livello, provvisorio: !!d.provvisorio, testo: d.testo, sintesi: d.sintesi ?? null, tavolo: notaDaApplicare(d), usi: d.usi ?? null };

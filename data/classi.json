@@ -1,5 +1,5 @@
 {
-  "versione_manuale": "Giocatore 0.54 (Google Doc del 09/11/2026)",
+  "versione_manuale": "Giocatore 0.62 (Google Doc del 12/11/2026)",
   "fonte": "§3.4, §3.6, §3.8 (profili); §3.5.2–3.5.11, §3.7, §3.9 (Talenti)",
   "_nota": "PV e PM per Grado: fisso + 1d<dado> (dado 0 = nessun dado). Al 1° livello il dado dei PV è massimizzato (§2.12, §3.3). Le quote incantesimi valgono per le Classi taumaturgiche (§3.8).",
   "classi": [
@@ -21,27 +21,27 @@
       "competenze": {
         "S": [
           "Percezione",
-          "Raggirare"
+          "Raggirare",
+          "Furtività",
+          "Armi leggere"
         ],
         "P": [
-          "Armi leggere",
           "Cultura",
-          "Furtività",
           "Oratoria",
           "Difese",
-          "Tecnologia"
+          "Tecnologia",
+          "Atletica",
+          "Corpo a corpo",
+          "Medicina"
         ],
         "G": [
           "Armi da lancio",
           "Armi medie",
           "Armi da mischia",
-          "Corpo a corpo",
           "Artefatti",
           "Occultismo",
-          "Atletica",
           "Pilotare",
           "Sopravvivenza",
-          "Medicina",
           "Scienza",
           "Intrattenere"
         ],
@@ -216,7 +216,41 @@
             "quantita": 1
           }
         }
-      ]
+      ],
+      "competenze_precedenti": {
+        "S": [
+          "Percezione",
+          "Raggirare"
+        ],
+        "P": [
+          "Armi leggere",
+          "Cultura",
+          "Furtività",
+          "Oratoria",
+          "Difese",
+          "Tecnologia"
+        ],
+        "G": [
+          "Armi da lancio",
+          "Armi medie",
+          "Armi da mischia",
+          "Corpo a corpo",
+          "Artefatti",
+          "Occultismo",
+          "Atletica",
+          "Pilotare",
+          "Sopravvivenza",
+          "Medicina",
+          "Scienza",
+          "Intrattenere"
+        ],
+        "N": [
+          "Armi pesanti",
+          "Armi da guerra",
+          "Potere",
+          "Rituali"
+        ]
+      }
     },
     {
       "nome": "Cacciatore",
@@ -236,25 +270,25 @@
       "competenze": {
         "S": [
           "Armi medie",
-          "Percezione"
+          "Percezione",
+          "Furtività",
+          "Sopravvivenza"
         ],
         "P": [
           "Armi da mischia",
           "Difese",
           "Occultismo",
           "Atletica",
-          "Furtività",
-          "Sopravvivenza"
+          "Armi da lancio",
+          "Medicina",
+          "Scienza"
         ],
         "G": [
-          "Armi da lancio",
           "Armi leggere",
           "Corpo a corpo",
           "Artefatti",
           "Pilotare",
           "Cultura",
-          "Medicina",
-          "Scienza",
           "Tecnologia",
           "Intrattenere",
           "Oratoria",
@@ -359,7 +393,41 @@
           "nome": "Colpo di Abbattimento",
           "testo": "Quando colpisce la propria Preda, raddoppia il danno se essa è A Terra, Immobilizzata oppure soggetta alla penalità fisica di Trappola Improvvisata o Pressione di Maestro della Caccia. Una generica penalità al VA non soddisfa quest’ultima condizione. Si applicano le regole comuni: il danno ×2 diventa ×3 con un Magistrale; gli altri moltiplicatori non si sommano e si usa il più alto. Negli attacchi con più istanze di danno il beneficio riguarda soltanto la prima."
         }
-      ]
+      ],
+      "competenze_precedenti": {
+        "S": [
+          "Armi medie",
+          "Percezione"
+        ],
+        "P": [
+          "Armi da mischia",
+          "Difese",
+          "Occultismo",
+          "Atletica",
+          "Furtività",
+          "Sopravvivenza"
+        ],
+        "G": [
+          "Armi da lancio",
+          "Armi leggere",
+          "Corpo a corpo",
+          "Artefatti",
+          "Pilotare",
+          "Cultura",
+          "Medicina",
+          "Scienza",
+          "Tecnologia",
+          "Intrattenere",
+          "Oratoria",
+          "Raggirare"
+        ],
+        "N": [
+          "Armi pesanti",
+          "Armi da guerra",
+          "Potere",
+          "Rituali"
+        ]
+      }
     },
     {
       "nome": "Esploratore",
@@ -379,26 +447,26 @@
       "competenze": {
         "S": [
           "Percezione",
-          "Sopravvivenza"
+          "Sopravvivenza",
+          "Atletica",
+          "Pilotare"
         ],
         "P": [
           "Difese",
-          "Atletica",
           "Furtività",
-          "Pilotare",
           "Scienza",
-          "Tecnologia"
+          "Tecnologia",
+          "Armi leggere",
+          "Medicina",
+          "Cultura"
         ],
         "G": [
           "Armi da lancio",
-          "Armi leggere",
           "Armi medie",
           "Armi da mischia",
           "Corpo a corpo",
           "Artefatti",
           "Occultismo",
-          "Cultura",
-          "Medicina",
           "Intrattenere",
           "Oratoria",
           "Raggirare"
@@ -473,7 +541,41 @@
             "quantita": 1
           }
         }
-      ]
+      ],
+      "competenze_precedenti": {
+        "S": [
+          "Percezione",
+          "Sopravvivenza"
+        ],
+        "P": [
+          "Difese",
+          "Atletica",
+          "Furtività",
+          "Pilotare",
+          "Scienza",
+          "Tecnologia"
+        ],
+        "G": [
+          "Armi da lancio",
+          "Armi leggere",
+          "Armi medie",
+          "Armi da mischia",
+          "Corpo a corpo",
+          "Artefatti",
+          "Occultismo",
+          "Cultura",
+          "Medicina",
+          "Intrattenere",
+          "Oratoria",
+          "Raggirare"
+        ],
+        "N": [
+          "Armi pesanti",
+          "Armi da guerra",
+          "Potere",
+          "Rituali"
+        ]
+      }
     },
     {
       "nome": "Lestofante",
@@ -493,29 +595,29 @@
       "competenze": {
         "S": [
           "Furtività",
-          "Raggirare"
+          "Raggirare",
+          "Armi da mischia",
+          "Tecnologia"
         ],
         "P": [
-          "Armi da mischia",
           "Difese",
           "Atletica",
           "Percezione",
-          "Tecnologia",
-          "Oratoria"
+          "Oratoria",
+          "Armi leggere",
+          "Intrattenere",
+          "Cultura"
         ],
         "G": [
           "Armi da lancio",
-          "Armi leggere",
           "Armi medie",
           "Corpo a corpo",
           "Artefatti",
           "Occultismo",
           "Pilotare",
           "Sopravvivenza",
-          "Cultura",
           "Medicina",
-          "Scienza",
-          "Intrattenere"
+          "Scienza"
         ],
         "N": [
           "Armi pesanti",
@@ -584,7 +686,41 @@
           "nome": "Fuga tra la Folla",
           "testo": "In un ambiente affollato, in rovina o ricco di Coperture, quando utilizza un’Azione di Movimento può confondersi con l’ambiente. Il primo attacco contro di lui prima della sua Iniziativa successiva deve scegliere un altro bersaglio valido oppure subisce una complicazione stabilita dal Direttore."
         }
-      ]
+      ],
+      "competenze_precedenti": {
+        "S": [
+          "Furtività",
+          "Raggirare"
+        ],
+        "P": [
+          "Armi da mischia",
+          "Difese",
+          "Atletica",
+          "Percezione",
+          "Tecnologia",
+          "Oratoria"
+        ],
+        "G": [
+          "Armi da lancio",
+          "Armi leggere",
+          "Armi medie",
+          "Corpo a corpo",
+          "Artefatti",
+          "Occultismo",
+          "Pilotare",
+          "Sopravvivenza",
+          "Cultura",
+          "Medicina",
+          "Scienza",
+          "Intrattenere"
+        ],
+        "N": [
+          "Armi pesanti",
+          "Armi da guerra",
+          "Potere",
+          "Rituali"
+        ]
+      }
     },
     {
       "nome": "Paramedico",
@@ -604,28 +740,28 @@
       "competenze": {
         "S": [
           "Percezione",
-          "Medicina"
+          "Medicina",
+          "Atletica",
+          "Sopravvivenza"
         ],
         "P": [
           "Difese",
-          "Atletica",
           "Pilotare",
-          "Sopravvivenza",
           "Scienza",
-          "Tecnologia"
+          "Tecnologia",
+          "Armi leggere",
+          "Furtività",
+          "Oratoria"
         ],
         "G": [
           "Armi da lancio",
-          "Armi leggere",
           "Armi medie",
           "Armi da mischia",
           "Corpo a corpo",
           "Artefatti",
           "Occultismo",
-          "Furtività",
           "Cultura",
           "Intrattenere",
-          "Oratoria",
           "Raggirare"
         ],
         "N": [
@@ -724,7 +860,41 @@
       ],
       "note": [
         "Accesso alle cure delle Menomazioni. Il Paramedico può eseguire il trattamento delle Menomazioni temporanee (§5.16.5). L’intervento specialistico sulle permanenti richiede la Classe Medico (§5.16.4)."
-      ]
+      ],
+      "competenze_precedenti": {
+        "S": [
+          "Percezione",
+          "Medicina"
+        ],
+        "P": [
+          "Difese",
+          "Atletica",
+          "Pilotare",
+          "Sopravvivenza",
+          "Scienza",
+          "Tecnologia"
+        ],
+        "G": [
+          "Armi da lancio",
+          "Armi leggere",
+          "Armi medie",
+          "Armi da mischia",
+          "Corpo a corpo",
+          "Artefatti",
+          "Occultismo",
+          "Furtività",
+          "Cultura",
+          "Intrattenere",
+          "Oratoria",
+          "Raggirare"
+        ],
+        "N": [
+          "Armi pesanti",
+          "Armi da guerra",
+          "Potere",
+          "Rituali"
+        ]
+      }
     },
     {
       "nome": "Artigliere",
@@ -744,23 +914,23 @@
       "competenze": {
         "S": [
           "Armi medie",
-          "Armi pesanti"
+          "Armi pesanti",
+          "Percezione",
+          "Armi da lancio"
         ],
         "P": [
           "Armi leggere",
           "Difese",
           "Atletica",
           "Furtività",
-          "Percezione",
-          "Tecnologia"
+          "Tecnologia",
+          "Sopravvivenza",
+          "Pilotare"
         ],
         "G": [
-          "Armi da lancio",
           "Armi da mischia",
           "Armi da guerra",
           "Corpo a corpo",
-          "Pilotare",
-          "Sopravvivenza",
           "Cultura",
           "Medicina",
           "Scienza",
@@ -895,7 +1065,41 @@
           "nome": "Fuoco di Disturbo",
           "testo": "Una volta per Round, un bersaglio colpito da un’arma da fuoco subisce −2 VA al prossimo attacco effettuato entro la fine della propria Iniziativa successiva."
         }
-      ]
+      ],
+      "competenze_precedenti": {
+        "S": [
+          "Armi medie",
+          "Armi pesanti"
+        ],
+        "P": [
+          "Armi leggere",
+          "Difese",
+          "Atletica",
+          "Furtività",
+          "Percezione",
+          "Tecnologia"
+        ],
+        "G": [
+          "Armi da lancio",
+          "Armi da mischia",
+          "Armi da guerra",
+          "Corpo a corpo",
+          "Pilotare",
+          "Sopravvivenza",
+          "Cultura",
+          "Medicina",
+          "Scienza",
+          "Intrattenere",
+          "Oratoria",
+          "Raggirare"
+        ],
+        "N": [
+          "Artefatti",
+          "Occultismo",
+          "Potere",
+          "Rituali"
+        ]
+      }
     },
     {
       "nome": "Assaltatore",
@@ -915,21 +1119,21 @@
       "competenze": {
         "S": [
           "Armi da mischia",
-          "Armi da guerra"
+          "Armi da guerra",
+          "Difese",
+          "Atletica"
         ],
         "P": [
           "Armi leggere",
           "Corpo a corpo",
-          "Difese",
-          "Atletica",
           "Percezione",
-          "Sopravvivenza"
-        ],
-        "G": [
+          "Sopravvivenza",
           "Armi da lancio",
           "Armi medie",
+          "Furtività"
+        ],
+        "G": [
           "Armi pesanti",
-          "Furtività",
           "Pilotare",
           "Cultura",
           "Medicina",
@@ -1071,7 +1275,41 @@
             }
           }
         }
-      ]
+      ],
+      "competenze_precedenti": {
+        "S": [
+          "Armi da mischia",
+          "Armi da guerra"
+        ],
+        "P": [
+          "Armi leggere",
+          "Corpo a corpo",
+          "Difese",
+          "Atletica",
+          "Percezione",
+          "Sopravvivenza"
+        ],
+        "G": [
+          "Armi da lancio",
+          "Armi medie",
+          "Armi pesanti",
+          "Furtività",
+          "Pilotare",
+          "Cultura",
+          "Medicina",
+          "Scienza",
+          "Tecnologia",
+          "Intrattenere",
+          "Oratoria",
+          "Raggirare"
+        ],
+        "N": [
+          "Artefatti",
+          "Occultismo",
+          "Potere",
+          "Rituali"
+        ]
+      }
     },
     {
       "nome": "Incursore",
@@ -1091,29 +1329,29 @@
       "competenze": {
         "S": [
           "Furtività",
-          "Tecnologia"
+          "Tecnologia",
+          "Armi leggere",
+          "Armi da guerra"
         ],
         "P": [
           "Armi da lancio",
-          "Armi leggere",
-          "Armi da guerra",
+          "Percezione",
           "Difese",
           "Atletica",
-          "Percezione"
+          "Corpo a corpo",
+          "Sopravvivenza",
+          "Raggirare"
         ],
         "G": [
           "Armi medie",
           "Armi pesanti",
           "Armi da mischia",
-          "Corpo a corpo",
           "Pilotare",
-          "Sopravvivenza",
           "Cultura",
           "Medicina",
           "Scienza",
           "Intrattenere",
-          "Oratoria",
-          "Raggirare"
+          "Oratoria"
         ],
         "N": [
           "Artefatti",
@@ -1263,7 +1501,41 @@
             "quantita": 1
           }
         }
-      ]
+      ],
+      "competenze_precedenti": {
+        "S": [
+          "Furtività",
+          "Tecnologia"
+        ],
+        "P": [
+          "Armi da lancio",
+          "Armi leggere",
+          "Armi da guerra",
+          "Difese",
+          "Atletica",
+          "Percezione"
+        ],
+        "G": [
+          "Armi medie",
+          "Armi pesanti",
+          "Armi da mischia",
+          "Corpo a corpo",
+          "Pilotare",
+          "Sopravvivenza",
+          "Cultura",
+          "Medicina",
+          "Scienza",
+          "Intrattenere",
+          "Oratoria",
+          "Raggirare"
+        ],
+        "N": [
+          "Artefatti",
+          "Occultismo",
+          "Potere",
+          "Rituali"
+        ]
+      }
     },
     {
       "nome": "Lottatore",
@@ -1283,24 +1555,24 @@
       "competenze": {
         "S": [
           "Corpo a corpo",
-          "Difese"
+          "Difese",
+          "Atletica",
+          "Percezione"
         ],
         "P": [
           "Armi da mischia",
-          "Atletica",
           "Furtività",
-          "Percezione",
           "Sopravvivenza",
-          "Medicina"
+          "Medicina",
+          "Occultismo",
+          "Potere",
+          "Cultura"
         ],
         "G": [
           "Armi da lancio",
           "Armi leggere",
           "Armi da guerra",
-          "Occultismo",
-          "Potere",
           "Pilotare",
-          "Cultura",
           "Scienza",
           "Tecnologia",
           "Intrattenere",
@@ -1524,7 +1796,41 @@
             ]
           }
         }
-      ]
+      ],
+      "competenze_precedenti": {
+        "S": [
+          "Corpo a corpo",
+          "Difese"
+        ],
+        "P": [
+          "Armi da mischia",
+          "Atletica",
+          "Furtività",
+          "Percezione",
+          "Sopravvivenza",
+          "Medicina"
+        ],
+        "G": [
+          "Armi da lancio",
+          "Armi leggere",
+          "Armi da guerra",
+          "Occultismo",
+          "Potere",
+          "Pilotare",
+          "Cultura",
+          "Scienza",
+          "Tecnologia",
+          "Intrattenere",
+          "Oratoria",
+          "Raggirare"
+        ],
+        "N": [
+          "Armi medie",
+          "Armi pesanti",
+          "Artefatti",
+          "Rituali"
+        ]
+      }
     },
     {
       "nome": "Soldato",
@@ -1544,22 +1850,22 @@
       "competenze": {
         "S": [
           "Armi medie",
-          "Sopravvivenza"
+          "Sopravvivenza",
+          "Armi leggere",
+          "Difese"
         ],
         "P": [
-          "Armi leggere",
-          "Difese",
           "Atletica",
           "Percezione",
           "Tecnologia",
-          "Oratoria"
+          "Oratoria",
+          "Armi da guerra",
+          "Armi da lancio",
+          "Corpo a corpo"
         ],
         "G": [
-          "Armi da lancio",
           "Armi pesanti",
           "Armi da mischia",
-          "Armi da guerra",
-          "Corpo a corpo",
           "Furtività",
           "Pilotare",
           "Cultura",
@@ -1697,7 +2003,41 @@
       ],
       "note": [
         "Attivazione dei Talenti di comando. Coordinamento di Squadra, Disciplina di Ferro, Supporto d’Attacco e Supporto di Difesa non richiedono la spesa di azioni. Coordinamento di Squadra si attiva immediatamente prima della Prova dell’alleato; gli altri si attivano durante l’Iniziativa del Soldato. Il Soldato deve essere cosciente e gli alleati devono poter percepire le sue indicazioni. Restano valide le rispettive frequenze e durate."
-      ]
+      ],
+      "competenze_precedenti": {
+        "S": [
+          "Armi medie",
+          "Sopravvivenza"
+        ],
+        "P": [
+          "Armi leggere",
+          "Difese",
+          "Atletica",
+          "Percezione",
+          "Tecnologia",
+          "Oratoria"
+        ],
+        "G": [
+          "Armi da lancio",
+          "Armi pesanti",
+          "Armi da mischia",
+          "Armi da guerra",
+          "Corpo a corpo",
+          "Furtività",
+          "Pilotare",
+          "Cultura",
+          "Medicina",
+          "Scienza",
+          "Intrattenere",
+          "Raggirare"
+        ],
+        "N": [
+          "Artefatti",
+          "Occultismo",
+          "Potere",
+          "Rituali"
+        ]
+      }
     },
     {
       "nome": "Agricoltore",
@@ -1717,29 +2057,29 @@
       "competenze": {
         "S": [
           "Sopravvivenza",
-          "Scienza"
+          "Scienza",
+          "Atletica",
+          "Medicina"
         ],
         "P": [
-          "Atletica",
           "Percezione",
           "Pilotare",
-          "Medicina",
           "Tecnologia",
-          "Oratoria"
+          "Oratoria",
+          "Armi da mischia",
+          "Cultura",
+          "Raggirare"
         ],
         "G": [
           "Armi da lancio",
           "Armi leggere",
           "Armi medie",
-          "Armi da mischia",
           "Corpo a corpo",
           "Difese",
           "Artefatti",
           "Occultismo",
           "Furtività",
-          "Cultura",
-          "Intrattenere",
-          "Raggirare"
+          "Intrattenere"
         ],
         "N": [
           "Armi pesanti",
@@ -1939,7 +2279,41 @@
       ],
       "note": [
         "Ambiti dei Talenti. Il Talento pertinente dipende dall’obiettivo della Prova. Coltivatore Esperto riguarda terreno e prodotti coltivati; Meccanizzazione Agricola riguarda mezzi e impianti; Allevatore Esperto riguarda animali domestici; Caccia, Pesca e Raccolta riguarda risorse selvatiche; Conservazione delle Provviste riguarda risorse già raccolte e purificazione dell’acqua. Curare una coltura e riparare il suo impianto d’irrigazione sono attività distinte."
-      ]
+      ],
+      "competenze_precedenti": {
+        "S": [
+          "Sopravvivenza",
+          "Scienza"
+        ],
+        "P": [
+          "Atletica",
+          "Percezione",
+          "Pilotare",
+          "Medicina",
+          "Tecnologia",
+          "Oratoria"
+        ],
+        "G": [
+          "Armi da lancio",
+          "Armi leggere",
+          "Armi medie",
+          "Armi da mischia",
+          "Corpo a corpo",
+          "Difese",
+          "Artefatti",
+          "Occultismo",
+          "Furtività",
+          "Cultura",
+          "Intrattenere",
+          "Raggirare"
+        ],
+        "N": [
+          "Armi pesanti",
+          "Armi da guerra",
+          "Potere",
+          "Rituali"
+        ]
+      }
     },
     {
       "nome": "Artigiano",
@@ -1959,26 +2333,26 @@
       "competenze": {
         "S": [
           "Cultura",
-          "Tecnologia"
+          "Tecnologia",
+          "Percezione",
+          "Raggirare"
         ],
         "P": [
           "Atletica",
           "Furtività",
-          "Percezione",
           "Scienza",
           "Oratoria",
-          "Raggirare"
+          "Armi da mischia",
+          "Difese",
+          "Pilotare"
         ],
         "G": [
           "Armi da lancio",
           "Armi leggere",
           "Armi medie",
-          "Armi da mischia",
           "Corpo a corpo",
-          "Difese",
           "Artefatti",
           "Occultismo",
-          "Pilotare",
           "Sopravvivenza",
           "Medicina",
           "Intrattenere"
@@ -2249,7 +2623,41 @@
       ],
       "note": [
         "Ambiti dei Talenti. Addestramento di Bottega comprende i bonus per esaminare, riconoscere e valutare materiali, manufatti, restauri e falsificazioni. I bonus dei Talenti a scelta riguardano le operazioni pratiche nei rispettivi ambiti: progettare, costruire, riparare, adattare, restaurare e contraffare. Artefice di Precisione riguarda strumenti di misura e meccanismi di precisione; Maestro Manifattore riguarda utensili ordinari, abbigliamento, arredi e manufatti ornamentali."
-      ]
+      ],
+      "competenze_precedenti": {
+        "S": [
+          "Cultura",
+          "Tecnologia"
+        ],
+        "P": [
+          "Atletica",
+          "Furtività",
+          "Percezione",
+          "Scienza",
+          "Oratoria",
+          "Raggirare"
+        ],
+        "G": [
+          "Armi da lancio",
+          "Armi leggere",
+          "Armi medie",
+          "Armi da mischia",
+          "Corpo a corpo",
+          "Difese",
+          "Artefatti",
+          "Occultismo",
+          "Pilotare",
+          "Sopravvivenza",
+          "Medicina",
+          "Intrattenere"
+        ],
+        "N": [
+          "Armi pesanti",
+          "Armi da guerra",
+          "Potere",
+          "Rituali"
+        ]
+      }
     },
     {
       "nome": "Operaio",
@@ -2269,15 +2677,18 @@
       "competenze": {
         "S": [
           "Atletica",
-          "Tecnologia"
+          "Tecnologia",
+          "Armi da mischia",
+          "Pilotare"
         ],
         "P": [
-          "Armi da mischia",
           "Difese",
           "Percezione",
-          "Pilotare",
           "Sopravvivenza",
-          "Scienza"
+          "Scienza",
+          "Corpo a corpo",
+          "Medicina",
+          "Cultura"
         ],
         "G": [
           "Armi da lancio",
@@ -2285,10 +2696,7 @@
           "Armi medie",
           "Armi pesanti",
           "Armi da guerra",
-          "Corpo a corpo",
           "Furtività",
-          "Cultura",
-          "Medicina",
           "Intrattenere",
           "Oratoria",
           "Raggirare"
@@ -2391,7 +2799,41 @@
           "nome": "Lavoro di Squadra",
           "testo": "Quando l’Operaio Aiuta in un’attività non offensiva, aumenta di +1 il bonus fornito dal proprio aiuto. Con VA 1– 8 fornisce +2 invece di +1; con VA 9–14 fornisce +3 invece di +2; con VA 15–19 fornisce +4 invece di +3; con VA 20 o più fornisce +5 invece di +4. Il bonus complessivo fornito da tutti gli aiutanti non può comunque superare +5. Restano applicabili i requisiti della regola Assistenza: l’Operaio deve poter partecipare concretamente con il tempo, la posizione e gli strumenti necessari."
         }
-      ]
+      ],
+      "competenze_precedenti": {
+        "S": [
+          "Atletica",
+          "Tecnologia"
+        ],
+        "P": [
+          "Armi da mischia",
+          "Difese",
+          "Percezione",
+          "Pilotare",
+          "Sopravvivenza",
+          "Scienza"
+        ],
+        "G": [
+          "Armi da lancio",
+          "Armi leggere",
+          "Armi medie",
+          "Armi pesanti",
+          "Armi da guerra",
+          "Corpo a corpo",
+          "Furtività",
+          "Cultura",
+          "Medicina",
+          "Intrattenere",
+          "Oratoria",
+          "Raggirare"
+        ],
+        "N": [
+          "Artefatti",
+          "Occultismo",
+          "Potere",
+          "Rituali"
+        ]
+      }
     },
     {
       "nome": "Pilota",
@@ -2411,28 +2853,28 @@
       "competenze": {
         "S": [
           "Pilotare",
-          "Tecnologia"
+          "Tecnologia",
+          "Percezione",
+          "Sopravvivenza"
         ],
         "P": [
           "Armi leggere",
-          "Percezione",
-          "Sopravvivenza",
           "Atletica",
           "Scienza",
-          "Difese"
+          "Difese",
+          "Armi medie",
+          "Cultura",
+          "Oratoria"
         ],
         "G": [
           "Armi da lancio",
-          "Armi medie",
           "Armi pesanti",
           "Armi da mischia",
           "Corpo a corpo",
           "Artefatti",
           "Furtività",
-          "Cultura",
           "Medicina",
           "Intrattenere",
-          "Oratoria",
           "Raggirare"
         ],
         "N": [
@@ -2539,7 +2981,41 @@
           "nome": "Coordinazione di Bordo",
           "testo": "All’inizio di un combattimento o di un’emergenza che coinvolge il veicolo, il Pilota sceglie, senza spendere Azioni, un numero massimo di alleati pari al proprio Mod INT, minimo uno, che possano ricevere le sue indicazioni.\nDurante il primo Round, quando questi alleati forniscono assistenza a Prove di Pilotare, Tecnologia, impiego delle armi di bordo o riparazioni d’emergenza, aumentano di 1 il bonus del proprio Aiuto.\nDevono possedere un VA pertinente di almeno 1 e poter contribuire concretamente, di persona oppure tramite sistemi e comunicazioni adeguati. Restano i normali tempi e requisiti dell’assistenza e il limite complessivo di +5. La comunicazione a distanza non permette di eseguire materialmente una riparazione senza accesso ai componenti.\nConduzione, Manovrabilità, velocità, attacchi, tre strutture con PI separati, collisioni e riparazioni sono nel Manuale dei Veicoli. I profili delle armi di bordo mantengono le regole del Manuale degli Armamenti."
         }
-      ]
+      ],
+      "competenze_precedenti": {
+        "S": [
+          "Pilotare",
+          "Tecnologia"
+        ],
+        "P": [
+          "Armi leggere",
+          "Percezione",
+          "Sopravvivenza",
+          "Atletica",
+          "Scienza",
+          "Difese"
+        ],
+        "G": [
+          "Armi da lancio",
+          "Armi medie",
+          "Armi pesanti",
+          "Armi da mischia",
+          "Corpo a corpo",
+          "Artefatti",
+          "Furtività",
+          "Cultura",
+          "Medicina",
+          "Intrattenere",
+          "Oratoria",
+          "Raggirare"
+        ],
+        "N": [
+          "Armi da guerra",
+          "Occultismo",
+          "Potere",
+          "Rituali"
+        ]
+      }
     },
     {
       "nome": "Tecnico",
@@ -2559,24 +3035,24 @@
       "competenze": {
         "S": [
           "Scienza",
-          "Tecnologia"
+          "Tecnologia",
+          "Percezione",
+          "Pilotare"
         ],
         "P": [
           "Atletica",
           "Furtività",
-          "Percezione",
-          "Pilotare",
           "Cultura",
-          "Raggirare"
+          "Raggirare",
+          "Artefatti",
+          "Difese",
+          "Armi leggere"
         ],
         "G": [
           "Armi da lancio",
-          "Armi leggere",
           "Armi medie",
           "Armi da mischia",
           "Corpo a corpo",
-          "Difese",
-          "Artefatti",
           "Occultismo",
           "Sopravvivenza",
           "Medicina",
@@ -2671,7 +3147,41 @@
           "nome": "Sistema Ottimizzato",
           "testo": "Dedicando almeno un’ora alla configurazione, riparazione o modifica di un dispositivo tecnologico e superando una Prova di Tecnologia, il Tecnico può ottimizzarne una specifica funzione non offensiva. L’ora può essere compresa in un intervento più lungo.\nIl dispositivo concede +2 VA alle Prove direttamente collegate alla funzione scelta finché perde almeno 1 Integrità, viene nuovamente modificato oppure riceve una nuova ottimizzazione.\nOgni dispositivo mantiene una sola ottimizzazione. Il beneficio vale per chi lo utilizza, ma non aumenta attacchi, danni o Protezioni.\nLa PS Integrità degli oggetti è nel Manuale degli Armamenti, §7.2.1; le strutture dei veicoli e le relative riparazioni sono nel Manuale dei Veicoli, §§4 e 7. Schede e prestazioni dei dispositivi sono nei rispettivi cataloghi. Controllo Parallelo rimane distinto da Interfaccia Remota del Tecnomante (§3.9.5): quest’ultimo attiva proprietà di Artefatti sintonizzati senza controller, conserva le normali Azioni e non concede attacchi ordinari a distanza attraverso l’oggetto."
         }
-      ]
+      ],
+      "competenze_precedenti": {
+        "S": [
+          "Scienza",
+          "Tecnologia"
+        ],
+        "P": [
+          "Atletica",
+          "Furtività",
+          "Percezione",
+          "Pilotare",
+          "Cultura",
+          "Raggirare"
+        ],
+        "G": [
+          "Armi da lancio",
+          "Armi leggere",
+          "Armi medie",
+          "Armi da mischia",
+          "Corpo a corpo",
+          "Difese",
+          "Artefatti",
+          "Occultismo",
+          "Sopravvivenza",
+          "Medicina",
+          "Intrattenere",
+          "Oratoria"
+        ],
+        "N": [
+          "Armi pesanti",
+          "Armi da guerra",
+          "Potere",
+          "Rituali"
+        ]
+      }
     },
     {
       "nome": "Accademico",
@@ -2691,15 +3201,18 @@
       "competenze": {
         "S": [
           "Cultura",
-          "Scienza"
+          "Scienza",
+          "Occultismo",
+          "Oratoria"
         ],
         "P": [
           "Artefatti",
-          "Occultismo",
           "Percezione",
           "Medicina",
           "Tecnologia",
-          "Oratoria"
+          "Rituali",
+          "Sopravvivenza",
+          "Intrattenere"
         ],
         "G": [
           "Armi da lancio",
@@ -2707,12 +3220,9 @@
           "Armi da mischia",
           "Corpo a corpo",
           "Difese",
-          "Rituali",
           "Atletica",
           "Furtività",
           "Pilotare",
-          "Sopravvivenza",
-          "Intrattenere",
           "Raggirare"
         ],
         "N": [
@@ -2820,7 +3330,41 @@
             "quantita": 1
           }
         }
-      ]
+      ],
+      "competenze_precedenti": {
+        "S": [
+          "Cultura",
+          "Scienza"
+        ],
+        "P": [
+          "Artefatti",
+          "Occultismo",
+          "Percezione",
+          "Medicina",
+          "Tecnologia",
+          "Oratoria"
+        ],
+        "G": [
+          "Armi da lancio",
+          "Armi leggere",
+          "Armi da mischia",
+          "Corpo a corpo",
+          "Difese",
+          "Rituali",
+          "Atletica",
+          "Furtività",
+          "Pilotare",
+          "Sopravvivenza",
+          "Intrattenere",
+          "Raggirare"
+        ],
+        "N": [
+          "Armi medie",
+          "Armi pesanti",
+          "Armi da guerra",
+          "Potere"
+        ]
+      }
     },
     {
       "nome": "Amministrativo",
@@ -2840,15 +3384,18 @@
       "competenze": {
         "S": [
           "Cultura",
-          "Oratoria"
+          "Oratoria",
+          "Percezione",
+          "Tecnologia"
         ],
         "P": [
-          "Percezione",
           "Pilotare",
           "Scienza",
-          "Tecnologia",
           "Intrattenere",
-          "Raggirare"
+          "Raggirare",
+          "Artefatti",
+          "Furtività",
+          "Medicina"
         ],
         "G": [
           "Armi da lancio",
@@ -2857,12 +3404,9 @@
           "Armi da mischia",
           "Corpo a corpo",
           "Difese",
-          "Artefatti",
           "Occultismo",
           "Atletica",
-          "Furtività",
-          "Sopravvivenza",
-          "Medicina"
+          "Sopravvivenza"
         ],
         "N": [
           "Armi pesanti",
@@ -2962,7 +3506,41 @@
             ]
           }
         }
-      ]
+      ],
+      "competenze_precedenti": {
+        "S": [
+          "Cultura",
+          "Oratoria"
+        ],
+        "P": [
+          "Percezione",
+          "Pilotare",
+          "Scienza",
+          "Tecnologia",
+          "Intrattenere",
+          "Raggirare"
+        ],
+        "G": [
+          "Armi da lancio",
+          "Armi leggere",
+          "Armi medie",
+          "Armi da mischia",
+          "Corpo a corpo",
+          "Difese",
+          "Artefatti",
+          "Occultismo",
+          "Atletica",
+          "Furtività",
+          "Sopravvivenza",
+          "Medicina"
+        ],
+        "N": [
+          "Armi pesanti",
+          "Armi da guerra",
+          "Potere",
+          "Rituali"
+        ]
+      }
     },
     {
       "nome": "Artista",
@@ -2982,15 +3560,18 @@
       "competenze": {
         "S": [
           "Intrattenere",
-          "Oratoria"
+          "Oratoria",
+          "Cultura",
+          "Raggirare"
         ],
         "P": [
           "Atletica",
           "Furtività",
           "Percezione",
-          "Cultura",
           "Tecnologia",
-          "Raggirare"
+          "Difese",
+          "Pilotare",
+          "Sopravvivenza"
         ],
         "G": [
           "Armi da lancio",
@@ -2998,11 +3579,8 @@
           "Armi medie",
           "Armi da mischia",
           "Corpo a corpo",
-          "Difese",
           "Artefatti",
           "Occultismo",
-          "Pilotare",
-          "Sopravvivenza",
           "Medicina",
           "Scienza"
         ],
@@ -3108,7 +3686,41 @@
             "quantita": 1
           }
         }
-      ]
+      ],
+      "competenze_precedenti": {
+        "S": [
+          "Intrattenere",
+          "Oratoria"
+        ],
+        "P": [
+          "Atletica",
+          "Furtività",
+          "Percezione",
+          "Cultura",
+          "Tecnologia",
+          "Raggirare"
+        ],
+        "G": [
+          "Armi da lancio",
+          "Armi leggere",
+          "Armi medie",
+          "Armi da mischia",
+          "Corpo a corpo",
+          "Difese",
+          "Artefatti",
+          "Occultismo",
+          "Pilotare",
+          "Sopravvivenza",
+          "Medicina",
+          "Scienza"
+        ],
+        "N": [
+          "Armi pesanti",
+          "Armi da guerra",
+          "Potere",
+          "Rituali"
+        ]
+      }
     },
     {
       "nome": "Medico",
@@ -3128,15 +3740,18 @@
       "competenze": {
         "S": [
           "Medicina",
-          "Scienza"
+          "Scienza",
+          "Percezione",
+          "Tecnologia"
         ],
         "P": [
           "Occultismo",
-          "Percezione",
           "Sopravvivenza",
           "Cultura",
-          "Tecnologia",
-          "Oratoria"
+          "Oratoria",
+          "Artefatti",
+          "Atletica",
+          "Pilotare"
         ],
         "G": [
           "Armi da lancio",
@@ -3144,11 +3759,8 @@
           "Armi da mischia",
           "Corpo a corpo",
           "Difese",
-          "Artefatti",
           "Rituali",
-          "Atletica",
           "Furtività",
-          "Pilotare",
           "Intrattenere",
           "Raggirare"
         ],
@@ -3258,7 +3870,41 @@
       ],
       "note": [
         "Accesso alle cure delle Menomazioni. Il Medico può eseguire sia il trattamento delle temporanee (§5.16.5) sia l’intervento specialistico sulle permanenti (§5.16.4), con i requisiti previsti dalle rispettive procedure."
-      ]
+      ],
+      "competenze_precedenti": {
+        "S": [
+          "Medicina",
+          "Scienza"
+        ],
+        "P": [
+          "Occultismo",
+          "Percezione",
+          "Sopravvivenza",
+          "Cultura",
+          "Tecnologia",
+          "Oratoria"
+        ],
+        "G": [
+          "Armi da lancio",
+          "Armi leggere",
+          "Armi da mischia",
+          "Corpo a corpo",
+          "Difese",
+          "Artefatti",
+          "Rituali",
+          "Atletica",
+          "Furtività",
+          "Pilotare",
+          "Intrattenere",
+          "Raggirare"
+        ],
+        "N": [
+          "Armi medie",
+          "Armi pesanti",
+          "Armi da guerra",
+          "Potere"
+        ]
+      }
     },
     {
       "nome": "Predicatore",
@@ -3278,29 +3924,29 @@
       "competenze": {
         "S": [
           "Occultismo",
-          "Oratoria"
+          "Oratoria",
+          "Cultura",
+          "Rituali"
         ],
         "P": [
           "Artefatti",
-          "Rituali",
           "Percezione",
-          "Cultura",
           "Medicina",
-          "Intrattenere"
+          "Intrattenere",
+          "Difese",
+          "Sopravvivenza",
+          "Raggirare"
         ],
         "G": [
           "Armi da lancio",
           "Armi leggere",
           "Armi da mischia",
           "Corpo a corpo",
-          "Difese",
           "Atletica",
           "Furtività",
           "Pilotare",
-          "Sopravvivenza",
           "Scienza",
-          "Tecnologia",
-          "Raggirare"
+          "Tecnologia"
         ],
         "N": [
           "Armi medie",
@@ -3407,7 +4053,41 @@
       "note": [
         "Possedere Rituali non concede Incantesimi. Purificazione è un utilizzo specifico dell’Abilità autorizzato dal Talento, disponibile anche mentre le regole generali dei Rituali verranno integrate successivamente (Manuale della Magia).",
         "Raccordi. Guida Morale, Fede Incrollabile e Consolazione si applicano alle PS di Magia contro la Corruzione secondo il §5.20, con gli eventuali modificatori dell’Umanità (§5.21). Le altre procedure dell’Oscura Simmetria e i Rituali generali verranno integrati successivamente nel Manuale della Magia."
-      ]
+      ],
+      "competenze_precedenti": {
+        "S": [
+          "Occultismo",
+          "Oratoria"
+        ],
+        "P": [
+          "Artefatti",
+          "Rituali",
+          "Percezione",
+          "Cultura",
+          "Medicina",
+          "Intrattenere"
+        ],
+        "G": [
+          "Armi da lancio",
+          "Armi leggere",
+          "Armi da mischia",
+          "Corpo a corpo",
+          "Difese",
+          "Atletica",
+          "Furtività",
+          "Pilotare",
+          "Sopravvivenza",
+          "Scienza",
+          "Tecnologia",
+          "Raggirare"
+        ],
+        "N": [
+          "Armi medie",
+          "Armi pesanti",
+          "Armi da guerra",
+          "Potere"
+        ]
+      }
     },
     {
       "nome": "Arcanista",
@@ -3427,15 +4107,18 @@
       "competenze": {
         "S": [
           "Potere",
-          "Rituali"
+          "Rituali",
+          "Artefatti",
+          "Occultismo"
         ],
         "P": [
           "Armi da lancio",
           "Difese",
-          "Artefatti",
-          "Occultismo",
           "Percezione",
-          "Cultura"
+          "Cultura",
+          "Scienza",
+          "Tecnologia",
+          "Oratoria"
         ],
         "G": [
           "Armi leggere",
@@ -3445,10 +4128,7 @@
           "Furtività",
           "Sopravvivenza",
           "Medicina",
-          "Scienza",
-          "Tecnologia",
           "Intrattenere",
-          "Oratoria",
           "Raggirare"
         ],
         "N": [
@@ -3582,7 +4262,41 @@
       ],
       "note": [
         "Ordine dei costi: si parte dal costo del livello dichiarato; si applicano Armonizzazione Arcana ed eventualmente Riserva Tecnica, con minimo 1 PM; un Successo Magistrale dimezza per difetto il costo risultante, sempre con minimo 1 PM; infine si applica Controllo dei Flussi. Un Incantesimo di livello 7 costa 6 PM con Armonizzazione Arcana, ma mantiene la Prova a −2 VA; Architetto Arcano elimina questa penalità, non la Prova."
-      ]
+      ],
+      "competenze_precedenti": {
+        "S": [
+          "Potere",
+          "Rituali"
+        ],
+        "P": [
+          "Armi da lancio",
+          "Difese",
+          "Artefatti",
+          "Occultismo",
+          "Percezione",
+          "Cultura"
+        ],
+        "G": [
+          "Armi leggere",
+          "Armi da mischia",
+          "Corpo a corpo",
+          "Atletica",
+          "Furtività",
+          "Sopravvivenza",
+          "Medicina",
+          "Scienza",
+          "Tecnologia",
+          "Intrattenere",
+          "Oratoria",
+          "Raggirare"
+        ],
+        "N": [
+          "Armi medie",
+          "Armi pesanti",
+          "Armi da guerra",
+          "Pilotare"
+        ]
+      }
     },
     {
       "nome": "Custode",
@@ -3602,34 +4316,34 @@
       "competenze": {
         "S": [
           "Armi da mischia",
-          "Difese"
+          "Difese",
+          "Potere",
+          "Atletica"
         ],
         "P": [
           "Corpo a corpo",
-          "Artefatti",
           "Occultismo",
-          "Potere",
-          "Atletica",
-          "Percezione"
+          "Percezione",
+          "Armi da guerra",
+          "Rituali",
+          "Sopravvivenza",
+          "Armi leggere"
         ],
         "G": [
           "Armi da lancio",
-          "Armi leggere",
-          "Armi da guerra",
-          "Rituali",
           "Furtività",
-          "Sopravvivenza",
           "Cultura",
           "Medicina",
           "Tecnologia",
-          "Intrattenere",
+          "Pilotare",
           "Oratoria",
-          "Raggirare"
+          "Raggirare",
+          "Artefatti"
         ],
         "N": [
           "Armi medie",
           "Armi pesanti",
-          "Pilotare",
+          "Intrattenere",
           "Scienza"
         ]
       },
@@ -3709,7 +4423,41 @@
           "nome": "Difesa Astrale",
           "testo": "Una volta per Round, mentre impugna l’Arma Astrale, il Custode può effettuare gratuitamente una Parata con Difese contro un attacco parabile, anche quando non dispone più di Azioni. Non concede una seconda Difesa dopo il fallimento di un’altra Difesa contro lo stesso attacco.\nSi applicano le regole ordinarie della Parata: un successo dimezza per eccesso il danno prima dell’Armatura; un Successo Magistrale lo annulla; un Fallimento Maldestro comporta −2 VA fino all’arrivo dell’Iniziativa successiva. Contro gli attacchi a distanza si applica −8 VA con l’arma, con un ulteriore −2 contro le Raffiche. Non rende parabili attacchi o effetti normalmente imparabili."
         }
-      ]
+      ],
+      "competenze_precedenti": {
+        "S": [
+          "Armi da mischia",
+          "Difese"
+        ],
+        "P": [
+          "Corpo a corpo",
+          "Artefatti",
+          "Occultismo",
+          "Potere",
+          "Atletica",
+          "Percezione"
+        ],
+        "G": [
+          "Armi da lancio",
+          "Armi leggere",
+          "Armi da guerra",
+          "Rituali",
+          "Furtività",
+          "Sopravvivenza",
+          "Cultura",
+          "Medicina",
+          "Tecnologia",
+          "Intrattenere",
+          "Oratoria",
+          "Raggirare"
+        ],
+        "N": [
+          "Armi medie",
+          "Armi pesanti",
+          "Pilotare",
+          "Scienza"
+        ]
+      }
     },
     {
       "nome": "Invocatore",
@@ -3729,25 +4477,25 @@
       "competenze": {
         "S": [
           "Occultismo",
-          "Potere"
+          "Potere",
+          "Armi da lancio",
+          "Percezione"
         ],
         "P": [
-          "Armi da lancio",
           "Corpo a corpo",
           "Difese",
           "Artefatti",
-          "Percezione",
-          "Oratoria"
+          "Oratoria",
+          "Rituali",
+          "Cultura",
+          "Atletica"
         ],
         "G": [
           "Armi leggere",
           "Armi da mischia",
-          "Rituali",
-          "Atletica",
           "Furtività",
           "Pilotare",
           "Sopravvivenza",
-          "Cultura",
           "Medicina",
           "Tecnologia",
           "Intrattenere",
@@ -3904,7 +4652,41 @@
       ],
       "note": [
         "Incantesimi Aggressivi, Sovraccarico Controllato e il danno aggiuntivo di Controllo Arcano sono cumulabili. Si applicano prima dei moltiplicatori, delle Difese e dell’Armatura, rispettando per ciascuno il limite di una sola applicazione per bersaglio e per Incantesimo. Il Successo Magistrale segue la regola generale sulla prima istanza di danno."
-      ]
+      ],
+      "competenze_precedenti": {
+        "S": [
+          "Occultismo",
+          "Potere"
+        ],
+        "P": [
+          "Armi da lancio",
+          "Corpo a corpo",
+          "Difese",
+          "Artefatti",
+          "Percezione",
+          "Oratoria"
+        ],
+        "G": [
+          "Armi leggere",
+          "Armi da mischia",
+          "Rituali",
+          "Atletica",
+          "Furtività",
+          "Pilotare",
+          "Sopravvivenza",
+          "Cultura",
+          "Medicina",
+          "Tecnologia",
+          "Intrattenere",
+          "Raggirare"
+        ],
+        "N": [
+          "Armi medie",
+          "Armi pesanti",
+          "Armi da guerra",
+          "Scienza"
+        ]
+      }
     },
     {
       "nome": "Mistico",
@@ -3924,15 +4706,18 @@
       "competenze": {
         "S": [
           "Potere",
-          "Medicina"
+          "Medicina",
+          "Percezione",
+          "Rituali"
         ],
         "P": [
           "Difese",
           "Artefatti",
           "Occultismo",
-          "Rituali",
-          "Percezione",
-          "Oratoria"
+          "Oratoria",
+          "Sopravvivenza",
+          "Cultura",
+          "Scienza"
         ],
         "G": [
           "Armi da lancio",
@@ -3942,9 +4727,6 @@
           "Atletica",
           "Furtività",
           "Pilotare",
-          "Sopravvivenza",
-          "Cultura",
-          "Scienza",
           "Intrattenere",
           "Raggirare"
         ],
@@ -4098,7 +4880,41 @@
       ],
       "note": [
         "Regole comuni delle aure. Aura di Equilibrio e Scudo Spirituale sono automatici nella forma base, non consumano PM e non richiedono Concentrazione. Uscire dai 3 Q fa perdere il beneficio; entrarvi permette di ricevere il beneficio attualmente attivo. I due potenziamenti sono indipendenti: attivarli entrambi costa 4 PM. Una nuova attivazione rinnova la durata a 10 Round, senza sommare il potenziamento.\nSe il Mistico perde conoscenza, terminano entrambe le aure e i relativi potenziamenti. Quando torna cosciente, riprendono automaticamente soltanto i benefici di base. Più aure dello stesso tipo non si sommano: si applica il beneficio maggiore.\nScudo Spirituale si applica anche alle PS di Magia contro Corruzione. Le penalità da CROS e da perdita di UMN si applicano normalmente prima di determinare il Valore finale della Salvezza (§§5.20–5.21)."
-      ]
+      ],
+      "competenze_precedenti": {
+        "S": [
+          "Potere",
+          "Medicina"
+        ],
+        "P": [
+          "Difese",
+          "Artefatti",
+          "Occultismo",
+          "Rituali",
+          "Percezione",
+          "Oratoria"
+        ],
+        "G": [
+          "Armi da lancio",
+          "Armi leggere",
+          "Armi da mischia",
+          "Corpo a corpo",
+          "Atletica",
+          "Furtività",
+          "Pilotare",
+          "Sopravvivenza",
+          "Cultura",
+          "Scienza",
+          "Intrattenere",
+          "Raggirare"
+        ],
+        "N": [
+          "Armi medie",
+          "Armi pesanti",
+          "Armi da guerra",
+          "Tecnologia"
+        ]
+      }
     },
     {
       "nome": "Tecnomante",
@@ -4118,24 +4934,24 @@
       "competenze": {
         "S": [
           "Artefatti",
-          "Tecnologia"
+          "Tecnologia",
+          "Occultismo",
+          "Scienza"
         ],
         "P": [
           "Armi leggere",
           "Difese",
-          "Potere",
           "Rituali",
           "Percezione",
-          "Scienza"
+          "Potere",
+          "Pilotare",
+          "Armi da mischia"
         ],
         "G": [
           "Armi medie",
-          "Armi da mischia",
           "Corpo a corpo",
-          "Occultismo",
           "Atletica",
           "Furtività",
-          "Pilotare",
           "Cultura",
           "Medicina",
           "Intrattenere",
@@ -4239,8 +5055,42 @@
             "stato": "da_verificare"
           }
         }
-      ]
+      ],
+      "competenze_precedenti": {
+        "S": [
+          "Artefatti",
+          "Tecnologia"
+        ],
+        "P": [
+          "Armi leggere",
+          "Difese",
+          "Potere",
+          "Rituali",
+          "Percezione",
+          "Scienza"
+        ],
+        "G": [
+          "Armi medie",
+          "Armi da mischia",
+          "Corpo a corpo",
+          "Occultismo",
+          "Atletica",
+          "Furtività",
+          "Pilotare",
+          "Cultura",
+          "Medicina",
+          "Intrattenere",
+          "Oratoria",
+          "Raggirare"
+        ],
+        "N": [
+          "Armi da lancio",
+          "Armi pesanti",
+          "Armi da guerra",
+          "Sopravvivenza"
+        ]
+      }
     }
   ],
-  "_nota_competenze": "Capitolo 3 del Giocatore (Doc del 29/09/2026, 23:45): per ogni Classe le categorie di competenza delle 24 Abilità (S Specializzate, P Professionali, G Generiche, N Non competenti; §2.3). La prima Classe fissa le basi; tutte le Classi possedute contano per i limiti del VA personale (§8.7). Estratte dal testo con tools/prototipo_competenze.mjs (profili in tools/profili_competenze_29-09.json)."
+  "_nota_competenze": "Lotto 192: `competenze` è il profilo 4/7/9/4 del Giocatore 0.62 (§8.10), `competenze_precedenti` il 2/6/12/4 di prima. Quale dei due vale per un personaggio lo decide un posto solo: `profiloCompetenze` di src/competenze.js, dal contrassegno scelte.regimeAbilita."
 }

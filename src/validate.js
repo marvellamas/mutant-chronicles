@@ -532,6 +532,26 @@ function validaRegole(r, err, dati = {}) {
     const n = Object.values(cc).reduce((s, c) => s + (isIntero(c?.numero) ? c.numero : 0), 0);
     if (dati.abilita?.abilita && n !== dati.abilita.abilita.length) err(F, 'competenze.categorie', `le categorie coprono ${n} Abilità, le Abilità sono ${dati.abilita.abilita.length}`);
     if (isIntero(r.competenze.punti_base_totali) && totale !== r.competenze.punti_base_totali) err(F, 'competenze.punti_base_totali', `le basi sommano ${totale}, non ${r.competenze.punti_base_totali} (§2.3)`);
+    // Lotto 192: il profilo di prima (competenze.precedente) è il profilo con cui sono salvati i personaggi non
+    // ancora adeguati. Se si sfalda, le loro schede cambiano in silenzio: vale esattamente quanto quello nuovo.
+    const prec = r.competenze.precedente;
+    if (prec !== undefined) {
+      const K = 'competenze.precedente';
+      if (!isOggetto(prec) || !isOggetto(prec.categorie)) err(F, K, 'serve { categorie, punti_base_totali } (lotto 192)');
+      else {
+        let tPrec = 0;
+        for (const id of Object.keys(cc)) {
+          const p = prec.categorie[id];
+          if (!isOggetto(p)) { err(F, `${K}.categorie.${id}`, `manca la categoria ${id} nel profilo di prima`); continue; }
+          if (!isIntero(p.numero) || p.numero < 0) err(F, `${K}.categorie.${id}.numero`, 'numero di Abilità intero ≥ 0');
+          if (!isOggetto(p.limite) || !['fisso', 'per_grado_totale', 'per_grado_categoria'].every((x) => isIntero(p.limite[x]) && p.limite[x] >= 0)) err(F, `${K}.categorie.${id}.limite`, 'serve { fisso, per_grado_totale, per_grado_categoria } interi ≥ 0');
+          if (isIntero(p.numero) && isIntero(cc[id]?.base)) tPrec += p.numero * cc[id].base;
+        }
+        const nPrec = Object.keys(cc).reduce((s, id) => s + (isIntero(prec.categorie[id]?.numero) ? prec.categorie[id].numero : 0), 0);
+        if (dati.abilita?.abilita && nPrec !== dati.abilita.abilita.length) err(F, `${K}.categorie`, `il profilo di prima copre ${nPrec} Abilità, le Abilità sono ${dati.abilita.abilita.length}`);
+        if (isIntero(prec.punti_base_totali) && tPrec !== prec.punti_base_totali) err(F, `${K}.punti_base_totali`, `le basi del profilo di prima sommano ${tPrec}, non ${prec.punti_base_totali}`);
+      }
+    }
   }
   for (const tab of ['incantesimi.schema_livello_base']) {
     const v = tab.split('.').reduce((o, k) => o?.[k], r);
@@ -1141,7 +1161,12 @@ function validaClassi(c, nomiAddestramenti, nomiAbilita, macrofamiglie, regole, 
   if (!isOggetto(c)) return;
   const F = 'classi';
   const taumaturgo = regole?.taumaturgo?.addestramento;
-  listaNominata(F, c, 'classi', err).forEach((x, i) => {
+  // Lotto 192: quanti profili di competenza ha guardato davvero. Il difetto del 189 era un controllo che girava a
+  // vuoto e diceva verde: qui, se i profili visti non sono tutte le Classi, il validatore lo dice.
+  let profiliVisti = 0;
+  let profiliPrecedentiVisti = 0;
+  const classi = listaNominata(F, c, 'classi', err);
+  classi.forEach((x, i) => {
     const k = `classi[${i}] (${x.nome})`;
     if (!nomiAddestramenti.has(x.addestramento)) err(F, `${k}.addestramento`, `"${x.addestramento}" non è un Addestramento esistente`);
 
@@ -1170,6 +1195,29 @@ function validaClassi(c, nomiAddestramenti, nomiAbilita, macrofamiglie, regole, 
       }
       for (const cat of Object.keys(cc)) if (!(cat in comp)) err(F, `${k}.competenze`, `manca la categoria ${cat} (${cc[cat].nome})`);
       for (const n of nomiAbilita) if (!viste.has(n)) err(F, `${k}.competenze`, `l'Abilità "${n}" non ha una categoria di competenza`);
+      profiliVisti += 1;
+    }
+    // Lotto 192: il profilo di prima della Classe, con i numeri di regole.json → competenze.precedente. Lo usa ogni
+    // personaggio che non ha dichiarato il profilo nuovo: se manca, src/competenze.js ripiega su quello nuovo e la
+    // scheda di un personaggio salvato cambia senza che nessuno l'abbia deciso. È il cancello, e si controlla.
+    const ccP = regole?.competenze?.precedente?.categorie;
+    const compP = isOggetto(x.competenze_precedenti) ? x.competenze_precedenti : null;
+    if (ccP && !compP) err(F, `${k}.competenze_precedenti`, 'manca il profilo di prima (lotto 192): senza, un personaggio non ancora adeguato prenderebbe quello nuovo');
+    else if (ccP && compP) {
+      const visteP = new Map();
+      for (const [cat, lista] of Object.entries(compP)) {
+        if (!(cat in ccP)) { err(F, `${k}.competenze_precedenti.${cat}`, `categoria "${cat}" non in competenze.precedente`); continue; }
+        if (!Array.isArray(lista)) { err(F, `${k}.competenze_precedenti.${cat}`, 'serve un elenco di Abilità'); continue; }
+        if (lista.length !== ccP[cat].numero) err(F, `${k}.competenze_precedenti.${cat}`, `${cc[cat]?.nome ?? cat}: attese ${ccP[cat].numero} Abilità nel profilo di prima, trovate ${lista.length}`);
+        for (const n of lista) {
+          if (!nomiAbilita.has(n)) err(F, `${k}.competenze_precedenti.${cat}`, `"${n}" non è un'Abilità esistente`);
+          else if (visteP.has(n)) err(F, `${k}.competenze_precedenti.${cat}`, `"${n}" è già fra le ${cc[visteP.get(n)]?.nome ?? visteP.get(n)}: ogni Abilità sta in una sola categoria`);
+          else visteP.set(n, cat);
+        }
+      }
+      for (const cat of Object.keys(ccP)) if (!(cat in compP)) err(F, `${k}.competenze_precedenti`, `manca la categoria ${cat} nel profilo di prima`);
+      for (const n of nomiAbilita) if (!visteP.has(n)) err(F, `${k}.competenze_precedenti`, `l'Abilità "${n}" non ha una categoria nel profilo di prima`);
+      profiliPrecedentiVisti += 1;
     }
 
     validaDadi(F, `${k}.pv_per_grado`, x.pv_per_grado, err);
@@ -1212,6 +1260,12 @@ function validaClassi(c, nomiAddestramenti, nomiAbilita, macrofamiglie, regole, 
       }
     }
   });
+  // Lotto 192: un controllo che non ha guardato nessun profilo non è un controllo che passa, è un controllo che non
+  // è girato. Il 189 ne aveva tre scritti così, verdi su zero voci.
+  if (classi.length && profiliVisti !== classi.length) err(F, 'classi.competenze', `profili di competenza controllati ${profiliVisti} su ${classi.length} Classi`);
+  if (regole?.competenze?.precedente?.categorie && classi.length && profiliPrecedentiVisti !== classi.length) {
+    err(F, 'classi.competenze_precedenti', `profili di prima controllati ${profiliPrecedentiVisti} su ${classi.length} Classi: senza, un personaggio non ancora adeguato cambierebbe VA`);
+  }
 }
 
 // ---------------------------------------------------------------------------

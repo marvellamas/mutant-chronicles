@@ -211,7 +211,8 @@ test('app.js: la scelta passa dal salvataggio normale; offline e coda bloccano; 
   const a = readFileSync(new URL('../src/ui/app.js', import.meta.url), 'utf8');
   assert.match(a, /function talentiBloccati\(\)[\s\S]*eOffline\(\)[\s\S]*inCoda\(/);
   assert.match(a, /scegli: \(posto, scelta[\s\S]*if \(talentiBloccati\(\)\)[\s\S]*persisti\(\)/);
-  assert.match(a, /scelte: \{ \.\.\.nuoveScelte\(\), regimeTalenti: 2 \}/);
+  // lotto 192: un PG nuovo nasce anche col profilo delle Abilità 4/7/9/4 (regimeAbilita: 2)
+  assert.match(a, /scelte: \{ \.\.\.nuoveScelte\(\), regimeTalenti: 2, regimeAbilita: 2 \}/);
   assert.match(readFileSync(new URL('../src/ui/tab.js', import.meta.url), 'utf8'), /ctx\.talenti \? ctx\.talenti\.disegna\(ctx\.talenti\)/);
 });
 

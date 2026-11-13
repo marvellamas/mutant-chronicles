@@ -232,11 +232,11 @@
     "_nota": "«punti_abilita»: titolo dell'avviso in cima alla SD quando un evento già registrato (creazione o livello) ha meno Punti Abilità Liberi di quelli previsti dalle regole correnti o punti che non aumentano più il VA personale: Giocatore, Doc del 27/09/2026 (per-davide A.52) e Doc del 29/09/2026 (categorie di competenza e limiti del VA personale, §2.13, §8.3). «eccesso»: avviso dei punti liberi oltre quelli previsti ({n} = punti in più in tutti gli eventi), in testa alla SD, nella tab Abilità, nella stampa e all'import; Giocatore del 03/10/2026 sera, confermato da Davide il 04/10 (A.90): 7 punti a ogni Grado, compreso il primo (prima 10, poi 5 per l’E&L del 03/10). «mancanti»: avviso dei punti liberi ancora da assegnare ({n}), con «Assegna»: chi ha 5 punti per Grado ne ha 2 da assegnare per evento. Se le regole cambiano ancora, si aggiornano qui i testi."
   },
   "competenze": {
-    "paragrafo": "Giocatore §§1.2.1, 2.3, 2.12, 2.13, 4.2, 8.3, 8.7 (Doc del 29/09/2026, 23:45)",
+    "paragrafo": "Giocatore §§1.2.1, 2.3, 2.12, 2.13, 4.2, 8.3, 8.3.1, 8.7 (0.62)",
     "categorie": {
       "S": {
         "nome": "Specializzate",
-        "numero": 2,
+        "numero": 4,
         "base": 7,
         "limite": {
           "fisso": 10,
@@ -246,20 +246,20 @@
       },
       "P": {
         "nome": "Professionali",
-        "numero": 6,
+        "numero": 7,
         "base": 6,
         "limite": {
-          "fisso": 7,
+          "fisso": 8,
           "per_grado_totale": 1,
           "per_grado_categoria": 1
         }
       },
       "G": {
         "nome": "Generiche",
-        "numero": 12,
+        "numero": 9,
         "base": 5,
         "limite": {
-          "fisso": 5,
+          "fisso": 6,
           "per_grado_totale": 2,
           "per_grado_categoria": 0
         }
@@ -269,14 +269,54 @@
         "numero": 4,
         "base": 3,
         "limite": {
-          "fisso": 3,
+          "fisso": 4,
           "per_grado_totale": 2,
           "per_grado_categoria": 0
         }
       }
     },
-    "punti_base_totali": 122,
-    "_nota": "La prima Classe assegna a ciascuna delle 24 Abilità una categoria di competenza (classi.json → competenze) e la sua base, che resta fissa (§2.3). VA grezzo personale = Mod + Base + Corporazione + Avanzamento; VA personale = min(grezzo, limite) (§1.2.1). Limite di un'Abilità (§8.7): per ogni categoria che le attribuisce almeno una Classe posseduta, fisso + per_grado_totale × G + per_grado_categoria × g (G = Gradi di tutte le Classi, g = Gradi delle Classi che la mettono in quella categoria); vale il più alto. Con una sola Classe al Grado g dà la tabella del §8.3 (S 10 + 2g, P 7 + 2g, G 5 + 2g, N 3 + 2g). Bonus e penalità alla Prova (equipaggiamento, Talenti, Specializzazioni, condizioni) si applicano dopo il limite (§4.2). I +1 di Classe oltre il limite restano nel grezzo; i punti liberi valgono solo se aumentano il VA personale (§2.13, §8.3)."
+    "punti_base_totali": 127,
+    "_nota": "La prima Classe assegna a ciascuna delle 24 Abilità una categoria di competenza (classi.json → competenze) e la sua base, che resta fissa (§2.3). VA grezzo personale = Mod + Base + Corporazione + Avanzamento; VA personale = min(grezzo, limite) (§1.2.1). Limite di un'Abilità (§8.7): per ogni categoria che le attribuisce almeno una Classe posseduta, fisso + per_grado_totale × G + per_grado_categoria × g (G = Gradi di tutte le Classi, g = Gradi delle Classi che la mettono in quella categoria); vale il più alto. Con una sola Classe al Grado g dà la tabella del §8.3 (S 10 + 2g, P 7 + 2g, G 5 + 2g, N 3 + 2g). Bonus e penalità alla Prova (equipaggiamento, Talenti, Specializzazioni, condizioni) si applicano dopo il limite (§4.2). I +1 di Classe oltre il limite restano nel grezzo; i punti liberi valgono solo se aumentano il VA personale (§2.13, §8.3).",
+    "precedente": {
+      "categorie": {
+        "S": {
+          "numero": 2,
+          "limite": {
+            "fisso": 10,
+            "per_grado_totale": 1,
+            "per_grado_categoria": 1
+          }
+        },
+        "P": {
+          "numero": 6,
+          "limite": {
+            "fisso": 7,
+            "per_grado_totale": 1,
+            "per_grado_categoria": 1
+          }
+        },
+        "G": {
+          "numero": 12,
+          "limite": {
+            "fisso": 5,
+            "per_grado_totale": 2,
+            "per_grado_categoria": 0
+          }
+        },
+        "N": {
+          "numero": 4,
+          "limite": {
+            "fisso": 3,
+            "per_grado_totale": 2,
+            "per_grado_categoria": 0
+          }
+        }
+      },
+      "punti_base_totali": 122,
+      "fino_a": "Giocatore 0.54",
+      "_nota": "Il profilo 2/6/12/4 e i limiti di prima (S 10 + 2g, P 7 + 2g, G 5 + 2g, N 3 + 2g, 122 punti base). Lo usa ogni personaggio salvato prima del lotto 192 che non ha dichiarato il profilo nuovo (scelte.regimeAbilita = 2): una scheda conserva le scelte e ricalcola i valori, quindi cambiare le categorie cambierebbe il VA di chi è già salvato. Lo adeguerà il lotto C, al tavolo, insieme al giocatore (§8.3.1)."
+    },
+    "TODO(Davide)": "A.267: nell'adeguamento del §8.3.1 un'Abilità che passa a una categoria più bassa perde base (P→G −1, G→N −2) e il VA scende. Nessuno dei sette personaggi al tavolo lo subisce, ma succede (il Predicatore d'esempio: Artefatti 9→8, Intrattenere 6→4). Il §8.3.1 azzera e ridistribuisce i punti liberi, che possono compensare solo se l'Abilità non è al limite: il VA può restare più basso di prima. Si accetta la discesa, oppure il Direttore la compensa? L'app non adegua nessuno finché la risposta non c'è (il contrassegno scelte.regimeAbilita lo mette il lotto C, al tavolo)."
   },
   "taumaturgo": {
     "addestramento": "Taumaturgo",

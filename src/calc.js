@@ -1,7 +1,7 @@
 // Motore di calcolo: funzioni pure. Le costanti numeriche arrivano dai dati (data/*.json);
 // qui stanno solo le formule, ciascuna con il paragrafo del Manuale del Giocatore.
 import { calcolaSchedaPersonaggio } from './avanzamento.js';
-import { competenzaDi, baseIniziale, limiteAbilita, vaPersonale, puntiUtili, limiteConEccezioni, oltreIlLimite } from './competenze.js';
+import { competenzaDi, baseIniziale, limiteAbilita, vaPersonale, puntiUtili, limiteConEccezioni, oltreIlLimite, profiloCompetenze } from './competenze.js';
 
 // Avanzamento di livello (cap. 8): la validazione di un livello sta in avanzamento.js.
 export { validaLivello } from './avanzamento.js';
@@ -165,14 +165,16 @@ function caratteristicheFinali(corp, scelte, dati) {
  */
 function abilitaScomposte(car, corp, classe, scelte, dati) {
   const bonusClasse = dati.regole.creazione.bonus_classe_per_grado;
+  // lotto 192: il profilo delle Abilità del personaggio, risolto una volta (4/7/9/4 solo se l'ha dichiarato)
+  const profilo = profiloCompetenze(dati.regole, scelte);
   return dati.abilita.abilita.map(({ nome, categoria, caratteristica }) => {
     const componenti = {
       mod: car[caratteristica].mod,
-      base: baseIniziale(classe, nome, dati.regole),
+      base: baseIniziale(classe, nome, profilo),
       corporazione: corp.abilita_bonus.includes(nome) ? 1 : 0,
     };
-    const competenza = competenzaDi(classe, nome);
-    const lim = limiteAbilita(nome, [{ def: classe, grado: 1 }], dati.regole);
+    const competenza = competenzaDi(classe, nome, profilo);
+    const lim = limiteAbilita(nome, [{ def: classe, grado: 1 }], profilo);
     // §2.12: il +1 di Classe va nell'Avanzamento, sempre; §3.1: prima i punti di Classe, poi i liberi
     const daClasse = classe.abilita.includes(nome) ? bonusClasse : 0;
     const scelti = scelte.puntiAbilitaLiberi?.[nome] ?? 0;
@@ -252,7 +254,7 @@ export function validaScelte(scelte, dati) {
       if (a.inattivi) {
         errori.push({
           campo: `puntiAbilitaLiberi.${a.nome}`, tipo: 'violazione', inattivi: a.inattivi,
-          problema: `${a.inattivi === 1 ? '1 punto non aumenta' : `${a.inattivi} punti non aumentano`} il VA personale: ${a.liberi ? `con ${a.liberi === 1 ? '1 punto' : `${a.liberi} punti`} il VA arriva` : 'il VA è già'} al limite ${a.limite} (${dati.regole.competenze.categorie[a.limiteCategoria ?? a.competenza].nome} al I Grado, §2.13)`,
+          problema: `${a.inattivi === 1 ? '1 punto non aumenta' : `${a.inattivi} punti non aumentano`} il VA personale: ${a.liberi ? `con ${a.liberi === 1 ? '1 punto' : `${a.liberi} punti`} il VA arriva` : 'il VA è già'} al limite ${a.limite} (${profiloCompetenze(dati.regole, scelte).categorie[a.limiteCategoria ?? a.competenza].nome} al I Grado, §2.13)`,
         });
       }
       if (a.vaPrimaDeiLiberi < cr.va_minimo_per_punti_liberi) {

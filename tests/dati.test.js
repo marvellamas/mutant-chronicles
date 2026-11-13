@@ -3,7 +3,7 @@ import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { validaDati, formattaErrore, trovaTodo, avvisiDati } from '../src/validate.js';
 import { caricaDati } from '../src/rules.js';
-import { competenzaDi, baseIniziale, limiteAbilita } from '../src/competenze.js';
+import { competenzaDi, baseIniziale, limiteAbilita, profiloCompetenze } from '../src/competenze.js';
 import { datiReali, leggiDaDisco, copia } from './helpers.js';
 
 const { dati, errori } = await datiReali();
@@ -40,7 +40,9 @@ test('i TODO(Davide) sono elencabili', () => {
   assert.equal(todo.some((t) => t.percorso.startsWith('classi.json')), false);
   // tutte chiuse dalle risposte ai 19 quesiti (E&L del 29/09) e ai 6 quesiti del 03/10 (A.80, A.86); restano
   // le scelte sui Rituali (per-davide A.74); A.78 chiusa il 02/10 (decisione 71)
-  assert.ok(todo.filter((t) => t.percorso.startsWith('regole.json')).every((t) => (/^regole\.json\.rituali/.test(t.percorso) && /A\.74/.test(t.testo)) || (/^regole\.json\.umanita\.riabilitazione/.test(t.percorso) && /A\.111/.test(t.testo)) || (/^regole\.json\.attacco_distanza\.a_terra/.test(t.percorso) && /A\.153/.test(t.testo)) || (/^regole\.json\.caratteristiche_temporanee/.test(t.percorso) && /A\.120/.test(t.testo)) || (/^regole\.json\.prezzi_artefatti/.test(t.percorso) && /A\.26[12]/.test(t.testo)))); // A.110, A.116 e A.119 risolte il 09/10; A.153 (A Terra e Copertura) aperta; A.261 e A.262 sul prezzo di vendita (A.256, lotto 181)
+  assert.ok(todo.filter((t) => t.percorso.startsWith('regole.json')).every((t) => (/^regole\.json\.rituali/.test(t.percorso) && /A\.74/.test(t.testo)) || (/^regole\.json\.umanita\.riabilitazione/.test(t.percorso) && /A\.111/.test(t.testo)) || (/^regole\.json\.attacco_distanza\.a_terra/.test(t.percorso) && /A\.153/.test(t.testo)) || (/^regole\.json\.caratteristiche_temporanee/.test(t.percorso) && /A\.120/.test(t.testo)) || (/^regole\.json\.prezzi_artefatti/.test(t.percorso) && /A\.26[12]/.test(t.testo))
+    // lotto 192: nell'adeguamento del §8.3.1 un'Abilità che scende di categoria perde base e il VA scende (A.267)
+    || (/^regole\.json\.competenze/.test(t.percorso) && /A\.267/.test(t.testo)))); // A.110, A.116 e A.119 risolte il 09/10; A.153 (A Terra e Copertura) aperta; A.261 e A.262 sul prezzo di vendita (A.256, lotto 181)
   // durate delle Tecniche Interiori: decise dal master il 26/09/2026 (A.4 del Doc E&L); effetti di Pelle di
   // Rinoceronte (A.81) e di Onda Interiore (A.82) decisi il 03/10/2026
   assert.equal(todo.some((t) => t.percorso.startsWith('tecniche_interiori.json')), false);
@@ -64,33 +66,52 @@ function erroriDopo(modifica) {
   return validaDati(d);
 }
 
-test('validatore: le 25 Classi coprono le 24 Abilità una volta ciascuna, 2 S / 6 P / 12 G / 4 N (§2.3 del 29/09)', () => {
+test('validatore: le 25 Classi coprono le 24 Abilità una volta ciascuna, 4 S / 7 P / 9 G / 4 N (Giocatore 0.62 §2.3)', () => {
   const cc = dati.regole.competenze.categorie;
-  assert.deepEqual(Object.fromEntries(Object.entries(cc).map(([k, v]) => [k, [v.numero, v.base]])), { S: [2, 7], P: [6, 6], G: [12, 5], N: [4, 3] });
-  assert.equal(dati.regole.competenze.punti_base_totali, 122);
+  assert.deepEqual(Object.fromEntries(Object.entries(cc).map(([k, v]) => [k, [v.numero, v.base]])), { S: [4, 7], P: [7, 6], G: [9, 5], N: [4, 3] });
+  assert.equal(dati.regole.competenze.punti_base_totali, 127);
   assert.equal(dati.classi.classi.length, 25);
   const nomi = dati.abilita.abilita.map((a) => a.nome).sort();
   for (const c of dati.classi.classi) {
     const tutte = Object.values(c.competenze).flat();
     assert.deepEqual([...tutte].sort(), nomi, c.nome);
     for (const [k, v] of Object.entries(cc)) assert.equal(c.competenze[k].length, v.numero, `${c.nome} ${k}`);
-    // le basi sommano 122 (2×7 + 6×6 + 12×5 + 4×3)
-    assert.equal(Object.entries(c.competenze).reduce((t, [k, l]) => t + l.length * cc[k].base, 0), 122, c.nome);
+    // le basi sommano 127 (4×7 + 7×6 + 9×5 + 4×3)
+    assert.equal(Object.entries(c.competenze).reduce((t, [k, l]) => t + l.length * cc[k].base, 0), 127, c.nome);
+  }
+  // Lotto 192: il profilo di prima vale quanto quello nuovo, perché è quello dei personaggi non ancora adeguati
+  const ccP = dati.regole.competenze.precedente.categorie;
+  assert.deepEqual(Object.fromEntries(Object.entries(ccP).map(([k, v]) => [k, v.numero])), { S: 2, P: 6, G: 12, N: 4 });
+  assert.equal(dati.regole.competenze.precedente.punti_base_totali, 122);
+  for (const c of dati.classi.classi) {
+    assert.deepEqual(Object.values(c.competenze_precedenti).flat().sort(), nomi, `${c.nome} (profilo di prima)`);
+    for (const [k, v] of Object.entries(ccP)) assert.equal(c.competenze_precedenti[k].length, v.numero, `${c.nome} ${k} (profilo di prima)`);
+    assert.equal(Object.entries(c.competenze_precedenti).reduce((t, [k, l]) => t + l.length * cc[k].base, 0), 122, `${c.nome} (profilo di prima)`);
   }
   // gli Addestramenti non hanno più i valori base
   for (const a of dati.addestramenti.addestramenti) assert.equal(a.valori_base, undefined, a.nome);
 });
 
-test('Incursore §3.7 (Giocatore del 03/10): Armi da guerra Professionale, Armi da mischia Generica', () => {
+test('Incursore: Armi da guerra Specializzata nel Giocatore 0.62, Professionale nel profilo di prima; Armi da mischia Generica in tutt’e due', () => {
   const inc = dati.classi.classi.find((c) => c.nome === 'Incursore');
-  assert.equal(competenzaDi(inc, 'Armi da guerra'), 'P');
-  assert.equal(competenzaDi(inc, 'Armi da mischia'), 'G');
-  assert.equal(baseIniziale(inc, 'Armi da guerra', dati.regole), 6);
-  assert.equal(baseIniziale(inc, 'Armi da mischia', dati.regole), 5);
-  // il limite del VA personale segue la categoria (§8.3): P più alto di G a ogni Grado
+  const PN = profiloCompetenze(dati.regole, { regimeAbilita: 2 });
+  const PV = profiloCompetenze(dati.regole, {});
+  // il 0.62 ha riscritto tutti e 25 i profili: per l'Incursore Armi da guerra passa da Professionale a
+  // Specializzata (base 6 → 7). Nel profilo di prima resta Professionale, e per chi non è adeguato lo è ancora.
+  assert.equal(competenzaDi(inc, 'Armi da guerra', PN), 'S');
+  assert.equal(competenzaDi(inc, 'Armi da mischia', PN), 'G');
+  assert.equal(baseIniziale(inc, 'Armi da guerra', PN), 7);
+  assert.equal(baseIniziale(inc, 'Armi da mischia', PN), 5);
+  assert.equal(competenzaDi(inc, 'Armi da guerra', PV), 'P');
+  assert.equal(competenzaDi(inc, 'Armi da mischia', PV), 'G');
+  assert.equal(baseIniziale(inc, 'Armi da guerra', PV), 6);
+  // il limite del VA personale segue la categoria (§8.3). Nel Giocatore 0.62 Armi da guerra è S (12 al I Grado) e
+  // Armi da mischia G, che sale da 7 a 8; nel profilo di prima erano 9 (P) e 7 (G), e per chi non è adeguato lo sono ancora.
   const uno = [{ def: inc, grado: 1 }];
-  assert.equal(limiteAbilita('Armi da guerra', uno, dati.regole).valore, 9);
-  assert.equal(limiteAbilita('Armi da mischia', uno, dati.regole).valore, 7);
+  assert.equal(limiteAbilita('Armi da guerra', uno, PN).valore, 12);
+  assert.equal(limiteAbilita('Armi da mischia', uno, PN).valore, 8);
+  assert.equal(limiteAbilita('Armi da guerra', uno, PV).valore, 9);
+  assert.equal(limiteAbilita('Armi da mischia', uno, PV).valore, 7);
   // Armi da mischia resta una delle cinque Abilità di Classe (+1 per Grado) pur essendo Generica:
   // i +1 si registrano sempre, ma oltre il limite G restano inattivi (§8.3; src/competenze.js → puntiUtili)
   assert.ok(inc.abilita.includes('Armi da mischia'));
@@ -101,8 +122,15 @@ test('validatore: Classe con categoria di competenza sbagliata, Abilità ripetut
   // una G spostata fra le S: 3 S e 11 G
   const e = erroriDopo((d) => { const c = d.classi.classi[0].competenze; c.S.push(c.G.pop()); });
   const k = (x) => x.file === 'classi.json' && x.chiave.includes('Agente');
-  assert.ok(e.some((x) => k(x) && x.chiave.endsWith('competenze.S') && /attese 2 Abilità, trovate 3/.test(x.problema)), JSON.stringify(e));
-  assert.ok(e.some((x) => k(x) && x.chiave.endsWith('competenze.G') && /attese 12 Abilità, trovate 11/.test(x.problema)));
+  assert.ok(e.some((x) => k(x) && x.chiave.endsWith('competenze.S') && /attese 4 Abilità, trovate 5/.test(x.problema)), JSON.stringify(e));
+  assert.ok(e.some((x) => k(x) && x.chiave.endsWith('competenze.G') && /attese 9 Abilità, trovate 8/.test(x.problema)));
+  // Lotto 192: lo stesso sul profilo di prima, che è il cancello. Un profilo di prima che manca o si sfalda
+  // farebbe ripiegare un personaggio non adeguato sul profilo nuovo, cambiandogli il VA in silenzio.
+  const prec = erroriDopo((d) => { const c = d.classi.classi[0].competenze_precedenti; c.S.push(c.G.pop()); });
+  assert.ok(prec.some((x) => k(x) && x.chiave.endsWith('competenze_precedenti.S') && /attese 2 Abilità nel profilo di prima, trovate 3/.test(x.problema)), JSON.stringify(prec));
+  const senza = erroriDopo((d) => { delete d.classi.classi[3].competenze_precedenti; });
+  assert.ok(senza.some((x) => /manca il profilo di prima/.test(x.problema)), JSON.stringify(senza.slice(0, 3)));
+  assert.ok(senza.some((x) => /profili di prima controllati 24 su 25 Classi/.test(x.problema)), JSON.stringify(senza.slice(0, 3)));
   // Abilità scritta male: inesistente e, di conseguenza, «Furtività» senza categoria
   const m = erroriDopo((d) => { const c = d.classi.classi[1].competenze; for (const l of Object.values(c)) { const i = l.indexOf('Furtività'); if (i >= 0) l[i] = 'Furtivita'; } });
   assert.ok(m.some((x) => /"Furtivita" non è un'Abilità esistente/.test(x.problema)));
@@ -118,9 +146,12 @@ test('validatore: Classe con categoria di competenza sbagliata, Abilità ripetut
 test('validatore: regole delle competenze con basi o numeri che non tornano, valori base rimessi negli Addestramenti', () => {
   // base S 7 → 8: le basi sommano 124
   const e = erroriDopo((d) => { d.regole.competenze.categorie.S.base = 8; });
-  assert.ok(e.some((x) => x.file === 'regole.json' && /le basi sommano 124, non 122/.test(x.problema)), JSON.stringify(e));
-  // numero S 2 → 3: le categorie coprono 25 Abilità (e ogni Classe ne ha una di troppo da trovare)
-  assert.ok(erroriDopo((d) => { d.regole.competenze.categorie.S.numero = 3; }).some((x) => /coprono 25 Abilità, le Abilità sono 24/.test(x.problema)));
+  assert.ok(e.some((x) => x.file === 'regole.json' && /le basi sommano 131, non 127/.test(x.problema)), JSON.stringify(e));
+  // numero S 4 → 5: le categorie coprono 25 Abilità (e ogni Classe ne ha una di troppo da trovare)
+  assert.ok(erroriDopo((d) => { d.regole.competenze.categorie.S.numero = 5; }).some((x) => /coprono 25 Abilità, le Abilità sono 24/.test(x.problema)));
+  // lotto 192: anche il profilo di prima ha la sua somma e il suo conto di Abilità
+  assert.ok(erroriDopo((d) => { d.regole.competenze.precedente.punti_base_totali = 120; }).some((x) => /le basi del profilo di prima sommano 122, non 120/.test(x.problema)));
+  assert.ok(erroriDopo((d) => { d.regole.competenze.precedente.categorie.G.numero = 11; }).some((x) => /il profilo di prima copre 23 Abilità, le Abilità sono 24/.test(x.problema)));
   // i valori_base del vecchio schema non si rimettono (le basi vengono dalla prima Classe)
   assert.ok(erroriDopo((d) => { d.addestramenti.addestramenti[0].valori_base = { 'Furtività': 4 }; }).some((x) => x.file === 'addestramenti.json' && /valori_base/.test(x.chiave + x.problema)));
 });

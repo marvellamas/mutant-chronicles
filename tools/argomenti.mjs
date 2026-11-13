@@ -77,4 +77,5 @@ export const ARGOMENTI = {
   'ricognizione-manuali.mjs': ['drive'],
   'lotto_189_edizioni.mjs': ['file', 'scrivi'],
   'edizioni-dati.mjs': [],
+  'lotto_192_profilo_abilita.mjs': ['scrivi'],
 };

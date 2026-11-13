@@ -1128,7 +1128,9 @@ function nuovoPersonaggio() {
   const id = archivio.nuovoId();
   // l'identificativo nasce con il personaggio (src/character.js → nuovoPg): non dipende dal nome
   // Talenti v1.0 (lotto 2, 25/10/2026): un personaggio nuovo nasce con le tre categorie (Specializzazione al 1° livello)
-  if (!archivio.salva({ id, scelte: { ...nuoveScelte(), regimeTalenti: 2 }, passo: 0, pg: nuovoPg() })) {
+  // lotto 192: un personaggio creato da zero nasce col profilo delle Abilità 4/7/9/4 (regimeAbilita: 2) e con i
+  // Talenti nuovi: sono le regole correnti, e per lui non c'è niente da migrare.
+  if (!archivio.salva({ id, scelte: { ...nuoveScelte(), regimeTalenti: 2, regimeAbilita: 2 }, passo: 0, pg: nuovoPg() })) {
     stato.messaggioHome = { tipo: 'attenzione', testo: 'Il browser non permette di salvare: il personaggio andrà perso chiudendo la pagina. Usa Esporta per conservarlo.' };
   }
   stato.id = null;

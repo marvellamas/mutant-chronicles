@@ -357,6 +357,10 @@ function foglioAbilita(d) {
     box({ titolo: 'Abilità', tinta: 'accento', forte: true, classe: 'f2-abilita' },
       h('div', { class: 'abilita-affiancate' }, tabellaAbilita(d.categorie.slice(0, meta)), tabellaAbilita(d.categorie.slice(meta))),
       h('p', { class: 'piccolo' }, '• Abilità di Classe. S / P / G / N: competenza (§2.3). VA = Mod + Base + Corp + Av. (Avanzamento), al massimo il limite (⚑: VA grezzo oltre il limite, §8.3; ✦: eccezione del Direttore, il VA passa il limite, A.247), + Eq. (equipaggiamento indossato).'),
+      // lotto 192: su carta come nella tab, a quale profilo delle Abilità sta il personaggio
+      d.profilo ? h('p', { class: 'piccolo' }, d.profilo.chiave === 'nuovo'
+        ? `Profilo delle Abilità ${d.profilo.nome}, ${d.profilo.punti_base_totali} punti base (Giocatore 0.62 §2.3).`
+        : `Profilo delle Abilità ${d.profilo.nome}, ${d.profilo.punti_base_totali} punti base: quello con cui è salvato. Il profilo nuovo è 4/7/9/4 con 127 punti base, e l'adeguamento si fa al tavolo (§8.3.1).`) : null,
       // bonus condizionali accanto al VA (in apice): fuori dal valore, con la condizione
       condizionaliStampa(d.categorie),
       // punti liberi in eccesso (E&L del 03/10/2026): l'avviso resta sulla carta finché non si tolgono

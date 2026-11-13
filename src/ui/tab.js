@@ -1472,6 +1472,20 @@ function apriCalcolo(ctx, a) {
   return informa({ titolo: `Calcolo: ${a.nome}`, contenuto, classe: 'finestrella-calcolo' });
 }
 
+/**
+ * Lotto 192: a quale profilo delle Abilità sta questo personaggio. Una riga sola, in coda alla tab, accanto alla
+ * legenda: serve perché un VA più basso di quello di un compagno di pari Grado non sembri un errore della scheda.
+ * Chi è ancora al profilo di prima vede anche che l'adeguamento si fa al tavolo (§8.3.1).
+ */
+function rigaProfiloAbilita(ctx) {
+  const p = ctx.tab.scheda?.profiloAbilita ?? null;
+  if (!p) return null;
+  const n = Object.entries(p.numero).map(([k, v]) => `${v} ${k}`).join(' / ');
+  return h('p', { class: 'nota' }, p.chiave === 'nuovo'
+    ? `Profilo delle Abilità: ${p.nome} (${n}), ${p.punti_base_totali} punti base — Giocatore 0.62 §2.3.`
+    : `Profilo delle Abilità: ${p.nome} (${n}), ${p.punti_base_totali} punti base — quello con cui questo personaggio è salvato. Il profilo nuovo del Giocatore 0.62 è 4/7/9/4 con 127 punti base: l'adeguamento si fa al tavolo con il Direttore (§8.3.1).`);
+}
+
 function tabAbilita(ctx, d) {
   const meta = Math.ceil(d.categorie.length / 2);
   const eccesso = ctx.tab.scheda?.avvisoPunti ?? null;
@@ -1524,6 +1538,7 @@ function tabAbilita(ctx, d) {
         sezione('Abilità',
           eccesso ? avvisoPuntiEccesso(ctx, eccesso) : null,
           h('div', { class: 'abilita-affiancate' }, tabella(d.categorie.slice(0, meta)), tabella(d.categorie.slice(meta))),
+          rigaProfiloAbilita(ctx),
           h('p', { class: 'nota' }, `• Abilità di Classe. S / P / G / N: competenza nella prima Classe (§2.3). ⚑: VA oltre il limite della categoria (§8.3). ✦: eccezione del Direttore, il VA passa il limite (A.247). ▼/▲: il VA mostrato comprende le condizioni della sessione. «Calcolo» apre il conto del VA.${eccesso ? ' ✱: punti liberi ricevuti in un evento con punti in eccesso.' : ''}`))),
       h('aside', { class: 'colonna-condizioni', 'aria-label': 'Condizioni attive' },
         h('section', { class: 'riquadro condizioni-attive' },

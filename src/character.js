@@ -86,6 +86,11 @@ export function nuoveScelte() {
     // Talenti v1.0 (07/10/2026): 2 = il personaggio usa le tre categorie (Talenti Liberi, Maestrie, Specializzazioni);
     // null = i Talenti di prima (un solo evento «talento_libero» ai livelli dispari). Lo imposta la migrazione (lotto 2).
     regimeTalenti: null,
+    // Lotto 192 (Giocatore 0.62 §8.3.1): 2 = il personaggio usa il profilo delle Abilità 4/7/9/4 e i limiti nuovi;
+    // null = il profilo 2/6/12/4 di prima, con cui è stato salvato. Lo imposta la migrazione del lotto C, al tavolo:
+    // una scheda ricalcola i valori dalle scelte, quindi cambiare le categorie cambierebbe il VA di chi è già
+    // salvato. I personaggi creati da zero nascono con 2, perché per loro non c'è niente da migrare.
+    regimeAbilita: null,
     // Specializzazione del Grado iniziale (1° livello), regime nuovo: { id, annotazione? }
     specializzazioneIniziale: null,
     // Talenti v1.0: le scelte dei posti fino a questo livello le ha chiuse il Direttore (il giocatore non le cambia più)
@@ -266,6 +271,8 @@ export function normalizza(scelteIn, dati) {
   for (const [k, v] of Object.entries(s.parametriTalenti)) if (typeof v !== 'string' || !v) delete s.parametriTalenti[k];
   // Talenti v1.0: regime e Specializzazione iniziale (i file di prima non li hanno: restano Talenti vecchi)
   if (s.regimeTalenti !== 2) s.regimeTalenti = null;
+  // lotto 192: il profilo delle Abilità (i file di prima non lo hanno: restano al profilo con cui sono salvati)
+  if (s.regimeAbilita !== 2) s.regimeAbilita = null;
   if (!(Number.isInteger(s.talentiChiusiFino) && s.talentiChiusiFino >= 1)) s.talentiChiusiFino = null;
   if (!(isOggetto(s.specializzazioneIniziale) && typeof s.specializzazioneIniziale.id === 'string' && s.specializzazioneIniziale.id)) s.specializzazioneIniziale = null;
   else {
@@ -510,6 +517,7 @@ export function serializza(scelte, { versioniDati, livelli, sessione, calendario
   if (!Object.keys(pulite.parametriTalenti ?? {}).length) delete pulite.parametriTalenti;
   // Talenti v1.0: scritti solo se ci sono, così i file di prima restano identici
   if (pulite.regimeTalenti !== 2) delete pulite.regimeTalenti;
+  if (pulite.regimeAbilita !== 2) delete pulite.regimeAbilita;
   if (!pulite.specializzazioneIniziale) delete pulite.specializzazioneIniziale;
   if (!pulite.talentiChiusiFino) delete pulite.talentiChiusiFino;
   const file = { formato: FORMATO_FILE, versione: VERSIONE_FORMATO };

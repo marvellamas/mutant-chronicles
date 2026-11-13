@@ -1,6 +1,7 @@
 // I passi del wizard (sequenza §2.0 del Manuale del Giocatore). Ogni passo si genera dai dati.
 import { h, segno, dadi } from './dom.js';
 import { validaScelte } from '../calc.js';
+import { profiloCompetenze, listeCompetenza } from '../competenze.js';
 import { eTaumaturgo, specTiroPuntiEroe, CAMPI_ANAGRAFICA } from '../character.js';
 import { statoIncantesimi, motivoBloccoIncantesimo, regoleIncantesimi } from '../incantesimi.js';
 import { info, elencoInfo, etichettaMacro, pallini } from './tooltip.js';
@@ -301,14 +302,16 @@ function talento(ctx, chiave, titolo, testo) {
 // §2.3 e §8.3: le quattro categorie di competenza di una Classe, con base iniziale e limite al I Grado
 // (numeri da regole.json → competenze).
 export function competenzeClasse(ctx, classe, { primaClasse = true } = {}) {
-  const C = ctx.dati.regole.competenze.categorie;
+  // lotto 192: base, limite e liste sono quelli del profilo del personaggio (4/7/9/4 solo se l'ha dichiarato)
+  const profilo = profiloCompetenze(ctx.dati.regole, ctx.scelte);
+  const C = profilo.categorie;
   const limite1 = (L) => L.fisso + L.per_grado_totale + L.per_grado_categoria;
   return h('dl', { class: 'voci competenze' }, Object.entries(C).map(([cat, c]) => h('div', {},
     primaClasse
       ? h('dt', { title: `base ${c.base}, limite del VA personale ${limite1(c.limite)} al I Grado (§8.3)` },
         `${c.nome} `, h('small', {}, `base ${c.base} · limite ${limite1(c.limite)}`))
       : h('dt', {}, c.nome),
-    h('dd', {}, elencoInfo('abilita', classe.competenze?.[cat] ?? [])))));
+    h('dd', {}, elencoInfo('abilita', listeCompetenza(classe, profilo)[cat] ?? [])))));
 }
 
 /** Il posto della Specializzazione del 1° livello, dal conto unico (postiTalenti). */
@@ -343,6 +346,8 @@ function passoSpecializzazioneIniziale(ctx) {
 
 function passoClasse(ctx) {
   const { dati, scelte } = ctx;
+  // lotto 192: il profilo del personaggio che si sta creando (nuovo di norma; quello di prima se il file lo dice)
+  const profiloScelta = profiloCompetenze(dati.regole, scelte);
   const classi = dati.classi.classi.filter((c) => c.addestramento === scelte.addestramento);
   const scelta = trova(classi, scelte.classe);
   const cos = ctx.ante.caratteristiche?.COS.valore;
@@ -359,7 +364,7 @@ function passoClasse(ctx) {
         // §2.3: le categorie che distinguono le Classi si vedono senza aprire il riquadro (04/10/2026: Davide non
         // vedeva il profilo nuovo dell'Incursore, che stava solo nel riquadro chiuso)
         ['S', 'P'].map((cat) => h('p', { class: 'competenze-in-vista' },
-          h('strong', {}, `${dati.regole.competenze.categorie[cat]?.nome ?? cat}: `), elencoInfo('abilita', c.competenze?.[cat] ?? []))),
+          h('strong', {}, `${profiloScelta.categorie[cat]?.nome ?? cat}: `), elencoInfo('abilita', listeCompetenza(c, profiloScelta)[cat] ?? []))),
         dettagli(ctx, `comp:${c.nome}`, 'Competenze: basi e limiti delle 24 Abilità', competenzeClasse(ctx, c)),
         h('dl', { class: 'voci in-linea' },
           h('div', {}, h('dt', {}, 'PV/Grado'), h('dd', {}, dadi(c.pv_per_grado),
@@ -390,7 +395,7 @@ function passoAbilita(ctx) {
   const imposta = (n, v) => ctx.aggiorna({ puntiAbilitaLiberi: { ...pa, [n]: v } });
   const rimasti = cr.punti_abilita_liberi - somma(pa);
 
-  const C = dati.regole.competenze.categorie;
+  const C = profiloCompetenze(dati.regole, scelte).categorie;
   const righe = (cat) => scheda.abilita.filter((a) => a.categoria === cat).map((a) => {
     // i punti salvati, anche quelli che non aumentano il VA (a.liberi conta solo quelli utili)
     const presi = pa[a.nome] ?? 0;
