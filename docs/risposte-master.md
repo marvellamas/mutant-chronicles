@@ -2695,3 +2695,24 @@ che il giocatore legge alla creazione: l'app non sceglie da sola e il testo del 
 
 Il primo numero libero diventa **A.267**. Restano aperte le sei del lotto 181 (A.260–A.265), la nuova A.266 e la
 A.246, che è una decisione del Direttore al tavolo.
+
+## 13/11/2026 — lotto 192, il profilo delle Abilità 4/7/9/4 nei dati
+
+**A.266 è risposta dal Manuale del Giocatore 0.63** (Google Doc del 12/11/2026, 20:34), pubblicato dopo il
+recepimento del lotto 191. Il §2.16.1 non conta più i NEC in UE in modo incompatibile: «Una carica CEC contiene
+10 UE; mediante il trasformatore dedicato viene trasferita integralmente in un tampone da 100 cariche NEC da
+0,1 UE ciascuna.» È esattamente il modello che l'app ha dal lotto 146 (1 carica CEC → tampone da 100 cariche).
+La 0.63 cambia **solo** quel paragrafo e il numero di edizione: si recepisce con il lotto che applica la A.266
+(lotto F, Equipaggiamento 0.41), dichiarata intanto in `tools/manuali.json` → `recepimento_in_attesa`.
+
+**Domanda nuova, aperta: A.267 — nell'adeguamento del §8.3.1 un VA può scendere.** Il profilo 4/7/9/4 sposta
+Abilità anche verso categorie più basse, e la base scende con loro (Professionale → Generica −1, Generica → Non
+competente −2). Il §8.3.1 azzera e ridistribuisce i punti liberi, che però compensano **solo se l'Abilità non è
+già al limite della sua categoria**: il VA può restare più basso di prima. Nessuno dei sette personaggi al tavolo
+lo subisce (verificati uno per uno: zero discese), ma succede — il Predicatore d'esempio perderebbe Artefatti
+9 → 8 e Intrattenere 6 → 4. Si accetta la discesa come conseguenza del profilo nuovo, oppure il Direttore la
+compensa (e con che cosa)? Serve prima dell'adeguamento al tavolo. `TODO(Davide)` in `data/regole.json` →
+`competenze`.
+
+Il primo numero libero diventa **A.268**. Restano aperte le sei del lotto 181 (A.260–A.265), la nuova A.267 e la
+A.246, che è una decisione del Direttore al tavolo.
