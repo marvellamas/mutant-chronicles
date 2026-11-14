@@ -2767,3 +2767,44 @@ Due cose da sapere prima della serata, e nessuna delle due è una domanda nuova:
 
 Il primo numero libero resta **A.268**. Restano aperte le sei del lotto 181 (A.260–A.265), la A.267 e la A.246,
 che è una decisione del Direttore al tavolo.
+
+## 14/11/2026 — lotto 195, i prezzi dal manuale, l'Anello e la CyberArma (A.261, A.263, A.265; A.266 chiusa)
+
+Applicate le tre risposte che i manuali dell'11/11 avevano portato (ricognizione del lotto 190) e chiusa la A.266.
+
+- **A.261 — la formula vince, e i prezzi si prendono scritti.** Magia 1.17 §24.3 e §27.2, Equipaggiamento 0.41
+  §10.1: «prezzo indicativo di vendita = costo completo di creazione × 3 × coefficiente di potenza, arrotondato per
+  eccesso al multiplo di 50 cr: Comune 1, Non Comune 1,5, Rara 2, Molto Rara 3, **Epica 4**, Leggendaria 5».
+  Davide ha **già ricalcolato con essa tutto il catalogo del §10**: una Batteria Rossa da 5 PM passa da 1.000 a
+  1.950 cr, una Batteria Matrice da 10 PM da 3.000 a 13.500, la pergamena di Cura Ferite 3 da 150 a 250. Nei dati
+  sono entrate le **cifre scritte nelle tabelle**, lette dal testo del manuale; la formula serve a verificare che
+  tornino. Le due voci in cui non torna restano come il manuale le scrive: Pietra della Vigilanza 4.000 cr (la
+  formula darebbe 12.600) e Guanti da Combattimento Mistico 3.000 cr (13.800). Il «prezzo per PM» delle Batterie e
+  il «vendita = creazione × 2» dei Consumabili non esistono più. **A.262 chiusa dalla stessa risposta**: l'Epica ha
+  il suo coefficiente e i quattro Artefatti di Grado V hanno un prezzo.
+- **A.263 — l'Anello con Rigenerazione 9 è di Grado IV, potenza Molto Rara e SnT 4** (Magia 1.17 §25.4; la 1.11
+  diceva Grado III e SnT 3). I tre valori adesso si accordano con le tabelle del §10.1 e del §7.10, quindi
+  l'eccezione che il lotto 181 aveva dovuto dichiarare (`snt_eccezione`) **è stata tolta**: non c'è più niente
+  da eccettuare. Prezzo invariato (1.500 × 3 × 3 = 13.500 cr): il manuale non dà il costo di costruzione di questo
+  anello, lo dà la A.256, e la A.261 dice che i prezzi non si ricalcolano. Che con il Grado IV i reagenti
+  costerebbero 2.000 cr invece di 1.000 (§24.5), e quindi il prezzo 22.500, è scritto nel dato come **ipotesi**.
+- **A.265 — la CyberArma ha potenza Rara, Grado III e SnT base 3**; la SnT effettiva è **2 per il Tecnomante, 1 per
+  un Custode e 0 per il Custode che l'ha costruita e la usa come propria arma personale** (Armamenti 0.83 §7.25;
+  Magia 1.17 §§24.1–24.2). Vale per l'originale e per le due conversioni: «Capacità della riserva e modulatore SIN
+  non cambiano questa scala». Prima nei dati l'originale era «Comune» con SnT 2 e la catena non tornava. Il valore
+  indicativo dell'originale è ora scritto nel manuale: **7.500 cr** (1.250 di costruzione × 3 × 2), e resta un
+  pezzo unico che non si compra dal catalogo. Nel progetto di Paradise si legge **quale** delle quattro SnT si
+  applica, con la scala intera accanto.
+- **A.266 risolta.** Il Giocatore 0.63 §2.16.1: «Una carica CEC contiene 10 UE; mediante il trasformatore dedicato
+  viene trasferita integralmente in un tampone da 100 cariche NEC da 0,1 UE ciascuna». È il modello che l'app ha
+  dal lotto 146: la nota dei dati passa a quel testo e il `TODO(Davide)` di `dotazioni.json` è stato tolto.
+
+Nessuna conseguenza per i sette: nel file di un personaggio non c'è nessun prezzo, e solo due di loro (Dimitri e
+Lucas) hanno un oggetto il cui prezzo di catalogo cambia — la Batteria Matrice Rossa da 10 PM, 3.000 → 13.500 cr.
+Il valore del FIAT LUX non cambia (126.510 + 62.600 = 189.110 cr): nessuna delle sue voci è un Artefatto.
+
+**Domanda nuova, aperta: A.268 — da che livello parte l'adeguamento delle Abilità.** Vedi
+`docs/pacchetto-per-davide-2026-11-14-lotto195.md`. Il primo numero libero diventa **A.269**. Delle sei del lotto 181 restano
+aperte **A.260** (il consumo delle conversioni della CyberArma, colpi o Round) e **A.264** (di quanto cala il valore
+di un accumulatore di ricambio scarico); A.261, A.262, A.263 e A.265 hanno risposta. Resta aperta la **A.267** e
+resta la **A.246**, che è una decisione del Direttore al tavolo.
