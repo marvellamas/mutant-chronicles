@@ -1,5 +1,6 @@
 {
-  "versione_manuale": "Giocatore 0.62 (Google Doc del 12/11/2026)",
+  "versione_manuale": "Giocatore 0.63 (Google Doc del 12/11/2026)",
+  "_nota_edizione": "Lotto 192: i 25 profili di competenza 4/7/9/4 vengono dal Giocatore 0.62, capitolo 3. Lotto 195: l’etichetta passa alla 0.63 perché fra 0.62 e 0.63 cambiano quattro righe, tutte nel §2.16.1 dei NEC (verificato col diff): l’ambito di questo file è identico byte per byte e nessun numero si è mosso.",
   "fonte": "§3.4, §3.6, §3.8 (profili); §3.5.2–3.5.11, §3.7, §3.9 (Talenti)",
   "_nota": "PV e PM per Grado: fisso + 1d<dado> (dado 0 = nessun dado). Al 1° livello il dado dei PV è massimizzato (§2.12, §3.3). Le quote incantesimi valgono per le Classi taumaturgiche (§3.8).",
   "classi": [

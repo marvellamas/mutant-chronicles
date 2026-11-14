@@ -73,6 +73,7 @@ export const ARGOMENTI = {
   'cartella-di-prova.mjs': [],
   'descrizioni-bestiario.mjs': ['profili'],
   'riserve-intere.mjs': ['scrivi'],
+  'prezzi-prima-dopo.mjs': ['da'],
   'prove.mjs': ['concorrenza', 'solo'],
   'ricognizione-manuali.mjs': ['drive'],
   'lotto_189_edizioni.mjs': ['file', 'scrivi'],

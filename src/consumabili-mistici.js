@@ -48,7 +48,10 @@ export function costiCreazione({ grado, pmSigillati, magistrale = false, support
   const costoSupporto = Number.isInteger(supporto) ? supporto : R.supporto.costo;
   return {
     grado, supporto: costoSupporto, reagenti, creazione: costoSupporto + reagenti,
-    vendita: (costoSupporto + g.reagenti) * R.vendita_moltiplicatore, reperibilita: g.reperibilita,
+    // A.261 (lotto 195): la Magia 1.17 §27.2 non ha più un moltiplicatore dei Consumabili a parte — il prezzo di
+    // vendita è quello della tabella per Grado, che il manuale calcola con la formula del §24.3. Si legge dalla riga
+    // del Grado, non si ricalcola qui: il supporto diverso cambia il costo di creazione, non il prezzo di catalogo.
+    vendita: g.vendita, reperibilita: g.reperibilita,
     pmLavoro, pmSigillati, pmTotali: pmLavoro + pmSigillati, ore: R.supporto.ore,
   };
 }

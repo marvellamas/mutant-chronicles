@@ -3442,11 +3442,18 @@ function tabArtefatti(ctx) {
   /** A.256: la riga del prezzo nella scheda di un Artefatto. null quando non c'è niente da dire. */
   const rigaPrezzoArtefatto = (c, def) => {
     const pz = prezzoArtefatto(def, c.dati, { numero: nf });
-    if (pz.unico) return h('p', { class: 'nota' }, h('strong', {}, 'Prezzo: '), h('span', { title: def._nota_unico ?? '' }, 'esemplare unico o reliquia, senza prezzo di catalogo (A.256)'));
+    // A.265: un pezzo unico può avere un valore indicativo scritto nel manuale (la CyberArma, 7.500 cr): si legge,
+    // e la riga dice che è un valore e non un listino.
+    if (pz.unico && pz.cr === null) return h('p', { class: 'nota' }, h('strong', {}, 'Prezzo: '), h('span', { title: def._nota_unico ?? '' }, 'esemplare unico o reliquia, senza prezzo di catalogo (A.256)'));
     if (pz.cr === null) return pz.motivo ? h('p', { class: 'nota' }, h('strong', {}, 'Prezzo: '), pz.motivo) : null;
     return h('p', { class: 'nota' }, h('strong', {}, 'Prezzo: '),
       `${nf(pz.cr)} cr`,
-      pz.fonte === 'A.256' ? h('span', { title: `A.256: ${pz.conto}` }, ' · prezzo di vendita calcolato (A.256)')
+      pz.unico ? h('span', { title: def._nota_unico ?? '' }, ' · valore indicativo di un pezzo unico: non si compra dal catalogo (A.265)') : null,
+      // A.261: i prezzi di catalogo si prendono scritti dal manuale e la formula li verifica. Dove non torna, la
+      // riga lo dice: è un'ambiguità dichiarata (Pietra della Vigilanza, Guanti da Combattimento Mistico).
+      pz.verifica && !pz.verifica.torna ? h('span', { class: 'nota motivo', title: `La formula del §24.3 darebbe ${pz.verifica.conto}. Il prezzo scritto nel manuale resta quello (A.261).` }, ` · scritto nel manuale; la formula darebbe ${nf(pz.verifica.calcolato)} cr`)
+        : pz.verifica ? h('span', { title: `A.261: il prezzo è quello scritto nel manuale, e la formula del §24.3 lo ritrova — ${pz.verifica.conto}` }, ' · dal manuale, confermato dalla formula')
+        : pz.fonte === 'A.256' ? h('span', { title: `A.256: ${pz.conto}` }, ' · prezzo di vendita calcolato (A.256)')
         : pz.vendita !== null && pz.vendita !== pz.catalogo ? h('span', { title: `A.256: ${pz.conto}` }, ` · vendita calcolata ${nf(pz.vendita)} cr (A.256)`) : null,
       pz.rarita ? h('span', { class: 'sigla' }, ` · rarità ${pz.rarita}`) : null,
       h('span', { class: 'nota', title: pz.nota ?? '' }, pz.reperibilita ? ` · REP ${pz.reperibilita}` : ' · reperibilità non indicata'));
@@ -3549,6 +3556,10 @@ function sezioneProgetti(ctx) {
     // A.251 (Davide, 06/11/2026): cristallo e SIN tengono i PM personali; la riserva interna di CM e la
     // conversione a NeC li fanno perdere, insieme alle proprietà da Custode, e non si cumulano fra loro. La
     // scelta non si torna indietro facilmente: che cosa si perde si legge prima di confermare, in chiaro.
+    // A.265: la SnT che si applica a questo impiego, con la scala intera accanto (base 3, Tecnomante 2,
+    // Custode 1, Custode costruttore 0): si legge, non si indovina al tavolo.
+    const sntRiga = r.snt ? h('p', { class: 'progetto-snt' }, h('strong', {}, `Sintonizzazione: SnT ${r.snt.snt}`),
+      h('span', { class: 'nota' }, ` · ${r.snt.perche} · nella scala della CyberArma: ${r.snt.scala.map((x) => `${x.chi} ${x.snt}`).join(', ')} (A.265)`)) : null;
     const alimSceglibile = alimentazioneSceglibile(p);
     const alimentazione = r.alimentazioni.length ? h('div', { class: 'progetto-forma progetto-alimentazione' },
       h('h4', {}, 'Alimentazione'),
@@ -3641,7 +3652,7 @@ function sezioneProgetti(ctx) {
         ...(r.modello.componenti ?? []).map((x) => h('p', {}, h('strong', {}, `${x.nome}: `), x.nota)),
         ...(r.modello.regole ?? []).map((x) => h('p', { class: 'nota' }, x)),
         h('p', { class: 'nota' }, `Fonte: ${r.modello.fonte}.`)),
-      esemplari, forma, alimentazione, giorni, chiusura, consegna);
+      esemplari, forma, sntRiga, alimentazione, giorni, chiusura, consegna);
   };
   return sezione('Progetti', [
     ui.errore ? h('p', { class: 'nota motivo' }, ui.errore) : null,

@@ -27,8 +27,9 @@ export function raritaArtefatto(voce, dati) {
 }
 
 /**
- * Il coefficiente di rarità. null quando la rarità non è nella tabella (per esempio l'«Epica», che la A.256 non
- * dà: A.262) oppure è «Unico o reliquia», che non ha prezzo di catalogo.
+ * Il coefficiente di rarità. null quando la rarità non è nella tabella oppure è «Unico o reliquia», che non ha
+ * prezzo di catalogo. Dal lotto 195 la tabella ha sei gradini: l'«Epica» è entrata con la A.261 (prima mancava, e
+ * i quattro Artefatti di Grado V restavano senza prezzo calcolato: A.262, chiusa dalla stessa risposta).
  */
 export function coefficienteRarita(rarita, dati) {
   const R = regolePrezzi(dati);
@@ -71,8 +72,28 @@ export function prezzoDiVendita(costruzioneCr, rarita, dati, { numero = (n) => S
 }
 
 /**
+ * Il prezzo scritto nel manuale **torna** con la formula del §24.3?
+ *
+ * A.261 (14/11/2026): i prezzi di catalogo si prendono scritti e non si ricalcolano; la formula serve a
+ * verificare. Questa funzione fa la verifica, e **ignora `unico`**: la rarità che usa è la potenza
+ * dell'Artefatto, perché la domanda è «il numero scritto è coerente con la regola?», non «questo pezzo ha un
+ * prezzo di listino?». Per questo la CyberArma — pezzo unico, senza prezzo di listino — può comunque dire che il
+ * suo valore indicativo di 7.500 cr è 1.250 × 3 × 2.
+ *
+ * @returns {{ torna, calcolato, conto, potenza }} oppure null se non c'è abbastanza per verificare
+ */
+export function verificaFormula(voce, dati, { numero = (n) => String(n) } = {}) {
+  const potenza = voce?.artefatto?.potenza ?? voce?.potenza ?? null;
+  const dichiarato = intero(voce?.costo);
+  if (!potenza || dichiarato === null) return null;
+  const v = prezzoDiVendita(voce?.creazione_cr, potenza, dati, { numero });
+  if (v.cr === null) return null;
+  return { torna: v.cr === dichiarato, calcolato: v.cr, conto: v.conto, potenza };
+}
+
+/**
  * Il prezzo di una voce del catalogo, come la scheda lo mostra:
- *  - `catalogo`: il prezzo dichiarato dal manuale, quando c'è (resta quello: A.261 aperta);
+ *  - `catalogo`: il prezzo dichiarato dal manuale, quando c'è — **resta quello** (A.261);
  *  - `vendita`: il prezzo calcolato con la A.256, quando il costo di costruzione e la rarità lo consentono;
  *  - `cr`: il prezzo da usare — quello dichiarato se c'è, altrimenti quello calcolato;
  *  - `reperibilita` e `nota`: rarità e reperibilità restano separate (A.256).
@@ -95,6 +116,8 @@ export function prezzoArtefatto(voce, dati, { numero = (n) => String(n) } = {}) 
     fonte: dichiarato !== null ? 'catalogo' : v.cr !== null ? 'A.256' : null,
     reperibilita: typeof voce?.reperibilita === 'string' ? voce.reperibilita : null,
     nota: regolePrezzi(dati)?.reperibilita_separata ?? null,
+    // A.261: la formula non sostituisce il prezzo scritto, lo verifica. Dove non torna, l'app lo dice e tiene lo scritto.
+    verifica: verificaFormula(voce, dati, { numero }),
   };
 }
 
@@ -104,6 +127,8 @@ export function testoPrezzoArtefatto(voce, dati, { numero = (n) => String(n) } =
   if (p.cr === null) return { testo: p.motivo ?? 'prezzo non disponibile', prezzo: p };
   const parti = [`${numero(p.cr)} cr`];
   if (p.fonte === 'A.256') parti.push(`A.256: ${p.conto}`);
+  else if (p.verifica && !p.verifica.torna) parti.push(`prezzo scritto nel manuale; la formula darebbe ${numero(p.verifica.calcolato)} cr (${p.verifica.conto})`);
+  else if (p.verifica) parti.push(`dal manuale, e la formula lo conferma: ${p.verifica.conto}`);
   else if (p.vendita !== null && p.vendita !== p.catalogo) parti.push(`prezzo di vendita calcolato ${numero(p.vendita)} cr (A.256: ${p.conto})`);
   if (p.reperibilita) parti.push(`REP ${p.reperibilita}`);
   return { testo: parti.join(' · '), prezzo: p };

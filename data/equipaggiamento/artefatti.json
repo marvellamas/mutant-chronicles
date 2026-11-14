@@ -1,5 +1,5 @@
 {
-  "versione_manuale": "Equipaggiamento 0.30",
+  "versione_manuale": "Equipaggiamento 0.41 (prezzi del §10 letti dal manuale, A.261)",
   "fonte": "Manuale degli Armamenti v0.50, §7.5 Artefatti (pp. 30–31) e §7.10 Artefatti e sintonizzazione (pp. 58–60); lotto 12; prezzi delle batterie e SnT dei soli passivi dal Doc del 01/10/2026 sera (Armamenti §7.5, §7.10; Magia §24.2, §24.7; docs/diff-manuali-2026-10-02.md, lotto 2); capitolo 10 dell'Equipaggiamento 0.5 e Magia §26 (Doc del 02/10/2026; tools/lotti/lotto_artefatti_cap10.mjs)",
   "_nota": "Generato da tools/lotti/lotto12_artefatti.mjs; da qui in poi si modifica questo file. «sintonizzazione» contiene le regole del §7.10: capacità per Gradi complessivi (indice 0 = Grado I), bonus del Talento, costo per potenza. «artefatti_catalogo» dà tipologia e potenza agli Artefatti già presenti in altri file. «contenitore» descrive la riserva di Chroma (Magia sez. 6): energia (colore di regole.json → chroma.colori), capacita_pm; «integrato»: true quando la riserva è dentro l'oggetto (§7.5.1: Bordone Templare, Spade Vindicator e Deliverer, Lancia Castigator, Lama Demontooth, Scudo delle Guardie Sacre), con un solo costo di sintonizzazione. «sintonizzabile»: le proprietà attive richiedono sintonizzazione (§7.10). Batterie da 5 PM: profilo della risposta di Davide A.14 (28/09/2026) con i prezzi indicativi del 01/10/2026 sera, 1.000 crediti le colorate e 5.000 la Bianca (Armamenti §7.5; Magia §24.7: 200 e 1.000 crediti per PM; E&L, «Regole consolidate»); i 10.000 e 50.000 di A.14 non valgono più. «proprieta_attive»: true se l’Artefatto ha almeno una proprietà attiva, e allora la SnT è quella della potenza (il Grado finale, Magia §24.2); false con sole proprietà passive, e allora SnT 0 e niente sintonizzazione (Armamenti §7.10). Controllo voce per voce del 02/10: tutte le voci del catalogo hanno proprietà attive (attivazione offensiva o Scudo Magico, §7.5.1) oppure sono batterie autonome (SnT pari al Grado).",
   "sintonizzazione": {
@@ -19,6 +19,15 @@
       "nome": "Architetto TecnoMistico",
       "bonus": 2
     },
+    "gradi": {
+      "I": "Comune",
+      "II": "Non Comune",
+      "III": "Rara",
+      "IV": "Molto Rara",
+      "V": "Epica",
+      "VI": "Leggendaria"
+    },
+    "_nota_gradi": "Equipaggiamento 0.41 §10.1 e Magia 1.17 §24.2: «Il Grado determina la potenza magica: I Comune, II Non Comune, III Rara, IV Molto Rara, V Epica, VI Leggendaria». È il primo anello della catena Grado → potenza → rarità → SnT: la potenza decide il coefficiente del prezzo (regole.json → prezzi_artefatti) e, con proprietà attive, la SnT (potenze, §7.10). Un Artefatto che dichiara un «grado» deve avere la potenza di questa tabella; chi ha bisogno di uscirne lo dichiara con snt_eccezione e il motivo.",
     "potenze": {
       "Comune": 1,
       "Non Comune": 2,
@@ -174,23 +183,30 @@
     {
       "rif": "armi:cyberarma",
       "tipologia": "Armi",
-      "potenza": "Comune",
-      "sintonizzazione": 2,
+      "potenza": "Rara",
+      "sintonizzazione": 3,
       "sintonizzazione_per_classe": {
-        "Custode": 1,
-        "Tecnomante": 2
+        "Tecnomante": 2,
+        "Custode": 1
       },
       "sintonizzabile": true,
       "proprieta_attive": true,
       "snt_per_impiego": true,
-      "_nota": "Armamenti 0.74 §7.25: SnT 1 per il Custode, 2 per il Tecnomante (le SnT sono regole specifiche dei diversi impieghi e non determinano danno o Grado).",
-      "TODO(Davide)": "A.265: la CyberArma originale ha SnT 1 nell’impiego del Custode e 2 in quello del Tecnomante, e il §7.10 lega la potenza al SnT. Nei dati la potenza è «Comune» (SnT 1) mentre il campo «sintonizzazione» della voce è 2. Qual è la potenza dell’originale? L’app lascia «Comune» e non ne deduce un prezzo: è un pezzo unico."
+      "_nota": "A.265 (Armamenti 0.83 §7.25; Magia 1.17 §§24.1–24.2): potenza Rara, Grado III, SnT base 3. La SnT effettiva è 2 per il Tecnomante, 1 per un Custode e 0 per il Custode che l’ha costruita e la usa come propria arma personale. Vale per l’originale e per le due conversioni: «Capacità della riserva e modulatore SIN non cambiano questa scala». Le riduzioni d’impiego restano regole a sé (snt_per_impiego) e non determinano danno o Grado.",
+      "TODO(Davide)": "A.265: la CyberArma originale ha SnT 1 nell’impiego del Custode e 2 in quello del Tecnomante, e il §7.10 lega la potenza al SnT. Nei dati la potenza è «Comune» (SnT 1) mentre il campo «sintonizzazione» della voce è 2. Qual è la potenza dell’originale? L’app lascia «Comune» e non ne deduce un prezzo: è un pezzo unico.",
+      "grado": "III",
+      "sintonizzazione_costruttore": {
+        "classe": "Custode",
+        "snt": 0,
+        "condizione": "il Custode che ha costruito quell’esemplare e lo usa come propria arma personale",
+        "fonte": "Armamenti 0.83 §7.25; Magia 1.17 §§24.1–24.2 (A.265)"
+      }
     },
     {
       "rif": "armi:cyberarma-batteria-verde",
       "tipologia": "Armi",
-      "potenza": "Non Comune",
-      "sintonizzazione": 2,
+      "potenza": "Rara",
+      "sintonizzazione": 3,
       "sintonizzabile": true,
       "proprieta_attive": true,
       "snt_per_impiego": true,
@@ -206,7 +222,18 @@
           "nota": "CyberArma con batteria Verde"
         }
       },
-      "_nota": "Armamenti 0.74 §7.25: la SnT 2 comprende l’intero manufatto e la batteria integrata, senza un secondo costo."
+      "_nota": "A.265 (Armamenti 0.83 §7.25; Magia 1.17 §§24.1–24.2): potenza Rara, Grado III, SnT base 3. La SnT effettiva è 2 per il Tecnomante, 1 per un Custode e 0 per il Custode che l’ha costruita e la usa come propria arma personale. Vale per l’originale e per le due conversioni: «Capacità della riserva e modulatore SIN non cambiano questa scala». Le riduzioni d’impiego restano regole a sé (snt_per_impiego) e non determinano danno o Grado.",
+      "grado": "III",
+      "sintonizzazione_per_classe": {
+        "Tecnomante": 2,
+        "Custode": 1
+      },
+      "sintonizzazione_costruttore": {
+        "classe": "Custode",
+        "snt": 0,
+        "condizione": "il Custode che ha costruito quell’esemplare e lo usa come propria arma personale",
+        "fonte": "Armamenti 0.83 §7.25; Magia 1.17 §§24.1–24.2 (A.265)"
+      }
     },
     {
       "rif": "armi:cyberarma-nec",
@@ -216,8 +243,19 @@
       "sintonizzabile": true,
       "proprieta_attive": true,
       "snt_per_impiego": true,
-      "_nota": "Armamenti 0.74 §7.25: conversione a NeC, SnT 3 complessiva.",
-      "_nota_potenza": "Armamenti 0.74 §7.10: la classificazione di potenza e il costo SnT vanno insieme (Comune 1, Non Comune 2, Rara 3…). Questa voce ha SnT 3: la potenza è Rara. Prima diceva «Non Comune», che vale per SnT 2 (lotto 157)."
+      "_nota": "A.265 (Armamenti 0.83 §7.25; Magia 1.17 §§24.1–24.2): potenza Rara, Grado III, SnT base 3. La SnT effettiva è 2 per il Tecnomante, 1 per un Custode e 0 per il Custode che l’ha costruita e la usa come propria arma personale. Vale per l’originale e per le due conversioni: «Capacità della riserva e modulatore SIN non cambiano questa scala». Le riduzioni d’impiego restano regole a sé (snt_per_impiego) e non determinano danno o Grado.",
+      "_nota_potenza": "Armamenti 0.74 §7.10: la classificazione di potenza e il costo SnT vanno insieme (Comune 1, Non Comune 2, Rara 3…). Questa voce ha SnT 3: la potenza è Rara. Prima diceva «Non Comune», che vale per SnT 2 (lotto 157).",
+      "grado": "III",
+      "sintonizzazione_per_classe": {
+        "Tecnomante": 2,
+        "Custode": 1
+      },
+      "sintonizzazione_costruttore": {
+        "classe": "Custode",
+        "snt": 0,
+        "condizione": "il Custode che ha costruito quell’esemplare e lo usa come propria arma personale",
+        "fonte": "Armamenti 0.83 §7.25; Magia 1.17 §§24.1–24.2 (A.265)"
+      }
     }
   ],
   "oggetti": [
@@ -231,7 +269,7 @@
       "note_manuale": "Un contenitore mistico può avere qualsiasi forma e materiale, ma contiene un Chroma. La scheda deve riportare natura energetica, PM attuali, capacità massima e proprietà. Uso diretto, conversione, ricarica e prelievo dal Chroma Bianco seguono il Manuale della Magia, sezione 6; i contenitori mistici dei profili a PM impiegano Chroma Rosso. Le batterie da 5 PM con Chroma Rosso, Blu o Verde sono Comuni, con SnT 1; quella con Chroma Bianco è Non Comune, con SnT 2. Le batterie mistiche Rosse, Blu e Verdi da 5 PM hanno ciascuna prezzo indicativo di 1.000 crediti, REP Molto rara, potenza Comune e SnT 1. Quella Bianca da 5 PM ha prezzo indicativo di 5.000 crediti, REP Leggendaria, potenza Non Comune e SnT 2. Tutte pesano 0,2 kg, hanno Qualità Comune, PS Integrità 10 e 3 PI; all’acquisto contengono 5/5 PM. Per le capacità superiori, fino a 30 PM colorati e 25 PM Bianchi nella scala ordinaria, vedere il Manuale della Magia, §24.7. I prezzi restano soggetti al playtest e non garantiscono la reperibilità. Le celle tecnologiche NEC usano cariche e UE, non richiedono Sintonizzazione e seguono i §§7.1.4 e 7.20.5.",
       "paragrafo": "Equipaggiamento §10.2; Magia §24.7",
       "versione_manuale": "Equipaggiamento 0.5 (Google Doc del 02/10/2026, 09:12 UTC)",
-      "costo": 1000,
+      "costo": 1950,
       "artefatto": {
         "tipologia": "Batterie e contenitori",
         "potenza": "Comune",
@@ -241,7 +279,8 @@
         "contenitore": {
           "energia": "Rosso",
           "capacita_pm": 5
-        }
+        },
+        "grado": "I"
       },
       "proprieta": [],
       "reperibilita": "MR",
@@ -261,7 +300,7 @@
       "note_manuale": "Un contenitore mistico può avere qualsiasi forma e materiale, ma contiene un Chroma. La scheda deve riportare natura energetica, PM attuali, capacità massima e proprietà. Uso diretto, conversione, ricarica e prelievo dal Chroma Bianco seguono il Manuale della Magia, sezione 6; i contenitori mistici dei profili a PM impiegano Chroma Rosso. Le batterie da 5 PM con Chroma Rosso, Blu o Verde sono Comuni, con SnT 1; quella con Chroma Bianco è Non Comune, con SnT 2. Le batterie mistiche Rosse, Blu e Verdi da 5 PM hanno ciascuna prezzo indicativo di 1.000 crediti, REP Molto rara, potenza Comune e SnT 1. Quella Bianca da 5 PM ha prezzo indicativo di 5.000 crediti, REP Leggendaria, potenza Non Comune e SnT 2. Tutte pesano 0,2 kg, hanno Qualità Comune, PS Integrità 10 e 3 PI; all’acquisto contengono 5/5 PM. Per le capacità superiori, fino a 30 PM colorati e 25 PM Bianchi nella scala ordinaria, vedere il Manuale della Magia, §24.7. I prezzi restano soggetti al playtest e non garantiscono la reperibilità. Le celle tecnologiche NEC usano cariche e UE, non richiedono Sintonizzazione e seguono i §§7.1.4 e 7.20.5.",
       "paragrafo": "Equipaggiamento §10.2; Magia §24.7",
       "versione_manuale": "Equipaggiamento 0.5 (Google Doc del 02/10/2026, 09:12 UTC)",
-      "costo": 1000,
+      "costo": 1950,
       "artefatto": {
         "tipologia": "Batterie e contenitori",
         "potenza": "Comune",
@@ -271,7 +310,8 @@
         "contenitore": {
           "energia": "Blu",
           "capacita_pm": 5
-        }
+        },
+        "grado": "I"
       },
       "proprieta": [],
       "reperibilita": "MR",
@@ -291,7 +331,7 @@
       "note_manuale": "Un contenitore mistico può avere qualsiasi forma e materiale, ma contiene un Chroma. La scheda deve riportare natura energetica, PM attuali, capacità massima e proprietà. Uso diretto, conversione, ricarica e prelievo dal Chroma Bianco seguono il Manuale della Magia, sezione 6; i contenitori mistici dei profili a PM impiegano Chroma Rosso. Le batterie da 5 PM con Chroma Rosso, Blu o Verde sono Comuni, con SnT 1; quella con Chroma Bianco è Non Comune, con SnT 2. Le batterie mistiche Rosse, Blu e Verdi da 5 PM hanno ciascuna prezzo indicativo di 1.000 crediti, REP Molto rara, potenza Comune e SnT 1. Quella Bianca da 5 PM ha prezzo indicativo di 5.000 crediti, REP Leggendaria, potenza Non Comune e SnT 2. Tutte pesano 0,2 kg, hanno Qualità Comune, PS Integrità 10 e 3 PI; all’acquisto contengono 5/5 PM. Per le capacità superiori, fino a 30 PM colorati e 25 PM Bianchi nella scala ordinaria, vedere il Manuale della Magia, §24.7. I prezzi restano soggetti al playtest e non garantiscono la reperibilità. Le celle tecnologiche NEC usano cariche e UE, non richiedono Sintonizzazione e seguono i §§7.1.4 e 7.20.5.",
       "paragrafo": "Equipaggiamento §10.2; Magia §24.7",
       "versione_manuale": "Equipaggiamento 0.5 (Google Doc del 02/10/2026, 09:12 UTC)",
-      "costo": 1000,
+      "costo": 1950,
       "artefatto": {
         "tipologia": "Batterie e contenitori",
         "potenza": "Comune",
@@ -301,7 +341,8 @@
         "contenitore": {
           "energia": "Verde",
           "capacita_pm": 5
-        }
+        },
+        "grado": "I"
       },
       "proprieta": [],
       "reperibilita": "MR",
@@ -321,7 +362,7 @@
       "note_manuale": "Un contenitore mistico può avere qualsiasi forma e materiale, ma contiene un Chroma. La scheda deve riportare natura energetica, PM attuali, capacità massima e proprietà. Uso diretto, conversione, ricarica e prelievo dal Chroma Bianco seguono il Manuale della Magia, sezione 6; i contenitori mistici dei profili a PM impiegano Chroma Rosso. Le batterie da 5 PM con Chroma Rosso, Blu o Verde sono Comuni, con SnT 1; quella con Chroma Bianco è Non Comune, con SnT 2. Le batterie mistiche Rosse, Blu e Verdi da 5 PM hanno ciascuna prezzo indicativo di 1.000 crediti, REP Molto rara, potenza Comune e SnT 1. Quella Bianca da 5 PM ha prezzo indicativo di 5.000 crediti, REP Leggendaria, potenza Non Comune e SnT 2. Tutte pesano 0,2 kg, hanno Qualità Comune, PS Integrità 10 e 3 PI; all’acquisto contengono 5/5 PM. Per le capacità superiori, fino a 30 PM colorati e 25 PM Bianchi nella scala ordinaria, vedere il Manuale della Magia, §24.7. I prezzi restano soggetti al playtest e non garantiscono la reperibilità. Le celle tecnologiche NEC usano cariche e UE, non richiedono Sintonizzazione e seguono i §§7.1.4 e 7.20.5.",
       "paragrafo": "Equipaggiamento §10.2; Magia §24.7",
       "versione_manuale": "Equipaggiamento 0.5 (Google Doc del 02/10/2026, 09:12 UTC)",
-      "costo": 5000,
+      "costo": 9900,
       "artefatto": {
         "tipologia": "Batterie e contenitori",
         "potenza": "Non Comune",
@@ -331,7 +372,8 @@
         "contenitore": {
           "energia": "Bianco",
           "capacita_pm": 5
-        }
+        },
+        "grado": "II"
       },
       "proprieta": [],
       "reperibilita": "LE",
@@ -351,7 +393,7 @@
       "note_manuale": "Il Chroma Rosso contiene energia Fisica, il Blu Mentale, il Verde Spirituale e il Bianco Universale. Le capacità ordinarie procedono per multipli di 5 PM. Il Grado della riserva è quello indicato nella tabella, indipendentemente dai PM momentaneamente presenti. Batterie finite: 200 cr per PM colorato e 1.000 cr per PM universale. La reperibilità delle batterie colorate è Molto Rara; quella delle universali è Leggendaria e resta distinta dalla classificazione di potenza. Un supporto di batteria di base costa 100 cr, pesa 0,2 kg, ha Qualità Comune, PS Integrità 10 e PI 3. Una batteria autonoma ha SnT pari al proprio Grado.",
       "paragrafo": "Equipaggiamento §10.2; Magia §24.7",
       "versione_manuale": "Equipaggiamento 0.5 (Google Doc del 02/10/2026, 09:12 UTC)",
-      "costo": 2000,
+      "costo": 5400,
       "artefatto": {
         "tipologia": "Batterie e contenitori",
         "potenza": "Non Comune",
@@ -361,7 +403,8 @@
         "contenitore": {
           "energia": "Rosso",
           "capacita_pm": 10
-        }
+        },
+        "grado": "II"
       },
       "proprieta": [],
       "reperibilita": "MR",
@@ -381,7 +424,7 @@
       "note_manuale": "Il Chroma Rosso contiene energia Fisica, il Blu Mentale, il Verde Spirituale e il Bianco Universale. Le capacità ordinarie procedono per multipli di 5 PM. Il Grado della riserva è quello indicato nella tabella, indipendentemente dai PM momentaneamente presenti. Batterie finite: 200 cr per PM colorato e 1.000 cr per PM universale. La reperibilità delle batterie colorate è Molto Rara; quella delle universali è Leggendaria e resta distinta dalla classificazione di potenza. Un supporto di batteria di base costa 100 cr, pesa 0,2 kg, ha Qualità Comune, PS Integrità 10 e PI 3. Una batteria autonoma ha SnT pari al proprio Grado.",
       "paragrafo": "Equipaggiamento §10.2; Magia §24.7",
       "versione_manuale": "Equipaggiamento 0.5 (Google Doc del 02/10/2026, 09:12 UTC)",
-      "costo": 3000,
+      "costo": 10500,
       "artefatto": {
         "tipologia": "Batterie e contenitori",
         "potenza": "Rara",
@@ -391,7 +434,8 @@
         "contenitore": {
           "energia": "Rosso",
           "capacita_pm": 15
-        }
+        },
+        "grado": "III"
       },
       "proprieta": [],
       "reperibilita": "MR",
@@ -411,7 +455,7 @@
       "note_manuale": "Il Chroma Rosso contiene energia Fisica, il Blu Mentale, il Verde Spirituale e il Bianco Universale. Le capacità ordinarie procedono per multipli di 5 PM. Il Grado della riserva è quello indicato nella tabella, indipendentemente dai PM momentaneamente presenti. Batterie finite: 200 cr per PM colorato e 1.000 cr per PM universale. La reperibilità delle batterie colorate è Molto Rara; quella delle universali è Leggendaria e resta distinta dalla classificazione di potenza. Un supporto di batteria di base costa 100 cr, pesa 0,2 kg, ha Qualità Comune, PS Integrità 10 e PI 3. Una batteria autonoma ha SnT pari al proprio Grado.",
       "paragrafo": "Equipaggiamento §10.2; Magia §24.7",
       "versione_manuale": "Equipaggiamento 0.5 (Google Doc del 02/10/2026, 09:12 UTC)",
-      "costo": 4000,
+      "costo": 20700,
       "artefatto": {
         "tipologia": "Batterie e contenitori",
         "potenza": "Molto Rara",
@@ -421,7 +465,8 @@
         "contenitore": {
           "energia": "Rosso",
           "capacita_pm": 20
-        }
+        },
+        "grado": "IV"
       },
       "proprieta": [],
       "reperibilita": "MR",
@@ -441,7 +486,7 @@
       "note_manuale": "Il Chroma Rosso contiene energia Fisica, il Blu Mentale, il Verde Spirituale e il Bianco Universale. Le capacità ordinarie procedono per multipli di 5 PM. Il Grado della riserva è quello indicato nella tabella, indipendentemente dai PM momentaneamente presenti. Batterie finite: 200 cr per PM colorato e 1.000 cr per PM universale. La reperibilità delle batterie colorate è Molto Rara; quella delle universali è Leggendaria e resta distinta dalla classificazione di potenza. Un supporto di batteria di base costa 100 cr, pesa 0,2 kg, ha Qualità Comune, PS Integrità 10 e PI 3. Una batteria autonoma ha SnT pari al proprio Grado.",
       "paragrafo": "Equipaggiamento §10.2; Magia §24.7",
       "versione_manuale": "Equipaggiamento 0.5 (Google Doc del 02/10/2026, 09:12 UTC)",
-      "costo": 5000,
+      "costo": 34200,
       "artefatto": {
         "tipologia": "Batterie e contenitori",
         "potenza": "Epica",
@@ -451,7 +496,8 @@
         "contenitore": {
           "energia": "Rosso",
           "capacita_pm": 25
-        }
+        },
+        "grado": "V"
       },
       "proprieta": [],
       "reperibilita": "MR",
@@ -471,7 +517,7 @@
       "note_manuale": "Il Chroma Rosso contiene energia Fisica, il Blu Mentale, il Verde Spirituale e il Bianco Universale. Le capacità ordinarie procedono per multipli di 5 PM. Il Grado della riserva è quello indicato nella tabella, indipendentemente dai PM momentaneamente presenti. Batterie finite: 200 cr per PM colorato e 1.000 cr per PM universale. La reperibilità delle batterie colorate è Molto Rara; quella delle universali è Leggendaria e resta distinta dalla classificazione di potenza. Un supporto di batteria di base costa 100 cr, pesa 0,2 kg, ha Qualità Comune, PS Integrità 10 e PI 3. Una batteria autonoma ha SnT pari al proprio Grado.",
       "paragrafo": "Equipaggiamento §10.2; Magia §24.7",
       "versione_manuale": "Equipaggiamento 0.5 (Google Doc del 02/10/2026, 09:12 UTC)",
-      "costo": 6000,
+      "costo": 51000,
       "artefatto": {
         "tipologia": "Batterie e contenitori",
         "potenza": "Leggendaria",
@@ -481,7 +527,8 @@
         "contenitore": {
           "energia": "Rosso",
           "capacita_pm": 30
-        }
+        },
+        "grado": "VI"
       },
       "proprieta": [],
       "reperibilita": "MR",
@@ -501,7 +548,7 @@
       "note_manuale": "Il Chroma Rosso contiene energia Fisica, il Blu Mentale, il Verde Spirituale e il Bianco Universale. Le capacità ordinarie procedono per multipli di 5 PM. Il Grado della riserva è quello indicato nella tabella, indipendentemente dai PM momentaneamente presenti. Batterie finite: 200 cr per PM colorato e 1.000 cr per PM universale. La reperibilità delle batterie colorate è Molto Rara; quella delle universali è Leggendaria e resta distinta dalla classificazione di potenza. Un supporto di batteria di base costa 100 cr, pesa 0,2 kg, ha Qualità Comune, PS Integrità 10 e PI 3. Una batteria autonoma ha SnT pari al proprio Grado.",
       "paragrafo": "Equipaggiamento §10.2; Magia §24.7",
       "versione_manuale": "Equipaggiamento 0.5 (Google Doc del 02/10/2026, 09:12 UTC)",
-      "costo": 2000,
+      "costo": 5400,
       "artefatto": {
         "tipologia": "Batterie e contenitori",
         "potenza": "Non Comune",
@@ -511,7 +558,8 @@
         "contenitore": {
           "energia": "Blu",
           "capacita_pm": 10
-        }
+        },
+        "grado": "II"
       },
       "proprieta": [],
       "reperibilita": "MR",
@@ -531,7 +579,7 @@
       "note_manuale": "Il Chroma Rosso contiene energia Fisica, il Blu Mentale, il Verde Spirituale e il Bianco Universale. Le capacità ordinarie procedono per multipli di 5 PM. Il Grado della riserva è quello indicato nella tabella, indipendentemente dai PM momentaneamente presenti. Batterie finite: 200 cr per PM colorato e 1.000 cr per PM universale. La reperibilità delle batterie colorate è Molto Rara; quella delle universali è Leggendaria e resta distinta dalla classificazione di potenza. Un supporto di batteria di base costa 100 cr, pesa 0,2 kg, ha Qualità Comune, PS Integrità 10 e PI 3. Una batteria autonoma ha SnT pari al proprio Grado.",
       "paragrafo": "Equipaggiamento §10.2; Magia §24.7",
       "versione_manuale": "Equipaggiamento 0.5 (Google Doc del 02/10/2026, 09:12 UTC)",
-      "costo": 3000,
+      "costo": 10500,
       "artefatto": {
         "tipologia": "Batterie e contenitori",
         "potenza": "Rara",
@@ -541,7 +589,8 @@
         "contenitore": {
           "energia": "Blu",
           "capacita_pm": 15
-        }
+        },
+        "grado": "III"
       },
       "proprieta": [],
       "reperibilita": "MR",
@@ -561,7 +610,7 @@
       "note_manuale": "Il Chroma Rosso contiene energia Fisica, il Blu Mentale, il Verde Spirituale e il Bianco Universale. Le capacità ordinarie procedono per multipli di 5 PM. Il Grado della riserva è quello indicato nella tabella, indipendentemente dai PM momentaneamente presenti. Batterie finite: 200 cr per PM colorato e 1.000 cr per PM universale. La reperibilità delle batterie colorate è Molto Rara; quella delle universali è Leggendaria e resta distinta dalla classificazione di potenza. Un supporto di batteria di base costa 100 cr, pesa 0,2 kg, ha Qualità Comune, PS Integrità 10 e PI 3. Una batteria autonoma ha SnT pari al proprio Grado.",
       "paragrafo": "Equipaggiamento §10.2; Magia §24.7",
       "versione_manuale": "Equipaggiamento 0.5 (Google Doc del 02/10/2026, 09:12 UTC)",
-      "costo": 4000,
+      "costo": 20700,
       "artefatto": {
         "tipologia": "Batterie e contenitori",
         "potenza": "Molto Rara",
@@ -571,7 +620,8 @@
         "contenitore": {
           "energia": "Blu",
           "capacita_pm": 20
-        }
+        },
+        "grado": "IV"
       },
       "proprieta": [],
       "reperibilita": "MR",
@@ -591,7 +641,7 @@
       "note_manuale": "Il Chroma Rosso contiene energia Fisica, il Blu Mentale, il Verde Spirituale e il Bianco Universale. Le capacità ordinarie procedono per multipli di 5 PM. Il Grado della riserva è quello indicato nella tabella, indipendentemente dai PM momentaneamente presenti. Batterie finite: 200 cr per PM colorato e 1.000 cr per PM universale. La reperibilità delle batterie colorate è Molto Rara; quella delle universali è Leggendaria e resta distinta dalla classificazione di potenza. Un supporto di batteria di base costa 100 cr, pesa 0,2 kg, ha Qualità Comune, PS Integrità 10 e PI 3. Una batteria autonoma ha SnT pari al proprio Grado.",
       "paragrafo": "Equipaggiamento §10.2; Magia §24.7",
       "versione_manuale": "Equipaggiamento 0.5 (Google Doc del 02/10/2026, 09:12 UTC)",
-      "costo": 5000,
+      "costo": 34200,
       "artefatto": {
         "tipologia": "Batterie e contenitori",
         "potenza": "Epica",
@@ -601,7 +651,8 @@
         "contenitore": {
           "energia": "Blu",
           "capacita_pm": 25
-        }
+        },
+        "grado": "V"
       },
       "proprieta": [],
       "reperibilita": "MR",
@@ -621,7 +672,7 @@
       "note_manuale": "Il Chroma Rosso contiene energia Fisica, il Blu Mentale, il Verde Spirituale e il Bianco Universale. Le capacità ordinarie procedono per multipli di 5 PM. Il Grado della riserva è quello indicato nella tabella, indipendentemente dai PM momentaneamente presenti. Batterie finite: 200 cr per PM colorato e 1.000 cr per PM universale. La reperibilità delle batterie colorate è Molto Rara; quella delle universali è Leggendaria e resta distinta dalla classificazione di potenza. Un supporto di batteria di base costa 100 cr, pesa 0,2 kg, ha Qualità Comune, PS Integrità 10 e PI 3. Una batteria autonoma ha SnT pari al proprio Grado.",
       "paragrafo": "Equipaggiamento §10.2; Magia §24.7",
       "versione_manuale": "Equipaggiamento 0.5 (Google Doc del 02/10/2026, 09:12 UTC)",
-      "costo": 6000,
+      "costo": 51000,
       "artefatto": {
         "tipologia": "Batterie e contenitori",
         "potenza": "Leggendaria",
@@ -631,7 +682,8 @@
         "contenitore": {
           "energia": "Blu",
           "capacita_pm": 30
-        }
+        },
+        "grado": "VI"
       },
       "proprieta": [],
       "reperibilita": "MR",
@@ -651,7 +703,7 @@
       "note_manuale": "Il Chroma Rosso contiene energia Fisica, il Blu Mentale, il Verde Spirituale e il Bianco Universale. Le capacità ordinarie procedono per multipli di 5 PM. Il Grado della riserva è quello indicato nella tabella, indipendentemente dai PM momentaneamente presenti. Batterie finite: 200 cr per PM colorato e 1.000 cr per PM universale. La reperibilità delle batterie colorate è Molto Rara; quella delle universali è Leggendaria e resta distinta dalla classificazione di potenza. Un supporto di batteria di base costa 100 cr, pesa 0,2 kg, ha Qualità Comune, PS Integrità 10 e PI 3. Una batteria autonoma ha SnT pari al proprio Grado.",
       "paragrafo": "Equipaggiamento §10.2; Magia §24.7",
       "versione_manuale": "Equipaggiamento 0.5 (Google Doc del 02/10/2026, 09:12 UTC)",
-      "costo": 2000,
+      "costo": 5400,
       "artefatto": {
         "tipologia": "Batterie e contenitori",
         "potenza": "Non Comune",
@@ -661,7 +713,8 @@
         "contenitore": {
           "energia": "Verde",
           "capacita_pm": 10
-        }
+        },
+        "grado": "II"
       },
       "proprieta": [],
       "reperibilita": "MR",
@@ -681,7 +734,7 @@
       "note_manuale": "Il Chroma Rosso contiene energia Fisica, il Blu Mentale, il Verde Spirituale e il Bianco Universale. Le capacità ordinarie procedono per multipli di 5 PM. Il Grado della riserva è quello indicato nella tabella, indipendentemente dai PM momentaneamente presenti. Batterie finite: 200 cr per PM colorato e 1.000 cr per PM universale. La reperibilità delle batterie colorate è Molto Rara; quella delle universali è Leggendaria e resta distinta dalla classificazione di potenza. Un supporto di batteria di base costa 100 cr, pesa 0,2 kg, ha Qualità Comune, PS Integrità 10 e PI 3. Una batteria autonoma ha SnT pari al proprio Grado.",
       "paragrafo": "Equipaggiamento §10.2; Magia §24.7",
       "versione_manuale": "Equipaggiamento 0.5 (Google Doc del 02/10/2026, 09:12 UTC)",
-      "costo": 3000,
+      "costo": 10500,
       "artefatto": {
         "tipologia": "Batterie e contenitori",
         "potenza": "Rara",
@@ -691,7 +744,8 @@
         "contenitore": {
           "energia": "Verde",
           "capacita_pm": 15
-        }
+        },
+        "grado": "III"
       },
       "proprieta": [],
       "reperibilita": "MR",
@@ -711,7 +765,7 @@
       "note_manuale": "Il Chroma Rosso contiene energia Fisica, il Blu Mentale, il Verde Spirituale e il Bianco Universale. Le capacità ordinarie procedono per multipli di 5 PM. Il Grado della riserva è quello indicato nella tabella, indipendentemente dai PM momentaneamente presenti. Batterie finite: 200 cr per PM colorato e 1.000 cr per PM universale. La reperibilità delle batterie colorate è Molto Rara; quella delle universali è Leggendaria e resta distinta dalla classificazione di potenza. Un supporto di batteria di base costa 100 cr, pesa 0,2 kg, ha Qualità Comune, PS Integrità 10 e PI 3. Una batteria autonoma ha SnT pari al proprio Grado.",
       "paragrafo": "Equipaggiamento §10.2; Magia §24.7",
       "versione_manuale": "Equipaggiamento 0.5 (Google Doc del 02/10/2026, 09:12 UTC)",
-      "costo": 4000,
+      "costo": 20700,
       "artefatto": {
         "tipologia": "Batterie e contenitori",
         "potenza": "Molto Rara",
@@ -721,7 +775,8 @@
         "contenitore": {
           "energia": "Verde",
           "capacita_pm": 20
-        }
+        },
+        "grado": "IV"
       },
       "proprieta": [],
       "reperibilita": "MR",
@@ -741,7 +796,7 @@
       "note_manuale": "Il Chroma Rosso contiene energia Fisica, il Blu Mentale, il Verde Spirituale e il Bianco Universale. Le capacità ordinarie procedono per multipli di 5 PM. Il Grado della riserva è quello indicato nella tabella, indipendentemente dai PM momentaneamente presenti. Batterie finite: 200 cr per PM colorato e 1.000 cr per PM universale. La reperibilità delle batterie colorate è Molto Rara; quella delle universali è Leggendaria e resta distinta dalla classificazione di potenza. Un supporto di batteria di base costa 100 cr, pesa 0,2 kg, ha Qualità Comune, PS Integrità 10 e PI 3. Una batteria autonoma ha SnT pari al proprio Grado.",
       "paragrafo": "Equipaggiamento §10.2; Magia §24.7",
       "versione_manuale": "Equipaggiamento 0.5 (Google Doc del 02/10/2026, 09:12 UTC)",
-      "costo": 5000,
+      "costo": 34200,
       "artefatto": {
         "tipologia": "Batterie e contenitori",
         "potenza": "Epica",
@@ -751,7 +806,8 @@
         "contenitore": {
           "energia": "Verde",
           "capacita_pm": 25
-        }
+        },
+        "grado": "V"
       },
       "proprieta": [],
       "reperibilita": "MR",
@@ -771,7 +827,7 @@
       "note_manuale": "Il Chroma Rosso contiene energia Fisica, il Blu Mentale, il Verde Spirituale e il Bianco Universale. Le capacità ordinarie procedono per multipli di 5 PM. Il Grado della riserva è quello indicato nella tabella, indipendentemente dai PM momentaneamente presenti. Batterie finite: 200 cr per PM colorato e 1.000 cr per PM universale. La reperibilità delle batterie colorate è Molto Rara; quella delle universali è Leggendaria e resta distinta dalla classificazione di potenza. Un supporto di batteria di base costa 100 cr, pesa 0,2 kg, ha Qualità Comune, PS Integrità 10 e PI 3. Una batteria autonoma ha SnT pari al proprio Grado.",
       "paragrafo": "Equipaggiamento §10.2; Magia §24.7",
       "versione_manuale": "Equipaggiamento 0.5 (Google Doc del 02/10/2026, 09:12 UTC)",
-      "costo": 6000,
+      "costo": 51000,
       "artefatto": {
         "tipologia": "Batterie e contenitori",
         "potenza": "Leggendaria",
@@ -781,7 +837,8 @@
         "contenitore": {
           "energia": "Verde",
           "capacita_pm": 30
-        }
+        },
+        "grado": "VI"
       },
       "proprieta": [],
       "reperibilita": "MR",
@@ -801,7 +858,7 @@
       "note_manuale": "Il Chroma Rosso contiene energia Fisica, il Blu Mentale, il Verde Spirituale e il Bianco Universale. Le capacità ordinarie procedono per multipli di 5 PM. Il Grado della riserva è quello indicato nella tabella, indipendentemente dai PM momentaneamente presenti. Batterie finite: 200 cr per PM colorato e 1.000 cr per PM universale. La reperibilità delle batterie colorate è Molto Rara; quella delle universali è Leggendaria e resta distinta dalla classificazione di potenza. Un supporto di batteria di base costa 100 cr, pesa 0,2 kg, ha Qualità Comune, PS Integrità 10 e PI 3. Una batteria autonoma ha SnT pari al proprio Grado.",
       "paragrafo": "Equipaggiamento §10.2; Magia §24.7",
       "versione_manuale": "Equipaggiamento 0.5 (Google Doc del 02/10/2026, 09:12 UTC)",
-      "costo": 10000,
+      "costo": 25500,
       "artefatto": {
         "tipologia": "Batterie e contenitori",
         "potenza": "Rara",
@@ -811,7 +868,8 @@
         "contenitore": {
           "energia": "Bianco",
           "capacita_pm": 10
-        }
+        },
+        "grado": "III"
       },
       "proprieta": [],
       "reperibilita": "LE",
@@ -831,7 +889,7 @@
       "note_manuale": "Il Chroma Rosso contiene energia Fisica, il Blu Mentale, il Verde Spirituale e il Bianco Universale. Le capacità ordinarie procedono per multipli di 5 PM. Il Grado della riserva è quello indicato nella tabella, indipendentemente dai PM momentaneamente presenti. Batterie finite: 200 cr per PM colorato e 1.000 cr per PM universale. La reperibilità delle batterie colorate è Molto Rara; quella delle universali è Leggendaria e resta distinta dalla classificazione di potenza. Un supporto di batteria di base costa 100 cr, pesa 0,2 kg, ha Qualità Comune, PS Integrità 10 e PI 3. Una batteria autonoma ha SnT pari al proprio Grado.",
       "paragrafo": "Equipaggiamento §10.2; Magia §24.7",
       "versione_manuale": "Equipaggiamento 0.5 (Google Doc del 02/10/2026, 09:12 UTC)",
-      "costo": 15000,
+      "costo": 56700,
       "artefatto": {
         "tipologia": "Batterie e contenitori",
         "potenza": "Molto Rara",
@@ -841,7 +899,8 @@
         "contenitore": {
           "energia": "Bianco",
           "capacita_pm": 15
-        }
+        },
+        "grado": "IV"
       },
       "proprieta": [],
       "reperibilita": "LE",
@@ -861,7 +920,7 @@
       "note_manuale": "Il Chroma Rosso contiene energia Fisica, il Blu Mentale, il Verde Spirituale e il Bianco Universale. Le capacità ordinarie procedono per multipli di 5 PM. Il Grado della riserva è quello indicato nella tabella, indipendentemente dai PM momentaneamente presenti. Batterie finite: 200 cr per PM colorato e 1.000 cr per PM universale. La reperibilità delle batterie colorate è Molto Rara; quella delle universali è Leggendaria e resta distinta dalla classificazione di potenza. Un supporto di batteria di base costa 100 cr, pesa 0,2 kg, ha Qualità Comune, PS Integrità 10 e PI 3. Una batteria autonoma ha SnT pari al proprio Grado.",
       "paragrafo": "Equipaggiamento §10.2; Magia §24.7",
       "versione_manuale": "Equipaggiamento 0.5 (Google Doc del 02/10/2026, 09:12 UTC)",
-      "costo": 20000,
+      "costo": 100200,
       "artefatto": {
         "tipologia": "Batterie e contenitori",
         "potenza": "Epica",
@@ -871,7 +930,8 @@
         "contenitore": {
           "energia": "Bianco",
           "capacita_pm": 20
-        }
+        },
+        "grado": "V"
       },
       "proprieta": [],
       "reperibilita": "LE",
@@ -891,7 +951,7 @@
       "note_manuale": "Il Chroma Rosso contiene energia Fisica, il Blu Mentale, il Verde Spirituale e il Bianco Universale. Le capacità ordinarie procedono per multipli di 5 PM. Il Grado della riserva è quello indicato nella tabella, indipendentemente dai PM momentaneamente presenti. Batterie finite: 200 cr per PM colorato e 1.000 cr per PM universale. La reperibilità delle batterie colorate è Molto Rara; quella delle universali è Leggendaria e resta distinta dalla classificazione di potenza. Un supporto di batteria di base costa 100 cr, pesa 0,2 kg, ha Qualità Comune, PS Integrità 10 e PI 3. Una batteria autonoma ha SnT pari al proprio Grado.",
       "paragrafo": "Equipaggiamento §10.2; Magia §24.7",
       "versione_manuale": "Equipaggiamento 0.5 (Google Doc del 02/10/2026, 09:12 UTC)",
-      "costo": 25000,
+      "costo": 156000,
       "artefatto": {
         "tipologia": "Batterie e contenitori",
         "potenza": "Leggendaria",
@@ -901,7 +961,8 @@
         "contenitore": {
           "energia": "Bianco",
           "capacita_pm": 25
-        }
+        },
+        "grado": "VI"
       },
       "proprieta": [],
       "reperibilita": "LE",
@@ -937,7 +998,7 @@
       "note_manuale": "Ogni voce richiede di registrare la Matrice d’origine. Entro la sua influenza recupera 2 PM/ora; presso un’altra Matrice dello stesso colore recupera 1 PM/ora. Nessuna ricarica automatica da colori diversi e nessun cumulo fra Matrici. Il recupero non richiede sintonizzazione, mentre l’uso della Batteria la richiede. Tutte le Batterie del campionario usano un contenitore base da 100 cr: peso 0,2 kg, Qualità Comune, PS Integrità 10 e 3 PI.",
       "paragrafo": "Equipaggiamento §10.3; Magia §26.4",
       "versione_manuale": "Equipaggiamento 0.5 (Google Doc del 02/10/2026, 09:12 UTC)",
-      "costo": 1500,
+      "costo": 5400,
       "creazione_cr": 1200,
       "artefatto": {
         "tipologia": "Batterie e contenitori",
@@ -949,7 +1010,8 @@
           "energia": "Rosso",
           "capacita_pm": 5,
           "matrice": true
-        }
+        },
+        "grado": "II"
       },
       "proprieta": [],
       "reperibilita": "EP",
@@ -968,7 +1030,7 @@
       "note_manuale": "Ogni voce richiede di registrare la Matrice d’origine. Entro la sua influenza recupera 2 PM/ora; presso un’altra Matrice dello stesso colore recupera 1 PM/ora. Nessuna ricarica automatica da colori diversi e nessun cumulo fra Matrici. Il recupero non richiede sintonizzazione, mentre l’uso della Batteria la richiede. Tutte le Batterie del campionario usano un contenitore base da 100 cr: peso 0,2 kg, Qualità Comune, PS Integrità 10 e 3 PI.",
       "paragrafo": "Equipaggiamento §10.3; Magia §26.4",
       "versione_manuale": "Equipaggiamento 0.5 (Google Doc del 02/10/2026, 09:12 UTC)",
-      "costo": 3000,
+      "costo": 13500,
       "creazione_cr": 2250,
       "artefatto": {
         "tipologia": "Batterie e contenitori",
@@ -980,7 +1042,8 @@
           "energia": "Rosso",
           "capacita_pm": 10,
           "matrice": true
-        }
+        },
+        "grado": "III"
       },
       "proprieta": [],
       "reperibilita": "EP",
@@ -999,7 +1062,7 @@
       "note_manuale": "Ogni voce richiede di registrare la Matrice d’origine. Entro la sua influenza recupera 2 PM/ora; presso un’altra Matrice dello stesso colore recupera 1 PM/ora. Nessuna ricarica automatica da colori diversi e nessun cumulo fra Matrici. Il recupero non richiede sintonizzazione, mentre l’uso della Batteria la richiede. Tutte le Batterie del campionario usano un contenitore base da 100 cr: peso 0,2 kg, Qualità Comune, PS Integrità 10 e 3 PI.",
       "paragrafo": "Equipaggiamento §10.3; Magia §26.4",
       "versione_manuale": "Equipaggiamento 0.5 (Google Doc del 02/10/2026, 09:12 UTC)",
-      "costo": 4500,
+      "costo": 29700,
       "creazione_cr": 3300,
       "artefatto": {
         "tipologia": "Batterie e contenitori",
@@ -1011,7 +1074,8 @@
           "energia": "Rosso",
           "capacita_pm": 15,
           "matrice": true
-        }
+        },
+        "grado": "IV"
       },
       "proprieta": [],
       "reperibilita": "EP",
@@ -1030,7 +1094,7 @@
       "note_manuale": "Ogni voce richiede di registrare la Matrice d’origine. Entro la sua influenza recupera 2 PM/ora; presso un’altra Matrice dello stesso colore recupera 1 PM/ora. Nessuna ricarica automatica da colori diversi e nessun cumulo fra Matrici. Il recupero non richiede sintonizzazione, mentre l’uso della Batteria la richiede. Tutte le Batterie del campionario usano un contenitore base da 100 cr: peso 0,2 kg, Qualità Comune, PS Integrità 10 e 3 PI.",
       "paragrafo": "Equipaggiamento §10.3; Magia §26.4",
       "versione_manuale": "Equipaggiamento 0.5 (Google Doc del 02/10/2026, 09:12 UTC)",
-      "costo": 6000,
+      "costo": 52200,
       "creazione_cr": 4350,
       "artefatto": {
         "tipologia": "Batterie e contenitori",
@@ -1042,7 +1106,8 @@
           "energia": "Rosso",
           "capacita_pm": 20,
           "matrice": true
-        }
+        },
+        "grado": "V"
       },
       "proprieta": [],
       "reperibilita": "EP",
@@ -1061,7 +1126,7 @@
       "note_manuale": "Ogni voce richiede di registrare la Matrice d’origine. Entro la sua influenza recupera 2 PM/ora; presso un’altra Matrice dello stesso colore recupera 1 PM/ora. Nessuna ricarica automatica da colori diversi e nessun cumulo fra Matrici. Il recupero non richiede sintonizzazione, mentre l’uso della Batteria la richiede. Tutte le Batterie del campionario usano un contenitore base da 100 cr: peso 0,2 kg, Qualità Comune, PS Integrità 10 e 3 PI.",
       "paragrafo": "Equipaggiamento §10.3; Magia §26.4",
       "versione_manuale": "Equipaggiamento 0.5 (Google Doc del 02/10/2026, 09:12 UTC)",
-      "costo": 7500,
+      "costo": 81000,
       "creazione_cr": 5400,
       "artefatto": {
         "tipologia": "Batterie e contenitori",
@@ -1073,7 +1138,8 @@
           "energia": "Rosso",
           "capacita_pm": 25,
           "matrice": true
-        }
+        },
+        "grado": "VI"
       },
       "proprieta": [],
       "reperibilita": "EP",
@@ -1092,7 +1158,7 @@
       "note_manuale": "Ogni voce richiede di registrare la Matrice d’origine. Entro la sua influenza recupera 2 PM/ora; presso un’altra Matrice dello stesso colore recupera 1 PM/ora. Nessuna ricarica automatica da colori diversi e nessun cumulo fra Matrici. Il recupero non richiede sintonizzazione, mentre l’uso della Batteria la richiede. Tutte le Batterie del campionario usano un contenitore base da 100 cr: peso 0,2 kg, Qualità Comune, PS Integrità 10 e 3 PI.",
       "paragrafo": "Equipaggiamento §10.3; Magia §26.4",
       "versione_manuale": "Equipaggiamento 0.5 (Google Doc del 02/10/2026, 09:12 UTC)",
-      "costo": 1500,
+      "costo": 5400,
       "creazione_cr": 1200,
       "artefatto": {
         "tipologia": "Batterie e contenitori",
@@ -1104,7 +1170,8 @@
           "energia": "Blu",
           "capacita_pm": 5,
           "matrice": true
-        }
+        },
+        "grado": "II"
       },
       "proprieta": [],
       "reperibilita": "EP",
@@ -1123,7 +1190,7 @@
       "note_manuale": "Ogni voce richiede di registrare la Matrice d’origine. Entro la sua influenza recupera 2 PM/ora; presso un’altra Matrice dello stesso colore recupera 1 PM/ora. Nessuna ricarica automatica da colori diversi e nessun cumulo fra Matrici. Il recupero non richiede sintonizzazione, mentre l’uso della Batteria la richiede. Tutte le Batterie del campionario usano un contenitore base da 100 cr: peso 0,2 kg, Qualità Comune, PS Integrità 10 e 3 PI.",
       "paragrafo": "Equipaggiamento §10.3; Magia §26.4",
       "versione_manuale": "Equipaggiamento 0.5 (Google Doc del 02/10/2026, 09:12 UTC)",
-      "costo": 3000,
+      "costo": 13500,
       "creazione_cr": 2250,
       "artefatto": {
         "tipologia": "Batterie e contenitori",
@@ -1135,7 +1202,8 @@
           "energia": "Blu",
           "capacita_pm": 10,
           "matrice": true
-        }
+        },
+        "grado": "III"
       },
       "proprieta": [],
       "reperibilita": "EP",
@@ -1154,7 +1222,7 @@
       "note_manuale": "Ogni voce richiede di registrare la Matrice d’origine. Entro la sua influenza recupera 2 PM/ora; presso un’altra Matrice dello stesso colore recupera 1 PM/ora. Nessuna ricarica automatica da colori diversi e nessun cumulo fra Matrici. Il recupero non richiede sintonizzazione, mentre l’uso della Batteria la richiede. Tutte le Batterie del campionario usano un contenitore base da 100 cr: peso 0,2 kg, Qualità Comune, PS Integrità 10 e 3 PI.",
       "paragrafo": "Equipaggiamento §10.3; Magia §26.4",
       "versione_manuale": "Equipaggiamento 0.5 (Google Doc del 02/10/2026, 09:12 UTC)",
-      "costo": 4500,
+      "costo": 29700,
       "creazione_cr": 3300,
       "artefatto": {
         "tipologia": "Batterie e contenitori",
@@ -1166,7 +1234,8 @@
           "energia": "Blu",
           "capacita_pm": 15,
           "matrice": true
-        }
+        },
+        "grado": "IV"
       },
       "proprieta": [],
       "reperibilita": "EP",
@@ -1185,7 +1254,7 @@
       "note_manuale": "Ogni voce richiede di registrare la Matrice d’origine. Entro la sua influenza recupera 2 PM/ora; presso un’altra Matrice dello stesso colore recupera 1 PM/ora. Nessuna ricarica automatica da colori diversi e nessun cumulo fra Matrici. Il recupero non richiede sintonizzazione, mentre l’uso della Batteria la richiede. Tutte le Batterie del campionario usano un contenitore base da 100 cr: peso 0,2 kg, Qualità Comune, PS Integrità 10 e 3 PI.",
       "paragrafo": "Equipaggiamento §10.3; Magia §26.4",
       "versione_manuale": "Equipaggiamento 0.5 (Google Doc del 02/10/2026, 09:12 UTC)",
-      "costo": 6000,
+      "costo": 52200,
       "creazione_cr": 4350,
       "artefatto": {
         "tipologia": "Batterie e contenitori",
@@ -1197,7 +1266,8 @@
           "energia": "Blu",
           "capacita_pm": 20,
           "matrice": true
-        }
+        },
+        "grado": "V"
       },
       "proprieta": [],
       "reperibilita": "EP",
@@ -1216,7 +1286,7 @@
       "note_manuale": "Ogni voce richiede di registrare la Matrice d’origine. Entro la sua influenza recupera 2 PM/ora; presso un’altra Matrice dello stesso colore recupera 1 PM/ora. Nessuna ricarica automatica da colori diversi e nessun cumulo fra Matrici. Il recupero non richiede sintonizzazione, mentre l’uso della Batteria la richiede. Tutte le Batterie del campionario usano un contenitore base da 100 cr: peso 0,2 kg, Qualità Comune, PS Integrità 10 e 3 PI.",
       "paragrafo": "Equipaggiamento §10.3; Magia §26.4",
       "versione_manuale": "Equipaggiamento 0.5 (Google Doc del 02/10/2026, 09:12 UTC)",
-      "costo": 7500,
+      "costo": 81000,
       "creazione_cr": 5400,
       "artefatto": {
         "tipologia": "Batterie e contenitori",
@@ -1228,7 +1298,8 @@
           "energia": "Blu",
           "capacita_pm": 25,
           "matrice": true
-        }
+        },
+        "grado": "VI"
       },
       "proprieta": [],
       "reperibilita": "EP",
@@ -1247,7 +1318,7 @@
       "note_manuale": "Ogni voce richiede di registrare la Matrice d’origine. Entro la sua influenza recupera 2 PM/ora; presso un’altra Matrice dello stesso colore recupera 1 PM/ora. Nessuna ricarica automatica da colori diversi e nessun cumulo fra Matrici. Il recupero non richiede sintonizzazione, mentre l’uso della Batteria la richiede. Tutte le Batterie del campionario usano un contenitore base da 100 cr: peso 0,2 kg, Qualità Comune, PS Integrità 10 e 3 PI.",
       "paragrafo": "Equipaggiamento §10.3; Magia §26.4",
       "versione_manuale": "Equipaggiamento 0.5 (Google Doc del 02/10/2026, 09:12 UTC)",
-      "costo": 1500,
+      "costo": 5400,
       "creazione_cr": 1200,
       "artefatto": {
         "tipologia": "Batterie e contenitori",
@@ -1259,7 +1330,8 @@
           "energia": "Verde",
           "capacita_pm": 5,
           "matrice": true
-        }
+        },
+        "grado": "II"
       },
       "proprieta": [],
       "reperibilita": "EP",
@@ -1278,7 +1350,7 @@
       "note_manuale": "Ogni voce richiede di registrare la Matrice d’origine. Entro la sua influenza recupera 2 PM/ora; presso un’altra Matrice dello stesso colore recupera 1 PM/ora. Nessuna ricarica automatica da colori diversi e nessun cumulo fra Matrici. Il recupero non richiede sintonizzazione, mentre l’uso della Batteria la richiede. Tutte le Batterie del campionario usano un contenitore base da 100 cr: peso 0,2 kg, Qualità Comune, PS Integrità 10 e 3 PI.",
       "paragrafo": "Equipaggiamento §10.3; Magia §26.4",
       "versione_manuale": "Equipaggiamento 0.5 (Google Doc del 02/10/2026, 09:12 UTC)",
-      "costo": 3000,
+      "costo": 13500,
       "creazione_cr": 2250,
       "artefatto": {
         "tipologia": "Batterie e contenitori",
@@ -1290,7 +1362,8 @@
           "energia": "Verde",
           "capacita_pm": 10,
           "matrice": true
-        }
+        },
+        "grado": "III"
       },
       "proprieta": [],
       "reperibilita": "EP",
@@ -1309,7 +1382,7 @@
       "note_manuale": "Ogni voce richiede di registrare la Matrice d’origine. Entro la sua influenza recupera 2 PM/ora; presso un’altra Matrice dello stesso colore recupera 1 PM/ora. Nessuna ricarica automatica da colori diversi e nessun cumulo fra Matrici. Il recupero non richiede sintonizzazione, mentre l’uso della Batteria la richiede. Tutte le Batterie del campionario usano un contenitore base da 100 cr: peso 0,2 kg, Qualità Comune, PS Integrità 10 e 3 PI.",
       "paragrafo": "Equipaggiamento §10.3; Magia §26.4",
       "versione_manuale": "Equipaggiamento 0.5 (Google Doc del 02/10/2026, 09:12 UTC)",
-      "costo": 4500,
+      "costo": 29700,
       "creazione_cr": 3300,
       "artefatto": {
         "tipologia": "Batterie e contenitori",
@@ -1321,7 +1394,8 @@
           "energia": "Verde",
           "capacita_pm": 15,
           "matrice": true
-        }
+        },
+        "grado": "IV"
       },
       "proprieta": [],
       "reperibilita": "EP",
@@ -1340,7 +1414,7 @@
       "note_manuale": "Ogni voce richiede di registrare la Matrice d’origine. Entro la sua influenza recupera 2 PM/ora; presso un’altra Matrice dello stesso colore recupera 1 PM/ora. Nessuna ricarica automatica da colori diversi e nessun cumulo fra Matrici. Il recupero non richiede sintonizzazione, mentre l’uso della Batteria la richiede. Tutte le Batterie del campionario usano un contenitore base da 100 cr: peso 0,2 kg, Qualità Comune, PS Integrità 10 e 3 PI.",
       "paragrafo": "Equipaggiamento §10.3; Magia §26.4",
       "versione_manuale": "Equipaggiamento 0.5 (Google Doc del 02/10/2026, 09:12 UTC)",
-      "costo": 6000,
+      "costo": 52200,
       "creazione_cr": 4350,
       "artefatto": {
         "tipologia": "Batterie e contenitori",
@@ -1352,7 +1426,8 @@
           "energia": "Verde",
           "capacita_pm": 20,
           "matrice": true
-        }
+        },
+        "grado": "V"
       },
       "proprieta": [],
       "reperibilita": "EP",
@@ -1371,7 +1446,7 @@
       "note_manuale": "Ogni voce richiede di registrare la Matrice d’origine. Entro la sua influenza recupera 2 PM/ora; presso un’altra Matrice dello stesso colore recupera 1 PM/ora. Nessuna ricarica automatica da colori diversi e nessun cumulo fra Matrici. Il recupero non richiede sintonizzazione, mentre l’uso della Batteria la richiede. Tutte le Batterie del campionario usano un contenitore base da 100 cr: peso 0,2 kg, Qualità Comune, PS Integrità 10 e 3 PI.",
       "paragrafo": "Equipaggiamento §10.3; Magia §26.4",
       "versione_manuale": "Equipaggiamento 0.5 (Google Doc del 02/10/2026, 09:12 UTC)",
-      "costo": 7500,
+      "costo": 81000,
       "creazione_cr": 5400,
       "artefatto": {
         "tipologia": "Batterie e contenitori",
@@ -1383,7 +1458,8 @@
           "energia": "Verde",
           "capacita_pm": 25,
           "matrice": true
-        }
+        },
+        "grado": "VI"
       },
       "proprieta": [],
       "reperibilita": "EP",
@@ -1402,7 +1478,7 @@
       "note_manuale": "Ogni voce richiede di registrare la Matrice d’origine. Entro la sua influenza recupera 2 PM/ora; presso un’altra Matrice dello stesso colore recupera 1 PM/ora. Nessuna ricarica automatica da colori diversi e nessun cumulo fra Matrici. Il recupero non richiede sintonizzazione, mentre l’uso della Batteria la richiede. Tutte le Batterie del campionario usano un contenitore base da 100 cr: peso 0,2 kg, Qualità Comune, PS Integrità 10 e 3 PI.",
       "paragrafo": "Equipaggiamento §10.3; Magia §26.4",
       "versione_manuale": "Equipaggiamento 0.5 (Google Doc del 02/10/2026, 09:12 UTC)",
-      "costo": 7500,
+      "costo": 25500,
       "creazione_cr": 4250,
       "artefatto": {
         "tipologia": "Batterie e contenitori",
@@ -1414,10 +1490,11 @@
           "energia": "Bianco",
           "capacita_pm": 5,
           "matrice": true
-        }
+        },
+        "grado": "III"
       },
       "proprieta": [],
-      "reperibilita": "LE",
+      "reperibilita": "EC",
       "disponibilita_eccezionale": true,
       "qualita": "Comune",
       "ps_int": 10,
@@ -1434,7 +1511,7 @@
       "note_manuale": "Ogni voce richiede di registrare la Matrice d’origine. Entro la sua influenza recupera 2 PM/ora; presso un’altra Matrice dello stesso colore recupera 1 PM/ora. Nessuna ricarica automatica da colori diversi e nessun cumulo fra Matrici. Il recupero non richiede sintonizzazione, mentre l’uso della Batteria la richiede. Tutte le Batterie del campionario usano un contenitore base da 100 cr: peso 0,2 kg, Qualità Comune, PS Integrità 10 e 3 PI.",
       "paragrafo": "Equipaggiamento §10.3; Magia §26.4",
       "versione_manuale": "Equipaggiamento 0.5 (Google Doc del 02/10/2026, 09:12 UTC)",
-      "costo": 15000,
+      "costo": 74700,
       "creazione_cr": 8300,
       "artefatto": {
         "tipologia": "Batterie e contenitori",
@@ -1446,10 +1523,11 @@
           "energia": "Bianco",
           "capacita_pm": 10,
           "matrice": true
-        }
+        },
+        "grado": "IV"
       },
       "proprieta": [],
-      "reperibilita": "LE",
+      "reperibilita": "EC",
       "disponibilita_eccezionale": true,
       "qualita": "Comune",
       "ps_int": 10,
@@ -1466,7 +1544,7 @@
       "note_manuale": "Ogni voce richiede di registrare la Matrice d’origine. Entro la sua influenza recupera 2 PM/ora; presso un’altra Matrice dello stesso colore recupera 1 PM/ora. Nessuna ricarica automatica da colori diversi e nessun cumulo fra Matrici. Il recupero non richiede sintonizzazione, mentre l’uso della Batteria la richiede. Tutte le Batterie del campionario usano un contenitore base da 100 cr: peso 0,2 kg, Qualità Comune, PS Integrità 10 e 3 PI.",
       "paragrafo": "Equipaggiamento §10.3; Magia §26.4",
       "versione_manuale": "Equipaggiamento 0.5 (Google Doc del 02/10/2026, 09:12 UTC)",
-      "costo": 22500,
+      "costo": 148200,
       "creazione_cr": 12350,
       "artefatto": {
         "tipologia": "Batterie e contenitori",
@@ -1478,10 +1556,11 @@
           "energia": "Bianco",
           "capacita_pm": 15,
           "matrice": true
-        }
+        },
+        "grado": "V"
       },
       "proprieta": [],
-      "reperibilita": "LE",
+      "reperibilita": "EC",
       "disponibilita_eccezionale": true,
       "qualita": "Comune",
       "ps_int": 10,
@@ -1498,7 +1577,7 @@
       "note_manuale": "Ogni voce richiede di registrare la Matrice d’origine. Entro la sua influenza recupera 2 PM/ora; presso un’altra Matrice dello stesso colore recupera 1 PM/ora. Nessuna ricarica automatica da colori diversi e nessun cumulo fra Matrici. Il recupero non richiede sintonizzazione, mentre l’uso della Batteria la richiede. Tutte le Batterie del campionario usano un contenitore base da 100 cr: peso 0,2 kg, Qualità Comune, PS Integrità 10 e 3 PI.",
       "paragrafo": "Equipaggiamento §10.3; Magia §26.4",
       "versione_manuale": "Equipaggiamento 0.5 (Google Doc del 02/10/2026, 09:12 UTC)",
-      "costo": 30000,
+      "costo": 246000,
       "creazione_cr": 16400,
       "artefatto": {
         "tipologia": "Batterie e contenitori",
@@ -1510,10 +1589,11 @@
           "energia": "Bianco",
           "capacita_pm": 20,
           "matrice": true
-        }
+        },
+        "grado": "VI"
       },
       "proprieta": [],
-      "reperibilita": "LE",
+      "reperibilita": "EC",
       "disponibilita_eccezionale": true,
       "qualita": "Comune",
       "ps_int": 10,
@@ -2369,7 +2449,7 @@
       "note_manuale": "Artefatto Mistico consumabile, monouso, con SnT 0 e Cariche Esclusive sigillate Verdi. I PM sono già inclusi nell’oggetto: l’utilizzatore non deve fornirli, conoscere l’Incantesimo o possedere Ritualista. L’attivazione è automatica, salvo eccezioni espresse; restano eventuali Prove per colpire, Difese e Salvezze. I costi di creazione presuppongono il progetto già disponibile. A contatto, restituisce 1d4+2 PV a una creatura vivente consenziente, oppure incosciente soccorsa. Ogni 2 punti di guarigione possono invece ridurre il Sanguinamento di 1; i punti rimanenti restituiscono PV. Effetto istantaneo. Non cura Ferite o Menomazioni e conserva gli altri limiti di Cura Ferite. Riferimento: scheda 21.1. A.155: peso 0,1 kg, Qualità Comune, PS Integrità 10, PI massimi 1, uguali per tutti i Gradi; peso e Integrità valgono per ciascun esemplare. A 0 PI la pergamena è inutilizzabile e non si può attivare; la sua distruzione non libera l’incantesimo.",
       "paragrafo": "Magia §27.3.1",
       "versione_manuale": "Magia (Google Doc dell’08/10/2026, 21:33 UTC)",
-      "costo": 150,
+      "costo": 250,
       "artefatto": {
         "tipologia": "Consumabili",
         "sintonizzazione": 0,
@@ -2407,7 +2487,7 @@
       "note_manuale": "Artefatto Mistico consumabile, monouso, con SnT 0 e Cariche Esclusive sigillate Verdi. I PM sono già inclusi nell’oggetto: l’utilizzatore non deve fornirli, conoscere l’Incantesimo o possedere Ritualista. L’attivazione è automatica, salvo eccezioni espresse; restano eventuali Prove per colpire, Difese e Salvezze. I costi di creazione presuppongono il progetto già disponibile. Incanta un’arma toccata per 5 RND, senza Concentrazione. I danni diventano Magici; conferisce +1 al VA degli attacchi e +1 al danno. Il bonus al VA non si applica alla Parata. Restano i limiti di cumulo della scheda; ripetere l’effetto non somma i bonus. Riferimento: scheda 22.1. A.155: peso 0,1 kg, Qualità Comune, PS Integrità 10, PI massimi 1, uguali per tutti i Gradi; peso e Integrità valgono per ciascun esemplare. A 0 PI la pergamena è inutilizzabile e non si può attivare; la sua distruzione non libera l’incantesimo.",
       "paragrafo": "Magia §27.3.2",
       "versione_manuale": "Magia (Google Doc dell’08/10/2026, 21:33 UTC)",
-      "costo": 150,
+      "costo": 250,
       "artefatto": {
         "tipologia": "Consumabili",
         "sintonizzazione": 0,
@@ -2445,7 +2525,7 @@
       "note_manuale": "Artefatto Mistico consumabile, monouso, con SnT 0 e Cariche Esclusive sigillate Verdi. I PM sono già inclusi nell’oggetto: l’utilizzatore non deve fornirli, conoscere l’Incantesimo o possedere Ritualista. L’attivazione è automatica, salvo eccezioni espresse; restano eventuali Prove per colpire, Difese e Salvezze. I costi di creazione presuppongono il progetto già disponibile. Incanta un’armatura fisica indossata e toccata per 5 RND, senza Concentrazione. Converte la sua AR in Magica e aggiunge +1 AR. Non ripara l’armatura. Sono esclusi scudi, pelle naturale e protezioni generate da Incantesimi; restano i normali limiti di cumulo. Riferimento: scheda 22.2. A.155: peso 0,1 kg, Qualità Comune, PS Integrità 10, PI massimi 1, uguali per tutti i Gradi; peso e Integrità valgono per ciascun esemplare. A 0 PI la pergamena è inutilizzabile e non si può attivare; la sua distruzione non libera l’incantesimo.",
       "paragrafo": "Magia §27.3.3",
       "versione_manuale": "Magia (Google Doc dell’08/10/2026, 21:33 UTC)",
-      "costo": 150,
+      "costo": 250,
       "artefatto": {
         "tipologia": "Consumabili",
         "sintonizzazione": 0,
@@ -2483,7 +2563,7 @@
       "note_manuale": "Artefatto Mistico consumabile, monouso, con SnT 0 e Cariche Esclusive sigillate Verdi. I PM sono già inclusi nell’oggetto: l’utilizzatore non deve fornirli, conoscere l’Incantesimo o possedere Ritualista. L’attivazione è automatica, salvo eccezioni espresse; restano eventuali Prove per colpire, Difese e Salvezze. I costi di creazione presuppongono il progetto già disponibile. Potere di Rilevazione 6. Permette la percezione delle emanazioni entro 10 Q (15 m), oppure l’analisi di un’area totale di 1 Q entro la stessa gittata. Una sola modalità alla volta. Si sceglie Concentrazione fino a 10 minuti oppure durata fissa di 5 RND. Percezione, analisi, cambi di modalità e occultamenti seguono la scheda. Riconosce l’impronta dell’Oscura Simmetria, ma non certifica la Corruzione personale di una creatura. Riferimento: scheda 23.9. A.155: peso 0,1 kg, Qualità Comune, PS Integrità 10, PI massimi 1, uguali per tutti i Gradi; peso e Integrità valgono per ciascun esemplare. A 0 PI la pergamena è inutilizzabile e non si può attivare; la sua distruzione non libera l’incantesimo.",
       "paragrafo": "Magia §27.3.4",
       "versione_manuale": "Magia (Google Doc dell’08/10/2026, 21:33 UTC)",
-      "costo": 250,
+      "costo": 600,
       "artefatto": {
         "tipologia": "Consumabili",
         "sintonizzazione": 0,
@@ -2521,7 +2601,7 @@
       "note_manuale": "Artefatto Mistico consumabile, monouso, con SnT 0 e Cariche Esclusive sigillate Verdi. I PM sono già inclusi nell’oggetto: l’utilizzatore non deve fornirli, conoscere l’Incantesimo o possedere Ritualista. L’attivazione è automatica, salvo eccezioni espresse; restano eventuali Prove per colpire, Difese e Salvezze. I costi di creazione presuppongono il progetto già disponibile. Fuori dal combattimento, richiede Concentrazione e contatto per tutta l’attivazione con una creatura vivente consenziente, oppure incosciente soccorsa. Riduce di uno Stato la Corruzione; lo Stato iniziale non può superare Corrotto. Un solo trattamento efficace ogni 24 ore per beneficiario, considerando insieme pergamene, altri Artefatti e lanci diretti. Non cura Oscuro, non rimuove automaticamente mutazioni permanenti e non espelle possessioni. Riferimento: scheda 21.5. A.155: peso 0,1 kg, Qualità Comune, PS Integrità 10, PI massimi 1, uguali per tutti i Gradi; peso e Integrità valgono per ciascun esemplare. A 0 PI la pergamena è inutilizzabile e non si può attivare; la sua distruzione non libera l’incantesimo.",
       "paragrafo": "Magia §27.3.5",
       "versione_manuale": "Magia (Google Doc dell’08/10/2026, 21:33 UTC)",
-      "costo": 250,
+      "costo": 600,
       "artefatto": {
         "tipologia": "Consumabili",
         "sintonizzazione": 0,
@@ -2560,7 +2640,7 @@
       "note_manuale": "Artefatto Mistico consumabile, monouso, con SnT 0 e Cariche Esclusive sigillate Verdi. I PM sono già inclusi nell’oggetto: l’utilizzatore non deve fornirli, conoscere l’Incantesimo o possedere Ritualista. L’attivazione è automatica, salvo eccezioni espresse; restano eventuali Prove per colpire, Difese e Salvezze. I costi di creazione presuppongono il progetto già disponibile. Mantenendo contatto e condizioni della versione per tre ore, avvia la riparazione di una Menomazione permanente in un beneficiario vivente consenziente, oppure incosciente soccorso, purché la parte anatomica sia ancora presente. Il processo si completa nei cinque giorni successivi, senza ulteriore contatto o Concentrazione. Una sola Rigenerazione attiva per beneficiario. Non ricrea un arto mancante a questo livello, non resuscita e non recupera automaticamente Umanità. Le nuove lesioni non entrano nel processo già avviato. Riferimento: scheda 21.10; 25.3–25.4. A.155: peso 0,1 kg, Qualità Comune, PS Integrità 10, PI massimi 1, uguali per tutti i Gradi; peso e Integrità valgono per ciascun esemplare. A 0 PI la pergamena è inutilizzabile e non si può attivare; la sua distruzione non libera l’incantesimo.",
       "paragrafo": "Magia §27.3.6",
       "versione_manuale": "Magia (Google Doc dell’08/10/2026, 21:33 UTC)",
-      "costo": 450,
+      "costo": 1350,
       "artefatto": {
         "tipologia": "Consumabili",
         "sintonizzazione": 0,
@@ -2619,7 +2699,7 @@
       "note_manuale": "Fascia rossa della Mishima con il simbolo della corporazione al centro e kanji mistici neri; microframmenti di Chroma Verde nel ricamo, senza formare una riserva. Artefatto Mistico per chi utilizza Risorse Interiori. Respiro Disciplinato (passiva) riduce di 1 PM il costo delle Tecniche Interiori personali mentre la fascia è indossata e sintonizzata: una Tecnica con costo positivo non scende sotto 1 PM, una già gratuita resta gratuita. Non richiede Azioni, Prove o Concentrazione, non cambia il limite di una Tecnica per Round e non concede nuove Tecniche. Non riguarda Incantesimi, Rituali, ricariche o attivazioni di altri Artefatti. Più fasce o altre riduzioni dello stesso costo non si sommano: vale la più favorevole. Senza sintonizzazione non riduce i costi. Materiali di creazione 800 cr con il progetto disponibile; progetto nuovo 200 cr in più; progetto ordinario 1.000 cr (ricetta in Magia §28.1.1). Riparazione: base 200 cr, materiali ordinari 10 cr per PI recuperato.",
       "paragrafo": "Equipaggiamento §10.10; Magia §28.1",
       "versione_manuale": "Equipaggiamento 0.8 / Magia 1.5 (15/10/2026)",
-      "costo": 1500,
+      "costo": 3600,
       "indossabile": true,
       "artefatto": {
         "tipologia": "Accessori",
@@ -2627,7 +2707,11 @@
         "sintonizzazione": 1,
         "sintonizzabile": true,
         "proprieta_attive": false,
-        "snt_beneficio": true
+        "snt_beneficio": true,
+        "snt_eccezione": {
+          "regola": "Magia 1.17 §28.1; Equipaggiamento 0.41 §10.10",
+          "motivo": "Con sole proprietà passive la SnT sarebbe 0 (§7.10) e la potenza Non Comune vorrebbe SnT 2: il §28.1 prescrive invece SnT 1 e la sintonizzazione come condizione del beneficio passivo sui PM. È una deroga scritta nel manuale, non un dato approssimato."
+        }
       },
       "sconto_tecniche": {
         "pm": 1,
@@ -2673,17 +2757,17 @@
       "nomi_alternativi": [
         "Anello di Rigenerazione"
       ],
-      "note_manuale": "Anello con la sola Rigenerazione 9 Esclusiva (Magia §25.4): Grado III, SnT 3. Riserva Verde dedicata da 5 Cariche Mistiche (CM); ogni Rigenerazione 9 consuma 5 CM, quindi un utilizzo a riserva piena. Dopo 3 ore di attivazione continua, con contatto e condizioni della versione, consuma le 5 CM e avvia la riparazione di una Menomazione permanente con parte ancora presente; il completamento richiede altri 5 giorni. Un’interruzione prima delle 3 ore impedisce l’effetto senza consumare cariche. Ricarica della riserva vuota: 30 PM personali con conversione 3:1, 20 con 2:1, 10 con 1:1 (CM mancanti × 2 × conversione). Il personaggio sintonizzato non deve essere un Ritualista; i 9 PM del rituale eseguito direttamente restano invariati. È la configurazione dell’oggetto: non assegna un anello a nessun personaggio. Prezzo non indicato.",
+      "note_manuale": "Anello con la sola Rigenerazione 9 Esclusiva (Magia §25.4): Grado IV, potenza Molto Rara, SnT 4 (A.263). Riserva Verde dedicata da 5 Cariche Mistiche (CM); ogni Rigenerazione 9 consuma 5 CM, quindi un utilizzo a riserva piena. Dopo 3 ore di attivazione continua, con contatto e condizioni della versione, consuma le 5 CM e avvia la riparazione di una Menomazione permanente con parte ancora presente; il completamento richiede altri 5 giorni. Un’interruzione prima delle 3 ore impedisce l’effetto senza consumare cariche. Ricarica della riserva vuota: 30 PM personali con conversione 3:1, 20 con 2:1, 10 con 1:1 (CM mancanti × 2 × conversione). Il personaggio sintonizzato non deve essere un Ritualista; i 9 PM del rituale eseguito direttamente restano invariati. È la configurazione dell’oggetto: non assegna un anello a nessun personaggio. Prezzo non indicato.",
       "paragrafo": "Magia §25.4; configurazione approvata da Davide il 02/11/2026 (per-davide.md, sezione 7)",
-      "versione_manuale": "Magia 1.11 (02/11/2026 17:47)",
+      "versione_manuale": "Magia 1.17 §25.4 (A.263); configurazione approvata da Davide il 02/11/2026",
       "indossabile": true,
       "artefatto": {
         "tipologia": "Accessori",
         "potenza": "Molto Rara",
-        "sintonizzazione": 3,
+        "sintonizzazione": 4,
         "sintonizzabile": true,
         "proprieta_attive": true,
-        "grado": "III",
+        "grado": "IV",
         "contenitore": {
           "energia": "Verde",
           "integrato": true,
@@ -2696,11 +2780,7 @@
             "incantesimo": "Rigenerazione",
             "livello": 9
           }
-        ],
-        "snt_eccezione": {
-          "regola": "A.256 (06/11/2026); A.263 aperta",
-          "motivo": "La A.256 dice l’Anello «Molto rara» e ne calcola il prezzo; la configurazione approvata del 02/11 gli dà Grado III e SnT 3. La tabella del §7.10 vorrebbe SnT 4 per una Molto Rara: l’app tiene la SnT della configurazione approvata e aspetta la A.263."
-        }
+        ]
       },
       "attivazione_lunga": {
         "id": "rigenerazione-9",
@@ -2711,12 +2791,11 @@
         "giorni_dopo": 5,
         "effetto_avviato": "avviata la riparazione di una Menomazione permanente con parte ancora presente",
         "condizione": "Contatto e condizioni della versione per tutte e 3 le ore; beneficiario vivente consenziente, o incosciente soccorso. Una sola Rigenerazione attiva per beneficiario. Nessuna Prova di Potere né Rituale, nessun Successo Magistrale o Fallimento Maldestro (Magia §25.4).",
-        "fonte": "Magia 1.11 §25.4; configurazione approvata da Davide il 02/11/2026"
+        "fonte": "Magia 1.17 §25.4; configurazione approvata da Davide il 02/11/2026"
       },
       "proprieta": [],
       "creazione_cr": 1500,
-      "_nota_prezzo": "A.256 (Davide, 06/11/2026): costo completo di costruzione 1.500 cr, rarità Molto rara → prezzo di vendita 1.500 × 3 × 3 = 13.500 cr. Prima nei dati la potenza era «Rara» (configurazione del 02/11: Grado III, SnT 3) e il prezzo non c’era.",
-      "TODO(Davide)": "A.263: la A.256 dice l’Anello «Molto rara», mentre la configurazione approvata del 02/11 gli dà Grado III e SnT 3, e i manuali legano Grado III → potenza Rara (Equipaggiamento §10.1) e Molto Rara → SnT 4 (Armamenti §7.10). Cambiano Grado e SnT, o la rarità dell’Anello è un’eccezione alle due tabelle? L’app applica la A.256 per la rarità e il prezzo, e tiene Grado III e SnT 3 della configurazione approvata."
+      "_nota_prezzo": "A.256: costo completo di costruzione 1.500 cr, potenza Molto Rara → prezzo di vendita 1.500 × 3 × 3 = 13.500 cr. **Ipotesi dichiarata (confronto alla cieca, A.263):** con il Grado IV i reagenti dell’infusione costano 2.000 cr invece di 1.000 (Magia §24.5), quindi il costo completo potrebbe essere 2.500 cr e il prezzo 22.500. Il manuale non dà né il costo né il prezzo di questo anello; i 1.500 cr li dichiara la A.256 e la A.261 dice che i prezzi si prendono scritti e non ricalcolati, quindi restano 1.500 → 13.500 cr. Se Davide vuole il conto del Grado IV, cambia una riga di questo file."
     }
   ],
   "fuori_scala": {
@@ -2765,7 +2844,7 @@
     ]
   },
   "consumabili": {
-    "versione_manuale": "Magia (Google Doc dell’08/10/2026, 21:33 UTC)",
+    "versione_manuale": "Magia 1.17 §27",
     "fonte": "Magia §27 (Artefatti consumabili); livelli della versione e Grado dal §24.2",
     "snt": 0,
     "riserva": {
@@ -2781,7 +2860,6 @@
       "ore": 4
     },
     "pm_lavoro_per_grado": 3,
-    "vendita_moltiplicatore": 2,
     "magistrale": {
       "dimezza": [
         "pm_lavoro",
@@ -2798,7 +2876,7 @@
         ],
         "reagenti": 50,
         "creazione": 75,
-        "vendita": 150,
+        "vendita": 250,
         "reperibilita": "MR"
       },
       {
@@ -2809,7 +2887,7 @@
         ],
         "reagenti": 100,
         "creazione": 125,
-        "vendita": 250,
+        "vendita": 600,
         "reperibilita": "MR"
       },
       {
@@ -2820,7 +2898,7 @@
         ],
         "reagenti": 200,
         "creazione": 225,
-        "vendita": 450,
+        "vendita": 1350,
         "reperibilita": "MR"
       },
       {
@@ -2831,7 +2909,7 @@
         ],
         "reagenti": 400,
         "creazione": 425,
-        "vendita": 850,
+        "vendita": 3850,
         "reperibilita": "LE"
       },
       {
@@ -2842,7 +2920,7 @@
         ],
         "reagenti": 800,
         "creazione": 825,
-        "vendita": 1650,
+        "vendita": 9900,
         "reperibilita": "LE"
       },
       {
@@ -2853,7 +2931,7 @@
         ],
         "reagenti": 1600,
         "creazione": 1625,
-        "vendita": 3250,
+        "vendita": 24400,
         "reperibilita": "LE"
       }
     ],
@@ -3045,7 +3123,8 @@
       "vendita": "Vendita = doppio di tale costo: prezzo indicativo da playtest, distinto dal valore di rivendita e dalla possibilità concreta di trovare un’offerta.",
       "inventario": "Si registra la quantità posseduta e se ne sottrae una solo al completamento dell’attivazione.",
       "campionario": "I sei profili costituiscono un campionario di catalogo, non una nuova assegnazione automatica ai personaggi."
-    }
+    },
+    "vendita": "Prezzo indicativo di vendita = costo completo di creazione × 3 × coefficiente di potenza del Grado, arrotondato per eccesso ai 50 cr (Magia 1.17 §27.2, la stessa formula del §24.3): non c’è più un moltiplicatore dei Consumabili a parte."
   },
   "_nota_classificazione": "Manuali del 12/10/2026 (Armamenti cap. 7, Equipaggiamento cap. 10, Magia sez. 26): un oggetto può essere contemporaneamente un’Arma e un Artefatto Mistico o TecnoMistico — sono viste della stessa istanza, e quantità, peso, Integrità, riserve e SnT si conteggiano una sola volta. La modalità d’impiego distingue gli oggetti impugnati da quelli indossati e dice quante mani occupano (i Guanti da Combattimento Mistico: 0)."
 }

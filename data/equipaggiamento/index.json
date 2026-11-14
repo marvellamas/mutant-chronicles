@@ -21,11 +21,17 @@
     "EP": {
       "nome": "Epica",
       "ricerca": "Oratoria −6 VA, se il Direttore di Gioco stabilisce che esiste una possibilità concreta di reperimento (per gli Artefatti un’offerta o una commissione, per esempio un raro tecnomistico indipendente). Un successo non obbliga a vendere e non toglie prezzo, autorizzazioni o tempi di produzione.",
-      "fonte": "Le Batterie colorate passano da REP Molto Rara a Epica. A.83 (E&L del 03/10/2026): EP fra Molto Rara e Leggendaria, ricerca con Oratoria −6 VA; le Batterie Matrice Bianche restano Leggendarie (Equipaggiamento §1.8, §10.3; Armamenti §7.1.8; Magia §26.4)."
+      "fonte": "Le Batterie colorate passano da REP Molto Rara a Epica. A.83 (E&L del 03/10/2026): EP fra Molto Rara e Leggendaria, ricerca con Oratoria −6 VA. Dall’Equipaggiamento 0.41 §10.3 le Batterie Matrice Bianche non sono più Leggendarie ma «Eccezionali» (EC), che non è una fascia commerciale (Equipaggiamento §1.8, §10.1, §10.3; Armamenti §7.1.8; Magia §26.4)."
     },
     "LE": {
       "nome": "Leggendaria",
       "ricerca": "Nessuna Prova la rende disponibile: riservata a disponibilità eccezionali introdotte dal Direttore di Gioco."
+    },
+    "EC": {
+      "nome": "Eccezionale",
+      "commerciale": false,
+      "ricerca": "Nessuna Prova la rende disponibile: è un accesso di campagna che il Direttore di Gioco concede o nega.",
+      "fonte": "Equipaggiamento 0.41 §10.1: «REP eccezionale indica un accesso di campagna, non una nuova fascia della normale tabella commerciale». Le Batterie Matrice Bianche e le configurazioni oltre il Grado VI del §10.3 la portano: non sono una sesta fascia sopra la Leggendaria, sono fuori dal listino."
     }
   },
   "file": [

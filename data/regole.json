@@ -1627,7 +1627,7 @@
       ]
     },
     "cristalli_matrice": {
-      "paragrafo": "Magia 1.3 §26.3",
+      "paragrafo": "Magia 1.17 §26.3",
       "_nota": "Tabella di consultazione: il livello 1–20 dà dimensioni e raggio d’influenza (raggio in metri) e non coincide con il Grado degli Artefatti. La legge il tooltip delle Batterie Matrice.",
       "livelli": [
         {
@@ -1753,8 +1753,9 @@
       ],
       "frasi": [
         "Il livello da 1 a 20 indica dimensioni e raggio di influenza e non coincide con il Grado I–VI degli Artefatti.",
-        "Il loro controllo e la loro realizzazione non sono attualmente accessibili ai personaggi."
-      ]
+        "Il loro controllo e la loro realizzazione non sono accessibili ai personaggi; resta possibile beneficiare della loro influenza o usare frammenti ricevuti in gioco."
+      ],
+      "_nota_frase": "Magia 1.17 §26.3 (lotto 195): la 1.11 diceva «non sono attualmente accessibili» e si fermava lì; la 1.17 aggiunge che l’influenza e i frammenti ricevuti in gioco restano possibili. È la frase riscritta, non una regola nuova: le Batterie Matrice e i frammenti sono nel catalogo dal 02/10."
     },
     "schegge": {
       "paragrafo": "Magia 1.3 §26.5, Equipaggiamento 0.5 §10.4",
@@ -4673,8 +4674,8 @@
     }
   },
   "prezzi_artefatti": {
-    "versione_manuale": "Magia 1.11 / Equipaggiamento 0.30 / Armamenti 0.74",
-    "fonte": "A.256 (Davide, 06/11/2026); Equipaggiamento §10.1 (il Grado determina la potenza magica); Armamenti §7.10 (classificazione di potenza)",
+    "versione_manuale": "Magia 1.17 / Equipaggiamento 0.41 / Armamenti 0.83",
+    "fonte": "A.256 (Davide, 06/11/2026) e A.261 (risposta nei manuali dell’11/11/2026: Magia 1.17 §24.3 e §27.2, Equipaggiamento 0.41 §10.1); Equipaggiamento §10.1 (il Grado determina la potenza magica); Armamenti §7.10 (classificazione di potenza)",
     "formula": "costo completo di costruzione × 3 × coefficiente di rarità, arrotondato per eccesso ai 50 cr successivi",
     "moltiplicatore": 3,
     "arrotondamento": {
@@ -4686,18 +4687,21 @@
       "Non Comune": 1.5,
       "Rara": 2,
       "Molto Rara": 3,
+      "Epica": 4,
       "Leggendaria": 5
     },
     "senza_prezzo": "Unico o reliquia",
     "esempio": {
       "nome": "Anello con Rigenerazione 9",
+      "grado": "IV",
       "costruzione_cr": 1500,
       "rarita": "Molto Rara",
-      "vendita_cr": 13500
+      "vendita_cr": 13500,
+      "fonte": "A.256 per il costo di costruzione; A.263 per Grado IV, potenza Molto Rara e SnT 4"
     },
     "reperibilita_separata": "Rarità e reperibilità restano separate: disporre del denaro non garantisce che l’oggetto sia disponibile. L’app mostra la Reperibilità accanto al prezzo e non fa sembrare comprabile ciò che non è reperibile.",
-    "prezzo_dichiarato": "Dove il manuale dà già un prezzo di catalogo, resta quello: la formula dà il prezzo di vendita calcolato, che l’app mostra accanto, e diventa il prezzo quando il catalogo non ne ha.",
-    "TODO(Davide)": "A.261: la formula non ritrova i prezzi di catalogo già scritti nei manuali (Batteria da 5 PM Rossa: creazione 650, Comune → 1.950 cr calcolati, catalogo 1.000; le pergamene del §27.3 hanno Vendita = Creazione × 2, la formula darebbe × 3). La formula sostituisce quei prezzi o vale solo dove un prezzo non c’è? L’app tiene i prezzi dichiarati e mostra accanto il calcolo. A.262: la tabella della A.256 non dà il coefficiente dell’«Epica» (Grado V, §10.1), che nei dati esiste: l’app non calcola un prezzo per gli Artefatti Epici e lo dice."
+    "prezzo_dichiarato": "A.261: **i prezzi di catalogo si prendono scritti dal manuale, non ricalcolati.** La formula vince come regola — Davide ha ricalcolato con essa tutto il catalogo del §10 — ma le cifre che l’app usa sono quelle scritte nelle tabelle, e la formula serve a verificare che tornino. Dove un prezzo di catalogo non c’è, vale la formula. Dove c’è e non torna con la formula, resta il prezzo scritto e l’app mostra il calcolo accanto: sono due voci, la Pietra della Vigilanza (4.000 cr scritti, 12.600 calcolati) e i Guanti da Combattimento Mistico (3.000 scritti, 13.800 calcolati).",
+    "epica": "Il gradino «Epica» (Grado V) è entrato con la A.261: Magia 1.17 §24.3 e §27.2 ed Equipaggiamento 0.41 §10.1 danno sei coefficienti invece di cinque. Prima le quattro Batterie di Grado V restavano senza prezzo calcolato e l’app lo diceva (A.262, chiusa dalla stessa risposta)."
   },
   "capolavoro": {
     "versione_manuale": "Giocatore 0.54 (Artigiano, Talento di Grado V)",

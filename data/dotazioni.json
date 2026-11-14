@@ -13,7 +13,6 @@
   ],
   "_nota_oggetti_dotazione": "Voci della dotazione del §2.16 senza modello di armamento. Con «rif» hanno una scheda di catalogo (Manuale dell’Equipaggiamento 0.3–0.5, cap. 2–6, tools/lotti/lotto_equipaggiamento_03.mjs; cap. 5, tools/lotti/lotto_equipaggiamento_05.mjs; Corredo di manutenzione da campo: Armamenti §7.13.7): nome della dotazione, peso, prezzo, Qualità, PI ed effetti dalla scheda, anche per i personaggi già salvati (risolvi() tramite dotazione_id). Senza «rif» restano «da definire» (A.34: peso assente non è 0 kg, prezzo assente non dà credito di scambio). Nessun oggetto della dotazione che non sia un armamento assegnato si cede nello scambio iniziale (§2.16.29).",
   "comune": {
-    "TODO(Davide)": "A.266: la nota del §2.16.1 del Giocatore 0.54 descrive ancora i NEC in Unità Energetiche — «1 UE dello stesso colore ripristina dieci cariche personali mediante trasformatore dedicato» — mentre l’Equipaggiamento 0.30 §5.4 e il registro Revisione NEC 2.11 contano le cariche e dicono che quel registro «sostituisce le precedenti equivalenze dei Moduli da 10 UE e dei Banchi da 100 UE». Il trasformatore dell’app segue il lotto 146 (A.193): preleva una carica CEC e riempie un tampone da 100 cariche NEC. Due manuali correnti dicono numeri diversi su una regola che il giocatore legge alla creazione: non si sceglie da soli. Il testo resta quello del manuale finché Davide non risponde.",
     "paragrafo": "2.16.1",
     "oggetti": [
       {
@@ -64,9 +63,10 @@
     ],
     "note": [
       "Torcia e comunicatore personale comprendono ciascuno un NEC Verde 1 carico, cavo e alimentatore. Consumi, ricambi e ricarica sono nel Manuale dell’Equipaggiamento, §5.4. L’elettronica ordinaria non richiede conteggio energetico; la ricarica rientra nei normali rifornimenti (Manuale dell’Equipaggiamento, §5.4).",
-      "I NEC usano riserve distinte UER, UEB e UEV. Per le armi si annotano cariche o colpi: 1 UE dello stesso colore ripristina dieci cariche personali mediante trasformatore dedicato, conservando il resto nel tampone. Torce, comunicatori, mirini, visori, elmetti e corredi elettronici ordinari non richiedono un conteggio energetico. I rifornimenti comprendono la loro ricarica; armi, scudi, mezzi e dispositivi speciali mantengono il contatore della scheda. Regole generali, tempi, prezzi e gestione del campo: Manuale dell’Equipaggiamento, §5.4. Le batterie mistiche restano in PM e seguono Sintonizzazione e ricarica del Manuale della Magia, senza conversione automatica da UE.",
+      "I NEC usano riserve distinte UER, UEB e UEV. Per le armi si annotano cariche o colpi. Una carica CEC contiene 10 UE; mediante il trasformatore dedicato viene trasferita integralmente in un tampone da 100 cariche NEC da 0,1 UE ciascuna. Il trasformatore ripristina le cariche personali mancanti e conserva nel tampone quelle non utilizzate. Torce, comunicatori, mirini, visori, elmetti e corredi elettronici ordinari non richiedono un conteggio energetico. I rifornimenti comprendono la loro ricarica; armi, scudi, mezzi e dispositivi speciali mantengono il contatore della scheda. Regole generali, tempi, prezzi e gestione del campo: Manuale dell’Equipaggiamento, §5.4. Le batterie mistiche restano in PM e seguono Sintonizzazione e ricarica del Manuale della Magia, senza conversione automatica da UE.",
       "Le scorte iniziali comprendono tre giorni di cibo e due litri d’acqua. L’acqua copre un giorno di consumo ordinario e richiede rifornimenti durante il viaggio."
-    ]
+    ],
+    "_nota_nec": "Giocatore 0.63 §2.16.1 (A.266, risposta del 12/11/2026): «Una carica CEC contiene 10 UE; mediante il trasformatore dedicato viene trasferita integralmente in un tampone da 100 cariche NEC». È esattamente il modello che l’app ha dal lotto 146: una carica CEC prelevata, un tampone da 100 cariche NEC. I due manuali non dicono più numeri diversi — dicono lo stesso numero in due unità — e il §2.16.1 adesso lo scrive in cariche, che è la lingua di tutto il resto. Niente da cambiare nel codice: il TODO si toglie perché la domanda ha risposta, non perché l’abbiamo risolta noi."
   },
   "classi": {
     "Agente": {

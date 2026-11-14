@@ -149,3 +149,56 @@ export function alimentazioneDaTablet(nuovi, disco, dati) {
     return { ...p, modello, alimentazione: { id, quando: typeof t.alimentazione.quando === 'string' ? t.alimentazione.quando : '', da: 'giocatore' } };
   });
 }
+
+// ---------------------------------------------------------------------------
+// A.265 (14/11/2026): la SnT della CyberArma — una potenza, quattro impieghi.
+//
+// «La sua potenza è Rara, corrispondente al Grado III e a una SnT base 3. La SnT effettiva scende a 2 per il
+// Tecnomante, a 1 per un Custode e a 0 per il Custode che l'ha costruita e la usa come propria arma personale»
+// (Armamenti 0.83 §7.25; Magia 1.17 §§24.1–24.2). La scala vale anche per le conversioni: «Capacità della riserva
+// e modulatore SIN non cambiano questa scala».
+//
+// Al tavolo serve sapere **quale dei quattro si applica**, perché la differenza fra 3 e 0 è un terzo della
+// capacità di Sintonizzazione di un personaggio al III Grado. Non è una cosa da far indovinare: nel progetto
+// (`sntProgetto`) si legge il numero che si applica, con accanto l'intera scala e il perché.
+
+/** Il blocco Artefatto di una voce del catalogo, per rif: sta in artefatti.json → artefatti_catalogo. */
+export function bloccoArtefatto(rif, dati) {
+  const voci = dati?.equipaggiamento?.file?.artefatti?.artefatti_catalogo ?? [];
+  return lista(voci).find((x) => x?.rif === rif) ?? null;
+}
+
+/**
+ * La SnT che si applica, fra le quattro della scala.
+ * @param rif la voce del catalogo («armi:cyberarma» e le sue varianti)
+ * @param chi { classe, costruttore } — `costruttore` vero solo per il Custode che l'ha costruita e la usa come propria
+ * @returns {{ snt, chi, perche, base, scala }} oppure null se la voce non ha un blocco Artefatto
+ */
+export function sntCyberArma(rif, dati, { classe = null, costruttore = false } = {}) {
+  const a = bloccoArtefatto(rif, dati);
+  if (!a) return null;
+  const perClasse = isOggetto(a.sintonizzazione_per_classe) ? a.sintonizzazione_per_classe : {};
+  const c = isOggetto(a.sintonizzazione_costruttore) ? a.sintonizzazione_costruttore : null;
+  const scala = [
+    { chi: 'base', snt: a.sintonizzazione, nota: 'chiunque altro, secondo la potenza Rara' },
+    ...Object.entries(perClasse).map(([k, n]) => ({ chi: k, snt: n, nota: `impiego del ${k}` })),
+    ...(c ? [{ chi: `${c.classe} costruttore`, snt: c.snt, nota: c.condizione }] : []),
+  ].sort((x, y) => x.snt - y.snt);
+  if (c && costruttore && classe === c.classe) return { snt: c.snt, chi: `${c.classe} costruttore`, perche: c.condizione, base: a.sintonizzazione, scala };
+  if (classe && Number.isInteger(perClasse[classe])) return { snt: perClasse[classe], chi: classe, perche: `impiego del ${classe}`, base: a.sintonizzazione, scala };
+  return { snt: a.sintonizzazione, chi: 'base', perche: `SnT base della potenza ${a.potenza}`, base: a.sintonizzazione, scala };
+}
+
+/**
+ * La SnT del progetto: quella dell'impiego per cui si sta lavorando l'arma. Il progetto dice la Classe
+ * (`modello.classe`); «costruttore» no, perché un progetto di Paradise non costruisce un originale — lo figura
+ * nella scala, con la sua condizione, così si vede che esiste e perché qui non si applica.
+ */
+export function sntProgetto(modello, dati, { costruttore = false } = {}) {
+  const rif = modello?.rif ?? modello?.esemplare_di_partenza?.rif ?? null;
+  if (!rif) return null;
+  const s = sntCyberArma(rif, dati, { classe: modello?.classe ?? null, costruttore });
+  if (!s) return null;
+  const altre = s.scala.filter((x) => x.chi !== s.chi).map((x) => `${x.chi} ${x.snt}`).join(', ');
+  return { ...s, testo: `SnT ${s.snt} — ${s.perche}${altre ? ` (nella scala: ${altre})` : ''}` };
+}

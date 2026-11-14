@@ -519,7 +519,10 @@ function bottoneCompra(ctx, scelto, nuovaVoce, etichetta = 'Compra') {
   // A.256: senza prezzo di catalogo vale quello di vendita calcolato (costruzione × 3 × rarità, ai 50 cr)
   const pz = scelto.artefatto || scelto.unico || Number.isFinite(scelto.creazione_cr) ? prezzoArtefatto(scelto, ctx.dati, { numero: (n) => n.toLocaleString('it-IT') }) : null;
   const costo = Number.isFinite(scelto.costo) ? scelto.costo : Number.isFinite(pz?.vendita) ? pz.vendita : null;
-  const motivo = pz?.unico ? 'Esemplare unico o reliquia: senza prezzo di catalogo (A.256). Lo assegna il Direttore.'
+  // A.265: un pezzo unico può avere un valore indicativo scritto nel manuale (la CyberArma, 7.500 cr) e non essere
+  // per questo in vendita: «Ogni esemplare rimane un pezzo unico, molto difficile da collocare sul mercato comune».
+  // Il bottone resta spento e dice il valore, invece di far finta che il prezzo non esista.
+  const motivo = pz?.unico ? `Esemplare unico o reliquia: non si compra dal catalogo${costo === null ? ' e non ha un prezzo di listino' : `; il manuale ne dà un valore indicativo di ${costo.toLocaleString('it-IT')} cr`} (A.256). Lo assegna il Direttore.`
     : costo === null ? 'Prezzo di catalogo assente: aggiungi l’oggetto e scala i crediti a mano.'
     : !Number.isInteger(ctx.crediti) ? 'Crediti non tracciati: applica prima la dotazione iniziale, oppure aggiungi l’oggetto e annota la spesa a mano.'
       : null;

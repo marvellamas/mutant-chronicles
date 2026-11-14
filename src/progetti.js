@@ -20,7 +20,7 @@
 //    (src/correzioni-master.js → proteggiBlocchiMaster con formaDaTablet e vociConsegnaDaTablet).
 // L'app avvisa, non blocca, quando il Direttore procede (forma non scelta, progetto non riuscito, budget superato).
 
-import { famigliaAlimentazione, opzioniAlimentazione, perditeAlimentazione, alimentazioneSceglibile } from './cyberarma.js';
+import { famigliaAlimentazione, opzioniAlimentazione, perditeAlimentazione, alimentazioneSceglibile, sntProgetto } from './cyberarma.js';
 
 const isOggetto = (v) => v !== null && typeof v === 'object' && !Array.isArray(v);
 const testo = (v) => (typeof v === 'string' ? v.trim() : '');
@@ -182,7 +182,10 @@ export function riepilogoProgetto(p, dati) {
   // A.251: le alimentazioni proponibili e quella scelta, con che cosa si perde
   const alimentazioni = opzioniAlimentazione(m, dati, { master: true });
   const alimentazione = alimentazioni.find((o) => o.id === p.alimentazione?.id) ?? null;
-  return { modello: m, forme: formeDi(m), forma: formeDi(m).find((f) => f.id === p.forma?.id) ?? null, alimentazioni, alimentazione, giorni, ore, cr, tuttiRiusciti, avvisi };
+  // A.265: quale delle quattro SnT si applica a questo progetto, con l’intera scala accanto. La differenza fra 3 e 0
+  // è un terzo della capacità di Sintonizzazione al III Grado: non è una cosa da far indovinare al tavolo.
+  const snt = sntProgetto(m, dati);
+  return { modello: m, forme: formeDi(m), forma: formeDi(m).find((f) => f.id === p.forma?.id) ?? null, alimentazioni, alimentazione, snt, giorni, ore, cr, tuttiRiusciti, avvisi };
 }
 
 /**

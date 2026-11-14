@@ -960,7 +960,7 @@
         "Cyber-Arma"
       ],
       "paragrafo": "§§7.25–7.25.4",
-      "versione_manuale": "Armamenti 0.74 (02/11/2026) / A.231, A.235",
+      "versione_manuale": "Armamenti 0.83 (§§7.25–7.25.4) / A.231, A.235, A.251, A.265",
       "abilita": "Armi da mischia",
       "specializzazione": "specializzazione-spade",
       "manovre": [
@@ -981,8 +981,8 @@
       "qualita": "Non comune",
       "ps_int": 12,
       "reperibilita": "EP",
-      "costo": null,
-      "_nota_costo": "Armamenti 0.74 §7.25: non è fissato un prezzo unico per gli originali; il valore dipende da fattura, unicità, proprietà e provenienza. Nell’app il prezzo risulta non disponibile, non zero.",
+      "costo": 7500,
+      "_nota_costo": "Armamenti 0.83 §7.25: «Con un costo di costruzione base di 1.250 cr, il valore indicativo dell’originale è 7.500 cr: costo × 3 × coefficiente 2 della rarità Rara». La cifra è scritta nel manuale e si prende così (A.261); la formula del §24.3 la ritrova. Resta un valore indicativo di un pezzo unico: «molto difficile da collocare sul mercato comune», e compratore, disponibilità e prezzo effettivo li stabilisce il Direttore.",
       "proprieta": [],
       "manifestazioni": {
         "fonte": "Armamenti 0.74 §7.25 (ritoccato il 02/11/2026); A.231 e A.235 (Davide, 02/11/2026); A.166 del 16/10/2026 per le forme",
@@ -1096,7 +1096,7 @@
       "peso": 0.5,
       "_nota_peso": "A.235 (Davide, 02/11/2026): peso e Integrità si registrano per esemplare. 0,5 kg, Qualità Non Comune, PS Integrità 12 e 4 PI sono i valori del supporto originale recuperato da Park (fissati con la A.158) e restano quelli di questa voce; non diventano obbligatori per ogni CyberArma originale. Le modifiche fisiche si annotano sul singolo esemplare (`esemplare.fisico`); la manifestazione energetica non aggiunge peso.",
       "uso_per_classe": {
-        "fonte": "Armamenti 0.74 §7.25 (impieghi) e A.158 (Custode)",
+        "fonte": "Armamenti 0.83 §7.25 (A.265): SnT base 3, Tecnomante 2, Custode 1, Custode costruttore e proprietario 0",
         "predefinito": "altre",
         "classi": [
           {
@@ -1107,6 +1107,16 @@
             "va": 0,
             "sintonizzazione": 1,
             "testo": "Custode (SnT 1): evoca l’Arma Astrale per 1 PM e 15 Round, includendo l’evocazione nell’Azione del primo attacco, +1 al danno (Maestro d’Arma). Danno base e altri benefici seguono il Grado e i Talenti del Custode (Giocatore §3.9.2)."
+          },
+          {
+            "classe": "Custode costruttore",
+            "pm": 1,
+            "round": 15,
+            "danno_extra": 1,
+            "va": 0,
+            "sintonizzazione": 0,
+            "condizione": "il Custode che ha costruito quell’esemplare e lo usa come propria arma personale",
+            "testo": "Custode costruttore (SnT 0): il Custode che l’ha costruita e la usa come propria arma personale non paga capacità di Sintonizzazione. Per il resto l’impiego è quello del Custode (A.265)."
           },
           {
             "classe": "Tecnomante",
@@ -1183,13 +1193,9 @@
         "testo": "SIN 1: +1 VA alle Prove per colpire con la CyberArma, comprese le Manovre che richiedono quel tiro, soltanto al Tecnomante con interfaccia neurale compatibile, funzionante e collegata. Non aggiunge bonus a Parate, danni o altre Prove; un solo SIN per Prova (§7.15.1)."
       },
       "modifiche": {
-        "fonte": "Armamenti 0.74 §7.25 e §7.25.2: prezzi indicativi su un originale esistente; si aggiungono al valore dell’arma originale",
+        "fonte": "Armamenti 0.83 §7.25 e §7.25.2: prezzi indicativi su un originale esistente; si aggiungono al valore dell’arma originale",
         "predisposizione_batteria": {
           "cr": 1000
-        },
-        "batteria_verde_10_pm": {
-          "cr": 2000,
-          "nota": "con la predisposizione 3.000 cr"
         },
         "conversione_nec": {
           "cr": 2000,
@@ -1213,7 +1219,19 @@
           },
           "nota": "nuova forma sullo stesso modulatore; il nuovo profilo sostituisce il precedente"
         },
-        "totali": "PM personali: SnT 2; con modulatore 1.500 cr, SnT 2. Batteria interna Verde: 3.000 cr, SnT 2; con modulatore 4.500 cr. Conversione a NeC Rosso: 2.000 cr, NeC escluso, SnT 3; con modulatore 3.500 cr."
+        "totali": "Armamenti 0.83 §7.25, sommando il valore indicativo dell’originale (7.500 cr): CyberArma con 10 CM 12.500 cr; con NeC Rosso 10 9.900 cr; con 10 CM e SIN 1 14.000 cr; con NeC Rosso 10 e SIN 1 11.400 cr. «Le tariffe degli interventi sono già prezzi indicativi completi e non ricevono nuovamente il moltiplicatore di rarità.»",
+        "riserva_cm_5": {
+          "cr": 2000,
+          "nota": "capacità ordinaria; con la predisposizione 3.000 cr"
+        },
+        "riserva_cm_10": {
+          "cr": 4000,
+          "nota": "richiede un progetto specifico; con la predisposizione 5.000 cr"
+        },
+        "nec_rosso_10_carico": {
+          "cr": 400,
+          "nota": "il NeC non è compreso nella conversione"
+        }
       },
       "progetti": [
         {
@@ -1362,7 +1380,7 @@
         }
       ],
       "alimentazione_modifiche": {
-        "fonte": "A.251 (Davide, 06/11/2026); Armamenti 0.74 §§7.25–7.25.4",
+        "fonte": "A.251 (Davide, 06/11/2026); A.265 (14/11/2026); Armamenti 0.83 §§7.25–7.25.4",
         "_nota": "A.251: due famiglie di modifiche che non si comportano allo stesso modo. Cristallo sostituito e SIN inserita non toccano l’alimentazione: l’arma continua a potersi alimentare con i PM personali e le due cose possono coesistere con quell’alimentazione. Riserva interna di CM e conversione a NeC sono conversioni energetiche alternative: impediscono l’uso dei PM personali, fanno perdere le proprietà da Custode e non si cumulano fra loro. La scelta non si torna indietro facilmente: va detta in chiaro prima di confermare, perché chi la fa da un tablet non ha il manuale davanti.",
         "pm_personali_predefiniti": true,
         "perdite": [
@@ -1425,7 +1443,8 @@
         "TODO(Davide)": "A.260: la A.251 misura il consumo delle due conversioni «ogni 10 colpi», la A.236 del 02/11 diceva «1 CM per 10 Round». L’app applica la A.251, che è la più recente: 10 colpi. Da confermare."
       },
       "unico": true,
-      "_nota_unico": "Armamenti 0.74 §7.25: «Ogni originale è un pezzo unico». Rarità «Unico o reliquia» della A.256: senza prezzo di catalogo. Il valore dipende da fattura, unicità, proprietà e provenienza, e lo decide il Direttore."
+      "_nota_unico": "Armamenti 0.83 §7.25: «Ogni originale è un pezzo unico». Dalla A.265 il manuale gli dà comunque un valore indicativo (7.500 cr): l’app lo mostra come prezzo letto dal catalogo e dice che è indicativo, non che è un listino. La formula della A.256 non si applica da sé a un pezzo unico.",
+      "creazione_cr": 1250
     },
     {
       "tipo": "arma_ravvicinata",
@@ -1436,7 +1455,7 @@
         "Cyber-Arma"
       ],
       "paragrafo": "§7.25 («Batteria interna opzionale»), §7.25.2",
-      "versione_manuale": "Armamenti 0.74 (02/11/2026) / A.231, A.235",
+      "versione_manuale": "Armamenti 0.83 (§§7.25–7.25.4) / A.231, A.235, A.251, A.265",
       "abilita": "Armi da mischia",
       "specializzazione": "specializzazione-spade",
       "manovre": [
@@ -1458,7 +1477,7 @@
       "ps_int": 12,
       "reperibilita": "EP",
       "costo": null,
-      "_nota_costo": "Armamenti 0.74 §7.25: non è fissato un prezzo unico per gli originali; il valore dipende da fattura, unicità, proprietà e provenienza. Nell’app il prezzo risulta non disponibile, non zero.",
+      "_nota_costo": "Armamenti 0.83 §7.25: il prezzo di una configurazione modificata è il valore indicativo dell’originale (7.500 cr) più le tariffe degli interventi, che il manuale elenca nella voce «cyberarma» → modifiche e somma per i quattro casi dichiarati. Non c’è un prezzo di catalogo di questa variante: nell’app il prezzo risulta non disponibile, non zero.",
       "proprieta": [],
       "manifestazioni": {
         "fonte": "Armamenti 0.74 §7.25 (ritoccato il 02/11/2026); A.231 e A.235 (Davide, 02/11/2026); A.166 del 16/10/2026 per le forme",
@@ -1572,7 +1591,7 @@
       "peso": 0.7,
       "_nota_peso": "A.158, punto 3: peso complessivo della configurazione modificata.",
       "uso_per_classe": {
-        "fonte": "Armamenti 0.74 §7.25",
+        "fonte": "Armamenti 0.83 §7.25 (A.265): SnT base 3, Tecnomante 2, Custode 1, Custode costruttore e proprietario 0",
         "predefinito": "altre",
         "classi": [
           {
@@ -1588,13 +1607,24 @@
             "cm": null
           },
           {
+            "classe": "Custode costruttore",
+            "pm": null,
+            "round": null,
+            "danno_extra": 0,
+            "va": 0,
+            "sintonizzazione": 0,
+            "condizione": "il Custode che ha costruito quell’esemplare e lo usa come propria arma personale",
+            "testo": "Custode costruttore (SnT 0): la SnT resta quella della scala, ma su un esemplare convertito si perdono le proprietà da Custode e l’alimentazione con i PM personali (A.251): l’impiego del Custode non è disponibile.",
+            "ammesso": false
+          },
+          {
             "classe": "Tecnomante",
             "pm": 2,
             "round": 10,
             "danno_extra": 0,
             "va": 0,
             "sintonizzazione": 2,
-            "testo": "Tecnomante (SnT 2): 1 AzP e 1 CM della riserva interna, oppure 2 PM personali; lama stabile, 1 CM ogni 10 colpi, senza Concentrazione; 1d8 Magico più i modificatori pertinenti (revisione «Cariche Mistiche», A.236). (A.251: 1 CM + 1 AzP ogni 10 colpi; si perdono i PM personali e le proprietà da Custode) (A.251: 1 CM + 1 AzP ogni 10 colpi; si perdono i PM personali e le proprietà da Custode)",
+            "testo": "Tecnomante (SnT 2): 1 AzP e 1 CM della riserva interna, oppure 2 PM personali; lama stabile, 1 CM ogni 10 colpi, senza Concentrazione; 1d8 Magico più i modificatori pertinenti (revisione «Cariche Mistiche», A.236). (A.251: 1 CM + 1 AzP ogni 10 colpi; si perdono i PM personali e le proprietà da Custode)",
             "cm": 1,
             "ogni_colpi": 10
           },
@@ -1617,7 +1647,7 @@
         "fonte": "Armamenti 0.74 §7.25.2",
         "testo": "SIN 1: +1 VA alle Prove per colpire con la CyberArma, comprese le Manovre che richiedono quel tiro, soltanto al Tecnomante con interfaccia neurale compatibile, funzionante e collegata. Non aggiunge bonus a Parate, danni o altre Prove; un solo SIN per Prova (§7.15.1)."
       },
-      "_nota_batteria": "Revisione «Cariche Mistiche» (02/11/2026) e A.236: riserva interna Verde da 5 CM, dedicata esclusivamente alla CyberArma: non paga Incantesimi, altre capacità, altri oggetti e non si converte in PM personali. Per il Tecnomante 1 CM e 1 AzP manifestano l’arma per 10 Round (cinque attivazioni); resta il profilo da 2 PM personali. L’installazione va fatta e confermata: il progetto iniziale dei tre giorni di Dimitri non la comprende. Ricarica a 3:1: 30 PM da vuota. Prezzo indicativo: predisposizione 1.000 cr + batteria 2.000 cr.",
+      "_nota_batteria": "Armamenti 0.83 §7.25 e revisione «Cariche Mistiche» (A.236): riserva interna Verde dedicata esclusivamente alla CyberArma, capacità ordinaria 5 CM; «una riserva da 10 CM richiede un progetto specifico». Non paga Incantesimi, altre capacità o altri oggetti e non si converte in PM personali. Per il Tecnomante 1 CM e 1 AzP manifestano l’arma per 10 Round (cinque attivazioni con 5 CM); dopo l’installazione i PM personali e le proprietà del Custode sono perduti (A.251). Ricarica: CM mancanti × 2 × rapporto, quindi 30 PM da vuota a 3:1, 20 a 2:1, 10 a 1:1; con 10 CM i valori raddoppiano. Prezzo indicativo: predisposizione 1.000 cr + riserva 2.000 cr (5 CM) o 4.000 cr (10 CM).",
       "costo_modifica": 3000,
       "alimentazione_modifiche_rif": {
         "famiglia": "riserva_cm",
@@ -1633,7 +1663,7 @@
       "famiglia": "Spade",
       "nomi_alternativi": [],
       "paragrafo": "§7.25 («Conversione a NeC»), §7.25.2",
-      "versione_manuale": "Armamenti 0.74 (02/11/2026) / A.231, A.235",
+      "versione_manuale": "Armamenti 0.83 (§§7.25–7.25.4) / A.231, A.235, A.251, A.265",
       "abilita": "Armi da mischia",
       "specializzazione": "specializzazione-spade",
       "manovre": [
@@ -1655,7 +1685,7 @@
       "ps_int": 12,
       "reperibilita": "EP",
       "costo": null,
-      "_nota_costo": "Armamenti 0.74 §7.25: non è fissato un prezzo unico per gli originali; il valore dipende da fattura, unicità, proprietà e provenienza. Nell’app il prezzo risulta non disponibile, non zero.",
+      "_nota_costo": "Armamenti 0.83 §7.25: il prezzo di una configurazione modificata è il valore indicativo dell’originale (7.500 cr) più le tariffe degli interventi, che il manuale elenca nella voce «cyberarma» → modifiche e somma per i quattro casi dichiarati. Non c’è un prezzo di catalogo di questa variante: nell’app il prezzo risulta non disponibile, non zero.",
       "proprieta": [],
       "manifestazioni": {
         "fonte": "Armamenti 0.74 §7.25 (ritoccato il 02/11/2026); A.231 e A.235 (Davide, 02/11/2026); A.166 del 16/10/2026 per le forme",
@@ -1769,9 +1799,20 @@
       "peso": 0.5,
       "_nota_peso": "Armamenti 0.74 §7.25: peso, dimensioni e Integrità del supporto si registrano per esemplare. 0,5 kg, Qualità Non comune, PS Integrità 12 e 4 PI sono i valori della A.158 (13/10) e restano finché l’esemplare non ne ha di propri (A.235).",
       "uso_per_classe": {
-        "fonte": "Armamenti 0.74 §7.25 («Conversione a NeC»)",
+        "fonte": "Armamenti 0.83 §7.25 (A.265): SnT base 3, Tecnomante 2, Custode 1, Custode costruttore e proprietario 0",
         "predefinito": "altre",
         "classi": [
+          {
+            "classe": "Custode costruttore",
+            "pm": null,
+            "round": null,
+            "danno_extra": 0,
+            "va": 0,
+            "sintonizzazione": 0,
+            "condizione": "il Custode che ha costruito quell’esemplare e lo usa come propria arma personale",
+            "testo": "Custode costruttore (SnT 0): la SnT resta quella della scala, ma su un esemplare convertito si perdono le proprietà da Custode e l’alimentazione con i PM personali (A.251): l’impiego del Custode non è disponibile.",
+            "ammesso": false
+          },
           {
             "classe": "altre",
             "pm": null,
@@ -1781,7 +1822,7 @@
             "danno_extra": 0,
             "va": 0,
             "sintonizzazione": 3,
-            "testo": "Qualsiasi Classe (SnT 3), rispettando competenze e requisiti dell’esemplare: 1 AzP e 1 carica di un NeC Rosso compatibile, arma manifestata per 10 colpi, senza PM personali né Concentrazione. Il consumo è per attivazione, non per attacco; il circuito alimenta solo questa CyberArma. La carica si scala nella riga del NeC (Inventario). (A.251: 1 carica + 1 AzP ogni 10 colpi; si perdono i PM personali e le proprietà da Custode) (A.251: 1 carica + 1 AzP ogni 10 colpi; si perdono i PM personali e le proprietà da Custode)",
+            "testo": "Qualsiasi Classe (SnT 3), rispettando competenze e requisiti dell’esemplare: 1 AzP e 1 carica di un NeC Rosso compatibile, arma manifestata per 10 colpi, senza PM personali né Concentrazione. Il consumo è per attivazione, non per attacco; il circuito alimenta solo questa CyberArma. La carica si scala nella riga del NeC (Inventario). (A.251: 1 carica + 1 AzP ogni 10 colpi; si perdono i PM personali e le proprietà da Custode)",
             "ogni_colpi": 10
           }
         ]
@@ -1793,7 +1834,7 @@
         "fonte": "Armamenti 0.74 §7.25.2",
         "testo": "SIN 1: +1 VA alle Prove per colpire con la CyberArma, comprese le Manovre che richiedono quel tiro, soltanto al Tecnomante con interfaccia neurale compatibile, funzionante e collegata. Non aggiunge bonus a Parate, danni o altre Prove; un solo SIN per Prova (§7.15.1)."
       },
-      "_nota_nec": "A.237 (Davide, 02/11/2026): configurazione ordinaria con un NEC Rosso da 10 cariche; ogni attivazione richiede 1 AzP e una carica e mantiene la manifestazione per 10 Round: dieci cariche, dieci attivazioni. SnT 3 complessiva. Le conversioni non danno il +1 danno di Maestro d’Arma né i benefici del Custode. Prezzo indicativo della conversione: 2.000 cr, NEC escluso.",
+      "_nota_nec": "Armamenti 0.83 §7.25 e A.237: un NeC Rosso compatibile diventa l’unica fonte di alimentazione; ogni attivazione costa 1 AzP e una carica intera e mantiene la manifestazione per 10 Round, quindi un NeC Rosso 10 consente dieci attivazioni. Qualsiasi personaggio può usarla dopo la Sintonizzazione, rispettando competenze e requisiti dell’esemplare. Le conversioni non danno il +1 danno di Maestro d’Arma né i benefici del Custode (A.251). Prezzo indicativo della conversione: 2.000 cr, NeC escluso; un NeC Rosso 10 carico costa 400 cr.",
       "costo_modifica": 2000,
       "alimentazione": {
         "nec": "nec:nec-rosso-10",

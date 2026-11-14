@@ -81,7 +81,7 @@ export function validaDati(dati) {
   validaTecniche(dati.tecniche_interiori, err);
   validaSintesiTalenti(dati, err);
   validaCircostanza(dati, err);
-  validaEquipaggiamento(dati.equipaggiamento, [...nomiAbilita], [...(idSpec ?? [])], err, Object.keys(dati.regole?.chroma?.colori ?? {}).filter((c) => !dati.regole.chroma.colori[c]?.esausto && dati.regole.chroma.colori[c]?.contenitore !== false), Object.keys(dati.regole?.corruzione ?? {}));
+  validaEquipaggiamento(dati.equipaggiamento, [...nomiAbilita], [...(idSpec ?? [])], err, Object.keys(dati.regole?.chroma?.colori ?? {}).filter((c) => !dati.regole.chroma.colori[c]?.esausto && dati.regole.chroma.colori[c]?.contenitore !== false), Object.keys(dati.regole?.corruzione ?? {}), dati.regole?.prezzi_artefatti?.coefficienti ?? {});
   if (dati.regole?.chroma !== undefined) validaChroma(dati, err);
   if (dati.equipaggiamento?.file) validaNec(dati, err);
   if (dati.equipaggiamento?.file?.artefatti?.consumabili !== undefined) validaConsumabili(dati, err);
@@ -1437,7 +1437,7 @@ function validaSchedaDigitale(dati, err) {
   }
 }
 
-function validaEquipaggiamento(eq, nomiAbilita, idSpec, err, coloriChroma = [], fontiCorruzione = []) {
+function validaEquipaggiamento(eq, nomiAbilita, idSpec, err, coloriChroma = [], fontiCorruzione = [], coefficientiPrezzo = {}) {
   nomiAbilitaPenalita = nomiAbilita;
   const FI = 'equipaggiamento/index';
   if (!isOggetto(eq) || !isOggetto(eq.indice)) {
@@ -1467,6 +1467,7 @@ function validaEquipaggiamento(eq, nomiAbilita, idSpec, err, coloriChroma = [], 
   const rimandiArtefatti = []; // [file, chiave, riferimento] di «artefatti_catalogo» (§7.5.1)
   const artefattiDaControllare = []; // [file, chiave, dati] di Artefatto: potenza e costo (§7.10)
   let potenzeArtefatti = null;
+  let gradiArtefatti = null; // §10.1: Grado → potenza (lotto 195)
   let sntSoloPassive = null; // §7.10: SnT degli Artefatti con sole proprietà passive
   const rimandiArmi = []; // [file, chiave, riferimento] di «sin_armi» (§7.15.1): devono essere armi
   // [file, chiave, riferimento, tipi ammessi] di «compatibile_con»: armature per gli accessori
@@ -1496,6 +1497,20 @@ function validaEquipaggiamento(eq, nomiAbilita, idSpec, err, coloriChroma = [], 
       if (!isOggetto(s?.talento) || !isTesto(s.talento.nome) || !isIntero(s.talento.bonus)) err(F, 'sintonizzazione.talento', 'serve { nome, bonus }');
       if (!isOggetto(s?.potenze) || Object.values(s.potenze).some((x) => !isIntero(x) || x < 1)) err(F, 'sintonizzazione.potenze', 'serve { potenza: costo intero ≥ 1 }');
       else potenzeArtefatti = s.potenze;
+      // Lotto 195: il primo anello della catena, Grado → potenza (§10.1). Sei Gradi, e ogni potenza che nominano
+      // deve stare nella tabella delle SnT: altrimenti un Artefatto di Grado V resterebbe senza coefficiente e
+      // senza Snta, com'era l'«Epica» prima della A.261.
+      if (s?.gradi !== undefined) {
+        const ROMANI = ['I', 'II', 'III', 'IV', 'V', 'VI'];
+        if (!isOggetto(s.gradi) || ROMANI.some((r) => !isTesto(s.gradi[r])) || Object.keys(s.gradi).length !== 6) err(F, 'sintonizzazione.gradi', 'serve { I…VI: potenza } (Equipaggiamento §10.1)');
+        else {
+          gradiArtefatti = s.gradi;
+          for (const [g, p] of Object.entries(s.gradi)) {
+            if (isOggetto(s.potenze) && s.potenze[p] === undefined) err(F, `sintonizzazione.gradi.${g}`, `la potenza "${p}" non è nella tabella delle SnT (§7.10)`);
+            if (coefficientiPrezzo[p] === undefined) err(F, `sintonizzazione.gradi.${g}`, `la potenza "${p}" non ha un coefficiente di prezzo in regole.json → prezzi_artefatti (A.261: l’«Epica» mancava)`);
+          }
+        }
+      }
       // Armamenti §7.10 (01/10 sera): «Un Artefatto con sole proprietà passive ha SnT 0, qualunque sia la sua potenza.»
       if (!isOggetto(s?.solo_passive) || !isIntero(s.solo_passive.snt) || s.solo_passive.snt < 0 || !Array.isArray(s.solo_passive.frasi)) err(F, 'sintonizzazione.solo_passive', 'serve { snt: intero ≥ 0, frasi: [...] , fonte }');
       else sntSoloPassive = s.solo_passive.snt;
@@ -1920,11 +1935,22 @@ function validaEquipaggiamento(eq, nomiAbilita, idSpec, err, coloriChroma = [], 
     // CyberArma (Armamenti 0.74 §7.25): «Le SnT 1, 2 e 3 sono regole specifiche dei diversi impieghi e non determinano
     // automaticamente danno o Grado»: la SnT viene dall'impiego (snt_per_impiego), non dalla potenza
     if (a.sintonizzazione_per_classe !== undefined && !(isOggetto(a.sintonizzazione_per_classe) && Object.values(a.sintonizzazione_per_classe).every((n) => isIntero(n) && n >= 1))) err(F, `${k}.sintonizzazione_per_classe`, 'serve { Classe: SnT intera ≥ 1 }');
+    // A.265 (14/11/2026): la SnT effettiva del Custode che ha costruito la propria CyberArma è 0, e vale solo a
+    // quella condizione. Non sta fra le Classi, che non hanno condizioni: sta a parte, con la condizione scritta.
+    if (a.sintonizzazione_costruttore !== undefined && !(isOggetto(a.sintonizzazione_costruttore) && isIntero(a.sintonizzazione_costruttore.snt) && a.sintonizzazione_costruttore.snt >= 0 && isTesto(a.sintonizzazione_costruttore.classe) && isTesto(a.sintonizzazione_costruttore.condizione))) err(F, `${k}.sintonizzazione_costruttore`, 'serve { classe, snt: intera ≥ 0, condizione }');
+    // Lotto 195: il Grado dichiarato deve dare la potenza del §10.1. Senza questo controllo l'Anello con
+    // Rigenerazione 9 è rimasto «Grado III, Molto Rara» per sei giorni, cioè due anelli della catena in disaccordo.
+    if (isTesto(a.grado) && gradiArtefatti && !isOggetto(a.snt_eccezione) && gradiArtefatti[a.grado] !== a.potenza) err(F, `${k}.potenza`, `Grado ${a.grado}: la potenza è ${gradiArtefatti[a.grado] ?? 'sconosciuta'} (§10.1), trovata ${a.potenza}`);
     // A.256 e A.263 (06 e 08/11/2026): una rarità decisa da una risposta può non stare nella tabella del §7.10
     // (l'Anello con Rigenerazione 9 è «Molto rara» con la SnT 3 della configurazione approvata). L'eccezione va
     // dichiarata nei dati, con la regola e il motivo: «snt_eccezione»; altrimenti resta un errore.
     if (a.snt_eccezione !== undefined && !(isOggetto(a.snt_eccezione) && isTesto(a.snt_eccezione.regola) && isTesto(a.snt_eccezione.motivo))) err(F, `${k}.snt_eccezione`, 'serve { regola, motivo }: la risposta che la decide e perché (§7.10)');
-    if (a.snt_per_impiego !== true && !isOggetto(a.snt_eccezione) && potenzeArtefatti && potenzeArtefatti[a.potenza] !== a.sintonizzazione) err(F, `${k}.sintonizzazione`, `potenza ${a.potenza}: il costo di sintonizzazione è ${potenzeArtefatti[a.potenza] ?? 'sconosciuto'} (§7.10), trovato ${a.sintonizzazione}`);
+    // Lotto 195 (A.265): `snt_per_impiego` non esonera più la SnT **base** dalla catena. Autorizza soltanto le
+    // riduzioni per impiego (`sintonizzazione_per_classe`, `sintonizzazione_costruttore`), che restano regole a sé.
+    // Prima era una scappatoia: la CyberArma stava nei dati come «Comune» con SnT 2 — due anelli in disaccordo —
+    // e nessun controllo lo diceva, perché `snt_per_impiego: true` saltava il confronto. L'unica uscita è
+    // un'eccezione dichiarata con la regola che la decide e il motivo.
+    if (!isOggetto(a.snt_eccezione) && potenzeArtefatti && potenzeArtefatti[a.potenza] !== a.sintonizzazione) err(F, `${k}.sintonizzazione`, `potenza ${a.potenza}: il costo di sintonizzazione è ${potenzeArtefatti[a.potenza] ?? 'sconosciuto'} (§7.10), trovato ${a.sintonizzazione}${a.snt_per_impiego === true ? ' — snt_per_impiego vale per le riduzioni d’impiego, non per la SnT base (A.265)' : ''}`);
     // Magia sez. 6: contenitore di Chroma (colore di regole.json → chroma.colori, non l'esausto)
     if (a.contenitore !== undefined) {
       const c = a.contenitore;
@@ -2108,9 +2134,16 @@ function validaCura(F, k, c, err) {
 
 // Giocatore §5.21 e Equipaggiamento §7.1: Umanità, fasce e impianti; rif_sostituiti dell'indice
 /**
- * Artefatti consumabili (Magia §27): la tabella per Grado (creazione = supporto + reagenti, vendita = doppio, livelli
- * della versione del §24.2 contigui da 1 a 18) e le schede del catalogo con un «consumabile»: Grado coerente con il
- * livello, Incantesimo e versione esistenti, PM sigillati della versione, prezzo, creazione e reperibilità del Grado.
+ * Artefatti consumabili (Magia §27): la tabella per Grado (creazione = supporto + reagenti, vendita dalla formula del
+ * §24.3, livelli della versione del §24.2 contigui da 1 a 18) e le schede del catalogo con un «consumabile»: Grado
+ * coerente con il livello, Incantesimo e versione esistenti, PM sigillati della versione, prezzo, creazione e
+ * reperibilità del Grado.
+ *
+ * Lotto 195 (A.261): fino alla Magia 1.11 il §27.2 diceva «Vendita = Creazione × 2» e il controllo cercava quel
+ * doppio. La 1.17 usa per i Consumabili la stessa formula di tutti gli altri Artefatti — creazione × 3 ×
+ * coefficiente di potenza del Grado, ai 50 cr per eccesso — e il controllo la applica, prendendo i coefficienti da
+ * `regole.json` → `prezzi_artefatti`: un prezzo della tabella che non torna è un errore dei dati, non un prezzo da
+ * ricalcolare.
  */
 function validaConsumabili(dati, err) {
   const F = 'equipaggiamento/artefatti';
@@ -2118,7 +2151,17 @@ function validaConsumabili(dati, err) {
   if (!isOggetto(R)) { err(F, 'consumabili', 'deve essere un oggetto'); return; }
   if (R.snt !== 0) err(F, 'consumabili.snt', 'i Consumabili hanno SnT 0 (Magia §27.1)');
   if (!isOggetto(R.supporto) || !isIntero(R.supporto.costo) || !isIntero(R.supporto.ore)) err(F, 'consumabili.supporto', 'serve { nome, costo, costruzione, ore }');
-  if (!isIntero(R.pm_lavoro_per_grado) || !isIntero(R.vendita_moltiplicatore)) err(F, 'consumabili', 'servono pm_lavoro_per_grado e vendita_moltiplicatore interi');
+  if (!isIntero(R.pm_lavoro_per_grado)) err(F, 'consumabili', 'serve pm_lavoro_per_grado intero');
+  if (R.vendita_moltiplicatore !== undefined) err(F, 'consumabili.vendita_moltiplicatore', 'campo sostituito dalla formula del §24.3 (A.261): il prezzo è creazione × 3 × coefficiente di potenza del Grado');
+  // A.261: la vendita dei Consumabili segue la formula generale, con i coefficienti di regole.json
+  const PR = dati.regole?.prezzi_artefatti;
+  const potenzaDiGrado = dati.equipaggiamento?.file?.artefatti?.sintonizzazione?.gradi ?? null;
+  const vendita = (grado, creazione) => {
+    const coef = PR?.coefficienti?.[potenzaDiGrado?.[grado]];
+    if (!isIntero(creazione) || !Number.isFinite(coef) || !isIntero(PR?.moltiplicatore)) return null;
+    const passo = isIntero(PR?.arrotondamento?.ai_cr) ? PR.arrotondamento.ai_cr : 50;
+    return Math.ceil((creazione * PR.moltiplicatore * coef) / passo) * passo;
+  };
   if (!isOggetto(R.magistrale) || !Array.isArray(R.magistrale.dimezza) || R.magistrale.dimezza.some((x) => !['pm_lavoro', 'reagenti'].includes(x))) err(F, 'consumabili.magistrale.dimezza', 'elenco fra pm_lavoro e reagenti');
   const romani = ['I', 'II', 'III', 'IV', 'V', 'VI'];
   const gradi = Array.isArray(R.gradi) ? R.gradi : [];
@@ -2130,7 +2173,9 @@ function validaConsumabili(dati, err) {
     if (!Array.isArray(g?.livelli) || g.livelli.length !== 2 || g.livelli[0] !== atteso || !(g.livelli[1] >= g.livelli[0])) err(F, `${k}.livelli`, `[da, a] con da = ${atteso} (livelli della versione contigui, Magia §24.2)`);
     else atteso = g.livelli[1] + 1;
     if (isIntero(R.supporto?.costo) && g?.creazione !== R.supporto.costo + g?.reagenti) err(F, `${k}.creazione`, `deve valere supporto + reagenti = ${R.supporto.costo + g?.reagenti} (§27.2), trovato ${g?.creazione}`);
-    if (g?.vendita !== g?.creazione * R.vendita_moltiplicatore) err(F, `${k}.vendita`, `deve valere ${R.vendita_moltiplicatore} × creazione = ${g?.creazione * R.vendita_moltiplicatore} (§27.2), trovato ${g?.vendita}`);
+    const vAttesa = vendita(g?.grado, g?.creazione);
+    if (vAttesa === null) err(F, `${k}.vendita`, 'non posso controllarla: servono prezzi_artefatti (coefficienti, moltiplicatore) e sintonizzazione.gradi');
+    else if (g?.vendita !== vAttesa) err(F, `${k}.vendita`, `dalla formula del §24.3: creazione ${g?.creazione} × ${PR?.moltiplicatore} × coefficiente di ${potenzaDiGrado?.[g?.grado]} = ${vAttesa} cr (§27.2), trovato ${g?.vendita}`);
     if (!['MR', 'LE'].includes(g?.reperibilita)) err(F, `${k}.reperibilita`, 'MR o LE (§27.2)');
   });
   if (gradi.length && atteso !== 19) err(F, 'consumabili.gradi', 'i livelli devono arrivare a 18');
