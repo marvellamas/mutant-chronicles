@@ -2808,3 +2808,23 @@ Il valore del FIAT LUX non cambia (126.510 + 62.600 = 189.110 cr): nessuna delle
 aperte **A.260** (il consumo delle conversioni della CyberArma, colpi o Round) e **A.264** (di quanto cala il valore
 di un accumulatore di ricambio scarico); A.261, A.262, A.263 e A.265 hanno risposta. Resta aperta la **A.267** e
 resta la **A.246**, che è una decisione del Direttore al tavolo.
+
+## 14/11/2026 — lotto 196, l'istantanea dello stato (nessuna domanda nuova)
+
+Non una decisione di Davide: una regola nostra, scritta qui perché cambia come si leggono tutte le righe di prima.
+
+**`personaggi/` è una copia locale, non «i file veri».** Il 14/11/2026 conteneva file del 4 ottobre (Dimitri), del
+7 (Oshi), del 25 (Botha, Duncan, Michele, Pablo) e del 10 novembre (Lucas), con in mezzo due serate di gioco, i PX
+del 26 ottobre e la migrazione dei Talenti. Anche la cartella «FILE PG» su Drive è ferma al 4 ottobre. Da adesso
+ogni affermazione sui personaggi porta la data del file su cui si basa, e dove un lotto ha bisogno dello stato vero
+per decidere si dice che serve la copia fresca (CLAUDE.md, «Regole permanenti di lavoro»).
+
+**La A.268 del pacchetto del lotto 195 è stata riscritta** per questo: diceva «per sei di loro sono due livelli»
+come se fosse un fatto, mentre era una lettura di ottobre. Adesso dichiara la data della nostra copia e chiede due
+cose — a che livello sono davvero i sette, e se l'adeguamento si fa dopo le salite o ai livelli di adesso.
+
+Il meccanismo: a fine sessione Mutant scrive uno zip (personaggi, veicoli, PX e `stato-mutant.txt`) in una cartella
+che Davide sincronizza col cloud, e di lì arriva a noi; la cartella la sceglie lui dalle Impostazioni, le istantanee
+sono venti, non diventano mai la cartella dei dati e non entrano in git. `docs/diff-lotto196-2026-11-14.md`.
+
+Nessuna domanda nuova: il primo numero libero resta **A.269**.
