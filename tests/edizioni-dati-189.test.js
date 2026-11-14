@@ -19,7 +19,7 @@ import assert from 'node:assert/strict';
 import { readFileSync, existsSync } from 'node:fs';
 import { join } from 'node:path';
 import { RADICE, registro, voci, CARTELLA_TESTI } from '../tools/manuali.mjs';
-import { quadroEdizioni, edizioniArretrate, manualiCitati, fileDati, eccezioni, NOMI } from '../tools/edizioni-dati.mjs';
+import { quadroEdizioni, edizioniArretrate, manualiCitati, fileDati, eccezioni, corporaFuoriPosto, NOMI } from '../tools/edizioni-dati.mjs';
 
 test('ogni file di data/ dichiara l’edizione corrente del suo manuale, o un’eccezione col suo motivo', () => {
   const fuori = edizioniArretrate();
@@ -31,13 +31,19 @@ test('le eccezioni dichiarate hanno un motivo e riguardano un file e un manuale 
   const file = new Set(fileDati());
   const id = new Set(voci().map((v) => v.id));
   for (const [f, perManuale] of Object.entries(eccezioni())) {
-    assert.ok(file.has(f), `edizioni_in_attesa: «${f}» non è un file di data/`);
+    // la chiave è un file di data/, oppure un **corpus** dichiarato — un insieme di dati del repo fuori da data/,
+    // come `esempi/nemici/` (lotto 197) — che deve esistere su disco e dichiarare la sua edizione
+    const corpus = !file.has(f);
+    if (corpus) assert.ok(existsSync(join(RADICE, f)), `edizioni_in_attesa: «${f}» non è un file di data/ né un corpus che esiste su disco`);
     for (const [m, e] of Object.entries(perManuale)) {
       assert.ok(id.has(m), `edizioni_in_attesa[${f}]: «${m}» non è un manuale del registro`);
       // un'eccezione senza motivo non è un'eccezione: è un file dimenticato
       assert.ok(e?.motivo, `edizioni_in_attesa[${f}][${m}]: manca il motivo`);
+      // un corpus non ha un `versione_manuale` da leggere: l'edizione la dichiara qui, o non si sa
+      if (corpus) assert.match(e?.edizione ?? '', /^\d+(\.\d+)+$/, `edizioni_in_attesa[${f}][${m}]: un corpus dichiara la sua edizione`);
     }
   }
+  assert.deepEqual(corporaFuoriPosto(), [], 'un corpus dichiarato che non esiste su disco è un’eccezione dimenticata');
 });
 
 test('ogni file di data/ ha una versione_manuale, e si capisce quale manuale cita', () => {

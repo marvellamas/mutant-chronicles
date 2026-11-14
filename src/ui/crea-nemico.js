@@ -19,7 +19,7 @@ import {
   profiloNemico, scelteCreatura, fileUmano, SUFFISSO_UMANO, aCaso, ritiraPasso, mutazioniAmmesse,
   roundResistenza, proponiNome, proponiDescrizione, idDaNome,
 } from '../crea-nemico.js';
-import { classiPng, pxPng } from '../png-generici.js';
+import { classiPng, pxPng, acquisizioniPng } from '../png-generici.js';
 
 const PASSI = ['Base', 'Grado', 'Moduli', 'Nome e descrizione', 'Riepilogo'];
 const nuovoSeme = () => Math.floor(Math.random() * 2 ** 31) + 1;
@@ -114,7 +114,19 @@ export function apriCreaNemico(ctx, { voci = [], salvato = () => {}, destinazion
     ];
   };
 
-  // Modello PNG generico (Mostri 0.46 / Direttore §9.6): Classe, Grado ed EQ → un nemico da ritoccare e salvare.
+  // Le acquisizioni raggiunte al Grado, in una riga: i benefici fissi sono già nelle tabelle (Direttore §9.6.2),
+  // e dirlo qui serve a non risommarli a mano al tavolo.
+  const notaAcquisizioni = (s, d) => {
+    const a = acquisizioniPng(s.classe, s.grado, d);
+    const liv = d.png_generici.classi[s.classe].caratteristiche[s.grado].livello;
+    const parti = [
+      a.specializzazioni.length ? `${a.specializzazioni.length} Specializzazioni (${a.specializzazioni.join(', ')})` : null,
+      a.maestrie.length ? `${a.maestrie.length} Maestrie` : null,
+      a.talenti_liberi.length ? `${a.talenti_liberi.length} Talenti Liberi` : null,
+    ].filter(Boolean);
+    return `Al livello ${liv} ha ${parti.join(', ') || 'nessuna acquisizione'}: i benefici fissi sono già nei valori pronti, una volta sola.`;
+  };
+  // Modello PNG generico (Mostri 0.67 / Direttore 0.51 §§9.6–9.6.2): Classe, Grado ed EQ → un nemico da ritoccare e salvare.
   // Il Grado e l'EQ si scelgono qui; i passi 2 e 3 (grado del bestiario proposto e moduli) non servono.
   const modelloPng = () => {
     const D = dati.png_generici;
@@ -124,7 +136,7 @@ export function apriCreaNemico(ctx, { voci = [], salvato = () => {}, destinazion
     const imposta = (campo, valore) => cambia((x) => { x.png = { classe: x.png?.classe ?? classiPng(dati)[0].id, grado: x.png?.grado ?? 'I', eq: x.png?.eq ?? 0, [campo]: valore }; delete x.creatura; });
     const px = attuale ? pxPng(attuale.grado, attuale.eq, dati) : null;
     return h('div', { class: 'scelta-attacco scelta-gruppo modello-png', role: 'group', 'aria-label': 'Modello PNG generico' },
-      h('p', { class: 'scelta-titolo' }, 'Oppure un modello PNG generico (Direttore §9.6, Mostri 0.46)'),
+      h('p', { class: 'scelta-titolo' }, 'Oppure un modello PNG generico (Direttore 0.51 §9.6, Mostri 0.67): venticinque modelli'),
       h('div', { class: 'riga-azioni' },
         h('label', {}, 'Classe ', h('select', { 'aria-label': 'Classe del modello PNG', onchange: (e) => imposta('classe', e.target.value) },
           h('option', { value: '', selected: !attuale }, '— nessun modello —'),
@@ -132,7 +144,7 @@ export function apriCreaNemico(ctx, { voci = [], salvato = () => {}, destinazion
         h('label', {}, 'Grado ', h('select', { 'aria-label': 'Grado del modello PNG', disabled: !attuale, onchange: (e) => imposta('grado', e.target.value) }, D.gradi.map((g) => h('option', { value: g, selected: attuale?.grado === g }, g)))),
         h('label', {}, 'EQ ', h('select', { 'aria-label': 'Qualità complessiva EQ', disabled: !attuale, onchange: (e) => imposta('eq', Number(e.target.value)) }, D.eq.map((q) => h('option', { value: q.eq, selected: attuale?.eq === q.eq }, `${q.eq} · ${q.nome}`)))),
         attuale ? h('button', { type: 'button', class: 'btn primario', onclick: () => { st.passo = 3; disegna(); } }, 'Usa questo modello →') : null),
-      attuale ? h('p', { class: 'nota' }, `${D.classi[attuale.classe].descrizione} Valore pronto: ${px} PX per quattro PG. Dieci modelli su venticinque: Lavoratori, Studiosi e Taumaturghi non sono ancora nel manuale.`)
+      attuale ? h('p', { class: 'nota' }, `${D.classi[attuale.classe].descrizione} Valore pronto: ${px} PX per quattro PG. ${notaAcquisizioni(attuale, dati)}`)
         : h('p', { class: 'nota' }, 'Si sceglie una Classe, un Grado da I a VI e un solo valore di EQ: i numeri vengono dal manuale; poi si ritocca e si salva come ogni altro nemico.'));
   };
 

@@ -174,3 +174,37 @@ export function testoEdizione(id, versione) {
   if (!existsSync(p)) throw new Error(`del manuale «${id}» non c'è il testo dell'edizione ${versione}: ${nome}`);
   return readFileSync(p, 'utf8');
 }
+
+/**
+ * Le **fonti di dati** che Davide pubblica insieme a un manuale: non testo, ma numeri strutturati — oggi il JSON
+ * delle Abilità dei PNG generici (lotto 197). Stanno in `docs/manuali-txt/` con la versione nel nome, come i
+ * testi, e si leggono da qui: nessun percorso scritto a mano (regola 3 e `tests/manuali-versioni-188.test.js`).
+ *
+ * Perché stanno nel registro. Una fonte di dati appartiene a un'edizione di un manuale e lo **dimostra**: il JSON
+ * dei PNG dichiara lo sha256 del Word a cui si riferisce. Il registro conserva quell'impronta accanto alla voce,
+ * così `verificaFonte` può dire «questa fonte è dell'edizione che abbiamo recepito» anche senza rete, e un file
+ * scambiato con quello di un'altra edizione non passa in silenzio.
+ */
+export const datiVoci = () => registro().dati ?? [];
+
+export function voceDati(id) {
+  const v = datiVoci().find((x) => x.id === id);
+  if (!v) throw new Error(`la fonte di dati «${id}» non è nel registro (tools/manuali.json → dati): ${datiVoci().map((x) => x.id).join(', ')}`);
+  return v;
+}
+
+export function percorsoFonteDati(id) {
+  const v = voceDati(id);
+  const p = join(CARTELLA_TESTI, v.file);
+  if (!existsSync(p)) throw new Error(`la fonte di dati «${id}» (${v.versione}) non c'è: ${p}`);
+  return p;
+}
+
+/** La fonte di dati già interpretata (JSON). */
+export const fonteDati = (id) => JSON.parse(readFileSync(percorsoFonteDati(id), 'utf8'));
+
+/** La versione scritta nel nome di una fonte di dati: `png-abilita-0.67.json` → `0.67`. */
+export function versioneNelNomeDati(nome) {
+  const m = String(nome).match(/-(\d+(?:\.\d+)+)\.json$/);
+  return m ? m[1] : null;
+}

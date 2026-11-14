@@ -5,143 +5,491 @@
   "cartella_archivio": "1tVAzASERKxCEZPCrAf-LFHiYLqhey9Rc",
   "controllato": "2026-11-14",
   "manuali": [
-    {"id":"giocatore","nome":"Manuale del Giocatore","drive":"110LNyYLZFWRGYuym836EqKYOUvoQRYvqBzm_2bJqybc","formato":"doc","versione":"0.63","testo":"giocatore-0.63.md","modificato":"2026-11-12T20:34:16Z","confronto":"alla cieca","recepita":{"versione":"0.63","quando":"2026-11-14","lotto":195,"cosa":"Quattro righe in tutto rispetto alla 0.62: il numero di edizione e il §2.16.1, che adesso dice «Una carica CEC contiene 10 UE; mediante il trasformatore dedicato viene trasferita integralmente in un tampone da 100 cariche NEC da 0,1 UE ciascuna». È la risposta alla A.266, e descrive il modello che l’app ha dal lotto 146. Verificato col diff: nient’altro cambia, e l’ambito del lotto 192 (§§2.3, 8.3, 8.7) è identico byte per byte.","documento":"docs/diff-lotto195-2026-11-14.md"}},
-    {"id":"magia","nome":"Manuale della Magia","drive":"1F5npdIujLUEVcHVX6CvF5jOHNMG5LS7dx0tgklDpzAY","formato":"doc","versione":"1.17","testo":"magia-1.17.md","modificato":"2026-11-13T12:38:14Z","confronto":"alla cieca","recepimento_in_attesa":{"versione":"1.19","motivo":"Il 13/11 Davide ha allineato le copie Drive ai Word correnti (blocco E&L del 13/11, «Raccordo dei manufatti lunari»). La differenza con l’edizione recepita è solo l’aggiunta dei manufatti lunari dei Mutanti (§26.8 ritoccato e §28.5 nuovo) e, negli Armamenti, il sommario rinumerato: verificato col diff, nessuna riga dell’ambito del lotto 195 — prezzi del §10, Anello §25.4, CyberArma §7.25 — cambia di un carattere. I quattro manufatti nuovi (Collana di papiro, Pugnale e Spada lunare d’osso, Spada dei Tre Riflessi) sono un lotto a sé: la Spada è la prima ricetta di Grado V, Epica, SnT 5 con una riserva condivisa di 3 CM Bianche e tre poteri cromatici, e tocca «Attacca!», le durate e le Cariche Mistiche. Recepirla qui vorrebbe dire mettere in cartella un testo diverso da quello su cui sono scritte le risposte A.261, A.263 e A.265 della ricognizione del lotto 190.","documento":"docs/diff-lotto195-2026-11-14.md"}},
-    {"id":"armamenti","nome":"Manuale degli Armamenti","drive":"1eDZJHfgBIYPvzKg78tEGwiLtrI_6gzpQOIfJA9aYiYg","formato":"doc","versione":"0.83","testo":"armamenti-0.83.md","modificato":"2026-11-13T12:59:27Z","confronto":"alla cieca","recepimento_in_attesa":{"versione":"0.85","motivo":"Il 13/11 Davide ha allineato le copie Drive ai Word correnti (blocco E&L del 13/11, «Raccordo dei manufatti lunari»). La differenza con l’edizione recepita è solo l’aggiunta dei manufatti lunari dei Mutanti (§7.27 nuovo) e, negli Armamenti, il sommario rinumerato: verificato col diff, nessuna riga dell’ambito del lotto 195 — prezzi del §10, Anello §25.4, CyberArma §7.25 — cambia di un carattere. I quattro manufatti nuovi (Collana di papiro, Pugnale e Spada lunare d’osso, Spada dei Tre Riflessi) sono un lotto a sé: la Spada è la prima ricetta di Grado V, Epica, SnT 5 con una riserva condivisa di 3 CM Bianche e tre poteri cromatici, e tocca «Attacca!», le durate e le Cariche Mistiche. Recepirla qui vorrebbe dire mettere in cartella un testo diverso da quello su cui sono scritte le risposte A.261, A.263 e A.265 della ricognizione del lotto 190.","documento":"docs/diff-lotto195-2026-11-14.md"}},
-    {"id":"equipaggiamento","nome":"Manuale dell’Equipaggiamento","drive":"1bvTeJphQ6BNKazpV5twivvRbqkHrRowNBDZ_RakQiXA","formato":"doc","versione":"0.41","testo":"equipaggiamento-0.41.md","modificato":"2026-11-13T12:38:21Z","confronto":"alla cieca (in sezione 7 c’è la riga della 0.40, non della 0.41)","recepimento_in_attesa":{"versione":"0.42","motivo":"Il 13/11 Davide ha allineato le copie Drive ai Word correnti (blocco E&L del 13/11, «Raccordo dei manufatti lunari»). La differenza con l’edizione recepita è solo l’aggiunta dei manufatti lunari dei Mutanti (§10.14 nuovo) e, negli Armamenti, il sommario rinumerato: verificato col diff, nessuna riga dell’ambito del lotto 195 — prezzi del §10, Anello §25.4, CyberArma §7.25 — cambia di un carattere. I quattro manufatti nuovi (Collana di papiro, Pugnale e Spada lunare d’osso, Spada dei Tre Riflessi) sono un lotto a sé: la Spada è la prima ricetta di Grado V, Epica, SnT 5 con una riserva condivisa di 3 CM Bianche e tre poteri cromatici, e tocca «Attacca!», le durate e le Cariche Mistiche. Recepirla qui vorrebbe dire mettere in cartella un testo diverso da quello su cui sono scritte le risposte A.261, A.263 e A.265 della ricognizione del lotto 190.","documento":"docs/diff-lotto195-2026-11-14.md"}},
-    { "id": "veicoli", "nome": "Manuale dei Veicoli", "drive": "1lo_c3KLK7kntJwv195v5aD2ieuMfRuaThsDhPJCX3T4", "formato": "doc", "versione": "0.10", "testo": "veicoli-0.10.md", "modificato": "2026-11-03T11:37:10Z", "recepimento_in_attesa": { "versione": "0.18", "motivo": "Il testo su Drive è cambiato alle 14:12 del 12/11, dopo la ricognizione del lotto 190: recepirlo vorrebbe dire mettere in cartella un file diverso da quello su cui sono scritte le conclusioni del 190. La differenza è tutta nell’indice e nelle figure — nessuna regola, nessun numero (docs/diff-lotto191-2026-11-12.md). Il numero non è più da indovinare: il 12/11 Davide ha rinominato il file in «Manuale dei Veicoli v0.18» e la prima pagina dice 0.18, quindi la regola 3 è tornata rispettata.", "documento": "docs/diff-lotto191-2026-11-12.md" } },
-    { "id": "mostri", "nome": "Manuale dei Mostri", "drive": "1qScWOJpDjNSw7j5rNUlHGTKPbsUiEgvG", "formato": "docx", "versione": "0.66", "testo": "mostri-0.66.md", "modificato": "2026-11-12T12:34:26Z", "confronto": "alla cieca", "nota": "Il Google Doc 0.23 è archiviato: vale il Word (lotto 187 su Drive, lotto 188 nel repo)." },
-    { "id": "direttore", "nome": "Manuale del Direttore", "drive": "1lfwR5Z9pIqfoASAuNt1Ia01sOj8OOb-5", "formato": "docx", "versione": "0.49", "testo": "direttore-0.49.md", "modificato": "2026-11-12T00:50:50Z", "confronto": "alla cieca" },
-    { "id": "talenti", "nome": "Talenti, Specializzazioni e Maestrie", "drive": "10ztjyeX1apff5tnh3SzNiswsvXNjyX0m", "formato": "docx", "versione": "1.1", "testo": "talenti-specializzazioni-maestrie-1.1.md", "modificato": "2026-11-03T11:33:41Z", "nota": "Sui Talenti vale su quello che dice il Manuale del Giocatore (regola di precedenza del 25/10)." },
-    { "id": "revisione-nec", "nome": "Revisione NEC — registro unico", "drive": "1AJyKJ0qQOGmGh12hBUI8g2gmoFDMHgk_", "formato": "docx", "versione": "2.11", "testo": "revisione-nec-2.11.md", "modificato": "2026-10-31T10:47:53Z" },
-    { "id": "energia", "nome": "Energia — riepilogo per l’app", "drive": "1s9saJZl1DpK5o1IMUMyct75jOdwWSrnH", "formato": "docx", "versione": "1.0", "testo": "energia-riepilogo-app-1.0.md", "modificato": "2026-11-02T16:23:56Z" }
+    {
+      "id": "giocatore",
+      "nome": "Manuale del Giocatore",
+      "drive": "110LNyYLZFWRGYuym836EqKYOUvoQRYvqBzm_2bJqybc",
+      "formato": "doc",
+      "versione": "0.63",
+      "testo": "giocatore-0.63.md",
+      "modificato": "2026-11-12T20:34:16Z",
+      "confronto": "alla cieca",
+      "recepita": {
+        "versione": "0.63",
+        "quando": "2026-11-14",
+        "lotto": 195,
+        "cosa": "Quattro righe in tutto rispetto alla 0.62: il numero di edizione e il §2.16.1, che adesso dice «Una carica CEC contiene 10 UE; mediante il trasformatore dedicato viene trasferita integralmente in un tampone da 100 cariche NEC da 0,1 UE ciascuna». È la risposta alla A.266, e descrive il modello che l’app ha dal lotto 146. Verificato col diff: nient’altro cambia, e l’ambito del lotto 192 (§§2.3, 8.3, 8.7) è identico byte per byte.",
+        "documento": "docs/diff-lotto195-2026-11-14.md"
+      }
+    },
+    {
+      "id": "magia",
+      "nome": "Manuale della Magia",
+      "drive": "1F5npdIujLUEVcHVX6CvF5jOHNMG5LS7dx0tgklDpzAY",
+      "formato": "doc",
+      "versione": "1.17",
+      "testo": "magia-1.17.md",
+      "modificato": "2026-11-13T12:38:14Z",
+      "confronto": "alla cieca",
+      "recepimento_in_attesa": {
+        "versione": "1.19",
+        "motivo": "Il 13/11 Davide ha allineato le copie Drive ai Word correnti (blocco E&L del 13/11, «Raccordo dei manufatti lunari»). La differenza con l’edizione recepita è solo l’aggiunta dei manufatti lunari dei Mutanti (§26.8 ritoccato e §28.5 nuovo) e, negli Armamenti, il sommario rinumerato: verificato col diff, nessuna riga dell’ambito del lotto 195 — prezzi del §10, Anello §25.4, CyberArma §7.25 — cambia di un carattere. I quattro manufatti nuovi (Collana di papiro, Pugnale e Spada lunare d’osso, Spada dei Tre Riflessi) sono un lotto a sé: la Spada è la prima ricetta di Grado V, Epica, SnT 5 con una riserva condivisa di 3 CM Bianche e tre poteri cromatici, e tocca «Attacca!», le durate e le Cariche Mistiche. Recepirla qui vorrebbe dire mettere in cartella un testo diverso da quello su cui sono scritte le risposte A.261, A.263 e A.265 della ricognizione del lotto 190.",
+        "documento": "docs/diff-lotto195-2026-11-14.md"
+      }
+    },
+    {
+      "id": "armamenti",
+      "nome": "Manuale degli Armamenti",
+      "drive": "1eDZJHfgBIYPvzKg78tEGwiLtrI_6gzpQOIfJA9aYiYg",
+      "formato": "doc",
+      "versione": "0.83",
+      "testo": "armamenti-0.83.md",
+      "modificato": "2026-11-13T12:59:27Z",
+      "confronto": "alla cieca",
+      "recepimento_in_attesa": {
+        "versione": "0.85",
+        "motivo": "Il 13/11 Davide ha allineato le copie Drive ai Word correnti (blocco E&L del 13/11, «Raccordo dei manufatti lunari»). La differenza con l’edizione recepita è solo l’aggiunta dei manufatti lunari dei Mutanti (§7.27 nuovo) e, negli Armamenti, il sommario rinumerato: verificato col diff, nessuna riga dell’ambito del lotto 195 — prezzi del §10, Anello §25.4, CyberArma §7.25 — cambia di un carattere. I quattro manufatti nuovi (Collana di papiro, Pugnale e Spada lunare d’osso, Spada dei Tre Riflessi) sono un lotto a sé: la Spada è la prima ricetta di Grado V, Epica, SnT 5 con una riserva condivisa di 3 CM Bianche e tre poteri cromatici, e tocca «Attacca!», le durate e le Cariche Mistiche. Recepirla qui vorrebbe dire mettere in cartella un testo diverso da quello su cui sono scritte le risposte A.261, A.263 e A.265 della ricognizione del lotto 190.",
+        "documento": "docs/diff-lotto195-2026-11-14.md"
+      }
+    },
+    {
+      "id": "equipaggiamento",
+      "nome": "Manuale dell’Equipaggiamento",
+      "drive": "1bvTeJphQ6BNKazpV5twivvRbqkHrRowNBDZ_RakQiXA",
+      "formato": "doc",
+      "versione": "0.41",
+      "testo": "equipaggiamento-0.41.md",
+      "modificato": "2026-11-13T12:38:21Z",
+      "confronto": "alla cieca (in sezione 7 c’è la riga della 0.40, non della 0.41)",
+      "recepimento_in_attesa": {
+        "versione": "0.42",
+        "motivo": "Il 13/11 Davide ha allineato le copie Drive ai Word correnti (blocco E&L del 13/11, «Raccordo dei manufatti lunari»). La differenza con l’edizione recepita è solo l’aggiunta dei manufatti lunari dei Mutanti (§10.14 nuovo) e, negli Armamenti, il sommario rinumerato: verificato col diff, nessuna riga dell’ambito del lotto 195 — prezzi del §10, Anello §25.4, CyberArma §7.25 — cambia di un carattere. I quattro manufatti nuovi (Collana di papiro, Pugnale e Spada lunare d’osso, Spada dei Tre Riflessi) sono un lotto a sé: la Spada è la prima ricetta di Grado V, Epica, SnT 5 con una riserva condivisa di 3 CM Bianche e tre poteri cromatici, e tocca «Attacca!», le durate e le Cariche Mistiche. Recepirla qui vorrebbe dire mettere in cartella un testo diverso da quello su cui sono scritte le risposte A.261, A.263 e A.265 della ricognizione del lotto 190.",
+        "documento": "docs/diff-lotto195-2026-11-14.md"
+      }
+    },
+    {
+      "id": "veicoli",
+      "nome": "Manuale dei Veicoli",
+      "drive": "1lo_c3KLK7kntJwv195v5aD2ieuMfRuaThsDhPJCX3T4",
+      "formato": "doc",
+      "versione": "0.10",
+      "testo": "veicoli-0.10.md",
+      "modificato": "2026-11-03T11:37:10Z",
+      "recepimento_in_attesa": {
+        "versione": "0.18",
+        "motivo": "Il testo su Drive è cambiato alle 14:12 del 12/11, dopo la ricognizione del lotto 190: recepirlo vorrebbe dire mettere in cartella un file diverso da quello su cui sono scritte le conclusioni del 190. La differenza è tutta nell’indice e nelle figure — nessuna regola, nessun numero (docs/diff-lotto191-2026-11-12.md). Il numero non è più da indovinare: il 12/11 Davide ha rinominato il file in «Manuale dei Veicoli v0.18» e la prima pagina dice 0.18, quindi la regola 3 è tornata rispettata.",
+        "documento": "docs/diff-lotto191-2026-11-12.md"
+      }
+    },
+    {
+      "id": "mostri",
+      "nome": "Manuale dei Mostri",
+      "drive": "1qScWOJpDjNSw7j5rNUlHGTKPbsUiEgvG",
+      "formato": "docx",
+      "versione": "0.67",
+      "testo": "mostri-0.67.md",
+      "modificato": "2026-11-13T11:24:27Z",
+      "confronto": "alla cieca",
+      "nota": "Il Google Doc 0.23 è archiviato: vale il Word (lotto 187 su Drive, lotto 188 nel repo).",
+      "sha256_docx": "7e44083cf549cbbd72106de2191fb892daa860f59789d733f5bae3adebbe25a9",
+      "recepita": {
+        "versione": "0.67",
+        "quando": "2026-11-14",
+        "lotto": 197,
+        "cosa": "Consolidamento dei venticinque modelli PNG generici (blocco E&L del 13/11): ogni modello ha ora sei Specializzazioni ai livelli 1, 4, 8, 12, 16 e 20, cinque Maestrie ai livelli 2, 6, 10, 14 e 18 e nove Talenti Liberi ai livelli dispari dal 3 al 19 — 150 + 125 + 225 voci in tutto — in tre progressioni separate e cumulative, con una pagina per Classe. Ricalcolati attacchi, danni, Iniziativa, PM e azioni magiche pronte ai livelli raggiunti. Le assegnazioni e i VA personali delle 24 Abilità restano quelli della 0.66. Corrette le larghezze del Cono Elementale e i modificatori PS di Incantesimi Inarrestabili.",
+        "documento": "docs/diff-lotto197-2026-11-14.md"
+      }
+    },
+    {
+      "id": "direttore",
+      "nome": "Manuale del Direttore",
+      "drive": "1lfwR5Z9pIqfoASAuNt1Ia01sOj8OOb-5",
+      "formato": "docx",
+      "versione": "0.51",
+      "testo": "direttore-0.51.md",
+      "modificato": "2026-11-13T11:58:17Z",
+      "confronto": "alla cieca",
+      "recepita": {
+        "versione": "0.51",
+        "quando": "2026-11-14",
+        "lotto": 197,
+        "cosa": "Nuovo §9.6.2 «Acquisizioni e valori pronti»: le tre progressioni dei PNG generici, la lettura dei bonus (i VA personali delle 24 Abilità escludono Talenti, Specializzazioni, EQ, strumenti e condizioni; le tabelle pronte li comprendono già), EQ una volta sola, e i modelli generici che mantengono PV e Ferite senza il +30% dei mostri. GS e PX invariati: valore unitario = PX base del Grado × (1 + 0,50 × EQ). Il §9.9 «Mostri senza Ferite» non cambia dalla 0.49.",
+        "documento": "docs/diff-lotto197-2026-11-14.md"
+      }
+    },
+    {
+      "id": "talenti",
+      "nome": "Talenti, Specializzazioni e Maestrie",
+      "drive": "10ztjyeX1apff5tnh3SzNiswsvXNjyX0m",
+      "formato": "docx",
+      "versione": "1.1",
+      "testo": "talenti-specializzazioni-maestrie-1.1.md",
+      "modificato": "2026-11-03T11:33:41Z",
+      "nota": "Sui Talenti vale su quello che dice il Manuale del Giocatore (regola di precedenza del 25/10)."
+    },
+    {
+      "id": "revisione-nec",
+      "nome": "Revisione NEC — registro unico",
+      "drive": "1AJyKJ0qQOGmGh12hBUI8g2gmoFDMHgk_",
+      "formato": "docx",
+      "versione": "2.11",
+      "testo": "revisione-nec-2.11.md",
+      "modificato": "2026-10-31T10:47:53Z"
+    },
+    {
+      "id": "energia",
+      "nome": "Energia — riepilogo per l’app",
+      "drive": "1s9saJZl1DpK5o1IMUMyct75jOdwWSrnH",
+      "formato": "docx",
+      "versione": "1.0",
+      "testo": "energia-riepilogo-app-1.0.md",
+      "modificato": "2026-11-02T16:23:56Z"
+    }
   ],
   "schede": [
-    { "id": "asa-scout", "nome": "ASA Scout MK4 — scheda", "drive": "1DgvIVekDypu7UKHup-SHSSKCzuK_R-l75Xd9kPsRhHY", "formato": "doc", "versione": "0.6", "testo": "asa-scout-mk4-0.6.md", "modificato": "2026-10-30T17:38:33Z" },
-    { "id": "neverlost", "nome": "Neverlost — scheda tecnologica", "drive": "1MWn5jv3XB6W5h1JQyZEnnWDyeQfe_EbZ", "formato": "docx", "versione": "1.6", "testo": "neverlost-scheda-tecnologica-1.6.md", "modificato": "2026-10-29T17:23:03Z" },
-    { "id": "wachter", "nome": "Scudo Punisher Wächter", "drive": "1mDFtahzSrrkSKowJif9iagT_peIqIBRE", "formato": "docx", "versione": "1.2", "testo": "punisher-wachter-1.2.md", "modificato": "2026-10-29T17:23:13Z" },
-    { "id": "guanti-lucas", "nome": "Guanti mistici di Lucas — scheda", "drive": "1SbF2U8eRSZiA11_B9KNODeptNYDCVO4s", "formato": "docx", "versione": "1.0", "testo": "guanti-mistici-lucas-1.0.md", "modificato": "2026-11-02T16:23:49Z" },
-    { "id": "cyberarma-dimitri", "nome": "CyberArma Opzioni per Dimitri", "drive": "1pcumz4X6IDT0ITeAb7kE6tUf-RsBhs1o-bC5xAqmJC0", "formato": "doc", "versione": "1.0", "testo": "cyberarma-dimitri-1.0.md", "modificato": "2026-11-02T16:15:21Z" }
+    {
+      "id": "asa-scout",
+      "nome": "ASA Scout MK4 — scheda",
+      "drive": "1DgvIVekDypu7UKHup-SHSSKCzuK_R-l75Xd9kPsRhHY",
+      "formato": "doc",
+      "versione": "0.6",
+      "testo": "asa-scout-mk4-0.6.md",
+      "modificato": "2026-10-30T17:38:33Z"
+    },
+    {
+      "id": "neverlost",
+      "nome": "Neverlost — scheda tecnologica",
+      "drive": "1MWn5jv3XB6W5h1JQyZEnnWDyeQfe_EbZ",
+      "formato": "docx",
+      "versione": "1.6",
+      "testo": "neverlost-scheda-tecnologica-1.6.md",
+      "modificato": "2026-10-29T17:23:03Z"
+    },
+    {
+      "id": "wachter",
+      "nome": "Scudo Punisher Wächter",
+      "drive": "1mDFtahzSrrkSKowJif9iagT_peIqIBRE",
+      "formato": "docx",
+      "versione": "1.2",
+      "testo": "punisher-wachter-1.2.md",
+      "modificato": "2026-10-29T17:23:13Z"
+    },
+    {
+      "id": "guanti-lucas",
+      "nome": "Guanti mistici di Lucas — scheda",
+      "drive": "1SbF2U8eRSZiA11_B9KNODeptNYDCVO4s",
+      "formato": "docx",
+      "versione": "1.0",
+      "testo": "guanti-mistici-lucas-1.0.md",
+      "modificato": "2026-11-02T16:23:49Z"
+    },
+    {
+      "id": "cyberarma-dimitri",
+      "nome": "CyberArma Opzioni per Dimitri",
+      "drive": "1pcumz4X6IDT0ITeAb7kE6tUf-RsBhs1o-bC5xAqmJC0",
+      "formato": "doc",
+      "versione": "1.0",
+      "testo": "cyberarma-dimitri-1.0.md",
+      "modificato": "2026-11-02T16:15:21Z"
+    }
   ],
   "scambio": [
-    { "id": "per-davide", "nome": "per-davide.md (domande a Davide)", "drive": "1Jg5rqbBtcHGE1E10xYElO_qCDCwh8K87LAInovtpF6A", "formato": "doc", "testo": "../per-davide.md", "modificato": "2026-11-06T08:32:48Z", "nota": "Fonte unica delle domande; lo scrive solo Davide (e Cowork per il pacchetto). docs/protocollo-davide.md." },
-    { "id": "e-l", "nome": "E&L — Risposte e correzioni approvate", "drive": "1VaqZaAe4NK5P8A956Eahua_ZT60eh3ohnR2xSqh-tVs", "formato": "doc", "testo": "../risposte-master-2026-09-26.md", "modificato": "2026-10-15T23:21:09Z" }
+    {
+      "id": "per-davide",
+      "nome": "per-davide.md (domande a Davide)",
+      "drive": "1Jg5rqbBtcHGE1E10xYElO_qCDCwh8K87LAInovtpF6A",
+      "formato": "doc",
+      "testo": "../per-davide.md",
+      "modificato": "2026-11-06T08:32:48Z",
+      "nota": "Fonte unica delle domande; lo scrive solo Davide (e Cowork per il pacchetto). docs/protocollo-davide.md."
+    },
+    {
+      "id": "e-l",
+      "nome": "E&L — Risposte e correzioni approvate",
+      "drive": "1VaqZaAe4NK5P8A956Eahua_ZT60eh3ohnR2xSqh-tVs",
+      "formato": "doc",
+      "testo": "../risposte-master-2026-09-26.md",
+      "modificato": "2026-10-15T23:21:09Z"
+    }
   ],
   "archiviati": [
-    { "nome": "ARCHIVIO — Manuale dei Mostri 0.23 — SUPERATO", "drive": "11Uxmz9GM2vU2knngtIPk_80532ABlHC3xL8ZvAXX7rE", "versione": "0.23", "archiviato": "2026-11-10", "motivo": "Superato dal Word 0.47. È il file che il 9/11 fece descrivere il Lorath con il Getto acido invece del veleno paralizzante: aveva il numero più basso e la data più recente." }
+    {
+      "nome": "ARCHIVIO — Manuale dei Mostri 0.23 — SUPERATO",
+      "drive": "11Uxmz9GM2vU2knngtIPk_80532ABlHC3xL8ZvAXX7rE",
+      "versione": "0.23",
+      "archiviato": "2026-11-10",
+      "motivo": "Superato dal Word 0.47. È il file che il 9/11 fece descrivere il Lorath con il Getto acido invece del veleno paralizzante: aveva il numero più basso e la data più recente."
+    }
   ],
   "senza_versione": [
-    { "testo": "talenti-magici-mistici.md", "nota": "Doc di Davide del 27/09 senza numero di versione: non è un manuale del registro, lo legge il solo lotto storico dei testi dei Talenti." },
-    { "testo": "layout-app-davide.md", "nota": "Appunti di layout, non un manuale." },
-    { "testo": "modifiche-layout-app.md", "nota": "Appunti di layout, non un manuale." }
+    {
+      "testo": "talenti-magici-mistici.md",
+      "nota": "Doc di Davide del 27/09 senza numero di versione: non è un manuale del registro, lo legge il solo lotto storico dei testi dei Talenti."
+    },
+    {
+      "testo": "layout-app-davide.md",
+      "nota": "Appunti di layout, non un manuale."
+    },
+    {
+      "testo": "modifiche-layout-app.md",
+      "nota": "Appunti di layout, non un manuale."
+    }
   ],
   "_edizioni_in_attesa": "Lotto 189: i file di `data/` che restano a un'edizione precedente perché il manuale nuovo cambia una regola ancora da decidere. Si scrive { \"data/x.json\": { \"<manuale>\": { \"motivo\": \"…\", \"domanda\": \"A.n\" } } }, e `tools/edizioni-dati.mjs` non li segnala più. Un'eccezione senza motivo non è un'eccezione: è un file dimenticato. Oggi è vuoto — tutti e 40 i file dichiarano l'edizione corrente.",
   "edizioni_in_attesa": {
     "data/abilita.json": {
-      "giocatore": {"motivo":"Giocatore 0.62: riscrive il profilo delle Abilità (da 2/6/12/4 a 4/7/9/4), i punti base (122 → 127), i limiti del VA e i 25 profili di Classe, e aggiunge le regole del Morente (§§5.14.2–3). I dati non sono ancora stati rigenerati: l’etichetta si aggiorna nel lotto che li rigenera (lotto B, poi D per il Morente e G per i testi dei Talenti). Scriverla adesso direbbe che i dati vengono dalla 0.62, e non è vero.","lotto":"B","documento":"docs/ricognizione-manuali-2026-11-12-lotto190.md"}
+      "giocatore": {
+        "motivo": "Giocatore 0.62: riscrive il profilo delle Abilità (da 2/6/12/4 a 4/7/9/4), i punti base (122 → 127), i limiti del VA e i 25 profili di Classe, e aggiunge le regole del Morente (§§5.14.2–3). I dati non sono ancora stati rigenerati: l’etichetta si aggiorna nel lotto che li rigenera (lotto B, poi D per il Morente e G per i testi dei Talenti). Scriverla adesso direbbe che i dati vengono dalla 0.62, e non è vero.",
+        "lotto": "B",
+        "documento": "docs/ricognizione-manuali-2026-11-12-lotto190.md"
+      }
     },
     "data/addestramenti.json": {
-      "giocatore": {"motivo":"Giocatore 0.62: riscrive il profilo delle Abilità (da 2/6/12/4 a 4/7/9/4), i punti base (122 → 127), i limiti del VA e i 25 profili di Classe, e aggiunge le regole del Morente (§§5.14.2–3). I dati non sono ancora stati rigenerati: l’etichetta si aggiorna nel lotto che li rigenera (lotto B, poi D per il Morente e G per i testi dei Talenti). Scriverla adesso direbbe che i dati vengono dalla 0.62, e non è vero.","lotto":"B","documento":"docs/ricognizione-manuali-2026-11-12-lotto190.md"}
+      "giocatore": {
+        "motivo": "Giocatore 0.62: riscrive il profilo delle Abilità (da 2/6/12/4 a 4/7/9/4), i punti base (122 → 127), i limiti del VA e i 25 profili di Classe, e aggiunge le regole del Morente (§§5.14.2–3). I dati non sono ancora stati rigenerati: l’etichetta si aggiorna nel lotto che li rigenera (lotto B, poi D per il Morente e G per i testi dei Talenti). Scriverla adesso direbbe che i dati vengono dalla 0.62, e non è vero.",
+        "lotto": "B",
+        "documento": "docs/ricognizione-manuali-2026-11-12-lotto190.md"
+      }
     },
     "data/caratteristiche.json": {
-      "giocatore": {"motivo":"Giocatore 0.62: riscrive il profilo delle Abilità (da 2/6/12/4 a 4/7/9/4), i punti base (122 → 127), i limiti del VA e i 25 profili di Classe, e aggiunge le regole del Morente (§§5.14.2–3). I dati non sono ancora stati rigenerati: l’etichetta si aggiorna nel lotto che li rigenera (lotto B, poi D per il Morente e G per i testi dei Talenti). Scriverla adesso direbbe che i dati vengono dalla 0.62, e non è vero.","lotto":"B","documento":"docs/ricognizione-manuali-2026-11-12-lotto190.md"}
+      "giocatore": {
+        "motivo": "Giocatore 0.62: riscrive il profilo delle Abilità (da 2/6/12/4 a 4/7/9/4), i punti base (122 → 127), i limiti del VA e i 25 profili di Classe, e aggiunge le regole del Morente (§§5.14.2–3). I dati non sono ancora stati rigenerati: l’etichetta si aggiorna nel lotto che li rigenera (lotto B, poi D per il Morente e G per i testi dei Talenti). Scriverla adesso direbbe che i dati vengono dalla 0.62, e non è vero.",
+        "lotto": "B",
+        "documento": "docs/ricognizione-manuali-2026-11-12-lotto190.md"
+      }
     },
     "data/corporazioni.json": {
-      "giocatore": {"motivo":"Giocatore 0.62: riscrive il profilo delle Abilità (da 2/6/12/4 a 4/7/9/4), i punti base (122 → 127), i limiti del VA e i 25 profili di Classe, e aggiunge le regole del Morente (§§5.14.2–3). I dati non sono ancora stati rigenerati: l’etichetta si aggiorna nel lotto che li rigenera (lotto B, poi D per il Morente e G per i testi dei Talenti). Scriverla adesso direbbe che i dati vengono dalla 0.62, e non è vero.","lotto":"B","documento":"docs/ricognizione-manuali-2026-11-12-lotto190.md"}
+      "giocatore": {
+        "motivo": "Giocatore 0.62: riscrive il profilo delle Abilità (da 2/6/12/4 a 4/7/9/4), i punti base (122 → 127), i limiti del VA e i 25 profili di Classe, e aggiunge le regole del Morente (§§5.14.2–3). I dati non sono ancora stati rigenerati: l’etichetta si aggiorna nel lotto che li rigenera (lotto B, poi D per il Morente e G per i testi dei Talenti). Scriverla adesso direbbe che i dati vengono dalla 0.62, e non è vero.",
+        "lotto": "B",
+        "documento": "docs/ricognizione-manuali-2026-11-12-lotto190.md"
+      }
     },
     "data/dotazioni.json": {
-      "giocatore": {"motivo":"Lotto 195: la nota dei NEC del §2.16.1 viene dal Giocatore 0.63 (A.266, risposta). I venti testi del §2.16 restano quelli della 0.54: la 0.62 riscrive il profilo delle Abilità e la 0.63 non li tocca, ma non sono stati riletti, quindi l’etichetta del file resta 0.54.","lotto":"G","documento":"docs/diff-lotto195-2026-11-14.md"}
+      "giocatore": {
+        "motivo": "Lotto 195: la nota dei NEC del §2.16.1 viene dal Giocatore 0.63 (A.266, risposta). I venti testi del §2.16 restano quelli della 0.54: la 0.62 riscrive il profilo delle Abilità e la 0.63 non li tocca, ma non sono stati riletti, quindi l’etichetta del file resta 0.54.",
+        "lotto": "G",
+        "documento": "docs/diff-lotto195-2026-11-14.md"
+      }
     },
     "data/formato_nemici.json": {
-      "giocatore": {"motivo":"Giocatore 0.62: riscrive il profilo delle Abilità (da 2/6/12/4 a 4/7/9/4), i punti base (122 → 127), i limiti del VA e i 25 profili di Classe, e aggiunge le regole del Morente (§§5.14.2–3). I dati non sono ancora stati rigenerati: l’etichetta si aggiorna nel lotto che li rigenera (lotto B, poi D per il Morente e G per i testi dei Talenti). Scriverla adesso direbbe che i dati vengono dalla 0.62, e non è vero.","lotto":"B","documento":"docs/ricognizione-manuali-2026-11-12-lotto190.md"}
+      "giocatore": {
+        "motivo": "Giocatore 0.62: riscrive il profilo delle Abilità (da 2/6/12/4 a 4/7/9/4), i punti base (122 → 127), i limiti del VA e i 25 profili di Classe, e aggiunge le regole del Morente (§§5.14.2–3). I dati non sono ancora stati rigenerati: l’etichetta si aggiorna nel lotto che li rigenera (lotto B, poi D per il Morente e G per i testi dei Talenti). Scriverla adesso direbbe che i dati vengono dalla 0.62, e non è vero.",
+        "lotto": "B",
+        "documento": "docs/ricognizione-manuali-2026-11-12-lotto190.md"
+      }
     },
     "data/incantesimi.json": {
-      "magia": {"motivo":"Magia 1.17: cambia il Grado e la Sintonizzazione dell’Anello con Rigenerazione 9 (Grado IV, SnT 4) e i prezzi degli Artefatti, che la 1.11 dava diversi. Si applica nel lotto F; fino a lì l’etichetta resta quella dell’edizione da cui i dati vengono davvero.","lotto":"F","documento":"docs/ricognizione-manuali-2026-11-12-lotto190.md"}
+      "magia": {
+        "motivo": "Magia 1.17: cambia il Grado e la Sintonizzazione dell’Anello con Rigenerazione 9 (Grado IV, SnT 4) e i prezzi degli Artefatti, che la 1.11 dava diversi. Si applica nel lotto F; fino a lì l’etichetta resta quella dell’edizione da cui i dati vengono davvero.",
+        "lotto": "F",
+        "documento": "docs/ricognizione-manuali-2026-11-12-lotto190.md"
+      }
     },
     "data/mappa.json": {
-      "giocatore": {"motivo":"Giocatore 0.62: riscrive il profilo delle Abilità (da 2/6/12/4 a 4/7/9/4), i punti base (122 → 127), i limiti del VA e i 25 profili di Classe, e aggiunge le regole del Morente (§§5.14.2–3). I dati non sono ancora stati rigenerati: l’etichetta si aggiorna nel lotto che li rigenera (lotto B, poi D per il Morente e G per i testi dei Talenti). Scriverla adesso direbbe che i dati vengono dalla 0.62, e non è vero.","lotto":"B","documento":"docs/ricognizione-manuali-2026-11-12-lotto190.md"}
-    },
-    "data/png_generici.json": {
-      "mostri": {"motivo":"Mostri 0.66: le progressioni dei PNG e le schede senza Ferite. Il JSON delle Abilità dei PNG che Davide pubblica insieme al manuale sostituisce l’estrazione dal Word per i modelli generici: si applica nel lotto E.","lotto":"E","documento":"docs/ricognizione-manuali-2026-11-12-lotto190.md"},
-      "direttore": {"motivo":"Direttore 0.49: riscrive il §9.6 (i modelli generici Classe/Grado/EQ, da dieci a venticinque) e aggiunge il §9.8.3 sull’adeguamento del gruppo. Il §9.6 si applica nel lotto E, il §9.8.3 è il lotto C e ha bisogno di una sessione al tavolo.","lotto":"E","documento":"docs/ricognizione-manuali-2026-11-12-lotto190.md"}
+      "giocatore": {
+        "motivo": "Giocatore 0.62: riscrive il profilo delle Abilità (da 2/6/12/4 a 4/7/9/4), i punti base (122 → 127), i limiti del VA e i 25 profili di Classe, e aggiunge le regole del Morente (§§5.14.2–3). I dati non sono ancora stati rigenerati: l’etichetta si aggiorna nel lotto che li rigenera (lotto B, poi D per il Morente e G per i testi dei Talenti). Scriverla adesso direbbe che i dati vengono dalla 0.62, e non è vero.",
+        "lotto": "B",
+        "documento": "docs/ricognizione-manuali-2026-11-12-lotto190.md"
+      }
     },
     "data/regole.json": {
-      "giocatore": {"motivo":"Lotti 192 e 193: il blocco `competenze` (§§2.3, 8.3, 8.7) e il blocco `ferite.morente` (§§5.14.2–5.14.3, con la frase del §5.14 riscritta) vengono dalla 0.62. Il resto del file è ancora della 0.54: restano indietro le due frasi delle Manovre riscritte dal manuale nuovo — il Tiro Ravvicinato di `attacco_distanza` e l'Immobilizzare Migliorato di `attacco_ravvicinato` (§5.12) — che sono un ambito a sé. L'etichetta del file resta 0.54 finché non sono fatte.","lotto":"G","documento":"docs/diff-lotto193-2026-11-13.md"},
-      "magia": {"motivo":"Lotto 195: il blocco `prezzi_artefatti` (formula, coefficienti compresa l’Epica, §24.3 e §27.2) e la frase dei Cristalli Matrice (§26.3) vengono dalla 1.17. Il resto del file cita ancora la 1.11 — `chroma`, `cariche_mistiche`, `lancio` — e non è l’ambito di questo lotto: l’etichetta del file resta 1.11 finché quei blocchi non sono riletti.","lotto":"G","documento":"docs/diff-lotto195-2026-11-14.md"},
-      "equipaggiamento": {"motivo":"Lotto 195: la A.266 ha risposta (Giocatore 0.63 §2.16.1 conta le cariche come l’Equipaggiamento 0.41 e come l’app), quindi non c’è più una regola in sospeso. Resta che i blocchi dell’energia di questo file — `nec`, i trasformatori, il carico — sono stati scritti sulla 0.30 e la 0.41 li riorganizza: si rileggono nel lotto che li rigenera, non qui. Il blocco `prezzi_artefatti` cita la 0.41, da cui viene davvero.","lotto":"G","documento":"docs/diff-lotto195-2026-11-14.md"}
+      "giocatore": {
+        "motivo": "Lotti 192 e 193: il blocco `competenze` (§§2.3, 8.3, 8.7) e il blocco `ferite.morente` (§§5.14.2–5.14.3, con la frase del §5.14 riscritta) vengono dalla 0.62. Il resto del file è ancora della 0.54: restano indietro le due frasi delle Manovre riscritte dal manuale nuovo — il Tiro Ravvicinato di `attacco_distanza` e l'Immobilizzare Migliorato di `attacco_ravvicinato` (§5.12) — che sono un ambito a sé. L'etichetta del file resta 0.54 finché non sono fatte.",
+        "lotto": "G",
+        "documento": "docs/diff-lotto193-2026-11-13.md"
+      },
+      "magia": {
+        "motivo": "Lotto 195: il blocco `prezzi_artefatti` (formula, coefficienti compresa l’Epica, §24.3 e §27.2) e la frase dei Cristalli Matrice (§26.3) vengono dalla 1.17. Il resto del file cita ancora la 1.11 — `chroma`, `cariche_mistiche`, `lancio` — e non è l’ambito di questo lotto: l’etichetta del file resta 1.11 finché quei blocchi non sono riletti.",
+        "lotto": "G",
+        "documento": "docs/diff-lotto195-2026-11-14.md"
+      },
+      "equipaggiamento": {
+        "motivo": "Lotto 195: la A.266 ha risposta (Giocatore 0.63 §2.16.1 conta le cariche come l’Equipaggiamento 0.41 e come l’app), quindi non c’è più una regola in sospeso. Resta che i blocchi dell’energia di questo file — `nec`, i trasformatori, il carico — sono stati scritti sulla 0.30 e la 0.41 li riorganizza: si rileggono nel lotto che li rigenera, non qui. Il blocco `prezzi_artefatti` cita la 0.41, da cui viene davvero.",
+        "lotto": "G",
+        "documento": "docs/diff-lotto195-2026-11-14.md"
+      }
     },
     "data/specializzazioni.json": {
-      "giocatore": {"motivo":"Giocatore 0.62: riscrive il profilo delle Abilità (da 2/6/12/4 a 4/7/9/4), i punti base (122 → 127), i limiti del VA e i 25 profili di Classe, e aggiunge le regole del Morente (§§5.14.2–3). I dati non sono ancora stati rigenerati: l’etichetta si aggiorna nel lotto che li rigenera (lotto B, poi D per il Morente e G per i testi dei Talenti). Scriverla adesso direbbe che i dati vengono dalla 0.62, e non è vero.","lotto":"B","documento":"docs/ricognizione-manuali-2026-11-12-lotto190.md"}
+      "giocatore": {
+        "motivo": "Giocatore 0.62: riscrive il profilo delle Abilità (da 2/6/12/4 a 4/7/9/4), i punti base (122 → 127), i limiti del VA e i 25 profili di Classe, e aggiunge le regole del Morente (§§5.14.2–3). I dati non sono ancora stati rigenerati: l’etichetta si aggiorna nel lotto che li rigenera (lotto B, poi D per il Morente e G per i testi dei Talenti). Scriverla adesso direbbe che i dati vengono dalla 0.62, e non è vero.",
+        "lotto": "B",
+        "documento": "docs/ricognizione-manuali-2026-11-12-lotto190.md"
+      }
     },
     "data/talenti_liberi.json": {
-      "giocatore": {"motivo":"Giocatore 0.62: riscrive il profilo delle Abilità (da 2/6/12/4 a 4/7/9/4), i punti base (122 → 127), i limiti del VA e i 25 profili di Classe, e aggiunge le regole del Morente (§§5.14.2–3). I dati non sono ancora stati rigenerati: l’etichetta si aggiorna nel lotto che li rigenera (lotto B, poi D per il Morente e G per i testi dei Talenti). Scriverla adesso direbbe che i dati vengono dalla 0.62, e non è vero.","lotto":"B","documento":"docs/ricognizione-manuali-2026-11-12-lotto190.md"},
-      "magia": {"motivo":"Magia 1.17: cambia il Grado e la Sintonizzazione dell’Anello con Rigenerazione 9 (Grado IV, SnT 4) e i prezzi degli Artefatti, che la 1.11 dava diversi. Si applica nel lotto F; fino a lì l’etichetta resta quella dell’edizione da cui i dati vengono davvero.","lotto":"F","documento":"docs/ricognizione-manuali-2026-11-12-lotto190.md"}
+      "giocatore": {
+        "motivo": "Giocatore 0.62: riscrive il profilo delle Abilità (da 2/6/12/4 a 4/7/9/4), i punti base (122 → 127), i limiti del VA e i 25 profili di Classe, e aggiunge le regole del Morente (§§5.14.2–3). I dati non sono ancora stati rigenerati: l’etichetta si aggiorna nel lotto che li rigenera (lotto B, poi D per il Morente e G per i testi dei Talenti). Scriverla adesso direbbe che i dati vengono dalla 0.62, e non è vero.",
+        "lotto": "B",
+        "documento": "docs/ricognizione-manuali-2026-11-12-lotto190.md"
+      },
+      "magia": {
+        "motivo": "Magia 1.17: cambia il Grado e la Sintonizzazione dell’Anello con Rigenerazione 9 (Grado IV, SnT 4) e i prezzi degli Artefatti, che la 1.11 dava diversi. Si applica nel lotto F; fino a lì l’etichetta resta quella dell’edizione da cui i dati vengono davvero.",
+        "lotto": "F",
+        "documento": "docs/ricognizione-manuali-2026-11-12-lotto190.md"
+      }
     },
     "data/tecniche_interiori.json": {
-      "giocatore": {"motivo":"Giocatore 0.62: riscrive il profilo delle Abilità (da 2/6/12/4 a 4/7/9/4), i punti base (122 → 127), i limiti del VA e i 25 profili di Classe, e aggiunge le regole del Morente (§§5.14.2–3). I dati non sono ancora stati rigenerati: l’etichetta si aggiorna nel lotto che li rigenera (lotto B, poi D per il Morente e G per i testi dei Talenti). Scriverla adesso direbbe che i dati vengono dalla 0.62, e non è vero.","lotto":"B","documento":"docs/ricognizione-manuali-2026-11-12-lotto190.md"}
+      "giocatore": {
+        "motivo": "Giocatore 0.62: riscrive il profilo delle Abilità (da 2/6/12/4 a 4/7/9/4), i punti base (122 → 127), i limiti del VA e i 25 profili di Classe, e aggiunge le regole del Morente (§§5.14.2–3). I dati non sono ancora stati rigenerati: l’etichetta si aggiorna nel lotto che li rigenera (lotto B, poi D per il Morente e G per i testi dei Talenti). Scriverla adesso direbbe che i dati vengono dalla 0.62, e non è vero.",
+        "lotto": "B",
+        "documento": "docs/ricognizione-manuali-2026-11-12-lotto190.md"
+      }
     },
     "data/equipaggiamento/accessori_armi.json": {
-      "armamenti": {"motivo":"Armamenti 0.83: ricalcola i prezzi di catalogo con la formula della A.261 (e aggiunge il gradino di Reperibilità «Epica 4», che regole.json non ha) e rivede la CyberArma (A.265). Si applica nel lotto F; fino a lì l’etichetta resta quella dell’edizione da cui i dati vengono davvero.","lotto":"F","documento":"docs/ricognizione-manuali-2026-11-12-lotto190.md"}
+      "armamenti": {
+        "motivo": "Armamenti 0.83: ricalcola i prezzi di catalogo con la formula della A.261 (e aggiunge il gradino di Reperibilità «Epica 4», che regole.json non ha) e rivede la CyberArma (A.265). Si applica nel lotto F; fino a lì l’etichetta resta quella dell’edizione da cui i dati vengono davvero.",
+        "lotto": "F",
+        "documento": "docs/ricognizione-manuali-2026-11-12-lotto190.md"
+      }
     },
     "data/equipaggiamento/armature.json": {
-      "armamenti": {"motivo":"Armamenti 0.83: ricalcola i prezzi di catalogo con la formula della A.261 (e aggiunge il gradino di Reperibilità «Epica 4», che regole.json non ha) e rivede la CyberArma (A.265). Si applica nel lotto F; fino a lì l’etichetta resta quella dell’edizione da cui i dati vengono davvero.","lotto":"F","documento":"docs/ricognizione-manuali-2026-11-12-lotto190.md"}
+      "armamenti": {
+        "motivo": "Armamenti 0.83: ricalcola i prezzi di catalogo con la formula della A.261 (e aggiunge il gradino di Reperibilità «Epica 4», che regole.json non ha) e rivede la CyberArma (A.265). Si applica nel lotto F; fino a lì l’etichetta resta quella dell’edizione da cui i dati vengono davvero.",
+        "lotto": "F",
+        "documento": "docs/ricognizione-manuali-2026-11-12-lotto190.md"
+      }
     },
     "data/equipaggiamento/armature_corporative.json": {
-      "armamenti": {"motivo":"Armamenti 0.83: ricalcola i prezzi di catalogo con la formula della A.261 (e aggiunge il gradino di Reperibilità «Epica 4», che regole.json non ha) e rivede la CyberArma (A.265). Si applica nel lotto F; fino a lì l’etichetta resta quella dell’edizione da cui i dati vengono davvero.","lotto":"F","documento":"docs/ricognizione-manuali-2026-11-12-lotto190.md"}
+      "armamenti": {
+        "motivo": "Armamenti 0.83: ricalcola i prezzi di catalogo con la formula della A.261 (e aggiunge il gradino di Reperibilità «Epica 4», che regole.json non ha) e rivede la CyberArma (A.265). Si applica nel lotto F; fino a lì l’etichetta resta quella dell’edizione da cui i dati vengono davvero.",
+        "lotto": "F",
+        "documento": "docs/ricognizione-manuali-2026-11-12-lotto190.md"
+      }
     },
     "data/equipaggiamento/armi.json": {
-      "armamenti": {"motivo":"Lotto 195: le tre voci della CyberArma (`cyberarma`, `-batteria-verde`, `-nec`) vengono dagli Armamenti 0.83 §7.25 — potenza Rara, Grado III, SnT base 3 con le riduzioni d’impiego 2/1/0 e i prezzi scritti nel manuale (A.265, A.261). Le altre duecento voci del file sono ancora della 0.74 e non sono state confrontate riga per riga: l’etichetta del file resta 0.74 e ogni voce porta la sua.","lotto":"G","documento":"docs/diff-lotto195-2026-11-14.md"}
+      "armamenti": {
+        "motivo": "Lotto 195: le tre voci della CyberArma (`cyberarma`, `-batteria-verde`, `-nec`) vengono dagli Armamenti 0.83 §7.25 — potenza Rara, Grado III, SnT base 3 con le riduzioni d’impiego 2/1/0 e i prezzi scritti nel manuale (A.265, A.261). Le altre duecento voci del file sono ancora della 0.74 e non sono state confrontate riga per riga: l’etichetta del file resta 0.74 e ogni voce porta la sua.",
+        "lotto": "G",
+        "documento": "docs/diff-lotto195-2026-11-14.md"
+      }
     },
     "data/equipaggiamento/armi_corporative.json": {
-      "armamenti": {"motivo":"Armamenti 0.83: ricalcola i prezzi di catalogo con la formula della A.261 (e aggiunge il gradino di Reperibilità «Epica 4», che regole.json non ha) e rivede la CyberArma (A.265). Si applica nel lotto F; fino a lì l’etichetta resta quella dell’edizione da cui i dati vengono davvero.","lotto":"F","documento":"docs/ricognizione-manuali-2026-11-12-lotto190.md"}
+      "armamenti": {
+        "motivo": "Armamenti 0.83: ricalcola i prezzi di catalogo con la formula della A.261 (e aggiunge il gradino di Reperibilità «Epica 4», che regole.json non ha) e rivede la CyberArma (A.265). Si applica nel lotto F; fino a lì l’etichetta resta quella dell’edizione da cui i dati vengono davvero.",
+        "lotto": "F",
+        "documento": "docs/ricognizione-manuali-2026-11-12-lotto190.md"
+      }
     },
     "data/equipaggiamento/armi_distanza.json": {
-      "armamenti": {"motivo":"Armamenti 0.83: ricalcola i prezzi di catalogo con la formula della A.261 (e aggiunge il gradino di Reperibilità «Epica 4», che regole.json non ha) e rivede la CyberArma (A.265). Si applica nel lotto F; fino a lì l’etichetta resta quella dell’edizione da cui i dati vengono davvero.","lotto":"F","documento":"docs/ricognizione-manuali-2026-11-12-lotto190.md"}
+      "armamenti": {
+        "motivo": "Armamenti 0.83: ricalcola i prezzi di catalogo con la formula della A.261 (e aggiunge il gradino di Reperibilità «Epica 4», che regole.json non ha) e rivede la CyberArma (A.265). Si applica nel lotto F; fino a lì l’etichetta resta quella dell’edizione da cui i dati vengono davvero.",
+        "lotto": "F",
+        "documento": "docs/ricognizione-manuali-2026-11-12-lotto190.md"
+      }
     },
     "data/equipaggiamento/armi_distanza_corporative.json": {
-      "armamenti": {"motivo":"Armamenti 0.83: ricalcola i prezzi di catalogo con la formula della A.261 (e aggiunge il gradino di Reperibilità «Epica 4», che regole.json non ha) e rivede la CyberArma (A.265). Si applica nel lotto F; fino a lì l’etichetta resta quella dell’edizione da cui i dati vengono davvero.","lotto":"F","documento":"docs/ricognizione-manuali-2026-11-12-lotto190.md"}
+      "armamenti": {
+        "motivo": "Armamenti 0.83: ricalcola i prezzi di catalogo con la formula della A.261 (e aggiunge il gradino di Reperibilità «Epica 4», che regole.json non ha) e rivede la CyberArma (A.265). Si applica nel lotto F; fino a lì l’etichetta resta quella dell’edizione da cui i dati vengono davvero.",
+        "lotto": "F",
+        "documento": "docs/ricognizione-manuali-2026-11-12-lotto190.md"
+      }
     },
     "data/equipaggiamento/comunicazione.json": {
-      "equipaggiamento": {"motivo":"Equipaggiamento 0.41: la A.266 ha risposta (Giocatore 0.63 §2.16.1 conta le cariche come la 0.41 e come l’app, lotto 195), quindi qui non c’è più una regola in sospeso. Resta che questo file è stato scritto sulla 0.30 e la 0.41 riorganizza i capitoli dell’energia, del sanitario e delle dotazioni, con i prezzi ricalcolati dalla A.261: va riletto nel lotto che lo rigenera. Il lotto 195 ha riletto soltanto il capitolo 10 (artefatti.json).","lotto":"G","documento":"docs/diff-lotto195-2026-11-14.md"}
+      "equipaggiamento": {
+        "motivo": "Equipaggiamento 0.41: la A.266 ha risposta (Giocatore 0.63 §2.16.1 conta le cariche come la 0.41 e come l’app, lotto 195), quindi qui non c’è più una regola in sospeso. Resta che questo file è stato scritto sulla 0.30 e la 0.41 riorganizza i capitoli dell’energia, del sanitario e delle dotazioni, con i prezzi ricalcolati dalla A.261: va riletto nel lotto che lo rigenera. Il lotto 195 ha riletto soltanto il capitolo 10 (artefatti.json).",
+        "lotto": "G",
+        "documento": "docs/diff-lotto195-2026-11-14.md"
+      }
     },
     "data/equipaggiamento/corredi_dispositivi.json": {
-      "armamenti": {"motivo":"Armamenti 0.83: ricalcola i prezzi di catalogo con la formula della A.261 (e aggiunge il gradino di Reperibilità «Epica 4», che regole.json non ha) e rivede la CyberArma (A.265). Si applica nel lotto F; fino a lì l’etichetta resta quella dell’edizione da cui i dati vengono davvero.","lotto":"F","documento":"docs/ricognizione-manuali-2026-11-12-lotto190.md"}
+      "armamenti": {
+        "motivo": "Armamenti 0.83: ricalcola i prezzi di catalogo con la formula della A.261 (e aggiunge il gradino di Reperibilità «Epica 4», che regole.json non ha) e rivede la CyberArma (A.265). Si applica nel lotto F; fino a lì l’etichetta resta quella dell’edizione da cui i dati vengono davvero.",
+        "lotto": "F",
+        "documento": "docs/ricognizione-manuali-2026-11-12-lotto190.md"
+      }
     },
     "data/equipaggiamento/dotazioni_personali.json": {
-      "equipaggiamento": {"motivo":"Equipaggiamento 0.41: la A.266 ha risposta (Giocatore 0.63 §2.16.1 conta le cariche come la 0.41 e come l’app, lotto 195), quindi qui non c’è più una regola in sospeso. Resta che questo file è stato scritto sulla 0.30 e la 0.41 riorganizza i capitoli dell’energia, del sanitario e delle dotazioni, con i prezzi ricalcolati dalla A.261: va riletto nel lotto che lo rigenera. Il lotto 195 ha riletto soltanto il capitolo 10 (artefatti.json).","lotto":"G","documento":"docs/diff-lotto195-2026-11-14.md"}
+      "equipaggiamento": {
+        "motivo": "Equipaggiamento 0.41: la A.266 ha risposta (Giocatore 0.63 §2.16.1 conta le cariche come la 0.41 e come l’app, lotto 195), quindi qui non c’è più una regola in sospeso. Resta che questo file è stato scritto sulla 0.30 e la 0.41 riorganizza i capitoli dell’energia, del sanitario e delle dotazioni, con i prezzi ricalcolati dalla A.261: va riletto nel lotto che lo rigenera. Il lotto 195 ha riletto soltanto il capitolo 10 (artefatti.json).",
+        "lotto": "G",
+        "documento": "docs/diff-lotto195-2026-11-14.md"
+      }
     },
     "data/equipaggiamento/elmetti.json": {
-      "armamenti": {"motivo":"Armamenti 0.83: ricalcola i prezzi di catalogo con la formula della A.261 (e aggiunge il gradino di Reperibilità «Epica 4», che regole.json non ha) e rivede la CyberArma (A.265). Si applica nel lotto F; fino a lì l’etichetta resta quella dell’edizione da cui i dati vengono davvero.","lotto":"F","documento":"docs/ricognizione-manuali-2026-11-12-lotto190.md"}
+      "armamenti": {
+        "motivo": "Armamenti 0.83: ricalcola i prezzi di catalogo con la formula della A.261 (e aggiunge il gradino di Reperibilità «Epica 4», che regole.json non ha) e rivede la CyberArma (A.265). Si applica nel lotto F; fino a lì l’etichetta resta quella dell’edizione da cui i dati vengono davvero.",
+        "lotto": "F",
+        "documento": "docs/ricognizione-manuali-2026-11-12-lotto190.md"
+      }
     },
     "data/equipaggiamento/esplorazione.json": {
-      "equipaggiamento": {"motivo":"Equipaggiamento 0.41: la A.266 ha risposta (Giocatore 0.63 §2.16.1 conta le cariche come la 0.41 e come l’app, lotto 195), quindi qui non c’è più una regola in sospeso. Resta che questo file è stato scritto sulla 0.30 e la 0.41 riorganizza i capitoli dell’energia, del sanitario e delle dotazioni, con i prezzi ricalcolati dalla A.261: va riletto nel lotto che lo rigenera. Il lotto 195 ha riletto soltanto il capitolo 10 (artefatti.json).","lotto":"G","documento":"docs/diff-lotto195-2026-11-14.md"}
+      "equipaggiamento": {
+        "motivo": "Equipaggiamento 0.41: la A.266 ha risposta (Giocatore 0.63 §2.16.1 conta le cariche come la 0.41 e come l’app, lotto 195), quindi qui non c’è più una regola in sospeso. Resta che questo file è stato scritto sulla 0.30 e la 0.41 riorganizza i capitoli dell’energia, del sanitario e delle dotazioni, con i prezzi ricalcolati dalla A.261: va riletto nel lotto che lo rigenera. Il lotto 195 ha riletto soltanto il capitolo 10 (artefatti.json).",
+        "lotto": "G",
+        "documento": "docs/diff-lotto195-2026-11-14.md"
+      }
     },
     "data/equipaggiamento/impianti.json": {
-      "equipaggiamento": {"motivo":"Equipaggiamento 0.41: la A.266 ha risposta (Giocatore 0.63 §2.16.1 conta le cariche come la 0.41 e come l’app, lotto 195), quindi qui non c’è più una regola in sospeso. Resta che questo file è stato scritto sulla 0.30 e la 0.41 riorganizza i capitoli dell’energia, del sanitario e delle dotazioni, con i prezzi ricalcolati dalla A.261: va riletto nel lotto che lo rigenera. Il lotto 195 ha riletto soltanto il capitolo 10 (artefatti.json).","lotto":"G","documento":"docs/diff-lotto195-2026-11-14.md"}
+      "equipaggiamento": {
+        "motivo": "Equipaggiamento 0.41: la A.266 ha risposta (Giocatore 0.63 §2.16.1 conta le cariche come la 0.41 e come l’app, lotto 195), quindi qui non c’è più una regola in sospeso. Resta che questo file è stato scritto sulla 0.30 e la 0.41 riorganizza i capitoli dell’energia, del sanitario e delle dotazioni, con i prezzi ricalcolati dalla A.261: va riletto nel lotto che lo rigenera. Il lotto 195 ha riletto soltanto il capitolo 10 (artefatti.json).",
+        "lotto": "G",
+        "documento": "docs/diff-lotto195-2026-11-14.md"
+      }
     },
     "data/equipaggiamento/index.json": {
-      "armamenti": {"motivo":"Armamenti 0.83: ricalcola i prezzi di catalogo con la formula della A.261 (e aggiunge il gradino di Reperibilità «Epica 4», che regole.json non ha) e rivede la CyberArma (A.265). Si applica nel lotto F; fino a lì l’etichetta resta quella dell’edizione da cui i dati vengono davvero.","lotto":"F","documento":"docs/ricognizione-manuali-2026-11-12-lotto190.md"}
+      "armamenti": {
+        "motivo": "Armamenti 0.83: ricalcola i prezzi di catalogo con la formula della A.261 (e aggiunge il gradino di Reperibilità «Epica 4», che regole.json non ha) e rivede la CyberArma (A.265). Si applica nel lotto F; fino a lì l’etichetta resta quella dell’edizione da cui i dati vengono davvero.",
+        "lotto": "F",
+        "documento": "docs/ricognizione-manuali-2026-11-12-lotto190.md"
+      }
     },
     "data/equipaggiamento/munizioni.json": {
-      "armamenti": {"motivo":"Armamenti 0.83: ricalcola i prezzi di catalogo con la formula della A.261 (e aggiunge il gradino di Reperibilità «Epica 4», che regole.json non ha) e rivede la CyberArma (A.265). Si applica nel lotto F; fino a lì l’etichetta resta quella dell’edizione da cui i dati vengono davvero.","lotto":"F","documento":"docs/ricognizione-manuali-2026-11-12-lotto190.md"}
+      "armamenti": {
+        "motivo": "Armamenti 0.83: ricalcola i prezzi di catalogo con la formula della A.261 (e aggiunge il gradino di Reperibilità «Epica 4», che regole.json non ha) e rivede la CyberArma (A.265). Si applica nel lotto F; fino a lì l’etichetta resta quella dell’edizione da cui i dati vengono davvero.",
+        "lotto": "F",
+        "documento": "docs/ricognizione-manuali-2026-11-12-lotto190.md"
+      }
     },
     "data/equipaggiamento/nec.json": {
-      "equipaggiamento": {"motivo":"Equipaggiamento 0.41: la A.266 ha risposta (Giocatore 0.63 §2.16.1 conta le cariche come la 0.41 e come l’app, lotto 195), quindi qui non c’è più una regola in sospeso. Resta che questo file è stato scritto sulla 0.30 e la 0.41 riorganizza i capitoli dell’energia, del sanitario e delle dotazioni, con i prezzi ricalcolati dalla A.261: va riletto nel lotto che lo rigenera. Il lotto 195 ha riletto soltanto il capitolo 10 (artefatti.json).","lotto":"G","documento":"docs/diff-lotto195-2026-11-14.md"}
+      "equipaggiamento": {
+        "motivo": "Equipaggiamento 0.41: la A.266 ha risposta (Giocatore 0.63 §2.16.1 conta le cariche come la 0.41 e come l’app, lotto 195), quindi qui non c’è più una regola in sospeso. Resta che questo file è stato scritto sulla 0.30 e la 0.41 riorganizza i capitoli dell’energia, del sanitario e delle dotazioni, con i prezzi ricalcolati dalla A.261: va riletto nel lotto che lo rigenera. Il lotto 195 ha riletto soltanto il capitolo 10 (artefatti.json).",
+        "lotto": "G",
+        "documento": "docs/diff-lotto195-2026-11-14.md"
+      }
     },
     "data/equipaggiamento/rinforzi.json": {
-      "armamenti": {"motivo":"Armamenti 0.83: ricalcola i prezzi di catalogo con la formula della A.261 (e aggiunge il gradino di Reperibilità «Epica 4», che regole.json non ha) e rivede la CyberArma (A.265). Si applica nel lotto F; fino a lì l’etichetta resta quella dell’edizione da cui i dati vengono davvero.","lotto":"F","documento":"docs/ricognizione-manuali-2026-11-12-lotto190.md"}
+      "armamenti": {
+        "motivo": "Armamenti 0.83: ricalcola i prezzi di catalogo con la formula della A.261 (e aggiunge il gradino di Reperibilità «Epica 4», che regole.json non ha) e rivede la CyberArma (A.265). Si applica nel lotto F; fino a lì l’etichetta resta quella dell’edizione da cui i dati vengono davvero.",
+        "lotto": "F",
+        "documento": "docs/ricognizione-manuali-2026-11-12-lotto190.md"
+      }
     },
     "data/equipaggiamento/sanitario.json": {
-      "equipaggiamento": {"motivo":"Equipaggiamento 0.41: la A.266 ha risposta (Giocatore 0.63 §2.16.1 conta le cariche come la 0.41 e come l’app, lotto 195), quindi qui non c’è più una regola in sospeso. Resta che questo file è stato scritto sulla 0.30 e la 0.41 riorganizza i capitoli dell’energia, del sanitario e delle dotazioni, con i prezzi ricalcolati dalla A.261: va riletto nel lotto che lo rigenera. Il lotto 195 ha riletto soltanto il capitolo 10 (artefatti.json).","lotto":"G","documento":"docs/diff-lotto195-2026-11-14.md"}
+      "equipaggiamento": {
+        "motivo": "Equipaggiamento 0.41: la A.266 ha risposta (Giocatore 0.63 §2.16.1 conta le cariche come la 0.41 e come l’app, lotto 195), quindi qui non c’è più una regola in sospeso. Resta che questo file è stato scritto sulla 0.30 e la 0.41 riorganizza i capitoli dell’energia, del sanitario e delle dotazioni, con i prezzi ricalcolati dalla A.261: va riletto nel lotto che lo rigenera. Il lotto 195 ha riletto soltanto il capitolo 10 (artefatti.json).",
+        "lotto": "G",
+        "documento": "docs/diff-lotto195-2026-11-14.md"
+      }
     },
     "data/equipaggiamento/scudi.json": {
-      "armamenti": {"motivo":"Armamenti 0.83: ricalcola i prezzi di catalogo con la formula della A.261 (e aggiunge il gradino di Reperibilità «Epica 4», che regole.json non ha) e rivede la CyberArma (A.265). Si applica nel lotto F; fino a lì l’etichetta resta quella dell’edizione da cui i dati vengono davvero.","lotto":"F","documento":"docs/ricognizione-manuali-2026-11-12-lotto190.md"}
+      "armamenti": {
+        "motivo": "Armamenti 0.83: ricalcola i prezzi di catalogo con la formula della A.261 (e aggiunge il gradino di Reperibilità «Epica 4», che regole.json non ha) e rivede la CyberArma (A.265). Si applica nel lotto F; fino a lì l’etichetta resta quella dell’edizione da cui i dati vengono davvero.",
+        "lotto": "F",
+        "documento": "docs/ricognizione-manuali-2026-11-12-lotto190.md"
+      }
     },
     "data/equipaggiamento/strumenti_professionali.json": {
-      "equipaggiamento": {"motivo":"Equipaggiamento 0.41: la A.266 ha risposta (Giocatore 0.63 §2.16.1 conta le cariche come la 0.41 e come l’app, lotto 195), quindi qui non c’è più una regola in sospeso. Resta che questo file è stato scritto sulla 0.30 e la 0.41 riorganizza i capitoli dell’energia, del sanitario e delle dotazioni, con i prezzi ricalcolati dalla A.261: va riletto nel lotto che lo rigenera. Il lotto 195 ha riletto soltanto il capitolo 10 (artefatti.json).","lotto":"G","documento":"docs/diff-lotto195-2026-11-14.md"}
+      "equipaggiamento": {
+        "motivo": "Equipaggiamento 0.41: la A.266 ha risposta (Giocatore 0.63 §2.16.1 conta le cariche come la 0.41 e come l’app, lotto 195), quindi qui non c’è più una regola in sospeso. Resta che questo file è stato scritto sulla 0.30 e la 0.41 riorganizza i capitoli dell’energia, del sanitario e delle dotazioni, con i prezzi ricalcolati dalla A.261: va riletto nel lotto che lo rigenera. Il lotto 195 ha riletto soltanto il capitolo 10 (artefatti.json).",
+        "lotto": "G",
+        "documento": "docs/diff-lotto195-2026-11-14.md"
+      }
     },
     "data/equipaggiamento/unita_robotiche.json": {
-      "armamenti": {"motivo":"Armamenti 0.83: ricalcola i prezzi di catalogo con la formula della A.261 (e aggiunge il gradino di Reperibilità «Epica 4», che regole.json non ha) e rivede la CyberArma (A.265). Si applica nel lotto F; fino a lì l’etichetta resta quella dell’edizione da cui i dati vengono davvero.","lotto":"F","documento":"docs/ricognizione-manuali-2026-11-12-lotto190.md"}
+      "armamenti": {
+        "motivo": "Armamenti 0.83: ricalcola i prezzi di catalogo con la formula della A.261 (e aggiunge il gradino di Reperibilità «Epica 4», che regole.json non ha) e rivede la CyberArma (A.265). Si applica nel lotto F; fino a lì l’etichetta resta quella dell’edizione da cui i dati vengono davvero.",
+        "lotto": "F",
+        "documento": "docs/ricognizione-manuali-2026-11-12-lotto190.md"
+      }
+    },
+    "esempi/nemici/": {
+      "mostri": {
+        "edizione": "0.47",
+        "motivo": "Le 341 schede delle creature (esempi/nemici/, esempi/nemici/umani/ e il loro importatore) vengono dal Manuale dei Mostri 0.46/0.47 e non sono ancora rigenerate sulla 0.67. La 0.67 non cambia le creature rispetto alla 0.66, ma la 0.66 porta il +30% dei PV già incorporato (blocco E&L del 12/11, Direttore §9.9): rigenerarle è un lotto a sé, perché prima va messo al tavolo il sistema senza Ferite e va impedito il doppio aumento. Finché non succede, chi confronta una scheda con «il manuale» legge la 0.47, che è l’edizione da cui quelle schede vengono.",
+        "lotto": "creature 0.67",
+        "documento": "docs/diff-lotto197-2026-11-14.md"
+      }
     }
   },
   "_edizioni_citate": "Le edizioni superate che restano in `docs/manuali-txt/` perché un dato o uno strumento le cita ancora, con chi le cita. Quando nessuno le cita più si archiviano in `docs/manuali-txt/archivio/`: l'elenco serve a saperlo senza cercarlo a mano. Lotto 191: le sei edizioni recepite fino al lotto 189 restano in cartella perché sono quelle da cui i dati vengono davvero, ed è il confronto che `edizioni_in_attesa` dichiara.",
@@ -151,23 +499,103 @@
     "magia-1.11.md": "l'edizione da cui vengono i dati di `regole.json`, `incantesimi.json` e `talenti_liberi.json` (`edizioni_in_attesa`, lotto F)",
     "armamenti-0.74.md": "l'edizione da cui vengono i dati di 14 file del catalogo (`edizioni_in_attesa`, lotto F)",
     "equipaggiamento-0.30.md": "l'edizione da cui vengono i dati di `regole.json` e di 9 file del catalogo (`edizioni_in_attesa`, lotto F)",
-    "mostri-0.47.md": "l'edizione da cui viene `png_generici.json` (`edizioni_in_attesa`, lotto E)",
-    "direttore-0.46.md": "l'edizione da cui viene `png_generici.json` (`edizioni_in_attesa`, lotto E)"
+    "mostri-0.47.md": "l’edizione da cui vengono le 341 schede delle creature (esempi/nemici/, edizioni_in_attesa → esempi/nemici/)"
   },
   "_testi_archiviati": "Lotto 191: le edizioni superate che nessun dato e nessuno strumento cita più, spostate in `docs/manuali-txt/archivio/` e non cancellate. Un archiviato non è un doppione (regola 5 del protocollo, applicata qui alla cartella del repo come su Drive).",
   "testi_archiviati": [
-    { "testo": "archivio/magia-1.7.md", "archiviato": "2026-11-12", "motivo": "Nessun dato la cita più dal lotto 189." },
-    { "testo": "archivio/armamenti-0.68.md", "archiviato": "2026-11-12", "motivo": "Nessun dato la cita più dal lotto 189." },
-    { "testo": "archivio/armamenti-0.70.md", "archiviato": "2026-11-12", "motivo": "Nessun dato la cita più dal lotto 189." },
-    { "testo": "archivio/equipaggiamento-0.22.md", "archiviato": "2026-11-12", "motivo": "Nessun dato la cita più dal lotto 189." },
-    { "testo": "archivio/equipaggiamento-0.24.md", "archiviato": "2026-11-12", "motivo": "Nessun dato la cita più dal lotto 189." },
-    { "testo": "archivio/equipaggiamento-0.25.md", "archiviato": "2026-11-12", "motivo": "Nessun dato la cita più dal lotto 189." },
-    { "testo": "archivio/revisione-nec-2.7.md", "archiviato": "2026-11-12", "motivo": "Nessun dato la cita più dal lotto 189." },
-    { "testo": "archivio/revisione-nec-2.9.md", "archiviato": "2026-11-12", "motivo": "Nessun dato la cita più dal lotto 189." },
-    { "testo": "archivio/revisione-nec-2.10.md", "archiviato": "2026-11-12", "motivo": "Nessun dato la cita più dal lotto 189." },
-    { "testo": "archivio/mostri-0.23.md", "archiviato": "2026-11-12", "motivo": "Il Google Doc superato dal Word: è il file del Lorath del 9/11. Su Drive è già nella cartella «ARCHIVIO — Manuali superati»." },
-    { "testo": "archivio/mostri-0.23-2026-11-03.md", "archiviato": "2026-11-12", "motivo": "Seconda estrazione della stessa edizione superata." },
-    { "testo": "archivio/veicoli-0.10-2026-11-03.md", "archiviato": "2026-11-12", "motivo": "Doppione della 0.10 corrente: due estrazioni della stessa edizione, diverse in 490 righe fra indice e segnalibri. La regola 1 vuole un solo testo corrente per manuale, e il registro indica `veicoli-0.10.md`." }
+    {
+      "testo": "archivio/magia-1.7.md",
+      "archiviato": "2026-11-12",
+      "motivo": "Nessun dato la cita più dal lotto 189."
+    },
+    {
+      "testo": "archivio/armamenti-0.68.md",
+      "archiviato": "2026-11-12",
+      "motivo": "Nessun dato la cita più dal lotto 189."
+    },
+    {
+      "testo": "archivio/armamenti-0.70.md",
+      "archiviato": "2026-11-12",
+      "motivo": "Nessun dato la cita più dal lotto 189."
+    },
+    {
+      "testo": "archivio/equipaggiamento-0.22.md",
+      "archiviato": "2026-11-12",
+      "motivo": "Nessun dato la cita più dal lotto 189."
+    },
+    {
+      "testo": "archivio/equipaggiamento-0.24.md",
+      "archiviato": "2026-11-12",
+      "motivo": "Nessun dato la cita più dal lotto 189."
+    },
+    {
+      "testo": "archivio/equipaggiamento-0.25.md",
+      "archiviato": "2026-11-12",
+      "motivo": "Nessun dato la cita più dal lotto 189."
+    },
+    {
+      "testo": "archivio/revisione-nec-2.7.md",
+      "archiviato": "2026-11-12",
+      "motivo": "Nessun dato la cita più dal lotto 189."
+    },
+    {
+      "testo": "archivio/revisione-nec-2.9.md",
+      "archiviato": "2026-11-12",
+      "motivo": "Nessun dato la cita più dal lotto 189."
+    },
+    {
+      "testo": "archivio/revisione-nec-2.10.md",
+      "archiviato": "2026-11-12",
+      "motivo": "Nessun dato la cita più dal lotto 189."
+    },
+    {
+      "testo": "archivio/mostri-0.23.md",
+      "archiviato": "2026-11-12",
+      "motivo": "Il Google Doc superato dal Word: è il file del Lorath del 9/11. Su Drive è già nella cartella «ARCHIVIO — Manuali superati»."
+    },
+    {
+      "testo": "archivio/mostri-0.23-2026-11-03.md",
+      "archiviato": "2026-11-12",
+      "motivo": "Seconda estrazione della stessa edizione superata."
+    },
+    {
+      "testo": "archivio/veicoli-0.10-2026-11-03.md",
+      "archiviato": "2026-11-12",
+      "motivo": "Doppione della 0.10 corrente: due estrazioni della stessa edizione, diverse in 490 righe fra indice e segnalibri. La regola 1 vuole un solo testo corrente per manuale, e il registro indica `veicoli-0.10.md`."
+    },
+    {
+      "testo": "archivio/mostri-0.66.md",
+      "archiviato": "2026-11-14",
+      "motivo": "Edizione superata dal recepimento del lotto 197, nessun dato la cita."
+    },
+    {
+      "testo": "archivio/direttore-0.46.md",
+      "archiviato": "2026-11-14",
+      "motivo": "Nessun dato la cita più dal lotto 197: png_generici.json è rigenerato sulla 0.67 / 0.51."
+    },
+    {
+      "testo": "archivio/direttore-0.49.md",
+      "archiviato": "2026-11-14",
+      "motivo": "Edizione superata dal recepimento del lotto 197, nessun dato la cita."
+    }
   ],
-  "_confronto": "Lotto 191: il campo `confronto` di una voce dice come si è arrivati a conoscere che cosa è cambiato in quell'edizione. «alla cieca» vuol dire che in sezione 7 del Doc «Per Davide» non c'è la riga di registro di quella pubblicazione, e la differenza è stata ricavata dal solo diff dei testi: per quei manuali una differenza ambigua è un'ipotesi, non una certezza, e chi lavora al lotto B o C deve saperlo. La ricognizione del 190 ha trovato 3 righe su 27 pubblicazioni (Magia 1.16, Equipaggiamento 0.40, Mostri 0.47)."
+  "_confronto": "Lotto 191: il campo `confronto` di una voce dice come si è arrivati a conoscere che cosa è cambiato in quell'edizione. «alla cieca» vuol dire che in sezione 7 del Doc «Per Davide» non c'è la riga di registro di quella pubblicazione, e la differenza è stata ricavata dal solo diff dei testi: per quei manuali una differenza ambigua è un'ipotesi, non una certezza, e chi lavora al lotto B o C deve saperlo. La ricognizione del 190 ha trovato 3 righe su 27 pubblicazioni (Magia 1.16, Equipaggiamento 0.40, Mostri 0.47).",
+  "_dati": "Lotto 197: le fonti di **dati** che Davide pubblica insieme a un manuale — numeri strutturati, non testo. Stanno in `docs/manuali-txt/` con la versione nel nome e si leggono solo da `tools/manuali.mjs` (`fonteDati`), come i testi. `sha256_manuale` è l’impronta del Word a cui la fonte dichiara di appartenere, verificata contro il file scaricato da Drive: è ciò che permette di dire «questa fonte è dell’edizione recepita» senza rete.",
+  "dati": [
+    {
+      "id": "png-abilita",
+      "nome": "Abilità e acquisizioni dei 25 PNG generici",
+      "drive": "1KSjdcssH0t1FqyC8KZrdrpmnS7egkKVr",
+      "formato": "json",
+      "versione": "0.67",
+      "file": "png-abilita-0.67.json",
+      "modificato": "2026-11-13T11:24:36Z",
+      "manuale": "mostri",
+      "sha256_manuale": "7e44083cf549cbbd72106de2191fb892daa860f59789d733f5bae3adebbe25a9",
+      "impronta_verificata": "2026-11-14",
+      "schema": "1.1",
+      "voci": 3600,
+      "nota": "SIMPLY_RPG_PNG_Abilita_v0.67.json. 25 modelli × 6 Gradi × 24 Abilità = 3.600 voci (categoria, base, incrementi automatici, punti liberi, VA grezzo, limite, VA personale), più acquisizioni, valori pronti, Salvezze e note operative. Dichiara lo sha256 del Manuale dei Mostri 0.67: verificato byte per byte contro il .docx di Drive il 14/11/2026. Lo legge tools/importa-png-generici.mjs; i blocchi comuni e la prosa restano nel Word."
+    }
+  ]
 }

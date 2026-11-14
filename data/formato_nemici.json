@@ -1,5 +1,5 @@
 {
-  "versione_manuale": "Giocatore 0.54 (Google Doc del 09/11/2026); E&L del 02/10/2026, decisioni 5–9 (A.73)",
+  "versione_manuale": "Giocatore 0.54 (Google Doc del 09/11/2026); E&L del 02/10/2026, decisioni 5–9 (A.73); Direttore 0.51 §§9.6.2, 9.9",
   "fonte": "Il Giocatore 0.45 non ha un capitolo dei nemici. Formato proposto da Marcello e Claude Code il 01/10/2026 (docs/tavolo-direttore.md, decisione 4; per-davide A.73) e approvato da Davide il 02/10/2026 (E&L, decisioni 5–9): un nemico è un tipo con i numeri già fatti, come li scrive il master, comune all’app e al futuro bestiario. Le regole che usa sono quelle dei PG: AR «totale, di cui magica» (§5.24), Difese (§5.9), Iniziativa (§2.14, parità §5.1), Movimento (§2.14), Prove Salvezza (§1.2.3), Ferite (§5.14), Stati (§5.18).",
   "_nota": "Questo file descrive i campi di un file nemico (nemici/<id>.json sul server del Tavolo del Master). src/validate.js → validaNemico lo legge: tipi «costante», «testo» (modello), «intero» (min, max, non_oltre: un campo fratello; oppure: valori testuali ammessi al posto del numero), «dadi», «scelta» (valori o valori_da), «lista» (voce, min), «oggetto» (campi), «mappa» (chiavi_da, valore, tutte); per ogni campo «obbligatorio», «richiesto_se» e «ammesso_se» ({ campo fratello: valore }). valori_da / chiavi_da: caratteristiche (sigle), salvezze (id), stati (regole.json → stati.elenco), modalita_di_fuoco (regole.json), abilita (abilita.json), nature_danno e contromisure (questo file). Aggiungere un campo = aggiungere una voce qui.",
   "decisioni": [
@@ -729,6 +729,52 @@
       "obbligatorio": false,
       "descrizione": "Immagine del token sulla mappa di battaglia (non è una regola: decisione di Marcello del 06/10/2026, A.131). File in mappe/ sul server, caricato da «Crea nemico», dall'editor del bestiario, dalla carta nella plancia o dal pannello del token, con la copia ridotta per il token. Senza immagine il token mostra le iniziali."
     }
+  },
+  "_nota_sistema_salute": "Lotto 197 (14/11/2026). Il Direttore 0.51 §9.9 («Mostri senza Ferite», dal §9.9 della 0.49) dà alle creature del Bestiario un sistema di salute ridotto: solo PV, niente tracciato delle Ferite, niente Menomazioni automatiche né contatore Morente, e a 0 PV sono fuori combattimento. I PG, i PNG nominativi e **i venticinque modelli generici Classe/Grado/EQ** tengono invece il sistema completo, PV e Ferite ordinari (§9.6.2). Qui si dichiara **quale sistema usa un profilo e quale conversione dei PV ha già ricevuto**: i nomi dei campi sono una scelta del codice, ma l’indicazione deve essere inequivocabile, perché «una importazione o un ricalcolo ripetuti della stessa fonte non devono aumentare di nuovo i PV» (blocco E&L del 12/11/2026). Il comportamento al tavolo del sistema ridotto — Ferita diretta −5 PV senza AR, cura di uno stato +5 PV, 0 PV fuori combattimento senza contatore, ritorno all’attività — è un lotto a sé: qui c’è solo la dichiarazione, perché senza di essa una seconda importazione gonfierebbe il bestiario.",
+  "sistema_salute": {
+    "campo": "sistema_salute",
+    "predefinito": "PV_e_Ferite",
+    "paragrafo": "Direttore 0.51 §§9.6.2, 9.9; Giocatore §5.14.4; blocco E&L del 12/11/2026",
+    "sistemi": {
+      "PV_e_Ferite": {
+        "nome": "PV e Ferite",
+        "descrizione": "Sistema completo, come i PG: tracciato delle Ferite, Menomazioni, contatore Morente. Lo usano i PG, i PNG nominativi e i venticinque modelli generici Classe/Grado/EQ.",
+        "conversione_pv": null
+      },
+      "solo_PV": {
+        "nome": "Solo PV",
+        "descrizione": "Creature con profilo del Bestiario, umanoidi e boss compresi: niente tracciato delle Ferite, niente penalità da Ferite, nessuna Menomazione automatica né contatore Morente; a 0 PV sono fuori combattimento e la morte effettiva è un dato distinto.",
+        "conversione_pv": "1,30"
+      }
+    },
+    "conversione_pv": {
+      "fattore": 1.3,
+      "arrotondamento": "per eccesso all’intero",
+      "dichiarata": "conversione_pv",
+      "_nota": "Il +30% sostituisce le proposte del 50% e del 33%: non si sommano coefficienti. Le schede del Mostri 0.66 e 0.67 **lo comprendono già**: i massimi pubblicati si usano direttamente. Nessuno strumento dell’app moltiplica i PV di una scheda; chi importasse una fonte che non l’ha già applicato scrive la conversione nel profilo, e trovandola scritta non la riapplica.",
+      "esempi": {
+        "Lorath": [
+          40,
+          52
+        ],
+        "Dragomedusa giovane": [
+          900,
+          1170
+        ],
+        "Dragomedusa adulto": [
+          1600,
+          2080
+        ]
+      },
+      "png_generici": "Le tabelle dei PNG generici non ricevono l’aumento (blocco E&L del 12/11; Direttore §9.6.2): l’Agente di I Grado resta a 16 PV."
+    },
+    "da_fare": [
+      "Ferita diretta contro una creatura senza Ferite: −5 PV ignorando AR e la PS ordinaria delle Ferite, conservando Prove, Salvezze e condizioni dell’effetto.",
+      "Cura: ogni stato di Ferita curato vale 5 PV fino al massimo, sommato all’eventuale recupero ordinario dello stesso effetto.",
+      "A 0 PV: fuori combattimento, nessuna Azione o Difesa attiva, nessun contatore Morente; la morte effettiva resta un dato distinto.",
+      "Ritorno all’attività: un recupero valido sopra 0 riporta attivi al proprio turno successivo, senza rimuovere altri Stati e senza resuscitare un morto.",
+      "Nella plancia: niente avanzamento del tracciato né Tempra per nuove Ferite per questi profili; gli altri Stati e le Menomazioni inflitte espressamente continuano a funzionare."
+    ]
   },
   "regimi_lancio": {
     "taumaturgo": "taumaturgo",

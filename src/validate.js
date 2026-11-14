@@ -2816,6 +2816,25 @@ function validaFormatoNemici(dati, err) {
     if (!(Array.isArray(T.parita_iniziativa) && T.parita_iniziativa.every((x) => sigle.includes(x)))) err(F, 'tavolo.parita_iniziativa', 'sigle di Caratteristiche');
     if (!(typeof T.spareggio === 'string' && DADI.test(T.spareggio))) err(F, 'tavolo.spareggio', 'dado dello spareggio, es. «1d10»');
   }
+  // i due sistemi di salute (Direttore 0.51 §§9.6.2, 9.9; lotto 197): quale usa un profilo e quale conversione
+  // dei PV ha già ricevuto. Un fattore senza arrotondamento dichiarato, o un sistema senza descrizione, sono
+  // dichiarazioni a metà: con quelle una seconda importazione gonfia il bestiario in silenzio.
+  const SS = f.sistema_salute;
+  if (!isOggetto(SS)) err(F, 'sistema_salute', 'i due sistemi di salute vanno dichiarati (Direttore §§9.6.2, 9.9)');
+  else {
+    if (!isTesto(SS.campo)) err(F, 'sistema_salute.campo', 'il nome del campo che porta il sistema nel profilo');
+    if (!isOggetto(SS.sistemi) || !SS.sistemi[SS.predefinito]) err(F, 'sistema_salute.predefinito', 'il sistema predefinito deve essere uno di quelli dichiarati');
+    for (const [k, s] of Object.entries(SS.sistemi ?? {})) {
+      if (!isTesto(s?.nome) || !isTesto(s?.descrizione)) err(F, `sistema_salute.sistemi.${k}`, 'nome e descrizione');
+      if (!(s?.conversione_pv === null || isTesto(s?.conversione_pv))) err(F, `sistema_salute.sistemi.${k}.conversione_pv`, 'la conversione già applicata, o null se non ce n’è');
+    }
+    const C = SS.conversione_pv;
+    if (!isOggetto(C) || !(typeof C.fattore === 'number' && C.fattore > 1) || !isTesto(C.arrotondamento)) err(F, 'sistema_salute.conversione_pv', 'fattore (> 1) e arrotondamento dichiarati');
+    else if (!isOggetto(C.esempi) || !Object.values(C.esempi).every((v) => Array.isArray(v) && v.length === 2 && v.every(isIntero) && v[1] === Math.ceil(v[0] * C.fattore))) {
+      err(F, 'sistema_salute.conversione_pv.esempi', `ogni esempio [prima, dopo] con dopo = prima × ${C.fattore} arrotondato per eccesso`);
+    }
+    if (!Array.isArray(SS.da_fare) || !SS.da_fare.every(isTesto)) err(F, 'sistema_salute.da_fare', 'che cosa del sistema ridotto non è ancora al tavolo, scritto');
+  }
   // scala del GS (Direttore §9.3.1): nomi unici, PX interi crescenti
   if (!Array.isArray(f.gs_scala) || !f.gs_scala.length) err(F, 'gs_scala', 'lista della scala del GS mancante');
   else {
@@ -3282,8 +3301,12 @@ function validaVeicoli(dati, err) {
  * Galleria (data/galleria.json, N1 del 13/10/2026): i parametri della cartella galleria/ e della tab del master.
  * Un numero sbagliato qui farebbe rifiutare ogni immagine o manderebbe l'originale ai tablet.
  */
-// Modelli PNG generici Classe / Grado / EQ (data/png_generici.json, Mostri 0.46, Direttore §9.6): sei Gradi per Classe, EQ 0–5,
-// tabelle dei PX 6 × 6, armamenti con dado valido, 24 Abilità con sei valori, ogni arma dei pronti nella tabella degli armamenti.
+// Modelli PNG generici Classe / Grado / EQ (data/png_generici.json, Mostri 0.67, Direttore 0.51 §§9.6–9.6.2):
+// venticinque modelli, sei Gradi ciascuno, EQ 0–5, tabelle dei PX 6 × 6, armamenti con dado valido, 24 Abilità con
+// sei valori, ogni arma dei pronti nella tabella degli armamenti o fra gli alias **dichiarati con il motivo**.
+//
+// Lotto 197: il controllo conta i modelli e le righe di Grado, e non passa se ne vede meno di venticinque e
+// centocinquanta. Un invariante verde su zero voci è il difetto che ci ha ingannato tre volte (lotti 189, 191, 192).
 function validaPngGenerici(dati, err) {
   const F = 'png_generici';
   const p = dati.png_generici;
@@ -3295,6 +3318,10 @@ function validaPngGenerici(dati, err) {
     const r = p.px?.[g];
     if (!Array.isArray(r) || r.length !== 6 || !r.every((x, i) => isIntero(x) && x > 0 && (i === 0 || x > r[i - 1]))) err(F, `px.${g}`, 'sei PX crescenti, uno per EQ');
   }
+  // i livelli delle tre progressioni (Direttore §9.6.2): Specializzazioni 1/4/8/12/16/20, Maestrie 2/6/10/14/18,
+  // Talenti Liberi ai nove livelli dispari dal 3 al 19
+  const LIV = { specializzazioni: [1, 4, 8, 12, 16, 20], maestrie: [2, 6, 10, 14, 18], talenti_liberi: [3, 5, 7, 9, 11, 13, 15, 17, 19] };
+  for (const [k, v] of Object.entries(LIV)) if (JSON.stringify(p.livelli_acquisizioni?.[k]) !== JSON.stringify(v)) err(F, `livelli_acquisizioni.${k}`, `i livelli del §9.6.2 sono ${v.join(', ')}`);
   const DADO = /^\d+d\d+$/;
   const tipi = new Set();
   for (const [i, a] of (p.armamenti ?? []).entries()) {
@@ -3303,30 +3330,76 @@ function validaPngGenerici(dati, err) {
     if (a?.q > 1 && !(Array.isArray(a.modalita) && a.modalita.length && a.modalita.every((m) => dati.regole?.modalita_di_fuoco?.[m] !== undefined))) err(F, `armamenti[${i}].modalita`, 'un’arma a distanza ha modalità di fuoco note (regole.json → modalita_di_fuoco)');
     tipi.add(a?.tipo);
   }
+  // un alias d'arma vale solo se dichiara la riga, il motivo e la domanda aperta (come `snt_eccezione`): un alias
+  // senza motivo è una svista, non una scelta
+  for (const [nome, a] of Object.entries(p.alias_armi ?? {})) {
+    if (!isTesto(a?.riga) || !tipi.has(a.riga)) err(F, `alias_armi.${nome}.riga`, 'la riga della tabella degli armamenti a cui l’alias rimanda');
+    if (!isTesto(a?.motivo) || a.motivo.length < 30) err(F, `alias_armi.${nome}.motivo`, 'un alias senza il motivo scritto è una svista: scriverlo');
+    if (!/^A\.\d+$/.test(a?.domanda ?? '')) err(F, `alias_armi.${nome}.domanda`, 'il numero della domanda aperta (A.n)');
+  }
+  const armaNota = (x) => tipi.has(x) || p.alias_armi?.[x] !== undefined;
   const nomiAb = new Set((dati.abilita?.abilita ?? []).map((a) => a.nome));
   const classi = p.classi;
   if (!isOggetto(classi) || Object.keys(classi).length < 1) { err(F, 'classi', 'almeno un modello'); return; }
   const CAR = ['FOR', 'DES', 'COS', 'INT', 'SAG', 'CAR'];
+  const CATEG = ['S', 'P', 'G', 'N'];
+  const comp = dati.regole?.competenze?.categorie;
+  let modelli = 0; let righeGrado = 0; let voci = 0;
   for (const [id, c] of Object.entries(classi)) {
     const K = `classi.${id}`;
+    modelli += 1;
     if (!isTesto(c?.nome) || !isTesto(c?.categoria)) err(F, K, 'nome e categoria');
+    if (c?.sistema_salute !== 'PV_e_Ferite') err(F, `${K}.sistema_salute`, 'i modelli completi tengono PV e Ferite ordinari, senza il +30% dei mostri (Direttore §9.6.2, §9.9)');
+    // il profilo delle categorie: 4 S, 7 P, 9 G, 4 N e le 24 Abilità distinte (Giocatore 0.62 §2.3, lotto 192)
+    for (const cat of CATEG) {
+      const lista = c?.competenze?.[cat];
+      if (!Array.isArray(lista) || (comp && lista.length !== comp[cat].numero)) err(F, `${K}.competenze.${cat}`, `il profilo del Giocatore vuole ${comp?.[cat]?.numero ?? '?'} Abilità ${cat}`);
+      for (const n of lista ?? []) if (!nomiAb.has(n)) err(F, `${K}.competenze.${cat}`, `Abilità sconosciuta: ${n}`);
+    }
+    if (new Set(CATEG.flatMap((cat) => c?.competenze?.[cat] ?? [])).size !== nomiAb.size) err(F, `${K}.competenze`, `le ${nomiAb.size} Abilità, ciascuna una volta sola`);
+    if (!Array.isArray(c?.abilita_automatiche) || c.abilita_automatiche.length !== 5) err(F, `${K}.abilita_automatiche`, 'le cinque Abilità di Classe');
     for (const g of GR) {
       const a = c?.caratteristiche?.[g]; const r = c?.risorse?.[g]; const s = c?.salvezze?.[g]; const t = c?.attacchi?.[g];
+      righeGrado += 1;
       if (!a || !CAR.every((x) => isIntero(a[x]) && a[x] >= 0 && a[x] <= 10) || !isIntero(a.livello)) err(F, `${K}.caratteristiche.${g}`, 'livello e sei Caratteristiche da 0 a 10');
-      if (!r || !['pv', 'pm', 'ini', 'ap', 'ar', 'schivata'].every((x) => isIntero(r[x]) && r[x] >= 0) || !(r.parata === null || isIntero(r.parata))) err(F, `${K}.risorse.${g}`, 'pv, pm, ini, ap, ar, schivata interi e parata intera (null solo se il manuale scrive «—»)');
+      if (!r || !['pv', 'pm', 'ini', 'ap', 'ar', 'difese'].every((x) => isIntero(r[x]) && r[x] >= 0)) err(F, `${K}.risorse.${g}`, 'pv, pm, ini, ap, ar e difese interi');
+      else {
+        for (const x of ['parata', 'schivata']) if (!(r[x] === null || isIntero(r[x]))) err(F, `${K}.risorse.${g}.${x}`, 'intera, o null se il manuale scrive «—»');
+        if (!isIntero(r.ar_magica) || r.ar_magica < 0) err(F, `${K}.risorse.${g}.ar_magica`, 'AR magica intera (0 dove il manuale non la dà)');
+        if (!['difese', 'parata', 'schivata'].includes(r.difese_da)) err(F, `${K}.risorse.${g}.difese_da`, 'da quale colonna viene la Difesa del profilo: difese, parata o schivata');
+        else if (r.difese !== (r.difese_da === 'difese' ? r.difese : r[r.difese_da])) err(F, `${K}.risorse.${g}.difese`, `non è il valore di ${r.difese_da}`);
+      }
       if (!s || !['tempra', 'riflessi', 'volonta', 'magia'].every((x) => isIntero(s[x]))) err(F, `${K}.salvezze.${g}`, 'quattro Salvezze intere');
       if (!Array.isArray(t) || !t.length) err(F, `${K}.attacchi.${g}`, 'almeno un attacco');
       else for (const [j, x] of t.entries()) {
-        if (!tipi.has(x?.arma)) err(F, `${K}.attacchi.${g}[${j}]`, `l’arma «${x?.arma}» non è nella tabella degli armamenti`);
+        if (!armaNota(x?.arma)) err(F, `${K}.attacchi.${g}[${j}]`, `l’arma «${x?.arma}» non è nella tabella degli armamenti né fra gli alias dichiarati`);
         if (!isIntero(x?.va) || !/^\d+d\d+([+-]\d+)?$/.test(x?.danno ?? '')) err(F, `${K}.attacchi.${g}[${j}]`, 'VA intero e danno NdM±B');
       }
+      // le acquisizioni raggiunte al Grado: cumulative, tutte presenti nelle tre liste del modello
+      for (const k of Object.keys(LIV)) {
+        const raggiunte = c?.acquisizioni_per_grado?.[g]?.[k];
+        if (!Array.isArray(raggiunte)) { err(F, `${K}.acquisizioni_per_grado.${g}.${k}`, 'elenco dei nomi raggiunti al Grado'); continue; }
+        const nomi = (c?.acquisizioni?.[k] ?? []).filter((x) => x.livello <= (a?.livello ?? 0)).map((x) => x.nome);
+        if (JSON.stringify(raggiunte) !== JSON.stringify(nomi)) err(F, `${K}.acquisizioni_per_grado.${g}.${k}`, `al livello ${a?.livello} le acquisizioni raggiunte sono ${nomi.join(', ') || 'nessuna'}`);
+      }
+    }
+    for (const [k, liv] of Object.entries(LIV)) {
+      const lista = c?.acquisizioni?.[k];
+      if (!Array.isArray(lista) || lista.length !== liv.length || !lista.every((x, i) => x?.livello === liv[i] && isTesto(x?.nome))) err(F, `${K}.acquisizioni.${k}`, `${liv.length} voci, una per livello: ${liv.join(', ')}`);
     }
     const ab = Object.keys(c?.abilita ?? {});
     for (const n of ab) if (!nomiAb.has(n)) err(F, `${K}.abilita.${n}`, 'Abilità sconosciuta');
     for (const n of nomiAb) if (!ab.includes(n)) err(F, `${K}.abilita`, `manca l’Abilità «${n}»`);
-    for (const [n, v] of Object.entries(c?.abilita ?? {})) if (!Array.isArray(v) || v.length !== 6 || !v.every(isIntero)) err(F, `${K}.abilita.${n}`, 'sei valori, uno per Grado');
+    for (const [n, v] of Object.entries(c?.abilita ?? {})) {
+      if (!Array.isArray(v) || v.length !== 6 || !v.every(isIntero)) { err(F, `${K}.abilita.${n}`, 'sei valori, uno per Grado'); continue; }
+      voci += v.length;
+    }
     for (const g of GR) if (!c?.talenti_classe?.[g]?.nome) err(F, `${K}.talenti_classe.${g}`, 'Talento di Classe del Grado');
   }
+  // i conti: venticinque modelli, centocinquanta righe di Grado, 3.600 voci di Abilità
+  if (modelli !== 25) err(F, 'classi', `${modelli} modelli: il Mostri 0.67 ne ha venticinque`);
+  if (righeGrado !== 150) err(F, 'classi', `${righeGrado} righe di Grado: ne servono centocinquanta`);
+  if (voci !== 25 * 6 * nomiAb.size) err(F, 'classi', `${voci} voci di Abilità: ne servono ${25 * 6 * nomiAb.size} (25 modelli × 6 Gradi × ${nomiAb.size} Abilità)`);
 }
 
 // A.161: regole del calcolatore «PX della partita». I Titoli coprono i livelli 1–20 senza buchi, con fattori e

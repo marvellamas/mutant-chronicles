@@ -10,7 +10,7 @@
 //
 // Le eccezioni non si nascondono: un file che resta indietro perché il manuale nuovo cambia una regola ancora da
 // decidere sta in `tools/manuali.json` → `edizioni_in_attesa`, con il motivo e il numero della domanda.
-import { readFileSync, readdirSync } from 'node:fs';
+import { readFileSync, readdirSync, existsSync } from 'node:fs';
 import { join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { RADICE, registro, voce, testoManuale, testoEdizione, righeDiTesto, celleDiTesto } from './manuali.mjs';
@@ -56,6 +56,21 @@ export function manualiCitati(testo) {
 export const eccezioni = () => registro().edizioni_in_attesa ?? {};
 
 /**
+ * I **corpora** dichiarati: insiemi di dati del repo che non sono file di `data/` e che dichiarano comunque
+ * l'edizione da cui vengono — oggi `esempi/nemici/`, le schede delle creature, generate dal Mostri 0.47 e non
+ * ancora rigenerate (lotto 197).
+ *
+ * Perché esistono. La nona regola dice «ogni insieme di dati dichiara l'edizione da cui viene», e `data/` non è
+ * l'unico posto in cui il repo tiene dati copiati da un manuale. Senza questa riga, il giorno in cui `data/` si
+ * allinea alla 0.67 i controlli delle creature leggerebbero il manuale nuovo e diventerebbero rossi per il solo
+ * fatto che Davide ha pubblicato: esattamente ciò che la nona regola serve a evitare. Un corpus dichiarato deve
+ * esistere su disco, altrimenti è un'eccezione dimenticata e `corporaFuoriPosto` lo dice.
+ */
+export const corpora = (radice = RADICE) => Object.keys(eccezioni()).filter((k) => !k.startsWith('data/')).map((k) => ({ chiave: k, esiste: existsSync(join(radice, k)) }));
+
+export const corporaFuoriPosto = (radice = RADICE) => corpora(radice).filter((c) => !c.esiste);
+
+/**
  * Il quadro: una riga per file di dati, con i manuali citati, l'edizione corrente e l'esito.
  * @returns [{ file, dichiarata, manuali: [{ id, citate, corrente, allineata, eccezione? }], fuori }]
  */
@@ -93,6 +108,12 @@ export const edizioniArretrate = (radice = RADICE) => quadroEdizioni(radice)
 export function edizioneDeiDati(id, radice = RADICE) {
   const corrente = voce(id).versione;
   const viste = new Set();
+  // i corpora dichiarati (insiemi di dati fuori dalla cartella data/): la loro edizione conta come quella di un file
+  for (const [chiave, m] of Object.entries(eccezioni())) {
+    if (chiave.startsWith('data/')) continue;
+    const e = m?.[id];
+    if (e?.edizione && e.edizione !== corrente) viste.add(e.edizione);
+  }
   for (const r of quadroEdizioni(radice)) {
     for (const m of r.manuali) {
       if (m.id !== id || m.allineata || !m.eccezione) continue;
@@ -119,7 +140,13 @@ if (process.argv[1] === fileURLToPath(import.meta.url)) {
     const stato = r.manuali.map((m) => `${m.id} ${m.citate.join('/')}${m.allineata ? ' ✓' : m.eccezione ? ` ⏸ ${m.corrente} (${m.eccezione.domanda ?? 'in attesa'})` : ` → ${m.corrente}`}`);
     console.log(`${r.file.padEnd(46)} ${stato.join(' · ') || '(nessun manuale del registro)'}`);
   }
+  for (const c of corpora()) {
+    const m = eccezioni()[c.chiave];
+    const stato = Object.entries(m).map(([id, e]) => `${id} ${e.edizione ?? '?'} ⏸ ${voce(id).versione} (${e.lotto ?? 'in attesa'})`);
+    console.log(`${c.chiave.padEnd(46)} ${stato.join(' · ')}${c.esiste ? '' : '  ← non esiste su disco'}`);
+  }
   const fuori = edizioniArretrate();
-  console.log(`\n${fuori.length} dichiarazioni arretrate su ${quadro.length} file.`);
-  process.exitCode = fuori.length ? 1 : 0;
+  const corpiFuori = corporaFuoriPosto();
+  console.log(`\n${fuori.length} dichiarazioni arretrate su ${quadro.length} file; ${corpora().length} corpora dichiarati${corpiFuori.length ? `, ${corpiFuori.length} che non esistono su disco` : ''}.`);
+  process.exitCode = fuori.length || corpiFuori.length ? 1 : 0;
 }
