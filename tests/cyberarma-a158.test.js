@@ -20,7 +20,9 @@ test('due voci di catalogo con i valori della risposta', () => {
   const o = r('armi:cyberarma');
   assert.equal(o.nome, 'CyberArma');
   assert.deepEqual([o.qualita, o.ps_int, o.pi, o.peso, o.reperibilita], ['Non comune', 12, 4, 0.5, 'EP']);
-  assert.equal(o.costo, null, 'non ha un prezzo di catalogo (la proposta di 3.000 cr è ritirata)');
+  // A.265 (Armamenti 0.83 §7.25): «Con un costo di costruzione base di 1.250 cr, il valore indicativo
+  // dell’originale è 7.500 cr». Resta un pezzo unico e non si compra dal catalogo, ma il valore adesso c’è scritto.
+  assert.deepEqual([o.costo, o.creazione_cr], [7500, 1250]);
   assert.deepEqual([o.abilita, o.mani, o.portata_q, o.for_richiesta, o.danno.una_mano, o.natura_danno], ['Armi da mischia', 1, 1, 3, '1d8', 'Magico']);
   const b = r('armi:cyberarma-batteria-verde');
   assert.deepEqual([b.qualita, b.ps_int, b.pi, b.peso, b.reperibilita], ['Non comune', 12, 4, 0.7, 'EP']);
@@ -32,12 +34,17 @@ test('Grado e SnT: la sintonizzazione si conta una volta sola', () => {
   const o = art.find((x) => x.rif === 'armi:cyberarma');
   const b = art.find((x) => x.rif === 'armi:cyberarma-batteria-verde');
   // Armamenti 0.74 §7.25: SnT secondo l'impiego (Custode 1, Tecnomante 2), non secondo la potenza
-  assert.deepEqual([o.snt_per_impiego, o.sintonizzazione_per_classe], [true, { Custode: 1, Tecnomante: 2 }]);
-  assert.equal(b.sintonizzazione, 2, 'la SnT 2 comprende manufatto e batteria');
+  // A.265: potenza Rara, Grado III, SnT base 3; le riduzioni d’impiego sono 2 per il Tecnomante, 1 per un Custode
+  // e 0 per il Custode che l’ha costruita e la usa come propria arma personale. La scala vale anche per le
+  // conversioni: «Capacità della riserva e modulatore SIN non cambiano questa scala».
+  assert.deepEqual([o.snt_per_impiego, o.sintonizzazione_per_classe], [true, { Tecnomante: 2, Custode: 1 }]);
+  assert.deepEqual([o.potenza, o.grado, o.sintonizzazione], ['Rara', 'III', 3]);
+  assert.deepEqual([o.sintonizzazione_costruttore.classe, o.sintonizzazione_costruttore.snt], ['Custode', 0]);
+  assert.equal(b.sintonizzazione, 3, 'la SnT base è quella della scala generale, riserva compresa (A.265)');
   // revisione «Cariche Mistiche» e A.236 (lotto 171): riserva interna Verde da 5 CM, esclusiva dell'arma (non più una Batteria)
   assert.deepEqual(b.contenitore, { energia: 'Verde', integrato: true, riserva: 'cariche', alimentazione: 'esclusiva', capacita_cm: 5, precedente: { capacita_pm: 10, unita: 'PM', nota: 'CyberArma con batteria Verde' } });
   // una sola voce di inventario: l'oggetto sta fra le armi e il blocco artefatto lo raggiunge per rif
-  assert.equal(infoArtefatto(r('armi:cyberarma-batteria-verde'), dati).sintonizzazione, 2);
+  assert.equal(infoArtefatto(r('armi:cyberarma-batteria-verde'), dati).sintonizzazione, 3);
 });
 
 test('uso per Classe: i numeri stanno nei dati, non nel codice', () => {
@@ -113,9 +120,12 @@ test('Custodia del Silenzio (§7.25.1) nel catalogo', () => {
 });
 
 test('la CyberArma resta fuori dagli acquisti automatici: niente prezzo', () => {
+  // A.265: l’originale ha un valore indicativo (7.500 cr) e le due conversioni no; nessuno dei tre si compra dal
+  // catalogo, perché sono pezzi unici (`unico: true`, che tiene spento «Compra»).
+  assert.deepEqual(['armi:cyberarma', 'armi:cyberarma-batteria-verde', 'armi:cyberarma-nec'].map((rif) => r(rif).costo), [7500, null, null]);
   for (const rif of ['armi:cyberarma', 'armi:cyberarma-batteria-verde', 'armi:cyberarma-nec']) {
-    assert.equal(r(rif).costo, null);
-    assert.match(r(rif)._nota_costo, /prezzo unico/);
+    assert.equal(r(rif).unico, true, rif);
+    assert.match(r(rif)._nota_costo, /valore indicativo/);
   }
   // Armamenti 0.74: costruzione dei soli Custodi; prezzi delle modifiche indicativi, in costo_modifica
   assert.match(r('armi:cyberarma').costruzione.chi, /Soltanto i Custodi/);

@@ -28,7 +28,7 @@ test('catalogo: 23 Batterie Mistiche con il supporto base (A.75 chiusa), 19 Batt
   assert.equal(mat.length, 19);
   // Magia §26.4: +1 Grado e +1 SnT; REP Epica per le colorate
   const r10 = ogg('batteria-matrice-da-10-pm-chroma-rosso');
-  assert.deepEqual([r10.artefatto.potenza, r10.artefatto.sintonizzazione, r10.reperibilita, r10.costo, r10.artefatto.contenitore.matrice], ['Rara', 3, 'EP', 3000, true]);
+  assert.deepEqual([r10.artefatto.potenza, r10.artefatto.sintonizzazione, r10.reperibilita, r10.costo, r10.artefatto.contenitore.matrice], ['Rara', 3, 'EP', 13500, true]);
   assert.equal(art.fuori_scala.profili.length, 4);
   const sch = art.oggetti.filter((o) => o.id.startsWith('scheggia-instabile-'));
   assert.equal(sch.length, 23);

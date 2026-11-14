@@ -19,17 +19,19 @@ const rigaCampionario = (id) => { const o = cat.perRif.get(P(id)); const c = o.a
 
 test('§27.2: tabella per Grado e Grado della versione dal livello (§24.2)', () => {
   assert.deepEqual(['I', 'II', 'III', 'IV', 'V', 'VI'].map((g) => { const r = rigaGrado(g, dati); return [r.reagenti, r.creazione, r.vendita, r.reperibilita]; }),
-    [[50, 75, 150, 'MR'], [100, 125, 250, 'MR'], [200, 225, 450, 'MR'], [400, 425, 850, 'LE'], [800, 825, 1650, 'LE'], [1600, 1625, 3250, 'LE']]);
+    // A.261 (Magia 1.17 §27.2): la vendita non è più «creazione × 2» ma la formula del §24.3, creazione × 3 ×
+    // coefficiente di potenza del Grado, ai 50 cr per eccesso. Le sei righe sono quelle scritte nella tabella.
+    [[50, 75, 250, 'MR'], [100, 125, 600, 'MR'], [200, 225, 1350, 'MR'], [400, 425, 3850, 'LE'], [800, 825, 9900, 'LE'], [1600, 1625, 24400, 'LE']]);
   assert.deepEqual([1, 3, 4, 6, 8, 9, 11, 12, 15, 18].map((l) => gradoVersione(l, dati)), ['I', 'I', 'II', 'II', 'II', 'III', 'III', 'IV', 'V', 'VI']);
 });
 
 test('§27.3: le sei pergamene del campionario, con i numeri della tabella', () => {
-  assert.deepEqual(rigaCampionario('cura-ferite-3'), ['I', 3, '1 AzP', 75, 150, 'MR']);
-  assert.deepEqual(rigaCampionario('arma-mistica-3'), ['I', 3, '1 AzP', 75, 150, 'MR']);
-  assert.deepEqual(rigaCampionario('armatura-mistica-3'), ['I', 3, '1 AzP', 75, 150, 'MR']);
-  assert.deepEqual(rigaCampionario('individuare-6'), ['II', 6, '1 AzP', 125, 250, 'MR']);
-  assert.deepEqual(rigaCampionario('esorcizzare-corruzione-6'), ['II', 6, '10 minuti', 125, 250, 'MR']);
-  assert.deepEqual(rigaCampionario('rigenerazione-9'), ['III', 9, '3 ore continuative', 225, 450, 'MR']);
+  assert.deepEqual(rigaCampionario('cura-ferite-3'), ['I', 3, '1 AzP', 75, 250, 'MR']);
+  assert.deepEqual(rigaCampionario('arma-mistica-3'), ['I', 3, '1 AzP', 75, 250, 'MR']);
+  assert.deepEqual(rigaCampionario('armatura-mistica-3'), ['I', 3, '1 AzP', 75, 250, 'MR']);
+  assert.deepEqual(rigaCampionario('individuare-6'), ['II', 6, '1 AzP', 125, 600, 'MR']);
+  assert.deepEqual(rigaCampionario('esorcizzare-corruzione-6'), ['II', 6, '10 minuti', 125, 600, 'MR']);
+  assert.deepEqual(rigaCampionario('rigenerazione-9'), ['III', 9, '3 ore continuative', 225, 1350, 'MR']);
   // A.155 (approvata il 10/10/2026): profilo fisico uguale per tutti i Gradi, per esemplare
   for (const id of ['cura-ferite-3', 'individuare-6', 'rigenerazione-9']) {
     const o = cat.perRif.get(P(id));
@@ -40,7 +42,7 @@ test('§27.3: le sei pergamene del campionario, con i numeri della tabella', () 
 
 test('§27.2 creazione: l’esempio di Cura Ferite 3 (75 cr e 6 PM; Magistrale 50 cr e 5 PM)', () => {
   const c = costiCreazione({ grado: 'I', pmSigillati: 3 }, dati);
-  assert.deepEqual([c.supporto, c.reagenti, c.creazione, c.ore, c.pmLavoro, c.pmSigillati, c.pmTotali, c.vendita], [25, 50, 75, 4, 3, 3, 6, 150]);
+  assert.deepEqual([c.supporto, c.reagenti, c.creazione, c.ore, c.pmLavoro, c.pmSigillati, c.pmTotali, c.vendita], [25, 50, 75, 4, 3, 3, 6, 250]);
   const m = costiCreazione({ grado: 'I', pmSigillati: 3, magistrale: true }, dati);
   assert.deepEqual([m.reagenti, m.creazione, m.pmLavoro, m.pmSigillati, m.pmTotali], [25, 50, 2, 3, 5]);
   // Rigenerazione 9 (Grado III): 9 PM di lavoro + 9 sigillati; Magistrale 5 + 9, reagenti 100
@@ -50,7 +52,7 @@ test('§27.2 creazione: l’esempio di Cura Ferite 3 (75 cr e 6 PM; Magistrale 5
 
 test('acquisto: scheda del catalogo Commerciale, SnT 0, fuori dalla sintonizzazione e dalle riserve di Chroma', () => {
   const r = risolvi(voce('cura-ferite-3', 2), cat);
-  assert.deepEqual([r.tipo, r.def.catalogo, r.def.famiglia, r.def.costo], ['artefatto', 'Commerciale', 'Consumabili', 150]);
+  assert.deepEqual([r.tipo, r.def.catalogo, r.def.famiglia, r.def.costo], ['artefatto', 'Commerciale', 'Consumabili', 250]);
   const voci = [voce('cura-ferite-3', 2)];
   // i PM sigillati non sono una riserva del personaggio (§27.1, §27.4)
   assert.deepEqual(contenitori(voci, dati), []);

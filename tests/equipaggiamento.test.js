@@ -936,9 +936,11 @@ test('lotto 12: regole di sintonizzazione, profili con riserva mistica, batterie
     contenitore: { energia: 'Rosso', integrato: true, riserva: 'cariche', alimentazione: 'esclusiva', capacita_cm: 5, precedente: { capacita_pm: 5, unita: 'PM', nota: 'Scudo delle Guardie Sacre' } }, // Magia §26.2, Armamenti §7.5.1; lotto 171: 5 CM
   });
   const b = catalogo(dati).perRif.get('artefatti:batteria-da-5-pm-chroma-bianco');
-  assert.deepEqual(b.artefatto, { tipologia: 'Batterie e contenitori', potenza: 'Non Comune', sintonizzazione: 2, sintonizzabile: true, proprieta_attive: true, contenitore: { energia: 'Bianco', capacita_pm: 5 } });
+  // lotto 195: ogni Batteria dichiara anche il suo Grado, letto dalla tabella del §10.2 — è il primo anello della
+  // catena Grado → potenza → SnT, e il validatore controlla che i tre si accordino.
+  assert.deepEqual(b.artefatto, { tipologia: 'Batterie e contenitori', potenza: 'Non Comune', sintonizzazione: 2, sintonizzabile: true, proprieta_attive: true, contenitore: { energia: 'Bianco', capacita_pm: 5 }, grado: 'II' });
   // risposta A.14 con i prezzi del 01/10 sera (Armamenti §7.5, Magia §24.7); potenza e SnT restano quelle del §7.10
-  assert.deepEqual([b.costo, b.reperibilita, b.qualita, b.ps_int, b.pi, b.peso], [5000, 'LE', 'Comune', 10, 3, 0.2]);
+  assert.deepEqual([b.costo, b.reperibilita, b.qualita, b.ps_int, b.pi, b.peso], [9900, 'LE', 'Comune', 10, 3, 0.2]); // A.261: prezzo dell'Equipaggiamento 0.41 §10.2
   // §7.10 (01/10 sera): SnT 0 con sole proprietà passive; tutte le voci del catalogo hanno proprietà attive
   assert.equal(f.sintonizzazione.solo_passive.snt, 0);
   assert.ok(f.artefatti_catalogo.every((a) => a.proprieta_attive === true));

@@ -108,12 +108,18 @@ test('A.10: Scudo delle Guardie Sacre, lama ritratta 1d6+1 e lama estratta 1d6+1
 
 // prezzi indicativi del 01/10 sera (Armamenti §7.5, Magia §24.7, E&L «Regole consolidate»): 200 e 1.000 crediti per PM
 test('A.14: batterie da 5 PM con i valori approvati, cariche all’acquisto; scala di reperibilità fino a Leggendaria', () => {
-  for (const [c, rep, costo, pot, sint] of [['rosso', 'MR', 1000, 'Comune', 1], ['blu', 'MR', 1000, 'Comune', 1], ['verde', 'MR', 1000, 'Comune', 1], ['bianco', 'LE', 5000, 'Non Comune', 2]]) {
+  for (const [c, rep, costo, pot, sint] of // A.261 (lotto 195): i prezzi sono quelli ricalcolati nell'Equipaggiamento 0.41 §10.2; reperibilità, potenza e SnT della A.14 non cambiano
+  [['rosso', 'MR', 1950, 'Comune', 1], ['blu', 'MR', 1950, 'Comune', 1], ['verde', 'MR', 1950, 'Comune', 1], ['bianco', 'LE', 9900, 'Non Comune', 2]]) {
     const b = def(`artefatti:batteria-da-5-pm-chroma-${c}`);
     assert.deepEqual([b.reperibilita, b.costo, b.qualita, b.ps_int, b.pi, b.peso, b.artefatto.contenitore.capacita_pm], [rep, costo, 'Comune', 10, 3, 0.2, 5], c);
     assert.deepEqual([b.artefatto.potenza, b.artefatto.sintonizzazione], [pot, sint], c); // invariati (§7.10)
   }
-  assert.deepEqual(Object.values(dati.equipaggiamento.indice.reperibilita).map((r) => r.nome), ['Comune', 'Non comune', 'Rara', 'Molto rara', 'Epica', 'Leggendaria']); // Magia §26.4: Epica per le Batterie Matrice (A.83)
+  // Magia §26.4: Epica per le Batterie Matrice (A.83). Lotto 195: l'Equipaggiamento 0.41 §10.3 segna le Batterie
+  // Matrice Bianche «Eccezionali», che per il §10.1 **non è una fascia commerciale** ma un accesso di campagna: sta
+  // nella scala con commerciale: false, e la scala commerciale resta quella di sei fasce fino alla Leggendaria.
+  const rep = dati.equipaggiamento.indice.reperibilita;
+  assert.deepEqual(Object.values(rep).filter((r) => r.commerciale !== false).map((r) => r.nome), ['Comune', 'Non comune', 'Rara', 'Molto rara', 'Epica', 'Leggendaria']);
+  assert.deepEqual([rep.EC.nome, rep.EC.commerciale], ['Eccezionale', false]);
   assert.match(dati.equipaggiamento.indice._nota_reperibilita, /non un listino/);
   // cariche all'acquisto (A.19): il contenitore nuovo è pieno
   const creazione = { ...MISHIMA_AGENTE, equipaggiamento: [voce('b', 'artefatti:batteria-da-5-pm-chroma-verde', 'trasportato')] };

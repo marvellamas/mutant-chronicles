@@ -33,20 +33,31 @@ const ciber = (eq) => eq.filter((v) => String(v.rif ?? '').startsWith('armi:cybe
 test('catalogo: originale, riserva Verde da 5 CM e conversione a NEC (Armamenti 0.74, revisione «Cariche Mistiche», A.236, A.237)', () => {
   const o = arma('cyberarma');
   assert.deepEqual([o.abilita, o.danno.una_mano, o.natura_danno, o.for_richiesta, o.mani, o.portata_q], ['Armi da mischia', '1d8', 'Magico', 3, 1, 1]);
-  assert.equal(o.costo, null, 'nessun prezzo unico per gli originali');
-  const [cu, te, al] = o.uso_per_classe.classi;
+  // A.265: gli Armamenti 0.83 danno all'originale un valore indicativo di 7.500 cr (1.250 di costruzione × 3 × 2);
+  // resta un pezzo unico, quindi «Compra» resta spento, ma il valore non è più «non disponibile».
+  assert.deepEqual([o.costo, o.unico], [7500, true]);
+  // A.265: quattro impieghi, non due. Lo 0 del Custode costruttore vale a una condizione — quel Custode, quel suo
+  // esemplare — quindi sta in una riga sua con la condizione scritta, non fra le Classi senza condizioni.
+  const [cu, co, te, al] = o.uso_per_classe.classi;
   assert.deepEqual([cu.classe, cu.pm, cu.round, cu.danno_extra, cu.sintonizzazione], ['Custode', 1, 15, 1, 1]);
+  assert.deepEqual([co.classe, co.sintonizzazione], ['Custode costruttore', 0]);
+  assert.match(co.condizione, /costruito quell’esemplare/);
   assert.deepEqual([te.classe, te.pm, te.round, te.sintonizzazione], ['Tecnomante', 2, 10, 2]);
   assert.equal(al.ammesso, false, 'le altre Classi solo con la conversione a NeC');
-  assert.deepEqual(blocco('armi:cyberarma').sintonizzazione_per_classe, { Custode: 1, Tecnomante: 2 });
+  assert.deepEqual(blocco('armi:cyberarma').sintonizzazione_per_classe, { Tecnomante: 2, Custode: 1 });
+  assert.deepEqual([blocco('armi:cyberarma').potenza, blocco('armi:cyberarma').grado, blocco('armi:cyberarma').sintonizzazione], ['Rara', 'III', 3]);
   // modifiche (§7.25, §7.25.2)
   const m = o.modifiche;
-  assert.deepEqual([m.predisposizione_batteria.cr, m.batteria_verde_10_pm.cr, m.conversione_nec.cr, m.modulatore_neurale.cr, m.riconfigurazione.cr], [1000, 2000, 2000, 1500, 300]);
+  // Armamenti 0.83 §7.25: la riserva ordinaria è 5 CM (2.000 cr); quella da 10 CM richiede un progetto specifico
+  // (4.000 cr). Le tariffe sono quelle scritte, e il manuale ne somma lui i quattro totali (A.261).
+  assert.deepEqual([m.predisposizione_batteria.cr, m.riserva_cm_5.cr, m.riserva_cm_10.cr, m.conversione_nec.cr, m.nec_rosso_10_carico.cr, m.modulatore_neurale.cr, m.riconfigurazione.cr], [1000, 2000, 4000, 2000, 400, 1500, 300]);
+  assert.match(m.riserva_cm_10.nota, /progetto specifico/);
+  assert.match(m.totali, /con 10 CM 12\.500 cr/);
   assert.deepEqual([o.modulatore_neurale.sin, o.modulatore_neurale.classe], [1, 'Tecnomante']);
   // lotto 171: riserva interna Verde da 5 CM (era la batteria da 10 PM), SnT 2
   const b = arma('cyberarma-batteria-verde');
   assert.equal(b.munizioni, undefined);
-  assert.deepEqual([blocco('armi:cyberarma-batteria-verde').contenitore.capacita_cm, blocco('armi:cyberarma-batteria-verde').contenitore.energia, blocco('armi:cyberarma-batteria-verde').sintonizzazione], [5, 'Verde', 2]);
+  assert.deepEqual([blocco('armi:cyberarma-batteria-verde').contenitore.capacita_cm, blocco('armi:cyberarma-batteria-verde').contenitore.energia, blocco('armi:cyberarma-batteria-verde').sintonizzazione], [5, 'Verde', 3]);
   assert.equal(b.costo_modifica, 3000);
   // conversione a NeC: qualsiasi Classe, 1 carica, 10 Round, SnT 3
   const n = arma('cyberarma-nec');

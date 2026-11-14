@@ -28,10 +28,15 @@ function conAnello() {
   return { m, scheda, s: allineaSessione({}, m) };
 }
 
-test('la configurazione: Grado III, SnT 3, Esclusiva, riserva Verde da 5 CM, 5 CM per uso, 3 ore e poi 5 giorni', () => {
+test('la configurazione: Grado IV, SnT 4, Esclusiva, riserva Verde da 5 CM, 5 CM per uso, 3 ore e poi 5 giorni', () => {
   const a = VOCE.artefatto;
-  assert.deepEqual([a.grado, a.sintonizzazione, a.contenitore.energia, a.contenitore.capacita_cm, a.contenitore.alimentazione, a.contenitore.riserva], ['III', 3, 'Verde', 5, 'esclusiva', 'cariche']);
+  assert.deepEqual([a.grado, a.sintonizzazione, a.contenitore.energia, a.contenitore.capacita_cm, a.contenitore.alimentazione, a.contenitore.riserva], ['IV', 4, 'Verde', 5, 'esclusiva', 'cariche']);
   assert.deepEqual([AL.cm, AL.ore, AL.giorni_dopo, AL.continua], [5, 3, 5, true]);
+  // A.263 (14/11/2026): Grado IV, potenza Molto Rara, SnT 4 — la Magia 1.11 diceva Grado III e SnT 3, e la catena
+  // Grado → potenza → SnT non tornava. Adesso torna, quindi l’eccezione dichiarata dal lotto 181 non c’è più.
+  assert.equal(a.potenza, 'Molto Rara');
+  assert.equal(a.snt_eccezione, undefined, 'niente più eccezione: Grado IV, Molto Rara e SnT 4 si accordano');
+  assert.equal(VOCE['TODO(Davide)'], undefined, 'la A.263 ha risposta');
   assert.equal(VOCE.costo, undefined, 'il prezzo non è indicato: non si inventa');
 });
 

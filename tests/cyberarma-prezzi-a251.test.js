@@ -205,9 +205,13 @@ test('A.256: un Comune e un Leggendario, con il conto e l’arrotondamento', () 
   const comune = art('batteria-da-5-pm-chroma-rosso');
   assert.equal(raritaArtefatto(comune, dati), 'Comune');
   const pc = prezzoArtefatto(comune, dati);
+  // A.261 (risposta): la formula vince come regola, e Davide ha ricalcolato il catalogo con essa. Il prezzo
+  // scritto nell’Equipaggiamento 0.41 §10.2 è 1.950 cr, non più 1.000: l’app lo legge dal manuale e la formula lo
+  // conferma. Se un giorno i due numeri tornano a divergere, vince quello scritto.
   assert.equal(pc.vendita, 1950, '650 × 3 × 1 = 1.950 cr');
-  assert.equal(pc.catalogo, 1000, 'il prezzo dichiarato dal manuale resta (A.261)');
-  assert.equal(pc.cr, 1000, 'dove il catalogo ha un prezzo, si usa quello');
+  assert.equal(pc.catalogo, 1950, 'il prezzo scritto nel manuale (§10.2)');
+  assert.equal(pc.cr, 1950, 'dove il catalogo ha un prezzo, si usa quello');
+  assert.equal(pc.verifica.torna, true, 'la formula ritrova la cifra scritta');
   const legg = art('batteria-da-30-pm-chroma-rosso');
   assert.equal(raritaArtefatto(legg, dati), 'Leggendaria');
   assert.equal(prezzoArtefatto(legg, dati).vendita, 51000, '3.400 × 3 × 5 = 51.000 cr');
@@ -226,10 +230,18 @@ test('A.256: un «Unico o reliquia» non mostra un prezzo di catalogo', () => {
     assert.match(p.motivo, /unico o reliquia/);
   }
   // ogni CyberArma originale è un pezzo unico (Armamenti §7.25)
+  // A.265: le CyberArmi restano pezzi unici — niente prezzo di listino, «Compra» spento — ma l’originale ha un
+  // valore indicativo scritto nel manuale, e la verifica della formula lo conferma senza sostituirlo.
   for (const id of ['cyberarma', 'cyberarma-batteria-verde', 'cyberarma-nec']) {
     assert.equal(arma(id).unico, true, `${id}: pezzo unico`);
-    assert.equal(prezzoArtefatto(arma(id), dati).cr, null);
+    assert.equal(raritaArtefatto(arma(id), dati), 'Unico o reliquia', id);
+    assert.equal(prezzoArtefatto(arma(id), dati).vendita, null, `${id}: nessun prezzo di listino`);
   }
+  const cy = prezzoArtefatto(arma('cyberarma'), dati);
+  assert.equal(cy.cr, 7500, 'il valore indicativo scritto nel §7.25');
+  // la potenza di un'arma sta nel suo blocco Artefatto (artefatti_catalogo, per rif), non nella voce dell'arma:
+  // la verifica della formula si fa con la potenza del blocco.
+  assert.equal(prezzoDiVendita(1250, 'Rara', dati).cr, 7500, '1.250 × 3 × 2 = 7.500: la formula conferma la cifra scritta');
 });
 
 test('A.256: rarità e reperibilità restano separate, e l’Epica non ha coefficiente (A.262)', () => {
@@ -237,12 +249,15 @@ test('A.256: rarità e reperibilità restano separate, e l’Epica non ha coeffi
   assert.equal(p.rarita, 'Rara');
   assert.equal(p.reperibilita, 'MR', 'la reperibilità viaggia accanto al prezzo: il denaro non garantisce il venditore');
   assert.match(p.nota, /non garantisce/);
+  // A.261 chiude anche la A.262: la scala ha sei gradini e l’«Epica» vale 4. Prima questa Batteria di Grado V
+  // restava senza prezzo calcolato e l’app lo diceva; adesso il conto torna con la cifra scritta nel §10.2.
   const epica = art('batteria-da-25-pm-chroma-rosso');
   assert.equal(raritaArtefatto(epica, dati), 'Epica');
   const pe = prezzoArtefatto(epica, dati);
-  assert.equal(pe.vendita, null, 'la A.256 non dà il coefficiente dell’Epica: l’app non lo inventa');
-  assert.match(pe.motivo, /A\.262/);
-  assert.equal(pe.cr, 5000, 'il prezzo di catalogo resta');
+  assert.equal(pe.coefficiente, 4, 'Epica 4 (Magia 1.17 §24.3; Equipaggiamento 0.41 §10.1)');
+  assert.equal(pe.cr, 34200, 'il prezzo scritto nel manuale');
+  assert.equal(pe.vendita, 34200, '2.850 × 3 × 4 = 34.200: la formula lo conferma');
+  assert.equal(pe.motivo, null);
 });
 
 test('A.256: le rarità dei dati stanno con il costo di sintonizzazione del §7.10 (o con un’eccezione dichiarata)', () => {

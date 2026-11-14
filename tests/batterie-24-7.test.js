@@ -5,6 +5,7 @@ import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { calcolaScheda } from '../src/calc.js';
 import { catalogo } from '../src/equipaggiamento.js';
+import { prezzoArtefatto } from '../src/prezzi-artefatti.js';
 import { massimiSessione, inizializzaSessione } from '../src/sessione.js';
 import { preparaStampa, schemaQuadratini } from '../src/stampa.js';
 import { normalizza, testoManualiDeiDati } from '../tools/verifica_frasi.mjs';
@@ -15,20 +16,29 @@ const { dati } = await datiReali();
 const batterie = catalogo(dati).oggetti.filter((o) => /^batteria-da-\d+-pm-chroma-/.test(o.id));
 const voce = (uid, rif) => ({ uid, rif, stato: 'trasportato', quantita: 1, note: '', sintonizzato: true });
 
-test('Magia §24.7: taglie, prezzi per PM, Grado e SnT, reperibilità', () => {
+test('Magia §24.7: taglie, prezzi del catalogo, Grado e SnT, reperibilità', () => {
   const per = (colore) => batterie.filter((b) => b.artefatto.contenitore.energia === colore).map((b) => [b.artefatto.contenitore.capacita_pm, b.costo, b.artefatto.sintonizzazione, b.artefatto.potenza, b.reperibilita]);
   for (const colore of ['Rosso', 'Blu', 'Verde']) {
     assert.deepEqual(per(colore), [
-      [5, 1000, 1, 'Comune', 'MR'], [10, 2000, 2, 'Non Comune', 'MR'], [15, 3000, 3, 'Rara', 'MR'],
-      [20, 4000, 4, 'Molto Rara', 'MR'], [25, 5000, 5, 'Epica', 'MR'], [30, 6000, 6, 'Leggendaria', 'MR'],
+      // A.261: i prezzi sono quelli scritti nella tabella dell'Equipaggiamento 0.41 §10.2, che Davide ha
+      // ricalcolato con la formula del §24.3. Prima erano 200 cr per PM colorato e 1.000 per PM Bianco.
+      [5, 1950, 1, 'Comune', 'MR'], [10, 5400, 2, 'Non Comune', 'MR'], [15, 10500, 3, 'Rara', 'MR'],
+      [20, 20700, 4, 'Molto Rara', 'MR'], [25, 34200, 5, 'Epica', 'MR'], [30, 51000, 6, 'Leggendaria', 'MR'],
     ], colore);
   }
   // Bianco: un Grado in più; 30 PM «Fuori scala ordinaria» (ricetta eccezionale), non in catalogo
   assert.deepEqual(per('Bianco'), [
-    [5, 5000, 2, 'Non Comune', 'LE'], [10, 10000, 3, 'Rara', 'LE'], [15, 15000, 4, 'Molto Rara', 'LE'],
-    [20, 20000, 5, 'Epica', 'LE'], [25, 25000, 6, 'Leggendaria', 'LE'],
+    [5, 9900, 2, 'Non Comune', 'LE'], [10, 25500, 3, 'Rara', 'LE'], [15, 56700, 4, 'Molto Rara', 'LE'],
+    [20, 100200, 5, 'Epica', 'LE'], [25, 156000, 6, 'Leggendaria', 'LE'],
   ]);
-  for (const b of batterie) assert.equal(b.costo, b.artefatto.contenitore.capacita_pm * (b.artefatto.contenitore.energia === 'Bianco' ? 1000 : 200), b.id);
+  // A.261: il prezzo per PM non esiste più — «il prezzo di vendita di una Batteria finita si ricava dal costo
+  // completo di creazione secondo la formula del §10.1; non si usa un prezzo fisso per PM» (Equipaggiamento 0.41
+  // §9). Qui si controlla che la cifra scritta nel catalogo torni con la formula, non che la si ricalcoli.
+  for (const b of batterie) {
+    const p = prezzoArtefatto(b, dati);
+    assert.equal(p.cr, b.costo, `${b.id}: il prezzo usato è quello del catalogo`);
+    assert.equal(p.verifica?.torna, true, `${b.id}: la formula del §24.3 ritrova la cifra scritta`);
+  }
   // le frasi della nota sono del manuale
   const manuali = testoManualiDeiDati();
   const nuove = batterie.filter((b) => b.artefatto.contenitore.capacita_pm > 5);

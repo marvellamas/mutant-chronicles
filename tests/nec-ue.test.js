@@ -80,7 +80,11 @@ function valori(o, d) {
     abilita: s.abilita?.map((a) => [a.nome, a.totale, a.effettivo, a.vaEquip]),
     ar: s.equipaggiamento?.arEffettiva ?? s.equipaggiamento?.ar, carico: s.carico && { peso: s.carico.peso, livello: s.carico.livello?.id ?? s.carico.livello },
     armi: s.equipaggiamento?.armi?.map((x) => [x.nome, x.va, x.danno]),
-    costi: (o.scelte.equipaggiamento ?? []).map((v) => catalogo(d).perRif.get(v.rif)?.costo ?? null),
+    // Lotto 195: i prezzi si leggono sempre dal catalogo di adesso, su entrambi i lati. Questo test guarda se i
+    // valori **del personaggio** sono cambiati fra i dati di allora e quelli di oggi; il prezzo di catalogo di un
+    // oggetto non è un valore del personaggio e cambia quando Davide ripubblica il catalogo (A.261: la Batteria
+    // Matrice da 10 PM di Dimitri passa da 3.000 a 13.500 cr senza che il suo file cambi di un carattere).
+    costi: (o.scelte.equipaggiamento ?? []).map((v) => catalogo(dati).perRif.get(v.rif)?.costo ?? null),
     sessione: sessioneSenzaNec,
   });
 }

@@ -25,7 +25,7 @@ test('catalogo: Hachimaki e Tomo sono validi per il validatore e hanno i valori 
   const c = catalogo(dati);
   const h = c.perRif.get(HACH);
   assert.ok(h);
-  assert.deepEqual([h.peso, h.ps_int, h.pi, h.costo, h.reperibilita, h.qualita], [0.05, 12, 2, 1500, 'MR', 'Non comune']);
+  assert.deepEqual([h.peso, h.ps_int, h.pi, h.costo, h.reperibilita, h.qualita], [0.05, 12, 2, 3600, 'MR', 'Non comune']);
   assert.deepEqual([h.artefatto.potenza, h.artefatto.sintonizzazione, h.artefatto.contenitore], ['Non Comune', 1, undefined]);
   assert.deepEqual(h.sconto_tecniche, { pm: 1, minimo: 1, richiede_sintonizzazione: true, fonte: 'Equipaggiamento §10.10; Magia §28.1' });
   const t = c.perRif.get('artefatti:tomo-dei-guardiani');
