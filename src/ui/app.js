@@ -53,6 +53,7 @@ import { renderGiocatori } from './mappa/giocatori.js';
 import { creaAllarme } from './allarme.js';
 import { renderGuidaMappa } from './guida.js';
 import { avviso, avvisoErrore } from './avvisi.js';
+import { mandaIstantanea } from './salvataggio.js';
 import { controlloInUso } from './ridisegno.js';
 import { urlMuovi, alRound, collegamentoScontro, tecnicheScadute, statiScaduti, durateCarta, testoDurata, idPg } from '../round-scontro.js';
 import { bloccoControNemico } from './attacco-pg.js';
@@ -2237,6 +2238,10 @@ function renderSchedaInterna({ mantieniScorrimento = false } = {}) {
         if (!confirm(`Nuova sessione: PV e PM tornano ai massimi, Stati, Ferite e Affaticamento si azzerano, il Round torna a 1 senza Tecniche attive, gli usi «per sessione» tornano disponibili (A.233)${capolavori ? `, compres${capolavori === 1 ? 'o 1 Capolavoro' : `i ${capolavori} Capolavori`} (A.259)` : ''}. Note, Punti Eroe, Distintivi e gli altri usi restano. Procedere?`)) return;
         if (capolavori) stato.scelte = applicaModifica(stato.scelte, { equipaggiamento: rinnovaCapolavori(stato.scelte.equipaggiamento) }, stato.dati).scelte;
         cambiaSessione(nuovaSessione(stato.sessione, massimi));
+        // lotto 196: «Nuova sessione» è il momento in cui la serata finisce, quindi è il momento dell'istantanea
+        // dello stato per Marcello (src/ui/salvataggio.js). Non blocca e non avvisa: se la cartella non è impostata
+        // lo dice il server nella sua finestra, una volta.
+        mandaIstantanea('Nuova sessione');
       },
       // A.259: l'inventario come sta ADESSO. Il ctx della scheda si rifà a ogni disegno, ma una finestrella aperta
       // tiene quello di quando è stata aperta: senza questa lettura viva mostrerebbe un Capolavoro già usato come

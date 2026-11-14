@@ -103,6 +103,8 @@
 //   GET /api/salvataggi                { attivo, locale, autosave: { quando, file, dimensione } | null, ultimo }
 //   POST /api/salva-sessione           il salvataggio completo («Salva sessione»): zip in salvataggi/, Drive, ntfy;
 //                                      risponde con l'esito ({ ok, riga, drive, ntfy, … })
+//   POST /api/istantanea               «Manda lo stato» (lotto 196), solo da questo PC: zip dei personaggi nella
+//                                      cartella sincronizzata col cloud; nessun salvataggio completo, nessuna rete
 //   POST /api/spegni                   «Spegni Mutant», solo da questo PC (403 dagli altri): salvataggio completo,
 //                                      esito, poi il server si spegne (codice 42: avvia-server.bat chiude la finestra)
 //   «Il tablet è una vista» (21/10/2026, src/dispositivi.js, tavolo/dispositivi.json): un dispositivo (tablet) è
@@ -2064,15 +2066,29 @@ async function apiSalvataggi(req, res, percorso, salvataggi) {
   const locale = daQuestoPc(req.socket.remoteAddress);
   if (percorso === '/api/salvataggi') {
     if (req.method !== 'GET') return json(res, 405, { errore: 'metodo non ammesso' });
-    return json(res, 200, { attivo: true, locale, autosave: salvataggi.autosave?.() ?? null, ultimo: salvataggi.ultimo?.() ?? null });
+    return json(res, 200, { attivo: true, locale, autosave: salvataggi.autosave?.() ?? null, ultimo: salvataggi.ultimo?.() ?? null, istantanea: salvataggi.ultimaIstantanea?.() ?? null, cartellaIstantanee: locale ? salvataggi.cartellaIstantanee?.() ?? null : null });
   }
   if (req.method !== 'POST') return json(res, 405, { errore: 'metodo non ammesso' });
   if (percorso === '/api/salva-sessione') return json(res, 200, await salvataggi.salva('Salva sessione'));
+  // lotto 196: l'istantanea dello stato per Marcello. Solo dal PC del server — i dati del gruppo non li manda un
+  // tablet — e senza salvataggio completo: è una copia dei personaggi, non un backup della sessione.
+  if (percorso === '/api/istantanea') {
+    if (!locale) return json(res, 403, { errore: '«Manda lo stato» funziona solo dal PC dove gira il server.' });
+    let origine = 'Manda lo stato';
+    try {
+      const corpo = JSON.parse((await leggiCorpo(req, 8 * 1024)).toString('utf8') || '{}');
+      if (typeof corpo?.origine === 'string' && corpo.origine.length <= 60) origine = corpo.origine;
+    } catch { /* senza corpo: «Manda lo stato» */ }
+    return json(res, 200, await salvataggi.istantanea(origine));
+  }
   // «Spegni Mutant»: solo dal PC del server (un tablet non spegne il tavolo)
   if (!locale) return json(res, 403, { errore: '«Spegni Mutant» funziona solo dal PC dove gira il server.' });
   const esito = await salvataggi.salva('Spegni Mutant', { seCambiato: true });
+  // lotto 196: fine sessione = istantanea. Qui c'è tempo (la risposta non è ancora partita), a differenza della
+  // chiusura brusca della finestra.
+  const istantanea = await salvataggi.istantanea?.('Spegni Mutant');
   res.on('finish', () => salvataggi.spegni?.(esito));
-  return json(res, 200, { ...esito, spento: true });
+  return json(res, 200, { ...esito, spento: true, istantanea: istantanea ?? null });
 }
 
 export function creaServer({ radice = RADICE, cartella = join(RADICE, CARTELLA), tavolo = join(RADICE, TAVOLO), scontri = join(RADICE, SCONTRI), nemici = join(RADICE, NEMICI), veicoli: veicoliDati = null, scene = join(RADICE, SCENE), mappe = join(RADICE, MAPPE), musica = join(RADICE, MUSICA), galleria = join(RADICE, GALLERIA), px = join(RADICE, PX), soloLocale = false, avvisi = null, salvataggi = null, backupMaster = null, avvio = null, eMaster = (req) => daQuestoPc(req.socket.remoteAddress) } = {}) {
@@ -2113,7 +2129,7 @@ export function creaServer({ radice = RADICE, cartella = join(RADICE, CARTELLA),
         const no = rifiutoAiuto(req.method, percorso);
         if (no) return json(res, no.stato, { errore: no.errore });
       }
-      if (percorso === '/api/salvataggi' || percorso === '/api/salva-sessione' || percorso === '/api/spegni') return await apiSalvataggi(req, res, percorso, salvataggi);
+      if (percorso === '/api/salvataggi' || percorso === '/api/salva-sessione' || percorso === '/api/spegni' || percorso === '/api/istantanea') return await apiSalvataggi(req, res, percorso, salvataggi);
       if (percorso.startsWith('/api/')) return await api(req, res, percorso, cartella, tavolo, scontri, nemici, base, soloLocale, veicoli, migraIn, scene, mappe, canale, musica, avvisi, galleria, px);
       return await statico(req, res, percorso, base, versioneAvvio);
     } catch (e) {
@@ -2187,6 +2203,8 @@ if (process.argv[1] && fileURLToPath(import.meta.url) === process.argv[1]) {
     avvisi: () => { if (senzaAvvisi) return null; try { return leggiConfigAvvisi(RADICE)?.conf ?? null; } catch { return null; } },
     // backup su Drive o notifica non riusciti: nel registro (avvisi/registro.txt) che la console mostra all'avvio
     registra: (x) => registraErrore(baseSalvataggi, x),
+    // lotto 196: il rapporto della voce C entra nell'istantanea, così Davide non deve più mandarlo a mano
+    statoTxt: join(RADICE, 'stato-mutant.txt'),
   });
   const minuti = gestore.minuti();
   // autosave ogni N minuti, solo se qualcosa è cambiato; resta sul PC
@@ -2222,6 +2240,8 @@ if (process.argv[1] && fileURLToPath(import.meta.url) === process.argv[1]) {
     console.log(`\nMutant si spegne (${perche}): salvo la sessione…`);
     setTimeout(() => process.exit(0), 15000).unref();
     try { await gestore.salva(`chiusura: ${perche}`, { seCambiato: true, veloce: true }); } catch { /* niente da fare */ }
+    // lotto 196: l'istantanea è una copia di file locali, senza rete: sta nei pochi secondi che Windows concede
+    try { await gestore.istantanea(`chiusura: ${perche}`); } catch { /* niente da fare */ }
     server.close();
     process.exit(0);
   };

@@ -16,7 +16,7 @@
     "px",
     "avvisi",
     "node_modules",
-    "backup-prima-aggiornamento"
+    "backup-prima-aggiornamento", "istantanee"
   ],
   "file": [
     "config-salvataggi.json",

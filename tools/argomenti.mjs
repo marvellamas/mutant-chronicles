@@ -74,6 +74,7 @@ export const ARGOMENTI = {
   'descrizioni-bestiario.mjs': ['profili'],
   'riserve-intere.mjs': ['scrivi'],
   'prezzi-prima-dopo.mjs': ['da'],
+  'istantanea.mjs': ['cartella', 'dove', 'tieni', 'stato', 'elenco'],
   'prove.mjs': ['concorrenza', 'solo'],
   'ricognizione-manuali.mjs': ['drive'],
   'lotto_189_edizioni.mjs': ['file', 'scrivi'],

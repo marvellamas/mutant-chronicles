@@ -23,7 +23,7 @@ import { cartelleDi, perConsole } from './salva-sessione.mjs';
 import { elencoSalvataggi, rigaSalvataggio, quando, statoServer, spegniServer, ripristina, contenutoSalvataggio, avvisoCartellaVuota, postiSalvataggi, contenutoPerElenco } from './ripristina.mjs';
 import { NOME_MARCATORE, statoInstallazione, avvisoSovrascrittura } from '../src/copia-di-lavoro.js';
 import { leggiConfig, dimensione } from './salva-sessione.mjs';
-import { statoImpostazioni, testoAvvisi, testoDrive, argomentoGruppo, salvaAvvisi, salvaDrive, posizioniDrive, notificaDiProva, erroriNuovi, FILE_REGISTRO } from './impostazioni.mjs';
+import { statoImpostazioni, testoAvvisi, testoDrive, testoIstantanee, salvaIstantanee, argomentoGruppo, salvaAvvisi, salvaDrive, posizioniDrive, notificaDiProva, erroriNuovi, FILE_REGISTRO } from './impostazioni.mjs';
 import { hostname } from 'node:os';
 import { spawnSync } from 'node:child_process';
 import { righeMenu, ascii } from './menu.mjs';
@@ -607,6 +607,38 @@ async function voceAvvisi(chiedi) {
   console.log(e.ok ? ` Salvato: avvisi ${attivo ? 'ACCESI' : 'SPENTI'}. Prova con la voce 3.` : ` NON salvato: ${e.errore}.`);
 }
 
+/**
+ * Lotto 196: la cartella delle istantanee dello stato. **La scegli tu**: il programma non la indovina e non la
+ * deduce, perché è la tua cartella del cloud e solo tu sai quale è sincronizzata davvero. Si controlla una cosa
+ * sola, e non è negoziabile: non può essere la cartella dei dati di Mutant.
+ */
+async function voceIstantanee(chiedi) {
+  const s = statoImpostazioni(radice).istantanee;
+  console.log('\n Cartella delle istantanee dello stato');
+  console.log(' A fine sessione (Nuova sessione, spegnimento, pulsante "Manda lo stato") Mutant scrive qui uno zip');
+  console.log(' con i personaggi, i veicoli, i PX e il rapporto stato-mutant.txt. Se la cartella e\' sincronizzata');
+  console.log(' col cloud, lo stato arriva a Marcello da se\': Mutant non manda niente in rete.');
+  console.log(' Scegli tu quale: va bene qualunque cartella che il tuo cloud sincronizza. Vuota = nessuna istantanea.\n');
+  console.log(` Ora: ${ascii(testoIstantanee(s))}`);
+  const proposte = posizioniDrive().map((p) => `${p}\\Mutant stato`);
+  if (proposte.length) {
+    console.log(' Cartelle del cloud trovate su questo PC (sono proposte, non obblighi):');
+    proposte.forEach((p, i) => console.log(`  ${i + 1}. ${p}`));
+  }
+  const r = (await chiedi(` Percorso della cartella${proposte.length ? ', o il numero di una proposta' : ''} (Invio = ${s.percorso ? 'lascia com\'e\'' : 'nessuna istantanea'}, - = nessuna istantanea): `)).trim();
+  let percorso;
+  if (!r) percorso = s.percorso ?? '';
+  else if (r === '-') percorso = '';
+  else if (/^\d+$/.test(r) && proposte[Number(r) - 1]) percorso = proposte[Number(r) - 1];
+  else percorso = r;
+  let e = salvaIstantanee(radice, percorso);
+  if (!e.ok && /non esiste$/.test(`${e.errore}`)) {
+    if (si(await chiedi(` La cartella ${percorso} non esiste. La creo? [S/N] `))) e = salvaIstantanee(radice, percorso, { crea: true });
+    else { console.log(' Non salvato: scegli una cartella che esiste.'); return; }
+  }
+  console.log(!e.ok ? ` NON salvato: ${ascii(e.errore)}.` : e.percorso ? ` Salvato${e.creata ? ' (cartella creata)' : ''}: le istantanee andranno in ${e.percorso}.` : ' Salvato: nessuna istantanea.');
+}
+
 async function voceDrive(chiedi) {
   const s = statoImpostazioni(radice).drive;
   console.log('\n Cartella di Google Drive per i backup');
@@ -644,16 +676,18 @@ export async function voceImpostazioni(esterno = null) {
       console.log(' -----------------------------------');
       console.log(`  1. Avvisi ntfy: ${testoAvvisi(s.avvisi, radice)}`);
       console.log(`  2. Cartella Drive per i backup: ${testoDrive(s.drive)}`);
-      console.log('  3. Manda una notifica di prova');
-      console.log(`  4. Ruolo di questo PC: ${ascii(testoRuolo(leggiRuolo(radice)))}`);
-      console.log('  5. Metti il collegamento "Mutant" sul desktop');
-      console.log('  6. Torna al menu');
+      console.log(`  3. Cartella delle istantanee per Marcello: ${ascii(testoIstantanee(s.istantanee))}`);
+      console.log('  4. Manda una notifica di prova');
+      console.log(`  5. Ruolo di questo PC: ${ascii(testoRuolo(leggiRuolo(radice)))}`);
+      console.log('  6. Metti il collegamento "Mutant" sul desktop');
+      console.log('  7. Torna al menu');
       const r = (await chiedi('\n Scegli un numero (Invio = torna al menu): ')).trim();
       if (r === '1') await voceAvvisi(chiedi);
       else if (r === '2') await voceDrive(chiedi);
-      else if (r === '4') await voceRuolo({ rl });
-      else if (r === '5') creaCollegamento();
-      else if (r === '3') {
+      else if (r === '3') await voceIstantanee(chiedi);
+      else if (r === '5') await voceRuolo({ rl });
+      else if (r === '6') creaCollegamento();
+      else if (r === '4') {
         console.log('\n Invio della notifica di prova...');
         const p = await notificaDiProva(radice);
         console.log(` ${p.ok ? 'OK: ' : 'ERRORE: '}${p.testo}`);

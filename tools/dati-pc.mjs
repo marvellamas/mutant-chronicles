@@ -40,6 +40,8 @@ export function leggiImpostazione(opz = {}) {
 
 /** Scrive la cartella dei dati di questo PC (scrittura atomica). */
 export function scriviImpostazione(cartella, { perche = '', adesso = new Date(), ...opz } = {}) {
+  // lotto 196: una cartella di istantanee non diventa la cartella dei dati, nemmeno chiedendolo
+  if (eCartellaDiIstantanee(cartella)) throw new Error(`${resolve(cartella)} è la cartella delle istantanee dello stato (mutant-stato_*.zip): non può essere la cartella dei dati di Mutant. Scegline un'altra.`);
   const p = percorsoImpostazione(opz);
   mkdirSync(dirname(p), { recursive: true });
   const o = { _nota: 'Dove sono i dati di Mutant (personaggi, PX, tavolo, salvataggi) su questo PC. Lo scrivono Mutant.bat e il server; nessun aggiornamento lo cambia.', cartella: resolve(cartella), scelta: adesso.toISOString(), perche };
@@ -60,6 +62,19 @@ export function cartellaTemporanea(cartella, radiceApp, opz = {}) {
 }
 
 /**
+ * **Lotto 196: una cartella di istantanee non è una cartella di dati.** Le istantanee (tools/istantanea.mjs) vanno
+ * in una cartella che il cloud sincronizza, e il cloud cancella, rinomina e riscrive i file quando vuole: metterci
+ * i personaggi è l'errore che a fine ottobre li ha fatti sparire (docs/diagnosi-dati-spariti-2026-10-12.md). La
+ * cartella si riconosce dai file che ha dentro — `mutant-stato_*.zip` — non dal nome, perché il nome lo scegli
+ * Davide. Chi prova a impostarla viene fermato: `scriviImpostazione` la rifiuta e `cartellaDati` la ignora.
+ */
+export function eCartellaDiIstantanee(cartella) {
+  try {
+    return readdirSync(cartella).some((f) => /^mutant-stato_\d{4}-\d{2}-\d{2}_\d{4}(_\d+)?\.zip$/.test(f));
+  } catch { return false; }
+}
+
+/**
  * La cartella dei dati per una copia dell'app che sta in `radiceApp`.
  * @returns {{ cartella, fonte: 'profilo'|'app', impostata: string|null, problema: string|null }}
  *   fonte «profilo»: l'impostazione di questo PC; «app»: la cartella dell'app (nessuna impostazione, o non valida).
@@ -70,6 +85,9 @@ export function cartellaDati(radiceApp, opz = {}) {
   const imp = leggiImpostazione(opz);
   if (imp) {
     if (cartellaTemporanea(imp.cartella, radiceApp, opz)) return { cartella: resolve(radiceApp), fonte: 'app', impostata: imp.cartella, problema: 'La cartella dei personaggi impostata è una cartella temporanea: la ignoro' };
+    // lotto 196: se l'impostazione punta alla cartella delle istantanee (scritta a mano, o una cartella diventata
+    // tale dopo), si usa quella dell'app e si dice perché: i personaggi non si tengono dove scrive il cloud
+    if (eCartellaDiIstantanee(imp.cartella)) return { cartella: resolve(radiceApp), fonte: 'app', impostata: imp.cartella, problema: `la cartella impostata contiene le istantanee dello stato (mutant-stato_*.zip) e non i dati: la ignoro` };
     if (existsSync(join(imp.cartella, 'personaggi'))) return { cartella: resolve(imp.cartella), fonte: 'profilo', impostata: imp.cartella, problema: null };
     return { cartella: resolve(radiceApp), fonte: 'app', impostata: imp.cartella, problema: `la cartella dei dati impostata su questo PC non c'è più: ${imp.cartella}` };
   }

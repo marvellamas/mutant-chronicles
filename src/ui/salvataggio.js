@@ -47,6 +47,47 @@ export function pulsanteSalvaSessione() {
 }
 
 /**
+ * **L'istantanea dello stato per Marcello (lotto 196).** Uno zip dei personaggi, dei veicoli e dei PX nella
+ * cartella che Davide sincronizza col cloud: di lì arriva a noi da sé, senza che l'app mandi niente in rete.
+ *
+ * Non si chiama a ogni salvataggio: durante un combattimento l'app salva decine di volte in pochi minuti, e un
+ * invio per salvataggio rallenterebbe proprio il momento in cui non deve rallentare niente. Si chiama a **fine
+ * sessione** — «Nuova sessione», spegnimento — e dal pulsante «Manda lo stato» quando serve subito.
+ *
+ * Non blocca e non avvisa da sé quando la cartella non è impostata: il server lo dice una volta nella sua finestra
+ * e non insiste (tools/salva-sessione.mjs → istantanea).
+ * @returns l'esito, o null se non c'è un server (l'app senza server non ha niente da mandare)
+ */
+export async function mandaIstantanea(origine) {
+  try {
+    const r = await fetch('api/istantanea', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ origine }) });
+    if (!r.ok) return null; // 403 da un tablet: lo stato lo manda il PC del Direttore
+    return await r.json();
+  } catch { return null; } // senza server non c'è niente da mandare
+}
+
+/** «Manda lo stato»: l'istantanea adesso, con l'esito in una riga. Solo dal PC del server. */
+export function pulsanteMandaStato() {
+  const b = h('button', {
+    type: 'button', class: 'btn',
+    title: 'Scrive subito l’istantanea dello stato (personaggi, veicoli, PX e il rapporto stato-mutant.txt) nella cartella sincronizzata col cloud, da cui arriva a Marcello. Non manda niente in rete e non salva la sessione: per quello c’è «Salva sessione»',
+    onclick: async () => {
+      b.disabled = true;
+      b.textContent = 'Scrivo…';
+      try {
+        const e = await mandaIstantanea('Manda lo stato');
+        if (!e) avviso('Istantanea non fatta: «Manda lo stato» funziona solo dal PC dove gira Mutant.', { tipo: 'errore', chiave: 'istantanea' });
+        else avviso(e.riga ?? 'Istantanea fatta.', { tipo: e.fatto ? 'ok' : 'errore', chiave: 'istantanea', durata: e.fatto ? 8000 : 15000 });
+      } finally {
+        b.disabled = false;
+        b.textContent = 'Manda lo stato';
+      }
+    },
+  }, 'Manda lo stato');
+  return b;
+}
+
+/**
  * «Spegni Mutant»: conferma, salvataggio completo, esito; poi il server si spegne e la sua finestra si chiude.
  * La pagina resta con l'esito e «Mutant è spento».
  */

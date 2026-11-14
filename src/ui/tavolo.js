@@ -58,7 +58,7 @@ import { linkGuidaMappa } from './guida.js';
 import { cartaDallaMappa, arrivoDallaMappa, tornaAllaMappa } from './ritorno.js';
 import { scegliImmagineNemico, impostaImmagineNemico } from './immagine-nemico.js';
 import { chiediTesto, chiedi } from './finestrella.js';
-import { pulsanteSalvaSessione, pulsanteSpegni } from './salvataggio.js';
+import { pulsanteSalvaSessione, pulsanteSpegni, pulsanteMandaStato } from './salvataggio.js';
 
 const INTERVALLO_MS = 3000;
 /** Carta con la chiave del suo token (data-pezzo): la mappa di battaglia la cerca al clic sul token (src/ui/mappa/canale.js). */
@@ -440,7 +440,7 @@ export function renderTavolo(radice, ctx) {
       // lotto 175 (A.233): «Nuova scena» e «Nuovo capitolo», solo sul PC del Direttore, sempre con conferma e «Annulla»
       ctx.master ? gruppoMomento({ momento: stato.momento, dati: ctx.dati, gruppo: gruppoTesta, dopo: (m) => { stato.momento = m; disegna(); },
         testiAlTavolo: () => alTavolo.filter((r) => r.file && stato.testi.has(r.file)).map((r) => ({ file: r.file, testo: stato.testi.get(r.file) })) }) : null,
-      gruppoTesta('Sessione', 'gruppo-sessione', pulsanteSalvaSessione(), pulsanteSpegni()));
+      gruppoTesta('Sessione', 'gruppo-sessione', pulsanteSalvaSessione(), pulsanteMandaStato(), pulsanteSpegni()));
     const esitoEsempi = stato.esitoEsempi ? h('p', { class: 'riquadro attenzione', role: 'status' }, stato.esitoEsempi) : null;
     // 08/10: nel riquadro anche l'elenco «Tablet collegati» dei PG al tavolo (stesso dato dell'elenco dell'Iniziativa)
     const iniz = (n) => String(n ?? '?').split(/\s+/).filter(Boolean).map((x) => x[0]).join('').slice(0, 2).toUpperCase();

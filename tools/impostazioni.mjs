@@ -8,6 +8,9 @@
 //   avvisi/registro.txt       una riga per invio non riuscito, la più recente in fondo
 //   avvisi/stato.json         anche «registro_letto»: fin dove la console ha già mostrato il registro
 import { readFileSync, writeFileSync, existsSync, mkdirSync, statSync } from 'node:fs';
+import { quanteIstantanee } from './salva-sessione.mjs';
+import { erroreCartellaIstantanee } from './istantanea.mjs';
+import { cartellaDati } from './dati-pc.mjs';
 import { join, dirname } from 'node:path';
 import { hostname } from 'node:os';
 import { configurazione, inviaHttp, dataOra, ARGOMENTO, registraErrore, FILE_REGISTRO } from './avvisi.mjs';
@@ -48,7 +51,10 @@ export function statoImpostazioni(radice) {
   const gc = existsSync(fc) ? leggi(fc) : null;
   const percorso = String(gc?.cartella_drive ?? gc?.copia_in ?? '').trim() || null;
   const drive = { file: existsSync(fc), percorso, esiste: !!percorso && cartella(percorso), stato: !existsSync(fc) ? 'mancante' : !percorso ? 'vuota' : cartella(percorso) ? 'ok' : 'inesistente' };
-  return { avvisi, drive, mancanti: [...(letta ? [] : [FILE_AVVISI]), ...(existsSync(fc) ? [] : [FILE_CONFIG])], nuova: !letta && !existsSync(fc) };
+  // lotto 196: la cartella delle istantanee dello stato, quella che il cloud sincronizza
+  const pi = String(gc?.cartella_istantanee ?? '').trim() || null;
+  const istantanee = { file: existsSync(fc), percorso: pi, esiste: !!pi && cartella(pi), tenere: quanteIstantanee(gc ?? {}), stato: !existsSync(fc) ? 'mancante' : !pi ? 'vuota' : cartella(pi) ? 'ok' : 'inesistente' };
+  return { avvisi, drive, istantanee, mancanti: [...(letta ? [] : [FILE_AVVISI]), ...(existsSync(fc) ? [] : [FILE_CONFIG])], nuova: !letta && !existsSync(fc) };
 }
 
 /** Testo di una riga per lo stato degli avvisi. */
@@ -60,6 +66,15 @@ export function testoAvvisi(a, radice = null) {
     case 'argomento_vuoto': return 'accesi, ma senza argomento ntfy: non parte nulla';
     case 'argomento_non_valido': return `accesi, ma l'argomento «${a.argomento}» non e' valido: non parte nulla`;
     default: return `ACCESI · argomento ${a.argomento}${proposto && a.argomento === proposto ? ' (quello del gruppo)' : ''} · nome di questo PC: ${a.nomePc ?? `${hostname()} (nome di Windows)`}`;
+  }
+}
+
+/** Testo di una riga per la cartella delle istantanee dello stato (lotto 196). */
+export function testoIstantanee(i) {
+  switch (i.stato) {
+    case 'mancante': case 'vuota': return 'non impostata: lo stato dei personaggi non arriva a Marcello';
+    case 'inesistente': return `${i.percorso} — NON TROVATA (il cloud e' acceso? il percorso e' giusto?)`;
+    default: return `${i.percorso} (trovata) · ne tiene ${i.tenere}`;
   }
 }
 
@@ -114,6 +129,32 @@ export function salvaDrive(radice, percorso, { crea = false } = {}) {
   const v = daEsempio(radice, FILE_CONFIG, ESEMPIO_CONFIG);
   v.cartella_drive = p ? p.replace(/\\/g, '/') : '';
   delete v.copia_in;
+  scrivi(join(radice, FILE_CONFIG), v);
+  return { ok: true, creata, percorso: p || null };
+}
+
+/**
+ * Salva la cartella delle istantanee dello stato (lotto 196). Vuoto = nessuna istantanea.
+ *
+ * **Il controllo che conta:** non può essere la cartella dei dati di Mutant, né starci dentro, né contenerla. Il
+ * cloud cancella, rinomina e riscrive i file di quella cartella quando vuole; i personaggi non si tengono dove
+ * scrive il cloud. È l'errore che a fine ottobre è costato i personaggi a Davide.
+ * @returns {{ ok: boolean, errore?: string, creata?: boolean, percorso?: string|null }}
+ */
+export function salvaIstantanee(radice, percorso, { crea = false, dati = null } = {}) {
+  const p = String(percorso ?? '').trim().replace(/^"(.*)"$/, '$1').replace(/[\\/]+$/, '');
+  let creata = false;
+  if (p) {
+    const male = erroreCartellaIstantanee(p, dati ?? cartellaDati(radice).cartella);
+    if (male) return { ok: false, errore: `${p} ${male}` };
+    if (!cartella(p)) {
+      if (!crea) return { ok: false, errore: `la cartella ${p} non esiste` };
+      if (!cartella(dirname(p))) return { ok: false, errore: `non esiste nemmeno ${dirname(p)}: il cloud è installato e acceso?` };
+      try { mkdirSync(p); creata = true; } catch (e) { return { ok: false, errore: `non riesco a creare ${p} (${e.message})` }; }
+    }
+  }
+  const v = daEsempio(radice, FILE_CONFIG, ESEMPIO_CONFIG);
+  v.cartella_istantanee = p ? p.replace(/\\/g, '/') : '';
   scrivi(join(radice, FILE_CONFIG), v);
   return { ok: true, creata, percorso: p || null };
 }

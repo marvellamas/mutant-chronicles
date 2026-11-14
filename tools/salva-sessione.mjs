@@ -23,7 +23,7 @@
 import { readFileSync, existsSync, mkdirSync, readdirSync, statSync, constants } from 'node:fs';
 import { cartellaDati } from './dati-pc.mjs';
 import { readFile, writeFile, rename, copyFile, mkdir, unlink } from 'node:fs/promises';
-import { join, relative, sep, basename } from 'node:path';
+import { join, relative, sep, basename, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { hostname } from 'node:os';
 import { createHash } from 'node:crypto';
@@ -159,6 +159,18 @@ export function minutiAutosave(config) {
 
 /** La cartella di Google Drive configurata («copia_in» è il nome di prima, 06/10), o null. */
 export const cartellaDrive = (config) => (String(config?.cartella_drive ?? config?.copia_in ?? '').trim() || null);
+
+/**
+ * La cartella delle istantanee dello stato (lotto 196), o null se Davide non l'ha ancora scelta.
+ * È una cartella che il cloud sincronizza: ci scrive solo Mutant, e di lì lo stato arriva a Marcello da sé.
+ */
+export const cartellaIstantanee = (config) => (String(config?.cartella_istantanee ?? '').trim() || null);
+
+/** Quante istantanee tenere: `istantanee_da_tenere` fra 2 e 200; altrimenti 20 (tools/istantanea.mjs, TIENI). */
+export function quanteIstantanee(config) {
+  const n = Number(config?.istantanee_da_tenere);
+  return Number.isInteger(n) && n >= 2 && n <= 200 ? n : 20;
+}
 
 /**
  * L'argomento ntfy dei salvataggi: "ntfy": false lo spegne; "ntfy_argomento" nel file dei salvataggi lo sceglie (prove);
@@ -370,7 +382,7 @@ export async function salvataggioCompleto({ cartelle, salvataggi, config = {}, a
  * Mutant» e la chiusura della finestra: la stessa procedura della voce 3 di Mutant.bat (salvataggioCompleto).
  * @param config, avvisi funzioni che rileggono la configurazione a ogni salvataggio (si cambia senza riavviare)
  */
-export function creaGestore({ cartelle, salvataggi, autosave: dirAutosave, config = () => ({}), avvisi = () => null, log = console.log, fetchFn = fetch, registra = null }) {
+export function creaGestore({ cartelle, salvataggi, autosave: dirAutosave, config = () => ({}), avvisi = () => null, log = console.log, fetchFn = fetch, registra = null, statoTxt = null }) {
   const ora = () => new Date().toLocaleTimeString('it-IT', { hour: '2-digit', minute: '2-digit' });
   let coda = Promise.resolve();
   let ultimo = null; // { quando, riga, impronta }
@@ -382,8 +394,47 @@ export function creaGestore({ cartelle, salvataggi, autosave: dirAutosave, confi
     if (e.ok && !e.saltato) ultimo = { quando: new Date().toISOString(), riga: e.riga, impronta: e.impronta };
     return e;
   }));
+  // lotto 196: l'istantanea dello stato per noi. Non a ogni salvataggio — durante un combattimento l'app salva
+  // decine di volte in pochi minuti — ma a fine sessione: «Nuova sessione», spegnimento e il pulsante «Manda lo
+  // stato». Se la cartella non è impostata **lo dice una volta e non insiste**: un avviso a ogni fine scontro
+  // diventa rumore, e il rumore si impara a ignorare.
+  let dettoNonImpostata = false;
+  let ultimaIstantanea = null; // { quando, file, quanti }
+  // l'import è dentro la funzione, non in cima: tools/istantanea.mjs importa da qui (creaZip, leggiZip), e due
+  // moduli che si importano a vicenda funzionano finché nessuno dei due serve all'altro al momento del caricamento.
+  // Tenendolo qui quel «finché» non c'è: la direzione degli import resta una sola.
+  const istantanea = (origine, { adesso = new Date() } = {}) => (coda = coda.then(async () => {
+    const { faiIstantanea, CARTELLE: CARTELLE_ISTANTANEA } = await import(`./istantanea.mjs`);
+    const c = config();
+    const dove = cartellaIstantanee(c);
+    if (!dove) {
+      // la riga torna sempre a chi ha chiesto (il pulsante «Manda lo stato» merita una risposta ogni volta);
+      // quello che si dice **una volta sola** è nella finestra del server, dove gli inneschi automatici finiscono:
+      // un avviso a ogni fine scontro diventa rumore, e il rumore si impara a ignorare.
+      const r = { fatto: false, motivo: 'non impostata', zitto: dettoNonImpostata, riga: 'Istantanea dello stato: cartella non impostata. Impostazioni di Mutant.bat (voce 9) → cartella delle istantanee: scegli una cartella che il cloud sincronizza e lo stato arriva a Marcello da sé. Non lo ripeto.' };
+      if (!dettoNonImpostata) log(perConsole(`[${ora()}] ${r.riga}`));
+      dettoNonImpostata = true;
+      return r;
+    }
+    const e = faiIstantanea({
+      cartelle: Object.fromEntries(CARTELLE_ISTANTANEA.map((x) => [x, cartelle[x]])),
+      dove,
+      dati: dirname(cartelle.personaggi ?? ''),
+      statoTxt: statoTxt ?? null,
+      adesso,
+      tieni: quanteIstantanee(c),
+    });
+    log(perConsole(`[${ora()}] ${origine}. ${e.riga}`));
+    if (e.fatto) ultimaIstantanea = { quando: adesso.toISOString(), file: e.file, quanti: e.quanti };
+    else registra?.({ tipo: 'istantanea dello stato', testo: `${origine}`, errore: e.riga });
+    return e;
+  }));
+
   return {
     salva,
+    istantanea,
+    ultimaIstantanea: () => ultimaIstantanea,
+    cartellaIstantanee: () => cartellaIstantanee(config()),
     minuti: () => minutiAutosave(config()),
     async faiAutosave() {
       if (inAutosave) return { scritto: false, motivo: 'in corso' };
