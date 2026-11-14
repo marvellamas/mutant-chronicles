@@ -4,7 +4,7 @@ Tool interno per il gruppo di gioco di ruolo. Non va pubblicato. Il master (Davi
 
 Lingua del progetto: italiano (UI, commenti, commit, documentazione). Terminologia: quella dei manuali (Caratteristica, Abilità, Addestramento, Classe, Grado, Talento, VA, PV, PM, Salvezza).
 
-## All'inizio di OGNI sessione: controllo dei manuali
+## All'inizio di OGNI sessione: controllo dei manuali e data dei personaggi
 
 Prima di qualunque altro lavoro, eseguire la procedura di controllo di `docs/manuali-drive.md` su:
 
@@ -16,6 +16,8 @@ Si confronta il `modifiedTime` di ciascuno con il registro.
 
 - Se nessuno è cambiato: riferire in una riga «manuali e risposte invariati».
 - Altrimenti applicare la procedura, poi riferire che cosa è cambiato e che cosa è stato applicato. La procedura: testo in `docs/manuali-txt/`, diff, classificazione regola / testo / cosmetica, dati, `docs/risposte-master.md` e `docs/per-davide.md`, registro.
+
+**Di che giorno sono i personaggi** (lotto 196): `node tools/ricognizione-manuali.mjs` lo stampa in prima riga — «istantanea del 14/11 alle 23:40, sette personaggi», oppure l'avviso che è vecchia o che non c'è. È la prima cosa da sapere aprendo una sessione, prima di qualunque affermazione sui livelli, sugli inventari, sulle Ferite o sui PX: `personaggi/` è una **copia locale** e può essere vecchia di settimane. L'istantanea la manda l'app dal PC di Davide (`tools/istantanea.mjs`); se manca o è vecchia, lo si dice e si chiede «Manda lo stato» invece di rispondere dalla copia vecchia.
 
 Drive si usa **in sola lettura**: mai scrivere nei Doc di Davide, nemmeno commenti (`docs/protocollo-davide.md`). Se un Doc non è leggibile, segnalarlo subito senza inventare.
 
@@ -360,6 +362,7 @@ Valgono per ogni prompt, anche quando il prompt non le ripete.
 - Cartelle reali intoccabili: `personaggi/`, `tavolo/`, `scontri/`, `nemici/`, `veicoli/`, `scene/`, `mappe/`, `musica/`, `galleria/`, `px/`, `salvataggi/`, `autosave/`, `backup-master/`. Intoccabile anche la porta 3000. Le prove si fanno su cartelle temporanee nello scratchpad e su un'altra porta (3017); una cartella dello scratchpad in cui si copiano personaggi si crea prima, vuota, con `node tools/cartella-di-prova.mjs <cartella>` (lotto 161: in una prova ogni cartella con personaggi non nata nella prova è di sola lettura).
 - **Una cartella di dati nuova del server va aggiunta in tre posti:** `.gitignore`, `tools/file-locali.json` (`cartelle` e `controllo_svuotamento`) e, se contiene dati di gioco da salvare, `CARTELLE` di `tools/salva-sessione.mjs`. Altrimenti un aggiornamento la cancella: è successo a `backup-master/` (12/10, `docs/diagnosi-dati-spariti-2026-10-12.md`). `tests/dati-spariti.test.js` lo controlla.
 - I PG reali (Drive «FILE PG», `PersonaggiBackup/`) solo in lettura: si lavora sulle copie.
+- **`personaggi/` non si chiama «i file veri»: è la copia locale, e ogni affermazione che la riguarda porta scritta la data del file su cui si basa** — «Dimitri, copia del 04/10: nessuna CyberArma». Senza la data, l'affermazione non vale. *Perché:* i personaggi li tiene Davide sul suo PC e noi non li vediamo; il 14/11/2026 la nostra copia aveva file del 4 ottobre (Dimitri), del 7 (Oshi), del 25 (Botha, Duncan, Michele, Pablo) e del 10 novembre (Lucas), con in mezzo due serate di gioco, i PX del 26 ottobre e la migrazione dei Talenti — e per settimane abbiamo presentato come «adesso» conclusioni su ottobre, fino a mandare a Davide una domanda sbagliata (A.268, lotto 195). Dove un lotto ha bisogno dello stato vero per decidere (livelli, inventari, Ferite, PX), **si dice che serve la copia fresca** invece di rispondere dalla copia vecchia: la si chiede con «Manda lo stato» (lotto 196) e `node tools/istantanea.mjs --stato` dice di che giorno è l'ultima.
 - Prima del commit devono essere verdi:
   - i test (`npm test`);
   - il validatore dei dati;

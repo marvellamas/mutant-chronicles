@@ -54,36 +54,45 @@ Nella stessa sezione, **spostare la A.262** (il coefficiente dell'«Epica»), ch
 
 **Aggiungere una domanda.**
 
-> • **A.268 — Da che livello parte l'adeguamento delle Abilità: tutti all'8, o ai livelli di adesso?**
-> (14/11/2026).
+> • **A.268 — A che livello sono i sette, e da dove parte l'adeguamento delle Abilità?** (14/11/2026).
 >
-> *In parole semplici:* il blocco «Adeguamento approvato delle Abilità e passaggio al livello 8» dell'11 novembre
-> dice che «la destinazione dei sette PG è il livello 8, con tre Gradi complessivi» e che «a livello 8 il monte
-> totale spettante è 7 × 3 = 21 punti liberi». Nei file dei personaggi, però, **sei dei sette sono al livello 6** e
-> **solo Lucas è al 7**: non uno sotto l'8, ma due. Con il monte del §8.3.1 — «7 punti per Grado complessivo» — ai
-> livelli di adesso fanno **14 punti**, non 21.
+> *Prima di tutto, una cosa su di noi.* I personaggi li hai tu. La nostra copia è quella che ci hai passato, e
+> oggi contiene file del **4 ottobre** (Dimitri), del **7** (Oshi), del **25** (Botha, Duncan, Michele, Pablo) e del
+> **10 novembre** (Lucas). In mezzo ci sono almeno due serate di gioco, i PX del 26 ottobre e la migrazione dei
+> Talenti fatta al tavolo. Quindi quello che segue è una lettura di **ottobre**, non di adesso, e la domanda nasce
+> proprio da qui.
 >
-> Le due strade sono diverse per la serata e per le Schede:
+> *Che cosa dice il blocco approvato:* «la destinazione dei sette PG è il livello 8, con tre Gradi complessivi» e «a
+> livello 8 il monte totale spettante è 7 × 3 = 21 punti liberi» (11 novembre). Dà per scontato che i sette siano
+> al livello 7.
 >
-> 1. **Prima si sale, poi si adegua.** Si portano tutti al livello 8 — e per sei di loro sono **due livelli**, non
->    uno, quindi due Talenti di Grado, due dadi di PV e PM, due incrementi di Classe ciascuno — e poi si fa la
->    redistribuzione con 21 punti. È l'ordine che il §8.3.1 indica («completare prima il passaggio dal livello 7,
->    poi aggiornare categorie e basi e infine ridistribuire i punti liberi»), ma parte dal presupposto che siano
->    già al 7.
-> 2. **Si adegua adesso, ai livelli di oggi**, con 14 punti (16 per Lucas, che ha un Grado in più), e i punti dei
->    Gradi successivi arrivano quando arrivano i livelli, come sempre.
+> *Che cosa vediamo noi, nella copia ferma a ottobre:* **sei risultano al livello 6 e Lucas al 7**. Con il monte del
+> §8.3.1 — «7 punti per Grado complessivo» — ai livelli che vediamo fanno **14 punti**, non 21. Molto probabilmente
+> nel frattempo hai assegnato PX che noi non vediamo, e allora i livelli veri sono altri.
 >
-> *Che cosa fa l'app nel frattempo:* la procedura **calcola il monte dai dati** del personaggio, non da un numero
-> scritto nel codice, e **dichiara la differenza** con il blocco approvato. Quindi funziona in tutti e due i casi e
-> non ha inventato niente: da nessuna parte è scritto «21». Quello che non può decidere da sé è **quando** far
-> salire i sette, perché due di loro non hanno i PX della soglia e l'avanzamento straordinario è una concessione
-> del Direttore (A.187).
+> *La domanda, in due parti:*
+>
+> 1. **A che livello sono davvero i sette, adesso?** Se sono già al 7, il blocco approvato si applica così com'è
+>    scritto e il monte è 21. Se sono ancora al 6, per sei di loro il passaggio all'8 sono **due** livelli, non uno —
+>    due Talenti di Grado, due dadi di PV e PM, due incrementi di Classe ciascuno.
+> 2. **L'adeguamento si fa dopo le salite o ai livelli di adesso?** Prima si sale e poi si ridistribuisce (è
+>    l'ordine che il §8.3.1 indica: «completare prima il passaggio dal livello 7, poi aggiornare categorie e basi e
+>    infine ridistribuire i punti liberi»), oppure si adegua subito, con il monte dei livelli attuali, e i punti dei
+>    Gradi successivi arrivano quando arrivano i livelli.
+>
+> *Che cosa fa l'app nel frattempo:* la procedura **calcola il monte dai dati del personaggio** che ha davanti, non
+> da un numero scritto nel codice, e **dichiara la differenza** con il blocco approvato. Funziona quindi in tutti e
+> due i casi, e da nessuna parte c'è scritto «21». Quello che non può decidere da sé è **quando** far salire i sette:
+> l'avanzamento di chi non ha i PX della soglia è una concessione del Direttore (A.187).
 >
 > *Perché la domanda:* la risposta cambia una serata di lavoro al tavolo. Se si sale prima, la serata comincia con
-> due «Sali di livello» per sei giocatori — scelte di Talenti e Specializzazioni comprese — e la redistribuzione
-> viene dopo, su 21 punti. Se si adegua adesso, la serata è solo la redistribuzione su 14, e le salite si fanno
-> quando i PX ci sono. Farlo nell'ordine sbagliato vuol dire rifarlo: i punti liberi si assegnano «usando lo stato
-> e i limiti attuali del personaggio», e i limiti cambiano a ogni Grado.
+> uno o due «Sali di livello» per sei giocatori — scelte di Talenti e Specializzazioni comprese — e la
+> redistribuzione viene dopo. Se si adegua adesso, la serata è solo la redistribuzione, e le salite si fanno quando i
+> PX ci sono. Farlo nell'ordine sbagliato vuol dire rifarlo: i punti liberi si assegnano «usando lo stato e i limiti
+> attuali del personaggio», e i limiti cambiano a ogni Grado.
+>
+> *Come ci rispondi senza scrivere niente:* con «Manda lo stato» (sezione 8). Da quel momento i livelli veri li
+> vediamo noi, e questa domanda resta solo per la seconda parte.
 
 Il primo numero libero diventa **A.269**. Restano aperte la **A.260** (il consumo delle conversioni della
 CyberArma: colpi o Round) e la **A.264** (di quanto cala il valore di un accumulatore di ricambio scarico) del
