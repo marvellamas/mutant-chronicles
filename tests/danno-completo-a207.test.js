@@ -88,7 +88,7 @@ test('A.207: il Bestiario proposto (creature pronte per grado, mutazioni e boss)
   assert.ok(n > 20, `${n} profili controllati`);
 });
 
-test('A.207: i modelli PNG generici (10 Classi × 6 Gradi): la tabella dà il «Danno completo», l’EQ si somma una volta sola e nient’altro', () => {
+test('A.207: i modelli PNG generici (25 Classi × 6 Gradi): la tabella dà il «Danno completo», l’EQ si somma una volta sola e nient’altro', () => {
   let n = 0;
   for (const cl of classiPng(dati)) {
     for (const g of dati.png_generici.gradi) {
@@ -107,7 +107,7 @@ test('A.207: i modelli PNG generici (10 Classi × 6 Gradi): la tabella dà il «
       }
     }
   }
-  assert.equal(n, 120);
+  assert.equal(n, 300);
 });
 
 test('A.207: «PG → nemico»: il danno del personaggio (con i suoi bonus) diventa il danno del nemico, e l’attacco non lo somma ancora', () => {
