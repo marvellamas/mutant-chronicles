@@ -23,6 +23,9 @@ import { readFileSync, existsSync } from 'node:fs';
 import { join } from 'node:path';
 import { registro, voci, CARTELLA_TESTI, versioneDichiarata, versioneNelNome, improntaTesto } from './manuali.mjs';
 import { fermaSeSconosciuti, ARGOMENTI } from './argomenti.mjs';
+import { cartellaIstantanee, leggiConfig } from './salva-sessione.mjs';
+import { ultimaIstantanea, rigaFreschezza, RADICE as RADICE_APP } from './istantanea.mjs';
+import { cartellaDati } from './dati-pc.mjs';
 
 /** Il numero di versione dal titolo di un file di Drive: «… v0.74», «… 0.47.docx», «… — scheda v0.6». */
 export function versioneNelTitolo(titolo) {
@@ -116,8 +119,33 @@ export function referto(files = null) {
   return { righe, doppioni: dop, spariti, diverse, incoerenti, mancanti, fermati: dop.length > 0 || spariti.length > 0 || incoerenti.length > 0 || mancanti.length > 0 };
 }
 
+/**
+ * **Di che giorno sono i personaggi che stiamo guardando (lotto 196).**
+ *
+ * Va in cima al controllo di inizio sessione, accanto alla ricognizione dei manuali, perché è la cosa che per
+ * settimane non abbiamo saputo: `personaggi/` è una copia locale, e al 14/11/2026 conteneva file del 4 ottobre
+ * (Dimitri), del 7 (Oshi), del 25 (Botha, Duncan, Michele, Pablo) e del 10 novembre (Lucas). Chiamarla «i file
+ * veri» ci ha fatto presentare come «adesso» affermazioni su ottobre, e una di quelle ha prodotto una domanda
+ * sbagliata a Davide (A.268, lotto 195).
+ *
+ * Legge l'ultima istantanea dalla cartella impostata (config-salvataggi.json → cartella_istantanee, quella che il
+ * cloud sincronizza) e dice quanto è fresca. Non scrive niente e non ferma nessuno: senza istantanee stampa la
+ * riga che ricorda di datare ogni affermazione.
+ */
+export function rigaIstantanea() {
+  try {
+    const dd = cartellaDati(RADICE_APP).cartella;
+    const dove = cartellaIstantanee(leggiConfig(join(dd, 'config-salvataggi.json')));
+    if (!dove) return 'Istantanea dei personaggi: cartella non impostata su questo PC. Ogni affermazione sui personaggi riguarda la copia locale di personaggi/, con la data del file su cui si basa.';
+    return rigaFreschezza(ultimaIstantanea(dove)).riga;
+  } catch (e) {
+    return `Istantanea dei personaggi: non si legge (${e.message}). Vale la copia locale, con la data del file.`;
+  }
+}
+
 function stampa(r, conDrive) {
   const L = (s, n) => String(s ?? '—').padEnd(n);
+  console.log(`${rigaIstantanea()}\n`);
   console.log(`Registro: ${registro().manuali.length} manuali, ${registro().schede.length} schede, ${registro().scambio.length} documenti di scambio. Controllato il ${registro().controllato}.`);
   console.log(`Cartella di lavoro ${registro().cartella_lavoro} · archivio ${registro().cartella_archivio}\n`);
   console.log(L('Manuale', 36), L('disco', 7), L('prima pagina', 13), conDrive ? L('Drive', 7) : '', conDrive ? 'esito' : '');
