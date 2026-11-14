@@ -2828,3 +2828,37 @@ che Davide sincronizza col cloud, e di lì arriva a noi; la cartella la sceglie 
 sono venti, non diventano mai la cartella dei dati e non entrano in git. `docs/diff-lotto196-2026-11-14.md`.
 
 Nessuna domanda nuova: il primo numero libero resta **A.269**.
+
+## 14 novembre 2026, sera — Lotto 197: i venticinque PNG generici dal file di dati di Davide (`docs/diff-lotto197-2026-11-14.md`)
+
+Recepiti **Mostri 0.67**, **Direttore 0.51** e la fonte di dati `SIMPLY_RPG_PNG_Abilita_v0.67.json`
+(`docs/manuali-txt/png-abilita-0.67.json`). Le tre verifiche del lotto 190, rifatte sull'edizione nuova: lo sha256
+del Word dichiarato dal JSON **coincide**, i nove numeri di controllo del Doc E&L tornano, e le **3.600 voci**
+(25 modelli × 6 Gradi × 24 Abilità) sono coerenti senza eccezioni. Il profilo delle Abilità del JSON è il
+**4/7/9/4** del lotto 192 su tutti e venticinque, con 127 punti base e i limiti che le formule del §8.7 danno da
+sé.
+
+**Nessun profilo è più in revisione.** Il 12 e il 13 novembre Davide ha approvato i diciotto che mancavano e li ha
+consolidati: ogni modello ha sei Specializzazioni (livelli 1, 4, 8, 12, 16, 20), cinque Maestrie (2, 6, 10, 14, 18)
+e nove Talenti Liberi (i dispari dal 3 al 19) — 150 + 125 + 225 voci. I modelli passano da dieci a venticinque:
+641 celle cambiano nei dieci che c'erano già, fra il profilo 4/7/9/4 e il ricalcolo degli attacchi, dei danni e
+dell'Iniziativa ai livelli raggiunti. **I nemici già salvati non cambiano**: il modello è uno stampo, usato una
+volta alla creazione (`node tools/png-prima-dopo.mjs --nemici=<cartella>`, sola lettura, li elenca).
+
+**La regola da non rompere** (Direttore §9.6.2): i valori pronti comprendono già i benefici fissi delle
+acquisizioni raggiunte, **una volta sola**. L'app non risomma niente: aggiunge EQ una volta e lascia i benefici
+condizionati al Direttore.
+
+**Mostri senza Ferite (§9.9), chiusa a metà e detto quale metà.** Fatto: i due sistemi di salute sono dichiarati in
+`data/formato_nemici.json` → `sistema_salute`, con la conversione già applicata (fattore 1,30, arrotondamento per
+eccesso, esempi ricalcolati dal validatore), e ogni modello generico porta `PV_e_Ferite` — l'Agente di I Grado resta
+a 16 PV, la verifica che il blocco E&L chiede. Nessuno strumento dell'app moltiplica i PV di una scheda. Manca: il
+comportamento al tavolo (Ferita diretta −5 PV, cura +5, 0 PV fuori combattimento senza contatore, ritorno
+all'attività), elencato in `sistema_salute.da_fare` e da fare insieme alla rigenerazione delle 341 creature sulla
+0.67. Fino ad allora `esempi/nemici/` è dichiarato alla 0.47 come **corpus** in `edizioni_in_attesa`.
+
+- **Nuove domande: A.269** («Spada» nelle tabelle di Classe contro «Arma da guerra» nella tabella degli armamenti
+  astratti: applicato come alias dichiarato, con il motivo) e **A.270** (il Lottatore di I Grado torna senza
+  Parata, mentre la A.206 del 30/10 aveva deciso che para a mani nude fin dal I Grado: ho seguito il blocco
+  approvato del 12/11, più recente, ma una decisione che si rovescia va confermata). Il primo numero libero
+  diventa **A.271**.
