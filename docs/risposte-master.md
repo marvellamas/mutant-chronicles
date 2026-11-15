@@ -3009,3 +3009,47 @@ accanto alla riga dell'istantanea, quanti sono e di chi, separando la copia loca
 **I due test che devono restare verdi sempre** (`tests/riferimenti-rotti-201.test.js`,
 `tests/riferimenti-rotti-strumento-201.test.js`, provati col mutante): un riferimento rotto viene segnalato; l'app
 non ricollega da sé senza una scelta del Direttore.
+
+## 15 novembre 2026 — Lotto 202: la causa a monte, e lo stesso difetto sulla mappa (`docs/diff-lotto202-2026-11-15.md`)
+
+Nessuna risposta nuova e **nessuna domanda nuova**: il primo numero libero resta **A.273**. Sono le due cose
+segnalate e non fatte dal lotto 201.
+
+**A. La guardia dei doppioni vale per tutti i mezzi.** In `migraVeicoli` era
+`v.gruppo === true && registro.find(…)`: nasce con la A.91, quando il problema in vista era il mezzo **condiviso**,
+e per un mezzo personale il caso sembrava non esistere. Lo Scout dei PG, nei file, non era marcato «del gruppo» —
+era una copia locale normale in più schede — e ogni migrazione ne ha fatto un record nuovo: sono i tre del lotto
+201 (4, 9 e 26 ottobre). Adesso si confrontano **profilo e proprietario** (il gruppo con il gruppo, un PG con sé
+stesso: `stessoProprietario`), e la guardia sta **dove il record si scrive** — `erroreDoppioneVeicolo` in
+`src/veicoli.js`, controllo in `PUT /api/veicoli/<id>` per un record nuovo, come la Neverlost del lotto 200 — oltre
+che in `migraVeicoli`. **Niente si fonde e niente si cancella**: l'app elenca quello che c'è già con
+l'identificativo e la data di nascita (`quandoNato`, dagli uid in base 36) e lascia decidere; un secondo esemplare
+vero si dichiara con `mezzo.esemplare_distinto` e passa. **Nel registro di Davide, in sola lettura: nessun altro
+doppione oltre ai due Neverlost già noti** (e quei due differiscono anche per proprietario, il caso che la guardia
+di prima non vedeva da nessuno dei due lati).
+
+**B. I token della mappa che rimandano al vuoto.** `tokenOrfani` li trovava già e la pagina li **toglieva da sé**:
+per un partecipante uscito da uno scontro aperto è giusto ed è rimasto com'era (§6 del lotto della mappa). Due casi
+però non sono «è uscito» ma «il record è sparito» — un veicolo non più nel registro, e uno scontro collegato che non
+esiste — e lì cancellare in silenzio è la decisione sbagliata presa senza chiedere. **La distinzione che conta:**
+una scena collegata a uno scontro che esiste, **anche chiuso o archiviato**, non ha token appesi, perché è il
+ricordo di quel combattimento; col criterio ingenuo nelle sette scene della copia locale i token appesi sarebbero
+**70 su 76**, un allarme che si impara a ignorare. Con il criterio giusto sono **11, in una scena sola**.
+`src/ui/mappa/fonti.js` distingue «chiuso» da «non esiste» (`esisteComunque`) e chi legge dal disco guarda anche
+`scontri/archivio/`. Sulla mappa **una riga** per token, con l'identificativo e la data di nascita del record («il
+record era del 4 ottobre»); al Direttore la tendina di quello che esiste — con l'identificativo accanto al nome,
+perché le due Neverlost erano indistinguibili —, «Ricollega» spento finché non ha scelto, e «Togli dalla mappa»
+sempre disponibile. Il motore è quello del lotto 201 (`src/riferimenti-rotti.js`).
+
+**C. Nelle scene di Davide non si conta, e il motivo è nostro:** l'istantanea del 14/11 è stata scritta dal suo PC
+**prima** del lotto 199, quindi porta solo `personaggi/` e `veicoli/` (indice di versione 1). Dalla prossima lo
+sapremo; lo strumento e la riga di inizio sessione lo dicono invece di tacere.
+
+**I due test che devono restare verdi sempre** (`tests/doppioni-veicoli-202.test.js`,
+`tests/token-appesi-202.test.js`), provati col mutante: un secondo record di un mezzo non del gruppo è rifiutato
+dove si scrive; un token appeso non si ricollega senza una scelta del Direttore. Aggiornato
+`tests/esemplare-unico-200.test.js`, perché due Scout del gruppo adesso **sono** un doppione: la regola è cambiata e
+il test lo dice.
+
+**Resta segnalato:** un token appeso si vede solo aprendo la scena (la plancia e il Tavolo non lo dicono), e
+`esemplare_distinto` non si dichiara ancora dall'interfaccia.
