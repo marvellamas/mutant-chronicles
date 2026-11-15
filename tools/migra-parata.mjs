@@ -14,6 +14,7 @@ import { readdirSync, readFileSync, writeFileSync, mkdirSync, existsSync, copyFi
 import { join, dirname, relative, sep } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { fermaSeSconosciuti, ARGOMENTI } from './argomenti.mjs';
+import { attualiFraIFile } from './personaggi-cartella.mjs';
 
 export const VECCHIO = 'Parata a Mani Nude';
 export const NUOVO = 'Parata a Mani Nude Migliorata';
@@ -65,15 +66,23 @@ function tuttiIFile(dir, base = dir) {
   });
 }
 
-/** Il rapporto su una cartella: per ogni file di personaggio che nomina il Talento, che cosa succede. */
+/**
+ * Il rapporto su una cartella: per ogni **personaggio** che nomina il Talento, che cosa succede.
+ *
+ * **Lotto 200 (15/11/2026): un personaggio, non un file.** Prima si prendeva ogni file: sulla cartella vera, dove
+ * convivono cinque versioni datate per personaggio, il rapporto diceva cinque righe per ciascuno e `--scrivi`
+ * riscriveva anche le versioni vecchie. Quale file conti lo dice `src/cartella.js -> fileAttuale`, e la scelta sta
+ * in un posto solo (`tools/personaggi-cartella.mjs`). Si gira anche nelle sottocartelle, come prima, e il
+ * raggruppamento e' per cartella: una copia di sicurezza e una cartella di lavoro non si mescolano.
+ */
 export function rapporto(cartella) {
+  const leggi = (f) => { try { return JSON.parse(readFileSync(f, 'utf8')); } catch { return null; } };
   const righe = [];
-  for (const { nome, file } of tuttiIFile(cartella)) {
-    let o;
-    try { o = JSON.parse(readFileSync(file, 'utf8')); } catch { continue; }
-    if (o?.formato !== 'mutant-personaggio') continue;
-    const piano = pianoParata(o);
-    if (piano.ricondotte.length || piano.nonRicondotte.length) righe.push({ nome, file, ...piano });
+  for (const v of attualiFraIFile(tuttiIFile(cartella), leggi)) {
+    const piano = pianoParata(v.json);
+    if (piano.ricondotte.length || piano.nonRicondotte.length) {
+      righe.push({ nome: v.relativo, file: v.file, versioni: v.versioni, altri: v.altri, ...piano });
+    }
   }
   return righe;
 }
@@ -90,6 +99,7 @@ if (process.argv[1] && fileURLToPath(import.meta.url) === process.argv[1]) {
   if (!a.cartella || a.cartella === true) { console.error('Dimmi la cartella dei personaggi: --cartella DIR (su una copia, se vuoi scrivere).'); process.exit(2); }
   const righe = rapporto(a.cartella);
   if (!righe.length) console.log('Nessun personaggio nomina «Parata a Mani Nude»: niente da fare.');
+  else console.log(`${righe.length} personaggi, sul loro file attuale (le versioni vecchie non si toccano).`);
   for (const r of righe) {
     console.log(`${r.nome}: ${r.ricondotte.length} scelta/e da ricondurre${r.ricondotte.map((x) => ` (livello ${x.livello ?? '?'}, ${x.classe})`).join('')}`);
     for (const n of r.nonRicondotte) console.log(`   NON ricondotta — ${n.dove}: ${n.perche}`);

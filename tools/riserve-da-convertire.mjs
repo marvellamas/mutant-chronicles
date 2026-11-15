@@ -6,6 +6,7 @@
 // convertire». Per i veicoli (record di veicoli/ e veicoli locali dei file dei PG) conta riserve Rosse, Verdi e ricambi di prima.
 import { readdir, readFile } from 'node:fs/promises';
 import { join } from 'node:path';
+import { personaggiDellaCartella, rigaSuCosa } from './personaggi-cartella.mjs';
 import { caricaDati } from '../src/rules.js';
 import { deserializzaPersonaggio, normalizza } from '../src/character.js';
 import { calcolaScheda } from '../src/calc.js';
@@ -49,9 +50,13 @@ if (process.argv[1]?.endsWith('riserve-da-convertire.mjs')) {
   const [cartellaPg, cartellaVeicoli] = process.argv.slice(2);
   if (!cartellaPg) { console.log('Uso: node tools/riserve-da-convertire.mjs <cartella personaggi> [<cartella veicoli>]'); process.exit(1); }
   let nConv = 0; let nDa = 0; let vConv = 0; let vDa = 0;
-  for (const f of await json(cartellaPg)) {
+  // lotto 200: un personaggio, non un file. Nella cartella vera ce ne sono cinque versioni per ciascuno, e questo
+  // strumento le contava tutte: le riserve che contano sono quelle del file attuale (tools/personaggi-cartella.mjs).
+  const voci = personaggiDellaCartella(cartellaPg);
+  console.log(rigaSuCosa(voci, cartellaPg));
+  for (const { nome, percorso: f } of voci) {
     let r;
-    try { r = riserveDelPg(await readFile(f, 'utf8')); } catch (e) { console.log(`- ${f}: non letto (${e.message})`); continue; }
+    try { r = riserveDelPg(await readFile(f, 'utf8')); } catch (e) { console.log(`- ${nome} [${f}]: non letto (${e.message})`); continue; }
     nConv += r.convertite.length;
     nDa += r.daConvertire.length;
     for (const c of r.convertite) console.log(`- ${f}: ${c.chiave} convertita da ${c.valore} su ${c.capacita} → ${c.esatto} cariche su ${c.massimo} (segnate ${c.applicato})`);

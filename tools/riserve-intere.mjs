@@ -20,6 +20,7 @@ import { rigaStorico } from '../src/storico.js';
 import { conFrazione, interoRiserva, numeroRiserva } from '../src/cariche-mistiche.js';
 import { normalizzaVeicoli } from '../src/veicoli.js';
 import { fermaSeSconosciuti, ARGOMENTI } from './argomenti.mjs';
+import { personaggiDellaCartella, rigaSuCosa } from './personaggi-cartella.mjs';
 
 const SCRIVI = process.argv.includes('--scrivi');
 const QUANDO = new Date().toISOString();
@@ -56,8 +57,16 @@ export function riserveMezzo(mezzo) {
 
 const riga = (r) => `${r.dove} ${r.nome ?? ''}`.trim() + `: ${numeroRiserva(r.prima)} → ${r.dopo}`;
 
+/**
+ * **Lotto 200: un personaggio, non un file.** Prima si leggeva e si scriveva ogni .json della cartella: sulla
+ * cartella vera, dove convivono cinque versioni datate per personaggio, il conto diceva 37 dove i personaggi sono
+ * sette e `--scrivi` metteva la riga nello storico anche nelle versioni vecchie. Quale file conti lo dice
+ * `src/cartella.js -> fileAttuale`, dal posto unico `tools/personaggi-cartella.mjs`.
+ */
 async function personaggi(cartella, dati) {
-  const file = (await readdir(cartella)).filter((f) => f.endsWith('.json'));
+  const voci = personaggiDellaCartella(cartella);
+  const file = voci.map((v) => v.file);
+  console.log(rigaSuCosa(voci, cartella));
   let conFrazioni = 0;
   let scritti = 0;
   for (const f of file) {
@@ -86,7 +95,7 @@ async function personaggi(cartella, dati) {
     await writeFile(join(cartella, f), fuori.endsWith('\n') ? fuori : `${fuori}\n`);
     scritti += 1;
   }
-  console.log(`${file.length} file, ${conFrazioni} con riserve da arrotondare${SCRIVI ? `, ${scritti} scritti` : ''}.`);
+  console.log(`${file.length} personaggi, ${conFrazioni} con riserve da arrotondare${SCRIVI ? `, ${scritti} scritti (solo il file attuale di ciascuno)` : ''}.`);
 }
 
 async function veicoli(cartella, dati) {

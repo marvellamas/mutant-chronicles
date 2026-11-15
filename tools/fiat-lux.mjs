@@ -6,6 +6,7 @@
 // sono più di uno, o un PG ne ha una copia locale distinta, lo segnala: è un difetto da sistemare (A.226).
 import { readdir, readFile } from 'node:fs/promises';
 import { join } from 'node:path';
+import { personaggiDellaCartella } from './personaggi-cartella.mjs';
 import { caricaDati } from '../src/rules.js';
 import { normalizzaRecord } from '../src/veicoli-registro.js';
 import { testoCariche } from '../src/veicoli.js';
@@ -29,10 +30,18 @@ export function quadroScout(record, personaggi) {
   const delGruppo = scout.filter((r) => r.proprietario?.tipo === 'gruppo');
   if (delGruppo.length > 1) avvisi.push(`Scout del gruppo nel registro: ${delGruppo.length} (${delGruppo.map((r) => `${r.mezzo.nome} ${r.id}`).join(', ')}). Il FIAT LUX è uno solo (A.226): va tenuto un record.`);
   const copie = [];
+  const idNelRegistro = new Set(record.map((r) => r?.id).filter(Boolean));
   for (const { file, pg } of personaggi) {
     for (const v of pg?.scelte?.veicoli ?? []) {
       if (v?.rif && scout.some((r) => r.id === v.rif)) copie.push({ file, tipo: 'riferimento', id: v.rif });
-      else if (!v?.rif && (v?.profilo === PROFILO)) {
+      // lotto 200: un riferimento a un record che nel registro non c'è. Si vede solo guardando il file **attuale**
+      // di ciascuno: nell'istantanea del 14/11 il file attuale di Pablo rimanda a `veimuu14mqa0`, che sul PC di
+      // Davide non esiste (il FIAT LUX è `veimvozx57q0`), e il riferimento al record vero è sparito dal 2 novembre.
+      // Un riferimento che non punta a niente non è un doppione, ed è peggio: il veicolo non si apre.
+      else if (v?.rif && !idNelRegistro.has(v.rif)) {
+        copie.push({ file, tipo: 'riferimento a un record che non c’è', id: v.rif });
+        avvisi.push(`${file}: rimanda al veicolo ${v.rif}${v.nome ? ` («${v.nome}»)` : ''}, che nel registro non c’è: il mezzo non si apre. Il riferimento si rifà dalla tab Veicoli.`);
+      } else if (!v?.rif && (v?.profilo === PROFILO)) {
         copie.push({ file, tipo: 'copia locale', id: v.uid });
         if (!scout.some((r) => r.id === v.uid)) avvisi.push(`${file}: una copia locale di uno Scout (${v.nome ?? v.uid}) che non è nel registro: sarebbe un secondo veicolo (A.226).`);
       }
@@ -65,7 +74,11 @@ if (import.meta.url === `file://${process.argv[1]?.replace(/\\/g, '/').replace(/
     process.exit(1);
   }
   const record = (await Promise.all((await json(cartellaVeicoli)).map(leggiJson))).filter(Boolean);
-  const personaggi = (await Promise.all((await json(cartellaPg)).map(async (f) => ({ file: f.split(/[\\/]/).pop(), pg: await leggiJson(f) })))).filter((x) => x.pg);
+  // lotto 200: un personaggio, non un file. Prima si leggeva ogni .json, e un personaggio con cinque versioni
+  // compariva cinque volte nelle righe «riferimento» (sulla cartella vera Pablo usciva due volte col lotto 199).
+  const personaggi = cartellaPg
+    ? personaggiDellaCartella(cartellaPg).map((v) => ({ file: `${v.nome} [${v.file}]`, pg: v.json }))
+    : [];
   const q = quadroScout(record, personaggi);
   console.log(`Scout MK4 nel registro: ${q.righe.length}`);
   for (const r of q.righe) {

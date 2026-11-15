@@ -6,6 +6,7 @@
 // Uso: node tools/caricatori-prima-dopo.mjs <file o cartella> [altri…]
 import { readFileSync, readdirSync, statSync } from 'node:fs';
 import { join } from 'node:path';
+import { personaggiDellaCartella } from './personaggi-cartella.mjs';
 import { fileURLToPath } from 'node:url';
 import { caricaDati } from '../src/rules.js';
 import { deserializzaPersonaggio, normalizza } from '../src/character.js';
@@ -45,7 +46,9 @@ if (process.argv[1] && fileURLToPath(import.meta.url) === process.argv[1]) {
   if (!percorsi.length) { console.error('Uso: node tools/caricatori-prima-dopo.mjs <file o cartella> [altri…]'); process.exit(1); }
   const radice = new URL('../', import.meta.url);
   const { dati } = await caricaDati(async (n) => readFileSync(new URL(`data/${n}.json`, radice), 'utf8'));
-  const file = percorsi.flatMap((x) => (statSync(x).isDirectory() ? readdirSync(x).filter((f) => f.endsWith('.json')).map((f) => join(x, f)) : [x]));
+  // lotto 200: da una cartella si prende il file **attuale** di ogni personaggio, non ogni file. Nella cartella
+  // vera convivono cinque versioni datate per ciascuno, e i colpi che contano sono quelli di adesso.
+  const file = percorsi.flatMap((x) => (statSync(x).isDirectory() ? personaggiDellaCartella(x).map((v) => v.percorso) : [x]));
   let diversi = 0;
   for (const f of file) {
     let r;

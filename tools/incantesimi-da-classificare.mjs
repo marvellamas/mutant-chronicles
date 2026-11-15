@@ -3,6 +3,7 @@
 // Senza argomenti guarda esempi/, tests/collaudo/ e, se ci sono, personaggi/ e PersonaggiBackup/ (in sola lettura).
 // Un incantesimo è «da classificare» quando non ha `tipo` (appreso o annotato): le righe salvate prima della distinzione.
 import { readdir, readFile, stat } from 'node:fs/promises';
+import { fileAttuale } from '../src/cartella.js';
 import { join } from 'node:path';
 
 const RADICE = new URL('../', import.meta.url).pathname.replace(/^\/([A-Za-z]:)/, '$1');
@@ -27,7 +28,13 @@ export function righeAMano(testo) {
   try { o = JSON.parse(testo); } catch { return null; }
   if (!o || o.formato !== 'mutant-personaggio') return null;
   const lista = o.scelte?.incantesimiAMano ?? o.incantesimiAMano ?? [];
-  return { pg: o.pg ?? null, nome: o.scelte?.nome ?? o.nome ?? '(senza nome)', righe: (Array.isArray(lista) ? lista : []).map((x) => ({ nome: x?.nome, tipo: ['appreso', 'annotato'].includes(x?.tipo) ? x.tipo : 'da_classificare' })) };
+  return {
+    pg: o.pg ?? null,
+    nome: o.scelte?.nome ?? o.nome ?? '(senza nome)',
+    // lotto 200: serve a `fileAttuale`, che guarda `aggiornato_il` prima della data nel nome del file
+    aggiornato: typeof o.aggiornato_il === 'string' ? o.aggiornato_il : null,
+    righe: (Array.isArray(lista) ? lista : []).map((x) => ({ nome: x?.nome, tipo: ['appreso', 'annotato'].includes(x?.tipo) ? x.tipo : 'da_classificare' })),
+  };
 }
 
 export async function elenco(percorsi) {
@@ -40,10 +47,29 @@ export async function elenco(percorsi) {
       if (r) per.push({ file: f, radice, ...r });
     }
   }
-  // un personaggio con più file datati conta una volta: vale la prima cartella indicata che lo ha, e lì il file più recente
-  // (il nome del file porta la data); una copia in un'altra cartella non lo sostituisce
+  // Un personaggio con più file datati conta una volta: vale la prima cartella indicata che lo ha, e lì il suo file
+  // attuale; una copia in un'altra cartella non lo sostituisce.
+  //
+  // **Lotto 200:** contare per personaggio lo faceva già, ma con una regola sua — il nome del file in ordine
+  // alfabetico. Quale file sia l'attuale lo dice `src/cartella.js → fileAttuale`, che guarda `aggiornato_il` prima
+  // della data nel nome: due regole che quasi sempre danno lo stesso file sono peggio di una, perché quando danno
+  // file diversi nessuno se ne accorge.
+  const gruppi = new Map();
+  for (const x of per) {
+    const cartella = x.file.replace(/[^/]*$/, '');
+    const chiave = `${x.radice}\u0000${cartella}\u0000${x.pg ?? x.nome}`;
+    if (!gruppi.has(chiave)) gruppi.set(chiave, []);
+    gruppi.get(chiave).push(x);
+  }
   const ultimi = new Map();
-  for (const x of per.sort((a, b) => b.radice - a.radice || a.file.localeCompare(b.file))) ultimi.set(x.pg ?? `${x.nome}|${x.file.replace(/[^\/]*$/, '')}`, x);
+  // chi viene dopo vince: prima le cartelle più in fondo (per esempio `personaggi/storico/`), poi quella di lavoro,
+  // così è la cartella di lavoro a valere e non l'ordine con cui il disco ha restituito i file
+  const profondita = (v) => v.file.split('/').length;
+  for (const voci of [...gruppi.values()].sort((a, b) => b[0].radice - a[0].radice || profondita(b[0]) - profondita(a[0]))) {
+    const scelto = fileAttuale(voci.map((v) => ({ ...v, file: v.file.split('/').pop() })));
+    const vero = voci.find((v) => v.file.endsWith(scelto.file));
+    ultimi.set(vero.pg ?? `${vero.nome}|${vero.file.replace(/[^/]*$/, '')}`, vero);
+  }
   return [...ultimi.values()].filter((x) => x.righe.length);
 }
 

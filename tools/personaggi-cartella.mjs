@@ -17,7 +17,7 @@
 // l'attuale sarebbe sbagliato.
 import { existsSync, readdirSync, readFileSync, statSync } from 'node:fs';
 import { join, relative, sep } from 'node:path';
-import { NOME_FILE, chiaveDaFile } from '../src/cartella.js';
+import { NOME_FILE, chiaveDaFile, fileAttuale } from '../src/cartella.js';
 import { elencoDaDisco, perPersonaggio } from './stato-personaggi.mjs';
 
 /** Il nome leggibile di un personaggio: quello delle scelte, o la chiave del nome del file. */
@@ -92,6 +92,48 @@ export function trovaPersonaggio(lista, chi) {
     };
   }
   return { ok: true, voce: trovati[0] };
+}
+
+/**
+ * Fra una lista di file già trovati (anche in sottocartelle), quelli **attuali**: uno per personaggio e per
+ * cartella. Serve agli strumenti che devono girare anche nelle sottocartelle — una copia di sicurezza, una
+ * cartella di lavoro con dentro più cartelle di personaggi — dove `personaggiDellaCartella`, che guarda solo il
+ * primo livello come fa il server, non arriva.
+ *
+ * Il raggruppamento è **per cartella**: due file con lo stesso nome in due cartelle diverse sono due personaggi
+ * diversi, perché una cartella di copie e una di lavoro non si mescolano.
+ *
+ * @param righe [{ nome, file }] come le torna `tuttiIFileDiPersonaggio`
+ * @param leggi (file) => json
+ * @returns [{ nome, file, json, versioni, altri }] — solo i file attuali
+ */
+export function attualiFraIFile(righe, leggi) {
+  const gruppi = new Map();
+  for (const r of righe ?? []) {
+    const json = leggi(r.file);
+    if (json?.formato !== 'mutant-personaggio') continue;
+    const base = r.nome.includes('/') ? r.nome.slice(0, r.nome.lastIndexOf('/')) : '';
+    const solo = r.nome.slice(base ? base.length + 1 : 0);
+    const id = `${base}\u0000${json.pg || chiaveDaFile(solo)}`;
+    if (!gruppi.has(id)) gruppi.set(id, []);
+    gruppi.get(id).push({ ...r, solo, json, pg: json.pg ?? null, aggiornato: json.aggiornato_il ?? null, file: r.file, nomeFile: solo });
+  }
+  const out = [];
+  for (const voci of gruppi.values()) {
+    // fileAttuale guarda `file` come nome: gli si passa il nome senza cartelle, altrimenti confronta i percorsi
+    const perScelta = voci.map((v) => ({ ...v, file: v.nomeFile }));
+    const scelto = fileAttuale(perScelta);
+    const vero = voci.find((v) => v.nomeFile === scelto.file && v.nome === scelto.nome);
+    out.push({
+      nome: nomeDi(vero.json, vero.nomeFile),
+      file: vero.file,
+      relativo: vero.nome,
+      json: vero.json,
+      versioni: voci.length,
+      altri: voci.filter((v) => v !== vero).map((v) => v.nome),
+    });
+  }
+  return out.sort((a, b) => a.nome.localeCompare(b.nome, 'it'));
 }
 
 /** La riga che dice su che cosa si è basato un rapporto: senza, non si sa che cosa si è guardato. */

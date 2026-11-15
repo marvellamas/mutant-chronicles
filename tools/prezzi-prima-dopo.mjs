@@ -17,6 +17,7 @@ import { join, dirname, basename } from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 import { execFileSync } from 'node:child_process';
 import { fermaSeSconosciuti, ARGOMENTI } from './argomenti.mjs';
+import { personaggiDellaCartella } from './personaggi-cartella.mjs';
 
 const RADICE = dirname(dirname(fileURLToPath(import.meta.url)));
 
@@ -33,8 +34,10 @@ async function datiDa(commit) {
 export function fileDiPersonaggi(percorso) {
   const s = statSync(percorso);
   if (!s.isDirectory()) return [percorso];
-  return readdirSync(percorso).filter((f) => f.endsWith('.json')).map((f) => join(percorso, f))
-    .filter((f) => { try { return JSON.parse(readFileSync(f, 'utf8'))?.formato === 'mutant-personaggio'; } catch { return false; } });
+  // lotto 200: **un personaggio, non un file.** Nella cartella vera convivono cinque versioni datate per
+  // personaggio (37 file per sette, l'istantanea del 14/11): questo strumento stampava «37 personaggi». Quale file
+  // conti lo dice src/cartella.js → fileAttuale, dal posto unico tools/personaggi-cartella.mjs.
+  return personaggiDellaCartella(percorso).map((v) => v.percorso);
 }
 
 /**
