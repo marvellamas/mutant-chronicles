@@ -147,15 +147,37 @@ export function vede(rec, chi) {
  * @param registro i record letti dal server
  * @returns {{ veicoli, nuovi: record[], avvisi: string[] }} le scelte aggiornate e i record da creare
  */
+/**
+ * Lotto 202: un record del registro e un veicolo locale hanno lo stesso proprietario? Il gruppo con il gruppo, un
+ * PG con sé stesso. È la differenza fra «lo stesso mezzo registrato due volte» e «due mezzi uguali di due persone».
+ */
+function stessoProprietario(rec, locale, chi) {
+  if (locale?.gruppo === true) return rec?.proprietario?.tipo === 'gruppo';
+  if (rec?.proprietario?.tipo === 'gruppo') return false;
+  const suo = rec?.proprietario?.pg ?? rec?.proprietario?.chiave ?? '';
+  const mio = chi?.pg ?? chi?.chiave ?? '';
+  return Boolean(suo) && Boolean(mio) && (suo === mio || stessaChiave(rec?.proprietario?.chiave, chi?.chiave));
+}
+
 export function migraVeicoli(veicoli, chi, registro) {
   const avvisi = [];
   const nuovi = [];
   const out = (Array.isArray(veicoli) ? veicoli : []).map((v) => {
     if (eRiferimento(v) || !isOggetto(v)) return v;
     if (registro.some((r) => r.id === v.uid)) return { uid: v.uid, rif: v.uid, nome: v.nome };
-    const doppio = v.gruppo === true && registro.find((r) => r.proprietario?.tipo === 'gruppo' && (r.mezzo?.profilo ?? null) === (v.profilo ?? null) && r.mezzo?.profilo);
+    // **Lotto 202: la guardia vale per tutti i mezzi, non per i soli «del gruppo».** Prima era
+    // `v.gruppo === true && …`: lo Scout dei PG, che nei file non era marcato così, ha prodotto **tre** record —
+    // 4, 9 e 26 ottobre, lo stesso mezzo numero per numero — e due dei tre sono poi spariti lasciando appesi Pablo
+    // e Lucas (lotto 201). Si confronta il profilo **e** il proprietario (il gruppo con il gruppo, un PG con sé
+    // stesso): due auto di due PG diversi non sono un doppione. Non si unisce e non si cancella niente — un record
+    // porta Integrità, munizioni e storico di una campagna: il mezzo resta nel file, con l'avviso, e decide il
+    // Direttore. Un secondo esemplare vero si dichiara con `esemplare_distinto` e passa.
+    const doppio = !isOggetto(v.esemplare_distinto) && v.profilo
+      ? registro.find((r) => (r.mezzo?.profilo ?? null) === v.profilo && stessoProprietario(r, v, chi))
+      : null;
     if (doppio) {
-      avvisi.push(`«${v.nome}» del gruppo è già nel registro dei veicoli (${doppio.mezzo.nome}, ${doppio.id}): non lo unisco da solo. Resta la copia di questa scheda; il master decide quale tenere.`);
+      const di = v.gruppo === true ? 'del gruppo' : 'di questo personaggio';
+      avvisi.push(`«${v.nome}» ${di} è già nel registro dei veicoli (${doppio.mezzo?.nome ?? doppio.id}, ${doppio.id}): non lo unisco da solo. Resta la copia di questa scheda; il master decide quale tenere, e se è davvero un secondo mezzo lo dichiara.`);
       return v;
     }
     const rec = nuovoRecord(v, chi);

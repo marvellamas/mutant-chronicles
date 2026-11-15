@@ -165,7 +165,7 @@ import { NOME_MARCATORE, statoInstallazione, statoDaRuolo } from './src/copia-di
 import { leggiRuolo } from './tools/ruolo-pc.mjs';
 import { cartellaDati, migraSeServe } from './tools/dati-pc.mjs';
 import { validaRecord, ID_VEICOLO, migraVeicoli, eRiferimento, stessaChiave } from './src/veicoli-registro.js';
-import { normalizzaVeicoli, erroreEsemplareUnico } from './src/veicoli.js';
+import { normalizzaVeicoli, erroreEsemplareUnico, erroreDoppioneVeicolo } from './src/veicoli.js';
 import { caricaDati } from './src/rules.js';
 import { validaNemico, formattaErrore } from './src/validate.js';
 import { validaScena, riassuntoScena, ID_SCENA, FILE_MAPPA } from './src/mappa/scena.js';
@@ -563,7 +563,9 @@ async function apiVeicoli(req, res, percorso, veicoli) {
         try { altri.push(await leggiJson(join(veicoli, f))); } catch { /* rovinato: non conta */ }
       }
       const { dati } = await datiDelServer(RADICE);
-      const male = dati?.veicoli ? erroreEsemplareUnico(v, altri, dati) : null;
+      // lotto 202: la stessa cosa per tutti i mezzi, non per i soli esemplari unici. Un mezzo solo non deve
+      // diventare due record: e' cosi' che lo Scout dei PG e' finito nel registro tre volte.
+      const male = dati?.veicoli ? (erroreEsemplareUnico(v, altri, dati) ?? erroreDoppioneVeicolo(v, altri, dati)) : null;
       if (male) return json(res, 409, male);
     }
     const nuovo = { ...v, revisione: v.revisione + 1, aggiornato: new Date().toISOString() };

@@ -458,8 +458,68 @@ export function erroreEsemplareUnico(nuovo, esistenti, dati) {
   return {
     errore: `${profilo.nome ?? id} è un esemplare unico (A.240): nel registro c’è già ${nomi}. Un secondo record sarebbe una seconda nave: apri quello che c’è, o cancellalo dalla tab Veicoli se è di troppo.`,
     profilo: id,
+    unico: true,
     gia: gia.map((r) => r.id),
   };
+}
+
+/** Chi possiede un record, in forma confrontabile: «gruppo», oppure il PG (per `pg` se c'è, altrimenti la chiave). */
+const chiProprietario = (r) => (r?.proprietario?.tipo === 'gruppo'
+  ? 'gruppo'
+  : `pg:${r?.proprietario?.pg ?? r?.proprietario?.chiave ?? ''}`);
+
+/**
+ * **Un mezzo non diventa due record, per nessuna categoria** (lotto 202, 15/11/2026).
+ *
+ * *Perché.* Lo Scout dei PG era nel registro **tre volte** — 4, 9 e 26 ottobre, lo stesso mezzo numero per numero
+ * (lotto 201) — e due dei tre sono poi spariti lasciando appesi Pablo e Lucas. Nasceva un record nuovo ogni volta
+ * che una scheda che aveva lo Scout come copia locale lo passava al registro, perché la guardia dei doppioni di
+ * `migraVeicoli` valeva **solo** per i mezzi marcati «del gruppo»:
+ * `const doppio = v.gruppo === true && registro.find(…)`. Lo Scout, nei file, non era marcato così.
+ *
+ * *Che cosa fa, e che cosa non fa.* Guarda i record **dello stesso profilo e dello stesso proprietario** (il gruppo
+ * con il gruppo, un PG con sé stesso): due auto civili del gruppo sono lo stesso caso dello Scout, due auto di due
+ * PG diversi no. **Non fonde e non cancella niente**: un record di veicolo porta Integrità, munizioni e storico di
+ * una campagna, e fonderne due a indovinare è peggio che lasciarli. Elenca quello che c'è già e lascia decidere.
+ *
+ * *La via d'uscita, perché l'app avvisa e non blocca:* un mezzo che è davvero un secondo esemplare lo dichiara —
+ * `mezzo.esemplare_distinto` — e da allora passa. È una dichiarazione del Direttore, non un'ipotesi dell'app.
+ *
+ * @param nuovo il record che si sta scrivendo (vale solo per un record **nuovo**)
+ * @param esistenti i record già nel registro
+ * @returns null se si può scrivere, altrimenti { errore, profilo, gia: [id] }
+ */
+export function erroreDoppioneVeicolo(nuovo, esistenti, dati) {
+  const id = nuovo?.mezzo?.profilo;
+  if (!id) return null;
+  if (isOggetto(nuovo.mezzo?.esemplare_distinto)) return null; // dichiarato dal Direttore: è un altro mezzo
+  const profilo = lista(dati.veicoli?.profili).find((p) => p.id === id);
+  const mio = chiProprietario(nuovo);
+  const gia = lista(esistenti).filter((r) => r?.mezzo?.profilo === id && r.id !== nuovo.id && chiProprietario(r) === mio);
+  if (!gia.length) return null;
+  const nomi = gia.map((r) => `${r.mezzo?.nome ?? profilo?.nome ?? id} (${r.id}${quandoNato(r.id) ? `, del ${quandoNato(r.id)}` : ''})`).join(', ');
+  const di = mio === 'gruppo' ? 'del gruppo' : `di ${nuovo.proprietario?.nome ?? 'questo personaggio'}`;
+  return {
+    errore: `${profilo?.nome ?? id} ${di}: nel registro c’è già ${nomi}. Un mezzo solo non deve diventare due record — è così che lo Scout dei PG è finito nel registro tre volte (lotto 201). Apri quello che c’è; se è davvero un secondo mezzo, dichiaralo e lo scrivo.`,
+    profilo: id,
+    doppione: true,
+    gia: gia.map((r) => r.id),
+  };
+}
+
+/**
+ * La data di nascita scritta dentro un identificativo (lotto 201): gli uid sono `vei` + `Date.now()` in base 36,
+ * quindi dicono quando sono stati creati. Al tavolo «il record era del 4 ottobre» vale più di una sigla.
+ * @returns «4 ottobre» o `null` se l'identificativo non si decodifica
+ */
+export function quandoNato(id) {
+  const m = /^vei([a-z0-9]{8})/.exec(String(id ?? ''));
+  if (!m) return null;
+  const ms = Number.parseInt(m[1], 36);
+  if (!Number.isFinite(ms) || ms <= 0) return null;
+  const d = new Date(ms);
+  if (Number.isNaN(d.getTime()) || d.getFullYear() < 2020 || d.getFullYear() > 2100) return null;
+  return d.toLocaleDateString('it-IT', { day: 'numeric', month: 'long' });
 }
 
 /**
