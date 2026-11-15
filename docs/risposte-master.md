@@ -3053,3 +3053,43 @@ il test lo dice.
 
 **Resta segnalato:** un token appeso si vede solo aprendo la scena (la plancia e il Tavolo non lo dicono), e
 `esemplare_distinto` non si dichiara ancora dall'interfaccia.
+
+
+## Lotto 203 — 15/11/2026 — il Bestiario passa al Manuale dei Mostri 0.69
+
+**L'impronta non coincide, e non si è intrecciato niente.** Il JSON dei PNG (`png-abilita-0.67.json`) dichiara lo
+sha256 del Word a cui appartiene, e quel Word è la **0.67**: su Drive oggi c'è la **0.69**. Le due fonti non sono
+più la stessa edizione, quindi le creature — che vengono dal solo Word e si rigenerano — sono passate alla 0.69,
+mentre i **venticinque modelli PNG restano alla 0.67**, dichiarata in `edizioni_in_attesa` col motivo. Intrecciare
+numeri del JSON vecchio con prosa del manuale nuovo avrebbe prodotto profili incoerenti senza che nulla sembrasse
+sbagliato.
+
+**Da dove vengono i PV, e come si esclude il doppio +30%.** Il §4.2 della 0.69 dice che i PV stampati **comprendono
+già** l'aumento del 30% (×1,30 per eccesso) e che **non si riapplica**; il §4.2.1 dà il caso: il Lorath ha 52 PV, e
+non si fanno né ×1,30 né ×1,33 né ×1,50. Quindi il generatore **non moltiplica niente**: copia il valore stampato.
+Tre reti: il caso del §4.2.1 scritto coi **tre numeri** (40 della 0.47, 52 del manuale, 68 del doppio) e altri
+quattro casi di controllo; i quattro Elementali Maggiori, i cui PV si leggono dall'anteprima, provati come
+`Math.ceil(prima × 1,3)` e **diversi** da `× 1,3 × 1,3`; e un controllo d'insieme che nessuna scheda superi il
+rapporto 1,6 rispetto alla 0.47. `tests/creature-069-203.test.js`.
+
+**Il confronto.** 310 schede portano i PV della 0.69 (307 dal lettore, i 4 Elementali dall'anteprima, 2 Dragomedusa
+dal testo del §7.12), **1 creatura nuova** (Viverna della Sabbia, 73 PV), le altre invariate. **Si è aggiornato solo
+il campo PV**: gli altri campi che risultavano diversi erano letture incomplete dell'impaginazione nuova, non
+cambiamenti del manuale — scriverli avrebbe svuotato gli attacchi di 29 schede e alterato le Abilità di 18.
+
+**Le 32 schede provvisorie restano provvisorie (A.258).** I 30 umani «costruito come PG» e i 2 esempi del Tavolo non
+sono nella 0.69: nessuna di loro dichiara di venirne, e il segno «provvisoria» resta dove si vede.
+
+**I nemici già salvati non cambiano** — provato, non ragionato: `tests/nemici-salvati-203.test.js` e, nel browser,
+un «Lorath (salvato a ottobre)» riaperto con i suoi 40 PV, l'AR 4, l'Iniziativa +2 e la sua edizione dichiarata, e
+il file sul disco non riscritto.
+
+**I mostri senza Ferite (§4.2, §4.2.1).** Una creatura del Bestiario usa i soli PV: niente tracciato, niente
+penalità da Ferite, nessuna Menomazione automatica; a 0 PV è **fuori combattimento e non ha contatore di Morente** —
+il Morente del lotto 193 vale per i personaggi e per chi ha il tracciato. Una Ferita inflitta direttamente vale
+−5 PV ignorando l'AR; uno stato di Ferita curato vale +5 PV; sopra 0 torna attiva al **turno successivo**, e la
+conversione non resuscita. La mini-scheda lo scrive **sempre**, non solo a 0 PV: un'assenza non si legge.
+
+**Domande nuove:** nessuna; il primo numero libero resta **A.273**. **Resta aperto:** i PNG generici alla 0.67
+finché Davide non pubblica il JSON dell'edizione corrente, e le 151 pagine che il lettore non legge per intero
+sull'impaginazione nuova.
