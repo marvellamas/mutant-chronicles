@@ -432,6 +432,37 @@ export function profiliCreabili(dati, esistenti = []) {
 }
 
 /**
+ * La stessa regola della A.240, **dove il record si scrive** (lotto 200, 15/11/2026).
+ *
+ * `profiliCreabili` la applica nell'elenco di quello che si può creare, e non basta: nell'istantanea del 14/11 la
+ * Neverlost è **doppia**, due record a quindici secondi uno dall'altro. Una pagina aperta prima della prima
+ * creazione ha ancora il profilo nel suo elenco, e la seconda creazione passa — perché una regola applicata solo
+ * dove si guarda, e non dove si scrive, è una regola che il tempo aggira. È la stessa forma del difetto degli
+ * strumenti che camminavano sui file: il controllo sta in un posto, e quello che conta è un altro.
+ *
+ * Vale **solo per un record nuovo**: un record già scritto si continua a salvare, altrimenti un doppione esistente
+ * diventerebbe impossibile da correggere — e quello di troppo lo cancella il Direttore, non noi.
+ *
+ * @param nuovo il record che si sta scrivendo
+ * @param esistenti i record già nel registro (senza quello che si sta scrivendo)
+ * @returns null se si può scrivere, altrimenti { errore, profilo, gia: [id] }
+ */
+export function erroreEsemplareUnico(nuovo, esistenti, dati) {
+  const id = nuovo?.mezzo?.profilo;
+  if (!id) return null;
+  const profilo = lista(dati.veicoli?.profili).find((p) => p.id === id);
+  if (profilo?.esemplare_unico !== true) return null;
+  const gia = lista(esistenti).filter((r) => r?.mezzo?.profilo === id && r.id !== nuovo.id);
+  if (!gia.length) return null;
+  const nomi = gia.map((r) => `${r.mezzo?.nome ?? profilo.nome ?? id} (${r.id})`).join(', ');
+  return {
+    errore: `${profilo.nome ?? id} è un esemplare unico (A.240): nel registro c’è già ${nomi}. Un secondo record sarebbe una seconda nave: apri quello che c’è, o cancellalo dalla tab Veicoli se è di troppo.`,
+    profilo: id,
+    gia: gia.map((r) => r.id),
+  };
+}
+
+/**
  * Un mezzo nuovo per la scheda: integro, fermo, nessun conducente, NEC carico.
  * @param origine id del catalogo (veicoli.json → profili) oppure i campi di una scheda scritta a mano
  */

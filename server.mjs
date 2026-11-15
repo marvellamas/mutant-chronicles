@@ -165,7 +165,7 @@ import { NOME_MARCATORE, statoInstallazione, statoDaRuolo } from './src/copia-di
 import { leggiRuolo } from './tools/ruolo-pc.mjs';
 import { cartellaDati, migraSeServe } from './tools/dati-pc.mjs';
 import { validaRecord, ID_VEICOLO, migraVeicoli, eRiferimento, stessaChiave } from './src/veicoli-registro.js';
-import { normalizzaVeicoli } from './src/veicoli.js';
+import { normalizzaVeicoli, erroreEsemplareUnico } from './src/veicoli.js';
 import { caricaDati } from './src/rules.js';
 import { validaNemico, formattaErrore } from './src/validate.js';
 import { validaScena, riassuntoScena, ID_SCENA, FILE_MAPPA } from './src/mappa/scena.js';
@@ -551,6 +551,20 @@ async function apiVeicoli(req, res, percorso, veicoli) {
     try { attuale = await leggiJson(dove); } catch { /* nuovo */ }
     if ((attuale?.revisione ?? 0) !== v.revisione || (!attuale && v.revisione !== 0)) {
       return json(res, 409, { errore: 'il veicolo è stato cambiato altrove: ricarica', attuale });
+    }
+    // A.240, dove il record si scrive (lotto 200): un esemplare unico non diventa due. `profiliCreabili` lo tiene
+    // fuori dall'elenco di quello che si può creare, ma una pagina aperta prima della prima creazione ha ancora il
+    // profilo nel suo elenco: nell'istantanea del 14/11 la Neverlost è doppia, due record a quindici secondi uno
+    // dall'altro. Si controlla solo per un record **nuovo**: uno già scritto si continua a salvare, altrimenti un
+    // doppione esistente non si potrebbe più correggere.
+    if (!attuale) {
+      const altri = [];
+      for (const f of (await readdir(veicoli)).filter((x) => x.endsWith('.json') && ID_VEICOLO.test(x.slice(0, -5)))) {
+        try { altri.push(await leggiJson(join(veicoli, f))); } catch { /* rovinato: non conta */ }
+      }
+      const { dati } = await datiDelServer(RADICE);
+      const male = dati?.veicoli ? erroreEsemplareUnico(v, altri, dati) : null;
+      if (male) return json(res, 409, male);
     }
     const nuovo = { ...v, revisione: v.revisione + 1, aggiornato: new Date().toISOString() };
     await scriviJson(dove, nuovo);
