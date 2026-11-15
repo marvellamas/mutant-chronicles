@@ -15,18 +15,20 @@
 //
 // Quello che questo programma fa è il minimo: nota, contrassegno e punti azzerati. I 21 (o quanti sono) punti li
 // assegna **il giocatore dal suo tablet**, nella scheda, una scelta alla volta; il Direttore guarda la plancia.
-import { readdirSync, readFileSync, writeFileSync, mkdirSync, existsSync } from 'node:fs';
+import { readFileSync, writeFileSync, mkdirSync } from 'node:fs';
 import { join, dirname } from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 import { creaZip } from './salva-sessione.mjs';
 import { cartellaDati } from './dati-pc.mjs';
 import { fermaSeSconosciuti, ARGOMENTI } from './argomenti.mjs';
+// lotto 200: la scelta del file attuale sta in un posto solo, e di là viene anche il rifiuto sui nomi ambigui
+import { personaggiDellaCartella, trovaPersonaggio, tuttiIFileDiPersonaggio, rigaSuCosa } from './personaggi-cartella.mjs';
+import { PROFILO_NUOVO } from '../src/competenze.js';
 
 const RADICE = dirname(dirname(fileURLToPath(import.meta.url)));
 export const PREFISSO = 'prima-dell-adeguamento-abilita_';
 const due = (n) => String(n).padStart(2, '0');
 export const nomeZip = (d) => `${PREFISSO}${d.getFullYear()}-${due(d.getMonth() + 1)}-${due(d.getDate())}_${due(d.getHours())}${due(d.getMinutes())}${due(d.getSeconds())}.zip`;
-const NOME_FILE = /^[\w.()' -]+\.json$/;
 
 async function dati() {
   const { caricaDati } = await import(pathToFileURL(join(RADICE, 'src', 'rules.js')));
@@ -34,15 +36,22 @@ async function dati() {
   return (await caricaDati(async (n) => leggi(n))).dati;
 }
 
-/** I file di personaggio della cartella: { file, json }. Uno per file, come sul disco. */
+/**
+ * I personaggi della cartella: **uno per personaggio**, col suo file attuale.
+ *
+ * **Lotto 200 (15/11/2026): prima era uno per file, e sulla cartella vera non è la stessa cosa.** L'istantanea del
+ * 14/11 porta 37 file per sette personaggi — cinque versioni datate ciascuno, perché l'app salva un file nuovo a
+ * ogni serata e non sovrascrive. Con un personaggio per file il rapporto diceva 37 righe, `--applica` scriveva
+ * anche nelle versioni vecchie, e soprattutto `--annulla NOME` prendeva il **primo** file con quel nome — la
+ * versione del 26 ottobre — la riportava indietro e lasciava **adeguato il file attuale**, dicendo di aver
+ * annullato. Alla serata dell'adeguamento quello è l'unico attrezzo di sicurezza, e mentiva. La scelta è una sola
+ * e sta in `tools/personaggi-cartella.mjs` (`src/cartella.js → fileAttuale`, la stessa dell'app, del server e del
+ * menu).
+ *
+ * @returns [{ file, json, percorso, nome, versioni, altri }]
+ */
 export function personaggi(cartella) {
-  if (!existsSync(cartella)) return [];
-  return readdirSync(cartella).filter((f) => f.endsWith('.json') && NOME_FILE.test(f)).map((f) => {
-    try {
-      const json = JSON.parse(readFileSync(join(cartella, f), 'utf8'));
-      return json?.scelte ? { file: f, json } : null;
-    } catch { return null; }
-  }).filter(Boolean);
+  return personaggiDellaCartella(cartella).filter((v) => v.json?.scelte);
 }
 
 /**
@@ -52,9 +61,12 @@ export function personaggi(cartella) {
 export async function rapporto({ cartella, d = null, quando = new Date() }) {
   const D = d ?? await dati();
   const { pianoAdeguamento } = await import(pathToFileURL(join(RADICE, 'src', 'adeguamento-abilita.js')));
-  const piani = personaggi(cartella).map(({ file, json }) => ({ file, ...pianoAdeguamento(json, D, { quando }) }));
+  const voci = personaggi(cartella);
+  const piani = voci.map(({ file, json, versioni }) => ({ file, versioni, ...pianoAdeguamento(json, D, { quando }) }));
   return {
     piani,
+    // su che cosa si e' basato il rapporto: senza questa riga non si sa che cosa si e' guardato
+    suCosa: rigaSuCosa(voci, cartella),
     pronti: piani.filter((p) => p.nuovo),
     bloccati: piani.filter((p) => p.bloccato),
     giaFatti: piani.filter((p) => p.giaFatto),
@@ -77,7 +89,9 @@ export function righeRapporto({ piani }) {
 /** La copia zip della cartella dei personaggi, prima di toccare qualunque cosa. */
 export function copiaZip({ cartella, salvataggi, quando = new Date() }) {
   mkdirSync(salvataggi, { recursive: true });
-  const dentro = readdirSync(cartella).filter((f) => f.endsWith('.json')).map((f) => ({ nome: `personaggi/${f}`, dati: readFileSync(join(cartella, f)), mtime: quando }));
+  // qui si prendono TUTTI i file, storico compreso, e di proposito: e' la copia a cui si torna indietro, e una
+  // copia che contenesse solo i file attuali non riporterebbe la cartella com'era (lotto 200)
+  const dentro = tuttiIFileDiPersonaggio(cartella).map((f) => ({ nome: `personaggi/${f.nome}`, dati: readFileSync(f.file), mtime: quando }));
   const percorso = join(salvataggi, nomeZip(quando));
   writeFileSync(percorso, creaZip(dentro));
   return { percorso, quanti: dentro.length };
@@ -97,31 +111,51 @@ export async function applica({ cartella, salvataggi, d = null, quando = new Dat
   if (!r.pronti.length) return { fatto: false, zip: null, scritti: [], bloccati: [], motivo: 'nessun personaggio da adeguare.' };
   const zip = copiaZip({ cartella, salvataggi, quando });
   const scritti = [];
+  // si scrive **sul file attuale** di ciascuno: le versioni vecchie non si toccano (lotto 200)
   for (const p of r.pronti) {
     writeFileSync(join(cartella, p.file), `${JSON.stringify(p.nuovo, null, 2)}\n`);
-    scritti.push({ nome: p.nome, file: p.file, monte: p.monte.monte });
+    scritti.push({ nome: p.nome, file: p.file, monte: p.monte.monte, versioniNonToccate: Math.max(0, (p.versioni ?? 1) - 1) });
   }
   return { fatto: true, zip, scritti, bloccati: [], motivo: null };
 }
 
-/** Annulla l'adeguamento di **un** personaggio, per nome o per file. Gli altri non si toccano. */
+/**
+ * Annulla l'adeguamento di **un** personaggio, sul suo **file attuale**. Gli altri non si toccano.
+ *
+ * **Tre cose che il lotto 200 ha cambiato, e nessuna è un dettaglio.** Agisce sul file attuale, non sul primo che
+ * porta quel nome. Con un nome che non c'è o che è di più di un personaggio **si rifiuta e lo dice**, invece di
+ * scegliere: toccare il personaggio sbagliato è peggio che non fare niente. E dopo aver scritto **rilegge il file
+ * e controlla** che l'adeguamento sia davvero sparito, invece di dichiararlo: è l'unico attrezzo di sicurezza
+ * della serata, e un «fatto» che non corrisponde è il guasto peggiore che possa avere.
+ */
 export async function annulla({ cartella, chi, d = null }) {
   const D = d ?? await dati();
   const { annullaAdeguamento } = await import(pathToFileURL(join(RADICE, 'src', 'adeguamento-abilita.js')));
-  const cerca = String(chi ?? '').trim().toLowerCase();
-  const voce = personaggi(cartella).find((x) => x.file.toLowerCase() === cerca || String(x.json.scelte?.nome ?? '').trim().toLowerCase() === cerca);
-  if (!voce) return { ok: false, motivo: `non trovo «${chi}» nella cartella`, nome: null };
+  const trovato = trovaPersonaggio(personaggi(cartella), chi);
+  if (!trovato.ok) return { ok: false, motivo: trovato.motivo, nome: null };
+  const voce = trovato.voce;
   const esito = annullaAdeguamento(voce.json);
-  if (!esito.ok) return { ok: false, motivo: esito.motivo, nome: voce.json.scelte?.nome ?? voce.file };
-  writeFileSync(join(cartella, voce.file), `${JSON.stringify(esito.file, null, 2)}\n`);
-  return { ok: true, motivo: null, nome: voce.json.scelte?.nome ?? voce.file, file: voce.file };
+  if (!esito.ok) return { ok: false, motivo: esito.motivo, nome: voce.nome, file: voce.file };
+  writeFileSync(voce.percorso, `${JSON.stringify(esito.file, null, 2)}\n`);
+  // si controlla, non si dichiara: si rilegge il file attuale e si guarda se il contrassegno è andato via
+  const riletto = personaggiDellaCartella(cartella).find((v) => v.id === voce.id);
+  if (!riletto || riletto.file !== voce.file || riletto.json?.scelte?.regimeAbilita === PROFILO_NUOVO) {
+    return {
+      ok: false,
+      nome: voce.nome,
+      file: voce.file,
+      motivo: `ho scritto ${voce.file} ma rileggendolo l’adeguamento è ancora là: non dico «fatto». Guarda il file prima di continuare.`,
+    };
+  }
+  return { ok: true, motivo: null, nome: voce.nome, file: voce.file, versioniNonToccate: voce.altri.length };
 }
 
 /** A che punto è ciascuno: lo guarda il Direttore durante la serata. */
 export async function stato({ cartella, d = null }) {
   const D = d ?? await dati();
   const { statoPerPlancia } = await import(pathToFileURL(join(RADICE, 'src', 'adeguamento-abilita.js')));
-  return personaggi(cartella).map(({ file, json }) => ({ file, ...statoPerPlancia(json, D) }));
+  const voci = personaggi(cartella);
+  return voci.map(({ file, json, versioni }) => ({ file, versioni, ...statoPerPlancia(json, D) }));
 }
 
 if (process.argv[1] && import.meta.url.endsWith(process.argv[1].replace(/\\/g, '/').split('/').pop())) {
@@ -134,17 +168,23 @@ if (process.argv[1] && import.meta.url.endsWith(process.argv[1].replace(/\\/g, '
   const D = await dati();
 
   if (argv.includes('--stato')) {
-    for (const s of await stato({ cartella, d: D })) console.log(`${s.nome.padEnd(20)} ${s.testo}`);
+    const righe = await stato({ cartella, d: D });
+    console.log(rigaSuCosa(personaggi(cartella), cartella));
+    // il file su cui si e' guardato, accanto a ogni riga: nella cartella vera ce ne sono cinque per personaggio
+    for (const s of righe) console.log(`${s.nome.padEnd(20)} ${s.testo}${s.versioni > 1 ? `  [${s.file}]` : ''}`);
     process.exit(0);
   }
   if (argv.includes('--annulla')) {
     const chi = valore('annulla');
     if (!chi) { console.error('Serve il nome del personaggio: --annulla "NOME"'); process.exit(2); }
     const e = await annulla({ cartella, chi, d: D });
-    console.log(e.ok ? `${e.nome}: adeguamento annullato, il file è tornato com'era (${e.file}).` : `Non fatto: ${e.motivo}`);
+    console.log(e.ok
+      ? `${e.nome}: adeguamento annullato e ricontrollato sul file, che è tornato com'era (${e.file})${e.versioniNonToccate ? `; le ${e.versioniNonToccate} versioni precedenti non sono state toccate` : ''}.`
+      : `Non fatto: ${e.motivo}`);
     process.exit(e.ok ? 0 : 1);
   }
   const r = await rapporto({ cartella, d: D });
+  console.log(`${r.suCosa}\n`);
   for (const riga of righeRapporto(r)) console.log(riga);
   console.log(`\n${r.pronti.length} pronti, ${r.bloccati.length} bloccati, ${r.giaFatti.length} già adeguati.`);
   if (!argv.includes('--applica')) { console.log('\nNiente scritto. Con --applica si fa (prima una copia zip).'); process.exit(0); }

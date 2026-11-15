@@ -18,6 +18,7 @@ import { fileURLToPath, pathToFileURL } from 'node:url';
 import { creaZip, leggiZip } from './salva-sessione.mjs';
 import { cartellaDati } from './dati-pc.mjs';
 import { elencoDaDisco, perPersonaggio, rigaDi, statoDalServer, esitoControllo } from './stato-personaggi.mjs';
+import { personaggiDellaCartella } from './personaggi-cartella.mjs';
 import { idStabileDiFile } from '../src/cartella.js';
 import { fermaSeSconosciuti, ARGOMENTI } from './argomenti.mjs';
 
@@ -46,10 +47,13 @@ function tuttiIFile(dir, base = dir) {
  * scelta dell'app e del server). Fino al 25/10 si prendeva ogni file per conto suo: con più file datati dello stesso
  * personaggio si passavano anche le copie vecchie, e quale fosse l'attuale lo decideva l'ordine delle scritture.
  * [{ file, o, files }]
+ *
+ * **Lotto 200:** la scelta non è più scritta qui. Stava in questo file e in `tools/stato-personaggi.mjs`, e gli
+ * altri strumenti non l'avevano: `tools/adegua-abilita.mjs` camminava sui file, e `--annulla` mentiva. Adesso c'è
+ * un posto solo, `tools/personaggi-cartella.mjs`, e questo resta solo per la forma che i chiamanti di qui usano.
  */
 function personaggi(cartella) {
-  return perPersonaggio(elencoDaDisco(cartella).filter((r) => r.o?.formato === 'mutant-personaggio'))
-    .map((g) => ({ file: g.attuale.file, o: g.attuale.o, files: g.files.length }));
+  return personaggiDellaCartella(cartella).map((v) => ({ file: v.file, o: v.json, files: v.versioni }));
 }
 
 /** Il rapporto (righe) e i piani, PG per PG. */
