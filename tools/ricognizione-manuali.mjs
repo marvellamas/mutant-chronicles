@@ -128,14 +128,22 @@ export function referto(files = null) {
  * veri» ci ha fatto presentare come «adesso» affermazioni su ottobre, e una di quelle ha prodotto una domanda
  * sbagliata a Davide (A.268, lotto 195).
  *
- * Legge l'ultima istantanea dalla cartella impostata (config-salvataggi.json → cartella_istantanee, quella che il
- * cloud sincronizza) e dice quanto è fresca. Non scrive niente e non ferma nessuno: senza istantanee stampa la
- * riga che ricorda di datare ogni affermazione.
+ * Legge l'ultima istantanea e dice quanto è fresca. Non scrive niente e non ferma nessuno: senza istantanee stampa
+ * la riga che ricorda di datare ogni affermazione.
+ *
+ * **Due cartelle, non una (lotto 199).** `config-salvataggi.json → cartella_istantanee` è quella in cui l'app
+ * **scrive** le istantanee: sta sul PC di Davide, dentro il cloud, e `erroreCartellaIstantanee` pretende che sia fuori
+ * dalla cartella dei dati. Sul nostro PC le istantanee invece **arrivano**, e stanno in `istantanee/` accanto ai dati
+ * (`.gitignore` e `tools/file-locali.json` la prevedono dal lotto 196). Chi legge guarda l'impostazione se c'è e poi
+ * quella cartella: così il controllo di inizio sessione dice il giorno dei personaggi anche da noi, che è il posto
+ * dove serve. Chi scrive continua a guardare solo l'impostazione.
  */
 export function rigaIstantanea() {
   try {
     const dd = cartellaDati(RADICE_APP).cartella;
-    const dove = cartellaIstantanee(leggiConfig(join(dd, 'config-salvataggi.json')));
+    const impostata = cartellaIstantanee(leggiConfig(join(dd, 'config-salvataggi.json')));
+    const ricevute = join(dd, 'istantanee');
+    const dove = [impostata, ricevute].filter(Boolean).find((c) => ultimaIstantanea(c)) ?? impostata;
     if (!dove) return 'Istantanea dei personaggi: cartella non impostata su questo PC. Ogni affermazione sui personaggi riguarda la copia locale di personaggi/, con la data del file su cui si basa.';
     return rigaFreschezza(ultimaIstantanea(dove)).riga;
   } catch (e) {

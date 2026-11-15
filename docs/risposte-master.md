@@ -2862,3 +2862,59 @@ all'attività), elencato in `sistema_salute.da_fare` e da fare insieme alla rige
   Parata, mentre la A.206 del 30/10 aveva deciso che para a mani nude fin dal I Grado: ho seguito il blocco
   approvato del 12/11, più recente, ma una decisione che si rovescia va confermata). Il primo numero libero
   diventa **A.271**.
+
+## 15 novembre 2026 — Lotto 199: la prima istantanea vera (`docs/diff-lotto199-2026-11-15.md`)
+
+**L'istantanea è arrivata e il meccanismo del lotto 196 funziona.** `mutant-stato_2026-11-14_2004.zip`, scritta il
+14/11 alle 20:04 dal PC di Davide, è in `F:/REPOS/mutant/istantanee/` (zip e copia aperta in sola lettura, fuori da
+git, riconosciuta da sé dalla guardia perché contiene file con `"formato": "mutant-personaggio"`). **Da qui in
+avanti ogni affermazione sui sette porta la data di questa istantanea, non quella dei file locali.**
+
+**A.268 — RITIRATA** *(15/11/2026)*. Chiedeva a che livello fossero i sette, perché la copia locale di ottobre ne
+dava sei al livello 6. L'istantanea dice che sono **tutti e sette al livello 7** (Botha 1010, Duncan 1002, Dimitri
+906, Lucas 1022, Michele 1006, Oshi 1008, Pablo 1012 PX; `regimeTalenti: 2`, nessun `regimeAbilita`, `ferite: 0`):
+il passaggio è 7 → 8, un livello solo, monte 21 punti, esattamente come il blocco approvato dell'11/11. La domanda
+nasceva dalla nostra copia vecchia e non da un'ambiguità dei manuali. Resta scritta come ritirata, col motivo.
+
+**La A.267 non è bloccante al tavolo.** Sui file veri, delle **33** Abilità che cambiano categoria passando al
+profilo 4/7/9/4 **tutte e 33 salgono**: 46 VA in salita, **zero in discesa**, per tutti e sette. La procedura
+dell'adeguamento parte per tutti. La domanda resta aperta perché il caso esiste (il Predicatore d'esempio lo
+subisce) e il §8.3.1 non dice se compensare.
+
+**Quello che la verifica ha chiuso, punto per punto:** monte 14 per tutti e sette al livello 7 (lo strumento dice da
+sé «prima fallo salire all'8, poi 21 punti»); i Guanti di Lucas **indossati**, 6 CM su 6 col valore di prima
+conservato (conversione del lotto 171 esatta); la Batteria Matrice a 13.500 cr quadra con la formula e ce l'hanno
+**Dimitri e Lucas**, mentre i due prezzi che non quadrano (Guanti 3.000 contro 13.800, Pietra della Vigilanza 4.000
+contro 12.600) sono **entrambi di Lucas** — il dettaglio che mancava alla A.261; nessun blocco `morente` in nessuno
+dei 37 file, quindi il lotto 193 si applica senza cancello; PX e livelli coerenti, nessuno sfalsato, e **nessuno ha
+ancora i PX per il livello 8** (soglia 1050: a Lucas ne mancano 28, a Dimitri 144), quindi la destinazione del
+blocco approvato richiede una serata di PX o la concessione della A.187.
+
+- **Domanda nuova, aperta: A.271 — che CyberArma ha Dimitri.** Nel file dell'11/11 ha
+  `armi:cyberarma-batteria-verde` impugnata, con riserva di 5 CM: è la voce con la riserva interna, che la scheda
+  delle opzioni elencava fra gli sviluppi successivi. Nessun frammento Viola, nessun modulo SIN, `progetti_master`
+  vuoto. O è l'arma di Park registrata con la voce sbagliata (va ricondotta), o è un'altra arma e il progetto di
+  Paradise non ha un esemplare su cui lavorare. Simulata la consegna: **non si ferma**, aggiorna quella voce senza
+  crearne una seconda (A.231 rispettata), ma lascerebbe insieme la riserva interna di CM e l'alimentazione a PM
+  personali, che la A.251 dichiara incompatibili, e scriverebbe nello storico il focalizzatore Viola di un'arma che
+  non l'ha mai avuto. Niente toccato. Il primo numero libero diventa **A.272**.
+
+**Due cose nei dati veri di Davide, segnalate e non toccate:** la **Neverlost è doppia** nel registro (due record a
+quindici secondi uno dall'altro il 14/11, uno del gruppo completo e uno di Pablo vuoto) — `esemplare_unico` è
+applicato solo in `profiliCreabili`, cioè nell'elenco dei profili creabili, e non nella scrittura del record; e il
+**FIAT LUX sul suo PC è `veimvozx57q0`**, non `veimuu14mqa0` come nella nostra copia di ottobre (nessuno
+sdoppiamento: `tools/fiat-lux.mjs` ne conta uno).
+
+**Un difetto da sistemare prima della serata dell'adeguamento, fuori dall'ambito di questo lotto:**
+`tools/adegua-abilita.mjs` non usa `src/cartella.js → fileAttuale` e sulla cartella vera pianifica **37
+personaggi invece di 7**; `--annulla NOME` prenderebbe il primo file con quel nome (la versione del 26 ottobre) e
+lascerebbe adeguato l'attuale, dicendo di aver annullato. Si vede solo su una cartella vera, perché la copia locale
+ha un file per personaggio.
+
+**L'istantanea, completata (parte D):** `CARTELLE` aggiunge `nemici`, `scontri` e `scene` (fuori apposta `mappe` e
+`galleria`, che sono immagini: un'istantanea da 50 MB non arriva da sé); `stato-mutant.txt` **esce** dallo zip
+perché diceva le stesse cose dell'indice e c'era solo se Davide apriva la voce C (si continua a leggerlo per gli
+zip già fatti); l'indice passa alla **versione 2** e porta Classe, PX (da `scelte.puntiEsperienza`: li cercava in
+`px` e tornavano sempre null), regimi, Ferite e `attuale` sul file attuale di ciascuno; `px/` era già prevista ed è
+arrivata vuota, perché i PX stanno nei file dei personaggi. E la riga di inizio sessione conta i **personaggi** e
+non i file: diceva «37 personaggi» invece di sette.

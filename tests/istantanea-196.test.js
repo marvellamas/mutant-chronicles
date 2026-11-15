@@ -97,8 +97,9 @@ test('il nome porta la data e l’ora, e si rilegge', () => {
   assert.equal(quandoDalNome('mutant-stato.zip'), null);
 });
 
-test('dentro ci sono i personaggi, i veicoli, i PX, l’indice e il rapporto', () => {
+test('dentro ci sono i personaggi, i veicoli, i PX e l’indice', () => {
   const { base, cartelle, cloud } = conDati({ quanti: 3 });
+  // lotto 199: stato-mutant.txt non entra più nello zip (lo diceva due volte, e c’era solo se Davide apriva la voce C)
   writeFileSync(join(base, 'stato-mutant.txt'), 'STATO DI MUTANT - prova');
   const e = faiIstantanea({ cartelle, dove: cloud, dati: base, statoTxt: join(base, 'stato-mutant.txt') });
   assert.equal(e.fatto, true);
@@ -109,7 +110,7 @@ test('dentro ci sono i personaggi, i veicoli, i PX, l’indice e il rapporto', (
   assert.deepEqual(i.personaggi.map((p) => p.nome), ['Prova 0', 'Prova 1', 'Prova 2']);
   assert.equal(i.veicoli, 1);
   assert.equal(i.px, 1);
-  assert.match(i.stato, /STATO DI MUTANT/);
+  assert.equal(i.stato, null);
   // i file che non sono personaggi non entrano nel conto (riconosciuti dal contenuto, come il lotto 161)
   writeFileSync(join(base, 'personaggi', 'attese.json'), '{"nota":"non è un personaggio"}');
   assert.equal(faiIstantanea({ cartelle, dove: cloud, dati: base, adesso: new Date(Date.now() + 60000) }).quanti, 3);
@@ -196,8 +197,8 @@ test('le impostazioni dicono in una riga com’è la cartella, e il file d’ese
   assert.equal(statoImpostazioni(app).istantanee.stato, 'ok');
 });
 
-test('CARTELLE: l’istantanea porta i personaggi, i veicoli e i PX — non la sessione intera', () => {
-  assert.deepEqual(CARTELLE, ['personaggi', 'veicoli', 'px']);
+test('CARTELLE: l’istantanea porta lo stato, non la sessione intera (lotto 199: anche nemici, scontri, scene)', () => {
+  assert.deepEqual(CARTELLE, ['personaggi', 'veicoli', 'px', 'nemici', 'scontri', 'scene']);
   const { base, cartelle } = conDati();
   mkdirSync(join(base, 'mappe'), { recursive: true });
   writeFileSync(join(base, 'mappe', 'grossa.png'), Buffer.alloc(1024));
@@ -205,6 +206,6 @@ test('CARTELLE: l’istantanea porta i personaggi, i veicoli e i PX — non la s
   assert.equal(i.formato, 'mutant-istantanea');
   assert.equal(i.pc, 'PC-DAVIDE');
   const voci = vociIstantanea({ cartelle, indice: i });
-  assert.ok(voci.every((v) => /^(personaggi|veicoli|px)\/|^istantanea\.json$/.test(v.nome)), 'niente mappe, niente immagini');
+  assert.ok(voci.every((v) => /^(personaggi|veicoli|px|nemici|scontri|scene)\/|^istantanea\.json$/.test(v.nome)), 'niente mappe, niente immagini');
   assert.ok(voci.some((v) => v.nome === 'istantanea.json'));
 });
