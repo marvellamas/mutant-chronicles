@@ -66,9 +66,17 @@ test('il secondo record di un esemplare unico riceve 409, e dice quale c’è gi
   assert.deepEqual(readdirSync(c.veicoli).sort(), ['veiunico0001.json'], 'il file del secondo è stato scritto comunque');
 });
 
-test('un profilo che non è unico si crea quante volte si vuole', async () => {
+test('un profilo che non è unico si crea, e un secondo esemplare si dichiara (lotto 202)', async () => {
   assert.equal((await metti(record('veinorm00001', PROFILO_NORMALE, 'FIAT LUX'))).status, 200);
-  assert.equal((await metti(record('veinorm00002', PROFILO_NORMALE, 'un altro Scout'))).status, 200);
+  // **Cambiato dal lotto 202**: un secondo record dello stesso profilo e dello stesso proprietario adesso è
+  // rifiutato anche se il profilo non è un esemplare unico — è così che lo Scout dei PG è finito nel registro tre
+  // volte. Non è una porta chiusa: un secondo mezzo vero si dichiara e passa.
+  const secondo = await metti(record('veinorm00002', PROFILO_NORMALE, 'un altro Scout'));
+  assert.equal(secondo.status, 409);
+  assert.equal((await secondo.json()).doppione, true, 'rifiutato come doppione, non come esemplare unico');
+  const dichiarato = record('veinorm00003', PROFILO_NORMALE, 'un altro Scout');
+  dichiarato.mezzo.esemplare_distinto = { quando: '2026-11-15T10:00:00.000Z', da: 'Direttore' };
+  assert.equal((await metti(dichiarato)).status, 200, 'una dichiarazione del Direttore deve passare');
 });
 
 test('un record che c’è già si continua a salvare: un doppione esistente si deve poter correggere', async () => {

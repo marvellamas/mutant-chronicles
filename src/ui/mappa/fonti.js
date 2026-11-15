@@ -26,7 +26,11 @@ async function json(url) {
 export function creaFonti(dati) {
   const cache = new Map(); // file → { mtime, round, vista }
   return async function leggi(collegamento) {
-    const esito = { scontro: null, bozza: null, mancante: null, candidati: { aperti: [], bozze: [] }, viste: new Map(), record: new Map(), veicoli: [], alTavolo: [], errori: [] };
+    // lotto 202: `esisteComunque` distingue «lo scontro collegato c'è, ma e' chiuso o e' un'altra cosa» da «non
+    // esiste da nessuna parte». Senza, un combattimento finito e un collegamento rotto si leggevano allo stesso
+    // modo, e i token dei partecipanti di una scena di un vecchio scontro sarebbero sembrati appesi: nelle sette
+    // scene della copia locale, 70 token su 76.
+    const esito = { scontro: null, bozza: null, mancante: null, esisteComunque: false, candidati: { aperti: [], bozze: [] }, viste: new Map(), record: new Map(), veicoli: [], alTavolo: [], errori: [] };
     try {
       const lista = await json('api/scontri');
       esito.candidati.aperti = lista.filter((s) => s.stato === 'aperto');
@@ -38,7 +42,7 @@ export function creaFonti(dati) {
         const s = await json(`api/scontri/${encodeURIComponent(id)}`);
         if (collegamento.scontro && s.stato === 'aperto') esito.scontro = s;
         else if (collegamento.bozza && s.stato === STATO_BOZZA) esito.bozza = s;
-        else esito.mancante = collegamento.scontro ? 'scontro' : 'bozza';
+        else { esito.mancante = collegamento.scontro ? 'scontro' : 'bozza'; esito.esisteComunque = true; }
       } catch (e) {
         if (e.stato === 404) esito.mancante = collegamento.scontro ? 'scontro' : 'bozza';
         else esito.errori.push(`scontro collegato: ${e.message}`);

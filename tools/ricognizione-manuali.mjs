@@ -173,7 +173,7 @@ export async function righeRiferimentiRotti() {
     const { caricaDati } = await import(pathToFileURL(join(RADICE_APP, 'src', 'rules.js')));
     const { dati } = await caricaDati(async (n) => readFileSync(join(RADICE_APP, 'data', `${n}.json`), 'utf8'));
     const dd = cartellaDati(RADICE_APP).cartella;
-    const posti = [{ che: 'copia locale', pg: join(dd, 'personaggi'), veicoli: join(dd, 'veicoli') }];
+    const posti = [{ che: 'copia locale', base: dd, pg: join(dd, 'personaggi'), veicoli: join(dd, 'veicoli') }];
     // l'istantanea aperta più recente: è lo stato vero di Davide
     const ist = join(dd, 'istantanee');
     try {
@@ -181,12 +181,17 @@ export async function righeRiferimentiRotti() {
         .filter((d) => d.isDirectory() && /^stato_/.test(d.name))
         .map((d) => d.name).sort();
       const ultima = aperte[aperte.length - 1];
-      if (ultima) posti.push({ che: `istantanea ${ultima.replace(/^stato_/, '')}`, pg: join(ist, ultima, 'personaggi'), veicoli: join(ist, ultima, 'veicoli') });
+      if (ultima) posti.push({ che: `istantanea ${ultima.replace(/^stato_/, '')}`, base: join(ist, ultima), pg: join(ist, ultima, 'personaggi'), veicoli: join(ist, ultima, 'veicoli') });
     } catch { /* nessuna istantanea aperta: si guarda solo la copia locale */ }
+    // lotto 202: accanto ai riferimenti dei personaggi, i token appesi delle scene. Stesso posto, stessa forma:
+    // quanti e dove. L'obiettivo è quello di sempre — che una cosa così si veda il giorno in cui accade.
+    const { quadroScene } = await import('./riferimenti-rotti.mjs');
     for (const p of posti) {
       if (!existsSync(p.pg)) continue;
       const q = quadroRiferimentiRotti(personaggiDellaCartella(p.pg), recordDelRegistro(p.veicoli), dati, { master: true });
       out.push(`${p.che}: ${q.riga}`);
+      const s = await quadroScene({ base: p.base, d: dati });
+      out.push(`${p.che}: ${s ? s.quadro.riga : 'Token appesi: non si contano, in questa copia non c’è la cartella scene/.'}`);
     }
   } catch (e) {
     out.push(`Riferimenti rotti: non si leggono (${e.message}). Non blocca niente.`);

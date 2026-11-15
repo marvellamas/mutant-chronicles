@@ -128,5 +128,6 @@ test('la riga del controllo di inizio sessione esiste e non fa saltare niente', 
   const { righeRiferimentiRotti } = await import('../tools/ricognizione-manuali.mjs');
   const righe = await righeRiferimentiRotti();
   assert.ok(Array.isArray(righe), 'deve tornare delle righe, anche quando non c’è niente da dire');
-  for (const r of righe) assert.match(r, /Riferimenti rotti|non si leggono/);
+  // lotto 202: nello stesso posto ci sono anche i token appesi delle scene
+  for (const r of righe) assert.match(r, /Riferimenti rotti|Token appesi|non si leggono|non si contano/);
 });

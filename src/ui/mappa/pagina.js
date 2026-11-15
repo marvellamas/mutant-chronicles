@@ -38,6 +38,27 @@ import { leggiScena, salvaScena, caricaImmagine, controllaFile, preparaRidotta }
 import { agganciaQ, centroToken, tokenSottoPunto, disponiInFila, sovrapposti, chiaveRif, dimensioni, celleToken as celleTokenQ, tokenDentro } from '../../mappa/token.js';
 import { scale as elencoScale, scalaDi, testoScalaScena, scalaCambiabile, conScala, qMetri } from '../../mappa/scala.js';
 import { pezziDellaScena, pezziSenzaToken, tokenOrfani, tokenPerPezzo, tokenDaAdattare, adattaToken } from '../../mappa/partecipanti.js';
+// lotto 202: i token che rimandano al vuoto, con lo stesso motore dei veicoli della scheda (lotto 201)
+// `togliTokenAppeso` e `ricollegaTokenAppeso`: i nomi sono diversi da quelli della pagina, che ha gia' un suo
+// `togliToken(id)` — con lo stesso nome l'import restava zitto e la funzione chiamata era l'altra (visto provando)
+import { tokenAppesi, statoTokenAppeso, ricollegaToken as ricollegaTokenAppeso, togliToken as togliTokenAppeso } from '../../riferimenti-rotti.js';
+
+/**
+ * Lotto 202: com'e' il collegamento della scena allo scontro.
+ *  - 'presente': lo scontro o la bozza esistono, anche chiusi (`mancante` con `esisteComunque`) — la scena di un
+ *    combattimento finito e' il suo ricordo, e i suoi token non sono appesi;
+ *  - 'sparito': il collegamento nomina uno scontro che non esiste (404), e allora i token rimandano al vuoto;
+ *  - 'nessuno': la scena non e' collegata a niente, cosa che si fa.
+ */
+function statoCollegamento(f, scena) {
+  const id = scena?.collegamento?.scontro ?? scena?.collegamento?.bozza ?? null;
+  if (!id) return 'nessuno';
+  if (f?.scontro || f?.bozza) return 'presente';
+  if (f?.errori?.length) return 'presente'; // lettura incompleta: non si accusa nessuno
+  if (f?.mancante && f?.esisteComunque) return 'presente';
+  if (f?.mancante) return 'sparito';
+  return 'presente';
+}
 import { daBase64, inBase64, cella, conta, impostaCella } from '../../mappa/celle.js';
 import { ostacoliVista, lineaDiTiro, testoCopertura, apriNebbiaConPg } from '../../mappa/visuale.js';
 import { mappaSemplice, conSemplice, lineaSemplice, nebbiaConPg, modoNebbia } from '../../mappa/semplice.js';
@@ -858,7 +879,14 @@ export function renderMappa(radice, ctx) {
           setTimeout(() => aggiornaFonti(), 0);
           return;
         }
-        if (orfani.length) {
+        // lotto 202: un token **appeso** (veicolo sparito dal registro) non si toglie da se'. Chi esce da uno
+        // scontro aperto si', come sempre: quello e' il flusso del §6 e resta com'e'. La differenza e' fra «e'
+        // uscito dal combattimento» e «il record non c'e' piu'»: cancellare in silenzio il secondo e' la
+        // decisione sbagliata presa senza chiedere, ed e' il buco che il lotto 201 ha chiuso sui veicoli.
+        const appesiOra = new Set(tokenAppesi(st.scena, st.pezzi, { veicoli: esito.veicoli ?? [], collegamento: statoCollegamento(esito, st.scena) }).map((x) => x.token.id));
+        const daTogliere = orfani.filter((t) => !appesiOra.has(t.id));
+        if (daTogliere.length) {
+          const orfani = daTogliere;
           const nomi = orfani.map((t) => prima.get(chiaveRif(t.rif))?.nome ?? t.id);
           st.scena = { ...st.scena, token: st.scena.token.filter((t) => !orfani.includes(t)) };
           if (orfani.some((t) => t.id === st.selezionato)) st.selezionato = null;
@@ -888,21 +916,46 @@ export function renderMappa(radice, ctx) {
     el.selezione.aggiorna(riassuntoSelezione(st.scena, st.editor.selezione, ctx.dati));
     const f = st.fonti ?? { candidati: { aperti: [], bozze: [] }, errori: [], mancante: null, scontro: null, bozza: null };
     const senza = pezziSenzaToken(st.scena, st.pezzi);
+    // lotto 202: i token appesi. `collegamento` distingue uno scontro che esiste (anche chiuso o archiviato: la
+    // scena e' il ricordo di quel combattimento) da uno che non esiste piu' da nessuna parte.
+    const appesi = tokenAppesi(st.scena, st.pezzi, { veicoli: f.veicoli ?? [], collegamento: statoCollegamento(f, st.scena) })
+      .map((x) => statoTokenAppeso(x, st.scena, st.pezzi, { veicoli: f.veicoli ?? [], master: true }));
     const scelto = st.scena.token.find((t) => t.id === st.selezionato) ?? null;
     const pz = scelto ? pezzoDi(scelto) : null;
     // si ridisegna solo se cambia qualcosa: un menu aperto non si chiude da solo ogni tre secondi
     const firma = JSON.stringify([st.scena.collegamento, f.candidati.aperti.map((x) => [x.id, x.nome, x.round]), f.candidati.bozze.map((x) => [x.id, x.nome]),
       f.mancante, f.errori, !!f.scontro, !!f.bozza, f.scontro?.round, senza.map((p) => [p.chiave, p.nome, p.lato, p.ingombro]), st.daPiazzare, scelto, pz,
-      scelto ? movimentoPannello(scelto) : null]);
+      scelto ? movimentoPannello(scelto) : null, appesi.map((x) => [x.token, x.testo]), st.scelteRicollega]);
     if (firma === st.firmaPannello) return;
     st.firmaPannello = firma;
-    svuota(el.secScontro, sezioneScontro({ ...f, collegamento: st.scena.collegamento, senzaToken: senza, daPiazzare: st.daPiazzare }, {
+    svuota(el.secScontro, sezioneScontro({ ...f, collegamento: st.scena.collegamento, senzaToken: senza, daPiazzare: st.daPiazzare, appesi, master: true, scelteRicollega: st.scelteRicollega ?? {} }, {
       collega: (v) => collega(v ? { scontro: v.startsWith('s:') ? v.slice(2) : null, bozza: v.startsWith('b:') ? v.slice(2) : null } : { scontro: null, bozza: null }),
       collegaAperto: (id) => collega({ scontro: id, bozza: null }),
       metti: (chiave) => { st.daPiazzare = st.daPiazzare === chiave ? null : chiave; el.riquadro.classList.toggle('piazza', !!st.daPiazzare); disegnaPannelli(); },
       mettiTutti,
       // M4 (11/10): lo stesso «Aggiungi nemico» della plancia e della bozza, qui accanto ai pezzi da mettere
       aggiungiNemico: f.scontro || f.bozza ? () => aggiungiNemicoUi(f) : null,
+      // lotto 202: i token appesi. Scegliere non cambia niente: cambia solo quando il Direttore preme.
+      scegliRicollega: (token, id) => { st.scelteRicollega = { ...(st.scelteRicollega ?? {}), [token]: id }; disegnaPannelli(); },
+      ricollegaAppeso: (token, id) => {
+        const e = ricollegaTokenAppeso(st.scena, token, id, { master: true, veicoli: f.veicoli ?? [], pezzi: st.pezzi });
+        if (e.errore) { avviso(e.errore, { durata: 8000 }); return; }
+        st.scena = e.scena;
+        st.scelteRicollega = { ...(st.scelteRicollega ?? {}), [token]: undefined };
+        avviso(e.riga, { durata: 8000 });
+        salvaPresto();
+        aggiornaFonti();
+      },
+      togliAppeso: (token) => {
+        const e = togliTokenAppeso(st.scena, token, { master: true });
+        if (e.errore) { avviso(e.errore, { durata: 8000 }); return; }
+        st.scena = e.scena;
+        if (st.selezionato === token) st.selezionato = null;
+        avviso(e.riga, { durata: 8000 });
+        salvaPresto();
+        disegna();
+        disegnaPannelli();
+      },
     }));
     svuota(el.secToken, sezioneToken(scelto, pz, ctx.dati, {
       mov: scelto ? movimentoPannello(scelto) : null,

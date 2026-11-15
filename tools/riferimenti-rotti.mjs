@@ -20,6 +20,7 @@ import { fileURLToPath, pathToFileURL } from 'node:url';
 import { cartellaDati } from './dati-pc.mjs';
 import { fermaSeSconosciuti, ARGOMENTI } from './argomenti.mjs';
 import { personaggiDellaCartella, rigaSuCosa } from './personaggi-cartella.mjs';
+import { join as unisci } from 'node:path';
 
 const RADICE = dirname(dirname(fileURLToPath(import.meta.url)));
 
@@ -41,6 +42,58 @@ export function recordDelRegistro(cartella) {
   }
   return out;
 }
+/**
+ * Tutti gli scontri di una cartella di dati, **archivio compreso**: un combattimento chiuso esiste ancora, e la
+ * scena che lo nomina non ha token appesi — è il suo ricordo (lotto 202).
+ */
+export function scontriDelServer(base) {
+  const out = new Map();
+  for (const d of [unisci(base, 'scontri'), unisci(base, 'scontri', 'archivio')]) {
+    let nomi = [];
+    try { nomi = readdirSync(d).filter((f) => f.endsWith('.json')); } catch { continue; }
+    for (const f of nomi) {
+      try { const x = JSON.parse(readFileSync(unisci(d, f), 'utf8')); if (x?.id) out.set(x.id, x); } catch { /* rovinato */ }
+    }
+  }
+  return out;
+}
+
+/**
+ * I token appesi delle scene di una cartella di dati (lotto 202). Sola lettura.
+ *
+ * Il collegamento di ogni scena si classifica guardando se lo scontro esiste **da qualche parte**: col criterio
+ * ingenuo («il pezzo non c'è») nelle sette scene della copia locale i token appesi sarebbero 70 su 76, cioè un
+ * allarme che si impara a ignorare.
+ *
+ * @returns {{ quadro, scene }} oppure null se la cartella delle scene non c'è
+ */
+export async function quadroScene({ base, d = null }) {
+  const D = d ?? await dati();
+  const { pezziDellaScena } = await import(pathToFileURL(join(RADICE, 'src', 'mappa', 'partecipanti.js')));
+  const { quadroTokenAppesi } = await import(pathToFileURL(join(RADICE, 'src', 'riferimenti-rotti.js')));
+  const dirScene = unisci(base, 'scene');
+  let nomi;
+  try { nomi = readdirSync(dirScene).filter((f) => f.endsWith('.json')); } catch { return null; }
+  const veicoli = recordDelRegistro(unisci(base, 'veicoli'));
+  const scontri = scontriDelServer(base);
+  const scene = [];
+  for (const f of nomi) {
+    let x;
+    try { x = JSON.parse(readFileSync(unisci(dirScene, f), 'utf8')); } catch { continue; }
+    if (x?.formato !== 'mutant-scena') continue;
+    const id = x.collegamento?.scontro ?? x.collegamento?.bozza ?? null;
+    const sc = id ? scontri.get(id) ?? null : null;
+    const collegamento = !id ? 'nessuno' : sc ? 'presente' : 'sparito';
+    const pezzi = pezziDellaScena({
+      scontro: x.collegamento?.scontro && sc?.stato === 'aperto' ? sc : null,
+      bozza: x.collegamento?.bozza && sc ? sc : null,
+      veicoli, scena: x,
+    }, D);
+    scene.push({ nome: x.nome ?? f, file: f, scena: x, pezzi, veicoli, collegamento });
+  }
+  return { quadro: quadroTokenAppesi(scene), scene, token: scene.reduce((n, v) => n + (v.scena.token?.length ?? 0), 0) };
+}
+
 /**
  * Il quadro: che cosa c'è da ricollegare. Non scrive niente.
  * @returns {{ quadro, voci, suCosa }}
@@ -88,6 +141,22 @@ export async function applica({ personaggi: cartellaPg, veicoli: cartellaVeicoli
   return { scritti, lasciati, senzaCandidati };
 }
 
+/**
+ * Le scene della stessa cartella di dati dei personaggi: i token appesi (lotto 202). Sola lettura, e se la cartella
+ * delle scene non c'è lo dice invece di tacere — è il caso dell'istantanea del 14/11, scritta prima del lotto 199.
+ */
+async function stampaScene(cartellaPg, D) {
+  const base = dirname(cartellaPg);
+  const q = await quadroScene({ base, d: D });
+  console.log('');
+  if (!q) { console.log(`Scene: nessuna cartella scene/ accanto a ${cartellaPg} — i token non si possono contare.`); return; }
+  console.log(`${q.scene.length} scene, ${q.token} token in ${unisci(base, 'scene')}.`);
+  if (!q.quadro.quanti) { console.log('Nessun token appeso: ogni token rimanda a qualcosa che esiste.'); return; }
+  for (const x of q.quadro.righe) console.log(`   ${x.scena} · token ${x.token} · ${x.tipo} ${x.rif}${x.nato ? ` (del ${x.nato})` : ''} — ${x.motivo}`);
+  console.log(`${q.quadro.riga}`);
+  console.log('I token si ricollegano o si tolgono dalla mappa, dalla pagina della scena: qui non si scrive.');
+}
+
 if (process.argv[1] && import.meta.url.endsWith(process.argv[1].replace(/\\/g, '/').split('/').pop())) {
   const argv = process.argv.slice(2);
   fermaSeSconosciuti(argv, ARGOMENTI['riferimenti-rotti.mjs'], 'riferimenti-rotti.mjs');
@@ -103,6 +172,7 @@ if (process.argv[1] && import.meta.url.endsWith(process.argv[1].replace(/\\/g, '
   console.log(`Registro dei veicoli: ${r.record.length} record in ${cartellaVeicoli}.\n`);
   if (!r.quadro.quanti) {
     console.log('Nessun riferimento rotto: ogni veicolo citato da una scheda è nel registro.');
+    await stampaScene(cartellaPg, D);
     process.exit(0);
   }
   for (const x of r.quadro.righe) {
@@ -111,6 +181,7 @@ if (process.argv[1] && import.meta.url.endsWith(process.argv[1].replace(/\\/g, '
     console.log(`   ${x.sistemabile ? 'si può ricollegare con --scrivi' : x.attesa ? 'DUE O PIÙ CANDIDATI: lo lascio, scegli dalla scheda' : 'nessun candidato: lo rimetti o lo togli dalla scheda'}`);
   }
   console.log(`\n${r.quadro.quanti} riferimenti rotti: ${r.quadro.sistemabili} con un candidato solo, ${r.quadro.inAttesa} da scegliere, ${r.quadro.senzaCandidati} senza candidati.`);
+  await stampaScene(cartellaPg, D);
   if (!scrivi) { console.log('\nNiente scritto (sola lettura). Con --scrivi ricollego quelli con un candidato solo.'); process.exit(0); }
 
   const e = await applica({ personaggi: cartellaPg, veicoli: cartellaVeicoli, d: D });

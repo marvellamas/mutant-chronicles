@@ -14,8 +14,9 @@ const pallino = (lato) => h('span', { class: `mappa-pallino lato-${lato}`, 'aria
 
 /**
  * @param v { collegamento, candidati: { aperti, bozze }, scontro, bozza, mancante, errori, senzaToken: [pezzo],
- *   daPiazzare: chiave | null }
- * @param a { collega(valore), collegaAperto(id), metti(chiave), mettiTutti(), aggiungiNemico? () }
+ *   daPiazzare: chiave | null, appesi?: [statoTokenAppeso], master?: bool, scelteRicollega?: { token: id } }
+ * @param a { collega(valore), collegaAperto(id), metti(chiave), mettiTutti(), aggiungiNemico? (),
+ *   scegliRicollega(token, id), ricollegaAppeso(token, id), togliAppeso(token) }
  * M4 (11/10): «Aggiungi nemico» anche di qui, senza passare dalla plancia: il nemico entra nello scontro (o
  * nella bozza) collegato e compare subito fra i pezzi «Senza token», pronto da mettere sulla mappa.
  */
@@ -37,6 +38,10 @@ export function sezioneScontro(v, a) {
     avvisi.push(h('p', { class: 'riquadro attenzione' }, `${v.mancante === 'scontro' ? 'Lo scontro collegato è chiuso' : 'La bozza collegata non c’è più'}: i token restano sulla mappa. Scegli un altro collegamento.`));
   }
   if (v.errori.length) avvisi.push(h('p', { class: 'nota' }, `Lettura incompleta (i token non si tolgono finché non torna completa): ${v.errori.join('; ')}.`));
+  // lotto 202: i token che rimandano al vuoto — una riga ciascuno, perché sulla mappa lo spazio è ancora più
+  // stretto che nella scheda. Al Direttore, sulla stessa riga, la tendina di quello che esiste e i due comandi.
+  // L'app non ricollega da sé nemmeno con un candidato solo: «Ricollega» nasce spento e si accende con la scelta.
+  for (const x of v.appesi ?? []) avvisi.push(rigaTokenAppeso(x, v, a));
   const fonte = v.bozza ? 'bozza: i token si preparano prima di «Inizia»' : null;
   return h('section', { class: 'mappa-sezione', 'aria-label': 'Scontro' },
     h('h2', {}, 'Collegamento e token da mettere'),
@@ -55,6 +60,33 @@ export function sezioneScontro(v, a) {
       h('button', { type: 'button', class: 'btn btn-piccolo', 'aria-pressed': String(v.daPiazzare === p.chiave), onclick: () => a.metti(p.chiave) }, v.daPiazzare === p.chiave ? 'Clic sulla mappa…' : 'Metti'))))
         : h('p', { class: 'vuoto' }, 'Tutti in mappa.'),
     ] : h('p', { class: 'nota' }, 'Collega la scena a uno scontro o a una bozza per mettere in mappa PG, nemici e veicoli.'));
+}
+
+/**
+ * Un token appeso: la riga che dice il vero e, per il Direttore, come rimetterlo (lotto 202).
+ *
+ * «Togli dalla mappa» c'è **sempre**, anche senza nessun candidato: un token che non si può né riparare né buttare
+ * è il buco che il lotto 201 ha chiuso sui veicoli della scheda.
+ */
+function rigaTokenAppeso(x, v, a) {
+  const scelto = v.scelteRicollega?.[x.token] ?? '';
+  return h('p', { class: 'riquadro attenzione mappa-token-appeso' }, x.testo,
+    v.master ? h('span', {}, ' ',
+      x.candidati.length ? h('select', {
+        'aria-label': `Ricollega ${x.rif}`,
+        onchange: (e) => a.scegliRicollega(x.token, e.target.value),
+      }, h('option', { value: '', selected: !scelto }, 'scegli…'),
+      // l'identificativo nella voce, non solo il nome: nel registro di Davide ci sono due Neverlost, e senza
+      // l'identificativo la tendina ne mostrava due uguali e indistinguibili (visto provando a 820 px)
+      x.candidati.map((c) => h('option', { value: c.id, selected: scelto === c.id }, `${c.nome} · ${c.id}${c.nato ? ` (del ${c.nato})` : ''}`))) : null,
+      x.candidati.length ? h('button', {
+        type: 'button', class: 'btn btn-piccolo', disabled: scelto ? null : 'disabled',
+        onclick: () => a.ricollegaAppeso(x.token, scelto),
+      }, 'Ricollega') : null,
+      h('button', {
+        type: 'button', class: 'btn btn-piccolo', title: 'Toglie dalla mappa il token appeso, senza ricollegarlo',
+        onclick: () => a.togliAppeso(x.token),
+      }, 'Togli dalla mappa')) : null);
 }
 
 /**
