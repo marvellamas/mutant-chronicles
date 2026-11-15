@@ -2965,3 +2965,47 @@ ciascuno): nessuno strumento pianifica più voci dei personaggi che ci sono; `--
 annullato un personaggio il cui file attuale è ancora adeguato; applica e annulla non toccano un byte delle
 versioni vecchie e la cartella torna identica; il secondo record di un esemplare unico riceve 409. I primi due sono
 stati provati **rossi** prima della correzione.
+
+## 15 novembre 2026 — Lotto 201: un riferimento che non punta a niente (`docs/diff-lotto201-2026-11-15.md`)
+
+Nessuna risposta nuova e **nessuna domanda nuova**: la diagnosi prova che è un veicolo solo, ricreato tre volte, e
+non due mezzi diversi che Davide vuole tenere. Il primo numero libero resta **A.273**.
+
+**Il caso.** Nell'istantanea del 14/11 il file attuale di **PABLO ZAION** rimanda al veicolo `veimuu14mqa0` e quello
+di **LUCAS** a `veimv15h6e40`; nel registro di Davide c'è solo `veimvozx57q0`, il FIAT LUX. Per l'app quei mezzi non
+esistono, quindi la scheda non li apre — e Pablo è il pilota.
+
+**La diagnosi.** Gli uid dei veicoli sono `vei` + `Date.now()` in base 36, quindi **portano scritta la data di
+nascita**: lo Scout è stato registrato il **4 ottobre 16:22** (`veimuu14mqa0`, quello di Pablo), il **9 ottobre
+15:58** (`veimv15h6e40`, quello di Lucas) e il **26 ottobre 08:29** (`veimvozx57q0`, quello di adesso). Il record del
+4 ottobre esiste ancora nella copia locale di Marcello (16/10, revisione 18) e confrontato con quello di Davide
+(revisione 21) è **lo stesso mezzo**: stesso profilo, stessi PI 60/36/24, stesse munizioni 400 + 800, stessa energia,
+il gruppo proprietario e Pablo alla guida. Nascevano record nuovi perché la guardia dei doppioni di `migraVeicoli`
+vale **solo** per i veicoli marcati «del gruppo». Il 2/11 alle 22:30 il riferimento buono è stato tolto dalla scheda
+di Pablo con «Togli dalla scheda» (azione legittima, il record resta nel registro) ed è riemerso quello morto di
+ottobre; il 2/11 alle 19:56, a quaranta secondi di distanza, sono nati i **due Neverlost** — **correzione al lotto
+199**, che li diceva creati il 14/11 a quindici secondi di distanza (avevo letto il campo `aggiornato`, non la
+nascita). Perché i record del 4 e del 9 ottobre siano usciti dal registro **non si ricava dai file**: o cancellati a
+mano per togliere i doppioni, o perduti nel cambio della cartella dei dati di fine ottobre.
+
+**La classe del difetto.** Un identificativo non cambia mai: è il **record che può sparire**, e chi lo cita non viene
+più riconciliato — `migraVeicoli` salta i riferimenti per costruzione (`if (eRiferimento(v)) return v`), e la tab
+Veicoli offriva «Togli dalla scheda» solo per i record che esistono, quindi un riferimento rotto non si poteva né
+riparare né buttare. Rassegna di tutti i riferimenti fra un file e un altro nel documento del lotto: possono restare
+appesi i veicoli citati da una scheda (corretto qui) e i **token della mappa** che rimandano a un veicolo o a un
+partecipante che non c'è (segnalato, lotto a parte); non possono la Galleria (l'indice si rifà sui file veri), i PX
+(`nonMigrate`), le voci del catalogo (`rif_sostituiti`), e i profili dentro scontri e nemici viaggiano con lo scontro.
+
+**Che cosa fa l'app adesso.** `src/riferimenti-rotti.js` (puro) e, nella tab Veicoli, **una riga** che dice il vero
+con l'identificativo scritto e la conseguenza («il mezzo non si apre»), più — **solo in modalità master** — la tendina
+dei veicoli che esistono, «Ricollega» (spento finché il Direttore non ha scelto) e «Togli dalla scheda».
+**L'app non ricollega da sé nemmeno con un candidato solo:** un collegamento sbagliato è peggio di uno mancante. Il
+candidato si riconosce dal **nome** (un riferimento appeso non porta il profilo), confrontato col nome scritto, col
+modello e con quello deciso dai dati («FIAT LUX», A.226). `node tools/riferimenti-rotti.mjs` elenca in sola lettura,
+`--scrivi` ricollega dove il candidato è uno solo, sul file attuale di ciascuno (lotto 200), con una riga nello
+storico, e rilanciato non trova più niente; con due candidati lascia e lo dice. Nel controllo di inizio sessione,
+accanto alla riga dell'istantanea, quanti sono e di chi, separando la copia locale dall'istantanea aperta.
+
+**I due test che devono restare verdi sempre** (`tests/riferimenti-rotti-201.test.js`,
+`tests/riferimenti-rotti-strumento-201.test.js`, provati col mutante): un riferimento rotto viene segnalato; l'app
+non ricollega da sé senza una scelta del Direttore.
