@@ -2918,3 +2918,50 @@ zip già fatti); l'indice passa alla **versione 2** e porta Classe, PX (da `scel
 `px` e tornavano sempre null), regimi, Ferite e `attuale` sul file attuale di ciascuno; `px/` era già prevista ed è
 arrivata vuota, perché i PX stanno nei file dei personaggi. E la riga di inizio sessione conta i **personaggi** e
 non i file: diceva «37 personaggi» invece di sette.
+
+## 15 novembre 2026 — Lotto 200: un personaggio, non un file (`docs/diff-lotto200-2026-11-15.md`)
+
+Nessuna risposta nuova di Davide: è la correzione del difetto trovato chiudendo il 199, prima della serata
+dell'adeguamento.
+
+**Il difetto.** `tools/adegua-abilita.mjs` non usava `src/cartella.js → fileAttuale`: sulla cartella vera (37 file
+per sette personaggi) pianificava 37 righe, `--applica` scriveva anche nelle versioni vecchie e **`--annulla NOME`
+prendeva il primo file con quel nome** — la versione del 26 ottobre — la riportava indietro e lasciava adeguato il
+file attuale **dicendo di aver annullato**. Alla serata è l'unico attrezzo di sicurezza, e mentiva. Si vedeva solo
+su una cartella vera, perché la copia locale ha un file per personaggio: è per questo che era passato.
+
+**La classe del difetto, non il caso.** Censiti tutti gli strumenti che leggono `personaggi/*.json`. Scrivevano
+senza scegliere l'attuale (difetti corretti): `adegua-abilita`, `migra-parata` (riscriveva tutte e cinque le
+versioni), `riserve-intere` (metteva la riga A.252 nello storico anche nelle vecchie). Leggevano per file
+(corretti, adesso contano per personaggio e dicono su quale file): `prezzi-prima-dopo` (stampava «37 personaggi»),
+`caricatori-prima-dopo`, `riserve-da-convertire`, `fiat-lux`; `incantesimi-da-classificare` contava già per
+personaggio ma con una regola sua, e ora usa `fileAttuale`. Lasciati con il motivo scritto, perché devono vedere
+ogni file: la copia zip di sicurezza, `pulizia-personaggi`, `cerca-personaggi`, la guardia e gli strumenti che
+copiano cartelle intere. Non applicabile: il validatore (valida `data/`), `png-prima-dopo` (legge `nemici/`), gli
+strumenti su un file indicato a mano e i generatori degli esempi. La scelta sta ora in un posto solo,
+**`tools/personaggi-cartella.mjs`**; prima era scritta due volte e mancava a tutti gli altri.
+
+**La A.240 dove il record si scrive.** La Neverlost doppia dell'istantanea del 14/11 nasce dalla regola applicata
+solo in `profiliCreabili`, cioè nell'elenco di quello che si può creare: una pagina aperta prima della prima
+creazione passa. Adesso `erroreEsemplareUnico` (`src/veicoli.js`, funzione pura) e `PUT /api/veicoli/<id>` danno
+**409** al secondo record di un profilo unico, dicendo quale c'è già; un record già scritto si continua a salvare,
+altrimenti un doppione esistente non si potrebbe più correggere. Il record di troppo lo cancella Davide.
+
+**Una cosa nuova vista sui dati veri.** Il file attuale di **Pablo** rimanda al veicolo `veimuu14mqa0` e quello di
+**Lucas** a `veimv15h6e40`: nel registro di Davide non esistono (il FIAT LUX è `veimvozx57q0`, e il riferimento a
+quello è sparito dai file di Pablo dal 2 novembre). Un riferimento che non punta a niente non è un doppione, ed è
+peggio: il mezzo non si apre. `tools/fiat-lux.mjs` adesso lo dice; niente toccato, si rimette dalla tab Veicoli.
+
+- **Domanda nuova, aperta: A.272 — da che livello si fa l'adeguamento delle Abilità.** Tutti e sette sono al
+  livello 7 con PX fra 906 e 1022 e la soglia dell'ottavo è 1050: nessuno ce l'ha. Il monte di oggi è **14** punti
+  (§8.3.1, 7 per Grado), quello del blocco approvato dell'11/11 è **21** al livello 8. Tre strade, e decide Davide:
+  una serata di PX, la concessione della A.187, o l'adeguamento adesso al livello 7 con 14 punti. Nel frattempo la
+  procedura calcola il monte dai dati e non scegli al posto suo. Il primo numero libero diventa **A.273**.
+
+**I test che devono restare verdi sempre** (`tests/un-personaggio-non-un-file-200.test.js`,
+`tests/strumenti-per-personaggio-200.test.js`, `tests/esemplare-unico-200.test.js`), tutti su una cartella di
+collaudo **come quella di Davide** (`tests/cartella-come-davide.mjs`: sette personaggi, cinque versioni datate
+ciascuno): nessuno strumento pianifica più voci dei personaggi che ci sono; `--annulla` non dichiara di aver
+annullato un personaggio il cui file attuale è ancora adeguato; applica e annulla non toccano un byte delle
+versioni vecchie e la cartella torna identica; il secondo record di un esemplare unico riceve 409. I primi due sono
+stati provati **rossi** prima della correzione.
