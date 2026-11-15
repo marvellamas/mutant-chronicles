@@ -7,10 +7,10 @@ import { h } from './dom.js';
 import { riempimento } from '../interfaccia.js';
 import { validaNemico, formattaErrore, sorgentiNemico } from '../validate.js';
 import { nemicoVuoto, voceVuota, pulisciNemico, idDaNome, testoMovimento, pxDiRiferimentoGs } from '../nemici.js';
-import { variaPvNemico, variaPmNemico, cambiaStatoNemico, cambiaIntensitaNemico, usaCapacitaNemico, stabilizzaNemico, scalaMorenteNemico, cosNemico } from '../scontro.js';
+import { variaPvNemico, variaPmNemico, cambiaStatoNemico, cambiaIntensitaNemico, usaCapacitaNemico, stabilizzaNemico, scalaMorenteNemico, cosNemico, feritaDirettaNemico, curaFeritaNemico } from '../scontro.js';
 import { infoValore } from './tooltip.js';
 import { statoMorenteNemico } from '../morente.js';
-import { rigaSistemaSalute, statoAZeroPv } from '../senza-ferite.js';
+import { rigaSistemaSalute, statoAZeroPv, pezziGrassetto, regoleSenzaFerite } from '../senza-ferite.js';
 import { difeseNemico } from '../nemico-attacco.js';
 import { intensitaStato } from '../condizioni.js';
 import { statoIncantesimoNemico, regimeProposto, NOMI_REGIMI } from '../nemico-lancio.js';
@@ -386,8 +386,23 @@ export function cartaNemico(ctx, p, { modifica, durate = [], diTurnoOra = false,
       const riga = rigaSistemaSalute(p.scheda ?? p, dati);
       if (!riga) return null;
       const zero = (p.pv?.attuali ?? p.pv) <= 0 ? statoAZeroPv(p.scheda ?? p, dati) : null;
-      return h('p', { class: `nota riga-senza-ferite${zero ? ' senza-ferite-zero' : ''}` }, riga,
-        zero ? h('span', {}, ' ', h('strong', {}, 'A 0 PV: '), zero.testo) : null);
+      // l'enfasi del manuale sta nei dati fra `**`: qui diventa un grassetto vero, non due asterischi sullo schermo
+      const pezzi = (t) => pezziGrassetto(t).map((x) => (x.forte ? h('strong', {}, x.t) : x.t));
+      const R = regoleSenzaFerite(dati) ?? {};
+      const perFerita = Number.isInteger(R.ferita_diretta?.pv) ? R.ferita_diretta.pv : 5;
+      const perCura = Number.isInteger(R.cura_ferita?.pv) ? R.cura_ferita.pv : 5;
+      return h('div', { class: `riga-senza-ferite-blocco${zero ? ' senza-ferite-zero' : ''}` },
+        h('p', { class: `nota riga-senza-ferite${zero ? ' senza-ferite-zero' : ''}` }, pezzi(riga),
+          zero ? h('span', {}, ' ', h('strong', {}, 'A 0 PV: '), pezzi(zero.testo)) : null),
+        // §4.2.1: ciò che su un PG sarebbe una Ferita, qui è −5 PV che ignorano l'AR; uno stato curato, +5 PV.
+        // Due tocchi, con il motivo scritto nel registro: a mano sarebbero −5 e +5 da ricordare a memoria.
+        modifica ? h('p', { class: 'riga-azioni azioni-senza-ferite' },
+          h('button', { type: 'button', class: 'btn btn-piccolo', disabled: p.pv.attuali <= 0,
+            title: `Una Ferita inflitta direttamente: −${perFerita} PV, ignorando l’AR (§4.2.1). Non è un danno da tirare.`,
+            onclick: () => modifica((x) => feritaDirettaNemico(x, p.id, 1, dati, new Date())) }, `Ferita diretta (−${perFerita} PV)`),
+          h('button', { type: 'button', class: 'btn btn-piccolo', disabled: p.pv.attuali >= p.pv.massimo,
+            title: `Uno stato di Ferita curato o ridotto: +${perCura} PV, fino al massimo (§4.2.1).`,
+            onclick: () => modifica((x) => curaFeritaNemico(x, p.id, 1, dati, new Date())) }, `Ferita curata (+${perCura} PV)`)) : null);
     })(),
     // A.164 (16/10/2026): Morente del nemico, con lo stesso riquadro dei PG (src/morente.js)
     (() => {

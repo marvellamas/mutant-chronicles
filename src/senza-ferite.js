@@ -99,7 +99,7 @@ export function feritaDiretta(profilo, dati, pvAttuali, quante = 1) {
     perdita: (Number.isInteger(pvAttuali) ? pvAttuali : 0) - pv,
     converso: true,
     ignoraAr: R?.ignora_ar === true,
-    testo: n ? `${n} ${n === 1 ? 'Ferita' : 'Ferite'} dirette → −${per * n} PV, ignorando l’AR (§4.2.1).` : 'Nessuna Ferita inflitta.',
+    testo: n ? `${n} ${n === 1 ? 'Ferita diretta' : 'Ferite dirette'} → −${per * n} PV, ignorando l’AR (§4.2.1).` : 'Nessuna Ferita inflitta.',
   };
 }
 
@@ -125,7 +125,7 @@ export function curaFerita(profilo, dati, pvAttuali, pvMassimi, quante = 1, { pv
     convertito,
     // conta come cura di Ferite riuscita **solo** se ha recuperato PV per questa conversione
     contaComeCuraFerite: n > 0 && pv > ora,
-    testo: n ? `${n} ${n === 1 ? 'stato' : 'stati'} di Ferita curati → +${convertito} PV${pvCurati ? ` più i ${pvCurati} dell’effetto` : ''}, fino al massimo (§4.2.1).` : 'Nessuno stato curato.',
+    testo: n ? `${n} ${n === 1 ? 'stato di Ferita curato' : 'stati di Ferita curati'} → +${convertito} PV${pvCurati ? ` più i ${pvCurati} dell’effetto` : ''}, fino al massimo (§4.2.1).` : 'Nessuno stato curato.',
   };
 }
 
@@ -142,3 +142,25 @@ export function tornaAttiva(profilo, dati, pvPrima, pvDopo) {
     testo: regoleSenzaFerite(dati)?.ritorno_attivita?.testo ?? 'Sopra 0 PV torna attiva al proprio turno successivo.',
   };
 }
+
+/**
+ * I testi delle regole portano l'enfasi del manuale fra `**` (Mostri 0.69 §4.2): «**non ha il contatore di
+ * Morente**». L'enfasi è un dato della regola e sta nei dati, ma `**` sullo schermo è un difetto, non un grassetto.
+ * Qui si divide il testo in pezzi, e la pagina decide come mostrarli.
+ * @returns {{ t: string, forte: boolean }[]}
+ */
+export function pezziGrassetto(testo) {
+  const s = String(testo ?? '');
+  const fuori = [];
+  let i = 0;
+  for (const m of s.matchAll(/\*\*(.+?)\*\*/gs)) {
+    if (m.index > i) fuori.push({ t: s.slice(i, m.index), forte: false });
+    fuori.push({ t: m[1], forte: true });
+    i = m.index + m[0].length;
+  }
+  if (i < s.length) fuori.push({ t: s.slice(i), forte: false });
+  return fuori.filter((p) => p.t !== '');
+}
+
+/** Lo stesso testo senza i marcatori dell'enfasi: per il registro e per ogni posto che scrive testo e basta. */
+export const testoSemplice = (testo) => pezziGrassetto(testo).map((p) => p.t).join('');

@@ -59,6 +59,7 @@ import { cartaDallaMappa, arrivoDallaMappa, tornaAllaMappa } from './ritorno.js'
 import { scegliImmagineNemico, impostaImmagineNemico } from './immagine-nemico.js';
 import { chiediTesto, chiedi } from './finestrella.js';
 import { pulsanteSalvaSessione, pulsanteSpegni, pulsanteMandaStato } from './salvataggio.js';
+import { senzaFerite } from '../senza-ferite.js';
 
 const INTERVALLO_MS = 3000;
 /** Carta con la chiave del suo token (data-pezzo): la mappa di battaglia la cerca al clic sul token (src/ui/mappa/canale.js). */
@@ -671,7 +672,10 @@ export function renderTavolo(radice, ctx) {
   const colpitoNemico = (p, proposta = {}) => {
     if (!stato.scontro) return;
     // A.73, decisione 7: i nemici seguono la procedura dei PG (PS di Tempra a 0 PV, Ferite per fascia, Menomazioni)
-    const bersaglio = { nome: p.nome, pv: p.pv, ferite: p.ferite ?? 0, ar: p.scheda.ar };
+    // Lotto 203 (Mostri 0.69 §4.2): una creatura senza tracciato delle Ferite non ne ha nemmeno zero da mostrare.
+    // `ferite: null` è la forma che src/danno.js chiama «senza Ferite»: niente riga «Ferite 0» nella testata del
+    // pannello, nessuna Ferita nuova, nessuna Menomazione automatica, nessun promemoria di Morente.
+    const bersaglio = { nome: p.nome, pv: p.pv, ferite: senzaFerite(p.scheda ?? p, ctx.dati) ? null : (p.ferite ?? 0), ar: p.scheda.ar };
     apriColpo(ctx, bersaglio, {
       proposta,
       fonti: fontiPeriodiche(),

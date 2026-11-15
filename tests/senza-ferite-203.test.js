@@ -11,7 +11,7 @@ import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import {
   sistemaSalute, usaFerite, senzaFerite, puoEntrareInMorente, statoAZeroPv, rigaSistemaSalute,
-  feritaDiretta, curaFerita, tornaAttiva,
+  feritaDiretta, curaFerita, tornaAttiva, pezziGrassetto, testoSemplice,
 } from '../src/senza-ferite.js';
 import { morenteDopoColpo } from '../src/scontro.js';
 import { gradoMorente } from '../src/morente.js';
@@ -126,4 +126,103 @@ test('i dati dichiarano il comportamento, e non c’è più un «da_fare» che f
   assert.equal(SS.senza_ferite.a_zero_pv.contatore_morente, false);
   assert.match(SS.senza_ferite.paragrafo, /4\.2/);
   assert.equal(SS.versione_manuale, 'Mostri 0.69');
+});
+
+// Trovato nel browser a 820 px (prova E del lotto 203): la mini-scheda scriveva «**non ha il contatore di
+// Morente**» con gli asterischi in chiaro. L'enfasi è un dato della regola e resta nei dati; a renderla è la pagina.
+test('l’enfasi dei testi delle regole non arriva sullo schermo come asterischi', () => {
+  const d = dati;
+  const riga = rigaSistemaSalute({ _bestiario: { sistema_salute: 'solo_PV' } }, d);
+  assert.ok(/\*\*/.test(riga), 'il testo nei dati porta l’enfasi del manuale: se sparisce, questo controllo non prova più niente');
+  const pezzi = pezziGrassetto(riga);
+  assert.ok(pezzi.some((p) => p.forte), 'l’enfasi deve diventare un pezzo in grassetto');
+  assert.equal(pezzi.map((p) => p.t).join(''), riga.replace(/\*\*/g, ''), 'il testo mostrato è quello intero, senza i marcatori');
+  for (const p of pezzi) assert.ok(!/\*/.test(p.t), `pezzo con un asterisco residuo: «${p.t}»`);
+  // e lo stesso per il testo di 0 PV, che è l'altro che la mini-scheda scrive
+  const zero = statoAZeroPv({ _bestiario: { sistema_salute: 'solo_PV' } }, d);
+  for (const p of pezziGrassetto(zero.testo)) assert.ok(!/\*/.test(p.t), `0 PV: asterisco residuo in «${p.t}»`);
+  assert.ok(pezziGrassetto(zero.testo).some((p) => p.forte && /contatore di Morente/i.test(p.t)));
+});
+
+// Trovato nel browser (prova E): il pannello «Colpito» di una creatura senza tracciato scriveva «Ferite 0», e il
+// colpo registrato le avrebbe dato Ferite e Menomazioni come a un PG. La regola vale **dove il colpo si registra**.
+test('un colpo su una creatura senza Ferite non le dà né Ferite né Menomazioni', async () => {
+  const { colpoSuNemico } = await import('../src/colpo-nemico.js');
+  const scheda = { sistema_salute: 'solo_PV', _bestiario: { sistema_salute: 'solo_PV', edizione: 'Mostri 0.69' } };
+  const base = (sch) => ({
+    id: 'sc', round: 1, stato: 'aperto', registro: [],
+    partecipanti: [{ id: 'n1', nome: 'Viverna della Sabbia 1', tipo: 'nemico', pv: { attuali: 73, massimo: 73 }, ferite: 0, stati: [], scheda: sch }],
+  });
+  const { applicaColpo } = await import('../src/danno.js');
+  const colpo = { danni: [33], difesa: 'nessuna' };
+  // il risultato è quello vero del motore del danno, calcolato **con** il tracciato: così il guardiano si prova
+  // contro il caso peggiore, cioè un pannello che propone Ferite e Menomazioni a chi non le ha
+  const vero = applicaColpo({ nome: 'x', pv: { attuali: 73, massimo: 73 }, ferite: 0, ar: { totale: 0 } }, colpo, dati);
+  // le Ferite di un colpo nascono dalle PS di Tempra spuntate nel pannello: qui si simula il pannello che ne
+  // propone due con la Menomazione, che è esattamente ciò da cui la creatura senza tracciato va difesa
+  const ris = { ...vero, ferite: { prima: 0, dopo: 2, nome: 'Grave' }, menomazioni: [{ stato: 'Grave', testo: 'una Menomazione' }] };
+  const visto = { id: 'n1', nome: 'Viverna della Sabbia 1', pv: { attuali: 73 }, ferite: 0 };
+
+  const senza = colpoSuNemico(base({ ...scheda }), visto, ris, colpo, [], [], dati).partecipanti[0];
+  assert.equal(senza.pv.attuali, 40, 'i PV scendono come per chiunque: il danno è danno');
+  assert.equal(senza.ferite ?? 0, 0, 'nessuna Ferita: non ha il tracciato (§4.2)');
+  assert.deepEqual(senza.menomazioni ?? [], [], 'nessuna Menomazione automatica (§4.2)');
+  assert.equal(senza.morente ?? null, null, 'e nessun contatore di Morente');
+
+  // e il controllo che questo test non sia verde per caso: con il tracciato, le stesse Ferite arrivano
+  const con = colpoSuNemico(base({ _bestiario: { sistema_salute: 'PV_e_Ferite' } }), visto, ris, colpo, [], [], dati).partecipanti[0];
+  assert.equal(con.ferite, 2, 'una creatura col tracciato prende le Ferite del colpo');
+  assert.equal((con.menomazioni ?? []).length, 1);
+});
+
+
+// Prova E: la Ferita diretta e la cura devono essere due tocchi nella plancia, non un −5 e un +5 a memoria.
+test('Ferita diretta e Ferita curata su una creatura senza tracciato: −5 e +5 PV, con il motivo nel registro', async () => {
+  const { feritaDirettaNemico, curaFeritaNemico } = await import('../src/scontro.js');
+  const sch = { _bestiario: { sistema_salute: 'solo_PV', edizione: 'Mostri 0.69' } };
+  const base = (pv, sc = sch) => ({ id: 'sc', round: 2, stato: 'aperto', registro: [],
+    partecipanti: [{ id: 'n1', nome: 'Viverna della Sabbia 1', tipo: 'nemico', pv: { attuali: pv, massimo: 73 }, ferite: 0, stati: [], scheda: sc }] });
+
+  const ferito = feritaDirettaNemico(base(56), 'n1', 1, dati, new Date());
+  assert.equal(ferito.partecipanti[0].pv.attuali, 51, 'una Ferita diretta vale −5 PV (§4.2.1)');
+  assert.equal(ferito.partecipanti[0].ferite ?? 0, 0, 'e non le lascia una Ferita da tracciare');
+  assert.match(ferito.registro.at(-1).testo, /ignorando l’AR/, 'il registro dice perché, non solo «−5»');
+
+  const curato = curaFeritaNemico(base(51), 'n1', 1, dati, new Date());
+  assert.equal(curato.partecipanti[0].pv.attuali, 56, 'uno stato curato vale +5 PV');
+  assert.match(curato.registro.at(-1).testo, /§4.2.1/);
+
+  // il massimo non si supera, e a 0 PV la Ferita diretta non porta sotto zero
+  assert.equal(curaFeritaNemico(base(71), 'n1', 1, dati, new Date()).partecipanti[0].pv.attuali, 73);
+  assert.equal(feritaDirettaNemico(base(3), 'n1', 1, dati, new Date()).partecipanti[0].pv.attuali, 0);
+
+  // da 0 PV la cura riporta sopra zero ma **non** rimette in gioco subito (§4.2)
+  const rialzata = curaFeritaNemico(base(0), 'n1', 1, dati, new Date());
+  assert.equal(rialzata.partecipanti[0].pv.attuali, 5);
+  assert.match(rialzata.registro.at(-1).testo, /turno successivo/i, 'torna attiva al proprio turno successivo, e il registro lo dice');
+
+  // e su una creatura **col** tracciato le due scorciatoie non si usano: si passa da «Colpito»
+  const conTracciato = base(56, { _bestiario: { sistema_salute: 'PV_e_Ferite' } });
+  assert.throws(() => feritaDirettaNemico(conTracciato, 'n1', 1, dati, new Date()), /tracciato delle Ferite/);
+  assert.throws(() => curaFeritaNemico(conTracciato, 'n1', 1, dati, new Date()), /tracciato delle Ferite/);
+});
+
+
+// Trovato nel browser leggendo il registro: «1 Ferita dirette», «1 stato di Ferita curati», e gli asterischi
+// dell'enfasi finiti in una riga di registro, che è testo e basta.
+test('le righe del registro sono scritte in italiano e senza marcatori', async () => {
+  const { feritaDirettaNemico, curaFeritaNemico } = await import('../src/scontro.js');
+  const sch = { _bestiario: { sistema_salute: 'solo_PV' } };
+  const base = (pv) => ({ id: 'sc', round: 1, stato: 'aperto', registro: [],
+    partecipanti: [{ id: 'n1', nome: 'Viverna', tipo: 'nemico', pv: { attuali: pv, massimo: 73 }, ferite: 0, stati: [], scheda: sch }] });
+  const righe = [
+    feritaDirettaNemico(base(56), 'n1', 1, dati, new Date()).registro.at(-1).testo,
+    curaFeritaNemico(base(0), 'n1', 1, dati, new Date()).registro.at(-1).testo,
+    feritaDirettaNemico(base(56), 'n1', 2, dati, new Date()).registro.at(-1).testo,
+  ];
+  for (const r of righe) assert.ok(!r.includes('*'), `marcatore nel registro: «${r}»`);
+  assert.match(righe[0], /1 Ferita diretta /);
+  assert.match(righe[1], /1 stato di Ferita curato /);
+  assert.match(righe[2], /2 Ferite dirette /, 'al plurale resta il plurale');
+  assert.equal(testoSemplice('a **b** c'), 'a b c');
 });

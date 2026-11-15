@@ -4,6 +4,7 @@
 // «Annulla ultimo colpo», perdite periodiche dei soli Stati applicati davvero (§5.15).
 import { registraColpo, morenteDopoColpo } from './scontro.js';
 import { gradoMorente } from './morente.js';
+import { senzaFerite } from './senza-ferite.js';
 import { registraPeriodico } from './periodici.js';
 import { testoColpo } from './danno.js';
 
@@ -24,10 +25,13 @@ export function colpoSuNemico(s, visto, ris, colpo, stati, periodici, dati, { pr
   const grezze = ris.ferite?.dopo ?? prima.ferite;
   const morente = morenteDopoColpo(s, q, prima.ferite, grezze, dati);
   const statoMorente = morente && !prima.morente ? dati.regole.ferite.morente?.stato ?? null : null;
+  // Lotto 203 (Mostri 0.69 §4.2): una creatura senza tracciato non prende Ferite né Menomazioni automatiche,
+  // qualunque cosa arrivi dal pannello. La regola sta qui, dove il colpo si registra, e non solo in chi lo apre.
+  const senza = senzaFerite(q.scheda ?? q, dati);
   const dopo = {
     pv: ris.pv.dopo,
-    ferite: Math.min(grezze, gradoMorente(dati)),
-    menomazioni: [...prima.menomazioni, ...(ris.menomazioni ?? [])],
+    ferite: senza ? 0 : Math.min(grezze, gradoMorente(dati)),
+    menomazioni: senza ? prima.menomazioni : [...prima.menomazioni, ...(ris.menomazioni ?? [])],
     stati: [...new Set([...q.stati, ...ammessi, ...(statoMorente ? [statoMorente] : [])])],
     morente: morente ?? null,
   };

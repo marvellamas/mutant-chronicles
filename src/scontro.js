@@ -23,7 +23,7 @@ import { specTiro, motivoFuoriIntervallo } from './tiri.js';
 import { fineDurata } from './tecniche.js';
 import { segnaUso, azzeraPerRound, vistaCapacita } from './capacita-nemico.js';
 import { apriMorente, conCos, togliRound, statoMorente, gradoMorente } from './morente.js';
-import { puoEntrareInMorente } from './senza-ferite.js';
+import { puoEntrareInMorente, feritaDiretta, curaFerita, tornaAttiva, senzaFerite, testoSemplice } from './senza-ferite.js';
 
 /** Ultimo Round di una durata registrata (`al`); i file di prima hanno solo i Round rimasti. */
 const fineDi = (d, round) => (Number.isInteger(d.al) ? d.al : round + (d.rimasti ?? 1) - 1);
@@ -138,6 +138,40 @@ export function variaPvNemico(s, id, delta, adesso) {
     testo: `${p.nome}: PV ${daPrima} → ${attuali} (${diff > 0 ? '+' : '−'}${Math.abs(diff)})${attuali === 0 ? ', a 0 PV' : ''}.` };
   if (diff === 0) return { ...t, registro: ultima?.pv?.id === id && ultima.round === s.round ? s.registro.slice(0, -1) : s.registro };
   return { ...t, registro: ultima?.pv?.id === id && ultima.round === s.round ? [...s.registro.slice(0, -1), riga] : [...s.registro, riga] };
+}
+
+/**
+ * Lotto 203 (Mostri 0.69 §4.2.1): una **Ferita inflitta direttamente** a una creatura senza tracciato vale −5 PV
+ * e **ignora l'AR**, e uno **stato di Ferita curato** vale +5 PV. Non sono un danno e una cura qualsiasi: hanno un
+ * motivo, e il registro lo scrive — al tavolo un «−5» senza il perché diventa una cosa da ricordare a mente.
+ * Il conto lo fa src/senza-ferite.js; qui si registra.
+ */
+export function feritaDirettaNemico(s, id, quante, dati, adesso) {
+  const p = s.partecipanti.find((x) => x.id === id);
+  if (p?.tipo !== 'nemico') throw new Error('partecipante non trovato fra i nemici');
+  const profilo = p.scheda ?? p;
+  if (!senzaFerite(profilo, dati)) throw new Error(`${p.nome} ha il tracciato delle Ferite: la Ferita si registra con «Colpito».`);
+  const r = feritaDiretta(profilo, dati, p.pv.attuali, quante);
+  if (!r || r.pv === p.pv.attuali) return s;
+  const t = { ...s, partecipanti: s.partecipanti.map((x) => (x.id === id ? conPv(x, r.pv) : x)) };
+  const riga = { ora: ora(adesso), round: s.round,
+    testo: testoSemplice(`${p.nome}: ${r.testo} PV ${p.pv.attuali} → ${r.pv}${r.pv === 0 ? ', a 0 PV e fuori combattimento (nessun contatore di Morente)' : ''}.`) };
+  return { ...t, registro: [...s.registro, riga] };
+}
+
+/** §4.2.1 — uno stato di Ferita curato o ridotto: +5 PV fino al massimo, e il ritorno all'attività del §4.2. */
+export function curaFeritaNemico(s, id, quante, dati, adesso) {
+  const p = s.partecipanti.find((x) => x.id === id);
+  if (p?.tipo !== 'nemico') throw new Error('partecipante non trovato fra i nemici');
+  const profilo = p.scheda ?? p;
+  if (!senzaFerite(profilo, dati)) throw new Error(`${p.nome} ha il tracciato delle Ferite: la cura si registra come per un PG.`);
+  const r = curaFerita(profilo, dati, p.pv.attuali, p.pv.massimo, quante);
+  if (!r || r.pv === p.pv.attuali) return s;
+  const ritorno = tornaAttiva(profilo, dati, p.pv.attuali, r.pv);
+  const t = { ...s, partecipanti: s.partecipanti.map((x) => (x.id === id ? conPv(x, r.pv) : x)) };
+  const riga = { ora: ora(adesso), round: s.round,
+    testo: testoSemplice(`${p.nome}: ${r.testo} PV ${p.pv.attuali} → ${r.pv}${ritorno?.alProssimoTurno ? `. ${ritorno.testo}` : ''}`) };
+  return { ...t, registro: [...s.registro, riga] };
 }
 
 /** PM di un nemico: −/+ a mano, fra 0 e il massimo (A.73, decisione 8). Una riga di registro. */
