@@ -19,8 +19,9 @@
 // L'elenco di Drive lo prende chi ha gli strumenti di Drive (Claude Code in sessione) con una sola chiamata —
 // `search_files` su `parentId = <cartella_lavoro>`, tutte le pagine — e lo salva come JSON `{ files: [...] }`:
 // così lo strumento resta senza rete e il confronto è ripetibile.
-import { readFileSync, existsSync } from 'node:fs';
+import { readFileSync, existsSync, readdirSync } from 'node:fs';
 import { join } from 'node:path';
+import { pathToFileURL } from 'node:url';
 import { registro, voci, CARTELLA_TESTI, versioneDichiarata, versioneNelNome, improntaTesto } from './manuali.mjs';
 import { fermaSeSconosciuti, ARGOMENTI } from './argomenti.mjs';
 import { cartellaIstantanee, leggiConfig } from './salva-sessione.mjs';
@@ -151,9 +152,55 @@ export function rigaIstantanea() {
   }
 }
 
-function stampa(r, conDrive) {
+/**
+ * I riferimenti che non puntano a niente (lotto 201), accanto alla riga dell'istantanea.
+ *
+ * **Perché sta nel controllo di inizio sessione.** I due riferimenti rotti di Pablo e Lucas ci sono dal 4 e dal 9
+ * ottobre, e li abbiamo trovati il 15 novembre **per caso**, correggendo un altro strumento. Un riferimento rotto
+ * non si vede da nessuna parte finché qualcuno non apre quella scheda al tavolo, e allora è mezz'ora persa a
+ * cercare un guasto che non c'è. Qui si vede appena si apre una sessione.
+ *
+ * Si guarda la cartella dei dati di questo PC e, se c'è, l'istantanea aperta più recente in `istantanee/`: la prima
+ * è la nostra copia, la seconda è lo stato vero di Davide, e le due possono dire cose diverse. Non ferma nessuno e
+ * non scrive niente: se qualcosa non si legge, lo dice e tira avanti.
+ */
+export async function righeRiferimentiRotti() {
+  const out = [];
+  try {
+    const { quadroRiferimentiRotti } = await import(pathToFileURL(join(RADICE_APP, 'src', 'riferimenti-rotti.js')));
+    const { personaggiDellaCartella } = await import('./personaggi-cartella.mjs');
+    const { recordDelRegistro } = await import('./riferimenti-rotti.mjs');
+    const { caricaDati } = await import(pathToFileURL(join(RADICE_APP, 'src', 'rules.js')));
+    const { dati } = await caricaDati(async (n) => readFileSync(join(RADICE_APP, 'data', `${n}.json`), 'utf8'));
+    const dd = cartellaDati(RADICE_APP).cartella;
+    const posti = [{ che: 'copia locale', pg: join(dd, 'personaggi'), veicoli: join(dd, 'veicoli') }];
+    // l'istantanea aperta più recente: è lo stato vero di Davide
+    const ist = join(dd, 'istantanee');
+    try {
+      const aperte = readdirSync(ist, { withFileTypes: true })
+        .filter((d) => d.isDirectory() && /^stato_/.test(d.name))
+        .map((d) => d.name).sort();
+      const ultima = aperte[aperte.length - 1];
+      if (ultima) posti.push({ che: `istantanea ${ultima.replace(/^stato_/, '')}`, pg: join(ist, ultima, 'personaggi'), veicoli: join(ist, ultima, 'veicoli') });
+    } catch { /* nessuna istantanea aperta: si guarda solo la copia locale */ }
+    for (const p of posti) {
+      if (!existsSync(p.pg)) continue;
+      const q = quadroRiferimentiRotti(personaggiDellaCartella(p.pg), recordDelRegistro(p.veicoli), dati, { master: true });
+      out.push(`${p.che}: ${q.riga}`);
+    }
+  } catch (e) {
+    out.push(`Riferimenti rotti: non si leggono (${e.message}). Non blocca niente.`);
+  }
+  return out;
+}
+
+async function stampa(r, conDrive) {
   const L = (s, n) => String(s ?? '—').padEnd(n);
-  console.log(`${rigaIstantanea()}\n`);
+  console.log(rigaIstantanea());
+  // lotto 201: accanto alla data dei personaggi, i riferimenti che non puntano a niente. I due di Pablo e Lucas
+  // c'erano dal 4 e dal 9 ottobre e li abbiamo trovati il 15 novembre per caso: da qui si vedono aprendo la sessione.
+  for (const riga of await righeRiferimentiRotti()) console.log(riga);
+  console.log('');
   console.log(`Registro: ${registro().manuali.length} manuali, ${registro().schede.length} schede, ${registro().scambio.length} documenti di scambio. Controllato il ${registro().controllato}.`);
   console.log(`Cartella di lavoro ${registro().cartella_lavoro} · archivio ${registro().cartella_archivio}\n`);
   console.log(L('Manuale', 36), L('disco', 7), L('prima pagina', 13), conDrive ? L('Drive', 7) : '', conDrive ? 'esito' : '');
@@ -207,6 +254,6 @@ if (process.argv[1] && import.meta.url.endsWith(process.argv[1].replace(/\\/g, '
   const da = argv.find((a) => a.startsWith('--drive='))?.slice(8) ?? null;
   const files = da ? (JSON.parse(readFileSync(da, 'utf8')).files ?? JSON.parse(readFileSync(da, 'utf8'))) : null;
   const r = referto(files);
-  stampa(r, Boolean(files));
+  await stampa(r, Boolean(files));
   process.exit(r.fermati ? 2 : 0);
 }

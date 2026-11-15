@@ -514,7 +514,10 @@ export function normalizzaVeicoli(veicoli, dati, avvisi = []) {
   return lista(veicoli).filter(isOggetto).map((v) => {
     // A.91: riferimento al registro unico dei veicoli (src/veicoli-registro.js): resta com'è.
     // A.113: con il riferimento viaggia l'ultima copia del record, da consultare in sola lettura senza server.
-    if (typeof v.rif === 'string' && v.rif) return { uid: testo(v.uid) || v.rif, rif: v.rif, nome: testo(v.nome) || v.rif, ...(isOggetto(v.copia) ? { copia: v.copia } : {}) };
+    // lotto 201: `ricollegato` dice da quale identificativo viene questa voce, quando e per mano di chi. Si conserva
+    // come la copia, altrimenti la normalizzazione lo butta al primo salvataggio e la provenienza di un
+    // ricollegamento resterebbe solo nel registro del master.
+    if (typeof v.rif === 'string' && v.rif) return { uid: testo(v.uid) || v.rif, rif: v.rif, nome: testo(v.nome) || v.rif, ...(isOggetto(v.copia) ? { copia: v.copia } : {}), ...(isOggetto(v.ricollegato) ? { ricollegato: v.ricollegato } : {}) };
     const profilo = profiloDi(v, dati);
     if (!profilo) {
       avvisi.push(`Veicolo «${testo(v.nome) || v.profilo || 'senza nome'}»: profilo «${v.profilo ?? '—'}» non più nel catalogo dei veicoli; resta nel file, senza scheda.`);

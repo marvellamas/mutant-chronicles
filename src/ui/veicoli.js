@@ -17,10 +17,46 @@ import {
 } from '../veicoli.js';
 import { migraVeicoli, nuovoRecord, riferimento, vede, eRiferimento, statoMovimento, muoviVeicolo, cambiaConducente, movimentoResiduo, stessaChiave, scegliAndatura, conCopie, mezzoDallaCopia } from '../veicoli-registro.js';
 import { elencoVeicoli, scriviVeicolo, aggiornaVeicolo } from './veicoli-registro.js';
+import { veicoliRotti, statoRiferimentoRotto, ricollegaVeicolo, togliRiferimentoRotto } from '../riferimenti-rotti.js';
 import {
   vistaNeverlost, registraValori, registraVolo, registraStazionario, impostaApprodo, entraTraiettoria, esciTraiettoria, traversata,
   sparaCannone, attivaScudo, oraScudo, spegniScudo, roundSenzaColpi, usaFunzione, variaCircuito, colpoAlloScudo,
 } from '../neverlost.js';
+
+/**
+ * La riga di un riferimento rotto (lotto 201): dice il vero, con l'identificativo scritto, e **al Direttore** dà il
+ * modo di rimetterlo scegliendo fra i veicoli che esistono. L'app non sceglie da sé nemmeno quando il candidato è
+ * uno solo: la tendina parte vuota e «Ricollega» resta spento finché il Direttore non ha scelto, perché un
+ * collegamento sbagliato è peggio di uno mancante.
+ */
+function rigaRiferimentoRotto(ctx, rotto, record) {
+  const s = statoRiferimentoRotto(rotto, record, ctx.dati, { master: Boolean(ctx.master) });
+  const scelta = statoUi(ctx).ricollega ?? (statoUi(ctx).ricollega = {});
+  const applica = (esito) => {
+    if (esito.errore) { statoUi(ctx).erroreRicollega = esito.errore; ctx.azioni.ridisegna(); return; }
+    delete scelta[rotto.rif];
+    delete statoUi(ctx).erroreRicollega;
+    ctx.azioni.veicoli(esito.veicoli, esito.riga);
+  };
+  return h('p', { class: 'riquadro attenzione' },
+    s.testo,
+    ctx.master ? h('span', {}, ' ',
+      s.candidati.length ? h('select', {
+        'aria-label': `Ricollega ${rotto.nome}`,
+        onchange: (e) => { scelta[rotto.rif] = e.target.value; ctx.azioni.ridisegna(); },
+      }, h('option', { value: '', selected: !scelta[rotto.rif] }, 'scegli il veicolo…'),
+      s.candidati.map((r) => h('option', { value: r.id, selected: scelta[rotto.rif] === r.id }, `${r.mezzo?.nome ?? r.id} (${r.id})`))) : null,
+      s.candidati.length ? h('button', {
+        type: 'button', class: 'btn', disabled: !scelta[rotto.rif] ? 'disabled' : null,
+        onclick: () => applica(ricollegaVeicolo(ctx.scelte.veicoli ?? [], rotto.rif, scelta[rotto.rif], record, { master: true })),
+      }, 'Ricollega') : null,
+      h('button', {
+        type: 'button', class: 'btn',
+        title: 'Toglie il riferimento rotto da questa scheda, senza ricollegarlo',
+        onclick: () => applica(togliRiferimentoRotto(ctx.scelte.veicoli ?? [], rotto.rif, { master: true })),
+      }, 'Togli dalla scheda')) : null,
+    statoUi(ctx).erroreRicollega ? h('span', { class: 'errore' }, ` ${statoUi(ctx).erroreRicollega}`) : null);
+}
 
 const num = (x, d) => (Number.isFinite(Number.parseFloat(String(x).replace(',', '.'))) ? Number.parseFloat(String(x).replace(',', '.')) : d);
 const numero = (n) => (Number.isInteger(n) ? n.toLocaleString('it-IT') : '—');
@@ -104,7 +140,11 @@ function tabVeicoliRegistro(ctx) {
   const rif = new Set((ctx.scelte.veicoli ?? []).filter(eRiferimento).map((x) => x.rif));
   const visibili = R.record.filter((x) => rif.has(x.id) || vede(x, ctx.chi));
   const locali = (ctx.scelte.veicoli ?? []).filter((v) => !eRiferimento(v));
-  const mancanti = [...rif].filter((id) => R.stato === 'pronto' && !R.record.some((x) => x.id === id));
+  // lotto 201: i riferimenti che non puntano a niente. Prima qui c'era il solo identificativo («Il veicolo
+  // veimuu14mqa0 non è nel registro di questo server»): vero, ma non diceva di che mezzo si trattava, che il mezzo
+  // non si apre, né come rimetterlo — e il riferimento rotto non compariva fra le schede, quindi non aveva nemmeno
+  // il «Togli dalla scheda». Una riga, non un riquadro nuovo (la regola dello spazio di CLAUDE.md).
+  const rotti = R.stato === 'pronto' ? veicoliRotti(ctx.scelte.veicoli ?? [], R.record) : [];
   const scrivi = async (prima, dopo, messaggio) => {
     try {
       const { record, conflitti } = await aggiornaVeicolo(prima, dopo);
@@ -133,7 +173,7 @@ function tabVeicoliRegistro(ctx) {
       h('button', { type: 'button', class: 'btn', onclick: () => { R.stato = 'da-leggere'; ctx.azioni.ridisegna(); } }, 'Ricarica dal registro')),
     R.stato === 'errore' ? h('p', { class: 'riquadro errore' }, `Registro dei veicoli non leggibile: ${R.errore}`) : R.errore ? h('p', { class: 'riquadro attenzione' }, R.errore) : null,
     R.avvisi.map((x) => h('p', { class: 'riquadro attenzione' }, x)),
-    mancanti.map((id) => h('p', { class: 'riquadro attenzione' }, `Il veicolo ${id} non è nel registro di questo server.`)),
+    rotti.map((rotto) => rigaRiferimentoRotto(ctx, rotto, R.record)),
     statoUi(ctx).aggiungi ? pannelloAggiungi(ctx, async (mezzo) => {
       const r = await scriviVeicolo(nuovoRecord(mezzo, ctx.chi, { gruppo: false, guida: false }));
       if (r.record) { R.record = [...R.record, r.record]; ctx.azioni.veicoli([...(ctx.scelte.veicoli ?? []), riferimento(r.record)], `Aggiunto il veicolo «${mezzo.nome}» al registro.`); }

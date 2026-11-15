@@ -73,6 +73,7 @@ export const ARGOMENTI = {
   'cartella-di-prova.mjs': [],
   'descrizioni-bestiario.mjs': ['profili'],
   'riserve-intere.mjs': ['scrivi'],
+  'riferimenti-rotti.mjs': ['scrivi'],
   'prezzi-prima-dopo.mjs': ['da'],
   'istantanea.mjs': ['cartella', 'dove', 'tieni', 'stato', 'elenco'],
   'prove.mjs': ['concorrenza', 'solo'],
