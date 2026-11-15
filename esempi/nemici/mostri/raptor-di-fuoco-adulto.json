@@ -12,7 +12,7 @@
     "SAG": 7,
     "CAR": 3
   },
-  "pv": 48,
+  "pv": 63,
   "pm": 10,
   "ar": {
     "totale": 4,
@@ -168,5 +168,9 @@
       "effetto": "Furtività nelle Terre del Fuoco 18"
     }
   ],
-  "note": "Fauna di Iris • predatore delle Terre del Fuoco • Natura Comune. GS e PX provvisori nel manuale: da verificare al tavolo (Davide li confermerà)."
+  "note": "Fauna di Iris • predatore delle Terre del Fuoco • Natura Comune. GS e PX provvisori nel manuale: da verificare al tavolo (Davide li confermerà).",
+  "_bestiario": {
+    "edizione": "Mostri 0.69",
+    "sistema_salute": "solo_PV"
+  }
 }

@@ -23,6 +23,7 @@ import { specTiro, motivoFuoriIntervallo } from './tiri.js';
 import { fineDurata } from './tecniche.js';
 import { segnaUso, azzeraPerRound, vistaCapacita } from './capacita-nemico.js';
 import { apriMorente, conCos, togliRound, statoMorente, gradoMorente } from './morente.js';
+import { puoEntrareInMorente } from './senza-ferite.js';
 
 /** Ultimo Round di una durata registrata (`al`); i file di prima hanno solo i Round rimasti. */
 const fineDi = (d, round) => (Number.isInteger(d.al) ? d.al : round + (d.rimasti ?? 1) - 1);
@@ -787,6 +788,10 @@ function statoNemico(p, v) {
  * @returns il blocco morente del partecipante dopo il colpo, o undefined se non è Morente
  */
 export function morenteDopoColpo(s, p, feritePrima, feriteDopo, dati) {
+  // lotto 203: una creatura senza Ferite non entra in Morente e non ha contatore (Mostri 0.69 §4.2). Il confine si
+  // chiede a src/senza-ferite.js, in un posto solo: se si aprisse un contatore, al tavolo qualcuno le conterebbe
+  // i Round di sopravvivenza e aspetterebbe una stabilizzazione che non esiste.
+  if (!puoEntrareInMorente(p?.scheda ?? p, dati)) return undefined;
   const grado = gradoMorente(dati);
   if (feriteDopo < grado) return undefined;
   const cos = p.scheda?.caratteristiche?.COS;

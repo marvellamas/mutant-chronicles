@@ -12,7 +12,7 @@
     "SAG": 6,
     "CAR": 5
   },
-  "pv": 32,
+  "pv": 42,
   "pm": 8,
   "ar": {
     "totale": 5,
@@ -110,5 +110,9 @@
     "sanguinamento",
     "incendiato"
   ],
-  "note": "AR 5 (3 intrinseca + 2 scudo medio); senza scudo scende a 3. Tecnologia 13 per metallurgia. Martello da guerra e scudo medio Comuni, entrambi pronti; può parare con l’uno o l’altro. Comportamento: difende la fucina o un lavoro; non necessariamente ostile, trattare può evitare lo scontro."
+  "note": "AR 5 (3 intrinseca + 2 scudo medio); senza scudo scende a 3. Tecnologia 13 per metallurgia. Martello da guerra e scudo medio Comuni, entrambi pronti; può parare con l’uno o l’altro. Comportamento: difende la fucina o un lavoro; non necessariamente ostile, trattare può evitare lo scontro.",
+  "_bestiario": {
+    "edizione": "Mostri 0.69",
+    "sistema_salute": "solo_PV"
+  }
 }

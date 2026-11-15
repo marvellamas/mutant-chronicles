@@ -12,7 +12,7 @@
     "SAG": 5,
     "CAR": 5
   },
-  "pv": 40,
+  "pv": 52,
   "pm": 9,
   "ar": {
     "totale": 3,
@@ -147,5 +147,9 @@
       "effetto": "Un altro alleato con la capacità Frenesia gnoll, visibile entro 6 Q e capace di udire e comprendere il richiamo, può effettuare subito un singolo attacco ravvicinato pagando 1 propria AzP ancora disponibile. Non concede un’AzP, un nuovo Morso gratuito o un attacco con l’arco. Ordini fuori Iniziativa: incitare la Frenesia permette un singolo attacco immediato pagato dal destinatario con 1 AzP ancora disponibile del Round (non è una nuova Iniziativa, non concede Movimento e non attiva Frenesia); lo stesso destinatario riceve al massimo un attacco ordinato per Round da qualsiasi numero di capi, conserva la propria Opportunità se il tetto del profilo lo consente e non può spendere un’AzP di Frenesia non ancora ottenuta."
     }
   ],
-  "note": "Parata 11 (valore delle Difese), Schivata / Elusione 10. La Media è già inclusa: rimossa recupera +1 ai VA fisici penalizzati e Movimento 6 / 12 / 18 Q. Parla Comune e Gnoll. Coordina il branco con richiami e assalti ravvicinati. Condotta: sotto 10 PV o a Ferita Profonda cerca di riunire i superstiti e ripiegare. Fonte: Gnoll Pack Lord, p. 163."
+  "note": "Parata 11 (valore delle Difese), Schivata / Elusione 10. La Media è già inclusa: rimossa recupera +1 ai VA fisici penalizzati e Movimento 6 / 12 / 18 Q. Parla Comune e Gnoll. Coordina il branco con richiami e assalti ravvicinati. Condotta: sotto 10 PV o a Ferita Profonda cerca di riunire i superstiti e ripiegare. Fonte: Gnoll Pack Lord, p. 163.",
+  "_bestiario": {
+    "edizione": "Mostri 0.69",
+    "sistema_salute": "solo_PV"
+  }
 }

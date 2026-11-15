@@ -12,7 +12,7 @@
     "SAG": 5,
     "CAR": 3
   },
-  "pv": 8,
+  "pv": 11,
   "pm": 4,
   "ar": {
     "totale": 0,
@@ -104,5 +104,9 @@
       "effetto": "Richiede almeno 4 Q di Passo rettilineo verso la vittima nella stessa Iniziativa (usa l’AzM ordinaria e l’AzP del colpo; si dichiara prima del tiro; non si combina con Carica, Corsa, Scatto o altre manovre offensive). Il danno speciale sostituisce quello normale, senza il ×2 della Carica. Con almeno 1 danno finale: Tempra senza modificatore a una creatura non maggiore di 1 × 1 Q; fallimento → A Terra. Il Magistrale non ne peggiora la Salvezza. Usa 2d4+1 al posto del danno normale (un solo 1d4 da slancio). Una Cornata per Round, normale oppure in Impeto; l’Opportunità usa soltanto quella normale. Nessuna arrampicata speciale né aderenza ai soffitti."
     }
   ],
-  "note": "Un percorso roccioso resta una difficoltà concreta anche per un animale dal passo sicuro. Capacità di trasporto e disponibilità a portare una persona restano distinte. Condotta: può minacciare, allontanarsi o difendere i piccoli; sotto 2 PV o a Ferita Profonda tende a cercare un appoggio protetto o il branco. Fonte: Goat, p. 330."
+  "note": "Un percorso roccioso resta una difficoltà concreta anche per un animale dal passo sicuro. Capacità di trasporto e disponibilità a portare una persona restano distinte. Condotta: può minacciare, allontanarsi o difendere i piccoli; sotto 2 PV o a Ferita Profonda tende a cercare un appoggio protetto o il branco. Fonte: Goat, p. 330.",
+  "_bestiario": {
+    "edizione": "Mostri 0.69",
+    "sistema_salute": "solo_PV"
+  }
 }

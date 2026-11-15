@@ -12,7 +12,7 @@
     "SAG": 6,
     "CAR": 6
   },
-  "pv": 82,
+  "pv": 107,
   "pm": 14,
   "ar": {
     "totale": 6,
@@ -99,5 +99,9 @@
   "immunita": [
     "incendiato"
   ],
-  "note": "AR 6 (1 biologica + 5 armatura Pesante su misura). Difese = Parata 13; Schivata 11. Tecnologia 12 per forgia. Spadone a due mani (+3 ordinario, +3 innato, portata 2 Q). Comportamento: terreno solido e fronte controllabile; sotto 21 PV o a Ferita Seria ripiega o tratta."
+  "note": "AR 6 (1 biologica + 5 armatura Pesante su misura). Difese = Parata 13; Schivata 11. Tecnologia 12 per forgia. Spadone a due mani (+3 ordinario, +3 innato, portata 2 Q). Comportamento: terreno solido e fronte controllabile; sotto 21 PV o a Ferita Seria ripiega o tratta.",
+  "_bestiario": {
+    "edizione": "Mostri 0.69",
+    "sistema_salute": "solo_PV"
+  }
 }

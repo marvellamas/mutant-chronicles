@@ -12,7 +12,7 @@
     "SAG": 5,
     "CAR": 7
   },
-  "pv": 56,
+  "pv": 73,
   "pm": 10,
   "ar": {
     "totale": 3,
@@ -143,5 +143,9 @@
   "immunita": [
     "terrorizzato"
   ],
-  "note": "Immune a Terrorizzato, senza immunità generale al controllo mentale. Parla Abissale e Draconico. Capo combattente dalla forte presenza, distinto dallo Sciamano: il titolo non conferisce autorità automatica sui Lucertoloidi, non impone una fedeltà soprannaturale e non dà Natura Oscura Simmetria né CROS per l’origine demoniaca della fonte. Condotta: sotto 14 PV o a Ferita Profonda può ritirarsi, chiedere aiuto o trattare. Fonte: Lizard King/Queen, p. 205."
+  "note": "Immune a Terrorizzato, senza immunità generale al controllo mentale. Parla Abissale e Draconico. Capo combattente dalla forte presenza, distinto dallo Sciamano: il titolo non conferisce autorità automatica sui Lucertoloidi, non impone una fedeltà soprannaturale e non dà Natura Oscura Simmetria né CROS per l’origine demoniaca della fonte. Condotta: sotto 14 PV o a Ferita Profonda può ritirarsi, chiedere aiuto o trattare. Fonte: Lizard King/Queen, p. 205.",
+  "_bestiario": {
+    "edizione": "Mostri 0.69",
+    "sistema_salute": "solo_PV"
+  }
 }

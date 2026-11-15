@@ -12,7 +12,7 @@
     "SAG": 5,
     "CAR": 2
   },
-  "pv": 52,
+  "pv": 68,
   "pm": 6,
   "ar": {
     "totale": 4,
@@ -100,5 +100,9 @@
       "effetto": "Vede entro 12 Q nel buio naturale, senza colori; non attraversa ostacoli né individua da sola chi è nascosto."
     }
   ],
-  "note": "Furtività 9 sotto terra, 6 in superficie. Nessuna Parata naturale; non è immune a Terrorizzato. Nome originale: Bulette, p. 34. Comportamento: punta alla preda raggiungibile; a Ferita Seria può ritirarsi sottoterra. Dopo il salto non ha l’AzM per una Schivata nello stesso Round."
+  "note": "Furtività 9 sotto terra, 6 in superficie. Nessuna Parata naturale; non è immune a Terrorizzato. Nome originale: Bulette, p. 34. Comportamento: punta alla preda raggiungibile; a Ferita Seria può ritirarsi sottoterra. Dopo il salto non ha l’AzM per una Schivata nello stesso Round.",
+  "_bestiario": {
+    "edizione": "Mostri 0.69",
+    "sistema_salute": "solo_PV"
+  }
 }

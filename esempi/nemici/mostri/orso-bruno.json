@@ -12,7 +12,7 @@
     "SAG": 6,
     "CAR": 3
   },
-  "pv": 34,
+  "pv": 45,
   "pm": 6,
   "ar": {
     "totale": 1,
@@ -93,5 +93,9 @@
       "effetto": "Gli arti anteriori sono Braccia anche da sollevato: esegue manovre fisicamente praticabili pagandone costi e penalità. Il Morso non crea una presa automatica e la zampata non atterra automaticamente. Pelliccia e massa non danno immunità al freddo o ai proiettili."
     }
   ],
-  "note": "Condotta: difende piccoli, spazio e cibo; sotto 9 PV o a Ferita Seria interrompe lo scontro se ha via libera, più ostinato a difesa dei piccoli. Non combatte fino alla morte per una regola automatica."
+  "note": "Condotta: difende piccoli, spazio e cibo; sotto 9 PV o a Ferita Seria interrompe lo scontro se ha via libera, più ostinato a difesa dei piccoli. Non combatte fino alla morte per una regola automatica.",
+  "_bestiario": {
+    "edizione": "Mostri 0.69",
+    "sistema_salute": "solo_PV"
+  }
 }

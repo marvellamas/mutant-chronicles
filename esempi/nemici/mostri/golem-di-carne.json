@@ -12,7 +12,7 @@
     "SAG": 5,
     "CAR": 3
   },
-  "pv": 60,
+  "pv": 78,
   "pm": 8,
   "ar": {
     "totale": 2,
@@ -111,5 +111,9 @@
     "sanguinamento",
     "terrorizzato"
   ],
-  "note": "Guardiano assemblato con ragionamento elementare e movimenti rigidi. Al massimo due Schianti per Round, Opportunità compresa. Fonte: Flesh Golem, pp. 167 e 169."
+  "note": "Guardiano assemblato con ragionamento elementare e movimenti rigidi. Al massimo due Schianti per Round, Opportunità compresa. Fonte: Flesh Golem, pp. 167 e 169.",
+  "_bestiario": {
+    "edizione": "Mostri 0.69",
+    "sistema_salute": "solo_PV"
+  }
 }

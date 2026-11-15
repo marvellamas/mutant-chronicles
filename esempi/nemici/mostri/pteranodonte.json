@@ -12,7 +12,7 @@
     "SAG": 4,
     "CAR": 3
   },
-  "pv": 16,
+  "pv": 21,
   "pm": 4,
   "ar": {
     "totale": 1,
@@ -84,5 +84,9 @@
       "effetto": "Non provoca Attacchi di Opportunità per il solo allontanamento dalla portata di un avversario mentre vola; le altre occasioni seguono le regole ordinarie. Non attraversa corpi né scioglie prese. Per colpire e poi allontanarsi nella stessa Iniziativa serve il movimento necessario (budget ordinario); non ripristina l’AzM, non moltiplica gli attacchi, la picchiata non aggiunge danni. Ali reali: servono spazio e non resta sospeso come una creatura fluttuante; impedimenti o perdita di coscienza possono causare caduta."
     }
   ],
-  "note": "Vista e udito ordinari. Braccia = ali; Gambe = arti posteriori; un’ala menomata può impedire il volo. Non ha una presa per sollevare una creatura colpita. Non comprende linguaggi. Condotta: piccoli animali e cibo esposto; evita un gruppo che reagisce; sotto 4 PV o a Ferita Profonda prende distanza. Fonte: Pteranodon, p. 80."
+  "note": "Vista e udito ordinari. Braccia = ali; Gambe = arti posteriori; un’ala menomata può impedire il volo. Non ha una presa per sollevare una creatura colpita. Non comprende linguaggi. Condotta: piccoli animali e cibo esposto; evita un gruppo che reagisce; sotto 4 PV o a Ferita Profonda prende distanza. Fonte: Pteranodon, p. 80.",
+  "_bestiario": {
+    "edizione": "Mostri 0.69",
+    "sistema_salute": "solo_PV"
+  }
 }

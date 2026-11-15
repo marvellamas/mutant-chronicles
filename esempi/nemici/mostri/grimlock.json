@@ -12,7 +12,7 @@
     "SAG": 4,
     "CAR": 3
   },
-  "pv": 16,
+  "pv": 21,
   "pm": 6,
   "ar": {
     "totale": 0,
@@ -80,5 +80,9 @@
       "effetto": "Entro 6 Q localizza con udito e olfatto abbastanza da combattere senza penalità di buio o mancanza di vista. Assordato: solo olfatto entro 2 Q; senza olfatto non localizza. Ostacoli e bersagli nascosti richiedono le normali Prove; oltre la portata non ha vista alternativa. Non legge, non distingue i colori né soddisfa requisiti di visione reciproca: immune agli accecamenti sugli occhi e agli sguardi che richiedono di essere visti, non a ogni effetto mentale."
     }
   ],
-  "note": "Furtività 13 fra le rocce. Mazza ferrata Comune FOR 4, PI 5, una mano, già pronta; nessuna armatura o scudo; può parare con la mazza. Linguaggio delle profondità, può negoziare. Comportamento: sotto 4 PV o a Ferita Profonda cerca una via nota."
+  "note": "Furtività 13 fra le rocce. Mazza ferrata Comune FOR 4, PI 5, una mano, già pronta; nessuna armatura o scudo; può parare con la mazza. Linguaggio delle profondità, può negoziare. Comportamento: sotto 4 PV o a Ferita Profonda cerca una via nota.",
+  "_bestiario": {
+    "edizione": "Mostri 0.69",
+    "sistema_salute": "solo_PV"
+  }
 }

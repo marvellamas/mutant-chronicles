@@ -12,7 +12,7 @@
     "SAG": 5,
     "CAR": 5
   },
-  "pv": 76,
+  "pv": 99,
   "pm": 12,
   "ar": {
     "totale": 5,
@@ -96,5 +96,9 @@
       "effetto": "I valori pronti includono −1 ad attacchi e Agilità (Schivata compresa) e −1 Q a ogni andatura; Parata 12. Tolta l’armatura: AR 2, Armi da guerra 16, Armi da lancio 12, Schivata 12, Atletica 15, Furtività 8, movimento 8/16/24. Perdere i PI non elimina da solo le penalità."
     }
   ],
-  "note": "AR 5 (2 biologica + 3 armatura Media su misura). Difese = Parata 12; Schivata 11. Ascia bipenne a due mani (+3 ordinario, +2 innato, portata 2 Q). Comportamento: alterna ascia e Difese o prepara il tiro; sotto 19 PV o a Ferita Seria cerca copertura o un accordo."
+  "note": "AR 5 (2 biologica + 3 armatura Media su misura). Difese = Parata 12; Schivata 11. Ascia bipenne a due mani (+3 ordinario, +2 innato, portata 2 Q). Comportamento: alterna ascia e Difese o prepara il tiro; sotto 19 PV o a Ferita Seria cerca copertura o un accordo.",
+  "_bestiario": {
+    "edizione": "Mostri 0.69",
+    "sistema_salute": "solo_PV"
+  }
 }

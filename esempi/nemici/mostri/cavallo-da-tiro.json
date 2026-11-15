@@ -12,7 +12,7 @@
     "SAG": 5,
     "CAR": 4
   },
-  "pv": 28,
+  "pv": 37,
   "pm": 6,
   "ar": {
     "totale": 0,
@@ -87,5 +87,9 @@
       "effetto": "Un solo attacco di Zoccoli per Round, Opportunità compresa. Non ha Impeto né Calpestare. Un imbrago che limita lo spostamento può impedire una Schivata, lasciando applicabili AR, PS e altre conseguenze ordinarie."
     }
   ],
-  "note": "Il calcio è una reazione fisicamente raggiungibile, non un attacco contro ogni lato del corpo. Condotta: può seguire indicazioni note e fermarsi se il percorso è impraticabile; sotto 7 PV o a Ferita Profonda tende ad arretrare o cercare il conduttore. Fonte: Draft Horse, p. 321."
+  "note": "Il calcio è una reazione fisicamente raggiungibile, non un attacco contro ogni lato del corpo. Condotta: può seguire indicazioni note e fermarsi se il percorso è impraticabile; sotto 7 PV o a Ferita Profonda tende ad arretrare o cercare il conduttore. Fonte: Draft Horse, p. 321.",
+  "_bestiario": {
+    "edizione": "Mostri 0.69",
+    "sistema_salute": "solo_PV"
+  }
 }

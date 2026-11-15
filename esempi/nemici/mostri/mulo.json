@@ -12,7 +12,7 @@
     "SAG": 5,
     "CAR": 3
   },
-  "pv": 18,
+  "pv": 24,
   "pm": 5,
   "ar": {
     "totale": 0,
@@ -87,5 +87,9 @@
       "effetto": "+2 alle PS di Tempra o Riflessi e alle Prove di FOR o DES espressamente richieste per evitare A Terra; si aggiunge alla Prova pertinente, non ai valori permanenti. Non introduce una Prova se l’effetto non la concede, non evita ogni spostamento forzato, non vale per le PS per Ferite e non dà aderenza a superfici lisce o immunità alle Cadute."
     }
   ],
-  "note": "Cerca un appoggio stabile e può colpire con gli zoccoli quando qualcuno lo stringe senza via di fuga. Un attacco di Zoccoli per Round, Opportunità compresa. Condotta: può fermarsi davanti a un ostacolo concreto; sotto 4 PV o a Ferita Profonda tende a cercare un riparo. Fonte: Mule, p. 333."
+  "note": "Cerca un appoggio stabile e può colpire con gli zoccoli quando qualcuno lo stringe senza via di fuga. Un attacco di Zoccoli per Round, Opportunità compresa. Condotta: può fermarsi davanti a un ostacolo concreto; sotto 4 PV o a Ferita Profonda tende a cercare un riparo. Fonte: Mule, p. 333.",
+  "_bestiario": {
+    "edizione": "Mostri 0.69",
+    "sistema_salute": "solo_PV"
+  }
 }

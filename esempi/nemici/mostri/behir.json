@@ -12,7 +12,7 @@
     "SAG": 7,
     "CAR": 6
   },
-  "pv": 88,
+  "pv": 115,
   "pm": 12,
   "ar": {
     "totale": 4,
@@ -123,5 +123,9 @@
       "effetto": "Solo con un Morso contro la propria vittima già afferrata nelle spire, di spazio ≤ 1 × 1 Q: dopo almeno 1 danno finale la vittima è inghiottita e la presa esterna termina; non può trattenere o inghiottire altri finché ha quella nello stomaco. Dentro è Immobilizzata e Accecata verso l’esterno (mani non bloccate), segue il Behir, e se non ha respirazione autonoma inizia il soffocamento del §5.23. La massa dà copertura totale; la vittima attacca dall’interno con −4 e il Behir non può Schivare quel colpo. Digestione: 1 AzP, una volta per Round, 1d6+2 Naturale da acido (AR ordinaria; niente Corrosivo). Uscire: 1 AzP, Corpo a corpo o Atletica contro Atletica 15 (−4 di Immobilizzato): successo la espelle nel più vicino spazio libero adiacente alle fauci; un alleato presso le fauci può aiutarla con un attrezzo. Rigurgito: con almeno 10 danni finali dall’interno nello stesso Round, a fine dell’Iniziativa della vittima il Behir fa Tempra senza modificatore: fallimento la espelle A Terra entro 2 Q dalle fauci (una verifica per Round). Rilascio volontario: 1 AzP. Perdita di coscienza o morte fanno cessare la compressione."
     }
   ],
-  "note": "Cerca prede isolate e accessi difficili, ma può comunicare o valutare un’offerta; non eredita inimicizie cosmologiche della fonte. Condotta: sotto 22 PV o a Ferita Seria tenta di ritirarsi. Fonte: Behir, p. 25."
+  "note": "Cerca prede isolate e accessi difficili, ma può comunicare o valutare un’offerta; non eredita inimicizie cosmologiche della fonte. Condotta: sotto 22 PV o a Ferita Seria tenta di ritirarsi. Fonte: Behir, p. 25.",
+  "_bestiario": {
+    "edizione": "Mostri 0.69",
+    "sistema_salute": "solo_PV"
+  }
 }

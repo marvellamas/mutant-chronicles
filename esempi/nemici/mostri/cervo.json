@@ -12,7 +12,7 @@
     "SAG": 7,
     "CAR": 3
   },
-  "pv": 8,
+  "pv": 11,
   "pm": 4,
   "ar": {
     "totale": 0,
@@ -91,5 +91,9 @@
       "effetto": "Vista e udito ordinari, senza Scurovisione o bonus sensoriale innato. Riconoscere una minaccia nascosta richiede Percezione contro Furtività quando pertinente."
     }
   ],
-  "note": "Ungulato rapido pronto a prendere distanza da una minaccia; il profilo mantiene il Morso dell’originale. La rapidità non lo rende una cavalcatura utilizzabile. Condotta: tende a fuggire quando la minaccia si avvicina e a mantenere un passaggio verso il gruppo; sotto 2 PV o a Ferita Importante evita di prolungare il contatto. Fonte: Deer, p. 321."
+  "note": "Ungulato rapido pronto a prendere distanza da una minaccia; il profilo mantiene il Morso dell’originale. La rapidità non lo rende una cavalcatura utilizzabile. Condotta: tende a fuggire quando la minaccia si avvicina e a mantenere un passaggio verso il gruppo; sotto 2 PV o a Ferita Importante evita di prolungare il contatto. Fonte: Deer, p. 321.",
+  "_bestiario": {
+    "edizione": "Mostri 0.69",
+    "sistema_salute": "solo_PV"
+  }
 }

@@ -12,7 +12,7 @@
     "SAG": 4,
     "CAR": 3
   },
-  "pv": 18,
+  "pv": 24,
   "pm": 4,
   "ar": {
     "totale": 1,
@@ -100,5 +100,9 @@
       "effetto": "Prima di effettuare Tempra per nuove Ferite mentre è già a 0 PV, può ottenere +2 a quella PS se il danno è Naturale e non deriva da un Successo Magistrale. L’uso si consuma qualunque sia l’esito; non evita la Ferita minima, non recupera PV e non annulla Morente; una pausa nello stesso scontro non lo ripristina."
     }
   ],
-  "note": "Ungulato robusto che può caricare per allontanare una minaccia o aprire una via di uscita; usa le stesse procedure di Carica e Ferite del Cinghiale gigante, con valori inferiori. Nessuna Scurovisione o capacità sensoriale speciale. Condotta: sotto 5 PV o a Ferita Profonda cerca di allontanarsi; può caricare verso un varco. Fonte: Boar, p. 319."
+  "note": "Ungulato robusto che può caricare per allontanare una minaccia o aprire una via di uscita; usa le stesse procedure di Carica e Ferite del Cinghiale gigante, con valori inferiori. Nessuna Scurovisione o capacità sensoriale speciale. Condotta: sotto 5 PV o a Ferita Profonda cerca di allontanarsi; può caricare verso un varco. Fonte: Boar, p. 319.",
+  "_bestiario": {
+    "edizione": "Mostri 0.69",
+    "sistema_salute": "solo_PV"
+  }
 }

@@ -12,7 +12,7 @@
     "SAG": 6,
     "CAR": 5
   },
-  "pv": 46,
+  "pv": 60,
   "pm": 10,
   "ar": {
     "totale": 6,
@@ -113,5 +113,9 @@
     "terrorizzato",
     "stordito"
   ],
-  "note": "AR 6 con Scudo medio, 4 senza (piastre intrinseche AR 4 + AR passiva +2 dello Scudo). Sentinella intelligente che ragiona sull’intento della consegna: non è la semplice Armatura animata. Fonte: Helmed Horror, p. 183."
+  "note": "AR 6 con Scudo medio, 4 senza (piastre intrinseche AR 4 + AR passiva +2 dello Scudo). Sentinella intelligente che ragiona sull’intento della consegna: non è la semplice Armatura animata. Fonte: Helmed Horror, p. 183.",
+  "_bestiario": {
+    "edizione": "Mostri 0.69",
+    "sistema_salute": "solo_PV"
+  }
 }

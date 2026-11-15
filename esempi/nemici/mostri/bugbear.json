@@ -12,7 +12,7 @@
     "SAG": 5,
     "CAR": 4
   },
-  "pv": 30,
+  "pv": 39,
   "pm": 6,
   "ar": {
     "totale": 2,
@@ -117,5 +117,9 @@
       "effetto": "Vede entro 12 Q anche nell’oscurità naturale; al buio non distingue i colori, non vede attraverso ostacoli, fumo o oscurità magica e non individua da sé chi è nascosto. Oltre i 12 Q valgono luce e vista ordinarie."
     }
   ],
-  "note": "AR 1 senza scudo (inizia con mazza e scudo piccolo). Due giavellotti FOR 3, PI 4. Comportamento: cerca sorpresa e via di fuga; sotto 8 PV o a Ferita Profonda valuta la ritirata."
+  "note": "AR 1 senza scudo (inizia con mazza e scudo piccolo). Due giavellotti FOR 3, PI 4. Comportamento: cerca sorpresa e via di fuga; sotto 8 PV o a Ferita Profonda valuta la ritirata.",
+  "_bestiario": {
+    "edizione": "Mostri 0.69",
+    "sistema_salute": "solo_PV"
+  }
 }

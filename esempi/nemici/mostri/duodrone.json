@@ -12,7 +12,7 @@
     "SAG": 5,
     "CAR": 4
   },
-  "pv": 16,
+  "pv": 21,
   "pm": 6,
   "ar": {
     "totale": 1,
@@ -123,5 +123,9 @@
       "effetto": "Tre Giavellotti Comuni della sentinella (FOR 3, PI 4, PS Integrità 10): due già pronti nelle mani, uno riposto. Può lasciarne uno gratuitamente per liberare una mano, ma raccoglierlo o estrarre quello riposto costa 1 AzP. Ogni lancio consuma un esemplare; nessuna riserva si ricarica. Al massimo due attacchi di Pugno o Giavellotto per Round complessivi, Opportunità compresa. I 22 PX comprendono la dotazione."
     }
   ],
-  "note": "Modron di secondo grado: corpo squadrato che coordina consegne semplici; le due funzioni gestite non sono due azioni simultanee gratuite. Sotto 4 PV o a Ferita Profonda può ripiegare per riferire e preservare la consegna, senza immunità a paura o dolore. Fonte: Duodrone, p. 225."
+  "note": "Modron di secondo grado: corpo squadrato che coordina consegne semplici; le due funzioni gestite non sono due azioni simultanee gratuite. Sotto 4 PV o a Ferita Profonda può ripiegare per riferire e preservare la consegna, senza immunità a paura o dolore. Fonte: Duodrone, p. 225.",
+  "_bestiario": {
+    "edizione": "Mostri 0.69",
+    "sistema_salute": "solo_PV"
+  }
 }

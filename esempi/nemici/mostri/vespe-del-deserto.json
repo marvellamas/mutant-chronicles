@@ -12,7 +12,7 @@
     "SAG": 6,
     "CAR": 1
   },
-  "pv": 4,
+  "pv": 6,
   "pm": 3,
   "ar": {
     "totale": 1,
@@ -114,5 +114,9 @@
       "effetto": "Cento vespe formano dieci gruppi da dieci, distribuiti uniformemente nel vano della Valvola, una pedina per Q occupato. I gruppi possono muoversi separatamente dal resto dell’infestazione; ogni gruppo mantiene coesione e un solo bersaglio. Si annotano superstiti e agganci senza aggiungere pedine per le riserve. I PX della tabella comprendono tutte le vespe del gruppo: non si aggiungono premi individuali. Il calcolo del premio dell’incontro segue il Direttore §9.3."
     }
   ],
-  "note": "Insetti volanti velenosi • gruppi di attacco • Natura Comune. Gruppo e spazio: 10 vespe iniziali • una pedina di 1 Q • un solo bersaglio. Tratti speciali: Piccoli e veloci • sensibili al freddo • respinti dal fumo. GS e PX provvisori nel manuale: da verificare al tavolo (Davide li confermerà)."
+  "note": "Insetti volanti velenosi • gruppi di attacco • Natura Comune. Gruppo e spazio: 10 vespe iniziali • una pedina di 1 Q • un solo bersaglio. Tratti speciali: Piccoli e veloci • sensibili al freddo • respinti dal fumo. GS e PX provvisori nel manuale: da verificare al tavolo (Davide li confermerà).",
+  "_bestiario": {
+    "edizione": "Mostri 0.69",
+    "sistema_salute": "solo_PV"
+  }
 }

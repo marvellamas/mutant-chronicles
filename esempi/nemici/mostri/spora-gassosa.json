@@ -12,7 +12,7 @@
     "SAG": 1,
     "CAR": 1
   },
-  "pv": 4,
+  "pv": 6,
   "ar": {
     "totale": 0,
     "magica": 0
@@ -102,5 +102,9 @@
     "avvelenato",
     "terrorizzato"
   ],
-  "note": "Spora gassosa: PV 4, Tempra 6. Condotta: galleggia verso gli stimoli vicini; non si fa esplodere volontariamente. Fonte: Gas Spore, pp. 137–138."
+  "note": "Spora gassosa: PV 4, Tempra 6. Condotta: galleggia verso gli stimoli vicini; non si fa esplodere volontariamente. Fonte: Gas Spore, pp. 137–138.",
+  "_bestiario": {
+    "edizione": "Mostri 0.69",
+    "sistema_salute": "solo_PV"
+  }
 }

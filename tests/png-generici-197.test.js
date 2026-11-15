@@ -18,6 +18,7 @@ import '../tools/guardia-subito.mjs'; // la guardia sulle cartelle vere, comunqu
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { testoManuale, fonteDati, voceDati } from '../tools/manuali.mjs';
+import { testoDeiDati } from '../tools/edizioni-dati.mjs';
 import { datiReali } from './helpers.js';
 import { validaNemico, validaDati } from '../src/validate.js';
 import { profiloPng, classiPng, pxPng, sommaEqDanno, acquisizioniPng, armamentoPng } from '../src/png-generici.js';
@@ -247,7 +248,13 @@ test('i modelli generici tengono PV e Ferite ordinari, senza il +30% dei mostri 
   // nessuno strumento dell'app moltiplica i PV di una scheda: la conversione la fa Davide nel manuale
   assert.deepEqual(S.sistemi.PV_e_Ferite.conversione_pv, null);
   assert.equal(S.sistemi.solo_PV.conversione_pv, '1,30');
-  assert.ok(S.da_fare.length >= 3, 'che cosa del sistema ridotto manca ancora, scritto');
+  // **Lotto 203: non c'è più un «da_fare».** Il comportamento al tavolo delle creature senza Ferite è dichiarato
+  // in `sistema_salute.senza_ferite` (Mostri 0.69 §4.2, §4.2.1) e provato da `tests/senza-ferite-203.test.js`.
+  // Qui resta il controllo che conta per i PNG generici: loro tengono PV e Ferite ordinari e **non** ricevono il
+  // +30% dei mostri, e quello si vede nei numeri qui sotto.
+  assert.equal(S.da_fare, undefined, 'il comportamento è dichiarato: un «da_fare» farebbe credere che manchi');
+  assert.ok(S.senza_ferite?.a_zero_pv, 'il comportamento senza Ferite, dichiarato');
+  assert.equal(S.senza_ferite.a_zero_pv.contatore_morente, false, 'una creatura senza Ferite non ha il contatore di Morente');
 });
 
 test('Taumaturghi: AR magica, «Difese» invece di Parata e Schivata, e la tabella delle azioni magiche pronte', () => {
@@ -337,6 +344,7 @@ test('«Crea nemico»: nome e descrizione proposti, nome e id scelti dal master 
 });
 
 test('i dati coincidono con la fonte: rimontare il JSON e il Word dà esattamente data/png_generici.json', () => {
-  const letto = importaPng(testoManuale('mostri'), fonte);
+  // lotto 203: la 0.67, l'edizione del JSON dei PNG (il manuale corrente è la 0.69: impronte diverse)
+  const letto = importaPng(testoDeiDati('mostri'), fonte);
   assert.deepEqual(JSON.parse(JSON.stringify(letto)), P);
 });

@@ -12,7 +12,7 @@
     "SAG": 9,
     "CAR": 9
   },
-  "pv": 100,
+  "pv": 130,
   "pm": 30,
   "ar": {
     "totale": 5,
@@ -112,5 +112,9 @@
       "effetto": "Respira aria e acqua senza costo; nuoto 9 / 19 / 29 Q effettivo (già con l’armatura). Immune a Fulmine (effetti secondari compresi). Dimezza per eccesso il Ghiaccio dopo le Difese e prima dell’AR (il residuo può dare Rallentato o Congelato). Non immune ad Assordato o Aria."
     }
   ],
-  "note": "AR 5 (2 biologica + 3 armatura Media su misura). Difese = Parata 15; Schivata 14. Spadone a due mani (+3 ordinario, +5 innato, portata 2 Q). Tolta la corazza: AR 2, Armi da guerra 17, Armi da lancio 16, Schivata 15, Atletica 17, terra/nuoto 10/20/30. Comportamento: sotto 25 PV, a Ferita Seria o con meno di 7 PM cerca l’acqua o una tregua."
+  "note": "AR 5 (2 biologica + 3 armatura Media su misura). Difese = Parata 15; Schivata 14. Spadone a due mani (+3 ordinario, +5 innato, portata 2 Q). Tolta la corazza: AR 2, Armi da guerra 17, Armi da lancio 16, Schivata 15, Atletica 17, terra/nuoto 10/20/30. Comportamento: sotto 25 PV, a Ferita Seria o con meno di 7 PM cerca l’acqua o una tregua.",
+  "_bestiario": {
+    "edizione": "Mostri 0.69",
+    "sistema_salute": "solo_PV"
+  }
 }

@@ -12,7 +12,7 @@
     "SAG": 5,
     "CAR": 2
   },
-  "pv": 18,
+  "pv": 24,
   "pm": 4,
   "ar": {
     "totale": 1,
@@ -94,5 +94,9 @@
       "effetto": "Un Pungiglione per Round, Opportunità compresa. Testa comprende antenne e mandibole; Torace il corpo e l’apparato alare; Braccia le zampe anteriori e Gambe quelle posteriori con la funzione del pungiglione; la localizzazione individua la parte effettivamente lesa. Nessuna resistenza innata al Fuoco o al calore delle Terre del Fuoco."
     }
   ],
-  "note": "Le sue colonie non coincidono con la Covata. Sensi ordinari, senza Scurovisione; non comprende linguaggi. Condotta: può difendere il nido e interrompere l’inseguimento quando la minaccia si allontana; sotto 4 PV o a Ferita Profonda tende a ritirarsi. Fonte: Giant Wasp, p. 329."
+  "note": "Le sue colonie non coincidono con la Covata. Sensi ordinari, senza Scurovisione; non comprende linguaggi. Condotta: può difendere il nido e interrompere l’inseguimento quando la minaccia si allontana; sotto 4 PV o a Ferita Profonda tende a ritirarsi. Fonte: Giant Wasp, p. 329.",
+  "_bestiario": {
+    "edizione": "Mostri 0.69",
+    "sistema_salute": "solo_PV"
+  }
 }

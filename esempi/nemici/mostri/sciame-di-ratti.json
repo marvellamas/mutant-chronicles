@@ -12,7 +12,7 @@
     "SAG": 5,
     "CAR": 3
   },
-  "pv": 24,
+  "pv": 32,
   "pm": 5,
   "ar": {
     "totale": 0,
@@ -117,5 +117,9 @@
     "stordito",
     "terrorizzato"
   ],
-  "note": "I due profili di Morsi/Becchi sono le fasce di danno per PV: quello ridotto sostituisce l’altro e non è un attacco separato. Spazio 1 × 1 Q condivisibile con altre creature (portata 0 Q: attacca solo nello spazio condiviso). Può costringere a cambiare strada senza che ogni ratto debba essere eliminato. Il contatto con più gambe nello stesso Q non moltiplica l’attacco. Non ha Tattiche di branco, Scavo né aderenza a pareti lisce; i morsi non inoculano malattie automaticamente. Condotta: può abbandonare una minaccia per un riparo o cibo più accessibile; a 12 PV o meno oppure a Ferita Profonda tende a disperdersi. Fonte: Swarm of Rats, p. 339."
+  "note": "I due profili di Morsi/Becchi sono le fasce di danno per PV: quello ridotto sostituisce l’altro e non è un attacco separato. Spazio 1 × 1 Q condivisibile con altre creature (portata 0 Q: attacca solo nello spazio condiviso). Può costringere a cambiare strada senza che ogni ratto debba essere eliminato. Il contatto con più gambe nello stesso Q non moltiplica l’attacco. Non ha Tattiche di branco, Scavo né aderenza a pareti lisce; i morsi non inoculano malattie automaticamente. Condotta: può abbandonare una minaccia per un riparo o cibo più accessibile; a 12 PV o meno oppure a Ferita Profonda tende a disperdersi. Fonte: Swarm of Rats, p. 339.",
+  "_bestiario": {
+    "edizione": "Mostri 0.69",
+    "sistema_salute": "solo_PV"
+  }
 }

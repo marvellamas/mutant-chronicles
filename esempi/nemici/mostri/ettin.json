@@ -12,7 +12,7 @@
     "SAG": 5,
     "CAR": 4
   },
-  "pv": 60,
+  "pv": 78,
   "pm": 8,
   "ar": {
     "totale": 2,
@@ -101,5 +101,9 @@
       "effetto": "Vede entro 12 Q anche nell’oscurità naturale; al buio non distingue i colori, non vede attraverso ostacoli, fumo o oscurità magica e non individua da sé chi è nascosto. Oltre i 12 Q valgono luce e vista ordinarie."
     }
   ],
-  "note": "AR 2 biologica. Oratoria 13 per intimidire. Ascia leggera e mazza ferrata entrambe pronte; nessuna armatura o scudo; para con entrambe senza sommarne i benefici. Comportamento: difende un rifugio o un accordo; sotto 15 PV o a Ferita Seria può abbandonare."
+  "note": "AR 2 biologica. Oratoria 13 per intimidire. Ascia leggera e mazza ferrata entrambe pronte; nessuna armatura o scudo; para con entrambe senza sommarne i benefici. Comportamento: difende un rifugio o un accordo; sotto 15 PV o a Ferita Seria può abbandonare.",
+  "_bestiario": {
+    "edizione": "Mostri 0.69",
+    "sistema_salute": "solo_PV"
+  }
 }

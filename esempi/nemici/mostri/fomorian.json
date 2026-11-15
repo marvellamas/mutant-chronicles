@@ -12,7 +12,7 @@
     "SAG": 7,
     "CAR": 3
   },
-  "pv": 70,
+  "pv": 91,
   "pm": 20,
   "ar": {
     "totale": 2,
@@ -92,5 +92,9 @@
       "effetto": "Vede entro 24 Q nel buio naturale, senza colori o vista attraverso ostacoli. Lo sguardo richiede che il Fomorian veda la vittima, non che questa ricambi."
     }
   ],
-  "note": "AR 2 biologica, nessuna armatura; non lancia massi. Maglio = Martello a due mani (+3 ordinario, +2 innato, portata 3 Q). Comportamento: difende una caverna, cerca gli isolati; può essere interlocutore; sotto 18 PV o con meno di 4 PM cerca riparo o una via negoziata."
+  "note": "AR 2 biologica, nessuna armatura; non lancia massi. Maglio = Martello a due mani (+3 ordinario, +2 innato, portata 3 Q). Comportamento: difende una caverna, cerca gli isolati; può essere interlocutore; sotto 18 PV o con meno di 4 PM cerca riparo o una via negoziata.",
+  "_bestiario": {
+    "edizione": "Mostri 0.69",
+    "sistema_salute": "solo_PV"
+  }
 }

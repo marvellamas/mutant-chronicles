@@ -12,7 +12,7 @@
     "SAG": 6,
     "CAR": 2
   },
-  "pv": 14,
+  "pv": 19,
   "pm": 6,
   "ar": {
     "totale": 0,
@@ -85,5 +85,9 @@
       "effetto": "Vede entro 12 Q nel buio naturale, senza colori; non attraversa ostacoli né individua da sola chi è nascosto."
     }
   ],
-  "note": "Piccola bestia alata (Braccia = ali, Gambe = zampe); un’ala inutilizzabile impedisce il volo; nessun modificatore speciale a chi la attacca. Non comprende ordini complessi. Differisce dal Basilisco: qui servono una ferita e due Tempra con +2, e l’effetto termina dopo 24 ore. Nome originale: Cockatrice, p. 42. Comportamento: sibila e becca la minaccia più vicina; a Ferita Profonda si ritira verso un riparo."
+  "note": "Piccola bestia alata (Braccia = ali, Gambe = zampe); un’ala inutilizzabile impedisce il volo; nessun modificatore speciale a chi la attacca. Non comprende ordini complessi. Differisce dal Basilisco: qui servono una ferita e due Tempra con +2, e l’effetto termina dopo 24 ore. Nome originale: Cockatrice, p. 42. Comportamento: sibila e becca la minaccia più vicina; a Ferita Profonda si ritira verso un riparo.",
+  "_bestiario": {
+    "edizione": "Mostri 0.69",
+    "sistema_salute": "solo_PV"
+  }
 }

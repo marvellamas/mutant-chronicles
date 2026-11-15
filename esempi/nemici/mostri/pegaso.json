@@ -12,7 +12,7 @@
     "SAG": 7,
     "CAR": 6
   },
-  "pv": 38,
+  "pv": 50,
   "pm": 8,
   "ar": {
     "totale": 1,
@@ -88,5 +88,9 @@
       "effetto": "Può accettare un cavaliere di spazio 1 × 1 Q con equipaggiamento entro il carico ordinario (movimento del profilo non sovraccarico). Pegaso e cavaliere mantengono Azioni, Difese e bersagli distinti. Una sella o bardatura aggiunta cambia la dotazione."
     }
   ],
-  "note": "Può diventare un alleato o un trasportatore consenziente. Condotta: cerca una via aerea libera, protegge un compagno scelto, può rifiutare un ordine suicida; sotto 9 PV o a Ferita Profonda si allontana. Fonte: Pegasus, p. 250."
+  "note": "Può diventare un alleato o un trasportatore consenziente. Condotta: cerca una via aerea libera, protegge un compagno scelto, può rifiutare un ordine suicida; sotto 9 PV o a Ferita Profonda si allontana. Fonte: Pegasus, p. 250.",
+  "_bestiario": {
+    "edizione": "Mostri 0.69",
+    "sistema_salute": "solo_PV"
+  }
 }

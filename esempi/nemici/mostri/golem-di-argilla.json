@@ -12,7 +12,7 @@
     "SAG": 4,
     "CAR": 1
   },
-  "pv": 84,
+  "pv": 110,
   "ar": {
     "totale": 4,
     "magica": 0
@@ -119,5 +119,9 @@
     "avvelenato",
     "sanguinamento"
   ],
-  "note": "Pesante corpo di argilla animata che presidia un luogo; l’eventuale origine religiosa non gli dà Natura Oscura Simmetria. PM — e Volontà —: nessun dato (un dato assente non vale 0). Al massimo due Schianti per Round, Opportunità compresa. Fonte: Clay Golem, pp. 167–168."
+  "note": "Pesante corpo di argilla animata che presidia un luogo; l’eventuale origine religiosa non gli dà Natura Oscura Simmetria. PM — e Volontà —: nessun dato (un dato assente non vale 0). Al massimo due Schianti per Round, Opportunità compresa. Fonte: Clay Golem, pp. 167–168.",
+  "_bestiario": {
+    "edizione": "Mostri 0.69",
+    "sistema_salute": "solo_PV"
+  }
 }

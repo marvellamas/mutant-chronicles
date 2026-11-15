@@ -12,7 +12,7 @@
     "SAG": 5,
     "CAR": 3
   },
-  "pv": 58,
+  "pv": 76,
   "pm": 6,
   "ar": {
     "totale": 3,
@@ -100,5 +100,9 @@
       "effetto": "Dopo almeno 4 Q rettilinei verso la vittima nella stessa Iniziativa, Corna che infliggono almeno 1 danno finale impongono Tempra senza modificatore a una creatura ≤ 2 × 2 Q: fallimento → A Terra. Il Calpestare successivo costa la seconda AzP e conserva tiro per colpire, Difesa e AR normali. Nessun bonus di danno oltre alla formula."
     }
   ],
-  "note": "Vista e udito ordinari. Corna e collare sono parti della Testa, senza Parata naturale né PI separati. Non comprende linguaggi. Un branco richiede esemplari distinti. Condotta: protegge il branco o reagisce a una minaccia vicina; sotto 14 PV o a Ferita Seria cerca protezione. Fonte: Triceratops, p. 80."
+  "note": "Vista e udito ordinari. Corna e collare sono parti della Testa, senza Parata naturale né PI separati. Non comprende linguaggi. Un branco richiede esemplari distinti. Condotta: protegge il branco o reagisce a una minaccia vicina; sotto 14 PV o a Ferita Seria cerca protezione. Fonte: Triceratops, p. 80.",
+  "_bestiario": {
+    "edizione": "Mostri 0.69",
+    "sistema_salute": "solo_PV"
+  }
 }

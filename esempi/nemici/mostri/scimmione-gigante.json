@@ -12,7 +12,7 @@
     "SAG": 6,
     "CAR": 4
   },
-  "pv": 80,
+  "pv": 104,
   "pm": 8,
   "ar": {
     "totale": 2,
@@ -111,5 +111,9 @@
       "effetto": "Arrampicata fino a 8 Q per AzM al Passo su sostegni che lo reggano; non aderisce a soffitti né conserva due mani libere mentre è sospeso. Bipede: una Menomazione del braccio può rendere impossibile il Masso lasciando un Pugno con l’arto valido."
     }
   ],
-  "note": "Sensi ordinari. Non comprende linguaggi nel profilo selvatico ma riconosce segnali appresi e reagisce a offerte o minacce. Con soli Pugni infligge più danno nel Round; il Masso minaccia una posizione lontana consumando entrambe le AzP. Condotta: sotto 20 PV o a Ferita Seria si ritira verso un accesso protetto. Fonte: Giant Ape, p. 323."
+  "note": "Sensi ordinari. Non comprende linguaggi nel profilo selvatico ma riconosce segnali appresi e reagisce a offerte o minacce. Con soli Pugni infligge più danno nel Round; il Masso minaccia una posizione lontana consumando entrambe le AzP. Condotta: sotto 20 PV o a Ferita Seria si ritira verso un accesso protetto. Fonte: Giant Ape, p. 323.",
+  "_bestiario": {
+    "edizione": "Mostri 0.69",
+    "sistema_salute": "solo_PV"
+  }
 }

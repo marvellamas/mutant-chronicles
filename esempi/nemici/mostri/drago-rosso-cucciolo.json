@@ -12,7 +12,7 @@
     "SAG": 5,
     "CAR": 7
   },
-  "pv": 180,
+  "pv": 234,
   "pm": 36,
   "ar": {
     "totale": 10,
@@ -111,5 +111,9 @@
       "effetto": "1 AzP alla propria Iniziativa, una volta per incontro, contro nemici entro 24 Q Base che percepiscono direttamente il drago. Volontà −2 per il bianco, −3 per nero e verde, −4 per blu e rosso. Fallimento: Terrorizzato per 1+1d3 Round, con effetti, scadenze e rimozione comuni. Una sola prova contro la Presenza dello stesso drago nell’incontro. I cuccioli non possiedono questa capacità."
     }
   ],
-  "note": "Predatore draconico • cucciolo • Natura Comune. Sensi e linguaggi: Scurovisione 12 Q Base; Draconico."
+  "note": "Predatore draconico • cucciolo • Natura Comune. Sensi e linguaggi: Scurovisione 12 Q Base; Draconico.",
+  "_bestiario": {
+    "edizione": "Mostri 0.69",
+    "sistema_salute": "solo_PV"
+  }
 }

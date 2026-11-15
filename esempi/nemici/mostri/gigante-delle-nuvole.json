@@ -12,7 +12,7 @@
     "SAG": 8,
     "CAR": 8
   },
-  "pv": 88,
+  "pv": 115,
   "pm": 24,
   "ar": {
     "totale": 3,
@@ -112,5 +112,9 @@
       }
     }
   ],
-  "note": "AR 3 biologica, nessuna armatura. Percezione 14; olfatto 16. Maglio = Martello a due mani (+3 ordinario, +4 innato, portata 2 Q). I 24 PM sono una sola riserva. Comportamento: usa l’altezza; sotto 22 PV, a Ferita Seria o con meno di 4 PM si ritira."
+  "note": "AR 3 biologica, nessuna armatura. Percezione 14; olfatto 16. Maglio = Martello a due mani (+3 ordinario, +4 innato, portata 2 Q). I 24 PM sono una sola riserva. Comportamento: usa l’altezza; sotto 22 PV, a Ferita Seria o con meno di 4 PM si ritira.",
+  "_bestiario": {
+    "edizione": "Mostri 0.69",
+    "sistema_salute": "solo_PV"
+  }
 }

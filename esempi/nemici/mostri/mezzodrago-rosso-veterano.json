@@ -12,7 +12,7 @@
     "SAG": 6,
     "CAR": 6
   },
-  "pv": 65,
+  "pv": 85,
   "pm": 20,
   "ar": {
     "totale": 5,
@@ -91,5 +91,9 @@
       "risorsa": "6 PM"
     }
   ],
-  "note": "Combattente umanoide con tratti draconici • Natura Comune. Sensi e linguaggi: Scurovisione 12 Q Base; Comune e Draconico."
+  "note": "Combattente umanoide con tratti draconici • Natura Comune. Sensi e linguaggi: Scurovisione 12 Q Base; Comune e Draconico.",
+  "_bestiario": {
+    "edizione": "Mostri 0.69",
+    "sistema_salute": "solo_PV"
+  }
 }

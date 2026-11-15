@@ -12,7 +12,7 @@
     "SAG": 5,
     "CAR": 5
   },
-  "pv": 58,
+  "pv": 76,
   "pm": 12,
   "ar": {
     "totale": 4,
@@ -105,5 +105,9 @@
       "effetto": "Scurovisione 24 Q e percezione delle vibrazioni 12 Q sul medesimo terreno continuo: localizza creature in movimento, non chi vola o è isolato dal terreno; non soddisfa i requisiti dello Sguardo."
     }
   ],
-  "note": "Furtività 9 sotto terra, 7 all’aperto. Comportamento: emerge vicino alla preda senza farsi accerchiare; parla e può trattare; sotto 15 PV o a Ferita Seria si ritira in un tunnel."
+  "note": "Furtività 9 sotto terra, 7 all’aperto. Comportamento: emerge vicino alla preda senza farsi accerchiare; parla e può trattare; sotto 15 PV o a Ferita Seria si ritira in un tunnel.",
+  "_bestiario": {
+    "edizione": "Mostri 0.69",
+    "sistema_salute": "solo_PV"
+  }
 }

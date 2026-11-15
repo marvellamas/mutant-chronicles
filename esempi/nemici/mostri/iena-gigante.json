@@ -12,7 +12,7 @@
     "SAG": 6,
     "CAR": 2
   },
-  "pv": 30,
+  "pv": 39,
   "pm": 6,
   "ar": {
     "totale": 1,
@@ -88,5 +88,9 @@
       "effetto": "Non applica il bonus di Branco: il vantaggio del gruppo nasce da posizioni e numero. La propria AzP ordinaria resta necessaria per Schivare. Denti e mascelle non sono una Parata naturale e non infliggono Corrosivo o Sanguinamento automatici. Il riso e i richiami sono comunicazione, non un attacco che impone Terrorizzato."
     }
   ],
-  "note": "Condotta: segue una preda indebolita, contende carcasse; sotto 8 PV, a Ferita Profonda o separata dal gruppo interrompe l’inseguimento."
+  "note": "Condotta: segue una preda indebolita, contende carcasse; sotto 8 PV, a Ferita Profonda o separata dal gruppo interrompe l’inseguimento.",
+  "_bestiario": {
+    "edizione": "Mostri 0.69",
+    "sistema_salute": "solo_PV"
+  }
 }

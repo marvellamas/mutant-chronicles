@@ -43,10 +43,12 @@ test('Sciami: due fasce di danno per PV (quello ridotto sostituisce l’altro), 
   }
 });
 
-test('PV e soglie degli Sciami: 24 PV (28 quipper, 36 serpenti), fasce a 12 / 14 / 18 PV nei nomi degli attacchi', () => {
-  for (const id of ['sciame-di-pipistrelli', 'sciame-di-corvi', 'sciame-di-ratti', 'sciame-di-insetti']) assert.equal(leggi(id).pv, 24, id);
-  assert.equal(leggi('sciame-di-quipper').pv, 28);
-  assert.equal(leggi('sciame-di-serpenti-velenosi').pv, 36);
+test('PV e soglie degli Sciami sulla 0.69: 32 PV (37 quipper, 47 serpenti); le fasce nei nomi degli attacchi restano quelle del manuale', () => {
+  // lotto 203: 24 nella 0.46, 32 nella 0.69 (24 × 1,30 per eccesso, applicato una volta dal manuale). Le soglie
+  // nei nomi degli attacchi restano quelle scritte nel manuale: non si convertono, perché non sono PV massimi.
+  for (const id of ['sciame-di-pipistrelli', 'sciame-di-corvi', 'sciame-di-ratti', 'sciame-di-insetti']) assert.equal(leggi(id).pv, 32, id);
+  assert.equal(leggi('sciame-di-quipper').pv, 37, '28 × 1,30 per eccesso');
+  assert.equal(leggi('sciame-di-serpenti-velenosi').pv, 47, '36 × 1,30 per eccesso');
   assert.deepEqual(leggi('sciame-di-quipper').attacchi.map((a) => a.nome), ['Morsi (PV 15–28)', 'Morsi (PV 0–14)']);
   assert.deepEqual(leggi('sciame-di-serpenti-velenosi').attacchi.map((a) => a.nome), ['Morsi (PV 19–36)', 'Morsi (PV 0–18)']);
 });

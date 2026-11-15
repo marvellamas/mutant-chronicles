@@ -12,7 +12,7 @@
     "SAG": 6,
     "CAR": 4
   },
-  "pv": 80,
+  "pv": 104,
   "pm": 7,
   "ar": {
     "totale": 3,
@@ -108,5 +108,9 @@
       "effetto": "La vittima spende 1 AzP: Corpo a corpo o Atletica contro Corpo a corpo 15 (pareggio conserva la presa); un alleato entro portata delle fauci può farlo col proprio VA, con un attrezzo per fare leva. Una vittima di massa (dotazione compresa) non oltre 250 kg viene portata a velocità dimezzate (per difetto) con l’AzM ordinaria, entro la portata delle fauci. Prima di un bordo o pericolo immediato la vittima fa Riflessi senza modificatore: successo ferma il Tirannosauro all’ultimo spazio sicuro se vuole conservare la presa. Non Schiva conservando la presa. Rilascio gratuito; perdita di coscienza, morte o Menomazione mandibolare interrompono l’aggancio (0 PV no). Dopo il rilascio la vittima è nel più vicino spazio libero e sostenuto adiacente; nessun danno automatico."
     }
   ],
-  "note": "Vista e udito ordinari. Braccia = piccoli arti anteriori, Gambe = posteriori e coda, Testa = fauci. Non inghiotte e non trasferisce sulla vittima gli attacchi diretti contro di lui. Non comprende linguaggi. Condotta: nutrimento; può abbandonare avversari difficili; sotto 20 PV o a Ferita Seria si ritira. Fonte: Tyrannosaurus Rex, p. 80."
+  "note": "Vista e udito ordinari. Braccia = piccoli arti anteriori, Gambe = posteriori e coda, Testa = fauci. Non inghiotte e non trasferisce sulla vittima gli attacchi diretti contro di lui. Non comprende linguaggi. Condotta: nutrimento; può abbandonare avversari difficili; sotto 20 PV o a Ferita Seria si ritira. Fonte: Tyrannosaurus Rex, p. 80.",
+  "_bestiario": {
+    "edizione": "Mostri 0.69",
+    "sistema_salute": "solo_PV"
+  }
 }

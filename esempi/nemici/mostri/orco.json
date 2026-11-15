@@ -12,7 +12,7 @@
     "SAG": 5,
     "CAR": 5
   },
-  "pv": 24,
+  "pv": 32,
   "pm": 6,
   "ar": {
     "totale": 1,
@@ -113,5 +113,9 @@
       "effetto": "Vede entro 12 Q anche nell’oscurità naturale; al buio non distingue i colori, non vede attraverso ostacoli, fumo o oscurità magica e non individua da sé chi è nascosto. Oltre i 12 Q valgono luce e vista ordinarie."
     }
   ],
-  "note": "Oratoria 11 per intimidire. Ascia bipenne a due mani FOR 6; inizia con l’ascia pronta, nessuno scudo. Comportamento: cerca un bersaglio raggiungibile; se molto ferito o sotto 6 PV può ripiegare."
+  "note": "Oratoria 11 per intimidire. Ascia bipenne a due mani FOR 6; inizia con l’ascia pronta, nessuno scudo. Comportamento: cerca un bersaglio raggiungibile; se molto ferito o sotto 6 PV può ripiegare.",
+  "_bestiario": {
+    "edizione": "Mostri 0.69",
+    "sistema_salute": "solo_PV"
+  }
 }

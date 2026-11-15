@@ -12,7 +12,7 @@
     "SAG": 5,
     "CAR": 6
   },
-  "pv": 52,
+  "pv": 68,
   "pm": 10,
   "ar": {
     "totale": 3,
@@ -123,5 +123,9 @@
   "immunita": [
     "incendiato"
   ],
-  "note": "Essere serpentiforme con arti superiori: può essere un artigiano o difendere una fucina. Parla Ignan. Testa, Torace e Braccia sono le parti omonime; Gambe = la coda locomotrice e prensile. Tecnologia 12 vale solo per metallurgia con mezzi appropriati. Condotta: sotto 13 PV o a Ferita Seria può cercare riparo o negoziare. Fonte: Salamander, pp. 265–266."
+  "note": "Essere serpentiforme con arti superiori: può essere un artigiano o difendere una fucina. Parla Ignan. Testa, Torace e Braccia sono le parti omonime; Gambe = la coda locomotrice e prensile. Tecnologia 12 vale solo per metallurgia con mezzi appropriati. Condotta: sotto 13 PV o a Ferita Seria può cercare riparo o negoziare. Fonte: Salamander, pp. 265–266.",
+  "_bestiario": {
+    "edizione": "Mostri 0.69",
+    "sistema_salute": "solo_PV"
+  }
 }

@@ -12,7 +12,7 @@
     "SAG": 4,
     "CAR": 3
   },
-  "pv": 46,
+  "pv": 60,
   "pm": 6,
   "ar": {
     "totale": 1,
@@ -105,5 +105,9 @@
       "effetto": "Vede entro 12 Q anche nell’oscurità naturale; al buio non distingue i colori, non vede attraverso ostacoli, fumo o oscurità magica e non individua da sé chi è nascosto. Oltre i 12 Q valgono luce e vista ordinarie."
     }
   ],
-  "note": "Oratoria 12 per intimidire. Maglio = Martello a due mani FOR 6; inizia col maglio pronto, nessuno scudo. Con una sola AzP sceglie fra attaccare e Difendersi. Comportamento: colpisce il nemico più vicino; sotto 12 PV o a Ferita Profonda cerca l’uscita."
+  "note": "Oratoria 12 per intimidire. Maglio = Martello a due mani FOR 6; inizia col maglio pronto, nessuno scudo. Con una sola AzP sceglie fra attaccare e Difendersi. Comportamento: colpisce il nemico più vicino; sotto 12 PV o a Ferita Profonda cerca l’uscita.",
+  "_bestiario": {
+    "edizione": "Mostri 0.69",
+    "sistema_salute": "solo_PV"
+  }
 }

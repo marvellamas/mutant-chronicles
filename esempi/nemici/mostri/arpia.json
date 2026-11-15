@@ -12,7 +12,7 @@
     "SAG": 5,
     "CAR": 7
   },
-  "pv": 24,
+  "pv": 32,
   "pm": 10,
   "ar": {
     "totale": 0,
@@ -106,5 +106,9 @@
       }
     }
   ],
-  "note": "Randello d’osso: Comune, una mano, Armi da mischia, FOR 3, 1d4 Naturale (il danno della scheda include già +1), PI 3, PS Integrità 10; può parare, disarmabile e danneggiabile. Vista e udito ordinari. Comprende e parla una lingua locale. Fonte: Harpy, p. 181. Comportamento: cerca una posizione sopraelevata e una via di fuga; a Ferita Profonda o senza il vantaggio della quota fugge."
+  "note": "Randello d’osso: Comune, una mano, Armi da mischia, FOR 3, 1d4 Naturale (il danno della scheda include già +1), PI 3, PS Integrità 10; può parare, disarmabile e danneggiabile. Vista e udito ordinari. Comprende e parla una lingua locale. Fonte: Harpy, p. 181. Comportamento: cerca una posizione sopraelevata e una via di fuga; a Ferita Profonda o senza il vantaggio della quota fugge.",
+  "_bestiario": {
+    "edizione": "Mostri 0.69",
+    "sistema_salute": "solo_PV"
+  }
 }

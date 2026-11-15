@@ -12,7 +12,7 @@
     "SAG": 4,
     "CAR": 4
   },
-  "pv": 12,
+  "pv": 16,
   "pm": 5,
   "ar": {
     "totale": 0,
@@ -100,5 +100,9 @@
       "effetto": "Vede entro 12 Q anche nell’oscurità naturale; al buio non distingue i colori, non vede attraverso ostacoli, fumo o oscurità magica e non individua da sé chi è nascosto. Oltre i 12 Q valgono luce e vista ordinarie."
     }
   ],
-  "note": "Tecnologia 10 per congegni semplici. Nessuna armatura o scudo. Tre pugnali FOR 2, PI 4; Tiro Rapido richiede due pugnali pronti. Trappole e cunicoli vanno descritti prima dell’incontro. Comportamento: isolato o sotto 3 PV cerca riparo o si arrende."
+  "note": "Tecnologia 10 per congegni semplici. Nessuna armatura o scudo. Tre pugnali FOR 2, PI 4; Tiro Rapido richiede due pugnali pronti. Trappole e cunicoli vanno descritti prima dell’incontro. Comportamento: isolato o sotto 3 PV cerca riparo o si arrende.",
+  "_bestiario": {
+    "edizione": "Mostri 0.69",
+    "sistema_salute": "solo_PV"
+  }
 }

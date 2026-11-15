@@ -12,7 +12,7 @@
     "SAG": 5,
     "CAR": 2
   },
-  "pv": 48,
+  "pv": 63,
   "pm": 8,
   "ar": {
     "totale": 2,
@@ -94,5 +94,9 @@
       "effetto": "Percepisce per vibrazioni una creatura in movimento entro 2 Q sul medesimo supporto continuo; non vede attraverso le pareti. Nuoto 6 / 12 / 18 Q, ma respira aria (riserva di fiato su COS, §5.23); nessuna immunità al soffocamento. Non può usare Corsa, Scatto o Carica mantenendo la Costrizione; per trascinare la vittima spende 1 AzP e l’AzM intera e vince una nuova opposizione (fino a 2 Q al Passo, a terra o a nuoto), senza infliggere anche il danno di Costrizione."
     }
   ],
-  "note": "Morso con portata 2 Q. Liberazione con le regole comuni delle Prese naturali; colpirlo non libera, salvo Svenuto/Morente o perdita funzionale delle spire. Condotta: attende presso vegetazione o passaggi stretti; sotto 12 PV o a Ferita Seria può rilasciare e fuggire."
+  "note": "Morso con portata 2 Q. Liberazione con le regole comuni delle Prese naturali; colpirlo non libera, salvo Svenuto/Morente o perdita funzionale delle spire. Condotta: attende presso vegetazione o passaggi stretti; sotto 12 PV o a Ferita Seria può rilasciare e fuggire.",
+  "_bestiario": {
+    "edizione": "Mostri 0.69",
+    "sistema_salute": "solo_PV"
+  }
 }

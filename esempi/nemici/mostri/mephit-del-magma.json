@@ -12,7 +12,7 @@
     "SAG": 5,
     "CAR": 5
   },
-  "pv": 22,
+  "pv": 29,
   "pm": 10,
   "ar": {
     "totale": 1,
@@ -124,5 +124,9 @@
     "sanguinamento",
     "incendiato"
   ],
-  "note": "Immune al Fuoco e Incendiato; vulnerabile al Gelo ×2. Parla Ignan e Terran. Distinto dal calore passivo di Azer, Serpente di fuoco e Salamandra. Condotta: sotto 5 PV o a Ferita Profonda cerca calore e fuga. Non appartiene alla Covata; la variante di evocazione di altri Mephit non è compresa e la specie non è un’opzione di Evoca Elementale. Un Artiglio per Round, Opportunità compresa. Fonte: Magma Mephit, p. 216."
+  "note": "Immune al Fuoco e Incendiato; vulnerabile al Gelo ×2. Parla Ignan e Terran. Distinto dal calore passivo di Azer, Serpente di fuoco e Salamandra. Condotta: sotto 5 PV o a Ferita Profonda cerca calore e fuga. Non appartiene alla Covata; la variante di evocazione di altri Mephit non è compresa e la specie non è un’opzione di Evoca Elementale. Un Artiglio per Round, Opportunità compresa. Fonte: Magma Mephit, p. 216.",
+  "_bestiario": {
+    "edizione": "Mostri 0.69",
+    "sistema_salute": "solo_PV"
+  }
 }

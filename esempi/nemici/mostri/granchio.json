@@ -12,7 +12,7 @@
     "SAG": 4,
     "CAR": 1
   },
-  "pv": 4,
+  "pv": 6,
   "pm": 3,
   "ar": {
     "totale": 1,
@@ -95,5 +95,9 @@
       "effetto": "Terra e nuoto 4 / 8 / 12: la stessa andatura vale anche per nuoto"
     }
   ],
-  "note": "Fauna ordinaria • Natura Comune. Sensi e linguaggi: Vibrazioni 2 Q Base; nessun linguaggio."
+  "note": "Fauna ordinaria • Natura Comune. Sensi e linguaggi: Vibrazioni 2 Q Base; nessun linguaggio.",
+  "_bestiario": {
+    "edizione": "Mostri 0.69",
+    "sistema_salute": "solo_PV"
+  }
 }

@@ -12,7 +12,7 @@
     "SAG": 3,
     "CAR": 1
   },
-  "pv": 24,
+  "pv": 32,
   "pm": 4,
   "ar": {
     "totale": 1,
@@ -87,5 +87,9 @@
   "immunita": [
     "sanguinamento"
   ],
-  "note": "Nessuna dotazione, nessuna Parata naturale. Non è immune ad A Terra, Immobilizzato o rallentamenti materiali. Non trasmette infezioni né trasforma in Zombie chi colpisce. Comportamento: avanza verso il vivente indicato o più vicino, non fugge per PV bassi."
+  "note": "Nessuna dotazione, nessuna Parata naturale. Non è immune ad A Terra, Immobilizzato o rallentamenti materiali. Non trasmette infezioni né trasforma in Zombie chi colpisce. Comportamento: avanza verso il vivente indicato o più vicino, non fugge per PV bassi.",
+  "_bestiario": {
+    "edizione": "Mostri 0.69",
+    "sistema_salute": "solo_PV"
+  }
 }

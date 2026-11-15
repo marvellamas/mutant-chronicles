@@ -12,7 +12,7 @@
     "SAG": 5,
     "CAR": 6
   },
-  "pv": 50,
+  "pv": 65,
   "pm": 10,
   "ar": {
     "totale": 4,
@@ -115,5 +115,9 @@
       "effetto": "Entro 12 Q localizza metalli preziosi e gemme, anche attraverso terra e roccia naturali comunicanti. È un senso minerale innato, non normale vista né Individuare Magia: non identifica valore esatto, proprietà magiche, proprietario o intenzioni e non localizza creature prive di tali materiali. Metallo schermante continuo, pietra lavorata o barriera magica interrompono la rilevazione attraverso quell’ostacolo. Percepire una gemma dentro una borsa non la trasferisce nella sua bocca né rivela gli altri contenuti; mangiare, sottrarre o danneggiare un oggetto richiede un’azione e una situazione praticabile (un’arma o protezione mantiene le normali regole di Integrità)."
     }
   ],
-  "note": "Essere pesante con tre braccia, tre occhi e una grande bocca superiore: cerca metalli preziosi e gemme per nutrirsi e può offrire informazioni in cambio di una parte del tesoro (contratta anziché iniziare un combattimento). Parla Terran. Testa = bocca e occhi, Torace = nucleo, Braccia = gruppo di arti superiori, Gambe = appendici locomotorie. Condotta: sotto 12 PV o a Ferita Seria tende alla trattativa o alla ritirata nel terreno; non consuma automaticamente gli oggetti per la semplice vicinanza. Fonte: Xorn, p. 304."
+  "note": "Essere pesante con tre braccia, tre occhi e una grande bocca superiore: cerca metalli preziosi e gemme per nutrirsi e può offrire informazioni in cambio di una parte del tesoro (contratta anziché iniziare un combattimento). Parla Terran. Testa = bocca e occhi, Torace = nucleo, Braccia = gruppo di arti superiori, Gambe = appendici locomotorie. Condotta: sotto 12 PV o a Ferita Seria tende alla trattativa o alla ritirata nel terreno; non consuma automaticamente gli oggetti per la semplice vicinanza. Fonte: Xorn, p. 304.",
+  "_bestiario": {
+    "edizione": "Mostri 0.69",
+    "sistema_salute": "solo_PV"
+  }
 }

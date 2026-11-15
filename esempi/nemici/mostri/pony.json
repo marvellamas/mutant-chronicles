@@ -12,7 +12,7 @@
     "SAG": 5,
     "CAR": 4
   },
-  "pv": 16,
+  "pv": 21,
   "pm": 5,
   "ar": {
     "totale": 0,
@@ -87,5 +87,9 @@
       "effetto": "Un attacco di Zoccoli per Round, Opportunità compresa. Non ha Trasporto robusto, Piede saldo, Impeto o Calpestare. Per un passaggio stretto si valuta il corpo reale con sella e carico: la pedina da 1 Q non elimina questi ingombri."
     }
   ],
-  "note": "Utilizzabile da un cavaliere il cui peso e ingombro siano realmente compatibili; non è una versione ridotta del Cavallo da guerra. Condotta: può seguire il conduttore o fermarsi a un segnale noto; sotto 4 PV o a Ferita Profonda tende a cercare il gruppo o un’uscita. Fonte: Pony, p. 335."
+  "note": "Utilizzabile da un cavaliere il cui peso e ingombro siano realmente compatibili; non è una versione ridotta del Cavallo da guerra. Condotta: può seguire il conduttore o fermarsi a un segnale noto; sotto 4 PV o a Ferita Profonda tende a cercare il gruppo o un’uscita. Fonte: Pony, p. 335.",
+  "_bestiario": {
+    "edizione": "Mostri 0.69",
+    "sistema_salute": "solo_PV"
+  }
 }

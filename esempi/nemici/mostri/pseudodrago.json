@@ -12,7 +12,7 @@
     "SAG": 6,
     "CAR": 5
   },
-  "pv": 12,
+  "pv": 16,
   "pm": 10,
   "ar": {
     "totale": 1,
@@ -92,5 +92,9 @@
       "effetto": "Dopo almeno 1 danno finale del Pungiglione, tossina di Pericolosità II: Tempra 0. Fallimento: −2 alle Prove fisiche per 3 Round, con nuova Tempra a fine della propria Iniziativa per terminare l’effetto. Maldestro iniziale: anche Svenuto per 1d3+1 Round, interrotto da almeno 1 danno o da un alleato adiacente che spende 1 AzP per svegliarlo. Valgono protezioni e immunità pertinenti; le riapplicazioni non sommano la penalità. Percezione +2 se vista, udito o olfatto sono determinanti. Telepatia entro 20 Q Base: immagini, emozioni e idee semplici con una creatura che comprende almeno una lingua; non legge pensieri. Nessuna Parata naturale. Evita lo scontro e cerca una via di fuga."
     }
   ],
-  "note": "Piccolo draconico intelligente • Natura Comune. Sensi e linguaggi: Scurovisione 12 Q Base; comprende Comune e Draconico, senza parlarli."
+  "note": "Piccolo draconico intelligente • Natura Comune. Sensi e linguaggi: Scurovisione 12 Q Base; comprende Comune e Draconico, senza parlarli.",
+  "_bestiario": {
+    "edizione": "Mostri 0.69",
+    "sistema_salute": "solo_PV"
+  }
 }

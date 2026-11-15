@@ -12,7 +12,7 @@
     "SAG": 3,
     "CAR": 1
   },
-  "pv": 28,
+  "pv": 37,
   "ar": {
     "totale": 0,
     "magica": 0
@@ -100,5 +100,9 @@
     "sanguinamento",
     "stordito"
   ],
-  "note": "PM —: nessuna riserva. Immobile sembra un tappeto (+4 Furtività). Comportamento: protegge un’area o un accesso; interrompere l’animazione apre una finestra per salvare la vittima."
+  "note": "PM —: nessuna riserva. Immobile sembra un tappeto (+4 Furtività). Comportamento: protegge un’area o un accesso; interrompere l’animazione apre una finestra per salvare la vittima.",
+  "_bestiario": {
+    "edizione": "Mostri 0.69",
+    "sistema_salute": "solo_PV"
+  }
 }

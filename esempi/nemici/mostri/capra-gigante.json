@@ -12,7 +12,7 @@
     "SAG": 6,
     "CAR": 3
   },
-  "pv": 28,
+  "pv": 37,
   "pm": 6,
   "ar": {
     "totale": 1,
@@ -104,5 +104,9 @@
       "effetto": "Richiede almeno 4 Q di Passo rettilineo verso la vittima nella stessa Iniziativa (usa l’AzM ordinaria e l’AzP del colpo; si dichiara prima del tiro; non si combina con Carica, Corsa, Scatto o altre manovre offensive). Il danno speciale sostituisce quello normale, senza il ×2 della Carica. Con almeno 1 danno finale: Tempra senza modificatore a una creatura non maggiore di 1 × 1 Q; fallimento → A Terra. Il Magistrale non ne peggiora la Salvezza. Usa il danno completo 2d6+2 (un solo 1d6 aggiuntivo). Una Cornata per Round, normale oppure in Impeto, con la sola normale per l’Opportunità. Nessun Calpestare né attacco gratuito dopo la caduta."
     }
   ],
-  "note": "La corazza è AR biologica senza PI separati; le corna non permettono Parata naturale e non aprono automaticamente una breccia nei muri. Il nome e la massa non aggiungono immunità ambientali né poteri della Covata. Condotta: la sua struttura non implica abitudine alla sella; sotto 7 PV o a Ferita Profonda tende a sottrarsi verso terreno favorevole. Fonte: Giant Goat, p. 326."
+  "note": "La corazza è AR biologica senza PI separati; le corna non permettono Parata naturale e non aprono automaticamente una breccia nei muri. Il nome e la massa non aggiungono immunità ambientali né poteri della Covata. Condotta: la sua struttura non implica abitudine alla sella; sotto 7 PV o a Ferita Profonda tende a sottrarsi verso terreno favorevole. Fonte: Giant Goat, p. 326.",
+  "_bestiario": {
+    "edizione": "Mostri 0.69",
+    "sistema_salute": "solo_PV"
+  }
 }

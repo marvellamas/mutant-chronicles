@@ -12,7 +12,7 @@
     "SAG": 7,
     "CAR": 4
   },
-  "pv": 54,
+  "pv": 71,
   "pm": 8,
   "ar": {
     "totale": 2,
@@ -101,5 +101,9 @@
       "effetto": "Vede entro 12 Q anche nell’oscurità naturale; al buio non distingue i colori, non vede attraverso ostacoli, fumo o oscurità magica e non individua da sé chi è nascosto. Oltre i 12 Q valgono luce e vista ordinarie."
     }
   ],
-  "note": "AR 2 biologica. Ascia bipenne a due mani FOR 6, pronta; niente armatura o scudo; para con l’ascia, non con le corna. Comportamento: cerca un percorso di carica; sotto 14 PV o a Ferita Seria ripiega in zona conosciuta."
+  "note": "AR 2 biologica. Ascia bipenne a due mani FOR 6, pronta; niente armatura o scudo; para con l’ascia, non con le corna. Comportamento: cerca un percorso di carica; sotto 14 PV o a Ferita Seria ripiega in zona conosciuta.",
+  "_bestiario": {
+    "edizione": "Mostri 0.69",
+    "sistema_salute": "solo_PV"
+  }
 }

@@ -12,7 +12,7 @@
     "SAG": 5,
     "CAR": 5
   },
-  "pv": 32,
+  "pv": 42,
   "ar": {
     "totale": 4,
     "magica": 4
@@ -100,5 +100,9 @@
     "sanguinamento",
     "stordito"
   ],
-  "note": "PM —: nessuna riserva. Il VA 14 è quello del Dardo d’acqua, già in tabella: «Attacco a distanza» non è un’Abilità (A.169, 18/10), non dà Armi da lancio né altre competenze. Profilo evocato (Magia §14.1): «INI dopo l’evocatore» (qui 0; sulla plancia agisce dopo chi lo evoca). Scompare a 0 PV, a fine durata, al congedo o alla perdita di coscienza dell’evocatore. Spazio 2 × 2 Q (Sbalzante non lo sposta)."
+  "note": "PM —: nessuna riserva. Il VA 14 è quello del Dardo d’acqua, già in tabella: «Attacco a distanza» non è un’Abilità (A.169, 18/10), non dà Armi da lancio né altre competenze. Profilo evocato (Magia §14.1): «INI dopo l’evocatore» (qui 0; sulla plancia agisce dopo chi lo evoca). Scompare a 0 PV, a fine durata, al congedo o alla perdita di coscienza dell’evocatore. Spazio 2 × 2 Q (Sbalzante non lo sposta).",
+  "_bestiario": {
+    "edizione": "Mostri 0.69",
+    "sistema_salute": "solo_PV"
+  }
 }

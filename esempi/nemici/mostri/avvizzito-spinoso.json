@@ -12,7 +12,7 @@
     "SAG": 4,
     "CAR": 2
   },
-  "pv": 16,
+  "pv": 21,
   "pm": 4,
   "ar": {
     "totale": 1,
@@ -113,5 +113,9 @@
     "accecato",
     "assordato"
   ],
-  "note": "Il VA 10 è quello degli Aghi, già in tabella: «Tiro naturale» non è un’Abilità (A.169, 18/10), non dà Armi da lancio né altre competenze. Le spine sono parti del corpo, non proiettili recuperabili. Non ha la vulnerabilità al Fuoco del ramoso né le resistenze fisiche degli alberi. Capisce istruzioni semplici ma non parla. Condotta: cerca coperture e un tiro libero; sotto 4 PV o a Ferita Profonda arretra nella vegetazione fitta. Fonte: Needle Blight, pp. 31–32."
+  "note": "Il VA 10 è quello degli Aghi, già in tabella: «Tiro naturale» non è un’Abilità (A.169, 18/10), non dà Armi da lancio né altre competenze. Le spine sono parti del corpo, non proiettili recuperabili. Non ha la vulnerabilità al Fuoco del ramoso né le resistenze fisiche degli alberi. Capisce istruzioni semplici ma non parla. Condotta: cerca coperture e un tiro libero; sotto 4 PV o a Ferita Profonda arretra nella vegetazione fitta. Fonte: Needle Blight, pp. 31–32.",
+  "_bestiario": {
+    "edizione": "Mostri 0.69",
+    "sistema_salute": "solo_PV"
+  }
 }

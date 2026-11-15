@@ -12,7 +12,7 @@
     "SAG": 3,
     "CAR": 1
   },
-  "pv": 24,
+  "pv": 32,
   "ar": {
     "totale": 4,
     "magica": 0
@@ -99,5 +99,9 @@
     "sanguinamento",
     "stordito"
   ],
-  "note": "PM —: nessuna riserva. AR 4 intrinseca (non armatura indossata, nessuna penalità). Percepisce forme e movimenti entro 12 Q senza occhi (Accecato e Assordato non lo impediscono). Immobile sembra un’armatura: +4 Furtività. Comportamento: blocca un passaggio o insegue nel perimetro assegnato; non fugge per paura."
+  "note": "PM —: nessuna riserva. AR 4 intrinseca (non armatura indossata, nessuna penalità). Percepisce forme e movimenti entro 12 Q senza occhi (Accecato e Assordato non lo impediscono). Immobile sembra un’armatura: +4 Furtività. Comportamento: blocca un passaggio o insegue nel perimetro assegnato; non fugge per paura.",
+  "_bestiario": {
+    "edizione": "Mostri 0.69",
+    "sistema_salute": "solo_PV"
+  }
 }

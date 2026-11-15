@@ -12,7 +12,7 @@
     "SAG": 7,
     "CAR": 5
   },
-  "pv": 28,
+  "pv": 37,
   "pm": 8,
   "ar": {
     "totale": 1,
@@ -108,5 +108,9 @@
       "effetto": "Non ha Passaggio in volo: lasciare una portata nemica può provocare Opportunità. Un attacco riuscito di Artigli non solleva o trasporta la vittima: occorrono manovra prensile praticabile e i normali limiti di carico; le Azioni impegnate nella presa non restano disponibili per attacchi incompatibili."
     }
   ],
-  "note": "Difende piccoli e posatoi, può indicare una direzione o chiedere agli intrusi di allontanarsi. Condotta: sotto 7 PV o a Ferita Profonda tende a cercare quota e un riparo; un accesso troppo stretto può impedirle di raggiungere la preda. Fonte: Giant Eagle, p. 324."
+  "note": "Difende piccoli e posatoi, può indicare una direzione o chiedere agli intrusi di allontanarsi. Condotta: sotto 7 PV o a Ferita Profonda tende a cercare quota e un riparo; un accesso troppo stretto può impedirle di raggiungere la preda. Fonte: Giant Eagle, p. 324.",
+  "_bestiario": {
+    "edizione": "Mostri 0.69",
+    "sistema_salute": "solo_PV"
+  }
 }

@@ -12,7 +12,7 @@
     "SAG": 6,
     "CAR": 6
   },
-  "pv": 58,
+  "pv": 76,
   "pm": 12,
   "ar": {
     "totale": 4,
@@ -120,5 +120,9 @@
   "immunita": [
     "avvelenato"
   ],
-  "note": "Elementale di pietra simile a un masso con arti tozzi, può custodire un luogo per lunghi periodi e comunicare con chi vi entra. Parla Terran e può trattare informazioni sul luogo. Testa = parte sensoriale, Torace = nucleo, Braccia = arti superiori, Gambe = locomotori. Condotta: sotto 14 PV o a Ferita Seria tende a proteggere l’accesso o cercare riparo; non perde automaticamente la Concentrazione a 0 PV. Fonte: Galeb Duhr, p. 139."
+  "note": "Elementale di pietra simile a un masso con arti tozzi, può custodire un luogo per lunghi periodi e comunicare con chi vi entra. Parla Terran e può trattare informazioni sul luogo. Testa = parte sensoriale, Torace = nucleo, Braccia = arti superiori, Gambe = locomotori. Condotta: sotto 14 PV o a Ferita Seria tende a proteggere l’accesso o cercare riparo; non perde automaticamente la Concentrazione a 0 PV. Fonte: Galeb Duhr, p. 139.",
+  "_bestiario": {
+    "edizione": "Mostri 0.69",
+    "sistema_salute": "solo_PV"
+  }
 }

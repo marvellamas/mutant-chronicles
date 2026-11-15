@@ -12,7 +12,7 @@
     "SAG": 6,
     "CAR": 3
   },
-  "pv": 6,
+  "pv": 8,
   "pm": 4,
   "ar": {
     "totale": 0,
@@ -96,5 +96,9 @@
       "effetto": "Può seguire indizi accessibili con Sopravvivenza 11 quando occorre una Prova. Un odore non apre una chiusura e una fessura deve essere adatta al corpo reale. Nessun movimento speciale di scavo o arrampicata."
     }
   ],
-  "note": "Piccolo canide che cerca piccole prede e resti alimentari ai margini di un territorio frequentato. Distinto dallo Sciacallo mannaro: nessuna trasformazione o influenza soprannaturale. Condotta: evita il confronto diretto con avversari grandi e vigili; sotto 2 PV, a Ferita Importante o dopo la dispersione del gruppo tende a ritirarsi. Fonte: Jackal, p. 331."
+  "note": "Piccolo canide che cerca piccole prede e resti alimentari ai margini di un territorio frequentato. Distinto dallo Sciacallo mannaro: nessuna trasformazione o influenza soprannaturale. Condotta: evita il confronto diretto con avversari grandi e vigili; sotto 2 PV, a Ferita Importante o dopo la dispersione del gruppo tende a ritirarsi. Fonte: Jackal, p. 331.",
+  "_bestiario": {
+    "edizione": "Mostri 0.69",
+    "sistema_salute": "solo_PV"
+  }
 }

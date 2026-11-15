@@ -12,7 +12,7 @@
     "SAG": 6,
     "CAR": 4
   },
-  "pv": 38,
+  "pv": 50,
   "pm": 6,
   "ar": {
     "totale": 3,
@@ -84,5 +84,9 @@
       "effetto": "Gli uncini danno la velocità indicata (6/12/18 Q) su roccia con appigli, non aderenza a soffitti lisci; servono arti utilizzabili e un percorso che lo regga."
     }
   ],
-  "note": "Percezione 14 con l’udito. Comportamento: difende il gruppo e le uova, richiama i compagni, cerca un accesso laterale o rialzato; sotto 10 PV o a Ferita Profonda si ritira arrampicandosi."
+  "note": "Percezione 14 con l’udito. Comportamento: difende il gruppo e le uova, richiama i compagni, cerca un accesso laterale o rialzato; sotto 10 PV o a Ferita Profonda si ritira arrampicandosi.",
+  "_bestiario": {
+    "edizione": "Mostri 0.69",
+    "sistema_salute": "solo_PV"
+  }
 }

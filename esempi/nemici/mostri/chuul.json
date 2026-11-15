@@ -12,7 +12,7 @@
     "SAG": 6,
     "CAR": 3
   },
-  "pv": 56,
+  "pv": 73,
   "pm": 8,
   "ar": {
     "totale": 4,
@@ -117,5 +117,9 @@
   "immunita": [
     "avvelenato"
   ],
-  "note": "Immune ai danni da veleno e ad Avvelenato; non a malattie, Fuoco, Ghiaccio o influenze mentali. Testa = occhi, bocca e tentacoli velenosi; Torace = carapace; Braccia = chele; Gambe = zampe. Nessuna Parata con il guscio. Comprende una lingua scelta per la sua origine ma non parla; un eventuale legame con un Aboleth va stabilito nella scena. Condotta: sotto 14 PV o a Ferita Seria lascia le prede o si ritira. I 50 PX comprendono sensi, due chele e tossina. Fonte: Chuul, p. 40."
+  "note": "Immune ai danni da veleno e ad Avvelenato; non a malattie, Fuoco, Ghiaccio o influenze mentali. Testa = occhi, bocca e tentacoli velenosi; Torace = carapace; Braccia = chele; Gambe = zampe. Nessuna Parata con il guscio. Comprende una lingua scelta per la sua origine ma non parla; un eventuale legame con un Aboleth va stabilito nella scena. Condotta: sotto 14 PV o a Ferita Seria lascia le prede o si ritira. I 50 PX comprendono sensi, due chele e tossina. Fonte: Chuul, p. 40.",
+  "_bestiario": {
+    "edizione": "Mostri 0.69",
+    "sistema_salute": "solo_PV"
+  }
 }

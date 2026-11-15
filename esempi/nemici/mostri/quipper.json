@@ -12,7 +12,7 @@
     "SAG": 3,
     "CAR": 2
   },
-  "pv": 3,
+  "pv": 4,
   "pm": 2,
   "ar": {
     "totale": 0,
@@ -96,5 +96,9 @@
       "effetto": "Vede entro 12 Q nel buio naturale, senza colori; non attraversa solidi, torbidità o fumo."
     }
   ],
-  "note": "Un Morso per Round, Opportunità compresa. Testa e Torace = capo e tronco; Braccia = pinne anteriori; Gambe = apparato propulsivo posteriore. Non comprende linguaggi. L’adattamento a un’acqua fredda non concede immunità al Gelo. Condotta: a Ferita Superficiale tende a sottrarsi nella vegetazione o nell’acqua più profonda, se raggiungibile. Fonte: Quipper, p. 335."
+  "note": "Un Morso per Round, Opportunità compresa. Testa e Torace = capo e tronco; Braccia = pinne anteriori; Gambe = apparato propulsivo posteriore. Non comprende linguaggi. L’adattamento a un’acqua fredda non concede immunità al Gelo. Condotta: a Ferita Superficiale tende a sottrarsi nella vegetazione o nell’acqua più profonda, se raggiungibile. Fonte: Quipper, p. 335.",
+  "_bestiario": {
+    "edizione": "Mostri 0.69",
+    "sistema_salute": "solo_PV"
+  }
 }

@@ -12,7 +12,7 @@
     "SAG": 6,
     "CAR": 3
   },
-  "pv": 24,
+  "pv": 32,
   "pm": 5,
   "ar": {
     "totale": 2,
@@ -87,5 +87,9 @@
       "effetto": "Un’arma o proiettile di ferro o acciaio non magici che lo colpisce direttamente fa dopo il colpo una PS Integrità: fallimento −1 PI (anche se l’AR ha assorbito tutto, non se una Difesa ha evitato il contatto). Una sola applicazione per arma e attacco; un’arma naturale non arrugginisce."
     }
   ],
-  "note": "Percezione 14 per l’odore del ferro. La ruggine non corrode carne, legno, pietra, altri metalli o oggetti mistici. Comportamento: preferisce le Antenne al Morso; smette di inseguire chi abbandona una fonte di ferro; sotto 6 PV o a Ferita Profonda fugge."
+  "note": "Percezione 14 per l’odore del ferro. La ruggine non corrode carne, legno, pietra, altri metalli o oggetti mistici. Comportamento: preferisce le Antenne al Morso; smette di inseguire chi abbandona una fonte di ferro; sotto 6 PV o a Ferita Profonda fugge.",
+  "_bestiario": {
+    "edizione": "Mostri 0.69",
+    "sistema_salute": "solo_PV"
+  }
 }

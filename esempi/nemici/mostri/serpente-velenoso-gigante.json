@@ -12,7 +12,7 @@
     "SAG": 5,
     "CAR": 2
   },
-  "pv": 20,
+  "pv": 26,
   "pm": 4,
   "ar": {
     "totale": 1,
@@ -89,5 +89,9 @@
       "effetto": "Percezione non visiva di prossimità entro 2 Q (Percezione 11), senza Scurovisione né individuazione automatica di un essere nascosto. Nuoto nativo 6 / 12 / 18 Q (già effettivo; percorsi misti e respirazione come la specie minore). Nessuna respirazione acquatica, resistenza al Fuoco o immunità generica ai veleni."
     }
   ],
-  "note": "Non comprende linguaggi. Localizzazioni funzionali come nel Serpente velenoso, senza arti prensili. Condotta: può evitare un confronto se gli viene lasciato un passaggio; sotto 5 PV o a Ferita Profonda tende a cercare riparo o acqua libera. Fonte: Giant Poisonous Snake, p. 327."
+  "note": "Non comprende linguaggi. Localizzazioni funzionali come nel Serpente velenoso, senza arti prensili. Condotta: può evitare un confronto se gli viene lasciato un passaggio; sotto 5 PV o a Ferita Profonda tende a cercare riparo o acqua libera. Fonte: Giant Poisonous Snake, p. 327.",
+  "_bestiario": {
+    "edizione": "Mostri 0.69",
+    "sistema_salute": "solo_PV"
+  }
 }

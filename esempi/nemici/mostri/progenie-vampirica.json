@@ -12,7 +12,7 @@
     "SAG": 5,
     "CAR": 6
   },
-  "pv": 50,
+  "pv": 65,
   "pm": 12,
   "ar": {
     "totale": 3,
@@ -126,5 +126,9 @@
   "immunita": [
     "sanguinamento"
   ],
-  "note": "AR 3 intrinseca. Non è incorporea e non attraversa pareti o porte. Nessuna dotazione né Parata naturale. Il legame con un signore non dà controllo mentale o immunità. Comportamento: isolamento, presa e vie verticali; davanti a sole o acqua cerca riparo."
+  "note": "AR 3 intrinseca. Non è incorporea e non attraversa pareti o porte. Nessuna dotazione né Parata naturale. Il legame con un signore non dà controllo mentale o immunità. Comportamento: isolamento, presa e vie verticali; davanti a sole o acqua cerca riparo.",
+  "_bestiario": {
+    "edizione": "Mostri 0.69",
+    "sistema_salute": "solo_PV"
+  }
 }

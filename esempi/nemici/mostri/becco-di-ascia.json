@@ -12,7 +12,7 @@
     "SAG": 5,
     "CAR": 2
   },
-  "pv": 24,
+  "pv": 32,
   "pm": 5,
   "ar": {
     "totale": 1,
@@ -91,5 +91,9 @@
       "effetto": "Falco sanguinario e Ratto gigante possiedono Branco: +2 al VA dell’attacco quando un alleato vigile e capace di minacciare realmente la vittima è entro 1 Q da essa. Più compagni non aumentano il bonus, che non è incluso nel VA base e non concede Azioni. Le circostanze devono essere concretamente soddisfatte. PV, PM personali, Ferite, Menomazioni, respiro e soffocamento seguono le regole comuni. Tossine, prese e inchiostro funzionano soltanto con i requisiti scritti; i normali animali non ricevono protezioni ambientali della fauna modificata di Iris."
     }
   ],
-  "note": "Fauna ordinaria • Natura Comune. Sensi e linguaggi: Nessuno speciale; nessun linguaggio."
+  "note": "Fauna ordinaria • Natura Comune. Sensi e linguaggi: Nessuno speciale; nessun linguaggio.",
+  "_bestiario": {
+    "edizione": "Mostri 0.69",
+    "sistema_salute": "solo_PV"
+  }
 }

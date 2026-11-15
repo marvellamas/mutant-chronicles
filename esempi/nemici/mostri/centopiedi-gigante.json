@@ -12,7 +12,7 @@
     "SAG": 3,
     "CAR": 2
   },
-  "pv": 10,
+  "pv": 13,
   "pm": 3,
   "ar": {
     "totale": 1,
@@ -89,5 +89,9 @@
       "effetto": "Un solo Morso per Round, Opportunità compresa. Testa = apparato boccale e antenne; Torace = corpo; Braccia e Gambe = gruppi di zampe (o porzioni) anteriori e posteriori che sostengono la locomozione. Segmenti e numerose zampe non hanno PV separati, attacchi simultanei o premi distinti."
     }
   ],
-  "note": "Non comprende linguaggi. Condotta: può attaccare una creatura che ostacola il rifugio e poi sottrarsi negli anfratti accessibili; sotto 2 PV o a Ferita Profonda tende a nascondersi. Fonte: Giant Centipede, p. 323."
+  "note": "Non comprende linguaggi. Condotta: può attaccare una creatura che ostacola il rifugio e poi sottrarsi negli anfratti accessibili; sotto 2 PV o a Ferita Profonda tende a nascondersi. Fonte: Giant Centipede, p. 323.",
+  "_bestiario": {
+    "edizione": "Mostri 0.69",
+    "sistema_salute": "solo_PV"
+  }
 }

@@ -12,7 +12,7 @@
     "SAG": 5,
     "CAR": 4
   },
-  "pv": 40,
+  "pv": 52,
   "pm": 6,
   "ar": {
     "totale": 2,
@@ -151,5 +151,9 @@
       "effetto": "1 AzP della vittima o di un alleato adiacente: Atletica senza modificatore con mani o strumenti adatti; successo libera. In alternativa si recide la sagola (AR 0, PI 2, PS Integrità 10, come oggetto). Il Merrow può lasciare il filo gratis alla propria Iniziativa; per superare la lunghezza la vittima può iniziare con 1 AzP la contrapposta del trascinamento: successo fa mollare il filo."
     }
   ],
-  "note": "Arpione Comune con sagola: FOR 5, una mano, portata 2 Q, PI 6, PS Integrità 10; per danni, Abilità e Parata usa il profilo della Lancia a una mano (+2 personale già incluso), senza Versatile; la sagola richiede l’altra mano. I 33 PX comprendono questa dotazione. Anatomia umanoide con la coda al posto delle Gambe. Comprende e parla due lingue della comunità. Le origini demoniache della fonte non sono assunte per Iris. Condotta: minaccia, tratta o si ritira; sotto 10 PV o a Ferita Profonda interrompe una caccia pericolosa. Fonte: Merrow, p. 219."
+  "note": "Arpione Comune con sagola: FOR 5, una mano, portata 2 Q, PI 6, PS Integrità 10; per danni, Abilità e Parata usa il profilo della Lancia a una mano (+2 personale già incluso), senza Versatile; la sagola richiede l’altra mano. I 33 PX comprendono questa dotazione. Anatomia umanoide con la coda al posto delle Gambe. Comprende e parla due lingue della comunità. Le origini demoniache della fonte non sono assunte per Iris. Condotta: minaccia, tratta o si ritira; sotto 10 PV o a Ferita Profonda interrompe una caccia pericolosa. Fonte: Merrow, p. 219.",
+  "_bestiario": {
+    "edizione": "Mostri 0.69",
+    "sistema_salute": "solo_PV"
+  }
 }

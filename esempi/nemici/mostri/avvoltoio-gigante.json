@@ -12,7 +12,7 @@
     "SAG": 6,
     "CAR": 4
   },
-  "pv": 28,
+  "pv": 37,
   "pm": 6,
   "ar": {
     "totale": 1,
@@ -108,5 +108,9 @@
       "effetto": "+2 a Percezione quando vista o olfatto sono determinanti (una sola volta per Prova); nessuna Scurovisione innata. Può seguire tracce accessibili ma non localizza ogni morente a distanza illimitata. Comprende una lingua assegnata alla sua origine, senza parlarla. Non ha Passaggio in volo: le normali Opportunità continuano a valere."
     }
   ],
-  "note": "Può seguire un gruppo e aspettare un’occasione, o abbandonarlo per una carcassa più accessibile. Condotta: sotto 7 PV o a Ferita Profonda tende a riprendere quota. Fonte: Giant Vulture, p. 329."
+  "note": "Può seguire un gruppo e aspettare un’occasione, o abbandonarlo per una carcassa più accessibile. Condotta: sotto 7 PV o a Ferita Profonda tende a riprendere quota. Fonte: Giant Vulture, p. 329.",
+  "_bestiario": {
+    "edizione": "Mostri 0.69",
+    "sistema_salute": "solo_PV"
+  }
 }

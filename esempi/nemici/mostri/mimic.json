@@ -12,7 +12,7 @@
     "SAG": 6,
     "CAR": 4
   },
-  "pv": 38,
+  "pv": 50,
   "pm": 6,
   "ar": {
     "totale": 2,
@@ -101,5 +101,9 @@
   "immunita": [
     "a-terra"
   ],
-  "note": "Non ha automaticamente un linguaggio parlato; un esemplare che comprende un’offerta può scambiare il passaggio con nutrimento. Un Mimic che imita una porta non sostituisce un’intera parete. Condotta: immobilizza una preda e la morde; sotto 9 PV o a Ferita Profonda può rilasciarla e fuggire. Fonte: Mimic, p. 220."
+  "note": "Non ha automaticamente un linguaggio parlato; un esemplare che comprende un’offerta può scambiare il passaggio con nutrimento. Un Mimic che imita una porta non sostituisce un’intera parete. Condotta: immobilizza una preda e la morde; sotto 9 PV o a Ferita Profonda può rilasciarla e fuggire. Fonte: Mimic, p. 220.",
+  "_bestiario": {
+    "edizione": "Mostri 0.69",
+    "sistema_salute": "solo_PV"
+  }
 }

@@ -12,7 +12,7 @@
     "SAG": 6,
     "CAR": 3
   },
-  "pv": 35,
+  "pv": 46,
   "pm": 8,
   "ar": {
     "totale": 2,
@@ -93,5 +93,9 @@
       "effetto": "Immune a Ghiaccio e ai suoi Rallentato/Congelato e al freddo ambientale. Dopo almeno 1 danno finale da Fuoco: −2 VA a tutte le Prove di Abilità fino al termine del proprio turno successivo (si usa il maggiore fra questo e il malus di Incendiato). Scurovisione 12 Q; +2 Furtività in neve e ghiaccio; olfatto 13."
     }
   ],
-  "note": "AR 2 biologica. Terra e arrampicata 8/16/24 Q (su appigli adeguati). Può Schivare, non parare con gli artigli. Comportamento: prede isolate; sotto 9 PV o a Ferita Profonda si ritira. Non ha Soffio gelido."
+  "note": "AR 2 biologica. Terra e arrampicata 8/16/24 Q (su appigli adeguati). Può Schivare, non parare con gli artigli. Comportamento: prede isolate; sotto 9 PV o a Ferita Profonda si ritira. Non ha Soffio gelido.",
+  "_bestiario": {
+    "edizione": "Mostri 0.69",
+    "sistema_salute": "solo_PV"
+  }
 }

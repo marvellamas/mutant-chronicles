@@ -12,7 +12,7 @@
     "SAG": 6,
     "CAR": 4
   },
-  "pv": 40,
+  "pv": 52,
   "pm": 8,
   "ar": {
     "totale": 2,
@@ -115,5 +115,9 @@
       "effetto": "Vede entro 12 Q nel buio naturale, senza colori; non attraversa ostacoli né individua da sola chi è nascosto."
     }
   ],
-  "note": "Comprende e parla una lingua dell’ambientazione; può trattare (un tributo può risolvere l’incontro). Nome originale: Manticore, p. 213. Comportamento: cerca quota e Copertura; a Ferita Seria, con poche spine o davanti a una preda troppo costosa può ritirarsi o chiedere un tributo."
+  "note": "Comprende e parla una lingua dell’ambientazione; può trattare (un tributo può risolvere l’incontro). Nome originale: Manticore, p. 213. Comportamento: cerca quota e Copertura; a Ferita Seria, con poche spine o davanti a una preda troppo costosa può ritirarsi o chiedere un tributo.",
+  "_bestiario": {
+    "edizione": "Mostri 0.69",
+    "sistema_salute": "solo_PV"
+  }
 }

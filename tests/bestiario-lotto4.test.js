@@ -84,7 +84,10 @@ test('Dragomedusa giovane e adulto: GS, PX, valori e fonte del Manuale dei Mostr
   assert.deepEqual(a.gs_px, { gs: 'Semidio', px: 400, per_pg: 4 });
   assert.match(g.fonte, /dal Manuale dei Mostri v0\.46/);
   assert.match(a.fonte, /dal Manuale dei Mostri v0\.46/);
-  assert.deepEqual([g.pv, a.pv, g.ar, a.ar, g.pm, a.pm], [900, 1600, { totale: 18, magica: 4 }, { totale: 24, magica: 6 }, 80, 120]);
+  // lotto 203: i PV sono quelli stampati nella 0.69 — 1.170 e 2.080, cioè i 900 e i 1.600 della 0.46 convertiti
+  // **una volta** (§7.12). Tutto il resto non cambia: AR, PM, GS e PX restano quelli della A.194.
+  assert.deepEqual([g.pv, a.pv, g.ar, a.ar, g.pm, a.pm], [1170, 2080, { totale: 18, magica: 4 }, { totale: 24, magica: 6 }, 80, 120]);
+  assert.notDeepEqual([g.pv, a.pv], [Math.ceil(900 * 1.3 * 1.3), Math.ceil(1600 * 1.3 * 1.3)], 'il doppio +30%');
   assert.deepEqual([g.difese, a.difese, g.iniziativa, a.iniziativa], [12, 13, 2, 2]);
   assert.deepEqual(g.caratteristiche, { FOR: 8, DES: 8, COS: 9, INT: 3, SAG: 7, CAR: 4 });
   assert.deepEqual(a.caratteristiche, { FOR: 10, DES: 8, COS: 10, INT: 3, SAG: 8, CAR: 5 });

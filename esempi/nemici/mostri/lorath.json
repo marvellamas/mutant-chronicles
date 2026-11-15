@@ -12,7 +12,7 @@
     "SAG": 5,
     "CAR": 1
   },
-  "pv": 40,
+  "pv": 52,
   "pm": 5,
   "ar": {
     "totale": 4,
@@ -125,5 +125,9 @@
       "effetto": "spazio 1 × 2 Q"
     }
   ],
-  "note": "Aracnoide modificato dai cristalli • Natura Comune • controllore e tiratore Protezioni speciali: Nessuna immunità o Contromisura specifica. GS e PX provvisori nel manuale: da verificare al tavolo (Davide li confermerà)."
+  "note": "Aracnoide modificato dai cristalli • Natura Comune • controllore e tiratore Protezioni speciali: Nessuna immunità o Contromisura specifica. GS e PX provvisori nel manuale: da verificare al tavolo (Davide li confermerà).",
+  "_bestiario": {
+    "edizione": "Mostri 0.69",
+    "sistema_salute": "solo_PV"
+  }
 }

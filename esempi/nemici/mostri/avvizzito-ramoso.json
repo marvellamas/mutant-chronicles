@@ -12,7 +12,7 @@
     "SAG": 4,
     "CAR": 2
   },
-  "pv": 12,
+  "pv": 16,
   "pm": 4,
   "ar": {
     "totale": 1,
@@ -91,5 +91,9 @@
     "accecato",
     "assordato"
   ],
-  "note": "Furtività 14 immobile fra cespugli secchi o detriti compatibili. Capisce istruzioni semplici in una lingua assegnata all’infestazione ma non parla. Non è nella Covata né ha Natura Oscura Simmetria. Un gruppo richiede esemplari distinti con proprie Azioni. Condotta: attacca da un nascondiglio; sotto 3 PV o a Ferita Profonda cerca copertura. Fonte: Twig Blight, pp. 31–32."
+  "note": "Furtività 14 immobile fra cespugli secchi o detriti compatibili. Capisce istruzioni semplici in una lingua assegnata all’infestazione ma non parla. Non è nella Covata né ha Natura Oscura Simmetria. Un gruppo richiede esemplari distinti con proprie Azioni. Condotta: attacca da un nascondiglio; sotto 3 PV o a Ferita Profonda cerca copertura. Fonte: Twig Blight, pp. 31–32.",
+  "_bestiario": {
+    "edizione": "Mostri 0.69",
+    "sistema_salute": "solo_PV"
+  }
 }

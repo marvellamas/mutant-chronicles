@@ -12,7 +12,7 @@
     "SAG": 6,
     "CAR": 8
   },
-  "pv": 68,
+  "pv": 89,
   "pm": 12,
   "ar": {
     "totale": 7,
@@ -151,5 +151,9 @@
       "effetto": "Variante di atterramento senza danno (Sbilanciare Migliorato −2; la penalità della Pesante è già nel 13): un nemico adiacente entro 1 Q, di taglia non maggiore del comandante; occorrono lo Scudo medio impugnato e integro, terreno che consenta il contatto e la possibilità di spinta. Il bersaglio si oppone con Atletica oppure Difese per Schivare, a propria scelta: opposizione difensiva della capacità, senza costo di AzP o AzM e senza ulteriore Schivata o Parata (Immobilizzato e altre penalità fisiche si applicano; non si usano le PS). Se vince il comandante il bersaglio è A Terra nel proprio spazio: nessun danno ai PV o ai PI, spostamento, AC da localizzare o Magistrale automatico; un bersaglio già A Terra non subisce un effetto aggiuntivo. Consuma uno dei tre impieghi offensivi del Round, non è Opportunità né attacco ordinato; non atterra automaticamente un Ogre, un volatore fuori portata o una creatura senza assetto compatibile; non si applicano Attacco coordinato, bonus al danno o Furia. Possedere uno Scudo non concede questa variante in generale."
     }
   ],
-  "note": "AR 7 con Scudo medio, 5 senza; Parata 14 (valore delle Difese), Schivata / Elusione 9. I VA pronti includono la Pesante: rimuovendola recupera +2 ai VA fisici penalizzati e Movimento 6 / 12 / 18 Q, perdendo AR 5 (lo Scudo resta distinto). Parla Comune e Goblin. Veterano in armatura completa: guida il reparto, sfrutta i fianchi scoperti e alterna colpi e Parate. Condotta: sotto 17 PV o a Ferita Profonda cerca copertura, rinforzi o condizioni di resa; non combatte fino alla morte. Fonte: Hobgoblin Warlord, p. 187."
+  "note": "AR 7 con Scudo medio, 5 senza; Parata 14 (valore delle Difese), Schivata / Elusione 9. I VA pronti includono la Pesante: rimuovendola recupera +2 ai VA fisici penalizzati e Movimento 6 / 12 / 18 Q, perdendo AR 5 (lo Scudo resta distinto). Parla Comune e Goblin. Veterano in armatura completa: guida il reparto, sfrutta i fianchi scoperti e alterna colpi e Parate. Condotta: sotto 17 PV o a Ferita Profonda cerca copertura, rinforzi o condizioni di resa; non combatte fino alla morte. Fonte: Hobgoblin Warlord, p. 187.",
+  "_bestiario": {
+    "edizione": "Mostri 0.69",
+    "sistema_salute": "solo_PV"
+  }
 }

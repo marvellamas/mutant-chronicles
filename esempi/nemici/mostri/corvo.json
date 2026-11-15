@@ -12,7 +12,7 @@
     "SAG": 6,
     "CAR": 4
   },
-  "pv": 4,
+  "pv": 6,
   "pm": 4,
   "ar": {
     "totale": 0,
@@ -99,5 +99,9 @@
       "effetto": "Vista e udito ordinari, senza Scurovisione innata. Braccia = ali; Gambe = arti posteriori. Nessun volo stazionario né Passaggio in volo: lasciare una portata nemica può provocare Opportunità. Può trasportare solo ciò che anatomia e carico consentono."
     }
   ],
-  "note": "Un Becco per Round, Opportunità compresa. Può cercare cibo, attirare l’attenzione o difendere il nido; un oggetto sottratto richiede comunque un’azione e un accesso praticabile. Condotta: a Ferita Superficiale tende a raggiungere un posatoio sicuro. Fonte: Raven, p. 335."
+  "note": "Un Becco per Round, Opportunità compresa. Può cercare cibo, attirare l’attenzione o difendere il nido; un oggetto sottratto richiede comunque un’azione e un accesso praticabile. Condotta: a Ferita Superficiale tende a raggiungere un posatoio sicuro. Fonte: Raven, p. 335.",
+  "_bestiario": {
+    "edizione": "Mostri 0.69",
+    "sistema_salute": "solo_PV"
+  }
 }

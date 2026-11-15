@@ -12,7 +12,7 @@
     "SAG": 6,
     "CAR": 3
   },
-  "pv": 6,
+  "pv": 8,
   "pm": 4,
   "ar": {
     "totale": 0,
@@ -96,5 +96,9 @@
       "effetto": "Può afferrare cibo o un oggetto accessibile e trasportabile con le Azioni ordinarie; gli arti anteriori mantengono la funzione prensile. Nessuna Abilità d’arma, comprensione di dispositivi complessi o attivazione automatica di un Artefatto. Manipolare con un arto occupato può impedire un appiglio necessario."
     }
   ],
-  "note": "Primate sociale vigile che cerca cibo in gruppo e sorveglia gli accessi. Non ha Scurovisione innata. Condotta: tende a difendere gruppo e piccoli cercando rumore, distanza e una via sui rami; sotto 2 PV o a Ferita Importante tende a disimpegnarsi; un branco non diventa uno Sciame. Fonte: Baboon, p. 318."
+  "note": "Primate sociale vigile che cerca cibo in gruppo e sorveglia gli accessi. Non ha Scurovisione innata. Condotta: tende a difendere gruppo e piccoli cercando rumore, distanza e una via sui rami; sotto 2 PV o a Ferita Importante tende a disimpegnarsi; un branco non diventa uno Sciame. Fonte: Baboon, p. 318.",
+  "_bestiario": {
+    "edizione": "Mostri 0.69",
+    "sistema_salute": "solo_PV"
+  }
 }

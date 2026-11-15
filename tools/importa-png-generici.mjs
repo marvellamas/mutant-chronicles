@@ -23,6 +23,7 @@
 //
 //   node tools/importa-png-generici.mjs [--scrivi] [--testo=file] [--json=file] [--dest=file] [--verifica]
 import { readFileSync, writeFileSync, existsSync } from 'node:fs';
+import { testoDeiDati } from './edizioni-dati.mjs';
 import { testoManuale, fonteDati, percorsoFonteDati, voceDati } from './manuali.mjs';
 import { createHash } from 'node:crypto';
 import { join, dirname } from 'node:path';
@@ -304,7 +305,11 @@ export function importaPng(testoWord, fonte, { versione_manuale, nota_fonte } = 
 // ---------- uso da riga di comando ----------
 if (process.argv[1] && fileURLToPath(import.meta.url) === process.argv[1]) {
   const a = Object.fromEntries(process.argv.slice(2).map((x) => { const m = x.match(/^--([^=]+)(?:=(.*))?$/); return m ? [m[1], m[2] ?? true] : [x, true]; }));
-  const testo = a.testo ? readFileSync(a.testo, 'utf8') : testoManuale('mostri');
+  // lotto 203: i venticinque modelli vengono dal JSON 0.67, che dichiara lo sha256 del Word 0.67. Su Drive il
+  // manuale è la 0.69: intrecciare i numeri del JSON con la prosa di un'altra edizione darebbe profili incoerenti
+  // senza che nessun numero diventi assurdo. Quindi qui si legge **l'edizione da cui vengono i dati** (nona
+  // regola, lotto 191): tools/edizioni-dati.mjs la prende da , dove il lotto 203 l'ha scritta.
+  const testo = a.testo ? readFileSync(a.testo, 'utf8') : testoDeiDati('mostri');
   const fonte = a.json ? JSON.parse(readFileSync(a.json, 'utf8')) : fonteDati('png-abilita');
   const v = voceDati('png-abilita');
   const esito = verificaFonte(fonte, { sha256: v.sha256_manuale ?? null });

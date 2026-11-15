@@ -12,7 +12,7 @@
     "SAG": 6,
     "CAR": 3
   },
-  "pv": 36,
+  "pv": 47,
   "pm": 5,
   "ar": {
     "totale": 2,
@@ -99,5 +99,9 @@
       "effetto": "Dopo almeno 6 Q di movimento rettilineo verso la vittima nella stessa Iniziativa, Artigli che infliggono almeno 1 danno finale impongono Tempra senza modificatore a una creatura ≤ 2 × 2 Q: fallimento → A Terra. Il Morso successivo usa la seconda AzP (non è gratuito). Nessun danno oltre alle formule."
     }
   ],
-  "note": "Vista e udito ordinari, senza scurovisione. Non comprende linguaggi. Condotta: preda isolata e spazio per lo slancio; sotto 9 PV o a Ferita Profonda abbandona una caccia rischiosa. Fonte: Allosaurus, p. 79."
+  "note": "Vista e udito ordinari, senza scurovisione. Non comprende linguaggi. Condotta: preda isolata e spazio per lo slancio; sotto 9 PV o a Ferita Profonda abbandona una caccia rischiosa. Fonte: Allosaurus, p. 79.",
+  "_bestiario": {
+    "edizione": "Mostri 0.69",
+    "sistema_salute": "solo_PV"
+  }
 }

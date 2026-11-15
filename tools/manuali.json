@@ -86,18 +86,18 @@
       "nome": "Manuale dei Mostri",
       "drive": "1qScWOJpDjNSw7j5rNUlHGTKPbsUiEgvG",
       "formato": "docx",
-      "versione": "0.67",
-      "testo": "mostri-0.67.md",
-      "modificato": "2026-11-13T11:24:27Z",
+      "versione": "0.69",
+      "testo": "mostri-0.69.md",
+      "modificato": "2026-11-15T13:25:00Z",
       "confronto": "alla cieca",
       "nota": "Il Google Doc 0.23 è archiviato: vale il Word (lotto 187 su Drive, lotto 188 nel repo).",
-      "sha256_docx": "7e44083cf549cbbd72106de2191fb892daa860f59789d733f5bae3adebbe25a9",
+      "sha256_docx": "48a832aa2bde9cf4786846bd5f2e2da8eca05683435d9f4518b5e45fb1a4efdf",
       "recepita": {
-        "versione": "0.67",
-        "quando": "2026-11-14",
-        "lotto": 197,
-        "cosa": "Consolidamento dei venticinque modelli PNG generici (blocco E&L del 13/11): ogni modello ha ora sei Specializzazioni ai livelli 1, 4, 8, 12, 16 e 20, cinque Maestrie ai livelli 2, 6, 10, 14 e 18 e nove Talenti Liberi ai livelli dispari dal 3 al 19 — 150 + 125 + 225 voci in tutto — in tre progressioni separate e cumulative, con una pagina per Classe. Ricalcolati attacchi, danni, Iniziativa, PM e azioni magiche pronte ai livelli raggiunti. Le assegnazioni e i VA personali delle 24 Abilità restano quelli della 0.66. Corrette le larghezze del Cono Elementale e i modificatori PS di Incantesimi Inarrestabili.",
-        "documento": "docs/diff-lotto197-2026-11-14.md"
+        "versione": "0.69",
+        "quando": "2026-11-15",
+        "lotto": 203,
+        "cosa": "La 0.68 (14/11) aggiunge la Viverna della Sabbia nel §7.20 — profilo della Viverna comune con Mimetismo desertico e Resistenza cristallina — e riscrive l’aspetto delle Vespe del Deserto del §7.17 per la mutazione dai cristalli, «mantenendo invariati i valori della scheda»; la 0.69 è la stessa edizione col titolo «Fauna del deserto». Il §4.2 e il §4.2.1, che reggono la gestione senza Ferite e il +30% già incluso nei PV stampati, non cambiano una parola rispetto alla 0.67.",
+        "documento": "docs/diff-lotto203-2026-11-15.md"
       }
     },
     {
@@ -483,12 +483,12 @@
         "documento": "docs/ricognizione-manuali-2026-11-12-lotto190.md"
       }
     },
-    "esempi/nemici/": {
+    "data/png_generici.json": {
       "mostri": {
-        "edizione": "0.47",
-        "motivo": "Le 341 schede delle creature (esempi/nemici/, esempi/nemici/umani/ e il loro importatore) vengono dal Manuale dei Mostri 0.46/0.47 e non sono ancora rigenerate sulla 0.67. La 0.67 non cambia le creature rispetto alla 0.66, ma la 0.66 porta il +30% dei PV già incorporato (blocco E&L del 12/11, Direttore §9.9): rigenerarle è un lotto a sé, perché prima va messo al tavolo il sistema senza Ferite e va impedito il doppio aumento. Finché non succede, chi confronta una scheda con «il manuale» legge la 0.47, che è l’edizione da cui quelle schede vengono.",
-        "lotto": "creature 0.67",
-        "documento": "docs/diff-lotto197-2026-11-14.md"
+        "edizione": "0.67",
+        "motivo": "I venticinque modelli di PNG generici vengono dal file di dati `png-abilita-0.67.json`, che dichiara lo sha256 del Manuale dei Mostri **0.67** (`7e44083c…`). Su Drive il manuale è la **0.69** (`48a832aa…`): le due fonti non sono più la stessa edizione, e i modelli nascono intrecciando i numeri del JSON con la prosa e i blocchi comuni del Word. Intrecciare JSON 0.67 e Word 0.69 produrrebbe profili incoerenti senza che nessun numero diventi assurdo, quindi non si fa: i modelli restano alla 0.67, dichiarata, finché Davide non pubblica il JSON dell’edizione corrente. Le creature del Bestiario non c’entrano — vengono dal solo Word e il lotto 203 le ha rigenerate sulla 0.69.",
+        "lotto": "PNG generici sull’edizione corrente",
+        "documento": "docs/diff-lotto203-2026-11-15.md"
       }
     }
   },
@@ -499,7 +499,7 @@
     "magia-1.11.md": "l'edizione da cui vengono i dati di `regole.json`, `incantesimi.json` e `talenti_liberi.json` (`edizioni_in_attesa`, lotto F)",
     "armamenti-0.74.md": "l'edizione da cui vengono i dati di 14 file del catalogo (`edizioni_in_attesa`, lotto F)",
     "equipaggiamento-0.30.md": "l'edizione da cui vengono i dati di `regole.json` e di 9 file del catalogo (`edizioni_in_attesa`, lotto F)",
-    "mostri-0.47.md": "l’edizione da cui vengono le 341 schede delle creature (esempi/nemici/, edizioni_in_attesa → esempi/nemici/)"
+    "mostri-0.67.md": "l’edizione del JSON dei PNG generici (`dati` → png-abilita, `sha256_manuale`): i venticinque modelli di `data/png_generici.json` vengono da lì e restano dichiarati alla 0.67 (`edizioni_in_attesa`, lotto 203)"
   },
   "_testi_archiviati": "Lotto 191: le edizioni superate che nessun dato e nessuno strumento cita più, spostate in `docs/manuali-txt/archivio/` e non cancellate. Un archiviato non è un doppione (regola 5 del protocollo, applicata qui alla cartella del repo come su Drive).",
   "testi_archiviati": [

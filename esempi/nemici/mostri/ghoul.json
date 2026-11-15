@@ -12,7 +12,7 @@
     "SAG": 5,
     "CAR": 2
   },
-  "pv": 22,
+  "pv": 29,
   "pm": 6,
   "ar": {
     "totale": 0,
@@ -96,5 +96,9 @@
   "immunita": [
     "sanguinamento"
   ],
-  "note": "Nessuna dotazione né Parata naturale. Con una sola AzP sceglie Artigli, Morso o Difesa; gli Artigli non aggiungono un Morso gratuito. Comportamento: preda isolata; a Ferita Profonda o sotto 6 PV cerca riparo."
+  "note": "Nessuna dotazione né Parata naturale. Con una sola AzP sceglie Artigli, Morso o Difesa; gli Artigli non aggiungono un Morso gratuito. Comportamento: preda isolata; a Ferita Profonda o sotto 6 PV cerca riparo.",
+  "_bestiario": {
+    "edizione": "Mostri 0.69",
+    "sistema_salute": "solo_PV"
+  }
 }

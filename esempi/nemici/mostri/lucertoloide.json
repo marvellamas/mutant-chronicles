@@ -12,7 +12,7 @@
     "SAG": 5,
     "CAR": 4
   },
-  "pv": 24,
+  "pv": 32,
   "pm": 6,
   "ar": {
     "totale": 3,
@@ -152,5 +152,9 @@
       "effetto": "L’AR biologica 2 resta anche perdendo lo Scudo. Lo Scudo è ordinario: spuntoni ornamentali non danno un attacco aggiuntivo, un’arma con danno autonomo o un bonus alla Parata. La coda partecipa all’equilibrio e al Nuoto, senza attacco di Coda."
     }
   ],
-  "note": "AR 3 con Scudo piccolo, 2 biologica senza. Parla Draconico; nessuna Scurovisione innata. Abitante di rive e paludi, attrezzato per pattugliare e difendere una comunità; può riconoscere accordi e confini senza un obbligo di trattare gli estranei come cibo. Condotta: sotto 6 PV o a Ferita Profonda cerca la sponda, un riparo o l’aiuto dei compagni. Fonte: Lizardfolk, p. 204."
+  "note": "AR 3 con Scudo piccolo, 2 biologica senza. Parla Draconico; nessuna Scurovisione innata. Abitante di rive e paludi, attrezzato per pattugliare e difendere una comunità; può riconoscere accordi e confini senza un obbligo di trattare gli estranei come cibo. Condotta: sotto 6 PV o a Ferita Profonda cerca la sponda, un riparo o l’aiuto dei compagni. Fonte: Lizardfolk, p. 204.",
+  "_bestiario": {
+    "edizione": "Mostri 0.69",
+    "sistema_salute": "solo_PV"
+  }
 }

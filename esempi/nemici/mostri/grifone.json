@@ -12,7 +12,7 @@
     "SAG": 6,
     "CAR": 3
   },
-  "pv": 36,
+  "pv": 47,
   "pm": 6,
   "ar": {
     "totale": 1,
@@ -98,5 +98,9 @@
       "effetto": "Vede entro 12 Q nel buio naturale, senza colori; non attraversa ostacoli né individua da sola chi è nascosto."
     }
   ],
-  "note": "Percezione 12, oppure 15 con la vista (la vista acuta non rivela invisibili o nascosti). Un Grifone selvatico non è una cavalcatura pronta all’uso. Nome originale: Griffon, p. 174. Comportamento: cerca un bersaglio esposto e attacca dall’alto; a Ferita Seria può interrompere la caccia; difende più a lungo il nido."
+  "note": "Percezione 12, oppure 15 con la vista (la vista acuta non rivela invisibili o nascosti). Un Grifone selvatico non è una cavalcatura pronta all’uso. Nome originale: Griffon, p. 174. Comportamento: cerca un bersaglio esposto e attacca dall’alto; a Ferita Seria può interrompere la caccia; difende più a lungo il nido.",
+  "_bestiario": {
+    "edizione": "Mostri 0.69",
+    "sistema_salute": "solo_PV"
+  }
 }

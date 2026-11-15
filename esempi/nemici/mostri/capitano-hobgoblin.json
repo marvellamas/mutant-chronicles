@@ -12,7 +12,7 @@
     "SAG": 5,
     "CAR": 7
   },
-  "pv": 44,
+  "pv": 58,
   "pm": 10,
   "ar": {
     "totale": 3,
@@ -143,5 +143,9 @@
       "effetto": "Spadone a due mani FOR 6 PI 6; due Giavellotti della sentinella FOR 3 PI 4; Armatura media AR 3 FOR 5 PI 8. Tutto Comune, PS Integrità 10. Inizia con lo Spadone pronto, senza Scudo. Un lancio richiede di liberare una mano e preparare il Giavellotto (la mano libera non rende pronto quello riposto). Al massimo due attacchi per Round, Opportunità e colpo ordinato compresi. Attivare la Disciplina consuma una delle sue due AzP. I 55 PX comprendono la dotazione."
     }
   ],
-  "note": "Parata 12 (valore delle Difese); Schivata / Elusione 10. I VA pronti includono la Media: rimuovendola si recuperano +1 ai VA fisici penalizzati e Movimento 6 / 12 / 18 Q; Parata e PS restano invariate. Parla Comune e Goblin. Coordina una pattuglia e apre un varco con lo Spadone. Condotta: sotto 11 PV o a Ferita Profonda cerca una ritirata ordinata; resa o trattativa restano possibili. Fonte: Hobgoblin Captain, p. 186."
+  "note": "Parata 12 (valore delle Difese); Schivata / Elusione 10. I VA pronti includono la Media: rimuovendola si recuperano +1 ai VA fisici penalizzati e Movimento 6 / 12 / 18 Q; Parata e PS restano invariate. Parla Comune e Goblin. Coordina una pattuglia e apre un varco con lo Spadone. Condotta: sotto 11 PV o a Ferita Profonda cerca una ritirata ordinata; resa o trattativa restano possibili. Fonte: Hobgoblin Captain, p. 186.",
+  "_bestiario": {
+    "edizione": "Mostri 0.69",
+    "sistema_salute": "solo_PV"
+  }
 }

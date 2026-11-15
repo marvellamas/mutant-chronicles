@@ -12,7 +12,7 @@
     "SAG": 8,
     "CAR": 8
   },
-  "pv": 50,
+  "pv": 65,
   "pm": 20,
   "ar": {
     "totale": 1,
@@ -164,5 +164,9 @@
   "immunita": [
     "avvelenato"
   ],
-  "note": "Il profilo da 70 PX comprende due AzP, attacchi Magici, cure limitate, Rovi e il Passaggio del guardiano; non ha Azioni Leggendarie né effetti regionali. Condotta: avverte, protegge, può usare Rovi per fermare un inseguitore; sotto 12 PV o a Ferita Profonda mette in salvo sé e gli alleati. Fonte: Unicorn, pp. 293–294."
+  "note": "Il profilo da 70 PX comprende due AzP, attacchi Magici, cure limitate, Rovi e il Passaggio del guardiano; non ha Azioni Leggendarie né effetti regionali. Condotta: avverte, protegge, può usare Rovi per fermare un inseguitore; sotto 12 PV o a Ferita Profonda mette in salvo sé e gli alleati. Fonte: Unicorn, pp. 293–294.",
+  "_bestiario": {
+    "edizione": "Mostri 0.69",
+    "sistema_salute": "solo_PV"
+  }
 }

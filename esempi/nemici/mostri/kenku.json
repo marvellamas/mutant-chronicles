@@ -12,7 +12,7 @@
     "SAG": 5,
     "CAR": 5
   },
-  "pv": 16,
+  "pv": 21,
   "pm": 6,
   "ar": {
     "totale": 0,
@@ -120,5 +120,9 @@
       "effetto": "Riproduce una voce, un rumore o un breve insieme di suoni ascoltato adeguatamente, con il volume e i limiti fisici della propria voce; non impara ricordi, lingue, password o informazioni non udite; usa frammenti conosciuti e codici, senza creare liberamente una nuova frase con la voce di una persona; nessuna registrazione tecnologica né rumori da un’altra posizione. Quando tenta di far credere che il suono provenga dalla fonte imitata, Raggirare 12 si oppone a Percezione (Prove opposte; ambiente, familiarità con la voce e indizi possono modificare); non occorre tirare senza una posta o se l’origine è evidente; il successo rende credibile il suono, non obbliga a obbedire. Un richiamo breve compatibile con le normali comunicazioni non costa AzP; preparare un falso dialogo, una distrazione o una Manovra sociale usa tempi e costi appropriati. Si ode solo dove il suono arriva (Assordato, isolamento acustico e rumore lo impediscono). Chi lo vede non scambia il suo corpo per la voce imitata (serve un travestimento per l’identità visiva); un fallimento non giustifica ritiri ripetuti senza un nuovo indizio. Copiare una grafia richiede un campione e strumenti adatti; falsificare un documento resta una Prova di Raggirare; non sostituisce chiavi o autorizzazioni; non è Comando, fascinazione o magia."
     }
   ],
-  "note": "Comprende Comune e Auran. Non ha Volo o Scurovisione innati; Braccia = arti manipolatori, privi di ali funzionali. Può lavorare come messaggero, esploratore o imitatore senza essere vincolato alla vita criminale della fonte. Condotta: sotto 4 PV o a Ferita Profonda cerca copertura, una via di fuga o una trattativa. Fonte: Kenku, p. 194."
+  "note": "Comprende Comune e Auran. Non ha Volo o Scurovisione innati; Braccia = arti manipolatori, privi di ali funzionali. Può lavorare come messaggero, esploratore o imitatore senza essere vincolato alla vita criminale della fonte. Condotta: sotto 4 PV o a Ferita Profonda cerca copertura, una via di fuga o una trattativa. Fonte: Kenku, p. 194.",
+  "_bestiario": {
+    "edizione": "Mostri 0.69",
+    "sistema_salute": "solo_PV"
+  }
 }

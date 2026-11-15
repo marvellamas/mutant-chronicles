@@ -12,7 +12,7 @@
     "SAG": 6,
     "CAR": 3
   },
-  "pv": 56,
+  "pv": 73,
   "pm": 8,
   "ar": {
     "totale": 3,
@@ -120,5 +120,9 @@
       }
     }
   ],
-  "note": "Non comprende linguaggi nel profilo base e non ha un soffio. Condotta: insegue una preda accessibile cercando spazio per la coda; sotto 14 PV o a Ferita Profonda si allontana in volo. Fonte: Wyvern, p. 303."
+  "note": "Non comprende linguaggi nel profilo base e non ha un soffio. Condotta: insegue una preda accessibile cercando spazio per la coda; sotto 14 PV o a Ferita Profonda si allontana in volo. Fonte: Wyvern, p. 303.",
+  "_bestiario": {
+    "edizione": "Mostri 0.69",
+    "sistema_salute": "solo_PV"
+  }
 }

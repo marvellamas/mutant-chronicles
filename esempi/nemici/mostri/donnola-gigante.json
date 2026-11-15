@@ -12,7 +12,7 @@
     "SAG": 6,
     "CAR": 2
   },
-  "pv": 16,
+  "pv": 21,
   "pm": 4,
   "ar": {
     "totale": 1,
@@ -91,5 +91,9 @@
       "effetto": "PM personali anche senza incantesimi; a 0 PM valgono le conseguenze comuni. PV, Ferite, Menomazioni, respiro e soffocamento seguono il Giocatore. I sensi speciali indicati non rivelano automaticamente identità, dettagli o presenze oltre i propri limiti. Nessun animale del blocco possiede linguaggi."
     }
   ],
-  "note": "Fauna ordinaria • Natura Comune. Sensi e linguaggi: Scurovisione 12 Q Base; nessun linguaggio."
+  "note": "Fauna ordinaria • Natura Comune. Sensi e linguaggi: Scurovisione 12 Q Base; nessun linguaggio.",
+  "_bestiario": {
+    "edizione": "Mostri 0.69",
+    "sistema_salute": "solo_PV"
+  }
 }

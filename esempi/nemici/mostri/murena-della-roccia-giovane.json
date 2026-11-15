@@ -12,7 +12,7 @@
     "SAG": 6,
     "CAR": 2
   },
-  "pv": 15,
+  "pv": 20,
   "pm": 8,
   "ar": {
     "totale": 3,
@@ -75,5 +75,9 @@
       "effetto": "Furtività 12, oppure 14 tra le rocce"
     }
   ],
-  "note": "Dimensioni e spazio: Lunghezza 1,2 m • 1 × 1 Q. Occhi: Due; capacità 5 PM ciascuno, vuoti alla morte. GS e PX provvisori nel manuale: da verificare al tavolo (Davide li confermerà)."
+  "note": "Dimensioni e spazio: Lunghezza 1,2 m • 1 × 1 Q. Occhi: Due; capacità 5 PM ciascuno, vuoti alla morte. GS e PX provvisori nel manuale: da verificare al tavolo (Davide li confermerà).",
+  "_bestiario": {
+    "edizione": "Mostri 0.69",
+    "sistema_salute": "solo_PV"
+  }
 }

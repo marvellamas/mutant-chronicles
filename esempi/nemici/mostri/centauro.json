@@ -12,7 +12,7 @@
     "SAG": 6,
     "CAR": 6
   },
-  "pv": 40,
+  "pv": 52,
   "pm": 8,
   "ar": {
     "totale": 0,
@@ -135,5 +135,9 @@
       "effetto": "Testa e Braccia umanoidi, Torace comprendente entrambe le masse corporee, Gambe agli arti equini. Un passeggero richiede consenso, appoggio e carico compatibili, senza condividere Azioni né rinnovare il Movimento del Centauro. Scale e passaggi stretti devono essere concretamente percorribili. Parla Elfico e Silvano; nessuna Scurovisione innata."
     }
   ],
-  "note": "Viaggiatore dal corpo equino e tronco umanoide che sa usare armi e leggere le piste; la mobilità non lo rende una cavalcatura disponibile a chiunque. Condotta: sotto 10 PV o a Ferita Profonda cerca spazio per ripiegare. Fonte: Centaur, p. 38."
+  "note": "Viaggiatore dal corpo equino e tronco umanoide che sa usare armi e leggere le piste; la mobilità non lo rende una cavalcatura disponibile a chiunque. Condotta: sotto 10 PV o a Ferita Profonda cerca spazio per ripiegare. Fonte: Centaur, p. 38.",
+  "_bestiario": {
+    "edizione": "Mostri 0.69",
+    "sistema_salute": "solo_PV"
+  }
 }

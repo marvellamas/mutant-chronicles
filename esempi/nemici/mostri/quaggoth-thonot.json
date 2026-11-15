@@ -12,7 +12,7 @@
     "SAG": 6,
     "CAR": 4
   },
-  "pv": 40,
+  "pv": 52,
   "pm": 18,
   "ar": {
     "totale": 1,
@@ -161,5 +161,9 @@
   "immunita": [
     "avvelenato"
   ],
-  "note": "Raro esemplare capace di manipolazioni e manifestazioni psioniche, spesso custode di conoscenze della comunità; il potere non si trasferisce consumandone il corpo. Condotta: può sostenere i compagni o usare coperture e inganni; a Ferita Seria o se la comunità è al sicuro può ripiegare. Fonte: Quaggoth Thonot, p. 256."
+  "note": "Raro esemplare capace di manipolazioni e manifestazioni psioniche, spesso custode di conoscenze della comunità; il potere non si trasferisce consumandone il corpo. Condotta: può sostenere i compagni o usare coperture e inganni; a Ferita Seria o se la comunità è al sicuro può ripiegare. Fonte: Quaggoth Thonot, p. 256.",
+  "_bestiario": {
+    "edizione": "Mostri 0.69",
+    "sistema_salute": "solo_PV"
+  }
 }

@@ -12,7 +12,7 @@
     "SAG": 4,
     "CAR": 2
   },
-  "pv": 20,
+  "pv": 26,
   "pm": 3,
   "ar": {
     "totale": 3,
@@ -103,5 +103,9 @@
       "effetto": "Nuoto: 6 / 12 / 18 QValori nell’ordine Passo / Corsa / Scatto"
     }
   ],
-  "note": "Fauna di Iris • assalitore associato alla Piovra • Natura Comune. GS e PX provvisori nel manuale: da verificare al tavolo (Davide li confermerà)."
+  "note": "Fauna di Iris • assalitore associato alla Piovra • Natura Comune. GS e PX provvisori nel manuale: da verificare al tavolo (Davide li confermerà).",
+  "_bestiario": {
+    "edizione": "Mostri 0.69",
+    "sistema_salute": "solo_PV"
+  }
 }

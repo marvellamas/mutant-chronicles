@@ -12,7 +12,7 @@
     "SAG": 5,
     "CAR": 3
   },
-  "pv": 102,
+  "pv": 133,
   "pm": 10,
   "ar": {
     "totale": 4,
@@ -117,5 +117,9 @@
   "immunita": [
     "incendiato"
   ],
-  "note": "Grande predatore artico che emerge dal ghiaccio. Un solo Morso per Round, Opportunità e colpo ordinato compresi; con una vittima esterna nelle fauci non morde altre creature. Nessun linguaggio né Parata naturale. Testa comprende le fauci, Torace il corpo e lo stomaco. Condotta: sotto 26 PV o a Ferita Seria tende a ritirarsi. Fonte: Remorhaz, p. 258."
+  "note": "Grande predatore artico che emerge dal ghiaccio. Un solo Morso per Round, Opportunità e colpo ordinato compresi; con una vittima esterna nelle fauci non morde altre creature. Nessun linguaggio né Parata naturale. Testa comprende le fauci, Torace il corpo e lo stomaco. Condotta: sotto 26 PV o a Ferita Seria tende a ritirarsi. Fonte: Remorhaz, p. 258.",
+  "_bestiario": {
+    "edizione": "Mostri 0.69",
+    "sistema_salute": "solo_PV"
+  }
 }

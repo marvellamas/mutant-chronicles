@@ -12,7 +12,7 @@
     "SAG": 8,
     "CAR": 7
   },
-  "pv": 50,
+  "pv": 65,
   "pm": 20,
   "ar": {
     "totale": 6,
@@ -122,5 +122,9 @@
       "effetto": "Furtività 8, oppure 12 tra le rocce"
     }
   ],
-  "note": "La Madre cattura prede vive per nutrire i cuccioli e difende la zona dei bozzoli. Mantiene spesso parte del corpo immersa nella roccia. Dimensioni: Lunghezza 12 m • larghezza 3 m. Ingombro parziale: 2 × 2 Q, altezza 2 Q; può estendersi fino a 4 Q restando parzialmente nella roccia. Occhi: Due; capacità 15 PM ciascuno, vuoti alla morte. GS e PX provvisori nel manuale: da verificare al tavolo (Davide li confermerà)."
+  "note": "La Madre cattura prede vive per nutrire i cuccioli e difende la zona dei bozzoli. Mantiene spesso parte del corpo immersa nella roccia. Dimensioni: Lunghezza 12 m • larghezza 3 m. Ingombro parziale: 2 × 2 Q, altezza 2 Q; può estendersi fino a 4 Q restando parzialmente nella roccia. Occhi: Due; capacità 15 PM ciascuno, vuoti alla morte. GS e PX provvisori nel manuale: da verificare al tavolo (Davide li confermerà).",
+  "_bestiario": {
+    "edizione": "Mostri 0.69",
+    "sistema_salute": "solo_PV"
+  }
 }

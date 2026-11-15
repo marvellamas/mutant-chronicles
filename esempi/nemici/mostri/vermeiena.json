@@ -12,7 +12,7 @@
     "SAG": 6,
     "CAR": 3
   },
-  "pv": 34,
+  "pv": 45,
   "pm": 6,
   "ar": {
     "totale": 2,
@@ -94,5 +94,9 @@
       "effetto": "Scurovisione 12 Q; olfatto 14 (sangue e cadaveri lo attirano). Aderisce a pareti e soffitti solidi (6/12/18 Q); non è immune a cadute o al cedimento del supporto. Braccia sono i tentacoli del capo."
     }
   ],
-  "note": "Percezione 14 con l’olfatto. Comportamento: preferisce un cadavere a una preda che può ferirlo; sotto 9 PV o a Ferita Profonda si ritira."
+  "note": "Percezione 14 con l’olfatto. Comportamento: preferisce un cadavere a una preda che può ferirlo; sotto 9 PV o a Ferita Profonda si ritira.",
+  "_bestiario": {
+    "edizione": "Mostri 0.69",
+    "sistema_salute": "solo_PV"
+  }
 }

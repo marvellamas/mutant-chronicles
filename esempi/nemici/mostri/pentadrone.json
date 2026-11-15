@@ -12,7 +12,7 @@
     "SAG": 7,
     "CAR": 7
   },
-  "pv": 38,
+  "pv": 50,
   "pm": 10,
   "ar": {
     "totale": 2,
@@ -100,5 +100,9 @@
       "effetto": "Al massimo due attacchi di Braccio per Round, Opportunità compresa. I cinque arti non concedono Parata naturale o altre Azioni; una Menomazione si applica alla funzione colpita, senza essere cancellata dagli arti rimasti. Il Gas costa 1 AzP e sostituisce un’attività ordinaria: non è un attacco gratuito dopo i colpi. Non è immune al proprio veleno solo perché lo produce."
     }
   ],
-  "note": "Modron di quinto grado: organismo biomeccanico a cinque braccia che sorveglia compiti complessi. Adatta un ordine a una situazione nuova senza conoscere intenzioni o mappe non percepite; coordina Quadroni e propri pari. Condotta: sotto 9 PV o a Ferita Seria cerca una posizione utile a conservare la consegna. Fonte: Pentadrone, p. 226."
+  "note": "Modron di quinto grado: organismo biomeccanico a cinque braccia che sorveglia compiti complessi. Adatta un ordine a una situazione nuova senza conoscere intenzioni o mappe non percepite; coordina Quadroni e propri pari. Condotta: sotto 9 PV o a Ferita Seria cerca una posizione utile a conservare la consegna. Fonte: Pentadrone, p. 226.",
+  "_bestiario": {
+    "edizione": "Mostri 0.69",
+    "sistema_salute": "solo_PV"
+  }
 }

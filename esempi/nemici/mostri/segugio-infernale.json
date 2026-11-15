@@ -12,7 +12,7 @@
     "SAG": 6,
     "CAR": 4
   },
-  "pv": 44,
+  "pv": 58,
   "pm": 9,
   "ar": {
     "totale": 2,
@@ -110,5 +110,9 @@
   "immunita": [
     "incendiato"
   ],
-  "note": "Canide intelligente dalle fauci incandescenti. Condotta: sotto 11 PV o a Ferita Profonda può ripiegare o cambiare preda. Fonte: Hell Hound, p. 182."
+  "note": "Canide intelligente dalle fauci incandescenti. Condotta: sotto 11 PV o a Ferita Profonda può ripiegare o cambiare preda. Fonte: Hell Hound, p. 182.",
+  "_bestiario": {
+    "edizione": "Mostri 0.69",
+    "sistema_salute": "solo_PV"
+  }
 }

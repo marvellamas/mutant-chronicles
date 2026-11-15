@@ -12,7 +12,7 @@
     "SAG": 7,
     "CAR": 5
   },
-  "pv": 42,
+  "pv": 55,
   "pm": 8,
   "ar": {
     "totale": 2,
@@ -113,5 +113,9 @@
       "effetto": "Parla il linguaggio degli Alci giganti e comprende altre due lingue assegnate alla comunità o all’origine (non le parla automaticamente). Vista e udito ordinari. Il Direttore può dare significati culturali alla sua comparsa, ma la scheda non manifesta divinità, non concede profezie e non rende una caccia maledetta."
     }
   ],
-  "note": "Erbivoro senziente. Condotta: può indicare una via sicura, negare un passaggio o proteggere altri animali; sotto 10 PV o a Ferita Profonda si disimpegna; la sua comprensione permette una trattativa compatibile con il linguaggio. Fonte: Giant Elk, p. 325."
+  "note": "Erbivoro senziente. Condotta: può indicare una via sicura, negare un passaggio o proteggere altri animali; sotto 10 PV o a Ferita Profonda si disimpegna; la sua comprensione permette una trattativa compatibile con il linguaggio. Fonte: Giant Elk, p. 325.",
+  "_bestiario": {
+    "edizione": "Mostri 0.69",
+    "sistema_salute": "solo_PV"
+  }
 }

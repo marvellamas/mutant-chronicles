@@ -12,7 +12,7 @@
     "SAG": 5,
     "CAR": 2
   },
-  "pv": 62,
+  "pv": 81,
   "pm": 8,
   "ar": {
     "totale": 4,
@@ -97,5 +97,9 @@
       "effetto": "Nuoto 10 / 20 / 30 Q. Apnea 30 minuti (sostituisce i Round pari a COS, senza respirazione acquatica); esaurita, PS, perdita di coscienza e danni del §5.23, un Round d’aria la ripristina. +2 a Furtività nell’acqua con riparo (Furtività 13). Per trascinare una preda riluttante mentre tiene (niente Corsa/Scatto/Carica): 1 AzP e l’AzM intera, nuova opposizione, poi fino a 2 Q a terra o 4 Q a nuoto; percorso misto con budget 4 (1 Q a terra = 2, 1 Q a nuoto = 1). Prima di un pericolo letale la vittima effettua la normale PS Riflessi."
     }
   ],
-  "note": "Condotta: sfrutta occultamento e sponde senza sorpresa automatica; sotto 16 PV o a Ferita Seria rilascia la preda e cerca acqua profonda."
+  "note": "Condotta: sfrutta occultamento e sponde senza sorpresa automatica; sotto 16 PV o a Ferita Seria rilascia la preda e cerca acqua profonda.",
+  "_bestiario": {
+    "edizione": "Mostri 0.69",
+    "sistema_salute": "solo_PV"
+  }
 }

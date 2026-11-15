@@ -10,6 +10,7 @@ import { nemicoVuoto, voceVuota, pulisciNemico, idDaNome, testoMovimento, pxDiRi
 import { variaPvNemico, variaPmNemico, cambiaStatoNemico, cambiaIntensitaNemico, usaCapacitaNemico, stabilizzaNemico, scalaMorenteNemico, cosNemico } from '../scontro.js';
 import { infoValore } from './tooltip.js';
 import { statoMorenteNemico } from '../morente.js';
+import { rigaSistemaSalute, statoAZeroPv } from '../senza-ferite.js';
 import { difeseNemico } from '../nemico-attacco.js';
 import { intensitaStato } from '../condizioni.js';
 import { statoIncantesimoNemico, regimeProposto, NOMI_REGIMI } from '../nemico-lancio.js';
@@ -377,6 +378,16 @@ export function cartaNemico(ctx, p, { modifica, durate = [], diTurnoOra = false,
           onclick: () => modifica((x) => cambiaForma(x, p.id, f.id, { fino: (scontro?.round ?? 1) + 1 })) }, f.nome)) : null,
         forma && forma.id !== prima.id ? h('button', { type: 'button', class: 'btn btn-piccolo', disabled: !modifica, onclick: () => modifica((x) => cambiaForma(x, p.id, prima.id)) }, `Torna ${prima.nome.toLowerCase()}`) : null,
         forma && forma.muove === false ? h('small', { class: 'nota' }, ' Non si muove, non attacca, non attraversa la roccia, non Schiva.') : null);
+    })(),
+    // Lotto 203: le creature senza Ferite. La riga si legge **sempre**, anche sopra 0 PV: dice che non hanno il
+    // tracciato e che a 0 PV non avranno un contatore di Morente. Detta prima, al tavolo la domanda non nasce —
+    // un'assenza non si legge, una frase sì (Mostri 0.69 §4.2).
+    (() => {
+      const riga = rigaSistemaSalute(p.scheda ?? p, dati);
+      if (!riga) return null;
+      const zero = (p.pv?.attuali ?? p.pv) <= 0 ? statoAZeroPv(p.scheda ?? p, dati) : null;
+      return h('p', { class: `nota riga-senza-ferite${zero ? ' senza-ferite-zero' : ''}` }, riga,
+        zero ? h('span', {}, ' ', h('strong', {}, 'A 0 PV: '), zero.testo) : null);
     })(),
     // A.164 (16/10/2026): Morente del nemico, con lo stesso riquadro dei PG (src/morente.js)
     (() => {

@@ -12,7 +12,7 @@
     "SAG": 7,
     "CAR": 5
   },
-  "pv": 60,
+  "pv": 78,
   "pm": 8,
   "ar": {
     "totale": 3,
@@ -114,5 +114,9 @@
       "effetto": "Vede entro 12 Q nel buio naturale, senza colori; non attraversa ostacoli né individua da sola chi è nascosto."
     }
   ],
-  "note": "Comprende una lingua dell’ambientazione ma non la parla. Nessuna resistenza al fuoco. Braccia = zampe anteriori; Gambe = posteriori. Nome originale: Chimera, p. 39. Comportamento: apre con il Soffio su bersagli raccolti; a Ferita Grave o con le ali compromesse difende una posizione o negozia."
+  "note": "Comprende una lingua dell’ambientazione ma non la parla. Nessuna resistenza al fuoco. Braccia = zampe anteriori; Gambe = posteriori. Nome originale: Chimera, p. 39. Comportamento: apre con il Soffio su bersagli raccolti; a Ferita Grave o con le ali compromesse difende una posizione o negozia.",
+  "_bestiario": {
+    "edizione": "Mostri 0.69",
+    "sistema_salute": "solo_PV"
+  }
 }

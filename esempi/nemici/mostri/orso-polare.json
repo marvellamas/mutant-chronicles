@@ -12,7 +12,7 @@
     "SAG": 6,
     "CAR": 3
   },
-  "pv": 42,
+  "pv": 55,
   "pm": 6,
   "ar": {
     "totale": 2,
@@ -103,5 +103,9 @@
       "effetto": "Nuoto 6 / 12 / 18 Q effettivi (eccezione al costo ordinario 2; budget unico del §5.2.4 nei percorsi misti, costo 1 a terra e 2 in acqua, senza superare la distanza di ogni modalità). Respira aria: dopo COS Round senza respirare segue il §5.23; Immobilizzato in acqua non dà protezione respiratoria."
     }
   ],
-  "note": "Una variante cavernicola richiederebbe adattamenti dichiarati: non è inclusa. Condotta: fame, piccoli e possibilità di raggiungere la preda; sotto 10 PV o a Ferita Seria cerca una riva o una zona libera. Fonte: Polar Bear, p. 334."
+  "note": "Una variante cavernicola richiederebbe adattamenti dichiarati: non è inclusa. Condotta: fame, piccoli e possibilità di raggiungere la preda; sotto 10 PV o a Ferita Seria cerca una riva o una zona libera. Fonte: Polar Bear, p. 334.",
+  "_bestiario": {
+    "edizione": "Mostri 0.69",
+    "sistema_salute": "solo_PV"
+  }
 }

@@ -12,7 +12,7 @@
     "SAG": 5,
     "CAR": 1
   },
-  "pv": 78,
+  "pv": 102,
   "ar": {
     "totale": 4,
     "magica": 0
@@ -118,5 +118,9 @@
     "avvelenato",
     "sanguinamento"
   ],
-  "note": "PM — e Volontà —: nessun dato (un dato assente non vale 0); AR magica 0 a riposo. Sentinella pesante che segue il portatore della chiave mistica. Al massimo due Pugni per Round, Opportunità compresa. Fonte: Shield Guardian, p. 271."
+  "note": "PM — e Volontà —: nessun dato (un dato assente non vale 0); AR magica 0 a riposo. Sentinella pesante che segue il portatore della chiave mistica. Al massimo due Pugni per Round, Opportunità compresa. Fonte: Shield Guardian, p. 271.",
+  "_bestiario": {
+    "edizione": "Mostri 0.69",
+    "sistema_salute": "solo_PV"
+  }
 }

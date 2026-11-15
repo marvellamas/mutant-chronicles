@@ -12,7 +12,7 @@
     "SAG": 6,
     "CAR": 4
   },
-  "pv": 38,
+  "pv": 50,
   "pm": 8,
   "ar": {
     "totale": 1,
@@ -88,5 +88,9 @@
       "effetto": "Vede entro 12 Q nel buio naturale, senza colori; non attraversa ostacoli né individua da sola chi è nascosto."
     }
   ],
-  "note": "Felino a sei zampe con due tentacoli dorsali (Braccia = tentacoli; Gambe = i due gruppi locomotori da tre zampe). Non incorporea. Nome originale: Displacer Beast, p. 81. Comportamento: attacca un bersaglio isolato usando portata e terreno; dopo un colpo subito cerca Copertura; a Ferita Seria abbandona la caccia ordinaria."
+  "note": "Felino a sei zampe con due tentacoli dorsali (Braccia = tentacoli; Gambe = i due gruppi locomotori da tre zampe). Non incorporea. Nome originale: Displacer Beast, p. 81. Comportamento: attacca un bersaglio isolato usando portata e terreno; dopo un colpo subito cerca Copertura; a Ferita Seria abbandona la caccia ordinaria.",
+  "_bestiario": {
+    "edizione": "Mostri 0.69",
+    "sistema_salute": "solo_PV"
+  }
 }

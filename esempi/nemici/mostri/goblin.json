@@ -12,7 +12,7 @@
     "SAG": 4,
     "CAR": 4
   },
-  "pv": 14,
+  "pv": 19,
   "pm": 5,
   "ar": {
     "totale": 2,
@@ -104,5 +104,9 @@
       "effetto": "Vede entro 12 Q anche nell’oscurità naturale; al buio non distingue i colori, non vede attraverso ostacoli, fumo o oscurità magica e non individua da sé chi è nascosto. Oltre i 12 Q valgono luce e vista ordinarie."
     }
   ],
-  "note": "AR 1 senza scudo (inizia con spada e scudo pronti). Balestra piccola FOR 3, PI 4, solo Colpo Singolo, ricarica 1 AzM e mano libera. Comportamento: tiro protetto e cambio di posizione; sotto 4 PV o da solo fugge o si arrende."
+  "note": "AR 1 senza scudo (inizia con spada e scudo pronti). Balestra piccola FOR 3, PI 4, solo Colpo Singolo, ricarica 1 AzM e mano libera. Comportamento: tiro protetto e cambio di posizione; sotto 4 PV o da solo fugge o si arrende.",
+  "_bestiario": {
+    "edizione": "Mostri 0.69",
+    "sistema_salute": "solo_PV"
+  }
 }

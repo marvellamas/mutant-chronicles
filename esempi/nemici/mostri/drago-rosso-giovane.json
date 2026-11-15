@@ -12,7 +12,7 @@
     "SAG": 6,
     "CAR": 9
   },
-  "pv": 650,
+  "pv": 845,
   "pm": 70,
   "ar": {
     "totale": 20,
@@ -137,5 +137,9 @@
       "effetto": "I soffi bianco, nero, blu e rosso possono colpire un mezzo effettivamente esposto: una sola applicazione, localizzazione, scudo pertinente, AR, conversione in PI, PS Integrità e Corazzato secondo il Manuale dei Veicoli. Nessun danno automatico agli occupanti dietro lo scafo. L’eventuale effetto su una persona richiede che sia realmente esposta. Immunità e protezioni delle singole specie non si estendono ad altri tipi di danno o controllo."
     }
   ],
-  "note": "Grande predatore draconico • giovane • Natura Comune. Sensi e linguaggi: Scurovisione 24 Q Base • Draconico e una lingua di contatto. Il danno «NdM × k» è il risultato dei dadi moltiplicato per k; il dado non si tira da solo (A.199)."
+  "note": "Grande predatore draconico • giovane • Natura Comune. Sensi e linguaggi: Scurovisione 24 Q Base • Draconico e una lingua di contatto. Il danno «NdM × k» è il risultato dei dadi moltiplicato per k; il dado non si tira da solo (A.199).",
+  "_bestiario": {
+    "edizione": "Mostri 0.69",
+    "sistema_salute": "solo_PV"
+  }
 }

@@ -12,7 +12,7 @@
     "SAG": 5,
     "CAR": 4
   },
-  "pv": 84,
+  "pv": 110,
   "pm": 8,
   "ar": {
     "totale": 4,
@@ -104,5 +104,9 @@
       "effetto": "L’adattamento al clima freddo non dimezza i danni da Ghiaccio; la pelliccia è compresa nell’AR biologica (non è un’armatura rimovibile). Proboscide e zanne appartengono alla Testa. Un terreno cedevole o un ponte devono poter sostenere il corpo. Un corridoio stretto può impedirgli di raggiungere gli avversari; non colpisce attraverso le pareti. Dopo l’Impeto solo una vittima entro i limiti di Calpestare può subirlo (seconda AzP)."
     }
   ],
-  "note": "Sensi ordinari; non comprende linguaggi. Condotta: difende il gruppo e reagisce a chi gli chiude il passaggio; sotto 21 PV o a Ferita Seria cerca spazio e branco. Fonte: Mammoth, p. 332."
+  "note": "Sensi ordinari; non comprende linguaggi. Condotta: difende il gruppo e reagisce a chi gli chiude il passaggio; sotto 21 PV o a Ferita Seria cerca spazio e branco. Fonte: Mammoth, p. 332.",
+  "_bestiario": {
+    "edizione": "Mostri 0.69",
+    "sistema_salute": "solo_PV"
+  }
 }

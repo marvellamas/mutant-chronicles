@@ -12,7 +12,7 @@
     "SAG": 5,
     "CAR": 3
   },
-  "pv": 20,
+  "pv": 26,
   "pm": 5,
   "ar": {
     "totale": 1,
@@ -93,5 +93,9 @@
       "effetto": "Scurovisione 12 Q. In luce solare diretta −2 VA agli attacchi e alla Percezione visiva (non a Salvezze o Difese); luce artificiale e Luce Mistica non contano."
     }
   ],
-  "note": "Furtività 13 mimetizzato (immobile, fondale naturale adatto; muoversi la riporta a 10). AR 1 biologica; nessuna dotazione. Comportamento: difende cibo, rifugio o compagni, può trattare; sotto 5 PV o a Ferita Profonda cerca riparo."
+  "note": "Furtività 13 mimetizzato (immobile, fondale naturale adatto; muoversi la riporta a 10). AR 1 biologica; nessuna dotazione. Comportamento: difende cibo, rifugio o compagni, può trattare; sotto 5 PV o a Ferita Profonda cerca riparo.",
+  "_bestiario": {
+    "edizione": "Mostri 0.69",
+    "sistema_salute": "solo_PV"
+  }
 }

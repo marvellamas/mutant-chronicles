@@ -12,7 +12,7 @@
     "SAG": 6,
     "CAR": 5
   },
-  "pv": 50,
+  "pv": 65,
   "pm": 9,
   "ar": {
     "totale": 2,
@@ -107,5 +107,9 @@
       "effetto": "Immune a danni e conseguenze del Gelo di qualunque Natura; non è vulnerabile automaticamente al Fuoco. Udito e olfatto acuti +2. Sulla neve +2 a Furtività quando il manto bianco aiuta realmente a nascondersi (nessuna invisibilità né cancellazione delle impronte). Nessuna Scurovisione innata. Non guadagna altri Soffi restando al freddo e non assorbe il Gelo per curarsi."
     }
   ],
-  "note": "Parla Comune, Gigante e il linguaggio dei Lupi invernali. Segue tracce sulla neve; può servire come guardiano per accordo o addestramento. Condotta: sotto 13 PV o a Ferita Profonda può proteggere il branco ripiegando. Fonte: Winter Wolf, pp. 340–341."
+  "note": "Parla Comune, Gigante e il linguaggio dei Lupi invernali. Segue tracce sulla neve; può servire come guardiano per accordo o addestramento. Condotta: sotto 13 PV o a Ferita Profonda può proteggere il branco ripiegando. Fonte: Winter Wolf, pp. 340–341.",
+  "_bestiario": {
+    "edizione": "Mostri 0.69",
+    "sistema_salute": "solo_PV"
+  }
 }

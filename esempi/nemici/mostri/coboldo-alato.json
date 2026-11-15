@@ -12,7 +12,7 @@
     "SAG": 4,
     "CAR": 4
   },
-  "pv": 12,
+  "pv": 16,
   "pm": 5,
   "ar": {
     "totale": 0,
@@ -136,5 +136,9 @@
       "effetto": "Ali e spazio funzionali necessari; può sostenersi battendole senza percorso minimo. Corsa e Scatto in volo richiedono Atletica −2 e −4; quota, decollo e atterraggio usano l’unica AzM; perdita del sostegno o incoscienza possono farlo cadere."
     }
   ],
-  "note": "Tecnologia 10 vale solo per trappole semplici. Variante alata del Coboldo che passa sopra gli ostacoli e lascia cadere pietre; vulnerabilità al sole e tattiche di branco restano. Parla Comune e Draconico. Condotta: sotto 3 PV o isolato cerca un riparo o fugge. Fonte: Winged Kobold, p. 195."
+  "note": "Tecnologia 10 vale solo per trappole semplici. Variante alata del Coboldo che passa sopra gli ostacoli e lascia cadere pietre; vulnerabilità al sole e tattiche di branco restano. Parla Comune e Draconico. Condotta: sotto 3 PV o isolato cerca un riparo o fugge. Fonte: Winged Kobold, p. 195.",
+  "_bestiario": {
+    "edizione": "Mostri 0.69",
+    "sistema_salute": "solo_PV"
+  }
 }

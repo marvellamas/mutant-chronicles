@@ -12,7 +12,7 @@
     "SAG": 6,
     "CAR": 5
   },
-  "pv": 18,
+  "pv": 24,
   "pm": 6,
   "ar": {
     "totale": 0,
@@ -119,5 +119,9 @@
       }
     }
   ],
-  "note": "Vista e udito ordinari, nessuna scurovisione. Dotazione: due giavellotti, uno pronto. Il «Giavellotto della sentinella» (una mano, FOR 3, 1d6 Naturale, portata 1 Q, gittata FOR × 3 Q, AC 1, PI 4, PS Integrità 10; Armi da guerra in Ravvicinato e Armi da lancio a distanza; niente Tiro Rapido, Raffiche o bonus di Parata) è una proposta del manuale e non modifica il catalogo degli Armamenti. Linguaggio auran nell’ambientazione originale. Nome originale: Aarakocra, p. 12. Comportamento: avvista, avverte e prende quota; se perde il volo o subisce Ferita Profonda cerca riparo."
+  "note": "Vista e udito ordinari, nessuna scurovisione. Dotazione: due giavellotti, uno pronto. Il «Giavellotto della sentinella» (una mano, FOR 3, 1d6 Naturale, portata 1 Q, gittata FOR × 3 Q, AC 1, PI 4, PS Integrità 10; Armi da guerra in Ravvicinato e Armi da lancio a distanza; niente Tiro Rapido, Raffiche o bonus di Parata) è una proposta del manuale e non modifica il catalogo degli Armamenti. Linguaggio auran nell’ambientazione originale. Nome originale: Aarakocra, p. 12. Comportamento: avvista, avverte e prende quota; se perde il volo o subisce Ferita Profonda cerca riparo.",
+  "_bestiario": {
+    "edizione": "Mostri 0.69",
+    "sistema_salute": "solo_PV"
+  }
 }

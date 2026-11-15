@@ -12,7 +12,7 @@
     "SAG": 6,
     "CAR": 2
   },
-  "pv": 8,
+  "pv": 11,
   "pm": 3,
   "ar": {
     "totale": 0,
@@ -101,5 +101,9 @@
       "effetto": "Alimentarsi di carcasse non gli dà immunità generale a veleni, malattie o Corruzione; nessun Morso infetto nel profilo. Distinto dall’Avvoltoio gigante (altri attacchi e comprensione linguistica)."
     }
   ],
-  "note": "Necrofago alato che cerca carcasse e reagisce se intrappolato o minacciato. Condotta: può attendere una carcassa accessibile o lasciare il posto a una minaccia più grande; sotto 2 PV o a Ferita Importante cerca quota e un posatoio sicuro. Fonte: Vulture, p. 339."
+  "note": "Necrofago alato che cerca carcasse e reagisce se intrappolato o minacciato. Condotta: può attendere una carcassa accessibile o lasciare il posto a una minaccia più grande; sotto 2 PV o a Ferita Importante cerca quota e un posatoio sicuro. Fonte: Vulture, p. 339.",
+  "_bestiario": {
+    "edizione": "Mostri 0.69",
+    "sistema_salute": "solo_PV"
+  }
 }

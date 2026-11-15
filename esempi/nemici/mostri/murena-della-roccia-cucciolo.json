@@ -12,7 +12,7 @@
     "SAG": 6,
     "CAR": 2
   },
-  "pv": 4,
+  "pv": 6,
   "pm": 4,
   "ar": {
     "totale": 0,
@@ -87,5 +87,9 @@
       "effetto": "Con 0–2 PM effettivamente assorbiti in un singolo attacco, il cucciolo rimane etereo e può rientrare nella roccia con il movimento residuo. Con 3–4 PM diventa immediatamente corporeo e cade, contorcendosi come un pesce fuori dall’acqua: il movimento si interrompe e qualsiasi arma può colpirlo, con AR 0. L’overdose dura fino alla fine del Round successivo a quello dell’assorbimento (R+1). Il cucciolo non può attaccare, muoversi volontariamente, attraversare la roccia o Schivare; conserva le prove salvezza applicabili. Al termine torna etereo. L’assorbimento lento nei bozzoli segue una procedura distinta e non provoca overdose."
     }
   ],
-  "note": "Dimensioni e spazio: Circa 60 cm; ingombro tattico 1 × 1 Q. Occhi: Due; capacità 1 PM ciascuno, vuoti alla morte. GS e PX provvisori nel manuale: da verificare al tavolo (Davide li confermerà)."
+  "note": "Dimensioni e spazio: Circa 60 cm; ingombro tattico 1 × 1 Q. Occhi: Due; capacità 1 PM ciascuno, vuoti alla morte. GS e PX provvisori nel manuale: da verificare al tavolo (Davide li confermerà).",
+  "_bestiario": {
+    "edizione": "Mostri 0.69",
+    "sistema_salute": "solo_PV"
+  }
 }

@@ -12,7 +12,7 @@
     "SAG": 6,
     "CAR": 3
   },
-  "pv": 40,
+  "pv": 52,
   "pm": 5,
   "ar": {
     "totale": 2,
@@ -91,5 +91,9 @@
       "effetto": "La portata (2 Q) consente di mordere una creatura in superficie o lungo una riva accessibile, non di attraversare pareti o barriere. Il Morso non afferra, trascina o inghiotte. Un bersaglio che non riesce a raggiungere concretamente resta fuori."
     }
   ],
-  "note": "Vista e udito ordinari, senza percezione attraverso l’acqua torbida. Furtività 13 in acqua, con una possibilità reale di occultarsi. Braccia = pinne anteriori, Gambe = posteriori (coda come appendice). Condotta: cerca nutrimento e può attaccare da un nascondiglio immerso; sotto 10 PV o a Ferita Profonda si allontana verso acque libere. Fonte: Plesiosaurus, p. 80."
+  "note": "Vista e udito ordinari, senza percezione attraverso l’acqua torbida. Furtività 13 in acqua, con una possibilità reale di occultarsi. Braccia = pinne anteriori, Gambe = posteriori (coda come appendice). Condotta: cerca nutrimento e può attaccare da un nascondiglio immerso; sotto 10 PV o a Ferita Profonda si allontana verso acque libere. Fonte: Plesiosaurus, p. 80.",
+  "_bestiario": {
+    "edizione": "Mostri 0.69",
+    "sistema_salute": "solo_PV"
+  }
 }

@@ -12,7 +12,7 @@
     "SAG": 5,
     "CAR": 5
   },
-  "pv": 24,
+  "pv": 32,
   "pm": 10,
   "ar": {
     "totale": 0,
@@ -96,5 +96,9 @@
   "immunita": [
     "sanguinamento"
   ],
-  "note": "Presenza incorporea: nessun movimento a terra (si muove in volo). Per parare il Tocco serve un’arma magica o uno scudo con componente magica. Nessuna dotazione né Parata naturale. Comportamento: percorso laterale e bersaglio isolato; sotto 6 PV o a Ferita Profonda si ritira nel luogo che infesta."
+  "note": "Presenza incorporea: nessun movimento a terra (si muove in volo). Per parare il Tocco serve un’arma magica o uno scudo con componente magica. Nessuna dotazione né Parata naturale. Comportamento: percorso laterale e bersaglio isolato; sotto 6 PV o a Ferita Profonda si ritira nel luogo che infesta.",
+  "_bestiario": {
+    "edizione": "Mostri 0.69",
+    "sistema_salute": "solo_PV"
+  }
 }

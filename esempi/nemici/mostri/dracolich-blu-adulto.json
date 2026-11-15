@@ -12,7 +12,7 @@
     "SAG": 8,
     "CAR": 9
   },
-  "pv": 1200,
+  "pv": 1560,
   "pm": 100,
   "ar": {
     "totale": 24,
@@ -126,5 +126,9 @@
       "effetto": "La configurazione Dracolich occupa una fascia superiore al drago corrispondente. I valori comprendono tratti comuni e vincolo del filatterio; servitori, dotazioni aggiuntive e moduli della tana restano separati. Questa tabella classifica il profilo; il calcolo del premio dell’incontro rimane nel Manuale del Direttore §9.3. Il blu adulto seguente è un esempio completo. Per un altro colore si parte dalla sua scheda adulta o antica e si applicano le stesse modifiche, conservandone i soffi. Tabella (celle in ordine di lettura): Drago originario | Configurazione Dracolich | Mito • 200 PX | Semidio • 400 PX | Semidio • 400 PX | Divinità • 800 PX | Divinità • 800 PX | Divinità Maggiore • 1.600 PX."
     }
   ],
-  "note": "Esempio compilato del modello comune • Natura Comune. Sensi e linguaggi: Scurovisione 24 Q Base • Draconico e una lingua di contatto. Il danno «NdM × k» è il risultato dei dadi moltiplicato per k; il dado non si tira da solo (A.199)."
+  "note": "Esempio compilato del modello comune • Natura Comune. Sensi e linguaggi: Scurovisione 24 Q Base • Draconico e una lingua di contatto. Il danno «NdM × k» è il risultato dei dadi moltiplicato per k; il dado non si tira da solo (A.199).",
+  "_bestiario": {
+    "edizione": "Mostri 0.69",
+    "sistema_salute": "solo_PV"
+  }
 }

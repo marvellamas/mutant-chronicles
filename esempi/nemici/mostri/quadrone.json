@@ -12,7 +12,7 @@
     "SAG": 6,
     "CAR": 6
   },
-  "pv": 28,
+  "pv": 37,
   "pm": 9,
   "ar": {
     "totale": 2,
@@ -111,5 +111,9 @@
       "effetto": "Arco da guerra Comune, Armi da lancio, due mani, FOR 5, PI 6, PS Integrità 10, MOV 0; venti frecce ordinarie (base 1d6+1 e +1 personale già compresi; incoccare è compreso nell’attacco; frecce e recuperi seguono gli Armamenti). L’Arco non para; le altre due braccia possono tenere oggetti compatibili o usare Pugno, pagando le Azioni. Al massimo due attacchi o due frecce complessive per Round, Opportunità compresa (solo Pugno). Nessun tiro simultaneo di quattro frecce; l’eventuale Tiro Rapido mantiene tutti i propri costi e requisiti entro quel limite. Non ha un bonus di Tiro Mirato già attivo né il Talento di sparare automaticamente in volo. I 33 PX comprendono la dotazione."
     }
   ],
-  "note": "Modron di quarto grado: piattaforma biomeccanica con quattro braccia e ali; il numero di braccia non genera una Raffica. Vedere una forma non permette alla freccia di attraversare un ostacolo. Condotta: sceglie linee di tiro praticabili e riferisce ai Pentadroni; sotto 7 PV o a Ferita Profonda può ripararsi e conservare le informazioni. Fonte: Quadrone, p. 226."
+  "note": "Modron di quarto grado: piattaforma biomeccanica con quattro braccia e ali; il numero di braccia non genera una Raffica. Vedere una forma non permette alla freccia di attraversare un ostacolo. Condotta: sceglie linee di tiro praticabili e riferisce ai Pentadroni; sotto 7 PV o a Ferita Profonda può ripararsi e conservare le informazioni. Fonte: Quadrone, p. 226.",
+  "_bestiario": {
+    "edizione": "Mostri 0.69",
+    "sistema_salute": "solo_PV"
+  }
 }

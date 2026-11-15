@@ -12,7 +12,7 @@
     "SAG": 6,
     "CAR": 3
   },
-  "pv": 10,
+  "pv": 13,
   "pm": 4,
   "ar": {
     "totale": 0,
@@ -92,5 +92,9 @@
       "effetto": "Andature e Prove di Atletica ordinarie. Il Morso non impone automaticamente A Terra, Sanguinamento o una presa; rendere una preda Svenuta o Morente non concede un altro attacco o Movimento (appartiene alla Iena gigante, di cui non ha la Frenesia della caccia). Percezione 11 senza senso acuto o Scurovisione innata. Il riso e gli altri richiami possono avvertire compagni in grado di udirli, ma non comunicano informazioni precise illimitate né impongono Terrorizzato."
     }
   ],
-  "note": "Predatore opportunista che cerca cibo in gruppo e approfitta di una vittima isolata. Condotta: può cacciare, contendersi una carcassa o seguire un gruppo a distanza; sotto 3 PV, a Ferita Importante o se isolata tende a interrompere il contatto; la presenza di Gnoll non la rende un loro servitore. Fonte: Hyena, p. 331."
+  "note": "Predatore opportunista che cerca cibo in gruppo e approfitta di una vittima isolata. Condotta: può cacciare, contendersi una carcassa o seguire un gruppo a distanza; sotto 3 PV, a Ferita Importante o se isolata tende a interrompere il contatto; la presenza di Gnoll non la rende un loro servitore. Fonte: Hyena, p. 331.",
+  "_bestiario": {
+    "edizione": "Mostri 0.69",
+    "sistema_salute": "solo_PV"
+  }
 }

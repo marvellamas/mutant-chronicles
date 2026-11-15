@@ -12,7 +12,7 @@
     "SAG": 6,
     "CAR": 4
   },
-  "pv": 42,
+  "pv": 55,
   "pm": 6,
   "ar": {
     "totale": 1,
@@ -103,5 +103,9 @@
       "effetto": "Fiuto +2; vista e udito ordinari, senza Scurovisione. Una lesione della funzione delle fauci può impedire il Morso; gli Artigli restano se gli arti sono integri. L’Assalto non si somma alla Carica ordinaria."
     }
   ],
-  "note": "Condotta: cerca prede raggiungibili, può restare presso una carcassa senza attaccare chiunque avvisti; sotto 10 PV o a Ferita Seria si ritira; la difesa di piccoli o nutrimento può trattenerla (senza immunità a Terrorizzato). Fonte: Saber-Toothed Tiger, p. 336."
+  "note": "Condotta: cerca prede raggiungibili, può restare presso una carcassa senza attaccare chiunque avvisti; sotto 10 PV o a Ferita Seria si ritira; la difesa di piccoli o nutrimento può trattenerla (senza immunità a Terrorizzato). Fonte: Saber-Toothed Tiger, p. 336.",
+  "_bestiario": {
+    "edizione": "Mostri 0.69",
+    "sistema_salute": "solo_PV"
+  }
 }

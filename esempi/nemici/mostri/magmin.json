@@ -12,7 +12,7 @@
     "SAG": 5,
     "CAR": 4
   },
-  "pv": 14,
+  "pv": 19,
   "ar": {
     "totale": 2,
     "magica": 0
@@ -94,5 +94,9 @@
     "sanguinamento",
     "incendiato"
   ],
-  "note": "PM —: nessuna riserva. Creatura elementale di magma con mente. Comportamento: cerca calore e combustibile; sotto 4 PV o a Ferita Profonda cerca calore o fuga. Acqua e sabbia spengono gli incendi ma non lo distruggono."
+  "note": "PM —: nessuna riserva. Creatura elementale di magma con mente. Comportamento: cerca calore e combustibile; sotto 4 PV o a Ferita Profonda cerca calore o fuga. Acqua e sabbia spengono gli incendi ma non lo distruggono.",
+  "_bestiario": {
+    "edizione": "Mostri 0.69",
+    "sistema_salute": "solo_PV"
+  }
 }

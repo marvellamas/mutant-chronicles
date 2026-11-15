@@ -12,7 +12,7 @@
     "SAG": 6,
     "CAR": 3
   },
-  "pv": 40,
+  "pv": 52,
   "pm": 6,
   "ar": {
     "totale": 3,
@@ -93,5 +93,9 @@
       "effetto": "Fornisce ai mutanti una risorsa alimentare. In questa scheda non sono assegnati effetti meccanici al suo consumo."
     }
   ],
-  "note": "Artropode miriapode • cavalcatura addestrata • Natura Comune. Con tre persone: Passo 4 Q • Corsa 8 Q • Scatto non consentito. Protezioni speciali: Nessuna immunità o Contromisura specifica. Comportamento. È robusto e abituato ai propri allevatori. Cerca di allontanarsi dal pericolo e ricorre agli urti quando viene bloccato. Il profilo rappresenta una cavalcatura addestrata al trasporto; gli ordini non concedono Azioni aggiuntive. GS e PX provvisori nel manuale: da verificare al tavolo (Davide li confermerà)."
+  "note": "Artropode miriapode • cavalcatura addestrata • Natura Comune. Con tre persone: Passo 4 Q • Corsa 8 Q • Scatto non consentito. Protezioni speciali: Nessuna immunità o Contromisura specifica. Comportamento. È robusto e abituato ai propri allevatori. Cerca di allontanarsi dal pericolo e ricorre agli urti quando viene bloccato. Il profilo rappresenta una cavalcatura addestrata al trasporto; gli ordini non concedono Azioni aggiuntive. GS e PX provvisori nel manuale: da verificare al tavolo (Davide li confermerà).",
+  "_bestiario": {
+    "edizione": "Mostri 0.69",
+    "sistema_salute": "solo_PV"
+  }
 }

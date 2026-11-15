@@ -12,7 +12,7 @@
     "SAG": 5,
     "CAR": 4
   },
-  "pv": 18,
+  "pv": 24,
   "pm": 8,
   "ar": {
     "totale": 0,
@@ -103,5 +103,9 @@
   "immunita": [
     "sanguinamento"
   ],
-  "note": "Furtività 14 in penombra o buio. Niente volo né attraversamento delle pareti. Nessuna dotazione né Parata naturale. Comportamento: aggira il fronte; sotto 5 PV o senza ripari fugge. Non genera nuove Ombre in questo profilo."
+  "note": "Furtività 14 in penombra o buio. Niente volo né attraversamento delle pareti. Nessuna dotazione né Parata naturale. Comportamento: aggira il fronte; sotto 5 PV o senza ripari fugge. Non genera nuove Ombre in questo profilo.",
+  "_bestiario": {
+    "edizione": "Mostri 0.69",
+    "sistema_salute": "solo_PV"
+  }
 }

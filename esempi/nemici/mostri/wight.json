@@ -12,7 +12,7 @@
     "SAG": 6,
     "CAR": 7
   },
-  "pv": 40,
+  "pv": 52,
   "pm": 12,
   "ar": {
     "totale": 3,
@@ -125,5 +125,9 @@
   "immunita": [
     "sanguinamento"
   ],
-  "note": "AR 3 (2 intrinseca + 1 da armatura leggera). Inizia con spada e mano libera per il Tocco; l’arco richiede due mani (Colpo Singolo e Tiro Rapido). Comportamento: usa ripari dal sole; sotto 10 PV o a Ferita Seria valuta la ritirata."
+  "note": "AR 3 (2 intrinseca + 1 da armatura leggera). Inizia con spada e mano libera per il Tocco; l’arco richiede due mani (Colpo Singolo e Tiro Rapido). Comportamento: usa ripari dal sole; sotto 10 PV o a Ferita Seria valuta la ritirata.",
+  "_bestiario": {
+    "edizione": "Mostri 0.69",
+    "sistema_salute": "solo_PV"
+  }
 }

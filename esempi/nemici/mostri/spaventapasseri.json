@@ -12,7 +12,7 @@
     "SAG": 5,
     "CAR": 7
   },
-  "pv": 32,
+  "pv": 42,
   "pm": 9,
   "ar": {
     "totale": 0,
@@ -107,5 +107,9 @@
     "sanguinamento",
     "terrorizzato"
   ],
-  "note": "Sentinella di legno, stoffa e paglia animata da uno spirito (impulsi e reazioni, senza i ricordi di una vita precedente). Al massimo due Artigli per Round, Opportunità compresa. Fonte: Scarecrow, p. 268."
+  "note": "Sentinella di legno, stoffa e paglia animata da uno spirito (impulsi e reazioni, senza i ricordi di una vita precedente). Al massimo due Artigli per Round, Opportunità compresa. Fonte: Scarecrow, p. 268.",
+  "_bestiario": {
+    "edizione": "Mostri 0.69",
+    "sistema_salute": "solo_PV"
+  }
 }

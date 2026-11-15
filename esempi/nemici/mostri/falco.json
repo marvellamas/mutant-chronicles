@@ -12,7 +12,7 @@
     "SAG": 7,
     "CAR": 3
   },
-  "pv": 3,
+  "pv": 4,
   "pm": 3,
   "ar": {
     "totale": 0,
@@ -96,5 +96,9 @@
       "effetto": "Un attacco di Artigli per Round, Opportunità compresa. La piccola taglia non concede Colpo Mirato agli occhi, Accecato o un attacco contro un organo esposto (le manovre mantengono costi e penalità). Nessun Branco, Passaggio in volo o danno da picchiata. Un Falco addestrato risponde a richiami e svolge compiti compatibili con l’addestramento, senza comprendere una conversazione né riferire a parole ciò che ha visto; non condivide i sensi con un padrone né fornisce una visuale a distanza."
     }
   ],
-  "note": "La pedina tattica 1 × 1 Q non rappresenta la larghezza reale; gli oggetti trasportabili devono essere compatibili con artigli, becco e carico. Piccolo rapace distinto dal Falco sanguinario della fonte. Condotta: preferisce quota e posatoi e tende ad abbandonare il contatto quando ferito, già da Ferita Superficiale, se ha percorso e funzione alare utilizzabili. Fonte: Hawk, p. 330."
+  "note": "La pedina tattica 1 × 1 Q non rappresenta la larghezza reale; gli oggetti trasportabili devono essere compatibili con artigli, becco e carico. Piccolo rapace distinto dal Falco sanguinario della fonte. Condotta: preferisce quota e posatoi e tende ad abbandonare il contatto quando ferito, già da Ferita Superficiale, se ha percorso e funzione alare utilizzabili. Fonte: Hawk, p. 330.",
+  "_bestiario": {
+    "edizione": "Mostri 0.69",
+    "sistema_salute": "solo_PV"
+  }
 }

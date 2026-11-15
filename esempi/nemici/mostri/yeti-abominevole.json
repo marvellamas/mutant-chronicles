@@ -12,7 +12,7 @@
     "SAG": 6,
     "CAR": 4
   },
-  "pv": 85,
+  "pv": 111,
   "pm": 14,
   "ar": {
     "totale": 4,
@@ -104,5 +104,9 @@
       "effetto": "Immune a Ghiaccio e ai suoi Rallentato/Congelato e al freddo. Dopo almeno 1 danno da Fuoco −2 VA a tutte le Prove di Abilità fino a fine del turno successivo (il maggiore fra questo e Incendiato). Scurovisione 12 Q; +2 Furtività in neve e ghiaccio; olfatto 15."
     }
   ],
-  "note": "AR 4 biologica. Terra e arrampicata 8/16/24 Q. Nelle AzP al massimo due Artigli e una sola fra Sguardo e Soffio. Nessuna Parata naturale. Comportamento: coinvolge più intrusi nel Soffio; sotto 22 PV o a Ferita Seria valuta la ritirata."
+  "note": "AR 4 biologica. Terra e arrampicata 8/16/24 Q. Nelle AzP al massimo due Artigli e una sola fra Sguardo e Soffio. Nessuna Parata naturale. Comportamento: coinvolge più intrusi nel Soffio; sotto 22 PV o a Ferita Seria valuta la ritirata.",
+  "_bestiario": {
+    "edizione": "Mostri 0.69",
+    "sistema_salute": "solo_PV"
+  }
 }

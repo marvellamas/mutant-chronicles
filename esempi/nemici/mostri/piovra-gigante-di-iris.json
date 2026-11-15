@@ -12,7 +12,7 @@
     "SAG": 6,
     "CAR": 3
   },
-  "pv": 60,
+  "pv": 78,
   "pm": 5,
   "ar": {
     "totale": 5,
@@ -115,5 +115,9 @@
       "effetto": "Furtività immersa 13"
     }
   ],
-  "note": "Esemplare modificato • predatore acquatico • Natura Comune. Impiego e PX. Il valore di 70 PX comprende corpo e appendici; i tentacoli non assegnano PX separati. GS e PX restano provvisori, da verificare al tavolo. Il Polpo gigante del catalogo conserva il proprio profilo standard. ¹ Prova contrapposta di Corpo a corpo. Gli attacchi contro creature producono ciascuno AC 1. Stritolare il mezzo si usa al massimo una volta per Round, alla propria Iniziativa: ogni tentacolo applica separatamente il proprio danno allo scafo. Risorse nel manuale: Corpo: 60 PV • ogni tentacolo: 30 PV. GS e PX provvisori nel manuale: da verificare al tavolo (Davide li confermerà)."
+  "note": "Esemplare modificato • predatore acquatico • Natura Comune. Impiego e PX. Il valore di 70 PX comprende corpo e appendici; i tentacoli non assegnano PX separati. GS e PX restano provvisori, da verificare al tavolo. Il Polpo gigante del catalogo conserva il proprio profilo standard. ¹ Prova contrapposta di Corpo a corpo. Gli attacchi contro creature producono ciascuno AC 1. Stritolare il mezzo si usa al massimo una volta per Round, alla propria Iniziativa: ogni tentacolo applica separatamente il proprio danno allo scafo. Risorse nel manuale: Corpo: 60 PV • ogni tentacolo: 30 PV. GS e PX provvisori nel manuale: da verificare al tavolo (Davide li confermerà).",
+  "_bestiario": {
+    "edizione": "Mostri 0.69",
+    "sistema_salute": "solo_PV"
+  }
 }

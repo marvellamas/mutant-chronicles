@@ -12,7 +12,7 @@
     "SAG": 4,
     "CAR": 1
   },
-  "pv": 24,
+  "pv": 32,
   "ar": {
     "totale": 1,
     "magica": 0
@@ -107,5 +107,9 @@
     "a-terra",
     "terrorizzato"
   ],
-  "note": "AR 1 biologica. Il Corrosivo interessa solo protezioni non magiche di metallo compatibile (la Melma grigia: solo metallo). Condotta: va verso la fonte di nutrimento percepita più vicina; un’offerta di materiale commestibile può intercettarla. Fonte: Gray Ooze, p. 243."
+  "note": "AR 1 biologica. Il Corrosivo interessa solo protezioni non magiche di metallo compatibile (la Melma grigia: solo metallo). Condotta: va verso la fonte di nutrimento percepita più vicina; un’offerta di materiale commestibile può intercettarla. Fonte: Gray Ooze, p. 243.",
+  "_bestiario": {
+    "edizione": "Mostri 0.69",
+    "sistema_salute": "solo_PV"
+  }
 }

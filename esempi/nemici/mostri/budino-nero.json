@@ -12,7 +12,7 @@
     "SAG": 4,
     "CAR": 1
   },
-  "pv": 52,
+  "pv": 68,
   "ar": {
     "totale": 2,
     "magica": 0
@@ -132,5 +132,9 @@
     "a-terra",
     "terrorizzato"
   ],
-  "note": "AR 2 biologica. Condotta: segue il nutrimento percepito, supera dislivelli aderendo e filtra nelle aperture accessibili. Fonte: Black Pudding, p. 241."
+  "note": "AR 2 biologica. Condotta: segue il nutrimento percepito, supera dislivelli aderendo e filtra nelle aperture accessibili. Fonte: Black Pudding, p. 241.",
+  "_bestiario": {
+    "edizione": "Mostri 0.69",
+    "sistema_salute": "solo_PV"
+  }
 }

@@ -12,7 +12,7 @@
     "SAG": 5,
     "CAR": 7
   },
-  "pv": 26,
+  "pv": 34,
   "pm": 10,
   "ar": {
     "totale": 1,
@@ -136,5 +136,9 @@
       "effetto": "Il flauto ordinario usa Intrattenere e non impone Sonno, Terrorizzato o fascinazione; la variante dei Flauti magici della fonte non è compresa. Parla Comune, Elfico e Silvano; nessuna Scurovisione innata. Gambe = arti caprini."
     }
   ],
-  "note": "Abitante silvano legato a musica e incontri sociali; la propensione alla festa non elimina responsabilità o capacità di scelta. Condotta: sotto 7 PV o a Ferita Profonda può allontanarsi o trattare. Fonte: Satyr, p. 267."
+  "note": "Abitante silvano legato a musica e incontri sociali; la propensione alla festa non elimina responsabilità o capacità di scelta. Condotta: sotto 7 PV o a Ferita Profonda può allontanarsi o trattare. Fonte: Satyr, p. 267.",
+  "_bestiario": {
+    "edizione": "Mostri 0.69",
+    "sistema_salute": "solo_PV"
+  }
 }

@@ -768,13 +768,56 @@
       },
       "png_generici": "Le tabelle dei PNG generici non ricevono l’aumento (blocco E&L del 12/11; Direttore §9.6.2): l’Agente di I Grado resta a 16 PV."
     },
-    "da_fare": [
-      "Ferita diretta contro una creatura senza Ferite: −5 PV ignorando AR e la PS ordinaria delle Ferite, conservando Prove, Salvezze e condizioni dell’effetto.",
-      "Cura: ogni stato di Ferita curato vale 5 PV fino al massimo, sommato all’eventuale recupero ordinario dello stesso effetto.",
-      "A 0 PV: fuori combattimento, nessuna Azione o Difesa attiva, nessun contatore Morente; la morte effettiva resta un dato distinto.",
-      "Ritorno all’attività: un recupero valido sopra 0 riporta attivi al proprio turno successivo, senza rimuovere altri Stati e senza resuscitare un morto.",
-      "Nella plancia: niente avanzamento del tracciato né Tempra per nuove Ferite per questi profili; gli altri Stati e le Menomazioni inflitte espressamente continuano a funzionare."
-    ]
+    "versione_manuale": "Mostri 0.69",
+    "senza_ferite": {
+      "_nota": "Mostri 0.69 §4.2 e §4.2.1. Il comportamento al tavolo delle creature che non hanno il tracciato delle Ferite. Il confine col Morente del lotto 193 è la prima riga e va detto in chiaro: una creatura a 0 PV **non entra in Morente e non ha contatore**, altrimenti al tavolo qualcuno le conta i Round.",
+      "paragrafo": "Mostri 0.69 §4.2, §4.2.1",
+      "a_zero_pv": {
+        "fuori_combattimento": true,
+        "niente_azioni": true,
+        "niente_difese_attive": true,
+        "contatore_morente": false,
+        "morte_certa": false,
+        "testo": "Fuori combattimento: non agisce e non usa Difese attive. **Nessun contatore di Morente**: il Morente (§5.14) vale per i personaggi e per chi ha il tracciato delle Ferite. Non è detto che sia morta: cattura, incapacità, distruzione e morte si distinguono secondo la situazione.",
+        "nota_morente": "Una condizione che richiede espressamente un bersaglio Morente conserva quel requisito: un bersaglio a 0 PV non le equivale."
+      },
+      "danno_minimo": {
+        "sotto_zero": false,
+        "testo": "Il danno non porta i PV sotto 0."
+      },
+      "ferita_diretta": {
+        "pv": 5,
+        "ignora_ar": true,
+        "senza_ps_ferite": true,
+        "testo": "Ogni Ferita inflitta direttamente a una creatura senza Ferite le toglie **5 PV**, ignorando l’Armatura e senza la PS ordinaria per determinare le nuove Ferite. Restano Prove, Salvezze, immunità e condizioni richieste dalla fonte; la Natura del danno non cambia."
+      },
+      "cura_ferita": {
+        "pv": 5,
+        "si_somma_alla_cura_pv": true,
+        "testo": "Ogni stato di Ferita curato o ridotto le ridà **5 PV**, fino al massimo. Se l’effetto cura sia PV sia Ferite, i due recuperi si sommano. Restano costi, Azioni, tempi, frequenze e le normali condizioni del recupero dei PV, Sanguinamento compreso.",
+        "conta_come_cura_ferite": "Solo se recupera davvero PV per questa conversione: una normale cura dei PV non attiva i benefici che richiedono una cura di Ferite riuscita."
+      },
+      "senza_aumento": {
+        "_nota": "Il +30% sta nei PV massimi stampati e **in nient’altro**: applicarlo a un danno o a una cura è il secondo modo di sbagliare.",
+        "voci": [
+          "cure ordinarie dei PV",
+          "rigenerazione",
+          "danni"
+        ]
+      },
+      "ritorno_attivita": {
+        "testo": "Un recupero valido che la porti sopra 0, se è ancora viva, la riporta attiva **al proprio turno successivo**, salvo altri impedimenti. La conversione non resuscita."
+      },
+      "niente": {
+        "_nota": "Quello che una creatura senza Ferite non ha, e che la plancia non deve far avanzare.",
+        "voci": [
+          "tracciato delle Ferite e relative penalità",
+          "Tempra per determinare nuove Ferite",
+          "verifiche automatiche di Menomazione per soglia (quelle inflitte da una capacità restano)",
+          "tracciato ordinario di Affaticamento (gli effetti che lo impongono restano applicabili)"
+        ]
+      }
+    }
   },
   "regimi_lancio": {
     "taumaturgo": "taumaturgo",
@@ -798,5 +841,19 @@
       "mini-scheda"
     ],
     "eretici": "Gli Eretici come creature dell’Oscura Simmetria devono ancora essere completati: i profili attuali restano come sono, al Minore con «Toccato» e al Boss con «Consacrato», e ai gradi Semplice e Medio senza Doni (A.117)."
+  },
+  "corpus": {
+    "_nota": "Quante schede ci sono in esempi/nemici/ e da dove vengono. Dichiararlo serve a due cose: il validatore controlla che i numeri si sommino, e tests/creature-069-203.test.js controlla che i file sul disco siano davvero tanti. Un invariante verde su zero voci ci ha ingannato tre volte.",
+    "edizione": "Mostri 0.69",
+    "lotto": 203,
+    "schede": 342,
+    "dalla_edizione": 310,
+    "provvisorie": 32,
+    "non_leggibili": 0,
+    "dettaglio": {
+      "dalla_edizione": "307 aggiornate dal lettore del Word (di cui i quattro Elementali Maggiori dai PV dell’anteprima, perché la loro pagina non dà un’Iniziativa leggibile), 2 Dragomedusa da una lettura dichiarata del §7.12 e 1 nuova (Viverna della Sabbia, §7.20)",
+      "provvisorie": "I 30 umani «costruito come PG» (10 tipi × 3 gradi) e i 2 esempi del Tavolo, inseriti da Marcello: la 0.69 non li contiene e restano provvisori con il loro segno (A.258)",
+      "non_leggibili": "Nessuna: ogni scheda del manuale dà i PV, per intero o nell’anteprima della pagina."
+    }
   }
 }

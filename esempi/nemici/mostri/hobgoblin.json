@@ -12,7 +12,7 @@
     "SAG": 5,
     "CAR": 5
   },
-  "pv": 22,
+  "pv": 29,
   "pm": 6,
   "ar": {
     "totale": 5,
@@ -101,5 +101,9 @@
       "effetto": "Vede entro 12 Q anche nell’oscurità naturale; al buio non distingue i colori, non vede attraverso ostacoli, fumo o oscurità magica e non individua da sé chi è nascosto. Oltre i 12 Q valgono luce e vista ordinarie."
     }
   ],
-  "note": "Difesa: Parata 11; Schivata/Elusione 10. AR 5 con scudo medio, 3 senza; con l’arco si ripongono spada e scudo e l’AR scende a 3. La media applica già −1 agli attacchi e alle Prove fisiche ostacolate (Schivata compresa) e −1 Q al movimento (senza media: VA +1 e movimento 6/12/18). Comportamento: tiene un fronte; sotto 6 PV o a Ferita Profonda ritirata ordinata."
+  "note": "Difesa: Parata 11; Schivata/Elusione 10. AR 5 con scudo medio, 3 senza; con l’arco si ripongono spada e scudo e l’AR scende a 3. La media applica già −1 agli attacchi e alle Prove fisiche ostacolate (Schivata compresa) e −1 Q al movimento (senza media: VA +1 e movimento 6/12/18). Comportamento: tiene un fronte; sotto 6 PV o a Ferita Profonda ritirata ordinata.",
+  "_bestiario": {
+    "edizione": "Mostri 0.69",
+    "sistema_salute": "solo_PV"
+  }
 }

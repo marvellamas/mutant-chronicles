@@ -12,7 +12,7 @@
     "SAG": 8,
     "CAR": 8
   },
-  "pv": 70,
+  "pv": 91,
   "pm": 24,
   "ar": {
     "totale": 4,
@@ -174,5 +174,9 @@
       "effetto": "Entro 1,6 km dalla tana il Direttore può collocare superfici scivolose e fangose (Terreno Difficile sulla mappa) e fonti contaminate imbevibili; svaniscono in 3d10 giorni dopo la morte dell’Aboleth. Non sono attacchi ogni Round."
     }
   ],
-  "note": "Massa paragonabile a quella di un veicolo ai fini del limite di Sbalzante (taglia Grande). GS e PX con modulo tana attivo (solo quando incide davvero sull’incontro): Leggenda, 100 PX. Braccia = gruppi di tentacoli laterali; Gambe = porzioni locomotorie. Natura Comune (la malvagità dell’originale non dà Oscura Simmetria). Fonte: pp. 13–14. Comportamento: tratta e inganna prima di combattere; a 20 PV o Ferita Profonda cerca una via sommersa."
+  "note": "Massa paragonabile a quella di un veicolo ai fini del limite di Sbalzante (taglia Grande). GS e PX con modulo tana attivo (solo quando incide davvero sull’incontro): Leggenda, 100 PX. Braccia = gruppi di tentacoli laterali; Gambe = porzioni locomotorie. Natura Comune (la malvagità dell’originale non dà Oscura Simmetria). Fonte: pp. 13–14. Comportamento: tratta e inganna prima di combattere; a 20 PV o Ferita Profonda cerca una via sommersa.",
+  "_bestiario": {
+    "edizione": "Mostri 0.69",
+    "sistema_salute": "solo_PV"
+  }
 }

@@ -12,7 +12,7 @@
     "SAG": 6,
     "CAR": 5
   },
-  "pv": 20,
+  "pv": 26,
   "pm": 10,
   "ar": {
     "totale": 0,
@@ -96,5 +96,9 @@
       "effetto": "Udito e olfatto acuti +2, nessuna Scurovisione innata. Parla il linguaggio dei Cani intermittenti e comprende Silvano senza pronunciarlo; può comunicare, cooperare o rifiutare. La rivalità con le Bestie distorcenti è uno spunto di comportamento, non un obbligo cosmologico. Un solo Morso per Round, Opportunità e attacco ordinato compresi. Non è invisibile fra i Balzi, non vede attraverso i muri e non resta in una dimensione separata."
     }
   ],
-  "note": "Cacciatore che scompare da un punto e riappare in un altro visibile; il corpo resta vivente e materiale. Condotta: sotto 5 PV o a Ferita Profonda cerca un punto visibile riparato. Fonte: Blink Dog, p. 318."
+  "note": "Cacciatore che scompare da un punto e riappare in un altro visibile; il corpo resta vivente e materiale. Condotta: sotto 5 PV o a Ferita Profonda cerca un punto visibile riparato. Fonte: Blink Dog, p. 318.",
+  "_bestiario": {
+    "edizione": "Mostri 0.69",
+    "sistema_salute": "solo_PV"
+  }
 }

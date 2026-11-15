@@ -12,7 +12,7 @@
     "SAG": 7,
     "CAR": 5
   },
-  "pv": 60,
+  "pv": 78,
   "pm": 8,
   "ar": {
     "totale": 5,
@@ -99,5 +99,9 @@
       "effetto": "Gli esemplari comuni cercano di ritirarsi sotto 7 PV o a Ferita Profonda; il capobranco sotto 15 PV o a Ferita Profonda. Sono soglie di comportamento, non effetti automatici. La caduta del capobranco può indurre il branco a disperdersi, secondo la situazione."
     }
   ],
-  "note": "Predatori quadrupedi • pelle cristallina e acido • Natura Comune. Spazio: 1 × 2 Q. Corpo a corpo: 14. Atletica: 15. GS e PX provvisori nel manuale: da verificare al tavolo (Davide li confermerà)."
+  "note": "Predatori quadrupedi • pelle cristallina e acido • Natura Comune. Spazio: 1 × 2 Q. Corpo a corpo: 14. Atletica: 15. GS e PX provvisori nel manuale: da verificare al tavolo (Davide li confermerà).",
+  "_bestiario": {
+    "edizione": "Mostri 0.69",
+    "sistema_salute": "solo_PV"
+  }
 }

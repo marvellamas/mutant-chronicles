@@ -12,7 +12,7 @@
     "SAG": 5,
     "CAR": 3
   },
-  "pv": 30,
+  "pv": 39,
   "pm": 12,
   "ar": {
     "totale": 1,
@@ -102,5 +102,9 @@
       "effetto": "Arrampicata 6 Q al Passo: su pareti e soffitti aderenti si muove al Passo senza Atletica ordinaria (superfici friabili o scivolose richiedono valutazione). Attraversa normali ragnatele senza il costo aggiuntivo, ma non ha Getto di seta o reti da cattura. Un solo Morso per Round, Opportunità e colpo ordinato compresi, soltanto corporeo. Nessun linguaggio."
     }
   ],
-  "note": "Grande ragno che alterna corpo solido e fase incorporea; si sposta durante la fase (non ha il Balzo del Cane intermittente). Condotta: sotto 8 PV o a Ferita Profonda cerca una fessura. Fonte: Phase Spider, p. 334."
+  "note": "Grande ragno che alterna corpo solido e fase incorporea; si sposta durante la fase (non ha il Balzo del Cane intermittente). Condotta: sotto 8 PV o a Ferita Profonda cerca una fessura. Fonte: Phase Spider, p. 334.",
+  "_bestiario": {
+    "edizione": "Mostri 0.69",
+    "sistema_salute": "solo_PV"
+  }
 }

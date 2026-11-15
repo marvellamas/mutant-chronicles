@@ -12,7 +12,7 @@
     "SAG": 5,
     "CAR": 3
   },
-  "pv": 60,
+  "pv": 78,
   "pm": 8,
   "ar": {
     "totale": 3,
@@ -105,5 +105,9 @@
       "effetto": "Vede entro 12 Q anche nell’oscurità naturale; al buio non distingue i colori, non vede attraverso ostacoli, fumo o oscurità magica e non individua da sé chi è nascosto. Oltre i 12 Q valgono luce e vista ordinarie."
     }
   ],
-  "note": "AR 3 biologica. Nessun equipaggiamento: artigli, pelle e rigenerazione sono biologici; nessuna Parata naturale. Contromisure: Fuoco e Corrosivo bloccano il recupero; separarlo dalle prede. Comportamento: mantiene il contatto con una preda isolata; sotto 15 PV o dopo ripetuti blocchi cerca riparo."
+  "note": "AR 3 biologica. Nessun equipaggiamento: artigli, pelle e rigenerazione sono biologici; nessuna Parata naturale. Contromisure: Fuoco e Corrosivo bloccano il recupero; separarlo dalle prede. Comportamento: mantiene il contatto con una preda isolata; sotto 15 PV o dopo ripetuti blocchi cerca riparo.",
+  "_bestiario": {
+    "edizione": "Mostri 0.69",
+    "sistema_salute": "solo_PV"
+  }
 }

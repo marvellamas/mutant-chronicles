@@ -12,7 +12,7 @@
     "SAG": 4,
     "CAR": 2
   },
-  "pv": 18,
+  "pv": 24,
   "pm": 4,
   "ar": {
     "totale": 3,
@@ -98,5 +98,9 @@
       "effetto": "Percezione tattile di vibrazioni entro 6 Q nel mezzo fisico comunicante, senza attraversare pareti né distinguere colori e scritte."
     }
   ],
-  "note": "Testa = occhi e apparato boccale, Torace = carapace, Braccia = chele, Gambe = zampe. Non comprende linguaggi. Condotta: cibo o difesa di un rifugio; sotto 4 PV o a Ferita Profonda si ritira. Fonte: Giant Crab, p. 324."
+  "note": "Testa = occhi e apparato boccale, Torace = carapace, Braccia = chele, Gambe = zampe. Non comprende linguaggi. Condotta: cibo o difesa di un rifugio; sotto 4 PV o a Ferita Profonda si ritira. Fonte: Giant Crab, p. 324.",
+  "_bestiario": {
+    "edizione": "Mostri 0.69",
+    "sistema_salute": "solo_PV"
+  }
 }

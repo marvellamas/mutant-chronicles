@@ -12,7 +12,7 @@
     "SAG": 4,
     "CAR": 2
   },
-  "pv": 18,
+  "pv": 24,
   "pm": 4,
   "ar": {
     "totale": 1,
@@ -100,5 +100,9 @@
   "immunita": [
     "sanguinamento"
   ],
-  "note": "AR 1 da armatura leggera. Inizia con la spada pronta; l’arco (due mani) ha Colpo Singolo e Tiro Rapido. Comprende ordini semplici ma non parla. Comportamento: presidia un luogo o esegue una consegna."
+  "note": "AR 1 da armatura leggera. Inizia con la spada pronta; l’arco (due mani) ha Colpo Singolo e Tiro Rapido. Comprende ordini semplici ma non parla. Comportamento: presidia un luogo o esegue una consegna.",
+  "_bestiario": {
+    "edizione": "Mostri 0.69",
+    "sistema_salute": "solo_PV"
+  }
 }

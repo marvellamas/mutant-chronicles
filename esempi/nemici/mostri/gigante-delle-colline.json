@@ -12,7 +12,7 @@
     "SAG": 4,
     "CAR": 3
   },
-  "pv": 60,
+  "pv": 78,
   "pm": 8,
   "ar": {
     "totale": 2,
@@ -96,5 +96,9 @@
       "effetto": "Atletica 15 e soglie FOR × 20 / × 40 / × 80 kg per sollevare, trascinare o forzare (§4), rispettando Integrità e caratteristiche dell’ostacolo. Nessun danno doppio da assedio."
     }
   ],
-  "note": "AR 2 biologica, nessuna armatura. Maglio = Martello a due mani (+3 ordinario, +1 innato, portata 2 Q). Comportamento: raggiunge il bersaglio più accessibile; sotto 15 PV o a Ferita Profonda valuta fuga, resa o trattativa."
+  "note": "AR 2 biologica, nessuna armatura. Maglio = Martello a due mani (+3 ordinario, +1 innato, portata 2 Q). Comportamento: raggiunge il bersaglio più accessibile; sotto 15 PV o a Ferita Profonda valuta fuga, resa o trattativa.",
+  "_bestiario": {
+    "edizione": "Mostri 0.69",
+    "sistema_salute": "solo_PV"
+  }
 }

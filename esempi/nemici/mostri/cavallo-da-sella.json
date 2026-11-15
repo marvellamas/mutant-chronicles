@@ -12,7 +12,7 @@
     "SAG": 5,
     "CAR": 4
   },
-  "pv": 22,
+  "pv": 29,
   "pm": 5,
   "ar": {
     "totale": 0,
@@ -87,5 +87,9 @@
       "effetto": "Usa l’AzM dell’animale e le distanze riportate, ridotte da carico, terreno o lesioni. L’abitudine alla sella non gli concede Impeto, Calpestare, immunità a Terrorizzato o una Difesa gratuita. Un attacco di Zoccoli per Round, Opportunità compresa; la portata degli Zoccoli non diventa quella dell’arma del cavaliere."
     }
   ],
-  "note": "La velocità non implica la capacità di affrontare volontariamente fiamme, spari o una carica. Condotta: cerca uno spazio aperto e una direzione conosciuta; sotto 5 PV o a Ferita Profonda tende alla fuga. Fonte: Riding Horse, p. 336."
+  "note": "La velocità non implica la capacità di affrontare volontariamente fiamme, spari o una carica. Condotta: cerca uno spazio aperto e una direzione conosciuta; sotto 5 PV o a Ferita Profonda tende alla fuga. Fonte: Riding Horse, p. 336.",
+  "_bestiario": {
+    "edizione": "Mostri 0.69",
+    "sistema_salute": "solo_PV"
+  }
 }

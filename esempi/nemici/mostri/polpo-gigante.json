@@ -12,7 +12,7 @@
     "SAG": 5,
     "CAR": 3
   },
-  "pv": 38,
+  "pv": 50,
   "pm": 5,
   "ar": {
     "totale": 1,
@@ -105,5 +105,9 @@
       }
     }
   ],
-  "note": "Furtività 13 immerso, con copertura. Non comprende linguaggi. Condotta: sotto 9 PV o a Ferita Profonda rilascia la preda e fugge (l’Inchiostro usa la sua AzP). Fonte: Giant Octopus, p. 326."
+  "note": "Furtività 13 immerso, con copertura. Non comprende linguaggi. Condotta: sotto 9 PV o a Ferita Profonda rilascia la preda e fugge (l’Inchiostro usa la sua AzP). Fonte: Giant Octopus, p. 326.",
+  "_bestiario": {
+    "edizione": "Mostri 0.69",
+    "sistema_salute": "solo_PV"
+  }
 }

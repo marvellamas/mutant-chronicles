@@ -2833,7 +2833,49 @@ function validaFormatoNemici(dati, err) {
     else if (!isOggetto(C.esempi) || !Object.values(C.esempi).every((v) => Array.isArray(v) && v.length === 2 && v.every(isIntero) && v[1] === Math.ceil(v[0] * C.fattore))) {
       err(F, 'sistema_salute.conversione_pv.esempi', `ogni esempio [prima, dopo] con dopo = prima × ${C.fattore} arrotondato per eccesso`);
     }
-    if (!Array.isArray(SS.da_fare) || !SS.da_fare.every(isTesto)) err(F, 'sistema_salute.da_fare', 'che cosa del sistema ridotto non è ancora al tavolo, scritto');
+    // Lotto 203: il comportamento senza Ferite non è più «da fare», è dichiarato (Mostri 0.69 §4.2, §4.2.1). Il
+    // confine col Morente del lotto 193 si pretende scritto: una creatura a 0 PV **non ha contatore**, e se quel
+    // campo diventasse vero al tavolo qualcuno le conterebbe i Round.
+    const SF = SS.senza_ferite;
+    if (!isOggetto(SF)) err(F, 'sistema_salute.senza_ferite', 'il comportamento al tavolo delle creature senza Ferite va dichiarato (Mostri §4.2, §4.2.1)');
+    else {
+      if (!isTesto(SF.paragrafo)) err(F, 'sistema_salute.senza_ferite.paragrafo', 'il paragrafo da cui viene');
+      const Z = SF.a_zero_pv;
+      if (!isOggetto(Z) || !isTesto(Z.testo)) err(F, 'sistema_salute.senza_ferite.a_zero_pv', 'che cosa succede a 0 PV, scritto');
+      else {
+        if (Z.contatore_morente !== false) err(F, 'sistema_salute.senza_ferite.a_zero_pv.contatore_morente', 'deve essere falso: una creatura senza Ferite non entra in Morente e non ha contatore (§4.2, confine col lotto 193)');
+        if (Z.fuori_combattimento !== true) err(F, 'sistema_salute.senza_ferite.a_zero_pv.fuori_combattimento', 'a 0 PV è fuori combattimento');
+        if (Z.morte_certa !== false) err(F, 'sistema_salute.senza_ferite.a_zero_pv.morte_certa', 'deve essere falso: 0 PV non certifica la morte');
+      }
+      for (const [k, atteso] of [['ferita_diretta', 5], ['cura_ferita', 5]]) {
+        const x = SF[k];
+        if (!isOggetto(x) || x.pv !== atteso || !isTesto(x.testo)) err(F, `sistema_salute.senza_ferite.${k}`, `${atteso} PV, col testo che lo spiega (§4.2.1)`);
+      }
+      if (SF.ferita_diretta?.ignora_ar !== true) err(F, 'sistema_salute.senza_ferite.ferita_diretta.ignora_ar', 'la Ferita diretta ignora l’Armatura');
+      if (SF.danno_minimo?.sotto_zero !== false) err(F, 'sistema_salute.senza_ferite.danno_minimo.sotto_zero', 'il danno non porta i PV sotto 0');
+      // il +30% sta nei PV massimi e in nient'altro: dirlo è il modo di non riapplicarlo a danni e cure
+      if (!Array.isArray(SF.senza_aumento?.voci) || !SF.senza_aumento.voci.length) err(F, 'sistema_salute.senza_aumento.voci', 'che cosa NON riceve il +30% (cure, rigenerazione, danni)');
+      if (!Array.isArray(SF.niente?.voci) || !SF.niente.voci.length) err(F, 'sistema_salute.senza_ferite.niente.voci', 'quello che una creatura senza Ferite non ha');
+    }
+    if (SS.da_fare !== undefined) err(F, 'sistema_salute.da_fare', 'il comportamento è dichiarato in `senza_ferite` (lotto 203): «da_fare» non deve restare, altrimenti sembra che manchi ancora');
+  }
+  // Lotto 203: **il conto del corpus si dichiara e deve tornare.** Se i dati dicono di aver controllato le
+  // creature, devono dire quante e i numeri devono sommarsi: un invariante verde su zero voci ci ha ingannato tre
+  // volte. Che i file sul disco siano davvero tanti lo controlla tests/creature-069-203.test.js, che li conta.
+  const CO = f.corpus;
+  if (!isOggetto(CO)) err(F, 'corpus', 'quante schede ci sono in esempi/nemici/ e da dove vengono, dichiarato (lotto 203)');
+  else {
+    for (const k of ['schede', 'dalla_edizione', 'provvisorie', 'non_leggibili']) {
+      if (!isIntero(CO[k]) || CO[k] < 0) err(F, `corpus.${k}`, 'intero non negativo');
+    }
+    if (!isTesto(CO.edizione)) err(F, 'corpus.edizione', 'l’edizione da cui vengono le schede');
+    const somma = (CO.dalla_edizione ?? 0) + (CO.provvisorie ?? 0) + (CO.non_leggibili ?? 0);
+    if (isIntero(CO.schede) && somma !== CO.schede) {
+      err(F, 'corpus.schede', `il conto non torna: ${CO.dalla_edizione} dall’edizione + ${CO.provvisorie} provvisorie + ${CO.non_leggibili} non leggibili = ${somma}, ma le schede dichiarate sono ${CO.schede}`);
+    }
+    if (!isOggetto(CO.dettaglio) || !['dalla_edizione', 'provvisorie', 'non_leggibili'].every((k) => isTesto(CO.dettaglio[k]))) {
+      err(F, 'corpus.dettaglio', 'per ogni gruppo, da dove vengono quelle schede: un numero senza il perché non si può ricontrollare');
+    }
   }
   // scala del GS (Direttore §9.3.1): nomi unici, PX interi crescenti
   if (!Array.isArray(f.gs_scala) || !f.gs_scala.length) err(F, 'gs_scala', 'lista della scala del GS mancante');

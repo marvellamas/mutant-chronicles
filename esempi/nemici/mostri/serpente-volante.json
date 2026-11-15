@@ -12,7 +12,7 @@
     "SAG": 6,
     "CAR": 2
   },
-  "pv": 8,
+  "pv": 11,
   "pm": 4,
   "ar": {
     "totale": 1,
@@ -96,5 +96,9 @@
       "effetto": "Terra e nuoto 6 / 12 / 18: la stessa andatura vale anche per nuoto"
     }
   ],
-  "note": "Fauna ordinaria • Natura Comune. Sensi e linguaggi: Nessuno speciale; nessun linguaggio."
+  "note": "Fauna ordinaria • Natura Comune. Sensi e linguaggi: Nessuno speciale; nessun linguaggio.",
+  "_bestiario": {
+    "edizione": "Mostri 0.69",
+    "sistema_salute": "solo_PV"
+  }
 }

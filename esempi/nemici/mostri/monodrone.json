@@ -12,7 +12,7 @@
     "SAG": 5,
     "CAR": 3
   },
-  "pv": 8,
+  "pv": 11,
   "pm": 5,
   "ar": {
     "totale": 1,
@@ -127,5 +127,9 @@
       "effetto": "Un Pugnale Comune, FOR 2, PI 4, PS Integrità 10; due Giavellotti Comuni della sentinella (FOR 3, PI 4, PS Integrità 10). Inizia con un Giavellotto pronto e gli altri oggetti riposti. Un solo attacco per Round, Opportunità compresa (con un’arma ravvicinata pronta). Estrarre o recuperare un’arma richiede 1 AzP. I 11 PX comprendono la dotazione."
     }
   ],
-  "note": "Modron di primo grado: piccolo corpo sferico con arti e ali, per consegne elementari e messaggi brevi. Sotto 2 PV o a Ferita Profonda cerca il superiore o un riparo se il compito lo consente. Fonte: Monodrone, p. 224."
+  "note": "Modron di primo grado: piccolo corpo sferico con arti e ali, per consegne elementari e messaggi brevi. Sotto 2 PV o a Ferita Profonda cerca il superiore o un riparo se il compito lo consente. Fonte: Monodrone, p. 224.",
+  "_bestiario": {
+    "edizione": "Mostri 0.69",
+    "sistema_salute": "solo_PV"
+  }
 }

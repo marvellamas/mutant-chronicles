@@ -12,7 +12,7 @@
     "SAG": 5,
     "CAR": 3
   },
-  "pv": 3,
+  "pv": 4,
   "pm": 3,
   "ar": {
     "totale": 0,
@@ -91,5 +91,9 @@
       "effetto": "+2 a Percezione quando l’olfatto è determinante: un odore accessibile può rivelare una traccia, ma non localizza ogni creatura oltre pareti o in un ambiente saturo di altri odori (restano le Prove per seguire una pista). Può usare un varco adatto al suo corpo reale; una fessura chiusa non diventa percorribile perché occupa una pedina. Nessuna aderenza a pareti lisce."
     }
   ],
-  "note": "Un Morso per Round, Opportunità compresa; non inocula veleno o malattie automaticamente e non ha Tattiche di branco. Testa e Torace = capo e tronco; Braccia = zampe anteriori; Gambe = posteriori. Condotta: cerca un anfratto libero; a Ferita Superficiale tende alla fuga. Fonte: Rat, p. 335."
+  "note": "Un Morso per Round, Opportunità compresa; non inocula veleno o malattie automaticamente e non ha Tattiche di branco. Testa e Torace = capo e tronco; Braccia = zampe anteriori; Gambe = posteriori. Condotta: cerca un anfratto libero; a Ferita Superficiale tende alla fuga. Fonte: Rat, p. 335.",
+  "_bestiario": {
+    "edizione": "Mostri 0.69",
+    "sistema_salute": "solo_PV"
+  }
 }

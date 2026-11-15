@@ -12,7 +12,7 @@
     "SAG": 3,
     "CAR": 1
   },
-  "pv": 24,
+  "pv": 32,
   "pm": 4,
   "ar": {
     "totale": 1,
@@ -113,5 +113,9 @@
     "stordito",
     "terrorizzato"
   ],
-  "note": "I due profili di Morsi/Becchi sono le fasce di danno per PV: quello ridotto sostituisce l’altro e non è un attacco separato. Spazio 1 × 1 Q condivisibile con altre creature (portata 0 Q: attacca solo nello spazio condiviso). Profilo generico distinto dalla Covata e dalle varianti volanti o velenose (le varianti di vespe, ragni, scarabei e centopiedi della fonte non sono in questa scheda). L’AR 1 si sottrae dopo la resistenza pertinente; il carapace non dà PI separati né Parata naturale. Non ha Volo, Scavo, veleno, telepatia o adattamento alle Terre del Fuoco. Condotta: può difendere un nido o seguire una fonte di nutrimento; a 12 PV o meno oppure a Ferita Profonda tende a ripararsi nelle crepe. Fonte: Swarm of Insects, p. 338."
+  "note": "I due profili di Morsi/Becchi sono le fasce di danno per PV: quello ridotto sostituisce l’altro e non è un attacco separato. Spazio 1 × 1 Q condivisibile con altre creature (portata 0 Q: attacca solo nello spazio condiviso). Profilo generico distinto dalla Covata e dalle varianti volanti o velenose (le varianti di vespe, ragni, scarabei e centopiedi della fonte non sono in questa scheda). L’AR 1 si sottrae dopo la resistenza pertinente; il carapace non dà PI separati né Parata naturale. Non ha Volo, Scavo, veleno, telepatia o adattamento alle Terre del Fuoco. Condotta: può difendere un nido o seguire una fonte di nutrimento; a 12 PV o meno oppure a Ferita Profonda tende a ripararsi nelle crepe. Fonte: Swarm of Insects, p. 338.",
+  "_bestiario": {
+    "edizione": "Mostri 0.69",
+    "sistema_salute": "solo_PV"
+  }
 }

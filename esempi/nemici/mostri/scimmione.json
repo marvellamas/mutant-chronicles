@@ -12,7 +12,7 @@
     "SAG": 6,
     "CAR": 4
   },
-  "pv": 24,
+  "pv": 32,
   "pm": 6,
   "ar": {
     "totale": 0,
@@ -111,5 +111,9 @@
       "effetto": "Il lancio richiede una pietra pronta e una mano libera; raccogliere una pietra accessibile entro 1 Q costa 1 AzP (non è incorporabile nel tiro); estrarre un proiettile già trasportato segue il §5.1.1 (−4 VA per una sola estrazione incorporata). Il Direttore stabilisce prima della scena le pietre raggiungibili; roccia compatta o terreno senza pietre non sono una riserva. Ogni tiro richiede un nuovo proiettile; il danno non si replica sui bersagli adiacenti; nessuna Parata naturale."
     }
   ],
-  "note": "Non comprende linguaggi nel profilo selvatico; può apprendere segnali tramite un rapporto stabilito nella scena. Condotta: minaccia con richiami e posture prima dello scontro; sotto 6 PV o a Ferita Profonda raggiunge il gruppo o un riparo. Fonte: Ape, p. 317."
+  "note": "Non comprende linguaggi nel profilo selvatico; può apprendere segnali tramite un rapporto stabilito nella scena. Condotta: minaccia con richiami e posture prima dello scontro; sotto 6 PV o a Ferita Profonda raggiunge il gruppo o un riparo. Fonte: Ape, p. 317.",
+  "_bestiario": {
+    "edizione": "Mostri 0.69",
+    "sistema_salute": "solo_PV"
+  }
 }

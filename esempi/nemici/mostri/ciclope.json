@@ -12,7 +12,7 @@
     "SAG": 3,
     "CAR": 4
   },
-  "pv": 64,
+  "pv": 84,
   "pm": 8,
   "ar": {
     "totale": 2,
@@ -96,5 +96,9 @@
       "effetto": "Accecato impedisce la vista normalmente. Il capo resta una sola localizzazione: un colpo alla Testa non distrugge l’occhio da sé. Non possiede scurovisione né un senso alternativo."
     }
   ],
-  "note": "AR 2 biologica. Maglio = Martello a due mani (danno con +3 ordinario e +2 innato, portata 2 Q); nessuno scudo, para con il maglio. Lancio di massi: solo Colpo Singolo, serve un masso libero (~20 kg) da raccogliere (1 AzP, due mani). Comportamento: difende rifugio e risorse; sotto 16 PV o a Ferita Seria cerca riparo o tratta."
+  "note": "AR 2 biologica. Maglio = Martello a due mani (danno con +3 ordinario e +2 innato, portata 2 Q); nessuno scudo, para con il maglio. Lancio di massi: solo Colpo Singolo, serve un masso libero (~20 kg) da raccogliere (1 AzP, due mani). Comportamento: difende rifugio e risorse; sotto 16 PV o a Ferita Seria cerca riparo o tratta.",
+  "_bestiario": {
+    "edizione": "Mostri 0.69",
+    "sistema_salute": "solo_PV"
+  }
 }

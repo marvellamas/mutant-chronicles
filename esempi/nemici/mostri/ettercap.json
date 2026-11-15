@@ -12,7 +12,7 @@
     "SAG": 6,
     "CAR": 3
   },
-  "pv": 28,
+  "pv": 37,
   "pm": 6,
   "ar": {
     "totale": 1,
@@ -116,5 +116,9 @@
       "effetto": "Vede entro 12 Q nel buio naturale, senza colori; non attraversa ostacoli né individua da sola chi è nascosto."
     }
   ],
-  "note": "Getto di seta: VA 12, massimo 12 Q (non è nell’elenco attacchi perché non infligge danni). Braccia = arti superiori di presa. Nome originale: Ettercap, p. 131. Comportamento: cerca vie verticali e ostacoli; a Ferita Profonda può abbandonare la preda e allontanarsi sulla rete. Il manuale esclude l’Ettercap con garrota."
+  "note": "Getto di seta: VA 12, massimo 12 Q (non è nell’elenco attacchi perché non infligge danni). Braccia = arti superiori di presa. Nome originale: Ettercap, p. 131. Comportamento: cerca vie verticali e ostacoli; a Ferita Profonda può abbandonare la preda e allontanarsi sulla rete. Il manuale esclude l’Ettercap con garrota.",
+  "_bestiario": {
+    "edizione": "Mostri 0.69",
+    "sistema_salute": "solo_PV"
+  }
 }

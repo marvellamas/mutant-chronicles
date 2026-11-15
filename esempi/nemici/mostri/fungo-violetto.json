@@ -12,7 +12,7 @@
     "SAG": 2,
     "CAR": 1
   },
-  "pv": 18,
+  "pv": 24,
   "ar": {
     "totale": 0,
     "magica": 0
@@ -95,5 +95,9 @@
     "assordato",
     "terrorizzato"
   ],
-  "note": "Furtività 13 fra funghi. Testa = cappello, Torace = gambo, Braccia = filamenti, Gambe = base locomotrice. Fonte: Violet Fungus, p. 138."
+  "note": "Furtività 13 fra funghi. Testa = cappello, Torace = gambo, Braccia = filamenti, Gambe = base locomotrice. Fonte: Violet Fungus, p. 138.",
+  "_bestiario": {
+    "edizione": "Mostri 0.69",
+    "sistema_salute": "solo_PV"
+  }
 }

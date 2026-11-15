@@ -12,7 +12,7 @@
     "SAG": 5,
     "CAR": 3
   },
-  "pv": 40,
+  "pv": 52,
   "pm": 5,
   "ar": {
     "totale": 3,
@@ -100,5 +100,9 @@
       "effetto": "L’AR è biologica complessiva; il corno non ha PI separati e non para (una Menomazione si valuta nella funzione della Testa). Il peso non permette di ignorare trincee, barriere o un pavimento che non lo regge."
     }
   ],
-  "note": "Vista, udito e olfatto ordinari. Condotta: può minacciare prima di attaccare e fermarsi quando gli intrusi cedono spazio; sotto 10 PV o a Ferita Seria si allontana (un piccolo da difendere può cambiarlo). Fonte: Rhinoceros, p. 336."
+  "note": "Vista, udito e olfatto ordinari. Condotta: può minacciare prima di attaccare e fermarsi quando gli intrusi cedono spazio; sotto 10 PV o a Ferita Seria si allontana (un piccolo da difendere può cambiarlo). Fonte: Rhinoceros, p. 336.",
+  "_bestiario": {
+    "edizione": "Mostri 0.69",
+    "sistema_salute": "solo_PV"
+  }
 }

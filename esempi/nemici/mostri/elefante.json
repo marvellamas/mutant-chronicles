@@ -12,7 +12,7 @@
     "SAG": 5,
     "CAR": 4
   },
-  "pv": 60,
+  "pv": 78,
   "pm": 7,
   "ar": {
     "totale": 3,
@@ -104,5 +104,9 @@
       "effetto": "La proboscide manipola oggetti compatibili con la sua anatomia: non dà un terzo attacco, una Parata o una presa automatica (le manovre usano Azioni e procedure ordinarie). Per lesionarla si considera la funzione della Testa. Veicoli e costruzioni richiedono un bersaglio strutturale raggiungibile e il proprio profilo di Integrità. Il danno delle Zanne resta 2d6+3, senza bonus da slancio né ×2 di Carica."
     }
   ],
-  "note": "Sensi ordinari; non comprende linguaggi nel profilo selvatico (può rispondere a segnali appresi se il rapporto di addestramento è stabilito nella scena). Montura e carico richiedono una configurazione propria, senza Azioni o portata trasferite al cavaliere. Condotta: protegge i piccoli e può aprirsi una via di fuga; sotto 15 PV o a Ferita Seria si ritira con il branco. Fonte: Elephant, p. 322."
+  "note": "Sensi ordinari; non comprende linguaggi nel profilo selvatico (può rispondere a segnali appresi se il rapporto di addestramento è stabilito nella scena). Montura e carico richiedono una configurazione propria, senza Azioni o portata trasferite al cavaliere. Condotta: protegge i piccoli e può aprirsi una via di fuga; sotto 15 PV o a Ferita Seria si ritira con il branco. Fonte: Elephant, p. 322.",
+  "_bestiario": {
+    "edizione": "Mostri 0.69",
+    "sistema_salute": "solo_PV"
+  }
 }

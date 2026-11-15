@@ -12,7 +12,7 @@
     "SAG": 7,
     "CAR": 4
   },
-  "pv": 24,
+  "pv": 32,
   "pm": 8,
   "ar": {
     "totale": 1,
@@ -103,5 +103,9 @@
       "effetto": "Sotto luce solare diretta −2 a tutti i VA di Abilità e Salvezza; termina quando sono schermati (Luce Mistica e luce artificiale non contano). Ogni 10 minuti continuativi di esposizione Tempra 0 con il −2: fallimento 1 AFT; dal sessantesimo minuto ogni verifica infligge anche 1d6 Naturale interno che ignora AR. Un minuto di ombra interrompe il conteggio; PV, Ferite e AFT subiti restano."
     }
   ],
-  "note": "Cerca dialogo e protezione del circolo; si ritira sotto 6 PV o a Ferita Profonda. Fonte: Myconid Adult, p. 232."
+  "note": "Cerca dialogo e protezione del circolo; si ritira sotto 6 PV o a Ferita Profonda. Fonte: Myconid Adult, p. 232.",
+  "_bestiario": {
+    "edizione": "Mostri 0.69",
+    "sistema_salute": "solo_PV"
+  }
 }

@@ -12,7 +12,7 @@
     "SAG": 6,
     "CAR": 3
   },
-  "pv": 24,
+  "pv": 32,
   "pm": 5,
   "ar": {
     "totale": 1,
@@ -107,5 +107,9 @@
       "effetto": "Con la propria AzM percorre fino a 6 Q al Passo su appigli adatti, senza Prova in condizioni ordinarie; superfici precarie o altre difficoltà concrete richiedono la Prova pertinente. Non aderisce a soffitti o pareti lisce e non ottiene un secondo budget passando da terra a un tronco. Sollevarsi sulle zampe posteriori non cambia spazio, riserve o localizzazioni."
     }
   ],
-  "note": "Orso di taglia media, più piccolo del Bruno già nel catalogo. Pelliccia e massa non aggiungono resistenze al freddo, alle armi da fuoco o agli Stati. Condotta: può difendere piccoli o cibo e cercare distanza quando gli viene lasciata una via libera; sotto 6 PV o a Ferita Profonda tende a ritirarsi. Fonte: Black Bear, p. 318."
+  "note": "Orso di taglia media, più piccolo del Bruno già nel catalogo. Pelliccia e massa non aggiungono resistenze al freddo, alle armi da fuoco o agli Stati. Condotta: può difendere piccoli o cibo e cercare distanza quando gli viene lasciata una via libera; sotto 6 PV o a Ferita Profonda tende a ritirarsi. Fonte: Black Bear, p. 318.",
+  "_bestiario": {
+    "edizione": "Mostri 0.69",
+    "sistema_salute": "solo_PV"
+  }
 }

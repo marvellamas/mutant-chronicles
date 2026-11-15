@@ -12,7 +12,7 @@
     "SAG": 6,
     "CAR": 3
   },
-  "pv": 28,
+  "pv": 37,
   "pm": 6,
   "ar": {
     "totale": 1,
@@ -101,5 +101,9 @@
       "effetto": "Con almeno 2 Q di rincorsa salta fino a 5 Q in orizzontale senza Prova in condizioni ordinarie, contando rincorsa e salto nel movimento; serve un atterraggio adatto. Ostacoli o circostanze difficili richiedono Atletica."
     }
   ],
-  "note": "Condotta: sotto 7 PV o a Ferita Profonda cerca riparo e sostegno, salvo minaccia immediata ai piccoli."
+  "note": "Condotta: sotto 7 PV o a Ferita Profonda cerca riparo e sostegno, salvo minaccia immediata ai piccoli.",
+  "_bestiario": {
+    "edizione": "Mostri 0.69",
+    "sistema_salute": "solo_PV"
+  }
 }

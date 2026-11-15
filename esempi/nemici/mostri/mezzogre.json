@@ -12,7 +12,7 @@
     "SAG": 4,
     "CAR": 5
   },
-  "pv": 36,
+  "pv": 47,
   "pm": 6,
   "ar": {
     "totale": 1,
@@ -127,5 +127,9 @@
       "effetto": "Lo spazio 2 × 2 Q non concede più danni, Azioni, PI, qualità o portata; la portata si misura dal bordo dello spazio secondo il Giocatore. Barriere, oggetti, carico e passaggi stretti seguono le regole ordinarie: la grande forza non sfonda automaticamente muri e porte."
     }
   ],
-  "note": "Parla Comune e Gigante. Umanoide di discendenza ogre, meno massiccio di un Ogre: può lavorare come guardia, guida o mercenario, la discendenza non decide le sue scelte. Condotta: sotto 9 PV o a Ferita Profonda cerca una via di fuga o tratta. Fonte: Half-Ogre, p. 238."
+  "note": "Parla Comune e Gigante. Umanoide di discendenza ogre, meno massiccio di un Ogre: può lavorare come guardia, guida o mercenario, la discendenza non decide le sue scelte. Condotta: sotto 9 PV o a Ferita Profonda cerca una via di fuga o tratta. Fonte: Half-Ogre, p. 238.",
+  "_bestiario": {
+    "edizione": "Mostri 0.69",
+    "sistema_salute": "solo_PV"
+  }
 }

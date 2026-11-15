@@ -12,7 +12,7 @@
     "SAG": 8,
     "CAR": 3
   },
-  "pv": 55,
+  "pv": 72,
   "pm": 8,
   "ar": {
     "totale": 4,
@@ -98,5 +98,9 @@
       "effetto": "Vede entro 12 Q nel buio naturale, senza colori; non attraversa ostacoli né oscurità soprannaturale. Un bersaglio nascosto richiede il normale confronto di Percezione e Furtività."
     }
   ],
-  "note": "Furtività 15 immobile sulla roccia (aderenza a pareti e soffitti, 2/4/6 Q). Comportamento: attende il gruppo, poi una preda alla volta per il Morso; sotto 14 PV o a Ferita Seria rilascia i prigionieri."
+  "note": "Furtività 15 immobile sulla roccia (aderenza a pareti e soffitti, 2/4/6 Q). Comportamento: attende il gruppo, poi una preda alla volta per il Morso; sotto 14 PV o a Ferita Seria rilascia i prigionieri.",
+  "_bestiario": {
+    "edizione": "Mostri 0.69",
+    "sistema_salute": "solo_PV"
+  }
 }

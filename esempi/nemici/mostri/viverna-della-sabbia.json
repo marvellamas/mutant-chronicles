@@ -1,0 +1,145 @@
+{
+  "formato": "mutant-nemico",
+  "versione": 1,
+  "id": "viverna-della-sabbia",
+  "nome": "Viverna della Sabbia",
+  "fonte": "dal Manuale dei Mostri v0.46 (Word del 27/10/2026), cap. 7 «Fauna di Iris» — Viverna della Sabbia",
+  "caratteristiche": {
+    "FOR": 9,
+    "DES": 5,
+    "COS": 7,
+    "INT": 3,
+    "SAG": 6,
+    "CAR": 3
+  },
+  "pv": 73,
+  "pm": 8,
+  "ar": {
+    "totale": 3,
+    "magica": 0
+  },
+  "difese": 9,
+  "salvezze": {
+    "tempra": 12,
+    "riflessi": 9,
+    "volonta": 9,
+    "magia": 10
+  },
+  "iniziativa": 0,
+  "azioni": {
+    "principali": 2,
+    "movimento": 1
+  },
+  "movimento": {
+    "passo": 4,
+    "corsa": 8,
+    "scatto": 12,
+    "volo": 16
+  },
+  "spazio": "2 × 2 Q",
+  "taglia": "grande",
+  "abilita": [
+    {
+      "nome": "Corpo a corpo",
+      "va": 13
+    },
+    {
+      "nome": "Atletica",
+      "va": 12
+    },
+    {
+      "nome": "Percezione",
+      "va": 12
+    },
+    {
+      "nome": "Furtività",
+      "va": 7
+    }
+  ],
+  "gs_px": {
+    "gs": "Veterano",
+    "px": 50,
+    "per_pg": 4
+  },
+  "attacchi": [
+    {
+      "nome": "Morso",
+      "tipo": "ravvicinato",
+      "va": 13,
+      "danno": "1d8+2",
+      "natura": "Naturale",
+      "proprieta": [
+        "Perforazione"
+      ],
+      "portata_q": 2,
+      "ac": 1
+    },
+    {
+      "nome": "Pungiglione",
+      "tipo": "ravvicinato",
+      "va": 13,
+      "danno": "1d6+2",
+      "natura": "Naturale",
+      "proprieta": [
+        "poi veleno"
+      ],
+      "portata_q": 2,
+      "ac": 1
+    },
+    {
+      "nome": "Artigli",
+      "tipo": "ravvicinato",
+      "va": 13,
+      "danno": "1d8+2",
+      "natura": "Naturale",
+      "proprieta": [
+        "Taglio"
+      ],
+      "portata_q": 1,
+      "ac": 1
+    }
+  ],
+  "capacita": [
+    {
+      "nome": "Azioni e sequenza",
+      "effetto": "Mantiene 2 AzP e 1 AzM per Round. Al massimo un Morso e un Pungiglione per Round; in volo può sostituirne uno con Artigli. Ogni attacco costa 1 AzP e produce AC 1. L’Opportunità usa Morso o Artigli, senza puntura velenosa gratuita."
+    },
+    {
+      "nome": "Veleno e sensi",
+      "effetto": "Tre dosi di veleno in ventiquattro ore, con dichiarazione, consumo, Tempra −2 ed effetti della Viverna comune. Conserva Scurovisione 12 Q, anatomia, movimento, limiti al volo e soglia di ritirata del profilo base. Non possiede un soffio."
+    },
+    {
+      "nome": "Riferimento del premio",
+      "effetto": "Veterano e 50 PX per quattro PG sono i valori del profilo base riportati in tabella. L’effetto delle due capacità aggiuntive sul GS e sul premio della variante resta da verificare al tavolo; nella caccia narrativa il premio segue l’obiettivo dei PG e il Manuale del Direttore §9.3."
+    },
+    {
+      "nome": "Mimetismo desertico",
+      "effetto": "Nel deserto ottiene +6 al VA di Furtività, oltre al valore base 7, per un totale di 13 nelle circostanze pertinenti. La pigmentazione e la rifrazione delle inclusioni cristalline si adattano alla sabbia e alla luce: in volo si confonde con il cielo carico di polvere; al suolo diventa quasi indistinguibile dalle dune. Il tratto non attribuisce un attacco gratuito e la Sorpresa segue le regole ordinarie. Il cristallo visivo di Goran, nella scena di caccia della campagna, permette al gruppo di distinguere le sagome visibili e neutralizza questo bonus per la durata della caccia."
+    },
+    {
+      "nome": "Resistenza cristallina",
+      "effetto": "Dimezza per eccesso il danno di natura Naturale prima dell’AR, rispettando il normale ordine di risoluzione del danno. I danni Magici non vengono dimezzati da questa resistenza e incontrano comunque l’AR pertinente; la variante mantiene AR 3 biologica e AR magica 0. Il tratto dipende dall’organismo vivo e termina alla morte effettiva, non al semplice raggiungimento di 0 PV."
+    },
+    {
+      "nome": "Caccia in coppia",
+      "effetto": "La coppia osserva le prede dall’alto anche a lungo, valuta stanchezza e isolamento e sceglie il momento per colpire. Atterra fuori vista, ripiega le ali e si avvicina a terra, silenziosa e mimetizzata. Le due creature possono separarsi per arrivare da direzioni diverse. La condotta affina quella del profilo base, senza aggiungere Azioni o attacchi."
+    },
+    {
+      "nome": "Morte e materiali",
+      "effetto": "Alla morte si interrompono la resistenza e l’adattamento mimetico; la carcassa conserva la propria pigmentazione ma non mantiene una protezione attiva trasferibile. Le ossa rimangono robuste e lavorabili. I mutanti le usano per armi, balestre e utensili. I materiali da soli non concedono la Resistenza cristallina né danno Magico: quest’ultimo proviene dalla lavorazione con Pietre di Luna infuse."
+    },
+    {
+      "nome": "La tecnica dei mutanti",
+      "effetto": "Nella caccia del terzo giorno verso il Cimitero delle Astronavi, Goran fa da esca e tre guerrieri attendono nascosti sotto la sabbia. Sacche di pelle contengono una preparazione della secrezione dei Lorath, conservata fluida e capace di rapprendersi rapidamente all’aria. I legami incollano ali, arti e coda alla sabbia; i cacciatori colpiscono da distanza sicura con dardi d’osso e punte di Pietra di Luna. Questa preparazione e la risoluzione narrativa appartengono alla scena della campagna: il getto ordinario del Lorath conserva le proprie regole di liberazione."
+    },
+    {
+      "nome": "Altri movimenti",
+      "effetto": "spazio 2 × 2 Q"
+    }
+  ],
+  "note": "Predatore alato modificato dai cristalli • variante della Viverna • Natura Comune.",
+  "_bestiario": {
+    "edizione": "Mostri 0.69",
+    "sistema_salute": "solo_PV"
+  }
+}

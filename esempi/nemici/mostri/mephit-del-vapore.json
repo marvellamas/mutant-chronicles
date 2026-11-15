@@ -12,7 +12,7 @@
     "SAG": 5,
     "CAR": 6
   },
-  "pv": 20,
+  "pv": 26,
   "pm": 9,
   "ar": {
     "totale": 0,
@@ -120,5 +120,9 @@
     "sanguinamento",
     "incendiato"
   ],
-  "note": "Immune a Fuoco e Incendiato. Parla Aquan e Ignan. Può rendere incerta la propria sagoma senza diventare invisibile; le scie ordinarie non infliggono danno passivo. Condotta: sotto 5 PV o a Ferita Profonda cerca riparo. Non appartiene alla Covata; la variante di evocazione di altri Mephit non è compresa e la specie non è un’opzione di Evoca Elementale. Un Artiglio per Round, Opportunità compresa. Fonte: Steam Mephit, p. 217."
+  "note": "Immune a Fuoco e Incendiato. Parla Aquan e Ignan. Può rendere incerta la propria sagoma senza diventare invisibile; le scie ordinarie non infliggono danno passivo. Condotta: sotto 5 PV o a Ferita Profonda cerca riparo. Non appartiene alla Covata; la variante di evocazione di altri Mephit non è compresa e la specie non è un’opzione di Evoca Elementale. Un Artiglio per Round, Opportunità compresa. Fonte: Steam Mephit, p. 217.",
+  "_bestiario": {
+    "edizione": "Mostri 0.69",
+    "sistema_salute": "solo_PV"
+  }
 }

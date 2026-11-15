@@ -12,7 +12,7 @@
     "SAG": 6,
     "CAR": 4
   },
-  "pv": 28,
+  "pv": 37,
   "pm": 6,
   "ar": {
     "totale": 0,
@@ -104,5 +104,9 @@
       "effetto": "Richiede almeno 4 Q di Passo rettilineo verso la vittima nella stessa Iniziativa (usa l’AzM ordinaria e l’AzP del colpo; si dichiara prima del tiro; non si combina con Carica, Corsa, Scatto o altre manovre offensive). Il danno speciale sostituisce quello normale, senza il ×2 della Carica. Con almeno 1 danno finale: Tempra senza modificatore a una creatura non maggiore di 1 × 1 Q; fallimento → A Terra. Il Magistrale non ne peggiora la Salvezza. Non aumenta il danno degli Zoccoli. Un eventuale Calpestare costa la seconda AzP; se l’ha spesa per una Difesa non può recuperarla. Nessun attacco gratuito dell’originale."
     }
   ],
-  "note": "Descrive l’animale senza armatura: la tabella di bardature della fonte non si trasferisce al sistema AR. Può eseguire segnali di combattimento già appresi; l’addestramento non lo rende immune a Paura, Terrorizzato o dolore. Condotta: sotto 7 PV o a Ferita Profonda tende a cercare riparo o il conduttore. Fonte: Warhorse, p. 340."
+  "note": "Descrive l’animale senza armatura: la tabella di bardature della fonte non si trasferisce al sistema AR. Può eseguire segnali di combattimento già appresi; l’addestramento non lo rende immune a Paura, Terrorizzato o dolore. Condotta: sotto 7 PV o a Ferita Profonda tende a cercare riparo o il conduttore. Fonte: Warhorse, p. 340.",
+  "_bestiario": {
+    "edizione": "Mostri 0.69",
+    "sistema_salute": "solo_PV"
+  }
 }

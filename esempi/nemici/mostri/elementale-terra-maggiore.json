@@ -12,7 +12,7 @@
     "SAG": 5,
     "CAR": 5
   },
-  "pv": 40,
+  "pv": 52,
   "ar": {
     "totale": 5,
     "magica": 5
@@ -90,5 +90,9 @@
     "sanguinamento",
     "stordito"
   ],
-  "note": "PM —: nessuna riserva. «Prove di FOR 15» è la Prova di Forza, non un’Abilità (A.169, 18/10): vedi la capacità «Prova di Forza». Profilo evocato (Magia §14.4): «INI dopo l’evocatore» (qui 0; sulla plancia agisce dopo chi lo evoca). Scompare a 0 PV, a fine durata o al congedo. Spazio 2 × 2 Q."
+  "note": "PM —: nessuna riserva. «Prove di FOR 15» è la Prova di Forza, non un’Abilità (A.169, 18/10): vedi la capacità «Prova di Forza». Profilo evocato (Magia §14.4): «INI dopo l’evocatore» (qui 0; sulla plancia agisce dopo chi lo evoca). Scompare a 0 PV, a fine durata o al congedo. Spazio 2 × 2 Q.",
+  "_bestiario": {
+    "edizione": "Mostri 0.69",
+    "sistema_salute": "solo_PV"
+  }
 }

@@ -12,7 +12,7 @@
     "SAG": 5,
     "CAR": 1
   },
-  "pv": 2,
+  "pv": 3,
   "pm": 3,
   "ar": {
     "totale": 0,
@@ -95,5 +95,9 @@
       "effetto": "arrampicata 4 Q Base al Passo"
     }
   ],
-  "note": "Fauna ordinaria • Natura Comune. Sensi e linguaggi: Scurovisione 6 Q Base; vibrazioni sulla propria tela 3 Q; nessun linguaggio."
+  "note": "Fauna ordinaria • Natura Comune. Sensi e linguaggi: Scurovisione 6 Q Base; vibrazioni sulla propria tela 3 Q; nessun linguaggio.",
+  "_bestiario": {
+    "edizione": "Mostri 0.69",
+    "sistema_salute": "solo_PV"
+  }
 }

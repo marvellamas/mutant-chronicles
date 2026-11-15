@@ -12,7 +12,7 @@
     "SAG": 5,
     "CAR": 4
   },
-  "pv": 28,
+  "pv": 37,
   "pm": 7,
   "ar": {
     "totale": 1,
@@ -97,5 +97,9 @@
       "effetto": "Udito e olfatto acuti +2 a Percezione, senza sommarli. Parla Goblin e Worg. Non ha Branco, telepatia o controllo sui Goblin. Un solo Morso per Round, Opportunità e attacco ordinato compresi."
     }
   ],
-  "note": "Canide senziente che può collaborare con Goblin e Hobgoblin ma non è un animale obbediente per definizione. Cavalcatura solo con accordo, addestramento, attrezzatura e carico compatibili; il suo Movimento non diventa quello del cavaliere e non dà Azioni condivise. Condotta: sotto 7 PV o a Ferita Profonda cerca una via di fuga oppure tratta. Fonte: Worg, p. 341."
+  "note": "Canide senziente che può collaborare con Goblin e Hobgoblin ma non è un animale obbediente per definizione. Cavalcatura solo con accordo, addestramento, attrezzatura e carico compatibili; il suo Movimento non diventa quello del cavaliere e non dà Azioni condivise. Condotta: sotto 7 PV o a Ferita Profonda cerca una via di fuga oppure tratta. Fonte: Worg, p. 341.",
+  "_bestiario": {
+    "edizione": "Mostri 0.69",
+    "sistema_salute": "solo_PV"
+  }
 }

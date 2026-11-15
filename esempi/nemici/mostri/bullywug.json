@@ -12,7 +12,7 @@
     "SAG": 5,
     "CAR": 4
   },
-  "pv": 14,
+  "pv": 19,
   "pm": 5,
   "ar": {
     "totale": 2,
@@ -124,5 +124,9 @@
       "effetto": "Respira aria e acqua. In palude +2 a Furtività quando pelle, vegetazione e fango aiutano a occultarlo. Parla Bullywug e può comunicare concetti semplici a rane e rospi che lo sentano (non li comanda magicamente, non condivide sensi, non raggiunge distanze illimitate). Vista ordinaria, senza Scurovisione innata né attacchi velenosi."
     }
   ],
-  "note": "AR 2 con Scudo piccolo, 1 senza. Abitante delle paludi: alterna sponde, acqua e salti brevi; titoli, consuetudini e rapporti con gli estranei dipendono dalla comunità. Condotta: può chiedere un tributo, indicare una via o allontanare intrusi; non riceve una cavalcatura gratis; sotto 4 PV o a Ferita Profonda cerca acqua e riparo. Fonte: Bullywug, p. 35."
+  "note": "AR 2 con Scudo piccolo, 1 senza. Abitante delle paludi: alterna sponde, acqua e salti brevi; titoli, consuetudini e rapporti con gli estranei dipendono dalla comunità. Condotta: può chiedere un tributo, indicare una via o allontanare intrusi; non riceve una cavalcatura gratis; sotto 4 PV o a Ferita Profonda cerca acqua e riparo. Fonte: Bullywug, p. 35.",
+  "_bestiario": {
+    "edizione": "Mostri 0.69",
+    "sistema_salute": "solo_PV"
+  }
 }

@@ -12,7 +12,7 @@
     "SAG": 6,
     "CAR": 3
   },
-  "pv": 32,
+  "pv": 42,
   "pm": 6,
   "ar": {
     "totale": 3,
@@ -105,5 +105,9 @@
       "effetto": "Vede entro 12 Q nel buio naturale, senza colori; non attraversa ostacoli né individua da sola chi è nascosto."
     }
   ],
-  "note": "AR 3 naturale; da A Terra scende a 1 finché non si rialza. Furtività 10 sotto terra, 7 in superficie. Indipendente dalla Covata. Fonte: p. 21. Comportamento: individua una creatura isolata, emerge vicino e la trascina verso il cunicolo; a 8 PV o Ferita Profonda cerca di interrarsi."
+  "note": "AR 3 naturale; da A Terra scende a 1 finché non si rialza. Furtività 10 sotto terra, 7 in superficie. Indipendente dalla Covata. Fonte: p. 21. Comportamento: individua una creatura isolata, emerge vicino e la trascina verso il cunicolo; a 8 PV o Ferita Profonda cerca di interrarsi.",
+  "_bestiario": {
+    "edizione": "Mostri 0.69",
+    "sistema_salute": "solo_PV"
+  }
 }

@@ -12,7 +12,7 @@
     "SAG": 5,
     "CAR": 6
   },
-  "pv": 42,
+  "pv": 55,
   "pm": 8,
   "ar": {
     "totale": 5,
@@ -131,5 +131,9 @@
       "effetto": "Può usare la propria AzM come Passo di 6 Q anziché 4 verso un nemico visibile. Il percorso non può allontanarlo da quel nemico e deve terminare più vicino. Nessuna AzM aggiuntiva o aumento a Corsa, Scatto, Carica e Schivata; Opportunità normali. Non ha Furia di Gruumsh, Urlo di guerra o Frenesia gnoll."
     }
   ],
-  "note": "Parata 12 (valore delle Difese), Schivata / Elusione 8. Rimossa la Pesante recupera +2 ai VA fisici penalizzati e Movimento 6 / 12 / 18 Q (Passo aggressivo 8 Q); Parata, Percezione e PS restano invariate. Parla Comune e Orchesco. Variante dell’Orco, combattente robusto e disciplinato che valuta terreno e ritirata; non acquisisce i poteri del Capoguerra o dell’Occhio di Gruumsh. Condotta: sotto 11 PV o a Ferita Profonda può arretrare per salvare il reparto o trattare. Fonte: Orog, p. 247."
+  "note": "Parata 12 (valore delle Difese), Schivata / Elusione 8. Rimossa la Pesante recupera +2 ai VA fisici penalizzati e Movimento 6 / 12 / 18 Q (Passo aggressivo 8 Q); Parata, Percezione e PS restano invariate. Parla Comune e Orchesco. Variante dell’Orco, combattente robusto e disciplinato che valuta terreno e ritirata; non acquisisce i poteri del Capoguerra o dell’Occhio di Gruumsh. Condotta: sotto 11 PV o a Ferita Profonda può arretrare per salvare il reparto o trattare. Fonte: Orog, p. 247.",
+  "_bestiario": {
+    "edizione": "Mostri 0.69",
+    "sistema_salute": "solo_PV"
+  }
 }

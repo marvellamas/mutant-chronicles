@@ -12,7 +12,7 @@
     "SAG": 5,
     "CAR": 3
   },
-  "pv": 22,
+  "pv": 29,
   "pm": 5,
   "ar": {
     "totale": 0,
@@ -117,5 +117,9 @@
       "effetto": "Sceglie Corna, Corna in Impeto oppure Zoccoli per l’unico attacco del Round. L’Opportunità usa solo Corna ordinarie e consuma il limite offensivo."
     }
   ],
-  "note": "Distinto dall’Alce gigante già nel catalogo: non riceve le sue Azioni aggiuntive né la maggiore portata. Non ha Piede saldo speciale né sensi acuti. Condotta: sotto 5 PV o a Ferita Profonda tende a cercare il branco o spazio libero, salvo la necessità di proteggere piccoli vicini. Fonte: Elk, p. 322."
+  "note": "Distinto dall’Alce gigante già nel catalogo: non riceve le sue Azioni aggiuntive né la maggiore portata. Non ha Piede saldo speciale né sensi acuti. Condotta: sotto 5 PV o a Ferita Profonda tende a cercare il branco o spazio libero, salvo la necessità di proteggere piccoli vicini. Fonte: Elk, p. 322.",
+  "_bestiario": {
+    "edizione": "Mostri 0.69",
+    "sistema_salute": "solo_PV"
+  }
 }

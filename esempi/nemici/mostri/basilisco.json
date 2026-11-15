@@ -12,7 +12,7 @@
     "SAG": 4,
     "CAR": 3
   },
-  "pv": 32,
+  "pv": 42,
   "pm": 8,
   "ar": {
     "totale": 3,
@@ -88,5 +88,9 @@
       "effetto": "Vede entro 12 Q nel buio naturale, senza colori; non attraversa ostacoli né individua da sola chi è nascosto."
     }
   ],
-  "note": "AR 3 naturale. Non è immune al proprio sguardo riflesso. Nessuna Parata naturale. Otto zampe (Braccia = gruppo anteriore, Gambe = posteriore). Nome originale: Basilisk, p. 24. Comportamento: preferisce incontrare lo sguardo di un intruso e attendere che rallenti; a Ferita Seria cerca riparo."
+  "note": "AR 3 naturale. Non è immune al proprio sguardo riflesso. Nessuna Parata naturale. Otto zampe (Braccia = gruppo anteriore, Gambe = posteriore). Nome originale: Basilisk, p. 24. Comportamento: preferisce incontrare lo sguardo di un intruso e attendere che rallenti; a Ferita Seria cerca riparo.",
+  "_bestiario": {
+    "edizione": "Mostri 0.69",
+    "sistema_salute": "solo_PV"
+  }
 }

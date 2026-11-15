@@ -12,7 +12,7 @@
     "SAG": 7,
     "CAR": 5
   },
-  "pv": 22,
+  "pv": 29,
   "pm": 8,
   "ar": {
     "totale": 1,
@@ -96,5 +96,9 @@
       "effetto": "+2 a Percezione quando vista o udito sono determinanti (una sola volta per Prova). Furtività 14 richiede la possibilità reale di occultarsi: non è invisibile né perfettamente silenzioso; la vista notturna non rivela automaticamente chi è nascosto. Parla il linguaggio dei Gufi giganti e comprende altre tre lingue della sua comunità (senza poterle necessariamente parlare). Può fare da sentinella o negoziare un passaggio; nessun potere silvano o vincolo con esseri fatati per il solo nome."
     }
   ],
-  "note": "Un solo attacco di Artigli per Round, Opportunità compresa; non afferra automaticamente la preda. Condotta: sotto 5 PV o a Ferita Profonda tende a raggiungere un posatoio protetto. Fonte: Giant Owl, p. 327."
+  "note": "Un solo attacco di Artigli per Round, Opportunità compresa; non afferra automaticamente la preda. Condotta: sotto 5 PV o a Ferita Profonda tende a raggiungere un posatoio protetto. Fonte: Giant Owl, p. 327.",
+  "_bestiario": {
+    "edizione": "Mostri 0.69",
+    "sistema_salute": "solo_PV"
+  }
 }

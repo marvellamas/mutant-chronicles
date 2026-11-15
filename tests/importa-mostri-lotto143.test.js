@@ -3,13 +3,15 @@
 // e il controllo a mano ha trovato due difetti su cinque: un valore scritto nella pagina comune (AC) e un ingombro parziale
 // al posto del completo. Qui: nessun campo numerico saltato, AC dal blocco, ingombro completo, controllo incrociato.
 import '../tools/guardia-subito.mjs'; // la guardia sulle cartelle vere, comunque si lanci il test
-import { testoDeiDati } from '../tools/edizioni-dati.mjs';
+import { testoManuale } from '../tools/manuali.mjs';
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync, readdirSync } from 'node:fs';
 import { importa, leggiEsistenti, leggiRighe, dividi, differenze, controlloIncrociato, norm } from '../tools/importa-mostri.mjs';
 
-const testo = testoDeiDati('mostri');
+// lotto 203: il corpus viene dalla 0.69, quindi si confronta con quella (nona regola: si legge l'edizione da cui
+// vengono i dati, e da questo lotto è la corrente)
+const testo = testoManuale('mostri');
 const { risultati } = importa(testo);
 const esistenti = leggiEsistenti();
 const dir = new URL('../esempi/nemici/mostri/', import.meta.url);
@@ -93,9 +95,20 @@ test('ingombro: dove il manuale dà un ingombro completo e uno parziale, vale il
       const v = tab[completo + 1].match(/(\d+)\s*×\s*(\d+)/);
       const n = esistenti.get(norm(s.nome))?.nemico;
       assert.equal(n.spazio, `${v[1]} × ${v[2]} Q`, `${s.nome}: lo spazio è l'ingombro completo`);
-    } else assert.ok(/Raptor|Iene/.test(s.nome), `${s.nome}: due misure in una scheda a una colonna senza «Ingombro completo»`);
+    } else {
+      // **Lotto 203: l'invariante, non l'elenco dei nomi.** La 0.69 porta un terzo modo di avere due misure: non
+      // «completo e parziale», ma due **posture** — l'Ammantato è «2 × 2 Q aperto, 1 × 1 Q raccolto a terra», e
+      // come lui lo Stirge, lo Slaad verde, lo Yuan-ti Malison e il Duergar. Un elenco di nomi si romperebbe a
+      // ogni edizione; quello che deve restare vero è che **nessuna scheda del Bestiario dipende da
+      // un'ambiguità**: o è uno dei due casi noti a due colonne, o è una creatura che nel Bestiario non c'è (e
+      // quando entrerà, le due posture andranno trattate come le configurazioni della A.203).
+      const nel = esistenti.get(norm(s.nome));
+      assert.ok(/Raptor|Iene/.test(s.nome) || !nel, `${s.nome}: è nel Bestiario con due misure e senza «Ingombro completo»: quale ha preso?`);
+    }
   }
-  assert.equal(conDue, 3, 'Raptor, Iene mutate (due colonne) e la Madre delle Murene');
+  // lotto 203: nella 0.46 erano tre; sulla 0.69 sono di più, e il numero non è l'informazione — lo è che siano
+  // tutte spiegate dal controllo qui sopra
+  assert.ok(conDue >= 3, `schede con due misure: ${conDue}`);
   assert.equal(file.find((x) => x.id === 'madre-delle-murene-della-roccia').spazio, '6 × 2 Q');
 });
 

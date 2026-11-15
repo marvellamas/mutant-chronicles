@@ -12,7 +12,7 @@
     "SAG": 6,
     "CAR": 2
   },
-  "pv": 14,
+  "pv": 19,
   "pm": 4,
   "ar": {
     "totale": 0,
@@ -88,5 +88,9 @@
       }
     }
   ],
-  "note": "Può Schivare ed Elusione; nessuna Parata naturale. Condotta: cerca isolamento e vie di fuga, tende a ritirarsi sotto 4 PV, a Ferita Profonda o dopo la dispersione del branco."
+  "note": "Può Schivare ed Elusione; nessuna Parata naturale. Condotta: cerca isolamento e vie di fuga, tende a ritirarsi sotto 4 PV, a Ferita Profonda o dopo la dispersione del branco.",
+  "_bestiario": {
+    "edizione": "Mostri 0.69",
+    "sistema_salute": "solo_PV"
+  }
 }

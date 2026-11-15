@@ -12,7 +12,7 @@
     "SAG": 5,
     "CAR": 1
   },
-  "pv": 2,
+  "pv": 3,
   "pm": 3,
   "ar": {
     "totale": 0,
@@ -82,5 +82,9 @@
       "effetto": "Nuoto 4 / 8 / 12 Q Base; nessun movimento terrestre"
     }
   ],
-  "note": "Fauna ordinaria • Natura Comune. Sensi e linguaggi: Nessuno speciale; nessun linguaggio."
+  "note": "Fauna ordinaria • Natura Comune. Sensi e linguaggi: Nessuno speciale; nessun linguaggio.",
+  "_bestiario": {
+    "edizione": "Mostri 0.69",
+    "sistema_salute": "solo_PV"
+  }
 }

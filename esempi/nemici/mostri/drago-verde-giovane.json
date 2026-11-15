@@ -12,7 +12,7 @@
     "SAG": 7,
     "CAR": 7
   },
-  "pv": 450,
+  "pv": 585,
   "pm": 60,
   "ar": {
     "totale": 16,
@@ -149,5 +149,9 @@
       "effetto": "nel proprio ambiente con coperture adatte 13"
     }
   ],
-  "note": "Grande predatore draconico • giovane • Natura Comune. Sensi e linguaggi: Scurovisione 24 Q Base • Draconico e una lingua di contatto. Il danno «NdM × k» è il risultato dei dadi moltiplicato per k; il dado non si tira da solo (A.199)."
+  "note": "Grande predatore draconico • giovane • Natura Comune. Sensi e linguaggi: Scurovisione 24 Q Base • Draconico e una lingua di contatto. Il danno «NdM × k» è il risultato dei dadi moltiplicato per k; il dado non si tira da solo (A.199).",
+  "_bestiario": {
+    "edizione": "Mostri 0.69",
+    "sistema_salute": "solo_PV"
+  }
 }

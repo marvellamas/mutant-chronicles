@@ -12,7 +12,7 @@
     "SAG": 8,
     "CAR": 6
   },
-  "pv": 76,
+  "pv": 99,
   "pm": 16,
   "ar": {
     "totale": 4,
@@ -115,5 +115,9 @@
       }
     }
   ],
-  "note": "Altezza circa 7 Q. Il VA 13 è quello della Roccia, già in tabella: «Tiro naturale» non è un’Abilità (A.169, 18/10), non dà Armi da lancio né altre competenze. Furtività 14 immobile fra alberi compatibili. Parla il linguaggio del bosco e una lingua di contatto. Condotta: ferma incendi e abbattimenti, distingue gli intrusi dalle minacce reali, può avvertire o trattare prima di attaccare; sotto 19 PV o a Ferita Seria ripiega. Fonte: Treant, p. 289."
+  "note": "Altezza circa 7 Q. Il VA 13 è quello della Roccia, già in tabella: «Tiro naturale» non è un’Abilità (A.169, 18/10), non dà Armi da lancio né altre competenze. Furtività 14 immobile fra alberi compatibili. Parla il linguaggio del bosco e una lingua di contatto. Condotta: ferma incendi e abbattimenti, distingue gli intrusi dalle minacce reali, può avvertire o trattare prima di attaccare; sotto 19 PV o a Ferita Seria ripiega. Fonte: Treant, p. 289.",
+  "_bestiario": {
+    "edizione": "Mostri 0.69",
+    "sistema_salute": "solo_PV"
+  }
 }

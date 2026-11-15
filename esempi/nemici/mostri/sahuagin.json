@@ -12,7 +12,7 @@
     "SAG": 6,
     "CAR": 4
   },
-  "pv": 26,
+  "pv": 34,
   "pm": 8,
   "ar": {
     "totale": 1,
@@ -156,5 +156,9 @@
       }
     }
   ],
-  "note": "Dotazione: una Lancia Comune, FOR 5, PI 6, PS Integrità 10; nessuna armatura o scudo; le formule comprendono +1 personale. I 22 PX comprendono questa dotazione, senza squali o seguaci. Non è Barone, Sacerdotessa o Malenti. Parla la lingua della sua comunità. Condotta: sotto 6 PV o a Ferita Profonda cerca acqua, copertura o una trattativa. Fonte: Sahuagin, p. 263."
+  "note": "Dotazione: una Lancia Comune, FOR 5, PI 6, PS Integrità 10; nessuna armatura o scudo; le formule comprendono +1 personale. I 22 PX comprendono questa dotazione, senza squali o seguaci. Non è Barone, Sacerdotessa o Malenti. Parla la lingua della sua comunità. Condotta: sotto 6 PV o a Ferita Profonda cerca acqua, copertura o una trattativa. Fonte: Sahuagin, p. 263.",
+  "_bestiario": {
+    "edizione": "Mostri 0.69",
+    "sistema_salute": "solo_PV"
+  }
 }

@@ -12,7 +12,7 @@
     "SAG": 6,
     "CAR": 3
   },
-  "pv": 38,
+  "pv": 50,
   "pm": 7,
   "ar": {
     "totale": 1,
@@ -100,5 +100,9 @@
   "immunita": [
     "avvelenato"
   ],
-  "note": "Abitante delle caverne dal corpo robusto e dagli artigli sviluppati; origine e rapporti con altri popoli si definiscono nell’avventura, senza imporre le inimicizie della fonte. Condotta: a Ferita Seria o se la consegna lo permette può ritirarsi; la Furia non lo obbliga a inseguire fino alla morte. Fonte: Quaggoth, p. 256."
+  "note": "Abitante delle caverne dal corpo robusto e dagli artigli sviluppati; origine e rapporti con altri popoli si definiscono nell’avventura, senza imporre le inimicizie della fonte. Condotta: a Ferita Seria o se la consegna lo permette può ritirarsi; la Furia non lo obbliga a inseguire fino alla morte. Fonte: Quaggoth, p. 256.",
+  "_bestiario": {
+    "edizione": "Mostri 0.69",
+    "sistema_salute": "solo_PV"
+  }
 }

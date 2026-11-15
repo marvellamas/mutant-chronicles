@@ -12,7 +12,7 @@
     "SAG": 5,
     "CAR": 6
   },
-  "pv": 44,
+  "pv": 58,
   "pm": 12,
   "ar": {
     "totale": 4,
@@ -96,5 +96,9 @@
   "immunita": [
     "sanguinamento"
   ],
-  "note": "AR 4 intrinseca. Nelle AzP al massimo un Pugno e uno Sguardo per Round. Non para naturalmente; bende e amuleti non sono equipaggiamento recuperabile. Comportamento: difende un luogo o una consegna; davanti al fuoco cerca copertura."
+  "note": "AR 4 intrinseca. Nelle AzP al massimo un Pugno e uno Sguardo per Round. Non para naturalmente; bende e amuleti non sono equipaggiamento recuperabile. Comportamento: difende un luogo o una consegna; davanti al fuoco cerca copertura.",
+  "_bestiario": {
+    "edizione": "Mostri 0.69",
+    "sistema_salute": "solo_PV"
+  }
 }

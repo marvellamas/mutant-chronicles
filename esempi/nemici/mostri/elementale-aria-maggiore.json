@@ -12,7 +12,7 @@
     "SAG": 5,
     "CAR": 5
   },
-  "pv": 28,
+  "pv": 37,
   "ar": {
     "totale": 3,
     "magica": 3
@@ -101,5 +101,9 @@
     "sanguinamento",
     "stordito"
   ],
-  "note": "PM —: nessuna riserva. Il VA 16 è quello del Dardo d’aria, già in tabella: «Attacco a distanza» non è un’Abilità (A.169, 18/10), non dà Armi da lancio né altre competenze. Profilo evocato (Magia §14.2): «INI dopo l’evocatore» (qui 0; sulla plancia agisce dopo chi lo evoca). Scompare a 0 PV, a fine durata o al congedo. Spazio 2 × 2 Q. È immune ad A Terra (lo subisce il bersaglio, non l’elementale)."
+  "note": "PM —: nessuna riserva. Il VA 16 è quello del Dardo d’aria, già in tabella: «Attacco a distanza» non è un’Abilità (A.169, 18/10), non dà Armi da lancio né altre competenze. Profilo evocato (Magia §14.2): «INI dopo l’evocatore» (qui 0; sulla plancia agisce dopo chi lo evoca). Scompare a 0 PV, a fine durata o al congedo. Spazio 2 × 2 Q. È immune ad A Terra (lo subisce il bersaglio, non l’elementale).",
+  "_bestiario": {
+    "edizione": "Mostri 0.69",
+    "sistema_salute": "solo_PV"
+  }
 }

@@ -12,7 +12,7 @@
     "SAG": 5,
     "CAR": 4
   },
-  "pv": 32,
+  "pv": 42,
   "pm": 8,
   "ar": {
     "totale": 1,
@@ -104,5 +104,9 @@
   "immunita": [
     "sanguinamento"
   ],
-  "note": "Nessuna dotazione né Parata naturale. Gli ordini vocali guidano i Ghoul che li odono, senza Azioni gratuite. Comportamento: sotto 8 PV o a Ferita Seria può fuggire."
+  "note": "Nessuna dotazione né Parata naturale. Gli ordini vocali guidano i Ghoul che li odono, senza Azioni gratuite. Comportamento: sotto 8 PV o a Ferita Seria può fuggire.",
+  "_bestiario": {
+    "edizione": "Mostri 0.69",
+    "sistema_salute": "solo_PV"
+  }
 }

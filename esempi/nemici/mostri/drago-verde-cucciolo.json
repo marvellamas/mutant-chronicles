@@ -12,7 +12,7 @@
     "SAG": 6,
     "CAR": 5
   },
-  "pv": 100,
+  "pv": 130,
   "pm": 30,
   "ar": {
     "totale": 7,
@@ -123,5 +123,9 @@
       "effetto": "con coperture ambientali adatte 14"
     }
   ],
-  "note": "Predatore draconico • cucciolo • Natura Comune. Sensi e linguaggi: Scurovisione 12 Q Base; Draconico."
+  "note": "Predatore draconico • cucciolo • Natura Comune. Sensi e linguaggi: Scurovisione 12 Q Base; Draconico.",
+  "_bestiario": {
+    "edizione": "Mostri 0.69",
+    "sistema_salute": "solo_PV"
+  }
 }

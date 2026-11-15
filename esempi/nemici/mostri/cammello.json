@@ -12,7 +12,7 @@
     "SAG": 4,
     "CAR": 3
   },
-  "pv": 24,
+  "pv": 32,
   "pm": 5,
   "ar": {
     "totale": 0,
@@ -87,5 +87,9 @@
       "effetto": "Il profilo non assegna un consumo fisso di acqua né un’esenzione dall’Affaticamento: si valutano clima, sforzo e disponibilità con le regole comuni. L’adattamento a un ambiente arido non protegge da lava, Fuoco o gas delle Terre del Fuoco."
     }
   ],
-  "note": "Un Morso per Round, Opportunità compresa; nessun attacco di sputo in questa scheda. Condotta: può fermarsi, arretrare o cercare il gruppo; sotto 6 PV o a Ferita Profonda tende a sottrarsi (se è carico, la fuga conserva gli impedimenti). Fonte: Camel, p. 320."
+  "note": "Un Morso per Round, Opportunità compresa; nessun attacco di sputo in questa scheda. Condotta: può fermarsi, arretrare o cercare il gruppo; sotto 6 PV o a Ferita Profonda tende a sottrarsi (se è carico, la fuga conserva gli impedimenti). Fonte: Camel, p. 320.",
+  "_bestiario": {
+    "edizione": "Mostri 0.69",
+    "sistema_salute": "solo_PV"
+  }
 }

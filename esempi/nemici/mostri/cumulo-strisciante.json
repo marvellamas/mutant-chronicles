@@ -12,7 +12,7 @@
     "SAG": 5,
     "CAR": 3
   },
-  "pv": 60,
+  "pv": 78,
   "pm": 8,
   "ar": {
     "totale": 3,
@@ -116,5 +116,9 @@
     "accecato",
     "assordato"
   ],
-  "note": "AR 3 biologica. Furtività 14 fra detriti vegetali compatibili. Condotta: attende fra detriti, poi Schianti o la sequenza Afferrare–Inglobare; sotto 15 PV o a Ferita Seria tenta di ritirarsi. Fonte: Shambling Mound, p. 270."
+  "note": "AR 3 biologica. Furtività 14 fra detriti vegetali compatibili. Condotta: attende fra detriti, poi Schianti o la sequenza Afferrare–Inglobare; sotto 15 PV o a Ferita Seria tenta di ritirarsi. Fonte: Shambling Mound, p. 270.",
+  "_bestiario": {
+    "edizione": "Mostri 0.69",
+    "sistema_salute": "solo_PV"
+  }
 }

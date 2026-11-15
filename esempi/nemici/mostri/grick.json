@@ -12,7 +12,7 @@
     "SAG": 6,
     "CAR": 2
   },
-  "pv": 24,
+  "pv": 32,
   "pm": 5,
   "ar": {
     "totale": 1,
@@ -97,5 +97,9 @@
       "effetto": "Vede entro 12 Q nel buio naturale, senza colori; non attraversa ostacoli né individua da sola chi è nascosto."
     }
   ],
-  "note": "Furtività 13 immobile fra rocce in ambiente adatto (non è invisibilità). Il profilo è il Grick comune, non l’Alfa. Braccia = tentacoli; Testa = becco e capo. Nessuna Parata naturale. Nome originale: Grick, p. 173. Comportamento: preda vicina; a Ferita Profonda si ritrae in una fessura."
+  "note": "Furtività 13 immobile fra rocce in ambiente adatto (non è invisibilità). Il profilo è il Grick comune, non l’Alfa. Braccia = tentacoli; Testa = becco e capo. Nessuna Parata naturale. Nome originale: Grick, p. 173. Comportamento: preda vicina; a Ferita Profonda si ritrae in una fessura.",
+  "_bestiario": {
+    "edizione": "Mostri 0.69",
+    "sistema_salute": "solo_PV"
+  }
 }

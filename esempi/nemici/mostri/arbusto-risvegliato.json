@@ -12,7 +12,7 @@
     "SAG": 5,
     "CAR": 3
   },
-  "pv": 12,
+  "pv": 16,
   "pm": 6,
   "ar": {
     "totale": 0,
@@ -87,5 +87,9 @@
       "effetto": "Conosce una lingua assegnata alla sua origine e può parlare. Il risveglio è una trasformazione permanente: Negare Potere non lo toglie. Non dipende dal creatore per le proprie Azioni."
     }
   ],
-  "note": "Furtività 14 immobile fra vegetazione compatibile. Vista e udito ordinari, senza scurovisione. Condotta: nascondigli, richiami o trattative; sotto 3 PV o a Ferita Profonda cerca riparo. Fonte: Awakened Shrub, p. 317."
+  "note": "Furtività 14 immobile fra vegetazione compatibile. Vista e udito ordinari, senza scurovisione. Condotta: nascondigli, richiami o trattative; sotto 3 PV o a Ferita Profonda cerca riparo. Fonte: Awakened Shrub, p. 317.",
+  "_bestiario": {
+    "edizione": "Mostri 0.69",
+    "sistema_salute": "solo_PV"
+  }
 }
