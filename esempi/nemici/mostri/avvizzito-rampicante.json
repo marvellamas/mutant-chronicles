@@ -103,7 +103,7 @@
     "accecato",
     "assordato"
   ],
-  "note": "Vegetale infestante • presa e controllo del terreno • Natura Comune.",
+  "note": "Furtività 14 immobile fra liane compatibili. Parla una lingua assegnata alla comunità. Con una sola AzP sceglie fra terreno, attacco, stretta o Difesa. Può contrattare; sotto 6 PV o a Ferita Profonda cerca riparo. Fonte: Vine Blight, pp. 31–32.",
   "_bestiario": {
     "edizione": "Mostri 0.69",
     "sistema_salute": "solo_PV",
@@ -121,6 +121,7 @@
       "abilita": "Mostri 0.47",
       "attacchi": "Mostri 0.47",
       "capacita": "Mostri 0.47",
+      "note": "Mostri 0.47",
       "gs_px": "Mostri 0.69"
     }
   }

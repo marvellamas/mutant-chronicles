@@ -48,11 +48,12 @@
       "va": 9,
       "danno": "1d6+1",
       "natura": "Naturale",
+      "portata_q": 1,
+      "ac": 1,
       "proprieta": [
         "Contusione"
       ],
-      "portata_q": 1,
-      "ac": 1
+      "note": "Non concedono Parata, atterramento o Carica gratuiti."
     },
     {
       "nome": "Spada leggera",
@@ -60,11 +61,11 @@
       "va": 10,
       "danno": "1d6+2",
       "natura": "Naturale",
+      "portata_q": 1,
+      "ac": 1,
       "proprieta": [
         "Taglio"
-      ],
-      "portata_q": 1,
-      "ac": 1
+      ]
     },
     {
       "nome": "Arco da guerra",
@@ -72,14 +73,14 @@
       "va": 10,
       "danno": "1d6+1",
       "natura": "Naturale",
-      "proprieta": [
-        "Perforazione"
-      ],
       "gittata_q": 100,
       "modalita": [
         "S"
       ],
-      "ac": 1
+      "ac": 1,
+      "proprieta": [
+        "Perforazione"
+      ]
     }
   ],
   "abilita": [
@@ -151,8 +152,9 @@
       "movimento": "Mostri 0.69",
       "spazio": "Mostri 0.69",
       "abilita": "Mostri 0.69",
-      "attacchi": "Mostri 0.69",
+      "attacchi": "Mostri 0.47",
       "capacita": "Mostri 0.47",
+      "note": "Mostri 0.69",
       "gs_px": "Mostri 0.69"
     }
   }

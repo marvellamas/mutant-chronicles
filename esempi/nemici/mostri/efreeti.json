@@ -5,7 +5,6 @@
   "nome": "Efreeti",
   "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Efreeti",
   "taglia": "grande",
-  "note": "Genio del Fuoco che combatte con una grande scimitarra e globi di fiamma. Le sue protezioni non si estendono automaticamente agli oggetti che impugna o alle creature che trasporta.",
   "pv": 167,
   "pm": 55,
   "caratteristiche": {
@@ -69,8 +68,7 @@
       "danno": "3d6+3",
       "natura": "Naturale",
       "proprieta": [
-        "Fuoco",
-        "AC 1"
+        "Fuoco"
       ],
       "portata_q": 2,
       "ac": 1
@@ -82,8 +80,7 @@
       "danno": "4d6+3",
       "natura": "Magico",
       "proprieta": [
-        "Fuoco",
-        "AC 1"
+        "Fuoco"
       ],
       "gittata_q": 24,
       "modalita": [
@@ -98,8 +95,7 @@
       "danno": "2d6+3",
       "natura": "Naturale",
       "proprieta": [
-        "Contusione",
-        "AC 1"
+        "Contusione"
       ],
       "portata_q": 1,
       "ac": 1
@@ -135,6 +131,7 @@
       "effetto": "spazio 2 × 2 Q"
     }
   ],
+  "note": "Genio del Fuoco che combatte con una grande scimitarra e globi di fiamma. Le sue protezioni non si estendono automaticamente agli oggetti che impugna o alle creature che trasporta.",
   "gs_px": {
     "gs": "Mito",
     "px": 220,
@@ -155,6 +152,7 @@
       "abilita": "Mostri 0.69",
       "attacchi": "Mostri 0.69",
       "capacita": "Mostri 0.69",
+      "note": "Mostri 0.69",
       "gs_px": "Mostri 0.69"
     },
     "edizione": "Mostri 0.69",

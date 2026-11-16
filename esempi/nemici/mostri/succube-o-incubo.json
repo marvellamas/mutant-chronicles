@@ -4,7 +4,6 @@
   "id": "succube-o-incubo",
   "nome": "Succube o Incubo",
   "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Succube o Incubo",
-  "note": "Mutaforma alato che cerca fiducia e contatto ravvicinato. Succube e Incubo condividono questo profilo; il fascino non equivale al consenso a qualsiasi richiesta e il risucchio riguarda risorse definite.",
   "pv": 68,
   "pm": 36,
   "caratteristiche": {
@@ -86,6 +85,7 @@
       "effetto": "spazio 1 × 1 Q"
     }
   ],
+  "note": "Mutaforma alato che cerca fiducia e contatto ravvicinato. Succube e Incubo condividono questo profilo; il fascino non equivale al consenso a qualsiasi richiesta e il risucchio riguarda risorse definite.",
   "gs_px": {
     "gs": "Eroe",
     "px": 70,
@@ -105,9 +105,12 @@
       "spazio": "Mostri 0.69",
       "abilita": "Mostri 0.69",
       "capacita": "Mostri 0.69",
-      "gs_px": "Mostri 0.69"
+      "note": "Mostri 0.69",
+      "gs_px": "Mostri 0.69",
+      "attacchi": "Mostri 0.69"
     },
     "edizione": "Mostri 0.69",
     "sistema_salute": "solo_PV"
-  }
+  },
+  "attacchi": []
 }

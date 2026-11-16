@@ -4,7 +4,6 @@
   "id": "girino-di-slaad",
   "nome": "Girino di Slaad",
   "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Girino di Slaad",
-  "note": "Larva carnivora che cerca riparo e nutrimento dopo l’emersione. Il profilo rappresenta il girino già separato dall’ospite; non agisce come un secondo avversario dentro un corpo ancora vivo.",
   "pv": 11,
   "pm": 4,
   "caratteristiche": {
@@ -62,8 +61,7 @@
       "danno": "1d4+1",
       "natura": "Naturale",
       "proprieta": [
-        "Perforazione",
-        "AC 1"
+        "Perforazione"
       ],
       "portata_q": 1,
       "ac": 1
@@ -91,6 +89,7 @@
       "effetto": "spazio 1 Q condivisibile"
     }
   ],
+  "note": "Larva carnivora che cerca riparo e nutrimento dopo l’emersione. Il profilo rappresenta il girino già separato dall’ospite; non agisce come un secondo avversario dentro un corpo ancora vivo.",
   "gs_px": {
     "gs": "Principiante",
     "px": 10,
@@ -110,6 +109,7 @@
       "abilita": "Mostri 0.69",
       "attacchi": "Mostri 0.69",
       "capacita": "Mostri 0.69",
+      "note": "Mostri 0.69",
       "gs_px": "Mostri 0.69"
     },
     "edizione": "Mostri 0.69",

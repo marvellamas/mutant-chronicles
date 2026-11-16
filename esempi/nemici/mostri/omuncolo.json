@@ -4,7 +4,6 @@
   "id": "omuncolo",
   "nome": "Omuncolo",
   "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Omuncolo",
-  "note": "Piccolo servitore alato creato mediante un legame personale. Possiede una mente semplice e condivide informazioni con il proprio creatore, senza diventare una copia delle sue capacità.",
   "pv": 8,
   "pm": 5,
   "caratteristiche": {
@@ -64,7 +63,6 @@
       "natura": "Naturale",
       "proprieta": [
         "Perforazione",
-        "AC 1",
         "veleno"
       ],
       "portata_q": 1,
@@ -101,6 +99,7 @@
       "effetto": "1 Q condivisibile, non blocca il passaggio"
     }
   ],
+  "note": "Piccolo servitore alato creato mediante un legame personale. Possiede una mente semplice e condivide informazioni con il proprio creatore, senza diventare una copia delle sue capacità.",
   "gs_px": {
     "gs": "Principiante",
     "px": 10,
@@ -120,6 +119,7 @@
       "abilita": "Mostri 0.69",
       "attacchi": "Mostri 0.69",
       "capacita": "Mostri 0.69",
+      "note": "Mostri 0.69",
       "gs_px": "Mostri 0.69"
     },
     "edizione": "Mostri 0.69",

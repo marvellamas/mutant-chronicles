@@ -5,7 +5,6 @@
   "nome": "Hezrou",
   "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Hezrou",
   "taglia": "grande",
-  "note": "Pesante assalitore dalla pelle coriacea e dall’odore soffocante. Avanza per occupare il passaggio e costringe gli avversari vicini a combattere nel proprio fetore. Condotta. Preme sui passaggi stretti e concentra gli attacchi sulla preda già a portata. Il corpo può ricevere cure biologiche compatibili, senza Rigenerazione. Non possiede un’evocazione di Dretch o un’autorità mentale sui compagni inclusa nel profilo; i servitori eventuali restano creature separate.",
   "pv": 130,
   "pm": 16,
   "caratteristiche": {
@@ -64,8 +63,7 @@
       "danno": "2d8+3",
       "natura": "Naturale",
       "proprieta": [
-        "Perforazione",
-        "AC 1"
+        "Perforazione"
       ],
       "portata_q": 1,
       "ac": 1
@@ -77,8 +75,7 @@
       "danno": "2d6+3",
       "natura": "Naturale",
       "proprieta": [
-        "Taglio",
-        "AC 1"
+        "Taglio"
       ],
       "portata_q": 1,
       "ac": 1
@@ -110,6 +107,7 @@
       "effetto": "spazio 2 × 2 Q"
     }
   ],
+  "note": "Pesante assalitore dalla pelle coriacea e dall’odore soffocante. Avanza per occupare il passaggio e costringe gli avversari vicini a combattere nel proprio fetore. Condotta. Preme sui passaggi stretti e concentra gli attacchi sulla preda già a portata. Il corpo può ricevere cure biologiche compatibili, senza Rigenerazione. Non possiede un’evocazione di Dretch o un’autorità mentale sui compagni inclusa nel profilo; i servitori eventuali restano creature separate.",
   "gs_px": {
     "gs": "Leggenda",
     "px": 100,
@@ -130,6 +128,7 @@
       "abilita": "Mostri 0.69",
       "attacchi": "Mostri 0.69",
       "capacita": "Mostri 0.69",
+      "note": "Mostri 0.69",
       "gs_px": "Mostri 0.69"
     },
     "edizione": "Mostri 0.69",

@@ -75,60 +75,41 @@
   ],
   "capacita": [
     {
-      "nome": "Afferrare",
-      "effetto": "VA 13. Danno: Presa; contrapposta, senza danno. Portata/costo: 1 Q; 1 AzP; "
-    },
-    {
-      "nome": "Inglobare",
-      "effetto": "VA —. Danno: Contenimento; nessun danno iniziale. Portata/costo: Una vittima già presa; 1 AzP; "
-    },
-    {
-      "nome": "Comprimere",
-      "effetto": "VA —. Danno: 1d8+2 Naturale; Tempra 0 dimezza. Portata/costo: Prigioniero interno; 1 AzP; "
-    },
-    {
       "nome": "Sensi e metabolismo",
-      "effetto": "Percezione diffusa 12 Q; immunità ad Accecato, Assordato e all’accumulo di AFT. Possiede una mente istintiva e non è immune agli effetti mentali. Non dorme, ma entra in quiescenza; respira e si nutre. Il corpo segue le localizzazioni vegetali comuni, con Torace corrispondente al nucleo e alla massa centrale."
+      "effetto": "Terra e nuoto 4/8/12 Q. Percezione diffusa 12 Q; immune ad Accecato, Assordato e all’accumulo di AFT. Ha una mente istintiva e non è immune agli effetti mentali. Non dorme (entra in quiescenza); respira e si nutre. Torace = nucleo e massa centrale."
     },
     {
       "nome": "Resistenze e assorbimento",
-      "effetto": "Dimezza Fuoco e Ghiaccio di qualunque Natura ed è immune al Fulmine. Per ogni danno da Fulmine che lo raggiunge, si calcola il residuo dopo Difesa e AR ignorando solo tale immunità: recupera quel numero di PV, fino a 4 PV complessivi per Round da tutte le fonti elettriche. Non supera i PV massimi, non cura Ferite o Menomazioni e non stabilizza Morente. Esposizioni senza residuo non curano."
+      "effetto": "Dimezza Fuoco e Ghiaccio di qualunque Natura; immune al Fulmine. Per ogni danno da Fulmine che lo raggiunge si calcola il residuo dopo Difesa e AR (ignorando solo l’immunità) e recupera tanti PV, fino a 4 PV per Round da tutte le fonti elettriche; non oltre il massimo, non cura Ferite o Menomazioni, non stabilizza Morente."
     },
     {
-      "nome": "Presa",
-      "effetto": "Afferrare usa Corpo a corpo 13 contrapposto a Corpo a corpo o Atletica di una creatura di spazio 1 × 1 Q o inferiore. Successo Immobilizza senza bloccare le mani; un pareggio iniziale non afferra. Non richiede anche tiro per colpire e Difesa. Mantiene una sola vittima senza Azioni, ma non si sposta finché questa non è inglobata o rilasciata."
+      "nome": "Afferrare",
+      "effetto": "1 AzP, VA 13: Corpo a corpo 13 contrapposto a Corpo a corpo o Atletica di una creatura ≤ 1 × 1 Q; successo → Immobilizzato (mani non bloccate), il pareggio iniziale non afferra; nessun danno. Mantiene una sola vittima senza Azioni, ma non si sposta finché non è inglobata o rilasciata. Due Schianti non danno una terza AzP né un inglobamento gratuito.",
+      "azioni": {
+        "principali": 1
+      }
     },
     {
       "nome": "Inglobare",
-      "effetto": "1 AzP contro l’unica vittima già presa: la trasferisce dentro la massa senza altro tiro e senza danni iniziali. Diventa Accecata verso l’esterno e resta Immobilizzata, −4 fisico e mani non specificamente bloccate. Segue gli spostamenti del Cumulo, che ora può muoversi. Il contenimento occupa la capacità prensile: non può Afferrare altre creature prima di liberarla."
-    },
-    {
-      "nome": "Respirazione",
-      "effetto": "Se la massa ostruisce le vie respiratorie, inizia il soffocamento del Giocatore §5.23, conservando la riserva di fiato pari a COS. Un apparato autonomo funzionante lo impedisce. Un organismo che respira attraverso tutta la superficie è esposto se il contenimento ne impedisce davvero lo scambio gassoso; l’assenza di una bocca non garantisce protezione. Non viene ucciso automaticamente al termine di un numero di Round inventato."
+      "effetto": "1 AzP sull’unica vittima già presa: la trasferisce dentro la massa senza altro tiro né danni; è Accecata verso l’esterno e Immobilizzata (−4 fisico, mani non bloccate). Segue gli spostamenti del Cumulo, che ora può muoversi; occupa la capacità prensile (non afferra altre creature). Se le vie respiratorie sono ostruite, soffocamento del §5.23 (riserva pari a COS; un apparato autonomo lo impedisce).",
+      "azioni": {
+        "principali": 1
+      }
     },
     {
       "nome": "Comprimere",
-      "effetto": "1 AzP, al massimo una volta per Round: il prigioniero effettua Tempra 0. Fallimento subisce 1d8+2 Naturale da Contusione; successo dimezza per eccesso prima dell’AR. Non si aggiungono tiro per colpire, Parata, Schivata o un secondo tentativo di Elusione. Gli Schianti non possono essere diretti contro il prigioniero interno. Semplice permanenza nel corpo e fine Round non infliggono altri danni automatici."
+      "effetto": "1 AzP, una volta per Round, sul prigioniero interno: Tempra senza modificatore, fallimento 1d8+2 Naturale da Contusione, successo metà per eccesso, prima dell’AR; niente tiro per colpire né Difese. Gli Schianti non possono essere diretti contro il prigioniero. Nessun altro danno automatico.",
+      "azioni": {
+        "principali": 1
+      },
+      "usi": {
+        "quanti": 1,
+        "per": "Round"
+      }
     },
     {
       "nome": "Liberazione",
-      "effetto": "La vittima, presa esternamente o inglobata, spende 1 AzP e contrappone Corpo a corpo o Atletica a Corpo a corpo 13 del Cumulo; il −4 di Immobilizzato si applica. Un alleato adiacente può tentare lo stesso con il proprio VA, senza quel malus se libero. Successo libera in uno spazio adiacente capace di accoglierla; senza spazio non completa l’estrazione. Un pareggio mantiene la presa, senza danno da tentativo fallito."
-    },
-    {
-      "nome": "Combattere e rilasciare",
-      "effetto": "Il prigioniero può attaccare il Cumulo dall’interno con strumenti utilizzabili e −4; per colpire la massa che sente attorno a sé non aggiunge una seconda penalità visiva. Il Cumulo non può Schivare quel colpo conservando il contenimento. La massa dà copertura totale fra interno ed esterno. Rilascio gratuito alla propria Iniziativa; perdita di coscienza, morte o Menomazione della funzione di contenimento libera la vittima. 0 PV da soli non lo fanno."
-    },
-    {
-      "nome": "Dopo l’uscita",
-      "effetto": "Cessano la cecità da copertura e l’ostruzione respiratoria. Un Round di respiro normale ripristina il fiato; chi era svenuto per soffocamento riprende conoscenza in 1d3 Round salvo altre cause. PV, Ferite e Menomazioni restano; Morente richiede stabilizzazione. Un nucleo sopravvissuto può recuperare con tempo e cure ordinarie, senza rigenerazione gratuita o ritorno dalla morte."
-    },
-    {
-      "nome": "Altri movimenti",
-      "effetto": "Terra e nuoto 4 / 8 / 12: la stessa andatura vale anche per nuoto; spazio 2 × 2 Q"
-    },
-    {
-      "nome": "Abilità particolari",
-      "effetto": "fra detriti vegetali 14"
+      "effetto": "La vittima (presa o inglobata) spende 1 AzP: Corpo a corpo o Atletica contro Corpo a corpo 13 (−4 di Immobilizzato); un alleato adiacente può farlo col proprio VA (senza il malus se libero). Successo libera in uno spazio adiacente capace di accoglierla; il pareggio mantiene la presa. Il prigioniero attacca dall’interno con −4; la massa dà copertura totale. Rilascio gratuito; perdita di coscienza, morte o Menomazione del contenimento la liberano (0 PV no). All’uscita cessano cecità e ostruzione; il fiato torna dopo un Round di respiro normale."
     }
   ],
   "immunita": [
@@ -152,9 +133,9 @@
       "spazio": "Mostri 0.69",
       "abilita": "Mostri 0.47",
       "attacchi": "Mostri 0.47",
-      "capacita": "Mostri 0.69",
+      "capacita": "Mostri 0.47",
+      "note": "Mostri 0.69",
       "gs_px": "Mostri 0.69"
     }
-  },
-  "taglia": "grande"
+  }
 }

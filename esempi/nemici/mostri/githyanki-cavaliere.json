@@ -4,7 +4,6 @@
   "id": "githyanki-cavaliere",
   "nome": "Githyanki cavaliere",
   "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Githyanki cavaliere",
-  "note": "Githyanki corazzato che canalizza potere nello spadone argentato. Usa gli impulsi psichici come alternativa al colpo materiale e combina brevi trasferimenti con una limitata telecinesi.",
   "pv": 115,
   "pm": 36,
   "caratteristiche": {
@@ -109,6 +108,7 @@
       "effetto": "spazio 1 × 1 Q"
     }
   ],
+  "note": "Githyanki corazzato che canalizza potere nello spadone argentato. Usa gli impulsi psichici come alternativa al colpo materiale e combina brevi trasferimenti con una limitata telecinesi.",
   "gs_px": {
     "gs": "Leggenda",
     "px": 110,
@@ -128,9 +128,12 @@
       "spazio": "Mostri 0.69",
       "abilita": "Mostri 0.69",
       "capacita": "Mostri 0.69",
-      "gs_px": "Mostri 0.69"
+      "note": "Mostri 0.69",
+      "gs_px": "Mostri 0.69",
+      "attacchi": "Mostri 0.69"
     },
     "edizione": "Mostri 0.69",
     "sistema_salute": "solo_PV"
-  }
+  },
+  "attacchi": []
 }

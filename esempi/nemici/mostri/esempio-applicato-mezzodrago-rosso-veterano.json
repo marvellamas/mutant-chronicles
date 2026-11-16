@@ -4,7 +4,6 @@
   "id": "esempio-applicato-mezzodrago-rosso-veterano",
   "nome": "Esempio applicato Mezzodrago rosso veterano",
   "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Esempio applicato Mezzodrago rosso veterano",
-  "note": "Profilo già compreso nelle 424 creature del catalogo; Natura Comune. Combattente terrestre con discendenza rossa, senza volo innato e senza Incantesimi appresi. I valori mantengono la configurazione già presente.",
   "pv": 85,
   "pm": 20,
   "caratteristiche": {
@@ -55,6 +54,7 @@
       "effetto": "Scurovisione 12 Q, percezione non visiva 2 Q"
     }
   ],
+  "note": "Profilo già compreso nelle 424 creature del catalogo; Natura Comune. Combattente terrestre con discendenza rossa, senza volo innato e senza Incantesimi appresi. I valori mantengono la configurazione già presente.",
   "gs_px": {
     "gs": "Eroe",
     "px": 77,
@@ -73,9 +73,12 @@
       "movimento": "Mostri 0.69",
       "spazio": "Mostri 0.69",
       "capacita": "Mostri 0.69",
-      "gs_px": "Mostri 0.69"
+      "note": "Mostri 0.69",
+      "gs_px": "Mostri 0.69",
+      "attacchi": "Mostri 0.69"
     },
     "edizione": "Mostri 0.69",
     "sistema_salute": "solo_PV"
-  }
+  },
+  "attacchi": []
 }

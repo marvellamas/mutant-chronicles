@@ -4,7 +4,6 @@
   "id": "cacciatore-di-anime",
   "nome": "Cacciatore di Anime",
   "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Cacciatore di Anime",
-  "note": "Negoziatore oscuro che propone favori in cambio di impegni personali. Studia il desiderio della vittima e costruisce attorno a esso un debito sempre più difficile da sciogliere.",
   "pv": 72,
   "pm": 45,
   "caratteristiche": {
@@ -96,6 +95,7 @@
       "effetto": "spazio 1 Q"
     }
   ],
+  "note": "Negoziatore oscuro che propone favori in cambio di impegni personali. Studia il desiderio della vittima e costruisce attorno a esso un debito sempre più difficile da sciogliere.",
   "gs_px": {
     "gs": "Eroe",
     "px": 70,
@@ -114,9 +114,12 @@
       "movimento": "Mostri 0.69",
       "abilita": "Mostri 0.69",
       "capacita": "Mostri 0.69",
-      "gs_px": "Mostri 0.69"
+      "note": "Mostri 0.69",
+      "gs_px": "Mostri 0.69",
+      "attacchi": "Mostri 0.69"
     },
     "edizione": "Mostri 0.69",
     "sistema_salute": "solo_PV"
-  }
+  },
+  "attacchi": []
 }

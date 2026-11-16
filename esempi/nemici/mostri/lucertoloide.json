@@ -48,11 +48,11 @@
       "va": 10,
       "danno": "1d6+1",
       "natura": "Naturale",
+      "portata_q": 1,
+      "ac": 1,
       "proprieta": [
         "Contusione"
-      ],
-      "portata_q": 1,
-      "ac": 1
+      ]
     },
     {
       "nome": "Morso",
@@ -60,11 +60,12 @@
       "va": 10,
       "danno": "1d6+1",
       "natura": "Naturale",
+      "portata_q": 1,
+      "ac": 1,
       "proprieta": [
         "Perforazione"
       ],
-      "portata_q": 1,
-      "ac": 1
+      "note": "Non concede Parata naturale, non trasmette automaticamente malattie e non afferra la preda."
     },
     {
       "nome": "Giavellotto a mano",
@@ -72,11 +73,11 @@
       "va": 10,
       "danno": "1d6+1",
       "natura": "Naturale",
+      "portata_q": 1,
+      "ac": 1,
       "proprieta": [
         "Perforazione"
-      ],
-      "portata_q": 1,
-      "ac": 1
+      ]
     },
     {
       "nome": "Giavellotto lanciato",
@@ -84,14 +85,14 @@
       "va": 9,
       "danno": "1d6",
       "natura": "Naturale",
-      "proprieta": [
-        "Perforazione"
-      ],
       "gittata_q": 18,
       "modalita": [
         "S"
       ],
-      "ac": 1
+      "ac": 1,
+      "proprieta": [
+        "Perforazione"
+      ]
     }
   ],
   "abilita": [
@@ -151,7 +152,7 @@
       "effetto": "L’AR biologica 2 resta anche perdendo lo Scudo. Lo Scudo è ordinario: spuntoni ornamentali non danno un attacco aggiuntivo, un’arma con danno autonomo o un bonus alla Parata. La coda partecipa all’equilibrio e al Nuoto, senza attacco di Coda."
     }
   ],
-  "note": "Umanoide rettile • pattuglia anfibia • Natura Comune.",
+  "note": "AR 3 con Scudo piccolo, 2 biologica senza. Parla Draconico; nessuna Scurovisione innata. Abitante di rive e paludi, attrezzato per pattugliare e difendere una comunità; può riconoscere accordi e confini senza un obbligo di trattare gli estranei come cibo. Condotta: sotto 6 PV o a Ferita Profonda cerca la sponda, un riparo o l’aiuto dei compagni. Fonte: Lizardfolk, p. 204.",
   "_bestiario": {
     "edizione": "Mostri 0.69",
     "sistema_salute": "solo_PV",
@@ -167,8 +168,9 @@
       "movimento": "Mostri 0.69",
       "spazio": "Mostri 0.69",
       "abilita": "Mostri 0.69",
-      "attacchi": "Mostri 0.69",
+      "attacchi": "Mostri 0.47",
       "capacita": "Mostri 0.47",
+      "note": "Mostri 0.47",
       "gs_px": "Mostri 0.69"
     }
   }

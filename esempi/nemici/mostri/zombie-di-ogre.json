@@ -5,7 +5,6 @@
   "nome": "Zombie di Ogre",
   "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Zombie di Ogre",
   "taglia": "grande",
-  "note": "Cadavere animato massiccio e lento che usa una mazza. La sua tenacia sostiene le Prove per le Ferite, senza riportarlo automaticamente a un PV dopo ogni colpo.",
   "pv": 84,
   "pm": 6,
   "caratteristiche": {
@@ -64,8 +63,7 @@
       "danno": "2d6+3",
       "natura": "Naturale",
       "proprieta": [
-        "Contusione",
-        "AC 1"
+        "Contusione"
       ],
       "portata_q": 1,
       "ac": 1
@@ -77,8 +75,7 @@
       "danno": "1d8+2",
       "natura": "Naturale",
       "proprieta": [
-        "Contusione",
-        "AC 1"
+        "Contusione"
       ],
       "portata_q": 1,
       "ac": 1
@@ -106,6 +103,7 @@
       "effetto": "spazio 2 × 2 Q"
     }
   ],
+  "note": "Cadavere animato massiccio e lento che usa una mazza. La sua tenacia sostiene le Prove per le Ferite, senza riportarlo automaticamente a un PV dopo ogni colpo.",
   "gs_px": {
     "gs": "Esperto",
     "px": 33,
@@ -126,6 +124,7 @@
       "abilita": "Mostri 0.69",
       "attacchi": "Mostri 0.69",
       "capacita": "Mostri 0.69",
+      "note": "Mostri 0.69",
       "gs_px": "Mostri 0.69"
     },
     "edizione": "Mostri 0.69",

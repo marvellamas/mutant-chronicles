@@ -144,7 +144,7 @@
       "effetto": "+2 alla sola PS pertinente contro fascinazione, Terrorizzato, Paralizzato, Avvelenato, Stordito e Sonno, senza immunità o PS aggiuntive quando non previste. La robustezza mentale non lo rende immune agli incantesimi."
     }
   ],
-  "note": "Bugbear • assaltatore esperto • Natura Comune.",
+  "note": "AR 4 con Scudo piccolo, 3 senza; Parata 12 (valore delle Difese), Schivata / Elusione 10. La Media è già conteggiata: rimossa recupera +1 ai VA fisici penalizzati e Movimento 6 / 12 / 18 Q. Parla Comune e Goblin. Capo fisicamente potente, abile nel colpire da un riparo e nel radunare seguaci intimiditi. Condotta: sotto 13 PV o a Ferita Profonda può abbandonare la banda. Fonte: Bugbear Chief, p. 33.",
   "_bestiario": {
     "edizione": "Mostri 0.69",
     "sistema_salute": "solo_PV",
@@ -162,6 +162,7 @@
       "abilita": "Mostri 0.69",
       "attacchi": "Mostri 0.69",
       "capacita": "Mostri 0.47",
+      "note": "Mostri 0.47",
       "gs_px": "Mostri 0.69"
     }
   }

@@ -81,52 +81,28 @@
   ],
   "capacita": [
     {
-      "nome": "Sguardo perturbante",
-      "effetto": "VA —. Danno: Disorientato; nessun danno. Portata/costo: 6 Q; Volontà −2; 3 PM; "
-    },
-    {
       "nome": "Sequenza",
-      "effetto": "Può usare al massimo due Artigli e un attacco di Mandibole per Round, ciascuno con 1 AzP. Sguardo o Difese consumano le stesse tre AzP: non si aggiungono ai tre colpi. Sguardo è disponibile una sola volta per Round. Attacco di Opportunità con Artiglio, massimo uno ordinario; Mandibole non si aggiunge gratuitamente."
+      "effetto": "Al massimo due Artigli e un attacco di Mandibole per Round, 1 AzP ciascuno; Sguardo o Difese usano le stesse tre AzP. Attacco di Opportunità con Artiglio, uno per Round."
     },
     {
-      "nome": "Sensi",
-      "effetto": "Scurovisione 24 Q e percezione delle vibrazioni 12 Q sul medesimo terreno continuo. Le vibrazioni localizzano creature in movimento, non dettagli visivi; non percepiscono chi vola o è isolato dal terreno. Non permettono di mordere attraverso una parete né soddisfano i requisiti dello Sguardo."
+      "nome": "Sguardo perturbante",
+      "effetto": "1 AzP e 3 PM, una volta per Round, contro una creatura dotata di mente entro 6 Q che si veda reciprocamente, con linea d’effetto libera. Nessun tiro per colpire; Volontà con −2 evita (senza Azioni, niente Parata o Schivata). Fallimento: Disorientato, −2 VA a tutte le Prove di Abilità per 1+1d3 Round; non tocca Caratteristiche, Salvezze, danni, movimento o Azioni e il giocatore sceglie cosa fare. Nuove applicazioni tengono la scadenza più lontana; Barriera Mentale dà il suo bonus alla PS. Cura Spirituale (liv. 1) lo rimuove; Negare Potere: potenza 6. Coprirsi gli occhi rende Accecati.",
+      "risorsa": "3 PM",
+      "azioni": {
+        "principali": 1
+      },
+      "usi": {
+        "quanti": 1,
+        "per": "Round"
+      }
     },
     {
       "nome": "Scavo",
-      "effetto": "Attraversa terra a 4 Q e roccia ordinaria compatta a 2 Q per AzM, solo al Passo. Non perfora metallo, strutture rinforzate o barriere magiche. Lascia un cunicolo di circa 1 Q di larghezza e 2 Q di altezza, che percorre grazie alla propria anatomia. La stabilità dipende dal terreno; non produce un crollo ad area come attacco aggiuntivo."
+      "effetto": "Attraversa terra a 4 Q e roccia ordinaria compatta a 2 Q per AzM, solo al Passo; non perfora metallo, strutture rinforzate o barriere magiche. Lascia un cunicolo di circa 1 Q × 2 Q. Nessun crollo ad area come attacco."
     },
     {
-      "nome": "Attivazione",
-      "effetto": "1 AzP e 3 PM, massimo una volta per Round, contro una creatura dotata di mente entro 6 Q. L’Umber Hulk e la vittima devono vedersi reciprocamente, con linea d’effetto libera. Non serve tiro per colpire; Volontà con −2 evita l’effetto. La vittima non spende Azioni per questa Salvezza e non aggiunge Parata o Schivata."
-    },
-    {
-      "nome": "Effetto",
-      "effetto": "Con fallimento la vittima è Disorientata: −2 VA a tutte le Prove di Abilità per 1+1d3 Round. Non modifica Caratteristiche, Salvezze, danni o movimento e non sottrae Azioni. È un’alterazione mentale temporanea: nella conversione sostituisce la scelta casuale delle azioni dell’originale. Il giocatore continua a scegliere cosa fare; non è costretto a colpire un alleato o entrare in un pericolo."
-    },
-    {
-      "nome": "Persistenza",
-      "effetto": "Dopo l’applicazione non occorre continuare a guardarsi; interrompere la vista evita soltanto nuovi usi. L’Oscuramento del Mantoscuro, una parete o occhi coperti impediscono l’attivazione quando manca la vista reciproca. Non è un’aura passiva e non colpisce automaticamente chiunque inizi il turno vicino alla creatura."
-    },
-    {
-      "nome": "Cumulo e protezioni",
-      "effetto": "Nuove applicazioni conservano la scadenza più lontana, senza sommare penalità. Con altre penalità magiche alle stesse Prove si applica la maggiore. Barriera Mentale concede il proprio bonus alla PS Volontà pertinente; non è danno psichico e l’immunità a Dardo Psichico non basta a bloccarlo. Una creatura senza mente non è un bersaglio valido."
-    },
-    {
-      "nome": "Rimozione",
-      "effetto": "L’effetto termina alla scadenza o con Cura Spirituale dal livello 1, che rimuove Disorientato; per questa capacità la causa è conclusa all’attivazione e non continua ad alimentare il sintomo. Negare Potere può rimuoverlo, potenza di confronto 6. La morte o la perdita di coscienza dell’Umber Hulk non lo annullano retroattivamente. Non cancella ricordi e non produce danni o Ferite."
-    },
-    {
-      "nome": "Evitare lo sguardo",
-      "effetto": "Coprirsi gli occhi rende Accecati con le normali conseguenze; un senso sostitutivo utile al combattimento non ristabilisce il contatto visivo. Un riparo opaco può impedire lo Sguardo senza annullare la capacità dello scavatore di sentire le vibrazioni. Difendere il passaggio e riservare Azioni per Schivare restano risposte utili anche quando lo Sguardo riesce."
-    },
-    {
-      "nome": "Altri movimenti",
-      "effetto": "scavo 4 Q al Passo, 2 Q nella roccia; spazio 2 × 2 Q"
-    },
-    {
-      "nome": "Abilità particolari",
-      "effetto": "Furtività 9 sotto terra, 7 all’aperto"
+      "nome": "Sensi",
+      "effetto": "Scurovisione 24 Q e percezione delle vibrazioni 12 Q sul medesimo terreno continuo: localizza creature in movimento, non chi vola o è isolato dal terreno; non soddisfa i requisiti dello Sguardo."
     }
   ],
   "note": "Scavatore corazzato • assaltatore e sguardo perturbante • Natura Comune. Condotta. Cerca di emergere vicino alla preda senza rimanere accerchiato. Parla il proprio linguaggio; non è incapace di trattare per la sola forma del corpo. Sotto 20 PV prova a ritirarsi in un tunnel. Non è immune a cadute, crolli, Ferite o effetti mentali.",
@@ -146,9 +122,9 @@
       "spazio": "Mostri 0.69",
       "abilita": "Mostri 0.47",
       "attacchi": "Mostri 0.47",
-      "capacita": "Mostri 0.69",
+      "capacita": "Mostri 0.47",
+      "note": "Mostri 0.69",
       "gs_px": "Mostri 0.69"
     }
-  },
-  "taglia": "grande"
+  }
 }

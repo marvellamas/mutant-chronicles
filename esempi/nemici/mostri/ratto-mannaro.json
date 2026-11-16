@@ -4,7 +4,6 @@
   "id": "ratto-mannaro",
   "nome": "Ratto mannaro",
   "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Ratto mannaro",
-  "note": "Licantropo furtivo che sfrutta passaggi stretti e reti di complici. La forma di ratto gigante serve soprattutto a nascondersi e fuggire.",
   "pv": 37,
   "pm": 10,
   "caratteristiche": {
@@ -44,7 +43,6 @@
       "danno": "1d4+2",
       "natura": "Naturale",
       "proprieta": [
-        "AC 1",
         "maledizione"
       ],
       "portata_q": 1,
@@ -56,9 +54,6 @@
       "va": 11,
       "danno": "1d4+1",
       "natura": "Naturale",
-      "proprieta": [
-        "AC 1"
-      ],
       "portata_q": 1,
       "ac": 1
     }
@@ -85,6 +80,7 @@
       "effetto": "Percezione 10, 12 con olfatto"
     }
   ],
+  "note": "Licantropo furtivo che sfrutta passaggi stretti e reti di complici. La forma di ratto gigante serve soprattutto a nascondersi e fuggire.",
   "gs_px": {
     "gs": "Esperto",
     "px": 30,
@@ -103,6 +99,7 @@
       "movimento": "Mostri 0.69",
       "attacchi": "Mostri 0.69",
       "capacita": "Mostri 0.69",
+      "note": "Mostri 0.69",
       "gs_px": "Mostri 0.69"
     },
     "edizione": "Mostri 0.69",

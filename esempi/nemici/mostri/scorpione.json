@@ -4,7 +4,6 @@
   "id": "scorpione",
   "nome": "Scorpione",
   "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Scorpione",
-  "note": "Piccolo aracnide terrestre provvisto di chele e pungiglione. Il veleno appartiene a questa specie ordinaria; non usa le prese e le riserve dello Scorpione gigante.",
   "pv": 3,
   "pm": 3,
   "caratteristiche": {
@@ -64,7 +63,6 @@
       "natura": "Naturale",
       "proprieta": [
         "Perforazione",
-        "AC 1",
         "veleno 1d6"
       ],
       "portata_q": 1,
@@ -93,6 +91,7 @@
       "effetto": "corpo minuto, pedina di gestione 1 Q"
     }
   ],
+  "note": "Piccolo aracnide terrestre provvisto di chele e pungiglione. Il veleno appartiene a questa specie ordinaria; non usa le prese e le riserve dello Scorpione gigante.",
   "gs_px": {
     "gs": "Principiante",
     "px": 10,
@@ -113,6 +112,7 @@
       "abilita": "Mostri 0.69",
       "attacchi": "Mostri 0.69",
       "capacita": "Mostri 0.69",
+      "note": "Mostri 0.69",
       "gs_px": "Mostri 0.69"
     },
     "edizione": "Mostri 0.69",

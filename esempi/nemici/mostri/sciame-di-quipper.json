@@ -43,28 +43,30 @@
   },
   "attacchi": [
     {
-      "nome": "Morsi con PV 20–37",
+      "nome": "Morsi (PV 15–28)",
       "tipo": "ravvicinato",
       "va": 11,
       "danno": "2d6",
       "natura": "Naturale",
+      "ac": 1,
       "proprieta": [
         "Perforazione"
       ],
-      "portata_q": 0,
-      "ac": 1
+      "note": "Solo in acqua.",
+      "portata_q": 0
     },
     {
-      "nome": "Morsi con PV 1–19",
+      "nome": "Morsi (PV 0–14)",
       "tipo": "ravvicinato",
       "va": 11,
       "danno": "1d6",
       "natura": "Naturale",
+      "ac": 1,
       "proprieta": [
         "Perforazione"
       ],
-      "portata_q": 0,
-      "ac": 1
+      "note": "Solo in acqua.",
+      "portata_q": 0
     }
   ],
   "abilita": [
@@ -137,8 +139,9 @@
       "movimento": "Mostri 0.69",
       "spazio": "Mostri 0.69",
       "abilita": "Mostri 0.69",
-      "attacchi": "Mostri 0.69",
+      "attacchi": "Mostri 0.47",
       "capacita": "Mostri 0.47",
+      "note": "Mostri 0.69",
       "gs_px": "Mostri 0.69"
     }
   }

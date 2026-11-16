@@ -104,7 +104,7 @@
       "effetto": "spazio 3 × 3 Q"
     }
   ],
-  "note": "Gigante • combattente delle terre fredde • Natura Comune. Condotta. Può alternare pressione con l’ascia e Difese, oppure preparare il tiro da una posizione protetta. Non cammina automaticamente su ghiaccio verticale o instabile. Sotto 25 PV cerca copertura o un accordo; disciplina e obiettivi possono guidarne una ritirata organizzata.",
+  "note": "AR 5 (2 biologica + 3 armatura Media su misura). Difese = Parata 12; Schivata 11. Ascia bipenne a due mani (+3 ordinario, +2 innato, portata 2 Q). Comportamento: alterna ascia e Difese o prepara il tiro; sotto 19 PV o a Ferita Seria cerca copertura o un accordo.",
   "_bestiario": {
     "edizione": "Mostri 0.69",
     "sistema_salute": "solo_PV",
@@ -122,8 +122,8 @@
       "abilita": "Mostri 0.69",
       "attacchi": "Mostri 0.47",
       "capacita": "Mostri 0.69",
+      "note": "Mostri 0.47",
       "gs_px": "Mostri 0.69"
     }
-  },
-  "taglia": "grande"
+  }
 }

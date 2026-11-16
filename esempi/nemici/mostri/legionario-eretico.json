@@ -4,7 +4,6 @@
   "id": "legionario-eretico",
   "nome": "Legionario Eretico",
   "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Legionario Eretico",
-  "note": "Fante umano trasformato in strumento di Semai. Avanza sotto il fuoco nemico e tiene impegnati i difensori mentre gli infiltratori raggiungono il loro obiettivo. Comportamento. Tiene una linea di tiro e obbedisce a ordini semplici; non escogita autonomamente imboscate. Perde tempo contro un diversivo credibile. Disarmarlo o interrompere gli ordini riduce le sue opzioni, ma non lo spegne. Non è un normale soldato eretico da aggiungere ai venticinque modelli PNG.",
   "pv": 50,
   "pm": 10,
   "caratteristiche": {
@@ -109,6 +108,7 @@
       "effetto": "spazio 1 Q"
     }
   ],
+  "note": "Fante umano trasformato in strumento di Semai. Avanza sotto il fuoco nemico e tiene impegnati i difensori mentre gli infiltratori raggiungono il loro obiettivo. Comportamento. Tiene una linea di tiro e obbedisce a ordini semplici; non escogita autonomamente imboscate. Perde tempo contro un diversivo credibile. Disarmarlo o interrompere gli ordini riduce le sue opzioni, ma non lo spegne. Non è un normale soldato eretico da aggiungere ai venticinque modelli PNG.",
   "gs_px": {
     "gs": "Esperto",
     "px": 33,
@@ -128,6 +128,7 @@
       "abilita": "Mostri 0.69",
       "attacchi": "Mostri 0.69",
       "capacita": "Mostri 0.69",
+      "note": "Mostri 0.69",
       "gs_px": "Mostri 0.69"
     },
     "edizione": "Mostri 0.69",

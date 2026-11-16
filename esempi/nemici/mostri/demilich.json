@@ -4,7 +4,6 @@
   "id": "demilich",
   "nome": "Demilich",
   "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Demilich",
-  "note": "Cranio levitante nel quale sopravvive una volontà antica. Il suo potere è innato: non conserva il repertorio di Incantesimi del Lich.",
   "pv": 104,
   "pm": 70,
   "caratteristiche": {
@@ -89,6 +88,7 @@
       "effetto": "spazio 1 Q condivisibile, senza bloccare il passaggio"
     }
   ],
+  "note": "Cranio levitante nel quale sopravvive una volontà antica. Il suo potere è innato: non conserva il repertorio di Incantesimi del Lich.",
   "gs_px": {
     "gs": "Semidio",
     "px": 400,
@@ -107,9 +107,12 @@
       "movimento": "Mostri 0.69",
       "abilita": "Mostri 0.69",
       "capacita": "Mostri 0.69",
-      "gs_px": "Mostri 0.69"
+      "note": "Mostri 0.69",
+      "gs_px": "Mostri 0.69",
+      "attacchi": "Mostri 0.69"
     },
     "edizione": "Mostri 0.69",
     "sistema_salute": "solo_PV"
-  }
+  },
+  "attacchi": []
 }

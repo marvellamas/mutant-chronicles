@@ -4,7 +4,6 @@
   "id": "githzerai-zerth",
   "nome": "Githzerai Zerth",
   "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Githzerai Zerth",
-  "note": "Githzerai esperto nel combattimento senz’armi e nella pressione mentale. Può evocare un incubo personale e dispone di un trasferimento locale più ampio, conservando i limiti della disciplina di base.",
   "pv": 104,
   "pm": 36,
   "caratteristiche": {
@@ -105,6 +104,7 @@
       "effetto": "spazio 1 × 1 Q"
     }
   ],
+  "note": "Githzerai esperto nel combattimento senz’armi e nella pressione mentale. Può evocare un incubo personale e dispone di un trasferimento locale più ampio, conservando i limiti della disciplina di base.",
   "gs_px": {
     "gs": "Eroe",
     "px": 70,
@@ -124,9 +124,12 @@
       "spazio": "Mostri 0.69",
       "abilita": "Mostri 0.69",
       "capacita": "Mostri 0.69",
-      "gs_px": "Mostri 0.69"
+      "note": "Mostri 0.69",
+      "gs_px": "Mostri 0.69",
+      "attacchi": "Mostri 0.69"
     },
     "edizione": "Mostri 0.69",
     "sistema_salute": "solo_PV"
-  }
+  },
+  "attacchi": []
 }

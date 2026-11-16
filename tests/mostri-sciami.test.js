@@ -50,10 +50,15 @@ test('PV e soglie degli Sciami sulla 0.69: 32 PV (37 quipper, 47 serpenti); le f
   for (const id of ['sciame-di-pipistrelli', 'sciame-di-corvi', 'sciame-di-ratti', 'sciame-di-insetti']) assert.equal(leggi(id).pv, 32, id);
   assert.equal(leggi('sciame-di-quipper').pv, 37, '28 × 1,30 per eccesso');
   assert.equal(leggi('sciame-di-serpenti-velenosi').pv, 47, '36 × 1,30 per eccesso');
-  // lotto 204: la 0.69 ha riscritto anche le fasce, perché seguono i PV nuovi (37 e 47). Sono quelle stampate
-  // nel manuale alle righe «Morsi con PV 20–37» e «Morsi con PV 25–47»: lette, non ricalcolate.
-  assert.deepEqual(leggi('sciame-di-quipper').attacchi.map((a) => a.nome), ['Morsi con PV 20–37', 'Morsi con PV 1–19']);
-  assert.deepEqual(leggi('sciame-di-serpenti-velenosi').attacchi.map((a) => a.nome), ['Morsi con PV 25–47', 'Morsi con PV 1–24']);
+  // **Lotto 204: le fasce restano quelle della 0.47, e il motivo è la regola del lotto.** La 0.69 le ha riscritte
+  // («Morsi con PV 20–37») perché seguono i PV nuovi, ma la sua lettura degli attacchi **perde** la nota «Solo in
+  // acqua» e la portata 0 Q della A.171: è una lettura parziale, e una lettura parziale non si scrive sopra una
+  // buona. Gli attacchi di queste schede restano della 0.47, la scheda lo dichiara campo per campo e la plancia
+  // lo scrive. Meglio due fasce vecchie di un attacco senza la sua condizione.
+  assert.deepEqual(leggi('sciame-di-quipper').attacchi.map((a) => a.nome), ['Morsi (PV 15–28)', 'Morsi (PV 0–14)']);
+  assert.deepEqual(leggi('sciame-di-serpenti-velenosi').attacchi.map((a) => a.nome), ['Morsi (PV 19–36)', 'Morsi (PV 0–18)']);
+  assert.equal(leggi('sciame-di-quipper')._bestiario.campi.attacchi, 'Mostri 0.47', 'e lo dichiara');
+  assert.equal(leggi('sciame-di-quipper')._bestiario.campi.pv, 'Mostri 0.69', 'mentre i PV sono della 0.69');
 });
 
 test('animali singoli: nessuna immunità, nessuna fascia; Quipper senza moto a terra con Frenesia a VA 11', () => {

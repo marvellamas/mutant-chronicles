@@ -4,7 +4,6 @@
   "id": "flumph",
   "nome": "Flumph",
   "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Flumph",
-  "note": "Piccola creatura fluttuante simile a una medusa. Si nutre di residui psionici ambientali e comunica mentalmente; non sottrae passivamente PM a chi gli sta vicino.",
   "pv": 11,
   "pm": 12,
   "caratteristiche": {
@@ -93,6 +92,7 @@
       "effetto": "spazio 1 Q condivisibile"
     }
   ],
+  "note": "Piccola creatura fluttuante simile a una medusa. Si nutre di residui psionici ambientali e comunica mentalmente; non sottrae passivamente PM a chi gli sta vicino.",
   "gs_px": {
     "gs": "Inesperto",
     "px": 20,
@@ -111,9 +111,12 @@
       "movimento": "Mostri 0.69",
       "abilita": "Mostri 0.69",
       "capacita": "Mostri 0.69",
-      "gs_px": "Mostri 0.69"
+      "note": "Mostri 0.69",
+      "gs_px": "Mostri 0.69",
+      "attacchi": "Mostri 0.69"
     },
     "edizione": "Mostri 0.69",
     "sistema_salute": "solo_PV"
-  }
+  },
+  "attacchi": []
 }

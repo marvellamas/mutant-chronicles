@@ -5,7 +5,6 @@
   "nome": "Drider",
   "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Drider",
   "taglia": "grande",
-  "note": "Predatore dal torso umanoide e dal corpo aracnide. Si muove su pareti e soffitti e usa armi preparate, zanne velenose e pochi effetti innati di luce e oscuramento.",
   "pv": 125,
   "pm": 20,
   "caratteristiche": {
@@ -72,8 +71,7 @@
       "danno": "1d8+2",
       "natura": "Naturale",
       "proprieta": [
-        "Taglio",
-        "AC 1"
+        "Taglio"
       ],
       "portata_q": 1,
       "ac": 1
@@ -86,7 +84,6 @@
       "natura": "Naturale",
       "proprieta": [
         "Perforazione",
-        "AC 1",
         "eventuale tossina"
       ],
       "portata_q": 100,
@@ -100,7 +97,6 @@
       "natura": "Naturale",
       "proprieta": [
         "Perforazione",
-        "AC 1",
         "veleno 2d6"
       ],
       "portata_q": 1,
@@ -149,6 +145,7 @@
       "effetto": "Terra e arrampicata 6 / 12 / 18: la stessa andatura vale anche per arrampicata; spazio 2 × 2 Q"
     }
   ],
+  "note": "Predatore dal torso umanoide e dal corpo aracnide. Si muove su pareti e soffitti e usa armi preparate, zanne velenose e pochi effetti innati di luce e oscuramento.",
   "gs_px": {
     "gs": "Eroe",
     "px": 77,
@@ -169,6 +166,7 @@
       "abilita": "Mostri 0.69",
       "attacchi": "Mostri 0.69",
       "capacita": "Mostri 0.69",
+      "note": "Mostri 0.69",
       "gs_px": "Mostri 0.69"
     },
     "edizione": "Mostri 0.69",

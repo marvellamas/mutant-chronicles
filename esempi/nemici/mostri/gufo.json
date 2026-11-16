@@ -4,7 +4,6 @@
   "id": "gufo",
   "nome": "Gufo",
   "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Gufo",
-  "note": "Piccolo rapace notturno che caccia con udito e vista acuti. È un animale ordinario, distinto dal Gufo gigante senziente già presente nel catalogo.",
   "pv": 6,
   "pm": 2,
   "caratteristiche": {
@@ -46,8 +45,7 @@
       "danno": "1",
       "natura": "Naturale",
       "proprieta": [
-        "Taglio",
-        "AC 1"
+        "Taglio"
       ],
       "portata_q": 1,
       "ac": 1
@@ -79,6 +77,7 @@
       "effetto": "Percezione 11, 13 per vista o udito determinanti"
     }
   ],
+  "note": "Piccolo rapace notturno che caccia con udito e vista acuti. È un animale ordinario, distinto dal Gufo gigante senziente già presente nel catalogo.",
   "gs_px": {
     "gs": "Principiante",
     "px": 10,
@@ -98,6 +97,7 @@
       "spazio": "Mostri 0.69",
       "attacchi": "Mostri 0.69",
       "capacita": "Mostri 0.69",
+      "note": "Mostri 0.69",
       "gs_px": "Mostri 0.69"
     },
     "edizione": "Mostri 0.69",

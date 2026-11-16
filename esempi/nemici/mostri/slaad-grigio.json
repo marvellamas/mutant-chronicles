@@ -4,7 +4,6 @@
   "id": "slaad-grigio",
   "nome": "Slaad grigio",
   "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Slaad grigio",
-  "note": "Slaad di taglia umanoide che impiega lo spadone e poteri d’infiltrazione. Le sue armi sono infuse personalmente di magia, senza trasferire tale qualità agli oggetti recuperati.",
   "pv": 141,
   "pm": 48,
   "caratteristiche": {
@@ -75,8 +74,7 @@
       "danno": "1d6+2",
       "natura": "Magico",
       "proprieta": [
-        "Perforazione",
-        "AC 1"
+        "Perforazione"
       ],
       "portata_q": 1,
       "ac": 1
@@ -88,8 +86,7 @@
       "danno": "1d10+2",
       "natura": "Magico",
       "proprieta": [
-        "Taglio",
-        "AC 1"
+        "Taglio"
       ],
       "portata_q": 1,
       "ac": 1
@@ -101,8 +98,7 @@
       "danno": "2d6+3",
       "natura": "Magico",
       "proprieta": [
-        "Taglio",
-        "AC 1"
+        "Taglio"
       ],
       "portata_q": 1,
       "ac": 1
@@ -143,6 +139,7 @@
       "effetto": "spazio 1 × 1 Q"
     }
   ],
+  "note": "Slaad di taglia umanoide che impiega lo spadone e poteri d’infiltrazione. Le sue armi sono infuse personalmente di magia, senza trasferire tale qualità agli oggetti recuperati.",
   "gs_px": {
     "gs": "Leggenda",
     "px": 110,
@@ -163,6 +160,7 @@
       "abilita": "Mostri 0.69",
       "attacchi": "Mostri 0.69",
       "capacita": "Mostri 0.69",
+      "note": "Mostri 0.69",
       "gs_px": "Mostri 0.69"
     },
     "edizione": "Mostri 0.69",

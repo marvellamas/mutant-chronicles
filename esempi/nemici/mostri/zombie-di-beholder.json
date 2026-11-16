@@ -5,7 +5,6 @@
   "nome": "Zombie di Beholder",
   "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Zombie di Beholder",
   "taglia": "grande",
-  "note": "Cadavere levitante di un Beholder con quattro raggi oculari residui. L’occhio centrale non sopprime la magia e non dispone dei dieci raggi o delle azioni del Beholder vivo. 3d6+3 Etereo, una AC, Tempra dimezza per eccesso prima della sola AR magica. Non assorbe PM, AFT o PV massimi, non guarisce lo Zombie e non riduce Caratteristiche. Successo evita, fallimento 4d6+3 Magico, una AC con tutta l’AR. Non ignora protezioni, non polverizza automaticamente chi scende a zero PV e non provoca Ferite dirette aggiuntive.",
   "pv": 104,
   "pm": 24,
   "caratteristiche": {
@@ -115,6 +114,7 @@
       "effetto": "spazio 2 × 2 Q"
     }
   ],
+  "note": "Cadavere levitante di un Beholder con quattro raggi oculari residui. L’occhio centrale non sopprime la magia e non dispone dei dieci raggi o delle azioni del Beholder vivo. 3d6+3 Etereo, una AC, Tempra dimezza per eccesso prima della sola AR magica. Non assorbe PM, AFT o PV massimi, non guarisce lo Zombie e non riduce Caratteristiche. Successo evita, fallimento 4d6+3 Magico, una AC con tutta l’AR. Non ignora protezioni, non polverizza automaticamente chi scende a zero PV e non provoca Ferite dirette aggiuntive.",
   "gs_px": {
     "gs": "Eroe",
     "px": 70,
@@ -134,9 +134,12 @@
       "spazio": "Mostri 0.69",
       "abilita": "Mostri 0.69",
       "capacita": "Mostri 0.69",
-      "gs_px": "Mostri 0.69"
+      "note": "Mostri 0.69",
+      "gs_px": "Mostri 0.69",
+      "attacchi": "Mostri 0.69"
     },
     "edizione": "Mostri 0.69",
     "sistema_salute": "solo_PV"
-  }
+  },
+  "attacchi": []
 }

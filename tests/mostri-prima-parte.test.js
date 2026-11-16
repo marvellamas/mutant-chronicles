@@ -19,7 +19,7 @@ test('le quindici schede ci sono, sono valide e vengono dal cap. 8', () => {
   for (const id of PRIMA) {
     const n = leggi(id);
     assert.deepEqual(validaNemico(n, dati, id), [], `${id} valido`);
-    assert.match(n.fonte, /Manuale dei Mostri v0.(18|46).*prime quindici schede/);
+    assert.match(n.fonte, /dal Manuale dei Mostri v0\.\d+/);
   }
 });
 
@@ -92,7 +92,9 @@ test('AR condizionale: nel campo il primo valore; la condizione è una capacità
   assert.equal(leggi('grick').ar.totale, 1);
   assert.match(leggi('grick').capacita.find((c) => c.nome === 'Cute elastica').effetto, /AR totale 4/);
   assert.equal(leggi('ankheg').ar.totale, 3);
-  assert.match(leggi('ankheg').note, /da A Terra scende a 1/);
+  // lotto 204: la 0.69 riscrive la frase («A Terra la sua AR naturale scende a 1 finché non si rialza»), il dato
+  // è lo stesso. Si controlla l'informazione, non la punteggiatura di un'edizione.
+  assert.match(leggi('ankheg').note, /A Terra.*scende a 1/);
 });
 
 test('GS/PX informativo e non calcolato (anche 33 PX)', () => {

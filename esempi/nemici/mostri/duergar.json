@@ -4,7 +4,6 @@
   "id": "duergar",
   "nome": "Duergar",
   "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Duergar",
-  "note": "Umanoide robusto dalla pelle grigia, adattato alla vita sotterranea. Questo esemplare usa martello, lancia e scudo e può ingrandirsi o occultarsi per un tempo limitato.",
   "pv": 47,
   "pm": 12,
   "caratteristiche": {
@@ -93,6 +92,7 @@
       "effetto": "spazio 1 × 1 Q, ingrandito 2 × 2 Q"
     }
   ],
+  "note": "Umanoide robusto dalla pelle grigia, adattato alla vita sotterranea. Questo esemplare usa martello, lancia e scudo e può ingrandirsi o occultarsi per un tempo limitato.",
   "gs_px": {
     "gs": "Esperto",
     "px": 33,
@@ -112,9 +112,12 @@
       "spazio": "Mostri 0.69",
       "abilita": "Mostri 0.69",
       "capacita": "Mostri 0.69",
-      "gs_px": "Mostri 0.69"
+      "note": "Mostri 0.69",
+      "gs_px": "Mostri 0.69",
+      "attacchi": "Mostri 0.69"
     },
     "edizione": "Mostri 0.69",
     "sistema_salute": "solo_PV"
-  }
+  },
+  "attacchi": []
 }

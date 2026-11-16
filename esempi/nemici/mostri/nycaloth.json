@@ -5,7 +5,6 @@
   "nome": "Nycaloth",
   "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Nycaloth",
   "taglia": "grande",
-  "note": "Assaltatore alato dalla pelle verde e dagli artigli laceranti. Colpisce con l’ascia o le mani libere, quindi cambia posizione per evitare una risposta concentrata.",
   "pv": 136,
   "pm": 40,
   "caratteristiche": {
@@ -69,8 +68,7 @@
       "danno": "2d6+6",
       "natura": "Magico",
       "proprieta": [
-        "Taglio",
-        "AC 1"
+        "Taglio"
       ],
       "portata_q": 1,
       "ac": 1
@@ -83,7 +81,6 @@
       "natura": "Magico",
       "proprieta": [
         "Taglio",
-        "AC 1",
         "lacerazione"
       ],
       "portata_q": 1,
@@ -112,6 +109,7 @@
       "effetto": "spazio 2 × 2 Q"
     }
   ],
+  "note": "Assaltatore alato dalla pelle verde e dagli artigli laceranti. Colpisce con l’ascia o le mani libere, quindi cambia posizione per evitare una risposta concentrata.",
   "gs_px": {
     "gs": "Mito",
     "px": 220,
@@ -132,6 +130,7 @@
       "abilita": "Mostri 0.69",
       "attacchi": "Mostri 0.69",
       "capacita": "Mostri 0.69",
+      "note": "Mostri 0.69",
       "gs_px": "Mostri 0.69"
     },
     "edizione": "Mostri 0.69",

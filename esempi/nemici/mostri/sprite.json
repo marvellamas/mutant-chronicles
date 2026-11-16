@@ -4,7 +4,6 @@
   "id": "sprite",
   "nome": "Sprite",
   "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Sprite",
-  "note": "Sentinella alata armata di piccole lame e frecce soporifere. Sorveglia i boschi e valuta le emozioni degli intrusi senza leggere automaticamente la loro moralità o i loro segreti.",
   "pv": 8,
   "pm": 12,
   "caratteristiche": {
@@ -71,8 +70,7 @@
       "danno": "1d4",
       "natura": "Naturale",
       "proprieta": [
-        "Taglio",
-        "AC 1"
+        "Taglio"
       ],
       "portata_q": 1,
       "ac": 1
@@ -85,7 +83,6 @@
       "natura": "Naturale",
       "proprieta": [
         "Perforazione",
-        "AC 1",
         "veleno"
       ],
       "gittata_q": 8,
@@ -117,6 +114,7 @@
       "effetto": "spazio 1 Q condivisibile, non blocca il passaggio"
     }
   ],
+  "note": "Sentinella alata armata di piccole lame e frecce soporifere. Sorveglia i boschi e valuta le emozioni degli intrusi senza leggere automaticamente la loro moralità o i loro segreti.",
   "gs_px": {
     "gs": "Inesperto",
     "px": 22,
@@ -136,6 +134,7 @@
       "abilita": "Mostri 0.69",
       "attacchi": "Mostri 0.69",
       "capacita": "Mostri 0.69",
+      "note": "Mostri 0.69",
       "gs_px": "Mostri 0.69"
     },
     "edizione": "Mostri 0.69",

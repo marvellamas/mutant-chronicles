@@ -5,7 +5,6 @@
   "nome": "Marilith",
   "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Marilith",
   "taglia": "grande",
-  "note": "Comandante dal torso umanoide, sei braccia e parte inferiore serpentina. Alterna le spade, trattiene con la coda e reagisce con una difesa addestrata; i sei arti non possiedono turni separati.",
   "pv": 198,
   "pm": 48,
   "caratteristiche": {
@@ -68,8 +67,7 @@
       "danno": "1d8+6",
       "natura": "Magico",
       "proprieta": [
-        "Taglio",
-        "AC 1"
+        "Taglio"
       ],
       "portata_q": 1,
       "ac": 1
@@ -82,7 +80,6 @@
       "natura": "Magico",
       "proprieta": [
         "Contusione",
-        "AC 1",
         "presa"
       ],
       "portata_q": 2,
@@ -115,6 +112,7 @@
       "effetto": "spazio 2 × 2 Q"
     }
   ],
+  "note": "Comandante dal torso umanoide, sei braccia e parte inferiore serpentina. Alterna le spade, trattiene con la coda e reagisce con una difesa addestrata; i sei arti non possiedono turni separati.",
   "gs_px": {
     "gs": "Semidio",
     "px": 440,
@@ -135,6 +133,7 @@
       "abilita": "Mostri 0.69",
       "attacchi": "Mostri 0.69",
       "capacita": "Mostri 0.69",
+      "note": "Mostri 0.69",
       "gs_px": "Mostri 0.69"
     },
     "edizione": "Mostri 0.69",

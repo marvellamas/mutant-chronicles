@@ -49,11 +49,11 @@
       "va": 12,
       "danno": "1d8+2",
       "natura": "Naturale",
+      "portata_q": 2,
+      "ac": 1,
       "proprieta": [
         "Taglio"
-      ],
-      "portata_q": 2,
-      "ac": 1
+      ]
     },
     {
       "nome": "Morso",
@@ -61,11 +61,12 @@
       "va": 11,
       "danno": "1d4+2",
       "natura": "Naturale",
+      "portata_q": 1,
+      "ac": 1,
       "proprieta": [
         "Perforazione"
       ],
-      "portata_q": 1,
-      "ac": 1
+      "note": "Naturale: non concede Parata naturale a chi lo usa; nessuna Salvezza o infezione aggiuntiva."
     },
     {
       "nome": "Arco da guerra",
@@ -73,14 +74,14 @@
       "va": 11,
       "danno": "1d6+1",
       "natura": "Naturale",
-      "proprieta": [
-        "Perforazione"
-      ],
       "gittata_q": 100,
       "modalita": [
         "S"
       ],
-      "ac": 1
+      "ac": 1,
+      "proprieta": [
+        "Perforazione"
+      ]
     }
   ],
   "abilita": [
@@ -146,7 +147,7 @@
       "effetto": "Un altro alleato con la capacità Frenesia gnoll, visibile entro 6 Q e capace di udire e comprendere il richiamo, può effettuare subito un singolo attacco ravvicinato pagando 1 propria AzP ancora disponibile. Non concede un’AzP, un nuovo Morso gratuito o un attacco con l’arco. Ordini fuori Iniziativa: incitare la Frenesia permette un singolo attacco immediato pagato dal destinatario con 1 AzP ancora disponibile del Round (non è una nuova Iniziativa, non concede Movimento e non attiva Frenesia); lo stesso destinatario riceve al massimo un attacco ordinato per Round da qualsiasi numero di capi, conserva la propria Opportunità se il tetto del profilo lo consente e non può spendere un’AzP di Frenesia non ancora ottenuta."
     }
   ],
-  "note": "Gnoll • guida di una banda predatrice • Natura Comune.",
+  "note": "Parata 11 (valore delle Difese), Schivata / Elusione 10. La Media è già inclusa: rimossa recupera +1 ai VA fisici penalizzati e Movimento 6 / 12 / 18 Q. Parla Comune e Gnoll. Coordina il branco con richiami e assalti ravvicinati. Condotta: sotto 10 PV o a Ferita Profonda cerca di riunire i superstiti e ripiegare. Fonte: Gnoll Pack Lord, p. 163.",
   "_bestiario": {
     "edizione": "Mostri 0.69",
     "sistema_salute": "solo_PV",
@@ -162,8 +163,9 @@
       "movimento": "Mostri 0.69",
       "spazio": "Mostri 0.69",
       "abilita": "Mostri 0.69",
-      "attacchi": "Mostri 0.69",
+      "attacchi": "Mostri 0.47",
       "capacita": "Mostri 0.47",
+      "note": "Mostri 0.47",
       "gs_px": "Mostri 0.69"
     }
   }

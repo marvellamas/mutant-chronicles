@@ -5,7 +5,6 @@
   "nome": "Slaad rosso",
   "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Slaad rosso",
   "taglia": "grande",
-  "note": "Predatore anfibio nell’aspetto, dalla pelle rossa e artigli capaci di introdurre un uovo parassita. Combatte a distanza ravvicinata; l’incubazione è un effetto differito e non produce larve durante lo scontro.",
   "pv": 104,
   "pm": 12,
   "caratteristiche": {
@@ -64,8 +63,7 @@
       "danno": "2d4+2",
       "natura": "Naturale",
       "proprieta": [
-        "Perforazione",
-        "AC 1"
+        "Perforazione"
       ],
       "portata_q": 1,
       "ac": 1
@@ -78,7 +76,6 @@
       "natura": "Naturale",
       "proprieta": [
         "Taglio",
-        "AC 1",
         "possibile uovo"
       ],
       "portata_q": 1,
@@ -107,6 +104,7 @@
       "effetto": "spazio 2 × 2 Q"
     }
   ],
+  "note": "Predatore anfibio nell’aspetto, dalla pelle rossa e artigli capaci di introdurre un uovo parassita. Combatte a distanza ravvicinata; l’incubazione è un effetto differito e non produce larve durante lo scontro.",
   "gs_px": {
     "gs": "Eroe",
     "px": 70,
@@ -127,6 +125,7 @@
       "abilita": "Mostri 0.69",
       "attacchi": "Mostri 0.69",
       "capacita": "Mostri 0.69",
+      "note": "Mostri 0.69",
       "gs_px": "Mostri 0.69"
     },
     "edizione": "Mostri 0.69",

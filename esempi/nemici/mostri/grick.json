@@ -100,7 +100,7 @@
       "effetto": "Vede entro 12 Q nel buio naturale, senza colori; non attraversa ostacoli né individua da sola chi è nascosto."
     }
   ],
-  "note": "Bestia vermiforme • Natura Comune • predatrice da agguato • Grick, p. 173. Sensi e protezioni: Scurovisione 12 Q; nessuna immunità generale.",
+  "note": "Furtività 13 immobile fra rocce in ambiente adatto (non è invisibilità). Il profilo è il Grick comune, non l’Alfa. Braccia = tentacoli; Testa = becco e capo. Nessuna Parata naturale. Nome originale: Grick, p. 173. Comportamento: preda vicina; a Ferita Profonda si ritrae in una fessura.",
   "_bestiario": {
     "edizione": "Mostri 0.69",
     "sistema_salute": "solo_PV",
@@ -118,6 +118,7 @@
       "abilita": "Mostri 0.47",
       "attacchi": "Mostri 0.69",
       "capacita": "Mostri 0.47",
+      "note": "Mostri 0.47",
       "gs_px": "Mostri 0.69"
     }
   }

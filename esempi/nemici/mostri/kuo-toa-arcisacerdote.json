@@ -4,7 +4,6 @@
   "id": "kuo-toa-arcisacerdote",
   "nome": "Kuo-toa arcisacerdote",
   "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Kuo-toa arcisacerdote",
-  "note": "Guida Kuo-toa che combina protezioni, cure e controllo con uno scettro attraversato da scariche. Il fervore religioso descrive il ruolo nella comunità e non assegna poteri divini illimitati.",
   "pv": 99,
   "pm": 55,
   "caratteristiche": {
@@ -71,8 +70,7 @@
       "danno": "1d6+1",
       "natura": "Naturale",
       "proprieta": [
-        "Contusione",
-        "AC 1"
+        "Contusione"
       ],
       "portata_q": 1,
       "ac": 1
@@ -85,8 +83,7 @@
       "natura": "Naturale",
       "proprieta": [
         "Contusione",
-        "Elettricità",
-        "AC 1"
+        "Elettricità"
       ],
       "portata_q": 1,
       "ac": 1
@@ -98,8 +95,7 @@
       "danno": "1d4+1",
       "natura": "Naturale",
       "proprieta": [
-        "Contusione",
-        "AC 1"
+        "Contusione"
       ],
       "portata_q": 1,
       "ac": 1
@@ -143,6 +139,7 @@
       "effetto": "Terra e nuoto 6 / 12 / 18: la stessa andatura vale anche per nuoto; spazio 1 × 1 Q"
     }
   ],
+  "note": "Guida Kuo-toa che combina protezioni, cure e controllo con uno scettro attraversato da scariche. Il fervore religioso descrive il ruolo nella comunità e non assegna poteri divini illimitati.",
   "gs_px": {
     "gs": "Eroe",
     "px": 77,
@@ -163,6 +160,7 @@
       "abilita": "Mostri 0.69",
       "attacchi": "Mostri 0.69",
       "capacita": "Mostri 0.69",
+      "note": "Mostri 0.69",
       "gs_px": "Mostri 0.69"
     },
     "edizione": "Mostri 0.69",

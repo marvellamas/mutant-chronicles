@@ -3093,3 +3093,46 @@ conversione non resuscita. La mini-scheda lo scrive **sempre**, non solo a 0 PV:
 **Domande nuove:** nessuna; il primo numero libero resta **A.273**. **Resta aperto:** i PNG generici alla 0.67
 finché Davide non pubblica il JSON dell'edizione corrente, e le 151 pagine che il lettore non legge per intero
 sull'impaginazione nuova.
+
+
+## Lotto 204 — 16/11/2026 — il Bestiario arriva alla 0.69 campo per campo
+
+**Perché il lettore perdeva le righe.** Censite tutte le etichette delle 458 tabelle, invece di indovinare: **una
+causa domina**, la 0.46 chiamava «Protezioni e Difese» la riga che la 0.69 chiama **«Armatura e Difese»** (149
+schede), e senza quella riga mancavano AR e Difese, due campi obbligatori — la scheda non si scriveva affatto. Le
+altre cause, tutte di forma e non di contenuto: il tipo di danno separato da una virgola («Naturale, Perforazione»
+per «Naturale Perforante»), che mandava **395 attacchi di 200 schede** fra le capacità; i modi di movimento scritti
+in un'etichetta («Terra, scavo e volo»), risolti con una regola che separa i modi e non con un elenco di etichette;
+«Passo 6 / Corsa 12 / Scatto 18 Q»; l'AR «interamente magica»; le due Difese col punto e virgola; «Contatto» come
+portata; le due forme dei licantropi in una cella. **Non** erano celle su più righe, tabelle spezzate, intestazioni
+ripetute o campi passati a prosa. **Le schede del manuale che restano fuori passano da 152 a 1**, quella che non è
+una creatura; gli attacchi non letti da 395 a 99, tutti con un motivo vero (Salvezza invece di VA, due fasi in una
+cella, danno senza Natura).
+
+**Che cosa erano le «151 pagine»:** schede di creature, non capitoli di regole — Vampiro, Lich, Beholder, i
+licantropi, i diavoli, gli Yuan-ti. Il lavoro era grande di numero e piccolo di causa.
+
+**La regola, ora nel codice** (`src/provenienza-bestiario.js`): *una lettura incompleta non si scrive mai sopra un
+valore buono*. Un campo o si legge per intero, e allora si scrive con l'edizione da cui viene, oppure si dichiara
+non letto, e allora si tiene quello di prima — con scritto da dove viene. La provenienza sta **sul campo**, non
+sulla scheda (`_bestiario.campi`), perché «mezzo e mezzo» sia un'informazione invece di una sorpresa. Il test è
+stato provato in rosso con un mutante, e il caso che lo rende rosso non è una lettura **vuota** ma una lettura
+**parziale**: due attacchi su cinque è plausibile, non è vuoto, ed è sbagliato.
+
+**Al tavolo:** nella mini-scheda una riga tenue col ⚑ che nomina i campi non correnti e **si spegne da sé** quando
+la scheda è tutta all'edizione corrente, come il segno delle provvisorie del lotto 183.
+
+**Il conto** è dichiarato in `corpus.campi` e preteso dal validatore, che controlla anche che **ogni campo rimasto
+indietro su 50 schede o più abbia il motivo scritto**: un elenco di numeri senza il perché non si può
+ricontrollare. Le schede che restano miste lo sono per una sola ragione di fondo: la 0.69 ha spostato informazione
+dalle schede alle pagine «regole comuni» di ogni blocco, e il lettore le aggancia solo ad alcuni blocchi.
+Agganciarle a tutti è il lotto successivo.
+
+**La Taglia non si è toccata** (A.167): l'importatore la deduce da «spazio ≥ 2 × 2» e i generatori per blocco non
+lo hanno mai fatto; rigenerando, 86 schede si sarebbero trovate una Taglia che il manuale non scrive. Un valore
+dedotto non si scrive sopra un'assenza voluta.
+
+**Domande nuove: A.273** (le creature a due forme: configurazioni come la A.203?), **A.274** (attacchi col danno
+scritto senza la Natura: «Naturale» per impostazione?), **A.275** (la Taglia si deduce dall'ingombro?). Il primo
+numero libero diventa **A.276**. **Resta aperta** la richiesta del 203: il JSON dei PNG rigenerato dall'edizione
+corrente.

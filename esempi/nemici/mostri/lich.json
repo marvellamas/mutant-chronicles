@@ -4,7 +4,6 @@
   "id": "lich",
   "nome": "Lich",
   "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Lich",
-  "note": "Incantatore non morto che ha vincolato la propria continuità a un filatterio. La distruzione del corpo è una vittoria immediata, ma il vincolo può consentirgli un ritorno successivo.",
   "pv": 143,
   "pm": 90,
   "caratteristiche": {
@@ -75,8 +74,7 @@
       "danno": "2d6+3",
       "natura": "Magico",
       "proprieta": [
-        "Gelo",
-        "AC 1"
+        "Gelo"
       ],
       "portata_q": 1,
       "ac": 1
@@ -112,6 +110,7 @@
       "effetto": "spazio 1 × 1 Q"
     }
   ],
+  "note": "Incantatore non morto che ha vincolato la propria continuità a un filatterio. La distruzione del corpo è una vittoria immediata, ma il vincolo può consentirgli un ritorno successivo.",
   "gs_px": {
     "gs": "Semidio",
     "px": 440,
@@ -132,6 +131,7 @@
       "abilita": "Mostri 0.69",
       "attacchi": "Mostri 0.69",
       "capacita": "Mostri 0.69",
+      "note": "Mostri 0.69",
       "gs_px": "Mostri 0.69"
     },
     "edizione": "Mostri 0.69",

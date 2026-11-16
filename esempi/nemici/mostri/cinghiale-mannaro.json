@@ -4,7 +4,6 @@
   "id": "cinghiale-mannaro",
   "nome": "Cinghiale mannaro",
   "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Cinghiale mannaro",
-  "note": "Licantropo massiccio dalle zanne sviluppate. Cerca uno spazio di carica e resiste ai colpi, ma può anche proteggere un nucleo familiare senza attaccare gli estranei.",
   "pv": 73,
   "pm": 10,
   "caratteristiche": {
@@ -62,7 +61,6 @@
       "danno": "2d6+2",
       "natura": "Naturale",
       "proprieta": [
-        "AC 1",
         "maledizione"
       ],
       "portata_q": 1,
@@ -74,9 +72,6 @@
       "va": 13,
       "danno": "1d6+2",
       "natura": "Naturale",
-      "proprieta": [
-        "AC 1"
-      ],
       "portata_q": 1,
       "ac": 1
     }
@@ -99,6 +94,7 @@
       "effetto": "cinghiale: 8 / 16 / 24 Q, 1 × 2 Q"
     }
   ],
+  "note": "Licantropo massiccio dalle zanne sviluppate. Cerca uno spazio di carica e resiste ai colpi, ma può anche proteggere un nucleo familiare senza attaccare gli estranei.",
   "gs_px": {
     "gs": "Veterano",
     "px": 50,
@@ -118,6 +114,7 @@
       "abilita": "Mostri 0.69",
       "attacchi": "Mostri 0.69",
       "capacita": "Mostri 0.69",
+      "note": "Mostri 0.69",
       "gs_px": "Mostri 0.69"
     },
     "edizione": "Mostri 0.69",

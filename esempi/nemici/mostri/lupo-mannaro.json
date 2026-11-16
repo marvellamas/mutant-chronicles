@@ -4,7 +4,6 @@
   "id": "lupo-mannaro",
   "nome": "Lupo mannaro",
   "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Lupo mannaro",
-  "note": "Licantropo capace di vivere tra gli umanoidi o cacciare in forma di lupo e ibrida. Il branco può coordinare l’assalto senza una mente collettiva.",
   "pv": 63,
   "pm": 10,
   "caratteristiche": {
@@ -43,9 +42,6 @@
       "va": 12,
       "danno": "2d4+2",
       "natura": "Naturale",
-      "proprieta": [
-        "AC 1"
-      ],
       "portata_q": 1,
       "ac": 1
     },
@@ -56,7 +52,6 @@
       "danno": "1d8+2",
       "natura": "Naturale",
       "proprieta": [
-        "AC 1",
         "maledizione"
       ],
       "portata_q": 1,
@@ -68,9 +63,6 @@
       "va": 12,
       "danno": "1d6+2",
       "natura": "Naturale",
-      "proprieta": [
-        "AC 1"
-      ],
       "portata_q": 1,
       "ac": 1
     }
@@ -97,6 +89,7 @@
       "effetto": "Percezione 11, 13 con olfatto o udito"
     }
   ],
+  "note": "Licantropo capace di vivere tra gli umanoidi o cacciare in forma di lupo e ibrida. Il branco può coordinare l’assalto senza una mente collettiva.",
   "gs_px": {
     "gs": "Veterano",
     "px": 50,
@@ -115,6 +108,7 @@
       "movimento": "Mostri 0.69",
       "attacchi": "Mostri 0.69",
       "capacita": "Mostri 0.69",
+      "note": "Mostri 0.69",
       "gs_px": "Mostri 0.69"
     },
     "edizione": "Mostri 0.69",

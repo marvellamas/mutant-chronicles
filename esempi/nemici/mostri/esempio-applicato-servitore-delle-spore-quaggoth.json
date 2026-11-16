@@ -4,7 +4,6 @@
   "id": "esempio-applicato-servitore-delle-spore-quaggoth",
   "nome": "Esempio applicato Servitore delle spore Quaggoth",
   "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Esempio applicato Servitore delle spore Quaggoth",
-  "note": "Variante dimostrativa dell’archetipo, ricavata dal Quaggoth già convertito. Organismo fungino biologico di Natura Comune, senza equipaggiamento, lingue o poteri appresi. Non è una nuova voce numerata nel catalogo. La scheda presuppone un supporto sufficientemente integro e una colonia già cresciuta. Sensi e protezioni: Percezione non visiva 6 Q; immune ad Accecato, fascinazione, Terrorizzato, Paralizzato, danni da veleno e Avvelenato. Impiego. Massimo due Artigli per Round, Opportunità compresa; nessuna Furia ferita o Parata naturale. La lentezza e la perdita di memoria riducono le scelte rispetto al Quaggoth vivo. Zero PM causa Svenuto; A 0 PV il profilo senza Ferite è fuori combattimento secondo il §4.2; morte o distruzione effettiva restano distinte. Una colonia danneggiata non viene sostituita da un corpo nuovo al cambio di ordine. Può svolgere un compito ricevuto tramite rapporto, con priorità e limiti della pagina precedente.",
   "pv": 50,
   "pm": 4,
   "caratteristiche": {
@@ -45,8 +44,7 @@
       "danno": "1d6+2",
       "natura": "Naturale",
       "proprieta": [
-        "Taglio",
-        "AC 1"
+        "Taglio"
       ],
       "gittata_q": 1,
       "modalita": [
@@ -65,6 +63,7 @@
       "effetto": "Mischia e Guerra 12 con armi ammesse"
     }
   ],
+  "note": "Variante dimostrativa dell’archetipo, ricavata dal Quaggoth già convertito. Organismo fungino biologico di Natura Comune, senza equipaggiamento, lingue o poteri appresi. Non è una nuova voce numerata nel catalogo. La scheda presuppone un supporto sufficientemente integro e una colonia già cresciuta. Sensi e protezioni: Percezione non visiva 6 Q; immune ad Accecato, fascinazione, Terrorizzato, Paralizzato, danni da veleno e Avvelenato. Impiego. Massimo due Artigli per Round, Opportunità compresa; nessuna Furia ferita o Parata naturale. La lentezza e la perdita di memoria riducono le scelte rispetto al Quaggoth vivo. Zero PM causa Svenuto; A 0 PV il profilo senza Ferite è fuori combattimento secondo il §4.2; morte o distruzione effettiva restano distinte. Una colonia danneggiata non viene sostituita da un corpo nuovo al cambio di ordine. Può svolgere un compito ricevuto tramite rapporto, con priorità e limiti della pagina precedente.",
   "gs_px": {
     "gs": "Inesperto",
     "px": 20,
@@ -84,6 +83,7 @@
       "spazio": "Mostri 0.69",
       "attacchi": "Mostri 0.69",
       "capacita": "Mostri 0.69",
+      "note": "Mostri 0.69",
       "gs_px": "Mostri 0.69"
     },
     "edizione": "Mostri 0.69",

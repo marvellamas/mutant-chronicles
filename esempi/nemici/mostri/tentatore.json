@@ -4,7 +4,6 @@
   "id": "tentatore",
   "nome": "Tentatore",
   "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Tentatore",
-  "note": "Agente necrobiotico dall’aspetto umano, impiegato per avvicinare una persona e renderne meno vigile il giudizio. Le sue armi sono nascoste nel corpo.",
   "pv": 59,
   "pm": 24,
   "caratteristiche": {
@@ -122,6 +121,7 @@
       "effetto": "spazio 1 Q"
     }
   ],
+  "note": "Agente necrobiotico dall’aspetto umano, impiegato per avvicinare una persona e renderne meno vigile il giudizio. Le sue armi sono nascoste nel corpo.",
   "gs_px": {
     "gs": "Veterano",
     "px": 50,
@@ -141,6 +141,7 @@
       "abilita": "Mostri 0.69",
       "attacchi": "Mostri 0.69",
       "capacita": "Mostri 0.69",
+      "note": "Mostri 0.69",
       "gs_px": "Mostri 0.69"
     },
     "edizione": "Mostri 0.69",

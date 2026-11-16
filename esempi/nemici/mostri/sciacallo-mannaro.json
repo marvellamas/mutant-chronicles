@@ -4,7 +4,6 @@
   "id": "sciacallo-mannaro",
   "nome": "Sciacallo mannaro",
   "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Sciacallo mannaro",
-  "note": "Sciacallo mutaforma che assume un aspetto umanoide fisso e una forma ibrida. Usa il sonno magico per rapire o allontanare una minaccia; non è un licantropo contagioso.",
   "pv": 24,
   "pm": 12,
   "caratteristiche": {
@@ -43,9 +42,6 @@
       "va": 10,
       "danno": "1d4+2",
       "natura": "Naturale",
-      "proprieta": [
-        "AC 1"
-      ],
       "portata_q": 1,
       "ac": 1
     },
@@ -55,9 +51,6 @@
       "va": 10,
       "danno": "1d4+2",
       "natura": "Naturale",
-      "proprieta": [
-        "AC 1"
-      ],
       "portata_q": 1,
       "ac": 1
     }
@@ -84,6 +77,7 @@
       "effetto": "Percezione 10, 12 con olfatto o udito"
     }
   ],
+  "note": "Sciacallo mutaforma che assume un aspetto umanoide fisso e una forma ibrida. Usa il sonno magico per rapire o allontanare una minaccia; non è un licantropo contagioso.",
   "gs_px": {
     "gs": "Esperto",
     "px": 33,
@@ -102,6 +96,7 @@
       "movimento": "Mostri 0.69",
       "attacchi": "Mostri 0.69",
       "capacita": "Mostri 0.69",
+      "note": "Mostri 0.69",
       "gs_px": "Mostri 0.69"
     },
     "edizione": "Mostri 0.69",

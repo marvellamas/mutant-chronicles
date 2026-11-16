@@ -4,7 +4,6 @@
   "id": "intruso-callistoniano",
   "nome": "Intruso Callistoniano",
   "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Intruso Callistoniano",
-  "note": "Assassino alieno di corporatura snella, pelle scura e occhi luminosi celati dalla maschera. Colpisce dalle vie secondarie e abbandona le posizioni ormai individuate.",
   "pv": 68,
   "pm": 18,
   "caratteristiche": {
@@ -136,6 +135,7 @@
       "effetto": "spazio 1 Q"
     }
   ],
+  "note": "Assassino alieno di corporatura snella, pelle scura e occhi luminosi celati dalla maschera. Colpisce dalle vie secondarie e abbandona le posizioni ormai individuate.",
   "gs_px": {
     "gs": "Veterano",
     "px": 55,
@@ -155,6 +155,7 @@
       "abilita": "Mostri 0.69",
       "attacchi": "Mostri 0.69",
       "capacita": "Mostri 0.69",
+      "note": "Mostri 0.69",
       "gs_px": "Mostri 0.69"
     },
     "edizione": "Mostri 0.69",

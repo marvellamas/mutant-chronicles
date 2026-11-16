@@ -114,7 +114,7 @@
       "effetto": "Vede entro 12 Q anche nell’oscurità naturale; al buio non distingue i colori, non vede attraverso ostacoli, fumo o oscurità magica e non individua da sé chi è nascosto. Oltre i 12 Q valgono luce e vista ordinarie."
     }
   ],
-  "note": "Umanoide ienoide • inseguitore • Natura Comune.",
+  "note": "AR 1 senza scudo (inizia con lancia a una mano e scudo piccolo). Lancia a due mani: danno 1d6+4, riposto lo scudo (AR 1). L’arco richiede riporre lo scudo. La lancia non è un giavellotto. Comportamento: isolamento e inseguimento; se la preda è troppo costosa o sotto 6 PV si ritira verso il gruppo.",
   "_bestiario": {
     "edizione": "Mostri 0.69",
     "sistema_salute": "solo_PV",
@@ -132,6 +132,7 @@
       "abilita": "Mostri 0.69",
       "attacchi": "Mostri 0.47",
       "capacita": "Mostri 0.47",
+      "note": "Mostri 0.47",
       "gs_px": "Mostri 0.69"
     }
   }

@@ -4,7 +4,6 @@
   "id": "revenant",
   "nome": "Revenant",
   "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Revenant",
-  "note": "Morto ritornato per vendicarsi di una persona precisa. È capace di ragionare e allearsi; la sua ostinazione è diversa dalla fame di uno zombie.",
   "pv": 104,
   "pm": 18,
   "caratteristiche": {
@@ -66,9 +65,6 @@
       "va": 14,
       "danno": "2d6+2",
       "natura": "Naturale",
-      "proprieta": [
-        "AC 1"
-      ],
       "portata_q": 1,
       "ac": 1
     }
@@ -103,6 +99,7 @@
       "effetto": "spazio 1 × 1 Q"
     }
   ],
+  "note": "Morto ritornato per vendicarsi di una persona precisa. È capace di ragionare e allearsi; la sua ostinazione è diversa dalla fame di uno zombie.",
   "gs_px": {
     "gs": "Eroe",
     "px": 77,
@@ -123,6 +120,7 @@
       "abilita": "Mostri 0.69",
       "attacchi": "Mostri 0.69",
       "capacita": "Mostri 0.69",
+      "note": "Mostri 0.69",
       "gs_px": "Mostri 0.69"
     },
     "edizione": "Mostri 0.69",

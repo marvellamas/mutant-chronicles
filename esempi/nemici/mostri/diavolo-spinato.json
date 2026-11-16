@@ -4,7 +4,6 @@
   "id": "diavolo-spinato",
   "nome": "Diavolo spinato",
   "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Diavolo spinato",
-  "note": "Piccolo volatore ricoperto di spine, adatto alla ricognizione e al tiro. Porta un tridente e dispone di una riserva finita di aculei che si incendiano all’impatto.",
   "pv": 32,
   "pm": 10,
   "caratteristiche": {
@@ -90,6 +89,7 @@
       "effetto": "spazio 1 × 1 Q"
     }
   ],
+  "note": "Piccolo volatore ricoperto di spine, adatto alla ricognizione e al tiro. Porta un tridente e dispone di una riserva finita di aculei che si incendiano all’impatto.",
   "gs_px": {
     "gs": "Esperto",
     "px": 33,
@@ -109,9 +109,12 @@
       "spazio": "Mostri 0.69",
       "abilita": "Mostri 0.69",
       "capacita": "Mostri 0.69",
-      "gs_px": "Mostri 0.69"
+      "note": "Mostri 0.69",
+      "gs_px": "Mostri 0.69",
+      "attacchi": "Mostri 0.69"
     },
     "edizione": "Mostri 0.69",
     "sistema_salute": "solo_PV"
-  }
+  },
+  "attacchi": []
 }

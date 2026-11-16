@@ -5,7 +5,6 @@
   "nome": "Marid",
   "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Marid",
   "taglia": "grande",
-  "note": "Genio dell’Acqua che difende le proprie dimore con tridente, correnti e getti pressurizzati. Vive e respira sia immerso sia all’aria, senza dipendere da un singolo bacino.",
   "pv": 172,
   "pm": 60,
   "caratteristiche": {
@@ -95,6 +94,7 @@
       "effetto": "nuoto 18 / 36 / 54 Q; spazio 2 × 2 Q"
     }
   ],
+  "note": "Genio dell’Acqua che difende le proprie dimore con tridente, correnti e getti pressurizzati. Vive e respira sia immerso sia all’aria, senza dipendere da un singolo bacino.",
   "gs_px": {
     "gs": "Mito",
     "px": 220,
@@ -114,9 +114,12 @@
       "spazio": "Mostri 0.69",
       "abilita": "Mostri 0.69",
       "capacita": "Mostri 0.69",
-      "gs_px": "Mostri 0.69"
+      "note": "Mostri 0.69",
+      "gs_px": "Mostri 0.69",
+      "attacchi": "Mostri 0.69"
     },
     "edizione": "Mostri 0.69",
     "sistema_salute": "solo_PV"
-  }
+  },
+  "attacchi": []
 }

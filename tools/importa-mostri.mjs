@@ -316,7 +316,14 @@ function leggiAttacco(intest, c, nonCapito, acComune) {
   if (dm[2]) danno += `×${dm[2]}`;
   const att = { nome: nomeAtt, tipo: 'ravvicinato', va, danno, natura: dm[3] };
   const props = [dm[4], dm[5]].filter(Boolean).join('; ');
-  if (props) att.proprieta = props.split(/\s*[;,]\s*/).map((s) => s.trim()).filter(Boolean);
+  // Lotto 204: la 0.69 scrive l'AC **dentro** la cella del danno («2d6+3 Naturale; AC 1»). È l'AC dell'attacco, non
+  // una sua proprietà: lasciandola fra le proprietà la plancia scriveva «AC 1 · AC 1».
+  let acDalDanno = null;
+  if (props) {
+    const voci = props.split(/\s*[;,]\s*/).map((s) => s.trim()).filter(Boolean);
+    const restanti = voci.filter((v) => { const m = /^AC\s*(\d+)$/i.exec(v); if (m) { acDalDanno = +m[1]; return false; } return true; });
+    if (restanti.length) att.proprieta = restanti;
+  }
   const contatto = /contatto/i.test(portT);
   const tatt = sede.match(/(\d+)\s*Q\s*Tattici/);
   const dist = /gittata|massimo|^max\b/i.test(portT) ? sede.match(/(\d+)\s*Q/) : null;
@@ -337,7 +344,8 @@ function leggiAttacco(intest, c, nonCapito, acComune) {
     nonCapito.push(`Attacco «${nomeAtt}»: portata non letta («${portT}»): messo fra le capacità, non fra gli attacchi`);
     return { capacita: { nome: nomeAtt, effetto: ['VA ' + vaT, 'Danno: ' + dannoT, 'Portata/costo: ' + sede].join('. ') } };
   }
-  const ac = sede.match(/AC\s*(\d+)/) || (acComune ? [null, acComune] : null);
+  // l'AC: quella scritta accanto alla portata, poi quella della cella del danno (0.69), poi quella del blocco
+  const ac = sede.match(/AC\s*(\d+)/) || (acDalDanno !== null ? [null, acDalDanno] : null) || (acComune ? [null, acComune] : null);
   if (ac) att.ac = +ac[1];
   return { attacco: att };
 }

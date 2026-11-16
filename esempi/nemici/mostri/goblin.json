@@ -104,7 +104,7 @@
       "effetto": "Vede entro 12 Q anche nell’oscurità naturale; al buio non distingue i colori, non vede attraverso ostacoli, fumo o oscurità magica e non individua da sé chi è nascosto. Oltre i 12 Q valgono luce e vista ordinarie."
     }
   ],
-  "note": "Umanoide goblinoide • gregario e incursore • Natura Comune. Comportamento. Cerca un tiro protetto o un attacco contro un isolato, poi cambia posizione. Se è solo, perde il vantaggio del terreno o scende a 6 PV, cerca di fuggire o tratta una resa. Non ottiene i poteri del Goblin Boss.",
+  "note": "AR 1 senza scudo (inizia con spada e scudo pronti). Balestra piccola FOR 3, PI 4, solo Colpo Singolo, ricarica 1 AzM e mano libera. Comportamento: tiro protetto e cambio di posizione; sotto 4 PV o da solo fugge o si arrende.",
   "_bestiario": {
     "edizione": "Mostri 0.69",
     "sistema_salute": "solo_PV",
@@ -122,6 +122,7 @@
       "abilita": "Mostri 0.69",
       "attacchi": "Mostri 0.47",
       "capacita": "Mostri 0.47",
+      "note": "Mostri 0.47",
       "gs_px": "Mostri 0.69"
     }
   }

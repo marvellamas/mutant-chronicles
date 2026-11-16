@@ -5,7 +5,6 @@
   "nome": "Sahuagin barone",
   "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Sahuagin barone",
   "taglia": "grande",
-  "note": "Grande Sahuagin con quattro braccia, più robusto dell’esemplare ordinario. Usa un tridente e una corazza, conserva la frenesia predatoria e può influenzare uno squalo alla volta.",
   "pv": 104,
   "pm": 20,
   "caratteristiche": {
@@ -68,8 +67,7 @@
       "danno": "2d4+2",
       "natura": "Naturale",
       "proprieta": [
-        "Perforazione",
-        "AC 1"
+        "Perforazione"
       ],
       "portata_q": 1,
       "ac": 1
@@ -81,8 +79,7 @@
       "danno": "2d6+2",
       "natura": "Naturale",
       "proprieta": [
-        "Taglio",
-        "AC 1"
+        "Taglio"
       ],
       "portata_q": 1,
       "ac": 1
@@ -94,8 +91,7 @@
       "danno": "1d8+1d6+3",
       "natura": "Naturale",
       "proprieta": [
-        "Perforazione",
-        "AC 1"
+        "Perforazione"
       ],
       "portata_q": 2,
       "ac": 1
@@ -107,8 +103,7 @@
       "danno": "1d8+1d6+3",
       "natura": "Naturale",
       "proprieta": [
-        "Perforazione",
-        "AC 1"
+        "Perforazione"
       ],
       "portata_q": 4,
       "ac": 1
@@ -140,6 +135,7 @@
       "effetto": "nuoto 9 / 19 / 29 Q; spazio 2 × 2 Q"
     }
   ],
+  "note": "Grande Sahuagin con quattro braccia, più robusto dell’esemplare ordinario. Usa un tridente e una corazza, conserva la frenesia predatoria e può influenzare uno squalo alla volta.",
   "gs_px": {
     "gs": "Eroe",
     "px": 77,
@@ -160,6 +156,7 @@
       "abilita": "Mostri 0.69",
       "attacchi": "Mostri 0.69",
       "capacita": "Mostri 0.69",
+      "note": "Mostri 0.69",
       "gs_px": "Mostri 0.69"
     },
     "edizione": "Mostri 0.69",

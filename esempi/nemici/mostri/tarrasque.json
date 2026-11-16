@@ -5,7 +5,6 @@
   "nome": "Tarrasque",
   "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Tarrasque",
   "taglia": "grande",
-  "note": "Colosso bipede dal carapace riflettente, capace di devastare fortificazioni. La coda bilancia il corpo e le fauci possono trattenere prede enormi; non possiede rigenerazione o un ritorno automatico dopo la morte.",
   "pv": 624,
   "pm": 48,
   "caratteristiche": {
@@ -102,6 +101,7 @@
       "effetto": "spazio 6 × 10 Q; altezza 10 Q"
     }
   ],
+  "note": "Colosso bipede dal carapace riflettente, capace di devastare fortificazioni. La coda bilancia il corpo e le fauci possono trattenere prede enormi; non possiede rigenerazione o un ritorno automatico dopo la morte.",
   "gs_px": {
     "gs": "Entità Suprema",
     "px": 3200,
@@ -121,9 +121,12 @@
       "spazio": "Mostri 0.69",
       "abilita": "Mostri 0.69",
       "capacita": "Mostri 0.69",
-      "gs_px": "Mostri 0.69"
+      "note": "Mostri 0.69",
+      "gs_px": "Mostri 0.69",
+      "attacchi": "Mostri 0.69"
     },
     "edizione": "Mostri 0.69",
     "sistema_salute": "solo_PV"
-  }
+  },
+  "attacchi": []
 }

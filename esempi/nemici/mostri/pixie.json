@@ -4,7 +4,6 @@
   "id": "pixie",
   "nome": "Pixie",
   "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Pixie",
-  "note": "Piccolo folletto alato curioso e schivo. La polvere accompagna poteri di inganno, sonno e mutamento; la sua disponibilità non è una riserva di oggetti magici raccoglibili dopo lo scontro.",
   "pv": 6,
   "pm": 28,
   "caratteristiche": {
@@ -97,6 +96,7 @@
       "effetto": "spazio 1 Q condivisibile, non blocca il passaggio"
     }
   ],
+  "note": "Piccolo folletto alato curioso e schivo. La polvere accompagna poteri di inganno, sonno e mutamento; la sua disponibilità non è una riserva di oggetti magici raccoglibili dopo lo scontro.",
   "gs_px": {
     "gs": "Esperto",
     "px": 30,
@@ -115,9 +115,12 @@
       "movimento": "Mostri 0.69",
       "abilita": "Mostri 0.69",
       "capacita": "Mostri 0.69",
-      "gs_px": "Mostri 0.69"
+      "note": "Mostri 0.69",
+      "gs_px": "Mostri 0.69",
+      "attacchi": "Mostri 0.69"
     },
     "edizione": "Mostri 0.69",
     "sistema_salute": "solo_PV"
-  }
+  },
+  "attacchi": []
 }

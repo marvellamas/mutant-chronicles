@@ -4,7 +4,6 @@
   "id": "diavolo-barbuto",
   "nome": "Diavolo barbuto",
   "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Diavolo barbuto",
-  "note": "Combattente da prima linea che unisce un’arma inastata a tentacoli velenosi attorno al volto. Può ostacolare il recupero dei PV mentre le sue lacerazioni provocano Sanguinamento.",
   "pv": 60,
   "pm": 12,
   "caratteristiche": {
@@ -63,8 +62,7 @@
       "danno": "1d8+3",
       "natura": "Naturale",
       "proprieta": [
-        "Taglio",
-        "AC 1"
+        "Taglio"
       ],
       "portata_q": 2,
       "ac": 1
@@ -77,7 +75,6 @@
       "natura": "Naturale",
       "proprieta": [
         "Perforazione",
-        "AC 1",
         "veleno"
       ],
       "portata_q": 1,
@@ -110,6 +107,7 @@
       "effetto": "spazio 1 × 1 Q"
     }
   ],
+  "note": "Combattente da prima linea che unisce un’arma inastata a tentacoli velenosi attorno al volto. Può ostacolare il recupero dei PV mentre le sue lacerazioni provocano Sanguinamento.",
   "gs_px": {
     "gs": "Veterano",
     "px": 55,
@@ -130,6 +128,7 @@
       "abilita": "Mostri 0.69",
       "attacchi": "Mostri 0.69",
       "capacita": "Mostri 0.69",
+      "note": "Mostri 0.69",
       "gs_px": "Mostri 0.69"
     },
     "edizione": "Mostri 0.69",

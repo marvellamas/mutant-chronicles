@@ -49,11 +49,11 @@
       "va": 9,
       "danno": "1d4+2",
       "natura": "Naturale",
+      "portata_q": 1,
+      "ac": 1,
       "proprieta": [
         "Perforazione"
-      ],
-      "portata_q": 1,
-      "ac": 1
+      ]
     },
     {
       "nome": "Pugnale lanciato",
@@ -61,26 +61,30 @@
       "va": 9,
       "danno": "1d4+2",
       "natura": "Naturale",
-      "proprieta": [
-        "Perforazione"
-      ],
       "gittata_q": 9,
       "modalita": [
         "S"
       ],
-      "ac": 1
+      "ac": 1,
+      "proprieta": [
+        "Perforazione"
+      ]
     },
     {
       "nome": "Pietra lasciata cadere",
-      "tipo": "ravvicinato",
+      "tipo": "distanza",
       "va": 9,
       "danno": "1d4+1",
       "natura": "Naturale",
+      "gittata_q": 6,
+      "modalita": [
+        "S"
+      ],
+      "ac": 1,
       "proprieta": [
         "Contusione"
       ],
-      "portata_q": 6,
-      "ac": 1
+      "note": "Bersaglio visibile direttamente sotto la verticale, senza ostacoli; non è un’Area."
     }
   ],
   "abilita": [
@@ -148,8 +152,9 @@
       "movimento": "Mostri 0.69",
       "spazio": "Mostri 0.69",
       "abilita": "Mostri 0.47",
-      "attacchi": "Mostri 0.69",
+      "attacchi": "Mostri 0.47",
       "capacita": "Mostri 0.47",
+      "note": "Mostri 0.69",
       "gs_px": "Mostri 0.69"
     }
   }

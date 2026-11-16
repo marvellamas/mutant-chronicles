@@ -90,7 +90,7 @@
       "effetto": "Al massimo un Becco e un attacco di Artigli per Round, ciascuno con un’AzP. Può usare la Carica, anche in Picchiata, migliorando un solo attacco. La velocità non concede una ritirata gratuita dopo il colpo. Nessuna Parata naturale."
     }
   ],
-  "note": "Bestia alata • Natura Comune • difensore territoriale • Hippogriff, p. 184. Sensi e protezioni: Vista e udito ordinari; vista acuta come sopra, senza scurovisione o immunità. Comportamento. Prima minaccia o tenta di allontanare l’intruso; se dispone di spazio può scegliere la fuga. se gravemente minacciato abbandona uno scontro senza motivazioni territoriali. Vicino ai piccoli può continuare a proteggere il nido, senza ottenere immunità a paura o altri Stati.",
+  "note": "Percezione 12, oppure 15 con la vista (senza scurovisione né immunità). Addestrabile ma non per questo mansueto o disponibile al trasporto. Nome originale: Hippogriff, p. 184. Comportamento: prima minaccia o tenta di allontanare l’intruso, se può sceglie la fuga; a Ferita Profonda abbandona lo scontro senza motivazioni territoriali; vicino ai piccoli continua a proteggere il nido.",
   "_bestiario": {
     "edizione": "Mostri 0.69",
     "sistema_salute": "solo_PV",
@@ -108,8 +108,8 @@
       "abilita": "Mostri 0.47",
       "attacchi": "Mostri 0.69",
       "capacita": "Mostri 0.47",
+      "note": "Mostri 0.47",
       "gs_px": "Mostri 0.69"
     }
-  },
-  "taglia": "grande"
+  }
 }

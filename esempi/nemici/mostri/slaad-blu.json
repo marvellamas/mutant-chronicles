@@ -5,7 +5,6 @@
   "nome": "Slaad blu",
   "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Slaad blu",
   "taglia": "grande",
-  "note": "Slaad massiccio dagli uncini ossei sulle mani. Le lesioni possono trasmettere una malattia mutagena che impedisce il recupero dei PV e compromette progressivamente il corpo dell’ospite.",
   "pv": 136,
   "pm": 16,
   "caratteristiche": {
@@ -64,8 +63,7 @@
       "danno": "2d6+3",
       "natura": "Naturale",
       "proprieta": [
-        "Perforazione",
-        "AC 1"
+        "Perforazione"
       ],
       "portata_q": 1,
       "ac": 1
@@ -78,7 +76,6 @@
       "natura": "Naturale",
       "proprieta": [
         "Taglio",
-        "AC 1",
         "possibile Fagosi"
       ],
       "portata_q": 1,
@@ -107,6 +104,7 @@
       "effetto": "spazio 2 × 2 Q"
     }
   ],
+  "note": "Slaad massiccio dagli uncini ossei sulle mani. Le lesioni possono trasmettere una malattia mutagena che impedisce il recupero dei PV e compromette progressivamente il corpo dell’ospite.",
   "gs_px": {
     "gs": "Leggenda",
     "px": 100,
@@ -127,6 +125,7 @@
       "abilita": "Mostri 0.69",
       "attacchi": "Mostri 0.69",
       "capacita": "Mostri 0.69",
+      "note": "Mostri 0.69",
       "gs_px": "Mostri 0.69"
     },
     "edizione": "Mostri 0.69",

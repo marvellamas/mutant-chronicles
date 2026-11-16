@@ -4,7 +4,6 @@
   "id": "profeta-metropolitano",
   "nome": "Profeta Metropolitano",
   "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Profeta Metropolitano",
-  "note": "Sabotatore dormiente sotto un aspetto umano, capace di rivelare un corpo da sfondamento. Questa scheda descrive un Profeta già formato, pronto a interrompere la copertura.",
   "pv": 111,
   "pm": 30,
   "caratteristiche": {
@@ -96,6 +95,7 @@
       "effetto": "coperto 1 Q; rivelato 1×2 Q"
     }
   ],
+  "note": "Sabotatore dormiente sotto un aspetto umano, capace di rivelare un corpo da sfondamento. Questa scheda descrive un Profeta già formato, pronto a interrompere la copertura.",
   "gs_px": {
     "gs": "Leggenda",
     "px": 110,
@@ -114,9 +114,12 @@
       "movimento": "Mostri 0.69",
       "abilita": "Mostri 0.69",
       "capacita": "Mostri 0.69",
-      "gs_px": "Mostri 0.69"
+      "note": "Mostri 0.69",
+      "gs_px": "Mostri 0.69",
+      "attacchi": "Mostri 0.69"
     },
     "edizione": "Mostri 0.69",
     "sistema_salute": "solo_PV"
-  }
+  },
+  "attacchi": []
 }

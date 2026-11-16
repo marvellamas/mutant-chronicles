@@ -4,7 +4,6 @@
   "id": "mezzoloth",
   "nome": "Mezzoloth",
   "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Mezzoloth",
-  "note": "Fante insettoide con quattro braccia, carapace e tridente. Usa il buio per coprire i movimenti e una nube tossica per negare un passaggio.",
   "pv": 84,
   "pm": 30,
   "caratteristiche": {
@@ -81,6 +80,7 @@
       "effetto": "spazio 1 × 1 Q"
     }
   ],
+  "note": "Fante insettoide con quattro braccia, carapace e tridente. Usa il buio per coprire i movimenti e una nube tossica per negare un passaggio.",
   "gs_px": {
     "gs": "Eroe",
     "px": 77,
@@ -100,9 +100,12 @@
       "spazio": "Mostri 0.69",
       "abilita": "Mostri 0.69",
       "capacita": "Mostri 0.69",
-      "gs_px": "Mostri 0.69"
+      "note": "Mostri 0.69",
+      "gs_px": "Mostri 0.69",
+      "attacchi": "Mostri 0.69"
     },
     "edizione": "Mostri 0.69",
     "sistema_salute": "solo_PV"
-  }
+  },
+  "attacchi": []
 }

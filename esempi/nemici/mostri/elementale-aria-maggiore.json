@@ -101,7 +101,7 @@
     "sanguinamento",
     "stordito"
   ],
-  "note": "Manifestazione evocata di Aria • combattente mobile • Natura Comune. Impiego. Può usare due Folate, due Dardi o un attacco di ciascun tipo, oppure conservare Azioni per Difese. A 11–12 Q il Dardo subisce il normale −2 per distanza. La mobilità favorisce cambi di quota e linee di tiro, ma resta necessaria una geometria valida e non si ignorano gli Attacchi di Opportunità. Esegue gli ordini dell’evocatore nei limiti comuni.",
+  "note": "PM —: nessuna riserva. Il VA 16 è quello del Dardo d’aria, già in tabella: «Attacco a distanza» non è un’Abilità (A.169, 18/10), non dà Armi da lancio né altre competenze. Profilo evocato (Magia §14.2): «INI dopo l’evocatore» (qui 0; sulla plancia agisce dopo chi lo evoca). Scompare a 0 PV, a fine durata o al congedo. Spazio 2 × 2 Q. È immune ad A Terra (lo subisce il bersaglio, non l’elementale).",
   "_bestiario": {
     "edizione": "Mostri 0.69",
     "sistema_salute": "solo_PV",
@@ -118,8 +118,8 @@
       "abilita": "Mostri 0.47",
       "attacchi": "Mostri 0.47",
       "capacita": "Mostri 0.47",
+      "note": "Mostri 0.47",
       "gs_px": "Mostri 0.69"
     }
-  },
-  "taglia": "grande"
+  }
 }

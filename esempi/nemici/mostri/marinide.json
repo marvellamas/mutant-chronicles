@@ -48,11 +48,11 @@
       "va": 9,
       "danno": "1d6+1",
       "natura": "Naturale",
+      "portata_q": 2,
+      "ac": 1,
       "proprieta": [
         "Perforazione"
-      ],
-      "portata_q": 2,
-      "ac": 1
+      ]
     },
     {
       "nome": "Lancia a due mani",
@@ -60,11 +60,11 @@
       "va": 9,
       "danno": "1d6+3",
       "natura": "Naturale",
+      "portata_q": 2,
+      "ac": 1,
       "proprieta": [
         "Perforazione"
-      ],
-      "portata_q": 2,
-      "ac": 1
+      ]
     },
     {
       "nome": "Lancia scagliata",
@@ -72,14 +72,15 @@
       "va": 8,
       "danno": "1d6+1",
       "natura": "Naturale",
-      "proprieta": [
-        "Perforazione"
-      ],
       "gittata_q": 4,
       "modalita": [
         "S"
       ],
-      "ac": 1
+      "ac": 1,
+      "proprieta": [
+        "Perforazione"
+      ],
+      "note": "Massimo 4 Q in aria; 2 Q in acqua. Non torna in mano."
     }
   ],
   "abilita": [
@@ -118,7 +119,7 @@
       "effetto": "Può parare con la Lancia pronta (1 AzP, Difese 9; a distanza −8 VA). Una Parata spende l’unica AzP e non lascia AzP per attaccare; resta l’Opportunità ordinaria. Gettare la Lancia lo lascia senza arma finché non la recupera; estrazione e cambio d’impugnatura seguono il §5.1.1. Nessuna Parata con pinne o coda."
     }
   ],
-  "note": "Abitante delle acque • lancia e dialogo • Natura Comune. Condotta. La scheda descrive un difensore ordinario, non rende ostile un popolo intero. Può indicare rotte, chiedere aiuto o scambiare merci. Sotto 6 PV cerca riparo o soccorso. La cultura e l’accesso alla tecnologia dipendono dalla collocazione nell’ambientazione, senza imporre l’incapacità generale di lavorare materiali.",
+  "note": "Dotazione: una Lancia Comune, FOR 5, PI 6, PS Integrità 10 (compresa nei 11 PX); nessuna armatura o scudo. Danni con bonus personale 0; una o due mani secondo Versatile. Vista e udito ordinari. Comprende e parla due lingue della comunità. Oratoria 10 (A.205: nel manuale «Diplomazia» è Oratoria, a valori invariati). Testa, Torace e Braccia umanoidi; Gambe = coda. Condotta: difensore ordinario, non rende ostile un popolo; sotto 4 PV o a Ferita Profonda cerca riparo o soccorso. Fonte: Merfolk, p. 218.",
   "_bestiario": {
     "edizione": "Mostri 0.69",
     "sistema_salute": "solo_PV",
@@ -134,8 +135,9 @@
       "movimento": "Mostri 0.69",
       "spazio": "Mostri 0.69",
       "abilita": "Mostri 0.69",
-      "attacchi": "Mostri 0.69",
+      "attacchi": "Mostri 0.47",
       "capacita": "Mostri 0.47",
+      "note": "Mostri 0.47",
       "gs_px": "Mostri 0.69"
     }
   }

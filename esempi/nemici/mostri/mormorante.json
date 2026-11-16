@@ -4,7 +4,6 @@
   "id": "mormorante",
   "nome": "Mormorante",
   "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Mormorante",
-  "note": "Massa strisciante di occhi e bocche che altera il terreno immediatamente vicino e disorienta chi ascolta le sue voci sovrapposte.",
   "pv": 60,
   "pm": 14,
   "caratteristiche": {
@@ -85,6 +84,7 @@
       "effetto": "Terra e nuoto 2 / 4 / 6: la stessa andatura vale anche per nuoto; spazio 1 × 1 Q"
     }
   ],
+  "note": "Massa strisciante di occhi e bocche che altera il terreno immediatamente vicino e disorienta chi ascolta le sue voci sovrapposte.",
   "gs_px": {
     "gs": "Esperto",
     "px": 30,
@@ -104,9 +104,12 @@
       "spazio": "Mostri 0.69",
       "abilita": "Mostri 0.69",
       "capacita": "Mostri 0.69",
-      "gs_px": "Mostri 0.69"
+      "note": "Mostri 0.69",
+      "gs_px": "Mostri 0.69",
+      "attacchi": "Mostri 0.69"
     },
     "edizione": "Mostri 0.69",
     "sistema_salute": "solo_PV"
-  }
+  },
+  "attacchi": []
 }

@@ -48,11 +48,11 @@
       "va": 12,
       "danno": "2d6+2",
       "natura": "Naturale",
+      "portata_q": 1,
+      "ac": 1,
       "proprieta": [
         "Perforazione"
-      ],
-      "portata_q": 1,
-      "ac": 1
+      ]
     },
     {
       "nome": "Corno in Impeto",
@@ -60,11 +60,12 @@
       "va": 12,
       "danno": "3d6+2",
       "natura": "Naturale",
+      "portata_q": 1,
+      "ac": 1,
       "proprieta": [
         "Perforazione"
       ],
-      "portata_q": 1,
-      "ac": 1
+      "note": "Dopo almeno 4 Q di Passo rettilineo, al posto del Corno ordinario; comprende un solo 1d6 da slancio. Almeno 1 danno finale: Tempra −2 a una creatura ≤ 2 × 2 Q, fallimento → A Terra. Non infligge un secondo colpo né attraversa la vittima; l’Opportunità usa solo il Corno ordinario."
     }
   ],
   "abilita": [
@@ -115,10 +116,10 @@
       "movimento": "Mostri 0.69",
       "spazio": "Mostri 0.69",
       "abilita": "Mostri 0.69",
-      "attacchi": "Mostri 0.69",
+      "attacchi": "Mostri 0.47",
       "capacita": "Mostri 0.47",
+      "note": "Mostri 0.69",
       "gs_px": "Mostri 0.69"
     }
-  },
-  "taglia": "grande"
+  }
 }

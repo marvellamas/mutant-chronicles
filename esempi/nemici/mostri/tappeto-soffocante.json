@@ -100,7 +100,7 @@
     "sanguinamento",
     "stordito"
   ],
-  "note": "Costrutto privo di mente • guardiano da presa • Natura Comune. Impiego. Protegge un’area circoscritta o un accesso. L’avvicinamento a un tappeto sospetto permette di cercare tracce, saggiare il tessuto o usare rilevazioni pertinenti. Un bersaglio già consapevole del pericolo non diventa Sorpreso solo perché mette un piede sopra il tappeto. Interrompere l’animazione può creare una finestra sufficiente per salvare la vittima o superare la stanza.",
+  "note": "PM —: nessuna riserva. Immobile sembra un tappeto (+4 Furtività). Comportamento: protegge un’area o un accesso; interrompere l’animazione apre una finestra per salvare la vittima.",
   "_bestiario": {
     "edizione": "Mostri 0.69",
     "sistema_salute": "solo_PV",
@@ -117,6 +117,7 @@
       "abilita": "Mostri 0.69",
       "attacchi": "Mostri 0.47",
       "capacita": "Mostri 0.47",
+      "note": "Mostri 0.47",
       "gs_px": "Mostri 0.69"
     }
   }

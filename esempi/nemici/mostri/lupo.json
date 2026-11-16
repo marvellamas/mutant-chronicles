@@ -77,19 +77,15 @@
   "capacita": [
     {
       "nome": "Branco e sensi",
-      "effetto": "Applica il +2 di Branco alle condizioni comuni. Ottiene +2 a Percezione quando udito oppure olfatto sono determinanti, senza sommare i due sensi. Può seguire tracce con Sopravvivenza se esistono indizi accessibili; il fiuto non fornisce la posizione esatta di un bersaglio oltre gli ostacoli."
+      "effetto": "Applica il +2 di Branco alle condizioni comuni. +2 a Percezione quando udito oppure olfatto sono determinanti, senza sommare i due sensi. Segue tracce con Sopravvivenza se esistono indizi accessibili; il fiuto non dà la posizione esatta oltre gli ostacoli. Non vede attraverso le pareti."
     },
     {
       "nome": "Abbattere la preda",
-      "effetto": "Una volta per Round, se un Morso infligge almeno 1 danno finale a una creatura con spazio non superiore a 1 × 1 Q, può imporle Tempra con +2. Successo mantiene l’appoggio; fallimento o Maldestro applica A Terra. Non sposta la vittima e non aggiunge una presa. Il +2 alla Salvezza rappresenta la facilità di opporsi a un singolo lupo."
-    },
-    {
-      "nome": "Limiti dell’abbattimento",
-      "effetto": "Occorre una preda su un appoggio: nuotatori e volatori senza appoggio non cadono A Terra per questo effetto. Una preda già A Terra non effettua un’altra PS. Rialzarsi e i modificatori degli attacchi seguono il Giocatore §5.5. Il Morso non ignora armature né attiva automaticamente Sanguinamento."
-    },
-    {
-      "nome": "Altri movimenti",
-      "effetto": "spazio 1 × 1 Q"
+      "effetto": "Una volta per Round, se un Morso infligge almeno 1 danno finale a una creatura con spazio non superiore a 1 × 1 Q, le impone Tempra con +2; fallimento o Maldestro applica A Terra. Non sposta la vittima, non aggiunge una presa, richiede un appoggio (chi vola o nuota senza appoggio non cade) e non agisce su chi è già A Terra. Non ignora armature né attiva Sanguinamento.",
+      "usi": {
+        "quanti": 1,
+        "per": "Round"
+      }
     }
   ],
   "note": "Bestia quadrupede • cacciatore di branco • Natura Comune. Condotta. Può minacciare per difendere il branco, una carcassa o i piccoli. Cerca isolamento e vie di fuga; sotto 6 PV o dopo la dispersione del branco tende a ritirarsi. Non tratta ogni umano come preda e non è automaticamente addomesticabile.",
@@ -109,7 +105,8 @@
       "spazio": "Mostri 0.69",
       "abilita": "Mostri 0.69",
       "attacchi": "Mostri 0.47",
-      "capacita": "Mostri 0.69",
+      "capacita": "Mostri 0.47",
+      "note": "Mostri 0.69",
       "gs_px": "Mostri 0.69"
     }
   }

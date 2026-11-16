@@ -5,7 +5,6 @@
   "nome": "Orso delle caverne",
   "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Orso delle caverne",
   "taglia": "grande",
-  "note": "Grande orso adattato alla vita sotterranea, dal pelo scuro e ruvido. Mantiene il profilo fisico dell’Orso polare e aggiunge vista nel buio ordinario, senza poteri di roccia o gelo.",
   "pv": 55,
   "pm": 6,
   "caratteristiche": {
@@ -46,8 +45,7 @@
       "danno": "1d8+2",
       "natura": "Naturale",
       "proprieta": [
-        "Perforazione",
-        "AC 1"
+        "Perforazione"
       ],
       "portata_q": 1,
       "ac": 1
@@ -59,8 +57,7 @@
       "danno": "1d8+2",
       "natura": "Naturale",
       "proprieta": [
-        "Taglio",
-        "AC 1"
+        "Taglio"
       ],
       "portata_q": 1,
       "ac": 1
@@ -92,6 +89,7 @@
       "effetto": "Percezione 11, 13 per olfatto determinante"
     }
   ],
+  "note": "Grande orso adattato alla vita sotterranea, dal pelo scuro e ruvido. Mantiene il profilo fisico dell’Orso polare e aggiunge vista nel buio ordinario, senza poteri di roccia o gelo.",
   "gs_px": {
     "gs": "Esperto",
     "px": 30,
@@ -111,6 +109,7 @@
       "spazio": "Mostri 0.69",
       "attacchi": "Mostri 0.69",
       "capacita": "Mostri 0.69",
+      "note": "Mostri 0.69",
       "gs_px": "Mostri 0.69"
     },
     "edizione": "Mostri 0.69",

@@ -73,48 +73,20 @@
   ],
   "capacita": [
     {
-      "nome": "Oscuramento",
-      "effetto": "VA —. Danno: Nessun danno; area buia. Portata/costo: Raggio 3 Q; 2 PM; "
-    },
-    {
       "nome": "Aspetto roccioso",
-      "effetto": "Immobile su un soffitto adatto ottiene +3 a Furtività, VA 15. Una buona illuminazione non svela da sola il travestimento, ma contatto, movimento o esame riuscito permettono di riconoscerlo. Ecolocalizzazione 12 Q; se non funziona, non dispone di una vista alternativa utile al combattimento. Ali e mantello corrispondono alle Braccia, appendici di appiglio alle Gambe."
+      "effetto": "Immobile su un soffitto adatto ottiene +3 a Furtività (VA 15). Ecolocalizzazione 12 Q; se non funziona non ha una vista alternativa utile al combattimento. Ali e mantello sono le Braccia, le appendici di appiglio le Gambe."
     },
     {
-      "nome": "Avvolgimento",
-      "effetto": "Dopo almeno 1 danno finale contro una creatura di spazio non superiore a 1 × 1 Q, provvista di capo accessibile, questa effettua Riflessi senza modificatore. Successo evita l’aggancio; fallimento fissa il Mantoscuro al capo. È una capacità del colpo, senza altra AzP. Il corpo della vittima resta mobile e le mani libere: non applica Immobilizzato."
-    },
-    {
-      "nome": "Presa al capo",
-      "effetto": "La vittima non vede ed è Accecata finché il capo resta coperto. Se respira da vie ostruite, inizia il soffocamento del Giocatore §5.23, conservando la propria riserva di fiato. Un sistema respiratorio autonomo impedisce il soffocamento, non l’ostruzione della vista. Non riceve danni automatici per il semplice aggancio."
-    },
-    {
-      "nome": "Liberazione",
-      "effetto": "La vittima o un alleato adiacente spende 1 AzP e contrappone Corpo a corpo o Atletica a Corpo a corpo 11 del Mantoscuro. Un successo lo stacca senza danneggiare la vittima; un pareggio conserva la presa. Le normali penalità visive si applicano soltanto alle attività che richiedono effettivamente la vista: afferrare il mantello già sentito sul capo è possibile al tatto. Staccarlo non richiede un tiro per colpire aggiuntivo."
-    },
-    {
-      "nome": "Creatura agganciata",
-      "effetto": "Occupa il capo, segue gli spostamenti della vittima e non spende AzM per essere trasportata; non può Schivare restando agganciata. Può spendere 1 AzP per stringere: Corpo a corpo 11 contrapposto a Corpo a corpo o Atletica della vittima, con 1d6+1 Naturale e AR ordinaria se vince. Non aggiunge Avvolgimento allo stesso gesto. Una perdita di coscienza o una Menomazione che renda impossibile la presa la termina; 0 PV da soli non bastano."
-    },
-    {
-      "nome": "Attaccare e rilasciare",
-      "effetto": "Si può attaccare direttamente il Mantoscuro con le normali regole, scegliendolo come bersaglio distinto: la presa non gli trasferisce gratuitamente i colpi dalla vittima né assegna a questa i colpi falliti. Il rilascio volontario è gratuito alla propria Iniziativa. Si colloca nel più vicino spazio libero adiacente o cade se non ha sostegno; riprendere quota richiede movimento disponibile."
+      "nome": "Avvolgimento al capo",
+      "effetto": "Dopo almeno 1 danno finale a una creatura di spazio ≤ 1 × 1 Q con capo accessibile, Riflessi senza modificatore: fallimento → si fissa al capo (nessuna AzP, non applica Immobilizzato). La vittima è Accecata finché il capo è coperto e, se respira da vie ostruite, inizia il soffocamento del §5.23. Con 1 AzP stringe: Corpo a corpo 11 contrapposto, 1d6+1 Naturale con AR ordinaria. Liberazione: 1 AzP della vittima o di un alleato adiacente, Corpo a corpo o Atletica contro Corpo a corpo 11 (il pareggio conserva la presa). Una sola vittima; agganciato non Schiva né attacca altri."
     },
     {
       "nome": "Oscuramento",
-      "effetto": "1 AzP e 2 PM creano per 5 Round una sfera buia di raggio 3 Q centrata sul Mantoscuro, mobile con lui. Blocca la vista attraverso la zona; pareti e solidi ne arrestano la propagazione. Non richiede Concentrazione, ma termina se perde coscienza o lo congeda gratuitamente alla propria Iniziativa. Un rinnovo conserva la scadenza più lontana, senza cumulo."
-    },
-    {
-      "nome": "Luce e negazione",
-      "effetto": "Il buio impedisce la vista ordinaria e la scurovisione; torce e fari non lo dissipano. Luce Mistica illumina normalmente la porzione raggiunta dalla propria aura, senza spegnere Oscuramento altrove: è un’interazione espressa di questa capacità. Negare Potere può rimuovere l’intera sfera, potenza di confronto 3. Le regole ordinarie di buio e Accecato valgono soltanto contro ciò che non si riesce a percepire; l’ecolocalizzazione del Mantoscuro continua a funzionare."
-    },
-    {
-      "nome": "Soccorso",
-      "effetto": "Dopo aver scoperto il capo riprende la respirazione; un Round di respiro normale ripristina la riserva. Chi era svenuto per soffocamento riprende conoscenza dopo 1d3 Round, salvo altre cause. PV persi e Ferite restano; Morente richiede la stabilizzazione. Oscuramento può restare attivo dopo la liberazione se il Mantoscuro è ancora cosciente."
-    },
-    {
-      "nome": "Altri movimenti",
-      "effetto": "spazio 1 × 1 Q"
+      "effetto": "1 AzP e 2 PM: sfera buia di raggio 3 Q centrata su di sé e mobile con lui, per 5 Round, senza Concentrazione. Blocca la vista (anche scurovisione); torce e fari non la dissipano; Luce Mistica illumina la sola porzione della propria aura. Nessun danno. Negare Potere: potenza 3. Se spende l’AzP per Oscuramento non attacca in quell’Iniziativa.",
+      "risorsa": "2 PM",
+      "azioni": {
+        "principali": 1
+      }
     }
   ],
   "note": "Predatore alato • agguato e soffocamento • Natura Comune. Condotta. Sceglie una preda isolata e si ritira sotto 8 PV. Può avvolgere una sola vittima e, mentre è agganciato, non attacca altre creature. Se ha già speso l’AzP per Oscuramento, non può attaccare nella stessa Iniziativa. Le regole di liberazione e dell’oscurità sono nella pagina seguente.",
@@ -134,7 +106,8 @@
       "spazio": "Mostri 0.69",
       "abilita": "Mostri 0.69",
       "attacchi": "Mostri 0.47",
-      "capacita": "Mostri 0.69",
+      "capacita": "Mostri 0.47",
+      "note": "Mostri 0.69",
       "gs_px": "Mostri 0.69"
     }
   }

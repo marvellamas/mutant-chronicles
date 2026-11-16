@@ -8,7 +8,6 @@
     "volonta"
   ],
   "taglia": "grande",
-  "note": "Statua animata che presidia un luogo e altera il ritmo dei movimenti degli intrusi. È priva di mente e può restare immobile per tempi lunghissimi senza cessare di vigilare.",
   "pv": 143,
   "caratteristiche": {
     "FOR": 10,
@@ -91,6 +90,7 @@
       "effetto": "spazio 2 × 2 Q"
     }
   ],
+  "note": "Statua animata che presidia un luogo e altera il ritmo dei movimenti degli intrusi. È priva di mente e può restare immobile per tempi lunghissimi senza cessare di vigilare.",
   "gs_px": {
     "gs": "Leggenda",
     "px": 100,
@@ -109,9 +109,12 @@
       "spazio": "Mostri 0.69",
       "abilita": "Mostri 0.69",
       "capacita": "Mostri 0.69",
-      "gs_px": "Mostri 0.69"
+      "note": "Mostri 0.69",
+      "gs_px": "Mostri 0.69",
+      "attacchi": "Mostri 0.69"
     },
     "edizione": "Mostri 0.69",
     "sistema_salute": "solo_PV"
-  }
+  },
+  "attacchi": []
 }

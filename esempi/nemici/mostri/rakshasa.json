@@ -4,7 +4,6 @@
   "id": "rakshasa",
   "nome": "Rakshasa",
   "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Rakshasa",
-  "note": "Predatore dalla testa felina e dalle mani rivolte al contrario. Nasconde l’aspetto, legge pensieri superficiali e compromette il riposo della vittima; la difesa dalla magia minore ha un ambito esplicito.",
   "pv": 125,
   "pm": 56,
   "caratteristiche": {
@@ -68,7 +67,6 @@
       "natura": "Naturale",
       "proprieta": [
         "Taglio",
-        "AC 1",
         "maledizione"
       ],
       "portata_q": 1,
@@ -121,6 +119,7 @@
       "effetto": "spazio 1 × 1 Q"
     }
   ],
+  "note": "Predatore dalla testa felina e dalle mani rivolte al contrario. Nasconde l’aspetto, legge pensieri superficiali e compromette il riposo della vittima; la difesa dalla magia minore ha un ambito esplicito.",
   "gs_px": {
     "gs": "Mito",
     "px": 200,
@@ -141,6 +140,7 @@
       "abilita": "Mostri 0.69",
       "attacchi": "Mostri 0.69",
       "capacita": "Mostri 0.69",
+      "note": "Mostri 0.69",
       "gs_px": "Mostri 0.69"
     },
     "edizione": "Mostri 0.69",

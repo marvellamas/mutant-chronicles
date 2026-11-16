@@ -115,7 +115,7 @@
       }
     }
   ],
-  "note": "Vegetale senziente • difensore antico e animatore di alberi • Natura Comune. Condotta. Cerca di fermare incendi, abbattimenti e distruzione del bosco, distinguendo gli intrusi dalle minacce reali. Può avvertire o trattare prima di attaccare. Sotto 25 PV tende a ripiegare proteggendo il territorio. I 100 PX comprendono il potenziale di Animare alberi della pagina seguente.",
+  "note": "Altezza circa 7 Q. Il VA 13 è quello della Roccia, già in tabella: «Tiro naturale» non è un’Abilità (A.169, 18/10), non dà Armi da lancio né altre competenze. Furtività 14 immobile fra alberi compatibili. Parla il linguaggio del bosco e una lingua di contatto. Condotta: ferma incendi e abbattimenti, distingue gli intrusi dalle minacce reali, può avvertire o trattare prima di attaccare; sotto 19 PV o a Ferita Seria ripiega. Fonte: Treant, p. 289.",
   "_bestiario": {
     "edizione": "Mostri 0.69",
     "sistema_salute": "solo_PV",
@@ -133,8 +133,8 @@
       "abilita": "Mostri 0.47",
       "attacchi": "Mostri 0.47",
       "capacita": "Mostri 0.47",
+      "note": "Mostri 0.47",
       "gs_px": "Mostri 0.69"
     }
-  },
-  "taglia": "grande"
+  }
 }

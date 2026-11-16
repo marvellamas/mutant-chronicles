@@ -4,7 +4,6 @@
   "id": "yuan-ti-malison",
   "nome": "Yuan-ti Malison",
   "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Yuan-ti Malison",
-  "note": "Ibrido serpentino presente in tre anatomie alternative. Si sceglie il tipo prima dell’incontro: non sono tre trasformazioni liberamente combinabili durante il combattimento.",
   "pv": 73,
   "pm": 24,
   "caratteristiche": {
@@ -84,7 +83,6 @@
       "natura": "Naturale",
       "proprieta": [
         "Perforazione",
-        "AC 1",
         "veleno 2d6"
       ],
       "portata_q": 1,
@@ -97,8 +95,7 @@
       "danno": "1d6+2",
       "natura": "Naturale",
       "proprieta": [
-        "Taglio",
-        "AC 1"
+        "Taglio"
       ],
       "portata_q": 1,
       "ac": 1
@@ -110,8 +107,7 @@
       "danno": "1d6+2",
       "natura": "Naturale",
       "proprieta": [
-        "Perforazione",
-        "AC 1"
+        "Perforazione"
       ],
       "portata_q": 100,
       "ac": 1
@@ -124,7 +120,6 @@
       "natura": "Naturale",
       "proprieta": [
         "Contusione",
-        "AC 1",
         "presa"
       ],
       "portata_q": 1,
@@ -169,6 +164,7 @@
       "effetto": "spazio 1 × 1 Q tipi I e II, 1 × 2 Q tipo III"
     }
   ],
+  "note": "Ibrido serpentino presente in tre anatomie alternative. Si sceglie il tipo prima dell’incontro: non sono tre trasformazioni liberamente combinabili durante il combattimento.",
   "gs_px": {
     "gs": "Veterano",
     "px": 50,
@@ -189,6 +185,7 @@
       "abilita": "Mostri 0.69",
       "attacchi": "Mostri 0.69",
       "capacita": "Mostri 0.69",
+      "note": "Mostri 0.69",
       "gs_px": "Mostri 0.69"
     },
     "edizione": "Mostri 0.69",

@@ -4,7 +4,6 @@
   "id": "megera-notturna",
   "nome": "Megera notturna",
   "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Megera notturna",
-  "note": "Predatrice dei sogni che usa una pietra personale per sfalsare il proprio corpo. L’assalto onirico richiede una lunga permanenza accanto al dormiente e offre tempo e mezzi per interromperlo.",
   "pv": 104,
   "pm": 40,
   "caratteristiche": {
@@ -71,8 +70,7 @@
       "danno": "2d8+2",
       "natura": "Naturale",
       "proprieta": [
-        "Taglio",
-        "AC 1"
+        "Taglio"
       ],
       "portata_q": 1,
       "ac": 1
@@ -83,9 +81,6 @@
       "va": 13,
       "danno": "2d6+2",
       "natura": "Magico",
-      "proprieta": [
-        "AC 1"
-      ],
       "gittata_q": 12,
       "modalita": [
         "S"
@@ -131,6 +126,7 @@
       "effetto": "spazio 1 × 1 Q"
     }
   ],
+  "note": "Predatrice dei sogni che usa una pietra personale per sfalsare il proprio corpo. L’assalto onirico richiede una lunga permanenza accanto al dormiente e offre tempo e mezzi per interromperlo.",
   "gs_px": {
     "gs": "Leggenda",
     "px": 110,
@@ -151,6 +147,7 @@
       "abilita": "Mostri 0.69",
       "attacchi": "Mostri 0.69",
       "capacita": "Mostri 0.69",
+      "note": "Mostri 0.69",
       "gs_px": "Mostri 0.69"
     },
     "edizione": "Mostri 0.69",

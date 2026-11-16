@@ -4,7 +4,6 @@
   "id": "melma-grigia-psichica",
   "nome": "Melma grigia psichica",
   "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Melma grigia psichica",
-  "note": "Melma grigia che ha sviluppato una mente rudimentale e una limitata pressione psionica. Conserva corpo amorfo e corrosione del metallo, ma perde le immunità dovute all’assenza di mente del modello ordinario.",
   "pv": 32,
   "pm": 12,
   "caratteristiche": {
@@ -79,6 +78,7 @@
       "effetto": "Furtività 10, 14 immobile su fondale compatibile"
     }
   ],
+  "note": "Melma grigia che ha sviluppato una mente rudimentale e una limitata pressione psionica. Conserva corpo amorfo e corrosione del metallo, ma perde le immunità dovute all’assenza di mente del modello ordinario.",
   "gs_px": {
     "gs": "Esperto",
     "px": 30,
@@ -97,9 +97,12 @@
       "movimento": "Mostri 0.69",
       "spazio": "Mostri 0.69",
       "capacita": "Mostri 0.69",
-      "gs_px": "Mostri 0.69"
+      "note": "Mostri 0.69",
+      "gs_px": "Mostri 0.69",
+      "attacchi": "Mostri 0.69"
     },
     "edizione": "Mostri 0.69",
     "sistema_salute": "solo_PV"
-  }
+  },
+  "attacchi": []
 }

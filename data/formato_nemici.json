@@ -852,15 +852,16 @@
     "non_leggibili": 0,
     "campi": {
       "_nota": "Il conto per campo, non per scheda (lotto 204): «mezzo e mezzo» dev’essere un’informazione, non una sorpresa. Un campo o si legge per intero dall’edizione corrente, o si dichiara non letto e si tiene quello di prima, con scritto da dove viene.",
-      "letti": 5875,
-      "ereditati": 418,
-      "senza_provenienza": 383,
-      "miste": 248,
+      "letti": 6225,
+      "ereditati": 529,
+      "senza_provenienza": 415,
+      "miste": 249,
       "ereditati_per_campo": {
-        "capacita": 209,
-        "attacchi": 112,
+        "capacita": 220,
+        "attacchi": 156,
         "abilita": 68,
-        "azioni": 7,
+        "note": 55,
+        "azioni": 8,
         "iniziativa": 6,
         "pm": 2,
         "caratteristiche": 2,
@@ -875,10 +876,11 @@
         "letti": "5.910 campi letti per intero dal Manuale dei Mostri 0.69, sulle 461 schede che ne vengono",
         "ereditati": "383 campi che la 0.69 non dà in una forma leggibile e che restano quelli della 0.47, ciascuno con la propria provenienza scritta nel file",
         "senza_provenienza": "I campi delle 32 schede provvisorie: non vengono da un’edizione del manuale, quindi non ne dichiarano una (A.258)",
-        "miste": "248 schede portano valori di due edizioni e lo dicono nella mini-scheda; le altre 213 sono tutte alla 0.69 e non dicono niente",
+        "miste": "249 schede portano valori di due edizioni e lo dicono nella mini-scheda; le altre 212 sono tutte alla 0.69 e non dicono niente",
         "capacita": "La 0.69 ha spostato i tratti comuni (Melma, Corpo amorfo, Aderenza, Scurovisione) nelle pagine «regole comuni» di ogni blocco, e il lettore le aggancia solo ai blocchi dichiarati in GRUPPI_COMUNI. Finché non li aggancia tutti, quelle schede tengono le capacità della 0.47 invece di perderne il testo.",
         "attacchi": "Attacchi che il manuale scrive senza la Natura del danno (solo i dadi), con due fasi in una cella, o risolti con una Salvezza invece che con un VA, e attacchi la cui AC sta nelle pagine comuni del blocco: restano fra le capacità e l’elenco degli attacchi resta quello di prima (A.274)",
-        "abilita": "Abilità scritte con una condizione o una forma («Furtività 14 solo nelle Terre del Fuoco»), che il formato tiene come numero secco: restano quelle di prima e la condizione resta nelle capacità"
+        "abilita": "Abilità scritte con una condizione o una forma («Furtività 14 solo nelle Terre del Fuoco»), che il formato tiene come numero secco: restano quelle di prima e la condizione resta nelle capacità",
+        "note": "La nota di una scheda contiene due cose: la prosa del manuale, che la lettura nuova sostituisce com’è giusto, e le annotazioni che i lotti precedenti ci hanno aggiunto (l’AR senza scudo, le Difese alternative, il GS informativo) e che il manuale non scrive in quella forma. Si tengono solo le seconde: 55 schede."
       }
     },
     "dettaglio": {

@@ -4,7 +4,6 @@
   "id": "erinni",
   "nome": "Erinni",
   "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Erinni",
-  "note": "Combattente alata che alterna spada e arco. Il profilo usa armatura media e dotazione Comune; la capacità personale rende mistici i suoi attacchi d’arma e aggiunge veleno, senza trasformare gli oggetti recuperati in armi incantate.",
   "pv": 146,
   "pm": 40,
   "caratteristiche": {
@@ -73,7 +72,6 @@
       "natura": "Magico",
       "proprieta": [
         "Taglio",
-        "AC 1",
         "veleno"
       ],
       "portata_q": 1,
@@ -87,7 +85,6 @@
       "natura": "Magico",
       "proprieta": [
         "Perforazione",
-        "AC 1",
         "veleno"
       ],
       "gittata_q": 100,
@@ -127,6 +124,7 @@
       "effetto": "spazio 1 × 1 Q; penalità Media comprese"
     }
   ],
+  "note": "Combattente alata che alterna spada e arco. Il profilo usa armatura media e dotazione Comune; la capacità personale rende mistici i suoi attacchi d’arma e aggiunge veleno, senza trasformare gli oggetti recuperati in armi incantate.",
   "gs_px": {
     "gs": "Mito",
     "px": 220,
@@ -147,6 +145,7 @@
       "abilita": "Mostri 0.69",
       "attacchi": "Mostri 0.69",
       "capacita": "Mostri 0.69",
+      "note": "Mostri 0.69",
       "gs_px": "Mostri 0.69"
     },
     "edizione": "Mostri 0.69",

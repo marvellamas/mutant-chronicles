@@ -113,7 +113,7 @@
     "accecato",
     "assordato"
   ],
-  "note": "Vegetale infestante • tiratore e segnalazione biologica • Natura Comune. Condotta. Comprende istruzioni semplici ma non parla. Cerca coperture e un tiro libero, alternando allarme e attacchi secondo l’unica AzP disponibile. Sotto 6 PV arretra verso vegetazione fitta. Non si radica obbligatoriamente e non guadagna un bonus mimetico speciale da immobilità.",
+  "note": "Il VA 10 è quello degli Aghi, già in tabella: «Tiro naturale» non è un’Abilità (A.169, 18/10), non dà Armi da lancio né altre competenze. Le spine sono parti del corpo, non proiettili recuperabili. Non ha la vulnerabilità al Fuoco del ramoso né le resistenze fisiche degli alberi. Capisce istruzioni semplici ma non parla. Condotta: cerca coperture e un tiro libero; sotto 4 PV o a Ferita Profonda arretra nella vegetazione fitta. Fonte: Needle Blight, pp. 31–32.",
   "_bestiario": {
     "edizione": "Mostri 0.69",
     "sistema_salute": "solo_PV",
@@ -131,6 +131,7 @@
       "abilita": "Mostri 0.47",
       "attacchi": "Mostri 0.69",
       "capacita": "Mostri 0.47",
+      "note": "Mostri 0.47",
       "gs_px": "Mostri 0.69"
     }
   }

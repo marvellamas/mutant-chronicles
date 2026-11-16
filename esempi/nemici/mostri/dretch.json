@@ -4,7 +4,6 @@
   "id": "dretch",
   "nome": "Dretch",
   "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Dretch",
-  "note": "Demone minuto che combatte con morso e artigli e rilascia una nube irritante per intralciare chi gli si avvicina. Può cooperare con altri esemplari senza ricevere attacchi aggiuntivi dal loro numero.",
   "pv": 24,
   "pm": 6,
   "caratteristiche": {
@@ -85,6 +84,7 @@
       "effetto": "spazio 1 × 1 Q"
     }
   ],
+  "note": "Demone minuto che combatte con morso e artigli e rilascia una nube irritante per intralciare chi gli si avvicina. Può cooperare con altri esemplari senza ricevere attacchi aggiuntivi dal loro numero.",
   "gs_px": {
     "gs": "Inesperto",
     "px": 20,
@@ -104,9 +104,12 @@
       "spazio": "Mostri 0.69",
       "abilita": "Mostri 0.69",
       "capacita": "Mostri 0.69",
-      "gs_px": "Mostri 0.69"
+      "note": "Mostri 0.69",
+      "gs_px": "Mostri 0.69",
+      "attacchi": "Mostri 0.69"
     },
     "edizione": "Mostri 0.69",
     "sistema_salute": "solo_PV"
-  }
+  },
+  "attacchi": []
 }

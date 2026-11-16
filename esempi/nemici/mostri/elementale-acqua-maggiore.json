@@ -100,7 +100,7 @@
     "sanguinamento",
     "stordito"
   ],
-  "note": "Manifestazione evocata di Acqua • controllo e respinta • Natura Comune.",
+  "note": "PM —: nessuna riserva. Il VA 14 è quello del Dardo d’acqua, già in tabella: «Attacco a distanza» non è un’Abilità (A.169, 18/10), non dà Armi da lancio né altre competenze. Profilo evocato (Magia §14.1): «INI dopo l’evocatore» (qui 0; sulla plancia agisce dopo chi lo evoca). Scompare a 0 PV, a fine durata, al congedo o alla perdita di coscienza dell’evocatore. Spazio 2 × 2 Q (Sbalzante non lo sposta).",
   "_bestiario": {
     "edizione": "Mostri 0.69",
     "sistema_salute": "solo_PV",
@@ -117,8 +117,8 @@
       "abilita": "Mostri 0.47",
       "attacchi": "Mostri 0.47",
       "capacita": "Mostri 0.47",
+      "note": "Mostri 0.47",
       "gs_px": "Mostri 0.69"
     }
-  },
-  "taglia": "grande"
+  }
 }

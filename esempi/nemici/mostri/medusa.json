@@ -4,7 +4,6 @@
   "id": "medusa",
   "nome": "Medusa",
   "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Medusa",
-  "note": "Umanoide dalla chioma di serpenti velenosi. Sfrutta il contatto degli sguardi e può combattere con arco o pugnale; conserva una personalità e obiettivi propri.",
   "pv": 84,
   "pm": 24,
   "caratteristiche": {
@@ -97,6 +96,7 @@
       "effetto": "spazio 1 × 1 Q"
     }
   ],
+  "note": "Umanoide dalla chioma di serpenti velenosi. Sfrutta il contatto degli sguardi e può combattere con arco o pugnale; conserva una personalità e obiettivi propri.",
   "gs_px": {
     "gs": "Eroe",
     "px": 77,
@@ -116,9 +116,12 @@
       "spazio": "Mostri 0.69",
       "abilita": "Mostri 0.69",
       "capacita": "Mostri 0.69",
-      "gs_px": "Mostri 0.69"
+      "note": "Mostri 0.69",
+      "gs_px": "Mostri 0.69",
+      "attacchi": "Mostri 0.69"
     },
     "edizione": "Mostri 0.69",
     "sistema_salute": "solo_PV"
-  }
+  },
+  "attacchi": []
 }

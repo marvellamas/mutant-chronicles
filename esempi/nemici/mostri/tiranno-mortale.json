@@ -5,7 +5,6 @@
   "nome": "Tiranno mortale",
   "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Tiranno mortale",
   "taglia": "grande",
-  "note": "Forma non morta del Beholder: un cranio levitante circondato da occhi spettrali. Il grande occhio ostacola il recupero vitale e può vincolare i cadaveri.",
   "pv": 169,
   "pm": 65,
   "caratteristiche": {
@@ -87,6 +86,7 @@
       "effetto": "spazio 2 × 2 Q"
     }
   ],
+  "note": "Forma non morta del Beholder: un cranio levitante circondato da occhi spettrali. Il grande occhio ostacola il recupero vitale e può vincolare i cadaveri.",
   "gs_px": {
     "gs": "Mito",
     "px": 200,
@@ -106,9 +106,12 @@
       "spazio": "Mostri 0.69",
       "abilita": "Mostri 0.69",
       "capacita": "Mostri 0.69",
-      "gs_px": "Mostri 0.69"
+      "note": "Mostri 0.69",
+      "gs_px": "Mostri 0.69",
+      "attacchi": "Mostri 0.69"
     },
     "edizione": "Mostri 0.69",
     "sistema_salute": "solo_PV"
-  }
+  },
+  "attacchi": []
 }

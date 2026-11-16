@@ -5,7 +5,6 @@
   "nome": "Glabrezu",
   "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Glabrezu",
   "taglia": "grande",
-  "note": "Grande demone a quattro braccia, due terminate in chele e due in mani. Trattiene gli avversari mentre usa poteri di oscuramento, disorientamento e negazione mistica.",
   "pv": 146,
   "pm": 45,
   "caratteristiche": {
@@ -94,6 +93,7 @@
       "effetto": "spazio 2 × 2 Q"
     }
   ],
+  "note": "Grande demone a quattro braccia, due terminate in chele e due in mani. Trattiene gli avversari mentre usa poteri di oscuramento, disorientamento e negazione mistica.",
   "gs_px": {
     "gs": "Mito",
     "px": 200,
@@ -113,9 +113,12 @@
       "spazio": "Mostri 0.69",
       "abilita": "Mostri 0.69",
       "capacita": "Mostri 0.69",
-      "gs_px": "Mostri 0.69"
+      "note": "Mostri 0.69",
+      "gs_px": "Mostri 0.69",
+      "attacchi": "Mostri 0.69"
     },
     "edizione": "Mostri 0.69",
     "sistema_salute": "solo_PV"
-  }
+  },
+  "attacchi": []
 }

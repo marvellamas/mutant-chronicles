@@ -5,7 +5,6 @@
   "nome": "Chasme",
   "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Chasme",
   "taglia": "grande",
-  "note": "Grande insettoide volante dalla lunga proboscide. Il suo ronzio induce un torpore mistico e prepara un attacco che indebolisce temporaneamente la vitalità.",
   "pv": 84,
   "pm": 24,
   "caratteristiche": {
@@ -91,6 +90,7 @@
       "effetto": "arrampicata 4 Q al Passo anche capovolto; spazio 2 × 2 Q"
     }
   ],
+  "note": "Grande insettoide volante dalla lunga proboscide. Il suo ronzio induce un torpore mistico e prepara un attacco che indebolisce temporaneamente la vitalità.",
   "gs_px": {
     "gs": "Leggenda",
     "px": 100,
@@ -110,9 +110,12 @@
       "spazio": "Mostri 0.69",
       "abilita": "Mostri 0.69",
       "capacita": "Mostri 0.69",
-      "gs_px": "Mostri 0.69"
+      "note": "Mostri 0.69",
+      "gs_px": "Mostri 0.69",
+      "attacchi": "Mostri 0.69"
     },
     "edizione": "Mostri 0.69",
     "sistema_salute": "solo_PV"
-  }
+  },
+  "attacchi": []
 }

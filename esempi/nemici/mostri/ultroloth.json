@@ -4,7 +4,6 @@
   "id": "ultroloth",
   "nome": "Ultroloth",
   "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Ultroloth",
-  "note": "Comandante dalla testa allungata e dagli occhi opalescenti. Sostiene il fronte con la spada, ma preferisce separare i nemici e sfruttare un breve sguardo ipnotico.",
   "pv": 156,
   "pm": 60,
   "caratteristiche": {
@@ -94,6 +93,7 @@
       "effetto": "spazio 1 × 1 Q"
     }
   ],
+  "note": "Comandante dalla testa allungata e dagli occhi opalescenti. Sostiene il fronte con la spada, ma preferisce separare i nemici e sfruttare un breve sguardo ipnotico.",
   "gs_px": {
     "gs": "Mito",
     "px": 220,
@@ -113,9 +113,12 @@
       "spazio": "Mostri 0.69",
       "abilita": "Mostri 0.69",
       "capacita": "Mostri 0.69",
-      "gs_px": "Mostri 0.69"
+      "note": "Mostri 0.69",
+      "gs_px": "Mostri 0.69",
+      "attacchi": "Mostri 0.69"
     },
     "edizione": "Mostri 0.69",
     "sistema_salute": "solo_PV"
-  }
+  },
+  "attacchi": []
 }

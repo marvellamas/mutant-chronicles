@@ -4,7 +4,6 @@
   "id": "lemure",
   "nome": "Lemure",
   "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Lemure",
-  "note": "Creatura lenta dalla forma carnosa e incompleta. Comprende consegne elementari e colpisce con i pugni, senza trasformarsi in un diavolo più potente durante il combattimento.",
   "pv": 16,
   "pm": 4,
   "caratteristiche": {
@@ -63,8 +62,7 @@
       "danno": "1d4",
       "natura": "Naturale",
       "proprieta": [
-        "Contusione",
-        "AC 1"
+        "Contusione"
       ],
       "portata_q": 1,
       "ac": 1
@@ -88,6 +86,7 @@
       "effetto": "spazio 1 × 1 Q"
     }
   ],
+  "note": "Creatura lenta dalla forma carnosa e incompleta. Comprende consegne elementari e colpisce con i pugni, senza trasformarsi in un diavolo più potente durante il combattimento.",
   "gs_px": {
     "gs": "Principiante",
     "px": 10,
@@ -108,6 +107,7 @@
       "abilita": "Mostri 0.69",
       "attacchi": "Mostri 0.69",
       "capacita": "Mostri 0.69",
+      "note": "Mostri 0.69",
       "gs_px": "Mostri 0.69"
     },
     "edizione": "Mostri 0.69",

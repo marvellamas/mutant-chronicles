@@ -4,7 +4,6 @@
   "id": "ratto-gigante-infetto",
   "nome": "Ratto gigante infetto",
   "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Ratto gigante infetto",
-  "note": "Ratto gigante portatore di un’infezione debilitante. I numeri di combattimento sono quelli del roditore ordinario; il rischio aggiuntivo è il decorso della malattia dopo un morso penetrante.",
   "pv": 13,
   "pm": 4,
   "caratteristiche": {
@@ -46,7 +45,6 @@
       "natura": "Naturale",
       "proprieta": [
         "Perforazione",
-        "AC 1",
         "contagio condizionato"
       ],
       "portata_q": 1,
@@ -79,6 +77,7 @@
       "effetto": "Percezione 10, 12 per olfatto determinante"
     }
   ],
+  "note": "Ratto gigante portatore di un’infezione debilitante. I numeri di combattimento sono quelli del roditore ordinario; il rischio aggiuntivo è il decorso della malattia dopo un morso penetrante.",
   "gs_px": {
     "gs": "Principiante",
     "px": 10,
@@ -98,6 +97,7 @@
       "spazio": "Mostri 0.69",
       "attacchi": "Mostri 0.69",
       "capacita": "Mostri 0.69",
+      "note": "Mostri 0.69",
       "gs_px": "Mostri 0.69"
     },
     "edizione": "Mostri 0.69",

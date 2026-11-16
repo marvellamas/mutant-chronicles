@@ -4,7 +4,6 @@
   "id": "drow-guerriero-di-elite",
   "nome": "Drow guerriero d’élite",
   "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Drow guerriero d’élite",
-  "note": "Combattente Drow esperto, munito di scudo e di due tossine distinte: lesiva per la spada e sedativa per i quadrelli. Può levitare per un tempo limitato e conserva la sensibilità al sole.",
   "pv": 94,
   "pm": 18,
   "caratteristiche": {
@@ -72,7 +71,6 @@
       "natura": "Naturale",
       "proprieta": [
         "Taglio",
-        "AC 1",
         "eventuale veleno 2d6"
       ],
       "portata_q": 1,
@@ -86,7 +84,6 @@
       "natura": "Naturale",
       "proprieta": [
         "Perforazione",
-        "AC 1",
         "eventuale sedativo"
       ],
       "portata_q": 30,
@@ -135,6 +132,7 @@
       "effetto": "levitazione speciale; spazio 1 × 1 Q"
     }
   ],
+  "note": "Combattente Drow esperto, munito di scudo e di due tossine distinte: lesiva per la spada e sedativa per i quadrelli. Può levitare per un tempo limitato e conserva la sensibilità al sole.",
   "gs_px": {
     "gs": "Eroe",
     "px": 77,
@@ -155,6 +153,7 @@
       "abilita": "Mostri 0.69",
       "attacchi": "Mostri 0.69",
       "capacita": "Mostri 0.69",
+      "note": "Mostri 0.69",
       "gs_px": "Mostri 0.69"
     },
     "edizione": "Mostri 0.69",

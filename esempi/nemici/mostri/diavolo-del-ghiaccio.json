@@ -5,7 +5,6 @@
   "nome": "Diavolo del ghiaccio",
   "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Diavolo del ghiaccio",
   "taglia": "grande",
-  "note": "Grande insettoide bipede con coda e mandibole. Colpisce con appendici gelide e crea un muro che spezza le linee di attacco; il suo corpo tollera sia Fuoco sia Gelo, mentre il ghiaccio creato resta vulnerabile alle fiamme.",
   "pv": 188,
   "pm": 52,
   "caratteristiche": {
@@ -106,6 +105,7 @@
       "effetto": "spazio 2 × 2 Q"
     }
   ],
+  "note": "Grande insettoide bipede con coda e mandibole. Colpisce con appendici gelide e crea un muro che spezza le linee di attacco; il suo corpo tollera sia Fuoco sia Gelo, mentre il ghiaccio creato resta vulnerabile alle fiamme.",
   "gs_px": {
     "gs": "Semidio",
     "px": 400,
@@ -125,9 +125,12 @@
       "spazio": "Mostri 0.69",
       "abilita": "Mostri 0.69",
       "capacita": "Mostri 0.69",
-      "gs_px": "Mostri 0.69"
+      "note": "Mostri 0.69",
+      "gs_px": "Mostri 0.69",
+      "attacchi": "Mostri 0.69"
     },
     "edizione": "Mostri 0.69",
     "sistema_salute": "solo_PV"
-  }
+  },
+  "attacchi": []
 }

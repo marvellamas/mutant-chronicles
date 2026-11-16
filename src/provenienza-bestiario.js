@@ -20,13 +20,13 @@ const isOggetto = (x) => !!x && typeof x === 'object' && !Array.isArray(x);
  * I campi di cui si tiene la provenienza: quelli che il Direttore legge su una scheda e che l'app usa al tavolo.
  * Non è l'elenco di tutto ciò che un file contiene: nome, fonte e testi non sono valori di gioco.
  */
-export const CAMPI = ['pv', 'pm', 'caratteristiche', 'ar', 'difese', 'salvezze', 'iniziativa', 'azioni', 'movimento', 'spazio', 'abilita', 'attacchi', 'capacita', 'gs_px'];
+export const CAMPI = ['pv', 'pm', 'caratteristiche', 'ar', 'difese', 'salvezze', 'iniziativa', 'azioni', 'movimento', 'spazio', 'abilita', 'attacchi', 'capacita', 'note', 'gs_px'];
 
 /** I nomi che si leggono al tavolo, per la riga della mini-scheda e per il rapporto. */
 export const NOMI_CAMPI = {
   pv: 'PV', pm: 'PM', caratteristiche: 'Caratteristiche', ar: 'AR', difese: 'Difese', salvezze: 'Salvezze',
   iniziativa: 'Iniziativa', azioni: 'Azioni', movimento: 'Movimento', spazio: 'Ingombro', abilita: 'Abilità',
-  attacchi: 'Attacchi', capacita: 'Capacità', gs_px: 'GS e PX',
+  attacchi: 'Attacchi', capacita: 'Capacità', note: 'Note', gs_px: 'GS e PX',
 };
 
 /**
@@ -92,8 +92,10 @@ export function rigaProvenienza(nemico, corrente) {
   if (!vecchi.length) return null;
   const perEdizione = new Map();
   for (const v of vecchi) perEdizione.set(v.edizione, [...(perEdizione.get(v.edizione) ?? []), v.nome]);
-  const pezzi = [...perEdizione.entries()].map(([ed, nomi]) => `${nomi.join(', ')} ${nomi.length === 1 ? 'viene' : 'vengono'} da ${ed}`);
-  return `Non tutti i valori vengono da ${corrente}: ${pezzi.join('; ')}. Il manuale corrente non li dà in una forma leggibile, quindi restano quelli di prima.`;
+  // la frase è costruita per non dipendere dal numero: «Attacchi» è un campo solo ma di nome plurale, e un
+  // «viene» accanto a «Attacchi» si legge male. Due punti al posto del verbo, e vale in tutti i casi.
+  const pezzi = [...perEdizione.entries()].map(([ed, nomi]) => `${nomi.join(', ')} da ${ed}`);
+  return `Non tutti i valori vengono da ${corrente} — ${pezzi.join('; ')}. Il manuale corrente non dà questi valori in una forma leggibile, quindi restano quelli di prima.`;
 }
 
 /**

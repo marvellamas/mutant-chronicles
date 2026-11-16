@@ -4,7 +4,6 @@
   "id": "kuo-toa-frusta",
   "nome": "Kuo-toa frusta",
   "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Kuo-toa frusta",
-  "note": "Kuo-toa addestrato al bastone da cattura e a un breve repertorio di sostegno. Frusta è il nome del ruolo nella fonte: la sua arma è un’asta a tenaglia impugnata a due mani.",
   "pv": 63,
   "pm": 18,
   "caratteristiche": {
@@ -109,6 +108,7 @@
       "effetto": "Terra e nuoto 6 / 12 / 18: la stessa andatura vale anche per nuoto; spazio 1 × 1 Q"
     }
   ],
+  "note": "Kuo-toa addestrato al bastone da cattura e a un breve repertorio di sostegno. Frusta è il nome del ruolo nella fonte: la sua arma è un’asta a tenaglia impugnata a due mani.",
   "gs_px": {
     "gs": "Esperto",
     "px": 33,
@@ -128,9 +128,12 @@
       "spazio": "Mostri 0.69",
       "abilita": "Mostri 0.69",
       "capacita": "Mostri 0.69",
-      "gs_px": "Mostri 0.69"
+      "note": "Mostri 0.69",
+      "gs_px": "Mostri 0.69",
+      "attacchi": "Mostri 0.69"
     },
     "edizione": "Mostri 0.69",
     "sistema_salute": "solo_PV"
-  }
+  },
+  "attacchi": []
 }

@@ -5,7 +5,6 @@
   "nome": "Androsfinge",
   "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Androsfinge",
   "taglia": "grande",
-  "note": "Guardiano dal corpo leonino, grandi ali e testa umanoide. Mette alla prova coraggio e perseveranza; i tre ruggiti costituiscono una sequenza crescente, dichiarata e limitata. Una AzP per Incantesimo e PM della versione; Potere pronto 17 ai livelli tre e sei, 15 al nove. Restano condizioni di lancio e procedure delle regole comuni dei custodi e delle schede della Magia v1.7. Voce udita e compresa, una sola condotta; nel primo turno successivo massimo una AzP e un Movimento, senza azioni nuove. Limiti morali e PM/PE ordinari; Negare 6 prima dell’esecuzione. 9 PM; dieci Round fissi; raggio 15 Q oppure due Q totali di analisi entro 15 Q Potere rilevazione 9; una fonte e categoria per Round, non vista fisica. Legge fino alla macrofamiglia, non diagnosi CROS. Cambio modalità come scheda; Negare 9. 9 PM; due effetti validamente localizzati entro 15 Q e concatenati entro due Q Superiore termina, inferiore fallisce, pari una Volontà del negatore. Non individua da solo magie nascoste, non annulla cure o altri risultati istantanei. 6 PM; un vivente consenziente o incosciente soccorso entro sei Q Rimuove due tipi di Stato temporaneo compatibile fino a Svenuto, Stordito o Paralizzato. Non elimina cause persistenti, Ferite, PM zero o vincoli materiali. 6 PM; un vivente consenziente o incosciente soccorso visibile entro tre Q Due sostanze attive al massimo, naturali, artificiali o mistiche fino a Pericolosità V; non cura VI né restituisce PV o lesioni. 9 PM; una creatura visibile entro dieci Q; Magia 0 evita; tre Round Confinamento senza azioni, percezioni o recuperi, tempo ed effetti periodici sospesi. Un lancio attivo; ritorno Disorientato 1+1d3 Round. Negare 9 sulla traccia libera. 9 PM; un colpo 4d6+5 Magico Fuoco, una AC, automatico entro quindici Q Bersaglio visibile e percorso libero; Parata o Schivata, non Elusione. AR e secondario Fuoco −2 dopo residuo e Ignifugo. Nessun bonus FOR o altro elemento aggiunto.",
   "pv": 229,
   "pm": 64,
   "caratteristiche": {
@@ -139,6 +138,7 @@
       "effetto": "spazio 2 × 2 Q"
     }
   ],
+  "note": "Guardiano dal corpo leonino, grandi ali e testa umanoide. Mette alla prova coraggio e perseveranza; i tre ruggiti costituiscono una sequenza crescente, dichiarata e limitata. Una AzP per Incantesimo e PM della versione; Potere pronto 17 ai livelli tre e sei, 15 al nove. Restano condizioni di lancio e procedure delle regole comuni dei custodi e delle schede della Magia v1.7. Voce udita e compresa, una sola condotta; nel primo turno successivo massimo una AzP e un Movimento, senza azioni nuove. Limiti morali e PM/PE ordinari; Negare 6 prima dell’esecuzione. 9 PM; dieci Round fissi; raggio 15 Q oppure due Q totali di analisi entro 15 Q Potere rilevazione 9; una fonte e categoria per Round, non vista fisica. Legge fino alla macrofamiglia, non diagnosi CROS. Cambio modalità come scheda; Negare 9. 9 PM; due effetti validamente localizzati entro 15 Q e concatenati entro due Q Superiore termina, inferiore fallisce, pari una Volontà del negatore. Non individua da solo magie nascoste, non annulla cure o altri risultati istantanei. 6 PM; un vivente consenziente o incosciente soccorso entro sei Q Rimuove due tipi di Stato temporaneo compatibile fino a Svenuto, Stordito o Paralizzato. Non elimina cause persistenti, Ferite, PM zero o vincoli materiali. 6 PM; un vivente consenziente o incosciente soccorso visibile entro tre Q Due sostanze attive al massimo, naturali, artificiali o mistiche fino a Pericolosità V; non cura VI né restituisce PV o lesioni. 9 PM; una creatura visibile entro dieci Q; Magia 0 evita; tre Round Confinamento senza azioni, percezioni o recuperi, tempo ed effetti periodici sospesi. Un lancio attivo; ritorno Disorientato 1+1d3 Round. Negare 9 sulla traccia libera. 9 PM; un colpo 4d6+5 Magico Fuoco, una AC, automatico entro quindici Q Bersaglio visibile e percorso libero; Parata o Schivata, non Elusione. AR e secondario Fuoco −2 dopo residuo e Ignifugo. Nessun bonus FOR o altro elemento aggiunto.",
   "gs_px": {
     "gs": "Divinità",
     "px": 800,
@@ -158,9 +158,12 @@
       "spazio": "Mostri 0.69",
       "abilita": "Mostri 0.69",
       "capacita": "Mostri 0.69",
-      "gs_px": "Mostri 0.69"
+      "note": "Mostri 0.69",
+      "gs_px": "Mostri 0.69",
+      "attacchi": "Mostri 0.69"
     },
     "edizione": "Mostri 0.69",
     "sistema_salute": "solo_PV"
-  }
+  },
+  "attacchi": []
 }

@@ -5,7 +5,6 @@
   "nome": "Verme purpureo",
   "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Verme purpureo",
   "taglia": "grande",
-  "note": "Enorme predatore scavatore che apre gallerie nella roccia. Il morso può inghiottire una preda e il pungiglione caudale inocula una tossina potente; la sua percezione sotterranea resta limitata ai sensi effettivi.",
   "pv": 271,
   "pm": 16,
   "caratteristiche": {
@@ -86,6 +85,7 @@
       "effetto": "scavo in terra 6 / 12 / 18 Q, roccia ordinaria 3 / 6 / 9 Q; spazio 3 × 8 Q"
     }
   ],
+  "note": "Enorme predatore scavatore che apre gallerie nella roccia. Il morso può inghiottire una preda e il pungiglione caudale inocula una tossina potente; la sua percezione sotterranea resta limitata ai sensi effettivi.",
   "gs_px": {
     "gs": "Semidio",
     "px": 400,
@@ -105,9 +105,12 @@
       "spazio": "Mostri 0.69",
       "abilita": "Mostri 0.69",
       "capacita": "Mostri 0.69",
-      "gs_px": "Mostri 0.69"
+      "note": "Mostri 0.69",
+      "gs_px": "Mostri 0.69",
+      "attacchi": "Mostri 0.69"
     },
     "edizione": "Mostri 0.69",
     "sistema_salute": "solo_PV"
-  }
+  },
+  "attacchi": []
 }

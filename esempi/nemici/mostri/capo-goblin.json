@@ -139,7 +139,7 @@
       "effetto": "Prima del tiro per colpire di un attacco diretto solo contro il Capo, può farsi sostituire da un altro Goblin consenziente entro 1 Q. Deve percepire l’attacco; entrambi coscienti, mobili e in condizioni di reagire; il sostituto deve avere spazio per occupare la posizione e non può essere trattenuto, Immobilizzato o incapace di muoversi. I due scambiano la posizione (unico Movimento concesso, non consuma l’AzM del sostituto; non supera barriere né occupa un Q impraticabile; nessuna Opportunità per questa sola sostituzione). Il sostituto diventa il bersaglio solo se nella posizione del Capo è ancora valido per lo stesso attacco; si ricalcolano i modificatori e si tira; fa le proprie Difese senza ereditare quelle del Capo; il danno si applica a lui. Non si usa dopo aver conosciuto tiro, danni o Salvezza; non devia Aree, Raffiche, attacchi a più bersagli o effetti senza tiro per colpire; non assorbe un colpo già risolto né trasferisce Stati. Se mancano i requisiti non si spende l’AzP. Il sostituto non spende AzP; il consenso non nasce dalla sola intimidazione o dalla stessa specie e può venir meno se la banda abbandona il capo."
     }
   ],
-  "note": "Goblin • capo di una piccola banda • Natura Comune.",
+  "note": "AR 2 con Scudo piccolo, 1 senza. Parla Comune e Goblin. Guida con agguati, minacce e vie di fuga; preferisce farsi proteggere dai seguaci. Condotta: sotto 7 PV, a Ferita Profonda o senza seguaci cerca una via di fuga o offre informazioni. Fonte: Goblin Boss, p. 166.",
   "_bestiario": {
     "edizione": "Mostri 0.69",
     "sistema_salute": "solo_PV",
@@ -157,6 +157,7 @@
       "abilita": "Mostri 0.69",
       "attacchi": "Mostri 0.69",
       "capacita": "Mostri 0.47",
+      "note": "Mostri 0.47",
       "gs_px": "Mostri 0.69"
     }
   }

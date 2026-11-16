@@ -5,7 +5,6 @@
   "nome": "Slaad verde",
   "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Slaad verde",
   "taglia": "grande",
-  "note": "Slaad capace di assumere aspetto umanoide e alternare artigli, fiamme e inganni. Il profilo è privo del bastone opzionale della fonte e usa soltanto le armi naturali e i poteri scritti.",
   "pv": 136,
   "pm": 40,
   "caratteristiche": {
@@ -72,8 +71,7 @@
       "danno": "2d6+2",
       "natura": "Naturale",
       "proprieta": [
-        "Perforazione",
-        "AC 1"
+        "Perforazione"
       ],
       "portata_q": 1,
       "ac": 1
@@ -85,8 +83,7 @@
       "danno": "1d6+2",
       "natura": "Naturale",
       "proprieta": [
-        "Taglio",
-        "AC 1"
+        "Taglio"
       ],
       "portata_q": 1,
       "ac": 1
@@ -98,8 +95,7 @@
       "danno": "3d6",
       "natura": "Magico",
       "proprieta": [
-        "Fuoco",
-        "AC 1"
+        "Fuoco"
       ],
       "portata_q": 12,
       "ac": 1
@@ -140,6 +136,7 @@
       "effetto": "spazio 2 × 2 Q vero, 1 × 1 Q umanoide"
     }
   ],
+  "note": "Slaad capace di assumere aspetto umanoide e alternare artigli, fiamme e inganni. Il profilo è privo del bastone opzionale della fonte e usa soltanto le armi naturali e i poteri scritti.",
   "gs_px": {
     "gs": "Leggenda",
     "px": 100,
@@ -160,6 +157,7 @@
       "abilita": "Mostri 0.69",
       "attacchi": "Mostri 0.69",
       "capacita": "Mostri 0.69",
+      "note": "Mostri 0.69",
       "gs_px": "Mostri 0.69"
     },
     "edizione": "Mostri 0.69",

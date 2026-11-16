@@ -4,7 +4,6 @@
   "id": "arcanaloth",
   "nome": "Arcanaloth",
   "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Arcanaloth",
-  "note": "Studioso e negoziatore dalla testa di sciacallo. Il profilo possiede un repertorio di combattimento e utilità definito; la competenza nelle lingue non gli consegna segreti o autorità sui suoi interlocutori. Tutte le versioni sono di livello nove, nove PM e Potere pronto 15, salvo Barriera Mentale sei con sei PM e Potere 17. Una AzP per lancio. Questi valori non includono Ingaggio, componenti mancanti o condizioni della scena. Il tiro di Esplosione è Armi da lancio +2, VA 14; non possiede Incantesimi da Lancio. Nessuna prova per colpire negli altri effetti elencati. 15 Q; un colpo 4d6+5 Magico, solo Fuoco o Fulmine; una AC, automatico Parata o Schivata ordinarie, non Elusione; effetti secondari −2 dopo residuo e Contromisura Q entro 15 Q; raggio tre Q; 4d4+5 Magico Fuoco su 1d3 AC comuni; tiro VA 14 e scarto ordinario Elusione Riflessi −2 dimezza ogni AC; AR separata, un tiro danno comune, alleati compresi Un beneficiario consenziente entro tre Q; +4 alle PS pertinenti per cinque minuti Tutte Volontà e Magia direttamente mentali; immunità a Dardo Psichico, non AR; Negare 6 Una creatura entro dieci Q; tre Round confinata, senza agire o essere raggiunta Magia 0 evita; tempo del prigioniero sospeso; ritorno Disorientato 1+1d3 Round; Negare 9 sulla traccia Origine entro 15 Q, raggio tre Q; scena animata per trenta minuti; gestione una AzP Indagine Magia −2; un indizio può concederla senza AzP; senza materia o attacchi reali; Negare 9 Due menti entro 15 Q e concatenate entro due Q; identica breve frase Volontà −2 evita; una AzP e un Movimento al massimo nel turno previsto; voce, lingua e limiti morali; Negare 9 prima dell’esecuzione Un beneficiario entro tre Q; cinque minuti a durata fissa, quota totale una Azione, Movimento ordinario escluso Percezione −2 sulla distorsione una volta per Round; l’Azione successiva alla quota si risolve e poi termina; Negare 9 Dieci Round fissi; percezione raggio 15 Q oppure analisi due Q totali entro 15 Q; una fonte per Round Confronto rilevazione nove; non legge menti; l’analisi distingue anche macrofamiglia; Negare 9 Superiore rimuove, inferiore fallisce, pari Volontà del negatore; non è Contromagia Il repertorio segue integralmente le schede citate della Magia v1.7. Fuoco: dopo residuo della singola AC e Ignifugo, Riflessi −2 evita Incendiato per 1+1d3 Round; una sola verifica per bersaglio per l’intera Esplosione. Fulmine: dopo residuo e Isolante, Tempra −2 evita Disorientato per 1+1d3 Round, 20 naturale Stordito per un Round. Nessun bonus di Caratteristica si aggiunge al danno degli Incantesimi. Il Focus Comune è sintonizzato ma non fornisce PM o bonus; i 220 PX comprendono soltanto questo equipaggiamento.",
   "pv": 115,
   "pm": 72,
   "caratteristiche": {
@@ -134,6 +133,7 @@
       "effetto": "Terra e volo 6 / 12 / 18: la stessa andatura vale anche per volo; spazio 1 × 1 Q"
     }
   ],
+  "note": "Studioso e negoziatore dalla testa di sciacallo. Il profilo possiede un repertorio di combattimento e utilità definito; la competenza nelle lingue non gli consegna segreti o autorità sui suoi interlocutori. Tutte le versioni sono di livello nove, nove PM e Potere pronto 15, salvo Barriera Mentale sei con sei PM e Potere 17. Una AzP per lancio. Questi valori non includono Ingaggio, componenti mancanti o condizioni della scena. Il tiro di Esplosione è Armi da lancio +2, VA 14; non possiede Incantesimi da Lancio. Nessuna prova per colpire negli altri effetti elencati. 15 Q; un colpo 4d6+5 Magico, solo Fuoco o Fulmine; una AC, automatico Parata o Schivata ordinarie, non Elusione; effetti secondari −2 dopo residuo e Contromisura Q entro 15 Q; raggio tre Q; 4d4+5 Magico Fuoco su 1d3 AC comuni; tiro VA 14 e scarto ordinario Elusione Riflessi −2 dimezza ogni AC; AR separata, un tiro danno comune, alleati compresi Un beneficiario consenziente entro tre Q; +4 alle PS pertinenti per cinque minuti Tutte Volontà e Magia direttamente mentali; immunità a Dardo Psichico, non AR; Negare 6 Una creatura entro dieci Q; tre Round confinata, senza agire o essere raggiunta Magia 0 evita; tempo del prigioniero sospeso; ritorno Disorientato 1+1d3 Round; Negare 9 sulla traccia Origine entro 15 Q, raggio tre Q; scena animata per trenta minuti; gestione una AzP Indagine Magia −2; un indizio può concederla senza AzP; senza materia o attacchi reali; Negare 9 Due menti entro 15 Q e concatenate entro due Q; identica breve frase Volontà −2 evita; una AzP e un Movimento al massimo nel turno previsto; voce, lingua e limiti morali; Negare 9 prima dell’esecuzione Un beneficiario entro tre Q; cinque minuti a durata fissa, quota totale una Azione, Movimento ordinario escluso Percezione −2 sulla distorsione una volta per Round; l’Azione successiva alla quota si risolve e poi termina; Negare 9 Dieci Round fissi; percezione raggio 15 Q oppure analisi due Q totali entro 15 Q; una fonte per Round Confronto rilevazione nove; non legge menti; l’analisi distingue anche macrofamiglia; Negare 9 Superiore rimuove, inferiore fallisce, pari Volontà del negatore; non è Contromagia Il repertorio segue integralmente le schede citate della Magia v1.7. Fuoco: dopo residuo della singola AC e Ignifugo, Riflessi −2 evita Incendiato per 1+1d3 Round; una sola verifica per bersaglio per l’intera Esplosione. Fulmine: dopo residuo e Isolante, Tempra −2 evita Disorientato per 1+1d3 Round, 20 naturale Stordito per un Round. Nessun bonus di Caratteristica si aggiunge al danno degli Incantesimi. Il Focus Comune è sintonizzato ma non fornisce PM o bonus; i 220 PX comprendono soltanto questo equipaggiamento.",
   "gs_px": {
     "gs": "Mito",
     "px": 220,
@@ -153,9 +153,12 @@
       "spazio": "Mostri 0.69",
       "abilita": "Mostri 0.69",
       "capacita": "Mostri 0.69",
-      "gs_px": "Mostri 0.69"
+      "note": "Mostri 0.69",
+      "gs_px": "Mostri 0.69",
+      "attacchi": "Mostri 0.69"
     },
     "edizione": "Mostri 0.69",
     "sistema_salute": "solo_PV"
-  }
+  },
+  "attacchi": []
 }

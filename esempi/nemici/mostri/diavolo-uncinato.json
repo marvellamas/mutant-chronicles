@@ -4,7 +4,6 @@
   "id": "diavolo-uncinato",
   "nome": "Diavolo uncinato",
   "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Diavolo uncinato",
-  "note": "Sentinella dalla pelle ricoperta di uncini e dalla coda robusta. Punisce chi la trattiene e può colpire a distanza con globi di fiamma. Condotta. Presidia passaggi e tesori, usando le Fiamme contro chi cerca spazio. Gli uncini non rendono la pelle un’armatura asportabile né producono veleni. Un patto o una minaccia verbale non crea un controllo mentale; le capacità sociali richiedono le normali condizioni della scena.",
   "pv": 94,
   "pm": 26,
   "caratteristiche": {
@@ -67,8 +66,7 @@
       "danno": "1d6+2",
       "natura": "Naturale",
       "proprieta": [
-        "Perforazione",
-        "AC 1"
+        "Perforazione"
       ],
       "portata_q": 1,
       "ac": 1
@@ -80,8 +78,7 @@
       "danno": "2d6+2",
       "natura": "Naturale",
       "proprieta": [
-        "Perforazione",
-        "AC 1"
+        "Perforazione"
       ],
       "portata_q": 1,
       "ac": 1
@@ -93,8 +90,7 @@
       "danno": "3d6+2",
       "natura": "Magico",
       "proprieta": [
-        "Fuoco",
-        "AC 1"
+        "Fuoco"
       ],
       "gittata_q": 30,
       "modalita": [
@@ -125,6 +121,7 @@
       "effetto": "spazio 1 × 1 Q"
     }
   ],
+  "note": "Sentinella dalla pelle ricoperta di uncini e dalla coda robusta. Punisce chi la trattiene e può colpire a distanza con globi di fiamma. Condotta. Presidia passaggi e tesori, usando le Fiamme contro chi cerca spazio. Gli uncini non rendono la pelle un’armatura asportabile né producono veleni. Un patto o una minaccia verbale non crea un controllo mentale; le capacità sociali richiedono le normali condizioni della scena.",
   "gs_px": {
     "gs": "Eroe",
     "px": 70,
@@ -145,6 +142,7 @@
       "abilita": "Mostri 0.69",
       "attacchi": "Mostri 0.69",
       "capacita": "Mostri 0.69",
+      "note": "Mostri 0.69",
       "gs_px": "Mostri 0.69"
     },
     "edizione": "Mostri 0.69",

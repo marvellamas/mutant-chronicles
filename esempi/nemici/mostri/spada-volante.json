@@ -100,7 +100,7 @@
     "sanguinamento",
     "stordito"
   ],
-  "note": "Costrutto privo di mente • sentinella mobile • Natura Comune.",
+  "note": "PM —: nessuna riserva. Il corpo è l’arma; i danni seguono PV e Ferite, senza PI. Non dà proprietà o sintonizzazioni di un’arma magica ai PG. Immobile e appoggiata sembra un oggetto (+4 Furtività). Comportamento: percorso di guardia o bersaglio assegnato; una barriera chiusa ne ferma l’inseguimento.",
   "_bestiario": {
     "edizione": "Mostri 0.69",
     "sistema_salute": "solo_PV",
@@ -117,6 +117,7 @@
       "abilita": "Mostri 0.69",
       "attacchi": "Mostri 0.47",
       "capacita": "Mostri 0.47",
+      "note": "Mostri 0.47",
       "gs_px": "Mostri 0.69"
     }
   }

@@ -5,7 +5,6 @@
   "nome": "Solar",
   "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Solar",
   "taglia": "grande",
-  "note": "Raro combattente alato capace di dirigere la propria spada a distanza e colpire con un arco luminoso. La sua freccia può abbattere una vittima ferita, senza produrre morte automatica.",
   "pv": 302,
   "pm": 96,
   "caratteristiche": {
@@ -127,6 +126,7 @@
       "effetto": "spazio 2 × 2 Q"
     }
   ],
+  "note": "Raro combattente alato capace di dirigere la propria spada a distanza e colpire con un arco luminoso. La sua freccia può abbattere una vittima ferita, senza produrre morte automatica.",
   "gs_px": {
     "gs": "Divinità Maggiore",
     "px": 1760,
@@ -146,9 +146,12 @@
       "spazio": "Mostri 0.69",
       "abilita": "Mostri 0.69",
       "capacita": "Mostri 0.69",
-      "gs_px": "Mostri 0.69"
+      "note": "Mostri 0.69",
+      "gs_px": "Mostri 0.69",
+      "attacchi": "Mostri 0.69"
     },
     "edizione": "Mostri 0.69",
     "sistema_salute": "solo_PV"
-  }
+  },
+  "attacchi": []
 }

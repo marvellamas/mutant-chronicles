@@ -5,7 +5,6 @@
   "nome": "Planetar",
   "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Planetar",
   "taglia": "grande",
-  "note": "Combattente alato dalla pelle opalescente verde, più grande di un umano. Protegge un incarico con lo spadone, muri luminosi e capacità di soccorso.",
   "pv": 229,
   "pm": 72,
   "caratteristiche": {
@@ -103,6 +102,7 @@
       "effetto": "spazio 2 × 2 Q"
     }
   ],
+  "note": "Combattente alato dalla pelle opalescente verde, più grande di un umano. Protegge un incarico con lo spadone, muri luminosi e capacità di soccorso.",
   "gs_px": {
     "gs": "Semidio",
     "px": 440,
@@ -122,9 +122,12 @@
       "spazio": "Mostri 0.69",
       "abilita": "Mostri 0.69",
       "capacita": "Mostri 0.69",
-      "gs_px": "Mostri 0.69"
+      "note": "Mostri 0.69",
+      "gs_px": "Mostri 0.69",
+      "attacchi": "Mostri 0.69"
     },
     "edizione": "Mostri 0.69",
     "sistema_salute": "solo_PV"
-  }
+  },
+  "attacchi": []
 }

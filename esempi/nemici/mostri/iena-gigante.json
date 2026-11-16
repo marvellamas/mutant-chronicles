@@ -77,19 +77,15 @@
   "capacita": [
     {
       "nome": "Frenesia della caccia",
-      "effetto": "Una volta per Round, se il proprio Morso alla propria Iniziativa rende un nemico Svenuto, Morente o Morto, ottiene immediatamente una sola AzP vincolata a un Morso contro un altro nemico raggiungibile. Il passaggio a 0 PV non basta. Il Morso aggiuntivo non può attivare una seconda Frenesia e non può colpire nuovamente la stessa vittima."
-    },
-    {
-      "nome": "Movimento e scadenza",
-      "effetto": "Prima del Morso aggiuntivo può usare il movimento ordinario ancora disponibile, rispettando l’andatura scelta e i suoi limiti. Non riceve un’altra AzM, non può interrompere retroattivamente Corsa o Scatto e non ignora gli Attacchi di Opportunità. L’AzP aggiuntiva scade alla fine della propria Iniziativa se non viene impiegata."
+      "effetto": "Una volta per Round, se il proprio Morso alla propria Iniziativa rende un nemico Svenuto, Morente o Morto, ottiene subito una sola AzP vincolata a un Morso contro un altro nemico raggiungibile. Il solo passaggio a 0 PV non basta. Il Morso aggiuntivo non attiva una seconda Frenesia e non colpisce di nuovo la stessa vittima. Prima può usare il movimento ordinario rimasto; non riceve un’altra AzM, non interrompe Corsa o Scatto, non ignora gli Attacchi di Opportunità. L’AzP aggiuntiva scade a fine Iniziativa se inutilizzata.",
+      "usi": {
+        "quanti": 1,
+        "per": "Round"
+      }
     },
     {
       "nome": "Difese e gruppo",
-      "effetto": "Non applica il bonus di Branco di questo blocco: il vantaggio del gruppo nasce da posizioni e numero degli avversari. La propria AzP ordinaria rimane necessaria per Schivare. Denti e mascelle non sono una Parata naturale e non infliggono automaticamente Corrosivo o Sanguinamento."
-    },
-    {
-      "nome": "Altri movimenti",
-      "effetto": "spazio 2 × 1 Q"
+      "effetto": "Non applica il bonus di Branco: il vantaggio del gruppo nasce da posizioni e numero. La propria AzP ordinaria resta necessaria per Schivare. Denti e mascelle non sono una Parata naturale e non infliggono Corrosivo o Sanguinamento automatici. Il riso e i richiami sono comunicazione, non un attacco che impone Terrorizzato."
     }
   ],
   "note": "Bestia quadrupede gigante • inseguitore • Natura Comune. Condotta. Segue una preda indebolita, contende carcasse e cerca un bersaglio isolato. Sotto 11 PV o se rimane separata dal gruppo tende a interrompere l’inseguimento. Il riso e i richiami sono comunicazione animale, non un attacco che impone Terrorizzato.",
@@ -109,7 +105,8 @@
       "spazio": "Mostri 0.69",
       "abilita": "Mostri 0.69",
       "attacchi": "Mostri 0.47",
-      "capacita": "Mostri 0.69",
+      "capacita": "Mostri 0.47",
+      "note": "Mostri 0.69",
       "gs_px": "Mostri 0.69"
     }
   }

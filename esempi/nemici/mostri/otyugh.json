@@ -5,7 +5,6 @@
   "nome": "Otyugh",
   "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Otyugh",
   "taglia": "grande",
-  "note": "Grande divoratore di rifiuti e carogne, su tre zampe e con due tentacoli prensili. Può convivere con un insediamento che lo nutra, ma tende agguati quando manca il cibo.",
   "pv": 99,
   "pm": 10,
   "caratteristiche": {
@@ -72,6 +71,7 @@
       "effetto": "Furtività 10 tra i rifiuti, 6 altrove"
     }
   ],
+  "note": "Grande divoratore di rifiuti e carogne, su tre zampe e con due tentacoli prensili. Può convivere con un insediamento che lo nutra, ma tende agguati quando manca il cibo.",
   "gs_px": {
     "gs": "Eroe",
     "px": 70,
@@ -90,9 +90,12 @@
       "movimento": "Mostri 0.69",
       "spazio": "Mostri 0.69",
       "capacita": "Mostri 0.69",
-      "gs_px": "Mostri 0.69"
+      "note": "Mostri 0.69",
+      "gs_px": "Mostri 0.69",
+      "attacchi": "Mostri 0.69"
     },
     "edizione": "Mostri 0.69",
     "sistema_salute": "solo_PV"
-  }
+  },
+  "attacchi": []
 }

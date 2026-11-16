@@ -4,7 +4,6 @@
   "id": "slaad-della-morte",
   "nome": "Slaad della morte",
   "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Slaad della morte",
-  "note": "Slaad esperto nell’inganno e nel combattimento armato. Le sue ferite producono anche erosione spirituale; può aggiungere una nube tossica ai poteri del grigio.",
   "pv": 188,
   "pm": 64,
   "caratteristiche": {
@@ -101,6 +100,7 @@
       "effetto": "spazio 1 × 1 Q"
     }
   ],
+  "note": "Slaad esperto nell’inganno e nel combattimento armato. Le sue ferite producono anche erosione spirituale; può aggiungere una nube tossica ai poteri del grigio.",
   "gs_px": {
     "gs": "Mito",
     "px": 220,
@@ -120,9 +120,12 @@
       "spazio": "Mostri 0.69",
       "abilita": "Mostri 0.69",
       "capacita": "Mostri 0.69",
-      "gs_px": "Mostri 0.69"
+      "note": "Mostri 0.69",
+      "gs_px": "Mostri 0.69",
+      "attacchi": "Mostri 0.69"
     },
     "edizione": "Mostri 0.69",
     "sistema_salute": "solo_PV"
-  }
+  },
+  "attacchi": []
 }

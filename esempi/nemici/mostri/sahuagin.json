@@ -48,11 +48,11 @@
       "va": 10,
       "danno": "1d4+1",
       "natura": "Naturale",
+      "portata_q": 1,
+      "ac": 1,
       "proprieta": [
         "Perforazione"
-      ],
-      "portata_q": 1,
-      "ac": 1
+      ]
     },
     {
       "nome": "Artigli",
@@ -60,11 +60,12 @@
       "va": 10,
       "danno": "1d4+1",
       "natura": "Naturale",
+      "portata_q": 1,
+      "ac": 1,
       "proprieta": [
         "Taglio"
       ],
-      "portata_q": 1,
-      "ac": 1
+      "note": "Richiede una mano libera."
     },
     {
       "nome": "Lancia a una mano",
@@ -72,11 +73,11 @@
       "va": 10,
       "danno": "1d6+2",
       "natura": "Naturale",
+      "portata_q": 2,
+      "ac": 1,
       "proprieta": [
         "Perforazione"
-      ],
-      "portata_q": 2,
-      "ac": 1
+      ]
     },
     {
       "nome": "Lancia a due mani",
@@ -84,11 +85,11 @@
       "va": 10,
       "danno": "1d6+4",
       "natura": "Naturale",
+      "portata_q": 2,
+      "ac": 1,
       "proprieta": [
         "Perforazione"
-      ],
-      "portata_q": 2,
-      "ac": 1
+      ]
     },
     {
       "nome": "Lancia scagliata",
@@ -96,14 +97,15 @@
       "va": 9,
       "danno": "1d6+2",
       "natura": "Naturale",
-      "proprieta": [
-        "Perforazione"
-      ],
       "gittata_q": 4,
       "modalita": [
         "S"
       ],
-      "ac": 1
+      "ac": 1,
+      "proprieta": [
+        "Perforazione"
+      ],
+      "note": "Massimo 4 Q in aria; 2 Q in acqua. Lascia l’arma lontana finché non la recupera."
     }
   ],
   "abilita": [
@@ -154,7 +156,7 @@
       }
     }
   ],
-  "note": "Combattente anfibio • frenesia e comando degli squali • Natura Comune.",
+  "note": "Dotazione: una Lancia Comune, FOR 5, PI 6, PS Integrità 10; nessuna armatura o scudo; le formule comprendono +1 personale. I 22 PX comprendono questa dotazione, senza squali o seguaci. Non è Barone, Sacerdotessa o Malenti. Parla la lingua della sua comunità. Condotta: sotto 6 PV o a Ferita Profonda cerca acqua, copertura o una trattativa. Fonte: Sahuagin, p. 263.",
   "_bestiario": {
     "edizione": "Mostri 0.69",
     "sistema_salute": "solo_PV",
@@ -170,8 +172,9 @@
       "movimento": "Mostri 0.69",
       "spazio": "Mostri 0.69",
       "abilita": "Mostri 0.69",
-      "attacchi": "Mostri 0.69",
+      "attacchi": "Mostri 0.47",
       "capacita": "Mostri 0.47",
+      "note": "Mostri 0.47",
       "gs_px": "Mostri 0.69"
     }
   }

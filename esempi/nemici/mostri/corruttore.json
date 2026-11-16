@@ -4,7 +4,6 @@
   "id": "corruttore",
   "nome": "Corruttore",
   "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Corruttore",
-  "note": "Infiltratore composto da filamenti sotto una falsa pelle umana. Si introduce nei luoghi protetti e sottrae informazioni attraverso il contatto con una vittima incosciente.",
   "pv": 63,
   "pm": 40,
   "caratteristiche": {
@@ -96,6 +95,7 @@
       "effetto": "forma rivelata: arrampicata 6 Q con AzM, senza Corsa/Scatto; spazio 1 Q"
     }
   ],
+  "note": "Infiltratore composto da filamenti sotto una falsa pelle umana. Si introduce nei luoghi protetti e sottrae informazioni attraverso il contatto con una vittima incosciente.",
   "gs_px": {
     "gs": "Eroe",
     "px": 70,
@@ -114,9 +114,12 @@
       "movimento": "Mostri 0.69",
       "abilita": "Mostri 0.69",
       "capacita": "Mostri 0.69",
-      "gs_px": "Mostri 0.69"
+      "note": "Mostri 0.69",
+      "gs_px": "Mostri 0.69",
+      "attacchi": "Mostri 0.69"
     },
     "edizione": "Mostri 0.69",
     "sistema_salute": "solo_PV"
-  }
+  },
+  "attacchi": []
 }

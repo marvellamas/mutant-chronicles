@@ -5,7 +5,6 @@
   "nome": "Grick Alfa",
   "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Grick Alfa",
   "taglia": "grande",
-  "note": "Grick molto più grande dell’esemplare comune, protetto da una cute elastica spessa. Attende fra le rocce e concatena coda, tentacoli e becco soltanto pagando le relative Azioni.",
   "pv": 84,
   "pm": 12,
   "caratteristiche": {
@@ -46,8 +45,7 @@
       "danno": "2d6+2",
       "natura": "Naturale",
       "proprieta": [
-        "Contusione",
-        "AC 1"
+        "Contusione"
       ],
       "portata_q": 2,
       "ac": 1
@@ -59,8 +57,7 @@
       "danno": "3d8+2",
       "natura": "Naturale",
       "proprieta": [
-        "Taglio",
-        "AC 1"
+        "Taglio"
       ],
       "portata_q": 2,
       "ac": 1
@@ -73,7 +70,6 @@
       "natura": "Naturale",
       "proprieta": [
         "Perforazione",
-        "AC 1",
         "condizionato"
       ],
       "portata_q": 2,
@@ -106,6 +102,7 @@
       "effetto": "Furtività 11, 14 immobile fra rocce"
     }
   ],
+  "note": "Grick molto più grande dell’esemplare comune, protetto da una cute elastica spessa. Attende fra le rocce e concatena coda, tentacoli e becco soltanto pagando le relative Azioni.",
   "gs_px": {
     "gs": "Leggenda",
     "px": 100,
@@ -125,6 +122,7 @@
       "spazio": "Mostri 0.69",
       "attacchi": "Mostri 0.69",
       "capacita": "Mostri 0.69",
+      "note": "Mostri 0.69",
       "gs_px": "Mostri 0.69"
     },
     "edizione": "Mostri 0.69",

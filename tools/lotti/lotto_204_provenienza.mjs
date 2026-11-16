@@ -78,6 +78,63 @@ export function numeriPersi(vecchia, letta) {
   return fuori;
 }
 
+/** I numeri che la nota di prima aveva e che la lettura nuova non ha da nessuna parte (1d10 escluso, come sopra). */
+/**
+ * I segni di un'annotazione **nostra** dentro una nota: l'AR con e senza scudo, le Difese alternative, il GS
+ * informativo, l'Abilità con una condizione, il rimando a una risposta di Davide. Sono le frasi che i lotti
+ * precedenti hanno aggiunto e che il manuale non scrive in quella forma: nessuno le riscriverebbe, quindi non si
+ * lasciano cadere. Tutto il resto della nota è prosa del manuale, e la lettura nuova la sostituisce com'è giusto.
+ */
+export const ANNOTAZIONI_NOSTRE = /\bsenza\b|\bParata\b|\bSchivata\b|\bElusione\b|\bGS\b|informativ|A\.\d+|\bscende a\b|\bimmobile\b|\bsoltanto\b/i;
+
+export function numeriDellaNota(vecchia, letta) {
+  if (!vecchia?.note) return [];
+  // **Si proteggono le nostre annotazioni, non la prosa del manuale.** La nota di una scheda contiene due cose
+  // diverse: il testo che viene dal manuale (e che la 0.69 ha riscritto, spesso aggiornando dei numeri — la Piovra
+  // passa da «ogni tentacolo: 30 PV» a 39) e le annotazioni che i lotti precedenti ci hanno aggiunto, che il
+  // manuale non scrive in quella forma: l'AR senza scudo, le Difese alternative, il GS informativo. Le prime
+  // **devono** cedere il posto alla lettura nuova; le seconde no, perché nessuno le riscriverebbe.
+  // Quindi si guardano soltanto le frasi che portano uno dei segni di un'annotazione nostra, e di quelle i numeri.
+  const frasi = String(vecchia.note).split(/(?<=[.;])\s+/).filter((f) => ANNOTAZIONI_NOSTRE.test(f));
+  // e si cerca nella nota nuova soltanto: un numero che ricompare in una capacità o in un altro campo non è
+  // quello — l'AR 3 dell'Hobgoblin non è il suo «3 senza scudo».
+  const testo = String(letta?.note ?? '');
+  const fuori = [];
+  for (const f of frasi) {
+    for (const m of f.matchAll(/\b\d+(?:d\d+)?(?:\+\d+)?\b/g)) {
+      if (m[0] === '1d10' || testo.includes(m[0]) || fuori.includes(m[0])) continue;
+      fuori.push(m[0]);
+    }
+  }
+  return fuori;
+}
+
+/**
+ * I **sottocampi strutturati** che la lettura nuova perde. Non sono prosa: `risorsa` («3 PM»), `usi` («una volta
+ * per giorno»), `azione`, e le `eccezioni` delle Azioni sono i valori che la plancia usa per contare PM e Azioni.
+ * Un testo riscritto va bene; un costo in PM che sparisce no, perché al tavolo quella capacità diventa gratuita.
+ */
+export function sottocampiPersi(vecchia, letta) {
+  const fuori = {};
+  const vecchieCap = vecchia?.capacita ?? [];
+  const nuoveCap = letta?.capacita ?? [];
+  const persi = [];
+  for (const c of vecchieCap) {
+    const n = nuoveCap.find((x) => x.nome === c.nome);
+    for (const k of ['risorsa', 'usi', 'azione']) {
+      if (c[k] !== undefined && (!n || n[k] === undefined)) persi.push(`${c.nome}.${k}`);
+    }
+  }
+  if (persi.length) fuori.capacita = `sottocampi delle capacità che la lettura nuova non ha (${persi.slice(0, 5).join(', ')}${persi.length > 5 ? ', …' : ''}): sono i costi in PM e in Azioni che la plancia usa`;
+  for (const k of ['eccezioni', 'principali', 'movimento']) {
+    if (vecchia?.azioni?.[k] !== undefined && letta?.azioni?.[k] === undefined) {
+      fuori.azioni = `le Azioni perdono «${k}»`;
+      break;
+    }
+  }
+  return fuori;
+}
+
 /** I campi che una lettura NON ha letto per intero: `{ campo: motivo }`. */
 export function campiNonLetti(nonCapito = []) {
   const out = {};
@@ -118,8 +175,20 @@ export function piano({ testo = null, edizione = edizioneMostri() } = {}) {
       && (letta.attacchi ?? []).some((a) => a.ac === undefined)) {
       nonLetti.attacchi = 'attacchi letti senza AC: la 0.69 la scrive nelle pagine comuni del blocco, che il lettore non aggancia a questo blocco';
     }
+    // e un attacco che **perde la sua nota** è letto a metà: la nota porta la condizione («solo contro una vittima
+    // già A Terra»), e un attacco senza la sua condizione al tavolo si usa quando non si dovrebbe.
+    if (!nonLetti.attacchi) {
+      const perse = (vecchiaQui?.attacchi ?? []).filter((a) => a.note && !(letta.attacchi ?? []).some((b) => b.nome === a.nome && b.note));
+      if (perse.length) nonLetti.attacchi = `attacchi che perdono la loro condizione (${perse.map((a) => a.nome).join(', ')}): la 0.69 la scrive nella prosa, non accanto all’attacco`;
+    }
     const persi = numeriPersi(vecchiaQui, letta);
     if (persi.length) nonLetti.capacita = `numeri delle capacità che la lettura nuova non ha (${persi.slice(0, 6).join(', ')}${persi.length > 6 ? ', …' : ''}): la 0.69 li ha spostati nelle pagine comuni del blocco, che il lettore non aggancia a questo blocco`;
+    // **La nota della scheda non è solo prosa del manuale:** porta anche quello che i lotti precedenti ci hanno
+    // scritto — il GS e i PX informativi, l'AR senza scudo, le Difese alternative. Se la nota nuova non contiene
+    // più un numero che c'era, è una lettura parziale come le altre, e si tiene quella di prima.
+    for (const [k, motivo] of Object.entries(sottocampiPersi(vecchiaQui, letta))) if (!nonLetti[k]) nonLetti[k] = motivo;
+    const notaPersa = numeriDellaNota(vecchiaQui, letta);
+    if (notaPersa.length) nonLetti.note = `numeri della nota che la lettura nuova non ha (${notaPersa.slice(0, 6).join(', ')}${notaPersa.length > 6 ? ', …' : ''})`;
     for (const m of r.nonCapito ?? []) {
       if (RISERVE.test(m) || CAMPO_DEL_MOTIVO.some(([re]) => re.test(m))) continue;
       const k = m.replace(/«[^»]*»/g, '«…»').replace(/\d+/g, 'N');
@@ -179,6 +248,16 @@ export function applica(p) {
     // piedi di chi lo cita, che è il difetto dei lotti 201 e 202. Il Corazzato della Covata è `covata-corazzato`
     // nel Bestiario e «Corazzato» nel manuale: resta `covata-corazzato`.
     if (prima) { if (prima.id) json.id = prima.id; if (prima.nome) json.nome = prima.nome; }
+    // **La Taglia non si deduce dall'ingombro** (A.167). L'importatore la ricava da «spazio ≥ 2 × 2», e i
+    // generatori per blocco non l'hanno mai fatto: rigenerando, 28 schede si sarebbero trovate una Taglia che il
+    // manuale non scrive da nessuna parte. Un valore dedotto non si scrive sopra un'assenza voluta, esattamente
+    // come una lettura parziale non si scrive sopra un valore buono. Per una scheda che c'è già vale la sua.
+    if (prima) { if (prima.taglia === undefined) delete json.taglia; else json.taglia = prima.taglia; }
+    // **Una creatura nuova senza nessun attacco nella tabella.** Succede quando tutti i suoi colpi si risolvono con
+    // una Salvezza invece che con un VA, o hanno due fasi in una cella: finiscono fra le capacità, dove si leggono.
+    // Il formato dei nemici vuole il campo, e l'elenco vuoto è la verità — «nessun attacco con un VA» — non un dato
+    // inventato. Vale solo per le schede nuove: per una che esiste già, l'elenco di prima resta (regola del lotto).
+    if (v.nuova && json.attacchi === undefined) { json.attacchi = []; v.esito.campi.attacchi = p.edizione; }
     // il sistema di salute del lotto 203 non si perde per strada
     json._bestiario = { ...(json._bestiario ?? {}), edizione: p.edizione, sistema_salute: json._bestiario?.sistema_salute ?? 'solo_PV', campi: v.esito.campi };
     const testo = `${JSON.stringify(json, null, 2)}\n`;

@@ -48,11 +48,11 @@
       "va": 12,
       "danno": "1d8+2",
       "natura": "Naturale",
+      "portata_q": 1,
+      "ac": 1,
       "proprieta": [
         "Perforazione"
-      ],
-      "portata_q": 1,
-      "ac": 1
+      ]
     },
     {
       "nome": "Artigli",
@@ -60,11 +60,12 @@
       "va": 12,
       "danno": "1d8+2",
       "natura": "Naturale",
+      "portata_q": 1,
+      "ac": 1,
       "proprieta": [
         "Taglio"
       ],
-      "portata_q": 1,
-      "ac": 1
+      "note": "Richiede una mano disponibile."
     },
     {
       "nome": "Arpione in mischia",
@@ -72,11 +73,11 @@
       "va": 12,
       "danno": "1d6+3",
       "natura": "Naturale",
+      "portata_q": 2,
+      "ac": 1,
       "proprieta": [
         "Perforazione"
-      ],
-      "portata_q": 2,
-      "ac": 1
+      ]
     },
     {
       "nome": "Arpione scagliato",
@@ -84,14 +85,15 @@
       "va": 11,
       "danno": "1d6+3",
       "natura": "Naturale",
-      "proprieta": [
-        "Perforazione"
-      ],
       "gittata_q": 4,
       "modalita": [
         "S"
       ],
-      "ac": 1
+      "ac": 1,
+      "proprieta": [
+        "Perforazione"
+      ],
+      "note": "Massimo 4 Q in aria; 2 Q in acqua. Sagola lunga 4 Q."
     }
   ],
   "abilita": [
@@ -149,7 +151,7 @@
       "effetto": "1 AzP della vittima o di un alleato adiacente: Atletica senza modificatore con mani o strumenti adatti; successo libera. In alternativa si recide la sagola (AR 0, PI 2, PS Integrità 10, come oggetto). Il Merrow può lasciare il filo gratis alla propria Iniziativa; per superare la lunghezza la vittima può iniziare con 1 AzP la contrapposta del trascinamento: successo fa mollare il filo."
     }
   ],
-  "note": "Predatore anfibio • arpione con sagola • Natura Comune.",
+  "note": "Arpione Comune con sagola: FOR 5, una mano, portata 2 Q, PI 6, PS Integrità 10; per danni, Abilità e Parata usa il profilo della Lancia a una mano (+2 personale già incluso), senza Versatile; la sagola richiede l’altra mano. I 33 PX comprendono questa dotazione. Anatomia umanoide con la coda al posto delle Gambe. Comprende e parla due lingue della comunità. Le origini demoniache della fonte non sono assunte per Iris. Condotta: minaccia, tratta o si ritira; sotto 10 PV o a Ferita Profonda interrompe una caccia pericolosa. Fonte: Merrow, p. 219.",
   "_bestiario": {
     "edizione": "Mostri 0.69",
     "sistema_salute": "solo_PV",
@@ -165,10 +167,10 @@
       "movimento": "Mostri 0.69",
       "spazio": "Mostri 0.69",
       "abilita": "Mostri 0.69",
-      "attacchi": "Mostri 0.69",
+      "attacchi": "Mostri 0.47",
       "capacita": "Mostri 0.47",
+      "note": "Mostri 0.47",
       "gs_px": "Mostri 0.69"
     }
-  },
-  "taglia": "grande"
+  }
 }

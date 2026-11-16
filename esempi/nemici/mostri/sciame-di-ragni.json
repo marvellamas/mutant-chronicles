@@ -4,7 +4,6 @@
   "id": "sciame-di-ragni",
   "nome": "Sciame di ragni",
   "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Sciame di ragni",
-  "note": "Sciame di piccoli ragni che si muove come un solo avversario. Aderisce a superfici adatte e usa le vibrazioni delle tele presenti; il profilo non aggiunge veleno o lancio di ragnatele da combattimento.",
   "pv": 32,
   "pm": 4,
   "caratteristiche": {
@@ -63,8 +62,7 @@
       "danno": "2d4",
       "natura": "Naturale",
       "proprieta": [
-        "Perforazione",
-        "AC 1"
+        "Perforazione"
       ],
       "portata_q": 0,
       "ac": 1
@@ -76,8 +74,7 @@
       "danno": "1d4",
       "natura": "Naturale",
       "proprieta": [
-        "Perforazione",
-        "AC 1"
+        "Perforazione"
       ],
       "portata_q": 0,
       "ac": 1
@@ -109,6 +106,7 @@
       "effetto": "aderenza 4 Q al Passo; spazio condivisibile 1 × 1 Q"
     }
   ],
+  "note": "Sciame di piccoli ragni che si muove come un solo avversario. Aderisce a superfici adatte e usa le vibrazioni delle tele presenti; il profilo non aggiunge veleno o lancio di ragnatele da combattimento.",
   "gs_px": {
     "gs": "Inesperto",
     "px": 20,
@@ -129,6 +127,7 @@
       "abilita": "Mostri 0.69",
       "attacchi": "Mostri 0.69",
       "capacita": "Mostri 0.69",
+      "note": "Mostri 0.69",
       "gs_px": "Mostri 0.69"
     },
     "edizione": "Mostri 0.69",

@@ -4,7 +4,6 @@
   "id": "thri-kreen",
   "nome": "Thri-kreen",
   "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Thri-kreen",
-  "note": "Predatore insettoide nomade con quattro braccia e due gambe. Si mimetizza con il carapace, balza senza rincorsa e usa morso velenoso e artigli; è una specie autonoma, distinta dalla Covata di Iris.",
   "pv": 37,
   "pm": 12,
   "caratteristiche": {
@@ -46,7 +45,6 @@
       "natura": "Naturale",
       "proprieta": [
         "Perforazione",
-        "AC 1",
         "veleno"
       ],
       "portata_q": 1,
@@ -59,8 +57,7 @@
       "danno": "2d4+1",
       "natura": "Naturale",
       "proprieta": [
-        "Taglio",
-        "AC 1"
+        "Taglio"
       ],
       "portata_q": 1,
       "ac": 1
@@ -96,6 +93,7 @@
       "effetto": "Furtività 13, 15 mimetizzato"
     }
   ],
+  "note": "Predatore insettoide nomade con quattro braccia e due gambe. Si mimetizza con il carapace, balza senza rincorsa e usa morso velenoso e artigli; è una specie autonoma, distinta dalla Covata di Iris.",
   "gs_px": {
     "gs": "Esperto",
     "px": 30,
@@ -115,6 +113,7 @@
       "spazio": "Mostri 0.69",
       "attacchi": "Mostri 0.69",
       "capacita": "Mostri 0.69",
+      "note": "Mostri 0.69",
       "gs_px": "Mostri 0.69"
     },
     "edizione": "Mostri 0.69",

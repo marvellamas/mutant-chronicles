@@ -48,11 +48,12 @@
       "va": 9,
       "danno": "1d4",
       "natura": "Naturale",
+      "portata_q": 1,
+      "ac": 1,
       "proprieta": [
         "Contusione"
       ],
-      "portata_q": 1,
-      "ac": 1
+      "note": "Richiede una mano libera; non permette Parata."
     },
     {
       "nome": "Giavellotto a mano",
@@ -60,11 +61,11 @@
       "va": 9,
       "danno": "1d6",
       "natura": "Naturale",
+      "portata_q": 1,
+      "ac": 1,
       "proprieta": [
         "Perforazione"
-      ],
-      "portata_q": 1,
-      "ac": 1
+      ]
     },
     {
       "nome": "Giavellotto lanciato",
@@ -72,14 +73,14 @@
       "va": 9,
       "danno": "1d6+1",
       "natura": "Naturale",
-      "proprieta": [
-        "Perforazione"
-      ],
       "gittata_q": 15,
       "modalita": [
         "S"
       ],
-      "ac": 1
+      "ac": 1,
+      "proprieta": [
+        "Perforazione"
+      ]
     }
   ],
   "abilita": [
@@ -122,7 +123,7 @@
       "effetto": "Tre Giavellotti Comuni della sentinella (FOR 3, PI 4, PS Integrità 10): due già pronti nelle mani, uno riposto. Può lasciarne uno gratuitamente per liberare una mano, ma raccoglierlo o estrarre quello riposto costa 1 AzP. Ogni lancio consuma un esemplare; nessuna riserva si ricarica. Al massimo due attacchi di Pugno o Giavellotto per Round complessivi, Opportunità compresa. I 22 PX comprendono la dotazione."
     }
   ],
-  "note": "Modron di secondo grado • sorvegliante di esecutori • Natura Comune.",
+  "note": "Modron di secondo grado: corpo squadrato che coordina consegne semplici; le due funzioni gestite non sono due azioni simultanee gratuite. Sotto 4 PV o a Ferita Profonda può ripiegare per riferire e preservare la consegna, senza immunità a paura o dolore. Fonte: Duodrone, p. 225.",
   "_bestiario": {
     "edizione": "Mostri 0.69",
     "sistema_salute": "solo_PV",
@@ -138,8 +139,9 @@
       "movimento": "Mostri 0.69",
       "spazio": "Mostri 0.69",
       "abilita": "Mostri 0.69",
-      "attacchi": "Mostri 0.69",
+      "attacchi": "Mostri 0.47",
       "capacita": "Mostri 0.47",
+      "note": "Mostri 0.47",
       "gs_px": "Mostri 0.69"
     }
   }

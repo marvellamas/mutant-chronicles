@@ -89,50 +89,30 @@
   "capacita": [
     {
       "nome": "Scarica tempestosa",
-      "effetto": "VA —. Danno: 3d6+5 Fulmine Magico. Portata/costo: Centro 20 Q; raggio 2 Q; "
-    },
-    {
-      "nome": "Dotazione e danni",
-      "effetto": "Spadone FOR 6, PI 6, due mani: 2d6+1 base, +3 ordinario e +5 innato. Armatura civile Media su misura, AR 3, FOR 5, PI 8. Masso: 2d6 base, +2 ordinario e +4 innato. Tolta la corazza: AR 2, Guerra 17, Lancio 16, Schivata 15, Atletica 17 e terra/nuoto 10 / 20 / 30. Parata e Salvezze non cambiano."
-    },
-    {
-      "nome": "Anfibio",
-      "effetto": "Respira aria e acqua senza costo. Le velocità di nuoto sono effettive, già comprensive dell’armatura: non si dimezzano di nuovo. Correnti, ostacoli e carichi possono richiedere le normali Prove. Non concede respirazione acquatica ai compagni e non trasferisce l’immunità al soffocamento fuori da questi due ambienti."
-    },
-    {
-      "nome": "Protezioni",
-      "effetto": "Immune a Fulmine e ai suoi effetti secondari. Dimezza per eccesso il danno da Ghiaccio dopo le Difese e prima dell’AR; il residuo può comunque applicare Rallentato o Congelato. Non è immune al rumore, ad Assordato, a generici urti o ad Aria. Nessuna resistenza generica al danno Naturale."
-    },
-    {
-      "nome": "Scarica tempestosa",
-      "effetto": "1 AzP e 6 PM; sceglie un punto visibile entro 20 Q con linea d’effetto libera. Colpisce tutte le creature entro 2 Q dal punto, alleati compresi e anche il gigante se coinvolto, fermandosi davanti ai solidi. Nessun tiro per colpire: un solo tiro di 3d6+5 Fulmine Magico vale per l’area, 1 AC per bersaglio. Elusione su Riflessi con −4 dimezza per eccesso prima dell’AR."
-    },
-    {
-      "nome": "Ricarica e limiti",
-      "effetto": "Massimo una Scarica per Round; dopo averla usata non può ripeterla nel Round immediatamente successivo. Un uso nel Round 1 permette il successivo dal Round 3. Si annota il limite anche quando nessuno subisce danno. La seconda AzP può servire ad attaccare con un’arma pronta, difendersi o compiere altre attività. Il passaggio del turno non ricarica Azioni né PM."
-    },
-    {
-      "nome": "Effetto del Fulmine",
-      "effetto": "Dopo danno residuo e superamento della Contromisura pertinente, ogni vittima effettua una distinta PS Tempra con −4. Fallimento: Disorientato per 1+1d3 Round, −2 VA alle Abilità senza perdere AzP o movimento. Con 20 naturale subisce invece Stordito fino al termine del proprio turno successivo: può soltanto effettuare Passo, conserva le PS e non spende AzP. Nuove applicazioni mantengono la scadenza più lontana, senza sommare penalità."
-    },
-    {
-      "nome": "Interazioni",
-      "effetto": "Immunità a Fulmine e protezioni pertinenti si applicano normalmente. Elusione riuscita non sostituisce Tempra quando rimane danno sufficiente. Non si aggiungono archi verso altre vittime, stordimenti automatici per armatura metallica o danni moltiplicati dall’acqua. La scarica è istantanea: Negare Potere non restituisce PV e non è una reazione contro l’attivazione innata."
+      "effetto": "1 AzP e 6 PM, punto visibile entro 20 Q: tutte le creature entro 2 Q (alleati e il gigante se coinvolto), 1 AC, un solo 3d6+5 Fulmine Magico; i solidi fermano. Elusione su Riflessi −4 dimezza prima dell’AR; dopo residuo e Contromisura, una distinta Tempra −4: fallimento Disorientato 1+1d3 Round (−2 VA), con 20 naturale Stordito. Massimo una per Round e non nel Round immediatamente successivo (usata nel Round 1, torna dal 3).",
+      "risorsa": "6 PM",
+      "azioni": {
+        "principali": 1
+      },
+      "usi": {
+        "quanti": 1,
+        "per": "Round"
+      }
     },
     {
       "nome": "Levitazione",
-      "effetto": "1 AzP e 3 PM; per 10 Round, senza Concentrazione, può sollevare sé stesso con i propri oggetti entro il carico, non altre creature. L’unica AzM permette fino a 6 Q in verticale, senza Corsa o Scatto; può restare sospeso senza spostarsi. Non concede movimento orizzontale aereo. Il moto deve seguire un percorso libero; una corda o una presa che lo vincola può impedirlo."
+      "effetto": "1 AzP e 3 PM: per 10 Round senza Concentrazione solleva sé e i propri oggetti entro il carico, non altre creature. L’AzM permette fino a 6 Q in verticale (niente Corsa o Scatto), può restare sospeso; nessun moto orizzontale aereo. Non elimina gli Attacchi di Opportunità né l’immunità alle cadute. Negare Potere potenza 6.",
+      "risorsa": "3 PM",
+      "azioni": {
+        "principali": 1
+      }
     },
     {
-      "nome": "Controllo della levitazione",
-      "effetto": "Non elimina gli Attacchi di Opportunità quando si allontana né concede immunità alle cadute. Rinnovo: conserva la scadenza più lontana. Termina per congedo gratuito al proprio turno, scadenza, perdita di coscienza o Negare Potere, potenza 6. Se manca un appoggio, il gigante cade normalmente. Non può attivarla come reazione gratuita; il limite riguarda questa capacità, senza importare altri incantesimi climatici o di volo."
-    },
-    {
-      "nome": "Altri movimenti",
-      "effetto": "Terra e nuoto 9 / 19 / 29: la stessa andatura vale anche per nuoto; spazio 3 × 3 Q"
+      "nome": "Anfibio e protezioni",
+      "effetto": "Respira aria e acqua senza costo; nuoto 9 / 19 / 29 Q effettivo (già con l’armatura). Immune a Fulmine (effetti secondari compresi). Dimezza per eccesso il Ghiaccio dopo le Difese e prima dell’AR (il residuo può dare Rallentato o Congelato). Non immune ad Assordato o Aria."
     }
   ],
-  "note": "Gigante • avversario maggiore e signore del fulmine • Natura Comune. Condotta. La Scarica e la Levitazione sono descritte nella pagina seguente. Valuta bersagli, ripari e presenza degli alleati prima di usare un’area. Sotto 33 PV o con meno di 7 PM può cercare riparo in acqua o proporre una tregua. Il profilo non concede altre AzP per la qualifica Leggenda.",
+  "note": "AR 5 (2 biologica + 3 armatura Media su misura). Difese = Parata 15; Schivata 14. Spadone a due mani (+3 ordinario, +5 innato, portata 2 Q). Tolta la corazza: AR 2, Armi da guerra 17, Armi da lancio 16, Schivata 15, Atletica 17, terra/nuoto 10/20/30. Comportamento: sotto 25 PV, a Ferita Seria o con meno di 7 PM cerca l’acqua o una tregua.",
   "_bestiario": {
     "edizione": "Mostri 0.69",
     "sistema_salute": "solo_PV",
@@ -149,9 +129,9 @@
       "spazio": "Mostri 0.69",
       "abilita": "Mostri 0.69",
       "attacchi": "Mostri 0.47",
-      "capacita": "Mostri 0.69",
+      "capacita": "Mostri 0.47",
+      "note": "Mostri 0.47",
       "gs_px": "Mostri 0.69"
     }
-  },
-  "taglia": "grande"
+  }
 }

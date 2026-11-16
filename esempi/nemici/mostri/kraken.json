@@ -5,7 +5,6 @@
   "nome": "Kraken",
   "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Kraken",
   "taglia": "grande",
-  "note": "Titano anfibio dotato di dieci tentacoli, capace di demolire scafi e richiamare scariche. Il corpo e le appendici costituiscono una sola creatura; questo profilo è distinto dalla Piovra gigante modificata di Iris.",
   "pv": 468,
   "pm": 100,
   "caratteristiche": {
@@ -106,6 +105,7 @@
       "effetto": "nuoto 12 / 24 / 36 Q; spazio 6 × 6 Q"
     }
   ],
+  "note": "Titano anfibio dotato di dieci tentacoli, capace di demolire scafi e richiamare scariche. Il corpo e le appendici costituiscono una sola creatura; questo profilo è distinto dalla Piovra gigante modificata di Iris.",
   "gs_px": {
     "gs": "Divinità Maggiore",
     "px": 1600,
@@ -125,9 +125,12 @@
       "spazio": "Mostri 0.69",
       "abilita": "Mostri 0.69",
       "capacita": "Mostri 0.69",
-      "gs_px": "Mostri 0.69"
+      "note": "Mostri 0.69",
+      "gs_px": "Mostri 0.69",
+      "attacchi": "Mostri 0.69"
     },
     "edizione": "Mostri 0.69",
     "sistema_salute": "solo_PV"
-  }
+  },
+  "attacchi": []
 }

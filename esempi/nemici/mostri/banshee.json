@@ -4,7 +4,6 @@
   "id": "banshee",
   "nome": "Banshee",
   "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Banshee",
-  "note": "Presenza incorporea legata al luogo della propria morte. Il dolore si manifesta in un volto terrificante e in un lamento che spezza la resistenza dei viventi.",
   "pv": 50,
   "pm": 20,
   "caratteristiche": {
@@ -63,9 +62,6 @@
       "va": 12,
       "danno": "2d6+2",
       "natura": "Etereo",
-      "proprieta": [
-        "AC 1"
-      ],
       "portata_q": 1,
       "ac": 1
     }
@@ -96,6 +92,7 @@
       "effetto": "spazio 1 × 1 Q"
     }
   ],
+  "note": "Presenza incorporea legata al luogo della propria morte. Il dolore si manifesta in un volto terrificante e in un lamento che spezza la resistenza dei viventi.",
   "gs_px": {
     "gs": "Veterano",
     "px": 50,
@@ -116,6 +113,7 @@
       "abilita": "Mostri 0.69",
       "attacchi": "Mostri 0.69",
       "capacita": "Mostri 0.69",
+      "note": "Mostri 0.69",
       "gs_px": "Mostri 0.69"
     },
     "edizione": "Mostri 0.69",

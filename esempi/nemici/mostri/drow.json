@@ -4,7 +4,6 @@
   "id": "drow",
   "nome": "Drow",
   "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Drow",
-  "note": "Umanoide elfico adattato al sottosuolo. Questo esemplare combatte con spada leggera e balestra piccola, dispone di poche dosi sedative e usa la stessa magia innata di luce e oscuramento del Drider.",
   "pv": 24,
   "pm": 10,
   "caratteristiche": {
@@ -71,8 +70,7 @@
       "danno": "1d6+2",
       "natura": "Naturale",
       "proprieta": [
-        "Taglio",
-        "AC 1"
+        "Taglio"
       ],
       "portata_q": 1,
       "ac": 1
@@ -85,7 +83,6 @@
       "natura": "Naturale",
       "proprieta": [
         "Perforazione",
-        "AC 1",
         "eventuale sedativo"
       ],
       "portata_q": 30,
@@ -118,6 +115,7 @@
       "effetto": "spazio 1 × 1 Q"
     }
   ],
+  "note": "Umanoide elfico adattato al sottosuolo. Questo esemplare combatte con spada leggera e balestra piccola, dispone di poche dosi sedative e usa la stessa magia innata di luce e oscuramento del Drider.",
   "gs_px": {
     "gs": "Inesperto",
     "px": 22,
@@ -138,6 +136,7 @@
       "abilita": "Mostri 0.69",
       "attacchi": "Mostri 0.69",
       "capacita": "Mostri 0.69",
+      "note": "Mostri 0.69",
       "gs_px": "Mostri 0.69"
     },
     "edizione": "Mostri 0.69",

@@ -4,7 +4,6 @@
   "id": "imp",
   "nome": "Imp",
   "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Imp",
-  "note": "Piccolo ricognitore alato che assume forme animali e colpisce con un pungiglione velenoso. Preferisce raccogliere informazioni e sottrarsi alla risposta del nemico.",
   "pv": 16,
   "pm": 16,
   "caratteristiche": {
@@ -68,7 +67,6 @@
       "natura": "Naturale",
       "proprieta": [
         "Perforazione",
-        "AC 1",
         "veleno"
       ],
       "portata_q": 1,
@@ -101,6 +99,7 @@
       "effetto": "spazio 1 Q condivisibile, non blocca il passaggio"
     }
   ],
+  "note": "Piccolo ricognitore alato che assume forme animali e colpisce con un pungiglione velenoso. Preferisce raccogliere informazioni e sottrarsi alla risposta del nemico.",
   "gs_px": {
     "gs": "Esperto",
     "px": 30,
@@ -120,6 +119,7 @@
       "abilita": "Mostri 0.69",
       "attacchi": "Mostri 0.69",
       "capacita": "Mostri 0.69",
+      "note": "Mostri 0.69",
       "gs_px": "Mostri 0.69"
     },
     "edizione": "Mostri 0.69",

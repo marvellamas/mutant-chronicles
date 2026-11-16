@@ -4,7 +4,6 @@
   "id": "incubo-equino",
   "nome": "Incubo equino",
   "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Incubo equino",
-  "note": "Cavalcatura intelligente dalla criniera e dagli zoccoli ardenti. Vola e può accompagnare brevemente altre creature in Fase; non è un normale cavallo che obbedisce a chiunque lo monti.",
   "pv": 73,
   "pm": 24,
   "caratteristiche": {
@@ -78,6 +77,7 @@
       "effetto": "spazio 1 × 2 Q"
     }
   ],
+  "note": "Cavalcatura intelligente dalla criniera e dagli zoccoli ardenti. Vola e può accompagnare brevemente altre creature in Fase; non è un normale cavallo che obbedisce a chiunque lo monti.",
   "gs_px": {
     "gs": "Veterano",
     "px": 50,
@@ -97,9 +97,12 @@
       "spazio": "Mostri 0.69",
       "abilita": "Mostri 0.69",
       "capacita": "Mostri 0.69",
-      "gs_px": "Mostri 0.69"
+      "note": "Mostri 0.69",
+      "gs_px": "Mostri 0.69",
+      "attacchi": "Mostri 0.69"
     },
     "edizione": "Mostri 0.69",
     "sistema_salute": "solo_PV"
-  }
+  },
+  "attacchi": []
 }

@@ -4,7 +4,6 @@
   "id": "naga-guardiana",
   "nome": "Naga guardiana",
   "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Naga guardiana",
-  "note": "Serpente custode di un luogo o di un oggetto. Avverte gli intrusi e difende l’accesso con veleno, ordini, cure e confinamento temporaneo. Una AzP per Incantesimo e PM della versione; Potere pronto 16 ai livelli tre e sei, 14 al nove. Restano condizioni di lancio e procedure delle regole comuni dei custodi e delle schede della Magia v1.7. Voce udita e compresa, una sola condotta; nel primo turno successivo massimo una AzP e un Movimento, senza azioni nuove. Limiti morali e PM/PE ordinari; Negare 6 prima dell’esecuzione. 9 PM; un vivente consenziente o incosciente soccorso visibile entro sei Q; 4d4+5 punti 6 PM; un vivente consenziente o incosciente soccorso entro sei Q Rimuove due tipi di Stato temporaneo compatibile fino a Svenuto, Stordito o Paralizzato. Non elimina cause persistenti, Ferite, PM zero o vincoli materiali. 6 PM; un vivente consenziente o incosciente soccorso visibile entro tre Q Due sostanze attive al massimo, naturali, artificiali o mistiche fino a Pericolosità V; non cura VI né restituisce PV o lesioni. 6 PM; una creatura visibile entro dieci Q; Magia 0 evita; dieci Round −2 a Prove di Abilità, Caratteristica e PS, non alla PS iniziale di questo stesso lancio. Nessuna nuova PS automatica; maggiore penalità magica, Negare 6. 9 PM; una creatura visibile entro dieci Q; Magia 0 evita; tre Round Confinamento senza azioni, percezioni o recuperi, tempo ed effetti periodici sospesi. Un lancio attivo; ritorno Disorientato 1+1d3 Round. Negare 9 sulla traccia libera. 9 PM; un colpo 4d6+5 Magico Fuoco, una AC, automatico entro quindici Q Bersaglio visibile e percorso libero; Parata o Schivata, non Elusione. AR e secondario Fuoco −2 dopo residuo e Ignifugo. Nessun bonus FOR o altro elemento aggiunto.",
   "pv": 136,
   "pm": 60,
   "caratteristiche": {
@@ -133,6 +132,7 @@
       "effetto": "spazio 1 × 2 Q"
     }
   ],
+  "note": "Serpente custode di un luogo o di un oggetto. Avverte gli intrusi e difende l’accesso con veleno, ordini, cure e confinamento temporaneo. Una AzP per Incantesimo e PM della versione; Potere pronto 16 ai livelli tre e sei, 14 al nove. Restano condizioni di lancio e procedure delle regole comuni dei custodi e delle schede della Magia v1.7. Voce udita e compresa, una sola condotta; nel primo turno successivo massimo una AzP e un Movimento, senza azioni nuove. Limiti morali e PM/PE ordinari; Negare 6 prima dell’esecuzione. 9 PM; un vivente consenziente o incosciente soccorso visibile entro sei Q; 4d4+5 punti 6 PM; un vivente consenziente o incosciente soccorso entro sei Q Rimuove due tipi di Stato temporaneo compatibile fino a Svenuto, Stordito o Paralizzato. Non elimina cause persistenti, Ferite, PM zero o vincoli materiali. 6 PM; un vivente consenziente o incosciente soccorso visibile entro tre Q Due sostanze attive al massimo, naturali, artificiali o mistiche fino a Pericolosità V; non cura VI né restituisce PV o lesioni. 6 PM; una creatura visibile entro dieci Q; Magia 0 evita; dieci Round −2 a Prove di Abilità, Caratteristica e PS, non alla PS iniziale di questo stesso lancio. Nessuna nuova PS automatica; maggiore penalità magica, Negare 6. 9 PM; una creatura visibile entro dieci Q; Magia 0 evita; tre Round Confinamento senza azioni, percezioni o recuperi, tempo ed effetti periodici sospesi. Un lancio attivo; ritorno Disorientato 1+1d3 Round. Negare 9 sulla traccia libera. 9 PM; un colpo 4d6+5 Magico Fuoco, una AC, automatico entro quindici Q Bersaglio visibile e percorso libero; Parata o Schivata, non Elusione. AR e secondario Fuoco −2 dopo residuo e Ignifugo. Nessun bonus FOR o altro elemento aggiunto.",
   "gs_px": {
     "gs": "Mito",
     "px": 200,
@@ -152,9 +152,12 @@
       "spazio": "Mostri 0.69",
       "abilita": "Mostri 0.69",
       "capacita": "Mostri 0.69",
-      "gs_px": "Mostri 0.69"
+      "note": "Mostri 0.69",
+      "gs_px": "Mostri 0.69",
+      "attacchi": "Mostri 0.69"
     },
     "edizione": "Mostri 0.69",
     "sistema_salute": "solo_PV"
-  }
+  },
+  "attacchi": []
 }

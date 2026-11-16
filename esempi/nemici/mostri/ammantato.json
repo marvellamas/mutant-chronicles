@@ -5,7 +5,6 @@
   "nome": "Ammantato",
   "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Ammantato",
   "taglia": "grande",
-  "note": "Predatore appiattito simile a una manta e a un mantello di cuoio. Segue le prede al buio, le avvolge e disorienta gli inseguitori con immagini del proprio corpo.",
   "pv": 76,
   "pm": 22,
   "caratteristiche": {
@@ -64,9 +63,6 @@
       "va": 14,
       "danno": "2d6+3",
       "natura": "Naturale",
-      "proprieta": [
-        "AC 1"
-      ],
       "portata_q": 1,
       "ac": 1
     },
@@ -76,9 +72,6 @@
       "va": 14,
       "danno": "1d8+3",
       "natura": "Naturale",
-      "proprieta": [
-        "AC 1"
-      ],
       "portata_q": 2,
       "ac": 1
     }
@@ -113,6 +106,7 @@
       "effetto": "spazio 2 × 2 Q aperto, 1 × 1 Q raccolto a terra"
     }
   ],
+  "note": "Predatore appiattito simile a una manta e a un mantello di cuoio. Segue le prede al buio, le avvolge e disorienta gli inseguitori con immagini del proprio corpo.",
   "gs_px": {
     "gs": "Leggenda",
     "px": 100,
@@ -133,6 +127,7 @@
       "abilita": "Mostri 0.69",
       "attacchi": "Mostri 0.69",
       "capacita": "Mostri 0.69",
+      "note": "Mostri 0.69",
       "gs_px": "Mostri 0.69"
     },
     "edizione": "Mostri 0.69",

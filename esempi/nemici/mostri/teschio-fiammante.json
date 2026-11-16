@@ -4,7 +4,6 @@
   "id": "teschio-fiammante",
   "nome": "Teschio fiammante",
   "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Teschio fiammante",
-  "note": "Cranio animato avvolto da fiamme, creato come guardiano intelligente. Conserva un piccolo repertorio di magia offensiva e può ricomporsi dai frammenti.",
   "pv": 45,
   "pm": 24,
   "caratteristiche": {
@@ -63,8 +62,7 @@
       "danno": "2d6+2",
       "natura": "Magico",
       "proprieta": [
-        "Fuoco",
-        "AC 1"
+        "Fuoco"
       ],
       "gittata_q": 6,
       "modalita": [
@@ -103,6 +101,7 @@
       "effetto": "spazio 1 Q condivisibile, senza bloccare il passaggio"
     }
   ],
+  "note": "Cranio animato avvolto da fiamme, creato come guardiano intelligente. Conserva un piccolo repertorio di magia offensiva e può ricomporsi dai frammenti.",
   "gs_px": {
     "gs": "Eroe",
     "px": 70,
@@ -122,6 +121,7 @@
       "abilita": "Mostri 0.69",
       "attacchi": "Mostri 0.69",
       "capacita": "Mostri 0.69",
+      "note": "Mostri 0.69",
       "gs_px": "Mostri 0.69"
     },
     "edizione": "Mostri 0.69",

@@ -4,7 +4,6 @@
   "id": "danzatore-callistoniano",
   "nome": "Danzatore Callistoniano",
   "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Danzatore Callistoniano",
-  "note": "Tiratore callistoniano specializzato nelle lunghe distanze. Cerca postazioni dominanti e si nutre del sangue delle vittime; il profilo adotta il ruolo di cecchino delle fonti Warzone.",
   "pv": 76,
   "pm": 20,
   "caratteristiche": {
@@ -117,6 +116,7 @@
       "effetto": "spazio 1 Q"
     }
   ],
+  "note": "Tiratore callistoniano specializzato nelle lunghe distanze. Cerca postazioni dominanti e si nutre del sangue delle vittime; il profilo adotta il ruolo di cecchino delle fonti Warzone.",
   "gs_px": {
     "gs": "Eroe",
     "px": 77,
@@ -136,6 +136,7 @@
       "abilita": "Mostri 0.69",
       "attacchi": "Mostri 0.69",
       "capacita": "Mostri 0.69",
+      "note": "Mostri 0.69",
       "gs_px": "Mostri 0.69"
     },
     "edizione": "Mostri 0.69",

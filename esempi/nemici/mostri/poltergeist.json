@@ -4,7 +4,6 @@
   "id": "poltergeist",
   "nome": "Poltergeist",
   "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Poltergeist",
-  "note": "Spirito invisibile che manifesta la propria presenza con urti e oggetti scagliati. È una variante autonoma dello Spettro: la telecinesi sostituisce il risucchio vitale.",
   "pv": 32,
   "pm": 18,
   "caratteristiche": {
@@ -98,6 +97,7 @@
       "effetto": "spazio 1 × 1 Q"
     }
   ],
+  "note": "Spirito invisibile che manifesta la propria presenza con urti e oggetti scagliati. È una variante autonoma dello Spettro: la telecinesi sostituisce il risucchio vitale.",
   "gs_px": {
     "gs": "Esperto",
     "px": 30,
@@ -117,9 +117,12 @@
       "spazio": "Mostri 0.69",
       "abilita": "Mostri 0.69",
       "capacita": "Mostri 0.69",
-      "gs_px": "Mostri 0.69"
+      "note": "Mostri 0.69",
+      "gs_px": "Mostri 0.69",
+      "attacchi": "Mostri 0.69"
     },
     "edizione": "Mostri 0.69",
     "sistema_salute": "solo_PV"
-  }
+  },
+  "attacchi": []
 }

@@ -73,19 +73,15 @@
   "capacita": [
     {
       "nome": "Carica delle zanne",
-      "effetto": "Usa la normale Carica del Giocatore §5.6: 1 AzM e 1 AzP, percorso rettilineo minimo 3 Q, fino alla Corsa, con penalità e danno ×2 ordinari. Se infligge almeno 1 danno finale a una creatura non superiore a 2 × 2 Q, questa effettua Tempra senza modificatore proprio; fallimento o Maldestro applica A Terra. Il beneficio non si attiva con un semplice attacco da fermo."
-    },
-    {
-      "nome": "Limiti della Carica",
-      "effetto": "Non aggiunge i dadi da carica dell’originale, non possiede Carica Migliorata e non riceve un secondo attacco. L’abbattimento richiede un appoggio, non sposta la vittima e non agisce su chi è già A Terra. Ostacoli e spazio devono permettere il percorso dell’intero corpo."
+      "effetto": "Usa la Carica del Giocatore §5.6 (1 AzM e 1 AzP, percorso rettilineo minimo 3 Q, fino alla Corsa, penalità e danno ×2). Se infligge almeno 1 danno finale a una creatura non superiore a 2 × 2 Q, questa effettua Tempra senza modificatore proprio; fallimento o Maldestro applica A Terra. Non con un attacco da fermo, non aggiunge i dadi da carica dell’originale, nessuna Carica Migliorata né secondo attacco. L’abbattimento richiede un appoggio, non sposta la vittima e non agisce su chi è già A Terra."
     },
     {
       "nome": "Tenacia",
-      "effetto": "La capacità di resistere alle nuove Ferite non si applica al profilo senza Ferite. Non concede PV aggiuntivi oltre al +30% già incluso né nuove immunità."
-    },
-    {
-      "nome": "Altri movimenti",
-      "effetto": "spazio 2 × 2 Q"
+      "effetto": "Una volta per scena, prima di una PS Tempra per nuove Ferite mentre è già a 0 PV, ottiene +2 a quella PS se il danno è Naturale e non da Successo Magistrale. L’uso si consuma comunque. Non evita la Ferita minima, non recupera PV e non interrompe Morente. Una pausa nello stesso scontro non lo ripristina.",
+      "usi": {
+        "quanti": 1,
+        "per": "Scena"
+      }
     }
   ],
   "note": "Bestia quadrupede gigante • assaltatore • Natura Comune. Condotta. Reagisce a una minaccia vicina o cerca di sfondare il passaggio verso la fuga. Dopo la Carica può voltarsi per un nuovo percorso, pagando il normale movimento. Sotto 13 PV tende a cercare una via di uscita; non si scaglia contro muri invalicabili per effetto della propria tenacia.",
@@ -105,9 +101,9 @@
       "spazio": "Mostri 0.69",
       "abilita": "Mostri 0.69",
       "attacchi": "Mostri 0.47",
-      "capacita": "Mostri 0.69",
+      "capacita": "Mostri 0.47",
+      "note": "Mostri 0.69",
       "gs_px": "Mostri 0.69"
     }
-  },
-  "taglia": "grande"
+  }
 }

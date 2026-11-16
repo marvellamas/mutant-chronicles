@@ -4,7 +4,6 @@
   "id": "githzerai-monaco",
   "nome": "Githzerai monaco",
   "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Githzerai monaco",
-  "note": "Umanoide longilineo che combatte senz’armi e impiega disciplina psionica per difendersi e muoversi. Il termine monaco indica il modello della fonte e non introduce una nuova Classe di Simply RPG.",
   "pv": 52,
   "pm": 24,
   "caratteristiche": {
@@ -85,6 +84,7 @@
       "effetto": "spazio 1 × 1 Q"
     }
   ],
+  "note": "Umanoide longilineo che combatte senz’armi e impiega disciplina psionica per difendersi e muoversi. Il termine monaco indica il modello della fonte e non introduce una nuova Classe di Simply RPG.",
   "gs_px": {
     "gs": "Veterano",
     "px": 50,
@@ -104,9 +104,12 @@
       "spazio": "Mostri 0.69",
       "abilita": "Mostri 0.69",
       "capacita": "Mostri 0.69",
-      "gs_px": "Mostri 0.69"
+      "note": "Mostri 0.69",
+      "gs_px": "Mostri 0.69",
+      "attacchi": "Mostri 0.69"
     },
     "edizione": "Mostri 0.69",
     "sistema_salute": "solo_PV"
-  }
+  },
+  "attacchi": []
 }

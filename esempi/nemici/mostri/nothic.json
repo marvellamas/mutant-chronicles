@@ -4,7 +4,6 @@
   "id": "nothic",
   "nome": "Nothic",
   "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Nothic",
-  "note": "Creatura dall’occhio unico e dalla curiosità ossessiva per la magia. Osserva, ricatta e tratta in cambio di segreti o oggetti, usando lo sguardo per minacciare chi si avvicina.",
   "pv": 42,
   "pm": 16,
   "caratteristiche": {
@@ -71,6 +70,7 @@
       "effetto": "Percezione 12, 14 con la vista"
     }
   ],
+  "note": "Creatura dall’occhio unico e dalla curiosità ossessiva per la magia. Osserva, ricatta e tratta in cambio di segreti o oggetti, usando lo sguardo per minacciare chi si avvicina.",
   "gs_px": {
     "gs": "Esperto",
     "px": 30,
@@ -89,9 +89,12 @@
       "movimento": "Mostri 0.69",
       "spazio": "Mostri 0.69",
       "capacita": "Mostri 0.69",
-      "gs_px": "Mostri 0.69"
+      "note": "Mostri 0.69",
+      "gs_px": "Mostri 0.69",
+      "attacchi": "Mostri 0.69"
     },
     "edizione": "Mostri 0.69",
     "sistema_salute": "solo_PV"
-  }
+  },
+  "attacchi": []
 }

@@ -4,7 +4,6 @@
   "id": "couatl",
   "nome": "Couatl",
   "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Couatl",
-  "note": "Serpente piumato dalle ali variopinte, custode discreto di luoghi o persone. Immobilizza con le spire e addormenta con il morso, preferendo contenere l’avversario.",
   "pv": 84,
   "pm": 40,
   "caratteristiche": {
@@ -77,7 +76,6 @@
       "natura": "Magico",
       "proprieta": [
         "Perforazione",
-        "AC 1",
         "veleno"
       ],
       "portata_q": 1,
@@ -91,7 +89,6 @@
       "natura": "Magico",
       "proprieta": [
         "Contusione",
-        "AC 1",
         "presa"
       ],
       "portata_q": 2,
@@ -124,6 +121,7 @@
       "effetto": "spazio 1 × 1 Q"
     }
   ],
+  "note": "Serpente piumato dalle ali variopinte, custode discreto di luoghi o persone. Immobilizza con le spire e addormenta con il morso, preferendo contenere l’avversario.",
   "gs_px": {
     "gs": "Eroe",
     "px": 70,
@@ -144,6 +142,7 @@
       "abilita": "Mostri 0.69",
       "attacchi": "Mostri 0.69",
       "capacita": "Mostri 0.69",
+      "note": "Mostri 0.69",
       "gs_px": "Mostri 0.69"
     },
     "edizione": "Mostri 0.69",

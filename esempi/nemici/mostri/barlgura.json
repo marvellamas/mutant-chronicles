@@ -5,7 +5,6 @@
   "nome": "Barlgura",
   "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Barlgura",
   "taglia": "grande",
-  "note": "Grande predatore dal corpo scimmiesco che scala, salta e colpisce con pugni e zanne. Usa occultamenti e ostacoli per raggiungere un bersaglio isolato prima di esporsi.",
   "pv": 76,
   "pm": 24,
   "caratteristiche": {
@@ -64,8 +63,7 @@
       "danno": "1d10+2",
       "natura": "Naturale",
       "proprieta": [
-        "Contusione",
-        "AC 1"
+        "Contusione"
       ],
       "portata_q": 1,
       "ac": 1
@@ -77,8 +75,7 @@
       "danno": "2d6+2",
       "natura": "Naturale",
       "proprieta": [
-        "Perforazione",
-        "AC 1"
+        "Perforazione"
       ],
       "portata_q": 1,
       "ac": 1
@@ -114,6 +111,7 @@
       "effetto": "Terra e arrampicata 6 / 12 / 18: la stessa andatura vale anche per arrampicata; spazio 2 × 2 Q"
     }
   ],
+  "note": "Grande predatore dal corpo scimmiesco che scala, salta e colpisce con pugni e zanne. Usa occultamenti e ostacoli per raggiungere un bersaglio isolato prima di esporsi.",
   "gs_px": {
     "gs": "Eroe",
     "px": 70,
@@ -134,6 +132,7 @@
       "abilita": "Mostri 0.69",
       "attacchi": "Mostri 0.69",
       "capacita": "Mostri 0.69",
+      "note": "Mostri 0.69",
       "gs_px": "Mostri 0.69"
     },
     "edizione": "Mostri 0.69",

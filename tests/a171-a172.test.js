@@ -38,7 +38,9 @@ test('A.171: il formato dei nemici accetta portata 0 e rifiuta ancora una portat
 
 test('A.171: tutti e sei gli Sciami hanno portata 0 Q, senza più la nota di ripiego', () => {
   const sciami = readdirSync(cartellaMostri).filter((f) => f.startsWith('sciame-') && f.endsWith('.json'));
-  assert.equal(sciami.length, 6);
+  // lotto 204: erano 6 sulla 0.46, sono 10 sulla 0.69 (centopiedi, coleotteri, ragni, vespe). Il numero non è
+  // l'invariante — lo è che **ogni** Sciame colpisca chi condivide il quadretto, cioè a portata 0 Q.
+  assert.ok(sciami.length >= 6, `Sciami nel Bestiario: ${sciami.length}`);
   for (const f of sciami) {
     const n = JSON.parse(readFileSync(new URL(f, cartellaMostri), 'utf8'));
     const ravvicinati = n.attacchi.filter((a) => a.tipo === 'ravvicinato');

@@ -4,7 +4,6 @@
   "id": "grell",
   "nome": "Grell",
   "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Grell",
-  "note": "Cervello levitante con becco e tentacoli uncinati. Individua le prede attraverso suoni, vibrazioni e campi prossimi e cerca di portare via individui isolati.",
   "pv": 55,
   "pm": 12,
   "caratteristiche": {
@@ -63,9 +62,6 @@
       "va": 12,
       "danno": "1d8+2",
       "natura": "Naturale",
-      "proprieta": [
-        "AC 1"
-      ],
       "portata_q": 2,
       "ac": 1
     },
@@ -75,9 +71,6 @@
       "va": 12,
       "danno": "2d4+2",
       "natura": "Naturale",
-      "proprieta": [
-        "AC 1"
-      ],
       "portata_q": 1,
       "ac": 1
     }
@@ -108,6 +101,7 @@
       "effetto": "spazio 1 × 1 Q"
     }
   ],
+  "note": "Cervello levitante con becco e tentacoli uncinati. Individua le prede attraverso suoni, vibrazioni e campi prossimi e cerca di portare via individui isolati.",
   "gs_px": {
     "gs": "Veterano",
     "px": 50,
@@ -128,6 +122,7 @@
       "abilita": "Mostri 0.69",
       "attacchi": "Mostri 0.69",
       "capacita": "Mostri 0.69",
+      "note": "Mostri 0.69",
       "gs_px": "Mostri 0.69"
     },
     "edizione": "Mostri 0.69",

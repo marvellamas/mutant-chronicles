@@ -5,7 +5,6 @@
   "nome": "Anomalia acquatica",
   "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Anomalia acquatica",
   "taglia": "grande",
-  "note": "Spirito dell’Acqua legato a un bacino, capace di sollevare una forma serpentiforme e trascinare un intruso sotto la superficie. Non è una piovra né un genio e non porta con sé il proprio luogo di vincolo.",
   "pv": 55,
   "caratteristiche": {
     "FOR": 8,
@@ -93,6 +92,7 @@
       "effetto": "Solo nuoto 12 / 24 / 36 Q nel bacino vincolato; spazio 2 × 2 Q"
     }
   ],
+  "note": "Spirito dell’Acqua legato a un bacino, capace di sollevare una forma serpentiforme e trascinare un intruso sotto la superficie. Non è una piovra né un genio e non porta con sé il proprio luogo di vincolo.",
   "gs_px": {
     "gs": "Veterano",
     "px": 50,
@@ -111,9 +111,12 @@
       "spazio": "Mostri 0.69",
       "abilita": "Mostri 0.69",
       "capacita": "Mostri 0.69",
-      "gs_px": "Mostri 0.69"
+      "note": "Mostri 0.69",
+      "gs_px": "Mostri 0.69",
+      "attacchi": "Mostri 0.69"
     },
     "edizione": "Mostri 0.69",
     "sistema_salute": "solo_PV"
-  }
+  },
+  "attacchi": []
 }

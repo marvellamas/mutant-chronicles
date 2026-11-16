@@ -4,7 +4,6 @@
   "id": "githyanki-guerriero",
   "nome": "Githyanki guerriero",
   "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Githyanki guerriero",
-  "note": "Umanoide longilineo addestrato allo spadone e a brevi manifestazioni psioniche. Questo modello conserva capacità innate limitate; il cavaliere e il suo armamento speciale non sono compresi.",
   "pv": 63,
   "pm": 20,
   "caratteristiche": {
@@ -89,6 +88,7 @@
       "effetto": "spazio 1 × 1 Q"
     }
   ],
+  "note": "Umanoide longilineo addestrato allo spadone e a brevi manifestazioni psioniche. Questo modello conserva capacità innate limitate; il cavaliere e il suo armamento speciale non sono compresi.",
   "gs_px": {
     "gs": "Veterano",
     "px": 55,
@@ -108,9 +108,12 @@
       "spazio": "Mostri 0.69",
       "abilita": "Mostri 0.69",
       "capacita": "Mostri 0.69",
-      "gs_px": "Mostri 0.69"
+      "note": "Mostri 0.69",
+      "gs_px": "Mostri 0.69",
+      "attacchi": "Mostri 0.69"
     },
     "edizione": "Mostri 0.69",
     "sistema_salute": "solo_PV"
-  }
+  },
+  "attacchi": []
 }

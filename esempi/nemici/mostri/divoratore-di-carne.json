@@ -4,7 +4,6 @@
   "id": "divoratore-di-carne",
   "nome": "Divoratore di Carne",
   "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Divoratore di Carne",
-  "note": "Predatore infiltrato fra bande e persone senza protezione. Può abbandonare l’aspetto umano per lacerare la preda e investirla di secrezioni digestive.",
   "pv": 91,
   "pm": 18,
   "caratteristiche": {
@@ -133,6 +132,7 @@
       "effetto": "coperto 1 Q; rivelato 1×2 Q"
     }
   ],
+  "note": "Predatore infiltrato fra bande e persone senza protezione. Può abbandonare l’aspetto umano per lacerare la preda e investirla di secrezioni digestive.",
   "gs_px": {
     "gs": "Eroe",
     "px": 70,
@@ -152,6 +152,7 @@
       "abilita": "Mostri 0.69",
       "attacchi": "Mostri 0.69",
       "capacita": "Mostri 0.69",
+      "note": "Mostri 0.69",
       "gs_px": "Mostri 0.69"
     },
     "edizione": "Mostri 0.69",

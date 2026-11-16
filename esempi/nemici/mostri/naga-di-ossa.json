@@ -4,7 +4,6 @@
   "id": "naga-di-ossa",
   "nome": "Naga d’ossa",
   "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Naga d’ossa",
-  "note": "Resti animati di una Naga, privati del ritorno naturale. Conserva un repertorio ridotto scelto in base alla specie originaria; le due origini sono varianti della stessa scheda. Una AzP per Incantesimo e PM della versione; Potere pronto 13 ai livelli tre e sei, 11 al nove. Restano condizioni di lancio e procedure delle regole comuni dei custodi e delle schede della Magia v1.7. Voce udita e compresa, una sola condotta; nel primo turno successivo massimo una AzP e un Movimento, senza azioni nuove. Limiti morali e PM/PE ordinari; Negare 6 prima dell’esecuzione. 6 PM; una mente cosciente visibile entro dieci Q; Volontà 0 evita Fallimento −4 a tutte le Abilità cinque Round e interrompe la Concentrazione presente; nessun malus a PS, danno o Movimento e nessuna perdita di Azioni. Negare 6. 6 PM; una creatura visibile entro dieci Q; Magia 0 evita; dieci Round −2 a Prove di Abilità, Caratteristica e PS, non alla PS iniziale di questo stesso lancio. Nessuna nuova PS automatica; maggiore penalità magica, Negare 6. 3 PM; un vivente visibile entro sei Q capace di dormire; Volontà 0 evita; cinque Round +4 alla PS se già cosciente in combattimento o pericolo concreto. Danni e rumori non svegliano; scuotere una AzP per due turni consecutivi, Cura Spirituale 6 o Negare 3. 9 PM; fino a due menti visibili entro 15 Q concatenate entro due; Volontà −2 evita; dieci minuti fissi Emozioni e pensieri spontanei superficiali, non ricordi o verità garantita. Perdere vista o portata termina il singolo legame; Barriera Mentale aiuta, Negare 9. 9 PM; un colpo 4d6+5 Magico Fulmine, una AC, automatico entro quindici Q",
   "pv": 63,
   "pm": 30,
   "caratteristiche": {
@@ -117,6 +116,7 @@
       "effetto": "spazio 1 × 2 Q"
     }
   ],
+  "note": "Resti animati di una Naga, privati del ritorno naturale. Conserva un repertorio ridotto scelto in base alla specie originaria; le due origini sono varianti della stessa scheda. Una AzP per Incantesimo e PM della versione; Potere pronto 13 ai livelli tre e sei, 11 al nove. Restano condizioni di lancio e procedure delle regole comuni dei custodi e delle schede della Magia v1.7. Voce udita e compresa, una sola condotta; nel primo turno successivo massimo una AzP e un Movimento, senza azioni nuove. Limiti morali e PM/PE ordinari; Negare 6 prima dell’esecuzione. 6 PM; una mente cosciente visibile entro dieci Q; Volontà 0 evita Fallimento −4 a tutte le Abilità cinque Round e interrompe la Concentrazione presente; nessun malus a PS, danno o Movimento e nessuna perdita di Azioni. Negare 6. 6 PM; una creatura visibile entro dieci Q; Magia 0 evita; dieci Round −2 a Prove di Abilità, Caratteristica e PS, non alla PS iniziale di questo stesso lancio. Nessuna nuova PS automatica; maggiore penalità magica, Negare 6. 3 PM; un vivente visibile entro sei Q capace di dormire; Volontà 0 evita; cinque Round +4 alla PS se già cosciente in combattimento o pericolo concreto. Danni e rumori non svegliano; scuotere una AzP per due turni consecutivi, Cura Spirituale 6 o Negare 3. 9 PM; fino a due menti visibili entro 15 Q concatenate entro due; Volontà −2 evita; dieci minuti fissi Emozioni e pensieri spontanei superficiali, non ricordi o verità garantita. Perdere vista o portata termina il singolo legame; Barriera Mentale aiuta, Negare 9. 9 PM; un colpo 4d6+5 Magico Fulmine, una AC, automatico entro quindici Q",
   "gs_px": {
     "gs": "Eroe",
     "px": 70,
@@ -136,9 +136,12 @@
       "spazio": "Mostri 0.69",
       "abilita": "Mostri 0.69",
       "capacita": "Mostri 0.69",
-      "gs_px": "Mostri 0.69"
+      "note": "Mostri 0.69",
+      "gs_px": "Mostri 0.69",
+      "attacchi": "Mostri 0.69"
     },
     "edizione": "Mostri 0.69",
     "sistema_salute": "solo_PV"
-  }
+  },
+  "attacchi": []
 }

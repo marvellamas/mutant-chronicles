@@ -99,7 +99,7 @@
     "sanguinamento",
     "stordito"
   ],
-  "note": "Costrutto privo di mente • guardiano corazzato • Natura Comune.",
+  "note": "PM —: nessuna riserva. AR 4 intrinseca (non armatura indossata, nessuna penalità). Percepisce forme e movimenti entro 12 Q senza occhi (Accecato e Assordato non lo impediscono). Immobile sembra un’armatura: +4 Furtività. Comportamento: blocca un passaggio o insegue nel perimetro assegnato; non fugge per paura.",
   "_bestiario": {
     "edizione": "Mostri 0.69",
     "sistema_salute": "solo_PV",
@@ -116,6 +116,7 @@
       "abilita": "Mostri 0.69",
       "attacchi": "Mostri 0.47",
       "capacita": "Mostri 0.47",
+      "note": "Mostri 0.47",
       "gs_px": "Mostri 0.69"
     }
   }

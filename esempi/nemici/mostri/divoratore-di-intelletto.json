@@ -4,7 +4,6 @@
   "id": "divoratore-di-intelletto",
   "nome": "Divoratore d’intelletto",
   "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Divoratore d’intelletto",
-  "note": "Piccolo cervello ambulante su zampe artigliate. Cerca presenze mentali e corpi vulnerabili da infiltrare. In questa conversione l’invasione è reversibile e non azzera permanentemente INT.",
   "pv": 24,
   "pm": 18,
   "caratteristiche": {
@@ -84,6 +83,7 @@
       "effetto": "spazio 1 Q condivisibile, senza bloccare il passaggio"
     }
   ],
+  "note": "Piccolo cervello ambulante su zampe artigliate. Cerca presenze mentali e corpi vulnerabili da infiltrare. In questa conversione l’invasione è reversibile e non azzera permanentemente INT.",
   "gs_px": {
     "gs": "Eroe",
     "px": 70,
@@ -102,9 +102,12 @@
       "movimento": "Mostri 0.69",
       "abilita": "Mostri 0.69",
       "capacita": "Mostri 0.69",
-      "gs_px": "Mostri 0.69"
+      "note": "Mostri 0.69",
+      "gs_px": "Mostri 0.69",
+      "attacchi": "Mostri 0.69"
     },
     "edizione": "Mostri 0.69",
     "sistema_salute": "solo_PV"
-  }
+  },
+  "attacchi": []
 }

@@ -5,7 +5,6 @@
   "nome": "Diavolo d’ossa",
   "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Diavolo d’ossa",
   "taglia": "grande",
-  "note": "Grande creatura alata dall’aspetto scheletrico e dalla coda simile a quella di uno scorpione. Il corpo è vivente: non appartiene ai non morti per la sola forma delle ossa.",
   "pv": 136,
   "pm": 28,
   "caratteristiche": {
@@ -65,8 +64,7 @@
       "danno": "2d6+2",
       "natura": "Naturale",
       "proprieta": [
-        "Taglio",
-        "AC 1"
+        "Taglio"
       ],
       "portata_q": 2,
       "ac": 1
@@ -79,7 +77,6 @@
       "natura": "Naturale",
       "proprieta": [
         "Perforazione",
-        "AC 1",
         "veleno"
       ],
       "portata_q": 2,
@@ -112,6 +109,7 @@
       "effetto": "Terra e volo 8 / 16 / 24: la stessa andatura vale anche per volo; spazio 2 × 2 Q"
     }
   ],
+  "note": "Grande creatura alata dall’aspetto scheletrico e dalla coda simile a quella di uno scorpione. Il corpo è vivente: non appartiene ai non morti per la sola forma delle ossa.",
   "gs_px": {
     "gs": "Mito",
     "px": 200,
@@ -132,6 +130,7 @@
       "abilita": "Mostri 0.69",
       "attacchi": "Mostri 0.69",
       "capacita": "Mostri 0.69",
+      "note": "Mostri 0.69",
       "gs_px": "Mostri 0.69"
     },
     "edizione": "Mostri 0.69",

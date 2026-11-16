@@ -4,7 +4,6 @@
   "id": "kuo-toa-monitor",
   "nome": "Kuo-toa monitor",
   "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Kuo-toa monitor",
-  "note": "Kuo-toa addestrato al combattimento ravvicinato senza bastone o repertorio. I pugni producono una scarica bioelettrica e la disciplina migliora le Difese effettivamente pagate.",
   "pv": 63,
   "pm": 18,
   "caratteristiche": {
@@ -63,8 +62,7 @@
       "danno": "1d4+1",
       "natura": "Naturale",
       "proprieta": [
-        "Perforazione",
-        "AC 1"
+        "Perforazione"
       ],
       "portata_q": 1,
       "ac": 1
@@ -77,8 +75,7 @@
       "natura": "Naturale",
       "proprieta": [
         "Contusione",
-        "Elettricità",
-        "AC 1"
+        "Elettricità"
       ],
       "portata_q": 1,
       "ac": 1
@@ -110,6 +107,7 @@
       "effetto": "Terra e nuoto 6 / 12 / 18: la stessa andatura vale anche per nuoto; spazio 1 × 1 Q"
     }
   ],
+  "note": "Kuo-toa addestrato al combattimento ravvicinato senza bastone o repertorio. I pugni producono una scarica bioelettrica e la disciplina migliora le Difese effettivamente pagate.",
   "gs_px": {
     "gs": "Veterano",
     "px": 50,
@@ -130,6 +128,7 @@
       "abilita": "Mostri 0.69",
       "attacchi": "Mostri 0.69",
       "capacita": "Mostri 0.69",
+      "note": "Mostri 0.69",
       "gs_px": "Mostri 0.69"
     },
     "edizione": "Mostri 0.69",

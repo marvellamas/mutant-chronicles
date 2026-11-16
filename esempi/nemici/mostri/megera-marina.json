@@ -4,7 +4,6 @@
   "id": "megera-marina",
   "nome": "Megera marina",
   "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Megera marina",
-  "note": "Creatura anfibia dalla pelle viscida che infesta coste e acque degradate. Può mascherarsi da umanoide emaciato, ma la sua arma principale è una rivelazione terrificante seguita da uno sguardo che abbatte la vittima già impaurita.",
   "pv": 52,
   "pm": 18,
   "caratteristiche": {
@@ -89,6 +88,7 @@
       "effetto": "nuoto 8 / 16 / 24 Q; spazio 1 × 1 Q"
     }
   ],
+  "note": "Creatura anfibia dalla pelle viscida che infesta coste e acque degradate. Può mascherarsi da umanoide emaciato, ma la sua arma principale è una rivelazione terrificante seguita da uno sguardo che abbatte la vittima già impaurita.",
   "gs_px": {
     "gs": "Esperto",
     "px": 30,
@@ -108,9 +108,12 @@
       "spazio": "Mostri 0.69",
       "abilita": "Mostri 0.69",
       "capacita": "Mostri 0.69",
-      "gs_px": "Mostri 0.69"
+      "note": "Mostri 0.69",
+      "gs_px": "Mostri 0.69",
+      "attacchi": "Mostri 0.69"
     },
     "edizione": "Mostri 0.69",
     "sistema_salute": "solo_PV"
-  }
+  },
+  "attacchi": []
 }

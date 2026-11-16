@@ -48,11 +48,11 @@
       "va": 14,
       "danno": "2d6+3",
       "natura": "Naturale",
+      "portata_q": 1,
+      "ac": 1,
       "proprieta": [
         "Perforazione"
-      ],
-      "portata_q": 1,
-      "ac": 1
+      ]
     },
     {
       "nome": "Calpestare",
@@ -60,11 +60,12 @@
       "va": 14,
       "danno": "1d8+3",
       "natura": "Naturale",
+      "portata_q": 1,
+      "ac": 1,
       "proprieta": [
         "Contundente"
       ],
-      "portata_q": 1,
-      "ac": 1
+      "note": "Solo contro una vittima già A Terra, di spazio ≤ 2 × 2 Q e in una posizione raggiungibile dalle zampe. Non entra automaticamente nello spazio del bersaglio."
     }
   ],
   "abilita": [
@@ -115,10 +116,10 @@
       "movimento": "Mostri 0.69",
       "spazio": "Mostri 0.69",
       "abilita": "Mostri 0.69",
-      "attacchi": "Mostri 0.69",
+      "attacchi": "Mostri 0.47",
       "capacita": "Mostri 0.47",
+      "note": "Mostri 0.69",
       "gs_px": "Mostri 0.69"
     }
-  },
-  "taglia": "grande"
+  }
 }

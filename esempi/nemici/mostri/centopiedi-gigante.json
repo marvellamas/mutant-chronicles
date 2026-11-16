@@ -48,11 +48,9 @@
       "va": 9,
       "danno": "1d4+1",
       "natura": "Naturale",
-      "proprieta": [
-        "poi veleno"
-      ],
       "portata_q": 1,
-      "ac": 1
+      "ac": 1,
+      "note": "Poi veleno: vedi la capacità «Veleno di miriapode II»."
     }
   ],
   "abilita": [
@@ -107,8 +105,9 @@
       "movimento": "Mostri 0.69",
       "spazio": "Mostri 0.69",
       "abilita": "Mostri 0.69",
-      "attacchi": "Mostri 0.69",
+      "attacchi": "Mostri 0.47",
       "capacita": "Mostri 0.47",
+      "note": "Mostri 0.69",
       "gs_px": "Mostri 0.69"
     }
   }

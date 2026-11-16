@@ -39,7 +39,8 @@
   },
   "azioni": {
     "principali": 3,
-    "movimento": 1
+    "movimento": 1,
+    "eccezioni": "Opportunità speciali delle teste (vedi la capacità «Opportunità delle teste»)"
   },
   "attacchi": [
     {
@@ -48,11 +49,12 @@
       "va": 14,
       "danno": "1d8+2",
       "natura": "Naturale",
+      "portata_q": 2,
+      "ac": 1,
       "proprieta": [
         "Perforazione"
       ],
-      "portata_q": 2,
-      "ac": 1
+      "note": "Una testa funzionale per ogni Morso."
     }
   ],
   "abilita": [
@@ -119,14 +121,14 @@
       "difese": "Mostri 0.69",
       "salvezze": "Mostri 0.69",
       "iniziativa": "Mostri 0.69",
-      "azioni": "Mostri 0.69",
+      "azioni": "Mostri 0.47",
       "movimento": "Mostri 0.69",
       "spazio": "Mostri 0.69",
       "abilita": "Mostri 0.69",
-      "attacchi": "Mostri 0.69",
+      "attacchi": "Mostri 0.47",
       "capacita": "Mostri 0.47",
+      "note": "Mostri 0.69",
       "gs_px": "Mostri 0.69"
     }
-  },
-  "taglia": "grande"
+  }
 }

@@ -77,19 +77,15 @@
   "capacita": [
     {
       "nome": "Branco e sensi",
-      "effetto": "Applica Branco, con +2 VA condizionale. Ha +2 a Percezione quando udito oppure olfatto sono determinanti, senza raddoppiare il bonus. Tracce, vento, rumori e ostacoli continuano a contare; non possiede scurovisione o percezione magica."
+      "effetto": "Applica Branco, con +2 VA condizionale. +2 a Percezione quando udito oppure olfatto sono determinanti, senza raddoppiare il bonus. Non possiede scurovisione o percezione magica."
     },
     {
       "nome": "Abbattere la preda",
-      "effetto": "Una volta per Round, un Morso che infligge almeno 1 danno finale può imporre Tempra senza modificatore proprio a una preda non superiore a 2 × 2 Q. Fallimento o Maldestro applica A Terra. Rimangono i limiti di appoggio, l’assenza di spostamento e le normali regole per rialzarsi descritti per il Lupo."
-    },
-    {
-      "nome": "Movimento e Difese",
-      "effetto": "Lo spazio del corpo deve poter attraversare il percorso. La velocità non permette di attraversare avversari o di recuperare un’AzM spesa in Schivata. Una sola AzP obbliga a scegliere fra Morso e Difesa; la caccia in branco non risolve contemporaneamente gli attacchi degli esemplari."
-    },
-    {
-      "nome": "Altri movimenti",
-      "effetto": "spazio 2 × 1 Q"
+      "effetto": "Una volta per Round, un Morso che infligge almeno 1 danno finale può imporre Tempra senza modificatore proprio a una preda non superiore a 2 × 2 Q. Fallimento o Maldestro applica A Terra. Restano i limiti di appoggio, l’assenza di spostamento e le regole per rialzarsi del Lupo.",
+      "usi": {
+        "quanti": 1,
+        "per": "Round"
+      }
     }
   ],
   "note": "Bestia quadrupede gigante • cacciatore di branco • Natura Comune. Condotta. Insegue una preda separata, ma evita un fronte compatto ben difeso. Sotto 10 PV cerca il riparo dei compagni. Dimensioni e aggressività non lo rendono una cavalcatura addestrata: quel ruolo richiede una variante e una gestione propria.",
@@ -109,7 +105,8 @@
       "spazio": "Mostri 0.69",
       "abilita": "Mostri 0.69",
       "attacchi": "Mostri 0.47",
-      "capacita": "Mostri 0.69",
+      "capacita": "Mostri 0.47",
+      "note": "Mostri 0.69",
       "gs_px": "Mostri 0.69"
     }
   }

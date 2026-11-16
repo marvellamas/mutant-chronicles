@@ -103,7 +103,7 @@
   "immunita": [
     "sanguinamento"
   ],
-  "note": "Non morto semimateriale • incursore • Natura Comune. Condotta. Aggira il fronte e cerca i bersagli meno protetti. Sotto 7 PV o se privata dei ripari tenta di fuggire. Non para naturalmente e non genera nuove Ombre dalle vittime in questo profilo. Dotazione: nessuna.",
+  "note": "Furtività 14 in penombra o buio. Niente volo né attraversamento delle pareti. Nessuna dotazione né Parata naturale. Comportamento: aggira il fronte; sotto 5 PV o senza ripari fugge. Non genera nuove Ombre in questo profilo.",
   "_bestiario": {
     "edizione": "Mostri 0.69",
     "sistema_salute": "solo_PV",
@@ -121,6 +121,7 @@
       "abilita": "Mostri 0.47",
       "attacchi": "Mostri 0.47",
       "capacita": "Mostri 0.47",
+      "note": "Mostri 0.47",
       "gs_px": "Mostri 0.69"
     }
   }

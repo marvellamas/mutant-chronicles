@@ -4,7 +4,6 @@
   "id": "demone-di-ombra",
   "nome": "Demone d’ombra",
   "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Demone d’ombra",
-  "note": "Spirito dalla sagoma oscura che attraversa la materia e assale la mente a breve distanza. È distinto dall’Ombra non morta e non sottrae automaticamente FOR o PM.",
   "pv": 58,
   "pm": 20,
   "caratteristiche": {
@@ -86,6 +85,7 @@
       "effetto": "Terra e volo levitante 6 / 12 / 18: la stessa andatura vale anche per volo; spazio 1 × 1 Q"
     }
   ],
+  "note": "Spirito dalla sagoma oscura che attraversa la materia e assale la mente a breve distanza. È distinto dall’Ombra non morta e non sottrae automaticamente FOR o PM.",
   "gs_px": {
     "gs": "Eroe",
     "px": 70,
@@ -105,9 +105,12 @@
       "spazio": "Mostri 0.69",
       "abilita": "Mostri 0.69",
       "capacita": "Mostri 0.69",
-      "gs_px": "Mostri 0.69"
+      "note": "Mostri 0.69",
+      "gs_px": "Mostri 0.69",
+      "attacchi": "Mostri 0.69"
     },
     "edizione": "Mostri 0.69",
     "sistema_salute": "solo_PV"
-  }
+  },
+  "attacchi": []
 }

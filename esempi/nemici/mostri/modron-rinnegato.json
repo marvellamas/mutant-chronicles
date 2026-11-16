@@ -4,7 +4,6 @@
   "id": "modron-rinnegato",
   "nome": "Modron rinnegato",
   "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Modron rinnegato",
-  "note": "Quadrone che ha perso la mente assiomatica. Mantiene il corpo alato e l’addestramento al tiro, ma può scegliere i propri scopi e viene trattato come una mente autonoma.",
   "pv": 37,
   "pm": 9,
   "caratteristiche": {
@@ -68,8 +67,7 @@
       "danno": "1d4+1",
       "natura": "Naturale",
       "proprieta": [
-        "Contusione",
-        "AC 1"
+        "Contusione"
       ],
       "portata_q": 1,
       "ac": 1
@@ -81,8 +79,7 @@
       "danno": "1d6+2",
       "natura": "Naturale",
       "proprieta": [
-        "Perforazione",
-        "AC 1"
+        "Perforazione"
       ],
       "portata_q": 100,
       "ac": 1
@@ -114,6 +111,7 @@
       "effetto": "Terra e volo 6 / 12 / 18: la stessa andatura vale anche per volo; spazio 1 × 1 Q"
     }
   ],
+  "note": "Quadrone che ha perso la mente assiomatica. Mantiene il corpo alato e l’addestramento al tiro, ma può scegliere i propri scopi e viene trattato come una mente autonoma.",
   "gs_px": {
     "gs": "Esperto",
     "px": 33,
@@ -134,6 +132,7 @@
       "abilita": "Mostri 0.69",
       "attacchi": "Mostri 0.69",
       "capacita": "Mostri 0.69",
+      "note": "Mostri 0.69",
       "gs_px": "Mostri 0.69"
     },
     "edizione": "Mostri 0.69",
