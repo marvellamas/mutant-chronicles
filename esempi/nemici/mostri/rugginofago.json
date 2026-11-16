@@ -72,19 +72,60 @@
   ],
   "capacita": [
     {
-      "nome": "Antenne (ruggine)",
-      "effetto": "1 AzP, VA 11 contro un oggetto compatibile (solo ferro e acciaio non magici) esposto e individuato, portata 1 Q; nessun Colpo Mirato. Se portato o indossato, il possessore usa le proprie Difese. Un successo non difeso impone all’oggetto una PS Integrità (dalla Qualità): fallimento → −1 PI; con Magistrale −1 PI aggiuntivo (una sola PS). Schivata riuscita evita il contatto; Parata Magistrale lo devia; con Parata normale il contatto riguarda solo l’arma o lo scudo usato. Anticorrosivo X ≥ 1 protegge. Contro un oggetto immobile e accessibile non serve il tiro, ma 1 AzP e la PS. Non è un Attacco di Opportunità. Non danneggia i PV del portatore.",
-      "azioni": {
-        "principali": 1
-      }
+      "nome": "Antenne",
+      "effetto": "VA 11. Danno: Ruggine: perdita di PI. Portata/costo: 1 Q; un oggetto; "
     },
     {
-      "nome": "Odore del ferro",
-      "effetto": "Individua ferro e acciaio esposti entro 6 Q con Percezione 14; contenitori ermetici e barriere adeguate lo impediscono. Scurovisione 12 Q."
+      "nome": "Nutrimento e sensi",
+      "effetto": "Scurovisione 12 Q. Individua l’odore di ferro o acciaio esposti entro 6 Q con Percezione 14; contenitori ermetici e barriere adeguate possono impedirlo. Il senso non dà la composizione completa di una lega e non attraversa automaticamente muri. Un pezzo di ferro accessibile può attirarlo lontano, senza una regola di provocazione obbligatoria."
+    },
+    {
+      "nome": "Materiali compatibili",
+      "effetto": "La ruggine di questa scheda interessa soltanto ferro e acciaio non magici. Non corrode carne, legno, pietra, metalli diversi o un oggetto mistico. I materiali speciali richiedono una compatibilità espressa, senza dedurla dal nome della lega. Metallo rivestito e non raggiunto dal contatto non viene corroso attraverso la copertura."
+    },
+    {
+      "nome": "Antenne",
+      "effetto": "1 AzP, tiro a VA 11 contro un oggetto compatibile esposto e individuato. Questo VA comprende la precisione necessaria: non si aggiunge un malus da Colpo Mirato. Se portato o indossato, il possessore può usare le proprie Difese. Un successo non difeso impone all’oggetto una PS Integrità, senza danni ai PV del portatore. La procedura completa è nella pagina seguente."
+    },
+    {
+      "nome": "Perdita strutturale",
+      "effetto": "La ruggine è una capacità specifica di contatto: PS Integrità dell’oggetto, determinata dalla sua Qualità. Successo evita la perdita; fallimento causa 1 PI. Un attacco di Antenne Magistrale aggiunge 1 PI alla perdita potenziale, con una sola PS per entrambe le cause. Non si raddoppiano i PI e non si converte un danno inesistente. La scheda non usa la normale proprietà Corrosivo collegata al danno ai PV."
+    },
+    {
+      "nome": "Parata e Schivata",
+      "effetto": "Schivata riuscita evita il contatto; Parata Magistrale lo devia senza deterioramento. Con Parata normale riuscita il contatto riguarda soltanto l’arma o lo scudo usato per parare: se è di materiale compatibile effettua la PS Integrità appena descritta, altrimenti non accade nulla. Una Parata fallita lascia esposto l’oggetto inizialmente bersagliato. Nessun singolo attacco di Antenne corrode insieme arma, scudo e armatura."
+    },
+    {
+      "nome": "Difesa anticorrosione",
+      "effetto": "Un oggetto dotato di Anticorrosivo X con X almeno 1 è protetto da questa ruggine, anche con Antenne Magistrale: è un’interazione specifica, dato che il contatto non ha danni residui da confrontare. L’AR del portatore non annulla una PS dell’oggetto direttamente toccato. Una protezione integra interposta fisicamente può invece impedire di raggiungere il metallo sottostante."
     },
     {
       "nome": "Carapace reattivo",
-      "effetto": "Un’arma o proiettile di ferro o acciaio non magici che lo colpisce direttamente fa dopo il colpo una PS Integrità: fallimento −1 PI (anche se l’AR ha assorbito tutto, non se una Difesa ha evitato il contatto). Una sola applicazione per arma e attacco; un’arma naturale non arrugginisce."
+      "effetto": "Un’arma o proiettile di ferro o acciaio non magici che colpisce direttamente il corpo effettua dopo il colpo una PS Integrità: fallimento perde 1 PI, successo nulla. Vale anche se l’AR biologica ha assorbito tutto il danno, ma non quando una Difesa evita completamente il contatto. Una sola applicazione per arma e attacco, indipendentemente dalle AC. Il Magistrale dell’aggressore non deteriora ulteriormente la sua stessa arma. Un’arma naturale non arrugginisce."
+    },
+    {
+      "nome": "Oggetti e riparazioni",
+      "effetto": "Gli oggetti non perdono gradualmente danni o AR per ciascun PI mancante. A 0 PI diventano Rotti secondo gli Armamenti §7.2.1; peso e penalità persistono finché restano indossati. Si usa l’Integrità del singolo oggetto: un rinforzo conserva PI separati dall’armatura. La ruggine non distrugge una parete intera con un tocco; per una struttura si definisce prima una porzione e la sua Integrità. Le perdite richiedono riparazione e non scadono a fine scena."
+    },
+    {
+      "nome": "Oggetti abbandonati",
+      "effetto": "Contro un oggetto immobile e accessibile non serve tiro per colpire, ma resta 1 AzP e la sua PS Integrità, senza Magistrale automatico. Mangiare la ruggine non recupera PV o PM durante lo scontro. Le Antenne non si usano come Attacco di Opportunità: il solo attacco consentito è Morso."
+    },
+    {
+      "nome": "Creature del sottosuolo",
+      "effetto": "Il sottosuolo offre nascondigli, pareti scalabili e passaggi stretti. Queste creature sfruttano il buio, le prese, il veleno o l’equipaggiamento degli intrusi. Sono profili di catalogo: la loro presenza su Iris e i rapporti con Paradise richiedono una collocazione nell’ambientazione. Nessuna appartiene automaticamente alla Covata. PX di riferimento. I valori riguardano un esemplare nella configurazione descritta e quattro PG. Il Grimlock comprende una mazza di qualità Comune; gli altri profili non hanno equipaggiamento conteggiato. Il premio complessivo dell’incontro segue il Manuale del Direttore §9.3. Superare il pericolo, mettere in sicurezza un passaggio o ottenere un accordo può risolvere la sfida secondo l’obiettivo della scena. Criterio di adattamento. Le capacità usano le Azioni, le Difese, gli Stati e l’Integrità di Simply RPG. Il Perforatore è lo stadio giovanile del Roper nella fonte; questo rapporto non comporta una trasformazione durante il combattimento. Il Rugginofago cerca metallo, mentre Stirge e Vermeiena cercano nutrimento biologico: offrire un’alternativa può cambiare il loro comportamento. Fonti e verifica. Riferimenti operativi: Giocatore v0.49, Magia v1.5, Direttore v0.41 e Armamenti v0.64. Le pagine delle voci sono quelle stampate del Manuale dei Mostri fornito. GS e PX restano stime da verificare al tavolo, soprattutto per il costo delle liberazioni, il deterioramento degli oggetti e le Difese consumate dagli agguati. Tabella (celle in ordine di lettura): Dieci profili per gallerie, caverne e rovine sepolte | Creatura | GS | PX per 4 PG | Mantoscuro | Inesperto | 20 | Perforatore | Principiante | 10 | Roper | Eroe | 70 | Rugginofago | Inesperto | 20 | Umber Hulk | Eroe | 70 | Orrore uncinato | Esperto | 30 | Grimlock | Principiante | 11 | Troglodita | Inesperto | 20 | Stirge | Principiante | 10 | Vermeiena | Esperto | 30."
+    },
+    {
+      "nome": "Sottosuolo regole operative",
+      "effetto": "Organismi viventi. Tutte le creature di questo blocco hanno Natura Comune, una mente e PM personali; respirano, si nutrono e dormono. Stati iniziali e incantesimi appresi: nessuno. I PM non sono una riserva di PV; a 0 PM si diventa Svenuti. A 0 PV il profilo senza Ferite è fuori combattimento secondo il §4.2; morte o distruzione effettiva restano distinte. La taglia ridotta non trasforma automaticamente un danno in morte. Azioni e danni. INI è il modificatore a 1d10. Le AzP e l’unica AzM valgono per l’intero Round; arrivare alla propria Iniziativa non le ripristina. Ogni attacco costa 1 AzP, riguarda 1 AC e comprende tutti i bonus, salvo eccezione espressa. I limiti offensivi valgono anche quando si conserva un’Azione. Un singolo Attacco di Opportunità ordinario usa un attacco consentito dalla scheda, senza attivazioni magiche gratuite. Difese. Nessuno dei dieci profili possiede Parata naturale. Il Grimlock può parare con la mazza pronta; tutti possono Schivare quando concretamente possibile, pagando 1 AzP e 1 AzM. Una Parata normale dimezza per eccesso prima dell’AR, una Magistrale annulla. Le armi naturali hanno danno Naturale salvo indicazione diversa. Le Difese consumano Azioni che non saranno più disponibili per attaccare. Movimento. Le terne indicano Passo / Corsa / Scatto in Q. Le velocità speciali sono effettive e non si dimezzano di nuovo. I tragitti misti condividono un solo budget secondo le frazioni percorse. L’arrampicata con aderenza consente pareti e soffitti solidi ordinari, senza Prova; ghiaccio, superfici friabili o condizioni eccezionali possono richiedere Atletica. Il peso resta reale e un sostegno che cede provoca la normale caduta. Sensi e agguati. Scurovisione vede il buio naturale senza colori, entro la distanza indicata; non attraversa ostacoli o oscurità soprannaturale. Ecolocalizzazione sostituisce la vista per localizzare e combattere nell’area indicata, non legge colori o scritte e non soddisfa i requisiti degli sguardi. Assordato o un effetto che impedisce il suono la interrompono. In ogni caso un bersaglio nascosto richiede il normale confronto di Percezione e Furtività: nessun agguato riesce automaticamente. Prese e anatomia. Le liberazioni contrapposte costano 1 AzP; i pareggi mantengono una presa già stabilita. Il −4 fisico di Immobilizzato si applica anche ai tentativi fisici per liberarsi. Mantenere una presa non costa Azioni, ma occupa gli arti indicati. Per le localizzazioni, Testa e Torace indicano capo e corpo; Braccia e Gambe le appendici anteriori e posteriori, salvo la specifica della voce. Le Menomazioni colpiscono le funzioni coinvolte, senza concedere immunità generiche."
+    },
+    {
+      "nome": "Altri movimenti",
+      "effetto": "spazio 1 × 1 Q"
+    },
+    {
+      "nome": "Abilità particolari",
+      "effetto": "odore del ferro 14"
     }
   ],
   "note": "Consumatore di metalli • minaccia all’equipaggiamento • Natura Comune. Condotta. Preferisce Antenne al Morso e smette di inseguire chi abbandona una fonte di nutrimento adeguata, se non viene aggredito. Sotto 8 PV fugge. La corazza non è equipaggiamento recuperabile con proprietà corrosive. Non applica la vulnerabilità al freddo della Covata.",
@@ -104,7 +145,7 @@
       "spazio": "Mostri 0.69",
       "abilita": "Mostri 0.47",
       "attacchi": "Mostri 0.47",
-      "capacita": "Mostri 0.47",
+      "capacita": "Mostri 0.69",
       "note": "Mostri 0.69",
       "gs_px": "Mostri 0.69"
     }

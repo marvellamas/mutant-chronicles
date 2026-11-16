@@ -97,12 +97,44 @@
   ],
   "capacita": [
     {
-      "nome": "Forza e ingombro",
-      "effetto": "Solleva, trascina, forza o rompe oggetti con le regole comuni e gli strumenti adatti; non sfonda da sé porte o muri e non ignora l’Integrità. Lo spazio 2 × 2 Q deve poter attraversare il percorso; i passaggi stretti lo limitano. Non ottiene attacchi multipli per la taglia."
+      "nome": "Maglio a due mani",
+      "effetto": "VA 12. Danno: 2d6+2. Portata/costo: 1 Q; "
     },
     {
-      "nome": "Scurovisione",
-      "effetto": "Vede entro 12 Q anche nell’oscurità naturale; al buio non distingue i colori, non vede attraverso ostacoli, fumo o oscurità magica e non individua da sé chi è nascosto. Oltre i 12 Q valgono luce e vista ordinarie."
+      "nome": "Giavellotto a mano",
+      "effetto": "VA 12. Danno: 1d6+2. Portata/costo: 1 Q; "
+    },
+    {
+      "nome": "Giavellotto scagliato",
+      "effetto": "VA 9. Danno: 1d6. Portata/costo: massimo 27 Q; "
+    },
+    {
+      "nome": "Dotazione",
+      "effetto": "Il maglio usa il profilo Martello a due mani: FOR 6, PI 6, due mani, nessuna proprietà aggiunta. Due giavellotti FOR 3, PI 4 ciascuno; armatura leggera su misura AR 1, FOR 3, PI 6. Inizia con il maglio pronto. La dotazione su misura non aumenta da sola danno, portata o qualità."
+    },
+    {
+      "nome": "Forza e ingombro",
+      "effetto": "Può sollevare, trascinare, forzare o rompere oggetti con le regole comuni e gli strumenti appropriati. Non sfonda automaticamente porte o muri e non ignora l’Integrità degli oggetti. Lo spazio 2 × 2 Q deve poter attraversare il percorso; passaggi stretti ne limitano l’impiego."
+    },
+    {
+      "nome": "Difese",
+      "effetto": "Può parare con il maglio contro attacchi compatibili; nessuna Parata naturale. Con una sola AzP deve scegliere fra attaccare e conservarla per una Difesa. Non ottiene attacchi multipli perché grande."
+    },
+    {
+      "nome": "Bande e grandi avversari",
+      "effetto": "Queste schede aggiungono al capitolo 8 avversari capaci di sfruttare equipaggiamento, cooperazione, forza fisica e rigenerazione. Descrivono esemplari ordinari: capi, sciamani, varianti alate e versioni corrotte richiedono schede proprie. La loro presenza su Iris resta una scelta di ambientazione. PX di riferimento. Il valore riguarda un esemplare e comprende la dotazione indicata. Per un incontro con più avversari si applica il Manuale del Direttore §9.3. Le statistiche rimangono quelle della scheda al variare del numero dei PG. Stato di sviluppo. GS, PX e capacità adattate di questo blocco sono stime iniziali, non risultati di prove al tavolo. Il confronto considera efficacia offensiva, protezioni, Azioni, mobilità e capacità speciali. Vanno registrati gli esiti prima di modificare i valori per gli incontri successivi. Fonte e adattamento. I nomi originali e le pagine del Manuale dei Mostri fornito sono indicati nelle singole schede; le pagine sono quelle stampate nel volume. Descrizioni e regole operative sono riscritte per Simply RPG. Gli allineamenti e le cosmologie dell’originale non assegnano automaticamente Natura Oscura Simmetria. Tabella (celle in ordine di lettura): Dieci profili terrestri • continuazione del catalogo | Creatura | GS | PX per 4 PG | Goblin | Principiante | 11 | Hobgoblin | Inesperto | 22 | Bugbear | Esperto | 33 | Coboldo | Principiante | 11 | Orco | Inesperto | 22 | Gnoll | Inesperto | 22 | Ogre | Esperto | 33 | Ettin | Veterano | 55 | Minotauro | Veterano | 55 | Troll | Eroe | 70."
+    },
+    {
+      "nome": "Regole del blocco",
+      "effetto": "Valori pronti. Tutti gli attacchi sono Naturali, con AC 1 e costo 1 AzP, salvo una capacità che specifichi diversamente. Il danno comprende il bonus ordinario pertinente; non si aggiunge nuovamente FOR o DES. INI indica la componente fissa: si tira sempre anche 1d10. Le Azioni sono disponibili per l’intero Round, non si ripristinano all’Iniziativa. Riserve e protezioni. Tutti i profili sono viventi di Natura Comune, con PM personali e nessun incantesimo. Stati iniziali: nessuno. Nessuna immunità o Contromisura, salvo indicazione espressa. La componente magica dell’AR è sempre 0. A 0 PV il profilo senza Ferite è fuori combattimento secondo il §4.2; morte o distruzione effettiva restano distinte. Scurovisione. Tutti questi esemplari vedono entro 12 Q anche nell’oscurità naturale. Non distinguono colori al buio e non vedono attraverso ostacoli, fumo o oscurità magica. Il senso non individua automaticamente creature nascoste. Oltre tale portata valgono luce e vista ordinarie. Anatomia e movimento. Testa, Torace, Braccia e Gambe corrispondono alle parti omonime; le eccezioni dell’Ettin sono nella sua scheda. La taglia non concede Parata naturale o immunità alle manovre. I valori di movimento indicano Passo / Corsa / Scatto; non concedono volo o scavo. Nuoto e arrampicata restano attività ordinarie, quando possibili, con le relative Prove e penalità. Dotazione e Integrità. Le dotazioni sono Comuni e usano il Manuale degli Armamenti v0.62. Ogni oggetto ha PS Integrità 10; PI e requisiti sono riportati nelle schede. Armatura leggera e media sono i profili commerciali, senza proprietà aggiunte. Armi, scudi e armature a 0 PI seguono le regole di rottura; peso e penalità rimangono finché l’oggetto non è tolto. La corazza biologica non ha PI. Scudi e mani. L’AR dello scudo impugnato e utilizzabile è passiva, anche senza una Parata riuscita. La Parata a distanza con scudo ha −4 VA. Le altre Parate richiedono un mezzo e un attacco compatibili. Archi e armi a due mani richiedono entrambe le mani: riporre lo scudo ne fa perdere l’AR. Cambiare dotazione paga le normali Azioni; il semplice elenco di più armi non le rende tutte pronte. Tiro e munizioni. Arco da guerra: Colpo Singolo e Tiro Rapido, AC 1 per freccia; incoccare è compreso nell’attacco, TR consuma due frecce e segue il Giocatore. Balestra piccola: solo Colpo Singolo, capacità 1, INC 8; ricarica 1 AzM e mano libera. Le gittate sono massime: penalità di distanza, Copertura e movimento restano applicabili. Giavellotti. Le schede usano il profilo proposto nella voce Aarakocra: una mano, FOR 3, 1d6 base, portata 1 Q, gittata FOR × 3 Q, PI 4, niente Tiro Rapido. Armi da guerra in mischia e Armi da lancio a distanza. Ogni lancio spende un giavellotto; estrazione e recupero richiedono le normali Azioni. Questa proposta non modifica automaticamente il catalogo degli Armamenti. Difese e comportamento. Salvo concessione espressa, niente Parata naturale. Schivata richiede 1 AzP e 1 AzM; Elusione soltanto contro effetti che la consentono. Le soglie di ritirata sono intenzioni dell’esemplare, non obblighi biologici o nuove condizioni. Società, alleanze e ostilità dipendono dalla scena: il nome della specie non determina la condotta di ogni individuo."
+    },
+    {
+      "nome": "Altri movimenti",
+      "effetto": "spazio 2 × 2 Q"
+    },
+    {
+      "nome": "Abilità particolari",
+      "effetto": "Oratoria 12 per intimidire"
     }
   ],
   "note": "Gigante • assaltatore ordinario • Natura Comune. Comportamento. Tenta di raggiungere e colpire il nemico più vicino o chi lo minaccia apertamente. Fame, pagamento e sicurezza possono essere strumenti di negoziazione. Sotto 16 PV cerca una via d’uscita, salvo un obiettivo che lo trattenga.",
@@ -122,7 +154,7 @@
       "spazio": "Mostri 0.69",
       "abilita": "Mostri 0.47",
       "attacchi": "Mostri 0.47",
-      "capacita": "Mostri 0.47",
+      "capacita": "Mostri 0.69",
       "note": "Mostri 0.69",
       "gs_px": "Mostri 0.69"
     }

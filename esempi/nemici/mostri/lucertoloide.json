@@ -48,11 +48,11 @@
       "va": 10,
       "danno": "1d6+1",
       "natura": "Naturale",
-      "portata_q": 1,
-      "ac": 1,
       "proprieta": [
         "Contusione"
-      ]
+      ],
+      "portata_q": 1,
+      "ac": 1
     },
     {
       "nome": "Morso",
@@ -60,11 +60,11 @@
       "va": 10,
       "danno": "1d6+1",
       "natura": "Naturale",
-      "portata_q": 1,
-      "ac": 1,
       "proprieta": [
         "Perforazione"
       ],
+      "portata_q": 1,
+      "ac": 1,
       "note": "Non concede Parata naturale, non trasmette automaticamente malattie e non afferra la preda."
     },
     {
@@ -73,11 +73,11 @@
       "va": 10,
       "danno": "1d6+1",
       "natura": "Naturale",
-      "portata_q": 1,
-      "ac": 1,
       "proprieta": [
         "Perforazione"
-      ]
+      ],
+      "portata_q": 1,
+      "ac": 1
     },
     {
       "nome": "Giavellotto lanciato",
@@ -85,14 +85,14 @@
       "va": 9,
       "danno": "1d6",
       "natura": "Naturale",
+      "proprieta": [
+        "Perforazione"
+      ],
       "gittata_q": 18,
       "modalita": [
         "S"
       ],
-      "ac": 1,
-      "proprieta": [
-        "Perforazione"
-      ]
+      "ac": 1
     }
   ],
   "abilita": [
@@ -131,25 +131,32 @@
   ],
   "capacita": [
     {
-      "nome": "Corpo e Azioni",
-      "effetto": "Natura Comune, mente e PM personali; respira, mangia, beve e riposa; cure biologiche, malattie e Stati applicabili salvo protezioni esplicite. A 0 PV non Svenuto né morto automaticamente: un ulteriore danno finale positivo a 0 PV richiede Tempra e le Ferite del §4.2 (l’eccedenza del colpo che esaurisce i PV non genera da sola Ferite); a 0 PM personali Svenuto dopo la risoluzione completa dell’azione; cambiare forma, entrare in Furia o ricevere PV temporanei non cura Ferite, Menomazioni o Morente. INI modifica 1d10; AzP e unica AzM valgono per l’intero Round; ogni attacco normale costa 1 AzP, produce AC 1 e usa il danno già completo della tabella (non aggiungere FOR o DES). I tetti offensivi comprendono Opportunità e attacchi ordinati; una sola Opportunità ordinaria per Round con un’arma ravvicinata pronta o un attacco naturale ammesso (niente Carica, incantesimo, trasformazione o Manovra offensiva gratuita). Parata: 1 AzP, arma o scudo idonei, successo dimezza per eccesso prima dell’AR, Magistrale annulla; nessuna Parata naturale; armi ravvicinate −8 VA per parare a distanza, Scudo piccolo −4 con ulteriore −2 contro Raffica. Schivata: 1 AzP, 1 AzM, consapevolezza e spazio. Naturale e Magico incontrano l’AR pertinente, Etereo solo quella magica; nessuna AR magica. Dotazione: oggetti Comuni, PS Integrità 10; recuperare un’arma non trasferisce i bonus personali; incoccare è compreso nell’attacco con Arco pronto (ogni tiro consuma una freccia); estrarre, riporre o recuperare un oggetto costa 1 AzP (abbandonarlo è gratuito); le mani occupate restano occupate durante Difese e lanci. Taglia e numero di arti non concedono danni, PI, portata o Azioni maggiori."
-    },
-    {
-      "nome": "Nuoto nativo",
-      "effetto": "Nel solo Nuoto percorre le distanze effettive indicate (6 / 12 / 18 Q), come eccezione al costo 2 dell’acqua; Corsa e Scatto mantengono Prove, modificatori ed esiti del Giocatore §5.2. Nei percorsi misti vale il budget unico del §5.2.4 (costo 1 a terra e 2 in acqua, senza superare il limite per ciascuna modalità); entrare in acqua, immergersi e riemergere non rinnovano l’AzM."
-    },
-    {
-      "nome": "Apnea",
-      "effetto": "Respira aria e può trattenere il fiato per 15 minuti (150 Round) al posto della normale riserva pari a COS. Esaurita, seguono PS, coscienza e danni del §5.23; un Round respirando normalmente ripristina il fiato. Acqua irrespirabile o contaminata resta un pericolo."
-    },
-    {
       "nome": "Dotazione e sequenza",
-      "effetto": "Randello FOR 3 PI 5; due Giavellotti della sentinella FOR 3 PI 4; Scudo piccolo AR +1 FOR 3 PI 4; nessuna armatura indossata. Inizia con Randello e Scudo pronti. Per Round può compiere un Morso e un attacco con Randello oppure Giavellotto, Opportunità e colpo ordinato compresi; non ripete due volte la stessa sequenza. Ogni Giavellotto va preparato e consumato dal lancio. I 22 PX comprendono la dotazione."
+      "effetto": "Randello, FOR 3, PI 5; due Giavellotti della sentinella, FOR 3, PI 4; Scudo piccolo, AR +1, FOR 3, PI 4. Nessuna armatura indossata. Inizia con Randello e Scudo pronti. Per Round può compiere un Morso e un attacco con Randello oppure Giavellotto, Opportunità e colpo ordinato compresi; non ripete due volte la stessa sequenza. Ogni Giavellotto va preparato e consumato dal lancio."
     },
     {
       "nome": "Scaglie e Scudo",
-      "passiva": true,
-      "effetto": "L’AR biologica 2 resta anche perdendo lo Scudo. Lo Scudo è ordinario: spuntoni ornamentali non danno un attacco aggiuntivo, un’arma con danno autonomo o un bonus alla Parata. La coda partecipa all’equilibrio e al Nuoto, senza attacco di Coda."
+      "effetto": "L’AR biologica 2 resta anche perdendo lo Scudo. Lo Scudo è ordinario: spuntoni ornamentali non concedono un attacco aggiuntivo, un’arma con danno autonomo o un bonus alla Parata. Il Morso non concede Parata naturale, non trasmette automaticamente malattie e non afferra la preda."
+    },
+    {
+      "nome": "Vita e condotta",
+      "effetto": "Apnea di 15 minuti e Nuoto nativo come nella pagina comune. Parla Draconico; nessuna Scurovisione innata. Sotto 8 PV cerca la sponda, un riparo o l’aiuto dei compagni. Può riconoscere accordi e confini senza un obbligo di trattare gli estranei come cibo."
+    },
+    {
+      "nome": "Popoli delle terre selvagge",
+      "effetto": "Dieci profili per comunità, pattuglie e incontri di frontiera Queste schede descrivono abitanti di paludi, foreste, pianure e caverne. Possono essere guide, vicini, rivali, guardie o interlocutori, oltre che avversari. La specie non impone una morale, una cultura tecnologica o un rapporto con le Corporazioni. Origine, comunità e ragioni della presenza su Iris si stabiliscono nell’avventura, senza assimilare questi popoli alla Covata. PX di riferimento. Valori per un esemplare e quattro PG. Bullywug, Centauro, Kenku, Satiro, i tre Lucertoloidi e Orog comprendono la dotazione Comune descritta. Quaggoth e Thonot hanno capacità intrinseche già conteggiate nel GS, senza dotazione. Il premio dell’incontro segue il Direttore §9.3, senza riapplicare il moltiplicatore di equipaggiamento. Impiego. Una disputa sui confini, uno scambio, una richiesta di passaggio o la difesa di un rifugio possono essere il centro dell’incontro. I profili indicano mezzi e limiti del singolo esemplare; non assegnano automaticamente controllo sugli animali, poteri ai capi o ostilità verso altri popoli. Fonti e verifica. Giocatore v0.49, Magia v1.5, Direttore v0.41 e Armamenti v0.64; rimandi alle pagine stampate del Manuale dei Mostri fornito. GS e PX sono stime da verificare al tavolo, soprattutto per riserve temporanee, imitazione, trasformazione e sostegno mistico. Le capacità descritte non introducono nuove opzioni gratuite per i PG. Tabella (celle in ordine di lettura): Creatura | GS | PX per 4 PG | Bullywug | Principiante | 11 | Centauro | Esperto | 33 | Kenku | Principiante | 11 | Satiro | Inesperto | 22 | Lucertoloide | Inesperto | 22 | Sciamano lucertoloide | Esperto | 33 | Re o Regina lucertoloide | Veterano | 55 | Quaggoth | Esperto | 30 | Quaggoth Thonot | Veterano | 50 | Orog | Veterano | 55."
+    },
+    {
+      "nome": "Terre selvagge regole comuni",
+      "effetto": "Corpo e risorse. Tutti hanno Natura Comune, mente e PM personali. Respirano, mangiano, bevono e richiedono riposo; cure biologiche, malattie e Stati sono applicabili salvo protezioni esplicite. Quaggoth e Thonot sono immuni a veleno e Avvelenato, non alle malattie. Re o Regina lucertoloide non riceve Natura Oscura Simmetria o CROS per l’origine demoniaca della fonte. PV PM e Ferite. A 0 PV non diventano automaticamente Svenuti o morti: ulteriore danno finale positivo, quando si è già a 0 PV, richiede Tempra e le Ferite del §4.2. L’eccedenza del colpo che esaurisce i PV non genera da sola Ferite. A 0 PM personali si diventa Svenuti dopo la risoluzione completa dell’azione. Cambiare forma, entrare in Furia o ricevere PV temporanei non cura Ferite, Menomazioni o Morente. Azioni e attacchi. INI modifica 1d10; AzP e unica AzM valgono per l’intero Round. Ogni attacco normale costa 1 AzP, produce AC 1 e usa il danno già completo della tabella, senza aggiungere ancora FOR o DES. I tetti offensivi comprendono Opportunità e attacchi ordinati. Una sola Opportunità ordinaria per Round, con un’arma ravvicinata pronta o un attacco naturale ammesso; niente Carica, incantesimo, trasformazione o Manovra offensiva gratuita. Difese. Parata costa 1 AzP e richiede arma o scudo idonei: successo dimezza per eccesso prima dell’AR, Magistrale annulla. Nessuna Parata naturale. Armi ravvicinate −8 VA per parare a distanza; Scudo piccolo −4, con ulteriore −2 contro Raffica. Schivata richiede 1 AzP, 1 AzM, consapevolezza e spazio. Naturale e Magico incontrano l’AR pertinente; Etereo soltanto quella magica. Nessun profilo possiede AR magica. Dotazione. Tutti gli oggetti da combattimento indicati sono Comuni, PS Integrità 10. Requisiti FOR e PI sono nelle singole voci. Recuperare un’arma non trasferisce i bonus personali della creatura. Incoccare è compreso nell’attacco con Arco pronto; ogni tiro consuma una freccia. Estrarre, riporre o recuperare un oggetto costa 1 AzP salvo una regola specifica; abbandonarlo è gratuito. Le mani occupate restano occupate durante Difese e lanci. Movimento e armatura. Terne Passo / Corsa / Scatto in Q, con un unico budget per percorsi misti. Orog include già −2 da Pesante ad attacchi, Schivata e Prove fisiche ostacolate, e −2 Q a ciascuna andatura. Parata, Percezione e PS non ricevono questi malus. Armatura a 0 PI perde AR ma mantiene le penalità finché indossata. Taglia e numero di arti non concedono automaticamente danni, PI, portata o Azioni maggiori."
+    },
+    {
+      "nome": "Anfibi apnea e anatomia",
+      "effetto": "Nuoto nativo. Bullywug e i tre Lucertoloidi percorrono nel solo Nuoto le distanze effettive indicate, come eccezione al costo 2. Corsa e Scatto mantengono Prove, modificatori ed esiti del Giocatore §5.2. Nei percorsi misti si usa il budget unico del §5.2.4: costo 1 a terra e 2 in acqua, senza superare il limite scritto per ciascuna modalità. Entrare in acqua, immergersi e riemergere non rinnovano l’AzM. Respirazione. Bullywug respira aria e acqua. I Lucertoloidi respirano aria e possono trattenere il fiato per 15 minuti, cioè 150 Round, al posto della normale riserva pari a COS. La riserva è una sola per entrambe le forme dello Sciamano: trasformarsi non la rinnova. Esaurita, seguono PS, coscienza e danni del §5.23. Un Round respirando normalmente ripristina il fiato. Acqua irrespirabile o contaminata resta un pericolo compatibile. Salto del Bullywug. Come parte della propria AzM al Passo può compiere un salto da fermo lungo fino a 4 Q oppure alto fino a 2 Q, senza rincorsa e senza una Prova in condizioni ordinarie. Il percorso reale consuma il budget disponibile, compresa salita e discesa quando necessarie. Occorre un arrivo libero, praticabile e sostenuto. Ostacoli eccezionali, terreno precario o carico richiedono le normali valutazioni; non è Volo o una Schivata gratuita. Corpi diversi. Centauro ha Testa e Braccia umanoidi, Torace comprendente entrambe le masse corporee e Gambe corrispondenti agli arti equini. Per Kenku Braccia indica gli arti manipolatori, privi di ali funzionali. Per Satiro Gambe indica gli arti caprini. Quaggoth e Thonot hanno anatomia umanoide. Nei Lucertoloidi la coda partecipa all’equilibrio e al Nuoto, senza un attacco gratuito di Coda. Spazi e appoggi. Il corpo del Centauro e la forma di Coccodrillo occupano 2 × 2 Q; il resto dei profili 1 × 1 Q. Aperture e appigli devono permettere il passaggio reale. Nuoto e arrampicata non consentono di attraversare avversari, solidi o vincoli. Una Menomazione interessa la funzione coinvolta e mantiene le conseguenze ordinarie delle Ferite, senza assegnare riserve separate a ciascun arto."
+    },
+    {
+      "nome": "Altri movimenti",
+      "effetto": "Terra e Nuoto nativo 6 / 12 / 18: la stessa andatura vale anche per Nuoto nativo; spazio 1 × 1 Q"
     }
   ],
   "note": "AR 3 con Scudo piccolo, 2 biologica senza. Parla Draconico; nessuna Scurovisione innata. Abitante di rive e paludi, attrezzato per pattugliare e difendere una comunità; può riconoscere accordi e confini senza un obbligo di trattare gli estranei come cibo. Condotta: sotto 6 PV o a Ferita Profonda cerca la sponda, un riparo o l’aiuto dei compagni. Fonte: Lizardfolk, p. 204.",
@@ -168,8 +175,8 @@
       "movimento": "Mostri 0.69",
       "spazio": "Mostri 0.69",
       "abilita": "Mostri 0.69",
-      "attacchi": "Mostri 0.47",
-      "capacita": "Mostri 0.47",
+      "attacchi": "Mostri 0.69",
+      "capacita": "Mostri 0.69",
       "note": "Mostri 0.47",
       "gs_px": "Mostri 0.69"
     }

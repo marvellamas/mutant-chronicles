@@ -108,7 +108,7 @@ export function rigaProvenienza(nemico, corrente) {
  * @param opz.nonLetti      i campi che la lettura **non** ha letto per intero: `{ campo: motivo }`
  * @param opz.edizionePrima l'edizione da attribuire ai campi di `vecchia` che non dichiarano la propria
  * @param opz.campi         i campi su cui lavorare (per i test; di norma CAMPI)
- * @returns { json, campi, scritti, ereditati, nonLeggibili }
+ * @returns { json, campi, scritti, ereditati, nonLeggibili, parziali }
  */
 export function unisciPerCampo(vecchia, letta, { edizione, nonLetti = {}, edizionePrima = null, campi = CAMPI } = {}) {
   if (!edizione) throw new Error('unisciPerCampo: serve l’edizione da cui viene la lettura');
@@ -116,7 +116,7 @@ export function unisciPerCampo(vecchia, letta, { edizione, nonLetti = {}, edizio
   const provPrima = provenienza(prima);
   const json = { ...(prima ?? {}), ...Object.fromEntries(Object.entries(letta ?? {}).filter(([k]) => !campi.includes(k))) };
   const mappa = {};
-  const scritti = []; const ereditati = []; const nonLeggibili = [];
+  const scritti = []; const ereditati = []; const nonLeggibili = []; const parziali = [];
 
   for (const k of campi) {
     const nuovo = letta?.[k];
@@ -135,6 +135,18 @@ export function unisciPerCampo(vecchia, letta, { edizione, nonLetti = {}, edizio
     const aveva = avevo !== undefined && avevo !== null
       && !(Array.isArray(avevo) && avevo.length === 0)
       && !(isOggetto(avevo) && Object.keys(avevo).length === 0);
+    // **Lotto 205: la regola protegge un valore buono, e dove non ce n'è nessuno non c'è niente da proteggere.**
+    // Per una creatura **nuova** una lettura parziale non sovrascrive niente: buttarla lascerebbe la scheda senza
+    // quel campo, che è peggio di averlo incompleto e dichiarato. La Melma grigia psichica entrava con zero
+    // attacchi perché uno dei tre si risolve con una Salvezza: gli altri due erano letti, e andavano scritti.
+    // Si scrive quello che si è letto, con l'edizione da cui viene, e il motivo resta fra i «non capito».
+    if (!aveva && !vuoto) {
+      json[k] = nuovo;
+      mappa[k] = edizione;
+      scritti.push(k);
+      parziali.push({ campo: k, motivo: nonLetti[k] });
+      continue;
+    }
     if (aveva) {
       json[k] = avevo;
       const ed = provPrima[k] ?? edizionePrima;
@@ -145,7 +157,7 @@ export function unisciPerCampo(vecchia, letta, { edizione, nonLetti = {}, edizio
     }
   }
   const _bestiario = { ...(prima?._bestiario ?? {}), ...(letta?._bestiario ?? {}), campi: mappa };
-  return { json: { ...json, _bestiario }, campi: mappa, scritti, ereditati, nonLeggibili };
+  return { json: { ...json, _bestiario }, campi: mappa, scritti, ereditati, nonLeggibili, parziali };
 }
 
 /**

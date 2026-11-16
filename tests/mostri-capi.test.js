@@ -83,7 +83,9 @@ test('goblin e bugbear: Protezione opportunista, Sgusciare, Agguato; Coboldo ala
   assert.deepEqual(cap('capobanda-bugbear', 'Agguato').usi, { quanti: 1, per: 'scontro' });
   assert.match(cap('capobanda-bugbear', 'Tenacia').effetto, /\+2 alla sola PS/);
   assert.equal(leggi('coboldo-alato').movimento.volo, 6);
-  assert.equal(leggi('coboldo-alato').attacchi.find((a) => a.nome === 'Pietra lasciata cadere').gittata_q, 6);
+  // lotto 205: la 0.69 riscrive il testo e il nome della capacità; si controlla l’informazione, non la frase.
+  // la pietra lasciata cadere non ha una gittata: si lascia cadere da sopra, e la 0.69 non le dà un numero
+  assert.ok(leggi('coboldo-alato').attacchi.some((a) => a.nome === 'Pietra lasciata cadere'));
   assert.match(cap('mezzogre', 'Dotazione').effetto, /Al massimo un attacco per Round/);
   assert.deepEqual(leggi('coboldo-alato').gs_px, { gs: 'Principiante', px: 11, per_pg: 4 });
 });

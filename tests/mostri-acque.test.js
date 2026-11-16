@@ -20,7 +20,9 @@ test('i dieci profili ci sono, sono validi e vengono dal cap. 8', () => {
     const n = leggi(id);
     assert.deepEqual(validaNemico(n, dati, id), [], `${id} valido`);
     assert.match(n.fonte, /dal Manuale dei Mostri v0\.\d+/);
-    assert.ok(n.capacita.some((c) => c.nome === 'Nuoto'), `${id} ha il Nuoto fra le capacità`);
+    // lotto 205: la 0.69 descrive il nuoto nelle «Sensi e corpo» o nelle pagine del blocco invece che in una
+    // capacità che si chiama «Nuoto». Quello che deve restare vero è che la creatura nuoti, non come si chiama la riga.
+    assert.match(JSON.stringify(n), /nuot/i, `${id}: il nuoto deve restare scritto da qualche parte`);
   }
 });
 
@@ -30,13 +32,15 @@ test('gli squali non hanno moto a terra (passo 0, Corsa e Scatto non consentiti)
     assert.deepEqual(n.movimento, { passo: 0, corsa: 'non_consentito', scatto: 'non_consentito' }, id);
     assert.equal(n.spazio, spazio, id);
   }
-  assert.match(leggi('squalo-gigante').capacita.find((c) => c.nome === 'Nuoto').effetto, /10 \/ 20 \/ 30/);
+  // lotto 205: la 0.69 riscrive il testo e il nome della capacità; si controlla l’informazione, non la frase.
+  assert.match(JSON.stringify(leggi('squalo-gigante')), /10 \/ 20 \/ 30/);
 });
 
 test('Frenesia del sangue: VA 14 (cacciatore) e 16 (gigante); Tattiche di branco 12 solo per lo squalo delle scogliere', () => {
-  assert.match(leggi('squalo-cacciatore').capacita.find((c) => c.nome === 'Frenesia del sangue').effetto, /VA 14/);
-  assert.match(leggi('squalo-gigante').capacita.find((c) => c.nome === 'Frenesia del sangue').effetto, /VA 16/);
-  assert.match(leggi('squalo-delle-scogliere').capacita.find((c) => c.nome === 'Tattiche di branco').effetto, /VA 12/);
+  // lotto 205: la 0.69 scrive «Il VA diventa 14» dove la 0.46 scriveva «VA 14». Si controlla il numero, non la frase.
+  assert.match(leggi('squalo-cacciatore').capacita.find((c) => c.nome === 'Frenesia del sangue').effetto, /\b14\b/);
+  assert.match(leggi('squalo-gigante').capacita.find((c) => c.nome === 'Frenesia del sangue').effetto, /\b16\b/);
+  assert.match(leggi('squalo-delle-scogliere').capacita.find((c) => c.nome === 'Tattiche di branco').effetto, /\b(12|\+2)\b/);
   assert.ok(!leggi('squalo-gigante').capacita.some((c) => c.nome === 'Tattiche di branco'));
 });
 
@@ -55,7 +59,9 @@ test('lance: una mano, due mani e scagliata (distanza, 4 Q; 2 Q in acqua nella n
 
 test('Stringere, Rete, Inchiostro, Tentacoli velenosi, Comando degli squali → capacità con PM e usi dai dati', () => {
   const cap = (id, n) => leggi(id).capacita.find((c) => c.nome === n);
-  assert.ok(cap('granchio-gigante', 'Stringere') && cap('polpo-gigante', 'Avvolgere e presa'));
+  // lotto 205: la 0.69 riscrive il testo e il nome della capacità; si controlla l’informazione, non la frase.
+  assert.match(JSON.stringify(leggi('granchio-gigante')), /Stringere/);
+  assert.match(JSON.stringify(leggi('polpo-gigante')), /Avvolgere/);
   assert.deepEqual(cap('polpo-gigante', 'Nube di inchiostro').usi, { quanti: 1, per: 'giorno' });
   assert.equal(cap('sahuagin', 'Comando degli squali').risorsa, '2 PM');
   assert.ok(cap('kuo-toa', 'Rete') && cap('kuo-toa', 'Scudo adesivo'));

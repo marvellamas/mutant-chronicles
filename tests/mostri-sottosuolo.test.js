@@ -30,7 +30,9 @@ test('attacchi senza danno ai PV o con portata verticale → capacità, non atta
   assert.deepEqual(nomiAttacchi('roper'), ['Morso']);
   assert.ok(nomiCapacita('roper').includes('Filamento (aggancio)') && nomiCapacita('roper').includes('Trascinare'));
   assert.deepEqual(nomiAttacchi('rugginofago'), ['Morso']);
-  assert.ok(nomiCapacita('rugginofago').includes('Antenne (ruggine)'));
+  // lotto 205: la 0.69 riscrive il testo e il nome della capacità; si controlla l’informazione, non la frase.
+  assert.ok(nomiCapacita('rugginofago').some((n) => /Antenne/.test(n)));
+  assert.match(JSON.stringify(leggi('rugginofago')), /ruggine/i);
   assert.deepEqual(nomiAttacchi('umber-hulk'), ['Artiglio', 'Mandibole']);
   assert.ok(nomiCapacita('umber-hulk').includes('Sguardo perturbante'));
   assert.deepEqual(nomiAttacchi('stirge'), ['Puntura']);

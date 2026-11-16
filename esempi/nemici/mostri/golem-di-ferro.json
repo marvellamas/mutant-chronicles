@@ -60,6 +60,32 @@
       "va": 4
     }
   ],
+  "attacchi": [
+    {
+      "nome": "Schianto",
+      "tipo": "ravvicinato",
+      "va": 17,
+      "danno": "3d8+3",
+      "natura": "Magico",
+      "proprieta": [
+        "Contusione"
+      ],
+      "portata_q": 1,
+      "ac": 1
+    },
+    {
+      "nome": "Lama",
+      "tipo": "ravvicinato",
+      "va": 17,
+      "danno": "3d10+3",
+      "natura": "Magico",
+      "proprieta": [
+        "Taglio"
+      ],
+      "portata_q": 2,
+      "ac": 1
+    }
+  ],
   "capacita": [
     {
       "nome": "Esalazione",
@@ -90,6 +116,38 @@
       "effetto": "L’Esalazione è un danno istantaneo, senza Avvelenato periodico o paralisi; Cura Avvelenamenti non restituisce i PV già persi. Immunità al veleno evita l’effetto, un’armatura ordinaria no. La nube non rimane sul terreno e non offre dosi recuperabili. Comprende gli ordini del creatore senza parlare e prosegue l’ultima consegna valida; non possiede Furia automatica."
     },
     {
+      "nome": "Geni e guardiani elementali",
+      "effetto": "Dieci nuove creature di Natura Comune: i quattro geni elementali, due golem, l’Omuncolo, il Cacciatore invisibile, l’Anomalia acquatica e il Gorgone. L’origine elementale o artificiale non ne stabilisce la morale e non le associa automaticamente alla Simmetria Oscura. GS e PX sono una prima taratura per quattro PG e un solo esemplare con la dotazione scritta, senza tana, trappole o servitori. Le armi Comuni dei geni sono già comprese: non si applica il modulo EQ dei venticinque PNG. Un elementale evocato è una creatura aggiuntiva da considerare nell’incontro, non una riserva gratuita del genio. La procedura dei premi resta nel Direttore §9.3. Tabella (celle in ordine di lettura): Creatura | GS iniziale | PX per 4 PG | Dao | Mito | 220 | Djinni | Mito | 220 | Efreeti | Mito | 220 | Marid | Mito | 220 | Golem di ferro | Semidio | 400 | Golem di pietra | Leggenda | 100 | Omuncolo | Principiante | 10 | Cacciatore invisibile | Eroe | 70 | Anomalia acquatica | Veterano | 50 | Gorgone | Eroe | 70."
+    },
+    {
+      "nome": "Risoluzione comune",
+      "effetto": "Ogni attacco costa una AzP e applica una AC salvo eccezione scritta. AzP e unica AzM sono il totale per Round, senza ripristino al sopraggiungere dell’Iniziativa. I limiti di attacco comprendono l’unica Opportunità gratuita; essa usa solo un attacco ravvicinato compatibile, non soffi, getti o attivazioni. I danni della tabella sono completi e non ricevono un altro bonus di FOR. Iniziativa. Il bonus positivo dipende da DES; per il Gorgone usa invece SAG, come prontezza istintiva. Nei due golem non vi è un bonus positivo: tirano solo 1d10. Nessun malus di base dovuto a INT o DES basse; restano Ferite e condizioni. Il bonus scritto sostituisce, senza sommarlo, quello di un’altra Caratteristica. Le capacità innate consumano Azioni e PM anche quando il bersaglio resiste; non richiedono Potere o componenti e non sono lanci fermabili con Contromagia. Negare Potere interviene solo sugli effetti dichiarati rimovibili: potenza superiore rimuove, inferiore non basta, pari richiede una sola Volontà di chi nega. La potenza di confronto non è un costo aggiuntivo. Gli effetti a durata usano le scadenze comuni della Magia. A 0 PV il mostro è fuori combattimento secondo il §4.2; la morte o distruzione effettiva resta distinta. Zero PM personali provoca Svenuto dopo la completa risoluzione dell’azione; PM assenti, indicati con un trattino, non sono una riserva vuota. Le eccezioni di legame dell’Omuncolo e dell’Anomalia sono scritte nelle loro schede. Nessuno risucchia PM da creatori o bacini al posto della creatura."
+    },
+    {
+      "nome": "Geni poteri e risorse condivise",
+      "effetto": "Dao, Djinni, Efreeti e Marid sono spiriti autonomi e corporei, con mente e PM personali. Non sono le manifestazioni create da Evoca Elementale: non ricevono le immunità comuni di quelle schede, non scompaiono a zero PV e non sono cancellabili come un’evocazione solo per la loro origine. Usano le immunità e le resistenze specificate. Dao, Djinni ed Efreeti respirano aria; il Marid respira anche acqua. Dardo Spirituale può colpire la loro animazione e sottrarre i loro PM. Per il recupero ordinario usano riposo e raccoglimento compatibili con il proprio corpo; Cura Ferite e Medicina biologica non ricostituiscono materia elementale. Non assorbono automaticamente Fuoco, Acqua, Aria o Terra per curarsi. Alla morte effettiva il corpo si dissolve nell’elemento, senza esplosione o danno gratuito; gli oggetti restano. Non avviene al solo ingresso in Morente."
+    },
+    {
+      "nome": "Capacità di tutti e quattro",
+      "effetto": "Percepire magia. Una AzP e due PM rivelano se esiste una fonte mistica attiva visibile entro sei Q. Non ne identificano autore, Incantesimo, valori o natura morale e non vedono attraverso muri. Una creatura invisibile non diventa visibile per il solo esito positivo. È una lettura istantanea, non una sorveglianza permanente. Comprensione. Una AzP e due PM su di sé: per dieci minuti comprende e parla le lingue udite. Non legge automaticamente testi, decifra cifrari o ottiene conoscenze tecniche. Negare Potere rimuove il beneficio, confronto 3. Non è un canale telepatico e non obbliga l’interlocutore a capire un suono che non può udire. Invisibilità. Una AzP e tre PM, una volta per 24 ore, su di sé e sulla dotazione: tre Round senza Concentrazione. Termina dopo un attacco o potere ostile, da Svenuto o con Negare Potere, confronto 6. Non silenzia, cancella tracce o rende incorporeo; usare le normali limitazioni contro un nemico non visto. Forma gassosa. Una AzP e tre PM, una volta per 24 ore: cinque Round senza Concentrazione, volo levitante quattro Q al Passo; niente attacchi, parola, manipolazioni o altre capacità attive. Dimezza per eccesso Naturale dopo Difese e prima dell’AR intrinseca; non cumula un secondo dimezzamento contro la stessa fonte. Passa dove passa l’aria, non attraverso muri integri o acqua. Solo l’arma della dotazione segue il corpo; altri oggetti sono deposti. Nessuna cura o rinnovo di Azioni. Tornare corporei. Una AzP termina Forma gassosa; termina anche da Svenuto o con Negare Potere, confronto 9. Serve lo spazio corporeo libero: se forzato in una fessura viene espulso nel più vicino spazio adatto lungo il percorso, con 1d6 Etereo diretto senza AR. Non evade da un vincolo mistico compatibile e non permette di trasportare altre creature. Elementale alleato. Una AzP e quindici PM, una volta per 24 ore: capacità innata che applica Evoca Elementale 15 del Manuale della Magia §13.8, senza Prova Potere o componenti. Crea un Maggiore puro del proprio elemento entro 15 Q visibili, ordini mentali entro 25 Q, durata dieci minuti. Un solo elementale; usa integralmente la propria scheda, PM assenti, Iniziativa subito dopo il genio e condizioni di termine della Magia. Non rinnova Azioni globali sostituendolo. I suoi PX sono separati da quelli del genio. Profili base. Queste schede includono le capacità qui descritte. Desideri, viaggi tra piani e repertori ulteriori richiedono una variante con limiti e PX propri; non sono aggiunte automatiche. Un accordo narrativo con un genio non conferisce una nuova Classe o l’accesso gratuito alle sue capacità innate."
+    },
+    {
+      "nome": "Nuovi golem corpo e servizio",
+      "effetto": "Golem di ferro e di pietra seguono il modello dei Golem di carne e argilla già convertiti. Il corpo usa PV, Ferite, Menomazioni e Morente, senza una seconda riserva di PI strutturali. Non necessita di aria, cibo, acqua o sonno; è immune a soffocamento, Sanguinamento, malattie biologiche, veleno e sonno indotto. Una parte perduta mantiene le conseguenze funzionali pertinenti: la forma immutabile non annulla una Menomazione."
+    },
+    {
+      "nome": "Assenza di mente",
+      "effetto": "PM e Volontà sono assenti. Non subisce paura, fascinazione o un potere che richieda una mente; non effettua una Volontà inesistente per resistervi. Può invece subire un effetto mistico sul corpo usando Tempra, Riflessi o Magia, secondo la fonte. Dardo Spirituale può colpire espressamente il nucleo animante: danni ai PV normali, nessun PM da sottrarre e nessun trasferimento al creatore."
+    },
+    {
+      "nome": "Resistenza e forma",
+      "effetto": "Dimezza per eccesso Naturale da Contusione, Taglio e Perforazione dopo le Difese e prima dell’AR. Non dimezza Magico, Etereo, Fuoco, Gelo, Acido o Elettricità per questa resistenza; eventuali immunità della scheda prevalgono. Non viene importata una proprietà dell’adamantio assente dai cataloghi Simply RPG. La lama del Golem di ferro infligge Magico per la sua animazione, senza creare un’arma incantata separata. Forma immutabile. Non può essere trasformato in un’altra anatomia o materiale da un potere di mutazione. Questo non impedisce spinte, A Terra, legami, Rallentato o altri Stati compatibili con la sua scheda. Le immunità non impediscono che zero PV metta il corpo fuori combattimento (§4.2). Resistenza alla magia. +2 alle sole PS previste contro Incantesimi o poteri mistici, non già compreso nei valori pronti. Non aggiunge una nuova PS dove la fonte non la prevede e non migliora Tempra per Ferite solo perché il danno era Magico. Negare Potere non cancella il corpo autonomo, la sua AR o gli attacchi innati; può rimuovere il Campo di lentezza dalle vittime come specificato."
+    },
+    {
+      "nome": "Consegna e recupero",
+      "effetto": "Il creatore riconosciuto può impartire un ordine semplice senza AzP alla propria Iniziativa, udibile entro 12 Q. Il Golem comprende le lingue del creatore senza conoscerne pensieri, password o competenze; imitare la voce non trasferisce il controllo. Se non riceve altri ordini esegue l’ultima consegna possibile. Una consegna impossibile non crea nuove facoltà di percezione o movimento. Cura Ferite, Medicina, riposo biologico e riparazioni tecnologiche ordinarie non restituiscono PV al corpo animato. La scheda non introduce una ricetta di costruzione o restauro: servono procedure pertinenti definite altrove. L’assorbimento di Fuoco del Golem di ferro recupera soltanto PV entro i suoi limiti, senza ricostruire arti o sanare Ferite. Nessun Golem di questo blocco possiede Furia o turni leggendari."
+    },
+    {
       "nome": "Altri movimenti",
       "effetto": "spazio 2 × 2 Q"
     }
@@ -112,13 +170,12 @@
       "movimento": "Mostri 0.69",
       "spazio": "Mostri 0.69",
       "abilita": "Mostri 0.69",
+      "attacchi": "Mostri 0.69",
       "capacita": "Mostri 0.69",
       "note": "Mostri 0.69",
-      "gs_px": "Mostri 0.69",
-      "attacchi": "Mostri 0.69"
+      "gs_px": "Mostri 0.69"
     },
     "edizione": "Mostri 0.69",
     "sistema_salute": "solo_PV"
-  },
-  "attacchi": []
+  }
 }

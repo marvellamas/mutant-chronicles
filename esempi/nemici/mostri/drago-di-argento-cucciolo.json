@@ -93,6 +93,10 @@
       "effetto": "Immune a freddo e Gelo. Frequenta montagne e nubi; usa la paralisi per catturare gli avversari. Nessuna modalità aggiuntiva di movimento."
     },
     {
+      "nome": "Draghi metallici cuccioli e antichi",
+      "effetto": "Questo blocco completa ottone, rame, bronzo, argento e oro con cuccioli e antichi. Ogni specie mantiene due soffi alternativi e le proprie protezioni. Tutti hanno Natura Comune, senza dotazione né incantesimi appresi assegnati dal profilo. Tabella (celle in ordine di lettura): Dieci profili per completare le quattro età."
+    },
+    {
       "nome": "Azioni e attacchi",
       "effetto": "Cucciolo: Iniziativa 1d10 + 1 naturale; 2 AzP e 1 AzM per Round; un solo Morso al massimo per Round. Antico: Iniziativa 1d10 + 4 naturale; 5 AzP e 1 AzM; un Morso e fino a due Artigli per Round, con possibilità di sostituire un Artiglio con una Codata. Le Opportunità mantengono il costo ordinario e rientrano nei limiti offensivi. Le Azioni non si rinnovano alla propria Iniziativa. Ogni attacco fisico costa 1 AzP, produce AC 1 e usa Corpo a corpo. Morso: danni Naturali da Perforazione; Artigli: Taglio; Coda: Contusione. Portata del Morso cucciolo 1 Q Base; antico: Morso 4, Artiglio 3 e Coda 6 Q Base. Dadi e moltiplicatori sono completi. Nessuna Parata naturale; Schivata segue requisiti e costi comuni."
     },

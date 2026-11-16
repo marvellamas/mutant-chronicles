@@ -48,11 +48,11 @@
       "va": 11,
       "danno": "1d6+2",
       "natura": "Naturale",
-      "portata_q": 1,
-      "ac": 1,
       "proprieta": [
         "Contusione"
-      ]
+      ],
+      "portata_q": 1,
+      "ac": 1
     },
     {
       "nome": "Pietra",
@@ -60,14 +60,14 @@
       "va": 10,
       "danno": "1d6+1",
       "natura": "Naturale",
+      "proprieta": [
+        "Contusione"
+      ],
       "gittata_q": 6,
       "modalita": [
         "S"
       ],
       "ac": 1,
-      "proprieta": [
-        "Contusione"
-      ],
       "note": "Una mano; serve una pietra pronta (circa 1 kg)."
     }
   ],
@@ -95,20 +95,28 @@
   ],
   "capacita": [
     {
-      "nome": "Bestia selvaggia",
-      "effetto": "Natura Comune, biologicamente vivente, con mente e PM personali (a 0 PM Svenuta); nessun incantesimo o potere magico innato. A 0 PV valgono Tempra, Ferite, Menomazioni e Morente (non morte o incoscienza automatica). Nessuna Parata naturale: artigli, corna, proboscide e pugni non sostituiscono un’arma o uno scudo. L’Opportunità è un solo attacco ravvicinato normale gratuito, entro i limiti offensivi della scheda; non include Assalto, Impeto, Calpestare, lanci o altre manovre. Nei quadrupedi Testa = capo e collo, Torace = corpo, Braccia = arti anteriori, Gambe = posteriori con la coda. Respira aria (COS Round di fiato). Una via di fuga, una distanza di sicurezza o il cibo possono risolvere la scena; la sua presenza non applica Terrorizzato ai personaggi. Non comprende linguaggi (salvo dove detto)."
+      "nome": "Sequenza",
+      "effetto": "Fino a due Pugni per Round, ciascuno con 1 AzP, oppure un solo lancio di Pietra con 1 AzP. Nel Round di un lancio può effettuare al massimo un Pugno. Le Opportunità usano soltanto Pugno e rispettano questi limiti. Avere due mani non aggiunge applicazioni del danno a un attacco."
     },
     {
-      "nome": "Sequenza",
-      "effetto": "Fino a due Pugni per Round, 1 AzP ciascuno, oppure un solo lancio di Pietra con 1 AzP; nel Round di un lancio al massimo un Pugno. Le Opportunità usano solo il Pugno. Una mano occupata (presa, sostegno) non è disponibile per il Pugno di quella mano."
+      "nome": "Pietre e mani",
+      "effetto": "Il lancio richiede una pietra pronta e una mano libera; raccolta, peso e recupero seguono la pagina comune agli Scimmioni. Non crea proiettili dal proprio corpo e non lancia automaticamente gli avversari usando il profilo di Pietra. Una mano occupata da una presa o necessaria per sostenersi non è disponibile per il Pugno di quella mano."
     },
     {
       "nome": "Arrampicata",
-      "effetto": "Fino a 6 Q per AzM al Passo con appigli e sostegno adeguati al peso; Atletica per difficoltà reali; niente aderenza a pareti lisce. La postura sulle nocche non cambia le funzioni per le Menomazioni."
+      "effetto": "Fino a 6 Q per AzM al Passo, con appigli e sostegno adeguati al peso. Atletica risolve difficoltà reali, senza aderire a pareti lisce o concedere altre andature native. Testa e Torace sono quelli del corpo, Braccia gli arti superiori e Gambe quelli inferiori. La postura sulle nocche non cambia le funzioni per le Menomazioni."
     },
     {
-      "nome": "Pietre",
-      "effetto": "Il lancio richiede una pietra pronta e una mano libera; raccogliere una pietra accessibile entro 1 Q costa 1 AzP (non è incorporabile nel tiro); estrarre un proiettile già trasportato segue il §5.1.1 (−4 VA per una sola estrazione incorporata). Il Direttore stabilisce prima della scena le pietre raggiungibili; roccia compatta o terreno senza pietre non sono una riserva. Ogni tiro richiede un nuovo proiettile; il danno non si replica sui bersagli adiacenti; nessuna Parata naturale."
+      "nome": "Predatori e grandi erbivori",
+      "effetto": "Felini, orsi, grandi erbivori e primati richiedono incontri con spazio, ripari e motivazioni riconoscibili. Un predatore cerca nutrimento; un branco può difendere i piccoli o un passaggio. Le schede permettono di gestire queste situazioni con gli stessi valori usati in combattimento. Sono voci del catalogo generale: il Direttore stabilisce la loro presenza su Iris, senza assimilarle alla Covata. PX di riferimento. Valori per un esemplare e quattro PG, senza dotazione conteggiata. Artigli, corna, zanne, massa e attacchi con pietre raccolte sul posto sono compresi nei profili. I colpi aggiuntivi consumano le AzP indicate. Il premio complessivo dell’incontro si determina nel Manuale del Direttore §9.3; qui rimangono soltanto i valori unitari. Impiego. Una via di fuga, una distanza di sicurezza o l’accesso al cibo possono risolvere una situazione senza combattere. Le soglie di ritirata descrivono una tendenza, che il Direttore adatta alla protezione dei piccoli e alle condizioni della scena. La presenza di un animale grande non applica automaticamente Terrorizzato ai personaggi. Fonti e verifica. Giocatore v0.49, Magia v1.5, Direttore v0.41 e Armamenti v0.64. I riferimenti delle creature sono alle pagine stampate del Manuale dei Mostri fornito. GS e PX sono stime da verificare al tavolo, osservando Azioni consumate, danni finali, Ferite e possibilità di sottrarsi agli assalti. Il terreno modifica le opportunità, senza cambiare retroattivamente la scheda. Tabella (celle in ordine di lettura): Dieci bestie per foreste pianure e regioni fredde | Creatura | GS | PX per 4 PG | Pantera | Inesperto | 20 | Tigre | Esperto | 30 | Tigre dai denti a sciabola | Esperto | 30 | Orso polare | Esperto | 30 | Rinoceronte | Esperto | 30 | Elefante | Veterano | 50 | Mammut | Eroe | 70 | Alce gigante | Esperto | 30 | Scimmione | Inesperto | 20 | Scimmione gigante | Eroe | 70."
+    },
+    {
+      "nome": "Bestie selvagge regole operative",
+      "effetto": "Natura e risorse. Tutte le creature del blocco hanno Natura Comune, sono biologicamente viventi e possiedono mente e PM personali. Non conoscono incantesimi appresi o poteri magici innati. A 0 PM diventano Svenute; A 0 PV il mostro è fuori combattimento secondo il §4.2; la morte o distruzione effettiva resta distinta. Le cure biologiche sono applicabili. Stati iniziali: nessuno. Azioni e danni. INI modifica 1d10; AzP e unica AzM valgono per l’intero Round. Ogni attacco costa 1 AzP, produce AC 1 e comprende tutti i bonus indicati, salvo il Masso dello Scimmione gigante che costa 2 AzP. Dadi e bonus, moltiplicatori, Difesa, resistenze, AR e conseguenze da danno residuo si risolvono in quest’ordine. Naturale e Magico incontrano tutta l’AR pertinente, Etereo soltanto la quota magica. Difese e Opportunità. Nessuno ha Parata naturale: artigli, corna, proboscide e pugni non sostituiscono un’arma o uno scudo adatti. Schivata richiede 1 AzP, 1 AzM e possibilità concreta di spostarsi. L’Opportunità ordinaria resta un solo attacco ravvicinato normale gratuito su un’occasione reale; rispetta i limiti offensivi espressi nelle voci. Non incorpora Assalto, Impeto, Calpestare, lanci o altre manovre offensive. Assalto e Impeto. Le capacità con questi nomi richiedono almeno 4 Q di Passo rettilineo verso la vittima nella stessa Iniziativa. Usano l’AzM ordinaria e l’AzP del colpo; si dichiarano prima del tiro e non si combinano con Carica, Corsa, Scatto o altre manovre offensive. Il bersaglio e il percorso devono essere realmente raggiungibili. Eventuali AzP successive si pagano normalmente e non ricevono un raddoppio del danno. Atterramento. Dove indicato, almeno 1 danno finale impone la Tempra della scheda; il fallimento applica A Terra soltanto a una creatura entro la dimensione ammessa e con appoggio. Non provoca anche spostamento, Stordito o presa. Chi nuota o vola senza appoggio segue il Giocatore §5.2.5. Un bersaglio già A Terra non subisce una seconda caduta e non assegna Azioni aggiuntive. Movimento e anatomia. Le terne sono Q di Passo / Corsa / Scatto. Corsa e Scatto mantengono Prove di Atletica, modificatori ed esiti del §5.2. Arrampicata richiede appigli e sostegno adeguati; non è aderenza a superfici lisce. Nei quadrupedi Testa comprende capo e collo, Torace il corpo, Braccia gli arti anteriori e Gambe quelli posteriori con la coda. Per le Menomazioni si identifica la funzione effettivamente colpita. Sensi e ambiente. Fiuto +2 significa +2 VA a Percezione quando l’olfatto è determinante, senza localizzazione automatica o lettura delle intenzioni. Furtività richiede possibilità concrete di nascondersi. Scurovisione, quando presente, non attraversa solidi, fumo o oscurità soprannaturale. Pelliccia e habitat non concedono resistenza automatica ai danni da Ghiaccio o Fuoco. Tutte respirano aria e seguono il normale fiato di COS Round, salvo capacità espresse."
+    },
+    {
+      "nome": "Altri movimenti",
+      "effetto": "arrampicata 6 Q al Passo; spazio 1 × 1 Q"
     }
   ],
   "note": "Primate • pugni e lancio di pietre • Natura Comune. Condotta. Vista e udito ordinari. Non comprende linguaggi nel profilo selvatico; può apprendere segnali tramite un rapporto stabilito nella scena. Può minacciare con richiami e posture prima dello scontro. Sotto 8 PV tende a raggiungere il gruppo o un riparo. Pietre e pugni non concedono una Parata naturale.",
@@ -127,8 +135,8 @@
       "movimento": "Mostri 0.69",
       "spazio": "Mostri 0.69",
       "abilita": "Mostri 0.69",
-      "attacchi": "Mostri 0.47",
-      "capacita": "Mostri 0.47",
+      "attacchi": "Mostri 0.69",
+      "capacita": "Mostri 0.69",
       "note": "Mostri 0.69",
       "gs_px": "Mostri 0.69"
     }

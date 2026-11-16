@@ -99,20 +99,36 @@
   ],
   "capacita": [
     {
-      "nome": "Volo alato",
-      "effetto": "Richiede entrambe le ali utilizzabili e spazio per distenderle. Si mantiene in quota battendo le ali senza percorso minimo né AzM aggiuntiva; decollo e atterraggio sono compresi nell’AzM. Non è levitazione: perdita di coscienza e impedimenti alle ali seguono Volo e Stati del §5.2.5. Nessuna penalità universale per colpirlo perché vola. Una Menomazione permanente al Torace impedisce il volo."
+      "nome": "Sequenza",
+      "effetto": "Nel Round può usare al massimo un Morso, due attacchi di Artigli e tre Spine, entro il budget complessivo di tre AzP. È consentito combinarli: i massimi non si sommano in sei attacchi. Ogni colpo costa una propria AzP; il multiattacco dell’originale non diventa una singola Azione."
     },
     {
-      "nome": "Sequenza",
-      "effetto": "Nel Round al massimo un Morso, due attacchi di Artigli e tre Spine entro il budget di tre AzP; si possono combinare ma i massimi non si sommano in sei attacchi. Ogni colpo costa una propria AzP. L’Attacco di Opportunità usa Morso o Artigli (non una salva di Spine) ed è escluso dai limiti. Nessuna Parata naturale."
+      "nome": "Attacco di Opportunità",
+      "effetto": "Può usare Morso o Artigli per il normale attacco ravvicinato gratuito, escluso dai limiti della sequenza. Non può effettuare una salva di Spine come Attacco di Opportunità."
+    },
+    {
+      "nome": "Difese e anatomia",
+      "effetto": "Non possiede Parata naturale. Braccia e Gambe corrispondono agli arti anteriori e posteriori, Testa al capo, Torace al tronco. Una Menomazione permanente al Torace impedisce anche il volo; le limitazioni temporanee pertinenti penalizzano le relative Prove. La coda non si colpisce gratuitamente: quando un effetto la rende espressamente inutilizzabile, le Spine non sono disponibili."
     },
     {
       "nome": "Spine caudali",
-      "effetto": "Riserva massima 24 spine; ogni tiro ne consuma una (anche se manca o è evitato). Il costo di 1 AzP comprende il rilascio; non sono Tiro Rapido né Raffica: ogni tiro ha il proprio VA, bersaglio, Difesa e danno. VA prima degli altri modificatori: 12 a 1–10 Q, 10 a 11–20 Q, 8 a 21–40 Q, oltre 40 Q non può colpire. Si applicano Copertura e Difese a distanza. Nessun veleno né Sanguinamento o Immobilizzato automatici. Ricrescita: 3 spine per ogni ora completa di riposo con nutrimento adeguato, fino a 24; nessun ripristino automatico a fine scontro. Se la coda è resa inutilizzabile, niente Spine."
+      "effetto": "Riserva massima 24 spine. Ogni tiro ne consuma una, anche se manca o viene evitato. Il costo di 1 AzP comprende il rilascio; non serve un’azione di estrazione o ricarica fra le spine. Non sono Tiro Rapido o Raffica: ogni tiro ha il proprio VA, bersaglio, Difesa e danno. Si applicano Copertura, impedimenti e Difese pertinenti agli attacchi a distanza. Una spina non infligge veleno e non causa automaticamente Sanguinamento o Immobilizzato; eventuali conseguenze derivano dalle normali Ferite. Il danno è Naturale, senza capacità perforante speciale oltre alle regole comuni. Ricrescita. Rigenera 3 spine per ogni ora completa di riposo con nutrimento adeguato, fino a 24. Otto ore permettono quindi di recuperare una riserva vuota. Si registra il tempo effettivo: nessun ripristino automatico a fine scontro, cambio di scena o recupero di PV e PM. Un’ora interrotta non produce le tre spine. Tabella (celle in ordine di lettura): Distanza | VA prima degli altri modificatori | 1–10 Q | 12 | 11–20 Q | 10 | 21–40 Q | 8 | Oltre 40 Q | Non può colpire con questa capacità."
     },
     {
-      "nome": "Scurovisione",
-      "effetto": "Vede entro 12 Q nel buio naturale, senza colori; non attraversa ostacoli né individua da sola chi è nascosto."
+      "nome": "Condotta di combattimento",
+      "effetto": "All’aperto cerca quota e Copertura, distribuendo le spine su chi è esposto o sta minacciando le ali. A distanze elevate la penalità al tiro riduce il rendimento: può avvicinarsi, ma deve considerare gli attacchi avversari e il consumo dell’AzM. Quando decide di entrare in mischia può usare un Morso e due Artigli, se conserva tutte e tre le AzP. Una Difesa già pagata sottrae Azioni a questa sequenza. Se carica o spende l’AzM in volo, non riceve una seconda AzM per Schivare nello stesso Round. se gravemente minacciato, con poche spine o davanti a una preda troppo costosa può tentare la ritirata o chiedere un tributo. Può parlare e comprendere un’offerta: una concessione concreta può risolvere l’incontro senza eliminare la creatura. L’esito si valuta come superamento della sfida secondo le regole della campagna. Contromisure. Ripari che fermano i proiettili, bersagli non raggruppati e minacce che costringono a spendere AzP in Difese ne limitano il volume di fuoco. Non possiede visione attraverso i muri o individuazione automatica dell’invisibile. Abbatterla in volo segue caduta e Menomazioni, senza un danno aggiuntivo inventato per la specie."
+    },
+    {
+      "nome": "8 Catalogo delle creature",
+      "effetto": "Le schede presentano esemplari con le caratteristiche e la dotazione indicate. Tutte le creature di questo capitolo hanno Natura Comune; la loro eventuale presenza su Iris richiede una collocazione nell’ambientazione e non le assimila alla Covata. PX di riferimento. Valori per un esemplare oppure uno Sciame e quattro PG, con la dotazione descritta; premio dell’incontro nel Direttore §9.3. Le prime quindici creature, più la variante con tana dell’Aboleth, sono riepilogate qui. Seguono quaranta blocchi di dieci creature, un blocco conclusivo di nove e venticinque modelli generici di PNG con Gradi I–VI ed EQ, insieme ai due archetipi generali e ai relativi esempi applicati. Aboleth. Il valore della variante con tana si usa quando il modulo descritto nella scheda incide effettivamente sull’incontro. La sola presenza in una tana non cambia il profilo. La verifica al tavolo considera risorse consumate, Ferite, Azioni perse e contromisure disponibili. GS e PX non certificano da soli l’equilibrio di un incontro per un determinato livello dei personaggi. Tabella (celle in ordine di lettura): Creatura | GS | PX per 4 PG | Aarakocra | Principiante | 11 | Aboleth | Eroe | 70 | Aboleth con modulo tana | Leggenda | 100 | Ankheg | Inesperto | 20 | Arpia | Esperto | 33 | Basilisco | Veterano | 50 | Bestia distorcente | Esperto | 30 | Bulette | Veterano | 50 | Chimera | Eroe | 70 | Cockatrice | Inesperto | 20 | Ettercap | Esperto | 30 | Grick | Inesperto | 20 | Grifone | Esperto | 30 | Ippogrifo | Inesperto | 20 | Manticora | Veterano | 50 | Orsogufo | Esperto | 30."
+    },
+    {
+      "nome": "Regole operative del catalogo",
+      "effetto": "Azioni e Difese. AzP e AzM sono disponibili per l’intero Round; l’Iniziativa non le ripristina. Rimane il normale Attacco di Opportunità gratuito, al massimo uno per Round alle condizioni del Giocatore §5.3. Parata costa 1 AzP: successo dimezza per eccesso prima dell’AR, Magistrale annulla. Serve un mezzo idoneo. Schivata costa 1 AzP e 1 AzM, con possibilità di muoversi. Le aree usano la Salvezza indicata, senza una seconda Difesa salvo eccezione. Volo alato. Richiede ali funzionali e spazio per distenderle. Decollo e atterraggio sono compresi nell’AzM. Il volatore può mantenersi in quota battendo le ali senza percorso minimo o AzM aggiuntiva; non è levitazione. Incoscienza, caduta e impedimenti seguono il Giocatore §5.2.5. Il volo non impone da solo una penalità universale agli attacchi avversari. Movimento misto. Per queste schede, quando si combinano modalità con velocità diverse, si sommano le frazioni distanza percorsa / distanza consentita nella modalità scelta, fino a un massimo di 1 per l’unica AzM. Un Grifone che usa 3 dei 6 Q del Passo terrestre conserva 8 dei 16 Q del Passo in volo. Restano le Prove e le penalità ordinarie di Corsa, Scatto e terreno. Picchiata. È la Carica ordinaria, quando la traiettoria lo permette: 1 AzP e 1 AzM, almeno 3 Q sufficientemente rettilinei entro la Corsa, VA −2 per 3–6 Q oppure −4 da 7 Q e danno ×2 per il solo attacco ammesso. Restano le altre condizioni del Giocatore §5.6. Uscire dalla portata non concede immunità agli Attacchi di Opportunità. Tiri a distanza. Si applicano Copertura e modificatori ordinari: 1–10 Q senza penalità, 11–20 Q −2, 21–40 Q −4. La gittata massima indicata non può essere superata. Le capacità prive di Prova per colpire seguono la propria Salvezza e geometria. Capacità innate. Si attivano senza Focus, gesti rituali o Prova di Potere, salvo indicazioni diverse. Pagano AzP e PM dichiarati e non aggiungono nuovamente SAG. Le capacità biologiche non spendono PM salvo indicazione espressa. Spendere gli ultimi PM causa Svenuto secondo le regole comuni. Negare Potere. Solo gli effetti per i quali la scheda lo dichiara ammettono questa rimozione. La potenza indicata serve al confronto: superiore rimuove, uguale richiede la PS Volontà del negatore, inferiore non rimuove. Restano costi, gittata e condizioni dell’incantesimo. Non è un’estensione generale di Contromagia. Anatomia e varianti. Ogni scheda associa le localizzazioni alle parti funzionali. Arti aggiuntivi non concedono immunità o bersagli gratuiti. Cavalcature addestrate, bardature e varianti maggiori o corrotte richiedono profili propri. Il Grick Alfa e l’Ettercap con garrota non fanno parte del catalogo."
+    },
+    {
+      "nome": "Altri movimenti",
+      "effetto": "spazio 2 × 2 Q"
     }
   ],
   "note": "Bestia alata • Natura Comune • tiratrice e predatrice • Manticore, p. 213. Sensi e protezioni: Scurovisione 12 Q; nessuna immunità. Comprende e parla una lingua dell’ambientazione.",
@@ -131,8 +147,8 @@
       "movimento": "Mostri 0.69",
       "spazio": "Mostri 0.69",
       "abilita": "Mostri 0.69",
-      "attacchi": "Mostri 0.47",
-      "capacita": "Mostri 0.47",
+      "attacchi": "Mostri 0.69",
+      "capacita": "Mostri 0.69",
       "note": "Mostri 0.69",
       "gs_px": "Mostri 0.69"
     }

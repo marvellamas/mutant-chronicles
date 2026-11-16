@@ -36,6 +36,24 @@
     "scatto": 12
   },
   "spazio": "1 Q",
+  "abilita": [
+    {
+      "nome": "Corpo a corpo",
+      "va": 12
+    },
+    {
+      "nome": "Atletica",
+      "va": 11
+    },
+    {
+      "nome": "Furtività",
+      "va": 8
+    },
+    {
+      "nome": "Percezione",
+      "va": 7
+    }
+  ],
   "attacchi": [
     {
       "nome": "Artiglio",
@@ -54,6 +72,22 @@
     }
   ],
   "capacita": [
+    {
+      "nome": "Archetipo Servitore delle spore",
+      "effetto": "Una colonia fungina anima un cadavere biologico e ne usa il corpo come supporto. È un nuovo organismo vegetale vivente di Natura Comune, non la persona tornata in vita e non un non morto. Il modello richiede un corpo sufficientemente integro, di dimensioni non superiori a quelle di un Ogre, che in vita avesse tessuti e fisiologia compatibili. Corpi ammessi. Sono esclusi costrutti, elementali, melme, organismi vegetali, entità incorporee e corpi già non morti. Gli impianti non diventano tessuto fungino e non si riattivano automaticamente. La capacità del Miconide sovrano descritta più avanti usa soltanto cadaveri di animali e umanoidi compatibili; un’applicazione ad altre famiglie richiede una procedura distinta. Conserva FOR, DES, COS, PV massimi, AR e dimensioni della base; la colonia non ricostruisce parti mancanti INT 1 • SAG 3 • CAR 1; nuova mente rudimentale e 4 PM personali Conserva le AzP e i massimi fisici ordinari della base, senza benefici di Talenti o poteri perduti; una sola AzM Solo 1d10 più il bonus positivo di DES; nessun bonus mentale o istintivo del precedente individuo Riduce di 2 Q ogni Passo, minimo 1 Q; ricalcola Corsa e Scatto come doppio e triplo, se già ammessi Difese = DES + 4; Corpo a corpo, Mischia e Guerra = FOR + 4; Atletica = FOR + 3; Furtività = DES + 3; Percezione = 7 Tempra = COS + 3; Riflessi = DES + 3; Volontà 6; Magia 7, prima di equipaggiamento e condizioni Percezione non visiva 6 Q, fermata dai solidi; fuori portata non localizza bersagli con questo senso Valori finali. I VA sostituiscono quelli appresi della base: poi si applicano soltanto le penalità dell’equipaggiamento effettivamente portato, le lesioni e gli Stati presenti. Le formule non sommano due volte i bonus ordinari. Il limite minimo delle Caratteristiche resta uno, non zero. Tabella (celle in ordine di lettura): Dato | Modifica da applicare | Corpo e PV | Mente e PM | Azioni | Iniziativa | Movimento | Difese e abilità | Salvezze | Sensi."
+    },
+    {
+      "nome": "Servitore delle spore attacchi e fisiologia",
+      "effetto": "Capacità perdute. Non conserva memoria, lingue, Classe, Talenti, Incantesimi, Tecniche, poteri psichici o soprannaturali, Furia ferita, comandi sociali o sensi della base. Perde attacchi a distanza, soffi, secrezioni e azioni diverse dai normali colpi ravvicinati fisici e dal proprio Movimento. Il corpo non eredita informazioni che il defunto conosceva. Attacchi conservati. Mantiene i colpi ravvicinati che infliggono Contusione, Taglio o Perforazione e gli stessi massimi fisici compatibili con le AzP rimaste. Il danno conserva dadi, portata e bonus fisico ordinario, ma perde contributi psichici, velenosi, elementali, da Furia o altri tratti soppressi. Una proprietà realmente prodotta da un’arma autonoma rimane soltanto se l’oggetto è presente e utilizzabile; il servitore non attiva Artefatti sintonizzati o alimentati dal defunto. Arti senza armi. Se non resta alcun attacco, usa una zampa, un braccio o il corpo: una AzP, una AC, portata un Q, Corpo a corpo del modello; 1d4 più il bonus di FOR Naturale Contusione, oppure 2d4 per un corpo grande quanto un Ogre. Massimo un tale colpo per Round, Opportunità compresa. Non acquisisce Parata naturale; un’arma realmente pronta può consentire Parata secondo le regole normali. Resistenze e Stati. Conserva soltanto vulnerabilità, resistenze e immunità corporee realmente compatibili con il supporto originario; perde le protezioni dovute alla volontà, a un addestramento o a magia non più attiva. È immune ad Accecato, fascinazione, Terrorizzato e Paralizzato. Non è immune automaticamente a veleno, Avvelenato, malattie, fuoco, Gelo, Sanguinamento, Stordito o danni psichici: il Quaggoth mantiene invece la propria immunità corporea al veleno. Vita fungina. Respira e ha necessità biologiche compatibili con la colonia. Cura Ferite e altre cure biologiche possono recuperare i suoi PV fungini nei propri limiti, senza ricreare tessuti del defunto o parti mancanti. Ha una mente minima e quattro PM: Dardo Psichico e Dardo Spirituale possono interessarlo nei rispettivi requisiti; zero PM causa Svenuto ordinario. A 0 PV il profilo senza Ferite è fuori combattimento secondo il §4.2; morte o distruzione effettiva restano distinte. Anatomia. Si usano le parti funzionali del corpo: Testa per sensi e direzione, Torace per coesione della colonia, Braccia e Gambe per attacco e locomozione. La percezione diffusa resta limitata a sei Q e al confronto Percezione–Furtività: non legge scritte, colori o pensieri e non concede vista diretta per poteri. Essere immune alla cecità non rivela ciò che un solido scherma."
+    },
+    {
+      "nome": "Spore animanti preparazione del servitore",
+      "effetto": "Variante del sovrano. Il Miconide sovrano può disporre di Spore animanti: una AzP, senza PM, tre inoculazioni per ventiquattro ore, su un cadavere compatibile di animale o umanoide materialmente accessibile entro un Q. Un corpo vivo, anche Svenuto, Morente o a zero PV, non è un cadavere e non può essere convertito con questa capacità. Ogni tentativo consuma una dose, anche su un corpo poi inutilizzabile. Crescita. Occorrono ventiquattro ore complete in ambiente idoneo alla colonia, con il substrato preservato e senza distruzione del corpo o delle spore. Non è un effetto immediato da usare sul caduto nel medesimo combattimento. Al completamento si usa la scheda finale preparata: la riserva fungina parte piena, ma mutilazioni e impedimenti strutturali del supporto non vengono riparati. Un corpo incapace delle funzioni necessarie non diventa operativo solo perché possiede PV. Durata. Tirare 1d4+1 una volta alla crescita: settimane di attività della colonia, da due a cinque. La scadenza è fissa e si annota; cure, riposo, nuove dosi o ordini non la rinnovano. Distruzione effettiva o scadenza terminano questa attività. Lo stesso corpo non può essere animato una seconda volta con Spore animanti, neppure da un altro sovrano. Sovrano e incontro. Spore animanti è una capacità preparatoria della variante, non un aumento delle AzP o degli attacchi del sovrano e non comprende servitori già pronti nei suoi trenta PX. Ogni servitore presente ha la propria scheda, Iniziativa, riserve e PX per quattro PG; non nasce un secondo premio dal semplice processo di crescita. Il totale dell’incontro si gestisce nel Direttore. Origine biologica. L’inoculazione non è una Possessione, un Incantesimo o un’esposizione alla Corruzione. Contromagia, Negare Potere ed Esorcizzare Possessione non eliminano una colonia biologica autonoma. Una cura del veleno non fa tornare il defunto. La condizione di servitore non è una malattia di un ospite vivo sulla quale Cura Malattie possa agire automaticamente."
+    },
+    {
+      "nome": "Servitore delle spore rapporto e ordini",
+      "effetto": "Collegamento. Il servitore può partecipare alle Spore di rapporto di un Miconide compatibile. L’emissione costa la normale AzP e segue raggio iniziale e propagazione della scheda; per il sovrano raggio sei Q. Una volta collegato, il rapporto dura un’ora e comunica soltanto entro sei Q fra i partecipanti, con le normali schermature dei legami mentali. Il semplice essere stato creato da un sovrano non fornisce un collegamento a distanza illimitata. Comandi semplici. Come eccezione propria di questa colonia, il servitore esegue richieste semplici ricevute attraverso il rapporto: seguire, trasportare, difendere un accesso, attaccare un bersaglio percepibile o interrompere un compito. Non dispone della memoria o delle conoscenze del cadavere. Il comando usa una normale comunicazione alla propria Iniziativa, senza creare una nuova Azione di attacco o un movimento immediato del servitore. Priorità. Fra ordini ricevuti da Miconidi collegati prevale il sovrano, poi l’adulto, poi il germoglio; fra pari grado vale l’ultimo ordine ricevuto. Questa priorità riguarda soltanto i servitori delle spore, non il libero arbitrio dei partecipanti viventi alle Spore di rapporto. Un ordine non rende visibile un bersaglio, non fornisce mappe o sensi condivisi e non consente ciò che anatomia o Stati impediscono. Perdita del contatto. Fuori portata la comunicazione si sospende; alla scadenza o con un’interruzione reale del rapporto non arrivano nuovi ordini. Il servitore continua l’ultimo compito concretamente praticabile, senza conoscere i movimenti o i desideri successivi del Miconide. Se il compito diventa impossibile rimane sul posto o cerca un riparo immediato. Incoscienza o morte del creatore non lo distruggono e non gli restituiscono il precedente individuo. Nessun turno aggiuntivo. AzP e AzM sono del servitore e non si rinnovano quando riceve un comando. Chi è Svenuto, Immobilizzato o menomato conserva i propri limiti. Un altro Miconide deve ottenere un collegamento valido per impartire ordini: non assume automaticamente controllo attraverso pareti ermetiche o per il solo essere presente."
+    },
     {
       "nome": "Altri movimenti",
       "effetto": "arrampicata con appigli 4 Q al Passo; spazio 1 × 1 Q"
@@ -81,6 +115,7 @@
       "azioni": "Mostri 0.69",
       "movimento": "Mostri 0.69",
       "spazio": "Mostri 0.69",
+      "abilita": "Mostri 0.69",
       "attacchi": "Mostri 0.69",
       "capacita": "Mostri 0.69",
       "note": "Mostri 0.69",

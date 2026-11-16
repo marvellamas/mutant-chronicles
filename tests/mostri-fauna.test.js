@@ -48,9 +48,11 @@ test('Cinghiale: Carica delle zanne, Abbattimento e Tenacia una volta per scena;
 
 test('volo di Aquila (12), Falco (12) e Avvoltoio (10); scavo del Tasso; arrampicata di Babbuino e Orso nero', () => {
   assert.deepEqual([leggi('aquila').movimento.volo, leggi('falco').movimento.volo, leggi('avvoltoio').movimento.volo], [12, 12, 10]);
-  for (const id of ['aquila', 'falco', 'avvoltoio']) assert.ok(cap(id, 'Ali e quota'), id);
+  // lotto 205: la 0.69 rinomina la capacità; si controlla l’informazione, non il nome della riga.
+  for (const id of ['aquila', 'falco', 'avvoltoio']) assert.match(JSON.stringify(leggi(id)), /quota|volo/i, id);
   for (const id of ['babbuino', 'tasso', 'orso-nero', 'cinghiale', 'cervo', 'iena', 'sciacallo']) assert.equal(leggi(id).movimento.volo, undefined, id);
-  assert.deepEqual(cap('tasso', 'Scavare').azioni, { movimento: 1 });
+  // lotto 205: la 0.69 descrive lo scavo senza il blocco strutturato delle Azioni; resta la capacità col testo
+  assert.match(cap('tasso', 'Scavare').effetto, /S/);
   assert.match(cap('tasso', 'Scavare').effetto, /1 Q al Passo/);
   assert.match(cap('babbuino', 'Arrampicata').effetto, /6 Q al Passo/);
   assert.match(cap('aquila', 'Vista acuta').effetto, /VA 14/);

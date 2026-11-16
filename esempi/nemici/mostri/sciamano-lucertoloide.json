@@ -48,11 +48,11 @@
       "va": 11,
       "danno": "1d6+1",
       "natura": "Naturale",
-      "portata_q": 1,
-      "ac": 1,
       "proprieta": [
         "Perforazione"
-      ]
+      ],
+      "portata_q": 1,
+      "ac": 1
     },
     {
       "nome": "Artigli umanoidi",
@@ -60,11 +60,11 @@
       "va": 11,
       "danno": "1d4+1",
       "natura": "Naturale",
-      "portata_q": 1,
-      "ac": 1,
       "proprieta": [
         "Taglio"
       ],
+      "portata_q": 1,
+      "ac": 1,
       "note": "Richiedono una mano libera; nessuna Parata naturale."
     },
     {
@@ -73,11 +73,11 @@
       "va": 11,
       "danno": "1d8+2",
       "natura": "Naturale",
-      "portata_q": 1,
-      "ac": 1,
       "proprieta": [
         "Perforazione"
       ],
+      "portata_q": 1,
+      "ac": 1,
       "note": "Solo nella forma di Coccodrillo: vedi «Forma di Coccodrillo»."
     }
   ],
@@ -185,7 +185,7 @@
       "movimento": "Mostri 0.69",
       "spazio": "Mostri 0.69",
       "abilita": "Mostri 0.69",
-      "attacchi": "Mostri 0.47",
+      "attacchi": "Mostri 0.69",
       "capacita": "Mostri 0.47",
       "note": "Mostri 0.69",
       "gs_px": "Mostri 0.69"

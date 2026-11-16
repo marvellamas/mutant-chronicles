@@ -55,20 +55,41 @@ export const RISERVE = /Due Difese scritte|Due forme con movimento|portata in Q 
  * I numeri che le capacità di prima avevano e che la lettura nuova non ha da nessuna parte. `1d10` non si conta:
  * è il dado dell'Iniziativa, che sta in ogni scheda e non è un dato di questa creatura.
  */
+/**
+ * **Lotto 205 — una frase si è persa, o è stata solo riscritta?** I numeri non bastano: «la vittima dev'essere
+ * già A Terra» e «Dimezza per eccesso» non ne hanno, e sparendo portano via una condizione che al tavolo decide
+ * se un attacco si può usare. Si guardano quindi le **parole che contano** (quelle lunghe, che in italiano
+ * portano il senso) e si chiede che se ne ritrovi almeno la metà: un testo riscritto le conserva quasi tutte, un
+ * testo perso non ne lascia nessuna. Né un elenco di frasi né un confronto esatto: quelli si rompono a ogni edizione.
+ */
+export function prosaPersa(testoVecchio, testoNuovo) {
+  const parole = [...new Set(String(testoVecchio ?? '').toLowerCase().match(/[a-zà-ù]{5,}/g) ?? [])];
+  if (parole.length < 3) return false;
+  const nuovo = String(testoNuovo ?? '').toLowerCase();
+  const trovate = parole.filter((w) => nuovo.includes(w)).length;
+  return trovate / parole.length < 0.5;
+}
+
 export function numeriPersi(vecchia, letta) {
   if (!vecchia?.capacita?.length) return [];
   const testo = JSON.stringify(letta ?? {});
   const fuori = [];
-  // una capacità **con nome** che sparisce del tutto è una lettura incompleta quanto un numero che manca: i tratti
-  // comuni del blocco (Melma, Corpo amorfo, Aderenza) nella 0.69 stanno nelle pagine comuni, che il lettore aggancia
-  // solo ai blocchi dichiarati in GRUPPI_COMUNI. Finché non li aggancia tutti, quelle schede tengono le loro.
-  const nomiNuovi = new Set((letta?.capacita ?? []).map((c) => String(c.nome ?? '').toLowerCase()));
+  // una capacità il cui **testo** non si ritrova più è una lettura incompleta quanto un numero che manca
   for (const c of vecchia.capacita) {
-    const nome = String(c.nome ?? '').toLowerCase();
-    if (nome && !nomiNuovi.has(nome) && ![...nomiNuovi].some((x) => x.includes(nome) || nome.includes(x))) {
-      fuori.push(`capacità «${c.nome}» non più letta`);
-    }
+    // se la 0.69 ha una capacità **con lo stesso nome**, il confronto si fa con quella: è lei che ha preso il
+    // posto della vecchia, e se dice un'altra cosa il contenuto di prima è andato perso. Il «Corpo distribuito»
+    // dello Sciame di ratti diceva «Dimezza per eccesso i danni fisici…» e ora rimanda alle regole comuni, dove
+    // quella frase non c'è: confrontandolo con tutta la scheda sarebbe passato per riscritto.
+    const omonima = (letta?.capacita ?? []).find((x) => String(x.nome ?? '').toLowerCase() === String(c.nome ?? '').toLowerCase());
+    if (prosaPersa(c.effetto, omonima ? omonima.effetto : testo)) fuori.push(`il testo di «${c.nome}» non si ritrova`);
   }
+  // **Lotto 205: il criterio sui nomi non serve più, e tenerlo sarebbe un freno a mano tirato.**
+  // Nel 204 una capacità con nome che spariva contava come lettura incompleta, perché i tratti comuni del blocco
+  // (Melma, Corpo amorfo, Aderenza, Scurovisione) stavano nelle pagine «regole comuni» che il lettore agganciava
+  // solo ad alcuni blocchi: sparendo il nome, spariva il testo. Adesso le pagine di blocco si agganciano per
+  // posizione a tutte le schede del catalogo (`blocchiDelTesto`), quindi il testo c'è — sotto il nome che la 0.69
+  // gli dà, che è il nome giusto. Quello che deve restare vero è che **nessun numero si perda**: il controllo è
+  // quello qui sotto, e un nome diverso per lo stesso contenuto non è una perdita.
   for (const c of vecchia.capacita) {
     for (const m of String(c.effetto ?? '').matchAll(/\b\d+(?:d\d+)?(?:\+\d+)?\b/g)) {
       if (m[0] === '1d10' || testo.includes(m[0])) continue;
@@ -168,6 +189,13 @@ export function piano({ testo = null, edizione = edizioneMostri() } = {}) {
     // pagine il lettore non le aggancia a tutti i blocchi. Il segno che un dato è andato perso, e non solo
     // riscritto, è un **numero** che c'era e non si ritrova: i numeri sono quello che al tavolo si usa.
     const vecchiaQui = e ? e.nemico : null;
+    // **Lotto 205: un elenco di attacchi più corto di prima è una lettura parziale, sempre.** È il caso che il
+    // 204 non copriva e che il controllo di non-regressione ha trovato: leggendo «1d6+5 / 1d6+7 Naturale» come
+    // un'arma sola, il Capoguerra orco passava da tre attacchi a due. Due attacchi su tre è plausibile, non è
+    // vuoto, ed è sbagliato — la stessa frase del lotto 204, applicata al numero invece che al contenuto.
+    if ((letta.attacchi ?? []).length < (vecchiaQui?.attacchi ?? []).length) {
+      nonLetti.attacchi = `la lettura nuova trova ${(letta.attacchi ?? []).length} attacchi dove ce n’erano ${(vecchiaQui?.attacchi ?? []).length}: resta l’elenco di prima`;
+    }
     // un attacco letto **senza AC** è letto a metà: l'AC dice quante applicazioni costa, e la 0.69 la scrive nelle
     // pagine comuni del blocco, che il lettore aggancia solo ai blocchi dichiarati in GRUPPI_COMUNI.
     if (!nonLetti.attacchi
@@ -177,9 +205,40 @@ export function piano({ testo = null, edizione = edizioneMostri() } = {}) {
     }
     // e un attacco che **perde la sua nota** è letto a metà: la nota porta la condizione («solo contro una vittima
     // già A Terra»), e un attacco senza la sua condizione al tavolo si usa quando non si dovrebbe.
+    // **Lotto 205: conta il contenuto, non il posto.** La 0.69 scrive spesso la condizione nella prosa della
+    // scheda o nelle pagine del blocco invece che accanto all'attacco, e adesso quella prosa il lettore la prende.
+    // La nota della Manticora («VA 12 a 1–10 Q, 10 a 11–20 Q… Riserva di 24 spine») si ritrova tutta nel testo
+    // nuovo: non è persa, è spostata. Si guarda quindi se i **numeri** della nota si ritrovano da qualche parte
+    // nella lettura; se non si ritrovano, quella è una perdita vera e l'elenco degli attacchi resta quello di prima.
+    // **La condizione si porta dietro, non si butta via.** Se la 0.69 dà un attacco con lo stesso nome ma senza
+    // la nota che aveva («solo contro una vittima già A Terra»), si tengono i suoi valori — che sono quelli
+    // correnti — e si **ricopia la condizione** accanto all'attacco, dove il Direttore la legge. Non è una
+    // lettura parziale scritta sopra una buona: è la lettura nuova più ciò che la 0.69 scrive altrove e che il
+    // formato vuole lì. Il «non capito» lo dice, scheda per scheda.
+    let condizioniTenute = [];
+    if (letta.attacchi?.length && vecchiaQui?.attacchi?.length) {
+      for (const a of vecchiaQui.attacchi) {
+        if (!a.note) continue;
+        const b = letta.attacchi.find((x) => x.nome === a.nome);
+        if (b && !b.note) { b.note = a.note; condizioniTenute.push(a.nome); }
+      }
+    }
+    if (condizioniTenute.length) {
+      r.nonCapito.push(`Attacchi: la condizione di ${condizioniTenute.join(', ')} non è più scritta accanto all’attacco nella 0.69: tenuta quella di prima`);
+    }
     if (!nonLetti.attacchi) {
-      const perse = (vecchiaQui?.attacchi ?? []).filter((a) => a.note && !(letta.attacchi ?? []).some((b) => b.nome === a.nome && b.note));
-      if (perse.length) nonLetti.attacchi = `attacchi che perdono la loro condizione (${perse.map((a) => a.nome).join(', ')}): la 0.69 la scrive nella prosa, non accanto all’attacco`;
+      const testoLetto = JSON.stringify(letta);
+      const perse = (vecchiaQui?.attacchi ?? []).filter((a) => {
+        if (!a.note) return false;
+        if ((letta.attacchi ?? []).some((b) => b.nome === a.nome && b.note)) return false;
+        // **Qui si resta stretti, e il motivo è il Triceratopo.** Per un momento il criterio è stato «la nota è
+        // persa solo se il suo testo non si ritrova»: con parole comuni come «vittima», «spazio», «posizione»
+        // quel confronto passa anche quando la condizione è sparita davvero, e il Calpestare del Triceratopo
+        // perdeva il suo «solo contro una vittima già A Terra» restando un attacco sempre disponibile. Un attacco
+        // usabile quando non si dovrebbe è un danno al tavolo: se la nota c'era e non c'è più, l'elenco di prima resta.
+        return true;
+      });
+      if (perse.length) nonLetti.attacchi = `attacchi che perdono la loro condizione, e il testo nuovo non la riporta (${perse.map((a) => a.nome).join(', ')})`;
     }
     const persi = numeriPersi(vecchiaQui, letta);
     if (persi.length) nonLetti.capacita = `numeri delle capacità che la lettura nuova non ha (${persi.slice(0, 6).join(', ')}${persi.length > 6 ? ', …' : ''}): la 0.69 li ha spostati nelle pagine comuni del blocco, che il lettore non aggancia a questo blocco`;

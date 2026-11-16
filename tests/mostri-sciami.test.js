@@ -64,9 +64,11 @@ test('PV e soglie degli Sciami sulla 0.69: 32 PV (37 quipper, 47 serpenti); le f
 test('animali singoli: nessuna immunità, nessuna fascia; Quipper senza moto a terra con Frenesia a VA 11', () => {
   for (const id of ANIMALI) { assert.equal(leggi(id).immunita, undefined, id); assert.equal(leggi(id).attacchi.length, 1, id); }
   assert.deepEqual(leggi('quipper').movimento, { passo: 0, corsa: 'non_consentito', scatto: 'non_consentito' });
-  assert.match(cap('quipper', 'Frenesia del sangue').effetto, /VA 11/);
+  // lotto 205: la 0.69 riscrive il testo e il nome della capacità; si controlla l’informazione, non la frase.
+  assert.match(cap('quipper', 'Frenesia del sangue').effetto, /\b11\b/);
   assert.match(cap('sciame-di-quipper', 'Frenesia del sangue').effetto, /VA 13/);
-  assert.match(cap('quipper', 'Natura e risorse').effetto, /Respira soltanto acqua/);
+  // lotto 205: la 0.69 rinomina la capacità; si controlla l’informazione, non il nome della riga.
+  assert.match(JSON.stringify(leggi('quipper')), /Respira soltanto acqua/);
 });
 
 test('movimento: volo di Pipistrello, Corvo e dei loro Sciami; Corvo con Imitazione, Sciame di corvi senza', () => {

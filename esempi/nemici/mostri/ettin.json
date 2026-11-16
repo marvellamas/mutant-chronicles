@@ -85,20 +85,44 @@
   ],
   "capacita": [
     {
+      "nome": "Ascia leggera",
+      "effetto": "VA 12. Danno: 1d6+3. Portata/costo: 1 Q; "
+    },
+    {
+      "nome": "Mazza ferrata",
+      "effetto": "VA 12. Danno: 1d6+3. Portata/costo: 1 Q; "
+    },
+    {
       "nome": "Braccia poderose",
-      "effetto": "I due danni includono +2 innato oltre al bonus ordinario (già compreso). È ambidestro: niente −4 per il singolo attacco con la mano secondaria. Al massimo due attacchi offensivi nelle proprie AzP per Round; la manovra con due armi li consuma entrambi col normale −4 VA. L’Attacco di Opportunità ordinario resta distinto (uno per Round)."
+      "effetto": "I due danni includono +2 innato, oltre al bonus ordinario pertinente. È ambidestro: non applica il −4 per un attacco singolo con la mano secondaria. Può risolvere al massimo due attacchi offensivi nelle proprie AzP di un Round; la manovra con due armi li consuma entrambi, con il normale −4 VA, e lascia l’eventuale AzP restante per altre attività. L’Attacco di Opportunità ordinario resta distinto, al massimo uno per Round."
     },
     {
       "nome": "Due vedette",
-      "effetto": "Con entrambe le teste coscienti: +2 a Percezione e +2 a Volontà contro Paura e tentativi di influenzare la mente, con una sola Prova. Perdere la funzionalità di una testa toglie questi bonus."
+      "effetto": "Con entrambe le teste coscienti e funzionanti ottiene +2 a Percezione e +2 a Volontà contro Paura e tentativi di influenzarne la mente. Tira una sola Prova con il bonus, non due. Durante il riposo una testa può restare sveglia: conserva Percezione 11, ma non i bonus delle due teste."
     },
     {
       "nome": "Un solo organismo",
-      "effetto": "Uno Stato globale, Svenuto per PM 0 e Morente valgono per tutto il corpo; la seconda testa non li annulla. Una Menomazione alla Testa colpisce un capo preciso, senza un secondo tiro gratuito."
+      "effetto": "Uno Stato globale, Svenuto per PM 0 e Morente coinvolgono il corpo intero; la seconda testa non li annulla. Per una Menomazione alla Testa determinare quale capo è colpito e applicare gli effetti a quella parte, senza un secondo tiro gratuito. Perdere la funzionalità di una testa toglie i bonus di Due vedette, non ripristina Azioni e non elimina Ferite."
     },
     {
-      "nome": "Scurovisione",
-      "effetto": "Vede entro 12 Q anche nell’oscurità naturale; al buio non distingue i colori, non vede attraverso ostacoli, fumo o oscurità magica e non individua da sé chi è nascosto. Oltre i 12 Q valgono luce e vista ordinarie."
+      "nome": "Dotazione e comportamento",
+      "effetto": "Ascia leggera FOR 4, PI 5 e mazza ferrata FOR 4, PI 5, entrambe pronte; nessuna armatura o scudo. Può parare con entrambe le armi, senza sommarne i benefici. Difende un rifugio o un accordo; sotto 20 PV può abbandonare lo scontro. Armi, braccia e teste non assegnano altre AzP."
+    },
+    {
+      "nome": "Bande e grandi avversari",
+      "effetto": "Queste schede aggiungono al capitolo 8 avversari capaci di sfruttare equipaggiamento, cooperazione, forza fisica e rigenerazione. Descrivono esemplari ordinari: capi, sciamani, varianti alate e versioni corrotte richiedono schede proprie. La loro presenza su Iris resta una scelta di ambientazione. PX di riferimento. Il valore riguarda un esemplare e comprende la dotazione indicata. Per un incontro con più avversari si applica il Manuale del Direttore §9.3. Le statistiche rimangono quelle della scheda al variare del numero dei PG. Stato di sviluppo. GS, PX e capacità adattate di questo blocco sono stime iniziali, non risultati di prove al tavolo. Il confronto considera efficacia offensiva, protezioni, Azioni, mobilità e capacità speciali. Vanno registrati gli esiti prima di modificare i valori per gli incontri successivi. Fonte e adattamento. I nomi originali e le pagine del Manuale dei Mostri fornito sono indicati nelle singole schede; le pagine sono quelle stampate nel volume. Descrizioni e regole operative sono riscritte per Simply RPG. Gli allineamenti e le cosmologie dell’originale non assegnano automaticamente Natura Oscura Simmetria. Tabella (celle in ordine di lettura): Dieci profili terrestri • continuazione del catalogo | Creatura | GS | PX per 4 PG | Goblin | Principiante | 11 | Hobgoblin | Inesperto | 22 | Bugbear | Esperto | 33 | Coboldo | Principiante | 11 | Orco | Inesperto | 22 | Gnoll | Inesperto | 22 | Ogre | Esperto | 33 | Ettin | Veterano | 55 | Minotauro | Veterano | 55 | Troll | Eroe | 70."
+    },
+    {
+      "nome": "Regole del blocco",
+      "effetto": "Valori pronti. Tutti gli attacchi sono Naturali, con AC 1 e costo 1 AzP, salvo una capacità che specifichi diversamente. Il danno comprende il bonus ordinario pertinente; non si aggiunge nuovamente FOR o DES. INI indica la componente fissa: si tira sempre anche 1d10. Le Azioni sono disponibili per l’intero Round, non si ripristinano all’Iniziativa. Riserve e protezioni. Tutti i profili sono viventi di Natura Comune, con PM personali e nessun incantesimo. Stati iniziali: nessuno. Nessuna immunità o Contromisura, salvo indicazione espressa. La componente magica dell’AR è sempre 0. A 0 PV il profilo senza Ferite è fuori combattimento secondo il §4.2; morte o distruzione effettiva restano distinte. Scurovisione. Tutti questi esemplari vedono entro 12 Q anche nell’oscurità naturale. Non distinguono colori al buio e non vedono attraverso ostacoli, fumo o oscurità magica. Il senso non individua automaticamente creature nascoste. Oltre tale portata valgono luce e vista ordinarie. Anatomia e movimento. Testa, Torace, Braccia e Gambe corrispondono alle parti omonime; le eccezioni dell’Ettin sono nella sua scheda. La taglia non concede Parata naturale o immunità alle manovre. I valori di movimento indicano Passo / Corsa / Scatto; non concedono volo o scavo. Nuoto e arrampicata restano attività ordinarie, quando possibili, con le relative Prove e penalità. Dotazione e Integrità. Le dotazioni sono Comuni e usano il Manuale degli Armamenti v0.62. Ogni oggetto ha PS Integrità 10; PI e requisiti sono riportati nelle schede. Armatura leggera e media sono i profili commerciali, senza proprietà aggiunte. Armi, scudi e armature a 0 PI seguono le regole di rottura; peso e penalità rimangono finché l’oggetto non è tolto. La corazza biologica non ha PI. Scudi e mani. L’AR dello scudo impugnato e utilizzabile è passiva, anche senza una Parata riuscita. La Parata a distanza con scudo ha −4 VA. Le altre Parate richiedono un mezzo e un attacco compatibili. Archi e armi a due mani richiedono entrambe le mani: riporre lo scudo ne fa perdere l’AR. Cambiare dotazione paga le normali Azioni; il semplice elenco di più armi non le rende tutte pronte. Tiro e munizioni. Arco da guerra: Colpo Singolo e Tiro Rapido, AC 1 per freccia; incoccare è compreso nell’attacco, TR consuma due frecce e segue il Giocatore. Balestra piccola: solo Colpo Singolo, capacità 1, INC 8; ricarica 1 AzM e mano libera. Le gittate sono massime: penalità di distanza, Copertura e movimento restano applicabili. Giavellotti. Le schede usano il profilo proposto nella voce Aarakocra: una mano, FOR 3, 1d6 base, portata 1 Q, gittata FOR × 3 Q, PI 4, niente Tiro Rapido. Armi da guerra in mischia e Armi da lancio a distanza. Ogni lancio spende un giavellotto; estrazione e recupero richiedono le normali Azioni. Questa proposta non modifica automaticamente il catalogo degli Armamenti. Difese e comportamento. Salvo concessione espressa, niente Parata naturale. Schivata richiede 1 AzP e 1 AzM; Elusione soltanto contro effetti che la consentono. Le soglie di ritirata sono intenzioni dell’esemplare, non obblighi biologici o nuove condizioni. Società, alleanze e ostilità dipendono dalla scena: il nome della specie non determina la condotta di ogni individuo."
+    },
+    {
+      "nome": "Altri movimenti",
+      "effetto": "spazio 2 × 2 Q"
+    },
+    {
+      "nome": "Abilità particolari",
+      "effetto": "Oratoria 13 per intimidire"
     }
   ],
   "note": "Gigante bicefalo • guardiano e assaltatore • Natura Comune.",
@@ -118,7 +142,7 @@
       "spazio": "Mostri 0.69",
       "abilita": "Mostri 0.47",
       "attacchi": "Mostri 0.47",
-      "capacita": "Mostri 0.47",
+      "capacita": "Mostri 0.69",
       "note": "Mostri 0.69",
       "gs_px": "Mostri 0.69"
     }

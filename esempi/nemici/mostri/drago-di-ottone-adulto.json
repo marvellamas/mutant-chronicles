@@ -112,6 +112,10 @@
       "effetto": "Immune ai danni da Fuoco e a Incendiato causato dal fuoco. Scavo in sabbia e terreno friabile: giovane 4 / 8 / 12 Q Base, adulto 6 / 12 / 18; non attraversa roccia compatta. Curioso e comunicativo, può usare il sonno per interrompere uno scontro. Presenza terrificante: 1 AzP, una volta per incontro, 12 Q Base; Volontà −1. Procedura nella pagina comune."
     },
     {
+      "nome": "Draghi metallici giovani e adulti",
+      "effetto": "Ottone, rame, bronzo, argento e oro ricevono due profili distinti ciascuno. Ogni drago sceglie fra un soffio che infligge danni e uno con un effetto specifico. Tutti hanno Natura Comune; il metallo non determina automaticamente condotta, alleanze o allineamento. Tabella (celle in ordine di lettura): Dieci profili con soffi alternativi e capacità innate."
+    },
+    {
       "nome": "Azioni per Round",
       "effetto": "Giovane: 3 AzP e 1 AzM. Adulto: 4 AzP e 1 AzM. Le Azioni valgono per l’intero Round e non si rinnovano alla propria Iniziativa. Iniziativa 1d10 + 2 naturale per il giovane e 1d10 + 3 naturale per l’adulto. Al massimo un Morso e due Artigli per Round. L’adulto può sostituire un Artiglio con una Codata. Gli attacchi di Opportunità mantengono il costo ordinario e rientrano in questi limiti. Ogni attacco costa 1 AzP, produce AC 1 e usa il VA di Corpo a corpo. Nessuna Parata naturale; Schivata segue requisiti e costi comuni. Morso: danni Naturali da Perforazione; Artigli: Taglio; Coda: Contusione. Portata giovane: Morso 2 Q Base e Artiglio 1; adulto: Morso 3, Artiglio 2 e Coda 4 Q Base. Dadi e moltiplicatori comprendono i bonus ordinari: non aggiungerli di nuovo."
     },

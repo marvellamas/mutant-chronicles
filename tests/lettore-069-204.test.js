@@ -57,7 +57,8 @@ test('una scheda mista lo dice, una tutta alla 0.69 no — i due casi visti nell
   assert.equal(provenienza(lorath).attacchi, 'Mostri 0.47');
   assert.equal(provenienza(lorath).pv, ED, 'ma i PV sono della 0.69');
   const riga = rigaProvenienza(lorath, ED);
-  assert.match(riga, /Attacchi da Mostri 0\.47/);
+  // lotto 205: il Lorath tiene anche le Capacità, e la riga elenca insieme i campi della stessa edizione
+  assert.match(riga, /Attacchi.*da Mostri 0\.47/);
   assert.ok(!/viene da/.test(riga), 'l’italiano della riga non dipende dal numero dei campi');
   assert.equal(schedaMista(vampiro, ED), false);
   assert.equal(rigaProvenienza(vampiro, ED), null, 'niente riga dove non c’è niente da dire');

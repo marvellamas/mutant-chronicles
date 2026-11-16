@@ -48,11 +48,11 @@
       "va": 13,
       "danno": "2d6+3",
       "natura": "Naturale",
-      "portata_q": 1,
-      "ac": 1,
       "proprieta": [
         "Contusione"
-      ]
+      ],
+      "portata_q": 1,
+      "ac": 1
     },
     {
       "nome": "Schianto in Impeto",
@@ -60,11 +60,11 @@
       "va": 13,
       "danno": "3d6+3",
       "natura": "Naturale",
-      "portata_q": 1,
-      "ac": 1,
       "proprieta": [
         "Contusione"
       ],
+      "portata_q": 1,
+      "ac": 1,
       "note": "Dopo almeno 4 Q rettilinei rotolati verso la vittima; sostituisce lo Schianto normale: vedi «Rotolamento». Un solo 1d6 aggiuntivo già compreso, senza ×2 della Carica."
     }
   ],
@@ -136,7 +136,7 @@
       "movimento": "Mostri 0.69",
       "spazio": "Mostri 0.69",
       "abilita": "Mostri 0.69",
-      "attacchi": "Mostri 0.47",
+      "attacchi": "Mostri 0.69",
       "capacita": "Mostri 0.47",
       "note": "Mostri 0.69",
       "gs_px": "Mostri 0.69"

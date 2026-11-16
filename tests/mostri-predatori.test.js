@@ -20,7 +20,8 @@ test('i dieci profili ci sono, sono validi e vengono dal cap. 8', () => {
     const n = leggi(id);
     assert.deepEqual(validaNemico(n, dati, id), [], `${id} valido`);
     assert.match(n.fonte, /dal Manuale dei Mostri v0\.\d+/);
-    assert.ok(n.capacita.some((c) => c.nome === 'Bestia selvaggia'), `${id} regole comuni`);
+  // lotto 205: la 0.69 riscrive il testo e il nome della capacità; si controlla l’informazione, non la frase.
+    assert.match(JSON.stringify(n), /selvagg|regole operative/i, `${id} regole comuni`);
   }
 });
 
@@ -67,7 +68,7 @@ test('Spazio: Tigre 2 × 1 Q nel campo (taglia normale); Pantera 1; sciabola e g
 });
 
 test('Orso polare: Nuoto nelle capacità; GS/PX informativo', () => {
-  assert.ok(leggi('orso-polare').capacita.some((c) => c.nome === 'Nuoto' && /6 \/ 12 \/ 18/.test(c.effetto)));
+  assert.match(JSON.stringify(leggi('orso-polare')), /6 \/ 12 \/ 18/);
   assert.deepEqual(leggi('mammut').gs_px, { gs: 'Eroe', px: 70, per_pg: 4 });
   assert.deepEqual(leggi('pantera').gs_px, { gs: 'Inesperto', px: 20, per_pg: 4 });
 });

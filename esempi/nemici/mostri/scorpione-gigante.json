@@ -82,23 +82,47 @@
   "capacita": [
     {
       "nome": "Sequenza",
-      "effetto": "Due AzP, non i tre attacchi simultanei dell’originale: una volta con ciascuna chela libera, oppure una chela e il Pungiglione. Massimo un Pungiglione per Round. Difese e altre attività consumano le stesse Azioni."
+      "effetto": "Dispone di due AzP, non dei tre attacchi simultanei dell’originale. Può attaccare una volta con ciascuna chela libera oppure usare una chela e il Pungiglione. Massimo un Pungiglione nelle proprie AzP per Round. Difese e altre attività consumano le medesime Azioni."
     },
     {
       "nome": "Presa con le chele",
-      "effetto": "Al posto del danno di una Chela: Presa naturale con Corpo a corpo 12 contro una preda non superiore a 1 × 1 Q. Ogni chela trattiene una sola vittima e, mentre occupata, non attacca altri. La presa blocca le gambe; mani e braccia restano con il −4 di Immobilizzato. Nessun danno iniziale. Con 1 AzP e una nuova opposizione stringe per 1d6+1 Naturale (AR normale); il fallimento non scioglie la presa."
+      "effetto": "Al posto del danno di una Chela può tentare una Presa naturale con Corpo a corpo 12 contro una preda non superiore a 1 × 1 Q. Ogni chela trattiene una sola vittima e, mentre occupata, non attacca altri bersagli. La presa blocca le gambe; mani e braccia restano utilizzabili con il −4 fisico di Immobilizzato. Non infligge danno iniziale o automatico. Può spendere 1 AzP e una nuova opposizione per stringere, infliggendo 1d6+1 Naturale con AR normale; il fallimento non scioglie la presa."
     },
     {
-      "nome": "Veleno del pungiglione (Pericolosità III, Profonda)",
-      "effetto": "Se il Pungiglione infligge almeno 1 danno finale a un vivente, applica il veleno: Tempra con −2. Tre applicazioni di 1d4 danni (una immediata e una all’Iniziativa dello Scorpione nei due Round successivi), ciascuna ignora AR e non concede Difese. Un successo iniziale dimezza per eccesso ognuna; non si ripete Tempra. Avvelenato termina dopo l’ultima applicazione. Nuove esposizioni rinnovano solo le due applicazioni future; più Scorpioni non sommano il veleno (una sola sequenza). Cura Avvelenamenti (liv. 3) o un antidoto terminano il veleno e le applicazioni dovute."
+      "nome": "Pungiglione e percezione",
+      "effetto": "Il Pungiglione può colpire una preda trattenuta o un altro bersaglio a portata, con un normale attacco e le Difese praticabili. Il carapace non rende immuni ai veleni. Percepisce tramite vibrazioni creature in movimento entro 6 Q sul medesimo supporto continuo: questa percezione sostituisce la vista per localizzarle, senza attraversare muri o riconoscere chi resta immobile."
     },
     {
-      "nome": "Percezione per vibrazioni",
-      "effetto": "Il carapace non rende immune ai veleni. Percepisce tramite vibrazioni le creature in movimento entro 6 Q sul medesimo supporto continuo: sostituisce la vista per localizzarle, senza attraversare muri né riconoscere chi resta immobile."
+      "nome": "Inoculazione",
+      "effetto": "Se il Pungiglione infligge almeno 1 danno finale a un organismo vivente, applica un veleno naturale di Pericolosità III, Profonda. La vittima effettua Tempra con −2. Il veleno produce tre applicazioni di 1d4 danni ciascuna: una immediata e una all’Iniziativa dello Scorpione in ciascuno dei due Round successivi. Ogni applicazione ignora AR e non concede Difese attive."
     },
     {
-      "nome": "Trascinare una preda",
-      "effetto": "Trattenere non dà spostamenti gratuiti. Per trascinare una vittima riluttante spende 1 AzP e l’AzM intera, vince una nuova opposizione della Presa, poi muove al massimo 2 Q al Passo. Una sola vittima alla volta; deve liberare l’altra chela e avere spazio per entrambi. Il fallimento consuma le Azioni senza spostare. Prima di un pericolo letale la vittima effettua la normale PS Riflessi."
+      "nome": "Salvezza",
+      "effetto": "Un successo iniziale dimezza per eccesso ciascuno dei tre danni dopo il tiro; fallimento o Maldestro li applicano interi. Non si ripete Tempra a ogni applicazione. Non aggiunge penalità fisiche, paralisi o Affaticamento. Avvelenato termina dopo l’ultima applicazione; A 0 PV il profilo senza Ferite è fuori combattimento secondo il §4.2; morte o distruzione effettiva restano distinte."
+    },
+    {
+      "nome": "Nuove esposizioni",
+      "effetto": "Finché lo stesso veleno è attivo, una nuova puntura penetrante rinnova soltanto le due applicazioni future ai due Round successivi alla nuova esposizione. Non infligge un altro danno immediato, non richiede un’altra PS iniziale e conserva l’eventuale dimezzamento già ottenuto. Più Scorpioni non sommano questo veleno: si conserva un’unica sequenza, all’Iniziativa della prima fonte. Veleni diversi seguono le regole comuni."
+    },
+    {
+      "nome": "Cure",
+      "effetto": "Cura Avvelenamenti dal livello 3 o un antidoto compatibile terminano il veleno e tutte le applicazioni ancora dovute. Medicina può identificarlo e trattarne i sintomi, ma non lo neutralizza automaticamente. I danni già inflitti restano. Distruggere o allontanare lo Scorpione non cura la vittima; se la fonte non agisce più, si mantiene il suo ultimo momento nell’ordine d’Iniziativa."
+    },
+    {
+      "nome": "Trasportare una preda",
+      "effetto": "Trattenere non concede spostamenti gratuiti. Per trascinare una vittima riluttante lo Scorpione deve spendere 1 AzP e l’AzM ancora intera, vincere una nuova opposizione della Presa naturale e poi muoversi al massimo 2 Q al Passo. Può trascinare una sola vittima alla volta, deve liberare l’altra chela da eventuali prigionieri e mantenere spazio libero per entrambi. Fallimento consuma le Azioni senza spostare nessuno. Pericoli immediatamente letali consentono la normale PS Riflessi prima dell’ingresso."
+    },
+    {
+      "nome": "Bestie e predatori",
+      "effetto": "Questo blocco aggiunge animali ordinari e versioni giganti, con comportamenti di caccia, difesa del territorio e fuga. La loro presenza su Iris richiede una scelta di ambientazione: non acquisiscono automaticamente la resistenza delle specie delle Terre del Fuoco e non appartengono alla Covata. PX di riferimento. Il valore riguarda un solo esemplare senza equipaggiamento. Gli altri membri del branco contano separatamente secondo il Manuale del Direttore §9.3. Il premio riguarda la risoluzione della sfida: allontanare un predatore o proteggere il passaggio può soddisfare l’obiettivo senza ucciderlo. Verifica al tavolo. GS e PX sono stime iniziali. Registrare il peso della superiorità numerica, le Azioni consumate per liberarsi, le applicazioni di veleno e la possibilità di evitare il terreno favorevole al predatore. Il Coccodrillo gigante è particolarmente pericoloso dove può trascinare una preda in acqua. Fonte e conversione. Le voci derivano dal Manuale dei Mostri fornito; ogni scheda indica nome originale e pagina stampata. Si usano Giocatore v0.49, Magia v1.5 e Direttore v0.41. Le procedure operative qui scritte sostituiscono quelle dell’originale; i profili non assegnano automaticamente linguaggi, addestramento o capacità da cavalcatura. Tabella (celle in ordine di lettura): Dieci profili per gli incontri nelle terre selvagge | Creatura | GS | PX per 4 PG | Lupo | Principiante | 10 | Lupo feroce | Inesperto | 20 | Orso bruno | Esperto | 30 | Cinghiale gigante | Esperto | 30 | Leone | Esperto | 30 | Iena gigante | Inesperto | 20 | Ragno gigante | Inesperto | 20 | Scorpione gigante | Veterano | 50 | Serpente costrittore gigante | Veterano | 50 | Coccodrillo gigante | Eroe | 70."
+    },
+    {
+      "nome": "Bestie regole comuni",
+      "effetto": "Valori e risorse. Tutti gli esemplari hanno Natura Comune, sono viventi e respirano aria. La pelle o il carapace forniscono soltanto l’AR intrinseca indicata, con componente magica 0. Hanno la riserva personale di PM riportata, senza incantesimi o spese di PM per le capacità di questo blocco. A 0 PM sono Svenuti; PV, Ferite, Morente, cure e recuperi seguono le regole ordinarie. Stati iniziali: nessuno. Dotazione: nessuna. Azioni e attacchi. Ogni attacco costa 1 AzP e ha AC 1; il danno completo include i bonus ordinari. Le AzP indicate e 1 AzM valgono per tutto il Round. Per l’Iniziativa si somma 1d10 al valore in scheda. Nessuna creatura possiede Parata naturale: può Schivare con 1 AzP e 1 AzM se dispone di spazio e movimento. Rimane un solo Attacco di Opportunità ordinario per Round, con un mezzo libero e idoneo. Un’AzP aggiuntiva vincolata a un attacco non può essere conservata per una Difesa. Movimento. Le terne indicano Passo, Corsa e Scatto in Q. Prove, penalità e costi delle andature rimangono quelli del Giocatore §5.2. Le velocità di nuoto espressamente indicate sono distanze effettive e non subiscono un secondo dimezzamento; nei percorsi misti si usa un’unica AzM e la frazione di movimento consumata in ciascuna modalità. L’arrampicata indicata ammette soltanto Passo. Nessun senso speciale vede attraverso pareti o sostituisce automaticamente Furtività contro Percezione. Branco. Lupo, Lupo feroce e Leone ottengono +2 VA agli attacchi ravvicinati contro un bersaglio che abbia entro 1 Q almeno un loro alleato vigile, capace di minacciarlo in corpo a corpo. Un alleato Svenuto, Stordito o completamente bloccato non basta. Più alleati non aumentano il bonus. Il +2 è condizionale e non è già compreso nei VA delle schede; non concede Azioni né immunità alla paura. Prese naturali. Scorpione, Serpente e Coccodrillo dichiarano una presa prima del tiro. Si usa Corpo a corpo contro Corpo a corpo o Atletica del bersaglio; è una Prova contrapposta, senza un’ulteriore Parata o Schivata. Liberarsi costa 1 AzP e ripete la stessa opposizione, applicando anche il −4 fisico di Immobilizzato; i pareggi favoriscono chi trattiene. Un alleato adiacente può spendere 1 AzP per la stessa opposizione e liberare il prigioniero, usando Corpo a corpo o Atletica. Mantenere non costa Azioni. Rilasciare è gratuito; Svenuto, Morente, distruzione del mezzo di presa o separazione oltre la portata terminano la presa. Stordito da solo non la scioglie. Localizzazioni. Testa indica capo e organi sensoriali; Torace il corpo centrale. La coda del Coccodrillo rientra nelle Gambe, quella dello Scorpione nel Torace. Per il Serpente le Menomazioni alle Braccia limitano la costrizione e quelle alle Gambe la locomozione; le conseguenze si applicano alla funzione corrispondente, senza inventare mani. Gli arti numerosi non annullano automaticamente una Menomazione. Il Direttore identifica il mezzo colpito prima di applicarne gli impedimenti. Tabella (celle in ordine di lettura): Anatomia | Braccia | Gambe | Quadrupedi | Arti anteriori | Arti posteriori | Ragno gigante | Quattro zampe anteriori | Quattro zampe posteriori | Scorpione gigante | Chele | Zampe locomotrici | Serpente gigante | Spire anteriori usate per trattenere | Tratto posteriore e coda."
+    },
+    {
+      "nome": "Altri movimenti",
+      "effetto": "spazio 2 × 2 Q"
     }
   ],
   "note": "Bestia aracnide • predatore corazzato • Natura Comune. Condotta. Cerca contatto e trattiene una preda mentre minaccia gli altri con la coda. Sotto 15 PV tende a cercare un riparo. La gestione del veleno e del trasporto della preda è descritta di seguito.",
@@ -117,8 +141,8 @@
       "movimento": "Mostri 0.69",
       "spazio": "Mostri 0.69",
       "abilita": "Mostri 0.69",
-      "attacchi": "Mostri 0.47",
-      "capacita": "Mostri 0.47",
+      "attacchi": "Mostri 0.69",
+      "capacita": "Mostri 0.69",
       "note": "Mostri 0.69",
       "gs_px": "Mostri 0.69"
     }

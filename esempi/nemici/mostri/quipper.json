@@ -48,12 +48,12 @@
       "va": 9,
       "danno": "1",
       "natura": "Naturale",
-      "ac": 1,
       "proprieta": [
         "Perforazione"
       ],
-      "note": "Solo in acqua.",
-      "portata_q": 1
+      "portata_q": 1,
+      "ac": 1,
+      "note": "Solo in acqua."
     }
   ],
   "abilita": [
@@ -76,24 +76,32 @@
   ],
   "capacita": [
     {
-      "nome": "Natura e risorse",
-      "effetto": "Natura Comune, vivente, senza incantesimi né poteri magici attivi. 1 AzP e 1 AzM per Round; un attacco costa 1 AzP e produce AC 1; al massimo un attacco per Round, Opportunità compresa. Nessuna Parata naturale. Schivata: 1 AzP, 1 AzM e spostamento realmente possibile. A 0 PV valgono Tempra, Ferite, Menomazioni e Morente (nessuna morte o incoscienza automatica); a 0 PM Svenuto. Nessuna immunità generica agli effetti spirituali. Respira soltanto acqua. Naturale e Magico incontrano tutta l’AR pertinente, Etereo solo quella magica."
-    },
-    {
-      "nome": "Animale singolo",
-      "effetto": "Segue integralmente PV, PM, Ferite, Menomazioni e cure biologiche. Non comprende linguaggi. Un animale incontrato non è automaticamente una minaccia: cibo, rifugio, rumori, uova e accessi al nido spiegano la condotta. Il gruppo ostile ha un profilo separato (Sciame). Usa questa scheda per un esemplare isolato e quella dello Sciame per il branco compatto ostile."
-    },
-    {
-      "nome": "Nuoto",
-      "effetto": "Nuoto 8 / 16 / 24 Q effettivi (eccezione al costo ordinario 2 dell’acqua: nel solo Nuoto si percorrono le distanze scritte; percorsi misti: budget unico del §5.2.4). Nessun moto a terra: fuori dall’acqua non si sposta, segue la riserva di fiato di COS Round e il soffocamento, e non attacca oltre il mezzo che raggiunge."
-    },
-    {
       "nome": "Frenesia del sangue",
-      "effetto": "+2 VA al Morso (VA 11) contro un organismo vivente con PV inferiori al massimo oppure con Sanguinamento attivo. Non si somma per più ferite, tracce o alleati e non aumenta il danno; il Morso non procura Sanguinamento automaticamente."
+      "effetto": "+2 VA al Morso contro un organismo vivente con PV inferiori al massimo oppure Sanguinamento attivo. Il VA diventa 11 prima degli altri modificatori. Il bonus non si somma per più ferite, tracce o alleati e non aumenta il danno. Il Morso non procura Sanguinamento automaticamente."
     },
     {
-      "nome": "Scurovisione",
-      "effetto": "Vede entro 12 Q nel buio naturale, senza colori; non attraversa solidi, torbidità o fumo."
+      "nome": "Acqua e sensi",
+      "effetto": "Respira soltanto acqua e ha Scurovisione 12 Q. Fuori dall’acqua non si sposta e segue la normale riserva di fiato di COS Round e il successivo soffocamento; resistere per qualche istante non gli consente di attaccare oltre il mezzo che raggiunge. L’adattamento a un’acqua fredda non concede immunità al Gelo."
+    },
+    {
+      "nome": "Corpo e condotta",
+      "effetto": "Un Morso per Round, Opportunità compresa. Testa e Torace sono capo e tronco, Braccia le pinne anteriori e Gambe l’apparato propulsivo posteriore. Non comprende linguaggi. A Ferita Superficiale tende a sottrarsi nella vegetazione o nell’acqua più profonda, se raggiungibile."
+    },
+    {
+      "nome": "Veleni minori inoculazione e soccorso",
+      "effetto": "Esposizione. Vespa, Centopiedi, due Serpenti e Ragno lupo inoculano soltanto dopo almeno 1 danno fisico finale a un organismo vivente. Prima si risolvono attacco, Difesa, AR, PV e Ferite del colpo; poi la tossina. Tutti questi veleni sono Naturali di Pericolosità II, Importante, e usano Tempra 0. Non costano PM o AzP aggiuntive oltre all’attacco, ma non attraversano una protezione che ha assorbito l’intero danno fisico. Salvezza e durata. Fallimento: danno tossico immediato della voce, ignorando l’AR, e −2 VA alle azioni fisiche per la durata indicata. Successo: metà per eccesso del solo danno tossico e nessuna penalità; questa è la regola specifica, senza dimezzare anche una durata residua. Alla fine di ogni propria Iniziativa la vittima può ripetere Tempra 0 gratuitamente: successo termina la penalità. Non si ripete il danno nei Round seguenti. La scadenza è a fine Round R + N. Esposizioni ripetute. Finché la stessa tossina è attiva, nuove inoculazioni rinnovano solo la durata senza una nuova PS iniziale o altro danno tossico; il danno fisico del colpo resta ordinario. I due Serpenti condividono il veleno ofidico, il Ragno lupo quello aracnide di Ettercap e Ragno gigante. Veleno di Vespa e di Centopiedi sono distinti. Tossine diverse coesistono; ciascuna conserva durata e PS di recupero proprie, senza confondere una sostanza con più dosi della stessa. Danni e immunità. Il Magistrale raddoppia soltanto il danno fisico del Morso o Pungiglione, non la tossina o la difficoltà della sua PS. Un danno tossico subito quando i PV sono già 0 può richiedere le normali Tempra per le Ferite. Nessun veleno di questa pagina dichiara automaticamente morte, paralisi, Svenuto o stabilizzazione a 0 PV. Immunità ai veleni impedisce danno e Stato; la sola immunità ad Avvelenato impedisce la penalità ma non un danno tossico altrimenti compatibile. Cura. Un antidoto adeguato alla sostanza o Cura Avvelenamenti dal livello 2 neutralizza la tossina e termina le penalità ancora mantenute. Il numero di sostanze trattate segue il profilo della cura: curarne una non elimina automaticamente quelle diverse coesistenti. Medicina può riconoscere e trattare i sintomi secondo gli strumenti, senza annullare automaticamente il veleno. Cura Spirituale non elimina una causa tossica attiva. PV, Ferite, Menomazioni e Morente restano interventi distinti. Raccolta. La capacità innata di inoculare non assegna dosi commerciali recuperabili dal cadavere o applicabili a un’arma. Estrazione, conservazione e impiego richiedono una scheda di sostanza, strumenti e tempi adeguati. Neutralizzare una dose nel corpo non sterilizza il nido o rende innocuo l’animale. Una creatura resa incosciente non annulla una tossina già inoculata."
+    },
+    {
+      "nome": "Sciami e piccola fauna",
+      "effetto": "Quattro animali minuti e sei sciami permettono di distinguere un incontro con un singolo esemplare da una massa che agisce insieme. Il Corvo può ripetere suoni, Pipistrello e Ratto cercano riparo negli anfratti, il Quipper popola le acque. Gli sciami possono ostacolare un passaggio o difendere un nido. Il Direttore ne stabilisce la presenza su Iris e la ragione concreta dell’aggressività. PX di riferimento. Valori per un esemplare oppure uno Sciame completo, con quattro PG come riferimento e nessuna dotazione conteggiata. Resistenza del corpo distribuito, immunità, movimento e veleno sono compresi nel GS. Lo Sciame è un solo avversario: i suoi componenti non aggiungono premi individuali. Per il premio dell’incontro si consulta il Direttore §9.3. Impiego. Un animale incontrato non costituisce automaticamente una minaccia. Cibo, rifugio, rumori, uova e accessi al nido possono spiegare la condotta. La presenza di molti animali non converte da sola le loro schede in uno Sciame: si sceglie una delle due rappresentazioni prima dell’incontro e si conserva il relativo conteggio. Fonti e verifica. Giocatore v0.49, Magia v1.5, Direttore v0.41 e Armamenti v0.64. Le pagine citate sono quelle stampate del Manuale dei Mostri fornito. GS e PX sono stime da verificare al tavolo; contromisure ad Area, vie di fuga e possibilità di chiudere gli accessi incidono molto sugli sciami. Le varianti opzionali dello Sciame di insetti della fonte richiedono profili propri. Tabella (celle in ordine di lettura): Dieci profili per nidi acque e luoghi infestati | Creatura | GS | PX per 4 PG | Pipistrello | Principiante | 10 | Corvo | Principiante | 10 | Ratto | Principiante | 10 | Quipper | Principiante | 10 | Sciame di pipistrelli | Inesperto | 20 | Sciame di corvi | Inesperto | 20 | Sciame di ratti | Inesperto | 20 | Sciame di insetti | Inesperto | 20 | Sciame di quipper | Esperto | 30 | Sciame di serpenti velenosi | Esperto | 30."
+    },
+    {
+      "nome": "Sciami spazio e regole operative",
+      "effetto": "Natura e Azioni. Tutti hanno Natura Comune e sono viventi. Nessuno conosce incantesimi o poteri magici attivi. Ogni scheda dispone di 1 AzP e 1 AzM per l’intero Round; INI modifica 1d10. Un attacco costa 1 AzP e produce AC 1, anche quando rappresenta molti morsi. È consentito al massimo un attacco per Round, Opportunità compresa; nessuno possiede Parata naturale. Difese e danni. Schivata richiede 1 AzP, 1 AzM e uno spostamento concretamente possibile. Una vittima può difendersi dall’attacco collettivo con le Difese normalmente adatte: condividere il Q non annulla la sua AR. Dadi e bonus sono completi; si applicano moltiplicatori, Difesa o Salvezza, resistenze, AR ed effetti subordinati al danno residuo. Naturale e Magico incontrano tutta l’AR pertinente, Etereo soltanto quella magica. Spazio condiviso. Uno Sciame occupa 1 × 1 Q e può condividere lo spazio di altre creature. Per attaccare deve condividere con la vittima almeno un Q e il relativo volume: un gruppo in quota non morde chi è al suolo. La portata è 0 Q; anche un’Opportunità richiede che il bersaglio sia ancora nello spazio condiviso al momento dell’innesco. Entrare o restare nel Q non infligge danno automatico. Passaggi e contatto. Lo Sciame attraversa soltanto aperture realmente percorribili da un suo componente e prosegue come un’unica pedina. Non si divide in unità con nuove Azioni o risorse. Pareti, vetri e contenitori chiusi fermano il passaggio; vestiti e armature non sono ignorati dai morsi. Ogni Area risolve sullo Sciame un solo bersaglio, senza moltiplicare colpi o danni per il numero di animali. Movimento. Le terne indicano Q effettivi di Passo / Corsa / Scatto. In volo Corsa e Scatto richiedono Atletica a −2 e −4. Il solo Nuoto nativo percorre le distanze scritte come eccezione al costo 2, mantenendo Prove ed esiti del Giocatore §5.2. Nei percorsi misti si usa il budget unico del §5.2.4, con costo 1 sulla terra o in volo e 2 a nuoto, senza superare il limite di ciascuna modalità. Ali e sensi. Pipistrelli e Corvi non hanno volo stazionario; decollo, dislivello e atterraggio consumano la stessa AzM. Svenuto o perdita della funzione alare possono causare Caduta. Scurovisione, fiuto ed ecolocalizzazione hanno i limiti delle singole voci e non attraversano solidi. Un senso alternativo non individua automaticamente un bersaglio nascosto. Un senso acuto concede +2 a Percezione soltanto quando è determinante. Risorse e Stati. Stati iniziali: nessuno. Gli animali singoli seguono integralmente PV, PM, Ferite, Menomazioni e cure biologiche. Gli sciami usano un solo tracciato per ciascuna risorsa; le eccezioni relative a resistenza, immunità e recupero sono nella pagina finale del blocco. A 0 PV non scattano morte o incoscienza automatiche. A 0 PM si applica Svenuto; le schede non concedono immunità generiche agli effetti spirituali."
+    },
+    {
+      "nome": "Altri movimenti",
+      "effetto": "nuoto 8 / 16 / 24 Q; spazio tattico 1 × 1 Q"
     }
   ],
   "note": "Piccolo pesce carnivoro • frenesia del sangue • Natura Comune.",
@@ -112,8 +120,8 @@
       "movimento": "Mostri 0.69",
       "spazio": "Mostri 0.69",
       "abilita": "Mostri 0.69",
-      "attacchi": "Mostri 0.47",
-      "capacita": "Mostri 0.47",
+      "attacchi": "Mostri 0.69",
+      "capacita": "Mostri 0.69",
       "note": "Mostri 0.69",
       "gs_px": "Mostri 0.69"
     }

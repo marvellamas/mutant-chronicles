@@ -48,11 +48,11 @@
       "va": 10,
       "danno": "1d6+1",
       "natura": "Naturale",
-      "portata_q": 1,
-      "ac": 1,
       "proprieta": [
         "Taglio"
       ],
+      "portata_q": 1,
+      "ac": 1,
       "note": "Con almeno 1 danno finale, una vittima dotata di mente effettua Volontà senza modificatore: fallimento Terrorizzato per 1 Round (nessuna seconda PS iniziale; Barriera Mentale dà il proprio bonus; un’AR che annulla il colpo evita anche questa applicazione)."
     }
   ],
@@ -123,7 +123,7 @@
       "movimento": "Mostri 0.69",
       "spazio": "Mostri 0.69",
       "abilita": "Mostri 0.69",
-      "attacchi": "Mostri 0.47",
+      "attacchi": "Mostri 0.69",
       "capacita": "Mostri 0.47",
       "note": "Mostri 0.69",
       "gs_px": "Mostri 0.69"

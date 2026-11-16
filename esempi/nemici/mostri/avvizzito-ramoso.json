@@ -75,16 +75,32 @@
   ],
   "capacita": [
     {
-      "nome": "Corpo vegetale",
-      "effetto": "Natura Comune, biologicamente vivente, con una mente e PM personali (a 0 PM Svenuto): INT bassa, corpo vegetale o assenza di parola non danno immunità mentali. Respira attraverso i tessuti (nessuna gola da strangolare, ma non è immune alla mancanza d’aria). Nessuna Parata naturale, salvo la Driade con il randello. A 0 PV valgono Tempra, Ferite, Menomazioni e Morente. Testa = regione sensoriale, Torace = tronco, Braccia = rami anteriori, Gambe = radici o appendici locomotrici."
-    },
-    {
-      "nome": "Percezione diffusa",
-      "effetto": "Localizza entro 12 Q senza occhi e udito; non legge colori o scritte, non soddisfa gli sguardi e non attraversa ostacoli solidi. Immune ad Accecato e Assordato; non agli effetti mentali. Resta il confronto Percezione–Furtività."
+      "nome": "Sensi",
+      "effetto": "Percezione diffusa 12 Q; immunità ad Accecato e Assordato. Oltre il raggio non possiede una vista alternativa utile al combattimento. La mente elementare non lo protegge da paura, controllo mentale o danni psichici. Le regole delle melme prive di mente non si applicano."
     },
     {
       "nome": "Legno secco",
-      "effetto": "Subisce danno ×2 da Fuoco di qualunque Natura, prima di Difesa e AR; con un Magistrale il moltiplicatore complessivo diventa ×3. Le fiamme non lo rendono automaticamente Incendiato. Non ha le resistenze da Contusione o Perforazione dell’Albero risvegliato; il Ghiaccio non gli applica il disorientamento speciale della Covata."
+      "effetto": "Subisce Fuoco ×2 di qualunque Natura, prima di Difesa e AR; Magistrale e vulnerabilità danno ×3 complessivo. Non possiede le resistenze da Contusione o Perforazione dell’Albero risvegliato. Ghiaccio non gli applica il disorientamento speciale della Covata."
+    },
+    {
+      "nome": "Rami e nascondigli",
+      "effetto": "Furtività 14 quando è immobile fra cespugli secchi o detriti compatibili. Deve avere una possibilità reale di nascondersi e può essere riconosciuto con un esame riuscito. Le localizzazioni vegetali comuni comprendono il piccolo capo sensoriale, il tronco e gli arti intrecciati."
+    },
+    {
+      "nome": "Vegetali e custodi delle foreste",
+      "effetto": "Il bosco può essere un ambiente, un interlocutore o un avversario. Arbusti risvegliati, alberi senzienti e custodi silvani hanno esigenze differenti dai vegetali infestanti e dai predatori di materia organica. Questi profili ampliano il catalogo generale; la loro presenza su Iris richiede una collocazione nell’ambientazione. Origini divine, piani e culti della fonte non vengono assegnati automaticamente al mondo di Simply RPG. PX di riferimento. Valori per un esemplare e quattro PG. Solo la Driade comprende una dotazione conteggiata, il randello di qualità Comune. L’animazione di due alberi ordinari è già compresa nel profilo e nei 100 PX del Treant: quegli alberi non assegnano un secondo premio. Alberi risvegliati autonomi incontrati separatamente conservano invece la propria scheda. Il calcolo complessivo dell’incontro è nel Manuale del Direttore §9.3. Adattamento. Gli Avvizziti sono tre forme di vegetali infestanti; il nome e il comportamento ostile non attribuiscono Natura Oscura Simmetria, CROS o una dipendenza da un Apostolo. Il Cumulo strisciante è un predatore vegetale. Driade, Treant, Pegaso e Unicorno possono dialogare e scegliere di aiutare gli intrusi: il loro valore in PX non prescrive uno scontro. Fonti e verifica. Giocatore v0.49, Magia v1.5, Direttore v0.41 e Armamenti v0.64. Le pagine delle singole voci sono quelle stampate del Manuale dei Mostri fornito. Le capacità sono convertite, con un insieme definito di poteri invece delle liste di incantesimi e delle Azioni Leggendarie originali. GS e PX sono stime da verificare al tavolo, soprattutto per servitori, prese e supporto. Tabella (celle in ordine di lettura): Dieci profili per boschi viventi, radure e paludi | Creatura | GS | PX per 4 PG | Arbusto risvegliato | Principiante | 10 | Albero risvegliato | Esperto | 30 | Avvizzito ramoso | Principiante | 10 | Avvizzito spinoso | Principiante | 10 | Avvizzito rampicante | Inesperto | 20 | Driade | Esperto | 33 | Cumulo strisciante | Veterano | 50 | Treant | Leggenda | 100 | Pegaso | Esperto | 30 | Unicorno | Eroe | 70."
+    },
+    {
+      "nome": "Foreste regole operative",
+      "effetto": "Corpi e menti. Tutte le dieci creature hanno Natura Comune, sono biologicamente viventi e possiedono una mente e PM personali, anche senza poteri magici. INT bassa, corpo vegetale o incapacità di parlare non concedono immunità mentali. A 0 PM diventano Svenute. L’eccezione riguarda soltanto gli alberi temporaneamente animati dal Treant, che non hanno una mente autonoma e sono descritti separatamente. Stati iniziali e incantesimi appresi: nessuno. Vita e lesioni. A 0 PV il profilo senza Ferite è fuori combattimento secondo il §4.2; morte o distruzione effettiva restano distinte. non si muore e non si sviene per il solo esaurimento dei PV. Le cure biologiche sono applicabili. I vegetali respirano attraverso i tessuti: non hanno una gola animale da strangolare, ma non sono immuni alla mancanza d’aria o all’immersione completa incompatibile con il proprio metabolismo. Nessun corpo vegetale è automaticamente immune a veleni o malattie. Azioni. INI è il modificatore a 1d10. AzP e unica AzM appartengono all’intero Round, senza ripristino all’arrivo dell’Iniziativa. Ogni attacco costa 1 AzP, produce AC 1 e comprende tutti i bonus, salvo eccezione espressa. Un Attacco di Opportunità ordinario usa soltanto un attacco ravvicinato con VA della scheda: non concede poteri, cure, prese speciali o animazioni gratuiti. I limiti offensivi dichiarati comprendono le Opportunità. Difese e danni. Nessuno possiede Parata naturale; la Driade può parare con il randello pronto. Schivata richiede 1 AzP, 1 AzM e possibilità concreta di spostarsi. Parata normale dimezza per eccesso prima dell’AR, Magistrale annulla. Si risolvono dadi e bonus, moltiplicatori, Difesa, resistenze, AR e infine effetti subordinati al danno residuo. Naturale e Magico incontrano tutta l’AR pertinente; Etereo soltanto la quota magica. Sensi e anatomia. Scurovisione vede nel buio naturale, non attraverso solidi o oscurità soprannaturale. La Percezione diffusa degli Avvizziti e del Cumulo localizza senza occhi e udito entro 12 Q: non legge colori o scritte, non soddisfa gli sguardi e non attraversa ostacoli solidi. Richiede comunque il normale confronto Percezione–Furtività. Nei vegetali umanoidi Testa è la regione sensoriale, Torace il tronco, Braccia i rami anteriori e Gambe radici o appendici locomotrici; lesioni e Menomazioni colpiscono quelle funzioni. Movimento e durate. Le terne sono Passo / Corsa / Scatto in Q. Velocità speciali già effettive; tragitti misti condividono il budget ordinario. Terreno difficile segue il Giocatore §5.2. Una durata di N Round termina alla fine del Round di applicazione più N. Immobilizzato applica movimento 0 e −4 alle azioni fisiche, comprese Difese e liberazioni, non alle Salvezze; le mani restano libere salvo blocco espresso."
+    },
+    {
+      "nome": "Altri movimenti",
+      "effetto": "spazio 1 × 1 Q"
+    },
+    {
+      "nome": "Abilità particolari",
+      "effetto": "immobile 14"
     }
   ],
   "immunita": [
@@ -108,7 +124,7 @@
       "spazio": "Mostri 0.69",
       "abilita": "Mostri 0.47",
       "attacchi": "Mostri 0.69",
-      "capacita": "Mostri 0.47",
+      "capacita": "Mostri 0.69",
       "note": "Mostri 0.47",
       "gs_px": "Mostri 0.69"
     }

@@ -58,6 +58,32 @@
       "va": 13
     }
   ],
+  "attacchi": [
+    {
+      "nome": "Catena chiodata",
+      "tipo": "ravvicinato",
+      "va": 15,
+      "danno": "1d4+5",
+      "natura": "Naturale",
+      "proprieta": [
+        "Sanguinante 1"
+      ],
+      "portata_q": 2,
+      "ac": 1
+    },
+    {
+      "nome": "Catena animata",
+      "tipo": "ravvicinato",
+      "va": 15,
+      "danno": "1d4+5",
+      "natura": "Naturale",
+      "proprieta": [
+        "Sanguinante 1"
+      ],
+      "portata_q": 2,
+      "ac": 1
+    }
+  ],
   "capacita": [
     {
       "nome": "Maschera inquietante",
@@ -88,6 +114,26 @@
       "effetto": "Una AzP e due PM: una mente cosciente visibile entro sei Q che veda il suo volto, Volontà 0; fallimento Terrorizzato fino alla fine della successiva Iniziativa della vittima. Non legge ricordi per copiare persone mai viste. Barriera Mentale aggiunge il bonus; Negare Potere confronto 6. Dopo resistenza o liberazione, immunità alla Maschera di questo esemplare per 24 ore. I 110 PX comprendono le due catene pronte e quattro ambientali disponibili; nessun carceriere o prigioniero è incluso."
     },
     {
+      "nome": "Diavoli soldati e custodi",
+      "effetto": "Dieci profili di Natura Comune: dal Lemure ai combattenti alati e al Diavolo del ghiaccio. I nomi identificano le creature della fonte; la loro eventuale presenza su Iris richiede una collocazione nell’ambientazione. Aspetto, immunità e condotta non assegnano automaticamente Oscura Simmetria, Corruzione o fedeltà a una divinità esterna. GS e PX sono una prima taratura per quattro PG e un esemplare con la dotazione scritta. Per il Diavolo delle catene sono comprese le quattro catene ambientali predisposte; altri servitori, trappole o modifiche della scena restano distinti. Le dotazioni Comuni sono già incluse nei PX finali. Il modulo EQ dei PNG generici non si applica; il premio degli incontri resta nel Direttore §9.3. Tabella (celle in ordine di lettura): Creatura | GS iniziale | PX per 4 PG | Lemure | Principiante | 10 | Imp | Esperto | 30 | Diavolo spinato | Esperto | 33 | Diavolo barbuto | Veterano | 55 | Diavolo uncinato | Eroe | 70 | Diavolo delle catene | Leggenda | 110 | Diavolo d’ossa | Mito | 200 | Erinni | Mito | 220 | Diavolo cornuto | Mito | 220 | Diavolo del ghiaccio | Semidio | 400."
+    },
+    {
+      "nome": "Azioni e risorse",
+      "effetto": "AzP e unica AzM sono il totale per Round, senza ripristino all’Iniziativa. Ogni attacco costa una AzP salvo indicazione diversa; danni e bonus sono completi. I limiti comprendono l’unica Opportunità gratuita, soltanto con un attacco ravvicinato compatibile. Più arti, catene o proiettili non concedono Azioni autonome. Le Difese mantengono i propri requisiti e costi; le eccezioni dell’Erinni sono espresse nella scheda. Iniziativa. Si tira 1d10 più il bonus positivo di DES riportato; il Lemure tira soltanto 1d10. Non si applica un malus di base per INT o DES basse. Tutti hanno mente e PM personali: zero PM provoca Svenuto dopo la risoluzione completa dell’azione. Zero PV non provoca morte o dissoluzione automatica; seguono Ferite, Menomazioni e Morente. I corpi sono viventi biologici per cure ed effetti compatibili; immunità ai veleni non significa immunità a malattie, Sanguinamento o sonno. Nessun ritorno automatico da un altro piano, promozione, Famiglio, patto che sottragga anime o capacità di evocare altri diavoli è incluso. Un vincolo ulteriore richiede regole e contromisure proprie definite prima dell’incontro."
+    },
+    {
+      "nome": "Protezioni",
+      "effetto": "Protezioni elementali comuni. Tutti e dieci sono immuni a Fuoco, veleni e Avvelenato e dimezzano per eccesso il Gelo dopo le Difese e prima dell’AR. Il Diavolo del ghiaccio è invece immune anche al Gelo. Le immunità comprendono gli Stati direttamente prodotti dal relativo elemento; non curano PV o altri danni di un colpo misto. La semplice resistenza al Gelo non evita i suoi effetti aggiuntivi dopo residuo e superamento di Termico. Armi non argentate. Tutti salvo il Lemure dimezzano per eccesso il danno Naturale da armi non argentate, armi naturali comprese, dopo le Difese e prima dell’AR. Argento effettivamente presente nella parte offensiva elimina soltanto questo dimezzamento, senza raddoppio o perforazione dell’AR. Magico ed Etereo, fenomeni ambientali, soffocamento e tossine non sono dimezzati da questa resistenza. Il danno diretto di un’arma Naturale con una proprietà elementale resta un’arma; componenti separate si risolvono ciascuna secondo la propria Natura. Una fonte compresa in due resistenze si dimezza una sola volta. Resistenza alla magia. Tutti salvo il Lemure aggiungono +2 alle sole PS previste contro Incantesimi o poteri mistici, non già compreso nei VA pronti. Non concede tiri nuovi, non penalizza chi usa una Difesa e non modifica Tempra per Ferite solo perché il danno era Magico. Non aiuta automaticamente contro un veleno biologico; può aiutare contro quello mistico dell’Erinni, se la vittima possiede la capacità."
+    },
+    {
+      "nome": "Sensi e comunicazione",
+      "effetto": "Vista infernale. Scurovisione entro 24 Q che funziona anche nel buio magico. Non rende trasparenti solidi, fumo o nebbia opaca e non rivela invisibilità o menti nascoste. L’Erinni possiede inoltre Vista rivelatrice 9: usa il confronto di rilevazione descritto per Glabrezu e Nalfeshnee, senza eliminare i requisiti della percezione. Percezione cieca, quando indicata, mantiene la propria portata ed è fermata dai solidi. Telepatia. Quando riportata permette messaggi a una mente cosciente validamente individuata entro la portata, senza lettura mentale, sensi condivisi o controllo. Un messaggio breve alla propria Iniziativa non costa AzP. Gli ordini ad alleati consenzienti non concedono loro nuove Azioni. Lingua e capacità sociali non rendono obbligatoria una richiesta; i profili non possiedono un’autorità mistica universale."
+    },
+    {
+      "nome": "Risoluzione dei poteri e dei colpi",
+      "effetto": "Le capacità innate pagano Azioni e PM anche se la vittima resiste. Non richiedono Potere o componenti e non sono lanci fermabili con Contromagia. Negare Potere interviene solo sugli effetti dichiarati rimovibili: superiore rimuove, inferiore non basta, pari richiede una sola Volontà di chi nega. La potenza di confronto non è un altro costo in PM. Barriera Mentale aiuta Volontà e Magia direttamente mentali, non Tempra contro veleno, Gelo o lesioni. AC due. Aculei dello Spinato e colpi del Diavolo del ghiaccio hanno due applicazioni successive: una Prova per colpire, una sola Difesa, poi AR e conseguenze separate per ogni componente. Parata dimezza ciascuna applicazione, Schivata le evita entrambe; Magistrale moltiplica soltanto la prima. Si risolve la prima prima della seconda, comprese eventuali Ferite. Magico incontra l’AR ordinaria: non è automaticamente Etereo. Veleno dopo un colpo. Quando richiede danno finale, un colpo che lasci zero non inocula. La perdita da veleno usa la propria Tempra, ignora AR e non offre una seconda Difesa. È un’istanza distinta dal danno iniziale, non riceve nuovamente il Magistrale e segue le normali conseguenze se la vittima è già a zero PV. Sanguinamento mantiene invece la procedura specifica del Giocatore §5.15, senza sommare valori o abbreviare arbitrariamente Medicina."
+    },
+    {
       "nome": "Altri movimenti",
       "effetto": "spazio 1 × 1 Q"
     }
@@ -111,13 +157,12 @@
       "movimento": "Mostri 0.69",
       "spazio": "Mostri 0.69",
       "abilita": "Mostri 0.69",
+      "attacchi": "Mostri 0.69",
       "capacita": "Mostri 0.69",
       "note": "Mostri 0.69",
-      "gs_px": "Mostri 0.69",
-      "attacchi": "Mostri 0.69"
+      "gs_px": "Mostri 0.69"
     },
     "edizione": "Mostri 0.69",
     "sistema_salute": "solo_PV"
-  },
-  "attacchi": []
+  }
 }

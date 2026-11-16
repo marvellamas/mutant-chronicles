@@ -245,9 +245,15 @@ test('la pagina porta anche il testo del manuale proposto, con i suoi capitoli',
 
 // --- lotto 144: peso della pagina e testi comuni scritti una volta sola ---------------------------------------
 
-test('peso: la pagina pubblicata sta sotto 1 MB (le schede viaggiano compresse) ed è completa una volta aperta', () => {
+test('peso: la pagina pubblicata resta leggera sul telefono (le schede viaggiano compresse) ed è completa una volta aperta', () => {
+  // **Lotto 205: il limite passa da 1 MB a 1,3 MB, e il motivo è contenuto, non pigrizia.** Agganciando le
+  // pagine «regole comuni» di ogni blocco a tutte le schede del catalogo, nel Bestiario sono entrate le regole
+  // di blocco del manuale — resistenze, sensi, sequenze di attacco — che prima non c'erano. Nella pagina ogni
+  // testo ripetuto è scritto **una volta sola** (condividiTesti), quindi i 300 KB in più sono testo nuovo e non
+  // la stessa frase copiata 460 volte: è la differenza fra una pagina più grassa e una pagina più completa.
+  // Il limite resta, perché la pagina si legge sul telefono: se risalisse ancora, si guarda che cosa è entrato.
   const grezzo = readFileSync(new URL(FILE_PAGINA, RADICE), 'utf8');
-  assert.ok(Buffer.byteLength(grezzo) < 1024 * 1024, `la pagina pesa ${Math.round(Buffer.byteLength(grezzo) / 1024)} KB`);
+  assert.ok(Buffer.byteLength(grezzo) < 1.3 * 1024 * 1024, `la pagina pesa ${Math.round(Buffer.byteLength(grezzo) / 1024)} KB`);
   assert.match(grezzo, /id="dati-schede"/);
   assert.match(grezzo, /id="caricamento"/);
   const aperto = aperta(grezzo);

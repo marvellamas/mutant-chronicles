@@ -82,19 +82,55 @@
   "capacita": [
     {
       "nome": "Sequenza",
-      "effetto": "Nelle AzP al massimo un’azione di mascelle e un attacco di Coda per Round. Una presa o stretta occupa l’azione di mascelle. Il bersaglio della Coda deve essere diverso dalla preda trattenuta. Le due AzP possono servire anche per Difese."
+      "effetto": "Nelle proprie AzP può usare al massimo un’azione di mascelle e un attacco di Coda per Round. Una presa iniziale o una stretta successiva occupa l’azione di mascelle. Il bersaglio della Coda deve essere diverso dalla preda trattenuta. Le due AzP possono anche servire per Difese o altre attività."
     },
     {
       "nome": "Presa delle mascelle",
-      "effetto": "Al posto del Morso: Presa naturale, Corpo a corpo 14 contro Corpo a corpo o Atletica, su una preda non superiore a 2 × 2 Q. Se riesce applica Immobilizzato e infligge 1d10+2 Naturale (AR normale). Trattiene una sola preda (corpo e gambe bloccati, mani con il −4 fisico); non può mordere un altro bersaglio mentre tiene. Una stretta successiva: 1 AzP e nuova opposizione, successo 1d10+2 Naturale, fallimento nessun danno e conserva la presa."
+      "effetto": "Al posto del Morso ordinario dichiara una Presa naturale, Corpo a corpo 14 contro Corpo a corpo o Atletica, su una preda non superiore a 2 × 2 Q. Se riesce applica Immobilizzato e infligge 1d10+2 Naturale con AR normale. Trattiene una sola preda; il corpo e le gambe sono bloccati, le mani restano disponibili con il −4 fisico. Non può mordere un altro bersaglio finché mantiene la presa."
     },
     {
-      "nome": "Spazzata di coda",
-      "effetto": "La Coda che infligge almeno 1 danno finale a una creatura non superiore a 2 × 2 Q impone Tempra senza modificatore; fallimento o Maldestro applica A Terra. Richiede un appoggio, senza spostamento o effetto su chi è già A Terra."
+      "nome": "Stringere e spazzare",
+      "effetto": "Una stretta successiva richiede 1 AzP e una nuova opposizione della presa: successo infligge 1d10+2 Naturale, fallimento non infligge danno e conserva la presa. La Coda che infligge almeno 1 danno finale a una creatura non superiore a 2 × 2 Q impone Tempra senza modificatore; fallimento o Maldestro applica A Terra. Occorre un appoggio, senza spostamento o effetto su chi è già A Terra."
     },
     {
-      "nome": "Anfibio",
-      "effetto": "Nuoto 10 / 20 / 30 Q. Apnea 30 minuti (sostituisce i Round pari a COS, senza respirazione acquatica); esaurita, PS, perdita di coscienza e danni del §5.23, un Round d’aria la ripristina. +2 a Furtività nell’acqua con riparo (Furtività 13). Per trascinare una preda riluttante mentre tiene (niente Corsa/Scatto/Carica): 1 AzP e l’AzM intera, nuova opposizione, poi fino a 2 Q a terra o 4 Q a nuoto; percorso misto con budget 4 (1 Q a terra = 2, 1 Q a nuoto = 1). Prima di un pericolo letale la vittima effettua la normale PS Riflessi."
+      "nome": "Apnea",
+      "effetto": "Può trattenere il fiato per 30 minuti. Questa riserva sostituisce il normale numero di Round pari a COS, senza concedere respirazione acquatica. Una volta esaurita si applicano PS, perdita di coscienza e danni del Giocatore §5.23. Un Round respirando normalmente ripristina la riserva, secondo la regola comune."
+    },
+    {
+      "nome": "Trascinare una preda",
+      "effetto": "Mentre mantiene la presa non può usare Corsa, Scatto o Carica. Per trascinare la vittima riluttante spende 1 AzP e l’AzM ancora intera e vince una nuova opposizione della Presa naturale. Può quindi avanzare fino a 2 Q a terra o 4 Q a nuoto, con spazio libero per entrambi."
+    },
+    {
+      "nome": "Percorso misto",
+      "effetto": "Per questa specifica manovra usa un budget di 4 punti: ogni Q a terra costa 2 punti, ogni Q a nuoto ne costa 1. Il movimento del predatore segue gli Attacchi di Opportunità ordinari; il movimento forzato della vittima non ne provoca. Fallire l’opposizione consuma le Azioni senza spostare nessuno. Trascinare non infligge anche il danno del Morso o della stretta."
+    },
+    {
+      "nome": "Pericoli e immersione",
+      "effetto": "Prima di trascinare la vittima in un pericolo immediatamente letale si effettua la normale PS Riflessi: successo la lascia nell’ultimo Q sicuro; il Coccodrillo deve fermarsi conservando la portata oppure rilasciarla. Affogare inizia soltanto quando le vie respiratorie sono realmente immerse e la vittima non può respirare tramite mezzi adeguati."
+    },
+    {
+      "nome": "Tempo per intervenire",
+      "effetto": "La vittima dispone inizialmente di COS Round di fiato e può tentare la liberazione; non perde coscienza per il solo ingresso in acqua. Poi seguono le PS Tempra, Svenuto e i danni del §5.23. Uscire dall’acqua interrompe il soffocamento ma non cancella PV persi, Ferite o Morente. La riserva di 30 minuti del Coccodrillo non si trasferisce alla preda."
+    },
+    {
+      "nome": "Soccorso",
+      "effetto": "Liberare con una Prova, attaccare il predatore, bloccargli il percorso o fornire aria sono opzioni distinte. Un prigioniero già Svenuto non può liberarsi da solo; i compagni possono usare la liberazione delle Prese naturali senza danneggiarlo automaticamente. La coda non può colpire la preda trattenuta e le mascelle non ottengono attacchi gratuiti durante il trascinamento."
+    },
+    {
+      "nome": "Bestie e predatori",
+      "effetto": "Questo blocco aggiunge animali ordinari e versioni giganti, con comportamenti di caccia, difesa del territorio e fuga. La loro presenza su Iris richiede una scelta di ambientazione: non acquisiscono automaticamente la resistenza delle specie delle Terre del Fuoco e non appartengono alla Covata. PX di riferimento. Il valore riguarda un solo esemplare senza equipaggiamento. Gli altri membri del branco contano separatamente secondo il Manuale del Direttore §9.3. Il premio riguarda la risoluzione della sfida: allontanare un predatore o proteggere il passaggio può soddisfare l’obiettivo senza ucciderlo. Verifica al tavolo. GS e PX sono stime iniziali. Registrare il peso della superiorità numerica, le Azioni consumate per liberarsi, le applicazioni di veleno e la possibilità di evitare il terreno favorevole al predatore. Il Coccodrillo gigante è particolarmente pericoloso dove può trascinare una preda in acqua. Fonte e conversione. Le voci derivano dal Manuale dei Mostri fornito; ogni scheda indica nome originale e pagina stampata. Si usano Giocatore v0.49, Magia v1.5 e Direttore v0.41. Le procedure operative qui scritte sostituiscono quelle dell’originale; i profili non assegnano automaticamente linguaggi, addestramento o capacità da cavalcatura. Tabella (celle in ordine di lettura): Dieci profili per gli incontri nelle terre selvagge | Creatura | GS | PX per 4 PG | Lupo | Principiante | 10 | Lupo feroce | Inesperto | 20 | Orso bruno | Esperto | 30 | Cinghiale gigante | Esperto | 30 | Leone | Esperto | 30 | Iena gigante | Inesperto | 20 | Ragno gigante | Inesperto | 20 | Scorpione gigante | Veterano | 50 | Serpente costrittore gigante | Veterano | 50 | Coccodrillo gigante | Eroe | 70."
+    },
+    {
+      "nome": "Bestie regole comuni",
+      "effetto": "Valori e risorse. Tutti gli esemplari hanno Natura Comune, sono viventi e respirano aria. La pelle o il carapace forniscono soltanto l’AR intrinseca indicata, con componente magica 0. Hanno la riserva personale di PM riportata, senza incantesimi o spese di PM per le capacità di questo blocco. A 0 PM sono Svenuti; PV, Ferite, Morente, cure e recuperi seguono le regole ordinarie. Stati iniziali: nessuno. Dotazione: nessuna. Azioni e attacchi. Ogni attacco costa 1 AzP e ha AC 1; il danno completo include i bonus ordinari. Le AzP indicate e 1 AzM valgono per tutto il Round. Per l’Iniziativa si somma 1d10 al valore in scheda. Nessuna creatura possiede Parata naturale: può Schivare con 1 AzP e 1 AzM se dispone di spazio e movimento. Rimane un solo Attacco di Opportunità ordinario per Round, con un mezzo libero e idoneo. Un’AzP aggiuntiva vincolata a un attacco non può essere conservata per una Difesa. Movimento. Le terne indicano Passo, Corsa e Scatto in Q. Prove, penalità e costi delle andature rimangono quelli del Giocatore §5.2. Le velocità di nuoto espressamente indicate sono distanze effettive e non subiscono un secondo dimezzamento; nei percorsi misti si usa un’unica AzM e la frazione di movimento consumata in ciascuna modalità. L’arrampicata indicata ammette soltanto Passo. Nessun senso speciale vede attraverso pareti o sostituisce automaticamente Furtività contro Percezione. Branco. Lupo, Lupo feroce e Leone ottengono +2 VA agli attacchi ravvicinati contro un bersaglio che abbia entro 1 Q almeno un loro alleato vigile, capace di minacciarlo in corpo a corpo. Un alleato Svenuto, Stordito o completamente bloccato non basta. Più alleati non aumentano il bonus. Il +2 è condizionale e non è già compreso nei VA delle schede; non concede Azioni né immunità alla paura. Prese naturali. Scorpione, Serpente e Coccodrillo dichiarano una presa prima del tiro. Si usa Corpo a corpo contro Corpo a corpo o Atletica del bersaglio; è una Prova contrapposta, senza un’ulteriore Parata o Schivata. Liberarsi costa 1 AzP e ripete la stessa opposizione, applicando anche il −4 fisico di Immobilizzato; i pareggi favoriscono chi trattiene. Un alleato adiacente può spendere 1 AzP per la stessa opposizione e liberare il prigioniero, usando Corpo a corpo o Atletica. Mantenere non costa Azioni. Rilasciare è gratuito; Svenuto, Morente, distruzione del mezzo di presa o separazione oltre la portata terminano la presa. Stordito da solo non la scioglie. Localizzazioni. Testa indica capo e organi sensoriali; Torace il corpo centrale. La coda del Coccodrillo rientra nelle Gambe, quella dello Scorpione nel Torace. Per il Serpente le Menomazioni alle Braccia limitano la costrizione e quelle alle Gambe la locomozione; le conseguenze si applicano alla funzione corrispondente, senza inventare mani. Gli arti numerosi non annullano automaticamente una Menomazione. Il Direttore identifica il mezzo colpito prima di applicarne gli impedimenti. Tabella (celle in ordine di lettura): Anatomia | Braccia | Gambe | Quadrupedi | Arti anteriori | Arti posteriori | Ragno gigante | Quattro zampe anteriori | Quattro zampe posteriori | Scorpione gigante | Chele | Zampe locomotrici | Serpente gigante | Spire anteriori usate per trattenere | Tratto posteriore e coda."
+    },
+    {
+      "nome": "Altri movimenti",
+      "effetto": "nuoto 10 / 20 / 30; spazio 3 × 2 Q"
+    },
+    {
+      "nome": "Abilità particolari",
+      "effetto": "Furtività 11, 13 nell’acqua con riparo"
     }
   ],
   "note": "Bestia rettile • predatore anfibio da agguato • Natura Comune. Condotta. Sfrutta occultamento e sponde, senza ottenere sorpresa automatica. Sotto 21 PV può rilasciare la preda e cercare acqua profonda. Nuoto, apnea e trascinamento sono descritti nella pagina seguente.",
@@ -113,8 +149,8 @@
       "movimento": "Mostri 0.69",
       "spazio": "Mostri 0.69",
       "abilita": "Mostri 0.47",
-      "attacchi": "Mostri 0.47",
-      "capacita": "Mostri 0.47",
+      "attacchi": "Mostri 0.69",
+      "capacita": "Mostri 0.69",
       "note": "Mostri 0.69",
       "gs_px": "Mostri 0.69"
     }

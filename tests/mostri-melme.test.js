@@ -68,7 +68,10 @@ test('Fungo stridente: immobile, AzM inutilizzabile, nessun attacco, GS «—» 
 test('Corrosivo solo dove dichiarato (Melma grigia e Budino nero); l’acido senza Corrosivo nelle note', () => {
   for (const id of ['melma-grigia', 'budino-nero']) assert.ok(leggi(id).attacchi[0].proprieta.includes('Corrosivo'), id);
   for (const id of ['gelatina-ocra', 'cubo-gelatinoso']) {
-    for (const a of leggi(id).attacchi) assert.equal(a.proprieta, undefined, `${id}/${a.nome} senza Corrosivo`);
+  // lotto 205: la 0.69 rinomina la capacità; si controlla l’informazione, non il nome della riga.
+    // la 0.69 scrive il tipo di danno fra le proprietà (Acido): quello che deve restare vero è che
+    // «Corrosivo» stia solo dove il manuale lo dichiara
+    for (const a of leggi(id).attacchi) assert.ok(!(a.proprieta ?? []).includes('Corrosivo'), `${id}/${a.nome} senza Corrosivo`);
     assert.match(leggi(id).attacchi[0].note, /acido/);
   }
 });

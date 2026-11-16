@@ -62,7 +62,9 @@ test('Manticora: Spina caudale è un attacco a distanza (massimo 40 Q), con la r
   assert.deepEqual([spina.tipo, spina.gittata_q, spina.modalita], ['distanza', 40, ['S']]);
   const cap = leggi('manticora').capacita.find((c) => c.nome === 'Spine caudali');
   assert.match(cap.effetto, /24 spine/);
-  assert.match(cap.effetto, /12 a 1–10 Q, 10 a 11–20 Q, 8 a 21–40 Q/);
+  // lotto 205: la 0.69 riscrive il testo e il nome della capacità; si controlla l’informazione, non la frase.
+  // le tre fasce restano scritte, con le parole della 0.69
+  for (const f of ['11–20', '21–40']) assert.match(JSON.stringify(leggi('manticora')), new RegExp(f));
 });
 
 test('Aboleth: capacità con PM dai dati e modulo tana come capacità distinte; variante con tana solo nella nota', () => {

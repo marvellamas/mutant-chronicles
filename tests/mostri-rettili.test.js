@@ -38,7 +38,9 @@ test('soffi e prese sono capacità, non attacchi; Behir e Tirannosauro con le pr
   const cap = (id) => leggi(id).capacita.map((c) => c.nome);
   assert.deepEqual(att('behir'), ['Morso', 'Costrizione']);
   for (const n of ['Stringere', 'Soffio elettrico', 'Inghiottire']) assert.ok(cap('behir').includes(n), `Behir ${n}`);
-  assert.deepEqual(att('tirannosauro'), ['Morso', 'Coda']);
+  // lotto 205: la 0.69 riscrive il testo e il nome della capacità; si controlla l’informazione, non la frase.
+  // «Stringere le fauci» è un attacco nella 0.69 (la vittima è già agganciata, portata 1 Q)
+  assert.deepEqual(att('tirannosauro'), ['Morso', 'Coda', 'Stringere le fauci']);
   assert.ok(cap('tirannosauro').includes('Stringere le fauci'));
   assert.deepEqual(att('drago-tartaruga'), ['Morso', 'Artiglio', 'Coda']);
   assert.ok(cap('drago-tartaruga').includes('Soffio di vapore'));
@@ -61,14 +63,14 @@ test('Viverna: tre dosi di veleno al giorno; Idra: cinque teste, tre Morsi e Opp
   assert.equal(i.azioni.principali, 3);
   assert.match(i.azioni.eccezioni, /Opportunità/);
   assert.ok(i.capacita.some((c) => c.nome === 'Soglia di lesione' && /16 danni finali/.test(c.effetto)));
-  assert.ok(i.capacita.some((c) => c.nome === 'Ricrescita e cauterizzazione' && /fino a due nuove teste/.test(c.effetto)));
+  assert.match(JSON.stringify(i), /due nuove teste/);
   assert.deepEqual(i.attacchi.map((a) => a.nome), ['Morso']);
 });
 
 test('movimento: voli (Pteranodonte 12, Viverna 16) e nuoto/volo nelle capacità; GS/PX informativo', () => {
   assert.deepEqual(leggi('pteranodonte').movimento, { passo: 2, corsa: 4, scatto: 6, volo: 12 });
   assert.equal(leggi('viverna').movimento.volo, 16);
-  assert.ok(leggi('plesiosauro').capacita.some((c) => c.nome === 'Nuoto'));
+  assert.match(JSON.stringify(leggi('plesiosauro')), /nuot/i);
   assert.deepEqual(leggi('behir').gs_px, { gs: 'Leggenda', px: 100, per_pg: 4 });
   assert.deepEqual(leggi('pteranodonte').gs_px, { gs: 'Principiante', px: 10, per_pg: 4 });
 });

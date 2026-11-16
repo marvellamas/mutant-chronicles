@@ -49,6 +49,9 @@
       "va": 9,
       "danno": "1d6",
       "natura": "Naturale",
+      "proprieta": [
+        "degradazione biologica"
+      ],
       "portata_q": 2,
       "ac": 1,
       "note": "Degradazione biologica: colpisce solo organismi biologici, AR normale; non è Etereo e non applica veleno, malattia o Corrosivo."
@@ -110,7 +113,7 @@
       "movimento": "Mostri 0.69",
       "spazio": "Mostri 0.69",
       "abilita": "Mostri 0.47",
-      "attacchi": "Mostri 0.47",
+      "attacchi": "Mostri 0.69",
       "capacita": "Mostri 0.47",
       "note": "Mostri 0.69",
       "gs_px": "Mostri 0.69"

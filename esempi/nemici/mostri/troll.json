@@ -81,28 +81,64 @@
   ],
   "capacita": [
     {
+      "nome": "Artiglio",
+      "effetto": "VA 14. Danno: 1d8+2. Portata/costo: 1 Q; "
+    },
+    {
+      "nome": "Morso",
+      "effetto": "VA 14. Danno: 1d6+2. Portata/costo: 1 Q; "
+    },
+    {
       "nome": "Sequenza offensiva",
-      "effetto": "Nelle proprie AzP al massimo due Artigli e un Morso per Round, pagati separatamente. Le AzP spese per Difese o altro riducono gli attacchi. L’Attacco di Opportunità ordinario resta distinto e non ripete la sequenza."
+      "effetto": "Nelle proprie AzP può effettuare al massimo due Artigli e un Morso per Round, ciascuno pagato separatamente. Le AzP spese per Difese o altre attività riducono gli attacchi disponibili. L’Attacco di Opportunità ordinario rimane distinto e non ripete tutta la sequenza."
     },
     {
       "nome": "Rigenerazione",
-      "effetto": "A inizio della propria Iniziativa, prima di agire, recupera 5 PV senza Azioni o PM, fino al massimo. Funziona anche a 0 PV e durante Svenuto, se è vivo e non Morente. Non elimina Ferite, Stati o Menomazioni, non stabilizza Morente, non riattiva un morto. A Morente il recupero è sospeso fino alla stabilizzazione."
+      "effetto": "All’inizio della propria Iniziativa, prima di agire, recupera 5 PV senza Azioni o PM, fino al massimo. Funziona anche a 0 PV e durante Svenuto, purché sia ancora vivo; il ritorno all’attività segue il §4.2. Non elimina Ferite, Stati o Menomazioni, non stabilizza Morente e non riattiva una creatura morta. A Morente il recupero è sospeso fino alla stabilizzazione ordinaria."
     },
     {
       "nome": "Arrestare il recupero",
-      "effetto": "Se subisce almeno 1 danno finale da Fuoco o da un attacco Corrosivo (anche il danno periodico di Incendiato), si annota un blocco: alla successiva Iniziativa salta il recupero e il blocco si cancella. Più colpi prima di quell’Iniziativa non accumulano recuperi persi. Un colpo del tutto assorbito non basta."
+      "effetto": "Se subisce almeno 1 danno finale da una componente Fuoco o da un attacco con proprietà Corrosivo, annotare un blocco. Alla successiva Iniziativa salta il recupero e cancella il blocco. Più attacchi prima di quell’Iniziativa non fanno accumulare recuperi persi; nuovi danni successivi possono bloccare ancora. Vale anche per il danno periodico di Incendiato. Un colpo completamente assorbito non basta. L’effetto sull’Integrità di Corrosivo rimane separato."
     },
     {
       "nome": "Ricrescita lenta",
-      "effetto": "Fuori scontro, vivo e non Morente, ricostruisce un braccio o una gamba dopo un’ora ininterrotta di riposo (un’ora per arto); l’interruzione fa ripartire il tempo. Toglie solo la Menomazione di quell’arto. Non ricrea un capo distrutto né restituisce la vita; le parti staccate sono inerti."
+      "effetto": "Fuori da uno scontro, un Troll vivo e non Morente può ricostruire un braccio o una gamba perduti dopo un’ora ininterrotta di riposo, senza subire nuovi danni e senza il blocco della rigenerazione. Ogni interruzione fa ripartire il tempo. Rimuove soltanto la Menomazione di quell’arto; Ferite e altri Stati rimangono. Serve un’ora per ogni arto. Non ricrea un capo distrutto e non restituisce la vita. Le parti staccate sono inerti e non generano altri Troll."
     },
     {
       "nome": "Olfatto",
-      "effetto": "Percezione 12 per odori percepibili (già compresa); non è vista cieca, non dà la posizione esatta e non ignora ostacoli solidi o penalità alla Prova per colpire."
+      "effetto": "Usa Percezione 12 per odori effettivamente percepibili; il bonus è già compreso nel valore. Non è vista cieca, non identifica automaticamente una posizione esatta e non permette di ignorare un ostacolo solido o una penalità alla Prova per colpire."
     },
     {
-      "nome": "Scurovisione",
-      "effetto": "Vede entro 12 Q anche nell’oscurità naturale; al buio non distingue i colori, non vede attraverso ostacoli, fumo o oscurità magica e non individua da sé chi è nascosto. Oltre i 12 Q valgono luce e vista ordinarie."
+      "nome": "Difese e anatomia",
+      "effetto": "Non possiede Parata naturale. Può Schivare se conserva 1 AzP, 1 AzM e spazio sufficiente; Elusione segue l’effetto che la ammette. Testa, Torace e arti seguono le localizzazioni ordinarie. Un arto menomato non torna utilizzabile grazie al solo recupero di PV. Non ha equipaggiamento: artigli, pelle e rigenerazione sono caratteristiche biologiche."
+    },
+    {
+      "nome": "Contromisure",
+      "effetto": "Separarlo dalle prede e infliggere danno da Fuoco o Corrosivo impediscono che il recupero prolunghi lo scontro. La rigenerazione non equivale a immunità ai danni ordinari: sconfitta e morte effettiva restano possibili secondo il §4.2. Ridurre la riserva a 0 PV mette il mostro fuori combattimento; la rigenerazione espressamente valida da 0 può consentirgli di tornare attivo secondo il §4.2."
+    },
+    {
+      "nome": "Esempio operativo",
+      "effetto": "Il Troll ha 8 PV attuali. Subisce 4 danni finali Fuoco e scende a 4 PV: si annota il blocco. Alla sua Iniziativa non recupera e il blocco si cancella. Se prima dell’Iniziativa seguente non subisce altro Fuoco o Corrosivo, recupera 5 PV, entro il proprio massimo. Non rimuove altri Stati o Menomazioni espressamente inflitte. La rigenerazione funziona da 0 soltanto se ancora vivo e alle condizioni già previste; il ritorno all’attività segue il §4.2."
+    },
+    {
+      "nome": "Verifica al tavolo",
+      "effetto": "Registrare quanti recuperi vengono negati, quanto durano le Ferite e quante AzP il Troll conserva per difendersi. Il GS Eroe e i 70 PX sono una prima stima per questo profilo; non comprendono varianti mutanti, arti autonomi o equipaggiamento aggiunto."
+    },
+    {
+      "nome": "Bande e grandi avversari",
+      "effetto": "Queste schede aggiungono al capitolo 8 avversari capaci di sfruttare equipaggiamento, cooperazione, forza fisica e rigenerazione. Descrivono esemplari ordinari: capi, sciamani, varianti alate e versioni corrotte richiedono schede proprie. La loro presenza su Iris resta una scelta di ambientazione. PX di riferimento. Il valore riguarda un esemplare e comprende la dotazione indicata. Per un incontro con più avversari si applica il Manuale del Direttore §9.3. Le statistiche rimangono quelle della scheda al variare del numero dei PG. Stato di sviluppo. GS, PX e capacità adattate di questo blocco sono stime iniziali, non risultati di prove al tavolo. Il confronto considera efficacia offensiva, protezioni, Azioni, mobilità e capacità speciali. Vanno registrati gli esiti prima di modificare i valori per gli incontri successivi. Fonte e adattamento. I nomi originali e le pagine del Manuale dei Mostri fornito sono indicati nelle singole schede; le pagine sono quelle stampate nel volume. Descrizioni e regole operative sono riscritte per Simply RPG. Gli allineamenti e le cosmologie dell’originale non assegnano automaticamente Natura Oscura Simmetria. Tabella (celle in ordine di lettura): Dieci profili terrestri • continuazione del catalogo | Creatura | GS | PX per 4 PG | Goblin | Principiante | 11 | Hobgoblin | Inesperto | 22 | Bugbear | Esperto | 33 | Coboldo | Principiante | 11 | Orco | Inesperto | 22 | Gnoll | Inesperto | 22 | Ogre | Esperto | 33 | Ettin | Veterano | 55 | Minotauro | Veterano | 55 | Troll | Eroe | 70."
+    },
+    {
+      "nome": "Regole del blocco",
+      "effetto": "Valori pronti. Tutti gli attacchi sono Naturali, con AC 1 e costo 1 AzP, salvo una capacità che specifichi diversamente. Il danno comprende il bonus ordinario pertinente; non si aggiunge nuovamente FOR o DES. INI indica la componente fissa: si tira sempre anche 1d10. Le Azioni sono disponibili per l’intero Round, non si ripristinano all’Iniziativa. Riserve e protezioni. Tutti i profili sono viventi di Natura Comune, con PM personali e nessun incantesimo. Stati iniziali: nessuno. Nessuna immunità o Contromisura, salvo indicazione espressa. La componente magica dell’AR è sempre 0. A 0 PV il profilo senza Ferite è fuori combattimento secondo il §4.2; morte o distruzione effettiva restano distinte. Scurovisione. Tutti questi esemplari vedono entro 12 Q anche nell’oscurità naturale. Non distinguono colori al buio e non vedono attraverso ostacoli, fumo o oscurità magica. Il senso non individua automaticamente creature nascoste. Oltre tale portata valgono luce e vista ordinarie. Anatomia e movimento. Testa, Torace, Braccia e Gambe corrispondono alle parti omonime; le eccezioni dell’Ettin sono nella sua scheda. La taglia non concede Parata naturale o immunità alle manovre. I valori di movimento indicano Passo / Corsa / Scatto; non concedono volo o scavo. Nuoto e arrampicata restano attività ordinarie, quando possibili, con le relative Prove e penalità. Dotazione e Integrità. Le dotazioni sono Comuni e usano il Manuale degli Armamenti v0.62. Ogni oggetto ha PS Integrità 10; PI e requisiti sono riportati nelle schede. Armatura leggera e media sono i profili commerciali, senza proprietà aggiunte. Armi, scudi e armature a 0 PI seguono le regole di rottura; peso e penalità rimangono finché l’oggetto non è tolto. La corazza biologica non ha PI. Scudi e mani. L’AR dello scudo impugnato e utilizzabile è passiva, anche senza una Parata riuscita. La Parata a distanza con scudo ha −4 VA. Le altre Parate richiedono un mezzo e un attacco compatibili. Archi e armi a due mani richiedono entrambe le mani: riporre lo scudo ne fa perdere l’AR. Cambiare dotazione paga le normali Azioni; il semplice elenco di più armi non le rende tutte pronte. Tiro e munizioni. Arco da guerra: Colpo Singolo e Tiro Rapido, AC 1 per freccia; incoccare è compreso nell’attacco, TR consuma due frecce e segue il Giocatore. Balestra piccola: solo Colpo Singolo, capacità 1, INC 8; ricarica 1 AzM e mano libera. Le gittate sono massime: penalità di distanza, Copertura e movimento restano applicabili. Giavellotti. Le schede usano il profilo proposto nella voce Aarakocra: una mano, FOR 3, 1d6 base, portata 1 Q, gittata FOR × 3 Q, PI 4, niente Tiro Rapido. Armi da guerra in mischia e Armi da lancio a distanza. Ogni lancio spende un giavellotto; estrazione e recupero richiedono le normali Azioni. Questa proposta non modifica automaticamente il catalogo degli Armamenti. Difese e comportamento. Salvo concessione espressa, niente Parata naturale. Schivata richiede 1 AzP e 1 AzM; Elusione soltanto contro effetti che la consentono. Le soglie di ritirata sono intenzioni dell’esemplare, non obblighi biologici o nuove condizioni. Società, alleanze e ostilità dipendono dalla scena: il nome della specie non determina la condotta di ogni individuo."
+    },
+    {
+      "nome": "Altri movimenti",
+      "effetto": "spazio 2 × 2 Q"
+    },
+    {
+      "nome": "Abilità particolari",
+      "effetto": "olfatto 12"
     }
   ],
   "note": "Gigante • assaltatore rigenerante • Natura Comune. Comportamento. Tenta di mantenere il contatto con una preda isolata. Quando riconosce fuoco o agenti corrosivi può cercare prima il loro utilizzatore, oppure interrompere il contatto. Sotto 20 PV o dopo ripetuti blocchi della rigenerazione, cerca un riparo se non difende un obiettivo essenziale.",
@@ -122,7 +158,7 @@
       "spazio": "Mostri 0.69",
       "abilita": "Mostri 0.47",
       "attacchi": "Mostri 0.47",
-      "capacita": "Mostri 0.47",
+      "capacita": "Mostri 0.69",
       "note": "Mostri 0.69",
       "gs_px": "Mostri 0.69"
     }

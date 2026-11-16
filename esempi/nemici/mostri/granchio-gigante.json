@@ -48,11 +48,23 @@
       "va": 9,
       "danno": "1d6+1",
       "natura": "Naturale",
-      "portata_q": 1,
-      "ac": 1,
       "proprieta": [
         "Contusione"
-      ]
+      ],
+      "portata_q": 1,
+      "ac": 1
+    },
+    {
+      "nome": "Stringere",
+      "tipo": "ravvicinato",
+      "va": 9,
+      "danno": "1d6+1",
+      "natura": "Naturale",
+      "proprieta": [
+        "contrapposta"
+      ],
+      "portata_q": 1,
+      "ac": 1
     }
   ],
   "abilita": [
@@ -75,27 +87,28 @@
   ],
   "capacita": [
     {
-      "nome": "Vita acquatica",
-      "effetto": "Natura Comune, biologicamente vivente, con mente e PM personali (a 0 PM Svenuto); a 0 PV valgono Tempra, Ferite, Menomazioni e Morente (non scatta morte, incoscienza o rilascio di una presa). Nessuna Parata naturale. Il fiato ordinario dura COS Round, poi §5.23. A Terra non si applica a chi nuota senza appoggio. Respirare acqua non dà resistenza a correnti, pressione o temperature estreme. I sensi alternativi valgono solo nel mezzo e nella distanza indicati, senza attraversare solidi né rivelare chi è nascosto."
-    },
-    {
-      "nome": "Nuoto",
-      "effetto": "Nuoto 6 / 12 / 18 Q effettivi (eccezione espressa al costo ordinario 2 dell’acqua: nel solo Nuoto si percorrono le distanze indicate). Nei percorsi misti si segue il budget unico del §5.2.4, con costo 1 sulla terra e 2 in acqua, senza superare la distanza indicata per ogni modalità. Immobilizzato impedisce il Nuoto. Respira aria e acqua."
-    },
-    {
       "nome": "Afferrare",
-      "effetto": "Una Chela con almeno 1 danno finale contro una creatura ≤ 1 × 1 Q impone Riflessi senza modificatore: fallimento → Immobilizzato (mani non bloccate). Può trattenere due vittime, una per chela; la chela occupata non attacca altri. Limite: un solo attacco di Chela o Stringere per Round, Opportunità comprese."
+      "effetto": "Chela con almeno 1 danno finale contro una creatura non maggiore di 1 × 1 Q impone Riflessi 0: fallimento Immobilizzato, senza bloccare specificamente le mani. Può trattenere due vittime, una per chela; la chela occupata non attacca altri bersagli. Il limite è un solo attacco di Chela o Stringere per Round, comprese le Opportunità: due chele non assegnano due AzP."
     },
     {
-      "nome": "Stringere",
-      "effetto": "1 AzP, VA 9, sulla vittima già presa: Corpo a corpo 9 contrapposto a Corpo a corpo o Atletica (−4 di Immobilizzato); successo 1d6+1 Naturale da Contusione, pareggio o fallimento nessun danno. La stessa contrapposta, iniziata dalla vittima o da un soccorritore con 1 AzP, libera. Rilascio gratuito; incoscienza, morte o perdita della chela interrompono la presa. Fermo mentre trattiene: non trascina sott’acqua.",
-      "azioni": {
-        "principali": 1
-      }
+      "nome": "Stringere e liberarsi",
+      "effetto": "Stringere costa 1 AzP: Corpo a corpo 9 contrapposto a Corpo a corpo o Atletica della vittima, con il −4 fisico di Immobilizzato. Successo infligge il danno indicato, pareggio o fallimento nessun danno. La stessa contrapposta, iniziata dalla vittima o da un soccorritore con 1 AzP, libera in caso di successo. Rilascio volontario gratuito alla propria Iniziativa; incoscienza, morte o perdita della funzione della chela interrompono la relativa presa."
     },
     {
-      "nome": "Sensi",
-      "effetto": "Percezione tattile di vibrazioni entro 6 Q nel mezzo fisico comunicante, senza attraversare pareti né distinguere colori e scritte."
+      "nome": "Sensi e corpo",
+      "effetto": "Respira aria e acqua. Percezione tattile di vibrazioni entro 6 Q nel mezzo fisico comunicante, senza attraversare pareti o distinguere colori e scritte. Le condizioni per nascondersi restano reali. Testa comprende occhi e apparato boccale, Torace il carapace, Braccia le chele e Gambe le zampe. Nel profilo resta fermo mentre trattiene qualcuno: non trascina automaticamente una vittima sott’acqua."
+    },
+    {
+      "nome": "Creature delle acque e popoli sommersi",
+      "effetto": "Queste schede comprendono animali acquatici, comunità capaci di dialogare e predatori che catturano la preda. Il fondale, la distanza dalla superficie e gli accessi all’aria determinano possibilità concrete di fuga e soccorso. Le voci appartengono al catalogo generale: il Direttore stabilisce dove collocarle su Iris. Non sono membri della Covata e non ereditano automaticamente culti, guerre o origini cosmologiche della fonte. PX di riferimento. Valori per un esemplare e quattro PG. Marinide, Merrow, Sahuagin e Kuo-toa comprendono la dotazione Comune descritta nelle loro schede. Gli altri profili non hanno equipaggiamento conteggiato. Chele, inchiostro, veleno e sensi innati sono compresi nel GS. Uno squalo comandato rimane un avversario con il proprio valore unitario; non è una parte gratuita del Sahuagin. Il premio dell’incontro segue il Direttore §9.3. Fonti e verifica. Giocatore v0.49, Magia v1.5, Direttore v0.41 e Armamenti v0.64. Le pagine delle creature si riferiscono al Manuale dei Mostri fornito. GS e PX sono stime da provare al tavolo, soprattutto con PG costretti a trattenere il respiro. I valori non presumono automaticamente un agguato riuscito, una vittima già legata o l’assenza di equipaggiamento subacqueo. Tabella (celle in ordine di lettura): Dieci profili per coste fondali e rovine sommerse | Creatura | GS | PX per 4 PG | Granchio gigante | Principiante | 10 | Polpo gigante | Esperto | 30 | Squalo delle scogliere | Inesperto | 20 | Squalo cacciatore | Esperto | 30 | Squalo gigante | Veterano | 50 | Marinide | Principiante | 11 | Merrow | Esperto | 33 | Sahuagin | Inesperto | 22 | Kuo-toa | Inesperto | 22 | Chuul | Veterano | 50."
+    },
+    {
+      "nome": "Acque regole operative",
+      "effetto": "Natura e danni. Tutti i profili hanno Natura Comune, sono biologicamente viventi e possiedono mente e PM personali. A 0 PM diventano Svenuti. A 0 PV il profilo senza Ferite è fuori combattimento secondo il §4.2; morte o distruzione effettiva restano distinte. Le cure biologiche sono applicabili. Nessuno conosce incantesimi appresi. Dadi e bonus sono completi; ogni attacco produce AC 1 salvo indicazione diversa. Azioni e Difese. INI modifica 1d10; AzP e unica AzM valgono per l’intero Round. Un attacco costa 1 AzP. L’Opportunità ordinaria è un solo attacco ravvicinato normale gratuito, su un’occasione effettiva, entro i limiti offensivi dichiarati. Non permette Rete, Inchiostro, comando mentale o Tentacoli velenosi. Nessuno ha Parata naturale: le creature armate possono parare con l’arma o lo scudo pronti. Schivata richiede 1 AzP, 1 AzM e spazio; Parata normale dimezza per eccesso prima dell’AR, Magistrale annulla. Movimento. Le terne indicano Q effettivi di Passo / Corsa / Scatto. Il Nuoto nativo è un’eccezione espressa al costo ordinario 2: nel solo Nuoto si percorrono le distanze indicate. Corsa e Scatto mantengono Prove, modificatori ed esiti del Giocatore §5.2. Nei percorsi misti si segue il budget unico del §5.2.4, con costo 1 sulla terra e 2 in acqua. Inoltre, il tratto di ciascuna modalità non supera la distanza indicata per l’andatura scelta. Cambiare modalità non rinnova Movimento o Azioni; una modalità con distanza 0 non consente spostamenti. Respirazione e Stati. Il fiato ordinario dura COS Round; poi si segue il §5.23. Immobilizzato impedisce il Nuoto, ma non affoga chi respira acqua o possiede un sistema autonomo funzionante. A Terra non si applica a chi nuota senza appoggio e non lo immerge automaticamente; sul fondo o su una piattaforma torna pertinente. Correnti, pressione e temperature estreme richiedono condizioni dichiarate nella scena: respirare acqua non conferisce ogni resistenza ambientale. Prese e soccorso. Immobilizzato significa Movimento 0 e −4 alle azioni fisiche, comprese Difese e fuga, non alle PS. Le mani sono utilizzabili salvo blocco espresso. Liberazioni contrapposte costano 1 AzP; un pareggio conserva la presa. Un alleato adiacente può usare la stessa procedura, con strumenti adeguati se necessari. Una vittima non si sposta con il predatore per il solo fatto di essere afferrata: le schede dichiarano il trasporto consentito. Il soccorso libera dalla causa, senza curare automaticamente PV, Ferite o Menomazioni. Sensi e protezioni. I sensi alternativi sostituiscono la vista soltanto nel mezzo e nella distanza indicati. Non attraversano solidi né rivelano automaticamente un essere nascosto. Naturale e Magico incontrano tutta l’AR pertinente, Etereo soltanto la quota magica. Perforazione descrive il mezzo fisico e non equivale a Perforante X. Le durate in Round terminano a fine Round R + N, dove R è quello di applicazione."
+    },
+    {
+      "nome": "Altri movimenti",
+      "effetto": "Terra e nuoto 6 / 12 / 18: la stessa andatura vale anche per nuoto; spazio 1 × 1 Q"
     }
   ],
   "note": "Crostaceo anfibio • chele e presa • Natura Comune. Condotta. Non comprende linguaggi. Può abbandonare una presa per raggiungere un riparo o conservare il cibo. Sotto 6 PV tende a ritirarsi. Il carapace riduce i danni secondo l’AR; non permette Parata naturale né immunità alle armi leggere.",
@@ -114,8 +127,8 @@
       "movimento": "Mostri 0.69",
       "spazio": "Mostri 0.69",
       "abilita": "Mostri 0.69",
-      "attacchi": "Mostri 0.47",
-      "capacita": "Mostri 0.47",
+      "attacchi": "Mostri 0.69",
+      "capacita": "Mostri 0.69",
       "note": "Mostri 0.69",
       "gs_px": "Mostri 0.69"
     }

@@ -48,6 +48,9 @@
       "va": 11,
       "danno": "1d4+1",
       "natura": "Naturale",
+      "proprieta": [
+        "poi veleno"
+      ],
       "portata_q": 2,
       "ac": 1,
       "note": "Poi veleno: vedi la capacità «Veleno ofidico II». Colpisce entro 2 Q solo lungo un percorso libero per il capo."
@@ -105,7 +108,7 @@
       "movimento": "Mostri 0.69",
       "spazio": "Mostri 0.69",
       "abilita": "Mostri 0.69",
-      "attacchi": "Mostri 0.47",
+      "attacchi": "Mostri 0.69",
       "capacita": "Mostri 0.47",
       "note": "Mostri 0.69",
       "gs_px": "Mostri 0.69"

@@ -83,19 +83,56 @@
   ],
   "capacita": [
     {
+      "nome": "Morso",
+      "effetto": "VA 12. Danno: AC 2: 1d8+1 Naturale, poi 1d4 Naturale da acido. Portata/costo: 1 Q; "
+    },
+    {
       "nome": "Corpo e sensi",
-      "effetto": "Scurovisione 12 Q; immune ad Acido di qualunque Natura e ad A Terra. Ha una mente e non è immune agli effetti mentali. Testa = bocca e sensi, Torace = massa centrale, Braccia = pseudopodi, Gambe = base locomotrice; mutare forma non guarisce le Menomazioni."
+      "effetto": "Scurovisione 12 Q; immunità ad Acido di qualunque Natura e ad A terra. Ha una mente e non è immune agli effetti mentali. Testa indica la regione bocca e sensi, Torace la massa centrale, Braccia gli pseudopodi e Gambe la base locomotrice; mutare forma non guarisce le Menomazioni."
     },
     {
       "nome": "Imitazione",
-      "effetto": "1 AzP: assume forma amorfa oppure l’aspetto di un oggetto solido che rientra nel suo volume di 1 × 1 Q. Trasformazione biologica senza PM: statistiche immutate e nessuna funzione meccanica dell’oggetto imitato (non diventa un’arma mistica o una serratura funzionante). Furtività 14 solo in forma oggetto, immobile, in una collocazione plausibile; un esame riuscito, il contatto o il movimento lo scoprono. Può attaccare anche in forma oggetto, rivelandosi.",
-      "azioni": {
-        "principali": 1
-      }
+      "effetto": "Con 1 AzP assume forma amorfa oppure l’aspetto di un oggetto solido che rientra nel proprio volume di 1 × 1 Q. È una trasformazione biologica senza PM: statistiche immutate, nessuna funzione meccanica dell’oggetto imitato. Non diventa un’arma mistica, una serratura funzionante o materia inerte. Furtività 14 richiede forma oggetto e immobilità in una collocazione plausibile; esame riuscito, contatto rivelatore o movimento possono scoprirlo."
     },
     {
-      "nome": "Adesione",
-      "effetto": "Solo in forma oggetto, su una creatura di spazio ≤ 2 × 2 Q o su un oggetto esposto. Un contatto diretto col corpo, anche se l’AR assorbe il danno del Pseudopodo, impone Riflessi senza modificatore: fallimento → presa (non costa un’altra AzP; un attacco fallito, una Schivata o una Parata magica che annulla il contatto non la attivano). Un’arma o attrezzo interposto può aderire senza immobilizzare chi lo impugna (lo si lascia con le regole del rilascio); una Parata fisica espone solo lo strumento parante, con la stessa PS per ritirarlo. Una sola creatura alla volta: Immobilizzata (movimento 0, −4 fisico); la mano che ha toccato è inutilizzabile finché resta attaccata, l’altra no (l’adesione tramite armatura non blocca le mani). Mantenerla è gratuito, ma il Mimic non può muoversi o Schivare senza rilasciarla. Liberarsi: 1 AzP, Corpo a corpo o Atletica contro Corpo a corpo 12 (−4 di Immobilizzato); un alleato adiacente può fare altrettanto (senza malus se libero); il pareggio conserva il contatto. Rilascio gratuito alla propria Iniziativa; forma amorfa, perdita di coscienza, morte o Menomazione ne interrompono le prese (0 PV no)."
+      "nome": "Attacchi",
+      "effetto": "Può attaccare anche in forma oggetto, rivelando la propria natura. Il Morso produce AC 2: prima 1d8+1 fisico, poi 1d4 da acido. Si effettua una sola Difesa; il suo esito e l’AR si applicano separatamente a ogni danno, risolvendo PV e Ferite prima del successivo. Un Magistrale raddoppia soltanto il primo. L’acido non ha Corrosivo. Contro la vittima che trattiene ottiene +2 al VA, quindi 14 prima di ulteriori modificatori."
+    },
+    {
+      "nome": "Superficie adesiva",
+      "effetto": "L’adesione funziona soltanto in forma oggetto, su una creatura di spazio non superiore a 2 × 2 Q o su un oggetto esposto. Un contatto diretto col corpo, anche se l’AR assorbe il danno del Pseudopodo, consente Riflessi senza modificatore: successo evita la presa, fallimento la stabilisce. La capacità è parte del contatto e non costa un’altra AzP. Un attacco fallito, una Schivata o una Parata magica che annulli il contatto non la attivano."
+    },
+    {
+      "nome": "Cosa rimane attaccato",
+      "effetto": "Un’arma o un attrezzo interposto può aderire senza immobilizzare automaticamente il possessore: questi può lasciarlo con le normali regole del rilascio. Una Parata fisica espone solo lo strumento che tocca la superficie; il possessore effettua la stessa PS Riflessi per ritirarlo in tempo. Un proiettile aderente non trascina il tiratore. Un’armatura indossata o un contatto con il corpo può invece trattenere la creatura."
+    },
+    {
+      "nome": "Presa",
+      "effetto": "Può trattenere una sola creatura alla volta. Questa è Immobilizzata, movimento 0 e −4 fisico; se ha toccato con una mano, quella mano non è utilizzabile finché resta attaccata, mentre l’altra rimane libera. Un’adesione tramite armatura non blocca le mani. Mantenere la presa è gratuito, ma il Mimic non può spostare il proprio corpo o Schivare senza rilasciarla prima. Non trasferisce alla vittima i danni degli attacchi diretti contro di lui."
+    },
+    {
+      "nome": "Liberarsi",
+      "effetto": "La vittima spende 1 AzP e contrappone Corpo a corpo o Atletica a Corpo a corpo 12 del Mimic, con il normale −4 di Immobilizzato. Un alleato adiacente può fare altrettanto usando il proprio VA, senza il malus se libero. Successo separa la creatura o un singolo oggetto aderente; pareggio conserva il contatto. Non si aggiunge un tiro per colpire. L’uso di un attrezzo adeguato evita di esporre direttamente le mani del soccorritore."
+    },
+    {
+      "nome": "Rilascio",
+      "effetto": "Può liberare gratuitamente alla propria Iniziativa una creatura o un oggetto. Passare alla forma amorfa, perdere coscienza, morire o subire una Menomazione che renda impossibile l’adesione interrompe tutte le prese. Il passaggio a 0 PV non le interrompe da solo. La morte rivela la forma amorfa. Gli oggetti liberati conservano la propria Integrità salvo danni realmente subiti; il semplice contatto non li corrode."
+    },
+    {
+      "nome": "Ambiente",
+      "effetto": "Un Mimic che imita una porta non sostituisce automaticamente un’intera parete e non sigilla passaggi maggiori del proprio volume. Il mimetismo consente un agguato soltanto se le normali Prove di percezione e occultamento lo permettono. Spostare o colpire a distanza un oggetto sospetto può rivelare la creatura senza entrare nella portata del Morso."
+    },
+    {
+      "nome": "Miconidi spore e sole",
+      "effetto": "Spore di rapporto. 1 AzP diffonde spore nel raggio della scheda lungo percorsi liberi nell’aria. Possono aderire volontariamente creature biologiche con una mente, inclusi altri Miconidi; costrutti, non morti ed elementali non sono compatibili. Un apparato che impedisce ogni contatto con le spore impedisce il collegamento. Il Miconide emittente partecipa sempre; ogni altro partecipante può rifiutare senza Prova. Comunicazione. Per 1 ora, i partecipanti alla stessa emissione possono scambiarsi pensieri intenzionalmente formulati quando distano al massimo 6 Q l’uno dall’altro. Non occorre una lingua comune. Il legame non rivela pensieri non condivisi, posizione, sensi o ricordi; non impone obbedienza e non concede Azioni extra. Una parete non interrompe da sola un legame già stabilito, mentre una protezione che blocca la telepatia ne impedisce l’uso. Fuori portata la comunicazione è sospesa, non prolungata. Consenso e durata. Un partecipante può cessare il proprio collegamento gratuitamente alla propria Iniziativa, senza spegnere quello altrui. Le emissioni successive non allargano automaticamente una rete precedente: ciascuna collega soltanto chi è stato esposto e ha acconsentito. I PM non vengono spesi e Negare Potere non dissolve la secrezione biologica; eventuali protezioni mentali mantengono le proprie normali funzioni. Spore di allarme. Dopo almeno 1 danno ai PV, un Miconide cosciente emette automaticamente un segnale biologico, al massimo una volta per Round. Gli altri Miconidi entro 48 Q, raggiungibili attraverso aria comunicante, avvertono il pericolo e la direzione approssimativa. Pareti sigillate e separazioni ermetiche bloccano il segnale. Non trasmette una mappa, identità precise o bersagli utilizzabili attraverso muri, e non concede un turno gratuito ai destinatari. Sensibilità solare. Sotto luce solare diretta subiscono −2 a tutti i VA di Abilità e Salvezza; la penalità termina quando sono concretamente schermati. Luce Mistica e illuminazione artificiale ordinaria non contano come sole. Ogni 10 minuti continuativi di esposizione effettuano Tempra 0, con il −2 solare: fallimento 1 AFT. Dal sessantesimo minuto, ogni verifica infligge anche 1d6 Naturale interno che ignora AR, indipendentemente dall’esito della PS. Riparo e gravità. Un minuto continuativo di ombra interrompe il conteggio di esposizione; PV, Ferite e AFT già subiti restano. La conversione sostituisce la morte automatica dopo un’ora della fonte con un deterioramento risolto dalle normali regole. A 0 PV il mostro è fuori combattimento secondo il §4.2; la morte o distruzione effettiva resta distinta. Il sole non produce spontaneamente danni da Fuoco o Corrosivo all’equipaggiamento."
+    },
+    {
+      "nome": "Altri movimenti",
+      "effetto": "spazio 1 × 1 Q"
+    },
+    {
+      "nome": "Abilità particolari",
+      "effetto": "oggetto immobile 14"
     }
   ],
   "immunita": [
@@ -118,7 +155,7 @@
       "spazio": "Mostri 0.69",
       "abilita": "Mostri 0.47",
       "attacchi": "Mostri 0.47",
-      "capacita": "Mostri 0.47",
+      "capacita": "Mostri 0.69",
       "note": "Mostri 0.69",
       "gs_px": "Mostri 0.69"
     }

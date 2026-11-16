@@ -48,6 +48,9 @@
       "va": 15,
       "danno": "2d8+3",
       "natura": "Naturale",
+      "proprieta": [
+        "possibile presa"
+      ],
       "portata_q": 2,
       "ac": 1,
       "note": "Possibile presa: vedi «Aggancio»."
@@ -58,11 +61,23 @@
       "va": 15,
       "danno": "2d6+3",
       "natura": "Naturale",
-      "portata_q": 2,
-      "ac": 1,
       "proprieta": [
         "Contundente"
-      ]
+      ],
+      "portata_q": 2,
+      "ac": 1
+    },
+    {
+      "nome": "Stringere le fauci",
+      "tipo": "ravvicinato",
+      "va": 15,
+      "danno": "2d8+3",
+      "natura": "Naturale",
+      "proprieta": [
+        "contrapposta"
+      ],
+      "portata_q": 1,
+      "ac": 1
     }
   ],
   "abilita": [
@@ -85,27 +100,52 @@
   ],
   "capacita": [
     {
-      "nome": "Corpo e anatomia",
-      "effetto": "Natura Comune, biologicamente vivente, con una mente e PM personali (a 0 PM Svenuto); bassa INT, grande massa e parentela draconica non danno immunità mentali o alla Corruzione. A 0 PV valgono Tempra, Ferite, Menomazioni e Morente. Nei quadrupedi Testa = capo e collo, Torace = corpo, Braccia = arti anteriori, Gambe = arti posteriori (la coda è un’appendice locomotrice delle Gambe). Nessuna Parata naturale; per una Menomazione si identifica la funzione coinvolta."
-    },
-    {
       "nome": "Sequenza",
-      "effetto": "Fino a due attacchi per Round: un Morso oppure Stringere le fauci, e un attacco di Coda; se usa entrambi devono riguardare bersagli diversi. L’Attacco di Opportunità rispetta gli stessi limiti. Nessun attacco di Artigli efficace."
+      "effetto": "Fino a due attacchi per Round: un Morso oppure Stringere le fauci, e un attacco di Coda. Se usa entrambi devono riguardare bersagli diversi. Un attacco di Opportunità rispetta gli stessi limiti. Non possiede un attacco di Artigli efficace nel profilo."
     },
     {
       "nome": "Aggancio",
-      "effetto": "Dopo almeno 1 danno finale del Morso contro una creatura ≤ 1 × 1 Q, Riflessi senza modificatore: successo evita la presa; fallimento → Immobilizzato (mani non bloccate). Una sola vittima, e non morde altri finché la presa dura. Un Morso di Opportunità non attiva l’aggancio."
+      "effetto": "Dopo almeno 1 danno finale del Morso contro una creatura di spazio non superiore a 1 × 1 Q, questa effettua Riflessi 0. Successo evita la presa; fallimento applica Immobilizzato senza blocco specifico delle mani. Può trattenere una sola vittima e non morde altri finché la presa rimane. Un Morso di Opportunità non attiva l’aggancio speciale."
+    },
+    {
+      "nome": "Sensi e arti",
+      "effetto": "Vista e udito ordinari. Braccia sono i piccoli arti anteriori, Gambe gli arti posteriori e la coda; Testa comprende le fauci. Immobilizzare gli arti anteriori non elimina da solo il Morso, mentre una Menomazione della funzione mandibolare può interrompere la presa."
     },
     {
       "nome": "Stringere le fauci",
-      "effetto": "1 AzP, solo sulla vittima già afferrata, VA 15: Corpo a corpo 15 contrapposto a Corpo a corpo o Atletica della vittima (−4 di Immobilizzato); successo infligge 2d8+3 Naturale con AR ordinaria, fallimento o pareggio nessun danno. La contrapposta sostituisce tiro per colpire e Difesa. È l’unico attacco delle fauci del Round.",
-      "azioni": {
-        "principali": 1
-      }
+      "effetto": "1 AzP contro la sola vittima già afferrata: Corpo a corpo 15 contrapposto a Corpo a corpo o Atletica della vittima, con il normale −4 fisico di Immobilizzato. Successo infligge 2d8+3 Naturale, AR ordinaria; fallimento o pareggio nessun danno. La Prova contrapposta sostituisce tiro per colpire e Difesa. È l’unico attacco delle fauci di quel Round, non un’aggiunta al Morso."
     },
     {
-      "nome": "Liberarsi e spostamento",
-      "effetto": "La vittima spende 1 AzP: Corpo a corpo o Atletica contro Corpo a corpo 15 (pareggio conserva la presa); un alleato entro portata delle fauci può farlo col proprio VA, con un attrezzo per fare leva. Una vittima di massa (dotazione compresa) non oltre 250 kg viene portata a velocità dimezzate (per difetto) con l’AzM ordinaria, entro la portata delle fauci. Prima di un bordo o pericolo immediato la vittima fa Riflessi senza modificatore: successo ferma il Tirannosauro all’ultimo spazio sicuro se vuole conservare la presa. Non Schiva conservando la presa. Rilascio gratuito; perdita di coscienza, morte o Menomazione mandibolare interrompono l’aggancio (0 PV no). Dopo il rilascio la vittima è nel più vicino spazio libero e sostenuto adiacente; nessun danno automatico."
+      "nome": "Liberarsi",
+      "effetto": "La vittima spende 1 AzP e contrappone Corpo a corpo o Atletica a Corpo a corpo 15 del Tirannosauro; successo termina la propria presa, pareggio la conserva. Un alleato entro portata delle fauci può tentare la stessa procedura usando il proprio VA, con un attrezzo adatto a fare leva se la sua anatomia non permette di separarle direttamente. Il −4 riguarda chi è Immobilizzato, non il soccorritore libero."
+    },
+    {
+      "nome": "Spostamento",
+      "effetto": "Nel profilo la vittima trattenuta può avere massa complessiva, inclusa la dotazione, non superiore a 250 kg. Il Tirannosauro la porta con sé usando l’AzM ordinaria a velocità dimezzate, arrotondate per difetto. Mantiene la vittima entro la portata delle fauci, senza attraversare solidi o spazi incapaci di accoglierla. La sola presa non consente di sollevare masse superiori al limite."
+    },
+    {
+      "nome": "Pericoli immediati",
+      "effetto": "Prima di trascinare la vittima oltre un bordo o dentro un pericolo immediato, questa effettua Riflessi 0: successo impone al Tirannosauro di fermarsi all’ultimo spazio sicuro se vuole conservare la presa; fallimento permette lo spostamento e le normali conseguenze. Il movimento forzato della vittima non provoca Attacchi di Opportunità contro di lei; gli spostamenti del predatore mantengono le occasioni ordinarie."
+    },
+    {
+      "nome": "Difese e rilascio",
+      "effetto": "Non può Schivare un attacco della vittima trattenuta conservando la presa. Gli attacchi contro l’uno o l’altra li trattano come bersagli distinti, con le normali coperture e interferenze: un colpo fallito non ferisce automaticamente il prigioniero. Rilascio volontario gratuito alla propria Iniziativa; perdita di coscienza, morte o Menomazione della funzione prensile interrompono l’aggancio. 0 PV da soli non lo interrompono."
+    },
+    {
+      "nome": "Dopo il rilascio",
+      "effetto": "La vittima viene collocata nel più vicino spazio libero e sostenuto adiacente alle fauci. Se era sospesa senza sostegno, cade normalmente. Non subisce danno automatico per il solo distacco. Cure dei PV, Ferite, Menomazioni e stabilizzazione rimangono procedure distinte; essere liberati non le risolve."
+    },
+    {
+      "nome": "Grandi rettili e predatori mostruosi",
+      "effetto": "Cariche, code, ali e lunghi colli permettono di minacciare spazi diversi. Alcuni di questi animali difendono piccoli e territorio; altri cacciano, e il Drago tartaruga può negoziare un passaggio. Le sei forme preistoriche precedono quattro predatori fantastici. Sono voci del catalogo generale: la loro presenza su Iris richiede una collocazione nell’ambientazione, senza attribuire loro appartenenza alla Covata o origini cosmologiche della fonte. PX di riferimento. Valori per un esemplare e quattro PG, senza dotazione conteggiata. Veleno, ricrescita delle teste, capacità di inghiottire e soffi sono già compresi nel GS. Le teste dell’Idra e le altre appendici non sono avversari separati e non assegnano PX aggiuntivi. Il premio complessivo dell’incontro segue il Manuale del Direttore §9.3. Adattamento. Le sequenze offensive impiegano Azioni effettive. Essere afferrati o inghiottiti lascia procedure di liberazione e soccorso; i soffi hanno un intervallo definito prima del riutilizzo. La perdita delle teste dell’Idra conserva la propria eccezione anatomica; una condizione che la renderebbe Morente la mette invece fuori combattimento secondo il §4.2, senza avviare un contatore ordinario. Fonti e verifica. Giocatore v0.49, Magia v1.5, Direttore v0.41 e Armamenti v0.64. Le pagine indicate sono quelle stampate del Manuale dei Mostri fornito. GS e PX sono stime da verificare al tavolo, soprattutto per creature con più attacchi, rigenerazione o forte vantaggio ambientale. Acqua profonda, passaggi stretti e spazi di volo cambiano le scelte disponibili, senza modificare retroattivamente le statistiche. Tabella (celle in ordine di lettura): Dieci profili per pianure, scogliere, acque e caverne | Creatura | GS | PX per 4 PG | Allosauro | Esperto | 30 | Anchilosauro | Esperto | 30 | Plesiosauro | Esperto | 30 | Pteranodonte | Principiante | 10 | Triceratopo | Veterano | 50 | Tirannosauro | Eroe | 70 | Viverna | Veterano | 50 | Idra | Eroe | 70 | Behir | Leggenda | 100 | Drago tartaruga | Leggenda | 100."
+    },
+    {
+      "nome": "Rettili regole operative",
+      "effetto": "Natura e risorse. Tutti i profili hanno Natura Comune, sono organismi biologicamente viventi e possiedono una mente e PM personali. A 0 PM diventano Svenuti. Non conoscono incantesimi appresi. Bassa INT, grande massa e parentela draconica non concedono immunità mentali o alla Corruzione. Stati iniziali: nessuno; l’Idra inizia con cinque teste e la Viverna con tre dosi di veleno, se non già consumate nella continuità della scena. PV e anatomia. A 0 PV il profilo senza Ferite è fuori combattimento secondo il §4.2; morte o distruzione effettiva restano distinte. Le cure biologiche sono applicabili. Nei quadrupedi Testa è capo e collo, Torace il corpo, Braccia gli arti anteriori e Gambe quelli posteriori; la coda è un’appendice locomotrice delle Gambe. Le voci precisano le altre anatomie. Prima di risolvere una Menomazione si identifica la funzione realmente coinvolta. Azioni e Difese. INI è il modificatore a 1d10; AzP e unica AzM valgono per l’intero Round. Ogni attacco costa 1 AzP, produce AC 1 e include tutti i bonus, salvo eccezione espressa. Nessuno possiede Parata naturale. Schivata richiede 1 AzP, 1 AzM e spazio concretamente disponibile. Parata normale dimezza per eccesso prima dell’AR, Magistrale annulla. Limiti offensivi delle singole voci comprendono l’Opportunità, salvo l’eccezione delle teste dell’Idra. Ordine del danno. Dadi e bonus, moltiplicatori, Difesa, resistenze, AR e infine effetti che richiedono danno residuo. Naturale e Magico incontrano tutta l’AR pertinente; Etereo soltanto la quota magica. Taglio, Contusione e Perforazione descrivono il mezzo fisico: Perforazione non equivale alla proprietà Perforante X. Un danno interno che ignora AR lo dichiara espressamente. L’acido non applica Corrosivo senza una proprietà indicata. Movimento e sensi. Le terne indicano Passo / Corsa / Scatto in Q, con velocità speciali già effettive. Tragitti misti condividono il budget ordinario. Ali reali richiedono spazio e non concedono volo stazionario; impedimenti funzionali o perdita di coscienza possono provocare caduta. Nuoto e combattimento immerso seguono il Giocatore. Scurovisione non attraversa solidi o oscurità soprannaturale; gli altri sensi non individuano automaticamente un nemico nascosto. Prese e tempi. Immobilizzato significa movimento 0 e −4 alle azioni fisiche, comprese Difese e liberazioni, non alle Salvezze. Le mani restano utilizzabili salvo blocco espresso. Liberazioni contrapposte costano 1 AzP; un pareggio conserva una presa già stabilita. Le durate in Round terminano alla fine del Round di applicazione più il numero indicato. Per i soffi usati nel Round R, il primo riutilizzo è R + 3: non basta raggiungere nuovamente la propria Iniziativa nello stesso Round."
+    },
+    {
+      "nome": "Altri movimenti",
+      "effetto": "spazio 3 × 3 Q"
     }
   ],
   "note": "Predatore terrestre • morso prensile e coda • Natura Comune. Condotta. Cerca nutrimento e può abbandonare avversari difficili da consumare. Non comprende linguaggi. Sotto 26 PV tenta di ritirarsi. Il Morso non inghiotte automaticamente la vittima e la presa non trasferisce su di lei gli attacchi diretti contro il Tirannosauro. La pagina seguente descrive stretta, movimento e soccorso.",
@@ -124,8 +164,8 @@
       "movimento": "Mostri 0.69",
       "spazio": "Mostri 0.69",
       "abilita": "Mostri 0.69",
-      "attacchi": "Mostri 0.47",
-      "capacita": "Mostri 0.47",
+      "attacchi": "Mostri 0.69",
+      "capacita": "Mostri 0.69",
       "note": "Mostri 0.69",
       "gs_px": "Mostri 0.69"
     }

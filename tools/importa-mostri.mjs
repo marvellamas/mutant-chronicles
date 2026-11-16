@@ -48,6 +48,72 @@ export const GRUPPI_COMUNI = [
   { pagine: /^Fauna terrestre acquatica e volante regole comuni/, per: /^(Becco d’ascia|Falco sanguinario|Serpente volante|Granchio|Coccodrillo|Ratto gigante|Cavalluccio marino|Cavalluccio marino gigante|Polpo|Ragno)$/ },
   { pagine: /^(Le miniere di Rutteng|Crescita e corporeità|Passaggio nella roccia|Occhi di cristallo e risorse)$/, per: /^Murena della Roccia|^Madre delle Murene/ },
 ];
+/**
+ * **Lotto 205 — le pagine comuni si agganciano per posizione, non per elenco.**
+ *
+ * Il Manuale dei Mostri apre ogni blocco con una pagina di regole che valgono per tutte le creature che seguono,
+ * fino al blocco successivo: «Non morti regole comuni», «Melme e funghi regole operative», «Regole del blocco».
+ * Nella 0.69 quelle pagine hanno assorbito informazione che nella 0.46 stava nelle singole schede — l'AC degli
+ * attacchi, la Scurovisione, i tratti comuni (Melma, Corpo amorfo, Aderenza) — ed è per questo che 249 schede
+ * restavano con capacità e attacchi dell'edizione di prima.
+ *
+ * `GRUPPI_COMUNI` elencava i blocchi a mano, quindi ne agganciava pochi. **Un elenco di blocchi va rifatto a ogni
+ * edizione**, come l'elenco di etichette che il lotto 204 ha sostituito con una regola sui modi di movimento.
+ * Qui la regola è: *una pagina il cui titolo finisce per «regole comuni» o «regole operative», o che si chiama
+ * «Regole del blocco», apre un blocco; vale per ogni scheda che la segue fino alla pagina che apre il blocco
+ * successivo.* Se Davide aggiunge un blocco, entra da sé.
+ *
+ * `GRUPPI_COMUNI` resta per le pagine che valgono su **una parte** del blocco (i draghi per età, la Covata, le
+ * Murene): quelle non si possono dedurre dalla posizione, e agganciarle a tutto il blocco sarebbe inventare.
+ */
+export const APRE_UN_BLOCCO = /regole (comuni|operative)$|^Regole del blocco$/i; // solo per leggerla nel rapporto
+
+/**
+ * I blocchi del catalogo, **letti dalla posizione e non dai titoli**: `[{ titolo, pagine, riga, fine }]`.
+ *
+ * La struttura del capitolo 8 è regolare e si vede a occhio scorrendo il testo: una o più **pagine di fila** (le
+ * regole del blocco, e spesso una o due pagine di approfondimento), poi le **creature** di quel blocco, poi la
+ * sequenza di pagine del blocco successivo. Quindi: *una sequenza di pagine senza schede in mezzo apre un blocco,
+ * e le schede che la seguono gli appartengono fino alla sequenza successiva.*
+ *
+ * **Perché non per titolo.** Il primo tentativo cercava i titoli che finiscono per «regole comuni» o «regole
+ * operative»: ne trovava 20, ma il manuale apre molti blocchi con altri titoli — «Non morti spiriti e signori»,
+ * «Aberrazioni occhi e predatori della mente», «Mutaforma licantropi e ingannatori», «Geni e guardiani
+ * elementali» — e quei blocchi finivano inghiottiti dal precedente: «Fauna terrestre acquatica e volante regole
+ * comuni» si sarebbe presa 161 schede, draghi e demoni compresi. Con la posizione i blocchi sono **57** e coprono
+ * **tutte** le schede del catalogo. Un elenco di titoli va rifatto a ogni edizione; questo no.
+ *
+ * **Solo dal capitolo 8 in poi**, e il motivo è nel testo: nel catalogo i blocchi sono regolari, mentre il
+ * **capitolo 7** («Fauna di Iris») raccoglie creature indipendenti e un solo gruppo, la Covata, le cui regole
+ * comuni valgono per le sue caste e non per il Lorath o la Viverna che vengono dopo. Lì la posizione direbbe il
+ * falso, e il capitolo 7 resta dichiarato in `GRUPPI_COMUNI`, con le sue eccezioni scritte una per una.
+ */
+export function blocchiDelTesto(pagine, schede = []) {
+  const catalogo = pagine.find((p) => /^8\s+Catalogo delle creature$/i.test(p.titolo));
+  const da = catalogo ? catalogo.riga : Infinity;
+  const elementi = [
+    ...pagine.filter((p) => p.riga >= da).map((x) => ({ tipo: 'p', x })),
+    ...schede.filter((s) => s.riga >= da).map((x) => ({ tipo: 's', x })),
+  ].sort((a, b) => a.x.riga - b.x.riga);
+  const blocchi = [];
+  let corrente = null;
+  for (const e of elementi) {
+    if (e.tipo === 'p') {
+      if (!corrente || corrente.chiuso) { corrente = { titolo: e.x.titolo, pagine: [], riga: e.x.riga, fine: Infinity, chiuso: false }; blocchi.push(corrente); }
+      corrente.pagine.push(e.x);
+    } else if (corrente) {
+      corrente.chiuso = true;
+      corrente.fine = Math.max(corrente.fine === Infinity ? 0 : corrente.fine, e.x.riga + 1);
+    }
+  }
+  // la fine di un blocco è l'inizio del successivo (l'ultimo arriva in fondo)
+  for (let i = 0; i < blocchi.length; i += 1) blocchi[i].fine = i + 1 < blocchi.length ? blocchi[i + 1].riga : Infinity;
+  return blocchi.filter((b) => b.pagine.length);
+}
+
+/** Il blocco a cui appartiene una scheda che comincia alla riga `riga`, o null se è prima del primo blocco. */
+export const bloccoDiRiga = (blocchi, riga) => blocchi.find((b) => riga > b.riga && riga < b.fine) ?? null;
+
 // sezioni di pagine comuni che non sono regole di gioco (solo presentazione del blocco)
 const SEZIONI_NON_REGOLE = /^(Riferimenti del blocco|Come leggere le schede|GS e PX di riferimento|Quattro età distinte|Impiego e riferimento|Le miniere di Rutteng)$/;
 // schede che hanno una tabella dei dati ma non sono creature (ambiente, oggetti): restano fuori, dette nel rapporto
@@ -297,6 +363,7 @@ function parteAbilita(testo, nonCapito, grezze) {
 
 function leggiAttacco(intest, c, nonCapito, acComune) {
   const ix = (re) => intest.findIndex((x) => re.test(x));
+  let dueMani = null; // lotto 205: due impugnature in una cella, si legge la prima e si dichiara
   const vaT = c[ix(/^VA$/)] ?? '';
   const dannoT = c[ix(/^(Danno|Effetto)/)] ?? '';
   const portT = c[ix(/^Portata/)] ?? '';
@@ -307,7 +374,23 @@ function leggiAttacco(intest, c, nonCapito, acComune) {
   // Lotto 204: la 0.46 scriveva «1d8+2 • Naturale Perforante», la 0.69 «1d8+2 Naturale, Perforazione; AC 1» — il tipo
   // di danno è separato da una virgola invece che da uno spazio. È la stessa informazione, scritta in un altro modo:
   // senza questa virgola 395 attacchi di 200 schede finivano fra le capacità, cioè non si potevano tirare.
-  const dm = dannoT.match(/^(\d+d\d+(?:\s*\+\s*\d+d\d+)*(?:\s*[+−-]\s*\d+)?|\d+)(?:\s*×\s*(\d+))?\s*(?:•\s*)?(Naturale|Magico|Etereo)(?:\s*,?\s+([A-Za-zÀ-ù]+))?(?:\s*;\s*(.+))?$/);
+  const dm = dannoT.match(/^(\d+d\d+(?:\s*\+\s*\d+d\d+)*(?:\s*[+−-]\s*\d+)?|\d+)(?:\s*×\s*(\d+))?\s*(?:•\s*)?(Naturale|Magico|Etereo)(?:\s*,?\s+([A-Za-zÀ-ù]+(?:,\s*[A-Za-zÀ-ù]+)*))?(?:\s*;\s*(.+))?$/)
+    // Lotto 205: la 0.69 scrive il tipo di danno anche **prima** della Natura — «1d6+2 Fuoco Naturale», «2d6+4
+    // Acqua Magico» — dove la 0.46 lo metteva dopo. È lo stesso dato nell'ordine inverso: 29 attacchi (Elementali,
+    // Magmin, creature di fuoco e ghiaccio) restavano fuori dall'elenco e non si potevano tirare.
+    ?? (() => {
+      const m = dannoT.match(/^(\d+d\d+(?:\s*\+\s*\d+d\d+)*(?:\s*[+−-]\s*\d+)?|\d+)(?:\s*×\s*(\d+))?\s+([A-Za-zÀ-ù]+)\s+(Naturale|Magico|Etereo)(?:\s*[,;]\s*(.+))?$/);
+      return m ? [m[0], m[1], m[2], m[4], m[3], m[5]] : null;
+    })()
+    // Lotto 205, **due impugnature in una cella**: «1d6+5 / 1d6+7 Naturale; Perforazione» (lancia a una o due
+    // mani). Si legge la **prima**, cioè l'arma come la creatura la impugna di norma, e l'altra si dichiara —
+    // la stessa scelta fatta nel lotto 204 per le due Difese, dove il formato ne tiene una sola.
+    ?? (() => {
+      const m = dannoT.match(/^(\d+d\d+(?:\s*[+−-]\s*\d+)?)\s*\/\s*(\d+d\d+(?:\s*[+−-]\s*\d+)?)\s+(Naturale|Magico|Etereo)(?:\s*[,;]\s*(.+))?$/);
+      if (!m) return null;
+      dueMani = `${m[1]} a una mano, ${m[2]} a due mani`;
+      return [m[0], m[1], undefined, m[3], undefined, m[4]];
+    })();
   if (va === null || !dm) {
     nonCapito.push(`Attacco «${nomeAtt}» non importato come attacco (VA «${vaT}», danno «${dannoT}»): messo fra le capacità`);
     return { capacita: { nome: nomeAtt, effetto: [`VA ${vaT}`, `Danno: ${dannoT}`, `Portata/costo: ${sede}`].join('. ') } };
@@ -324,6 +407,7 @@ function leggiAttacco(intest, c, nonCapito, acComune) {
     const restanti = voci.filter((v) => { const m = /^AC\s*(\d+)$/i.exec(v); if (m) { acDalDanno = +m[1]; return false; } return true; });
     if (restanti.length) att.proprieta = restanti;
   }
+  if (dueMani) nonCapito.push(`Attacco «${nomeAtt}»: due impugnature (${dueMani}); il formato ne tiene una: letta la prima`);
   const contatto = /contatto/i.test(portT);
   const tatt = sede.match(/(\d+)\s*Q\s*Tattici/);
   const dist = /gittata|massimo|^max\b/i.test(portT) ? sede.match(/(\d+)\s*Q/) : null;
@@ -335,7 +419,12 @@ function leggiAttacco(intest, c, nonCapito, acComune) {
     att.portata_q = +tatt[1] * Q_TATTICO_IN_Q_BASE;
     nonCapito.push(`Attacco «${nomeAtt}»: portata in Q Tattici (${tatt[0]}) convertita in Q Base`);
   } else if (q) att.portata_q = +q[1];
-  else if (contatto) {
+  else if (/vittima già|già in presa|già presa|solo vittima|una vittima già|vittima trattenuta|vittima avvolta/i.test(portT)) {
+    // Lotto 205: la 0.69 scrive come «portata» la **condizione** di una presa già in corso («Vittima già presa»):
+    // chi è già afferrato è a contatto, quindi 1 Q, come per «Contatto» nel lotto 204. Nove attacchi di stretta.
+    att.portata_q = 1;
+    nonCapito.push(`Attacco «${nomeAtt}»: portata «${portT.trim()}» letta come 1 Q (la vittima è già a contatto)`);
+  } else if (contatto) {
     // Lotto 204: la 0.69 scrive «Contatto» al posto di «1 Q» per i colpi che si danno toccando il bersaglio
     // (Morso del Vampiro, prese, tocchi dei non morti). È la portata di un attacco in mischia: 1 Q.
     att.portata_q = 1;
@@ -510,7 +599,8 @@ function classifica(coppie) {
 
 // Legge una scheda (o una colonna di una scheda a due colonne) e produce { id, nome, json, nonCapito, ... }
 // AC dichiarata da una pagina di blocco («Gli attacchi producono AC 1»): vale per le schede che la seguono, finché un'altra pagina non la riscrive (lotto 143)
-const RE_AC_ATTACCHI = /(?<!\b(?:[Ii]l|[Ll]a|[Ll]o|[Ll]’)\s?\w+\s)produc\w+(?:\s+\w+)?\s+AC\s*(\d+)|ciascun\w* (?:costa|attacco)[^.]*AC\s*(\d+)|hanno AC\s*(\d+)|\b(?:morsi|attacchi|colpi|attacco)\s+rest\w+\s+AC\s*(\d+)|\brest\w+\s+AC\s*(\d+)/i;
+// Lotto 205: la 0.69 dichiara l'AC del blocco anche con «ha AC 1» e «con AC 1», non solo con «produce AC 1».
+const RE_AC_ATTACCHI = /(?<!\b(?:[Ii]l|[Ll]a|[Ll]o|[Ll]’)\s?\w+\s)produc\w+(?:\s+\w+)?\s+AC\s*(\d+)|ciascun\w* (?:costa|attacco)[^.]*AC\s*(\d+)|hanno AC\s*(\d+)|\b(?:ogni|gli)\s+attacch?[oi][^.]{0,60}?\b(?:ha|con)\s+AC\s*(\d+)|\b(?:morsi|attacchi|colpi|attacco)\s+rest\w+\s+AC\s*(\d+)|\brest\w+\s+AC\s*(\d+)/i;
 export function acDelBlocco(pagine, riga) {
   let out = null;
   for (const p of pagine) {
@@ -748,12 +838,37 @@ function nomeColonna(base, col) {
 export function importa(testo) {
   const R = leggiRighe(testo);
   const { schede, pagine } = dividi(R);
-  const comuniPer = (nome) => {
+  const blocchi = blocchiDelTesto(pagine, schede);
+  // lotto 205: le sezioni di una pagina di blocco, lette una volta sola e riusate da tutte le sue schede
+  const sezioniDiPagina = new Map();
+  const comuniPer = (nome, riga) => {
     const out = [];
+    const usate = new Set();
+    const daPagina = (p) => {
+      if (usate.has(p.titolo)) return;
+      usate.add(p.titolo);
+      if (sezioniDiPagina.has(p.titolo)) { out.push(...sezioniDiPagina.get(p.titolo)); return; }
+      const voci = sezioniPagina(p);
+      sezioniDiPagina.set(p.titolo, voci);
+      out.push(...voci);
+    };
+    // 1) la pagina che apre il blocco in cui la scheda si trova — per posizione, senza elenchi
+    const b = bloccoDiRiga(blocchi, riga ?? Infinity);
+    if (b) for (const p of b.pagine) daPagina(p);
+    // 2) le pagine che valgono su una parte del blocco (draghi per età, Covata, Murene): quelle restano dichiarate
     for (const g of GRUPPI_COMUNI) {
       if (!g.per.test(nome)) continue;
       for (const p of pagine) {
         if (!g.pagine.test(p.titolo)) continue;
+        daPagina(p);
+      }
+    }
+    return out;
+  };
+  const sezioniPagina = (p) => {
+    const out = [];
+    {
+      {
         let corrente = { nome: p.titolo, corpo: [] };
         const sezioni = [];
         for (const r of p.righe.slice(1)) {
@@ -779,7 +894,7 @@ export function importa(testo) {
     const colonne = tab && tab.colonne.length ? [0, 1] : [null];
     for (const c of colonne) {
       const nomeFinale = c === null ? base : nomeColonna(base, tab.colonne[c]);
-      const comuni = comuniPer(nomeFinale);
+      const comuni = comuniPer(nomeFinale, s.riga);
       const r = leggiScheda(s, comuni, c, acDelBlocco(pagine, s.riga));
       if (comuni.length) r.nonCapito.push(`Pagine comuni del blocco: ${comuni.length} sezioni aggiunte alle capacità; le tabelle delle pagine comuni non sono importate (i valori per creatura sono nella scheda)`);
       risultati.push(r);

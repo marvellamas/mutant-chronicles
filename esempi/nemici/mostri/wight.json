@@ -59,8 +59,7 @@
       "natura": "Naturale",
       "gittata_q": 100,
       "modalita": [
-        "S",
-        "TR"
+        "S"
       ],
       "ac": 1
     },
@@ -141,7 +140,7 @@
       "movimento": "Mostri 0.69",
       "spazio": "Mostri 0.69",
       "abilita": "Mostri 0.69",
-      "attacchi": "Mostri 0.47",
+      "attacchi": "Mostri 0.69",
       "capacita": "Mostri 0.47",
       "note": "Mostri 0.69",
       "gs_px": "Mostri 0.69"

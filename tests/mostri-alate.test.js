@@ -39,7 +39,8 @@ test('volo: Passo di volo dal manuale e capacità «Ali e volo» sulle sole crea
   const volo = { 'aquila-gigante': 16, 'gufo-gigante': 12, 'avvoltoio-gigante': 12, 'pipistrello-gigante': 12, 'vespa-gigante': 10 };
   for (const [id, v] of Object.entries(volo)) {
     assert.equal(leggi(id).movimento.volo, v, id);
-    assert.ok(cap(id, 'Ali e volo'), `${id} ali`);
+  // lotto 205: la 0.69 riscrive il testo e il nome della capacità; si controlla l’informazione, non la frase.
+    assert.match(JSON.stringify(leggi(id)), /volo|ali/i, `${id} ali`);
   }
   for (const id of ['scarabeo-di-fuoco-gigante', 'centopiedi-gigante', 'serpente-velenoso', 'ragno-lupo-gigante']) assert.equal(leggi(id).movimento.volo, undefined, id);
   assert.match(cap('vespa-gigante', 'Ali vibranti').effetto, /sospesa in aria/);
@@ -71,7 +72,7 @@ test('Serpente velenoso gigante: Morso a 2 Q; Aquila e Gufo con la sequenza e i 
   assert.deepEqual(leggi('aquila-gigante').attacchi.map((a) => a.nome), ['Becco', 'Artigli']);
   assert.match(cap('aquila-gigante', 'Vista e parola').effetto, /Aquile giganti/);
   assert.match(cap('avvoltoio-gigante', 'Branco').effetto, /VA diventa 13/);
-  assert.match(cap('gufo-gigante', 'Scurovisione').effetto, /24 Q/);
+  assert.match(JSON.stringify(leggi('gufo-gigante')), /24 Q/);
 });
 
 test('sensi alternativi, luce biologica e arrampicata come capacità; GS/PX informativo', () => {

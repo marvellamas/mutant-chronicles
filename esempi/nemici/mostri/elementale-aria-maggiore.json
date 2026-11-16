@@ -48,11 +48,11 @@
       "va": 15,
       "danno": "2d6+3",
       "natura": "Magico",
-      "portata_q": 1,
-      "ac": 1,
       "proprieta": [
         "Aria"
-      ]
+      ],
+      "portata_q": 1,
+      "ac": 1
     },
     {
       "nome": "Dardo d’aria",
@@ -60,14 +60,14 @@
       "va": 16,
       "danno": "2d6+2",
       "natura": "Magico",
+      "proprieta": [
+        "Aria"
+      ],
       "gittata_q": 12,
       "modalita": [
         "S"
       ],
-      "ac": 1,
-      "proprieta": [
-        "Aria"
-      ]
+      "ac": 1
     }
   ],
   "abilita": [
@@ -116,7 +116,7 @@
       "movimento": "Mostri 0.69",
       "spazio": "Mostri 0.69",
       "abilita": "Mostri 0.47",
-      "attacchi": "Mostri 0.47",
+      "attacchi": "Mostri 0.69",
       "capacita": "Mostri 0.47",
       "note": "Mostri 0.47",
       "gs_px": "Mostri 0.69"

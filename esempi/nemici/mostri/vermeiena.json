@@ -48,6 +48,9 @@
       "va": 13,
       "danno": "1d4+1",
       "natura": "Naturale",
+      "proprieta": [
+        "veleno"
+      ],
       "portata_q": 2,
       "ac": 1,
       "note": "Veleno: vedi la capacità «Veleno»."
@@ -83,47 +86,15 @@
   "capacita": [
     {
       "nome": "Sequenza",
-      "effetto": "Può usare al massimo un attacco di Tentacoli e un Morso per Round, ciascuno con 1 AzP. La precisione dei Tentacoli, VA 13, è specifica di quell’attacco. Il Morso non è gratuito e non ignora le Difese di una vittima intossicata. Un Attacco di Opportunità ordinario usa soltanto Morso."
+      "effetto": "Al massimo un attacco di Tentacoli e un Morso per Round, 1 AzP ciascuno. Il Morso non ignora le Difese di una vittima intossicata. L’Attacco di Opportunità usa solo il Morso."
     },
     {
       "nome": "Veleno",
-      "effetto": "Dopo almeno 1 danno finale dei Tentacoli a un organismo biologicamente vivente, si effettua Tempra senza modificatore. Successo evita l’intossicazione; fallimento applica Avvelenato e Immobilizzato per 1+1d3 Round, senza danni periodici. È un’eccezione espressa al dimezzamento ordinario dei veleni. La durata e la rimozione completa sono nella pagina seguente."
+      "effetto": "Dopo almeno 1 danno finale dei Tentacoli a un organismo vivente, Tempra senza modificatore: fallimento → Avvelenato e Immobilizzato (movimento 0, −4 alle azioni fisiche, mani libere) per 1+1d3 Round, senza danni periodici. La vittima ripete Tempra a fine di ogni propria Iniziativa (senza Azioni): il successo termina. Nuove esposizioni tengono la scadenza più lontana, senza cumulo. Veleno naturale di Pericolosità II; Cura Avvelenamenti (liv. 2) o un antidoto lo eliminano. Un’AR che azzera il danno impedisce l’inoculazione. Non è una presa: per trascinare deve prima Immobilizzare con la manovra ordinaria."
     },
     {
       "nome": "Sensi e aderenza",
-      "effetto": "Scurovisione 12 Q e Percezione 14 con l’olfatto. Sangue e cadaveri possono attirarlo senza rivelargli automaticamente ogni creatura viva. Aderisce a pareti e soffitti solidi secondo la pagina comune. Non è immune a cadute o al cedimento del supporto. Braccia indica i tentacoli del capo, Gambe le appendici locomotorie; Testa e Torace restano capo e tronco."
-    },
-    {
-      "nome": "Rigidità tossica",
-      "effetto": "Il veleno blocca la locomozione: Immobilizzato impone movimento 0 e −4 alle azioni fisiche. Non blocca specificamente mani, parola o respirazione. La vittima conserva AzP, PS e le Difese concretamente possibili; non può Schivare se ciò richiede un movimento impedito. Non è Svenuta, Stordita o incapace di reagire, e non concede colpi automatici."
-    },
-    {
-      "nome": "Durata e ripetizione",
-      "effetto": "La vittima ripete Tempra senza modificatore alla fine di ogni propria Iniziativa, senza Azioni. Un successo elimina il veleno e la rigidità. Altrimenti terminano alla fine del Round di applicazione più la durata tirata. Nuove esposizioni allo stesso veleno richiedono la propria Tempra iniziale e, se fallita, mantengono solo la scadenza più lontana; non accumulano il −4 o bloccano ulteriori arti."
-    },
-    {
-      "nome": "Cura",
-      "effetto": "Veleno naturale di Pericolosità II, Importante: Cura Avvelenamenti dal livello 2, nei propri limiti, o un antidoto adeguato eliminano sostanza e Stati dipendenti. Medicina può identificarne i sintomi e organizzare il soccorso, ma non lo neutralizza automaticamente. Cura Spirituale non aggira la causa tossica ancora attiva. Le Ferite e i PV persi per Tentacoli e Morso restano da trattare."
-    },
-    {
-      "nome": "Immunità pertinenti",
-      "effetto": "Creature prive di metabolismo biologico o immuni ai veleni non subiscono l’intossicazione; il danno fisico dei Tentacoli resta possibile. Il veleno non dipende dalla paura e Barriera Mentale non lo blocca. Un’AR che annulla il danno del colpo impedisce l’inoculazione, senza dover effettuare Tempra. Non esiste un danno da veleno da applicare automaticamente dopo il colpo."
-    },
-    {
-      "nome": "Prede e trascinamento",
-      "effetto": "Immobilizzato da veleno non è una presa del Vermeiena: allontanare o uccidere il necrofago non termina l’intossicazione. Per trascinare una vittima ancora cosciente deve prima afferrarla con la normale manovra Immobilizzare, pagando l’Azione e risolvendo la contrapposta. Il trasporto rispetta carico, percorso e movimento ordinari; una preda non viene portata sul soffitto senza un appiglio e una presa adeguati."
-    },
-    {
-      "nome": "Verifica della sfida",
-      "effetto": "Il GS Esperto, 30 PX, comprende due AzP, portata dei Tentacoli, veleno con ripetizione e aderenza. Non comprende un branco o un ambiente che renda impossibile il soccorso. Durante il playtest osservare quante Azioni vengono dedicate a liberazioni, antidoti e Difese, oltre ai danni: è questa pressione che distingue il Vermeiena da un semplice predatore da Morso."
-    },
-    {
-      "nome": "Altri movimenti",
-      "effetto": "Terra e aderenza 6 / 12 / 18: la stessa andatura vale anche per aderenza; spazio 1 × 2 Q"
-    },
-    {
-      "nome": "Abilità particolari",
-      "effetto": "olfatto 14"
+      "effetto": "Scurovisione 12 Q; olfatto 14 (sangue e cadaveri lo attirano). Aderisce a pareti e soffitti solidi (6/12/18 Q); non è immune a cadute o al cedimento del supporto. Braccia sono i tentacoli del capo."
     }
   ],
   "note": "Necrofago tentacolato • veleno e agguato sui soffitti • Natura Comune. Condotta. Preferisce un cadavere accessibile a una preda ancora capace di ferirlo. Difende la fonte di cibo e cerca un bersaglio isolato; può mordere dalla parete se la portata lo permette. Sotto 12 PV si ritira verso un rifugio. Non divora o trascina automaticamente una creatura appena colpita.",
@@ -142,8 +113,8 @@
       "movimento": "Mostri 0.69",
       "spazio": "Mostri 0.69",
       "abilita": "Mostri 0.47",
-      "attacchi": "Mostri 0.47",
-      "capacita": "Mostri 0.69",
+      "attacchi": "Mostri 0.69",
+      "capacita": "Mostri 0.47",
       "note": "Mostri 0.69",
       "gs_px": "Mostri 0.69"
     }

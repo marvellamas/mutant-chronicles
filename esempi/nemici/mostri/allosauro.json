@@ -87,16 +87,28 @@
   ],
   "capacita": [
     {
-      "nome": "Corpo e anatomia",
-      "effetto": "Natura Comune, biologicamente vivente, con una mente e PM personali (a 0 PM Svenuto); bassa INT, grande massa e parentela draconica non danno immunità mentali o alla Corruzione. A 0 PV valgono Tempra, Ferite, Menomazioni e Morente. Nei quadrupedi Testa = capo e collo, Torace = corpo, Braccia = arti anteriori, Gambe = arti posteriori (la coda è un’appendice locomotrice delle Gambe). Nessuna Parata naturale; per una Menomazione si identifica la funzione coinvolta."
-    },
-    {
       "nome": "Sequenza",
-      "effetto": "Fino a due attacchi per Round, al massimo un Morso e un attacco di Artigli. Un’Azione conservata per Schivare non resta per completare la sequenza. Nessun attacco ad Area né danni automatici per chi è sotto il corpo."
+      "effetto": "Fino a due attacchi per Round, al massimo un Morso e un attacco di Artigli. Un’Azione conservata per Schivata non resta disponibile per completare la sequenza. Non possiede attacchi ad Area o danni automatici per chi si trova sotto il corpo."
     },
     {
       "nome": "Assalto",
-      "effetto": "Dopo almeno 6 Q di movimento rettilineo verso la vittima nella stessa Iniziativa, Artigli che infliggono almeno 1 danno finale impongono Tempra senza modificatore a una creatura ≤ 2 × 2 Q: fallimento → A Terra. Il Morso successivo usa la seconda AzP (non è gratuito). Nessun danno oltre alle formule."
+      "effetto": "Dopo almeno 6 Q di movimento rettilineo verso la vittima nella stessa Iniziativa, Artigli che infliggano almeno 1 danno finale impongono Tempra 0 a una creatura non maggiore di 2 × 2 Q. Fallimento: A terra. Il Morso successivo usa la seconda AzP, se disponibile: non è gratuito e non interrompe una Difesa o una PS ancora da risolvere. Assalto non aggiunge danni oltre alle formule indicate."
+    },
+    {
+      "nome": "Sensi e arti",
+      "effetto": "Vista e udito ordinari, senza scurovisione. Testa comprende il collo; Braccia sono gli arti anteriori con artigli, Gambe le zampe posteriori e la funzione della coda. Una Menomazione degli arti anteriori può impedire Artigli senza rendere inutilizzabile il Morso."
+    },
+    {
+      "nome": "Grandi rettili e predatori mostruosi",
+      "effetto": "Cariche, code, ali e lunghi colli permettono di minacciare spazi diversi. Alcuni di questi animali difendono piccoli e territorio; altri cacciano, e il Drago tartaruga può negoziare un passaggio. Le sei forme preistoriche precedono quattro predatori fantastici. Sono voci del catalogo generale: la loro presenza su Iris richiede una collocazione nell’ambientazione, senza attribuire loro appartenenza alla Covata o origini cosmologiche della fonte. PX di riferimento. Valori per un esemplare e quattro PG, senza dotazione conteggiata. Veleno, ricrescita delle teste, capacità di inghiottire e soffi sono già compresi nel GS. Le teste dell’Idra e le altre appendici non sono avversari separati e non assegnano PX aggiuntivi. Il premio complessivo dell’incontro segue il Manuale del Direttore §9.3. Adattamento. Le sequenze offensive impiegano Azioni effettive. Essere afferrati o inghiottiti lascia procedure di liberazione e soccorso; i soffi hanno un intervallo definito prima del riutilizzo. La perdita delle teste dell’Idra conserva la propria eccezione anatomica; una condizione che la renderebbe Morente la mette invece fuori combattimento secondo il §4.2, senza avviare un contatore ordinario. Fonti e verifica. Giocatore v0.49, Magia v1.5, Direttore v0.41 e Armamenti v0.64. Le pagine indicate sono quelle stampate del Manuale dei Mostri fornito. GS e PX sono stime da verificare al tavolo, soprattutto per creature con più attacchi, rigenerazione o forte vantaggio ambientale. Acqua profonda, passaggi stretti e spazi di volo cambiano le scelte disponibili, senza modificare retroattivamente le statistiche. Tabella (celle in ordine di lettura): Dieci profili per pianure, scogliere, acque e caverne | Creatura | GS | PX per 4 PG | Allosauro | Esperto | 30 | Anchilosauro | Esperto | 30 | Plesiosauro | Esperto | 30 | Pteranodonte | Principiante | 10 | Triceratopo | Veterano | 50 | Tirannosauro | Eroe | 70 | Viverna | Veterano | 50 | Idra | Eroe | 70 | Behir | Leggenda | 100 | Drago tartaruga | Leggenda | 100."
+    },
+    {
+      "nome": "Rettili regole operative",
+      "effetto": "Natura e risorse. Tutti i profili hanno Natura Comune, sono organismi biologicamente viventi e possiedono una mente e PM personali. A 0 PM diventano Svenuti. Non conoscono incantesimi appresi. Bassa INT, grande massa e parentela draconica non concedono immunità mentali o alla Corruzione. Stati iniziali: nessuno; l’Idra inizia con cinque teste e la Viverna con tre dosi di veleno, se non già consumate nella continuità della scena. PV e anatomia. A 0 PV il profilo senza Ferite è fuori combattimento secondo il §4.2; morte o distruzione effettiva restano distinte. Le cure biologiche sono applicabili. Nei quadrupedi Testa è capo e collo, Torace il corpo, Braccia gli arti anteriori e Gambe quelli posteriori; la coda è un’appendice locomotrice delle Gambe. Le voci precisano le altre anatomie. Prima di risolvere una Menomazione si identifica la funzione realmente coinvolta. Azioni e Difese. INI è il modificatore a 1d10; AzP e unica AzM valgono per l’intero Round. Ogni attacco costa 1 AzP, produce AC 1 e include tutti i bonus, salvo eccezione espressa. Nessuno possiede Parata naturale. Schivata richiede 1 AzP, 1 AzM e spazio concretamente disponibile. Parata normale dimezza per eccesso prima dell’AR, Magistrale annulla. Limiti offensivi delle singole voci comprendono l’Opportunità, salvo l’eccezione delle teste dell’Idra. Ordine del danno. Dadi e bonus, moltiplicatori, Difesa, resistenze, AR e infine effetti che richiedono danno residuo. Naturale e Magico incontrano tutta l’AR pertinente; Etereo soltanto la quota magica. Taglio, Contusione e Perforazione descrivono il mezzo fisico: Perforazione non equivale alla proprietà Perforante X. Un danno interno che ignora AR lo dichiara espressamente. L’acido non applica Corrosivo senza una proprietà indicata. Movimento e sensi. Le terne indicano Passo / Corsa / Scatto in Q, con velocità speciali già effettive. Tragitti misti condividono il budget ordinario. Ali reali richiedono spazio e non concedono volo stazionario; impedimenti funzionali o perdita di coscienza possono provocare caduta. Nuoto e combattimento immerso seguono il Giocatore. Scurovisione non attraversa solidi o oscurità soprannaturale; gli altri sensi non individuano automaticamente un nemico nascosto. Prese e tempi. Immobilizzato significa movimento 0 e −4 alle azioni fisiche, comprese Difese e liberazioni, non alle Salvezze. Le mani restano utilizzabili salvo blocco espresso. Liberazioni contrapposte costano 1 AzP; un pareggio conserva una presa già stabilita. Le durate in Round terminano alla fine del Round di applicazione più il numero indicato. Per i soffi usati nel Round R, il primo riutilizzo è R + 3: non basta raggiungere nuovamente la propria Iniziativa nello stesso Round."
+    },
+    {
+      "nome": "Altri movimenti",
+      "effetto": "spazio 2 × 2 Q"
     }
   ],
   "note": "Predatore terrestre • inseguimento e assalto • Natura Comune. Condotta. Preferisce prede isolate e spazio per prendere slancio. Non comprende linguaggi, ma può reagire a cibo, richiami o minacce secondo l’esperienza. Sotto 12 PV tende ad abbandonare una caccia rischiosa; una via di fuga o una fonte di nutrimento accessibile possono cambiare l’incontro.",
@@ -116,7 +128,7 @@
       "spazio": "Mostri 0.69",
       "abilita": "Mostri 0.69",
       "attacchi": "Mostri 0.69",
-      "capacita": "Mostri 0.47",
+      "capacita": "Mostri 0.69",
       "note": "Mostri 0.69",
       "gs_px": "Mostri 0.69"
     }

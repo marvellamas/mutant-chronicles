@@ -58,6 +58,20 @@
       "va": 13
     }
   ],
+  "attacchi": [
+    {
+      "nome": "Colpo senz’armi",
+      "tipo": "ravvicinato",
+      "va": 16,
+      "danno": "2d6+1",
+      "natura": "Magico",
+      "proprieta": [
+        "Contusione"
+      ],
+      "portata_q": 1,
+      "ac": 1
+    }
+  ],
   "capacita": [
     {
       "nome": "Impatto psichico",
@@ -100,6 +114,30 @@
       "effetto": "Già attiva blocca interamente la componente di danno psichico e la sua seconda PS di Svenuto. La sola paura rimane un’influenza mentale e concede Volontà −2 con il bonus della Barriera; non riceve un’immunità generale aggiuntiva. Una creatura priva di mente non è un bersaglio valido dell’intera capacità. Negare non restituisce PV già perduti. L’Incubo è un’applicazione istantanea con paura a durata fissa, senza danno gratuito nei Round successivi o un secondo attacco a ogni Iniziativa."
     },
     {
+      "nome": "Drow Gith e varianti predatrici",
+      "effetto": "Dieci nuovi profili di Natura Comune: due Drow combattenti, due Gith superiori, il Kuo-toa monitor e cinque varianti biologiche. Origine, comunità e collocazione su Iris dipendono dall’avventura. I titoli della fonte descrivono questi esemplari, senza aggiungere Classi ai venticinque modelli generici o assegnare Corporazioni e Gradi automatici. GS e PX sono una prima taratura per quattro PG e un singolo esemplare nella configurazione scritta. Le dotazioni Comuni dei due Drow e del Cavaliere sono già comprese; gli altri sette profili non hanno equipaggiamento separato. Nessun alleato, tana o variante ulteriore inclusi. Il modulo EQ dei PNG generici resta nel proprio capitolo; metodo degli incontri e premio nel Direttore §9.3. Tabella (celle in ordine di lettura): Creatura | GS iniziale | PX per 4 PG | Drow | Inesperto | 22 | Drow guerriero d’élite | Eroe | 77 | Githyanki cavaliere | Leggenda | 110 | Githzerai Zerth | Eroe | 70 | Kuo-toa monitor | Veterano | 50 | Melma grigia psichica | Esperto | 30 | Ratto gigante infetto | Principiante | 10 | Orso delle caverne | Esperto | 30 | Sciame di centopiedi | Inesperto | 20 | Sciame di ragni | Inesperto | 20."
+    },
+    {
+      "nome": "Azioni e risorse comuni",
+      "effetto": "AzP e unica AzM sono il totale del Round, senza ripristino all’Iniziativa. I massimi includono l’unica Opportunità gratuita, soltanto con colpo ravvicinato compatibile; poteri, proiettili e impulsi psichici non sono Opportunità. Danni, bonus personali e penalità dichiarate sono già compresi. Iniziativa aggiunge solo il bonus positivo di DES; quando manca si tira soltanto 1d10, senza malus di INT. Tutti e dieci hanno una mente e PM personali, compresa la Melma psichica e i due gruppi collettivi. Zero PM provoca Svenuto dopo l’azione; A 0 PV il profilo senza Ferite è fuori combattimento secondo il §4.2; morte o distruzione effettiva restano distinte. Il danno psichico ha la propria procedura senza Ferite. Il decorso terminale della malattia del Ratto è invece una specifica eccezione differita, descritta con tempi e possibilità di cura."
+    },
+    {
+      "nome": "Drow magia innata luce e oscuramento",
+      "effetto": "Tratti comuni. Scurovisione 24 Q nel buio ordinario; +2 alle PS già ammesse contro fascinazione e immunità al sonno magico. Non è immunità a ogni influenza mentale, ai sedativi biologici o a Svenuto da zero PM. Se il Drow o il bersaglio osservato è in sole diretto, −2 attacchi e Percezione visiva, una sola volta; nessun danno o malus alle PS. Ombra e luce artificiale non sono sole diretto. Lancio innato e rimozione. Le capacità Drow e Gith qui descritte richiedono AzP, PM e usi, senza Potere o componenti e senza Contromagia. Nessuna Anticipazione implicita. Negare agisce sugli effetti con confronto scritto: superiore rimuove, inferiore fallisce, pari una sola Volontà di chi nega per lancio. Non restituisce danni o spostamenti istantanei già prodotti, non neutralizza tossine biologiche e non cancella creature autonome. Luci mobili. Come il Drider: una AzP e un PM, fino a quattro luci innocue entro sei Q per cinque Round, luce complessiva di raggio due Q. Spostarle mantenendole entro portata costa una AzP. Nessuna materia o danno; non sono sole o Luce Mistica. Negare tre, Svenuto o morte del creatore terminano le luci. Oscuramento. Un uso per ventiquattro ore, una AzP e tre PM; centro visibile entro sei Q con percorso libero, sfera fissa di raggio tre Q per cinque Round senza Concentrazione. Blocca vista e Scurovisione, anche al creatore, e i solidi fermano la propagazione. Torce e fari non la dissipano; Luce Mistica illumina la porzione raggiunta dalla propria aura come nell’Oscuramento del Mantoscuro. Negare sei, congedo gratuito alla propria Iniziativa, Svenuto o morte terminano. Massimo una sfera per creatore. Luminescenza. Un uso separato per ventiquattro ore, una AzP e tre PM. Raggio due Q attorno a un punto visibile entro sei Q, percorso libero e solidi bloccanti; alleati compresi. Ogni creatura corporea presente effettua Riflessi 0: fallimento contorno luminoso tenue per tre Round. Gli attacchi diretti dipendenti dalla vista contro il corpo realmente visibile hanno +2 VA, senza sommare altri bonus magici di puntamento. Nessun danno o nuova Azione, Negare sei o scadenza terminano; uscire dall’Area non elimina il contorno già applicato. Rilevazione del contorno. Rilevazione sei contro Mimetismo: superiore distingue la sagoma, inferiore resta occultata, pari una sola Magia dell’osservatore per coppia di effetti. Non spegne Mimetismo e non supera Velo Psichico, solidi o nubi opache. Mantiene i limiti della Luminescenza del Drider: vedere una sagoma rende bersagliabile quel corpo, sapere soltanto il Q non basta per un potere che richieda visibilità. Ogni osservatore risolve il proprio confronto."
+    },
+    {
+      "nome": "Tossine sedative e paralizzanti",
+      "effetto": "Inoculazione. Quadrelli Drow, veleno lesivo della Spada e tossina dei centopiedi richiedono le condizioni espresse della singola scheda e almeno un danno fisico finale. Si risolvono prima attacco, Difese, AR, PV e Ferite, poi una sola esposizione per attacco, non una per dado o animale. Immunità al veleno o fisiologia incompatibile evita; Resistenza alla magia e Barriera Mentale non aiutano una Tempra biologica. Il Magistrale fisico non moltiplica la tossina. Tossina sedativa Drow III. Naturale, Pericolosità III, nessun danno diretto. Tempra 0 iniziale: successo o Magistrale evita; fallimento Avvelenato cinque Round, −2 alle Abilità fisiche senza malus alle PS; Maldestro aggiunge Svenuto per la stessa durata. A fine di ogni propria Iniziativa, anche da Svenuto, Tempra 0 gratuita: successo neutralizza la dose e termina i relativi Stati. Le nuove dosi mentre attiva aggiornano soltanto la scadenza più lontana, senza nuove PS iniziali, penalità o un nuovo Svenuto. Risveglio dal sedativo. Ogni danno effettivo concede una nuova Tempra 0 immediata; un alleato adiacente può spendere una AzP per scuotere e concedere un tentativo, massimo uno per Round con questo metodo. Successo neutralizza la dose e termina Avvelenato e Svenuto prodotti da essa. È sedazione biologica, non Indurre Sonno: l’immunità al sonno magico del Drow non protegge. Nessuna perdita di PV o ferita artificiale è necessaria se si usa scuotimento o antidoto. Centopiedi. Il loro veleno III si attiva soltanto quando un attacco penetrante di Morsi porta da almeno un PV a zero. Tempra 0 fallita: Avvelenato e Paralizzato cinque Round, ripetizione a fine di ogni propria Iniziativa neutralizza con successo. Nessuna stabilizzazione o cancellazione delle Ferite. Colpire chi era già a zero PV non basta a riattivarlo. La Paralisi mantiene il corpo incapace di muoversi, attaccare o difendersi attivamente, senza impedire le PS gratuite. Cure e persistenza. Un antidoto appropriato o Cura Avvelenamenti almeno tre neutralizza una di queste sostanze ancora attive e termina gli Stati da essa mantenuti. Cura Spirituale da sola non elimina la causa biologica, Negare non la dissolve. Restano PV perduti, Ferite e ogni altra causa di Svenuto o Paralisi. Ripristinare PV non cura il veleno; uccidere la fonte non lo termina. Le dosi lesive Drow infliggono invece soltanto danno istantaneo: una cura del veleno non restituisce quel danno già risolto."
+    },
+    {
+      "nome": "Gith superiori danni e spostamenti",
+      "effetto": "Impatto superiore. Una AzP e tre PM, una mente cosciente visibile a Contatto entro un Q, massimo uno per Round e dentro il limite complessivo delle azioni offensive. Volontà −2 dimezza per eccesso 3d6+2 psichici diretti. Come Dardo Psichico supera Difese, AR e PV temporanei, non causa Ferite e non sottrae PM. Barriera Mentale già attiva impedisce l’intero Impatto, senza PS o Svenuto. È un’alternativa al colpo materiale, non un danno aggiunto allo Spadone o ai pugni. Esaurimento e soccorso. Se il danno esaurisce i PV o colpisce chi è già a zero, seconda Volontà −2 per evitare Svenuto 1+1d4 Round. I PV non diventano negativi; alla scadenza si risveglia anche a zero PV salvo altre cause. Cura Spirituale sei può risvegliare senza recuperare PV; Negare non annulla il danno o lo Svenuto istantanei già prodotti. Queste regole valgono anche per la Pressione della Melma, con il suo danno e Volontà 0. Capacità ereditate. Mano psionica, Salto assistito, Passo breve, Aura schermata, Caduta protetta, Vista rivelatrice e Scudo seguono i moduli Gith già presenti e soltanto i profili che li dichiarano. Le nuove schede indicano nuovamente costi e usi. Non condividono riserve fra creature e non sommano bonus di DES e SAG all’Iniziativa. Gli usi per ventiquattro ore sono limiti aggiuntivi, non PM disponibili separati. Trasferimento ampio. Una AzP e sei PM, un uso per ventiquattro ore, solo sé e dotazione personale trasportabile entro quindici Q. Destinazione direttamente visibile, libera e abbastanza grande; nessuna AzM consumata o azione nuova. Non percorre lo spazio intermedio, può superare ostacoli trasparenti come Teletrasporto e non sceglie punti oltre pareti opache. Lascia vincoli materiali esterni, conserva effetti magici personali e non annulla un danno già subito. Arrivo senza sostegno applica Caduta; non è un varco persistente o un viaggio fra piani. Dotazioni e Natura. Cavaliere: la Pesante applica già −2 attacchi, Agilità e ogni budget MOV, senza penalizzare Parata o PS. A zero PI perde AR ma conserva ingombri finché indossata; toglierla ripristina i valori senza tali penalità. Lama canalizzata rende Magico il solo danno diretto per la durata scritta; l’argentatura conserva la propria funzione contro le resistenze specifiche, senza bonus universali. Zerth: il danno Magico dei pugni è intrinseco e non si trasferisce a un oggetto impugnato."
+    },
+    {
+      "nome": "Sciami specializzati corpo e dispersione",
+      "effetto": "Un solo avversario. Centopiedi e Ragni usano come lo Sciame di insetti una riserva di PV e PM, una AzP e una AzM, spazio condivisibile un Q. Una sola applicazione di Morsi con una AC contro una creatura effettivamente accessibile nello spazio condiviso. Il numero di componenti non moltiplica colpi, inoculazioni o sottrazioni di AR. Gli accessi devono consentire il passaggio reale dei singoli animali; contenitori chiusi e barriere solide non si ignorano. Resistenza distribuita. Dimezzano per eccesso il danno fisico da Contusione, Taglio e Perforazione di qualunque Natura dopo Difesa o Salvezza e prima dell’AR. Non dimezzano anche Fuoco, Gelo, veleno o danni psichici per questo solo tratto. Un attacco misto separa le componenti pertinenti, una sola riduzione per ciascuna. AR biologica uno dopo la resistenza; Etereo incontra soltanto la quota magica zero. Immunità collettive. Come gli sciami già approvati, immuni ad A Terra, Immobilizzato, Stordito, Terrorizzato, fascinazione, Paralizzato e pietrificazione. Gli eventuali danni associati restano. Non sono immuni automaticamente a Rallentato, Accecato, Assordato, Avvelenato, Incendiato, Sanguinamento, Svenuto o a tutti gli effetti mentali e spirituali. Il Gelo mantiene le normali conseguenze senza importare la vulnerabilità specifica della Covata. Risorse e Ferite. Non recuperano PV e non ricevono PV temporanei; disperdere e ricomporre non guarisce. PM, Stati e Menomazioni inflitte espressamente restano compatibili con il corpo collettivo; Ferite e Morente sono sostituiti dal §4.2. Testa indica orientamento e sensi, Torace coesione, Braccia le componenti offensive e Gambe locomozione. A zero PV non si certifica la morte di ogni animale: si seguono le procedure della scheda; Svenuto o fuori combattimento a 0 PV arrestano il gruppo; non si usa Morente. Metà PV e ritirata. A dodici PV o meno sostituiscono 2d4 fisici con 1d4, senza alterare le altre risorse. Cercare riparo usa Movimento, aperture e Opportunità ordinari; nessun teletrasporto fuori da un ambiente chiuso. Un superstite rappresentato in seguito individualmente non ricrea lo Sciame o un secondo premio per la stessa minaccia. Questi due modelli non cambiano i gruppi di dieci Vespe del Deserto, che mantengono la propria procedura specifica."
+    },
+    {
       "nome": "Altri movimenti",
       "effetto": "spazio 1 × 1 Q"
     }
@@ -123,13 +161,12 @@
       "movimento": "Mostri 0.69",
       "spazio": "Mostri 0.69",
       "abilita": "Mostri 0.69",
+      "attacchi": "Mostri 0.69",
       "capacita": "Mostri 0.69",
       "note": "Mostri 0.69",
-      "gs_px": "Mostri 0.69",
-      "attacchi": "Mostri 0.69"
+      "gs_px": "Mostri 0.69"
     },
     "edizione": "Mostri 0.69",
     "sistema_salute": "solo_PV"
-  },
-  "attacchi": []
+  }
 }

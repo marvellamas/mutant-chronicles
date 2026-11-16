@@ -72,28 +72,36 @@
   ],
   "capacita": [
     {
-      "nome": "Automa senza mente",
-      "effetto": "Esegue ordini semplici; nessuna mente da leggere o influenzare. Immune a Sonno, Affaticamento, Paralizzato e Disorientato; il Ghiaccio può renderla Rallentata o Congelata."
-    },
-    {
       "nome": "Sostentamento",
-      "effetto": "Si muove in ogni direzione e resta sospesa senza percorso minimo o costo. Immobilizzato blocca il movimento senza spegnere la levitazione; Svenuto da Morente, distruzione o soppressione la fanno cadere. Non trasporta creature."
+      "effetto": "Si muove in ogni direzione e resta sospesa senza percorso minimo o costo aggiuntivo. Immobilizzato blocca il movimento senza spegnere la levitazione; una presa fisica può trattenerla. Incapacità a 0 PV, distruzione o soppressione dell’animazione fanno invece cessare il sostentamento e causano la caduta ordinaria. Non trasporta cavalieri o altre creature."
     },
     {
       "nome": "Parata con la lama",
-      "effetto": "1 AzP per Parata contro un colpo ravvicinato fisico (Difese 12); non para a distanza o il tocco Etereo. La sua unica AzP spesa in Difesa impedisce il proprio attacco quel Round."
+      "effetto": "Può spendere 1 AzP per Parata contro un colpo ravvicinato fisico usando Difese 12. Non può parare un attacco a distanza o un tocco Etereo. Spendere l’unica AzP per difendersi impedisce il proprio attacco ordinario in quel Round."
     },
     {
-      "nome": "Sopprimere l’animazione",
-      "effetto": "Negare Potere sull’animazione (potenza 3), come l’Armatura animata; inerte fino alla fine del terzo Round successivo."
+      "nome": "Fermare la spada",
+      "effetto": "La manovra Immobilizzare può essere usata se si può afferrare in sicurezza l’elsa o vincolare materialmente la lama. Si applicano costi, opposizione e liberazione ordinari; non basta dichiarare Disarmare contro una creatura che non impugna un’arma separata. I danni alla Spada seguono PV e Ferite, senza sottrarre anche PI."
     },
     {
-      "nome": "Scurovisione",
-      "effetto": "Vede entro 12 Q anche nell’oscurità naturale; non distingue i colori al buio, non vede attraverso gli ostacoli e non individua da sé chi è nascosto."
+      "nome": "Aspetto e impiego",
+      "effetto": "Applica Aspetto inerte soltanto quando è appoggiata o riposta e ammette soppressione di potenza 3. La sua arma non concede proprietà, manovre o sintonizzazioni di un’arma magica ai PG. Segue un percorso di guardia o un bersaglio assegnato; una barriera chiusa può interromperne l’inseguimento."
     },
     {
-      "nome": "Corpo non biologico",
-      "effetto": "Non è un organismo vivente: non respira, non mangia, non beve, non dorme. Immune a veleni e malattie biologiche, soffocamento e Sanguinamento. Le cure biologiche, Medicina e il riposo non lo riparano; servono effetti espressamente compatibili. Corrosivo, urti e gli altri danni restano applicabili."
+      "nome": "Costrutti e creature elementali",
+      "effetto": "Armature, lame e tappeti possono essere guardiani animati; pietra, metallo e magma possono formare corpi abitati da una coscienza. Il blocco distingue questi avversari dai quattro Elementali puri Maggiori già definiti nel Manuale della Magia. Tutte le schede hanno Natura Comune: origine elementale e aspetto inquietante non assegnano Oscura Simmetria né appartenenza alla Covata. PX di riferimento. Ogni valore riguarda un esemplare nella configurazione descritta. L’Azer comprende martello da guerra e scudo medio di qualità Comune; gli altri profili non hanno dotazioni conteggiate separatamente. I premi degli incontri seguono il Manuale del Direttore §9.3. Disattivazione, liberazione di un passaggio o conclusione di un accordo possono risolvere la sfida. Elementali già consolidati. I quattro Maggiori riprendono statistiche, protezioni e capacità del Manuale della Magia §14. Sono i profili evocati: gli effetti dell’originale non si aggiungono a quelli di Simply RPG. Spiritelli, Servitori, Minori e ibridi conservano le proprie schede nel Manuale della Magia; i 70 PX di questa tabella non si estendono a quelle categorie. Fonti e verifica. Riferimenti operativi: Giocatore v0.49, Magia v1.5, Direttore v0.41 e Armamenti v0.64. Ogni voce indica la pagina stampata del Manuale dei Mostri fornito. GS e PX sono stime da verificare al tavolo, registrando soprattutto protezioni, numero di Azioni, controllo del bersaglio e contromisure disponibili. Tabella (celle in ordine di lettura): Dieci profili per guardiani animati e forze degli elementi | Creatura | GS | PX per 4 PG | Armatura animata | Inesperto | 20 | Spada volante | Principiante | 10 | Tappeto soffocante | Esperto | 30 | Gargoyle | Esperto | 30 | Azer | Esperto | 33 | Magmin | Inesperto | 20 | Elementale dell’Acqua Maggiore | Eroe | 70 | Elementale dell’Aria Maggiore | Eroe | 70 | Elementale del Fuoco Maggiore | Eroe | 70 | Elementale della Terra Maggiore | Eroe | 70."
+    },
+    {
+      "nome": "Corpi artificiali e manifestazioni",
+      "effetto": "Risorse dei primi sei profili. Stati iniziali: nessuno. Incantesimi conosciuti: nessuno. Armatura, Spada, Tappeto e Magmin hanno PM —: nessuna riserva personale. Gargoyle e Azer hanno 8 PM e diventano Svenuti a 0 PM; il recupero ordinario dei PM resta ammesso. Dardo Spirituale può applicare i danni ai PV previsti dalla sua scheda anche a chi ha PM —, senza sottrarre PM inesistenti né trasferire il drenaggio a un creatore. PV e distruzione. Per questi sei profili 0 PV significa fuori combattimento secondo il §4.2, senza Ferite, Menomazioni automatiche o contatore Morente. Azer e Magmin usano le localizzazioni umanoidi omonime per gli effetti specifici. Gli Elementali evocati conservano la propria eccezione: scompaiono a 0 PV. Fisiologia e ripristino. Nessuno di questi dieci corpi è un organismo biologicamente vivente. Non richiedono aria, cibo, acqua o sonno e sono immuni a veleni biologici, malattie biologiche, soffocamento e Sanguinamento. Corrosivo, urti e altri danni rimangono applicabili. Le cure biologiche, Medicina e il riposo biologico non ne riparano PV, Ferite o Menomazioni. Occorre un effetto espressamente compatibile; non si introduce una riparazione automatica tramite Tecnologia. Azioni e Difese. Le AzP e l’unica AzM valgono per tutto il Round. Ogni attacco costa 1 AzP e colpisce 1 AC, salvo diversa indicazione; i danni includono già i bonus. Nei primi sei profili si aggiunge 1d10 a INI. Schivata costa 1 AzP e 1 AzM; Parata richiede 1 AzP e un mezzo espressamente ammesso. Una Parata normale dimezza per eccesso prima dell’AR, una Magistrale annulla. Resta un solo Attacco di Opportunità ordinario per Round, quando praticabile. Movimento. Le terne indicano Passo, Corsa e Scatto in Q. Si applicano le penalità delle andature e le normali Prove richieste dal percorso. Nei percorsi misti si sommano le frazioni di movimento consumate nelle diverse modalità, senza ottenere una seconda AzM. Sostentamento, attraversamento di ostacoli e trasporto di creature richiedono capacità espresse. Fuoco e protezioni. Salvo eccezioni, il danno da Fuoco può applicare Incendiato solo dopo danno residuo e superamento di Ignifugo. La PS Riflessi è distinta dall’eventuale Elusione. Incendiato dura 1+1d3 Round, infligge subito 1d4 Fuoco e poi all’Iniziativa della fonte, al massimo una volta per Round, e dà −2 VA alle Abilità. Ignora AR non magica generica; AR magica e protezioni specifiche restano pertinenti. Nuove applicazioni non sommano il danno e conservano la scadenza più lontana. Spegnimento. 1 AzP e Riflessi permettono di tentare di spegnersi; con acqua, sabbia, coperta antifiamma o mezzo adeguato basta 1 AzP senza tiro, anche da parte di un alleato. Spegnere lo Stato non distrugge automaticamente una creatura elementale. Le immunità al Fuoco annullano anche Incendiato, ma non urti o crolli causati dall’incendio."
+    },
+    {
+      "nome": "Oggetti animati regole comuni",
+      "effetto": "Automi privi di mente. Armatura, Spada e Tappeto eseguono gli ordini semplici fissati alla creazione. Non hanno una mente da leggere, persuadere, spaventare o possedere; Dardo Psichico e poteri che richiedono una mente non trovano un bersaglio valido. Sono inoltre immuni a Sonno, Affaticamento, Paralizzato, Stordito e Disorientato. Il Ghiaccio può ancora renderli Rallentati o Congelati: l’assenza di nervi non elimina un vincolo materiale. Percezione artificiale. Percepiscono forme e movimenti entro 12 Q lungo un percorso libero da ostacoli solidi, anche al buio; fuori da questo raggio non acquisiscono bersagli. Questo senso non usa occhi o udito, non legge pensieri e non individua magie. Accecato e Assordato non lo impediscono. Restano necessarie Percezione contro Furtività e le condizioni per raggiungere il bersaglio: non attaccano attraverso pareti. Aspetto inerte. Se restano immobili nella posizione propria dell’oggetto, ottengono +4 a Furtività per celare la propria natura animata. Spada deve essere appoggiata o riposta, non sospesa. Il bonus non si applica dopo un movimento osservato. La Sorpresa resta individuale e segue il confronto con Percezione; dichiarare che sembrano oggetti non assegna automaticamente un attacco gratuito. Sopprimere l’animazione. Negare Potere può bersagliare l’animazione come eccezione specifica: potenza 3 per Armatura e Spada, 4 per Tappeto. Dopo il lancio riuscito, potere superiore sopprime; a parità serve la sola PS Volontà del negatore; inferiore non ha effetto. Si rispettano gittata e localizzazione del §23.6. Ogni oggetto conta come un effetto distinto, senza una Salvezza aggiuntiva del costrutto. Durata della soppressione. L’oggetto resta inerte fino alla fine del terzo Round successivo a quello del lancio: un successo nel Round 1 termina alla fine del Round 4. Non agisce, non effettua Difese attive e rilascia le prese. La Spada perde sostentamento e cade secondo le normali regole. I danni già subiti restano; l’animazione riprende con le risorse residue, senza nuove Azioni nel Round. Ulteriori soppressioni conservano la scadenza più lontana, senza sommarle. Materia e magia. Sono corpi fisici: armi comuni, vincoli e ostacoli possono interagire con loro. Essere animati non rende Magici i loro attacchi o la loro AR. Individuare e Identificare Potere possono esaminare l’animazione nei propri limiti; non concedono il controllo. Contromagia non annulla un attacco del costrutto. Queste schede non definiscono un incantesimo per fabbricarli né un bottino magico già funzionante. Localizzazioni. Per Armatura valgono le parti omonime. Per Spada: Testa è l’elsa, Torace il corpo della lama, Braccia il filo offensivo, Gambe la funzione di sostentamento. Per Tappeto: Testa è il lembo sensoriale, Torace la trama centrale, Braccia i lembi avvolgenti, Gambe il bordo che lo trascina. Le Menomazioni penalizzano le funzioni corrispondenti, senza annullare automaticamente ogni capacità."
+    },
+    {
+      "nome": "Altri movimenti",
+      "effetto": "nessun movimento terrestre; spazio 1 × 1 Q"
     }
   ],
   "immunita": [
@@ -115,8 +123,8 @@
       "movimento": "Mostri 0.69",
       "spazio": "Mostri 0.69",
       "abilita": "Mostri 0.69",
-      "attacchi": "Mostri 0.47",
-      "capacita": "Mostri 0.47",
+      "attacchi": "Mostri 0.69",
+      "capacita": "Mostri 0.69",
       "note": "Mostri 0.47",
       "gs_px": "Mostri 0.69"
     }

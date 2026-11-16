@@ -47,11 +47,11 @@
       "va": 15,
       "danno": "2d6+4",
       "natura": "Magico",
-      "portata_q": 1,
-      "ac": 1,
       "proprieta": [
         "Acqua"
-      ]
+      ],
+      "portata_q": 1,
+      "ac": 1
     },
     {
       "nome": "Dardo d’acqua",
@@ -59,14 +59,14 @@
       "va": 14,
       "danno": "2d6+2",
       "natura": "Magico",
+      "proprieta": [
+        "Acqua"
+      ],
       "gittata_q": 12,
       "modalita": [
         "S"
       ],
-      "ac": 1,
-      "proprieta": [
-        "Acqua"
-      ]
+      "ac": 1
     }
   ],
   "abilita": [
@@ -78,19 +78,55 @@
   "capacita": [
     {
       "nome": "Sbalzante",
-      "effetto": "Entrambi gli attacchi applicano Sbalzante 1 dopo il danno residuo e la Contromisura, senza PS contro lo spostamento, allontanando dall’elementale. Un ostacolo ferma nell’ultimo Q libero senza danno da collisione; la PS Riflessi prima di un pericolo letale resta dovuta."
+      "effetto": "Entrambi gli attacchi applicano Sbalzante 1 dopo il danno residuo e la Contromisura pertinente, senza una PS ordinaria contro lo spostamento. La direzione allontana dall’elementale. Un ostacolo, uno spazio occupato o invalicabile ferma nell’ultimo Q libero, senza danno automatico da collisione. La PS Riflessi prima di un pericolo immediatamente letale resta dovuta."
     },
     {
-      "nome": "Avvolgere le vie respiratorie",
-      "effetto": "1 AzP contro una creatura a contatto con spazio ≤ 2 × 2 Q: Corpo a corpo 15 contro Corpo a corpo o Atletica (opposizione, senza seconda Difesa). Il successo applica Immobilizzato e impedisce la respirazione anche fuori dall’acqua (§5.23), senza Schiaffo né Sbalzante. Mantenere costa 1 AzP per Round; l’elementale resta fermo. Liberarsi: 1 AzP e nuova opposizione (i pareggi favoriscono l’elementale)."
+      "nome": "Due Azioni",
+      "effetto": "Può ripetere Schiaffo o Dardo con le due AzP, pagando ogni attacco. Il primo spostamento può portare la vittima fuori dalla portata del secondo Schiaffo. Il Dardo subisce le normali penalità di distanza, compreso −2 a 11–12 Q; non è un’area e non concede Elusione aggiuntiva."
     },
     {
       "nome": "Protezioni",
-      "effetto": "Immune ad Acqua e Fuoco (effetti secondari compresi). Ghiaccio infligge danno normale e può dare Rallentato o Congelato. Dimezza il danno Naturale dopo le Difese e prima dell’AR 4 (tutta magica). Nuota 12 / 24 / 36 Q."
+      "effetto": "Immune ad Acqua e Fuoco, compresi i rispettivi effetti secondari. Ghiaccio infligge danno normale per questa categoria e può produrre Rallentato o Congelato. La resistenza al danno Naturale e AR 4 magica restano quelle comuni; non si aggiunge il congelamento del profilo originale di D&D."
     },
     {
-      "nome": "Corpo non biologico",
-      "effetto": "Non è un organismo vivente: non respira, non mangia, non beve, non dorme. Immune a veleni e malattie biologiche, soffocamento e Sanguinamento. Le cure biologiche, Medicina e il riposo non lo riparano; servono effetti espressamente compatibili. Corrosivo, urti e gli altri danni restano applicabili."
+      "nome": "Movimento e aiuto",
+      "effetto": "Nuota senza una Prova ordinaria; correnti e ostacoli possono richiederne una. Può sostenere o trainare carichi compatibili con FOR 9, senza trasporto illimitato. Non attraversa automaticamente pareti, fessure o spazi occupati. Affogare segue la procedura nella pagina successiva."
+    },
+    {
+      "nome": "Avvolgere le vie respiratorie",
+      "effetto": "1 AzP contro una creatura a contatto con spazio non superiore a 2 × 2 Q. Effettua Corpo a corpo 15 contro Corpo a corpo o Atletica della vittima. Il successo applica Immobilizzato e impedisce la respirazione anche fuori dall’acqua, senza danno di Schiaffo e senza Sbalzante. È una Prova contrapposta, senza una seconda Difesa."
+    },
+    {
+      "nome": "Mantenere",
+      "effetto": "L’AzP iniziale mantiene fino al turno successivo dell’elementale; continuare richiede 1 AzP per Round, senza una nuova Prova automatica. L’elementale resta fermo e non porta altri attacchi. Può usare l’altra AzP per difendersi, rispettando i costi ordinari. Mancare il mantenimento o rilasciare termina la presa."
+    },
+    {
+      "nome": "Condizioni della vittima",
+      "effetto": "Movimento 0 e −4 alle azioni fisiche; le braccia restano utilizzabili. Non può usare Invocazione mentre le vie respiratorie sono coperte. Non viene applicato Accecato. Una respirazione acquatica o un sistema autonomo funzionante protegge dal soffocamento, senza eliminare Immobilizzato."
+    },
+    {
+      "nome": "Liberazione",
+      "effetto": "1 AzP della vittima e una nuova opposizione di Corpo a corpo o Atletica contro Corpo a corpo 15 dell’elementale, con le penalità pertinenti; i pareggi favoriscono chi trattiene. Un alleato adiacente può spendere 1 AzP e usare la stessa procedura con i propri valori. Distruggere l’elementale, terminare l’evocazione o liberare la vittima interrompe il soffocamento."
+    },
+    {
+      "nome": "Fiato e soccorso",
+      "effetto": "La riserva è COS in Round. Si consuma alla propria Iniziativa; dall’Iniziativa successiva all’esaurimento si effettua Tempra ogni Round. Il primo fallimento causa Svenuto; dalla propria Iniziativa seguente si subiscono 3 danni fissi per Round ignorando AR. Se l’Iniziativa inizia già a 0 PV, ogni applicazione produce una Ferita senza la normale PS, secondo il Giocatore §5.23."
+    },
+    {
+      "nome": "Dopo la liberazione",
+      "effetto": "Un Round respirando normalmente ripristina il fiato. Chi era Svenuto per soffocamento riprende conoscenza dopo 1d3 Round, salvo altre cause. Ferite, Menomazioni e PV persi restano da trattare; tornare a respirare non stabilizza automaticamente Morente. L’elementale non trascina la vittima e non causa danni periodici di compressione oltre a quelli espressamente previsti dal soffocamento."
+    },
+    {
+      "nome": "Elementali Maggiori regole comuni",
+      "effetto": "Profili evocati. Le quattro schede successive riprendono il Manuale della Magia §§13.8 e 14. Hanno PM —, nessun equipaggiamento e nessun incantesimo proprio. Ogni attacco costa 1 AzP senza PM aggiuntivi. Agiscono subito dopo il proprio evocatore, anche nel Round dell’evocazione, con 2 AzP e 1 AzM disponibili per il Round. Sostituire la creatura non ripristina Azioni già consumate. Fonte della manifestazione. La configurazione di riferimento è Evoca Elementale 15: gittata iniziale 15 Q, ordini entro 25 Q, durata 10 minuti. La versione 18 usa gli stessi valori di creatura, gittata 20 Q, ordini entro 30 Q e durata 30 minuti. Si annota il livello effettivo della fonte, necessario anche per Negare Potere. Le durate anticipate e ogni altro cambiamento seguono l’incantesimo, senza modificare automaticamente la scheda. Comandi e cessazione. Un ordine mentale semplice per turno del Taumaturgo, senza AzP. Fuori dalla distanza degli ordini proseguono l’ultimo compito e poi cercano di tornare. Scompaiono a 0 PV, fine durata, congedo, perdita di coscienza o morte dell’evocatore, oppure quando un effetto annulla l’evocazione. Ogni creatura mantenuta è un effetto distinto per Negare Potere, confrontato con il livello del lancio. Gli oggetti portati restano e cadono se privi di sostegno. Immunità. Sono immuni a Veleni, Malattie, Sanguinamento, Sonno, Paralizzato, Disorientato, Stordito e A Terra; non respirano. Ghiaccio può comunque applicare Rallentato o Congelato quando manca un’immunità specifica. Non ricevono automaticamente immunità a paura, controllo mentale, Immobilizzato o danni spirituali. Le cure biologiche non recuperano i loro PV. Protezioni. Dimezzano per eccesso il danno Naturale dopo le Difese e prima dell’AR magica. Più resistenze che dimezzano non si moltiplicano: si applica un solo dimezzamento da resistenza. Le immunità specifiche prevalgono e comprendono gli effetti secondari dell’elemento. Danno Magico ed Etereo non sono genericamente dimezzati; contro Etereo l’AR indicata resta applicabile perché interamente magica. Attacchi e aree. Tutti gli attacchi sono Magici e colpiscono 1 AC. Gli attacchi diretti richiedono il VA riportato e consentono le Difese pertinenti. Le aree non richiedono tiro per colpire: coinvolgono anche alleati, escludono l’elementale che le genera e sono bloccate dai solidi. Un unico tiro di danno vale per tutti; Elusione e PS secondaria sono prove distinte. Nessun profilo dispone di Parata naturale. Movimento e anatomia. Le velocità di nuoto e volo sono effettive; il volo permette sostentamento senza AzP e senza percorso minimo. Non concedono trasporto illimitato, attraversamento della materia o visione attraverso pareti. Non hanno un tracciato di Ferite perché scompaiono a 0 PV; eventuali Stati o lesioni applicati direttamente da altre fonti seguono le proprie regole. La manifestazione mantiene parti funzionali riconoscibili, senza aggiungere immunità generiche."
+    },
+    {
+      "nome": "Altri movimenti",
+      "effetto": "nuoto 12 / 24 / 36; spazio 2 × 2 Q"
+    },
+    {
+      "nome": "Abilità particolari",
+      "effetto": "Attacco a distanza 14"
     }
   ],
   "immunita": [
@@ -115,8 +151,8 @@
       "movimento": "Mostri 0.69",
       "spazio": "Mostri 0.69",
       "abilita": "Mostri 0.47",
-      "attacchi": "Mostri 0.47",
-      "capacita": "Mostri 0.47",
+      "attacchi": "Mostri 0.69",
+      "capacita": "Mostri 0.69",
       "note": "Mostri 0.47",
       "gs_px": "Mostri 0.69"
     }

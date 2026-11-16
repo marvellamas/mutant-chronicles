@@ -49,11 +49,11 @@
       "va": 14,
       "danno": "1d8+2",
       "natura": "Naturale",
-      "portata_q": 2,
-      "ac": 1,
       "proprieta": [
         "Perforazione"
       ],
+      "portata_q": 2,
+      "ac": 1,
       "note": "Una testa funzionale per ogni Morso."
     }
   ],
@@ -77,36 +77,76 @@
   ],
   "capacita": [
     {
-      "nome": "Corpo e anatomia",
-      "effetto": "Natura Comune, biologicamente vivente, con una mente e PM personali (a 0 PM Svenuto); bassa INT, grande massa e parentela draconica non danno immunità mentali o alla Corruzione. A 0 PV valgono Tempra, Ferite, Menomazioni e Morente. Nei quadrupedi Testa = capo e collo, Torace = corpo, Braccia = arti anteriori, Gambe = arti posteriori (la coda è un’appendice locomotrice delle Gambe). Nessuna Parata naturale; per una Menomazione si identifica la funzione coinvolta."
+      "nome": "Morsi",
+      "effetto": "Con le AzP può attaccare al massimo tre volte per Round e non più del numero di teste funzionali. Ogni Morso costa 1 AzP. Le teste non consentono una Parata naturale, azioni simultanee fuori Iniziativa o attacchi attraverso ostacoli. Non afferra automaticamente con il Morso."
     },
     {
-      "nome": "Morsi e Opportunità delle teste",
-      "effetto": "Con le AzP al massimo tre Morsi per Round e non più del numero di teste funzionali, 1 AzP ciascuno. Eccezione espressa: con almeno tre teste funzionali può fare fino a due Attacchi di Opportunità ordinari per Round, su due occasioni distinte (con una o due teste, uno solo), aggiuntivi rispetto ai tre Morsi; ogni testa morde al massimo una volta per Round (si annotano le teste usate). Niente Parata naturale, azioni simultanee fuori Iniziativa o attacchi attraverso ostacoli."
+      "nome": "Opportunità delle teste",
+      "effetto": "Eccezione espressa: con almeno tre teste funzionali può effettuare fino a due Attacchi di Opportunità ordinari per Round, su due occasioni distinte; con una o due teste, uno soltanto. Questi Morsi sono aggiuntivi rispetto al limite di tre con AzP. Ogni testa può mordere al massimo una volta complessiva per Round: si annotano le teste usate. Nessuna occasione concreta significa nessun attacco gratuito."
+    },
+    {
+      "nome": "Vigilanza e sensi",
+      "effetto": "Scurovisione 12 Q. Nel sonno naturale almeno una testa rimane vigile con Percezione 14, senza individuare automaticamente un agguato. Può trattenere il fiato per 1 ora, poi segue il Giocatore §5.23. Un Round di respiro normale ripristina la riserva. Magia, Ferite e PM 0 possono rendere incosciente l’intera creatura."
     },
     {
       "nome": "Un solo organismo",
-      "effetto": "Inizia con cinque teste (numerate da 1 a 5), fino a sette contemporanee; condividono PV, PM, Ferite, Azioni e Stati dell’Idra. Una localizzazione Testa riguarda una testa funzionale determinata a caso fra quelle coinvolte e raggiungibili. Sette teste non significano sette AzP."
+      "effetto": "Inizia con cinque teste, numerate da 1 a 5; le nuove ricevono i numeri disponibili, fino a sette contemporanee. Le teste condividono PV, PM, Ferite, Azioni e Stati dell’Idra e non hanno proprie riserve. Nessun danno si conta una seconda volta sul corpo. Torace, Braccia e Gambe corrispondono al corpo quadrupede; una localizzazione Testa riguarda una testa funzionale determinata casualmente fra quelle coinvolte e raggiungibili."
     },
     {
       "nome": "Soglia di lesione",
-      "effetto": "Quando accumula almeno 16 danni finali nello stesso Round, una testa funzionale è distrutta o recisa e lascia un collo aperto (si verifica dopo aver risolto l’intero attacco; al massimo una testa per Round per questo innesco; conta il danno positivo anche a 0 PV, non i PM). Una lesione anatomica ordinaria può rendere non funzionale una testa anche senza la soglia. Una testa solo Accecata o Assordata non genera nuove teste."
+      "effetto": "Quando accumula almeno 16 danni finali nello stesso Round, una testa funzionale viene distrutta o recisa e lascia un collo aperto. Si verifica dopo aver risolto interamente l’attacco che raggiunge la soglia. Questo innesco può togliere al massimo una testa per Round; ulteriori danni seguono comunque PV e Ferite. Si conta il danno finale positivo anche quando i PV sono già 0, non la perdita di PM."
     },
     {
-      "nome": "Menti collegate",
-      "effetto": "Con almeno due teste funzionali +2 alle PS richieste direttamente per evitare Accecato, Assordato, Terrorizzato, Stordito, fascinazione o uno svenimento imposto da un effetto (non alla determinazione delle Ferite; non evita Svenuto da PM 0, Morente o conseguenze senza PS)."
+      "nome": "Menomazioni",
+      "effetto": "Le conseguenze anatomiche ordinarie restano: una lesione che distrugge una testa può renderla non funzionale anche senza la soglia. La medesima testa non si perde due volte per la stessa risoluzione. La soglia non aggiunge automaticamente altre Ferite oltre a quelle prodotte dall’attacco. Una testa solo Accecata o Assordata non diventa per questo un collo reciso capace di generare nuove teste."
+    },
+    {
+      "nome": "Resistenza delle menti collegate",
+      "effetto": "Con almeno due teste funzionali ottiene +2 alle PS direttamente richieste per evitare Accecato, Assordato, Terrorizzato, Stordito, fascinazione o uno svenimento imposto da un effetto. Non è un bonus a tutte le PS di Tempra o Magia: non modifica la normale determinazione delle Ferite. Non evita Svenuto da PM 0, Morente o un’altra conseguenza automatica priva di PS."
     },
     {
       "nome": "Ultima testa",
-      "effetto": "Se nessuna testa rimane funzionale per distruzione anatomica, l’Idra è Svenuta ed entra in Morente (contatore COS 10, penalità −8; primo decremento dopo un Round completo): eccezione anatomica distinta da 0 PV. La ricrescita non opera senza almeno una testa; recuperare PV non ricostruisce una testa. La stabilizzazione non restituisce la funzione; Rigenerazione sì."
+      "effetto": "Se nessuna testa rimane funzionale per distruzione anatomica, l’Idra è fuori combattimento anche se conserva PV: è un’impotenza anatomica espressa, distinta dall’esaurimento della riserva. Non si applicano Ferite o contatore Morente; morte e distruzione effettiva restano distinte secondo il §4.2. La ricrescita innata non opera senza almeno una testa superstite; recuperare PV non ricostruisce da solo una testa."
     },
     {
-      "nome": "Ricrescita e cauterizzazione",
-      "effetto": "A fine di ogni propria Iniziativa, se cosciente e con almeno una testa funzionale, verifica i colli aperti. Se ha subito almeno 1 danno finale da Fuoco dall’ultima verifica, tutti i colli aperti sono cauterizzati e non ricrescono con questa capacità. Altrimenti ogni collo aperto genera fino a due nuove teste (massimo sette), senza Azioni o PM; ogni testa ricresciuta cura 2 PV al corpo, fino a 4 PV per Round. Non riduce Ferite, non stabilizza, non guarisce Menomazioni di altro tipo. Le nuove teste agiscono dal Round dopo la ricrescita (limiti di tre Morsi e due Opportunità). Una fiamma senza danno finale non cauterizza; non è vulnerabile al Fuoco né Incendiata; la ricrescita non è un effetto di Negare Potere. I 70 PX comprendono cinque teste, ricrescita fino a sette e le Opportunità."
+      "nome": "Soccorso e memoria",
+      "effetto": "La stabilizzazione segue le capacità ordinarie e non restituisce automaticamente la funzione anatomica mancante. Rigenerazione o un trattamento espressamente adeguato può ricostruirla secondo le proprie regole. Le Ferite, gli Stati e le teste già utilizzate per mordere restano annotati: una nuova testa non ripristina Azioni del Round in corso."
     },
     {
-      "nome": "Sensi e fiato",
-      "effetto": "Scurovisione 12 Q. Nel sonno almeno una testa resta vigile (Percezione 14). Può trattenere il fiato per 1 ora, poi §5.23. Terra e nuoto 6/12/18 Q."
+      "nome": "Verifica",
+      "effetto": "Alla fine di ciascuna propria Iniziativa, se è cosciente e conserva almeno una testa funzionale, verifica i colli ancora aperti. Se ha subito almeno 1 danno finale da Fuoco dall’ultima verifica, tutti quei colli vengono cauterizzati e non ricrescono con questa capacità. Alla prima verifica si considera il tempo dall’inizio dello scontro. La fonte del Fuoco e la sua Natura non cambiano questo requisito."
+    },
+    {
+      "nome": "Ricrescita",
+      "effetto": "In assenza di quel danno da Fuoco, ogni collo aperto genera fino a due nuove teste, rispettando il massimo di sette contemporanee. La capacità non costa Azioni o PM. Un collo trattato viene chiuso anche se il limite impedisce di generare entrambe le teste. Una testa effettivamente ricresciuta recupera 2 PV al corpo, fino a 4 PV complessivi per Round da questa capacità e senza superare i PV massimi."
+    },
+    {
+      "nome": "Cosa guarisce",
+      "effetto": "La nuova testa ripristina soltanto la funzione della testa fisicamente perduta. Non riduce Ferite, non stabilizza Morente e non guarisce Menomazioni del corpo, delle zampe o di altri colli. Non si producono ricrescite o recuperi da semplice danno ai PV quando nessuna testa è stata persa. Perdere una testa e ricrearla non cancella Avvelenato, controllo mentale o le durate degli altri effetti sull’organismo."
+    },
+    {
+      "nome": "Nuove teste",
+      "effetto": "Possono essere usate dal Round successivo alla ricrescita, mantenendo i limiti di tre Morsi con AzP e due Opportunità. Sette teste non significano sette AzP. Teste cauterizzate non tornano disponibili cambiando scena o recuperando PV; occorrono le cure o i tempi biologici stabiliti per quella lesione, senza una rigenerazione istantanea aggiuntiva."
+    },
+    {
+      "nome": "Fuoco e protezioni",
+      "effetto": "Una fiamma che non infligge danno finale, per AR, Difesa o altra protezione, non cauterizza. La capacità non rende l’Idra vulnerabile al Fuoco e non la rende automaticamente Incendiata. La ricrescita è intrinseca all’organismo, non un incantesimo mantenuto che Negare Potere possa eliminare come effetto attivo. Le immunità o resistenze di altre creature non si trasferiscono all’Idra."
+    },
+    {
+      "nome": "PX e impiego",
+      "effetto": "I 70 PX comprendono cinque teste iniziali, possibile ricrescita fino a sette, recupero limitato e Opportunità speciali. Ogni testa resta parte dello stesso esemplare e non assegna un premio distinto. In verifica al tavolo registrare teste attive, colli cauterizzati, PV recuperati e quante Opportunità si verificano davvero: inseguire l’Idra senza cauterizzare può allungare molto lo scontro."
+    },
+    {
+      "nome": "Grandi rettili e predatori mostruosi",
+      "effetto": "Cariche, code, ali e lunghi colli permettono di minacciare spazi diversi. Alcuni di questi animali difendono piccoli e territorio; altri cacciano, e il Drago tartaruga può negoziare un passaggio. Le sei forme preistoriche precedono quattro predatori fantastici. Sono voci del catalogo generale: la loro presenza su Iris richiede una collocazione nell’ambientazione, senza attribuire loro appartenenza alla Covata o origini cosmologiche della fonte. PX di riferimento. Valori per un esemplare e quattro PG, senza dotazione conteggiata. Veleno, ricrescita delle teste, capacità di inghiottire e soffi sono già compresi nel GS. Le teste dell’Idra e le altre appendici non sono avversari separati e non assegnano PX aggiuntivi. Il premio complessivo dell’incontro segue il Manuale del Direttore §9.3. Adattamento. Le sequenze offensive impiegano Azioni effettive. Essere afferrati o inghiottiti lascia procedure di liberazione e soccorso; i soffi hanno un intervallo definito prima del riutilizzo. La perdita delle teste dell’Idra conserva la propria eccezione anatomica; una condizione che la renderebbe Morente la mette invece fuori combattimento secondo il §4.2, senza avviare un contatore ordinario. Fonti e verifica. Giocatore v0.49, Magia v1.5, Direttore v0.41 e Armamenti v0.64. Le pagine indicate sono quelle stampate del Manuale dei Mostri fornito. GS e PX sono stime da verificare al tavolo, soprattutto per creature con più attacchi, rigenerazione o forte vantaggio ambientale. Acqua profonda, passaggi stretti e spazi di volo cambiano le scelte disponibili, senza modificare retroattivamente le statistiche. Tabella (celle in ordine di lettura): Dieci profili per pianure, scogliere, acque e caverne | Creatura | GS | PX per 4 PG | Allosauro | Esperto | 30 | Anchilosauro | Esperto | 30 | Plesiosauro | Esperto | 30 | Pteranodonte | Principiante | 10 | Triceratopo | Veterano | 50 | Tirannosauro | Eroe | 70 | Viverna | Veterano | 50 | Idra | Eroe | 70 | Behir | Leggenda | 100 | Drago tartaruga | Leggenda | 100."
+    },
+    {
+      "nome": "Rettili regole operative",
+      "effetto": "Natura e risorse. Tutti i profili hanno Natura Comune, sono organismi biologicamente viventi e possiedono una mente e PM personali. A 0 PM diventano Svenuti. Non conoscono incantesimi appresi. Bassa INT, grande massa e parentela draconica non concedono immunità mentali o alla Corruzione. Stati iniziali: nessuno; l’Idra inizia con cinque teste e la Viverna con tre dosi di veleno, se non già consumate nella continuità della scena. PV e anatomia. A 0 PV il profilo senza Ferite è fuori combattimento secondo il §4.2; morte o distruzione effettiva restano distinte. Le cure biologiche sono applicabili. Nei quadrupedi Testa è capo e collo, Torace il corpo, Braccia gli arti anteriori e Gambe quelli posteriori; la coda è un’appendice locomotrice delle Gambe. Le voci precisano le altre anatomie. Prima di risolvere una Menomazione si identifica la funzione realmente coinvolta. Azioni e Difese. INI è il modificatore a 1d10; AzP e unica AzM valgono per l’intero Round. Ogni attacco costa 1 AzP, produce AC 1 e include tutti i bonus, salvo eccezione espressa. Nessuno possiede Parata naturale. Schivata richiede 1 AzP, 1 AzM e spazio concretamente disponibile. Parata normale dimezza per eccesso prima dell’AR, Magistrale annulla. Limiti offensivi delle singole voci comprendono l’Opportunità, salvo l’eccezione delle teste dell’Idra. Ordine del danno. Dadi e bonus, moltiplicatori, Difesa, resistenze, AR e infine effetti che richiedono danno residuo. Naturale e Magico incontrano tutta l’AR pertinente; Etereo soltanto la quota magica. Taglio, Contusione e Perforazione descrivono il mezzo fisico: Perforazione non equivale alla proprietà Perforante X. Un danno interno che ignora AR lo dichiara espressamente. L’acido non applica Corrosivo senza una proprietà indicata. Movimento e sensi. Le terne indicano Passo / Corsa / Scatto in Q, con velocità speciali già effettive. Tragitti misti condividono il budget ordinario. Ali reali richiedono spazio e non concedono volo stazionario; impedimenti funzionali o perdita di coscienza possono provocare caduta. Nuoto e combattimento immerso seguono il Giocatore. Scurovisione non attraversa solidi o oscurità soprannaturale; gli altri sensi non individuano automaticamente un nemico nascosto. Prese e tempi. Immobilizzato significa movimento 0 e −4 alle azioni fisiche, comprese Difese e liberazioni, non alle Salvezze. Le mani restano utilizzabili salvo blocco espresso. Liberazioni contrapposte costano 1 AzP; un pareggio conserva una presa già stabilita. Le durate in Round terminano alla fine del Round di applicazione più il numero indicato. Per i soffi usati nel Round R, il primo riutilizzo è R + 3: non basta raggiungere nuovamente la propria Iniziativa nello stesso Round."
+    },
+    {
+      "nome": "Altri movimenti",
+      "effetto": "Terra e nuoto 6 / 12 / 18: la stessa andatura vale anche per nuoto; spazio 3 × 3 Q"
     }
   ],
   "note": "Predatore a più teste • morsi, reazioni e ricrescita • Natura Comune. Condotta. Cerca nutrimento presso rive e paludi e può cambiare territorio quando le prede scarseggiano. Sotto 25 PV tenta di ritirarsi; la capacità di ricrescita non rende obbligatorio restare fino alla morte. Le pagine seguenti definiscono teste, resistenze specifiche e cauterizzazione.",
@@ -125,8 +165,8 @@
       "movimento": "Mostri 0.69",
       "spazio": "Mostri 0.69",
       "abilita": "Mostri 0.69",
-      "attacchi": "Mostri 0.47",
-      "capacita": "Mostri 0.47",
+      "attacchi": "Mostri 0.69",
+      "capacita": "Mostri 0.69",
       "note": "Mostri 0.69",
       "gs_px": "Mostri 0.69"
     }

@@ -49,11 +49,11 @@
       "va": 13,
       "danno": "1d8+2",
       "natura": "Naturale",
-      "portata_q": 2,
-      "ac": 1,
       "proprieta": [
         "Perforazione"
-      ]
+      ],
+      "portata_q": 2,
+      "ac": 1
     },
     {
       "nome": "Pungiglione",
@@ -61,6 +61,9 @@
       "va": 13,
       "danno": "1d6+2",
       "natura": "Naturale",
+      "proprieta": [
+        "poi veleno"
+      ],
       "portata_q": 2,
       "ac": 1,
       "note": "Poi veleno (una dose dichiarata prima del tiro): vedi la capacità «Veleno»."
@@ -71,11 +74,11 @@
       "va": 13,
       "danno": "1d8+2",
       "natura": "Naturale",
-      "portata_q": 1,
-      "ac": 1,
       "proprieta": [
         "Taglio"
       ],
+      "portata_q": 1,
+      "ac": 1,
       "note": "Solo in volo."
     }
   ],
@@ -136,7 +139,7 @@
       "movimento": "Mostri 0.69",
       "spazio": "Mostri 0.69",
       "abilita": "Mostri 0.69",
-      "attacchi": "Mostri 0.47",
+      "attacchi": "Mostri 0.69",
       "capacita": "Mostri 0.47",
       "note": "Mostri 0.69",
       "gs_px": "Mostri 0.69"

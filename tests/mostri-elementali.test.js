@@ -67,11 +67,13 @@ test('danni misti: prima componente in `danno`, seconda nella nota; Fuoco/Gelo i
 test('Salamandra: Lancia 2 Q e Coda a 2 Q, presa con Stringere come capacità; Serpente di fuoco con Morso e Coda', () => {
   const s = leggi('salamandra');
   assert.deepEqual(s.attacchi.map((a) => [a.nome, a.portata_q]), [['Lancia due mani', 2], ['Coda', 2]]);
-  assert.match(cap('salamandra', 'Afferrare e Stringere').effetto, /Riflessi −2/);
+  // lotto 205: la 0.69 riscrive il testo e il nome della capacità; si controlla l’informazione, non la frase.
+  assert.match(JSON.stringify(leggi('salamandra')), /Riflessi −2/);
   assert.equal(s.azioni.principali, 2);
   assert.deepEqual(s.gs_px, { gs: 'Veterano', px: 55, per_pg: 4 });
   assert.deepEqual(leggi('serpente-di-fuoco').attacchi.map((a) => a.nome), ['Morso', 'Coda']);
-  assert.match(cap('serpente-di-fuoco', 'Calore diretto').effetto, /1d4 Fuoco Naturale/);
+  // lotto 205: la 0.69 rinomina la capacità; si controlla l’informazione, non il nome della riga.
+  assert.match(JSON.stringify(leggi('serpente-di-fuoco')), /1d4 Fuoco/);
 });
 
 test('Galeb Duhr: Impeto con formula propria e Animare massi (6 PM, una volta al giorno, due massi da 30 PX); Xorn passa nella roccia', () => {

@@ -49,11 +49,11 @@
       "va": 12,
       "danno": "1d8+2",
       "natura": "Naturale",
-      "portata_q": 1,
-      "ac": 1,
       "proprieta": [
         "Perforazione"
-      ]
+      ],
+      "portata_q": 1,
+      "ac": 1
     },
     {
       "nome": "Artigli",
@@ -61,11 +61,11 @@
       "va": 12,
       "danno": "1d8+2",
       "natura": "Naturale",
-      "portata_q": 1,
-      "ac": 1,
       "proprieta": [
         "Taglio"
       ],
+      "portata_q": 1,
+      "ac": 1,
       "note": "Gli Artigli riusciti non afferrano automaticamente la vittima."
     }
   ],
@@ -93,26 +93,32 @@
   ],
   "capacita": [
     {
-      "nome": "Corpo vivente",
-      "effetto": "Natura Comune, mente e PM personali; respira, mangia, beve e riposa; veleni, malattie e cure biologiche possono interessarlo salvo immunità esplicite. Non appartiene alla Covata né ne applica il disorientamento da freddo. A 0 PV non è automaticamente morto o Svenuto: §4.2 (un nuovo danno finale positivo a 0 PV richiede Tempra e le normali Ferite; l’eccedenza del colpo che esaurisce i PV non genera da sola Ferite). A 0 PM personali Svenuto dopo la risoluzione completa dell’azione. INI modifica 1d10; AzP e unica AzM valgono per tutto il Round; ogni attacco normale costa 1 AzP e produce AC 1; il danno in tabella è già completo (non aggiungere FOR o DES). Una sola Opportunità ordinaria per Round (Morso, Becco, Corna o Artigli ammessi: non Soffi, teletrasporto, inghiottimento o Manovre offensive); i limiti offensivi comprendono Opportunità e attacchi ordinati. Nessuna Parata naturale; Schivata: 1 AzP e 1 AzM, consapevolezza, spazio e una funzione locomotoria. Naturale e Magico incontrano l’AR pertinente, Etereo solo quella magica; nessuna AR magica. Un senso acuto dà +2 a Percezione quando è determinante, una sola volta per Prova. Corsa e Scatto in volo richiedono Atletica −2 e −4; ali, quota e spazio necessari, nessun volo stazionario; perdita del sostegno o incoscienza possono causare Caduta. Testa = bocca e sensori, Torace = corpo, Braccia e Gambe = gruppi di arti (per Peryton e Roc le Braccia sono le ali). Stato di durata N applicato nel Round R: termina a fine R + N. Dotazione: nessuna."
-    },
-    {
       "nome": "Resistenza e sensi",
-      "passiva": true,
-      "effetto": "Dimezza per eccesso i danni Naturali da Contusione, Perforazione e Taglio prima dell’AR; non vale contro Magico, Etereo, Fuoco, Gelo o acido. Vista e olfatto acuti +2, senza sommarli; nessuna Scurovisione innata. Comprende Comune ed Elfico senza parlarli. L’ombra umanoide è visibile quando la luce la produce: non è una creatura, un’illusione controllabile o un potere di paura."
+      "effetto": "Dimezza per eccesso danni Naturali da Contusione, Perforazione e Taglio prima dell’AR; non vale contro Magico, Etereo, Fuoco, Gelo o acido. Vista e olfatto acuti +2, senza sommarli; nessuna Scurovisione innata. Comprende Comune ed Elfico senza parlarli. L’ombra umanoide è visibile quando la luce la produce: non è una creatura, un’illusione controllabile o un potere di paura."
     },
     {
-      "nome": "Passaggio in volo",
-      "passiva": true,
-      "effetto": "Al massimo un attacco di Corna e uno di Artigli per Round, Opportunità e attacco ordinato compresi. Uscire dalla portata di un nemico usando il proprio Volo non provoca Opportunità; non concede altre AzM, non scioglie prese e non permette di attraversare il solido. Per attaccare e allontanarsi divide il Passo entro il budget complessivo."
+      "nome": "Attacchi e passaggio",
+      "effetto": "Al massimo un attacco di Corna e uno di Artigli per Round, Opportunità e attacco ordinato compresi. Uscire dalla portata di un nemico usando il proprio Volo non provoca Opportunità. Non concede altre AzM, non scioglie prese e non permette di attraversare il solido. Per attaccare e allontanarsi divide il Passo entro il budget complessivo; Artigli riusciti non afferrano automaticamente la vittima."
     },
     {
-      "nome": "Picchiata",
-      "azioni": {
-        "principali": 1,
-        "movimento": 1
-      },
-      "effetto": "Carica in volo: traiettoria rettilinea praticabile di almeno 3 Q, con discesa verticale di almeno 6 Q per la Picchiata. Un solo attacco di Corna: −2 VA fino a 6 Q, −4 da 7 Q; danno ×2 (×3 complessivo con Magistrale). Nessun ulteriore dado da picchiata né secondo colpo nella Carica."
+      "nome": "Picchiata e condotta",
+      "effetto": "Può usare Carica in volo: 1 AzP e 1 AzM, traiettoria rettilinea praticabile di almeno 3 Q, con discesa verticale di almeno 6 Q per la Picchiata. Un solo attacco di Corna: −2 VA fino a 6 Q, −4 da 7 Q; danno ×2, oppure ×3 complessivo con Magistrale. Nessun ulteriore dado da picchiata o secondo colpo nella Carica. Sotto 11 PV può disimpegnarsi per tornare a cacciare. Dotazione: nessuna."
+    },
+    {
+      "nome": "Predatori straordinari",
+      "effetto": "Dieci creature per caccia, territori estremi e agguati insoliti Questi predatori completano i profili delle bestie con soffi elementali, traslazioni, corpi incandescenti e grandi rapaci. Non sono automaticamente ostili a ogni viaggiatore: fame, nido, addestramento, accordi o difesa del territorio determinano il comportamento. Alcuni comprendono linguaggi e possono negoziare. La loro presenza su Iris richiede una collocazione nell’avventura. PX di riferimento. Valori per un esemplare e quattro PG, senza dotazione recuperabile. Le capacità innate sono già comprese nel GS; nessun moltiplicatore di equipaggiamento. Il premio complessivo dell’incontro segue il Direttore §9.3. Impiego. Ripari, vie di fuga, terreno, quota e possibilità di soccorso devono essere leggibili nella scena. Il Roc può minacciare un carico o un animale; il Worg può trattare; un Remorhaz può essere aggirato evitando le vibrazioni che attirano la sua attenzione. Raggiungere l’obiettivo non richiede sempre uccidere il predatore. Fonti e verifica. Giocatore v0.49, Magia v1.5, Direttore v0.41 e Armamenti v0.64; pagine stampate del Manuale dei Mostri fornito. GS e PX sono stime da verificare al tavolo, soprattutto per fase, danni da contatto, presa e trasporto in quota. Le capacità non costituiscono nuovi incantesimi o opzioni gratuite per i PG. Tabella (celle in ordine di lettura): Creatura | GS | PX per 4 PG | Worg | Inesperto | 20 | Lupo invernale | Veterano | 50 | Segugio infernale | Veterano | 50 | Cane della morte | Esperto | 30 | Cane intermittente | Inesperto | 20 | Ragno di fase | Veterano | 50 | Remorhaz giovane | Eroe | 70 | Remorhaz | Leggenda | 100 | Peryton | Esperto | 30 | Roc | Leggenda | 100."
+    },
+    {
+      "nome": "Predatori regole comuni",
+      "effetto": "Corpi viventi. Tutti hanno Natura Comune, mente e PM personali. Respirano, mangiano, bevono e richiedono riposo; veleni, malattie e cure biologiche possono interessarli salvo immunità esplicite. Il nome Segugio infernale non assegna Natura Oscura Simmetria o CROS. Non appartengono alla Covata e non ne applicano il disorientamento da freddo. PV PM e Ferite. A 0 PV non sono automaticamente morti o Svenuti. Si usa il §4.2: un nuovo danno finale positivo, quando il bersaglio è già a 0 PV, richiede Tempra e le normali Ferite. L’eccedenza del colpo che esaurisce i PV non genera da sola Ferite. A 0 PM personali si diventa Svenuti dopo la risoluzione completa dell’azione; PM personali e riserve esterne rimangono distinti. Azioni e attacchi. INI modifica 1d10. AzP e unica AzM valgono per tutto il Round. Ogni attacco normale costa 1 AzP e produce AC 1; il danno in tabella è già completo, senza aggiungere ancora FOR o DES. I limiti offensivi comprendono Opportunità e attacchi ordinati fuori Iniziativa. Un’unica Opportunità ordinaria per Round usa soltanto Morso, Becco, Corna o Artigli ammessi, non Soffi, teletrasporto, inghiottimento o Manovre offensive. Difese e protezioni. Nessuna Parata naturale. Schivata costa 1 AzP e 1 AzM e richiede consapevolezza, spazio e una funzione locomotoria utilizzabile. Le opposizioni passive espressamente previste non sono Schivate aggiuntive a pagamento. Naturale e Magico incontrano l’AR pertinente, Etereo soltanto quella magica. Nessuno ha AR magica. Le immunità elementali valgono soltanto per gli elementi dichiarati, di qualunque Natura. Sensi e Branco. Un senso acuto concede +2 a Percezione quando il senso indicato è determinante, una sola volta per Prova. Non sostituisce automaticamente Furtività, ostacoli e localizzazione. Branco, soltanto per Lupo invernale e Segugio infernale, concede +2 ai tiri per colpire se un alleato cosciente e capace di attaccare minaccia la vittima in mischia da entro 1 Q. Non aggiungere un secondo vantaggio numerico per la stessa circostanza. Il bonus non modifica Soffi o PS. Movimento e parti. Terne Passo / Corsa / Scatto in Q; percorsi misti e carico usano un budget unico. Corsa e Scatto in volo richiedono Atletica −2 e −4. Ali, quota e spazio sono necessari; i rapaci non levitano immobili. Perdita del sostegno o incoscienza possono provocare Caduta. Testa comprende bocca e sensori, Torace il corpo, Braccia e Gambe i gruppi di arti corrispondenti; per Peryton e Roc le Braccia sono le ali. Le eccezioni anatomiche sono indicate nelle singole voci."
+    },
+    {
+      "nome": "Predatori Soffi e danni elementali",
+      "effetto": "Soffi. Lupo invernale e Segugio infernale spendono 2 AzP alla propria Iniziativa. Un cono lungo 3 Q dalle fauci e largo 1,5 Q all’estremità, centrato sulla direzione scelta. Richiede un percorso libero; pareti e solidi fermano le parti schermate. Tutte le creature nell’Area, alleati compresi, sono coinvolte. Non occorre tiro per colpire e non si applica Branco. Elusione. Per ogni vittima, Riflessi 0 per Eludere l’Area se concretamente possibile: successo dimezza per eccesso il danno prima dell’AR, fallimento o impossibilità lo lascia intero. Non consuma AzP o AzM. Coperture pertinenti modificano la PS; non si aggiungono una Parata, una Schivata o un altro tiro iniziale contro lo stesso soffio. Una sola AC per vittima. Intervallo. Dopo l’uso nel Round R il medesimo predatore non può soffiare prima di R + 3. Nessun costo in PM e nessuna ricarica casuale. Cambiare bersaglio, recuperare PV, entrare in un nuovo tratto della stessa scena o essere curato non azzerano l’intervallo. Il Soffio sostituisce entrambe le AzP, senza Morso aggiuntivo. Fuoco e Gelo. Dopo almeno 1 danno elementale residuo oltre Difesa, AR e Contromisura pertinente, il Fuoco impone Riflessi 0 contro Incendiato e il Gelo Tempra 0 contro Rallentato. Sono PS di Stato distinte da Elusione. Successo evita lo Stato, fallimento lo applica per 1+1d3 Round; nessun altro danno iniziale è annullato. Ignifugo e Termico non riducono i PV persi: possono impedire lo Stato secondo il Giocatore §5.24. Componenti miste. Morso del Segugio e dei Remorhaz produce una sola AC con una componente fisica e una di Fuoco. Si applicano Difesa e protezioni pertinenti a ciascuna componente e si aggregano i residui per una sola applicazione ai PV e alle Ferite. Non si aggiungono due colpi o due tiri per colpire. Solo il residuo di Fuoco può innescare Incendiato. Un’immunità al Fuoco non annulla il danno fisico. Stati e fonte. Incendiato infligge subito 1d4 e poi all’Iniziativa della fonte, al massimo una volta per Round, con −2 alle Abilità ma non alle PS. Ignora l’AR non magica generica; protezioni specifiche e AR magica restano pertinenti. Spegnersi segue il Giocatore. Rallentato limita il Passo a 3 Q, vieta Corsa e Scatto e dà −2 alle Prove fisiche e alle Difese. Applicazioni ripetute non sommano lo stesso Stato e conservano la scadenza più lontana; durata N nel Round R termina a fine R + N."
+    },
+    {
+      "nome": "Altri movimenti",
+      "effetto": "spazio 1 × 1 Q"
     }
   ],
   "note": "Predatore alato • Corna, Artigli e passaggio in volo • Natura Comune.",
@@ -131,8 +137,8 @@
       "movimento": "Mostri 0.69",
       "spazio": "Mostri 0.69",
       "abilita": "Mostri 0.69",
-      "attacchi": "Mostri 0.47",
-      "capacita": "Mostri 0.47",
+      "attacchi": "Mostri 0.69",
+      "capacita": "Mostri 0.69",
       "note": "Mostri 0.69",
       "gs_px": "Mostri 0.69"
     }

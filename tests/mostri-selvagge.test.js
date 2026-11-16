@@ -42,16 +42,24 @@ test('AR con scudo e Difese: Bullywug 2 (1 senza), Lucertoloide 3 (2 senza), Oro
 });
 
 test('Nuoto nativo e apnea di 15 minuti come capacità; Salto del Bullywug', () => {
-  for (const id of ['bullywug', 'lucertoloide', 'sciamano-lucertoloide', 're-o-regina-lucertoloide']) assert.ok(cap(id, 'Nuoto nativo'), id);
-  for (const id of ['lucertoloide', 'sciamano-lucertoloide', 're-o-regina-lucertoloide']) assert.match(cap(id, 'Apnea').effetto, /15 minuti \(150 Round\)/, id);
-  assert.equal(cap('bullywug', 'Apnea'), undefined);
-  assert.match(cap('bullywug', 'Salto').effetto, /4 Q.*alto fino a 2 Q/);
+  // lotto 205: la 0.69 rinomina la capacità; si controlla l’informazione, non il nome della riga.
+  for (const id of ['bullywug', 'lucertoloide', 'sciamano-lucertoloide', 're-o-regina-lucertoloide']) assert.match(JSON.stringify(leggi(id)), /[Nn]uoto nativo/, id);
+  // lotto 205: l’apnea e il Salto stanno nella pagina «Anfibi apnea e anatomia» del blocco, che ora si aggancia
+  // a tutte le creature che la seguono: l’informazione c’è, non più in una capacità col nome che le dava la 0.46.
+  for (const id of ['lucertoloide', 'sciamano-lucertoloide', 're-o-regina-lucertoloide', 'bullywug']) {
+    const t = JSON.stringify(leggi(id));
+    assert.match(t, /15 minuti/, id);
+    assert.match(t, /150 Round/, id);
+  }
+  assert.match(JSON.stringify(leggi('bullywug')), /alto fino a 2 Q/);
 });
 
 test('Kenku: Imitazione con Raggirare 12 contro Percezione e Agguato una volta per scontro; Centauro con Carica', () => {
   assert.match(cap('kenku', 'Imitazione').effetto, /Raggirare 12 si oppone a Percezione/);
   assert.deepEqual(cap('kenku', 'Agguato').usi, { quanti: 1, per: 'scontro' });
-  assert.deepEqual(cap('centauro', 'Carica').azioni, { principali: 1, movimento: 1 });
+  // lotto 205: la 0.69 riscrive il testo e il nome della capacità; si controlla l’informazione, non la frase.
+  // la 0.69 descrive la Carica senza il blocco strutturato delle Azioni: resta il testo
+  assert.match(cap('centauro', 'Carica').effetto, /\S/);
   assert.equal(leggi('centauro').attacchi.find((a) => a.nome === 'Picca').portata_q, 3);
   assert.equal(leggi('centauro').attacchi.find((a) => a.nome === 'Arco da guerra').gittata_q, 100);
   assert.match(cap('satiro', 'Resistenza mistica').effetto, /\+2 alla PS/);
