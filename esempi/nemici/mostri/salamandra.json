@@ -3,7 +3,7 @@
   "versione": 1,
   "id": "salamandra",
   "nome": "Salamandra",
-  "fonte": "dal Manuale dei Mostri v0.46 (Word del 27/10/2026), cap. 8 «Catalogo delle creature» — Mephit e creature elementali",
+  "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Salamandra",
   "caratteristiche": {
     "FOR": 8,
     "DES": 7,
@@ -123,9 +123,26 @@
   "immunita": [
     "incendiato"
   ],
-  "note": "Essere serpentiforme con arti superiori: può essere un artigiano o difendere una fucina. Parla Ignan. Testa, Torace e Braccia sono le parti omonime; Gambe = la coda locomotrice e prensile. Tecnologia 12 vale solo per metallurgia con mezzi appropriati. Condotta: sotto 13 PV o a Ferita Seria può cercare riparo o negoziare. Fonte: Salamander, pp. 265–266.",
+  "note": "Elementale di fuoco • Lancia calda e Coda prensile • Natura Comune.",
   "_bestiario": {
     "edizione": "Mostri 0.69",
-    "sistema_salute": "solo_PV"
-  }
+    "sistema_salute": "solo_PV",
+    "campi": {
+      "pv": "Mostri 0.69",
+      "pm": "Mostri 0.69",
+      "caratteristiche": "Mostri 0.69",
+      "ar": "Mostri 0.69",
+      "difese": "Mostri 0.69",
+      "salvezze": "Mostri 0.69",
+      "iniziativa": "Mostri 0.69",
+      "azioni": "Mostri 0.69",
+      "movimento": "Mostri 0.69",
+      "spazio": "Mostri 0.69",
+      "abilita": "Mostri 0.47",
+      "attacchi": "Mostri 0.47",
+      "capacita": "Mostri 0.47",
+      "gs_px": "Mostri 0.69"
+    }
+  },
+  "taglia": "grande"
 }

@@ -3,7 +3,7 @@
   "versione": 1,
   "id": "pipistrello-gigante",
   "nome": "Pipistrello gigante",
-  "fonte": "dal Manuale dei Mostri v0.46 (Word del 27/10/2026), cap. 8 «Catalogo delle creature» — Creature alate e piccoli predatori",
+  "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Pipistrello gigante",
   "caratteristiche": {
     "FOR": 7,
     "DES": 7,
@@ -49,11 +49,11 @@
       "va": 10,
       "danno": "1d6+1",
       "natura": "Naturale",
-      "portata_q": 1,
-      "ac": 1,
       "proprieta": [
         "Perforazione"
-      ]
+      ],
+      "portata_q": 1,
+      "ac": 1
     }
   ],
   "abilita": [
@@ -92,9 +92,26 @@
       "effetto": "Un solo Morso per Round, Opportunità compresa. Non ha Passaggio in volo e non trasmette automaticamente malattie né risucchia sangue. Non rimane sospeso gratuitamente senza avanzare. Una Menomazione delle ali membranose può compromettere il Volo."
     }
   ],
-  "note": "Non comprende linguaggi. Un rumore ordinario non lo stordisce automaticamente. Condotta: può disimpegnarsi se il rifugio resta accessibile o se trova una preda meno rischiosa; sotto 4 PV o a Ferita Profonda tende a tornare al riparo. Fonte: Giant Bat, p. 323.",
+  "note": "Volatore notturno • ecolocalizzazione • Natura Comune. Condotta. Non comprende linguaggi. Può disimpegnarsi se il rifugio rimane accessibile o se trova una preda meno rischiosa. Sotto 6 PV tende a tornare al riparo. Un rumore ordinario non lo stordisce automaticamente: serve una capacità o una condizione con effetti dichiarati.",
   "_bestiario": {
     "edizione": "Mostri 0.69",
-    "sistema_salute": "solo_PV"
-  }
+    "sistema_salute": "solo_PV",
+    "campi": {
+      "pv": "Mostri 0.69",
+      "pm": "Mostri 0.69",
+      "caratteristiche": "Mostri 0.69",
+      "ar": "Mostri 0.69",
+      "difese": "Mostri 0.69",
+      "salvezze": "Mostri 0.69",
+      "iniziativa": "Mostri 0.69",
+      "azioni": "Mostri 0.69",
+      "movimento": "Mostri 0.69",
+      "spazio": "Mostri 0.69",
+      "abilita": "Mostri 0.69",
+      "attacchi": "Mostri 0.69",
+      "capacita": "Mostri 0.47",
+      "gs_px": "Mostri 0.69"
+    }
+  },
+  "taglia": "grande"
 }

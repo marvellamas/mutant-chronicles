@@ -3,7 +3,7 @@
   "versione": 1,
   "id": "mulo",
   "nome": "Mulo",
-  "fonte": "dal Manuale dei Mostri v0.46 (Word del 27/10/2026), cap. 8 «Catalogo delle creature» — Cavalcature e animali da lavoro",
+  "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Mulo",
   "caratteristiche": {
     "FOR": 6,
     "DES": 5,
@@ -48,11 +48,11 @@
       "va": 8,
       "danno": "1d4+1",
       "natura": "Naturale",
-      "portata_q": 1,
-      "ac": 1,
       "proprieta": [
         "Contusione"
-      ]
+      ],
+      "portata_q": 1,
+      "ac": 1
     }
   ],
   "abilita": [
@@ -87,9 +87,25 @@
       "effetto": "+2 alle PS di Tempra o Riflessi e alle Prove di FOR o DES espressamente richieste per evitare A Terra; si aggiunge alla Prova pertinente, non ai valori permanenti. Non introduce una Prova se l’effetto non la concede, non evita ogni spostamento forzato, non vale per le PS per Ferite e non dà aderenza a superfici lisce o immunità alle Cadute."
     }
   ],
-  "note": "Cerca un appoggio stabile e può colpire con gli zoccoli quando qualcuno lo stringe senza via di fuga. Un attacco di Zoccoli per Round, Opportunità compresa. Condotta: può fermarsi davanti a un ostacolo concreto; sotto 4 PV o a Ferita Profonda tende a cercare un riparo. Fonte: Mule, p. 333.",
+  "note": "Animale da soma • trasporto robusto e Piede saldo • Natura Comune. Condotta. Un attacco di Zoccoli per Round, Opportunità compresa. Non comprende linguaggi. Può fermarsi davanti a un ostacolo concreto anziché proseguire; sotto 6 PV tende a cercare un riparo. Una bardatura non viene creata automaticamente dal suo ruolo di animale da soma.",
   "_bestiario": {
     "edizione": "Mostri 0.69",
-    "sistema_salute": "solo_PV"
+    "sistema_salute": "solo_PV",
+    "campi": {
+      "pv": "Mostri 0.69",
+      "pm": "Mostri 0.69",
+      "caratteristiche": "Mostri 0.69",
+      "ar": "Mostri 0.69",
+      "difese": "Mostri 0.69",
+      "salvezze": "Mostri 0.69",
+      "iniziativa": "Mostri 0.69",
+      "azioni": "Mostri 0.69",
+      "movimento": "Mostri 0.69",
+      "spazio": "Mostri 0.69",
+      "abilita": "Mostri 0.69",
+      "attacchi": "Mostri 0.69",
+      "capacita": "Mostri 0.47",
+      "gs_px": "Mostri 0.69"
+    }
   }
 }

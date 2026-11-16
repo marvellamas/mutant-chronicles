@@ -1,0 +1,116 @@
+{
+  "formato": "mutant-nemico",
+  "versione": 1,
+  "id": "megera-marina",
+  "nome": "Megera marina",
+  "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Megera marina",
+  "note": "Creatura anfibia dalla pelle viscida che infesta coste e acque degradate. Può mascherarsi da umanoide emaciato, ma la sua arma principale è una rivelazione terrificante seguita da uno sguardo che abbatte la vittima già impaurita.",
+  "pv": 52,
+  "pm": 18,
+  "caratteristiche": {
+    "FOR": 7,
+    "DES": 6,
+    "COS": 7,
+    "INT": 5,
+    "SAG": 5,
+    "CAR": 6
+  },
+  "ar": {
+    "totale": 2,
+    "magica": 0
+  },
+  "difese": 10,
+  "salvezze": {
+    "tempra": 11,
+    "riflessi": 10,
+    "volonta": 10,
+    "magia": 10
+  },
+  "iniziativa": 1,
+  "azioni": {
+    "principali": 2,
+    "movimento": 1
+  },
+  "movimento": {
+    "passo": 6,
+    "corsa": 12,
+    "scatto": 18
+  },
+  "spazio": "1 Q",
+  "abilita": [
+    {
+      "nome": "Corpo a corpo",
+      "va": 12
+    },
+    {
+      "nome": "Atletica",
+      "va": 11
+    },
+    {
+      "nome": "Percezione",
+      "va": 10
+    },
+    {
+      "nome": "Furtività",
+      "va": 10
+    },
+    {
+      "nome": "Raggirare",
+      "va": 11
+    }
+  ],
+  "capacita": [
+    {
+      "nome": "Aspetto terrificante",
+      "effetto": "VA —. Danno: Terrorizzato; Volontà 0. Portata/costo: Entro 6 Q; 1 AzP e 2 PM; "
+    },
+    {
+      "nome": "Sguardo abbattente",
+      "effetto": "VA —. Danno: Svenuto; Volontà 0. Portata/costo: Una mente Terrorizzata entro 6 Q; 1 AzP e 3 PM; "
+    },
+    {
+      "nome": "Corpo e sensi",
+      "effetto": "Vivente anfibia, respira aria e acqua, Scurovisione 12 Q. Nessuna Parata naturale, immunità al Gelo o Resistenza alla magia implicita. Massimo un attacco di Artigli per Round, Opportunità compresa. Non riceve bonus per il solo fatto di essere immersa."
+    },
+    {
+      "nome": "Aspetto terrificante",
+      "effetto": "Una AzP e due PM per mostrare il volto vero: ogni altra mente cosciente suscettibile alla paura entro sei Q che la veda effettua Volontà 0. Fallimento Terrorizzato per cinque Round, senza un secondo tiro iniziale. L’esposizione richiede questa attivazione, non la sola presenza o un ritratto. Successo o liberazione rendono immuni all’Aspetto di questo esemplare per 24 ore. Barriera Mentale aiuta; Oratoria adiacente con una AzP, Cura Spirituale uno, evidente scomparsa della fonte e Negare sei seguono le rimozioni ordinarie. Può ritentare soltanto contro chi non è immune."
+    },
+    {
+      "nome": "Sguardo abbattente",
+      "effetto": "Una AzP e tre PM, utilizzabile di nuovo alla propria Iniziativa R+3 dopo uso nel Round R. Una mente cosciente già Terrorizzata, visibile entro sei Q e che possa vederne gli occhi: Volontà 0 evita; fallimento Svenuto fino alla fine della successiva Iniziativa della vittima. La penalità di Terrorizzato si applica normalmente a questa nuova PS. Non porta i PV a zero, non infligge Ferite o morte automatica. Chi resiste o viene liberato diventa immune allo Sguardo di questo esemplare per 24 ore, indipendentemente dal precedente Terrore."
+    },
+    {
+      "nome": "Contromisure e maschera",
+      "effetto": "Barriera Mentale aiuta lo Sguardo, senza immunità; Cura Spirituale almeno sei o Negare Potere nove rimuovono il relativo Svenuto. La scomparsa della Megera termina il suo Terrore, non annulla retroattivamente lo Svenuto; il danno da solo non lo rimuove. Distogliere lo sguardo prima dell’attivazione impedisce il requisito visivo, con le normali conseguenze contro un avversario non guardato. Possiede Maschera apparente delle regole comuni, soltanto come umanoide emaciato o deturpato. La maschera non impone una reazione agli osservatori e non ha effetti di controllo. Congrega e tana non incluse."
+    },
+    {
+      "nome": "Altri movimenti",
+      "effetto": "nuoto 8 / 16 / 24 Q; spazio 1 × 1 Q"
+    }
+  ],
+  "gs_px": {
+    "gs": "Esperto",
+    "px": 30,
+    "per_pg": 4
+  },
+  "_bestiario": {
+    "campi": {
+      "pv": "Mostri 0.69",
+      "pm": "Mostri 0.69",
+      "caratteristiche": "Mostri 0.69",
+      "ar": "Mostri 0.69",
+      "difese": "Mostri 0.69",
+      "salvezze": "Mostri 0.69",
+      "iniziativa": "Mostri 0.69",
+      "azioni": "Mostri 0.69",
+      "movimento": "Mostri 0.69",
+      "spazio": "Mostri 0.69",
+      "abilita": "Mostri 0.69",
+      "capacita": "Mostri 0.69",
+      "gs_px": "Mostri 0.69"
+    },
+    "edizione": "Mostri 0.69",
+    "sistema_salute": "solo_PV"
+  }
+}

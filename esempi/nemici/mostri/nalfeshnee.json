@@ -1,0 +1,122 @@
+{
+  "formato": "mutant-nemico",
+  "versione": 1,
+  "id": "nalfeshnee",
+  "nome": "Nalfeshnee",
+  "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Nalfeshnee",
+  "taglia": "grande",
+  "note": "Grande demone dal corpo massiccio, dalle ali corte e dall’intelligenza spiccata. Spezza una formazione con bagliori terrificanti e cambia posizione prima di concentrare morso e artigli.",
+  "pv": 188,
+  "pm": 50,
+  "caratteristiche": {
+    "FOR": 10,
+    "DES": 5,
+    "COS": 10,
+    "INT": 9,
+    "SAG": 6,
+    "CAR": 7
+  },
+  "ar": {
+    "totale": 6,
+    "magica": 0
+  },
+  "difese": 11,
+  "salvezze": {
+    "tempra": 17,
+    "riflessi": 10,
+    "volonta": 14,
+    "magia": 15
+  },
+  "iniziativa": 1,
+  "azioni": {
+    "principali": 3,
+    "movimento": 1
+  },
+  "movimento": {
+    "passo": 4,
+    "corsa": 8,
+    "scatto": 12,
+    "volo": 6
+  },
+  "spazio": "2 × 2 Q",
+  "abilita": [
+    {
+      "nome": "Corpo a corpo",
+      "va": 17
+    },
+    {
+      "nome": "Atletica",
+      "va": 16
+    },
+    {
+      "nome": "Percezione",
+      "va": 13
+    },
+    {
+      "nome": "Oratoria",
+      "va": 14
+    },
+    {
+      "nome": "Occultismo",
+      "va": 15
+    }
+  ],
+  "capacita": [
+    {
+      "nome": "Nimbo terrificante",
+      "effetto": "VA —. Danno: Terrorizzato; Volontà −2. Portata/costo: Raggio 3 Q; 1 AzP e 4 PM; "
+    },
+    {
+      "nome": "Corpo e sensi",
+      "effetto": "Resistenze corporee comuni e resistenza fisica comune, immunità a veleno e Avvelenato. Resistenza alla magia +2 non inclusa nelle PS. Vista rivelatrice 9 entro 24 Q; telepatia entro 24 Q, senza controllo o Azioni extra per chi riceve gli ordini. Nessuna Parata naturale; il +1 di Iniziativa deriva da SAG, come prontezza istintiva, al posto del bonus DES."
+    },
+    {
+      "nome": "Sequenza offensiva",
+      "effetto": "Massimo un Morso e due Artigli per Round, Opportunità compresa. Nimbo e Teletrasporto consumano le stesse tre AzP: non si aggiungono a tre colpi gratuiti. Le ali devono funzionare e trovare spazio; non levita e da Svenuto in volo cade. Non è di Natura divina per il solo GS Semidio, che esprime la fascia di sfida."
+    },
+    {
+      "nome": "Nimbo terrificante",
+      "effetto": "Una AzP e quattro PM; usato nel Round R torna disponibile alla sua Iniziativa in R + 3. Emette un bagliore visibile alle creature entro tre Q che possano vederlo, alleati compresi. Volontà −2: fallimento Terrorizzato per tre Round; successo evita. Alla fine di ogni propria Iniziativa la vittima ripete Volontà −2, successo termina. Dopo resistenza o liberazione è immune al Nimbo di questo Nalfeshnee per 24 ore. Nessun danno, Accecato o attacco aggiuntivo."
+    },
+    {
+      "nome": "Schermare il nimbo",
+      "effetto": "Solidi opachi, Accecato o rinuncia preventiva a guardare la fonte impediscono l’esposizione; distogliere gli occhi applica le normali limitazioni contro un avversario non visto. Assordato non protegge da un bagliore. Barriera Mentale aggiunge il bonus a Volontà. La scomparsa evidente della fonte e le altre rimozioni ordinarie di Terrorizzato restano valide; Negare Potere rimuove l’effetto dalla vittima, confronto 9."
+    },
+    {
+      "nome": "Teletrasporto",
+      "effetto": "Una AzP e cinque PM, massimo una volta per Round, fino a 24 Q in uno spazio libero di 2 × 2 Q che vede realmente. Trasporta sé e oggetti indossati o portati, non altre creature; non permette arrivo dentro solidi o oltre una parete opaca senza una visuale valida. Non tronca catene fissate a un edificio o un altro corpo e non termina vincoli mistici che impediscano lo spostamento. Se manca una destinazione valida il tentativo fallisce consumando i costi. Il passaggio non provoca Opportunità lungo un percorso intermedio inesistente."
+    },
+    {
+      "nome": "Risorse e condotta",
+      "effetto": "Teletrasportarsi non rinnova AzM, AzP, attacchi, Nimbo o risorse e non cura Ferite. Non legge pensieri né impone ordini con la sola telepatia. Può usare la parola per comandare alleati consenzienti alle loro normali Iniziative. La variante che evoca altri demoni non è inclusa nei 400 PX; ogni eventuale alleato è una creatura aggiuntiva dell’incontro."
+    },
+    {
+      "nome": "Altri movimenti",
+      "effetto": "spazio 2 × 2 Q"
+    }
+  ],
+  "gs_px": {
+    "gs": "Semidio",
+    "px": 400,
+    "per_pg": 4
+  },
+  "_bestiario": {
+    "campi": {
+      "pv": "Mostri 0.69",
+      "pm": "Mostri 0.69",
+      "caratteristiche": "Mostri 0.69",
+      "ar": "Mostri 0.69",
+      "difese": "Mostri 0.69",
+      "salvezze": "Mostri 0.69",
+      "iniziativa": "Mostri 0.69",
+      "azioni": "Mostri 0.69",
+      "movimento": "Mostri 0.69",
+      "spazio": "Mostri 0.69",
+      "abilita": "Mostri 0.69",
+      "capacita": "Mostri 0.69",
+      "gs_px": "Mostri 0.69"
+    },
+    "edizione": "Mostri 0.69",
+    "sistema_salute": "solo_PV"
+  }
+}

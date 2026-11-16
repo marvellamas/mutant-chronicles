@@ -3,7 +3,7 @@
   "versione": 1,
   "id": "xorn",
   "nome": "Xorn",
-  "fonte": "dal Manuale dei Mostri v0.46 (Word del 27/10/2026), cap. 8 «Catalogo delle creature» — Mephit e creature elementali",
+  "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Xorn",
   "caratteristiche": {
     "FOR": 8,
     "DES": 5,
@@ -48,11 +48,11 @@
       "va": 13,
       "danno": "1d6+2",
       "natura": "Naturale",
-      "portata_q": 1,
-      "ac": 1,
       "proprieta": [
         "Taglio"
-      ]
+      ],
+      "portata_q": 1,
+      "ac": 1
     },
     {
       "nome": "Morso",
@@ -60,11 +60,11 @@
       "va": 13,
       "danno": "2d6+2",
       "natura": "Naturale",
-      "portata_q": 1,
-      "ac": 1,
       "proprieta": [
         "Perforazione"
-      ]
+      ],
+      "portata_q": 1,
+      "ac": 1
     }
   ],
   "abilita": [
@@ -115,9 +115,25 @@
       "effetto": "Entro 12 Q localizza metalli preziosi e gemme, anche attraverso terra e roccia naturali comunicanti. È un senso minerale innato, non normale vista né Individuare Magia: non identifica valore esatto, proprietà magiche, proprietario o intenzioni e non localizza creature prive di tali materiali. Metallo schermante continuo, pietra lavorata o barriera magica interrompono la rilevazione attraverso quell’ostacolo. Percepire una gemma dentro una borsa non la trasferisce nella sua bocca né rivela gli altri contenuti; mangiare, sottrarre o danneggiare un oggetto richiede un’azione e una situazione praticabile (un’arma o protezione mantiene le normali regole di Integrità)."
     }
   ],
-  "note": "Essere pesante con tre braccia, tre occhi e una grande bocca superiore: cerca metalli preziosi e gemme per nutrirsi e può offrire informazioni in cambio di una parte del tesoro (contratta anziché iniziare un combattimento). Parla Terran. Testa = bocca e occhi, Torace = nucleo, Braccia = gruppo di arti superiori, Gambe = appendici locomotorie. Condotta: sotto 12 PV o a Ferita Seria tende alla trattativa o alla ritirata nel terreno; non consuma automaticamente gli oggetti per la semplice vicinanza. Fonte: Xorn, p. 304.",
+  "note": "Elementale minerale • movimento nella roccia e senso dei tesori • Natura Comune.",
   "_bestiario": {
     "edizione": "Mostri 0.69",
-    "sistema_salute": "solo_PV"
+    "sistema_salute": "solo_PV",
+    "campi": {
+      "pv": "Mostri 0.69",
+      "pm": "Mostri 0.69",
+      "caratteristiche": "Mostri 0.69",
+      "ar": "Mostri 0.69",
+      "difese": "Mostri 0.69",
+      "salvezze": "Mostri 0.69",
+      "iniziativa": "Mostri 0.69",
+      "azioni": "Mostri 0.69",
+      "movimento": "Mostri 0.69",
+      "spazio": "Mostri 0.69",
+      "abilita": "Mostri 0.69",
+      "attacchi": "Mostri 0.69",
+      "capacita": "Mostri 0.47",
+      "gs_px": "Mostri 0.69"
+    }
   }
 }

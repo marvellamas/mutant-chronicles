@@ -1,0 +1,136 @@
+{
+  "formato": "mutant-nemico",
+  "versione": 1,
+  "id": "kuo-toa-frusta",
+  "nome": "Kuo-toa frusta",
+  "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Kuo-toa frusta",
+  "note": "Kuo-toa addestrato al bastone da cattura e a un breve repertorio di sostegno. Frusta è il nome del ruolo nella fonte: la sua arma è un’asta a tenaglia impugnata a due mani.",
+  "pv": 63,
+  "pm": 18,
+  "caratteristiche": {
+    "FOR": 6,
+    "DES": 5,
+    "COS": 6,
+    "INT": 6,
+    "SAG": 6,
+    "CAR": 5
+  },
+  "ar": {
+    "totale": 1,
+    "magica": 0
+  },
+  "difese": 10,
+  "salvezze": {
+    "tempra": 11,
+    "riflessi": 9,
+    "volonta": 10,
+    "magia": 11
+  },
+  "iniziativa": 0,
+  "azioni": {
+    "principali": 2,
+    "movimento": 1
+  },
+  "movimento": {
+    "passo": 6,
+    "corsa": 12,
+    "scatto": 18
+  },
+  "spazio": "1 Q",
+  "abilita": [
+    {
+      "nome": "Corpo a corpo",
+      "va": 12
+    },
+    {
+      "nome": "Armi da guerra",
+      "va": 13
+    },
+    {
+      "nome": "Atletica",
+      "va": 12
+    },
+    {
+      "nome": "Percezione",
+      "va": 14
+    },
+    {
+      "nome": "Occultismo",
+      "va": 11
+    },
+    {
+      "nome": "Potere",
+      "va": 11
+    }
+  ],
+  "capacita": [
+    {
+      "nome": "Colpo Elementale Fuoco 3",
+      "effetto": "VA —. Danno: 1d6+2 Naturale Fuoco; AC 1. Portata/costo: 6 Q; 1 AzP e 3 PM; repertorio; "
+    },
+    {
+      "nome": "Corpo e sensi",
+      "effetto": "Vivente biologico anfibio con mente e PM personali, Scurovisione 24 Q e sensibilità solare comune. Come il Kuo-toa base, +2 alle sole Prove fisiche per liberarsi da prese o legature; non è un bonus a tutte le PS. Percezione quattordici avverte invisibili o incorporei entro sei Q senza attraversare solidi: se si muovono localizza il Q, altrimenti soltanto presenza e direzione. Non li rende visibili. Parla la lingua della comunità."
+    },
+    {
+      "nome": "Azioni e tenaglia",
+      "effetto": "Due AzP totali, massimo un Morso e un attacco di Bastone per Round, Opportunità ravvicinata compresa. Incantesimi e Difese usano le medesime AzP; nessun lancio è Opportunità. Può Parare con l’asta pronta, senza bonus. Nessuna Rete, Scudo adesivo o terzo attacco nel profilo base. Il monitor e l’arcisacerdote sono profili distinti."
+    },
+    {
+      "nome": "Presa del bastone",
+      "effetto": "Dopo almeno un danno finale a una creatura corporea fino a un Q, Riflessi −2 evita Immobilizzato con mani e braccia utilizzabili. Una sola preda, bastone occupato e mantenuto a due mani; il Kuo-toa non lo usa per attaccare altri. Liberarsi: una AzP e Atletica o Corpo a corpo contrapposto a Guerra tredici, −4 alla vittima e pareggio conserva il legame. Un alleato adiacente al meccanismo con strumenti adatti può tentare senza il malus se libero. Stringere: una AzP e la stessa contrapposta, danno del Bastone soltanto con successo e dentro il limite di un attacco dell’asta per Round."
+    },
+    {
+      "nome": "Spostamento e rilascio",
+      "effetto": "Trascinare una preda riluttante richiede una AzP e l’AzM ancora intera, una nuova contrapposta della presa e massimo due Q al Passo, percorso libero per entrambi. Fallimento consuma le Azioni senza spostare; pericolo immediato concede la normale Riflessi. Svenuto, morte, rilascio o perdita dell’impugnatura del Kuo-toa aprono il fermo: nessun danno automatico. L’asta è un oggetto Comune, FOR cinque, due mani, portata due Q, PI sei, PS Integrità dieci, base 1d6+1 più uno personale. A zero PI si rompe e libera."
+    },
+    {
+      "nome": "Repertorio e comunità",
+      "effetto": "Dispone soltanto dei tre Incantesimi della pagina seguente, con livello massimo tre e Potere undici. Non usa slot, metamorfosi, evocazioni o una fonte divina che sottragga a distanza le sue capacità. Per costruire un PNG completo di Classe si applicano i modelli del manuale, senza sommare due progressioni. Anatomia umanoide; sotto 16 PV può ritirarsi, liberare una preda o trattare."
+    },
+    {
+      "nome": "Lancio ordinario",
+      "effetto": "Una AzP per Incantesimo, PM indicati, Focus indossato, Gesto e Invocazione. Con le mani occupate dal Bastone deve prima rendere possibile il Gesto pagando gli ordinari costi; perdere l’impugnatura a due mani libera la preda. Potere undici, lancio ordinario ai livelli uno–tre automatico salvo interferenze che impongano la Prova; quando richiesta resta undici con i modificatori pertinenti. Contromagia ammessa; nessuna Anticipazione o Rituale in questa scheda. Gli effetti non sono attivi all’inizio dello scontro."
+    },
+    {
+      "nome": "Maledizione uno",
+      "effetto": "Una AzP e un PM, una creatura visibile entro sei Q, Magia 0 evita. Fallimento −1 a ogni Prova di Abilità, Caratteristica e PS per cinque Round, senza modificare danni, AR, risorse o Azioni; la penalità non riguarda la PS iniziale del lancio. Nessuna ripetizione automatica, danni e distanza non terminano. Usa la maggiore penalità magica pertinente. Negare uno rimuove; Cura Spirituale non elimina una Maledizione generica e Barriera Mentale non aiuta la PS spirituale."
+    },
+    {
+      "nome": "Scudo uno",
+      "effetto": "Una AzP e un PM, Contatto con un consenziente, sé incluso, cinque Round fissi. Disco di forza con AR Naturale due, mani libere e Parata con Difese senza bonus; a distanza −4, oppure −6 contro Raffica, una AzP per Difesa. Non concede PS o Difese gratuite e non assorbe Etereo. Si somma alla pelle, non a un altro Scudo fisico o mistico. Negare uno termina. Per sé l’AR totale diventa tre, quota magica zero; fuori portata dopo il lancio mantiene la protezione."
+    },
+    {
+      "nome": "Colpo Elementale Fuoco tre",
+      "effetto": "Una AzP e tre PM, un bersaglio visibile entro sei Q e percorso libero: un colpo automatico dopo il lancio, 1d6+2 Naturale Fuoco, una AC e AR normale. Parata o Schivata a distanza ammesse ai propri costi; nessuna Elusione o PS per dimezzare il danno. Dopo almeno un danno finale e superamento di Ignifugo, Riflessi 0 evita Incendiato per 1+1d3 Round. Negare non cancella il danno o fuoco reale già prodotti. Sono i valori pronti di Colpo Elementale tre, senza altri bonus personali da aggiungere."
+    },
+    {
+      "nome": "Altri movimenti",
+      "effetto": "Terra e nuoto 6 / 12 / 18: la stessa andatura vale anche per nuoto; spazio 1 × 1 Q"
+    }
+  ],
+  "gs_px": {
+    "gs": "Esperto",
+    "px": 33,
+    "per_pg": 4
+  },
+  "_bestiario": {
+    "campi": {
+      "pv": "Mostri 0.69",
+      "pm": "Mostri 0.69",
+      "caratteristiche": "Mostri 0.69",
+      "ar": "Mostri 0.69",
+      "difese": "Mostri 0.69",
+      "salvezze": "Mostri 0.69",
+      "iniziativa": "Mostri 0.69",
+      "azioni": "Mostri 0.69",
+      "movimento": "Mostri 0.69",
+      "spazio": "Mostri 0.69",
+      "abilita": "Mostri 0.69",
+      "capacita": "Mostri 0.69",
+      "gs_px": "Mostri 0.69"
+    },
+    "edizione": "Mostri 0.69",
+    "sistema_salute": "solo_PV"
+  }
+}

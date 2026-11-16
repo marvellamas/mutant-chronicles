@@ -3,7 +3,7 @@
   "versione": 1,
   "id": "pentadrone",
   "nome": "Pentadrone",
-  "fonte": "dal Manuale dei Mostri v0.46 (Word del 27/10/2026), cap. 8 «Catalogo delle creature» — Costrutti e Modron",
+  "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Pentadrone",
   "caratteristiche": {
     "FOR": 7,
     "DES": 7,
@@ -48,11 +48,11 @@
       "va": 12,
       "danno": "1d6+2",
       "natura": "Naturale",
-      "portata_q": 1,
-      "ac": 1,
       "proprieta": [
         "Contusione"
-      ]
+      ],
+      "portata_q": 1,
+      "ac": 1
     }
   ],
   "abilita": [
@@ -100,9 +100,26 @@
       "effetto": "Al massimo due attacchi di Braccio per Round, Opportunità compresa. I cinque arti non concedono Parata naturale o altre Azioni; una Menomazione si applica alla funzione colpita, senza essere cancellata dagli arti rimasti. Il Gas costa 1 AzP e sostituisce un’attività ordinaria: non è un attacco gratuito dopo i colpi. Non è immune al proprio veleno solo perché lo produce."
     }
   ],
-  "note": "Modron di quinto grado: organismo biomeccanico a cinque braccia che sorveglia compiti complessi. Adatta un ordine a una situazione nuova senza conoscere intenzioni o mappe non percepite; coordina Quadroni e propri pari. Condotta: sotto 9 PV o a Ferita Seria cerca una posizione utile a conservare la consegna. Fonte: Pentadrone, p. 226.",
+  "note": "Modron di quinto grado • coordinatore e gas paralizzante • Natura Comune. Condotta. Può adattare un ordine a una situazione nuova senza conoscere intenzioni o mappe non percepite. Coordina Quadroni e propri pari secondo la gerarchia comune. Sotto 12 PV cerca una posizione utile a conservare la consegna. Non è immune al proprio tipo di veleno solo perché lo produce; l’Area esclude la fonte, non gli alleati.",
   "_bestiario": {
     "edizione": "Mostri 0.69",
-    "sistema_salute": "solo_PV"
-  }
+    "sistema_salute": "solo_PV",
+    "campi": {
+      "pv": "Mostri 0.69",
+      "pm": "Mostri 0.69",
+      "caratteristiche": "Mostri 0.69",
+      "ar": "Mostri 0.69",
+      "difese": "Mostri 0.69",
+      "salvezze": "Mostri 0.69",
+      "iniziativa": "Mostri 0.69",
+      "azioni": "Mostri 0.69",
+      "movimento": "Mostri 0.69",
+      "spazio": "Mostri 0.69",
+      "abilita": "Mostri 0.69",
+      "attacchi": "Mostri 0.69",
+      "capacita": "Mostri 0.47",
+      "gs_px": "Mostri 0.69"
+    }
+  },
+  "taglia": "grande"
 }

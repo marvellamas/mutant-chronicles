@@ -3,7 +3,7 @@
   "versione": 1,
   "id": "avvoltoio-gigante",
   "nome": "Avvoltoio gigante",
-  "fonte": "dal Manuale dei Mostri v0.46 (Word del 27/10/2026), cap. 8 «Catalogo delle creature» — Creature alate e piccoli predatori",
+  "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Avvoltoio gigante",
   "caratteristiche": {
     "FOR": 7,
     "DES": 5,
@@ -49,11 +49,11 @@
       "va": 11,
       "danno": "1d6+2",
       "natura": "Naturale",
-      "portata_q": 1,
-      "ac": 1,
       "proprieta": [
         "Perforazione"
-      ]
+      ],
+      "portata_q": 1,
+      "ac": 1
     },
     {
       "nome": "Artigli",
@@ -61,11 +61,11 @@
       "va": 11,
       "danno": "1d8+1",
       "natura": "Naturale",
-      "portata_q": 1,
-      "ac": 1,
       "proprieta": [
         "Taglio"
-      ]
+      ],
+      "portata_q": 1,
+      "ac": 1
     }
   ],
   "abilita": [
@@ -108,9 +108,26 @@
       "effetto": "+2 a Percezione quando vista o olfatto sono determinanti (una sola volta per Prova); nessuna Scurovisione innata. Può seguire tracce accessibili ma non localizza ogni morente a distanza illimitata. Comprende una lingua assegnata alla sua origine, senza parlarla. Non ha Passaggio in volo: le normali Opportunità continuano a valere."
     }
   ],
-  "note": "Può seguire un gruppo e aspettare un’occasione, o abbandonarlo per una carcassa più accessibile. Condotta: sotto 7 PV o a Ferita Profonda tende a riprendere quota. Fonte: Giant Vulture, p. 329.",
+  "note": "Predatore alato • branco e sensi acuti • Natura Comune. Condotta. Può seguire un gruppo e aspettare un’occasione, oppure abbandonarlo per una carcassa più accessibile. Sotto 10 PV tende a riprendere quota. Non possiede Passaggio in volo: le normali occasioni di Opportunità continuano a valere.",
   "_bestiario": {
     "edizione": "Mostri 0.69",
-    "sistema_salute": "solo_PV"
-  }
+    "sistema_salute": "solo_PV",
+    "campi": {
+      "pv": "Mostri 0.69",
+      "pm": "Mostri 0.69",
+      "caratteristiche": "Mostri 0.69",
+      "ar": "Mostri 0.69",
+      "difese": "Mostri 0.69",
+      "salvezze": "Mostri 0.69",
+      "iniziativa": "Mostri 0.69",
+      "azioni": "Mostri 0.69",
+      "movimento": "Mostri 0.69",
+      "spazio": "Mostri 0.69",
+      "abilita": "Mostri 0.69",
+      "attacchi": "Mostri 0.69",
+      "capacita": "Mostri 0.47",
+      "gs_px": "Mostri 0.69"
+    }
+  },
+  "taglia": "grande"
 }

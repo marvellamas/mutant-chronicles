@@ -1,0 +1,160 @@
+{
+  "formato": "mutant-nemico",
+  "versione": 1,
+  "id": "naga-guardiana",
+  "nome": "Naga guardiana",
+  "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Naga guardiana",
+  "note": "Serpente custode di un luogo o di un oggetto. Avverte gli intrusi e difende l’accesso con veleno, ordini, cure e confinamento temporaneo. Una AzP per Incantesimo e PM della versione; Potere pronto 16 ai livelli tre e sei, 14 al nove. Restano condizioni di lancio e procedure delle regole comuni dei custodi e delle schede della Magia v1.7. Voce udita e compresa, una sola condotta; nel primo turno successivo massimo una AzP e un Movimento, senza azioni nuove. Limiti morali e PM/PE ordinari; Negare 6 prima dell’esecuzione. 9 PM; un vivente consenziente o incosciente soccorso visibile entro sei Q; 4d4+5 punti 6 PM; un vivente consenziente o incosciente soccorso entro sei Q Rimuove due tipi di Stato temporaneo compatibile fino a Svenuto, Stordito o Paralizzato. Non elimina cause persistenti, Ferite, PM zero o vincoli materiali. 6 PM; un vivente consenziente o incosciente soccorso visibile entro tre Q Due sostanze attive al massimo, naturali, artificiali o mistiche fino a Pericolosità V; non cura VI né restituisce PV o lesioni. 6 PM; una creatura visibile entro dieci Q; Magia 0 evita; dieci Round −2 a Prove di Abilità, Caratteristica e PS, non alla PS iniziale di questo stesso lancio. Nessuna nuova PS automatica; maggiore penalità magica, Negare 6. 9 PM; una creatura visibile entro dieci Q; Magia 0 evita; tre Round Confinamento senza azioni, percezioni o recuperi, tempo ed effetti periodici sospesi. Un lancio attivo; ritorno Disorientato 1+1d3 Round. Negare 9 sulla traccia libera. 9 PM; un colpo 4d6+5 Magico Fuoco, una AC, automatico entro quindici Q Bersaglio visibile e percorso libero; Parata o Schivata, non Elusione. AR e secondario Fuoco −2 dopo residuo e Ignifugo. Nessun bonus FOR o altro elemento aggiunto.",
+  "pv": 136,
+  "pm": 60,
+  "caratteristiche": {
+    "FOR": 9,
+    "DES": 8,
+    "COS": 8,
+    "INT": 8,
+    "SAG": 9,
+    "CAR": 9
+  },
+  "ar": {
+    "totale": 5,
+    "magica": 0
+  },
+  "difese": 14,
+  "salvezze": {
+    "tempra": 15,
+    "riflessi": 14,
+    "volonta": 15,
+    "magia": 15
+  },
+  "iniziativa": 3,
+  "azioni": {
+    "principali": 3,
+    "movimento": 1
+  },
+  "movimento": {
+    "passo": 8,
+    "corsa": 16,
+    "scatto": 24
+  },
+  "spazio": "1 × 2 Q",
+  "abilita": [
+    {
+      "nome": "Corpo a corpo",
+      "va": 16
+    },
+    {
+      "nome": "Armi da lancio",
+      "va": 14
+    },
+    {
+      "nome": "Atletica",
+      "va": 14
+    },
+    {
+      "nome": "Percezione",
+      "va": 15
+    },
+    {
+      "nome": "Potere",
+      "va": 16
+    },
+    {
+      "nome": "Occultismo",
+      "va": 15
+    },
+    {
+      "nome": "Cultura",
+      "va": 15
+    },
+    {
+      "nome": "Oratoria",
+      "va": 15
+    }
+  ],
+  "capacita": [
+    {
+      "nome": "Sputo velenoso",
+      "effetto": "VA 14. Danno: 5d6 danni diretti da veleno; Tempra −2 dimezza. Portata/costo: Massimo 6 Q; 1 AzP; vedi esposizione; "
+    },
+    {
+      "nome": "Incantesimi",
+      "effetto": "VA —. Danno: Repertorio dedicato; PM e Potere indicati. Portata/costo: Una AzP salvo eccezione; "
+    },
+    {
+      "nome": "Corpo e sensi",
+      "effetto": "Vivente sovrannaturale, con bisogni, immunità, Scurovisione dodici Q e anatomia della Naga spirituale. Immune a veleno, malattie e fascinazione, senza Resistenza alla magia, telepatia o Parata naturale. Natura Comune non stabilisce che l’incarico sia giusto o che i PG abbiano il diritto di oltrepassarla. Tre AzP totali, massimo un Morso e uno Sputo per Round; Opportunità solo di Morso e compresa nel limite."
+    },
+    {
+      "nome": "Morso e tossina",
+      "effetto": "Dopo almeno un danno finale di Morso a un vivente biologico: Tempra −2 dimezza per eccesso 5d6 danni diretti da veleno naturale di Pericolosità VI, senza AR; fallimento danno intero. Una singola esposizione istantanea senza Avvelenato persistente, danni ricorrenti o paralisi; il Magistrale fisico non raddoppia la dose. Nessun consumo di PM per il veleno. L’immunità evita il veleno, non il danno del Morso."
+    },
+    {
+      "nome": "Sputo ed esposizione",
+      "effetto": "Una AzP, gittata sei Q, VA quattordici; serve vedere il bersaglio e avere un percorso libero. Normali Parata o Schivata contro attacco a distanza, nessuna Elusione. Con colpo non evitato, una creatura biologica con pelle, occhi o mucose esposte effettua Tempra −2: successo dimezza per eccesso 5d6 danni diretti da veleno naturale VI, fallimento interi, senza AR o danno fisico separato. Una protezione integralmente chiusa ed ermetica, occhi e respirazione compresi, impedisce l’esposizione; il solo valore numerico di AR non lo fa. Nessuna Area o accecamento implicito. Il liquido non genera una seconda dose a ogni contatto."
+    },
+    {
+      "nome": "Lancio e ritorno",
+      "effetto": "Lancio serpentino come Naga spirituale: nessun Focus o Gesto, voce obbligatoria e Contromagia possibile. Potere base sedici, pronto sedici al livello sei e quattordici al nove; non possiede Concentrazione Operativa, Anticipazione o Contromagia. Possiede il Ritorno della Naga, soltanto dopo morte effettiva. Non lancia automaticamente giuramenti permanenti, divinazioni remote o punizioni morali contro chi infrange un accordo; le sue conoscenze e gli ordini restano nei limiti delle schede."
+    },
+    {
+      "nome": "Incantesimo",
+      "effetto": "Tabella (celle in ordine di lettura): Parametri pronti | Esito e contromisura | Comando 6 • Magia §19.2 | 6 PM; una mente visibile entro 10 Q, breve frase; Volontà 0."
+    },
+    {
+      "nome": "Cura Ferite 9 • §21.1",
+      "effetto": "Tabella (celle in ordine di lettura): ."
+    },
+    {
+      "nome": "Ogni due punti riducono Sanguinamento di uno; il resto PV",
+      "effetto": "Non cura Ferite, Menomazioni, AFT, PM, veleni o cause di Svenuto."
+    },
+    {
+      "nome": "Cura Spirituale 6 • §21.4",
+      "effetto": "Tabella (celle in ordine di lettura): ."
+    },
+    {
+      "nome": "Cura Avvelenamenti 6 • §21.3",
+      "effetto": "Tabella (celle in ordine di lettura): ."
+    },
+    {
+      "nome": "Maledizione 6 • §23.4",
+      "effetto": "Tabella (celle in ordine di lettura): ."
+    },
+    {
+      "nome": "Prigione Dimensionale 9 • §17.10",
+      "effetto": "Tabella (celle in ordine di lettura): ."
+    },
+    {
+      "nome": "Colpo Elementale 9 • §13.1",
+      "effetto": "Tabella (celle in ordine di lettura): ."
+    },
+    {
+      "nome": "Altri movimenti",
+      "effetto": "spazio 1 × 2 Q"
+    }
+  ],
+  "gs_px": {
+    "gs": "Mito",
+    "px": 200,
+    "per_pg": 4
+  },
+  "_bestiario": {
+    "campi": {
+      "pv": "Mostri 0.69",
+      "pm": "Mostri 0.69",
+      "caratteristiche": "Mostri 0.69",
+      "ar": "Mostri 0.69",
+      "difese": "Mostri 0.69",
+      "salvezze": "Mostri 0.69",
+      "iniziativa": "Mostri 0.69",
+      "azioni": "Mostri 0.69",
+      "movimento": "Mostri 0.69",
+      "spazio": "Mostri 0.69",
+      "abilita": "Mostri 0.69",
+      "capacita": "Mostri 0.69",
+      "gs_px": "Mostri 0.69"
+    },
+    "edizione": "Mostri 0.69",
+    "sistema_salute": "solo_PV"
+  }
+}

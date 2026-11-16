@@ -1,0 +1,118 @@
+{
+  "formato": "mutant-nemico",
+  "versione": 1,
+  "id": "quasit",
+  "nome": "Quasit",
+  "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Quasit",
+  "note": "Piccolo infiltratore mutaforma che usa veleno, invisibilità e paura per evitare uno scontro diretto. Le forme animali cambiano la mobilità, senza fornirgli le statistiche di altre creature.",
+  "pv": 13,
+  "pm": 14,
+  "caratteristiche": {
+    "FOR": 2,
+    "DES": 8,
+    "COS": 5,
+    "INT": 3,
+    "SAG": 5,
+    "CAR": 5
+  },
+  "ar": {
+    "totale": 1,
+    "magica": 0
+  },
+  "difese": 12,
+  "salvezze": {
+    "tempra": 9,
+    "riflessi": 12,
+    "volonta": 10,
+    "magia": 11
+  },
+  "iniziativa": 3,
+  "azioni": {
+    "principali": 1,
+    "movimento": 1
+  },
+  "movimento": {
+    "passo": 8,
+    "corsa": 16,
+    "scatto": 24
+  },
+  "abilita": [
+    {
+      "nome": "Corpo a corpo",
+      "va": 11
+    },
+    {
+      "nome": "Furtività",
+      "va": 13
+    },
+    {
+      "nome": "Percezione",
+      "va": 10
+    },
+    {
+      "nome": "Raggirare",
+      "va": 11
+    },
+    {
+      "nome": "Atletica",
+      "va": 9
+    }
+  ],
+  "capacita": [
+    {
+      "nome": "Spavento",
+      "effetto": "VA —. Danno: Terrorizzato; Volontà 0. Portata/costo: 4 Q; 1 AzP e 2 PM; "
+    },
+    {
+      "nome": "Corpo e magia",
+      "effetto": "Resistenze corporee comuni e resistenza fisica comune, immunità a veleno e Avvelenato, Scurovisione 24 Q. Resistenza alla magia +2, non già compresa nelle PS. Nessuna Parata naturale; massimo un attacco per Round, Opportunità compresa. Parla la lingua della comunità e una lingua di contatto conosciuta; nessuna telepatia ordinaria."
+    },
+    {
+      "nome": "Veleno irritante",
+      "effetto": "Dopo almeno un danno finale di Artigli o Morso a un vivente biologico: Tempra 0 contro veleno naturale di Pericolosità II. Successo evita tutto; fallimento perde 1d4+1 PV diretti senza AR e rimane Avvelenato per tre Round, con −2 VA alle Prove fisiche, non alle PS. Alla fine di ogni propria Iniziativa ripete Tempra 0: successo termina la penalità. Il danno avviene soltanto all’inoculazione, non a ogni Round. Antidoto adeguato o Cura Avvelenamenti almeno due rimuovono la causa; nuove dosi non sommano penalità."
+    },
+    {
+      "nome": "Tre forme animali",
+      "effetto": "Una AzP e un PM: Pipistrello, terra due Q e volo otto Q al Passo; Centopiedi, terra e arrampicata otto Q; Rospo, terra e nuoto otto Q. Corsa e Scatto valgono due e tre volte quelle andature quando praticabili. Conserva tutte le altre statistiche, riserve, lesioni e capacità; un solo Q condivisibile in ogni forma. Il Morso sostituisce gli Artigli senza cambiarne il danno. Non riceve ecolocalizzazione, respirazione acquatica o capacità delle schede animali. Gli oggetti non si trasformano. Alla morte effettiva torna alla forma propria."
+    },
+    {
+      "nome": "Invisibilità",
+      "effetto": "Una AzP e due PM: tre Round senza Concentrazione. Termina dopo Artigli, Morso, Spavento o altra azione ostile, da Svenuto o con Negare Potere, confronto 6. La durata fissa sostituisce il mantenimento dell’originale. Può muoversi e agire con le proprie Azioni; non silenzia, cancella tracce o attraversa solidi. Valgono le normali limitazioni contro un nemico non visto."
+    },
+    {
+      "nome": "Spavento",
+      "effetto": "Una AzP e due PM, una volta per 24 ore: una mente cosciente entro quattro Q che vede il Quasit, Volontà 0 evita Terrorizzato per tre Round. Alla fine di ogni propria Iniziativa ripete Volontà 0; successo termina. La scomparsa evidente della fonte e le altre rimozioni di Terrorizzato restano valide. Barriera Mentale concede il proprio bonus; Negare Potere rimuove l’effetto, confronto 3. Nessuna immunità automatica a ogni paura dopo questo Spavento."
+    },
+    {
+      "nome": "Servizio",
+      "effetto": "Il profilo è autonomo. Un patto non trasferisce al padrone Resistenza alla magia, sensi condivisi o un vincolo telepatico permanente. La variante Famiglio della fonte richiede una trattazione distinta; non è già inclusa nei 30 PX o nelle capacità di una Classe."
+    },
+    {
+      "nome": "Altri movimenti",
+      "effetto": "spazio 1 Q condivisibile, non blocca il passaggio"
+    }
+  ],
+  "gs_px": {
+    "gs": "Esperto",
+    "px": 30,
+    "per_pg": 4
+  },
+  "_bestiario": {
+    "campi": {
+      "pv": "Mostri 0.69",
+      "pm": "Mostri 0.69",
+      "caratteristiche": "Mostri 0.69",
+      "ar": "Mostri 0.69",
+      "difese": "Mostri 0.69",
+      "salvezze": "Mostri 0.69",
+      "iniziativa": "Mostri 0.69",
+      "azioni": "Mostri 0.69",
+      "movimento": "Mostri 0.69",
+      "abilita": "Mostri 0.69",
+      "capacita": "Mostri 0.69",
+      "gs_px": "Mostri 0.69"
+    },
+    "edizione": "Mostri 0.69",
+    "sistema_salute": "solo_PV"
+  }
+}

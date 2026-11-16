@@ -1,0 +1,126 @@
+{
+  "formato": "mutant-nemico",
+  "versione": 1,
+  "id": "empireo",
+  "nome": "Empireo",
+  "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Empireo",
+  "taglia": "grande",
+  "note": "Titano dall’aspetto umanoide monumentale, capace di volare senza ali. Combatte con un martello e dardi elementali, sostenendo gli alleati con una breve esortazione.",
+  "pv": 364,
+  "pm": 100,
+  "caratteristiche": {
+    "FOR": 10,
+    "DES": 9,
+    "COS": 10,
+    "INT": 9,
+    "SAG": 9,
+    "CAR": 10
+  },
+  "ar": {
+    "totale": 9,
+    "magica": 0
+  },
+  "difese": 15,
+  "salvezze": {
+    "tempra": 20,
+    "riflessi": 16,
+    "volonta": 19,
+    "magia": 18
+  },
+  "iniziativa": 4,
+  "azioni": {
+    "principali": 4,
+    "movimento": 1
+  },
+  "movimento": {
+    "passo": 10,
+    "corsa": 20,
+    "scatto": 30,
+    "volo": 10
+  },
+  "spazio": "3 × 3 Q",
+  "abilita": [
+    {
+      "nome": "Armi da guerra",
+      "va": 21
+    },
+    {
+      "nome": "Armi da lancio",
+      "va": 17
+    },
+    {
+      "nome": "Corpo a corpo",
+      "va": 18
+    },
+    {
+      "nome": "Atletica",
+      "va": 21
+    },
+    {
+      "nome": "Percezione",
+      "va": 17
+    },
+    {
+      "nome": "Oratoria",
+      "va": 20
+    },
+    {
+      "nome": "Cultura",
+      "va": 18
+    }
+  ],
+  "capacita": [
+    {
+      "nome": "Percussione del terreno",
+      "effetto": "VA —. Danno: A Terra; Riflessi −4 evita. Portata/costo: Raggio 12 Q sulla stessa superficie; 2 AzP e 4 PM; "
+    },
+    {
+      "nome": "Corpo e sensi",
+      "effetto": "Vivente sovrannaturale che non invecchia, ma può morire e subisce i normali bisogni biologici e Affaticamento in assenza di una capacità pertinente. Immune al danno Naturale di armi da Contusione, Taglio e Perforazione, non ai fenomeni ambientali. Resistenza alla magia +2 non inclusa nelle PS, Vista rivelatrice dodici e lingue del blocco, senza telepatia assegnata. Nessuna immunità generale alla paura, fascinazione o veleno. Il volo magico non è fluttuazione: da Svenuto cade. Para con Martello pronto."
+    },
+    {
+      "nome": "Sequenza e martello",
+      "effetto": "Quattro AzP totali, massimo tre attacchi complessivi tra Martello e Dardo per Round, unica Opportunità di Martello compresa. Martello a due mani Comune: FOR sei, due mani, portata un Q, PI sei, PS Integrità dieci, base 2d6 più tre di FOR, tre personali e 2d6 di Impatto titanico già compresi. Danno Magico e Impatto appartengono all’Empireo, non all’oggetto recuperato. Dopo almeno un danno finale del Martello: Tempra −2 evita Stordito fino alla fine della successiva Iniziativa della vittima; Cura Spirituale sei lo rimuove. Non concede un secondo colpo gratuito."
+    },
+    {
+      "nome": "Dardo e scossa",
+      "effetto": "Dardo: una AzP e quattro PM, VA diciannove comprende Armi da lancio diciassette più due del proiettile mistico. Sceglie prima del tiro un solo elemento fra Acido, Gelo, Fuoco e Fulmine; normali Difese a distanza, una AC e AR. Effetti secondari −2 dopo residuo e Contromisura secondo il blocco, senza danno Etereo o due elementi simultanei. Percussione: due AzP e quattro PM, Martello pronto e contatto con il terreno; una volta per Round. Tutti gli altri appoggiati sulla stessa superficie continua e stesso livello entro dodici Q, alleati compresi: Riflessi −4 evita A Terra. Nessun tiro per colpire, danno, Elusione o cedimento strutturale automatico; vola o non tocca la superficie, non è colpito."
+    },
+    {
+      "nome": "Esortazione e tenacia",
+      "effetto": "Esortazione: una AzP e sei PM, una volta per Round; fino a quattro altri consenzienti visibili entro dodici Q che possano udirlo. Fino alla fine della successiva Iniziativa dell’Empireo: +2 a Prove e PS e immunità a nuove fascinazioni e nuovi effetti Terrorizzato, senza annullare quelli già presenti. Non si somma a bonus magici maggiori, non concede AP, PV o nuova PS; Negare dodici su ciascun beneficio, Svenuto o morte dell’Empireo terminano. Tenacia titanica: tre volte per ventiquattro ore può pagare quattro PM per ritirare una propria PS appena fallita, anche Maldestra, prima delle conseguenze; accetta il nuovo risultato e non ritira di nuovo la stessa PS. Non è un successo automatico."
+    },
+    {
+      "nome": "Purificazione e limiti",
+      "effetto": "Possiede Cura Spirituale nove e Cura Avvelenamenti nove innate, una AzP e nove PM ciascuna, fino a due consenzienti visibili entro sei Q e concatenati entro due; nessun recupero di PV o PM. Cura Malattie nove: nove PM e dieci minuti di Concentrazione fuori combattimento, stessi beneficiari e requisiti conservati. Non riceve automaticamente un intervento divino alla morte, una tempesta d’umore che danneggia la regione, un Terremoto strutturale o spostamenti planari. Questi eventi richiedono una variante narrativa distinta; i 1760 PX includono soltanto l’Empireo e il suo Martello."
+    },
+    {
+      "nome": "Altri movimenti",
+      "effetto": "Terra, volo magico e nuoto 10 / 20 / 30: la stessa andatura vale anche per volo, nuoto; spazio 3 × 3 Q"
+    }
+  ],
+  "gs_px": {
+    "gs": "Divinità Maggiore",
+    "px": 1760,
+    "per_pg": 4
+  },
+  "_bestiario": {
+    "campi": {
+      "pv": "Mostri 0.69",
+      "pm": "Mostri 0.69",
+      "caratteristiche": "Mostri 0.69",
+      "ar": "Mostri 0.69",
+      "difese": "Mostri 0.69",
+      "salvezze": "Mostri 0.69",
+      "iniziativa": "Mostri 0.69",
+      "azioni": "Mostri 0.69",
+      "movimento": "Mostri 0.69",
+      "spazio": "Mostri 0.69",
+      "abilita": "Mostri 0.69",
+      "capacita": "Mostri 0.69",
+      "gs_px": "Mostri 0.69"
+    },
+    "edizione": "Mostri 0.69",
+    "sistema_salute": "solo_PV"
+  }
+}

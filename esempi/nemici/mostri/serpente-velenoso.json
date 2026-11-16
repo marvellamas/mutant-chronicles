@@ -3,7 +3,7 @@
   "versione": 1,
   "id": "serpente-velenoso",
   "nome": "Serpente velenoso",
-  "fonte": "dal Manuale dei Mostri v0.46 (Word del 27/10/2026), cap. 8 «Catalogo delle creature» — Creature alate e piccoli predatori",
+  "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Serpente velenoso",
   "caratteristiche": {
     "FOR": 1,
     "DES": 7,
@@ -48,9 +48,11 @@
       "va": 10,
       "danno": "1",
       "natura": "Naturale",
+      "proprieta": [
+        "poi veleno"
+      ],
       "portata_q": 1,
-      "ac": 1,
-      "note": "Poi veleno: vedi la capacità «Veleno ofidico II»."
+      "ac": 1
     }
   ],
   "abilita": [
@@ -89,9 +91,25 @@
       "effetto": "Un Morso per Round, Opportunità compresa. Testa = capo e fauci; Torace = corpo; Braccia e Gambe = gruppi di zampe (o porzioni) anteriori e posteriori che sostengono la locomozione. Nessun arto prensile, attacco di Costrizione o capacità di inghiottire un personaggio."
     }
   ],
-  "note": "Non comprende linguaggi. Spazio tattico 1 × 1 Q: non rappresenta le sue dimensioni reali e non lo trasforma in uno sciame. Condotta: preferisce una via di fuga a un avversario troppo grande; il morso può essere una difesa del rifugio; sotto 2 PV o a Ferita Profonda tende a sottrarsi. Fonte: Poisonous Snake, p. 334.",
+  "note": "Piccolo rettile • morso e veleno ofidico • Natura Comune. Condotta. Non comprende linguaggi. Preferisce una via di fuga a un avversario troppo grande; il morso può essere una difesa del rifugio. Sotto 3 PV tende a sottrarsi. Lo spazio tattico non rappresenta le sue dimensioni reali e non lo trasforma in un intero sciame di serpenti.",
   "_bestiario": {
     "edizione": "Mostri 0.69",
-    "sistema_salute": "solo_PV"
+    "sistema_salute": "solo_PV",
+    "campi": {
+      "pv": "Mostri 0.69",
+      "pm": "Mostri 0.69",
+      "caratteristiche": "Mostri 0.69",
+      "ar": "Mostri 0.69",
+      "difese": "Mostri 0.69",
+      "salvezze": "Mostri 0.69",
+      "iniziativa": "Mostri 0.69",
+      "azioni": "Mostri 0.69",
+      "movimento": "Mostri 0.69",
+      "spazio": "Mostri 0.69",
+      "abilita": "Mostri 0.69",
+      "attacchi": "Mostri 0.69",
+      "capacita": "Mostri 0.47",
+      "gs_px": "Mostri 0.69"
+    }
   }
 }

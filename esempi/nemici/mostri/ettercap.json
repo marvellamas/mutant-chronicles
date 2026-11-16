@@ -3,7 +3,7 @@
   "versione": 1,
   "id": "ettercap",
   "nome": "Ettercap",
-  "fonte": "dal Manuale dei Mostri v0.46 (Word del 27/10/2026), cap. 8 «Catalogo delle creature» — prime quindici schede",
+  "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Ettercap",
   "caratteristiche": {
     "FOR": 6,
     "DES": 7,
@@ -116,9 +116,25 @@
       "effetto": "Vede entro 12 Q nel buio naturale, senza colori; non attraversa ostacoli né individua da sola chi è nascosto."
     }
   ],
-  "note": "Getto di seta: VA 12, massimo 12 Q (non è nell’elenco attacchi perché non infligge danni). Braccia = arti superiori di presa. Nome originale: Ettercap, p. 131. Comportamento: cerca vie verticali e ostacoli; a Ferita Profonda può abbandonare la preda e allontanarsi sulla rete. Il manuale esclude l’Ettercap con garrota.",
+  "note": "Aracnoide • Natura Comune • cacciatore con reti • Ettercap, p. 131. Sensi e protezioni: Scurovisione 12 Q. Nessuna immunità al veleno; ignora gli impedimenti delle normali ragnatele. Alla fine di ciascuna propria Iniziativa, una nuova Tempra senza modificatore termina la penalità con successo. Finché questo veleno è attivo, una nuova esposizione non richiede un’altra PS iniziale e rinnova soltanto la durata a 10 Round, senza danno aggiuntivo né cumulo della penalità; il Morso infligge comunque il proprio danno fisico. Cura Avvelenamenti 2 o un antidoto adeguato terminano il veleno; Medicina da sola non lo rimuove.",
   "_bestiario": {
     "edizione": "Mostri 0.69",
-    "sistema_salute": "solo_PV"
+    "sistema_salute": "solo_PV",
+    "campi": {
+      "pv": "Mostri 0.69",
+      "pm": "Mostri 0.69",
+      "caratteristiche": "Mostri 0.69",
+      "ar": "Mostri 0.69",
+      "difese": "Mostri 0.69",
+      "salvezze": "Mostri 0.69",
+      "iniziativa": "Mostri 0.69",
+      "azioni": "Mostri 0.69",
+      "movimento": "Mostri 0.69",
+      "spazio": "Mostri 0.69",
+      "abilita": "Mostri 0.69",
+      "attacchi": "Mostri 0.47",
+      "capacita": "Mostri 0.47",
+      "gs_px": "Mostri 0.69"
+    }
   }
 }

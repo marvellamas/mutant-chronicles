@@ -1,0 +1,144 @@
+{
+  "formato": "mutant-nemico",
+  "versione": 1,
+  "id": "drow-sacerdotessa",
+  "nome": "Drow sacerdotessa",
+  "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Drow sacerdotessa",
+  "note": "Drow esperta di sostegno, vincoli e veleno da arma. Il culto e il ruolo nella comunità dipendono dall’avventura; il profilo descrive una combattente con mazzafrusto e protezione media.",
+  "pv": 94,
+  "pm": 52,
+  "caratteristiche": {
+    "FOR": 5,
+    "DES": 6,
+    "COS": 6,
+    "INT": 6,
+    "SAG": 8,
+    "CAR": 8
+  },
+  "ar": {
+    "totale": 3,
+    "magica": 0
+  },
+  "difese": 12,
+  "salvezze": {
+    "tempra": 13,
+    "riflessi": 11,
+    "volonta": 14,
+    "magia": 14
+  },
+  "iniziativa": 1,
+  "azioni": {
+    "principali": 3,
+    "movimento": 1
+  },
+  "movimento": {
+    "passo": 5,
+    "corsa": 11,
+    "scatto": 17
+  },
+  "spazio": "1 Q",
+  "abilita": [
+    {
+      "nome": "Armi da guerra",
+      "va": 13
+    },
+    {
+      "nome": "Corpo a corpo",
+      "va": 10
+    },
+    {
+      "nome": "Potere",
+      "va": 13
+    },
+    {
+      "nome": "Occultismo",
+      "va": 14
+    },
+    {
+      "nome": "Percezione",
+      "va": 14
+    },
+    {
+      "nome": "Furtività",
+      "va": 12
+    },
+    {
+      "nome": "Oratoria",
+      "va": 14
+    }
+  ],
+  "capacita": [
+    {
+      "nome": "Colpo Elementale Gelo 6",
+      "effetto": "VA —. Danno: 1d6+7 Magico Gelo; AC 1. Portata/costo: 10 Q; 1 AzP e 6 PM; Potere 13; "
+    },
+    {
+      "nome": "Corpo e sensi",
+      "effetto": "Vivente biologico con mente e PM personali; Scurovisione 24 Q. +2 alle PS consentite contro fascinazione, non già incluso; immune al sonno magico, non alla sedazione biologica o allo Svenuto da zero PM. Se sé o il bersaglio osservato sono in sole diretto: −2 agli attacchi e alla Percezione visiva, una sola volta. Anatomia umanoide, lingue apprese e nessuna Parata naturale."
+    },
+    {
+      "nome": "Azioni e peso",
+      "effetto": "Tre AzP complessive, massimo due attacchi di Mazzafrusto per Round, Opportunità compatibile compresa. Incantesimi e Difese usano le medesime AzP. Media Comune: AR tre, FOR cinque, PI otto; Mazzafrusto Comune: FOR quattro, PI cinque, base 1d6+1. Tutti PS Integrità dieci. Bonus personale +1 al danno già incluso. La proprietà dell’arma impone −2 alla sola Parata avversaria, non alla Schivata."
+    },
+    {
+      "nome": "Penalità comprese",
+      "effetto": "Armatura media già applicata: −1 agli attacchi e alle Abilità di Agilità, −1 a ogni budget MOV e −3 a Potere appreso. Potere personale sedici diventa tredici; le magie innate senza Prova restano distinte. Parata e PS non penalizzate. Togliere la Media ripristina attacchi e Agilità +1, Potere sedici e MOV 6 / 12 / 18; a zero PI perde AR ma mantiene ingombri finché indossata. Mano libera per il Gesto, Focus indossato."
+    },
+    {
+      "nome": "Magia innata",
+      "effetto": "Luci mobili: una AzP e un PM, cinque Round. Oscuramento e Luminescenza: una AzP e tre PM, un uso per ventiquattro ore ciascuno. Si applica integralmente Drow magia innata luce e oscuramento, compresi Negare, visibilità e rilevazione. Levitazione personale come il Drow d’élite: una AzP e tre PM, un uso per ventiquattro ore, cinque Round fissi, fino a quattro Q verticali con l’AzM; niente moto orizzontale autonomo. Negare sei, Svenuto, morte, congedo o scadenza terminano; senza sostegno si applica Caduta."
+    },
+    {
+      "nome": "Veleno lesivo",
+      "effetto": "Sei dosi naturali IV, una già sull’arma; prima applicazione compresa nella dotazione, le altre una AzP ciascuna. Si consuma al primo attacco portato, anche fallito o evitato. Dopo danno fisico finale a un vivente compatibile: Tempra −2 dimezza per eccesso 3d6 danni tossici diretti senza AR. Nessun Avvelenato aggiuntivo o moltiplicatore del Magistrale; immunità al veleno evita. Cura Avvelenamenti almeno cinque tratta sostanze ancora attive, senza restituire questo danno istantaneo. Sotto 24 PV può cercare riparo."
+    },
+    {
+      "nome": "Repertorio appreso",
+      "effetto": "Scala Taumaturgo, versioni fino al nove: Cura Ferite, Cura Spirituale, Cura Avvelenamenti, Cura Malattie, Scudo Spirituale, Catene di Forza, Negare Potere, Colpo Elementale e Armonia Animale. Focus, Gesto e Invocazione, un’AzP e PM pari al livello, salvo i dieci minuti di Cura Malattie. La Media rende obbligatoria Potere tredici anche ai livelli uno–tre. Non riceve Talenti del Mistico o una fonte divina che modifichi a distanza il repertorio."
+    },
+    {
+      "nome": "Cura pronta",
+      "effetto": "Cura Ferite nove: una AzP e nove PM, Potere undici, un vivente consenziente o incosciente soccorso entro sei Q, 4d4+5 PV. Nessun bonus SAG, massimizzazione o guarigione di Ferite; ogni due punti destinati a Sanguinamento lo riducono di uno prima di recuperare PV. Cura Spirituale sei: una AzP e sei PM, Potere tredici, un consenziente entro sei Q, fino a due Stati temporanei consentiti, compresi Stordito, Svenuto e Paralizzato; non rimuove cause biologiche mantenute o zero PM."
+    },
+    {
+      "nome": "Controllo e dissoluzione",
+      "effetto": "Catene di Forza nove come nella pagina del Drow mago: Potere undici, due bersagli entro quindici Q, Tempra −2 o Immobilizzato cinque Round; liberarsi una AzP e nuova Tempra −2. Negare nove: una AzP e nove PM, Potere undici, fino a due effetti individuati entro quindici Q; superiore rimuove, inferiore fallisce, parità una sola Volontà della Sacerdotessa per lancio. Colpo Gelo sei usa Potere tredici e il danno già pronto 1d6+7, comprensivo di SAG +2; Tempra 0 governa il solo effetto secondario dopo danno e superamento di Termico."
+    },
+    {
+      "nome": "Soccorso e letture",
+      "effetto": "Cura Avvelenamenti sei tratta fino a due sostanze attive per un beneficiario entro tre Q, fino a Pericolosità V e origine naturale, artificiale o mistica. Cura Malattie richiede dieci minuti e una malattia identificata quando la versione non tratta tutte le cause. Armonia Animale segue la propria scheda e non produce due Ragni giganti o un esercito gratuito: eventuali animali sono individui presenti con risorse e PX propri."
+    },
+    {
+      "nome": "Richiamo maggiore",
+      "effetto": "Una volta per ventiquattro ore, due AzP e nove PM; tirare 1d10, successo da uno a tre. Successo: una Yochlol del catalogo appare in uno spazio libero visibile entro sei Q, dieci Round, fino alla morte di evocata o Sacerdotessa o al congedo gratuito. Stessa procedura di risorse, Iniziativa dal Round successivo e Negare nove del Richiamo minore; la Yochlol non evoca altre creature. Fallimento del richiamo: 1d6 danni psichici diretti alla sola Sacerdotessa, come Dardo Psichico con Volontà 0 per dimezzare; Barriera Mentale già attiva blocca, a zero PV la normale seconda PS per Svenuto. I PM sono spesi in entrambi i casi. I duecento PX della Yochlol si considerano separatamente se interviene; il modello della Sacerdotessa non comprende un servitore già presente."
+    },
+    {
+      "nome": "Altri movimenti",
+      "effetto": "spazio 1 × 1 Q"
+    }
+  ],
+  "gs_px": {
+    "gs": "Leggenda",
+    "px": 110,
+    "per_pg": 4
+  },
+  "_bestiario": {
+    "campi": {
+      "pv": "Mostri 0.69",
+      "pm": "Mostri 0.69",
+      "caratteristiche": "Mostri 0.69",
+      "ar": "Mostri 0.69",
+      "difese": "Mostri 0.69",
+      "salvezze": "Mostri 0.69",
+      "iniziativa": "Mostri 0.69",
+      "azioni": "Mostri 0.69",
+      "movimento": "Mostri 0.69",
+      "spazio": "Mostri 0.69",
+      "abilita": "Mostri 0.69",
+      "capacita": "Mostri 0.69",
+      "gs_px": "Mostri 0.69"
+    },
+    "edizione": "Mostri 0.69",
+    "sistema_salute": "solo_PV"
+  }
+}

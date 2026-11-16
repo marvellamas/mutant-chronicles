@@ -1,0 +1,143 @@
+{
+  "formato": "mutant-nemico",
+  "versione": 1,
+  "id": "acererak-demilich-delle-gemme",
+  "nome": "Acererak demilich delle gemme",
+  "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Acererak demilich delle gemme",
+  "note": "Variante del Demilich che concentra la cattura mistica nelle gemme del cranio. Può rappresentare Acererak della fonte o un seguace dello stesso percorso; identità e storia locale si stabiliscono nell’avventura.",
+  "pv": 130,
+  "pm": 90,
+  "caratteristiche": {
+    "FOR": 1,
+    "DES": 9,
+    "COS": 6,
+    "INT": 10,
+    "SAG": 8,
+    "CAR": 10
+  },
+  "ar": {
+    "totale": 6,
+    "magica": 6
+  },
+  "difese": 16,
+  "salvezze": {
+    "tempra": 15,
+    "riflessi": 15,
+    "volonta": 17,
+    "magia": 18
+  },
+  "iniziativa": 4,
+  "azioni": {
+    "principali": 3,
+    "movimento": 1
+  },
+  "movimento": {
+    "passo": 0,
+    "corsa": "non_consentito",
+    "scatto": "non_consentito",
+    "volo": 6
+  },
+  "abilita": [
+    {
+      "nome": "Percezione",
+      "va": 16
+    },
+    {
+      "nome": "Occultismo",
+      "va": 18
+    },
+    {
+      "nome": "Furtività",
+      "va": 12
+    }
+  ],
+  "capacita": [
+    {
+      "nome": "Risucchio di vita",
+      "effetto": "VA —. Danno: 2d6+3 Etereo; Tempra −2 evita. Portata/costo: Fino a tre viventi visibili entro 2 Q; 1 AzP e 3 PM; "
+    },
+    {
+      "nome": "Cattura nella gemma",
+      "effetto": "VA —. Danno: Confinamento oppure 4d6+3 Etereo; Magia −4. Portata/costo: Un vivente visibile entro 6 Q; 2 AzP e 8 PM; R+3; "
+    },
+    {
+      "nome": "Corpo e resistenze",
+      "effetto": "Non morto corporeo con mente e PM personali, senza necessità di aria, cibo, acqua o sonno; Scurovisione dodici Q. Dimezza Naturale dopo Difese e prima dell’AR; Magico ed Etereo normali. Immune a danni psichici diretti, paura, fascinazione, Paralizzato, Stordito, A Terra e vincoli soltanto materiali. Nessun passaggio attraverso muri o Parata naturale. Il cranio conserva localizzazioni funzionali e normali Ferite; cure biologiche non ricostruiscono ossa morte."
+    },
+    {
+      "nome": "Azioni e resistenza",
+      "effetto": "Tre AzP e una AzM per Round, senza turni leggendari aggiuntivi. Può spendere una sola AzP a fine Iniziativa di un avversario per Polvere, compresa nelle tre. Tre volte per ventiquattro ore ripete una propria PS appena fallita, secondo esito obbligatorio. Elusione superiore del Demilich: soltanto quando Elusione è ammessa, Riflessi riuscita annulla il danno, fallita lo dimezza prima dell’AR; requisiti e altri effetti invariati."
+    },
+    {
+      "nome": "Urlo",
+      "effetto": "Due AzP e sei PM, una volta ogni tre Round, massimo uno per Round. Viventi che odono entro sei Q con propagazione acustica libera: Tempra −2. Fallimento PV a zero e Svenuto un Round; successo Terrorizzato un Round. Nessuna Ferita o morte automatica, nessun PM sottratto. L’immunità alla paura evita soltanto la conseguenza pertinente. Isolamento acustico effettivo impedisce l’esposizione."
+    },
+    {
+      "nome": "Risucchio e polvere",
+      "effetto": "Risucchio: una AzP e tre PM, fino a tre viventi visibili entro due Q; Tempra −2 evita, fallimento 2d6+3 Etereo e AR magica. Un danno comune; recupera i PV realmente sottratti alle riserve, massimo dieci per uso, senza curare Ferite. Vittime già a zero non generano recupero. Polvere: una AzP e due PM, massimo una volta per Round, raggio due Q; Tempra 0 evita Accecato un Round."
+    },
+    {
+      "nome": "Maledizione",
+      "effetto": "Due AzP e quattro PM, una creatura visibile entro sei Q; Volontà −2 evita, fallimento −2 ad attacchi e PS tre Round. Usa la maggiore penalità magica pertinente; Negare dodici rimuove. Il GS Divinità è una fascia di pericolosità e non conferisce natura divina, invulnerabilità o autorità sugli altri non morti."
+    },
+    {
+      "nome": "Attivazione",
+      "effetto": "Due AzP e otto PM, riutilizzabile all’Iniziativa R+3 dopo uso in R; un vivente con anima e mente visibile entro sei Q, percorso libero, una gemma integra disponibile. Magia −4, senza tiro per colpire o Difese attive. Successo: 4d6+3 Etereo, AR magica applicabile e normali PV e Ferite; nessuna cattura automatica a zero. Fallimento: il corpo e la dotazione personale scompaiono nella gemma per tre Round senza danno iniziale. Scudo Spirituale aiuta Magia; Barriera Mentale non trasforma questa cattura spirituale in Dardo Psichico."
+    },
+    {
+      "nome": "Prigionia",
+      "effetto": "Usa la sospensione di Prigione Dimensionale: niente Azioni, comunicazione, percezione esterna, recuperi o possibilità di attaccare il prigioniero. Sanguinamento, veleni, soffocamento e durate personali sono sospesi, non cancellati; Concentrazione interrotta. Una sola cattura attiva per cranio: una nuova riuscita libera la precedente prima di confinare la nuova vittima. La gemma occupata risplende ed è riconoscibile, non sottrae PM o ricordi."
+    },
+    {
+      "nome": "Liberare",
+      "effetto": "Scadenza, congedo gratuito, distruzione della gemma occupata o Negare quindici sulla gemma o sulla traccia nel punto della scomparsa terminano il confinamento. Confronto ordinario di Negare; Rompere Vincolo è espressamente ammesso con potere quindici sulla gemma. Ritorno al Q della scomparsa o spazio libero più vicino, Disorientato 1+1d3 Round come Prigione Dimensionale. Nessun recupero o danno extra; se manca sostegno si applica Caduta. Svenuto o morte del cranio non prolungano la durata residua."
+    },
+    {
+      "nome": "Gemme corporee",
+      "effetto": "Otto gemme integre all’inizio del profilo, una sola ospita la cattura. Ciascuna PI tre, AR due interamente magica, PS Integrità dodici; non sono contenitori di PM. Finché nel cranio sono parti possedute: un attacco ordinario al cranio non danneggia gratuitamente anche la gemma. Per spezzarne una si dichiara un attacco mirato alla parte visibile con le normali regole contro oggetti posseduti, Difese del cranio e relativo costo; a zero PI libera l’eventuale prigioniero. Dopo la distruzione effettiva del cranio le gemme rimangono oggetti a terra, con la propria Integrità residua."
+    },
+    {
+      "nome": "Limite della conversione",
+      "effetto": "Il confinamento dura tre Round e resta reversibile: non incorpora la consumazione irreversibile dell’anima dopo ventiquattro ore della fonte. Le gemme recuperate non permettono a un PG di usare Cattura nella gemma; tale capacità appartiene alla volontà del cranio. Liberare una vittima non la guarisce, non la resuscita e non genera un nuovo premio per la stessa creatura."
+    },
+    {
+      "nome": "Filatterio",
+      "effetto": "PI quattro, AR quattro di cui due magica, PS Integrità quattordici; stessa procedura del Lich. Finché integro sullo stesso piano, dopo la distruzione effettiva ricostituisce il cranio entro un Q dall’oggetto in 1d10 giorni, ripristinando risorse, Ferite e Menomazioni. Zero PV o PM non avvia da solo il ritorno. Distruggere il filatterio impedisce nuovi ritorni senza abbattere il cranio ancora attivo."
+    },
+    {
+      "nome": "Gemme e ritorno",
+      "effetto": "Il ritorno ripristina le sedi corporee delle gemme distrutte, ma non duplica gemme integre recuperate: ogni sede resta collegata al proprio esemplare e torna disponibile al cranio soltanto se recuperato. Le gemme staccate non si teletrasportano o infliggono danno ai possessori. Il filatterio non contiene automaticamente le vittime liberate e non ricattura nessuno al ritorno."
+    },
+    {
+      "nome": "Incontro",
+      "effetto": "La scheda comprende il cranio, le gemme e la possibilità di ritorno; nessun modulo tana o custode. Posizione e protezioni del filatterio vanno stabilite prima della scena, senza aggiungere trappole dopo la vittoria. Il cranio può difendere le proprie spoglie o ritirarsi se il filatterio è minacciato. Il titolo proprio non concede tutti gli Incantesimi del Lich o una seconda coscienza che agisce altrove durante il combattimento."
+    },
+    {
+      "nome": "Altri movimenti",
+      "effetto": "spazio 1 Q condivisibile"
+    }
+  ],
+  "gs_px": {
+    "gs": "Divinità",
+    "px": 800,
+    "per_pg": 4
+  },
+  "_bestiario": {
+    "campi": {
+      "pv": "Mostri 0.69",
+      "pm": "Mostri 0.69",
+      "caratteristiche": "Mostri 0.69",
+      "ar": "Mostri 0.69",
+      "difese": "Mostri 0.69",
+      "salvezze": "Mostri 0.69",
+      "iniziativa": "Mostri 0.69",
+      "azioni": "Mostri 0.69",
+      "movimento": "Mostri 0.69",
+      "abilita": "Mostri 0.69",
+      "capacita": "Mostri 0.69",
+      "gs_px": "Mostri 0.69"
+    },
+    "edizione": "Mostri 0.69",
+    "sistema_salute": "solo_PV"
+  }
+}

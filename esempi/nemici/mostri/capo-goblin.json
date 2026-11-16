@@ -3,7 +3,7 @@
   "versione": 1,
   "id": "capo-goblin",
   "nome": "Capo goblin",
-  "fonte": "dal Manuale dei Mostri v0.46 (Word del 27/10/2026), cap. 8 «Catalogo delle creature» — Capi e varianti dei popoli guerrieri",
+  "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Capo goblin",
   "caratteristiche": {
     "FOR": 4,
     "DES": 7,
@@ -48,11 +48,11 @@
       "va": 11,
       "danno": "1d6+2",
       "natura": "Naturale",
-      "portata_q": 1,
-      "ac": 1,
       "proprieta": [
         "Taglio"
-      ]
+      ],
+      "portata_q": 1,
+      "ac": 1
     },
     {
       "nome": "Giavellotto a mano",
@@ -60,11 +60,11 @@
       "va": 10,
       "danno": "1d6",
       "natura": "Naturale",
-      "portata_q": 1,
-      "ac": 1,
       "proprieta": [
         "Perforazione"
-      ]
+      ],
+      "portata_q": 1,
+      "ac": 1
     },
     {
       "nome": "Giavellotto lanciato",
@@ -72,14 +72,14 @@
       "va": 11,
       "danno": "1d6+1",
       "natura": "Naturale",
+      "proprieta": [
+        "Perforazione"
+      ],
       "gittata_q": 12,
       "modalita": [
         "S"
       ],
-      "ac": 1,
-      "proprieta": [
-        "Perforazione"
-      ]
+      "ac": 1
     }
   ],
   "abilita": [
@@ -139,9 +139,25 @@
       "effetto": "Prima del tiro per colpire di un attacco diretto solo contro il Capo, può farsi sostituire da un altro Goblin consenziente entro 1 Q. Deve percepire l’attacco; entrambi coscienti, mobili e in condizioni di reagire; il sostituto deve avere spazio per occupare la posizione e non può essere trattenuto, Immobilizzato o incapace di muoversi. I due scambiano la posizione (unico Movimento concesso, non consuma l’AzM del sostituto; non supera barriere né occupa un Q impraticabile; nessuna Opportunità per questa sola sostituzione). Il sostituto diventa il bersaglio solo se nella posizione del Capo è ancora valido per lo stesso attacco; si ricalcolano i modificatori e si tira; fa le proprie Difese senza ereditare quelle del Capo; il danno si applica a lui. Non si usa dopo aver conosciuto tiro, danni o Salvezza; non devia Aree, Raffiche, attacchi a più bersagli o effetti senza tiro per colpire; non assorbe un colpo già risolto né trasferisce Stati. Se mancano i requisiti non si spende l’AzP. Il sostituto non spende AzP; il consenso non nasce dalla sola intimidazione o dalla stessa specie e può venir meno se la banda abbandona il capo."
     }
   ],
-  "note": "AR 2 con Scudo piccolo, 1 senza. Parla Comune e Goblin. Guida con agguati, minacce e vie di fuga; preferisce farsi proteggere dai seguaci. Condotta: sotto 7 PV, a Ferita Profonda o senza seguaci cerca una via di fuga o offre informazioni. Fonte: Goblin Boss, p. 166.",
+  "note": "Goblin • capo di una piccola banda • Natura Comune.",
   "_bestiario": {
     "edizione": "Mostri 0.69",
-    "sistema_salute": "solo_PV"
+    "sistema_salute": "solo_PV",
+    "campi": {
+      "pv": "Mostri 0.69",
+      "pm": "Mostri 0.69",
+      "caratteristiche": "Mostri 0.69",
+      "ar": "Mostri 0.69",
+      "difese": "Mostri 0.69",
+      "salvezze": "Mostri 0.69",
+      "iniziativa": "Mostri 0.69",
+      "azioni": "Mostri 0.69",
+      "movimento": "Mostri 0.69",
+      "spazio": "Mostri 0.69",
+      "abilita": "Mostri 0.69",
+      "attacchi": "Mostri 0.69",
+      "capacita": "Mostri 0.47",
+      "gs_px": "Mostri 0.69"
+    }
   }
 }

@@ -3,7 +3,7 @@
   "versione": 1,
   "id": "unicorno",
   "nome": "Unicorno",
-  "fonte": "dal Manuale dei Mostri v0.46 (Word del 27/10/2026), cap. 8 «Catalogo delle creature» — Vegetali e custodi delle foreste",
+  "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Unicorno",
   "caratteristiche": {
     "FOR": 9,
     "DES": 7,
@@ -164,9 +164,26 @@
   "immunita": [
     "avvelenato"
   ],
-  "note": "Il profilo da 70 PX comprende due AzP, attacchi Magici, cure limitate, Rovi e il Passaggio del guardiano; non ha Azioni Leggendarie né effetti regionali. Condotta: avverte, protegge, può usare Rovi per fermare un inseguitore; sotto 12 PV o a Ferita Profonda mette in salvo sé e gli alleati. Fonte: Unicorn, pp. 293–294.",
+  "note": "Custode equino senziente • carica, protezione e soccorso • Natura Comune. Condotta. Avverte, protegge ed eventualmente usa Rovi per fermare un inseguitore. Sotto 16 PV cerca di mettere in salvo sé e gli alleati. I poteri di supporto sono nelle due pagine seguenti; non possiede Azioni Leggendarie aggiuntive o effetti regionali automatici su una foresta.",
   "_bestiario": {
     "edizione": "Mostri 0.69",
-    "sistema_salute": "solo_PV"
-  }
+    "sistema_salute": "solo_PV",
+    "campi": {
+      "pv": "Mostri 0.69",
+      "pm": "Mostri 0.69",
+      "caratteristiche": "Mostri 0.69",
+      "ar": "Mostri 0.69",
+      "difese": "Mostri 0.69",
+      "salvezze": "Mostri 0.69",
+      "iniziativa": "Mostri 0.69",
+      "azioni": "Mostri 0.69",
+      "movimento": "Mostri 0.69",
+      "spazio": "Mostri 0.69",
+      "abilita": "Mostri 0.69",
+      "attacchi": "Mostri 0.47",
+      "capacita": "Mostri 0.47",
+      "gs_px": "Mostri 0.69"
+    }
+  },
+  "taglia": "grande"
 }

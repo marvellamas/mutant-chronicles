@@ -3,7 +3,7 @@
   "versione": 1,
   "id": "cavallo-da-sella",
   "nome": "Cavallo da sella",
-  "fonte": "dal Manuale dei Mostri v0.46 (Word del 27/10/2026), cap. 8 «Catalogo delle creature» — Cavalcature e animali da lavoro",
+  "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Cavallo da sella",
   "caratteristiche": {
     "FOR": 8,
     "DES": 6,
@@ -48,11 +48,11 @@
       "va": 9,
       "danno": "1d6+2",
       "natura": "Naturale",
-      "portata_q": 1,
-      "ac": 1,
       "proprieta": [
         "Contusione"
-      ]
+      ],
+      "portata_q": 1,
+      "ac": 1
     }
   ],
   "abilita": [
@@ -87,9 +87,26 @@
       "effetto": "Usa l’AzM dell’animale e le distanze riportate, ridotte da carico, terreno o lesioni. L’abitudine alla sella non gli concede Impeto, Calpestare, immunità a Terrorizzato o una Difesa gratuita. Un attacco di Zoccoli per Round, Opportunità compresa; la portata degli Zoccoli non diventa quella dell’arma del cavaliere."
     }
   ],
-  "note": "La velocità non implica la capacità di affrontare volontariamente fiamme, spari o una carica. Condotta: cerca uno spazio aperto e una direzione conosciuta; sotto 5 PV o a Ferita Profonda tende alla fuga. Fonte: Riding Horse, p. 336.",
+  "note": "Equino da viaggio • andatura veloce • Natura Comune. Condotta. Non comprende linguaggi. Cerca uno spazio aperto e una direzione conosciuta; sotto 7 PV tende alla fuga. Un rapporto con il conduttore può agevolare la gestione ordinaria, senza annullare pericoli reali o trasformare ogni esemplare in cavallo da guerra.",
   "_bestiario": {
     "edizione": "Mostri 0.69",
-    "sistema_salute": "solo_PV"
-  }
+    "sistema_salute": "solo_PV",
+    "campi": {
+      "pv": "Mostri 0.69",
+      "pm": "Mostri 0.69",
+      "caratteristiche": "Mostri 0.69",
+      "ar": "Mostri 0.69",
+      "difese": "Mostri 0.69",
+      "salvezze": "Mostri 0.69",
+      "iniziativa": "Mostri 0.69",
+      "azioni": "Mostri 0.69",
+      "movimento": "Mostri 0.69",
+      "spazio": "Mostri 0.69",
+      "abilita": "Mostri 0.69",
+      "attacchi": "Mostri 0.69",
+      "capacita": "Mostri 0.47",
+      "gs_px": "Mostri 0.69"
+    }
+  },
+  "taglia": "grande"
 }

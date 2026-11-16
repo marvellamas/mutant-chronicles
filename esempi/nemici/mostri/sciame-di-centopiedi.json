@@ -1,0 +1,137 @@
+{
+  "formato": "mutant-nemico",
+  "versione": 1,
+  "id": "sciame-di-centopiedi",
+  "nome": "Sciame di centopiedi",
+  "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Sciame di centopiedi",
+  "note": "Un gruppo di piccoli centopiedi rappresentato come un solo avversario. Il veleno può paralizzare una vittima che i morsi hanno appena portato a zero PV, senza stabilizzarla o sostituire le normali Ferite.",
+  "pv": 32,
+  "pm": 4,
+  "caratteristiche": {
+    "FOR": 3,
+    "DES": 6,
+    "COS": 5,
+    "INT": 1,
+    "SAG": 3,
+    "CAR": 1
+  },
+  "ar": {
+    "totale": 1,
+    "magica": 0
+  },
+  "difese": 9,
+  "salvezze": {
+    "tempra": 9,
+    "riflessi": 10,
+    "volonta": 6,
+    "magia": 7
+  },
+  "iniziativa": 1,
+  "azioni": {
+    "principali": 1,
+    "movimento": 1
+  },
+  "movimento": {
+    "passo": 4,
+    "corsa": 8,
+    "scatto": 12
+  },
+  "spazio": "1 Q",
+  "abilita": [
+    {
+      "nome": "Corpo a corpo",
+      "va": 10
+    },
+    {
+      "nome": "Atletica",
+      "va": 9
+    },
+    {
+      "nome": "Percezione",
+      "va": 7
+    },
+    {
+      "nome": "Furtività",
+      "va": 10
+    }
+  ],
+  "attacchi": [
+    {
+      "nome": "Morsi con PV 17–32",
+      "tipo": "ravvicinato",
+      "va": 10,
+      "danno": "2d4",
+      "natura": "Naturale",
+      "proprieta": [
+        "Perforazione",
+        "AC 1"
+      ],
+      "portata_q": 0,
+      "ac": 1
+    },
+    {
+      "nome": "Morsi con PV 1–16",
+      "tipo": "ravvicinato",
+      "va": 10,
+      "danno": "1d4",
+      "natura": "Naturale",
+      "proprieta": [
+        "Perforazione",
+        "AC 1"
+      ],
+      "portata_q": 0,
+      "ac": 1
+    }
+  ],
+  "capacita": [
+    {
+      "nome": "Corpo distribuito",
+      "effetto": "Un solo vivente biologico collettivo ai fini della scheda, con una riserva di PV, PM e Azioni. Applica tutte le resistenze, immunità, Ferite e limiti di recupero del modulo comune degli sciami. A dodici PV o meno usa il solo danno ridotto; nessuna Parata naturale. Iniziativa usa il bonus positivo di DES +1."
+    },
+    {
+      "nome": "Morsi e tossina",
+      "effetto": "Una AzP totale, massimo un attacco di Morsi per Round, Opportunità compatibile compresa soltanto se condivide realmente il Q della vittima. Si risolvono normali Difese e AR. Soltanto se un attacco infligge danno finale e porta un vivente biologico da almeno un PV a zero, Tempra 0 contro veleno naturale III: successo evita, fallimento Avvelenato e Paralizzato per cinque Round. Non si applica per il solo colpire chi era già a zero PV."
+    },
+    {
+      "nome": "Soccorso",
+      "effetto": "A fine di ogni propria Iniziativa la vittima ripete Tempra 0: successo neutralizza la dose e termina entrambi gli Stati. Avvelenato impone −2 alle sole Abilità fisiche, non alle PS. Un antidoto compatibile o Cura Avvelenamenti tre rimuove la causa; Cura Spirituale da sola non elimina la Paralisi mantenuta dal veleno. Recuperare PV non neutralizza la tossina. Nessuna stabilizzazione, cancellazione di Morente o immunità alle Ferite viene aggiunta."
+    },
+    {
+      "nome": "Superfici e sensi",
+      "effetto": "Arrampicata su asperità fino a quattro Q al Passo, senza aderenza a soffitti lisci o Scavo. Entro due Q Percezione sette avverte moto e corpi sul supporto continuo condiviso, non chi vola o è separato dal sostegno; solidi fermano il senso. Non ottiene Scurovisione o localizzazione automatica di chi è nascosto. Può entrare soltanto in aperture praticabili per un centopiedi reale."
+    },
+    {
+      "nome": "Dispersione e anatomia",
+      "effetto": "Testa indica orientamento e sensi, Torace coesione, Braccia le componenti offensive e Gambe la locomozione. Dimezzare il danno a metà PV non guarisce o ricrea esemplari; sotto metà PV può cercare crepe e riparo con il movimento ordinario. Non applica la vulnerabilità al freddo della Covata o il modello di dieci Vespe del Deserto a un gruppo di specie diversa."
+    },
+    {
+      "nome": "Altri movimenti",
+      "effetto": "arrampicata con appigli 4 Q al Passo; spazio condivisibile 1 × 1 Q"
+    }
+  ],
+  "gs_px": {
+    "gs": "Inesperto",
+    "px": 20,
+    "per_pg": 4
+  },
+  "_bestiario": {
+    "campi": {
+      "pv": "Mostri 0.69",
+      "pm": "Mostri 0.69",
+      "caratteristiche": "Mostri 0.69",
+      "ar": "Mostri 0.69",
+      "difese": "Mostri 0.69",
+      "salvezze": "Mostri 0.69",
+      "iniziativa": "Mostri 0.69",
+      "azioni": "Mostri 0.69",
+      "movimento": "Mostri 0.69",
+      "spazio": "Mostri 0.69",
+      "abilita": "Mostri 0.69",
+      "attacchi": "Mostri 0.69",
+      "capacita": "Mostri 0.69",
+      "gs_px": "Mostri 0.69"
+    },
+    "edizione": "Mostri 0.69",
+    "sistema_salute": "solo_PV"
+  }
+}

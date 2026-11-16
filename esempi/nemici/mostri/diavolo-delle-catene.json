@@ -1,0 +1,120 @@
+{
+  "formato": "mutant-nemico",
+  "versione": 1,
+  "id": "diavolo-delle-catene",
+  "nome": "Diavolo delle catene",
+  "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Diavolo delle catene",
+  "note": "Controllore che avvolge le vittime con catene chiodate e anima quelle già presenti sul terreno. La sua capacità distribuisce le Azioni tra più punti della scena senza creare nuovi turni.",
+  "pv": 104,
+  "pm": 32,
+  "caratteristiche": {
+    "FOR": 9,
+    "DES": 7,
+    "COS": 9,
+    "INT": 5,
+    "SAG": 6,
+    "CAR": 7
+  },
+  "ar": {
+    "totale": 4,
+    "magica": 0
+  },
+  "difese": 12,
+  "salvezze": {
+    "tempra": 14,
+    "riflessi": 12,
+    "volonta": 12,
+    "magia": 13
+  },
+  "iniziativa": 2,
+  "azioni": {
+    "principali": 3,
+    "movimento": 1
+  },
+  "movimento": {
+    "passo": 6,
+    "corsa": 12,
+    "scatto": 18
+  },
+  "spazio": "1 Q",
+  "abilita": [
+    {
+      "nome": "Armi da mischia",
+      "va": 15
+    },
+    {
+      "nome": "Corpo a corpo",
+      "va": 14
+    },
+    {
+      "nome": "Atletica",
+      "va": 15
+    },
+    {
+      "nome": "Percezione",
+      "va": 11
+    },
+    {
+      "nome": "Raggirare",
+      "va": 13
+    }
+  ],
+  "capacita": [
+    {
+      "nome": "Maschera inquietante",
+      "effetto": "VA —. Danno: Terrorizzato; Volontà 0. Portata/costo: 6 Q; 1 AzP e 2 PM; "
+    },
+    {
+      "nome": "Corpo e sensi",
+      "effetto": "Protezioni elementali comuni, resistenza alle armi non argentate, Vista infernale 24 Q e Resistenza alla magia +2 non inclusa nelle PS. Telepatia entro 24 Q. Nessuna Parata naturale; può Parare con una catena pronta non impegnata in una presa. Massimo tre attacchi di Catena complessivi per Round, comprese catene animate e Opportunità."
+    },
+    {
+      "nome": "Presa degli uncini",
+      "effetto": "Dopo almeno un danno finale di Catena a una creatura di spazio massimo un Q: Riflessi −2, fallimento Immobilizzato con braccia bloccate. È una capacità del Diavolo, non un beneficio dell’arma per qualunque utilizzatore. Massimo due vittime complessive tra tutte le catene, una per catena; quella impegnata non colpisce altri. Liberarsi costa una AzP e Atletica o Corpo a corpo contrapposto al 15 del Diavolo; applicare il −4 a chi è Immobilizzato, pareggi a chi trattiene. Un alleato a Contatto può tentare la stessa liberazione."
+    },
+    {
+      "nome": "Stringere e oggetti",
+      "effetto": "Stringere costa una AzP del Diavolo e una nuova contrapposta con la stessa procedura: successo danno di Catena, AR normale, fallimento mantiene la presa senza danno. Nessuna seconda Difesa alla contrapposta e nessun danno gratuito di mantenimento. Sanguinante uno si applica soltanto dopo danno finale, seguendo il massimo comune. Distruggere la catena termina la sua presa; PI della catena e PV del Diavolo sono riserve di bersagli distinti."
+    },
+    {
+      "nome": "Animare le catene",
+      "effetto": "Due AzP e sei PM, una volta per 24 ore, fino a quattro catene chiodate libere, non indossate o impugnate, visibili entro 12 Q, per cinque Round senza Concentrazione. Ognuna resta presso il proprio punto di ancoraggio e può raggiungere entro due Q; niente AzM, Iniziativa o AzP proprie. Ogni suo attacco consuma una delle tre AzP e dei tre attacchi totali del Diavolo, che deve vedere catena e bersaglio entro 12 Q. Nessuna Opportunità dalle catene remote. Le catene ambientali sono dichiarate e collocate prima dello scontro, non create dal potere."
+    },
+    {
+      "nome": "Integrità e termine",
+      "effetto": "Catene chiodate Comuni: FOR 5, una mano, base 1d4+2 più tre personali già compresi, portata due Q, PI 5, PS Integrità 10. Quando animata, una catena conserva i PI attuali, riceve AR due interamente magica e PS Integrità 12; non viene riparata. Danni agli oggetti secondo Armamenti §7.2.1. Ogni animazione è un effetto separato rimovibile con Negare Potere, confronto 9; termina anche se il Diavolo sviene o muore, senza cancellare l’oggetto. La presa innata termina con l’animazione o la perdita di controllo."
+    },
+    {
+      "nome": "Maschera inquietante",
+      "effetto": "Una AzP e due PM: una mente cosciente visibile entro sei Q che veda il suo volto, Volontà 0; fallimento Terrorizzato fino alla fine della successiva Iniziativa della vittima. Non legge ricordi per copiare persone mai viste. Barriera Mentale aggiunge il bonus; Negare Potere confronto 6. Dopo resistenza o liberazione, immunità alla Maschera di questo esemplare per 24 ore. I 110 PX comprendono le due catene pronte e quattro ambientali disponibili; nessun carceriere o prigioniero è incluso."
+    },
+    {
+      "nome": "Altri movimenti",
+      "effetto": "spazio 1 × 1 Q"
+    }
+  ],
+  "gs_px": {
+    "gs": "Leggenda",
+    "px": 110,
+    "per_pg": 4
+  },
+  "_bestiario": {
+    "campi": {
+      "pv": "Mostri 0.69",
+      "pm": "Mostri 0.69",
+      "caratteristiche": "Mostri 0.69",
+      "ar": "Mostri 0.69",
+      "difese": "Mostri 0.69",
+      "salvezze": "Mostri 0.69",
+      "iniziativa": "Mostri 0.69",
+      "azioni": "Mostri 0.69",
+      "movimento": "Mostri 0.69",
+      "spazio": "Mostri 0.69",
+      "abilita": "Mostri 0.69",
+      "capacita": "Mostri 0.69",
+      "gs_px": "Mostri 0.69"
+    },
+    "edizione": "Mostri 0.69",
+    "sistema_salute": "solo_PV"
+  }
+}

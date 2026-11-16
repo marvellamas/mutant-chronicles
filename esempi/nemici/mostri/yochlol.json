@@ -1,0 +1,116 @@
+{
+  "formato": "mutant-nemico",
+  "versione": 1,
+  "id": "yochlol",
+  "nome": "Yochlol",
+  "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Yochlol",
+  "note": "Mutaforma dal corpo molle che può assumere aspetto umanoide, ragno o nebbia tossica. Usa ragnatele e influenza mentale per separare una preda dal gruppo.",
+  "pv": 125,
+  "pm": 44,
+  "caratteristiche": {
+    "FOR": 7,
+    "DES": 7,
+    "COS": 9,
+    "INT": 6,
+    "SAG": 7,
+    "CAR": 7
+  },
+  "ar": {
+    "totale": 3,
+    "magica": 0
+  },
+  "difese": 12,
+  "salvezze": {
+    "tempra": 13,
+    "riflessi": 13,
+    "volonta": 12,
+    "magia": 13
+  },
+  "iniziativa": 2,
+  "azioni": {
+    "principali": 2,
+    "movimento": 1
+  },
+  "movimento": {
+    "passo": 6,
+    "corsa": 12,
+    "scatto": 18
+  },
+  "spazio": "1 Q",
+  "abilita": [
+    {
+      "nome": "Corpo a corpo",
+      "va": 14
+    },
+    {
+      "nome": "Atletica",
+      "va": 12
+    },
+    {
+      "nome": "Furtività",
+      "va": 13
+    },
+    {
+      "nome": "Percezione",
+      "va": 12
+    },
+    {
+      "nome": "Raggirare",
+      "va": 16
+    }
+  ],
+  "capacita": [
+    {
+      "nome": "Ragnatela mistica",
+      "effetto": "VA —. Danno: Immobilizzato; Riflessi −2. Portata/costo: Origine entro 12 Q; 1 AzP e 3 PM; "
+    },
+    {
+      "nome": "Corpo e sensi",
+      "effetto": "Protezione Demone comune, Resistenza alla magia +2 non inclusa nelle PS, Scurovisione 24 Q. Nessuna Parata naturale o telepatia ordinaria. Arrampica anche su soffitti solidi adatti senza Prova se non interviene un impedimento; non ignora altri ostacoli. Le sue ragnatele non ostacolano il suo Movimento. Massimo due colpi ravvicinati per Round, Opportunità compresa."
+    },
+    {
+      "nome": "Forme e veleno",
+      "effetto": "Una AzP e un PM per assumere umanoide o ragno, oppure tornare alla vera forma. Conserva valori, PV, PM e lesioni; nessuna guarigione o capacità aggiuntiva di altri profili. Schianto è Contusione, Morso Perforazione; la portata è personale. Oggetti non trasformati; alla morte effettiva torna alla forma propria. Dopo almeno un danno finale contro un vivente biologico: Tempra −2 dimezza per eccesso 3d6 danni diretti da veleno naturale di Pericolosità IV, senza AR. Fallimento danno intero; nessuno Stato persistente o seconda Difesa."
+    },
+    {
+      "nome": "Ragnatela",
+      "effetto": "Una AzP e tre PM, disponibile di nuovo alla propria Iniziativa R+3 se usata nel Round R. Rete fissa in area 3 × 3 Q, altezza due Q, sostenuta da almeno due appoggi solidi entro l’area; durata cinque Round, un solo lancio attivo. Chi è nell’area alla creazione o vi entra effettua Riflessi −2: fallimento Immobilizzato con braccia bloccate, purché occupi al massimo 2 × 2 Q. Nessuna nuova PS per la sola permanenza; dopo liberazione una nuova entrata può invischiare nuovamente. Liberarsi, anche con un alleato a Contatto: una AzP e Atletica contrapposta al VA fisso 14, con −4 al solo Immobilizzato; pareggi alla rete. Ogni sezione di un Q ha PI 6, AR 0 e PS Integrità 10, Fuoco raddoppiato prima della risoluzione oggetti. Distruggerla libera chi trattiene. Negare Potere confronto 9 rimuove l’intero lancio, che termina anche da Svenuto o alla morte del creatore."
+    },
+    {
+      "nome": "Nebbia tossica",
+      "effetto": "Una AzP e quattro PM per diventare nebbia fino a cinque Round; una AzP per tornare prima alla forma vera, senza altri PM. Volo fluttuante 6 / 12 / 18 Q, spazio un Q condivisibile; attraversa fessure non ermetiche, senza portare equipaggiamento o altre creature. Non può compiere AzP salvo tornare solida, né parlare, colpire o usare poteri; difese a costo di AzP impossibili. È immune al danno Naturale e a prese materiali, subisce Magico ed Etereo normalmente con la propria AR; le sole Tempra e Riflessi ricevono +2 di forma, distinto dalla Resistenza alla magia. Negare Potere confronto 9, Svenuto o morte interrompono; se occupa una fessura emerge nello spazio libero più vicino, senza danni automatici."
+    },
+    {
+      "nome": "Intossicazione e mente",
+      "effetto": "Chi inizia la propria Iniziativa nel suo Q di nebbia: Tempra −2; fallimento Avvelenato e Stordito fino all’inizio della propria Iniziativa successiva, senza danno. Veleno inalatorio naturale di Pericolosità V; immunità al veleno o protezione respiratoria realmente ermetica evita. Cura Avvelenamenti almeno sei rimuove la dose attiva; una successiva esposizione richiede una nuova PS. Fuori dalla Nebbia possiede Lettura superficiale e Dominio breve delle regole comuni, quest’ultimo una volta per 24 ore. Non impone fedeltà religiosa né un legame con una divinità della fonte."
+    },
+    {
+      "nome": "Altri movimenti",
+      "effetto": "Terra e arrampicata 6 / 12 / 18: la stessa andatura vale anche per arrampicata; spazio 1 × 1 Q"
+    }
+  ],
+  "gs_px": {
+    "gs": "Mito",
+    "px": 200,
+    "per_pg": 4
+  },
+  "_bestiario": {
+    "campi": {
+      "pv": "Mostri 0.69",
+      "pm": "Mostri 0.69",
+      "caratteristiche": "Mostri 0.69",
+      "ar": "Mostri 0.69",
+      "difese": "Mostri 0.69",
+      "salvezze": "Mostri 0.69",
+      "iniziativa": "Mostri 0.69",
+      "azioni": "Mostri 0.69",
+      "movimento": "Mostri 0.69",
+      "spazio": "Mostri 0.69",
+      "abilita": "Mostri 0.69",
+      "capacita": "Mostri 0.69",
+      "gs_px": "Mostri 0.69"
+    },
+    "edizione": "Mostri 0.69",
+    "sistema_salute": "solo_PV"
+  }
+}

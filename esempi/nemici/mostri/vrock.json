@@ -1,0 +1,122 @@
+{
+  "formato": "mutant-nemico",
+  "versione": 1,
+  "id": "vrock",
+  "nome": "Vrock",
+  "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Vrock",
+  "taglia": "grande",
+  "note": "Grande demone dall’aspetto di un avvoltoio umanoide. Alterna becco e artigli a spore tossiche e a un grido capace di stordire chi lo sente.",
+  "pv": 94,
+  "pm": 24,
+  "caratteristiche": {
+    "FOR": 8,
+    "DES": 7,
+    "COS": 9,
+    "INT": 3,
+    "SAG": 6,
+    "CAR": 4
+  },
+  "ar": {
+    "totale": 3,
+    "magica": 0
+  },
+  "difese": 12,
+  "salvezze": {
+    "tempra": 13,
+    "riflessi": 13,
+    "volonta": 10,
+    "magia": 12
+  },
+  "iniziativa": 2,
+  "azioni": {
+    "principali": 2,
+    "movimento": 1
+  },
+  "movimento": {
+    "passo": 8,
+    "corsa": 16,
+    "scatto": 24,
+    "volo": 12
+  },
+  "spazio": "2 × 2 Q",
+  "abilita": [
+    {
+      "nome": "Corpo a corpo",
+      "va": 14
+    },
+    {
+      "nome": "Atletica",
+      "va": 13
+    },
+    {
+      "nome": "Percezione",
+      "va": 12
+    },
+    {
+      "nome": "Furtività",
+      "va": 10
+    }
+  ],
+  "capacita": [
+    {
+      "nome": "Spore",
+      "effetto": "VA —. Danno: Veleno periodico; Tempra −2. Portata/costo: Raggio 3 Q; 1 AzP; "
+    },
+    {
+      "nome": "Grido stordente",
+      "effetto": "VA —. Danno: Stordito; Tempra −2. Portata/costo: Raggio 4 Q; 2 AzP e 4 PM; "
+    },
+    {
+      "nome": "Corpo e sensi",
+      "effetto": "Resistenze corporee comuni e resistenza fisica comune, immunità a veleno e Avvelenato, Resistenza alla magia +2 non inclusa nelle PS. Scurovisione 24 Q; nessuna Parata naturale. Massimo un Becco e un attacco di Artigli per Round, Opportunità compresa. Telepatia entro 24 Q; da Svenuto in volo cade."
+    },
+    {
+      "nome": "Rilascio delle spore",
+      "effetto": "Una AzP, nessun PM; usate nel Round R tornano disponibili alla sua Iniziativa in R + 3. Espongono le altre creature entro tre Q lungo percorsi aperti, anche intorno agli angoli; i solidi schermano. Veleno naturale di Pericolosità IV che agisce per contatto con tessuti biologici: respiratore da solo non basta, mentre protezione ambientale integralmente sigillata impedisce l’esposizione. Non rimane una nube persistente e non espone chi entra dopo."
+    },
+    {
+      "nome": "Veleno periodico",
+      "effetto": "Tempra −2: successo evita tutto; fallimento Avvelenato per tre Round, con perdita immediata di 1d4+1 PV diretti senza AR e una nuova perdita alla successiva Iniziativa del Vrock, massimo una per Round. Alla fine di ogni propria Iniziativa la vittima ripete Tempra −2: successo termina. Non applica penalità ulteriori, paralisi o Sanguinamento. Nuove esposizioni mantengono la scadenza maggiore senza sommare danni periodici della stessa capacità."
+    },
+    {
+      "nome": "Rimozione delle spore",
+      "effetto": "Antidoto adeguato o Cura Avvelenamenti almeno cinque rimuovono la sostanza e il danno ancora da applicare, senza restituire PV o curare Ferite già subite. Immunità al veleno evita il processo. Acqua ordinaria può lavare spore non ancora assorbite, ma una spruzzata non rimuove automaticamente una tossina attiva. La scheda non richiede acqua benedetta o un oggetto assente dai cataloghi."
+    },
+    {
+      "nome": "Grido",
+      "effetto": "Due AzP e quattro PM, una volta per 24 ore. Ogni creatura entro quattro Q che lo sente, alleati compresi, effettua Tempra −2: fallimento Stordito fino alla fine della prossima Iniziativa del Vrock; successo evita. I dieci demoni del blocco sono immuni a questo solo suono. Nessun tiro per colpire, danno, Parata o Schivata; Assordato o isolamento acustico efficace evita. Mantenere Concentrazione quando sopraggiunge Stordito segue la Volontà ordinaria della Magia."
+    },
+    {
+      "nome": "Rimozione dello stordimento",
+      "effetto": "Cura Spirituale almeno sei può rimuovere lo Stato già applicato, perché il Grido non rimane come causa continua; Negare Potere può interromperlo, confronto 6. Non è il veleno delle Spore e non viene curato da un antidoto. Il Grido occupa entrambe le AzP e non concede altri attacchi. Resta soltanto l’eventuale Opportunità ordinaria, se ancora disponibile e compatibile con i limiti del Round."
+    },
+    {
+      "nome": "Altri movimenti",
+      "effetto": "spazio 2 × 2 Q"
+    }
+  ],
+  "gs_px": {
+    "gs": "Eroe",
+    "px": 70,
+    "per_pg": 4
+  },
+  "_bestiario": {
+    "campi": {
+      "pv": "Mostri 0.69",
+      "pm": "Mostri 0.69",
+      "caratteristiche": "Mostri 0.69",
+      "ar": "Mostri 0.69",
+      "difese": "Mostri 0.69",
+      "salvezze": "Mostri 0.69",
+      "iniziativa": "Mostri 0.69",
+      "azioni": "Mostri 0.69",
+      "movimento": "Mostri 0.69",
+      "spazio": "Mostri 0.69",
+      "abilita": "Mostri 0.69",
+      "capacita": "Mostri 0.69",
+      "gs_px": "Mostri 0.69"
+    },
+    "edizione": "Mostri 0.69",
+    "sistema_salute": "solo_PV"
+  }
+}

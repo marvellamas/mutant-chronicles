@@ -1,0 +1,142 @@
+{
+  "formato": "mutant-nemico",
+  "versione": 1,
+  "id": "modron-rinnegato",
+  "nome": "Modron rinnegato",
+  "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Modron rinnegato",
+  "note": "Quadrone che ha perso la mente assiomatica. Mantiene il corpo alato e l’addestramento al tiro, ma può scegliere i propri scopi e viene trattato come una mente autonoma.",
+  "pv": 37,
+  "pm": 9,
+  "caratteristiche": {
+    "FOR": 6,
+    "DES": 7,
+    "COS": 6,
+    "INT": 6,
+    "SAG": 6,
+    "CAR": 6
+  },
+  "ar": {
+    "totale": 2,
+    "magica": 0
+  },
+  "difese": 11,
+  "salvezze": {
+    "tempra": 10,
+    "riflessi": 11,
+    "volonta": 10,
+    "magia": 10
+  },
+  "iniziativa": 2,
+  "azioni": {
+    "principali": 2,
+    "movimento": 1
+  },
+  "movimento": {
+    "passo": 6,
+    "corsa": 12,
+    "scatto": 18,
+    "volo": 6
+  },
+  "spazio": "1 Q",
+  "abilita": [
+    {
+      "nome": "Corpo a corpo",
+      "va": 10
+    },
+    {
+      "nome": "Armi da lancio",
+      "va": 12
+    },
+    {
+      "nome": "Atletica",
+      "va": 10
+    },
+    {
+      "nome": "Percezione",
+      "va": 12
+    },
+    {
+      "nome": "Furtività",
+      "va": 9
+    }
+  ],
+  "attacchi": [
+    {
+      "nome": "Pugno",
+      "tipo": "ravvicinato",
+      "va": 10,
+      "danno": "1d4+1",
+      "natura": "Naturale",
+      "proprieta": [
+        "Contusione",
+        "AC 1"
+      ],
+      "portata_q": 1,
+      "ac": 1
+    },
+    {
+      "nome": "Arco da guerra",
+      "tipo": "ravvicinato",
+      "va": 12,
+      "danno": "1d6+2",
+      "natura": "Naturale",
+      "proprieta": [
+        "Perforazione",
+        "AC 1"
+      ],
+      "portata_q": 100,
+      "ac": 1
+    }
+  ],
+  "capacita": [
+    {
+      "nome": "Corpo e sensi",
+      "effetto": "Costrutto biomeccanico vivente con mente e PM personali, secondo Modron fisiologia gerarchia e sensi: respira, si nutre e riposa; cure biologiche compatibili ammesse, senza riparazioni automatiche di componenti o Menomazioni. Può subire veleno, malattia, Sanguinamento, Sonno e Affaticamento compatibili. Visione ordinatrice dodici Q e Rilevazione sei contro Mimetismo, con la procedura e i limiti della pagina comune; non vede attraverso pareti o fumo opaco."
+    },
+    {
+      "nome": "Mente autonoma",
+      "effetto": "Perde integralmente Mente assiomatica: un controllo mentale valido può imporre comandi contrari alla vecchia funzione, entro i limiti del singolo potere. Restano le PS ordinarie e le altre protezioni effettive. Non diventa immune a paura, lettura mentale o perdita di PM e non riceve automaticamente una nuova morale. Parla Modron; conosce le comunicazioni apprese, senza un nuovo linguaggio universale."
+    },
+    {
+      "nome": "Azioni e arco",
+      "effetto": "Due AzP totali, massimo due attacchi complessivi per Round, Opportunità compresa soltanto per Pugno. Arco da guerra Comune, due mani, FOR cinque, PI sei, PS Integrità dieci, base 1d6+1 più uno personale, venti frecce. Incoccare compreso nell’attacco; non tira quattro frecce simultanee. Due braccia ulteriori restano disponibili per oggetti compatibili, senza Azioni gratuite o Parata naturale; l’Arco non para."
+    },
+    {
+      "nome": "Volo e parti",
+      "effetto": "Ali funzionali e spazio necessario; quota, decollo e atterraggio rientrano nell’unica AzM. Corsa e Scatto in volo richiedono Atletica −2 e −4. Non levita con ali menomate. Testa gruppo sensoriale, Torace nucleo e cingolo alare, Braccia manipolatori, Gambe locomozione. Solo la morte effettiva dopo Morente disgrega il corpo, lasciando armi e oggetti; nessuna promozione sostituisce un combattente durante la scena."
+    },
+    {
+      "nome": "Impiego della variante",
+      "effetto": "Questa scheda pronta usa il corpo Quadrone; per un diverso rango si conserva il relativo Modron del catalogo e si rimuove soltanto Mente assiomatica, mantenendo dotazione e PX di quel modello. Non si sommano le due schede. La condizione di rinnegato non crea una nuova Classe, un corpo di guardie o una caccia automatica nello stesso incontro. Sotto 10 PV può cercare riparo secondo i propri scopi."
+    },
+    {
+      "nome": "Altri movimenti",
+      "effetto": "Terra e volo 6 / 12 / 18: la stessa andatura vale anche per volo; spazio 1 × 1 Q"
+    }
+  ],
+  "gs_px": {
+    "gs": "Esperto",
+    "px": 33,
+    "per_pg": 4
+  },
+  "_bestiario": {
+    "campi": {
+      "pv": "Mostri 0.69",
+      "pm": "Mostri 0.69",
+      "caratteristiche": "Mostri 0.69",
+      "ar": "Mostri 0.69",
+      "difese": "Mostri 0.69",
+      "salvezze": "Mostri 0.69",
+      "iniziativa": "Mostri 0.69",
+      "azioni": "Mostri 0.69",
+      "movimento": "Mostri 0.69",
+      "spazio": "Mostri 0.69",
+      "abilita": "Mostri 0.69",
+      "attacchi": "Mostri 0.69",
+      "capacita": "Mostri 0.69",
+      "gs_px": "Mostri 0.69"
+    },
+    "edizione": "Mostri 0.69",
+    "sistema_salute": "solo_PV"
+  }
+}

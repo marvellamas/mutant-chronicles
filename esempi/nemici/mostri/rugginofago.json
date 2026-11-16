@@ -3,7 +3,7 @@
   "versione": 1,
   "id": "rugginofago",
   "nome": "Rugginofago",
-  "fonte": "dal Manuale dei Mostri v0.46 (Word del 27/10/2026), cap. 8 «Catalogo delle creature» — Creature del sottosuolo",
+  "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Rugginofago",
   "caratteristiche": {
     "FOR": 6,
     "DES": 6,
@@ -87,9 +87,25 @@
       "effetto": "Un’arma o proiettile di ferro o acciaio non magici che lo colpisce direttamente fa dopo il colpo una PS Integrità: fallimento −1 PI (anche se l’AR ha assorbito tutto, non se una Difesa ha evitato il contatto). Una sola applicazione per arma e attacco; un’arma naturale non arrugginisce."
     }
   ],
-  "note": "Percezione 14 per l’odore del ferro. La ruggine non corrode carne, legno, pietra, altri metalli o oggetti mistici. Comportamento: preferisce le Antenne al Morso; smette di inseguire chi abbandona una fonte di ferro; sotto 6 PV o a Ferita Profonda fugge.",
+  "note": "Consumatore di metalli • minaccia all’equipaggiamento • Natura Comune. Condotta. Preferisce Antenne al Morso e smette di inseguire chi abbandona una fonte di nutrimento adeguata, se non viene aggredito. Sotto 8 PV fugge. La corazza non è equipaggiamento recuperabile con proprietà corrosive. Non applica la vulnerabilità al freddo della Covata.",
   "_bestiario": {
     "edizione": "Mostri 0.69",
-    "sistema_salute": "solo_PV"
+    "sistema_salute": "solo_PV",
+    "campi": {
+      "pv": "Mostri 0.69",
+      "pm": "Mostri 0.69",
+      "caratteristiche": "Mostri 0.69",
+      "ar": "Mostri 0.69",
+      "difese": "Mostri 0.69",
+      "salvezze": "Mostri 0.69",
+      "iniziativa": "Mostri 0.69",
+      "azioni": "Mostri 0.69",
+      "movimento": "Mostri 0.69",
+      "spazio": "Mostri 0.69",
+      "abilita": "Mostri 0.47",
+      "attacchi": "Mostri 0.47",
+      "capacita": "Mostri 0.47",
+      "gs_px": "Mostri 0.69"
+    }
   }
 }

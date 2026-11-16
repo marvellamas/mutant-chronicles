@@ -3,7 +3,7 @@
   "versione": 1,
   "id": "signore-della-guerra-hobgoblin",
   "nome": "Signore della guerra hobgoblin",
-  "fonte": "dal Manuale dei Mostri v0.46 (Word del 27/10/2026), cap. 8 «Catalogo delle creature» — Capi e varianti dei popoli guerrieri",
+  "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Signore della guerra hobgoblin",
   "caratteristiche": {
     "FOR": 8,
     "DES": 6,
@@ -48,11 +48,11 @@
       "va": 13,
       "danno": "1d8+3",
       "natura": "Naturale",
-      "portata_q": 1,
-      "ac": 1,
       "proprieta": [
         "Taglio"
-      ]
+      ],
+      "portata_q": 1,
+      "ac": 1
     },
     {
       "nome": "Giavellotto a mano",
@@ -60,11 +60,11 @@
       "va": 13,
       "danno": "1d6+2",
       "natura": "Naturale",
-      "portata_q": 1,
-      "ac": 1,
       "proprieta": [
         "Perforazione"
-      ]
+      ],
+      "portata_q": 1,
+      "ac": 1
     },
     {
       "nome": "Giavellotto lanciato",
@@ -72,14 +72,14 @@
       "va": 11,
       "danno": "1d6+1",
       "natura": "Naturale",
+      "proprieta": [
+        "Perforazione"
+      ],
       "gittata_q": 24,
       "modalita": [
         "S"
       ],
-      "ac": 1,
-      "proprieta": [
-        "Perforazione"
-      ]
+      "ac": 1
     }
   ],
   "abilita": [
@@ -151,9 +151,25 @@
       "effetto": "Variante di atterramento senza danno (Sbilanciare Migliorato −2; la penalità della Pesante è già nel 13): un nemico adiacente entro 1 Q, di taglia non maggiore del comandante; occorrono lo Scudo medio impugnato e integro, terreno che consenta il contatto e la possibilità di spinta. Il bersaglio si oppone con Atletica oppure Difese per Schivare, a propria scelta: opposizione difensiva della capacità, senza costo di AzP o AzM e senza ulteriore Schivata o Parata (Immobilizzato e altre penalità fisiche si applicano; non si usano le PS). Se vince il comandante il bersaglio è A Terra nel proprio spazio: nessun danno ai PV o ai PI, spostamento, AC da localizzare o Magistrale automatico; un bersaglio già A Terra non subisce un effetto aggiuntivo. Consuma uno dei tre impieghi offensivi del Round, non è Opportunità né attacco ordinato; non atterra automaticamente un Ogre, un volatore fuori portata o una creatura senza assetto compatibile; non si applicano Attacco coordinato, bonus al danno o Furia. Possedere uno Scudo non concede questa variante in generale."
     }
   ],
-  "note": "AR 7 con Scudo medio, 5 senza; Parata 14 (valore delle Difese), Schivata / Elusione 9. I VA pronti includono la Pesante: rimuovendola recupera +2 ai VA fisici penalizzati e Movimento 6 / 12 / 18 Q, perdendo AR 5 (lo Scudo resta distinto). Parla Comune e Goblin. Veterano in armatura completa: guida il reparto, sfrutta i fianchi scoperti e alterna colpi e Parate. Condotta: sotto 17 PV o a Ferita Profonda cerca copertura, rinforzi o condizioni di resa; non combatte fino alla morte. Fonte: Hobgoblin Warlord, p. 187.",
+  "note": "Hobgoblin • comandante di una forza organizzata • Natura Comune.",
   "_bestiario": {
     "edizione": "Mostri 0.69",
-    "sistema_salute": "solo_PV"
+    "sistema_salute": "solo_PV",
+    "campi": {
+      "pv": "Mostri 0.69",
+      "pm": "Mostri 0.69",
+      "caratteristiche": "Mostri 0.69",
+      "ar": "Mostri 0.69",
+      "difese": "Mostri 0.69",
+      "salvezze": "Mostri 0.69",
+      "iniziativa": "Mostri 0.69",
+      "azioni": "Mostri 0.69",
+      "movimento": "Mostri 0.69",
+      "spazio": "Mostri 0.69",
+      "abilita": "Mostri 0.69",
+      "attacchi": "Mostri 0.69",
+      "capacita": "Mostri 0.47",
+      "gs_px": "Mostri 0.69"
+    }
   }
 }

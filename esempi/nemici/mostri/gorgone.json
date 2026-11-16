@@ -1,0 +1,117 @@
+{
+  "formato": "mutant-nemico",
+  "versione": 1,
+  "id": "gorgone",
+  "nome": "Gorgone",
+  "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Gorgone",
+  "taglia": "grande",
+  "note": "Grande predatore dall’aspetto di un bovino ricoperto di placche metalliche. È un organismo vivente, distinto dalla Medusa, e pietrifica con un’esalazione anziché con lo sguardo.",
+  "pv": 102,
+  "pm": 14,
+  "caratteristiche": {
+    "FOR": 10,
+    "DES": 5,
+    "COS": 9,
+    "INT": 2,
+    "SAG": 6,
+    "CAR": 4
+  },
+  "ar": {
+    "totale": 5,
+    "magica": 0
+  },
+  "difese": 10,
+  "salvezze": {
+    "tempra": 14,
+    "riflessi": 10,
+    "volonta": 9,
+    "magia": 12
+  },
+  "iniziativa": 1,
+  "azioni": {
+    "principali": 2,
+    "movimento": 1
+  },
+  "movimento": {
+    "passo": 8,
+    "corsa": 16,
+    "scatto": 24
+  },
+  "spazio": "2 × 2 Q",
+  "abilita": [
+    {
+      "nome": "Corpo a corpo",
+      "va": 14
+    },
+    {
+      "nome": "Atletica",
+      "va": 15
+    },
+    {
+      "nome": "Percezione",
+      "va": 12
+    },
+    {
+      "nome": "Sopravvivenza",
+      "va": 11
+    }
+  ],
+  "capacita": [
+    {
+      "nome": "Soffio pietrificante",
+      "effetto": "VA —. Danno: Due fasi; Tempra −2. Portata/costo: Cono 6 × 3 Q; 2 AzP e 3 PM; "
+    },
+    {
+      "nome": "Corazza vivente",
+      "effetto": "Scurovisione 12 Q. Immune alla pietrificazione; non è un costrutto, non possiede le immunità dei golem e non assorbe il Fuoco. Le placche sono parte del corpo: AR biologica senza una seconda riserva di PI, senza corazza indossabile recuperabile. Nessuna Parata naturale."
+    },
+    {
+      "nome": "Carica",
+      "effetto": "Dopo almeno quattro Q rettilinei verso un bersaglio con la propria AzM, la prima Cornata con danno finale impone Tempra −2 a chi poggia su una superficie e occupa al massimo 2 × 2 Q. Fallimento A Terra. Non aggiunge danni o un attacco gratuito: gli Zoccoli successivi costano l’altra AzP. Massimo una Cornata e un attacco di Zoccoli per Round, Opportunità compresa."
+    },
+    {
+      "nome": "Soffio",
+      "effetto": "Due AzP e tre PM; usato nel Round R torna disponibile alla sua Iniziativa in R + 3. Cono lungo sei Q e largo alla fine tre Q, bloccato dai solidi. Espone tutti i viventi biologici nell’area, alleati compresi, che respirino l’esalazione; un apparato respiratorio completamente sigillato e operativo evita l’inalazione. Non richiede contatto degli sguardi: chiudere gli occhi non protegge. Nessun tiro per colpire o Difesa attiva."
+    },
+    {
+      "nome": "Due fasi",
+      "effetto": "Tempra −2: successo evita; fallimento Immobilizzato e cosciente. Alla fine della successiva Iniziativa della vittima ripete Tempra −2: successo annulla, fallimento completa la pietrificazione. Anche un Maldestro iniziale richiede il secondo tiro; esposizioni ulteriori non lo anticipano. Non è un veleno biologico: immunità al veleno non protegge e Cura Avvelenamenti non annulla l’effetto. Nessun danno immediato o risucchio di PM."
+    },
+    {
+      "nome": "Statua",
+      "effetto": "Come Basilisco e Medusa: niente Azioni, Movimento, percezione o Difese attive; non è morta e non richiede respiro o cibo. Conserva PV, PM, AR, Ferite e Menomazioni precedenti, senza nuova corazza. Danni e Morente restano ordinari; processi biologici sospesi e ripresi al ritorno, senza cura biologica finché è statua. L’effetto persiste anche dopo la morte del Gorgone."
+    },
+    {
+      "nome": "Rimozione",
+      "effetto": "Le due fasi sono un unico effetto di potenza 9, rimovibile con Negare Potere dal bersaglio; il successo restituisce carne e libertà, non PV o PM. Barriera Mentale non aiuta Tempra contro una trasformazione fisica. Una statua non deve essere demolita per liberare la persona; rotture e lesioni non si cancellano col ritorno. Il soffio residuo non rimane come una nube che espone nei Round successivi."
+    },
+    {
+      "nome": "Altri movimenti",
+      "effetto": "spazio 2 × 2 Q"
+    }
+  ],
+  "gs_px": {
+    "gs": "Eroe",
+    "px": 70,
+    "per_pg": 4
+  },
+  "_bestiario": {
+    "campi": {
+      "pv": "Mostri 0.69",
+      "pm": "Mostri 0.69",
+      "caratteristiche": "Mostri 0.69",
+      "ar": "Mostri 0.69",
+      "difese": "Mostri 0.69",
+      "salvezze": "Mostri 0.69",
+      "iniziativa": "Mostri 0.69",
+      "azioni": "Mostri 0.69",
+      "movimento": "Mostri 0.69",
+      "spazio": "Mostri 0.69",
+      "abilita": "Mostri 0.69",
+      "capacita": "Mostri 0.69",
+      "gs_px": "Mostri 0.69"
+    },
+    "edizione": "Mostri 0.69",
+    "sistema_salute": "solo_PV"
+  }
+}

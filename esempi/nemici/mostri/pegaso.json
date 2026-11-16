@@ -3,7 +3,7 @@
   "versione": 1,
   "id": "pegaso",
   "nome": "Pegaso",
-  "fonte": "dal Manuale dei Mostri v0.46 (Word del 27/10/2026), cap. 8 «Catalogo delle creature» — Vegetali e custodi delle foreste",
+  "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Pegaso",
   "caratteristiche": {
     "FOR": 9,
     "DES": 7,
@@ -49,11 +49,11 @@
       "va": 12,
       "danno": "1d8+2",
       "natura": "Naturale",
-      "portata_q": 1,
-      "ac": 1,
       "proprieta": [
         "Contundente"
-      ]
+      ],
+      "portata_q": 1,
+      "ac": 1
     }
   ],
   "abilita": [
@@ -77,20 +77,41 @@
   "capacita": [
     {
       "nome": "Sensi e parola",
-      "effetto": "Vista e udito ordinari, senza scurovisione. Comprende due lingue assegnate all’ambiente ma non parla con voce umanoide (gesti o una capacità di comunicazione adatta). Intelligenza e volontà personali. Braccia = zampe anteriori, Gambe = posteriori; le ali sono appendici delle Braccia."
+      "effetto": "Vista e udito ordinari, senza scurovisione. Comprende due lingue assegnate all’ambiente ma non può parlare con voce umanoide. Può rispondere con gesti o tramite una capacità di comunicazione adatta. Intelligenza e volontà restano personali: Cavalcare non lo rende un animale privo di decisioni."
     },
     {
       "nome": "Volo",
-      "effetto": "Ali reali: servono spazio e un percorso per la loro apertura. Non resta sospeso come un organismo fluttuante. Danni alle ali, perdita di coscienza o impedimenti possono causare la normale caduta. Volo e terra condividono il budget dei tragitti misti; salire in quota non dà AzM extra né attacchi in picchiata gratuiti."
+      "effetto": "Usa ali reali; occorrono spazio e un percorso che accolgano la sua apertura. Non resta sospeso come un organismo fluttuante. Danni alle ali, perdita di coscienza o condizioni che impediscano il volo possono provocare la normale caduta. Volo e terra condividono il budget dei tragitti misti; salire in quota non concede AzM extra né attacchi in picchiata gratuiti."
     },
     {
       "nome": "Cavaliere",
-      "effetto": "Può accettare un cavaliere di spazio 1 × 1 Q con equipaggiamento entro il carico ordinario (movimento del profilo non sovraccarico). Pegaso e cavaliere mantengono Azioni, Difese e bersagli distinti. Una sella o bardatura aggiunta cambia la dotazione."
+      "effetto": "Può accettare un cavaliere di spazio 1 × 1 Q, con equipaggiamento entro il proprio carico ordinario. Montare, Cavalcare, ingombro e carichi seguono il Giocatore; i valori di movimento indicano il profilo non sovraccarico. Pegaso e cavaliere mantengono Azioni, Difese e bersagli distinti. Una sella o bardatura aggiunta cambia la dotazione e non è già compresa nella scheda."
+    },
+    {
+      "nome": "Altri movimenti",
+      "effetto": "spazio 2 × 2 Q"
     }
   ],
-  "note": "Può diventare un alleato o un trasportatore consenziente. Condotta: cerca una via aerea libera, protegge un compagno scelto, può rifiutare un ordine suicida; sotto 9 PV o a Ferita Profonda si allontana. Fonte: Pegasus, p. 250.",
+  "note": "Cavallo alato senziente • volo e alleanza • Natura Comune. Condotta. Cerca una via aerea libera, protegge un compagno scelto e può rifiutare un ordine suicida. Sotto 12 PV tenta di allontanarsi. Per le localizzazioni, Braccia sono le zampe anteriori e Gambe quelle posteriori; le ali sono appendici delle Braccia, distinguendo in anticipo quale parte funzionale viene colpita.",
   "_bestiario": {
     "edizione": "Mostri 0.69",
-    "sistema_salute": "solo_PV"
-  }
+    "sistema_salute": "solo_PV",
+    "campi": {
+      "pv": "Mostri 0.69",
+      "pm": "Mostri 0.69",
+      "caratteristiche": "Mostri 0.69",
+      "ar": "Mostri 0.69",
+      "difese": "Mostri 0.69",
+      "salvezze": "Mostri 0.69",
+      "iniziativa": "Mostri 0.69",
+      "azioni": "Mostri 0.69",
+      "movimento": "Mostri 0.69",
+      "spazio": "Mostri 0.69",
+      "abilita": "Mostri 0.69",
+      "attacchi": "Mostri 0.69",
+      "capacita": "Mostri 0.69",
+      "gs_px": "Mostri 0.69"
+    }
+  },
+  "taglia": "grande"
 }

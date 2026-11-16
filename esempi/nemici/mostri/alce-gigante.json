@@ -3,7 +3,7 @@
   "versione": 1,
   "id": "alce-gigante",
   "nome": "Alce gigante",
-  "fonte": "dal Manuale dei Mostri v0.46 (Word del 27/10/2026), cap. 8 «Catalogo delle creature» — Predatori e grandi erbivori",
+  "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Alce gigante",
   "caratteristiche": {
     "FOR": 9,
     "DES": 7,
@@ -48,11 +48,11 @@
       "va": 12,
       "danno": "2d6+2",
       "natura": "Naturale",
-      "portata_q": 2,
-      "ac": 1,
       "proprieta": [
         "Contusione"
-      ]
+      ],
+      "portata_q": 2,
+      "ac": 1
     },
     {
       "nome": "Corna in Impeto",
@@ -60,12 +60,11 @@
       "va": 12,
       "danno": "3d6+2",
       "natura": "Naturale",
-      "portata_q": 2,
-      "ac": 1,
       "proprieta": [
         "Contusione"
       ],
-      "note": "Dopo almeno 4 Q di Passo rettilineo; comprende un solo 1d6 da slancio. Almeno 1 danno finale: Tempra senza modificatore a una creatura ≤ 2 × 2 Q, fallimento → A Terra. Non riceve anche la Carica ordinaria."
+      "portata_q": 2,
+      "ac": 1
     },
     {
       "nome": "Zoccoli",
@@ -73,12 +72,11 @@
       "va": 12,
       "danno": "2d8+2",
       "natura": "Naturale",
-      "portata_q": 1,
-      "ac": 1,
       "proprieta": [
         "Contusione"
       ],
-      "note": "Solo contro una creatura A Terra non maggiore di 2 × 2 Q, con un appoggio che permetta il colpo; serve la seconda AzP e la portata di 1 Q."
+      "portata_q": 1,
+      "ac": 1
     }
   ],
   "abilita": [
@@ -113,9 +111,26 @@
       "effetto": "Parla il linguaggio degli Alci giganti e comprende altre due lingue assegnate alla comunità o all’origine (non le parla automaticamente). Vista e udito ordinari. Il Direttore può dare significati culturali alla sua comparsa, ma la scheda non manifesta divinità, non concede profezie e non rende una caccia maledetta."
     }
   ],
-  "note": "Erbivoro senziente. Condotta: può indicare una via sicura, negare un passaggio o proteggere altri animali; sotto 10 PV o a Ferita Profonda si disimpegna; la sua comprensione permette una trattativa compatibile con il linguaggio. Fonte: Giant Elk, p. 325.",
+  "note": "Erbivoro senziente • corna e zoccoli • Natura Comune. Condotta. Può indicare una via sicura, negare un passaggio o proteggere altri animali. Le corna non permettono di impugnare armi o parare. Sotto 13 PV tende a disimpegnarsi; la sua comprensione permette anche una trattativa compatibile con il linguaggio e la situazione.",
   "_bestiario": {
     "edizione": "Mostri 0.69",
-    "sistema_salute": "solo_PV"
-  }
+    "sistema_salute": "solo_PV",
+    "campi": {
+      "pv": "Mostri 0.69",
+      "pm": "Mostri 0.69",
+      "caratteristiche": "Mostri 0.69",
+      "ar": "Mostri 0.69",
+      "difese": "Mostri 0.69",
+      "salvezze": "Mostri 0.69",
+      "iniziativa": "Mostri 0.69",
+      "azioni": "Mostri 0.69",
+      "movimento": "Mostri 0.69",
+      "spazio": "Mostri 0.69",
+      "abilita": "Mostri 0.69",
+      "attacchi": "Mostri 0.69",
+      "capacita": "Mostri 0.47",
+      "gs_px": "Mostri 0.69"
+    }
+  },
+  "taglia": "grande"
 }

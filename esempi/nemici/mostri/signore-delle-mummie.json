@@ -1,0 +1,135 @@
+{
+  "formato": "mutant-nemico",
+  "versione": 1,
+  "id": "signore-delle-mummie",
+  "nome": "Signore delle Mummie",
+  "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Signore delle Mummie",
+  "note": "Sovrano non morto che conserva cuore e volontà in un sepolcro. Unisce il Marciume della tomba a comando, magia e ritorno del corpo.",
+  "pv": 117,
+  "pm": 50,
+  "caratteristiche": {
+    "FOR": 8,
+    "DES": 5,
+    "COS": 8,
+    "INT": 6,
+    "SAG": 9,
+    "CAR": 8
+  },
+  "ar": {
+    "totale": 5,
+    "magica": 3
+  },
+  "difese": 11,
+  "salvezze": {
+    "tempra": 15,
+    "riflessi": 10,
+    "volonta": 15,
+    "magia": 16
+  },
+  "iniziativa": 2,
+  "azioni": {
+    "principali": 3,
+    "movimento": 1
+  },
+  "movimento": {
+    "passo": 4,
+    "corsa": 8,
+    "scatto": 12
+  },
+  "spazio": "1 Q",
+  "abilita": [
+    {
+      "nome": "Corpo a corpo",
+      "va": 16
+    },
+    {
+      "nome": "Potere",
+      "va": 16
+    },
+    {
+      "nome": "Occultismo",
+      "va": 15
+    },
+    {
+      "nome": "Cultura",
+      "va": 14
+    },
+    {
+      "nome": "Percezione",
+      "va": 14
+    }
+  ],
+  "attacchi": [
+    {
+      "nome": "Pugno funerario",
+      "tipo": "ravvicinato",
+      "va": 16,
+      "danno": "2d8+3",
+      "natura": "Naturale",
+      "proprieta": [
+        "AC 1"
+      ],
+      "portata_q": 1,
+      "ac": 1
+    }
+  ],
+  "capacita": [
+    {
+      "nome": "Sensi e danni",
+      "effetto": "Scurovisione 12 Q salvo la percezione specifica dell’Artiglio; non vede attraverso ostacoli. Attacchi pronti senza altri bonus da aggiungere. Le immunità e le deroghe sono nelle capacità. I danni di questa scheda non ricevono EQ dei PNG."
+    },
+    {
+      "nome": "Corpo e marciume",
+      "effetto": "Dimezza Naturale dopo Difese e prima dell’AR; Magico ed Etereo normali. Immune a Terrorizzato, fascinazione e paralisi. Vulnerabile al Fuoco: raddoppia la componente dopo Difese e riduzioni e prima dell’AR. Una volta per Round può spendere due PM prima del Pugno: almeno un danno residuo impone Tempra −2 o Marciume della tomba, identico all’affezione della Mummia già descritta nel catalogo. Pericolosità IV, recuperi di PV dimezzati; Tempra giornaliera o Cura Malattie 6 per eliminarlo. Non riduce PV massimi e non viene rimosso dal semplice Negare Potere sulla creatura."
+    },
+    {
+      "nome": "Sguardo e parola",
+      "effetto": "Sguardo terribile: 1 AzP e 2 PM, una creatura visibile entro 6 Q che lo vede, Volontà −2; fallimento Terrorizzato per 3 Round. Successo o liberazione rende immuni allo Sguardo di questo Signore per 24 ore. Negare Potere confronta 9. Parola blasfema: 2 AzP e 4 PM, una volta ogni 3 Round; viventi che lo odono entro 2 Q, Tempra −2 o Stordito per 1 Round. Nessuna Difesa attiva; barriere acustiche adeguate impediscono l’esposizione."
+    },
+    {
+      "nome": "Polvere e vortice",
+      "effetto": "Polvere accecante: 1 AzP e 2 PM, una volta per Round; creature con occhi esposti entro 1 Q, Tempra 0 o Accecato per 1 Round, rimovibile con Cura Spirituale compatibile. Vortice di sabbia: 1 AzP e 2 PM, una volta per Round; percorre con la propria AzM fino a 6 Q attraverso un percorso libero, senza Opportunità, poi torna corporeo. Non attraversa muri, non diventa immune ai danni e non ottiene un’altra AzM."
+    },
+    {
+      "nome": "Magia e difesa",
+      "effetto": "Conosce Comando, Maledizione, Dardo Spirituale, Scudo Spirituale, Negare Potere e Individuare, fino al livello 12. Potere 16, scala Taumaturgo e componenti ordinarie. Resistenza mistica +2 alle PS contro effetti magici, non già inclusa. Può spendere una sola delle tre AzP alla fine dell’Iniziativa di un avversario per Pugno, Sguardo o Polvere; nessun nuovo totale di azioni leggendarie."
+    },
+    {
+      "nome": "Cuore preservato",
+      "effetto": "Dopo la distruzione effettiva ricostituisce il corpo in 24 ore entro 1 Q dal cuore conservato, con PV, PM, Ferite e Menomazioni ripristinati. Cuore: PI 3, AR 2 non magica, PS Integrità 10; il Fuoco ignora quell’AR. Distruggerlo impedisce ulteriori ritorni ma non distrugge il corpo ancora attivo. Non è un bersaglio automaticamente visibile o presente accanto al Signore: posizione e protezioni si stabiliscono prima dell’incontro. Nessuna azione di tana automatica è inclusa."
+    },
+    {
+      "nome": "Interdizione vitale",
+      "effetto": "Due AzP e quattro PM, una volta ogni tre Round. Viventi entro sei Q che può percepire: Magia −2; fallimento impedisce recuperi di PV fino alla fine del Round successivo. Non impedisce la cura delle Ferite, il recupero di PM o la stabilizzazione. Negare Potere può terminarla, confronto 9. Nessun danno o Ferita automatica."
+    },
+    {
+      "nome": "Altri movimenti",
+      "effetto": "spazio 1 × 1 Q"
+    }
+  ],
+  "gs_px": {
+    "gs": "Mito",
+    "px": 200,
+    "per_pg": 4
+  },
+  "_bestiario": {
+    "campi": {
+      "pv": "Mostri 0.69",
+      "pm": "Mostri 0.69",
+      "caratteristiche": "Mostri 0.69",
+      "ar": "Mostri 0.69",
+      "difese": "Mostri 0.69",
+      "salvezze": "Mostri 0.69",
+      "iniziativa": "Mostri 0.69",
+      "azioni": "Mostri 0.69",
+      "movimento": "Mostri 0.69",
+      "spazio": "Mostri 0.69",
+      "abilita": "Mostri 0.69",
+      "attacchi": "Mostri 0.69",
+      "capacita": "Mostri 0.69",
+      "gs_px": "Mostri 0.69"
+    },
+    "edizione": "Mostri 0.69",
+    "sistema_salute": "solo_PV"
+  }
+}

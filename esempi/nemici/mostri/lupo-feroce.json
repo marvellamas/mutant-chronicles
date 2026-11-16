@@ -3,7 +3,7 @@
   "versione": 1,
   "id": "lupo-feroce",
   "nome": "Lupo feroce",
-  "fonte": "dal Manuale dei Mostri v0.46 (Word del 27/10/2026), cap. 8 «Catalogo delle creature» — Bestie e predatori",
+  "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Lupo feroce",
   "caratteristiche": {
     "FOR": 7,
     "DES": 6,
@@ -77,20 +77,40 @@
   "capacita": [
     {
       "nome": "Branco e sensi",
-      "effetto": "Applica Branco, con +2 VA condizionale. +2 a Percezione quando udito oppure olfatto sono determinanti, senza raddoppiare il bonus. Non possiede scurovisione o percezione magica."
+      "effetto": "Applica Branco, con +2 VA condizionale. Ha +2 a Percezione quando udito oppure olfatto sono determinanti, senza raddoppiare il bonus. Tracce, vento, rumori e ostacoli continuano a contare; non possiede scurovisione o percezione magica."
     },
     {
       "nome": "Abbattere la preda",
-      "effetto": "Una volta per Round, un Morso che infligge almeno 1 danno finale può imporre Tempra senza modificatore proprio a una preda non superiore a 2 × 2 Q. Fallimento o Maldestro applica A Terra. Restano i limiti di appoggio, l’assenza di spostamento e le regole per rialzarsi del Lupo.",
-      "usi": {
-        "quanti": 1,
-        "per": "Round"
-      }
+      "effetto": "Una volta per Round, un Morso che infligge almeno 1 danno finale può imporre Tempra senza modificatore proprio a una preda non superiore a 2 × 2 Q. Fallimento o Maldestro applica A Terra. Rimangono i limiti di appoggio, l’assenza di spostamento e le normali regole per rialzarsi descritti per il Lupo."
+    },
+    {
+      "nome": "Movimento e Difese",
+      "effetto": "Lo spazio del corpo deve poter attraversare il percorso. La velocità non permette di attraversare avversari o di recuperare un’AzM spesa in Schivata. Una sola AzP obbliga a scegliere fra Morso e Difesa; la caccia in branco non risolve contemporaneamente gli attacchi degli esemplari."
+    },
+    {
+      "nome": "Altri movimenti",
+      "effetto": "spazio 2 × 1 Q"
     }
   ],
-  "note": "Una sola AzP obbliga a scegliere fra Morso e Difesa. Condotta: insegue una preda separata, evita un fronte compatto, cerca riparo sotto 7 PV o a Ferita Profonda. Non è una cavalcatura addestrata.",
+  "note": "Bestia quadrupede gigante • cacciatore di branco • Natura Comune. Condotta. Insegue una preda separata, ma evita un fronte compatto ben difeso. Sotto 10 PV cerca il riparo dei compagni. Dimensioni e aggressività non lo rendono una cavalcatura addestrata: quel ruolo richiede una variante e una gestione propria.",
   "_bestiario": {
     "edizione": "Mostri 0.69",
-    "sistema_salute": "solo_PV"
+    "sistema_salute": "solo_PV",
+    "campi": {
+      "pv": "Mostri 0.69",
+      "pm": "Mostri 0.69",
+      "caratteristiche": "Mostri 0.69",
+      "ar": "Mostri 0.69",
+      "difese": "Mostri 0.69",
+      "salvezze": "Mostri 0.69",
+      "iniziativa": "Mostri 0.69",
+      "azioni": "Mostri 0.69",
+      "movimento": "Mostri 0.69",
+      "spazio": "Mostri 0.69",
+      "abilita": "Mostri 0.69",
+      "attacchi": "Mostri 0.47",
+      "capacita": "Mostri 0.69",
+      "gs_px": "Mostri 0.69"
+    }
   }
 }

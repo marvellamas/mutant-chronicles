@@ -1,0 +1,105 @@
+{
+  "formato": "mutant-nemico",
+  "versione": 1,
+  "id": "incubo-equino",
+  "nome": "Incubo equino",
+  "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Incubo equino",
+  "note": "Cavalcatura intelligente dalla criniera e dagli zoccoli ardenti. Vola e può accompagnare brevemente altre creature in Fase; non è un normale cavallo che obbedisce a chiunque lo monti.",
+  "pv": 73,
+  "pm": 24,
+  "caratteristiche": {
+    "FOR": 8,
+    "DES": 7,
+    "COS": 8,
+    "INT": 5,
+    "SAG": 6,
+    "CAR": 7
+  },
+  "ar": {
+    "totale": 2,
+    "magica": 0
+  },
+  "difese": 11,
+  "salvezze": {
+    "tempra": 12,
+    "riflessi": 11,
+    "volonta": 11,
+    "magia": 11
+  },
+  "iniziativa": 2,
+  "azioni": {
+    "principali": 2,
+    "movimento": 1
+  },
+  "movimento": {
+    "passo": 12,
+    "corsa": 24,
+    "scatto": 36,
+    "volo": 18
+  },
+  "spazio": "1 × 2 Q",
+  "abilita": [
+    {
+      "nome": "Corpo a corpo",
+      "va": 13
+    },
+    {
+      "nome": "Atletica",
+      "va": 13
+    },
+    {
+      "nome": "Percezione",
+      "va": 11
+    }
+  ],
+  "capacita": [
+    {
+      "nome": "Zoccoli ardenti",
+      "effetto": "VA 13. Danno: AC 2: 2d6+2 Naturale, Contusione, poi 1d6 Magico, Fuoco. Portata/costo: 1 Q; 1 AzP; "
+    },
+    {
+      "nome": "Corpo e luce",
+      "effetto": "Vivente biologico, immune al Fuoco e ai suoi Stati diretti; fumo e mancanza d’aria restano pericolosi. Non possiede altre immunità di famiglia o Parata naturale. Massimo un attacco di Zoccoli per Round, Opportunità compresa. Produce luce ordinaria di raggio due Q e penombra per altri due, senza Fuoco ad area o danni gratuiti agli adiacenti. La luce non rivela invisibilità e non è Luce Mistica. Da Svenuto in volo cade."
+    },
+    {
+      "nome": "Zoccoli e cavaliere",
+      "effetto": "Un tiro per colpire e una Difesa per Zoccoli, poi due componenti successive con AR separate; Magistrale solo sulla prima. Dopo residuo del solo Fuoco e superamento di Ignifugo, Riflessi 0 evita Incendiato per 1+1d3 Round. Un cavaliere realmente in sella e accettato dall’Incubo dimezza per eccesso Fuoco dopo Difese e prima dell’AR: il beneficio non si somma ad altre resistenze, non evita automaticamente Incendiato e termina quando scende. Non protegge gli altri passeggeri soltanto perché sono in Fase."
+    },
+    {
+      "nome": "Fase condivisa",
+      "effetto": "Due AzP e sei PM, una volta per ventiquattro ore, tre Round senza Concentrazione. L’Incubo e fino a tre creature consenzienti a Contatto, cavaliere compreso, entrano nella stessa Fase alle regole comuni, potenza nove. Ognuno occupa spazio e usa Movimento e Azioni propri, senza diventare un passeggero fisicamente sostenuto. Trasporto robusto: carico ordinario 160 kg, massimo 320 kg e spinta o traino a terra 640 kg, con le regole di Carico e gestione degli animali del catalogo. Cavaliere, dotazione e finimenti rientrano nello stesso totale; in volo è ammesso soltanto il carico ordinario. Un solo cavaliere può restare in sella; non appaiono sedili ulteriori. Durante la Fase ciascuno percorre solo Passo fino a sei Q con la propria modalità già posseduta; un umano a piedi non ottiene Volo."
+    },
+    {
+      "nome": "Termine e limiti",
+      "effetto": "Ciascun beneficiario può rientrare prima con una propria AzP. Negare nove sul singolo libera quello; Negare sul legame dell’Incubo, perdita di coscienza dell’Incubo, morte o scadenza terminano l’effetto su tutti. Perdita di coscienza di un passeggero termina solo la sua Fase. Si termina ogni Movimento in uno spazio libero valido, con le normali conseguenze di una Caduta se manca il sostegno. Non crea un portale o un trasferimento istantaneo a destinazioni remote e non aggira le barriere che vietano la Fase. L’Incubo mantiene volontà propria; nessun padrone, finimento o sella compreso nei 50 PX."
+    },
+    {
+      "nome": "Altri movimenti",
+      "effetto": "spazio 1 × 2 Q"
+    }
+  ],
+  "gs_px": {
+    "gs": "Veterano",
+    "px": 50,
+    "per_pg": 4
+  },
+  "_bestiario": {
+    "campi": {
+      "pv": "Mostri 0.69",
+      "pm": "Mostri 0.69",
+      "caratteristiche": "Mostri 0.69",
+      "ar": "Mostri 0.69",
+      "difese": "Mostri 0.69",
+      "salvezze": "Mostri 0.69",
+      "iniziativa": "Mostri 0.69",
+      "azioni": "Mostri 0.69",
+      "movimento": "Mostri 0.69",
+      "spazio": "Mostri 0.69",
+      "abilita": "Mostri 0.69",
+      "capacita": "Mostri 0.69",
+      "gs_px": "Mostri 0.69"
+    },
+    "edizione": "Mostri 0.69",
+    "sistema_salute": "solo_PV"
+  }
+}

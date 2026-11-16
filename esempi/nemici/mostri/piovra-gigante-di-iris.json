@@ -3,7 +3,7 @@
   "versione": 1,
   "id": "piovra-gigante-di-iris",
   "nome": "Piovra gigante di Iris",
-  "fonte": "dal Manuale dei Mostri v0.46 (Word del 27/10/2026), cap. 7 «Fauna di Iris» — Piovra gigante di Iris",
+  "fonte": "dal Manuale dei Mostri v0.69, cap. 7 «Fauna di Iris» — Piovra gigante di Iris",
   "caratteristiche": {
     "FOR": 9,
     "DES": 6,
@@ -115,9 +115,24 @@
       "effetto": "Furtività immersa 13"
     }
   ],
-  "note": "Esemplare modificato • predatore acquatico • Natura Comune. Impiego e PX. Il valore di 70 PX comprende corpo e appendici; i tentacoli non assegnano PX separati. GS e PX restano provvisori, da verificare al tavolo. Il Polpo gigante del catalogo conserva il proprio profilo standard. ¹ Prova contrapposta di Corpo a corpo. Gli attacchi contro creature producono ciascuno AC 1. Stritolare il mezzo si usa al massimo una volta per Round, alla propria Iniziativa: ogni tentacolo applica separatamente il proprio danno allo scafo. Risorse nel manuale: Corpo: 60 PV • ogni tentacolo: 30 PV. GS e PX provvisori nel manuale: da verificare al tavolo (Davide li confermerà).",
+  "note": "Esemplare modificato • predatore acquatico • Natura Comune. Impiego e PX. Il valore di 70 PX comprende corpo e appendici; i tentacoli non assegnano PX separati. GS e PX restano provvisori, da verificare al tavolo. Il Polpo gigante del catalogo conserva il proprio profilo standard. ¹ Prova contrapposta di Corpo a corpo. Gli attacchi contro creature producono ciascuno AC 1. Stritolare il mezzo si usa al massimo una volta per Round, alla propria Iniziativa: ogni tentacolo applica separatamente il proprio danno allo scafo. Risorse nel manuale: Corpo: 78 PV • ogni tentacolo: 39 PV. GS e PX provvisori nel manuale: da verificare al tavolo (Davide li confermerà).",
   "_bestiario": {
     "edizione": "Mostri 0.69",
-    "sistema_salute": "solo_PV"
+    "sistema_salute": "solo_PV",
+    "campi": {
+      "pv": "Mostri 0.69",
+      "pm": "Mostri 0.69",
+      "caratteristiche": "Mostri 0.69",
+      "ar": "Mostri 0.69",
+      "difese": "Mostri 0.69",
+      "salvezze": "Mostri 0.69",
+      "iniziativa": "Mostri 0.69",
+      "azioni": "Mostri 0.69",
+      "movimento": "Mostri 0.69",
+      "abilita": "Mostri 0.47",
+      "attacchi": "Mostri 0.47",
+      "capacita": "Mostri 0.47",
+      "gs_px": "Mostri 0.69"
+    }
   }
 }

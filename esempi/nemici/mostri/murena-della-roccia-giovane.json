@@ -3,7 +3,7 @@
   "versione": 1,
   "id": "murena-della-roccia-giovane",
   "nome": "Murena della Roccia giovane",
-  "fonte": "dal Manuale dei Mostri v0.46 (Word del 27/10/2026), cap. 7 «Fauna di Iris» — Murena della Roccia giovane",
+  "fonte": "dal Manuale dei Mostri v0.69, cap. 7 «Fauna di Iris» — Murena della Roccia giovane",
   "caratteristiche": {
     "FOR": 5,
     "DES": 7,
@@ -64,7 +64,7 @@
     },
     {
       "nome": "Comportamento e movimento",
-      "effetto": "È una creatura corporea: le normali armi possono ferirla e il risucchio non causa overdose. Attraversa la roccia senza scavare, ma deve emergere per mordere. Il rientro richiede movimento disponibile, segue le normali regole degli attacchi di opportunità e non concede un’AzM aggiuntiva. Non percepisce automaticamente le prede oltre le pareti. Può proteggere i cuccioli, ma non possiede aura di terrore né soffio. Tende a ritirarsi sotto 5 PV o dopo una Ferita Profonda."
+      "effetto": "È una creatura corporea: le normali armi possono ferirla e il risucchio non causa overdose. Attraversa la roccia senza scavare, ma deve emergere per mordere. Il rientro richiede movimento disponibile, segue le normali regole degli attacchi di opportunità e non concede un’AzM aggiuntiva. Non percepisce automaticamente le prede oltre le pareti. Può proteggere i cuccioli, ma non possiede aura di terrore né soffio. Tende a ritirarsi sotto 7 PV."
     },
     {
       "nome": "Altri movimenti",
@@ -78,6 +78,21 @@
   "note": "Dimensioni e spazio: Lunghezza 1,2 m • 1 × 1 Q. Occhi: Due; capacità 5 PM ciascuno, vuoti alla morte. GS e PX provvisori nel manuale: da verificare al tavolo (Davide li confermerà).",
   "_bestiario": {
     "edizione": "Mostri 0.69",
-    "sistema_salute": "solo_PV"
+    "sistema_salute": "solo_PV",
+    "campi": {
+      "pv": "Mostri 0.69",
+      "pm": "Mostri 0.69",
+      "caratteristiche": "Mostri 0.69",
+      "ar": "Mostri 0.69",
+      "difese": "Mostri 0.69",
+      "salvezze": "Mostri 0.69",
+      "iniziativa": "Mostri 0.69",
+      "azioni": "Mostri 0.69",
+      "movimento": "Mostri 0.69",
+      "spazio": "Mostri 0.69",
+      "abilita": "Mostri 0.47",
+      "capacita": "Mostri 0.69",
+      "gs_px": "Mostri 0.69"
+    }
   }
 }

@@ -3,7 +3,7 @@
   "versione": 1,
   "id": "ettin",
   "nome": "Ettin",
-  "fonte": "dal Manuale dei Mostri v0.46 (Word del 27/10/2026), cap. 8 «Catalogo delle creature» — Bande e grandi avversari",
+  "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Ettin",
   "caratteristiche": {
     "FOR": 9,
     "DES": 4,
@@ -101,9 +101,26 @@
       "effetto": "Vede entro 12 Q anche nell’oscurità naturale; al buio non distingue i colori, non vede attraverso ostacoli, fumo o oscurità magica e non individua da sé chi è nascosto. Oltre i 12 Q valgono luce e vista ordinarie."
     }
   ],
-  "note": "AR 2 biologica. Oratoria 13 per intimidire. Ascia leggera e mazza ferrata entrambe pronte; nessuna armatura o scudo; para con entrambe senza sommarne i benefici. Comportamento: difende un rifugio o un accordo; sotto 15 PV o a Ferita Seria può abbandonare.",
+  "note": "Gigante bicefalo • guardiano e assaltatore • Natura Comune.",
   "_bestiario": {
     "edizione": "Mostri 0.69",
-    "sistema_salute": "solo_PV"
-  }
+    "sistema_salute": "solo_PV",
+    "campi": {
+      "pv": "Mostri 0.69",
+      "pm": "Mostri 0.69",
+      "caratteristiche": "Mostri 0.69",
+      "ar": "Mostri 0.69",
+      "difese": "Mostri 0.69",
+      "salvezze": "Mostri 0.69",
+      "iniziativa": "Mostri 0.69",
+      "azioni": "Mostri 0.69",
+      "movimento": "Mostri 0.69",
+      "spazio": "Mostri 0.69",
+      "abilita": "Mostri 0.47",
+      "attacchi": "Mostri 0.47",
+      "capacita": "Mostri 0.47",
+      "gs_px": "Mostri 0.69"
+    }
+  },
+  "taglia": "grande"
 }

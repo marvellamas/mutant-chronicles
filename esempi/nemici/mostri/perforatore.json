@@ -3,7 +3,7 @@
   "versione": 1,
   "id": "perforatore",
   "nome": "Perforatore",
-  "fonte": "dal Manuale dei Mostri v0.46 (Word del 27/10/2026), cap. 8 «Catalogo delle creature» — Creature del sottosuolo",
+  "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Perforatore",
   "caratteristiche": {
     "FOR": 5,
     "DES": 5,
@@ -63,19 +63,51 @@
   "capacita": [
     {
       "nome": "Caduta perforante",
-      "effetto": "1 AzP: si lascia cadere da 2–6 Q verticali sulla preda sotto di sé, con traiettoria libera, VA 10. Danno 1d6 Naturale ogni 2 Q di dislivello, massimo 3d6 (nessun bonus di FOR); Parata e Schivata normali, AR ordinaria. Prima del tiro indica un Q libero adiacente alla vittima su cui scivolerà; senza spazio d’arrivo non usa la manovra. Con attacco riuscito non subisce danni dalla caduta; se il tiro per colpire fallisce subisce metà per eccesso dei normali danni da caduta, ignorando la propria AR. Il movimento verticale non costa AzM. Cadute involontarie o oltre 6 Q seguono il §5.22 senza questa protezione.",
-      "azioni": {
-        "principali": 1
-      }
+      "effetto": "VA 10. Danno: 1d6 Naturale ogni 2 Q; massimo 3d6. Portata/costo: Verticale da 2 a 6 Q; "
     },
     {
       "nome": "Sensi e appigli",
-      "effetto": "Scurovisione 12 Q; l’udito integra Percezione senza vista cieca. Aderisce a pareti e soffitti. Il mimetismo richiede un supporto roccioso e immobilità. Braccia e Gambe sono le porzioni anteriore e posteriore del corpo aderente."
+      "effetto": "Scurovisione 12 Q; l’udito integra Percezione senza concedere vista cieca o individuazione attraverso pareti. Può aderire a pareti e soffitti secondo le regole comuni. Il mimetismo richiede un supporto roccioso e immobilità. Braccia e Gambe indicano rispettivamente le porzioni anteriore e posteriore del corpo aderente; danneggiarle può impedire di arrampicarsi."
+    },
+    {
+      "nome": "Caduta preparata",
+      "effetto": "1 AzP per lasciarsi cadere da 2–6 Q sulla preda sotto di sé, con traiettoria libera. Prima del tiro indica un Q libero adiacente alla vittima sul quale scivolerà dopo l’urto. Senza spazio d’arrivo non usa questa manovra. Il dislivello fissa il danno, senza bonus ulteriore di FOR. Parata e Schivata si applicano normalmente; il bersaglio usa AR ordinaria."
+    },
+    {
+      "nome": "Impatto",
+      "effetto": "Con attacco riuscito non subisce danni da quella caduta controllata, anche se la Difesa annulla il colpo. Se il tiro per colpire fallisce, subisce metà per eccesso dei normali danni da caduta, ignorando la propria AR. Il movimento verticale non costa AzM e non concede altri spostamenti; resta a terra e può usare solo il movimento ancora disponibile. Le cadute involontarie o superiori a 6 Q seguono il §5.22 senza questa protezione."
+    },
+    {
+      "nome": "Limiti e condotta",
+      "effetto": "A terra non possiede un attacco offensivo efficace né un Attacco di Opportunità; può muoversi, nascondersi o difendersi. Non si rialza sul soffitto gratuitamente e non ripete la caduta senza tornare in posizione. Sotto 7 PV cerca una fessura. Un esemplare raggiunto a terra è molto meno pericoloso di un gruppo collocato sopra un passaggio."
+    },
+    {
+      "nome": "Altri movimenti",
+      "effetto": "Terra e aderenza 1 / 2 / 3: la stessa andatura vale anche per aderenza; spazio 1 × 1 Q"
+    },
+    {
+      "nome": "Abilità particolari",
+      "effetto": "immobile sulla roccia 14"
     }
   ],
-  "note": "Stadio giovanile del Roper (nessuna trasformazione in combattimento). Furtività 14 immobile sulla roccia. Terra e aderenza 1/2/3 Q. A terra non ha un attacco offensivo efficace né Attacco di Opportunità; non ripete la caduta senza tornare in posizione. Comportamento: sotto 5 PV o a Ferita Profonda cerca una fessura. Nessun attacco in elenco: la Caduta perforante è fra le capacità, perché la sua portata è verticale (da 2 a 6 Q) e non rappresentabile come portata in Q.",
+  "note": "Predatore roccioso • agguato dall’alto • Natura Comune.",
   "_bestiario": {
     "edizione": "Mostri 0.69",
-    "sistema_salute": "solo_PV"
+    "sistema_salute": "solo_PV",
+    "campi": {
+      "pv": "Mostri 0.69",
+      "pm": "Mostri 0.69",
+      "caratteristiche": "Mostri 0.69",
+      "ar": "Mostri 0.69",
+      "difese": "Mostri 0.69",
+      "salvezze": "Mostri 0.69",
+      "iniziativa": "Mostri 0.69",
+      "azioni": "Mostri 0.69",
+      "movimento": "Mostri 0.69",
+      "spazio": "Mostri 0.69",
+      "abilita": "Mostri 0.47",
+      "capacita": "Mostri 0.69",
+      "gs_px": "Mostri 0.69"
+    }
   }
 }

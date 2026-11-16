@@ -3,7 +3,7 @@
   "versione": 1,
   "id": "pony",
   "nome": "Pony",
-  "fonte": "dal Manuale dei Mostri v0.46 (Word del 27/10/2026), cap. 8 «Catalogo delle creature» — Cavalcature e animali da lavoro",
+  "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Pony",
   "caratteristiche": {
     "FOR": 6,
     "DES": 5,
@@ -48,11 +48,11 @@
       "va": 9,
       "danno": "1d6+1",
       "natura": "Naturale",
-      "portata_q": 1,
-      "ac": 1,
       "proprieta": [
         "Contusione"
-      ]
+      ],
+      "portata_q": 1,
+      "ac": 1
     }
   ],
   "abilita": [
@@ -87,9 +87,25 @@
       "effetto": "Un attacco di Zoccoli per Round, Opportunità compresa. Non ha Trasporto robusto, Piede saldo, Impeto o Calpestare. Per un passaggio stretto si valuta il corpo reale con sella e carico: la pedina da 1 Q non elimina questi ingombri."
     }
   ],
-  "note": "Utilizzabile da un cavaliere il cui peso e ingombro siano realmente compatibili; non è una versione ridotta del Cavallo da guerra. Condotta: può seguire il conduttore o fermarsi a un segnale noto; sotto 4 PV o a Ferita Profonda tende a cercare il gruppo o un’uscita. Fonte: Pony, p. 335.",
+  "note": "Piccolo equino • cavalcatura per carichi compatibili • Natura Comune. Condotta. Non comprende linguaggi. Un esemplare abituato può seguire il conduttore o fermarsi a un segnale noto. Sotto 6 PV tende a cercare il gruppo o un’uscita. Cure, affaticamento e riposo seguono le stesse procedure degli altri animali.",
   "_bestiario": {
     "edizione": "Mostri 0.69",
-    "sistema_salute": "solo_PV"
+    "sistema_salute": "solo_PV",
+    "campi": {
+      "pv": "Mostri 0.69",
+      "pm": "Mostri 0.69",
+      "caratteristiche": "Mostri 0.69",
+      "ar": "Mostri 0.69",
+      "difese": "Mostri 0.69",
+      "salvezze": "Mostri 0.69",
+      "iniziativa": "Mostri 0.69",
+      "azioni": "Mostri 0.69",
+      "movimento": "Mostri 0.69",
+      "spazio": "Mostri 0.69",
+      "abilita": "Mostri 0.69",
+      "attacchi": "Mostri 0.69",
+      "capacita": "Mostri 0.47",
+      "gs_px": "Mostri 0.69"
+    }
   }
 }

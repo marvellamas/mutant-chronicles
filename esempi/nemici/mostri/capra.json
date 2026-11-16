@@ -3,7 +3,7 @@
   "versione": 1,
   "id": "capra",
   "nome": "Capra",
-  "fonte": "dal Manuale dei Mostri v0.46 (Word del 27/10/2026), cap. 8 «Catalogo delle creature» — Cavalcature e animali da lavoro",
+  "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Capra",
   "caratteristiche": {
     "FOR": 4,
     "DES": 5,
@@ -48,11 +48,11 @@
       "va": 8,
       "danno": "1d4+1",
       "natura": "Naturale",
-      "portata_q": 1,
-      "ac": 1,
       "proprieta": [
         "Contusione"
-      ]
+      ],
+      "portata_q": 1,
+      "ac": 1
     },
     {
       "nome": "Cornata in Impeto",
@@ -60,12 +60,11 @@
       "va": 8,
       "danno": "2d4+1",
       "natura": "Naturale",
-      "portata_q": 1,
-      "ac": 1,
       "proprieta": [
         "Contusione"
       ],
-      "note": "Dopo 4 Q di Passo rettilineo; sostituisce la Cornata normale: vedi la capacità «Impeto»."
+      "portata_q": 1,
+      "ac": 1
     }
   ],
   "abilita": [
@@ -104,9 +103,25 @@
       "effetto": "Richiede almeno 4 Q di Passo rettilineo verso la vittima nella stessa Iniziativa (usa l’AzM ordinaria e l’AzP del colpo; si dichiara prima del tiro; non si combina con Carica, Corsa, Scatto o altre manovre offensive). Il danno speciale sostituisce quello normale, senza il ×2 della Carica. Con almeno 1 danno finale: Tempra senza modificatore a una creatura non maggiore di 1 × 1 Q; fallimento → A Terra. Il Magistrale non ne peggiora la Salvezza. Usa 2d4+1 al posto del danno normale (un solo 1d4 da slancio). Una Cornata per Round, normale oppure in Impeto; l’Opportunità usa soltanto quella normale. Nessuna arrampicata speciale né aderenza ai soffitti."
     }
   ],
-  "note": "Un percorso roccioso resta una difficoltà concreta anche per un animale dal passo sicuro. Capacità di trasporto e disponibilità a portare una persona restano distinte. Condotta: può minacciare, allontanarsi o difendere i piccoli; sotto 2 PV o a Ferita Profonda tende a cercare un appoggio protetto o il branco. Fonte: Goat, p. 330.",
+  "note": "Ungulato agile • Piede saldo e Impeto • Natura Comune. Condotta. Una Cornata per Round, normale oppure in Impeto; l’Opportunità usa soltanto quella normale. Non comprende linguaggi. Può minacciare, allontanarsi o difendere i piccoli; sotto 3 PV tende a cercare un appoggio protetto o il branco.",
   "_bestiario": {
     "edizione": "Mostri 0.69",
-    "sistema_salute": "solo_PV"
+    "sistema_salute": "solo_PV",
+    "campi": {
+      "pv": "Mostri 0.69",
+      "pm": "Mostri 0.69",
+      "caratteristiche": "Mostri 0.69",
+      "ar": "Mostri 0.69",
+      "difese": "Mostri 0.69",
+      "salvezze": "Mostri 0.69",
+      "iniziativa": "Mostri 0.69",
+      "azioni": "Mostri 0.69",
+      "movimento": "Mostri 0.69",
+      "spazio": "Mostri 0.69",
+      "abilita": "Mostri 0.69",
+      "attacchi": "Mostri 0.69",
+      "capacita": "Mostri 0.47",
+      "gs_px": "Mostri 0.69"
+    }
   }
 }

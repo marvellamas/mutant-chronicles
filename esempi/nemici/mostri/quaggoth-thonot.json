@@ -3,7 +3,7 @@
   "versione": 1,
   "id": "quaggoth-thonot",
   "nome": "Quaggoth Thonot",
-  "fonte": "dal Manuale dei Mostri v0.46 (Word del 27/10/2026), cap. 8 «Catalogo delle creature» — Popoli delle terre selvagge",
+  "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Quaggoth Thonot",
   "caratteristiche": {
     "FOR": 8,
     "DES": 5,
@@ -48,12 +48,11 @@
       "va": 13,
       "danno": "1d6+2",
       "natura": "Naturale",
-      "portata_q": 1,
-      "ac": 1,
       "proprieta": [
         "Taglio"
       ],
-      "note": "Con Furia ferita (PV ≤ 10): VA 15 e danno 1d6+4."
+      "portata_q": 1,
+      "ac": 1
     }
   ],
   "abilita": [
@@ -161,9 +160,25 @@
   "immunita": [
     "avvelenato"
   ],
-  "note": "Raro esemplare capace di manipolazioni e manifestazioni psioniche, spesso custode di conoscenze della comunità; il potere non si trasferisce consumandone il corpo. Condotta: può sostenere i compagni o usare coperture e inganni; a Ferita Seria o se la comunità è al sicuro può ripiegare. Fonte: Quaggoth Thonot, p. 256.",
+  "note": "Quaggoth dotato di poteri innati • sostegno e inganno • Natura Comune. Condotta. Può sostenere i compagni o usare coperture e inganni. se gravemente minacciato o se la comunità è al sicuro può ripiegare. La Caduta protetta è una distinta capacità innata con risorse proprie indicate di seguito, non una Difesa gratuita. Dotazione: nessuna; psionico non significa privo di mente o immune a Dardo Psichico.",
   "_bestiario": {
     "edizione": "Mostri 0.69",
-    "sistema_salute": "solo_PV"
+    "sistema_salute": "solo_PV",
+    "campi": {
+      "pv": "Mostri 0.69",
+      "pm": "Mostri 0.69",
+      "caratteristiche": "Mostri 0.69",
+      "ar": "Mostri 0.69",
+      "difese": "Mostri 0.69",
+      "salvezze": "Mostri 0.69",
+      "iniziativa": "Mostri 0.69",
+      "azioni": "Mostri 0.69",
+      "movimento": "Mostri 0.69",
+      "spazio": "Mostri 0.69",
+      "abilita": "Mostri 0.69",
+      "attacchi": "Mostri 0.69",
+      "capacita": "Mostri 0.47",
+      "gs_px": "Mostri 0.69"
+    }
   }
 }

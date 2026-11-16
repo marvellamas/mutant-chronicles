@@ -1,0 +1,123 @@
+{
+  "formato": "mutant-nemico",
+  "versione": 1,
+  "id": "orso-mannaro",
+  "nome": "Orso mannaro",
+  "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Orso mannaro",
+  "note": "Licantropo robusto che assume forma ursina o ibrida. Può difendere un territorio o aiutare una comunità; l’aspetto ferale non determina da solo la sua condotta.",
+  "pv": 102,
+  "pm": 12,
+  "caratteristiche": {
+    "FOR": 10,
+    "DES": 5,
+    "COS": 9,
+    "INT": 5,
+    "SAG": 6,
+    "CAR": 5
+  },
+  "ar": {
+    "totale": 2,
+    "magica": 0
+  },
+  "difese": 10,
+  "salvezze": {
+    "tempra": 15,
+    "riflessi": 9,
+    "volonta": 11,
+    "magia": 12
+  },
+  "iniziativa": 1,
+  "azioni": {
+    "principali": 2,
+    "movimento": 1
+  },
+  "movimento": {
+    "passo": 6,
+    "corsa": 12,
+    "scatto": 18
+  },
+  "attacchi": [
+    {
+      "nome": "Artiglio",
+      "tipo": "ravvicinato",
+      "va": 14,
+      "danno": "2d6+3",
+      "natura": "Naturale",
+      "proprieta": [
+        "AC 1"
+      ],
+      "portata_q": 1,
+      "ac": 1
+    },
+    {
+      "nome": "Morso",
+      "tipo": "ravvicinato",
+      "va": 14,
+      "danno": "2d8+3",
+      "natura": "Naturale",
+      "proprieta": [
+        "AC 1",
+        "maledizione"
+      ],
+      "portata_q": 1,
+      "ac": 1
+    },
+    {
+      "nome": "Pugno",
+      "tipo": "ravvicinato",
+      "va": 14,
+      "danno": "1d6+3",
+      "natura": "Naturale",
+      "proprieta": [
+        "AC 1"
+      ],
+      "portata_q": 1,
+      "ac": 1
+    }
+  ],
+  "capacita": [
+    {
+      "nome": "Forme e resistenza",
+      "effetto": "Applica la procedura comune dei cinque licantropi: mutare costa una AzP e un PM, senza ripristinare risorse. Dimezza Naturale da armi non argentate secondo la regola comune. Massimo un Morso per Round, comprese le Opportunità; le due AzP possono sostenere due Artigli. Nessuna Parata naturale."
+    },
+    {
+      "nome": "Territorio e sensi",
+      "effetto": "Vista ordinaria e olfatto acuto; non ha Scurovisione. Non possiede carica, rigenerazione o un abbraccio automatico. Per trattenere una vittima usa la normale manovra Immobilizzare con Corpo a corpo 14, pagando una AzP in alternativa al danno."
+    },
+    {
+      "nome": "Morso e decisioni",
+      "effetto": "Soltanto il Morso che infligge danno finale può trasmettere la maledizione. Può evitare volontariamente la trasmissione dichiarandolo prima del tiro. Un guardiano che vuole proteggere gli intrusi preferisce Artigli, dialogo o una presa; la scheda non impone ostilità universale."
+    },
+    {
+      "nome": "Altri movimenti",
+      "effetto": "orso e ibrido: 8 / 16 / 24 Q, arrampicata 6 Q al Passo, 2 × 2 Q"
+    },
+    {
+      "nome": "Abilità particolari",
+      "effetto": "Percezione 12, 14 con olfatto"
+    }
+  ],
+  "gs_px": {
+    "gs": "Eroe",
+    "px": 70,
+    "per_pg": 4
+  },
+  "_bestiario": {
+    "campi": {
+      "pv": "Mostri 0.69",
+      "pm": "Mostri 0.69",
+      "caratteristiche": "Mostri 0.69",
+      "ar": "Mostri 0.69",
+      "difese": "Mostri 0.69",
+      "salvezze": "Mostri 0.69",
+      "iniziativa": "Mostri 0.69",
+      "azioni": "Mostri 0.69",
+      "movimento": "Mostri 0.69",
+      "attacchi": "Mostri 0.69",
+      "capacita": "Mostri 0.69",
+      "gs_px": "Mostri 0.69"
+    },
+    "edizione": "Mostri 0.69",
+    "sistema_salute": "solo_PV"
+  }
+}

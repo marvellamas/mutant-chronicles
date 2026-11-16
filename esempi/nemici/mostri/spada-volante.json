@@ -3,7 +3,7 @@
   "versione": 1,
   "id": "spada-volante",
   "nome": "Spada volante",
-  "fonte": "dal Manuale dei Mostri v0.46 (Word del 27/10/2026), cap. 8 «Catalogo delle creature» — Costrutti e creature elementali",
+  "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Spada volante",
   "caratteristiche": {
     "FOR": 4,
     "DES": 7,
@@ -100,9 +100,24 @@
     "sanguinamento",
     "stordito"
   ],
-  "note": "PM —: nessuna riserva. Il corpo è l’arma; i danni seguono PV e Ferite, senza PI. Non dà proprietà o sintonizzazioni di un’arma magica ai PG. Immobile e appoggiata sembra un oggetto (+4 Furtività). Comportamento: percorso di guardia o bersaglio assegnato; una barriera chiusa ne ferma l’inseguimento.",
+  "note": "Costrutto privo di mente • sentinella mobile • Natura Comune.",
   "_bestiario": {
     "edizione": "Mostri 0.69",
-    "sistema_salute": "solo_PV"
+    "sistema_salute": "solo_PV",
+    "campi": {
+      "pv": "Mostri 0.69",
+      "caratteristiche": "Mostri 0.69",
+      "ar": "Mostri 0.69",
+      "difese": "Mostri 0.69",
+      "salvezze": "Mostri 0.69",
+      "iniziativa": "Mostri 0.69",
+      "azioni": "Mostri 0.69",
+      "movimento": "Mostri 0.69",
+      "spazio": "Mostri 0.69",
+      "abilita": "Mostri 0.69",
+      "attacchi": "Mostri 0.47",
+      "capacita": "Mostri 0.47",
+      "gs_px": "Mostri 0.69"
+    }
   }
 }

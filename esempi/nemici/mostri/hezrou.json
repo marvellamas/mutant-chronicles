@@ -1,0 +1,138 @@
+{
+  "formato": "mutant-nemico",
+  "versione": 1,
+  "id": "hezrou",
+  "nome": "Hezrou",
+  "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Hezrou",
+  "taglia": "grande",
+  "note": "Pesante assalitore dalla pelle coriacea e dall’odore soffocante. Avanza per occupare il passaggio e costringe gli avversari vicini a combattere nel proprio fetore. Condotta. Preme sui passaggi stretti e concentra gli attacchi sulla preda già a portata. Il corpo può ricevere cure biologiche compatibili, senza Rigenerazione. Non possiede un’evocazione di Dretch o un’autorità mentale sui compagni inclusa nel profilo; i servitori eventuali restano creature separate.",
+  "pv": 130,
+  "pm": 16,
+  "caratteristiche": {
+    "FOR": 9,
+    "DES": 8,
+    "COS": 10,
+    "INT": 2,
+    "SAG": 6,
+    "CAR": 6
+  },
+  "ar": {
+    "totale": 4,
+    "magica": 0
+  },
+  "difese": 11,
+  "salvezze": {
+    "tempra": 15,
+    "riflessi": 12,
+    "volonta": 10,
+    "magia": 12
+  },
+  "iniziativa": 3,
+  "azioni": {
+    "principali": 3,
+    "movimento": 1
+  },
+  "movimento": {
+    "passo": 6,
+    "corsa": 12,
+    "scatto": 18
+  },
+  "spazio": "2 × 2 Q",
+  "abilita": [
+    {
+      "nome": "Corpo a corpo",
+      "va": 15
+    },
+    {
+      "nome": "Atletica",
+      "va": 15
+    },
+    {
+      "nome": "Percezione",
+      "va": 11
+    },
+    {
+      "nome": "Furtività",
+      "va": 8
+    }
+  ],
+  "attacchi": [
+    {
+      "nome": "Morso",
+      "tipo": "ravvicinato",
+      "va": 15,
+      "danno": "2d8+3",
+      "natura": "Naturale",
+      "proprieta": [
+        "Perforazione",
+        "AC 1"
+      ],
+      "portata_q": 1,
+      "ac": 1
+    },
+    {
+      "nome": "Artiglio",
+      "tipo": "ravvicinato",
+      "va": 15,
+      "danno": "2d6+3",
+      "natura": "Naturale",
+      "proprieta": [
+        "Taglio",
+        "AC 1"
+      ],
+      "portata_q": 1,
+      "ac": 1
+    }
+  ],
+  "capacita": [
+    {
+      "nome": "Corpo e sensi",
+      "effetto": "Resistenze corporee comuni e anche resistenza fisica comune, immunità a veleno e Avvelenato. Resistenza alla magia +2 non inclusa nelle PS; Scurovisione 24 Q. Nessuna Parata naturale. Telepatia entro 24 Q, senza controllo mentale; il basso INT non elimina i PM personali o Volontà."
+    },
+    {
+      "nome": "Sequenza offensiva",
+      "effetto": "Massimo un Morso e due Artigli per Round, Opportunità compresa. Non colpisce ogni bersaglio adiacente con la stessa AzP e non infligge danni aggiuntivi di contatto. Usa la medesima riserva di Azioni per Schivata o altre attività; può scegliere di conservare una AzP e l’AzM per difendersi."
+    },
+    {
+      "nome": "Fetore",
+      "effetto": "Aura fisiologica mobile di raggio due Q, senza costo di Azioni o PM. Chi inizia la propria Iniziativa nell’area e ne respira l’aria effettua Tempra 0 contro veleno naturale di Pericolosità IV: successo evita e conferisce immunità al fetore di questo Hezrou per 24 ore. Fallimento Avvelenato fino alla fine della propria Iniziativa successiva, con −2 VA alle Prove di Abilità, non alle PS. Nessun danno o perdita di Azioni; più fallimenti mantengono la scadenza maggiore senza sommare penalità."
+    },
+    {
+      "nome": "Schermare e curare",
+      "effetto": "Immunità ai veleni o apparato respiratorio completamente sigillato e operativo evita l’esposizione. I solidi e l’assenza di un passaggio d’aria schermano il fetore; non si propaga attraverso una parete chiusa. Antidoto adeguato o Cura Avvelenamenti almeno cinque termina la sostanza presente, senza immunità alle esposizioni successive. Allontanarsi evita i nuovi tiri ma non annulla subito la penalità già acquisita."
+    },
+    {
+      "nome": "Persistenza e limiti",
+      "effetto": "Il fetore continua anche quando Svenuto, finché vivo; termina alla morte effettiva. Non è un effetto magico rimuovibile con Negare Potere e la Resistenza alla magia non si applica automaticamente contro di esso. Gli altri demoni del blocco lo ignorano per immunità al veleno, non perché ogni alleato sia escluso dall’aura."
+    },
+    {
+      "nome": "Altri movimenti",
+      "effetto": "spazio 2 × 2 Q"
+    }
+  ],
+  "gs_px": {
+    "gs": "Leggenda",
+    "px": 100,
+    "per_pg": 4
+  },
+  "_bestiario": {
+    "campi": {
+      "pv": "Mostri 0.69",
+      "pm": "Mostri 0.69",
+      "caratteristiche": "Mostri 0.69",
+      "ar": "Mostri 0.69",
+      "difese": "Mostri 0.69",
+      "salvezze": "Mostri 0.69",
+      "iniziativa": "Mostri 0.69",
+      "azioni": "Mostri 0.69",
+      "movimento": "Mostri 0.69",
+      "spazio": "Mostri 0.69",
+      "abilita": "Mostri 0.69",
+      "attacchi": "Mostri 0.69",
+      "capacita": "Mostri 0.69",
+      "gs_px": "Mostri 0.69"
+    },
+    "edizione": "Mostri 0.69",
+    "sistema_salute": "solo_PV"
+  }
+}

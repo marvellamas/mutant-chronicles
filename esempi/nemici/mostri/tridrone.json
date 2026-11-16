@@ -3,7 +3,7 @@
   "versione": 1,
   "id": "tridrone",
   "nome": "Tridrone",
-  "fonte": "dal Manuale dei Mostri v0.46 (Word del 27/10/2026), cap. 8 «Catalogo delle creature» — Costrutti e Modron",
+  "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Tridrone",
   "caratteristiche": {
     "FOR": 6,
     "DES": 6,
@@ -48,11 +48,11 @@
       "va": 10,
       "danno": "1d4+1",
       "natura": "Naturale",
-      "portata_q": 1,
-      "ac": 1,
       "proprieta": [
         "Contusione"
-      ]
+      ],
+      "portata_q": 1,
+      "ac": 1
     },
     {
       "nome": "Giavellotto a mano",
@@ -60,11 +60,11 @@
       "va": 10,
       "danno": "1d6+1",
       "natura": "Naturale",
-      "portata_q": 1,
-      "ac": 1,
       "proprieta": [
         "Perforazione"
-      ]
+      ],
+      "portata_q": 1,
+      "ac": 1
     },
     {
       "nome": "Giavellotto lanciato",
@@ -72,14 +72,14 @@
       "va": 10,
       "danno": "1d6+1",
       "natura": "Naturale",
+      "proprieta": [
+        "Perforazione"
+      ],
       "gittata_q": 18,
       "modalita": [
         "S"
       ],
-      "ac": 1,
-      "proprieta": [
-        "Perforazione"
-      ]
+      "ac": 1
     }
   ],
   "abilita": [
@@ -122,9 +122,25 @@
       "effetto": "Tre Giavellotti Comuni della sentinella (FOR 3, PI 4, PS Integrità 10): due pronti e uno riposto; una terza mano resta libera. Al massimo due attacchi complessivi per Round, Opportunità compresa. Lanciare richiede il proprio esemplare; estrarre o recuperare costa 1 AzP. L’arto libero può usare oggetti o un Pugno, entro il budget. I 22 PX comprendono la dotazione."
     }
   ],
-  "note": "Modron di terzo grado: corpo a piramide rovesciata con tre braccia; coordina Duodroni e riceve da Quadroni. Si annota l’arto interessato da una Menomazione. Nessun bonus collettivo al tiro dalla sola presenza del coordinatore. Condotta: sotto 5 PV o a Ferita Profonda tende a riferire o riunire la pattuglia. Fonte: Tridrone, p. 225.",
+  "note": "Modron di terzo grado • coordinatore di pattuglia • Natura Comune.",
   "_bestiario": {
     "edizione": "Mostri 0.69",
-    "sistema_salute": "solo_PV"
+    "sistema_salute": "solo_PV",
+    "campi": {
+      "pv": "Mostri 0.69",
+      "pm": "Mostri 0.69",
+      "caratteristiche": "Mostri 0.69",
+      "ar": "Mostri 0.69",
+      "difese": "Mostri 0.69",
+      "salvezze": "Mostri 0.69",
+      "iniziativa": "Mostri 0.69",
+      "azioni": "Mostri 0.69",
+      "movimento": "Mostri 0.69",
+      "spazio": "Mostri 0.69",
+      "abilita": "Mostri 0.69",
+      "attacchi": "Mostri 0.69",
+      "capacita": "Mostri 0.47",
+      "gs_px": "Mostri 0.69"
+    }
   }
 }

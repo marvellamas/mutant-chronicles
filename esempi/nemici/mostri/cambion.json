@@ -1,0 +1,125 @@
+{
+  "formato": "mutant-nemico",
+  "versione": 1,
+  "id": "cambion",
+  "nome": "Cambion",
+  "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Cambion",
+  "note": "Combattente alato dall’aspetto umanoide, equipaggiato con lancia e armatura media. Alterna attacchi infuocati a ordini brevi e suggestioni, senza un’autorità automatica sulle altre creature.",
+  "pv": 84,
+  "pm": 30,
+  "caratteristiche": {
+    "FOR": 8,
+    "DES": 8,
+    "COS": 8,
+    "INT": 7,
+    "SAG": 6,
+    "CAR": 8
+  },
+  "ar": {
+    "totale": 4,
+    "magica": 0
+  },
+  "difese": 14,
+  "salvezze": {
+    "tempra": 12,
+    "riflessi": 12,
+    "volonta": 12,
+    "magia": 12
+  },
+  "iniziativa": 3,
+  "azioni": {
+    "principali": 2,
+    "movimento": 1
+  },
+  "movimento": {
+    "passo": 5,
+    "corsa": 11,
+    "scatto": 17,
+    "volo": 11
+  },
+  "spazio": "1 Q",
+  "abilita": [
+    {
+      "nome": "Armi da guerra",
+      "va": 14
+    },
+    {
+      "nome": "Armi da lancio",
+      "va": 12
+    },
+    {
+      "nome": "Corpo a corpo",
+      "va": 12
+    },
+    {
+      "nome": "Atletica",
+      "va": 12
+    },
+    {
+      "nome": "Furtività",
+      "va": 12
+    },
+    {
+      "nome": "Percezione",
+      "va": 11
+    },
+    {
+      "nome": "Raggirare",
+      "va": 13
+    }
+  ],
+  "capacita": [
+    {
+      "nome": "Lancia una mano",
+      "effetto": "VA 14. Danno: AC 2: 1d6+3 Naturale, Perforazione, poi 1d6 Magico, Fuoco. Portata/costo: 2 Q; 1 AzP; "
+    },
+    {
+      "nome": "Lancia due mani",
+      "effetto": "VA 14. Danno: AC 2: 1d6+5 Naturale, Perforazione, poi 1d6 Magico, Fuoco. Portata/costo: 2 Q; 1 AzP; "
+    },
+    {
+      "nome": "Corpo e difesa",
+      "effetto": "Vivente biologico, Scurovisione 12 Q. Dimezza Gelo, Fuoco, Elettricità, danni diretti da veleno e danno Naturale di armi da Contusione, Taglio e Perforazione. Non è immune ad Avvelenato o agli effetti secondari elementali. Nessuna Resistenza alla magia +2. Favore personale +2 alle Difese già compreso: base dodici, Parata quattordici con Lancia pronta, Schivata tredici dopo la sola penalità Media; nessuna Parata naturale. Da Svenuto in volo cade."
+    },
+    {
+      "nome": "Sequenza e fuoco",
+      "effetto": "Due AzP totali e massimo due attacchi complessivi per Round, anche misti tra Lancia e Raggio e comprendendo l’Opportunità di Lancia. Le due impugnature sono lo stesso attacco, non due limiti distinti. Per Lancia un tiro, una Difesa e due applicazioni successive; Magistrale solo sulla prima, AR separate. L’infusione è personale e non rimane nell’arma recuperata. Raggio VA quattordici include Armi da lancio dodici più due del proiettile mistico; consuma PM anche mancando e non è un’Opportunità. Dopo residuo della sola componente Fuoco e Ignifugo superato, Riflessi 0 evita Incendiato per 1+1d3 Round."
+    },
+    {
+      "nome": "Parola e suggestione",
+      "effetto": "Comando innato: una AzP e sei PM, tre usi per ventiquattro ore, applica Comando sei: una mente cosciente visibile entro dieci Q che oda e comprenda la sua voce, breve frase e Volontà 0; conserva tutti i limiti morali e operativi della Magia §19.2. Non concede Azioni nuove e non è trasmesso telepaticamente. Suggestione vincolata delle regole comuni: una AzP e quattro PM, una mente umanoide entro sei Q, Volontà −2; singolo compito plausibile per cinque Round, senza sostituire le scelte della vittima con un controllo totale."
+    },
+    {
+      "nome": "Maschera e dotazione",
+      "effetto": "Possiede Maschera apparente e Percepire magia delle regole comuni. Lancia Comune: Armi da guerra, FOR cinque, portata due Q, PI sei, PS Integrità dieci; base 1d6+1 a una mano o 1d6+3 a due, più due personali già compresi. Armatura media Comune: AR tre, FOR cinque, PI otto, PS Integrità dieci. Senza Media: AR biologica uno, Schivata quattordici, terra 6 / 12 / 18 Q e volo 12 / 24 / 36 Q; recupera il −1 agli attacchi e alle Prove fisiche ostacolate già sottratto. Il +2 alle Difese non si trasferisce con la protezione. Nessun teletrasporto planare, schiavo o patto coercitivo incluso nei 77 PX."
+    },
+    {
+      "nome": "Altri movimenti",
+      "effetto": "spazio 1 × 1 Q; penalità Media comprese"
+    }
+  ],
+  "gs_px": {
+    "gs": "Eroe",
+    "px": 77,
+    "per_pg": 4
+  },
+  "_bestiario": {
+    "campi": {
+      "pv": "Mostri 0.69",
+      "pm": "Mostri 0.69",
+      "caratteristiche": "Mostri 0.69",
+      "ar": "Mostri 0.69",
+      "difese": "Mostri 0.69",
+      "salvezze": "Mostri 0.69",
+      "iniziativa": "Mostri 0.69",
+      "azioni": "Mostri 0.69",
+      "movimento": "Mostri 0.69",
+      "spazio": "Mostri 0.69",
+      "abilita": "Mostri 0.69",
+      "capacita": "Mostri 0.69",
+      "gs_px": "Mostri 0.69"
+    },
+    "edizione": "Mostri 0.69",
+    "sistema_salute": "solo_PV"
+  }
+}

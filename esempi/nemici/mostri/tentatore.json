@@ -1,0 +1,149 @@
+{
+  "formato": "mutant-nemico",
+  "versione": 1,
+  "id": "tentatore",
+  "nome": "Tentatore",
+  "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Tentatore",
+  "note": "Agente necrobiotico dall’aspetto umano, impiegato per avvicinare una persona e renderne meno vigile il giudizio. Le sue armi sono nascoste nel corpo.",
+  "pv": 59,
+  "pm": 24,
+  "caratteristiche": {
+    "FOR": 6,
+    "DES": 7,
+    "COS": 7,
+    "INT": 8,
+    "SAG": 7,
+    "CAR": 10
+  },
+  "ar": {
+    "totale": 2,
+    "magica": 0
+  },
+  "difese": 13,
+  "salvezze": {
+    "tempra": 12,
+    "riflessi": 12,
+    "volonta": 14,
+    "magia": 13
+  },
+  "iniziativa": 2,
+  "azioni": {
+    "principali": 2,
+    "movimento": 1
+  },
+  "movimento": {
+    "passo": 6,
+    "corsa": 12,
+    "scatto": 18
+  },
+  "abilita": [
+    {
+      "nome": "Corpo a corpo",
+      "va": 13
+    },
+    {
+      "nome": "Oratoria",
+      "va": 18
+    },
+    {
+      "nome": "Raggirare",
+      "va": 17
+    },
+    {
+      "nome": "Percezione",
+      "va": 14
+    },
+    {
+      "nome": "Furtività",
+      "va": 13
+    },
+    {
+      "nome": "Cultura",
+      "va": 13
+    }
+  ],
+  "attacchi": [
+    {
+      "nome": "Artigli",
+      "tipo": "ravvicinato",
+      "va": 13,
+      "danno": "1d8+1",
+      "natura": "Naturale",
+      "proprieta": [
+        "Taglio"
+      ],
+      "portata_q": 1,
+      "ac": 1
+    },
+    {
+      "nome": "Aculeo linguale",
+      "tipo": "distanza",
+      "va": 13,
+      "danno": "1d4+1",
+      "natura": "Naturale",
+      "proprieta": [
+        "Perforazione",
+        "tossina III"
+      ],
+      "gittata_q": 1,
+      "modalita": [
+        "S"
+      ],
+      "ac": 1
+    }
+  ],
+  "capacita": [
+    {
+      "nome": "Fonte del soggetto",
+      "effetto": "Enabler; Mutant Chronicles 3ª ed., pp. 327–328; Dark Soul, p. 146. Selezione e adattamento: applicare soltanto le capacità operative di questa scheda."
+    },
+    {
+      "nome": "Corpo e copertura",
+      "effetto": "Modulo Corpo necrobiotico. Raggirare/Percezione per la copertura; lacerazioni, immagini cliniche o impianti esposti possono rivelarlo. Estrarre gli artigli richiede 1 AzM; dopo l’estrazione non è più un innocuo interlocutore ai fini di un inganno già smentito. La bellezza non rende impossibile attaccarlo."
+    },
+    {
+      "nome": "Feromoni mirati",
+      "effetto": "Occorrono un’ora entro 2 Q dalla stessa persona e cinque minuti complessivi di contatto cutaneo reale. Poi 1 AzP e 3 PM, Tempra 0 della persona: successo evita per ventiquattro ore. Fallimento permette al Tentatore +2 a Oratoria e Raggirare verso quella sola persona per sei ore, finché rimane entro 2 Q e respira i feromoni. Il bersaglio conserva decisioni, memoria e facoltà di rifiutare."
+    },
+    {
+      "nome": "Limiti dei feromoni",
+      "effetto": "Una sola persona attiva; sceglierne un’altra termina il primo effetto e richiede ripetere la preparazione. Allontanamento, respiratore sigillato o isolamento reale dell’aria sospendono il bonus. Nessuna crescita giornaliera illimitata o effetto attraverso comunicazioni. Tossine, veleni e immunità pertinenti si applicano; non è magia da Negare né contaminazione CROS."
+    },
+    {
+      "nome": "Tossina e recupero",
+      "effetto": "L’aculeo che infligge almeno un danno oltre AR espone alla Tossina lesiva III comune. Recupero necrobiotico: 1 AzP e 2 PM restituiscono 1d6 PV, massimo tre usi per ventiquattro ore; nessun trattamento di Ferite, Menomazioni o Morente."
+    },
+    {
+      "nome": "Tattica",
+      "effetto": "Si ritira se smascherato; usa veleno e artigli per aprirsi una via. Massimo due azioni offensive per Round, Opportunità compresa. Non ottiene Dominazione, Possessione o accesso libero ai Doni della fonte."
+    },
+    {
+      "nome": "Altri movimenti",
+      "effetto": "spazio 1 Q"
+    }
+  ],
+  "gs_px": {
+    "gs": "Veterano",
+    "px": 50,
+    "per_pg": 4
+  },
+  "_bestiario": {
+    "campi": {
+      "pv": "Mostri 0.69",
+      "pm": "Mostri 0.69",
+      "caratteristiche": "Mostri 0.69",
+      "ar": "Mostri 0.69",
+      "difese": "Mostri 0.69",
+      "salvezze": "Mostri 0.69",
+      "iniziativa": "Mostri 0.69",
+      "azioni": "Mostri 0.69",
+      "movimento": "Mostri 0.69",
+      "abilita": "Mostri 0.69",
+      "attacchi": "Mostri 0.69",
+      "capacita": "Mostri 0.69",
+      "gs_px": "Mostri 0.69"
+    },
+    "edizione": "Mostri 0.69",
+    "sistema_salute": "solo_PV"
+  }
+}

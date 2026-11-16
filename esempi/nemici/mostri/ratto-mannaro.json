@@ -1,0 +1,111 @@
+{
+  "formato": "mutant-nemico",
+  "versione": 1,
+  "id": "ratto-mannaro",
+  "nome": "Ratto mannaro",
+  "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Ratto mannaro",
+  "note": "Licantropo furtivo che sfrutta passaggi stretti e reti di complici. La forma di ratto gigante serve soprattutto a nascondersi e fuggire.",
+  "pv": 37,
+  "pm": 10,
+  "caratteristiche": {
+    "FOR": 5,
+    "DES": 8,
+    "COS": 6,
+    "INT": 6,
+    "SAG": 5,
+    "CAR": 4
+  },
+  "ar": {
+    "totale": 1,
+    "magica": 0
+  },
+  "difese": 12,
+  "salvezze": {
+    "tempra": 10,
+    "riflessi": 13,
+    "volonta": 10,
+    "magia": 11
+  },
+  "iniziativa": 2,
+  "azioni": {
+    "principali": 2,
+    "movimento": 1
+  },
+  "movimento": {
+    "passo": 6,
+    "corsa": 12,
+    "scatto": 18
+  },
+  "attacchi": [
+    {
+      "nome": "Morso",
+      "tipo": "ravvicinato",
+      "va": 11,
+      "danno": "1d4+2",
+      "natura": "Naturale",
+      "proprieta": [
+        "AC 1",
+        "maledizione"
+      ],
+      "portata_q": 1,
+      "ac": 1
+    },
+    {
+      "nome": "Colpo disarmato",
+      "tipo": "ravvicinato",
+      "va": 11,
+      "danno": "1d4+1",
+      "natura": "Naturale",
+      "proprieta": [
+        "AC 1"
+      ],
+      "portata_q": 1,
+      "ac": 1
+    }
+  ],
+  "capacita": [
+    {
+      "nome": "Forme e sensi",
+      "effetto": "Mutare costa una AzP e un PM; conserva valori e lesioni secondo la procedura comune. Olfatto acuto in ogni forma, Scurovisione 12 Q soltanto in forma di ratto. Il corpo animale è un ratto gigante, non un minuscolo roditore: non attraversa fessure che non ne consentono realmente il passaggio."
+    },
+    {
+      "nome": "Morso e difesa",
+      "effetto": "Massimo un Morso per Round comprese le Opportunità; un Morso penetrante può trasmettere la maledizione. Dimezza i danni da armi Naturali non argentate secondo la regola comune. Non possiede Parata naturale, veleno o malattia biologica aggiuntiva."
+    },
+    {
+      "nome": "Dotazione e clan",
+      "effetto": "Il profilo parte senza armi o protezioni: i valori scritti non presuppongono spada, balestra o una Classe da Lestofante. Un clan può affidargli strumenti effettivamente presenti, senza copiarli nella trasformazione. Le abilità di una persona imitata e le risorse dei complici non appartengono al mutaforma."
+    },
+    {
+      "nome": "Altri movimenti",
+      "effetto": "ratto gigante: 8 / 16 / 24 Q, 1 Q condivisibile senza bloccare il passaggio"
+    },
+    {
+      "nome": "Abilità particolari",
+      "effetto": "Percezione 10, 12 con olfatto"
+    }
+  ],
+  "gs_px": {
+    "gs": "Esperto",
+    "px": 30,
+    "per_pg": 4
+  },
+  "_bestiario": {
+    "campi": {
+      "pv": "Mostri 0.69",
+      "pm": "Mostri 0.69",
+      "caratteristiche": "Mostri 0.69",
+      "ar": "Mostri 0.69",
+      "difese": "Mostri 0.69",
+      "salvezze": "Mostri 0.69",
+      "iniziativa": "Mostri 0.69",
+      "azioni": "Mostri 0.69",
+      "movimento": "Mostri 0.69",
+      "attacchi": "Mostri 0.69",
+      "capacita": "Mostri 0.69",
+      "gs_px": "Mostri 0.69"
+    },
+    "edizione": "Mostri 0.69",
+    "sistema_salute": "solo_PV"
+  }
+}

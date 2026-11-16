@@ -1,0 +1,121 @@
+{
+  "formato": "mutant-nemico",
+  "versione": 1,
+  "id": "scorpione",
+  "nome": "Scorpione",
+  "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Scorpione",
+  "note": "Piccolo aracnide terrestre provvisto di chele e pungiglione. Il veleno appartiene a questa specie ordinaria; non usa le prese e le riserve dello Scorpione gigante.",
+  "pv": 3,
+  "pm": 3,
+  "caratteristiche": {
+    "FOR": 1,
+    "DES": 5,
+    "COS": 3,
+    "INT": 1,
+    "SAG": 4,
+    "CAR": 1
+  },
+  "ar": {
+    "totale": 0,
+    "magica": 0
+  },
+  "difese": 8,
+  "salvezze": {
+    "tempra": 6,
+    "riflessi": 8,
+    "volonta": 6,
+    "magia": 6
+  },
+  "iniziativa": 0,
+  "azioni": {
+    "principali": 1,
+    "movimento": 1
+  },
+  "movimento": {
+    "passo": 2,
+    "corsa": 4,
+    "scatto": 6
+  },
+  "spazio": "1 Q",
+  "abilita": [
+    {
+      "nome": "Corpo a corpo",
+      "va": 8
+    },
+    {
+      "nome": "Atletica",
+      "va": 6
+    },
+    {
+      "nome": "Percezione",
+      "va": 8
+    },
+    {
+      "nome": "Furtività",
+      "va": 11
+    }
+  ],
+  "attacchi": [
+    {
+      "nome": "Pungiglione",
+      "tipo": "ravvicinato",
+      "va": 8,
+      "danno": "1",
+      "natura": "Naturale",
+      "proprieta": [
+        "Perforazione",
+        "AC 1",
+        "veleno 1d6"
+      ],
+      "portata_q": 1,
+      "ac": 1
+    }
+  ],
+  "capacita": [
+    {
+      "nome": "Corpo e sensi",
+      "effetto": "Vivente biologico con mente animale e PM personali. Percezione cieca due Q, fermata dai solidi; può localizzare corpi nella portata secondo il modulo comune senza vista attraverso pareti, scritte o identità. Non ha immunità generale a veleno, Fuoco o freddo, né Parata naturale. Iniziativa soltanto 1d10. Il corpo minuto non occupa realmente tutto il Q di gestione."
+    },
+    {
+      "nome": "Puntura e tossina",
+      "effetto": "Un solo Pungiglione per Round, Opportunità compresa. Dopo almeno un danno finale a un vivente biologico, Tempra 0 dimezza per eccesso 1d6 danni diretti da veleno naturale I, senza AR. Se l’Armatura assorbe il punto iniziale non inocula. Non cerca automaticamente varchi, non moltiplica la tossina con un Magistrale e non infligge Paralisi, Avvelenato persistente o danni nei Round seguenti."
+    },
+    {
+      "nome": "Cure e chele",
+      "effetto": "Il danno della tossina è istantaneo: Cura Avvelenamenti non restituisce i PV già perduti. Un antidoto preventivo appropriato o immunità specifica applicano la propria protezione; Medicina può riconoscere la puntura senza neutralizzarla automaticamente. Le piccole chele aiutano a maneggiare prede adeguate, ma non Immobilizzano un personaggio o aggiungono un altro attacco."
+    },
+    {
+      "nome": "Riparo e anatomia",
+      "effetto": "Cerca fessure praticabili, pietre o sabbia; non attraversa pareti, chiusure ermetiche o armature per il solo ingombro ridotto. Testa sensi e apparato boccale, Torace corpo, Braccia chele, Gambe funzione locomotoria e coda con pungiglione. Registrare la funzione realmente menomata; nessuna riserva per ogni zampa. Tende a pungere se schiacciato o minacciato e poi cercare riparo; non possiede una mente collettiva o appartenenza alla Covata."
+    },
+    {
+      "nome": "Altri movimenti",
+      "effetto": "corpo minuto, pedina di gestione 1 Q"
+    }
+  ],
+  "gs_px": {
+    "gs": "Principiante",
+    "px": 10,
+    "per_pg": 4
+  },
+  "_bestiario": {
+    "campi": {
+      "pv": "Mostri 0.69",
+      "pm": "Mostri 0.69",
+      "caratteristiche": "Mostri 0.69",
+      "ar": "Mostri 0.69",
+      "difese": "Mostri 0.69",
+      "salvezze": "Mostri 0.69",
+      "iniziativa": "Mostri 0.69",
+      "azioni": "Mostri 0.69",
+      "movimento": "Mostri 0.69",
+      "spazio": "Mostri 0.69",
+      "abilita": "Mostri 0.69",
+      "attacchi": "Mostri 0.69",
+      "capacita": "Mostri 0.69",
+      "gs_px": "Mostri 0.69"
+    },
+    "edizione": "Mostri 0.69",
+    "sistema_salute": "solo_PV"
+  }
+}

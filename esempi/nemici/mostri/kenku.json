@@ -3,7 +3,7 @@
   "versione": 1,
   "id": "kenku",
   "nome": "Kenku",
-  "fonte": "dal Manuale dei Mostri v0.46 (Word del 27/10/2026), cap. 8 «Catalogo delle creature» — Popoli delle terre selvagge",
+  "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Kenku",
   "caratteristiche": {
     "FOR": 5,
     "DES": 7,
@@ -48,11 +48,11 @@
       "va": 10,
       "danno": "1d6+2",
       "natura": "Naturale",
-      "portata_q": 1,
-      "ac": 1,
       "proprieta": [
         "Taglio"
-      ]
+      ],
+      "portata_q": 1,
+      "ac": 1
     },
     {
       "nome": "Arco da guerra",
@@ -60,14 +60,14 @@
       "va": 10,
       "danno": "1d6+1",
       "natura": "Naturale",
+      "proprieta": [
+        "Perforazione"
+      ],
       "gittata_q": 100,
       "modalita": [
         "S"
       ],
-      "ac": 1,
-      "proprieta": [
-        "Perforazione"
-      ]
+      "ac": 1
     }
   ],
   "abilita": [
@@ -120,9 +120,25 @@
       "effetto": "Riproduce una voce, un rumore o un breve insieme di suoni ascoltato adeguatamente, con il volume e i limiti fisici della propria voce; non impara ricordi, lingue, password o informazioni non udite; usa frammenti conosciuti e codici, senza creare liberamente una nuova frase con la voce di una persona; nessuna registrazione tecnologica né rumori da un’altra posizione. Quando tenta di far credere che il suono provenga dalla fonte imitata, Raggirare 12 si oppone a Percezione (Prove opposte; ambiente, familiarità con la voce e indizi possono modificare); non occorre tirare senza una posta o se l’origine è evidente; il successo rende credibile il suono, non obbliga a obbedire. Un richiamo breve compatibile con le normali comunicazioni non costa AzP; preparare un falso dialogo, una distrazione o una Manovra sociale usa tempi e costi appropriati. Si ode solo dove il suono arriva (Assordato, isolamento acustico e rumore lo impediscono). Chi lo vede non scambia il suo corpo per la voce imitata (serve un travestimento per l’identità visiva); un fallimento non giustifica ritiri ripetuti senza un nuovo indizio. Copiare una grafia richiede un campione e strumenti adatti; falsificare un documento resta una Prova di Raggirare; non sostituisce chiavi o autorizzazioni; non è Comando, fascinazione o magia."
     }
   ],
-  "note": "Comprende Comune e Auran. Non ha Volo o Scurovisione innati; Braccia = arti manipolatori, privi di ali funzionali. Può lavorare come messaggero, esploratore o imitatore senza essere vincolato alla vita criminale della fonte. Condotta: sotto 4 PV o a Ferita Profonda cerca copertura, una via di fuga o una trattativa. Fonte: Kenku, p. 194.",
+  "note": "Umanoide aviforme • imitazione e agguato • Natura Comune.",
   "_bestiario": {
     "edizione": "Mostri 0.69",
-    "sistema_salute": "solo_PV"
+    "sistema_salute": "solo_PV",
+    "campi": {
+      "pv": "Mostri 0.69",
+      "pm": "Mostri 0.69",
+      "caratteristiche": "Mostri 0.69",
+      "ar": "Mostri 0.69",
+      "difese": "Mostri 0.69",
+      "salvezze": "Mostri 0.69",
+      "iniziativa": "Mostri 0.69",
+      "azioni": "Mostri 0.69",
+      "movimento": "Mostri 0.69",
+      "spazio": "Mostri 0.69",
+      "abilita": "Mostri 0.69",
+      "attacchi": "Mostri 0.69",
+      "capacita": "Mostri 0.47",
+      "gs_px": "Mostri 0.69"
+    }
   }
 }

@@ -3,7 +3,7 @@
   "versione": 1,
   "id": "ragno-di-fase",
   "nome": "Ragno di fase",
-  "fonte": "dal Manuale dei Mostri v0.46 (Word del 27/10/2026), cap. 8 «Catalogo delle creature» — Predatori straordinari",
+  "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Ragno di fase",
   "caratteristiche": {
     "FOR": 6,
     "DES": 7,
@@ -48,12 +48,12 @@
       "va": 12,
       "danno": "1d8+2",
       "natura": "Naturale",
-      "portata_q": 1,
-      "ac": 1,
       "proprieta": [
-        "Perforazione"
+        "Perforazione",
+        "poi veleno"
       ],
-      "note": "Poi veleno: vedi «Veleno di fase naturale III». Solo corporeo."
+      "portata_q": 1,
+      "ac": 1
     }
   ],
   "abilita": [
@@ -102,9 +102,26 @@
       "effetto": "Arrampicata 6 Q al Passo: su pareti e soffitti aderenti si muove al Passo senza Atletica ordinaria (superfici friabili o scivolose richiedono valutazione). Attraversa normali ragnatele senza il costo aggiuntivo, ma non ha Getto di seta o reti da cattura. Un solo Morso per Round, Opportunità e colpo ordinato compresi, soltanto corporeo. Nessun linguaggio."
     }
   ],
-  "note": "Grande ragno che alterna corpo solido e fase incorporea; si sposta durante la fase (non ha il Balzo del Cane intermittente). Condotta: sotto 8 PV o a Ferita Profonda cerca una fessura. Fonte: Phase Spider, p. 334.",
+  "note": "Aracnide cacciatore • veleno e passaggio di fase • Natura Comune.",
   "_bestiario": {
     "edizione": "Mostri 0.69",
-    "sistema_salute": "solo_PV"
-  }
+    "sistema_salute": "solo_PV",
+    "campi": {
+      "pv": "Mostri 0.69",
+      "pm": "Mostri 0.69",
+      "caratteristiche": "Mostri 0.69",
+      "ar": "Mostri 0.69",
+      "difese": "Mostri 0.69",
+      "salvezze": "Mostri 0.69",
+      "iniziativa": "Mostri 0.69",
+      "azioni": "Mostri 0.69",
+      "movimento": "Mostri 0.69",
+      "spazio": "Mostri 0.69",
+      "abilita": "Mostri 0.69",
+      "attacchi": "Mostri 0.69",
+      "capacita": "Mostri 0.47",
+      "gs_px": "Mostri 0.69"
+    }
+  },
+  "taglia": "grande"
 }

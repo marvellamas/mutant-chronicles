@@ -1,0 +1,113 @@
+{
+  "formato": "mutant-nemico",
+  "versione": 1,
+  "id": "spettatore",
+  "nome": "Spettatore",
+  "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Spettatore",
+  "note": "Custode levitante con quattro occhi minori. Può discutere ordini e condizioni di accesso; proteggere un oggetto non lo obbliga ad attaccare chiunque si avvicini.",
+  "pv": 45,
+  "pm": 22,
+  "caratteristiche": {
+    "FOR": 4,
+    "DES": 7,
+    "COS": 6,
+    "INT": 6,
+    "SAG": 7,
+    "CAR": 6
+  },
+  "ar": {
+    "totale": 2,
+    "magica": 0
+  },
+  "difese": 11,
+  "salvezze": {
+    "tempra": 11,
+    "riflessi": 11,
+    "volonta": 12,
+    "magia": 12
+  },
+  "iniziativa": 1,
+  "azioni": {
+    "principali": 2,
+    "movimento": 1
+  },
+  "movimento": {
+    "passo": 0,
+    "corsa": "non_consentito",
+    "scatto": "non_consentito",
+    "volo": 6
+  },
+  "spazio": "1 Q",
+  "abilita": [
+    {
+      "nome": "Corpo a corpo",
+      "va": 9
+    },
+    {
+      "nome": "Percezione",
+      "va": 14
+    },
+    {
+      "nome": "Oratoria",
+      "va": 11
+    },
+    {
+      "nome": "Occultismo",
+      "va": 11
+    }
+  ],
+  "capacita": [
+    {
+      "nome": "Raggio minore",
+      "effetto": "VA —. Danno: Quattro opzioni proprie. Portata/costo: 18 Q; 1 AzP e 2 PM; "
+    },
+    {
+      "nome": "Raggi minori",
+      "effetto": "Due AzP complessive e massimo due Raggi per Round, scegliendo tipi differenti. Una vittima visibile per Raggio; niente tiro per colpire o Difesa attiva. Confusione: Volontà 0 evita Disorientato per due Round. Paralisi: Tempra 0 evita Paralizzato per due Round, con nuova Tempra 0 alla fine della propria Iniziativa. Paura: Volontà 0 evita Terrorizzato per due Round, con nuova Volontà 0 alla fine della propria Iniziativa. Ferimento: Tempra 0 dimezza 2d6+2 Etereo prima dell’AR magica. Ogni Raggio costa una AzP e due PM; non usa i dieci tipi del Beholder."
+    },
+    {
+      "nome": "Rimuovere i controlli",
+      "effetto": "Confusione è qui Disorientato e non impone attacchi casuali contro alleati. Cura Spirituale tratta i singoli Stati nei propri limiti; Negare Potere è ammesso contro ciascuno dei primi tre Raggi, potenza 6. La PS ripetuta termina soltanto l’effetto pertinente. Barriera Mentale aggiunge il proprio bonus alle Volontà. Distogliere lo sguardo non impedisce un Raggio: basta che il custode veda la vittima."
+    },
+    {
+      "nome": "Riflessione limitata",
+      "effetto": "Una volta per Round può spendere una AzP ancora disponibile e due PM dopo aver superato la PS contro un Incantesimo istantaneo ostile a singolo bersaglio che non gli abbia lasciato conseguenze. Può deviarlo su un’altra creatura visibile entro sei Q, compreso chi lo ha lanciato. La nuova vittima deve essere valida per quell’Incantesimo e tira la propria PS; nessun nuovo Potere o rimborso. Non funziona contro aree, Raggi innati, attacchi con tiro per colpire, cure o magie persistenti. Il nuovo effetto non può essere riflesso ancora. Se la scheda non prevedeva una PS non può attivarla."
+    },
+    {
+      "nome": "Servizio e anatomia",
+      "effetto": "Scurovisione 24 Q, telepatia semplice a due vie entro 24 Q con una mente individuata, non lettura di pensieri. Immune ad A Terra; da Svenuto resta sospeso. Un uso al giorno di una AzP e un PM produce solo il proprio nutrimento per 24 ore. Il patto di custodia, i permessi e la durata locale si fissano prima della scena; non è un’evocazione del repertorio del Giocatore. Il corpo autonomo non viene dissolto dal semplice Negare Potere."
+    },
+    {
+      "nome": "Valori pronti",
+      "effetto": "Attacchi e Difese comprendono le componenti ordinarie. Le immunità sono soltanto quelle dichiarate; la specie non riceve automaticamente la vulnerabilità al freddo della Covata. Abilità e caratteristiche non aggiungono altri bonus ai danni scritti. Restano le normali localizzazioni, ricondotte alle funzioni anatomiche effettive."
+    },
+    {
+      "nome": "Altri movimenti",
+      "effetto": "spazio 1 × 1 Q"
+    }
+  ],
+  "gs_px": {
+    "gs": "Veterano",
+    "px": 50,
+    "per_pg": 4
+  },
+  "_bestiario": {
+    "campi": {
+      "pv": "Mostri 0.69",
+      "pm": "Mostri 0.69",
+      "caratteristiche": "Mostri 0.69",
+      "ar": "Mostri 0.69",
+      "difese": "Mostri 0.69",
+      "salvezze": "Mostri 0.69",
+      "iniziativa": "Mostri 0.69",
+      "azioni": "Mostri 0.69",
+      "movimento": "Mostri 0.69",
+      "spazio": "Mostri 0.69",
+      "abilita": "Mostri 0.69",
+      "capacita": "Mostri 0.69",
+      "gs_px": "Mostri 0.69"
+    },
+    "edizione": "Mostri 0.69",
+    "sistema_salute": "solo_PV"
+  }
+}

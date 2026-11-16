@@ -1,0 +1,124 @@
+{
+  "formato": "mutant-nemico",
+  "versione": 1,
+  "id": "banshee",
+  "nome": "Banshee",
+  "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Banshee",
+  "note": "Presenza incorporea legata al luogo della propria morte. Il dolore si manifesta in un volto terrificante e in un lamento che spezza la resistenza dei viventi.",
+  "pv": 50,
+  "pm": 20,
+  "caratteristiche": {
+    "FOR": 1,
+    "DES": 7,
+    "COS": 6,
+    "INT": 6,
+    "SAG": 6,
+    "CAR": 8
+  },
+  "ar": {
+    "totale": 0,
+    "magica": 0
+  },
+  "difese": 12,
+  "salvezze": {
+    "tempra": 10,
+    "riflessi": 12,
+    "volonta": 14,
+    "magia": 13
+  },
+  "iniziativa": 2,
+  "azioni": {
+    "principali": 2,
+    "movimento": 1
+  },
+  "movimento": {
+    "passo": 0,
+    "corsa": "non_consentito",
+    "scatto": "non_consentito",
+    "volo": 8
+  },
+  "spazio": "1 Q",
+  "abilita": [
+    {
+      "nome": "Corpo a corpo",
+      "va": 12
+    },
+    {
+      "nome": "Percezione",
+      "va": 12
+    },
+    {
+      "nome": "Furtività",
+      "va": 12
+    },
+    {
+      "nome": "Occultismo",
+      "va": 11
+    }
+  ],
+  "attacchi": [
+    {
+      "nome": "Tocco del cordoglio",
+      "tipo": "ravvicinato",
+      "va": 12,
+      "danno": "2d6+2",
+      "natura": "Etereo",
+      "proprieta": [
+        "AC 1"
+      ],
+      "portata_q": 1,
+      "ac": 1
+    }
+  ],
+  "capacita": [
+    {
+      "nome": "Sensi e danni",
+      "effetto": "Scurovisione 12 Q salvo la percezione specifica dell’Artiglio; non vede attraverso ostacoli. Attacchi pronti senza altri bonus da aggiungere. Le immunità e le deroghe sono nelle capacità. I danni di questa scheda non ricevono EQ dei PNG."
+    },
+    {
+      "nome": "Forma spirituale",
+      "effetto": "Usa le regole comuni di Corpo immateriale, attraversamento e Tocco Etereo di questo blocco. Immune ai danni da Gelo, a Terrorizzato, paralisi e fascinazione. Le altre protezioni non derivano dalla Natura Comune."
+    },
+    {
+      "nome": "Volto terrificante",
+      "effetto": "1 AzP e 2 PM, una volta per incontro: creature dotate di mente entro 6 Q che possono vedere il volto, esclusi i non morti. Volontà 0: successo evita; fallimento Terrorizzato per 3 Round. Nessuna Difesa attiva. Oratoria, Cura Spirituale e Negare Potere, confronto 6, possono rimuoverlo secondo le rispettive regole. Ogni creatura subisce al massimo una esposizione a quel Volto nell’incontro."
+    },
+    {
+      "nome": "Lamento",
+      "effetto": "2 AzP e 6 PM, una volta ogni 24 ore, vietato in luce solare diretta. Raggio 6 Q; soltanto viventi che possono udirla, con propagazione bloccata da barriere acustiche adeguate. Tempra −2: successo subisce 3d6 danni psichici diretti; fallimento porta i PV attuali a 0 e rende Svenuto per 1d3 Round. Nessun danno ai PM o Ferita automatica. Il successo non infligge Ferite neppure a chi è già a 0 PV; si perde solo la riserva ordinaria. Barriera Mentale attiva blocca questo attacco psichico. Nessuna Parata, Schivata o Elusione."
+    },
+    {
+      "nome": "Percepire la vita",
+      "effetto": "Sente la direzione generale delle presenze viventi entro 5 km, senza numero preciso, identità, Q o vista attraverso pareti. Non permette di scegliere bersagli invisibili per Tocco o Volto. La Banshee rimane legata a un luogo, di norma entro 5 km dal vincolo; spezzare la causa dell’infestazione è un obiettivo narrativo fissato prima dell’incontro."
+    },
+    {
+      "nome": "Altri movimenti",
+      "effetto": "spazio 1 × 1 Q"
+    }
+  ],
+  "gs_px": {
+    "gs": "Veterano",
+    "px": 50,
+    "per_pg": 4
+  },
+  "_bestiario": {
+    "campi": {
+      "pv": "Mostri 0.69",
+      "pm": "Mostri 0.69",
+      "caratteristiche": "Mostri 0.69",
+      "ar": "Mostri 0.69",
+      "difese": "Mostri 0.69",
+      "salvezze": "Mostri 0.69",
+      "iniziativa": "Mostri 0.69",
+      "azioni": "Mostri 0.69",
+      "movimento": "Mostri 0.69",
+      "spazio": "Mostri 0.69",
+      "abilita": "Mostri 0.69",
+      "attacchi": "Mostri 0.69",
+      "capacita": "Mostri 0.69",
+      "gs_px": "Mostri 0.69"
+    },
+    "edizione": "Mostri 0.69",
+    "sistema_salute": "solo_PV"
+  }
+}

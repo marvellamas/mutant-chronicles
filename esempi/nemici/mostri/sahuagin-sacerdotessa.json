@@ -1,0 +1,132 @@
+{
+  "formato": "mutant-nemico",
+  "versione": 1,
+  "id": "sahuagin-sacerdotessa",
+  "nome": "Sahuagin sacerdotessa",
+  "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Sahuagin sacerdotessa",
+  "note": "Sahuagin che sostiene la caccia con protezioni, vincoli e guarigione. Conserva la fisiologia anfibia limitata, la frenesia del sangue e il comando ristretto degli squali.",
+  "pv": 47,
+  "pm": 30,
+  "caratteristiche": {
+    "FOR": 6,
+    "DES": 5,
+    "COS": 6,
+    "INT": 6,
+    "SAG": 7,
+    "CAR": 6
+  },
+  "ar": {
+    "totale": 1,
+    "magica": 0
+  },
+  "difese": 10,
+  "salvezze": {
+    "tempra": 10,
+    "riflessi": 9,
+    "volonta": 12,
+    "magia": 11
+  },
+  "iniziativa": 0,
+  "azioni": {
+    "principali": 2,
+    "movimento": 1
+  },
+  "movimento": {
+    "passo": 6,
+    "corsa": 12,
+    "scatto": 18
+  },
+  "spazio": "1 Q",
+  "abilita": [
+    {
+      "nome": "Corpo a corpo",
+      "va": 11
+    },
+    {
+      "nome": "Potere",
+      "va": 13
+    },
+    {
+      "nome": "Occultismo",
+      "va": 11
+    },
+    {
+      "nome": "Percezione",
+      "va": 13
+    },
+    {
+      "nome": "Atletica",
+      "va": 11
+    },
+    {
+      "nome": "Oratoria",
+      "va": 11
+    }
+  ],
+  "capacita": [
+    {
+      "nome": "Colpo Elementale Fulmine 6",
+      "effetto": "VA —. Danno: 1d6+6 Magico Fulmine; AC 1. Portata/costo: 10 Q; 1 AzP e 6 PM; Potere 13; "
+    },
+    {
+      "nome": "Corpo e sensi",
+      "effetto": "Vivente biologico con mente, PM personali e Scurovisione 24 Q. Respira aria e acqua, ma richiede un’immersione completa ogni quattro ore; un Round immerso ripristina il periodo. Se lo supera inizia il soffocamento dal punto successivo al fiato esaurito, Giocatore §5.23. Nessuna Parata naturale o immunità generale al veleno; anatomia umanoide con coda nella funzione delle Gambe."
+    },
+    {
+      "nome": "Azioni e frenesia",
+      "effetto": "Due AzP totali, massimo un Morso e un attacco di Artigli per Round, Opportunità compatibile compresa. Contro un vivente sotto i PV massimi o con Sanguinamento attivo, +2 VA ai soli attacchi ravvicinati. I VA pronti non comprendono Frenesia, che non aumenta danni, Potere o gittata e non localizza automaticamente una vittima nascosta."
+    },
+    {
+      "nome": "Squali",
+      "effetto": "Una AzP e due PM, uno squalo con mente visibile entro 24 Q, Volontà 0 evita. Fallimento tre Round a Concentrazione, ordini semplici compatibili con gli istinti e le normali Azioni dello squalo. Nuova Volontà 0 a fine Iniziativa termina. Un solo comando; perdita di Concentrazione, distanza, congedo o Negare tre terminano. Dopo resistenza o liberazione lo squalo è immune a quella Sacerdotessa per ventiquattro ore. Nessun turno immediato, suicidio evidente o sensi condivisi."
+    },
+    {
+      "nome": "Comunità e condotta",
+      "effetto": "Focus indossato e mani libere per i Gesti; nessuna armatura separata, lancia o tridente mistico già attivo. Sacerdotessa non assegna una Classe aggiuntiva o il VI Grado. Sotto 12 PV può cercare acqua e riparo; squali, guardie e altre sacerdotesse hanno risorse proprie."
+    },
+    {
+      "nome": "Lancio",
+      "effetto": "Potere tredici, scala Taumaturgo, versioni fino al sei: Benedizione, Individuare, Colpo Elementale, Catene di Forza, Arma Mistica, Cura Ferite, Cura Spirituale e Linguaggi. Una AzP e PM pari al livello, Focus, Gesto e Invocazione. Non possiede i Talenti del Mistico, evocazioni di armi autonome o Contromagia. Il mantenimento del comando sullo squalo impedisce il lancio di altri Incantesimi fino a quando interrompe la Concentrazione."
+    },
+    {
+      "nome": "Fulmine pronto",
+      "effetto": "Colpo Elementale sei: una AzP e sei PM, Potere tredici, una vittima visibile entro dieci Q e percorso libero. Colpo automatico dopo il lancio, 1d6+6 Magico Fulmine, già comprensivo di SAG +1; Parata o Schivata a distanza, nessuna Elusione o PS sul danno. Dopo danno finale e superamento di Isolante, Tempra 0 evita Disorientato 1+1d3 Round; Maldestro anche Stordito un Round. Non usa la diversa Elettricità dello Scettro Kuo-toa."
+    },
+    {
+      "nome": "Cura e vincoli",
+      "effetto": "Cura Ferite sei: una AzP e sei PM, Potere tredici, un vivente consenziente o incosciente soccorso entro tre Q, 1d4+5 PV; ogni due punti destinati a Sanguinamento lo riducono di uno. Cura Spirituale sei: stessi costi e Potere, un consenziente entro sei Q, fino a due Stati temporanei consentiti. Catene sei: una AzP e sei PM, Potere tredici, una creatura entro dieci Q, Tempra 0 o Rallentato cinque Round; liberarsi una AzP e Tempra 0. Il primo danno effettivo del Round impone Riflessi 0 o A Terra. Non è paralisi."
+    },
+    {
+      "nome": "Sostegno",
+      "effetto": "Benedizione e Linguaggi seguono le proprie schede fino al sei. Individuare è disponibile al sei e non identifica da solo un Artefatto o tutti i pensieri. Arma Mistica sei può potenziare un’arma realmente presente e visibile entro tre Q, +1 VA e danno diretto Magico +1 per dieci Round; non crea un Tridente e non potenzia Morso o Artigli biologici. I bonus magici pertinenti non si sommano con copie dello stesso effetto."
+    },
+    {
+      "nome": "Altri movimenti",
+      "effetto": "nuoto 8 / 16 / 24 Q; spazio 1 × 1 Q"
+    }
+  ],
+  "gs_px": {
+    "gs": "Veterano",
+    "px": 55,
+    "per_pg": 4
+  },
+  "_bestiario": {
+    "campi": {
+      "pv": "Mostri 0.69",
+      "pm": "Mostri 0.69",
+      "caratteristiche": "Mostri 0.69",
+      "ar": "Mostri 0.69",
+      "difese": "Mostri 0.69",
+      "salvezze": "Mostri 0.69",
+      "iniziativa": "Mostri 0.69",
+      "azioni": "Mostri 0.69",
+      "movimento": "Mostri 0.69",
+      "spazio": "Mostri 0.69",
+      "abilita": "Mostri 0.69",
+      "capacita": "Mostri 0.69",
+      "gs_px": "Mostri 0.69"
+    },
+    "edizione": "Mostri 0.69",
+    "sistema_salute": "solo_PV"
+  }
+}

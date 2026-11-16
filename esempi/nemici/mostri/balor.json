@@ -1,0 +1,126 @@
+{
+  "formato": "mutant-nemico",
+  "versione": 1,
+  "id": "balor",
+  "nome": "Balor",
+  "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Balor",
+  "taglia": "grande",
+  "note": "Grande combattente alato avvolto dal calore, armato di spada e frusta. La lama scarica Elettricità e la frusta trascina il bersaglio; il suo corpo esplode soltanto alla morte effettiva.",
+  "pv": 260,
+  "pm": 64,
+  "caratteristiche": {
+    "FOR": 10,
+    "DES": 8,
+    "COS": 10,
+    "INT": 9,
+    "SAG": 8,
+    "CAR": 10
+  },
+  "ar": {
+    "totale": 7,
+    "magica": 0
+  },
+  "difese": 14,
+  "salvezze": {
+    "tempra": 17,
+    "riflessi": 15,
+    "volonta": 16,
+    "magia": 16
+  },
+  "iniziativa": 3,
+  "azioni": {
+    "principali": 3,
+    "movimento": 1
+  },
+  "movimento": {
+    "passo": 8,
+    "corsa": 16,
+    "scatto": 24,
+    "volo": 16
+  },
+  "spazio": "3 × 3 Q",
+  "abilita": [
+    {
+      "nome": "Armi da guerra",
+      "va": 19
+    },
+    {
+      "nome": "Armi da mischia",
+      "va": 18
+    },
+    {
+      "nome": "Corpo a corpo",
+      "va": 17
+    },
+    {
+      "nome": "Atletica",
+      "va": 17
+    },
+    {
+      "nome": "Percezione",
+      "va": 15
+    }
+  ],
+  "capacita": [
+    {
+      "nome": "Spada elettrica",
+      "effetto": "VA 19. Danno: AC 2: 1d8+7 Magico, Taglio, poi 3d6 Magico, Fulmine. Portata/costo: 2 Q personali; una mano; 1 AzP; "
+    },
+    {
+      "nome": "Frusta incendiaria",
+      "effetto": "VA 18. Danno: AC 2: 1d4+6 Magico, Taglio, poi 2d6 Magico, Fuoco. Portata/costo: 6 Q personali; una mano; 1 AzP; "
+    },
+    {
+      "nome": "Aura ardente",
+      "effetto": "VA —. Danno: 2d6 Magico, Fuoco; AC 1. Portata/costo: Entro 1 Q dal corpo; passiva; "
+    },
+    {
+      "nome": "Corpo e sensi",
+      "effetto": "Protezione Balor della tabella comune: immune a Fuoco e veleno; resiste a Gelo, Elettricità e fisico Naturale. Resistenza alla magia +2 non inclusa nelle PS; Vista rivelatrice 9 e telepatia entro 24 Q. Para con arma pronta ai costi normali; nessuna Parata naturale. Da Svenuto in volo cade."
+    },
+    {
+      "nome": "Armi e sequenza",
+      "effetto": "Tre AzP totali, massimo una Spada e una Frusta per Round, Opportunità compresa; l’Azione restante serve a difese o capacità. Un tiro per colpire e una Difesa per arma, poi due applicazioni successive con AR separate. Magistrale moltiplica solo la prima secondo le regole ordinarie: non triplica automaticamente i dadi. Spada Comune: FOR 4, PI 5, base 1d8+1; Frusta Comune: FOR 4, PI 4, base 1d4. Tutte PS Integrità 10. Il danno pronto include tre di FOR e tre di Forza brutale; portate e infusione sono personali. Recuperate, tornano ai profili Comuni di uno e tre Q."
+    },
+    {
+      "nome": "Fulmini e trascinamento",
+      "effetto": "Dopo residuo della sola componente Fulmine e superamento di Isolante, Tempra −2 evita Disorientato per 1+1d3 Round; 20 naturale produce invece Stordito per un Round, fino alla fine della successiva Iniziativa. Dopo residuo della prima componente della Frusta, una vittima fino a 2 × 2 Q effettua Riflessi −2: fallimento viene tirata fino a cinque Q verso il Balor, senza superarne il bordo. Il percorso termina prima di solidi o spazi occupati; niente danni da collisione, presa o atterramento aggiuntivi."
+    },
+    {
+      "nome": "Aura e incendi",
+      "effetto": "All’inizio della propria Iniziativa infligge il danno di Aura alle altre creature entro un Q dal suo bordo e in linea d’effetto, alleati compresi. Lo stesso danno può essere attivato da un contatto corporeo diretto prima di quel momento; ogni vittima lo subisce al massimo una volta per Round da questo Balor. Colpire con un’arma senza toccare il corpo non basta. Nessun tiro o Difesa attiva contro il calore di contatto; AR normale. Dopo residuo da Fuoco di Aura o Frusta e superamento di Ignifugo, Riflessi −2 evita Incendiato per 1+1d3 Round. L’Aura è soppressa da Svenuto, non da Negare Potere."
+    },
+    {
+      "nome": "Passaggio e morte",
+      "effetto": "Possiede Passaggio personale 24 Q, una AzP e quattro PM. Alla morte effettiva, una sola esplosione di raggio sei Q dal centro: 4d6+6 Magico, Fuoco, una AC per bersaglio, alleati compresi, propagazione bloccata dai solidi. Un unico tiro; Elusione Riflessi −4 dimezza prima dell’AR, niente Parata o Schivata; dopo residuo e Ignifugo Riflessi −4 evita Incendiato per 1+1d3 Round. Zero PV, Morente o zero PM non attivano l’esplosione. Nessuna seconda esplosione per distruzione del cadavere. Le due armi della dotazione diventano Rotte a zero PI; restano riparabili come oggetti Comuni. Il fuoco non distrugge automaticamente il resto dell’inventario."
+    },
+    {
+      "nome": "Altri movimenti",
+      "effetto": "spazio 3 × 3 Q"
+    }
+  ],
+  "gs_px": {
+    "gs": "Divinità",
+    "px": 880,
+    "per_pg": 4
+  },
+  "_bestiario": {
+    "campi": {
+      "pv": "Mostri 0.69",
+      "pm": "Mostri 0.69",
+      "caratteristiche": "Mostri 0.69",
+      "ar": "Mostri 0.69",
+      "difese": "Mostri 0.69",
+      "salvezze": "Mostri 0.69",
+      "iniziativa": "Mostri 0.69",
+      "azioni": "Mostri 0.69",
+      "movimento": "Mostri 0.69",
+      "spazio": "Mostri 0.69",
+      "abilita": "Mostri 0.69",
+      "capacita": "Mostri 0.69",
+      "gs_px": "Mostri 0.69"
+    },
+    "edizione": "Mostri 0.69",
+    "sistema_salute": "solo_PV"
+  }
+}

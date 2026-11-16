@@ -3,7 +3,7 @@
   "versione": 1,
   "id": "capoguerra-orco",
   "nome": "Capoguerra orco",
-  "fonte": "dal Manuale dei Mostri v0.46 (Word del 27/10/2026), cap. 8 «Catalogo delle creature» — Capi e varianti dei popoli guerrieri",
+  "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Capoguerra orco",
   "caratteristiche": {
     "FOR": 8,
     "DES": 5,
@@ -137,9 +137,25 @@
       "effetto": "Sceglie fino a quattro altri alleati consenzienti visibili entro 6 Q che possano udire e comprendere il richiamo (il Capoguerra non è un beneficiario). L’effetto inizia dopo l’attivazione e termina all’inizio della successiva Iniziativa del Capoguerra (se non può avvenire, allo stesso conteggio d’Iniziativa del Round successivo). +2 al VA dei tiri per colpire dei beneficiari: nessun bonus a Difese, Potere, PS, danni o Azioni; nessun attacco immediato, movimento fuori turno o opportunità aggiuntive; non esegue il colpo gratuito della fonte. Fra Urli vale il maggiore; per la stessa Prova non si somma a Disciplina hobgoblin, Benedizione, Efficienza o altri bonus magici (vale il maggiore); le Tattiche di branco non si contano due volte come stesso vantaggio numerico. Dopo il richiamo non occorre restare in gittata; la perdita di coscienza del Capoguerra non cancella l’impeto. Non è controllo mentale: la paura impone ancora i propri divieti. Negare Potere non lo rimuove. Il favore attribuito a Gruumsh è rappresentato da Furia e Urlo, senza altri effetti spirituali."
     }
   ],
-  "note": "Parata 12 (valore delle Difese), Schivata / Elusione 9. I VA includono già −1 da Media; rimossa si recupera +1 ai VA fisici penalizzati e Passo / Corsa / Scatto tornano 6 / 12 / 18 Q. Parla Comune e Orchesco. Veterano che concentra un assalto con un richiamo; non rappresenta automaticamente tutti gli Orchi; nessuna Frenesia gnoll. Condotta: sotto 14 PV o a Ferita Profonda può cercare una posizione protetta, trattare o ritirarsi. Fonte: Orc War Chief, p. 246.",
+  "note": "Orco • capo combattente • Natura Comune.",
   "_bestiario": {
     "edizione": "Mostri 0.69",
-    "sistema_salute": "solo_PV"
+    "sistema_salute": "solo_PV",
+    "campi": {
+      "pv": "Mostri 0.69",
+      "pm": "Mostri 0.69",
+      "caratteristiche": "Mostri 0.69",
+      "ar": "Mostri 0.69",
+      "difese": "Mostri 0.69",
+      "salvezze": "Mostri 0.69",
+      "iniziativa": "Mostri 0.69",
+      "azioni": "Mostri 0.69",
+      "movimento": "Mostri 0.69",
+      "spazio": "Mostri 0.69",
+      "abilita": "Mostri 0.69",
+      "attacchi": "Mostri 0.47",
+      "capacita": "Mostri 0.47",
+      "gs_px": "Mostri 0.69"
+    }
   }
 }

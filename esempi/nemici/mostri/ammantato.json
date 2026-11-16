@@ -1,0 +1,141 @@
+{
+  "formato": "mutant-nemico",
+  "versione": 1,
+  "id": "ammantato",
+  "nome": "Ammantato",
+  "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Ammantato",
+  "taglia": "grande",
+  "note": "Predatore appiattito simile a una manta e a un mantello di cuoio. Segue le prede al buio, le avvolge e disorienta gli inseguitori con immagini del proprio corpo.",
+  "pv": 76,
+  "pm": 22,
+  "caratteristiche": {
+    "FOR": 8,
+    "DES": 7,
+    "COS": 6,
+    "INT": 6,
+    "SAG": 6,
+    "CAR": 7
+  },
+  "ar": {
+    "totale": 2,
+    "magica": 0
+  },
+  "difese": 13,
+  "salvezze": {
+    "tempra": 12,
+    "riflessi": 12,
+    "volonta": 13,
+    "magia": 12
+  },
+  "iniziativa": 2,
+  "azioni": {
+    "principali": 2,
+    "movimento": 1
+  },
+  "movimento": {
+    "passo": 2,
+    "corsa": 4,
+    "scatto": 6,
+    "volo": 8
+  },
+  "spazio": "2 × 2 Q",
+  "abilita": [
+    {
+      "nome": "Corpo a corpo",
+      "va": 14
+    },
+    {
+      "nome": "Atletica",
+      "va": 13
+    },
+    {
+      "nome": "Furtività",
+      "va": 14
+    },
+    {
+      "nome": "Percezione",
+      "va": 12
+    }
+  ],
+  "attacchi": [
+    {
+      "nome": "Morso",
+      "tipo": "ravvicinato",
+      "va": 14,
+      "danno": "2d6+3",
+      "natura": "Naturale",
+      "proprieta": [
+        "AC 1"
+      ],
+      "portata_q": 1,
+      "ac": 1
+    },
+    {
+      "nome": "Coda",
+      "tipo": "ravvicinato",
+      "va": 14,
+      "danno": "1d8+3",
+      "natura": "Naturale",
+      "proprieta": [
+        "AC 1"
+      ],
+      "portata_q": 2,
+      "ac": 1
+    }
+  ],
+  "capacita": [
+    {
+      "nome": "Mimetismo e luce",
+      "effetto": "Scurovisione 12 Q. Se resta immobile e nasconde il ventre, Percezione contrapposta alla sua Furtività 14 permette di distinguerlo da un mantello di pelle; il contatto o il movimento evidente rivelano la creatura. Luce intensa impone −2 agli attacchi e alla Percezione visiva, non alle PS, e dissolve i suoi duplicati. Non ha Parata naturale o levitazione da Svenuto: in volo cade normalmente."
+    },
+    {
+      "nome": "Avvolgere",
+      "effetto": "Una AzP, in alternativa al danno, presa dichiarata con Corpo a corpo 14 secondo la procedura comune, una vittima di spazio massimo 1 × 1 Q. Nella presa usa lo spazio della vittima senza aumentare la propria portata. Un’ulteriore AzP può coprire il capo: Tempra −2 della vittima evita, fallimento Accecato e impossibilità di respirare finché avvolta; si applica il soffocamento ordinario, senza danni immediati aggiuntivi. Separare la presa rimuove queste due condizioni, ma non eventuali Ferite. Può mordere solo la vittima avvolta e usare la Coda contro altri, pagando ogni AzP."
+    },
+    {
+      "nome": "Danno condiviso",
+      "effetto": "Quando è avvolto a una vittima, un colpo mirato al corpo dell’Ammantato che supera le Difese divide il danno prima delle AR: metà per eccesso alla creatura, il resto alla vittima, ciascuno con le proprie protezioni. È una sola componente originaria, non un secondo attacco. Un’area che comprende entrambi li colpisce separatamente con danno pieno e non applica anche questa divisione. Colpi precisi a una porzione chiaramente lontana dall’ospite, come la Coda distesa, non trasferiscono danni; restano i normali modificatori di localizzazione."
+    },
+    {
+      "nome": "Gemito",
+      "effetto": "Una AzP e due PM, menti che lo odono entro 12 Q, escluse altre aberrazioni. Volontà 0 evita Terrorizzato fino alla fine del Round successivo; dopo resistenza o liberazione, immunità al Gemito di quell’Ammantato per 24 ore. Barriera Mentale aggiunge il bonus. Isolamento acustico effettivo impedisce l’esposizione; Negare Potere può rimuovere la paura, confronto 6. Non è un attacco di danno psichico."
+    },
+    {
+      "nome": "Duplicati",
+      "effetto": "Una AzP e tre PM, una volta per 24 ore, solo senza luce intensa: tre copie ottiche per dieci Round. Ogni attacco con tiro per colpire a singolo bersaglio individuato soltanto con la vista estrae prima 1d(N+1), con N copie presenti: uno indica il vero corpo, gli altri una copia. Poi si risolve il normale tiro: una copia non ha AR o Difese attive e si dissolve se il tiro per colpire riesce. Gli effetti senza tiro per colpire non sono deviati. Non agisce, infligge danni o blocca movimento. Le aree non vengono deviate e dissolvono tutte le copie raggiunte. Chi usa sensi non visivi le ignora; un’interazione che rivela l’inganno permette Volontà 0, massimo una per Round, e successo consente di ignorarle per 24 ore. Negare Potere rimuove l’intero insieme, confronto 6. Svenuto o luce intensa terminano l’effetto."
+    },
+    {
+      "nome": "Valori pronti",
+      "effetto": "Attacchi e Difese comprendono le componenti ordinarie. Le immunità sono soltanto quelle dichiarate; la specie non riceve automaticamente la vulnerabilità al freddo della Covata. Abilità e caratteristiche non aggiungono altri bonus ai danni scritti. Restano le normali localizzazioni, ricondotte alle funzioni anatomiche effettive."
+    },
+    {
+      "nome": "Altri movimenti",
+      "effetto": "spazio 2 × 2 Q aperto, 1 × 1 Q raccolto a terra"
+    }
+  ],
+  "gs_px": {
+    "gs": "Leggenda",
+    "px": 100,
+    "per_pg": 4
+  },
+  "_bestiario": {
+    "campi": {
+      "pv": "Mostri 0.69",
+      "pm": "Mostri 0.69",
+      "caratteristiche": "Mostri 0.69",
+      "ar": "Mostri 0.69",
+      "difese": "Mostri 0.69",
+      "salvezze": "Mostri 0.69",
+      "iniziativa": "Mostri 0.69",
+      "azioni": "Mostri 0.69",
+      "movimento": "Mostri 0.69",
+      "spazio": "Mostri 0.69",
+      "abilita": "Mostri 0.69",
+      "attacchi": "Mostri 0.69",
+      "capacita": "Mostri 0.69",
+      "gs_px": "Mostri 0.69"
+    },
+    "edizione": "Mostri 0.69",
+    "sistema_salute": "solo_PV"
+  }
+}

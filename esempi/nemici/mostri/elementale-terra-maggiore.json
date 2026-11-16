@@ -3,7 +3,7 @@
   "versione": 1,
   "id": "elementale-terra-maggiore",
   "nome": "Elementale della Terra Maggiore",
-  "fonte": "dal Manuale dei Mostri v0.46 (Word del 27/10/2026), cap. 8 «Catalogo delle creature» — Costrutti e creature elementali",
+  "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Elementale della Terra Maggiore",
   "caratteristiche": {
     "FOR": 10,
     "DES": 7,
@@ -90,9 +90,25 @@
     "sanguinamento",
     "stordito"
   ],
-  "note": "PM —: nessuna riserva. «Prove di FOR 15» è la Prova di Forza, non un’Abilità (A.169, 18/10): vedi la capacità «Prova di Forza». Profilo evocato (Magia §14.4): «INI dopo l’evocatore» (qui 0; sulla plancia agisce dopo chi lo evoca). Scompare a 0 PV, a fine durata o al congedo. Spazio 2 × 2 Q.",
+  "note": "Manifestazione evocata di Terra • presidio e pressione ravvicinata • Natura Comune.",
   "_bestiario": {
     "edizione": "Mostri 0.69",
-    "sistema_salute": "solo_PV"
-  }
+    "sistema_salute": "solo_PV",
+    "campi": {
+      "pv": "Mostri 0.69",
+      "caratteristiche": "Mostri 0.69",
+      "ar": "Mostri 0.69",
+      "difese": "Mostri 0.69",
+      "salvezze": "Mostri 0.69",
+      "iniziativa": "Mostri 0.47",
+      "azioni": "Mostri 0.69",
+      "movimento": "Mostri 0.69",
+      "spazio": "Mostri 0.69",
+      "abilita": "Mostri 0.47",
+      "attacchi": "Mostri 0.47",
+      "capacita": "Mostri 0.47",
+      "gs_px": "Mostri 0.69"
+    }
+  },
+  "taglia": "grande"
 }

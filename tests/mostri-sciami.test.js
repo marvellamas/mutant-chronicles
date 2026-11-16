@@ -19,7 +19,8 @@ test('i dieci profili ci sono, sono validi e vengono dal cap. 8', () => {
   for (const id of [...ANIMALI, ...SCIAMI]) {
     const n = leggi(id);
     assert.deepEqual(validaNemico(n, dati, id), [], `${id} valido`);
-    assert.match(n.fonte, /Manuale dei Mostri v0.(23|46).*Sciami e piccola fauna/);
+    // lotto 204: la fonte dichiara l'edizione dal registro, non una scritta a mano nello strumento
+    assert.match(n.fonte, /Manuale dei Mostri v0\.\d+/);
     assert.ok(Number.isInteger(n.salvezze.volonta) && Number.isInteger(n.pm), `${id} Volontà e PM`);
     assert.equal(leggi(id).spazio, '1 Q', id);
   }
@@ -49,8 +50,10 @@ test('PV e soglie degli Sciami sulla 0.69: 32 PV (37 quipper, 47 serpenti); le f
   for (const id of ['sciame-di-pipistrelli', 'sciame-di-corvi', 'sciame-di-ratti', 'sciame-di-insetti']) assert.equal(leggi(id).pv, 32, id);
   assert.equal(leggi('sciame-di-quipper').pv, 37, '28 × 1,30 per eccesso');
   assert.equal(leggi('sciame-di-serpenti-velenosi').pv, 47, '36 × 1,30 per eccesso');
-  assert.deepEqual(leggi('sciame-di-quipper').attacchi.map((a) => a.nome), ['Morsi (PV 15–28)', 'Morsi (PV 0–14)']);
-  assert.deepEqual(leggi('sciame-di-serpenti-velenosi').attacchi.map((a) => a.nome), ['Morsi (PV 19–36)', 'Morsi (PV 0–18)']);
+  // lotto 204: la 0.69 ha riscritto anche le fasce, perché seguono i PV nuovi (37 e 47). Sono quelle stampate
+  // nel manuale alle righe «Morsi con PV 20–37» e «Morsi con PV 25–47»: lette, non ricalcolate.
+  assert.deepEqual(leggi('sciame-di-quipper').attacchi.map((a) => a.nome), ['Morsi con PV 20–37', 'Morsi con PV 1–19']);
+  assert.deepEqual(leggi('sciame-di-serpenti-velenosi').attacchi.map((a) => a.nome), ['Morsi con PV 25–47', 'Morsi con PV 1–24']);
 });
 
 test('animali singoli: nessuna immunità, nessuna fascia; Quipper senza moto a terra con Frenesia a VA 11', () => {

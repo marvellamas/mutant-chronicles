@@ -3,7 +3,7 @@
   "versione": 1,
   "id": "miconide-germoglio",
   "nome": "Miconide germoglio",
-  "fonte": "dal Manuale dei Mostri v0.46 (Word del 27/10/2026), cap. 8 «Catalogo delle creature» — Melme funghi e imitatori",
+  "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Miconide germoglio",
   "caratteristiche": {
     "FOR": 4,
     "DES": 5,
@@ -100,9 +100,25 @@
       "effetto": "Sotto luce solare diretta −2 a tutti i VA di Abilità e Salvezza; termina quando sono schermati (Luce Mistica e luce artificiale non contano). Ogni 10 minuti continuativi di esposizione Tempra 0 con il −2: fallimento 1 AFT; dal sessantesimo minuto ogni verifica infligge anche 1d6 Naturale interno che ignora AR. Un minuto di ombra interrompe il conteggio; PV, Ferite e AFT subiti restano."
     }
   ],
-  "note": "Condotta: evita il sole e gli estranei aggressivi, cerca un adulto o propone un contatto tramite spore; sotto 3 PV o a Ferita Profonda si ritira. I PX descrivono un eventuale scontro, non richiedono di aggredire una comunità pacifica. Fonte: Myconid Sprout, p. 230.",
+  "note": "Organismo fungino senziente • esploratore giovane e comunicazione • Natura Comune. Condotta. Evita il sole e gli estranei aggressivi, cerca un adulto o propone un contatto tramite spore. Sotto 4 PV tenta di ritirarsi. I PX descrivono un eventuale scontro, non richiedono di aggredire una comunità pacifica. La sensibilità solare è definita nelle regole comuni dei Miconidi.",
   "_bestiario": {
     "edizione": "Mostri 0.69",
-    "sistema_salute": "solo_PV"
+    "sistema_salute": "solo_PV",
+    "campi": {
+      "pv": "Mostri 0.69",
+      "pm": "Mostri 0.69",
+      "caratteristiche": "Mostri 0.69",
+      "ar": "Mostri 0.69",
+      "difese": "Mostri 0.69",
+      "salvezze": "Mostri 0.69",
+      "iniziativa": "Mostri 0.69",
+      "azioni": "Mostri 0.69",
+      "movimento": "Mostri 0.69",
+      "spazio": "Mostri 0.69",
+      "abilita": "Mostri 0.69",
+      "attacchi": "Mostri 0.47",
+      "capacita": "Mostri 0.47",
+      "gs_px": "Mostri 0.69"
+    }
   }
 }

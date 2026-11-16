@@ -3,7 +3,7 @@
   "versione": 1,
   "id": "aquila-gigante",
   "nome": "Aquila gigante",
-  "fonte": "dal Manuale dei Mostri v0.46 (Word del 27/10/2026), cap. 8 «Catalogo delle creature» — Creature alate e piccoli predatori",
+  "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Aquila gigante",
   "caratteristiche": {
     "FOR": 8,
     "DES": 7,
@@ -49,11 +49,11 @@
       "va": 12,
       "danno": "1d6+2",
       "natura": "Naturale",
-      "portata_q": 1,
-      "ac": 1,
       "proprieta": [
         "Perforazione"
-      ]
+      ],
+      "portata_q": 1,
+      "ac": 1
     },
     {
       "nome": "Artigli",
@@ -61,11 +61,11 @@
       "va": 12,
       "danno": "1d8+2",
       "natura": "Naturale",
-      "portata_q": 1,
-      "ac": 1,
       "proprieta": [
         "Taglio"
-      ]
+      ],
+      "portata_q": 1,
+      "ac": 1
     }
   ],
   "abilita": [
@@ -108,9 +108,26 @@
       "effetto": "Non ha Passaggio in volo: lasciare una portata nemica può provocare Opportunità. Un attacco riuscito di Artigli non solleva o trasporta la vittima: occorrono manovra prensile praticabile e i normali limiti di carico; le Azioni impegnate nella presa non restano disponibili per attacchi incompatibili."
     }
   ],
-  "note": "Difende piccoli e posatoi, può indicare una direzione o chiedere agli intrusi di allontanarsi. Condotta: sotto 7 PV o a Ferita Profonda tende a cercare quota e un riparo; un accesso troppo stretto può impedirle di raggiungere la preda. Fonte: Giant Eagle, p. 324.",
+  "note": "Rapace senziente • vista acuta e attacchi ravvicinati • Natura Comune. Condotta. Difende piccoli e posatoi, può indicare una direzione o chiedere agli intrusi di allontanarsi. Sotto 10 PV tende a cercare quota e un riparo. Un accesso troppo stretto può impedirle di raggiungere la preda anche quando la distanza in pianta è breve.",
   "_bestiario": {
     "edizione": "Mostri 0.69",
-    "sistema_salute": "solo_PV"
-  }
+    "sistema_salute": "solo_PV",
+    "campi": {
+      "pv": "Mostri 0.69",
+      "pm": "Mostri 0.69",
+      "caratteristiche": "Mostri 0.69",
+      "ar": "Mostri 0.69",
+      "difese": "Mostri 0.69",
+      "salvezze": "Mostri 0.69",
+      "iniziativa": "Mostri 0.69",
+      "azioni": "Mostri 0.69",
+      "movimento": "Mostri 0.69",
+      "spazio": "Mostri 0.69",
+      "abilita": "Mostri 0.69",
+      "attacchi": "Mostri 0.69",
+      "capacita": "Mostri 0.47",
+      "gs_px": "Mostri 0.69"
+    }
+  },
+  "taglia": "grande"
 }

@@ -3,7 +3,7 @@
   "versione": 1,
   "id": "aarakocra",
   "nome": "Aarakocra",
-  "fonte": "dal Manuale dei Mostri v0.46 (Word del 27/10/2026), cap. 8 «Catalogo delle creature» — prime quindici schede",
+  "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Aarakocra",
   "caratteristiche": {
     "FOR": 5,
     "DES": 7,
@@ -99,29 +99,48 @@
   "capacita": [
     {
       "nome": "Volo alato",
-      "effetto": "Richiede entrambe le ali utilizzabili e spazio per distenderle. Si mantiene in quota battendo le ali senza percorso minimo né AzM aggiuntiva; decollo e atterraggio sono compresi nell’AzM. Non è levitazione: perdita di coscienza e impedimenti alle ali seguono Volo e Stati del §5.2.5. Nessuna penalità universale per colpirlo perché vola. Una Menomazione permanente al Torace impedisce il volo."
-    },
-    {
-      "nome": "Picchiata",
-      "effetto": "È la Carica ordinaria in volo (§5.6): 1 AzP e 1 AzM, almeno 3 Q sufficientemente rettilinei entro la Corsa, VA −2 per 3–6 Q o −4 da 7 Q, danno ×2 per un solo attacco. Nessuna uscita gratuita dalla portata dopo la Carica."
+      "effetto": "Richiede entrambe le ali utilizzabili e spazio per distenderle. Può mantenersi in quota battendo le ali, senza un percorso minimo obbligatorio o un’AzM aggiuntiva. Non è levitazione: perdita di coscienza e impedimenti alle ali seguono Volo e Stati del §5.2.5. Decollo e atterraggio sono compresi nell’AzM. Nessuna penalità universale per colpirlo soltanto perché vola."
     },
     {
       "nome": "Difendersi",
-      "effetto": "Può parare con il giavellotto integro (1 AzP); gli artigli non danno Parata naturale. Spendere l’AzM per Schivare esaurisce il movimento del Round, senza un secondo spostamento in volo."
+      "effetto": "Può parare con il giavellotto integro pagando 1 AzP; gli artigli non concedono Parata naturale. Schivata, Elusione e Attacchi di Opportunità seguono le regole comuni. Spendere l’AzM per Schivare esaurisce il movimento disponibile del Round, senza concedergli un secondo spostamento in volo."
+    },
+    {
+      "nome": "Anatomia",
+      "effetto": "Braccia e Gambe corrispondono agli arti omonimi; Testa resta il capo. Una Menomazione permanente al Torace compromette anche il cingolo alare e impedisce il volo. Le Menomazioni temporanee al Torace penalizzano anche le Prove necessarie al volo."
+    },
+    {
+      "nome": "Picchiata",
+      "effetto": "È la Carica ordinaria eseguita in volo. Consuma 1 AzM e 1 AzP; richiede almeno 3 Q sufficientemente rettilinei, con discesa verso il bersaglio, entro la Corsa. Usa Artigli o Giavellotto a mano, un solo colpo: VA −2 per 3–6 Q, −4 da 7 Q; danno ×2. Le corrispondenti penalità avversarie e le Prove di movimento sono quelle del §5.6. Non aggiunge il dado bonus della capacità di D&D. Nessuna uscita gratuita dalla portata dopo la Carica."
+    },
+    {
+      "nome": "Giavellotto della sentinella",
+      "effetto": "Proposta di nuovo profilo di equipaggiamento, distinta dalla Lancia già presente nel Manuale degli Armamenti. È un’arma corta da getto e da affondo: una mano, requisito FOR 3, portata ravvicinata 1 Q, gittata massima FOR × 3 Q, danno base 1d6 Naturale, AC 1, PI 4, PS Integrità 10. Usa Armi da guerra in Ravvicinato e Armi da lancio a distanza; bonus di danno rispettivamente da FOR e DES. Non concede Tiro Rapido, Raffiche o bonus di Parata. Affondo è la manovra compatibile. La dotazione comprende due giavellotti, di cui uno già pronto. Ogni lancio impiega un esemplare; estrarne uno accessibile o recuperarlo richiede la normale azione pertinente. Il profilo non introduce automaticamente prezzo o reperibilità nel catalogo. Con un’arma differente si sostituiscono i relativi dati, senza conservarne i benefici."
     },
     {
       "nome": "Danza dei cinque venti",
-      "effetto": "Capacità collettiva: cinque Aarakocra coscienti, tutti capaci di volare, entro 6 Q dal capofila (scelto prima) e con almeno 3 PM ciascuno. Per tre Round consecutivi ciascuno spende 1 AzP e 1 AzM alla propria Iniziativa, resta in volo entro 6 Q dal capofila e mantiene Concentrazione; la danza è il solo movimento consentito. Ognuno paga 3 PM all’inizio del primo Round; se uno interrompe, perde Concentrazione o non paga, l’intera danza fallisce e i PM non tornano. Dopo l’azione del quinto nel terzo Round il capofila effettua Rituali 10: un successo evoca un Elementale Minore puro dell’Aria entro 10 Q, per 5 minuti (scheda del Manuale della Magia §14, Evoca Elementale 12 del §13.8: ordini entro 20 Q, iniziativa subito dopo il capofila). Una volta ogni 24 ore per partecipante; nessun viaggio planare.",
-      "risorsa": "3 PM",
-      "usi": {
-        "quanti": 1,
-        "per": "giorno"
-      }
+      "effetto": "Capacità collettiva che sostituisce l’evocazione dell’originale. Occorrono cinque Aarakocra coscienti, tutti capaci di volare, entro 6 Q dal capofila e ciascuno con almeno 3 PM disponibili. Si sceglie un unico capofila prima di iniziare. Per tre Round consecutivi ciascuno spende 1 AzP e 1 AzM alla propria Iniziativa, resta in volo entro 6 Q dal capofila e mantiene Concentrazione. La danza è il solo movimento consentito dalla capacità durante questa Concentrazione. Ognuno paga 3 PM all’inizio del primo Round. Se uno interrompe, perde Concentrazione o non paga le azioni di un Round, l’intera danza fallisce; i PM spesi non vengono restituiti. Dopo l’azione del quinto partecipante nel terzo Round, il capofila effettua Rituali 10. Un successo evoca un Elementale Minore puro dell’Aria in uno spazio libero visibile entro 10 Q dal capofila, per 5 minuti. Si usa integralmente la scheda dell’Elementale Minore del Manuale della Magia §14 e il funzionamento di Evoca Elementale 12 (§13.8): ordini entro 20 Q, iniziativa immediatamente successiva al capofila e normali condizioni di scomparsa. Dopo l’evocazione non serve Concentrazione. Ogni partecipante può tentare questa danza una sola volta ogni 24 ore e appartenere a una sola evocazione attiva. Il capofila è il referente per comandi, perdita di coscienza e congedo. L’elementale non concede viaggi planari ai partecipanti. Comportamento. Avvista, avverte e prende quota. Combatte per difendere un luogo o consentire la ritirata dei compagni. Se perde il volo o subisce Ferita Profonda cerca un riparo; non rimane in mischia per sfruttare artificialmente le Ferite."
     }
   ],
-  "note": "Vista e udito ordinari, nessuna scurovisione. Dotazione: due giavellotti, uno pronto. Il «Giavellotto della sentinella» (una mano, FOR 3, 1d6 Naturale, portata 1 Q, gittata FOR × 3 Q, AC 1, PI 4, PS Integrità 10; Armi da guerra in Ravvicinato e Armi da lancio a distanza; niente Tiro Rapido, Raffiche o bonus di Parata) è una proposta del manuale e non modifica il catalogo degli Armamenti. Linguaggio auran nell’ambientazione originale. Nome originale: Aarakocra, p. 12. Comportamento: avvista, avverte e prende quota; se perde il volo o subisce Ferita Profonda cerca riparo.",
+  "note": "Umanoide aviano • Natura Comune • ricognitore e assaltatore aereo. Spazio e sensi: 1 × 1 Q • vista e udito ordinari; nessuna scurovisione. Protezioni specifiche: Nessuna immunità o Contromisura. Linguaggio auran nell’ambientazione originale.",
   "_bestiario": {
     "edizione": "Mostri 0.69",
-    "sistema_salute": "solo_PV"
+    "sistema_salute": "solo_PV",
+    "campi": {
+      "pv": "Mostri 0.69",
+      "pm": "Mostri 0.69",
+      "caratteristiche": "Mostri 0.69",
+      "ar": "Mostri 0.69",
+      "difese": "Mostri 0.69",
+      "salvezze": "Mostri 0.69",
+      "iniziativa": "Mostri 0.69",
+      "azioni": "Mostri 0.69",
+      "movimento": "Mostri 0.69",
+      "spazio": "Mostri 0.69",
+      "abilita": "Mostri 0.69",
+      "attacchi": "Mostri 0.69",
+      "capacita": "Mostri 0.69",
+      "gs_px": "Mostri 0.69"
+    }
   }
 }

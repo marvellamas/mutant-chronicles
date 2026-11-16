@@ -1,0 +1,133 @@
+{
+  "formato": "mutant-nemico",
+  "versione": 1,
+  "id": "kraken",
+  "nome": "Kraken",
+  "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Kraken",
+  "taglia": "grande",
+  "note": "Titano anfibio dotato di dieci tentacoli, capace di demolire scafi e richiamare scariche. Il corpo e le appendici costituiscono una sola creatura; questo profilo è distinto dalla Piovra gigante modificata di Iris.",
+  "pv": 468,
+  "pm": 100,
+  "caratteristiche": {
+    "FOR": 10,
+    "DES": 5,
+    "COS": 10,
+    "INT": 10,
+    "SAG": 8,
+    "CAR": 9
+  },
+  "ar": {
+    "totale": 8,
+    "magica": 0
+  },
+  "difese": 13,
+  "salvezze": {
+    "tempra": 20,
+    "riflessi": 16,
+    "volonta": 17,
+    "magia": 18
+  },
+  "iniziativa": 3,
+  "azioni": {
+    "principali": 5,
+    "movimento": 1
+  },
+  "movimento": {
+    "passo": 4,
+    "corsa": 8,
+    "scatto": 12
+  },
+  "spazio": "6 × 6 Q",
+  "abilita": [
+    {
+      "nome": "Corpo a corpo",
+      "va": 21
+    },
+    {
+      "nome": "Atletica",
+      "va": 20
+    },
+    {
+      "nome": "Percezione",
+      "va": 18
+    },
+    {
+      "nome": "Occultismo",
+      "va": 17
+    },
+    {
+      "nome": "Sopravvivenza",
+      "va": 17
+    }
+  ],
+  "capacita": [
+    {
+      "nome": "Tempesta di fulmini",
+      "effetto": "VA —. Danno: Tre scariche 4d6+6 Magico Fulmine; Riflessi −4 dimezza. Portata/costo: Tre bersagli distinti entro 24 Q; 2 AzP e 6 PM; "
+    },
+    {
+      "nome": "Corpo e sensi",
+      "effetto": "Vivente biologico anfibio: respira aria e acqua. Immune a Fulmine ed Elettricità, Terrorizzato, Paralizzato e al danno Naturale di armi da Contusione, Taglio e Perforazione, incluse armi naturali. Cadute, Acido, soffocamento e fenomeni non riconducibili a quelle armi conservano le proprie regole. Vista rivelatrice dodici entro 24 Q e telepatia 24 Q, senza lettura automatica di pensieri. Comprende le lingue apprese ma non parla; nessuna Resistenza alla magia +2 o Parata naturale. Iniziativa usa SAG +3, non INT."
+    },
+    {
+      "nome": "Cinque Azioni",
+      "effetto": "Cinque AzP totali e una AzM, massimo tre Tentacoli, un Morso, uno Schianto e una Tempesta per Round entro le Azioni disponibili. Una sola AzP può essere riservata a un Tentacolo alla fine dell’Iniziativa di un avversario; è parte del totale e del massimo, non un attacco aggiuntivo. Opportunità ordinaria solo Tentacolo o Morso compatibile, compresa nei massimi. Schianto costa due AzP e non è Opportunità. Digestione o Nube consumano le stesse Azioni."
+    },
+    {
+      "nome": "Tentacoli e prese",
+      "effetto": "Dopo almeno un danno finale a una creatura fino a 2 × 2 Q: Riflessi −4 evita Immobilizzato con braccia bloccate. Un tentacolo per vittima e massimo quattro vittime trattenute in questa conversione; un tentacolo impegnato non colpisce altri. Liberazione con una AzP e Atletica o Corpo a corpo contrapposto a Corpo a corpo ventuno, −4 al prigioniero; un alleato a Contatto può tentare con strumenti e accesso adatti, pareggio conserva la presa. Non infligge danno ogni Round gratuitamente; Stringere è un nuovo Tentacolo con contrapposta, stessa AzP e stesso limite. Svenuto, morte o Menomazione della funzione coinvolta sciolgono la relativa presa."
+    },
+    {
+      "nome": "Libertà di movimento",
+      "effetto": "Ignora Terreno Difficile in acqua o su un percorso comunque praticabile; non attraversa solidi, barriere o spazi insufficienti. Immune a Rallentato e Immobilizzato prodotti da magia che agisca sul movimento, non a ogni confinamento, controllo mentale o barriera materiale. Può usare la propria AzM di Passo e spendere un Q effettivo in uno spazio libero per liberarsi da una presa o da legami non magici, senza danno agli altri; non lo fa da incapace. Non sottrae Azioni al trattenitore. Le Ferite e le Menomazioni restano."
+    },
+    {
+      "nome": "Ingestione e strutture",
+      "effetto": "Un Morso contro una vittima già nel proprio tentacolo, fino a 2 × 2 Q, può inghiottire dopo almeno un danno finale; consuma il solo Morso del Round e scioglie la presa esterna. Capacità dello stomaco: quattro creature fino a un Q, oppure una fino a 2 × 2 Q che lo occupa interamente. Digestione: una AzP, una volta per Round, 4d6 Naturale Acido per ogni prigioniero, tiro comune e AR ordinaria. Fuga contro Atletica venti, rigurgito dopo venti danni finali interni nello stesso Round e Tempra −2 fallita, una verifica per Round. Applica la procedura comune di soccorso. Demolitrice quattro contro gli oggetti; lo Schianto sullo scafo non infligge danno passivo da semplice contatto."
+    },
+    {
+      "nome": "Tempesta",
+      "effetto": "Due AzP e sei PM, di nuovo disponibile alla propria Iniziativa R+3 dopo uso nel Round R. Tre creature visibili e distinte entro 24 Q, o meno se mancano bersagli validi, un Fulmine per creatura. Riflessi −4 dimezza per eccesso 4d6+6 Magico Fulmine prima dell’AR; un tiro comune e una AC ciascuno, nessuna Difesa attiva o Elusione oltre a questa PS. Solidi bloccano il percorso di ogni scarica; acqua e metallo non aggiungono bersagli. Dopo residuo e Isolante, Tempra −2 evita Disorientato 1+1d3 Round, 20 naturale invece Stordito fino alla fine della successiva Iniziativa. Non è la proprietà tecnologica Elettricità."
+    },
+    {
+      "nome": "Nube d’inchiostro",
+      "effetto": "Solo immerso, due AzP e quattro PM, disponibile di nuovo a R+3. Nube fissa di raggio sei Q dal bordo del corpo, tre Round, propagata attraverso acqua comunicante e fermata dai solidi ermetici. Opaca a vista e Scurovisione; il Kraken conserva percezione diretta entro sei Q nella propria nube, senza vedere attraverso pareti. Chi respira l’acqua contaminata alla creazione, all’ingresso o a inizio Iniziativa: Tempra −2 dimezza 3d6+3 danni diretti da veleno naturale IV senza AR, massimo una esposizione per Round per nube. Un tiro comune per Round; nessun Avvelenato persistente. Apnea, respirazione isolata o immunità al veleno evitano. Il Kraken non subisce la propria secrezione."
+    },
+    {
+      "nome": "Cessazione e spazio",
+      "effetto": "Una corrente forte continua sgombra la parte raggiunta dopo un Round completo. Negare nove, Svenuto o morte del Kraken terminano l’emissione mistica della nube; i danni già subiti restano. Un nuovo uso sostituisce la nube precedente. Vista rivelatrice non concede normalmente vista attraverso qualunque nebbia: la percezione nell’inchiostro è una sua capacità specifica. La Nube non cattura automaticamente una nave o un equipaggio."
+    },
+    {
+      "nome": "Dieci tentacoli",
+      "effetto": "Si registra quale tentacolo viene menomato, senza dieci riserve di PV o Azioni separate. Braccia indica i tentacoli, Torace la massa e lo stomaco, Testa fauci e sensi, Gambe la funzione locomotoria del corpo. Perdere un tentacolo impegnato libera la sua vittima; i limiti di attacchi non aumentano con quelli rimasti. Non ricrescono automaticamente durante lo scontro. Cultisti, poteri regionali, creature evocate, cambiamenti meteorologici permanenti e azioni della tana della fonte non sono inclusi nei 1600 PX."
+    },
+    {
+      "nome": "Altri movimenti",
+      "effetto": "nuoto 12 / 24 / 36 Q; spazio 6 × 6 Q"
+    }
+  ],
+  "gs_px": {
+    "gs": "Divinità Maggiore",
+    "px": 1600,
+    "per_pg": 4
+  },
+  "_bestiario": {
+    "campi": {
+      "pv": "Mostri 0.69",
+      "pm": "Mostri 0.69",
+      "caratteristiche": "Mostri 0.69",
+      "ar": "Mostri 0.69",
+      "difese": "Mostri 0.69",
+      "salvezze": "Mostri 0.69",
+      "iniziativa": "Mostri 0.69",
+      "azioni": "Mostri 0.69",
+      "movimento": "Mostri 0.69",
+      "spazio": "Mostri 0.69",
+      "abilita": "Mostri 0.69",
+      "capacita": "Mostri 0.69",
+      "gs_px": "Mostri 0.69"
+    },
+    "edizione": "Mostri 0.69",
+    "sistema_salute": "solo_PV"
+  }
+}

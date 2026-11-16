@@ -1,0 +1,140 @@
+{
+  "formato": "mutant-nemico",
+  "versione": 1,
+  "id": "nycaloth",
+  "nome": "Nycaloth",
+  "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Nycaloth",
+  "taglia": "grande",
+  "note": "Assaltatore alato dalla pelle verde e dagli artigli laceranti. Colpisce con l’ascia o le mani libere, quindi cambia posizione per evitare una risposta concentrata.",
+  "pv": 136,
+  "pm": 40,
+  "caratteristiche": {
+    "FOR": 10,
+    "DES": 6,
+    "COS": 9,
+    "INT": 5,
+    "SAG": 5,
+    "CAR": 7
+  },
+  "ar": {
+    "totale": 5,
+    "magica": 0
+  },
+  "difese": 12,
+  "salvezze": {
+    "tempra": 14,
+    "riflessi": 11,
+    "volonta": 11,
+    "magia": 12
+  },
+  "iniziativa": 1,
+  "azioni": {
+    "principali": 3,
+    "movimento": 1
+  },
+  "movimento": {
+    "passo": 8,
+    "corsa": 16,
+    "scatto": 24,
+    "volo": 12
+  },
+  "spazio": "2 × 2 Q",
+  "abilita": [
+    {
+      "nome": "Armi da guerra",
+      "va": 16
+    },
+    {
+      "nome": "Corpo a corpo",
+      "va": 15
+    },
+    {
+      "nome": "Atletica",
+      "va": 15
+    },
+    {
+      "nome": "Percezione",
+      "va": 12
+    },
+    {
+      "nome": "Furtività",
+      "va": 12
+    }
+  ],
+  "attacchi": [
+    {
+      "nome": "Ascia bipenne",
+      "tipo": "ravvicinato",
+      "va": 16,
+      "danno": "2d6+6",
+      "natura": "Magico",
+      "proprieta": [
+        "Taglio",
+        "AC 1"
+      ],
+      "portata_q": 1,
+      "ac": 1
+    },
+    {
+      "nome": "Artiglio",
+      "tipo": "ravvicinato",
+      "va": 15,
+      "danno": "2d6+3",
+      "natura": "Magico",
+      "proprieta": [
+        "Taglio",
+        "AC 1",
+        "lacerazione"
+      ],
+      "portata_q": 1,
+      "ac": 1
+    }
+  ],
+  "capacita": [
+    {
+      "nome": "Corpo e sensi",
+      "effetto": "Protezione Yugoloth comune, Resistenza alla magia +2 non inclusa nelle PS, Scurovisione e percezione cieca entro 12 Q, quest’ultima fermata dai solidi; telepatia 12 Q. Para con Ascia pronta ai costi normali; nessuna Parata naturale. Da Svenuto in volo cade."
+    },
+    {
+      "nome": "Sequenza e arma",
+      "effetto": "Tre AzP totali, massimo due attacchi ravvicinati complessivi per Round, Opportunità compresa. Usare il Passaggio lascia al massimo le altre AzP realmente disponibili, senza un attacco gratuito. Ascia bipenne Comune: FOR 6, due mani, portata un Q, PI 6, PS Integrità 10, base 2d6+1 più tre di FOR e due di Forza brutale già inclusi. Infusione Magica personale, assente nell’arma recuperata. Per un Artiglio serve una mano libera, senza costi omessi per riprendere l’impugnatura."
+    },
+    {
+      "nome": "Lacerazione",
+      "effetto": "Dopo almeno un danno finale di Artiglio a chi può sanguinare: Tempra −2, fallimento Sanguinamento tre. Non cresce a ogni colpo e non si somma ad altre fonti; usa immediato, ricorrenze e massimo comuni del Giocatore §5.15. Medicina o Cura Ferite seguono la procedura ordinaria: nessun arresto automatico con una sola AzP o un PV curato. Negare Potere non chiude una lesione fisica; l’effetto non è una proprietà dell’Ascia."
+    },
+    {
+      "nome": "Spostamento e inganni",
+      "effetto": "Possiede Passaggio personale 12 Q, Buio, Invisibilità breve, Percepire magia e Negazione 9 delle regole comuni. Duplicati evasivi: una AzP e tre PM, due immagini per tre Round senza Concentrazione; +2 al VA delle proprie Difese contro singoli attacchi di chi usa la vista per colpirlo. Nessun bonus contro aree, percezione cieca o effetti senza Difesa; non aggiunge AR. Ogni Difesa riuscita che abbia ricevuto il bonus consuma una immagine; esaurite, l’effetto termina. Non concede Difese gratuite o due tiri. Nuova attivazione sostituisce, non cumula; Negare Potere confronto 9, Svenuto e morte terminano. Le immagini non esplorano o agiscono."
+    },
+    {
+      "nome": "Altri movimenti",
+      "effetto": "spazio 2 × 2 Q"
+    }
+  ],
+  "gs_px": {
+    "gs": "Mito",
+    "px": 220,
+    "per_pg": 4
+  },
+  "_bestiario": {
+    "campi": {
+      "pv": "Mostri 0.69",
+      "pm": "Mostri 0.69",
+      "caratteristiche": "Mostri 0.69",
+      "ar": "Mostri 0.69",
+      "difese": "Mostri 0.69",
+      "salvezze": "Mostri 0.69",
+      "iniziativa": "Mostri 0.69",
+      "azioni": "Mostri 0.69",
+      "movimento": "Mostri 0.69",
+      "spazio": "Mostri 0.69",
+      "abilita": "Mostri 0.69",
+      "attacchi": "Mostri 0.69",
+      "capacita": "Mostri 0.69",
+      "gs_px": "Mostri 0.69"
+    },
+    "edizione": "Mostri 0.69",
+    "sistema_salute": "solo_PV"
+  }
+}

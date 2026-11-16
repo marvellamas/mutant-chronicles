@@ -3,7 +3,7 @@
   "versione": 1,
   "id": "mephit-del-vapore",
   "nome": "Mephit del vapore",
-  "fonte": "dal Manuale dei Mostri v0.46 (Word del 27/10/2026), cap. 8 «Catalogo delle creature» — Mephit e creature elementali",
+  "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Mephit del vapore",
   "caratteristiche": {
     "FOR": 3,
     "DES": 5,
@@ -120,9 +120,25 @@
     "sanguinamento",
     "incendiato"
   ],
-  "note": "Immune a Fuoco e Incendiato. Parla Aquan e Ignan. Può rendere incerta la propria sagoma senza diventare invisibile; le scie ordinarie non infliggono danno passivo. Condotta: sotto 5 PV o a Ferita Profonda cerca riparo. Non appartiene alla Covata; la variante di evocazione di altri Mephit non è compresa e la specie non è un’opzione di Evoca Elementale. Un Artiglio per Round, Opportunità compresa. Fonte: Steam Mephit, p. 217.",
+  "note": "Piccolo elementale di acqua e fuoco • vapore e sfocatura • Natura Comune.",
   "_bestiario": {
     "edizione": "Mostri 0.69",
-    "sistema_salute": "solo_PV"
+    "sistema_salute": "solo_PV",
+    "campi": {
+      "pv": "Mostri 0.69",
+      "pm": "Mostri 0.69",
+      "caratteristiche": "Mostri 0.69",
+      "ar": "Mostri 0.69",
+      "difese": "Mostri 0.69",
+      "salvezze": "Mostri 0.69",
+      "iniziativa": "Mostri 0.69",
+      "azioni": "Mostri 0.69",
+      "movimento": "Mostri 0.69",
+      "spazio": "Mostri 0.69",
+      "abilita": "Mostri 0.69",
+      "attacchi": "Mostri 0.47",
+      "capacita": "Mostri 0.47",
+      "gs_px": "Mostri 0.69"
+    }
   }
 }

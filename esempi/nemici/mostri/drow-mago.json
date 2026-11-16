@@ -1,0 +1,148 @@
+{
+  "formato": "mutant-nemico",
+  "versione": 1,
+  "id": "drow-mago",
+  "nome": "Drow mago",
+  "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Drow mago",
+  "note": "Incantatore Drow che affianca alla magia innata un repertorio appreso di protezione, energia e controllo. Usa il bastone per tenere lontano chi riesce a raggiungerlo. Condotta. Cerca linee di tiro e un’uscita; sotto 15 PV può ripiegare. Le magie innate e apprese consumano la stessa riserva. Mago indica questa configurazione della specie; per una progressione completa di Classe si usa il modello Arcanista senza sommare due schede.",
+  "pv": 58,
+  "pm": 50,
+  "caratteristiche": {
+    "FOR": 4,
+    "DES": 6,
+    "COS": 5,
+    "INT": 8,
+    "SAG": 6,
+    "CAR": 6
+  },
+  "ar": {
+    "totale": 0,
+    "magica": 0
+  },
+  "difese": 11,
+  "salvezze": {
+    "tempra": 9,
+    "riflessi": 11,
+    "volonta": 11,
+    "magia": 13
+  },
+  "iniziativa": 1,
+  "azioni": {
+    "principali": 2,
+    "movimento": 1
+  },
+  "movimento": {
+    "passo": 6,
+    "corsa": 12,
+    "scatto": 18
+  },
+  "spazio": "1 Q",
+  "abilita": [
+    {
+      "nome": "Armi da mischia",
+      "va": 9
+    },
+    {
+      "nome": "Armi da lancio",
+      "va": 11
+    },
+    {
+      "nome": "Potere",
+      "va": 15
+    },
+    {
+      "nome": "Occultismo",
+      "va": 15
+    },
+    {
+      "nome": "Percezione",
+      "va": 12
+    },
+    {
+      "nome": "Furtività",
+      "va": 13
+    },
+    {
+      "nome": "Raggirare",
+      "va": 12
+    }
+  ],
+  "capacita": [
+    {
+      "nome": "Colpo Elementale 9",
+      "effetto": "VA —. Danno: 4d6+6 Magico, Gelo oppure Fulmine; AC 1. Portata/costo: 15 Q; 1 AzP e 9 PM; Potere 13; "
+    },
+    {
+      "nome": "Corpo e sensi",
+      "effetto": "Vivente biologico con mente e PM personali; Scurovisione 24 Q. +2 alle PS consentite contro fascinazione, non già incluso; immune al sonno magico, non alla sedazione biologica o allo Svenuto da zero PM. Se sé o il bersaglio osservato sono in sole diretto: −2 agli attacchi e alla Percezione visiva, una sola volta. Anatomia umanoide, lingue apprese e nessuna Parata naturale."
+    },
+    {
+      "nome": "Azioni e arma",
+      "effetto": "Due AzP e una AzM complessive; massimo un attacco di Bastone per Round, Opportunità compatibile compresa. Il Bastone è un Randello Comune: base 1d6, FOR tre, PI cinque, PS Integrità dieci; +1 personale già nel danno. Una mano resta libera per i Gesti. Para con il Bastone pronto pagando la normale AzP."
+    },
+    {
+      "nome": "Magia innata",
+      "effetto": "Luci mobili: una AzP e un PM, cinque Round. Oscuramento e Luminescenza: una AzP e tre PM, un uso per ventiquattro ore ciascuno. Si applica integralmente Drow magia innata luce e oscuramento, compresi Negare, visibilità e rilevazione. Levitazione personale come il Drow d’élite: una AzP e tre PM, un uso per ventiquattro ore, cinque Round fissi, fino a quattro Q verticali con l’AzM; niente moto orizzontale autonomo. Negare sei, Svenuto, morte, congedo o scadenza terminano; senza sostegno si applica Caduta."
+    },
+    {
+      "nome": "Veleno del Bastone",
+      "effetto": "Sei dosi lesive naturali III, una già applicata. La dose si consuma al primo attacco, anche se fallisce o viene evitato; una nuova applicazione costa una AzP. Dopo almeno un danno fisico finale, Tempra 0 dimezza per eccesso 1d6 danni tossici diretti senza AR. Nessuno Stato persistente; il Magistrale fisico non moltiplica la tossina. Immunità e fisiologia incompatibile evitano; Cura Avvelenamenti non restituisce danni già risolti."
+    },
+    {
+      "nome": "Lancio appreso",
+      "effetto": "Potere quindici, scala Taumaturgo e versioni fino al nove. Focus indossato, Gesto e Invocazione; un’AzP per Incantesimo, PM pari al livello. Repertorio: Colpo Elementale, Esplosione Elementale, Armatura di Forza, Scudo, Catene di Forza, Telecinesi, Teletrasporto, Mimetismo, Alterare Immagine e Piattaforma Levitante. Schede complete della Magia; nessuna protezione è già attiva e non possiede i Talenti del PNG Arcanista."
+    },
+    {
+      "nome": "Colpo pronto",
+      "effetto": "Colpo Elementale nove: Potere tredici, una AzP e nove PM, una vittima visibile entro quindici Q, percorso libero. Un colpo automatico dopo il lancio, 4d6+6 Magico con Gelo oppure Fulmine, elemento dichiarato prima; +1 SAG già incluso. Parata e Schivata ammesse, niente Elusione o PS sul danno. Gli effetti secondari usano il modificatore −2 della versione, una sola verifica per bersaglio e lancio."
+    },
+    {
+      "nome": "Protezioni e vincoli",
+      "effetto": "Armatura di Forza sei: una AzP e sei PM, Potere quindici, un consenziente entro tre Q, +3 AR Magica per venti Round. Scudo tre: una AzP e tre PM, automatico in condizioni ordinarie, Contatto, AR Naturale due per dieci Round e Parata pagata. Catene di Forza nove: una AzP e nove PM, Potere tredici, due corpi visibili entro quindici Q, Tempra −2 evita Immobilizzato cinque Round; liberarsi costa una AzP e nuova Tempra −2. Il primo danno effettivo del Round impone Riflessi −2 o A Terra. Negare al livello dell’effetto rimuove secondo confronto."
+    },
+    {
+      "nome": "Occultamento e uscita",
+      "effetto": "Mimetismo nove fisso: una AzP e nove PM, Potere tredici, un consenziente entro tre Q, cinque minuti e una sola Azione ammessa nell’intera durata; il Movimento non la consuma, l’Azione successiva si risolve e poi rivela. Distorsione Percezione −2 secondo la scheda. Teletrasporto nove: stessi costi e Potere, solo sé e dotazione entro quindici Q direttamente visibili e liberi, nessuna AzM o Azione nuova. Piattaforma Levitante segue Magia §17.7 con area, carico e costi propri, senza attribuire un volo personale permanente."
+    },
+    {
+      "nome": "Richiamo minore",
+      "effetto": "Una volta per ventiquattro ore, due AzP e sei PM: compare un Quasit nel più vicino spazio libero visibile scelto entro sei Q, per dieci Round, fino alla sua morte, a quella del Mago o al congedo gratuito. Capacità innata, senza Potere o componenti. Usa il Quasit del catalogo con risorse proprie; entra nel normale ordine dal Round successivo, senza turno immediato. Non può richiamare altri demoni. Il richiamo finisce con Negare nove sulla manifestazione: ritorna senza recuperare danni o spese. Il Quasit vale trenta PX propri nell’incontro se impiegato, senza un secondo premio per un medesimo individuo già presente. Questo modello usa il richiamo certo del Quasit, non la diversa opzione del Demone d’ombra."
+    },
+    {
+      "nome": "Nube mortifera",
+      "effetto": "Una volta per ventiquattro ore, due AzP e sei PM, capacità innata senza Potere o componenti. Centro visibile entro dodici Q, percorso libero, raggio tre Q, nube fissa opaca per cinque Round senza Concentrazione. Come nella Nube mortifera dello Slaad della morte: chi respira alla creazione, entra o inizia la propria Iniziativa esposto subisce al massimo un’applicazione per Round. Tempra −2 dimezza per eccesso 2d6+3 danni tossici diretti senza AR; un tiro comune alla creazione e per ciascun Round. Veleno inalatorio naturale V, senza Avvelenato persistente o bonus SAG aggiuntivo."
+    },
+    {
+      "nome": "Esposizione e rimozione",
+      "effetto": "Solidi ermetici fermano il gas; immunità al veleno, respirazione realmente isolata o apnea iniziata prima dell’esposizione proteggono nei propri limiti. Anche Mago e alleati possono subirlo. Resistenza alla magia non aiuta la Tempra biologica; Cura Avvelenamenti non restituisce danni già risolti né protegge da una nuova dose. Vento forte continuo sgombra la parte raggiunta dopo un Round completo. Negare nove, Svenuto o morte del creatore terminano l’intera nube. Il volume oscura vista e Scurovisione, senza cancellare ogni senso non visivo; non è un attacco di Opportunità."
+    },
+    {
+      "nome": "Altri movimenti",
+      "effetto": "spazio 1 × 1 Q"
+    }
+  ],
+  "gs_px": {
+    "gs": "Leggenda",
+    "px": 110,
+    "per_pg": 4
+  },
+  "_bestiario": {
+    "campi": {
+      "pv": "Mostri 0.69",
+      "pm": "Mostri 0.69",
+      "caratteristiche": "Mostri 0.69",
+      "ar": "Mostri 0.69",
+      "difese": "Mostri 0.69",
+      "salvezze": "Mostri 0.69",
+      "iniziativa": "Mostri 0.69",
+      "azioni": "Mostri 0.69",
+      "movimento": "Mostri 0.69",
+      "spazio": "Mostri 0.69",
+      "abilita": "Mostri 0.69",
+      "capacita": "Mostri 0.69",
+      "gs_px": "Mostri 0.69"
+    },
+    "edizione": "Mostri 0.69",
+    "sistema_salute": "solo_PV"
+  }
+}

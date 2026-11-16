@@ -1,0 +1,112 @@
+{
+  "formato": "mutant-nemico",
+  "versione": 1,
+  "id": "githzerai-monaco",
+  "nome": "Githzerai monaco",
+  "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Githzerai monaco",
+  "note": "Umanoide longilineo che combatte senz’armi e impiega disciplina psionica per difendersi e muoversi. Il termine monaco indica il modello della fonte e non introduce una nuova Classe di Simply RPG.",
+  "pv": 52,
+  "pm": 24,
+  "caratteristiche": {
+    "FOR": 6,
+    "DES": 7,
+    "COS": 6,
+    "INT": 6,
+    "SAG": 7,
+    "CAR": 5
+  },
+  "ar": {
+    "totale": 0,
+    "magica": 0
+  },
+  "difese": 13,
+  "salvezze": {
+    "tempra": 12,
+    "riflessi": 13,
+    "volonta": 11,
+    "magia": 13
+  },
+  "iniziativa": 2,
+  "azioni": {
+    "principali": 2,
+    "movimento": 1
+  },
+  "movimento": {
+    "passo": 6,
+    "corsa": 12,
+    "scatto": 18
+  },
+  "spazio": "1 Q",
+  "abilita": [
+    {
+      "nome": "Corpo a corpo",
+      "va": 14
+    },
+    {
+      "nome": "Atletica",
+      "va": 13
+    },
+    {
+      "nome": "Percezione",
+      "va": 13
+    },
+    {
+      "nome": "Furtività",
+      "va": 12
+    }
+  ],
+  "capacita": [
+    {
+      "nome": "Impatto psichico",
+      "effetto": "VA —. Danno: 2d6+1 psichici diretti; Volontà 0 dimezza. Portata/costo: Una mente a Contatto entro 1 Q; 1 AzP e 2 PM; "
+    },
+    {
+      "nome": "Corpo e sensi",
+      "effetto": "Vivente biologico con mente e PM personali; sensi ordinari senza Scurovisione o immunità automatiche. Mentre non indossa armatura e non impugna scudi fisici riceve +2 Difese dalla disciplina, già incluso nel tredici; il disco di Scudo mistico è compatibile. I colpi senz’armi sono Magici per capacità intrinseca, non Eterei. È abilitato alla Parata senz’armi a Contatto contro attacchi fisici compatibili, nessuna Parata di proiettili o poteri grazie a questo tratto."
+    },
+    {
+      "nome": "Azioni e pressione",
+      "effetto": "Due AzP totali, massimo due azioni offensive complessive fra Colpo e Impatto, non più di un Impatto per Round; Opportunità soltanto di Colpo e compresa nel limite. L’Impatto usa la procedura psichica comune, pagando due PM; non accompagna gratuitamente il pugno. La Difesa tredici è un VA per le azioni effettivamente pagate, non una parata automatica e non AR."
+    },
+    {
+      "nome": "Mano salto e caduta",
+      "effetto": "Mano psionica come il Githyanki, una AzP e un PM, cinque Round, carico due kg. Salto assistito: tre usi per ventiquattro ore, una AzP e due PM, tre Round, medesimi limiti sei Q orizzontali o tre verticali. Caduta protetta: tre usi per ventiquattro ore, una AzP disponibile e due PM quando sé stesso o un consenziente visibile entro sei Q inizia a cadere, anche fuori dalla propria Iniziativa; applica il modulo del blocco. Non è un salvataggio gratuito senza coscienza o risorse."
+    },
+    {
+      "nome": "Vista rivelatrice e Scudo",
+      "effetto": "Vista rivelatrice: tre usi per ventiquattro ore, una AzP e tre PM, per cinque Round ottiene Rilevazione sei contro Mimetismo entro sei Q, con linea di vista e illuminazione sufficiente; non concede Scurovisione. Negare sei, Svenuto o morte terminano. Scudo: tre usi per ventiquattro ore, una AzP e un PM, solo sé per cinque Round fissi; AR Naturale +2 e Parata con disco secondo il modulo comune, Negare uno. Si attiva alla propria Iniziativa, non dopo aver subito un colpo."
+    },
+    {
+      "nome": "Limiti e condotta",
+      "effetto": "Il modello non comprende Zerth, viaggio planare, un repertorio appreso o Talenti di Classe del Lottatore. Non trasferisce la natura Magica dei pugni a un oggetto impugnato e non è immune a Dardo Psichico per la sola disciplina. La riserva di ventiquattro PM è unica per tutte le capacità; i limiti giornalieri non sono riserve separate. Anatomia umanoide. Sotto 13 PV può cercare una posizione protetta o negoziare."
+    },
+    {
+      "nome": "Altri movimenti",
+      "effetto": "spazio 1 × 1 Q"
+    }
+  ],
+  "gs_px": {
+    "gs": "Veterano",
+    "px": 50,
+    "per_pg": 4
+  },
+  "_bestiario": {
+    "campi": {
+      "pv": "Mostri 0.69",
+      "pm": "Mostri 0.69",
+      "caratteristiche": "Mostri 0.69",
+      "ar": "Mostri 0.69",
+      "difese": "Mostri 0.69",
+      "salvezze": "Mostri 0.69",
+      "iniziativa": "Mostri 0.69",
+      "azioni": "Mostri 0.69",
+      "movimento": "Mostri 0.69",
+      "spazio": "Mostri 0.69",
+      "abilita": "Mostri 0.69",
+      "capacita": "Mostri 0.69",
+      "gs_px": "Mostri 0.69"
+    },
+    "edizione": "Mostri 0.69",
+    "sistema_salute": "solo_PV"
+  }
+}

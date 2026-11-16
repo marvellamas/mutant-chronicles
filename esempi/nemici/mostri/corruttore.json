@@ -1,0 +1,122 @@
+{
+  "formato": "mutant-nemico",
+  "versione": 1,
+  "id": "corruttore",
+  "nome": "Corruttore",
+  "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Corruttore",
+  "note": "Infiltratore composto da filamenti sotto una falsa pelle umana. Si introduce nei luoghi protetti e sottrae informazioni attraverso il contatto con una vittima incosciente.",
+  "pv": 63,
+  "pm": 40,
+  "caratteristiche": {
+    "FOR": 5,
+    "DES": 6,
+    "COS": 7,
+    "INT": 9,
+    "SAG": 8,
+    "CAR": 8
+  },
+  "ar": {
+    "totale": 2,
+    "magica": 0
+  },
+  "difese": 12,
+  "salvezze": {
+    "tempra": 12,
+    "riflessi": 11,
+    "volonta": 16,
+    "magia": 15
+  },
+  "iniziativa": 1,
+  "azioni": {
+    "principali": 2,
+    "movimento": 1
+  },
+  "movimento": {
+    "passo": 6,
+    "corsa": 12,
+    "scatto": 18
+  },
+  "abilita": [
+    {
+      "nome": "Corpo a corpo",
+      "va": 12
+    },
+    {
+      "nome": "Furtività",
+      "va": 14
+    },
+    {
+      "nome": "Raggirare",
+      "va": 17
+    },
+    {
+      "nome": "Oratoria",
+      "va": 16
+    },
+    {
+      "nome": "Percezione",
+      "va": 16
+    },
+    {
+      "nome": "Occultismo",
+      "va": 15
+    }
+  ],
+  "capacita": [
+    {
+      "nome": "Seme del sospetto",
+      "effetto": "VA PS. Danno: Nessun danno; influenza mentale. Portata/costo: Una mente entro 6 Q; 1 AzP e 3 PM; modulo comune; "
+    },
+    {
+      "nome": "Fonte del soggetto",
+      "effetto": "Corruptor; Mutant Chronicles 3ª ed., p. 324; Dark Soul, p. 144. Non è il semplice titolo di un reclutatore umano. Selezione e adattamento: applicare soltanto le capacità operative di questa scheda."
+    },
+    {
+      "nome": "Falsa pelle",
+      "effetto": "Copertura fisica, non illusione. Raggirare opposto a Percezione per sostenere la falsa identità; una prova clinica su tessuti esposti o filamenti visibili rivela il corpo anomalo. I documenti e le informazioni necessarie alla copertura devono esistere. Non copia le capacità della persona imitata."
+    },
+    {
+      "nome": "Corpo filamentoso",
+      "effetto": "Abbandona la pelle con 1 AzM alla propria Iniziativa. Nella forma rivelata aderisce a pareti e soffitti e attraversa passaggi larghi almeno dieci centimetri, impiegando tutta l’AzM e senza attaccare nel medesimo passaggio. Non attraversa materia chiusa. Il ritorno alla copertura richiede tre ore indisturbate, non una seconda riserva di PV. Le Menomazioni interessano fasci offensivi, massa centrale e fasci locomotori."
+    },
+    {
+      "nome": "Infiltrazione mnemonica",
+      "effetto": "Quattro ore continue a Contatto con un umano vivo incosciente, 3 PM per ora iniziata. All’avvio Volontà −2 gratuita della vittima, anche incosciente: successo impedisce la lettura. Fallimento permette, soltanto al completamento, tre informazioni precise appartenenti ai suoi ricordi. Il contenuto non crea fatti nuovi e si concorda con il giocatore del bersaglio. Non trasferisce Abilità, Talenti o Incantesimi."
+    },
+    {
+      "nome": "Interrompere la lettura",
+      "effetto": "Risvegliare o separare la vittima interrompe e perde il progresso; i PM spesi restano consumati. Una Barriera Mentale attiva impedisce la procedura e interrompe quella in corso. Nessuna nuova prova contro la stessa vittima per ventiquattro ore, anche dopo interruzione. Nessuna CROS, Ferita o cancellazione automatica di ricordi; la vittima conserva incubi e tracce del contatto."
+    },
+    {
+      "nome": "Tattica",
+      "effetto": "Usa il Seme del sospetto per dividere gli inseguitori, non per ordinare un tradimento. Preferisce vie strette alla lotta. Corpo materiale biologico, cure ordinarie compatibili, nessuna immunità universale o Possessione. Massimo due azioni offensive per Round."
+    },
+    {
+      "nome": "Altri movimenti",
+      "effetto": "forma rivelata: arrampicata 6 Q con AzM, senza Corsa/Scatto; spazio 1 Q"
+    }
+  ],
+  "gs_px": {
+    "gs": "Eroe",
+    "px": 70,
+    "per_pg": 4
+  },
+  "_bestiario": {
+    "campi": {
+      "pv": "Mostri 0.69",
+      "pm": "Mostri 0.69",
+      "caratteristiche": "Mostri 0.69",
+      "ar": "Mostri 0.69",
+      "difese": "Mostri 0.69",
+      "salvezze": "Mostri 0.69",
+      "iniziativa": "Mostri 0.69",
+      "azioni": "Mostri 0.69",
+      "movimento": "Mostri 0.69",
+      "abilita": "Mostri 0.69",
+      "capacita": "Mostri 0.69",
+      "gs_px": "Mostri 0.69"
+    },
+    "edizione": "Mostri 0.69",
+    "sistema_salute": "solo_PV"
+  }
+}

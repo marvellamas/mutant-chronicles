@@ -1,0 +1,163 @@
+{
+  "formato": "mutant-nemico",
+  "versione": 1,
+  "id": "efreeti",
+  "nome": "Efreeti",
+  "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Efreeti",
+  "taglia": "grande",
+  "note": "Genio del Fuoco che combatte con una grande scimitarra e globi di fiamma. Le sue protezioni non si estendono automaticamente agli oggetti che impugna o alle creature che trasporta.",
+  "pv": 167,
+  "pm": 55,
+  "caratteristiche": {
+    "FOR": 10,
+    "DES": 6,
+    "COS": 10,
+    "INT": 8,
+    "SAG": 7,
+    "CAR": 8
+  },
+  "ar": {
+    "totale": 5,
+    "magica": 2
+  },
+  "difese": 12,
+  "salvezze": {
+    "tempra": 16,
+    "riflessi": 11,
+    "volonta": 14,
+    "magia": 13
+  },
+  "iniziativa": 1,
+  "azioni": {
+    "principali": 2,
+    "movimento": 1
+  },
+  "movimento": {
+    "passo": 8,
+    "corsa": 16,
+    "scatto": 24,
+    "volo": 12
+  },
+  "spazio": "2 × 2 Q",
+  "abilita": [
+    {
+      "nome": "Armi da mischia",
+      "va": 16
+    },
+    {
+      "nome": "Armi da lancio",
+      "va": 14
+    },
+    {
+      "nome": "Corpo a corpo",
+      "va": 15
+    },
+    {
+      "nome": "Percezione",
+      "va": 13
+    },
+    {
+      "nome": "Oratoria",
+      "va": 13
+    }
+  ],
+  "attacchi": [
+    {
+      "nome": "Scimitarra",
+      "tipo": "ravvicinato",
+      "va": 16,
+      "danno": "3d6+3",
+      "natura": "Naturale",
+      "proprieta": [
+        "Fuoco",
+        "AC 1"
+      ],
+      "portata_q": 2,
+      "ac": 1
+    },
+    {
+      "nome": "Fiamma scagliata",
+      "tipo": "distanza",
+      "va": 16,
+      "danno": "4d6+3",
+      "natura": "Magico",
+      "proprieta": [
+        "Fuoco",
+        "AC 1"
+      ],
+      "gittata_q": 24,
+      "modalita": [
+        "S"
+      ],
+      "ac": 1
+    },
+    {
+      "nome": "Pugno",
+      "tipo": "ravvicinato",
+      "va": 15,
+      "danno": "2d6+3",
+      "natura": "Naturale",
+      "proprieta": [
+        "Contusione",
+        "AC 1"
+      ],
+      "portata_q": 1,
+      "ac": 1
+    }
+  ],
+  "capacita": [
+    {
+      "nome": "Fuoco e sensi",
+      "effetto": "Scurovisione 24 Q. Immune ai danni da Fuoco e ai relativi effetti secondari, di qualunque Natura. Non assorbe il Fuoco per curarsi e non è immune al Gelo. Non incendia automaticamente chi lo tocca; il danno richiede un attacco o una capacità descritta. Non protegge per contatto un alleato dal calore."
+    },
+    {
+      "nome": "Fiamma scagliata",
+      "effetto": "Una AzP e tre PM per ogni tiro, massimo due tiri per Round. VA 16 già comprensivo di Armi da lancio +2 per il proiettile mistico; applicare distanza, Copertura e condizioni. Il tiro consente Parata con i modificatori a distanza oppure Schivata, ai costi ordinari; non è un’area. La Fiamma non è un’Opportunità ravvicinata. Nessuna Prova Potere o Contromagia."
+    },
+    {
+      "nome": "Incendio",
+      "effetto": "Scimitarra e Fiamma applicano Fuoco: dopo almeno un danno finale e superamento di Ignifugo, Riflessi 0 evita Incendiato; fallimento applica lo Stato del Giocatore per 1+1d3 Round. Il danno della tabella comprende già il Fuoco diretto, senza aggiungere altri dadi prima dello Stato. La proprietà della scimitarra cessa quando non è impugnata dall’Efreeti."
+    },
+    {
+      "nome": "Muro di fiamme",
+      "effetto": "Due AzP e sei PM, origine visibile entro 12 Q: fino a sei Q contigui, alti tre Q, per cinque Round senza Concentrazione. Non può crearlo nei Q di altre creature; non è una barriera solida e non nasconde la vista. Chi entra o lo attraversa, o vi inizia la propria Iniziativa, subisce 2d6+3 Magico, Fuoco, una sola volta per Round per questo muro. Elusione Riflessi −2 dimezza prima dell’AR; niente altra Difesa sullo stesso danno. Dopo residuo applica Fuoco con Riflessi −2. Il muro colpisce anche gli alleati."
+    },
+    {
+      "nome": "Limiti del muro",
+      "effetto": "Un solo muro attivo: il nuovo sostituisce il precedente. Scadenza, Svenuto o morte dell’Efreeti lo terminano; può scioglierlo gratis alla propria Iniziativa. Negare Potere può rimuoverlo, confronto 9. Acqua sufficiente e mezzi adeguati possono spegnere un tratto, a giudizio della scena; pochi spruzzi non spengono tutta la parete. Fiamme ambientali eventualmente propagate restano un fenomeno distinto."
+    },
+    {
+      "nome": "Dotazione e poteri",
+      "effetto": "Usa le capacità comuni dei geni ed evoca Fuoco. Scimitarra grande Comune PI 6, PS Integrità 10; Parata con arma pronta e costi normali, nessuna Parata naturale. Danno e portata richiedono la sua corporatura; recuperarla non conferisce il Fuoco. I 220 PX comprendono la dotazione, senza elementale evocato o tana."
+    },
+    {
+      "nome": "Altri movimenti",
+      "effetto": "spazio 2 × 2 Q"
+    }
+  ],
+  "gs_px": {
+    "gs": "Mito",
+    "px": 220,
+    "per_pg": 4
+  },
+  "_bestiario": {
+    "campi": {
+      "pv": "Mostri 0.69",
+      "pm": "Mostri 0.69",
+      "caratteristiche": "Mostri 0.69",
+      "ar": "Mostri 0.69",
+      "difese": "Mostri 0.69",
+      "salvezze": "Mostri 0.69",
+      "iniziativa": "Mostri 0.69",
+      "azioni": "Mostri 0.69",
+      "movimento": "Mostri 0.69",
+      "spazio": "Mostri 0.69",
+      "abilita": "Mostri 0.69",
+      "attacchi": "Mostri 0.69",
+      "capacita": "Mostri 0.69",
+      "gs_px": "Mostri 0.69"
+    },
+    "edizione": "Mostri 0.69",
+    "sistema_salute": "solo_PV"
+  }
+}

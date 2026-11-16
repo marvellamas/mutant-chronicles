@@ -1,0 +1,155 @@
+{
+  "formato": "mutant-nemico",
+  "versione": 1,
+  "id": "erinni",
+  "nome": "Erinni",
+  "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Erinni",
+  "note": "Combattente alata che alterna spada e arco. Il profilo usa armatura media e dotazione Comune; la capacità personale rende mistici i suoi attacchi d’arma e aggiunge veleno, senza trasformare gli oggetti recuperati in armi incantate.",
+  "pv": 146,
+  "pm": 40,
+  "caratteristiche": {
+    "FOR": 9,
+    "DES": 8,
+    "COS": 9,
+    "INT": 7,
+    "SAG": 7,
+    "CAR": 9
+  },
+  "ar": {
+    "totale": 4,
+    "magica": 0
+  },
+  "difese": 13,
+  "salvezze": {
+    "tempra": 14,
+    "riflessi": 14,
+    "volonta": 15,
+    "magia": 14
+  },
+  "iniziativa": 3,
+  "azioni": {
+    "principali": 3,
+    "movimento": 1
+  },
+  "movimento": {
+    "passo": 5,
+    "corsa": 11,
+    "scatto": 17,
+    "volo": 11
+  },
+  "spazio": "1 Q",
+  "abilita": [
+    {
+      "nome": "Armi da guerra",
+      "va": 15
+    },
+    {
+      "nome": "Armi da lancio",
+      "va": 14
+    },
+    {
+      "nome": "Corpo a corpo",
+      "va": 13
+    },
+    {
+      "nome": "Atletica",
+      "va": 12
+    },
+    {
+      "nome": "Percezione",
+      "va": 13
+    },
+    {
+      "nome": "Oratoria",
+      "va": 14
+    }
+  ],
+  "attacchi": [
+    {
+      "nome": "Spada lunga",
+      "tipo": "ravvicinato",
+      "va": 15,
+      "danno": "1d8+4",
+      "natura": "Magico",
+      "proprieta": [
+        "Taglio",
+        "AC 1",
+        "veleno"
+      ],
+      "portata_q": 1,
+      "ac": 1
+    },
+    {
+      "nome": "Arco da guerra",
+      "tipo": "distanza",
+      "va": 14,
+      "danno": "1d6+4",
+      "natura": "Magico",
+      "proprieta": [
+        "Perforazione",
+        "AC 1",
+        "veleno"
+      ],
+      "gittata_q": 100,
+      "modalita": [
+        "S"
+      ],
+      "ac": 1
+    }
+  ],
+  "capacita": [
+    {
+      "nome": "Corpo e percezione",
+      "effetto": "Protezioni elementali comuni, resistenza alle armi non argentate e Resistenza alla magia +2 non inclusa nelle PS. Vista rivelatrice 9 entro 24 Q, come descritta per Glabrezu e Nalfeshnee, e inoltre vede anche nel buio magico grazie alla Vista infernale. Telepatia entro 24 Q. Non legge menti o annulla una trasformazione fisica con la sola vista."
+    },
+    {
+      "nome": "Sequenza e preparazione",
+      "effetto": "Tre AzP totali, massimo tre colpi di Spada o due frecce per Round, senza superare tre attacchi complessivi, Opportunità compresa. Nessun Tiro Rapido presunto; ogni freccia costa una AzP e una munizione, incoccare incluso. Inizia con la Spada pronta e l’Arco riposto; cambiare arma richiede le normali Azioni e mani libere. L’Arco non Para; la Spada lunga non è Versatile."
+    },
+    {
+      "nome": "Armi e veleno",
+      "effetto": "Solo mentre le impugna, Spada e Arco infliggono il danno Magico completo della tabella. Dopo almeno un danno finale a un vivente biologico, Tempra −2 dimezza per eccesso 2d4+2 danni diretti da veleno mistico di Pericolosità IV; fallimento danno intero. Con una freccia, il fallimento applica anche Avvelenato per cinque Round, con −2 VA alle Prove fisiche, non alle PS; la Spada non applica questa penalità persistente. Nessun danno periodico o cumulo della penalità."
+    },
+    {
+      "nome": "Neutralizzare",
+      "effetto": "Immunità al veleno evita la perdita e lo Stato, non il colpo Magico. Antidoto adeguato alla sostanza mistica o Cura Avvelenamenti almeno sei rimuove l’eventuale veleno attivo; non restituisce PV già persi. Negare Potere non annulla la tossina già inoculata. Armi e frecce non impugnate dall’Erinni non mantengono l’infusione, non forniscono dosi recuperabili e restano oggetti Comuni."
+    },
+    {
+      "nome": "Parata addestrata",
+      "effetto": "Con Spada pronta, una Parata gratuita per Round, anche fuori dalla propria Iniziativa, con VA 15: Difese 13 più due personali per Parare con la Spada, non già compresi. Le ulteriori Parate costano una AzP; restano requisiti, penalità a distanza ed esiti ordinari, senza una seconda Difesa sullo stesso attacco. Non riceve un +4 di AR o una Parata naturale. Schivata usa Difese 13 e i costi comuni."
+    },
+    {
+      "nome": "Dotazione e armatura",
+      "effetto": "Spada lunga: FOR 4, PI 5, base 1d8+1; Arco da guerra: FOR 5, PI 6, base 1d6+1; tre personali già compresi nei danni pronti. Armatura media: AR 3, FOR 5, PI 8. Tutto Comune, PS Integrità 10. La Media impone −1 ai VA fisici pertinenti e −1 Q a ogni andatura, già inclusi; senza di essa recupera quei valori e torna a terra 6 / 12 / 18 e volo 12 / 24 / 36 Q, con sola AR biologica uno. I 220 PX includono la dotazione, senza corda magica o seguito."
+    },
+    {
+      "nome": "Altri movimenti",
+      "effetto": "spazio 1 × 1 Q; penalità Media comprese"
+    }
+  ],
+  "gs_px": {
+    "gs": "Mito",
+    "px": 220,
+    "per_pg": 4
+  },
+  "_bestiario": {
+    "campi": {
+      "pv": "Mostri 0.69",
+      "pm": "Mostri 0.69",
+      "caratteristiche": "Mostri 0.69",
+      "ar": "Mostri 0.69",
+      "difese": "Mostri 0.69",
+      "salvezze": "Mostri 0.69",
+      "iniziativa": "Mostri 0.69",
+      "azioni": "Mostri 0.69",
+      "movimento": "Mostri 0.69",
+      "spazio": "Mostri 0.69",
+      "abilita": "Mostri 0.69",
+      "attacchi": "Mostri 0.69",
+      "capacita": "Mostri 0.69",
+      "gs_px": "Mostri 0.69"
+    },
+    "edizione": "Mostri 0.69",
+    "sistema_salute": "solo_PV"
+  }
+}

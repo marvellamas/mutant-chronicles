@@ -3,7 +3,7 @@
   "versione": 1,
   "id": "azer",
   "nome": "Azer",
-  "fonte": "dal Manuale dei Mostri v0.46 (Word del 27/10/2026), cap. 8 «Catalogo delle creature» — Costrutti e creature elementali",
+  "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Azer",
   "caratteristiche": {
     "FOR": 7,
     "DES": 5,
@@ -110,9 +110,25 @@
     "sanguinamento",
     "incendiato"
   ],
-  "note": "AR 5 (3 intrinseca + 2 scudo medio); senza scudo scende a 3. Tecnologia 13 per metallurgia. Martello da guerra e scudo medio Comuni, entrambi pronti; può parare con l’uno o l’altro. Comportamento: difende la fucina o un lavoro; non necessariamente ostile, trattare può evitare lo scontro.",
+  "note": "Creatura elementale in corpo metallico • artigiano e difensore • Natura Comune. Condotta. Difende la fucina, i compagni o un lavoro affidato. Non è necessariamente ostile: trattare e riconoscere il suo ruolo può evitare uno scontro. Sotto 11 PV può cercare un riparo o una tregua. Il calore delle armi e il contatto diretto sono descritti nella pagina seguente.",
   "_bestiario": {
     "edizione": "Mostri 0.69",
-    "sistema_salute": "solo_PV"
+    "sistema_salute": "solo_PV",
+    "campi": {
+      "pv": "Mostri 0.69",
+      "pm": "Mostri 0.69",
+      "caratteristiche": "Mostri 0.69",
+      "ar": "Mostri 0.69",
+      "difese": "Mostri 0.69",
+      "salvezze": "Mostri 0.69",
+      "iniziativa": "Mostri 0.69",
+      "azioni": "Mostri 0.69",
+      "movimento": "Mostri 0.69",
+      "spazio": "Mostri 0.69",
+      "abilita": "Mostri 0.47",
+      "attacchi": "Mostri 0.47",
+      "capacita": "Mostri 0.47",
+      "gs_px": "Mostri 0.69"
+    }
   }
 }

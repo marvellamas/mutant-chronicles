@@ -3,7 +3,7 @@
   "versione": 1,
   "id": "chuul",
   "nome": "Chuul",
-  "fonte": "dal Manuale dei Mostri v0.46 (Word del 27/10/2026), cap. 8 «Catalogo delle creature» — Creature delle acque e popoli sommersi",
+  "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Chuul",
   "caratteristiche": {
     "FOR": 9,
     "DES": 5,
@@ -117,9 +117,26 @@
   "immunita": [
     "avvelenato"
   ],
-  "note": "Immune ai danni da veleno e ad Avvelenato; non a malattie, Fuoco, Ghiaccio o influenze mentali. Testa = occhi, bocca e tentacoli velenosi; Torace = carapace; Braccia = chele; Gambe = zampe. Nessuna Parata con il guscio. Comprende una lingua scelta per la sua origine ma non parla; un eventuale legame con un Aboleth va stabilito nella scena. Condotta: sotto 14 PV o a Ferita Seria lascia le prede o si ritira. I 50 PX comprendono sensi, due chele e tossina. Fonte: Chuul, p. 40.",
+  "note": "Predatore corazzato • chele e tentacoli velenosi • Natura Comune.",
   "_bestiario": {
     "edizione": "Mostri 0.69",
-    "sistema_salute": "solo_PV"
-  }
+    "sistema_salute": "solo_PV",
+    "campi": {
+      "pv": "Mostri 0.69",
+      "pm": "Mostri 0.69",
+      "caratteristiche": "Mostri 0.69",
+      "ar": "Mostri 0.69",
+      "difese": "Mostri 0.69",
+      "salvezze": "Mostri 0.69",
+      "iniziativa": "Mostri 0.69",
+      "azioni": "Mostri 0.69",
+      "movimento": "Mostri 0.69",
+      "spazio": "Mostri 0.69",
+      "abilita": "Mostri 0.69",
+      "attacchi": "Mostri 0.47",
+      "capacita": "Mostri 0.47",
+      "gs_px": "Mostri 0.69"
+    }
+  },
+  "taglia": "grande"
 }

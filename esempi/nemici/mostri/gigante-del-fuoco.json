@@ -3,7 +3,7 @@
   "versione": 1,
   "id": "gigante-del-fuoco",
   "nome": "Gigante del fuoco",
-  "fonte": "dal Manuale dei Mostri v0.46 (Word del 27/10/2026), cap. 8 «Catalogo delle creature» — Giganti e abitanti delle montagne",
+  "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Gigante del fuoco",
   "caratteristiche": {
     "FOR": 10,
     "DES": 5,
@@ -88,20 +88,49 @@
   ],
   "capacita": [
     {
-      "nome": "Immunità al Fuoco",
-      "effetto": "Non subisce Fuoco né Incendiato e tollera il calore ambientale senza danni o Affaticamento. Fumo, mancanza d’aria, crolli e materiali che lo intrappolano restano pericolosi. Ghiaccio normale, con i suoi Stati. L’equipaggiamento conserva le normali vulnerabilità."
+      "nome": "Dotazione e danni",
+      "effetto": "Spadone FOR 6, PI 6, due mani: base 2d6+1, +3 ordinario e +3 innato. Armatura civile Pesante su misura: AR 5, FOR 7, PI 10. Masso: base 2d6 e +4 innato. Nessuna arma ha Fuoco aggiunto e le piastre recuperate non rendono immuni al calore."
     },
     {
       "nome": "Valori con armatura",
-      "effetto": "I valori pronti includono −2 ad attacchi e Agilità e −2 Q a ogni andatura; Parata 13. Tolta la corazza: AR 1, Armi da guerra 17, Armi da lancio 13, Schivata 13, Atletica 16, movimento 6/12/18."
+      "effetto": "Già compresi −2 ad attacchi e Agilità e −2 Q a ogni andatura. Tolta la corazza: AR 1, Guerra 17, Lancio 13, Schivata 13, Atletica 16, movimento 6 / 12 / 18. Parata 13 e Salvezze restano uguali. L’esperienza di forgia riguarda processi e strumenti conosciuti, non concede competenze elettroniche o progetti segreti."
+    },
+    {
+      "nome": "Immunità al Fuoco",
+      "effetto": "Non subisce Fuoco né Incendiato e tollera il calore ambientale senza danni o Affaticamento da calore. Fumo, mancanza d’aria, crolli e materiali che lo intrappolano restano pericolosi. Il suo equipaggiamento conserva le normali vulnerabilità degli oggetti. Ghiaccio infligge danno ordinario e può applicare i propri Stati."
+    },
+    {
+      "nome": "Altri movimenti",
+      "effetto": "spazio 3 × 3 Q"
+    },
+    {
+      "nome": "Abilità particolari",
+      "effetto": "Tecnologia 12 per forgia"
     }
   ],
   "immunita": [
     "incendiato"
   ],
-  "note": "AR 6 (1 biologica + 5 armatura Pesante su misura). Difese = Parata 13; Schivata 11. Tecnologia 12 per forgia. Spadone a due mani (+3 ordinario, +3 innato, portata 2 Q). Comportamento: terreno solido e fronte controllabile; sotto 21 PV o a Ferita Seria ripiega o tratta.",
+  "note": "Gigante • combattente corazzato • Natura Comune. Condotta. Preferisce terreno solido e un fronte controllabile. Può spendere una AzP per attaccare e l’altra per Parata; una Difesa non ripristina le Azioni. Sotto 28 PV può ripiegare dietro una barriera o trattare. Non ha rigenerazione, scavo o effetti da assedio automatici.",
   "_bestiario": {
     "edizione": "Mostri 0.69",
-    "sistema_salute": "solo_PV"
-  }
+    "sistema_salute": "solo_PV",
+    "campi": {
+      "pv": "Mostri 0.69",
+      "pm": "Mostri 0.69",
+      "caratteristiche": "Mostri 0.69",
+      "ar": "Mostri 0.69",
+      "difese": "Mostri 0.69",
+      "salvezze": "Mostri 0.69",
+      "iniziativa": "Mostri 0.69",
+      "azioni": "Mostri 0.69",
+      "movimento": "Mostri 0.69",
+      "spazio": "Mostri 0.69",
+      "abilita": "Mostri 0.47",
+      "attacchi": "Mostri 0.47",
+      "capacita": "Mostri 0.69",
+      "gs_px": "Mostri 0.69"
+    }
+  },
+  "taglia": "grande"
 }

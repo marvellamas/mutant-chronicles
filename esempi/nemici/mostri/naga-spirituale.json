@@ -1,0 +1,152 @@
+{
+  "formato": "mutant-nemico",
+  "versione": 1,
+  "id": "naga-spirituale",
+  "nome": "Naga spirituale",
+  "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Naga spirituale",
+  "note": "Serpente intelligente che ricerca formule e controllo sui rivali. Il nome spirituale identifica la specie: il corpo è materiale e il suo morso non sottrae PM. Una AzP per Incantesimo e PM della versione; Potere pronto 15 ai livelli tre e sei, 13 al nove. Restano condizioni di lancio e procedure delle regole comuni dei custodi e delle schede della Magia v1.7. 6 PM; un colpo 1d6+5 Magico Gelo, una AC, automatico entro dieci Q 9 PM; un colpo 4d6+5 Magico Fulmine, una AC, automatico entro quindici Q 3 PM; centro visibile entro sei Q, raggio due Q, cinque minuti Immagine statica semplice, suoni e odori semplici; indagine Magia 0. Nessun attacco, materia o conoscenza ignota; Negare 3. 3 PM; un vivente visibile entro sei Q capace di dormire; Volontà 0 evita; cinque Round +4 alla PS se già cosciente in combattimento o pericolo concreto. Danni e rumori non svegliano; scuotere una AzP per due turni consecutivi, Cura Spirituale 6 o Negare 3. 9 PM; fino a due menti visibili entro 15 Q concatenate entro due; Volontà −2 evita; dieci minuti fissi Emozioni e pensieri spontanei superficiali, non ricordi o verità garantita. Perdere vista o portata termina il singolo legame; Barriera Mentale aiuta, Negare 9. 9 PM; una mente cosciente visibile entro 15 Q; Volontà −2 evita; tre Round a Concentrazione Usa solo azioni residue della vittima nel suo turno, niente PM/PE o violazioni morali. Nuova Volontà −2 al primo danno effettivo per Round; oltre 15 Q termina. Negare o Esorcizzare 9.",
+  "pv": 94,
+  "pm": 48,
+  "caratteristiche": {
+    "FOR": 8,
+    "DES": 8,
+    "COS": 7,
+    "INT": 8,
+    "SAG": 7,
+    "CAR": 8
+  },
+  "ar": {
+    "totale": 3,
+    "magica": 0
+  },
+  "difese": 12,
+  "salvezze": {
+    "tempra": 13,
+    "riflessi": 13,
+    "volonta": 13,
+    "magia": 13
+  },
+  "iniziativa": 3,
+  "azioni": {
+    "principali": 2,
+    "movimento": 1
+  },
+  "movimento": {
+    "passo": 8,
+    "corsa": 16,
+    "scatto": 24
+  },
+  "spazio": "1 × 2 Q",
+  "abilita": [
+    {
+      "nome": "Corpo a corpo",
+      "va": 15
+    },
+    {
+      "nome": "Atletica",
+      "va": 12
+    },
+    {
+      "nome": "Furtività",
+      "va": 12
+    },
+    {
+      "nome": "Percezione",
+      "va": 12
+    },
+    {
+      "nome": "Potere",
+      "va": 15
+    },
+    {
+      "nome": "Occultismo",
+      "va": 15
+    },
+    {
+      "nome": "Raggirare",
+      "va": 14
+    }
+  ],
+  "capacita": [
+    {
+      "nome": "Incantesimi",
+      "effetto": "VA —. Danno: Repertorio dedicato; PM e Potere indicati. Portata/costo: Una AzP salvo eccezione; "
+    },
+    {
+      "nome": "Corpo e sensi",
+      "effetto": "Vivente sovrannaturale che non necessita di aria, cibo, acqua o sonno e non invecchia né contrae malattie. Non è immune ad Affaticamento per queste sole proprietà. Immune a veleno, Stati mantenuti da veleno e fascinazione; Scurovisione dodici Q. Ha mente e PM personali, senza telepatia, Resistenza alla magia +2 o Parata naturale. A Terra e Immobilizzato restano applicabili alla sua anatomia; le Menomazioni degli arti interessano le funzioni locomotorie del corpo serpentino."
+    },
+    {
+      "nome": "Sequenza e veleno",
+      "effetto": "Due AzP totali, massimo un Morso per Round, Opportunità compresa. Dopo almeno un danno finale a un vivente biologico: Tempra −2 dimezza per eccesso 4d6 danni diretti da veleno naturale di Pericolosità V, senza AR; fallimento danno intero. Nessun Avvelenato persistente, paralisi o ricorrenza implicita. Il Magistrale del Morso non moltiplica il veleno. Cura Avvelenamenti non restituisce PV già perduti; immunità al veleno evita la sola componente velenosa, non il Morso."
+    },
+    {
+      "nome": "Lancio serpentino",
+      "effetto": "Gli Incantesimi del repertorio richiedono una AzP e PM pari al livello, pagati prima di Potere quindici: pronto quindici al livello sei e tredici al nove. Il tratto anatomico di specie esclude Focus e Gesto; l’Invocazione è obbligatoria, senza poterla omettere a penalità. È un’eccezione della Naga, non una regola per i PG: la magia rimane un Incantesimo riconoscibile e contrastabile con Contromagia. Ingaggio e altri impedimenti si applicano. Non possiede Concentrazione Operativa, Anticipazione o Contromagia. Zero PM provoca Svenuto dopo l’intero effetto."
+    },
+    {
+      "nome": "Ritorno e cattura",
+      "effetto": "Possiede Ritorno della Naga delle regole comuni: si avvia solo dopo la morte effettiva, non a zero PV o da Svenuto, e non ricostituisce il corpo durante lo scontro. È possibile sconfiggerla, imprigionarla o interromperne il nucleo prima del ritorno. Nessun servitore, cristallo, bozzolo o capacità delle Murene della roccia di Iris è incluso: le due specie restano distinte."
+    },
+    {
+      "nome": "Incantesimo",
+      "effetto": "Tabella (celle in ordine di lettura): Parametri pronti | Esito e contromisura | Colpo Elementale 6 • §13.1."
+    },
+    {
+      "nome": "Vista e percorso libero; Parata o Schivata, non Elusione",
+      "effetto": "AR e secondario Gelo 0 dopo residuo e Termico; nessuna progressione a Congelato implicita."
+    },
+    {
+      "nome": "Colpo Elementale 9 • §13.1",
+      "effetto": "Tabella (celle in ordine di lettura): ."
+    },
+    {
+      "nome": "Vista e percorso libero; Parata o Schivata, non Elusione",
+      "effetto": "AR e secondario Fulmine −2 dopo residuo e Isolante, senza effetto tecnologico aggiuntivo."
+    },
+    {
+      "nome": "Illusione 3 • §19.4",
+      "effetto": "Tabella (celle in ordine di lettura): ."
+    },
+    {
+      "nome": "Indurre Sonno 3 • §18.6",
+      "effetto": "Tabella (celle in ordine di lettura): ."
+    },
+    {
+      "nome": "Empatia 9 • §20.1",
+      "effetto": "Tabella (celle in ordine di lettura): ."
+    },
+    {
+      "nome": "Possessione 9 • §19.10",
+      "effetto": "Tabella (celle in ordine di lettura): ."
+    },
+    {
+      "nome": "Altri movimenti",
+      "effetto": "spazio 1 × 2 Q"
+    }
+  ],
+  "gs_px": {
+    "gs": "Leggenda",
+    "px": 100,
+    "per_pg": 4
+  },
+  "_bestiario": {
+    "campi": {
+      "pv": "Mostri 0.69",
+      "pm": "Mostri 0.69",
+      "caratteristiche": "Mostri 0.69",
+      "ar": "Mostri 0.69",
+      "difese": "Mostri 0.69",
+      "salvezze": "Mostri 0.69",
+      "iniziativa": "Mostri 0.69",
+      "azioni": "Mostri 0.69",
+      "movimento": "Mostri 0.69",
+      "spazio": "Mostri 0.69",
+      "abilita": "Mostri 0.69",
+      "capacita": "Mostri 0.69",
+      "gs_px": "Mostri 0.69"
+    },
+    "edizione": "Mostri 0.69",
+    "sistema_salute": "solo_PV"
+  }
+}

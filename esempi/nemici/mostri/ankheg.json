@@ -3,7 +3,7 @@
   "versione": 1,
   "id": "ankheg",
   "nome": "Ankheg",
-  "fonte": "dal Manuale dei Mostri v0.46 (Word del 27/10/2026), cap. 8 «Catalogo delle creature» — prime quindici schede",
+  "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Ankheg",
   "caratteristiche": {
     "FOR": 8,
     "DES": 5,
@@ -105,9 +105,26 @@
       "effetto": "Vede entro 12 Q nel buio naturale, senza colori; non attraversa ostacoli né individua da sola chi è nascosto."
     }
   ],
-  "note": "AR 3 naturale; da A Terra scende a 1 finché non si rialza. Furtività 10 sotto terra, 7 in superficie. Indipendente dalla Covata. Fonte: p. 21. Comportamento: individua una creatura isolata, emerge vicino e la trascina verso il cunicolo; a 8 PV o Ferita Profonda cerca di interrarsi.",
+  "note": "Insettoide scavatore • Natura Comune • predatore da imboscata. Spazio: 2 × 2 Q. Protezioni specifiche: Nessuna immunità o Contromisura. A Terra la sua AR naturale scende a 1 finché non si rialza. Liberarsi richiede 1 AzP e la normale Prova contrapposta; i pareggi favoriscono chi trattiene. Per stringere la vittima l’Ankheg spende 1 AzP ed effettua una nuova Prova contrapposta: con successo infligge il danno del Morso, con normale AR e Corrosivo. È l’eccezione di questo profilo al danno ordinario della presa; non aggiunge un secondo tiro per colpire o una seconda Difesa. Finché trattiene non morde altri e non usa Getto acido. Il rilascio volontario è gratuito nella propria Iniziativa. Dopo il getto deve trascorrere tre Round interi senza ripeterlo. Esempio: usato nel Round 1, torna disponibile nel Round 5. Non spende PM e non recupera la secrezione con Meditazione. Comportamento. Individua una creatura isolata, emerge vicino e prova a trascinarla verso il cunicolo. Usa il getto se affronta più nemici allineati o deve aprirsi una fuga. A 11 PV cerca di interrarsi; gli avversari possono reagire secondo ingaggio e opportunità, senza un’immunità gratuita durante lo scavo.",
   "_bestiario": {
     "edizione": "Mostri 0.69",
-    "sistema_salute": "solo_PV"
-  }
+    "sistema_salute": "solo_PV",
+    "campi": {
+      "pv": "Mostri 0.69",
+      "pm": "Mostri 0.69",
+      "caratteristiche": "Mostri 0.69",
+      "ar": "Mostri 0.69",
+      "difese": "Mostri 0.69",
+      "salvezze": "Mostri 0.69",
+      "iniziativa": "Mostri 0.69",
+      "azioni": "Mostri 0.69",
+      "movimento": "Mostri 0.69",
+      "spazio": "Mostri 0.69",
+      "abilita": "Mostri 0.47",
+      "attacchi": "Mostri 0.47",
+      "capacita": "Mostri 0.47",
+      "gs_px": "Mostri 0.69"
+    }
+  },
+  "taglia": "grande"
 }

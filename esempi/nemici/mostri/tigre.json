@@ -3,7 +3,7 @@
   "versione": 1,
   "id": "tigre",
   "nome": "Tigre",
-  "fonte": "dal Manuale dei Mostri v0.46 (Word del 27/10/2026), cap. 8 «Catalogo delle creature» — Predatori e grandi erbivori",
+  "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Tigre",
   "caratteristiche": {
     "FOR": 8,
     "DES": 7,
@@ -48,11 +48,11 @@
       "va": 12,
       "danno": "1d6+2",
       "natura": "Naturale",
-      "portata_q": 1,
-      "ac": 1,
       "proprieta": [
         "Taglio"
-      ]
+      ],
+      "portata_q": 1,
+      "ac": 1
     },
     {
       "nome": "Morso",
@@ -60,11 +60,11 @@
       "va": 12,
       "danno": "1d8+2",
       "natura": "Naturale",
-      "portata_q": 1,
-      "ac": 1,
       "proprieta": [
         "Perforazione"
-      ]
+      ],
+      "portata_q": 1,
+      "ac": 1
     }
   ],
   "abilita": [
@@ -107,9 +107,25 @@
       "effetto": "Fiuto +2. Acqua o un odore forte possono rendere inservibile una traccia olfattiva; il bonus non crea una pista assente. Può mordere anche una vittima ancora in piedi, pagando l’attacco ordinario."
     }
   ],
-  "note": "Condotta: caccia spesso da sola, può difendere territorio o piccoli; sotto 8 PV o a Ferita Profonda cerca copertura. Fonte: Tiger, p. 339.",
+  "note": "Grande felino • assalto e caccia solitaria • Natura Comune. Condotta. Non comprende linguaggi. Caccia spesso da sola e può difendere territorio o piccoli. Sotto 11 PV tende a cercare copertura. Un bersaglio fuori portata o oltre una barriera richiede un nuovo avvicinamento, non un allungo gratuito del Morso.",
   "_bestiario": {
     "edizione": "Mostri 0.69",
-    "sistema_salute": "solo_PV"
+    "sistema_salute": "solo_PV",
+    "campi": {
+      "pv": "Mostri 0.69",
+      "pm": "Mostri 0.69",
+      "caratteristiche": "Mostri 0.69",
+      "ar": "Mostri 0.69",
+      "difese": "Mostri 0.69",
+      "salvezze": "Mostri 0.69",
+      "iniziativa": "Mostri 0.69",
+      "azioni": "Mostri 0.69",
+      "movimento": "Mostri 0.69",
+      "spazio": "Mostri 0.69",
+      "abilita": "Mostri 0.69",
+      "attacchi": "Mostri 0.69",
+      "capacita": "Mostri 0.47",
+      "gs_px": "Mostri 0.69"
+    }
   }
 }

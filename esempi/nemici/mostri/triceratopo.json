@@ -3,7 +3,7 @@
   "versione": 1,
   "id": "triceratopo",
   "nome": "Triceratopo",
-  "fonte": "dal Manuale dei Mostri v0.46 (Word del 27/10/2026), cap. 8 «Catalogo delle creature» — Grandi rettili e predatori mostruosi",
+  "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Triceratopo",
   "caratteristiche": {
     "FOR": 10,
     "DES": 4,
@@ -48,11 +48,11 @@
       "va": 14,
       "danno": "2d6+3",
       "natura": "Naturale",
-      "portata_q": 1,
-      "ac": 1,
       "proprieta": [
         "Perforazione"
-      ]
+      ],
+      "portata_q": 1,
+      "ac": 1
     },
     {
       "nome": "Calpestare",
@@ -60,12 +60,11 @@
       "va": 14,
       "danno": "1d8+3",
       "natura": "Naturale",
-      "portata_q": 1,
-      "ac": 1,
       "proprieta": [
         "Contundente"
       ],
-      "note": "Solo contro una vittima già A Terra, di spazio ≤ 2 × 2 Q e in una posizione raggiungibile dalle zampe. Non entra automaticamente nello spazio del bersaglio."
+      "portata_q": 1,
+      "ac": 1
     }
   ],
   "abilita": [
@@ -100,9 +99,26 @@
       "effetto": "Dopo almeno 4 Q rettilinei verso la vittima nella stessa Iniziativa, Corna che infliggono almeno 1 danno finale impongono Tempra senza modificatore a una creatura ≤ 2 × 2 Q: fallimento → A Terra. Il Calpestare successivo costa la seconda AzP e conserva tiro per colpire, Difesa e AR normali. Nessun bonus di danno oltre alla formula."
     }
   ],
-  "note": "Vista e udito ordinari. Corna e collare sono parti della Testa, senza Parata naturale né PI separati. Non comprende linguaggi. Un branco richiede esemplari distinti. Condotta: protegge il branco o reagisce a una minaccia vicina; sotto 14 PV o a Ferita Seria cerca protezione. Fonte: Triceratops, p. 80.",
+  "note": "Erbivoro massiccio • carica e calpestamento • Natura Comune. Condotta. Avverte, protegge il branco o reagisce a una minaccia vicina. Non comprende linguaggi e può fermarsi quando viene lasciato un varco per allontanarsi. Sotto 19 PV tende a cercare protezione. Un branco richiede esemplari distinti, non ulteriori Azioni del singolo profilo.",
   "_bestiario": {
     "edizione": "Mostri 0.69",
-    "sistema_salute": "solo_PV"
-  }
+    "sistema_salute": "solo_PV",
+    "campi": {
+      "pv": "Mostri 0.69",
+      "pm": "Mostri 0.69",
+      "caratteristiche": "Mostri 0.69",
+      "ar": "Mostri 0.69",
+      "difese": "Mostri 0.69",
+      "salvezze": "Mostri 0.69",
+      "iniziativa": "Mostri 0.69",
+      "azioni": "Mostri 0.69",
+      "movimento": "Mostri 0.69",
+      "spazio": "Mostri 0.69",
+      "abilita": "Mostri 0.69",
+      "attacchi": "Mostri 0.69",
+      "capacita": "Mostri 0.47",
+      "gs_px": "Mostri 0.69"
+    }
+  },
+  "taglia": "grande"
 }

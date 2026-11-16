@@ -3,7 +3,7 @@
   "versione": 1,
   "id": "corvo",
   "nome": "Corvo",
-  "fonte": "dal Manuale dei Mostri v0.46 (Word del 27/10/2026), cap. 8 «Catalogo delle creature» — Sciami e piccola fauna",
+  "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Corvo",
   "caratteristiche": {
     "FOR": 1,
     "DES": 6,
@@ -49,11 +49,11 @@
       "va": 8,
       "danno": "1",
       "natura": "Naturale",
-      "ac": 1,
       "proprieta": [
         "Perforazione"
       ],
-      "portata_q": 1
+      "portata_q": 1,
+      "ac": 1
     }
   ],
   "abilita": [
@@ -99,9 +99,25 @@
       "effetto": "Vista e udito ordinari, senza Scurovisione innata. Braccia = ali; Gambe = arti posteriori. Nessun volo stazionario né Passaggio in volo: lasciare una portata nemica può provocare Opportunità. Può trasportare solo ciò che anatomia e carico consentono."
     }
   ],
-  "note": "Un Becco per Round, Opportunità compresa. Può cercare cibo, attirare l’attenzione o difendere il nido; un oggetto sottratto richiede comunque un’azione e un accesso praticabile. Condotta: a Ferita Superficiale tende a raggiungere un posatoio sicuro. Fonte: Raven, p. 335.",
+  "note": "Uccello opportunista • imitazione di suoni • Natura Comune. Condotta. Una Beccata per Round, Opportunità compresa. Il richiamo non applica Stati né garantisce Sorpresa. Può cercare cibo, attirare l’attenzione o difendere il nido; a Ferita Superficiale tende a raggiungere un posatoio sicuro. Un oggetto sottratto richiede comunque un’azione e un accesso realmente praticabile.",
   "_bestiario": {
     "edizione": "Mostri 0.69",
-    "sistema_salute": "solo_PV"
+    "sistema_salute": "solo_PV",
+    "campi": {
+      "pv": "Mostri 0.69",
+      "pm": "Mostri 0.69",
+      "caratteristiche": "Mostri 0.69",
+      "ar": "Mostri 0.69",
+      "difese": "Mostri 0.69",
+      "salvezze": "Mostri 0.69",
+      "iniziativa": "Mostri 0.69",
+      "azioni": "Mostri 0.69",
+      "movimento": "Mostri 0.69",
+      "spazio": "Mostri 0.69",
+      "abilita": "Mostri 0.69",
+      "attacchi": "Mostri 0.69",
+      "capacita": "Mostri 0.47",
+      "gs_px": "Mostri 0.69"
+    }
   }
 }

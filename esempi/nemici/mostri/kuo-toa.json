@@ -3,7 +3,7 @@
   "versione": 1,
   "id": "kuo-toa",
   "nome": "Kuo-toa",
-  "fonte": "dal Manuale dei Mostri v0.46 (Word del 27/10/2026), cap. 8 «Catalogo delle creature» — Creature delle acque e popoli sommersi",
+  "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Kuo-toa",
   "caratteristiche": {
     "FOR": 5,
     "DES": 5,
@@ -154,9 +154,25 @@
       "effetto": "In luce solare diretta −2 VA agli attacchi e alla Percezione visiva (non alle PS)."
     }
   ],
-  "note": "AR 3 = 1 biologica + 2 dello Scudo Medio (senza Scudo 1). Dotazione Comune: Lancia e Scudo Medio (FOR 5, PI 6, PS Integrità 10 ciascuno) più una Rete (FOR 3, due mani, PI 2); le formule comprendono bonus personale 0; i 22 PX comprendono la dotazione. Parla una lingua della sua comunità. Condotta: sotto 5 PV o a Ferita Profonda può fuggire, cedere o cercare aiuto. Fonte: Kuo-toa, p. 199.",
+  "note": "Abitante anfibio • cattura e scudo adesivo • Natura Comune.",
   "_bestiario": {
     "edizione": "Mostri 0.69",
-    "sistema_salute": "solo_PV"
+    "sistema_salute": "solo_PV",
+    "campi": {
+      "pv": "Mostri 0.69",
+      "pm": "Mostri 0.69",
+      "caratteristiche": "Mostri 0.69",
+      "ar": "Mostri 0.69",
+      "difese": "Mostri 0.69",
+      "salvezze": "Mostri 0.69",
+      "iniziativa": "Mostri 0.69",
+      "azioni": "Mostri 0.69",
+      "movimento": "Mostri 0.69",
+      "spazio": "Mostri 0.69",
+      "abilita": "Mostri 0.69",
+      "attacchi": "Mostri 0.47",
+      "capacita": "Mostri 0.47",
+      "gs_px": "Mostri 0.69"
+    }
   }
 }

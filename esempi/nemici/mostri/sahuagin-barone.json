@@ -1,0 +1,168 @@
+{
+  "formato": "mutant-nemico",
+  "versione": 1,
+  "id": "sahuagin-barone",
+  "nome": "Sahuagin barone",
+  "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Sahuagin barone",
+  "taglia": "grande",
+  "note": "Grande Sahuagin con quattro braccia, più robusto dell’esemplare ordinario. Usa un tridente e una corazza, conserva la frenesia predatoria e può influenzare uno squalo alla volta.",
+  "pv": 104,
+  "pm": 20,
+  "caratteristiche": {
+    "FOR": 9,
+    "DES": 7,
+    "COS": 8,
+    "INT": 7,
+    "SAG": 6,
+    "CAR": 8
+  },
+  "ar": {
+    "totale": 4,
+    "magica": 0
+  },
+  "difese": 13,
+  "salvezze": {
+    "tempra": 15,
+    "riflessi": 13,
+    "volonta": 13,
+    "magia": 12
+  },
+  "iniziativa": 2,
+  "azioni": {
+    "principali": 3,
+    "movimento": 1
+  },
+  "movimento": {
+    "passo": 5,
+    "corsa": 11,
+    "scatto": 17
+  },
+  "spazio": "2 × 2 Q",
+  "abilita": [
+    {
+      "nome": "Corpo a corpo",
+      "va": 15
+    },
+    {
+      "nome": "Armi da guerra",
+      "va": 15
+    },
+    {
+      "nome": "Armi da lancio",
+      "va": 13
+    },
+    {
+      "nome": "Atletica",
+      "va": 14
+    },
+    {
+      "nome": "Percezione",
+      "va": 15
+    }
+  ],
+  "attacchi": [
+    {
+      "nome": "Morso",
+      "tipo": "ravvicinato",
+      "va": 15,
+      "danno": "2d4+2",
+      "natura": "Naturale",
+      "proprieta": [
+        "Perforazione",
+        "AC 1"
+      ],
+      "portata_q": 1,
+      "ac": 1
+    },
+    {
+      "nome": "Artiglio",
+      "tipo": "ravvicinato",
+      "va": 15,
+      "danno": "2d6+2",
+      "natura": "Naturale",
+      "proprieta": [
+        "Taglio",
+        "AC 1"
+      ],
+      "portata_q": 1,
+      "ac": 1
+    },
+    {
+      "nome": "Tridente",
+      "tipo": "ravvicinato",
+      "va": 15,
+      "danno": "1d8+1d6+3",
+      "natura": "Naturale",
+      "proprieta": [
+        "Perforazione",
+        "AC 1"
+      ],
+      "portata_q": 2,
+      "ac": 1
+    },
+    {
+      "nome": "Tridente scagliato",
+      "tipo": "ravvicinato",
+      "va": 13,
+      "danno": "1d8+1d6+3",
+      "natura": "Naturale",
+      "proprieta": [
+        "Perforazione",
+        "AC 1"
+      ],
+      "portata_q": 4,
+      "ac": 1
+    }
+  ],
+  "capacita": [
+    {
+      "nome": "Corpo e sensi",
+      "effetto": "Vivente biologico con mente e PM personali; Scurovisione 24 Q. Respira aria e acqua ma richiede immersione completa ogni quattro ore secondo le regole Sahuagin; un Round immerso ripristina il periodo. Anatomia umanoide con quattro braccia e coda nella funzione delle Gambe; si registra quale braccio è menomato. Nessuna riserva di PV per ogni arto, Parata naturale o immunità automatica al veleno."
+    },
+    {
+      "nome": "Tre Azioni e frenesia",
+      "effetto": "Tre AzP totali, massimo un Morso e due attacchi complessivi di Artiglio o Tridente per Round, Opportunità ravvicinata compresa. Le quattro braccia permettono mani realmente libere, non Azioni o Difese aggiuntive. Frenesia: contro un organismo vivente sotto i PV massimi o con Sanguinamento attivo, +2 VA ai soli attacchi ravvicinati; non al lancio o ai danni e senza localizzazione automatica. I VA della tabella non comprendono Frenesia."
+    },
+    {
+      "nome": "Comando degli squali",
+      "effetto": "Una AzP e due PM, uno squalo con mente visibile entro 24 Q, Volontà 0 evita. Fallimento: tre Round a Concentrazione, semplici ordini di caccia o movimento con la normale Iniziativa e risorse dello squalo. Nuova Volontà 0 a fine della sua Iniziativa termina; chi resiste o si libera è immune a quel Barone per ventiquattro ore. Un solo comando; distanza oltre 24 Q, perdita di Concentrazione, congedo gratuito o Negare tre terminano. Si applicano tutti i limiti della procedura comune Sahuagin: niente azioni immediate, sensi condivisi o suicidio evidente."
+    },
+    {
+      "nome": "Dotazione e peso",
+      "effetto": "Tridente Comune: FOR quattro, una mano, portata due Q, PI sei, PS Integrità dieci; base 1d8+1, più due personali e 1d6 di Impatto della specie già compresi. L’Impatto non appartiene all’oggetto recuperato e non crea una seconda AC. Il lancio usa il profilo specifico scritto e richiede recupero dell’arma. Media Comune: AR tre, FOR cinque, PI otto, PS Integrità dieci; penalità già comprese, senza Scudo. Togliendola attacchi e Agilità +1, Terra 6 / 12 / 18, nuoto 10 / 20 / 30 Q; Parata, PS e Percezione invariati."
+    },
+    {
+      "nome": "Comunità e ritirata",
+      "effetto": "Il nome barone non assegna automaticamente una Corporazione, VI Grado o autorità magica sugli altri Sahuagin. Squali e seguaci hanno schede e PX propri. Il modello non comprende una Sacerdotessa, Malenti o un culto obbligatorio. Può difendere una comunità, guidare una caccia o trattare; sotto 26 PV può ordinare una ritirata, senza concedere turni gratuiti ai compagni."
+    },
+    {
+      "nome": "Altri movimenti",
+      "effetto": "nuoto 9 / 19 / 29 Q; spazio 2 × 2 Q"
+    }
+  ],
+  "gs_px": {
+    "gs": "Eroe",
+    "px": 77,
+    "per_pg": 4
+  },
+  "_bestiario": {
+    "campi": {
+      "pv": "Mostri 0.69",
+      "pm": "Mostri 0.69",
+      "caratteristiche": "Mostri 0.69",
+      "ar": "Mostri 0.69",
+      "difese": "Mostri 0.69",
+      "salvezze": "Mostri 0.69",
+      "iniziativa": "Mostri 0.69",
+      "azioni": "Mostri 0.69",
+      "movimento": "Mostri 0.69",
+      "spazio": "Mostri 0.69",
+      "abilita": "Mostri 0.69",
+      "attacchi": "Mostri 0.69",
+      "capacita": "Mostri 0.69",
+      "gs_px": "Mostri 0.69"
+    },
+    "edizione": "Mostri 0.69",
+    "sistema_salute": "solo_PV"
+  }
+}

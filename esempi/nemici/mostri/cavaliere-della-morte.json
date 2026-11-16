@@ -1,0 +1,128 @@
+{
+  "formato": "mutant-nemico",
+  "versione": 1,
+  "id": "cavaliere-della-morte",
+  "nome": "Cavaliere della Morte",
+  "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Cavaliere della Morte",
+  "note": "Guerriero non morto vincolato a un giuramento infranto. Combatte con spada e scudo e accompagna i colpi con scariche spirituali.",
+  "pv": 208,
+  "pm": 60,
+  "caratteristiche": {
+    "FOR": 10,
+    "DES": 5,
+    "COS": 10,
+    "INT": 6,
+    "SAG": 8,
+    "CAR": 9
+  },
+  "ar": {
+    "totale": 6,
+    "magica": 0
+  },
+  "difese": 16,
+  "salvezze": {
+    "tempra": 16,
+    "riflessi": 13,
+    "volonta": 16,
+    "magia": 15
+  },
+  "iniziativa": 2,
+  "azioni": {
+    "principali": 3,
+    "movimento": 1
+  },
+  "movimento": {
+    "passo": 6,
+    "corsa": 12,
+    "scatto": 18
+  },
+  "spazio": "1 Q",
+  "abilita": [
+    {
+      "nome": "Armi da guerra",
+      "va": 18
+    },
+    {
+      "nome": "Corpo a corpo",
+      "va": 16
+    },
+    {
+      "nome": "Potere",
+      "va": 16
+    },
+    {
+      "nome": "Percezione",
+      "va": 14
+    },
+    {
+      "nome": "Oratoria",
+      "va": 16
+    },
+    {
+      "nome": "Occultismo",
+      "va": 13
+    }
+  ],
+  "capacita": [
+    {
+      "nome": "Scarica del giuramento",
+      "effetto": "VA —. Danno: +1d8 Etereo sul colpo; danno distinto. Portata/costo: Un colpo di spada; 2 PM; "
+    },
+    {
+      "nome": "Sensi e danni",
+      "effetto": "Scurovisione 12 Q salvo la percezione specifica dell’Artiglio; non vede attraverso ostacoli. Attacchi pronti senza altri bonus da aggiungere. Le immunità e le deroghe sono nelle capacità. I danni di questa scheda non ricevono EQ dei PNG."
+    },
+    {
+      "nome": "Spada e Difesa",
+      "effetto": "Ogni colpo di spada può essere potenziato pagando due PM prima della Prova. La scarica raggiunge il bersaglio solo se l’attacco colpisce e non è completamente evitato: usa la stessa Difesa, poi sottrae separatamente l’AR magica alla sua componente Eterea. La riduzione per Parata si applica a entrambe le componenti; non si sommano i residui per superare Contromisure. Una sola Parata gratuita ravvicinata per Round, con arma pronta e Difese 16; ulteriori Difese costano normalmente."
+    },
+    {
+      "nome": "Globo infernale",
+      "effetto": "2 AzP e 8 PM, una volta ogni 24 ore. Punto visibile entro 24 Q, raggio 4 Q, percorso libero: attivazione innata senza tiro per colpire. Tutte le creature nell’Area subiscono due componenti, 4d6+4 Magico Fuoco e 4d6 Etereo; una sola Elusione Riflessi −2 dimezza per eccesso ciascuna componente prima delle protezioni pertinenti. Una AC per componente, nessuna Parata o Schivata. Riflessi −2 contro Incendiato 1+1d3 Round solo se resta danno da Fuoco. Le barriere solide fermano la propagazione."
+    },
+    {
+      "nome": "Comando dei morti",
+      "effetto": "Finché cosciente, lui e i non morti alleati entro 6 Q che ne percepiscono gli ordini ottengono +2 Volontà contro paura e controllo del non morto; non altre Salvezze. Non concede un’azione di scacciare universale ai PG. Conosce Comando, Arma Mistica, Negare Potere, Terrore e Maledizione, fino al livello 12: Potere 16 e scala Taumaturgo, normali componenti. Non usa Incantesimi per curarsi. Nessun servitore incluso."
+    },
+    {
+      "nome": "Dotazione",
+      "effetto": "Corazza AR 4 e scudo AR 2, già compresi; PI rispettivamente 8 e 6. Spada a una mano PI 6. Requisiti soddisfatti, nessuna penalità ulteriore da applicare ai valori pronti; tutti Comuni, PS Integrità 10. Senza scudo sottrarre 2 AR. La scarica spirituale è una capacità del Cavaliere, non della spada recuperata. Non applicare il modulo EQ dei 25 PNG."
+    },
+    {
+      "nome": "Condanna",
+      "effetto": "Immune a Terrorizzato e paralisi; Resistenza mistica +2 alle PS contro effetti magici, da aggiungere solo quando pertinente. Dopo la distruzione effettiva può ricostituirsi trascorsi sette giorni nel luogo del proprio giuramento, finché la condanna persiste. Il Direttore stabilisce prima dell’incontro quale atto concreto di riscatto o scioglimento del giuramento chiude il ritorno. La ricomparsa non interrompe uno scontro già risolto."
+    },
+    {
+      "nome": "Mani e componenti",
+      "effetto": "Con spada e scudo impugnati manca il Gesto: Potere subisce −2 e la Prova è necessaria anche ai livelli 1–3. Riporre la spada costa una AzP e permette di gesticolare con quella mano. Il Focus semplice è portato; il Globo e la scarica sono capacità innate e non richiedono questa preparazione."
+    },
+    {
+      "nome": "Altri movimenti",
+      "effetto": "spazio 1 × 1 Q"
+    }
+  ],
+  "gs_px": {
+    "gs": "Semidio",
+    "px": 440,
+    "per_pg": 4
+  },
+  "_bestiario": {
+    "campi": {
+      "pv": "Mostri 0.69",
+      "pm": "Mostri 0.69",
+      "caratteristiche": "Mostri 0.69",
+      "ar": "Mostri 0.69",
+      "difese": "Mostri 0.69",
+      "salvezze": "Mostri 0.69",
+      "iniziativa": "Mostri 0.69",
+      "azioni": "Mostri 0.69",
+      "movimento": "Mostri 0.69",
+      "spazio": "Mostri 0.69",
+      "abilita": "Mostri 0.69",
+      "capacita": "Mostri 0.69",
+      "gs_px": "Mostri 0.69"
+    },
+    "edizione": "Mostri 0.69",
+    "sistema_salute": "solo_PV"
+  }
+}

@@ -3,7 +3,7 @@
   "versione": 1,
   "id": "arpia",
   "nome": "Arpia",
-  "fonte": "dal Manuale dei Mostri v0.46 (Word del 27/10/2026), cap. 8 «Catalogo delle creature» — prime quindici schede",
+  "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Arpia",
   "caratteristiche": {
     "FOR": 6,
     "DES": 6,
@@ -106,9 +106,25 @@
       }
     }
   ],
-  "note": "Randello d’osso: Comune, una mano, Armi da mischia, FOR 3, 1d4 Naturale (il danno della scheda include già +1), PI 3, PS Integrità 10; può parare, disarmabile e danneggiabile. Vista e udito ordinari. Comprende e parla una lingua locale. Fonte: Harpy, p. 181. Comportamento: cerca una posizione sopraelevata e una via di fuga; a Ferita Profonda o senza il vantaggio della quota fugge.",
+  "note": "Umanoide alato • Natura Comune • adescatrice • Harpy, p. 181. Sensi e protezioni: Vista e udito ordinari; nessuna immunità. Comprende e parla una lingua locale, da scegliere nell’ambientazione.",
   "_bestiario": {
     "edizione": "Mostri 0.69",
-    "sistema_salute": "solo_PV"
+    "sistema_salute": "solo_PV",
+    "campi": {
+      "pv": "Mostri 0.69",
+      "pm": "Mostri 0.69",
+      "caratteristiche": "Mostri 0.69",
+      "ar": "Mostri 0.69",
+      "difese": "Mostri 0.69",
+      "salvezze": "Mostri 0.69",
+      "iniziativa": "Mostri 0.69",
+      "azioni": "Mostri 0.69",
+      "movimento": "Mostri 0.69",
+      "spazio": "Mostri 0.69",
+      "abilita": "Mostri 0.69",
+      "attacchi": "Mostri 0.47",
+      "capacita": "Mostri 0.47",
+      "gs_px": "Mostri 0.69"
+    }
   }
 }

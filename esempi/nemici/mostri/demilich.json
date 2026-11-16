@@ -1,0 +1,115 @@
+{
+  "formato": "mutant-nemico",
+  "versione": 1,
+  "id": "demilich",
+  "nome": "Demilich",
+  "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Demilich",
+  "note": "Cranio levitante nel quale sopravvive una volontà antica. Il suo potere è innato: non conserva il repertorio di Incantesimi del Lich.",
+  "pv": 104,
+  "pm": 70,
+  "caratteristiche": {
+    "FOR": 1,
+    "DES": 9,
+    "COS": 6,
+    "INT": 10,
+    "SAG": 8,
+    "CAR": 10
+  },
+  "ar": {
+    "totale": 6,
+    "magica": 6
+  },
+  "difese": 16,
+  "salvezze": {
+    "tempra": 15,
+    "riflessi": 15,
+    "volonta": 17,
+    "magia": 18
+  },
+  "iniziativa": 4,
+  "azioni": {
+    "principali": 3,
+    "movimento": 1
+  },
+  "movimento": {
+    "passo": 0,
+    "corsa": "non_consentito",
+    "scatto": "non_consentito",
+    "volo": 6
+  },
+  "abilita": [
+    {
+      "nome": "Percezione",
+      "va": 16
+    },
+    {
+      "nome": "Occultismo",
+      "va": 18
+    },
+    {
+      "nome": "Furtività",
+      "va": 12
+    }
+  ],
+  "capacita": [
+    {
+      "nome": "Risucchio di vita",
+      "effetto": "VA —. Danno: 2d6+3 Etereo; vedi Tempra. Portata/costo: Fino a tre viventi visibili entro 2 Q; 1 AzP e 3 PM; "
+    },
+    {
+      "nome": "Sensi e danni",
+      "effetto": "Scurovisione 12 Q salvo la percezione specifica dell’Artiglio; non vede attraverso ostacoli. Attacchi pronti senza altri bonus da aggiungere. Le immunità e le deroghe sono nelle capacità. I danni di questa scheda non ricevono EQ dei PNG."
+    },
+    {
+      "nome": "Corpo e resistenze",
+      "effetto": "Dimezza Naturale dopo Difese e prima dell’AR; Magico ed Etereo normali. Immune a danni psichici diretti, Terrorizzato, fascinazione, paralisi, Stordito, A Terra e vincoli soltanto materiali. Non passa attraverso muri. Il cranio è corporeo: calotta, mandibola, orbite e mandibole laterali rappresentano le parti funzionali per le Menomazioni. Nessuna Parata naturale. Tre volte per 24 ore ripete una propria PS fallita, secondo esito obbligatorio."
+    },
+    {
+      "nome": "Elusione superiore",
+      "effetto": "Quando l’effetto permette Elusione, una PS Riflessi riuscita annulla il danno e una fallita lo dimezza per eccesso prima dell’AR. Non concede una PS contro attacchi che non la prevedono e non modifica altri effetti o loro PS. Conserva le condizioni per poter usare Elusione; non funziona se lo Stato o la fonte la vietano."
+    },
+    {
+      "nome": "Urlo",
+      "effetto": "2 AzP e 6 PM, una volta ogni 3 Round, massimo un Urlo nel Round. Raggio 6 Q, viventi che lo odono, con propagazione acustica libera: Tempra −2. Fallimento: PV attuali a 0 e Svenuto per 1 Round; successo: Terrorizzato per 1 Round. Nessuna Ferita o morte automatica, nessun danno ai PM, nessuna Difesa attiva. Immunità pertinente all’effetto impedisce solo quella conseguenza: per esempio essere immune a Terrorizzato non protegge dal fallimento che fa svenire."
+    },
+    {
+      "nome": "Risucchio di vita",
+      "effetto": "Ogni bersaglio effettua Tempra −2: successo evita; fallimento subisce 2d6+3 Etereo, AR magica applicabile. Un solo tiro di danno per tutti; nessuna Parata o Schivata. Il Demilich recupera i PV realmente sottratti alle riserve delle vittime, massimo dieci PV per uso, senza curare Ferite. Una vittima già a 0 può subire le normali Ferite ma non genera recupero. Non riduce i PV massimi."
+    },
+    {
+      "nome": "Polvere e maledizione",
+      "effetto": "Polvere: 1 AzP e 2 PM, una volta per Round, raggio 2 Q; Tempra 0 evita Accecato per 1 Round. Maledizione: 2 AzP e 4 PM, una creatura visibile entro 6 Q, Volontà −2 evita; al fallimento −2 ad attacchi e PS per 3 Round, poi termina. Negare Potere può rimuovere la maledizione con confronto 12. Si usa solo la maggiore penalità magica pertinente. Può spendere una sola AzP fuori Iniziativa, dopo l’Iniziativa di un avversario, per Polvere; è compresa nelle tre totali."
+    },
+    {
+      "nome": "Ritorno e limiti",
+      "effetto": "Filatterio con la stessa procedura e gli stessi dati del Lich; ricostituisce il cranio dopo 1d10 giorni, non a 0 PV. Nessun Incantesimo appreso, nessuna cattura di anime nelle gemme, nessuna riduzione automatica di PV massimi. I moduli di tana e il profilo specifico di Acererak non appartengono a questa scheda."
+    },
+    {
+      "nome": "Altri movimenti",
+      "effetto": "spazio 1 Q condivisibile, senza bloccare il passaggio"
+    }
+  ],
+  "gs_px": {
+    "gs": "Semidio",
+    "px": 400,
+    "per_pg": 4
+  },
+  "_bestiario": {
+    "campi": {
+      "pv": "Mostri 0.69",
+      "pm": "Mostri 0.69",
+      "caratteristiche": "Mostri 0.69",
+      "ar": "Mostri 0.69",
+      "difese": "Mostri 0.69",
+      "salvezze": "Mostri 0.69",
+      "iniziativa": "Mostri 0.69",
+      "azioni": "Mostri 0.69",
+      "movimento": "Mostri 0.69",
+      "abilita": "Mostri 0.69",
+      "capacita": "Mostri 0.69",
+      "gs_px": "Mostri 0.69"
+    },
+    "edizione": "Mostri 0.69",
+    "sistema_salute": "solo_PV"
+  }
+}

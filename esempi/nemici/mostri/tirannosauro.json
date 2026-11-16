@@ -3,7 +3,7 @@
   "versione": 1,
   "id": "tirannosauro",
   "nome": "Tirannosauro",
-  "fonte": "dal Manuale dei Mostri v0.46 (Word del 27/10/2026), cap. 8 «Catalogo delle creature» — Grandi rettili e predatori mostruosi",
+  "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Tirannosauro",
   "caratteristiche": {
     "FOR": 10,
     "DES": 5,
@@ -108,9 +108,26 @@
       "effetto": "La vittima spende 1 AzP: Corpo a corpo o Atletica contro Corpo a corpo 15 (pareggio conserva la presa); un alleato entro portata delle fauci può farlo col proprio VA, con un attrezzo per fare leva. Una vittima di massa (dotazione compresa) non oltre 250 kg viene portata a velocità dimezzate (per difetto) con l’AzM ordinaria, entro la portata delle fauci. Prima di un bordo o pericolo immediato la vittima fa Riflessi senza modificatore: successo ferma il Tirannosauro all’ultimo spazio sicuro se vuole conservare la presa. Non Schiva conservando la presa. Rilascio gratuito; perdita di coscienza, morte o Menomazione mandibolare interrompono l’aggancio (0 PV no). Dopo il rilascio la vittima è nel più vicino spazio libero e sostenuto adiacente; nessun danno automatico."
     }
   ],
-  "note": "Vista e udito ordinari. Braccia = piccoli arti anteriori, Gambe = posteriori e coda, Testa = fauci. Non inghiotte e non trasferisce sulla vittima gli attacchi diretti contro di lui. Non comprende linguaggi. Condotta: nutrimento; può abbandonare avversari difficili; sotto 20 PV o a Ferita Seria si ritira. Fonte: Tyrannosaurus Rex, p. 80.",
+  "note": "Predatore terrestre • morso prensile e coda • Natura Comune. Condotta. Cerca nutrimento e può abbandonare avversari difficili da consumare. Non comprende linguaggi. Sotto 26 PV tenta di ritirarsi. Il Morso non inghiotte automaticamente la vittima e la presa non trasferisce su di lei gli attacchi diretti contro il Tirannosauro. La pagina seguente descrive stretta, movimento e soccorso.",
   "_bestiario": {
     "edizione": "Mostri 0.69",
-    "sistema_salute": "solo_PV"
-  }
+    "sistema_salute": "solo_PV",
+    "campi": {
+      "pv": "Mostri 0.69",
+      "pm": "Mostri 0.69",
+      "caratteristiche": "Mostri 0.69",
+      "ar": "Mostri 0.69",
+      "difese": "Mostri 0.69",
+      "salvezze": "Mostri 0.69",
+      "iniziativa": "Mostri 0.69",
+      "azioni": "Mostri 0.69",
+      "movimento": "Mostri 0.69",
+      "spazio": "Mostri 0.69",
+      "abilita": "Mostri 0.69",
+      "attacchi": "Mostri 0.47",
+      "capacita": "Mostri 0.47",
+      "gs_px": "Mostri 0.69"
+    }
+  },
+  "taglia": "grande"
 }

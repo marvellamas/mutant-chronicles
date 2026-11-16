@@ -1,0 +1,142 @@
+{
+  "formato": "mutant-nemico",
+  "versione": 1,
+  "id": "barlgura",
+  "nome": "Barlgura",
+  "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Barlgura",
+  "taglia": "grande",
+  "note": "Grande predatore dal corpo scimmiesco che scala, salta e colpisce con pugni e zanne. Usa occultamenti e ostacoli per raggiungere un bersaglio isolato prima di esporsi.",
+  "pv": 76,
+  "pm": 24,
+  "caratteristiche": {
+    "FOR": 9,
+    "DES": 7,
+    "COS": 8,
+    "INT": 3,
+    "SAG": 7,
+    "CAR": 4
+  },
+  "ar": {
+    "totale": 3,
+    "magica": 0
+  },
+  "difese": 12,
+  "salvezze": {
+    "tempra": 13,
+    "riflessi": 13,
+    "volonta": 9,
+    "magia": 12
+  },
+  "iniziativa": 2,
+  "azioni": {
+    "principali": 3,
+    "movimento": 1
+  },
+  "movimento": {
+    "passo": 6,
+    "corsa": 12,
+    "scatto": 18
+  },
+  "spazio": "2 × 2 Q",
+  "abilita": [
+    {
+      "nome": "Corpo a corpo",
+      "va": 14
+    },
+    {
+      "nome": "Atletica",
+      "va": 15
+    },
+    {
+      "nome": "Furtività",
+      "va": 13
+    },
+    {
+      "nome": "Percezione",
+      "va": 13
+    }
+  ],
+  "attacchi": [
+    {
+      "nome": "Pugno",
+      "tipo": "ravvicinato",
+      "va": 14,
+      "danno": "1d10+2",
+      "natura": "Naturale",
+      "proprieta": [
+        "Contusione",
+        "AC 1"
+      ],
+      "portata_q": 1,
+      "ac": 1
+    },
+    {
+      "nome": "Morso",
+      "tipo": "ravvicinato",
+      "va": 14,
+      "danno": "2d6+2",
+      "natura": "Naturale",
+      "proprieta": [
+        "Perforazione",
+        "AC 1"
+      ],
+      "portata_q": 1,
+      "ac": 1
+    }
+  ],
+  "capacita": [
+    {
+      "nome": "Corpo e sensi",
+      "effetto": "Resistenze corporee comuni, immunità a veleno e Avvelenato, Scurovisione 24 Q e percezione cieca sei Q fermata dai solidi. Nessuna Parata naturale o Resistenza alla magia +2. Telepatia entro 24 Q; comprende e parla la lingua della propria comunità."
+    },
+    {
+      "nome": "Assalto e balzo",
+      "effetto": "Massimo due Pugni e un Morso per Round, Opportunità compresa. Alla propria Iniziativa può dichiarare Assalto avventato: +2 VA ai propri attacchi ravvicinati fino al termine del turno; gli attacchi contro di lui hanno +2 VA fino alla sua Iniziativa successiva. Nessun bonus danno o AzP. Dopo almeno due Q di rincorsa, con la propria AzM può saltare fino a otto Q in lungo o quattro in alto, consumando la distanza percorsa: la rincorsa e il salto devono rientrare nell’andatura dichiarata, senza Movimento gratuito."
+    },
+    {
+      "nome": "Tralci vincolanti",
+      "effetto": "Una AzP e tre PM, una volta per 24 ore: zona di 2 × 2 Q su terreno visibile entro sei Q, per tre Round senza Concentrazione. Riflessi 0 evita Immobilizzato con braccia libere per chi vi si trova alla creazione e poggia sul terreno. Non agisce in aria o su un muro verticale; la zona è Terreno Difficile per tutti, senza nuove prese automatiche su chi entra dopo. Liberarsi costa una AzP e Atletica −2; un alleato a Contatto può usare la stessa procedura. Negare Potere rimuove la zona e i suoi vincoli, confronto 6."
+    },
+    {
+      "nome": "Invisibilità e maschera",
+      "effetto": "Invisibilità: una AzP e tre PM, due volte per 24 ore, tre Round senza Concentrazione; termina dopo un’azione ostile, da Svenuto o con Negare Potere, confronto 6. Maschera: una AzP e due PM, due volte per 24 ore, cambia solo l’aspetto visivo per dieci minuti entro il proprio ingombro. Non riduce lo spazio, copia credenziali o cambia i contatti fisici. Un’interazione incongruente concede Magia 0 per riconoscerla; Negare Potere confronto 6. Un solo effetto di ciascun tipo attivo."
+    },
+    {
+      "nome": "Inganno della percezione",
+      "effetto": "Una AzP e quattro PM, una volta per 24 ore: una mente visibile entro sei Q, Magia 0. Fallimento vede un singolo elemento illusorio scelto dal Barlgura entro un cubo di 2 × 2 × 2 Q per tre Round a Concentrazione. Non infligge danni reali, blocca fisicamente o impone Azioni. Un’interazione contraddittoria concede nuova Magia 0, massimo una per Round. Barriera Mentale aggiunge il bonus; Negare Potere confronto 6. Mentre mantiene Concentrazione non spende AzP e può effettuare soltanto il Passo."
+    },
+    {
+      "nome": "Tattica e limiti",
+      "effetto": "La terza AzP permette una sequenza offensiva più lunga, ma serve anche alle capacità e alle Difese. Non ottiene Artigli d’arrampicata come nuovi attacchi, una catena di balzi extra o l’evocazione automatica di un secondo Barlgura. Le illusioni non aumentano la propria FOR o danneggiano strutture."
+    },
+    {
+      "nome": "Altri movimenti",
+      "effetto": "Terra e arrampicata 6 / 12 / 18: la stessa andatura vale anche per arrampicata; spazio 2 × 2 Q"
+    }
+  ],
+  "gs_px": {
+    "gs": "Eroe",
+    "px": 70,
+    "per_pg": 4
+  },
+  "_bestiario": {
+    "campi": {
+      "pv": "Mostri 0.69",
+      "pm": "Mostri 0.69",
+      "caratteristiche": "Mostri 0.69",
+      "ar": "Mostri 0.69",
+      "difese": "Mostri 0.69",
+      "salvezze": "Mostri 0.69",
+      "iniziativa": "Mostri 0.69",
+      "azioni": "Mostri 0.69",
+      "movimento": "Mostri 0.69",
+      "spazio": "Mostri 0.69",
+      "abilita": "Mostri 0.69",
+      "attacchi": "Mostri 0.69",
+      "capacita": "Mostri 0.69",
+      "gs_px": "Mostri 0.69"
+    },
+    "edizione": "Mostri 0.69",
+    "sistema_salute": "solo_PV"
+  }
+}

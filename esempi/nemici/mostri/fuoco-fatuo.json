@@ -1,0 +1,111 @@
+{
+  "formato": "mutant-nemico",
+  "versione": 1,
+  "id": "fuoco-fatuo",
+  "nome": "Fuoco fatuo",
+  "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Fuoco fatuo",
+  "note": "Luce errante non morta che attira i viaggiatori verso luoghi pericolosi. La sua luminescenza non obbliga a seguirla; il risucchio richiede una vittima già Morente e un uso esplicito della capacità.",
+  "pv": 32,
+  "pm": 16,
+  "caratteristiche": {
+    "FOR": 1,
+    "DES": 10,
+    "COS": 5,
+    "INT": 6,
+    "SAG": 7,
+    "CAR": 5
+  },
+  "ar": {
+    "totale": 2,
+    "magica": 2
+  },
+  "difese": 14,
+  "salvezze": {
+    "tempra": 9,
+    "riflessi": 15,
+    "volonta": 11,
+    "magia": 12
+  },
+  "iniziativa": 5,
+  "azioni": {
+    "principali": 2,
+    "movimento": 1
+  },
+  "movimento": {
+    "passo": 0,
+    "corsa": "non_consentito",
+    "scatto": "non_consentito",
+    "volo": 10
+  },
+  "abilita": [
+    {
+      "nome": "Corpo a corpo",
+      "va": 13
+    },
+    {
+      "nome": "Percezione",
+      "va": 11
+    },
+    {
+      "nome": "Furtività",
+      "va": 14
+    },
+    {
+      "nome": "Raggirare",
+      "va": 10
+    }
+  ],
+  "capacita": [
+    {
+      "nome": "Risucchio della coscienza",
+      "effetto": "VA —. Danno: 1d4 PM personali; Magia 0 evita. Portata/costo: Vivente Morente a Contatto; 1 AzP e 2 PM; "
+    },
+    {
+      "nome": "Corpo e sensi",
+      "effetto": "Non morto incorporeo, Scurovisione 24 Q, niente bisogni biologici, Affaticamento, Sanguinamento, veleni o malattie. Immune a Fulmine, veleno e relativi Stati; dimezza Acido, Gelo, Fuoco, tuono magico, danni Eterei e Naturale da Contusione, Taglio o Perforazione. Una stessa fonte si dimezza una volta, dopo Difese e prima dell’AR. Non subisce prese materiali o A Terra mentre fluttua. Sonno e tossine biologiche non lo addormentano, ma zero PM personali o un potere psichico compatibile possono renderlo Svenuto: resta sospeso e fermo. Nessuna Parata naturale."
+    },
+    {
+      "nome": "Materia e danni",
+      "effetto": "Attraversa corpi e materia come Terreno Difficile; non vede o attacca attraverso solidi opachi. Se termina la propria Iniziativa in un solido, subisce 1d6 Etereo diretto senza AR, dimezzato dalla propria resistenza. Non attraversa barriere espressamente spirituali. Il corpo è normalmente visibile e non trasporta, impugna o indossa oggetti. Ha mente e PM propri; Dardo Spirituale può colpirli, senza trasferire perdite a un luogo o a un evocatore. A 0 PV il mostro è fuori combattimento secondo il §4.2; la morte o distruzione effettiva resta distinta. Le Menomazioni limitano luce, moto o Tocco secondo la funzione colpita, senza inventare arti corporei."
+    },
+    {
+      "nome": "Folgorazione",
+      "effetto": "Due AzP totali, massimo un Tocco e un Risucchio per Round, Opportunità compresa; solo il Tocco è un’Opportunità compatibile. Il Tocco consente le Difese ravvicinate ordinarie e applica AR. Dopo residuo da Fulmine e superamento di Isolante, Tempra 0 evita Disorientato per 1+1d3 Round; un 20 naturale provoca invece Stordito per un Round, fino alla fine dell’Iniziativa successiva. Non è la proprietà tecnologica Elettricità e non aggiunge anche il suo blocco delle Azioni fuori turno."
+    },
+    {
+      "nome": "Risucchio",
+      "effetto": "Una AzP e due PM, solo un vivente già Morente, a Contatto e validamente percepito, che conservi almeno un PM personale. Magia 0 evita; fallimento perde 1d4 PM senza AR e il Fuoco fatuo recupera altrettanti PV quanti i PM realmente sottratti dopo Scudo Spirituale e altre protezioni, massimo quattro. Non guadagna PM, cura Ferite o riduce i PV massimi della vittima. Barriera Mentale non protegge il risucchio spirituale; Scudo Spirituale aiuta Magia e può ridurre la perdita. Un vivente semplicemente a zero PV non è automaticamente Morente e non soddisfa il requisito. A zero PM vale Svenuto, senza morte automatica o danno da eccedenza. Nessun Risucchio su PM —."
+    },
+    {
+      "nome": "Luce invisibilità e riposo",
+      "effetto": "Alla propria Iniziativa può regolare gratis una luce ordinaria fra un Q e quattro Q di raggio, con penombra per altrettanti Q; non è Luce Mistica e non impone scelte. Invisibilità breve delle regole comuni: una AzP e due PM, tre Round, spegne anche la luce visibile e termina dopo Tocco o Risucchio. Non cancella altre tracce e non è incorporeità aggiuntiva. Medicina, cibo e Cura Ferite biologica non ripristinano il corpo spirituale; Negare Potere non cancella l’esistenza autonoma. Non genera altri Fuochi fatui per una semplice morte avvenuta vicino."
+    },
+    {
+      "nome": "Altri movimenti",
+      "effetto": "nessun passo terrestre; spazio 1 Q condivisibile"
+    }
+  ],
+  "gs_px": {
+    "gs": "Esperto",
+    "px": 30,
+    "per_pg": 4
+  },
+  "_bestiario": {
+    "campi": {
+      "pv": "Mostri 0.69",
+      "pm": "Mostri 0.69",
+      "caratteristiche": "Mostri 0.69",
+      "ar": "Mostri 0.69",
+      "difese": "Mostri 0.69",
+      "salvezze": "Mostri 0.69",
+      "iniziativa": "Mostri 0.69",
+      "azioni": "Mostri 0.69",
+      "movimento": "Mostri 0.69",
+      "abilita": "Mostri 0.69",
+      "capacita": "Mostri 0.69",
+      "gs_px": "Mostri 0.69"
+    },
+    "edizione": "Mostri 0.69",
+    "sistema_salute": "solo_PV"
+  }
+}

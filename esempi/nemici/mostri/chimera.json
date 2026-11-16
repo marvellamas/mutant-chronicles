@@ -3,7 +3,7 @@
   "versione": 1,
   "id": "chimera",
   "nome": "Chimera",
-  "fonte": "dal Manuale dei Mostri v0.46 (Word del 27/10/2026), cap. 8 «Catalogo delle creature» — prime quindici schede",
+  "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Chimera",
   "caratteristiche": {
     "FOR": 9,
     "DES": 5,
@@ -114,9 +114,26 @@
       "effetto": "Vede entro 12 Q nel buio naturale, senza colori; non attraversa ostacoli né individua da sola chi è nascosto."
     }
   ],
-  "note": "Comprende una lingua dell’ambientazione ma non la parla. Nessuna resistenza al fuoco. Braccia = zampe anteriori; Gambe = posteriori. Nome originale: Chimera, p. 39. Comportamento: apre con il Soffio su bersagli raccolti; a Ferita Grave o con le ali compromesse difende una posizione o negozia.",
+  "note": "Bestia a tre teste • Natura Comune • assaltatrice volante • Chimera, p. 39. Sensi e protezioni: Scurovisione 12 Q. Nessuna immunità o resistenza automatica al fuoco; comprende una lingua dell’ambientazione ma non la parla.",
   "_bestiario": {
     "edizione": "Mostri 0.69",
-    "sistema_salute": "solo_PV"
-  }
+    "sistema_salute": "solo_PV",
+    "campi": {
+      "pv": "Mostri 0.69",
+      "pm": "Mostri 0.69",
+      "caratteristiche": "Mostri 0.69",
+      "ar": "Mostri 0.69",
+      "difese": "Mostri 0.69",
+      "salvezze": "Mostri 0.69",
+      "iniziativa": "Mostri 0.69",
+      "azioni": "Mostri 0.69",
+      "movimento": "Mostri 0.69",
+      "spazio": "Mostri 0.69",
+      "abilita": "Mostri 0.69",
+      "attacchi": "Mostri 0.47",
+      "capacita": "Mostri 0.47",
+      "gs_px": "Mostri 0.69"
+    }
+  },
+  "taglia": "grande"
 }

@@ -3,7 +3,7 @@
   "versione": 1,
   "id": "scarabeo-di-fuoco-gigante",
   "nome": "Scarabeo di fuoco gigante",
-  "fonte": "dal Manuale dei Mostri v0.46 (Word del 27/10/2026), cap. 8 «Catalogo delle creature» — Creature alate e piccoli predatori",
+  "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Scarabeo di fuoco gigante",
   "caratteristiche": {
     "FOR": 3,
     "DES": 5,
@@ -48,11 +48,11 @@
       "va": 7,
       "danno": "1d4",
       "natura": "Naturale",
-      "portata_q": 1,
-      "ac": 1,
       "proprieta": [
         "Taglio"
-      ]
+      ],
+      "portata_q": 1,
+      "ac": 1
     }
   ],
   "abilita": [
@@ -91,9 +91,25 @@
       "effetto": "Percezione non visiva di prossimità entro 6 Q (Percezione 8), senza attraversare solidi; non identifica automaticamente creature nascoste. Testa = mandibole e sensori, Torace = carapace con le ghiandole, Braccia e Gambe = gruppi anteriori e posteriori di zampe. Non ha Volo nonostante il nome."
     }
   ],
-  "note": "Il nome si riferisce al bagliore, non a un attacco incendiario: non emette Fuoco o calore dannoso e non ha resistenza speciale a Fuoco o Ghiaccio. Un Morso per Round, Opportunità compresa; non comprende linguaggi. Condotta: sotto 2 PV o a Ferita Profonda tende a cercare un anfratto; può essere una fonte di luce o un incontro ambientale senza combattimento obbligatorio. Fonte: Giant Fire Beetle, p. 325.",
+  "note": "Insetto luminoso • ghiandole bioluminescenti • Natura Comune. Condotta. Un Morso per Round, Opportunità compresa. Non comprende linguaggi e non emette Fuoco o calore dannoso; non ha resistenza speciale a Fuoco o Ghiaccio. Sotto 3 PV tende a cercare un anfratto. Può costituire una fonte di luce o un incontro ambientale senza diventare un combattimento obbligatorio.",
   "_bestiario": {
     "edizione": "Mostri 0.69",
-    "sistema_salute": "solo_PV"
+    "sistema_salute": "solo_PV",
+    "campi": {
+      "pv": "Mostri 0.69",
+      "pm": "Mostri 0.69",
+      "caratteristiche": "Mostri 0.69",
+      "ar": "Mostri 0.69",
+      "difese": "Mostri 0.69",
+      "salvezze": "Mostri 0.69",
+      "iniziativa": "Mostri 0.69",
+      "azioni": "Mostri 0.69",
+      "movimento": "Mostri 0.69",
+      "spazio": "Mostri 0.69",
+      "abilita": "Mostri 0.69",
+      "attacchi": "Mostri 0.69",
+      "capacita": "Mostri 0.47",
+      "gs_px": "Mostri 0.69"
+    }
   }
 }

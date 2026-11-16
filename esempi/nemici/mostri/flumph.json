@@ -1,0 +1,119 @@
+{
+  "formato": "mutant-nemico",
+  "versione": 1,
+  "id": "flumph",
+  "nome": "Flumph",
+  "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Flumph",
+  "note": "Piccola creatura fluttuante simile a una medusa. Si nutre di residui psionici ambientali e comunica mentalmente; non sottrae passivamente PM a chi gli sta vicino.",
+  "pv": 11,
+  "pm": 12,
+  "caratteristiche": {
+    "FOR": 2,
+    "DES": 7,
+    "COS": 4,
+    "INT": 7,
+    "SAG": 7,
+    "CAR": 5
+  },
+  "ar": {
+    "totale": 0,
+    "magica": 0
+  },
+  "difese": 10,
+  "salvezze": {
+    "tempra": 8,
+    "riflessi": 11,
+    "volonta": 10,
+    "magia": 10
+  },
+  "iniziativa": 2,
+  "azioni": {
+    "principali": 1,
+    "movimento": 1
+  },
+  "movimento": {
+    "passo": 1,
+    "corsa": 2,
+    "scatto": 3,
+    "volo": 6
+  },
+  "abilita": [
+    {
+      "nome": "Corpo a corpo",
+      "va": 10
+    },
+    {
+      "nome": "Percezione",
+      "va": 11
+    },
+    {
+      "nome": "Occultismo",
+      "va": 12
+    },
+    {
+      "nome": "Cultura",
+      "va": 12
+    },
+    {
+      "nome": "Scienza",
+      "va": 12
+    }
+  ],
+  "capacita": [
+    {
+      "nome": "Filamenti",
+      "effetto": "VA 10. Danno: AC 2: 1d4 Naturale, Perforazione, poi 1d4 Naturale, Acido. Portata/costo: Contatto; 1 AzP; "
+    },
+    {
+      "nome": "Spruzzo fetido",
+      "effetto": "VA —. Danno: Contaminazione odorosa; Riflessi 0. Portata/costo: Cono 4 × 2 Q; 1 AzP e 2 PM; una volta per 24 ore; "
+    },
+    {
+      "nome": "Corpo e sensi",
+      "effetto": "Vivente biologico, Scurovisione 12 Q e telepatia dodici Q. Nessuna Parata naturale o immunità al veleno. Massimo un attacco per Round, Filamenti o Spruzzo, Opportunità compresa; soltanto i Filamenti sono un’Opportunità compatibile. Raddoppia la perdita diretta di PV di Dardo Psichico o equivalenti espressamente psichici dopo le PS; non raddoppia i PM persi o ogni effetto mentale. La vulnerabilità non supera l’immunità di Barriera Mentale se questa è attiva."
+    },
+    {
+      "nome": "Acido aderente",
+      "effetto": "Un tiro per Filamenti, una Difesa e due applicazioni successive con AR separate; Magistrale solo sulla prima. Dopo residuo della sola componente Acido, Tempra 0: fallimento acido aderente per tre Round. All’inizio di ogni Iniziativa successiva della vittima infligge 1d4 Naturale Acido, ridotto normalmente da AR; alla fine ripete Tempra 0 e termina con successo. Una AzP e almeno un litro d’acqua a Contatto lavano l’acido, anche con aiuto. Non è veleno, non ha automaticamente Corrosivo e non viene eliminato da Cura Avvelenamenti. Applicazioni ulteriori mantengono la scadenza maggiore, senza sommare danni."
+    },
+    {
+      "nome": "Spruzzo",
+      "effetto": "Una AzP e due PM, una volta per ventiquattro ore, cono lungo quattro Q e largo due alla fine, una sola esposizione per creatura anche su più Q, alleati compresi, solidi bloccano. Riflessi 0 evita il rivestimento; nessun danno o altra Difesa. Il liquido emette fetore per dieci minuti. Chi respira nel Q del rivestito o entro un Q dal suo bordo, rivestito compreso, effettua Tempra 0 alla prima esposizione e poi all’inizio di ciascuna propria Iniziativa ancora esposta, massimo una per Round per questo Spruzzo. Fallimento Avvelenato fino alla fine della propria Iniziativa successiva, −2 VA fisici ma non alle PS; nessun danno. Veleno inalatorio naturale di Pericolosità II, immunità al veleno o respirazione ermetica evitano. Lavarsi o lavare un alleato a Contatto costa una AzP e almeno due litri d’acqua e termina l’emissione; gli Stati già prodotti mantengono la scadenza, salvo antidoto o Cura Avvelenamenti almeno due. Negare Potere non rimuove il liquido biologico."
+    },
+    {
+      "nome": "Mente schermata e intercettazione",
+      "effetto": "Immune alla lettura diretta dei propri pensieri ed emozioni; Presenza non ne localizza la mente. Individuare può invece rilevare lo spirito nei propri limiti: nessuna immunità universale alle Divinazioni. Una volta per Round può captare un messaggio telepatico con un estremo entro dodici Q: Volontà 0 del mittente, con Barriera Mentale; successo blocca, fallimento rivela solo il messaggio espresso in una lingua comprensibile, senza posizione esatta, ricordi o altri pensieri. Non intercetta un collegamento che un Velo Psichico o un’altra interdizione pertinente gli impedisce realmente di percepire. Questa è una capacità personale, non una funzione ordinaria di Telepatia."
+    },
+    {
+      "nome": "Rovesciamento e condotta",
+      "effetto": "Quando viene messo A Terra, un tiro di 1d6 determina l’orientamento: dispari è capovolto e non può volare o compiere AzP tranne il tentativo di raddrizzarsi, una AzP e Riflessi 0. Un alleato a Contatto lo raddrizza con una AzP senza Prova. Pari: A Terra ordinario, raddrizzarsi richiede una AzP senza Prova. Da Svenuto in volo cade, senza difese attive. La nutrizione ambientale non legge pensieri e non produce risucchio numerico di PM. Un telepate silenzioso può ancora sorprenderlo: solo gli indizi effettivamente percepiti impediscono un agguato."
+    },
+    {
+      "nome": "Altri movimenti",
+      "effetto": "spazio 1 Q condivisibile"
+    }
+  ],
+  "gs_px": {
+    "gs": "Inesperto",
+    "px": 20,
+    "per_pg": 4
+  },
+  "_bestiario": {
+    "campi": {
+      "pv": "Mostri 0.69",
+      "pm": "Mostri 0.69",
+      "caratteristiche": "Mostri 0.69",
+      "ar": "Mostri 0.69",
+      "difese": "Mostri 0.69",
+      "salvezze": "Mostri 0.69",
+      "iniziativa": "Mostri 0.69",
+      "azioni": "Mostri 0.69",
+      "movimento": "Mostri 0.69",
+      "abilita": "Mostri 0.69",
+      "capacita": "Mostri 0.69",
+      "gs_px": "Mostri 0.69"
+    },
+    "edizione": "Mostri 0.69",
+    "sistema_salute": "solo_PV"
+  }
+}

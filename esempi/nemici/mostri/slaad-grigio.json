@@ -1,0 +1,171 @@
+{
+  "formato": "mutant-nemico",
+  "versione": 1,
+  "id": "slaad-grigio",
+  "nome": "Slaad grigio",
+  "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Slaad grigio",
+  "note": "Slaad di taglia umanoide che impiega lo spadone e poteri d’infiltrazione. Le sue armi sono infuse personalmente di magia, senza trasferire tale qualità agli oggetti recuperati.",
+  "pv": 141,
+  "pm": 48,
+  "caratteristiche": {
+    "FOR": 8,
+    "DES": 8,
+    "COS": 7,
+    "INT": 7,
+    "SAG": 4,
+    "CAR": 7
+  },
+  "ar": {
+    "totale": 5,
+    "magica": 0
+  },
+  "difese": 13,
+  "salvezze": {
+    "tempra": 13,
+    "riflessi": 13,
+    "volonta": 12,
+    "magia": 13
+  },
+  "iniziativa": 3,
+  "azioni": {
+    "principali": 3,
+    "movimento": 1
+  },
+  "movimento": {
+    "passo": 6,
+    "corsa": 12,
+    "scatto": 18
+  },
+  "spazio": "1 Q",
+  "abilita": [
+    {
+      "nome": "Armi da guerra",
+      "va": 16
+    },
+    {
+      "nome": "Corpo a corpo",
+      "va": 15
+    },
+    {
+      "nome": "Armi da lancio",
+      "va": 11
+    },
+    {
+      "nome": "Atletica",
+      "va": 13
+    },
+    {
+      "nome": "Percezione",
+      "va": 14
+    },
+    {
+      "nome": "Occultismo",
+      "va": 13
+    },
+    {
+      "nome": "Raggirare",
+      "va": 14
+    }
+  ],
+  "attacchi": [
+    {
+      "nome": "Morso",
+      "tipo": "ravvicinato",
+      "va": 15,
+      "danno": "1d6+2",
+      "natura": "Magico",
+      "proprieta": [
+        "Perforazione",
+        "AC 1"
+      ],
+      "portata_q": 1,
+      "ac": 1
+    },
+    {
+      "nome": "Artiglio",
+      "tipo": "ravvicinato",
+      "va": 15,
+      "danno": "1d10+2",
+      "natura": "Magico",
+      "proprieta": [
+        "Taglio",
+        "AC 1"
+      ],
+      "portata_q": 1,
+      "ac": 1
+    },
+    {
+      "nome": "Spadone",
+      "tipo": "ravvicinato",
+      "va": 16,
+      "danno": "2d6+3",
+      "natura": "Magico",
+      "proprieta": [
+        "Taglio",
+        "AC 1"
+      ],
+      "portata_q": 1,
+      "ac": 1
+    },
+    {
+      "nome": "Globo di fuoco",
+      "tipo": "ravvicinato",
+      "va": 13,
+      "danno": "4d6+3",
+      "natura": "Magico",
+      "proprieta": [
+        "Fuoco",
+        "AC 1 per vittima"
+      ],
+      "portata_q": 12,
+      "ac": 1
+    }
+  ],
+  "capacita": [
+    {
+      "nome": "Corpo e sensi",
+      "effetto": "Vivente biologico con Protezioni Slaad, Resistenza alla magia +2 e Rigenerazione quattro. Scurovisione, percezione cieca e telepatia dodici Q; la percezione cieca è fermata dai solidi. Lingua degli Slaad; altre lingue soltanto se realmente apprese. Para con Spadone pronto; nessuna Parata naturale."
+    },
+    {
+      "nome": "Sequenza e spadone",
+      "effetto": "Tre AzP totali; massimo tre attacchi ravvicinati per Round: un Morso al massimo, e fino a due colpi complessivi tra Artigli e Spadone, Opportunità compresa. Spadone Comune: FOR sei, due mani, portata un Q, PI sei, PS Integrità dieci, base 2d6+1 più due di FOR già inclusi. Infusione Magica personale mentre impugnato dal grigio, assente nell’oggetto recuperato; anche Morso e Artigli sono Magici innati. Gli Artigli richiedono una mano effettivamente libera."
+    },
+    {
+      "nome": "Poteri",
+      "effetto": "Possiede Mutamento Slaad, Percepire magia, Lettura superficiale, Mano remota e Invisibilità breve delle regole comuni. Globo di fuoco e Cono di terrore: due usi per ventiquattro ore ciascuno, con costi e procedure comuni; il Globo usa VA tredici. Possiede inoltre Immagine animata e Volo breve, quest’ultimo due usi per ventiquattro ore. Nessuna capacità trasferisce Ferite o consumo di PM alla forma imitata."
+    },
+    {
+      "nome": "Forma e limiti",
+      "effetto": "In forma umanoide conserva lo Spadone se l’anatomia permette l’impugnatura, ma non usa Morso o Artigli. Equipaggiamento e dotazione non si trasformano o duplicano. Non possiede Fiamma scagliata del verde, incubazione, Fagosi, gemma di controllo o spostamento planare. Divorare un cadavere non è una procedura di combattimento per acquisire istantaneamente la scheda dello Slaad della morte; eventuale evoluzione è una variante da stabilire prima dell’avventura."
+    },
+    {
+      "nome": "Altri movimenti",
+      "effetto": "spazio 1 × 1 Q"
+    }
+  ],
+  "gs_px": {
+    "gs": "Leggenda",
+    "px": 110,
+    "per_pg": 4
+  },
+  "_bestiario": {
+    "campi": {
+      "pv": "Mostri 0.69",
+      "pm": "Mostri 0.69",
+      "caratteristiche": "Mostri 0.69",
+      "ar": "Mostri 0.69",
+      "difese": "Mostri 0.69",
+      "salvezze": "Mostri 0.69",
+      "iniziativa": "Mostri 0.69",
+      "azioni": "Mostri 0.69",
+      "movimento": "Mostri 0.69",
+      "spazio": "Mostri 0.69",
+      "abilita": "Mostri 0.69",
+      "attacchi": "Mostri 0.69",
+      "capacita": "Mostri 0.69",
+      "gs_px": "Mostri 0.69"
+    },
+    "edizione": "Mostri 0.69",
+    "sistema_salute": "solo_PV"
+  }
+}

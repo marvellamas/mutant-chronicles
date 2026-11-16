@@ -3,7 +3,7 @@
   "versione": 1,
   "id": "occhio-di-gruumsh",
   "nome": "Occhio di Gruumsh",
-  "fonte": "dal Manuale dei Mostri v0.46 (Word del 27/10/2026), cap. 8 «Catalogo delle creature» — Capi e varianti dei popoli guerrieri",
+  "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Occhio di Gruumsh",
   "caratteristiche": {
     "FOR": 7,
     "DES": 5,
@@ -148,9 +148,25 @@
       "effetto": "Magia §23.5: una creatura vivente o entità spirituale ammessa, visibile entro 6 Q. Infligge 1d4 danni Eterei ai PV e sottrae 1 PM personale; Magia senza modificatore dimezza separatamente per eccesso il danno (il singolo PM è comunque perso salvo protezioni specifiche). Nessun tiro per colpire o Difesa attiva. Una AC per i PV: l’AR magica assorbe, quella ordinaria no. La perdita di PM è distinta, non ridotta dall’AR e non ricevuta dall’Occhio. Non colpisce oggetti, dispositivi, Ectoplasma o costrutti puramente meccanici salvo eccezioni del Bestiario; PM — non è 0 PM. Scudo Spirituale modifica la PS e la perdita di PM; Barriera Mentale non protegge. A 0 PM personali l’incoscienza si verifica dopo la risoluzione completa dell’azione."
     }
   ],
-  "note": "AR 5 con Scudo medio, 3 senza; Parata 11 (valore delle Difese), Schivata / Elusione 9. Rimossa la Media recupera +1 ai VA fisici penalizzati, lancio Potere 12 e Movimento 6 / 12 / 18 Q. Il valore di Percezione rappresenta già il profilo con un occhio: nessuna penalità generica permanente; titolo e menomazione rituale non concedono immunità. Parla Comune e Orchesco. Ministro di un culto guerriero. Condotta: sotto 9 PV o a Ferita Profonda cerca protezione o si arrende secondo il culto e la situazione. Fonte: Orc Eye of Gruumsh, p. 247.",
+  "note": "Orco • ministro di un culto guerriero • Natura Comune.",
   "_bestiario": {
     "edizione": "Mostri 0.69",
-    "sistema_salute": "solo_PV"
+    "sistema_salute": "solo_PV",
+    "campi": {
+      "pv": "Mostri 0.69",
+      "pm": "Mostri 0.69",
+      "caratteristiche": "Mostri 0.69",
+      "ar": "Mostri 0.69",
+      "difese": "Mostri 0.69",
+      "salvezze": "Mostri 0.69",
+      "iniziativa": "Mostri 0.69",
+      "azioni": "Mostri 0.69",
+      "movimento": "Mostri 0.69",
+      "spazio": "Mostri 0.69",
+      "abilita": "Mostri 0.47",
+      "attacchi": "Mostri 0.47",
+      "capacita": "Mostri 0.47",
+      "gs_px": "Mostri 0.69"
+    }
   }
 }

@@ -1,0 +1,125 @@
+{
+  "formato": "mutant-nemico",
+  "versione": 1,
+  "id": "deva",
+  "nome": "Deva",
+  "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Deva",
+  "note": "Messaggero alato dalla pelle argentea. Può assumere una forma discreta, prestare soccorso e combattere con una mazza infusa di luce; il suo incarico dipende dalla campagna.",
+  "pv": 146,
+  "pm": 48,
+  "caratteristiche": {
+    "FOR": 8,
+    "DES": 8,
+    "COS": 8,
+    "INT": 8,
+    "SAG": 9,
+    "CAR": 9
+  },
+  "ar": {
+    "totale": 5,
+    "magica": 0
+  },
+  "difese": 14,
+  "salvezze": {
+    "tempra": 14,
+    "riflessi": 14,
+    "volonta": 15,
+    "magia": 15
+  },
+  "iniziativa": 3,
+  "azioni": {
+    "principali": 3,
+    "movimento": 1
+  },
+  "movimento": {
+    "passo": 6,
+    "corsa": 12,
+    "scatto": 18,
+    "volo": 18
+  },
+  "spazio": "1 Q",
+  "abilita": [
+    {
+      "nome": "Armi da mischia",
+      "va": 16
+    },
+    {
+      "nome": "Corpo a corpo",
+      "va": 14
+    },
+    {
+      "nome": "Atletica",
+      "va": 14
+    },
+    {
+      "nome": "Percezione",
+      "va": 15
+    },
+    {
+      "nome": "Oratoria",
+      "va": 15
+    },
+    {
+      "nome": "Cultura",
+      "va": 14
+    },
+    {
+      "nome": "Medicina",
+      "va": 14
+    }
+  ],
+  "capacita": [
+    {
+      "nome": "Mazza luminosa",
+      "effetto": "VA 16. Danno: AC 2: 1d6+3 Magico, Contusione, poi 2d8 Magico, Luce. Portata/costo: 1 Q; una mano; 1 AzP; "
+    },
+    {
+      "nome": "Corpo e sensi",
+      "effetto": "Corpo vivente sovrannaturale: non necessita di cibo, acqua o sonno e non accumula Affaticamento, ma mantiene Ferite e Menomazioni e può essere reso Svenuto. Immune a fascinazione e Terrorizzato. Dimezza Luce e danni Naturali di armi da Contusione, Taglio e Perforazione, incluse armi naturali. Resistenza alla magia +2 non inclusa nelle PS. Scurovisione e telepatia 24 Q; comprensione delle lingue secondo le regole del blocco. Para con Mazza pronta; da Svenuto in volo cade."
+    },
+    {
+      "nome": "Sequenza e mazza",
+      "effetto": "Tre AzP totali; massimo due attacchi ravvicinati complessivi per Round, Opportunità compresa. Il Tocco non è un attacco e usa le AzP rimaste. Mazza ferrata Comune: FOR quattro, una mano, portata un Q, PI cinque, PS Integrità dieci, base 1d6+1 più due di FOR già inclusi. Infusione personale, assente nell’arma recuperata. Un tiro, una Difesa e due AC successive con AR separate; Magistrale soltanto sulla prima. Nessuna Parata naturale o Luce aggiunta al Pugno."
+    },
+    {
+      "nome": "Soccorso",
+      "effetto": "Tocco ristoratore: una AzP e sei PM, tre usi per ventiquattro ore; un altro vivente consenziente o incosciente soccorso a Contatto recupera sedici punti, da dividere fra PV e arresto del Sanguinamento con il normale costo di due punti per ridurlo di uno. Non cura Ferite, Menomazioni o PM. Purificazione separata: una AzP e sei PM, sceglie Cura Spirituale sei oppure Cura Avvelenamenti sei su un solo altro beneficiario a Contatto. Sono capacità innate senza Potere; la procedura comune specifica limiti e cause persistenti. Non includono resurrezione o rimozione universale di maledizioni."
+    },
+    {
+      "nome": "Mutamento",
+      "effetto": "Una AzP e tre PM: forma umanoide oppure animale terrestre o volante di un Q per un’ora, senza Concentrazione. Si sceglie un aspetto conosciuto; conserva valori, mente, sensi e risorse. Terra 6 / 12 / 18 Q; volo originario soltanto se la forma scelta possiede ali adatte. Non acquista Nuoto, scavo, veleni o altre capacità del modello; nessun Pugno o uso di armi se l’anatomia non li consente. Dotazione assorbita inutilizzabile oppure visibile e compatibile, scelta all’avvio; nessun oggetto o carico nuovo viene assorbito. Non crea una seconda riserva di PV. Negare nove, Svenuto o morte ripristinano forma e dotazione, senza guarire."
+    },
+    {
+      "nome": "Informazioni e limiti",
+      "effetto": "Individuare innato sei: una AzP e sei PM, cinque Round fissi; percezione raggio dieci Q o analisi di un Q entro dieci Q, secondo la procedura della Magia §23.9. Non legge intenzioni morali o CROS e non costringe a parlare. L’appellativo angelico non impone verità, infallibilità o fedeltà ai PG; divinità, profezie, comunioni remote e risurrezioni della fonte non sono capacità assegnate da questa scheda."
+    },
+    {
+      "nome": "Altri movimenti",
+      "effetto": "spazio 1 × 1 Q"
+    }
+  ],
+  "gs_px": {
+    "gs": "Mito",
+    "px": 220,
+    "per_pg": 4
+  },
+  "_bestiario": {
+    "campi": {
+      "pv": "Mostri 0.69",
+      "pm": "Mostri 0.69",
+      "caratteristiche": "Mostri 0.69",
+      "ar": "Mostri 0.69",
+      "difese": "Mostri 0.69",
+      "salvezze": "Mostri 0.69",
+      "iniziativa": "Mostri 0.69",
+      "azioni": "Mostri 0.69",
+      "movimento": "Mostri 0.69",
+      "spazio": "Mostri 0.69",
+      "abilita": "Mostri 0.69",
+      "capacita": "Mostri 0.69",
+      "gs_px": "Mostri 0.69"
+    },
+    "edizione": "Mostri 0.69",
+    "sistema_salute": "solo_PV"
+  }
+}

@@ -3,7 +3,7 @@
   "versione": 1,
   "id": "tappeto-soffocante",
   "nome": "Tappeto soffocante",
-  "fonte": "dal Manuale dei Mostri v0.46 (Word del 27/10/2026), cap. 8 «Catalogo delle creature» — Costrutti e creature elementali",
+  "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Tappeto soffocante",
   "caratteristiche": {
     "FOR": 7,
     "DES": 6,
@@ -100,9 +100,24 @@
     "sanguinamento",
     "stordito"
   ],
-  "note": "PM —: nessuna riserva. Immobile sembra un tappeto (+4 Furtività). Comportamento: protegge un’area o un accesso; interrompere l’animazione apre una finestra per salvare la vittima.",
+  "note": "Costrutto privo di mente • guardiano da presa • Natura Comune. Impiego. Protegge un’area circoscritta o un accesso. L’avvicinamento a un tappeto sospetto permette di cercare tracce, saggiare il tessuto o usare rilevazioni pertinenti. Un bersaglio già consapevole del pericolo non diventa Sorpreso solo perché mette un piede sopra il tappeto. Interrompere l’animazione può creare una finestra sufficiente per salvare la vittima o superare la stanza.",
   "_bestiario": {
     "edizione": "Mostri 0.69",
-    "sistema_salute": "solo_PV"
+    "sistema_salute": "solo_PV",
+    "campi": {
+      "pv": "Mostri 0.69",
+      "caratteristiche": "Mostri 0.69",
+      "ar": "Mostri 0.69",
+      "difese": "Mostri 0.69",
+      "salvezze": "Mostri 0.69",
+      "iniziativa": "Mostri 0.69",
+      "azioni": "Mostri 0.69",
+      "movimento": "Mostri 0.69",
+      "spazio": "Mostri 0.69",
+      "abilita": "Mostri 0.69",
+      "attacchi": "Mostri 0.47",
+      "capacita": "Mostri 0.47",
+      "gs_px": "Mostri 0.69"
+    }
   }
 }

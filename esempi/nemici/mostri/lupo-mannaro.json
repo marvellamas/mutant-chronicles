@@ -1,0 +1,123 @@
+{
+  "formato": "mutant-nemico",
+  "versione": 1,
+  "id": "lupo-mannaro",
+  "nome": "Lupo mannaro",
+  "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Lupo mannaro",
+  "note": "Licantropo capace di vivere tra gli umanoidi o cacciare in forma di lupo e ibrida. Il branco può coordinare l’assalto senza una mente collettiva.",
+  "pv": 63,
+  "pm": 10,
+  "caratteristiche": {
+    "FOR": 8,
+    "DES": 7,
+    "COS": 7,
+    "INT": 5,
+    "SAG": 6,
+    "CAR": 5
+  },
+  "ar": {
+    "totale": 2,
+    "magica": 0
+  },
+  "difese": 11,
+  "salvezze": {
+    "tempra": 12,
+    "riflessi": 12,
+    "volonta": 11,
+    "magia": 12
+  },
+  "iniziativa": 1,
+  "azioni": {
+    "principali": 2,
+    "movimento": 1
+  },
+  "movimento": {
+    "passo": 6,
+    "corsa": 12,
+    "scatto": 18
+  },
+  "attacchi": [
+    {
+      "nome": "Artigli",
+      "tipo": "ravvicinato",
+      "va": 12,
+      "danno": "2d4+2",
+      "natura": "Naturale",
+      "proprieta": [
+        "AC 1"
+      ],
+      "portata_q": 1,
+      "ac": 1
+    },
+    {
+      "nome": "Morso",
+      "tipo": "ravvicinato",
+      "va": 12,
+      "danno": "1d8+2",
+      "natura": "Naturale",
+      "proprieta": [
+        "AC 1",
+        "maledizione"
+      ],
+      "portata_q": 1,
+      "ac": 1
+    },
+    {
+      "nome": "Colpo disarmato",
+      "tipo": "ravvicinato",
+      "va": 12,
+      "danno": "1d6+2",
+      "natura": "Naturale",
+      "proprieta": [
+        "AC 1"
+      ],
+      "portata_q": 1,
+      "ac": 1
+    }
+  ],
+  "capacita": [
+    {
+      "nome": "Forme e resistenza",
+      "effetto": "Mutare costa una AzP e un PM. Usa la riduzione comune contro armi Naturali non argentate. Massimo un Morso per Round comprese le Opportunità; in forma di lupo l’altra AzP resta per attività o Difese compatibili, non per un secondo Morso."
+    },
+    {
+      "nome": "Sensi e ferite",
+      "effetto": "Olfatto e udito acuti, vista ordinaria senza Scurovisione. Non rigenera PV o Ferite e non è immune a Fuoco, Gelo, paura o danni psichici. La trasformazione non ricrea parti menomate. Nessuna Parata naturale."
+    },
+    {
+      "nome": "Caccia e contagio",
+      "effetto": "Solo il Morso penetrante può trasmettere la maledizione, non Artigli o sangue versato. In questa scheda il branco influenza la condotta e le normali condizioni degli attaccanti multipli, senza un ulteriore +2 automatico. Compagni lupi o lupi feroci usano le proprie schede, Azioni e PX."
+    },
+    {
+      "nome": "Altri movimenti",
+      "effetto": "lupo: 8 / 16 / 24 Q, 1 × 2 Q"
+    },
+    {
+      "nome": "Abilità particolari",
+      "effetto": "Percezione 11, 13 con olfatto o udito"
+    }
+  ],
+  "gs_px": {
+    "gs": "Veterano",
+    "px": 50,
+    "per_pg": 4
+  },
+  "_bestiario": {
+    "campi": {
+      "pv": "Mostri 0.69",
+      "pm": "Mostri 0.69",
+      "caratteristiche": "Mostri 0.69",
+      "ar": "Mostri 0.69",
+      "difese": "Mostri 0.69",
+      "salvezze": "Mostri 0.69",
+      "iniziativa": "Mostri 0.69",
+      "azioni": "Mostri 0.69",
+      "movimento": "Mostri 0.69",
+      "attacchi": "Mostri 0.69",
+      "capacita": "Mostri 0.69",
+      "gs_px": "Mostri 0.69"
+    },
+    "edizione": "Mostri 0.69",
+    "sistema_salute": "solo_PV"
+  }
+}

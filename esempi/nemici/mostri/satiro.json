@@ -3,7 +3,7 @@
   "versione": 1,
   "id": "satiro",
   "nome": "Satiro",
-  "fonte": "dal Manuale dei Mostri v0.46 (Word del 27/10/2026), cap. 8 «Catalogo delle creature» — Popoli delle terre selvagge",
+  "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Satiro",
   "caratteristiche": {
     "FOR": 5,
     "DES": 7,
@@ -48,12 +48,11 @@
       "va": 9,
       "danno": "1d6+1",
       "natura": "Naturale",
-      "portata_q": 1,
-      "ac": 1,
       "proprieta": [
         "Contusione"
       ],
-      "note": "Non concedono Parata, atterramento o Carica gratuiti."
+      "portata_q": 1,
+      "ac": 1
     },
     {
       "nome": "Spada leggera",
@@ -61,11 +60,11 @@
       "va": 10,
       "danno": "1d6+2",
       "natura": "Naturale",
-      "portata_q": 1,
-      "ac": 1,
       "proprieta": [
         "Taglio"
-      ]
+      ],
+      "portata_q": 1,
+      "ac": 1
     },
     {
       "nome": "Arco da guerra",
@@ -73,14 +72,14 @@
       "va": 10,
       "danno": "1d6+1",
       "natura": "Naturale",
+      "proprieta": [
+        "Perforazione"
+      ],
       "gittata_q": 100,
       "modalita": [
         "S"
       ],
-      "ac": 1,
-      "proprieta": [
-        "Perforazione"
-      ]
+      "ac": 1
     }
   ],
   "abilita": [
@@ -136,9 +135,25 @@
       "effetto": "Il flauto ordinario usa Intrattenere e non impone Sonno, Terrorizzato o fascinazione; la variante dei Flauti magici della fonte non è compresa. Parla Comune, Elfico e Silvano; nessuna Scurovisione innata. Gambe = arti caprini."
     }
   ],
-  "note": "Abitante silvano legato a musica e incontri sociali; la propensione alla festa non elimina responsabilità o capacità di scelta. Condotta: sotto 7 PV o a Ferita Profonda può allontanarsi o trattare. Fonte: Satyr, p. 267.",
+  "note": "Abitante silvano • musica, mobilità e resistenza mistica • Natura Comune.",
   "_bestiario": {
     "edizione": "Mostri 0.69",
-    "sistema_salute": "solo_PV"
+    "sistema_salute": "solo_PV",
+    "campi": {
+      "pv": "Mostri 0.69",
+      "pm": "Mostri 0.69",
+      "caratteristiche": "Mostri 0.69",
+      "ar": "Mostri 0.69",
+      "difese": "Mostri 0.69",
+      "salvezze": "Mostri 0.69",
+      "iniziativa": "Mostri 0.69",
+      "azioni": "Mostri 0.69",
+      "movimento": "Mostri 0.69",
+      "spazio": "Mostri 0.69",
+      "abilita": "Mostri 0.69",
+      "attacchi": "Mostri 0.69",
+      "capacita": "Mostri 0.47",
+      "gs_px": "Mostri 0.69"
+    }
   }
 }

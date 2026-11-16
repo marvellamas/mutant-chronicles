@@ -3,7 +3,7 @@
   "versione": 1,
   "id": "cavallo-da-tiro",
   "nome": "Cavallo da tiro",
-  "fonte": "dal Manuale dei Mostri v0.46 (Word del 27/10/2026), cap. 8 «Catalogo delle creature» — Cavalcature e animali da lavoro",
+  "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Cavallo da tiro",
   "caratteristiche": {
     "FOR": 9,
     "DES": 5,
@@ -48,11 +48,11 @@
       "va": 10,
       "danno": "1d8+2",
       "natura": "Naturale",
-      "portata_q": 1,
-      "ac": 1,
       "proprieta": [
         "Contusione"
-      ]
+      ],
+      "portata_q": 1,
+      "ac": 1
     }
   ],
   "abilita": [
@@ -87,9 +87,26 @@
       "effetto": "Un solo attacco di Zoccoli per Round, Opportunità compresa. Non ha Impeto né Calpestare. Un imbrago che limita lo spostamento può impedire una Schivata, lasciando applicabili AR, PS e altre conseguenze ordinarie."
     }
   ],
-  "note": "Il calcio è una reazione fisicamente raggiungibile, non un attacco contro ogni lato del corpo. Condotta: può seguire indicazioni note e fermarsi se il percorso è impraticabile; sotto 7 PV o a Ferita Profonda tende ad arretrare o cercare il conduttore. Fonte: Draft Horse, p. 321.",
+  "note": "Equino da lavoro • trasporto robusto • Natura Comune. Condotta. Non comprende linguaggi. Un esemplare abituato al lavoro può seguire indicazioni note e fermarsi se il percorso diventa impraticabile. Sotto 10 PV tende ad arretrare o cercare il conduttore. Sella e bardatura non sono comprese nel profilo.",
   "_bestiario": {
     "edizione": "Mostri 0.69",
-    "sistema_salute": "solo_PV"
-  }
+    "sistema_salute": "solo_PV",
+    "campi": {
+      "pv": "Mostri 0.69",
+      "pm": "Mostri 0.69",
+      "caratteristiche": "Mostri 0.69",
+      "ar": "Mostri 0.69",
+      "difese": "Mostri 0.69",
+      "salvezze": "Mostri 0.69",
+      "iniziativa": "Mostri 0.69",
+      "azioni": "Mostri 0.69",
+      "movimento": "Mostri 0.69",
+      "spazio": "Mostri 0.69",
+      "abilita": "Mostri 0.69",
+      "attacchi": "Mostri 0.69",
+      "capacita": "Mostri 0.47",
+      "gs_px": "Mostri 0.69"
+    }
+  },
+  "taglia": "grande"
 }

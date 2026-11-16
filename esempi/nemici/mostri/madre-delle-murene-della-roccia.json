@@ -3,7 +3,7 @@
   "versione": 1,
   "id": "madre-delle-murene-della-roccia",
   "nome": "Madre delle Murene della Roccia",
-  "fonte": "dal Manuale dei Mostri v0.46 (Word del 27/10/2026), cap. 7 «Fauna di Iris» — Madre delle Murene della Roccia",
+  "fonte": "dal Manuale dei Mostri v0.69, cap. 7 «Fauna di Iris» — Madre delle Murene della Roccia",
   "caratteristiche": {
     "FOR": 10,
     "DES": 4,
@@ -125,6 +125,22 @@
   "note": "La Madre cattura prede vive per nutrire i cuccioli e difende la zona dei bozzoli. Mantiene spesso parte del corpo immersa nella roccia. Dimensioni: Lunghezza 12 m • larghezza 3 m. Ingombro parziale: 2 × 2 Q, altezza 2 Q; può estendersi fino a 4 Q restando parzialmente nella roccia. Occhi: Due; capacità 15 PM ciascuno, vuoti alla morte. GS e PX provvisori nel manuale: da verificare al tavolo (Davide li confermerà).",
   "_bestiario": {
     "edizione": "Mostri 0.69",
-    "sistema_salute": "solo_PV"
+    "sistema_salute": "solo_PV",
+    "campi": {
+      "pv": "Mostri 0.69",
+      "pm": "Mostri 0.69",
+      "caratteristiche": "Mostri 0.69",
+      "ar": "Mostri 0.69",
+      "difese": "Mostri 0.69",
+      "salvezze": "Mostri 0.69",
+      "iniziativa": "Mostri 0.69",
+      "azioni": "Mostri 0.69",
+      "movimento": "Mostri 0.69",
+      "spazio": "Mostri 0.69",
+      "abilita": "Mostri 0.47",
+      "attacchi": "Mostri 0.47",
+      "capacita": "Mostri 0.69",
+      "gs_px": "Mostri 0.69"
+    }
   }
 }

@@ -1,0 +1,113 @@
+{
+  "formato": "mutant-nemico",
+  "versione": 1,
+  "id": "demone-di-ombra",
+  "nome": "Demone d’ombra",
+  "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Demone d’ombra",
+  "note": "Spirito dalla sagoma oscura che attraversa la materia e assale la mente a breve distanza. È distinto dall’Ombra non morta e non sottrae automaticamente FOR o PM.",
+  "pv": 58,
+  "pm": 20,
+  "caratteristiche": {
+    "FOR": 1,
+    "DES": 8,
+    "COS": 6,
+    "INT": 7,
+    "SAG": 6,
+    "CAR": 7
+  },
+  "ar": {
+    "totale": 1,
+    "magica": 1
+  },
+  "difese": 13,
+  "salvezze": {
+    "tempra": 10,
+    "riflessi": 13,
+    "volonta": 12,
+    "magia": 12
+  },
+  "iniziativa": 3,
+  "azioni": {
+    "principali": 2,
+    "movimento": 1
+  },
+  "movimento": {
+    "passo": 6,
+    "corsa": 12,
+    "scatto": 18,
+    "volo": 6
+  },
+  "spazio": "1 Q",
+  "abilita": [
+    {
+      "nome": "Furtività",
+      "va": 15
+    },
+    {
+      "nome": "Percezione",
+      "va": 12
+    },
+    {
+      "nome": "Occultismo",
+      "va": 11
+    }
+  ],
+  "capacita": [
+    {
+      "nome": "Artigli psichici",
+      "effetto": "VA —. Danno: 2d6+2 psichico diretto; Volontà 0. Portata/costo: Contatto; 1 AzP e 2 PM; "
+    },
+    {
+      "nome": "Corpo spirituale",
+      "effetto": "Non respira e non richiede cibo, acqua o sonno biologico. Ha mente e PM personali; zero PM provoca Svenuto. Immune a Gelo, Elettricità e Fulmine, veleni, Avvelenato, Affaticamento, Paralizzato e pietrificazione. Non applica il pacchetto delle resistenze corporee degli altri nove demoni. Nessuna Parata naturale o Resistenza alla magia +2; Scurovisione 24 Q."
+    },
+    {
+      "nome": "Resistenze e materia",
+      "effetto": "Dimezza per eccesso Acido, Fuoco, danni Eterei, tuono magico e Naturale da Contusione, Taglio o Perforazione dopo Difese e prima dell’AR. Non dimezza ogni danno psichico diretto. Attraversa creature e oggetti come Terreno Difficile, senza portare altri con sé; non attraversa barriere espressamente spirituali. Se termina la propria Iniziativa dentro un solido subisce 1d6 Etereo diretto senza AR. Non vede o attacca attraverso pareti opache."
+    },
+    {
+      "nome": "Artigli psichici",
+      "effetto": "Una AzP e due PM, massimo una applicazione per Round contro ciascuna mente cosciente a Contatto e validamente percepita. È un equivalente innato di Dardo Psichico per risoluzione e protezioni: nessun tiro per colpire, Parata, Schivata o Elusione; Volontà 0 dimezza per eccesso. Ignora tutte le AR e i PV temporanei di Irrobustire; non infligge Ferite. Barriera Mentale già attiva impedisce interamente l’effetto, senza PS. Gli Artigli sono un potere e non un’Opportunità gratuita. Nessun risucchio di PM o memoria."
+    },
+    {
+      "nome": "Svenimento e agguato",
+      "effetto": "Se la perdita esaurisce i PV ordinari, o il bersaglio era già a zero, seconda Volontà 0: fallimento Svenuto per 1+1d4 Round; successo resta cosciente. L’eccedenza non produce Ferite. Contro una vittima realmente Sorpresa, al primo Artiglio del primo Round aggiunge 2d6 prima della PS, una sola volta. Il solo vincere l’Iniziativa o stare al buio non garantisce Sorpresa."
+    },
+    {
+      "nome": "Luce intensa",
+      "effetto": "Quando una luce intensa diretta ne illumina il corpo subisce −2 VA alle Abilità visive, comprese Furtività e Difese, e le vittime degli Artigli ricevono +2 alle due Volontà. Le penalità non si sommano a quelle equivalenti più forti. Luce ordinaria non provoca danni; Luce Mistica segue i propri requisiti di Natura e CROS, senza raddoppio gratuito contro questo profilo Comune. In penombra o buio può Nascondersi con Furtività spendendo una AzP; non diventa automaticamente invisibile."
+    },
+    {
+      "nome": "Vincoli e cure",
+      "effetto": "Mani, reti e corde ordinarie non trattengono il corpo immateriale; vincoli mistici compatibili possono limitarlo. Non subisce A Terra mentre levita, ma da Svenuto rimane sospeso e fermo. Dardo Spirituale può colpire lo spirito e i suoi PM; Medicina e Cura Ferite biologiche non ricostituiscono il corpo. Negare Potere non cancella la sua esistenza autonoma. La comunicazione telepatica entro 24 Q non controlla chi la riceve."
+    },
+    {
+      "nome": "Altri movimenti",
+      "effetto": "Terra e volo levitante 6 / 12 / 18: la stessa andatura vale anche per volo; spazio 1 × 1 Q"
+    }
+  ],
+  "gs_px": {
+    "gs": "Eroe",
+    "px": 70,
+    "per_pg": 4
+  },
+  "_bestiario": {
+    "campi": {
+      "pv": "Mostri 0.69",
+      "pm": "Mostri 0.69",
+      "caratteristiche": "Mostri 0.69",
+      "ar": "Mostri 0.69",
+      "difese": "Mostri 0.69",
+      "salvezze": "Mostri 0.69",
+      "iniziativa": "Mostri 0.69",
+      "azioni": "Mostri 0.69",
+      "movimento": "Mostri 0.69",
+      "spazio": "Mostri 0.69",
+      "abilita": "Mostri 0.69",
+      "capacita": "Mostri 0.69",
+      "gs_px": "Mostri 0.69"
+    },
+    "edizione": "Mostri 0.69",
+    "sistema_salute": "solo_PV"
+  }
+}

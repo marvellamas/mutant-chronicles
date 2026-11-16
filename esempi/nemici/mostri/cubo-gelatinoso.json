@@ -3,7 +3,7 @@
   "versione": 1,
   "id": "cubo-gelatinoso",
   "nome": "Cubo gelatinoso",
-  "fonte": "dal Manuale dei Mostri v0.46 (Word del 27/10/2026), cap. 8 «Catalogo delle creature» — Melme funghi e imitatori",
+  "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Cubo gelatinoso",
   "caratteristiche": {
     "FOR": 7,
     "DES": 2,
@@ -115,9 +115,25 @@
     "a-terra",
     "terrorizzato"
   ],
-  "note": "AR 1 biologica. Condotta: avanza verso la fonte di nutrimento percepita; Inglobare, Digerire, Pseudopodo e Difesa competono per la sua unica AzP. Fonte: Gelatinous Cube, p. 242.",
+  "note": "Melma • ostacolo trasparente e inglobamento • Natura Comune. Condotta. Avanza verso la fonte di nutrimento percepita. Inglobare, Digerire, Pseudopodo e una Difesa competono per la sua unica AzP. Non infligge automaticamente danni digestivi a ogni turno: li produce soltanto nelle occasioni indicate nella pagina seguente.",
   "_bestiario": {
     "edizione": "Mostri 0.69",
-    "sistema_salute": "solo_PV"
-  }
+    "sistema_salute": "solo_PV",
+    "campi": {
+      "pv": "Mostri 0.69",
+      "caratteristiche": "Mostri 0.69",
+      "ar": "Mostri 0.69",
+      "difese": "Mostri 0.69",
+      "salvezze": "Mostri 0.69",
+      "iniziativa": "Mostri 0.69",
+      "azioni": "Mostri 0.69",
+      "movimento": "Mostri 0.69",
+      "spazio": "Mostri 0.69",
+      "abilita": "Mostri 0.47",
+      "attacchi": "Mostri 0.47",
+      "capacita": "Mostri 0.47",
+      "gs_px": "Mostri 0.69"
+    }
+  },
+  "taglia": "grande"
 }

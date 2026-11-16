@@ -1,0 +1,132 @@
+{
+  "formato": "mutant-nemico",
+  "versione": 1,
+  "id": "fantasma",
+  "nome": "Fantasma",
+  "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Fantasma",
+  "note": "Spirito che conserva una volontà e un compito irrisolto. Può attraversare la materia, terrorizzare e occupare temporaneamente un corpo umanoide.",
+  "pv": 47,
+  "pm": 24,
+  "caratteristiche": {
+    "FOR": 2,
+    "DES": 6,
+    "COS": 6,
+    "INT": 6,
+    "SAG": 6,
+    "CAR": 8
+  },
+  "ar": {
+    "totale": 0,
+    "magica": 0
+  },
+  "difese": 11,
+  "salvezze": {
+    "tempra": 10,
+    "riflessi": 11,
+    "volonta": 14,
+    "magia": 13
+  },
+  "iniziativa": 2,
+  "azioni": {
+    "principali": 2,
+    "movimento": 1
+  },
+  "movimento": {
+    "passo": 0,
+    "corsa": "non_consentito",
+    "scatto": "non_consentito",
+    "volo": 8
+  },
+  "spazio": "1 Q",
+  "abilita": [
+    {
+      "nome": "Corpo a corpo",
+      "va": 13
+    },
+    {
+      "nome": "Percezione",
+      "va": 12
+    },
+    {
+      "nome": "Furtività",
+      "va": 12
+    },
+    {
+      "nome": "Raggirare",
+      "va": 12
+    },
+    {
+      "nome": "Oratoria",
+      "va": 12
+    }
+  ],
+  "attacchi": [
+    {
+      "nome": "Tocco spettrale",
+      "tipo": "ravvicinato",
+      "va": 13,
+      "danno": "2d6+3",
+      "natura": "Etereo",
+      "proprieta": [
+        "AC 1"
+      ],
+      "portata_q": 1,
+      "ac": 1
+    }
+  ],
+  "capacita": [
+    {
+      "nome": "Sensi e danni",
+      "effetto": "Scurovisione 12 Q salvo la percezione specifica dell’Artiglio; non vede attraverso ostacoli. Attacchi pronti senza altri bonus da aggiungere. Le immunità e le deroghe sono nelle capacità. I danni di questa scheda non ricevono EQ dei PNG."
+    },
+    {
+      "nome": "Forma e terrore",
+      "effetto": "Corpo immateriale e attraversamento comuni. Immune a Gelo, Terrorizzato, paralisi e fascinazione. Manifestazione terrificante: 1 AzP e 2 PM, una volta per incontro; entro 6 Q chi vede il Fantasma effettua Volontà 0 o è Terrorizzato per 3 Round. Esclusi i non morti. Negare Potere confronta potenza 6; restano Oratoria e Cura Spirituale. Nessun invecchiamento permanente automatico è associato a questo profilo."
+    },
+    {
+      "nome": "Possessione innata",
+      "effetto": "1 AzP e 4 PM, al massimo una volta ogni 3 Round, contro un umanoide cosciente visibile entro 1 Q. Volontà −2: successo evita, fallimento permette al Fantasma di entrare nel corpo per 5 Round. Barriera Mentale concede il proprio bonus. La manifestazione scompare nel corpo e non può essere attaccata separatamente; il corpo rimane un bersaglio normale. Non è un Incantesimo e non richiede Potere o componenti."
+    },
+    {
+      "nome": "Azioni del corpo",
+      "effetto": "Il controllato agisce alla propria Iniziativa con le sole Azioni ancora disponibili, senza riceverne altre. Il Fantasma non agisce separatamente mentre lo occupa. Usa caratteristiche fisiche, Difese, armi e capacità passive del corpo, senza ricordi, password, Incantesimi, Tecniche Interiori, PE o spesa dei PM della vittima. La vittima resta cosciente. Non può imporre autolesionismo o azioni contrarie ai suoi principi profondi: si applicano i limiti della Possessione del Manuale della Magia 19.10."
+    },
+    {
+      "nome": "Liberare l’ospite",
+      "effetto": "La prima fonte di danno effettivo al corpo in ogni Round concede nuova Volontà −2; un successo libera. Fine durata, incoscienza o morte dell’ospite, volontà del Fantasma e sua riserva personale a 0 PM terminano il controllo. Sono compatibili Negare Potere ed Esorcizzare Possessione, confronto di potenza 9: è un vincolo innato esplicitamente esorcizzabile. Lo spirito riappare nel più vicino Q libero entro 1 Q dall’ospite, senza nuovo turno o attacco. Dopo una liberazione o una PS iniziale riuscita, quel corpo è immune alla Possessione di questo Fantasma per 24 ore."
+    },
+    {
+      "nome": "Infestazione",
+      "effetto": "Vista nel buio e percezione spirituale entro 12 Q, senza vedere dentro corpi o oggetti e senza attraversare piani. Il passaggio nella roccia non è una fase intangibile invulnerabile. La soluzione del compito irrisolto può chiudere l’incontro senza distruggere la manifestazione."
+    },
+    {
+      "nome": "Altri movimenti",
+      "effetto": "spazio 1 × 1 Q"
+    }
+  ],
+  "gs_px": {
+    "gs": "Eroe",
+    "px": 70,
+    "per_pg": 4
+  },
+  "_bestiario": {
+    "campi": {
+      "pv": "Mostri 0.69",
+      "pm": "Mostri 0.69",
+      "caratteristiche": "Mostri 0.69",
+      "ar": "Mostri 0.69",
+      "difese": "Mostri 0.69",
+      "salvezze": "Mostri 0.69",
+      "iniziativa": "Mostri 0.69",
+      "azioni": "Mostri 0.69",
+      "movimento": "Mostri 0.69",
+      "spazio": "Mostri 0.69",
+      "abilita": "Mostri 0.69",
+      "attacchi": "Mostri 0.69",
+      "capacita": "Mostri 0.69",
+      "gs_px": "Mostri 0.69"
+    },
+    "edizione": "Mostri 0.69",
+    "sistema_salute": "solo_PV"
+  }
+}

@@ -1,0 +1,124 @@
+{
+  "formato": "mutant-nemico",
+  "versione": 1,
+  "id": "yuan-ti-sangue-puro",
+  "nome": "Yuan-ti sangue puro",
+  "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Yuan-ti sangue puro",
+  "note": "Umanoide dai tratti serpentini poco evidenti, capace di infiltrarsi in una comunità. Non possiede un mutamento fisico: abiti, distanza e comportamento nascondono i suoi segni distintivi.",
+  "pv": 42,
+  "pm": 18,
+  "caratteristiche": {
+    "FOR": 5,
+    "DES": 6,
+    "COS": 5,
+    "INT": 7,
+    "SAG": 6,
+    "CAR": 7
+  },
+  "ar": {
+    "totale": 0,
+    "magica": 0
+  },
+  "difese": 10,
+  "salvezze": {
+    "tempra": 10,
+    "riflessi": 10,
+    "volonta": 11,
+    "magia": 11
+  },
+  "iniziativa": 1,
+  "azioni": {
+    "principali": 2,
+    "movimento": 1
+  },
+  "movimento": {
+    "passo": 6,
+    "corsa": 12,
+    "scatto": 18
+  },
+  "spazio": "1 Q",
+  "abilita": [
+    {
+      "nome": "Armi da mischia",
+      "va": 11
+    },
+    {
+      "nome": "Armi da lancio",
+      "va": 11
+    },
+    {
+      "nome": "Corpo a corpo",
+      "va": 10
+    },
+    {
+      "nome": "Furtività",
+      "va": 12
+    },
+    {
+      "nome": "Percezione",
+      "va": 11
+    },
+    {
+      "nome": "Raggirare",
+      "va": 14
+    },
+    {
+      "nome": "Oratoria",
+      "va": 12
+    },
+    {
+      "nome": "Sopravvivenza",
+      "va": 11
+    }
+  ],
+  "capacita": [
+    {
+      "nome": "Spruzzo tossico",
+      "effetto": "VA —. Danno: 2d6 danni diretti da veleno mistico; Tempra 0 evita. Portata/costo: Un bersaglio entro 2 Q; 1 AzP e 2 PM; "
+    },
+    {
+      "nome": "Corpo e sensi",
+      "effetto": "Vivente biologico, Scurovisione dodici Q, immune a veleno e Stati direttamente mantenuti da veleno. Resistenza alla magia +2 non inclusa nelle PS; nessuna immunità a malattie, paura, sonno o influenze mentali. Para con Spada pronta; nessuna Parata naturale o telepatia. Parla Comune e due lingue locali o rituali scelte prima dell’incontro."
+    },
+    {
+      "nome": "Sequenza e frecce",
+      "effetto": "Due AzP totali, massimo due Spade oppure una Freccia per Round, senza mescolare le sequenze; l’Opportunità di Spada consuma il relativo limite. Dodici frecce preparate con una dose naturale di Pericolosità III ciascuna: dopo almeno un danno finale, Tempra 0 dimezza per eccesso 2d6 danni diretti senza AR, fallimento interi. Nessuno Stato persistente e nessun Magistrale ulteriore sulla tossina. Una freccia consuma la propria dose al tiro, anche mancando; frecce recuperate non forniscono nuove dosi."
+    },
+    {
+      "nome": "Poteri innati",
+      "effetto": "Affinità serpentina delle regole comuni; Suggestione vincolata, tre usi per ventiquattro ore. Spruzzo tossico: una AzP e due PM, tre usi per ventiquattro ore, un vivente biologico visibile entro due Q con un percorso libero; Tempra 0 evita completamente 2d6 danni diretti senza AR. È una tossina mistica di Pericolosità III, senza residui o Avvelenato persistente: Resistenza alla magia aiuta la PS. Una protezione integralmente ermetica, occhi e respirazione compresi, impedisce l’esposizione. Nessun tiro per colpire, Difesa attiva o Elusione."
+    },
+    {
+      "nome": "Dotazione e infiltrazione",
+      "effetto": "Spada leggera Comune: FOR tre, una mano, portata un Q, PI cinque, PS Integrità dieci, base 1d6+1. Arco da guerra Comune: FOR cinque, due mani, cento Q, PI sei, PS Integrità dieci, base 1d6+1; incoccare incluso, una freccia a tiro. Danni pronti senza bonus aggiuntivi. I segni biologici possono essere riconosciuti con indizi reali e Percezione contrapposta a Raggirare quattordici quando un travestimento li occulta. Non cambia specie, Natura o identità con una semplice Prova sociale; non è automaticamente un Lestofante o un PNG di una Classe."
+    },
+    {
+      "nome": "Altri movimenti",
+      "effetto": "spazio 1 × 1 Q"
+    }
+  ],
+  "gs_px": {
+    "gs": "Esperto",
+    "px": 33,
+    "per_pg": 4
+  },
+  "_bestiario": {
+    "campi": {
+      "pv": "Mostri 0.69",
+      "pm": "Mostri 0.69",
+      "caratteristiche": "Mostri 0.69",
+      "ar": "Mostri 0.69",
+      "difese": "Mostri 0.69",
+      "salvezze": "Mostri 0.69",
+      "iniziativa": "Mostri 0.69",
+      "azioni": "Mostri 0.69",
+      "movimento": "Mostri 0.69",
+      "spazio": "Mostri 0.69",
+      "abilita": "Mostri 0.69",
+      "capacita": "Mostri 0.69",
+      "gs_px": "Mostri 0.69"
+    },
+    "edizione": "Mostri 0.69",
+    "sistema_salute": "solo_PV"
+  }
+}

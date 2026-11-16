@@ -3,7 +3,7 @@
   "versione": 1,
   "id": "mammut",
   "nome": "Mammut",
-  "fonte": "dal Manuale dei Mostri v0.46 (Word del 27/10/2026), cap. 8 «Catalogo delle creature» — Predatori e grandi erbivori",
+  "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Mammut",
   "caratteristiche": {
     "FOR": 10,
     "DES": 4,
@@ -48,11 +48,11 @@
       "va": 15,
       "danno": "2d8+3",
       "natura": "Naturale",
-      "portata_q": 2,
-      "ac": 1,
       "proprieta": [
         "Perforazione"
-      ]
+      ],
+      "portata_q": 2,
+      "ac": 1
     },
     {
       "nome": "Calpestare",
@@ -60,12 +60,11 @@
       "va": 15,
       "danno": "2d10+3",
       "natura": "Naturale",
-      "portata_q": 1,
-      "ac": 1,
       "proprieta": [
         "Contusione"
       ],
-      "note": "Solo contro una vittima A Terra non maggiore di 2 × 2 Q entro 1 Q, in una posizione che permetta il colpo (la maggiore portata delle Zanne non estende quella del piede)."
+      "portata_q": 1,
+      "ac": 1
     }
   ],
   "abilita": [
@@ -104,9 +103,26 @@
       "effetto": "L’adattamento al clima freddo non dimezza i danni da Ghiaccio; la pelliccia è compresa nell’AR biologica (non è un’armatura rimovibile). Proboscide e zanne appartengono alla Testa. Un terreno cedevole o un ponte devono poter sostenere il corpo. Un corridoio stretto può impedirgli di raggiungere gli avversari; non colpisce attraverso le pareti. Dopo l’Impeto solo una vittima entro i limiti di Calpestare può subirlo (seconda AzP)."
     }
   ],
-  "note": "Sensi ordinari; non comprende linguaggi. Condotta: difende il gruppo e reagisce a chi gli chiude il passaggio; sotto 21 PV o a Ferita Seria cerca spazio e branco. Fonte: Mammoth, p. 332.",
+  "note": "Grande erbivoro delle terre fredde • zanne e calpestamento • Natura Comune. Condotta. Sensi ordinari; non comprende linguaggi. Difende il gruppo e può reagire a chi gli chiude il passaggio. Sotto 28 PV tende a cercare spazio e branco. Un corridoio stretto può impedirgli di raggiungere gli avversari; la grandezza non autorizza a colpirli attraverso una parete.",
   "_bestiario": {
     "edizione": "Mostri 0.69",
-    "sistema_salute": "solo_PV"
-  }
+    "sistema_salute": "solo_PV",
+    "campi": {
+      "pv": "Mostri 0.69",
+      "pm": "Mostri 0.69",
+      "caratteristiche": "Mostri 0.69",
+      "ar": "Mostri 0.69",
+      "difese": "Mostri 0.69",
+      "salvezze": "Mostri 0.69",
+      "iniziativa": "Mostri 0.69",
+      "azioni": "Mostri 0.69",
+      "movimento": "Mostri 0.69",
+      "spazio": "Mostri 0.69",
+      "abilita": "Mostri 0.69",
+      "attacchi": "Mostri 0.69",
+      "capacita": "Mostri 0.47",
+      "gs_px": "Mostri 0.69"
+    }
+  },
+  "taglia": "grande"
 }

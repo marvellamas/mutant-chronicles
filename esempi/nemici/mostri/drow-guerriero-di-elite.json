@@ -1,0 +1,163 @@
+{
+  "formato": "mutant-nemico",
+  "versione": 1,
+  "id": "drow-guerriero-di-elite",
+  "nome": "Drow guerriero d’élite",
+  "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Drow guerriero d’élite",
+  "note": "Combattente Drow esperto, munito di scudo e di due tossine distinte: lesiva per la spada e sedativa per i quadrelli. Può levitare per un tempo limitato e conserva la sensibilità al sole.",
+  "pv": 94,
+  "pm": 18,
+  "caratteristiche": {
+    "FOR": 6,
+    "DES": 8,
+    "COS": 7,
+    "INT": 5,
+    "SAG": 6,
+    "CAR": 6
+  },
+  "ar": {
+    "totale": 3,
+    "magica": 0
+  },
+  "difese": 13,
+  "salvezze": {
+    "tempra": 13,
+    "riflessi": 14,
+    "volonta": 11,
+    "magia": 12
+  },
+  "iniziativa": 3,
+  "azioni": {
+    "principali": 2,
+    "movimento": 1
+  },
+  "movimento": {
+    "passo": 6,
+    "corsa": 12,
+    "scatto": 18
+  },
+  "spazio": "1 Q",
+  "abilita": [
+    {
+      "nome": "Armi da mischia",
+      "va": 15
+    },
+    {
+      "nome": "Armi da lancio",
+      "va": 14
+    },
+    {
+      "nome": "Corpo a corpo",
+      "va": 12
+    },
+    {
+      "nome": "Atletica",
+      "va": 12
+    },
+    {
+      "nome": "Percezione",
+      "va": 12
+    },
+    {
+      "nome": "Furtività",
+      "va": 16
+    }
+  ],
+  "attacchi": [
+    {
+      "nome": "Spada leggera",
+      "tipo": "ravvicinato",
+      "va": 15,
+      "danno": "1d6+3",
+      "natura": "Naturale",
+      "proprieta": [
+        "Taglio",
+        "AC 1",
+        "eventuale veleno 2d6"
+      ],
+      "portata_q": 1,
+      "ac": 1
+    },
+    {
+      "nome": "Balestra piccola",
+      "tipo": "ravvicinato",
+      "va": 14,
+      "danno": "1d4+3",
+      "natura": "Naturale",
+      "proprieta": [
+        "Perforazione",
+        "AC 1",
+        "eventuale sedativo"
+      ],
+      "portata_q": 30,
+      "ac": 1
+    }
+  ],
+  "capacita": [
+    {
+      "nome": "Corpo e sensi",
+      "effetto": "Vivente biologico con mente e PM personali. Scurovisione 24 Q, +2 alle PS già previste contro fascinazione e immunità al sonno magico come il Drow base. Nessuna immunità ai sedativi biologici o al danno psichico. Sensibilità solare comune. Anatomia umanoide; linguaggi effettivamente conosciuti, senza lettura mentale o Parata naturale."
+    },
+    {
+      "nome": "Sequenza e Parata",
+      "effetto": "Due AzP totali, massimo due attacchi complessivi per Round, Opportunità ravvicinata compresa. Una volta per Round, contro un attacco ravvicinato percepito, Parata agile con Spada pronta riceve +2 Difese: VA quindici già pronto, costo una AzP normale e nessun’altra Difesa per quel colpo. Negli altri casi Difese tredici. Il bonus non aumenta AR e non vale con Scudo, Schivata, Aree o proiettili."
+    },
+    {
+      "nome": "Scudo e ricarica",
+      "effetto": "Parte con Spada e Scudo pronti; senza Scudo AR uno. Parata con Scudo a distanza usa Difese −4, con arma −8, pagando una AzP. La Balestra carica è riposta; ricarica una AzM e una mano libera. Quindi non ricarica tenendo contemporaneamente Balestra e Scudo in mano. I due attacchi massimi non eliminano preparazione, recupero o ricarica."
+    },
+    {
+      "nome": "Magia innata",
+      "effetto": "Luci mobili una AzP e un PM, cinque Round. Oscuramento e Luminescenza una AzP e tre PM ciascuno, un uso per ventiquattro ore ciascuno, modulo Drow. Levitazione: un uso per ventiquattro ore, una AzP e tre PM, solo sé e dotazione trasportabile per cinque Round senza Concentrazione; mantiene la quota senza muoversi e usa una AzM per salire o scendere fino a quattro Q. Nessun movimento orizzontale autonomo o passeggero. Negare sei, scadenza, congedo gratuito, Svenuto o morte terminano e si applica Caduta se manca sostegno."
+    },
+    {
+      "nome": "Anatomia e ruolo",
+      "effetto": "Il nome d’élite non assegna una nuova Classe o un Grado corporativo automatico. Il corpo conserva le localizzazioni umanoidi e la dotazione i propri PI. È capace di scegliere un bersaglio, proteggere un alleato o ritirarsi; sotto 24 PV può cercare copertura. Altri Drow e servitori restano creature separate, con risorse e PX propri."
+    },
+    {
+      "nome": "Oggetti pronti",
+      "effetto": "Spada leggera Comune: FOR tre, PI cinque, base 1d6+1; danno pronto +2 personale. Balestra piccola Comune: FOR tre, PI quattro, base 1d4+1 più due personali, dodici quadrelli di cui sei sedativi. Leggera Comune: AR uno, FOR tre, PI sei. Scudo Medio Comune: AR due, FOR cinque, PI sei. Tutti PS Integrità dieci. La Leggera non penalizza attacchi o movimento; −1 a Potere per eventuali Incantesimi appresi, non alle capacità innate senza Prova."
+    },
+    {
+      "nome": "Veleno lesivo della Spada",
+      "effetto": "Sei dosi naturali di Pericolosità III, una già applicata alla Spada all’inizio. Dopo almeno un danno fisico finale: Tempra −2 dimezza per eccesso 2d6 danni diretti senza AR; nessuno Stato o danno periodico. La dose si consuma al primo attacco portato, anche se fallisce o viene evitato. Applicarne una nuova alla Spada richiede una AzP e la dose disponibile, prima dell’attacco; non è inclusa nei due fendenti. Il Magistrale fisico non moltiplica la tossina."
+    },
+    {
+      "nome": "Sedativo dei quadrelli",
+      "effetto": "Le sei dosi dei quadrelli sono separate dalle sei lesive. Ogni quadrello preparato consuma la propria dose al tiro e, dopo danno finale, applica Tossina sedativa Drow III con Tempra 0 come il modello base. Non si sommano anche i 2d6 lesivi della Spada e non si ricarica la Balestra mediante la Levitazione. Un quadrello usato non ricrea una dose pronta."
+    },
+    {
+      "nome": "Integrità e recupero",
+      "effetto": "A zero PI lo Scudo perde AR e capacità di Parata; la Leggera perde la propria AR ma resta indossata finché rimossa. Armi recuperate conservano danni e Qualità Comuni, non i bonus personali o un’infusione permanente. Antidoti compatibili e Cura Avvelenamenti tre neutralizzano le tossine ancora attive; non restituiscono danni già risolti. Non occorre eliminare il Drow per curare il veleno."
+    },
+    {
+      "nome": "Altri movimenti",
+      "effetto": "levitazione speciale; spazio 1 × 1 Q"
+    }
+  ],
+  "gs_px": {
+    "gs": "Eroe",
+    "px": 77,
+    "per_pg": 4
+  },
+  "_bestiario": {
+    "campi": {
+      "pv": "Mostri 0.69",
+      "pm": "Mostri 0.69",
+      "caratteristiche": "Mostri 0.69",
+      "ar": "Mostri 0.69",
+      "difese": "Mostri 0.69",
+      "salvezze": "Mostri 0.69",
+      "iniziativa": "Mostri 0.69",
+      "azioni": "Mostri 0.69",
+      "movimento": "Mostri 0.69",
+      "spazio": "Mostri 0.69",
+      "abilita": "Mostri 0.69",
+      "attacchi": "Mostri 0.69",
+      "capacita": "Mostri 0.69",
+      "gs_px": "Mostri 0.69"
+    },
+    "edizione": "Mostri 0.69",
+    "sistema_salute": "solo_PV"
+  }
+}

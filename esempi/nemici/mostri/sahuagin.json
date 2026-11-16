@@ -3,7 +3,7 @@
   "versione": 1,
   "id": "sahuagin",
   "nome": "Sahuagin",
-  "fonte": "dal Manuale dei Mostri v0.46 (Word del 27/10/2026), cap. 8 «Catalogo delle creature» — Creature delle acque e popoli sommersi",
+  "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Sahuagin",
   "caratteristiche": {
     "FOR": 6,
     "DES": 5,
@@ -48,11 +48,11 @@
       "va": 10,
       "danno": "1d4+1",
       "natura": "Naturale",
-      "portata_q": 1,
-      "ac": 1,
       "proprieta": [
         "Perforazione"
-      ]
+      ],
+      "portata_q": 1,
+      "ac": 1
     },
     {
       "nome": "Artigli",
@@ -60,12 +60,11 @@
       "va": 10,
       "danno": "1d4+1",
       "natura": "Naturale",
-      "portata_q": 1,
-      "ac": 1,
       "proprieta": [
         "Taglio"
       ],
-      "note": "Richiede una mano libera."
+      "portata_q": 1,
+      "ac": 1
     },
     {
       "nome": "Lancia a una mano",
@@ -73,11 +72,11 @@
       "va": 10,
       "danno": "1d6+2",
       "natura": "Naturale",
-      "portata_q": 2,
-      "ac": 1,
       "proprieta": [
         "Perforazione"
-      ]
+      ],
+      "portata_q": 2,
+      "ac": 1
     },
     {
       "nome": "Lancia a due mani",
@@ -85,11 +84,11 @@
       "va": 10,
       "danno": "1d6+4",
       "natura": "Naturale",
-      "portata_q": 2,
-      "ac": 1,
       "proprieta": [
         "Perforazione"
-      ]
+      ],
+      "portata_q": 2,
+      "ac": 1
     },
     {
       "nome": "Lancia scagliata",
@@ -97,15 +96,14 @@
       "va": 9,
       "danno": "1d6+2",
       "natura": "Naturale",
+      "proprieta": [
+        "Perforazione"
+      ],
       "gittata_q": 4,
       "modalita": [
         "S"
       ],
-      "ac": 1,
-      "proprieta": [
-        "Perforazione"
-      ],
-      "note": "Massimo 4 Q in aria; 2 Q in acqua. Lascia l’arma lontana finché non la recupera."
+      "ac": 1
     }
   ],
   "abilita": [
@@ -156,9 +154,25 @@
       }
     }
   ],
-  "note": "Dotazione: una Lancia Comune, FOR 5, PI 6, PS Integrità 10; nessuna armatura o scudo; le formule comprendono +1 personale. I 22 PX comprendono questa dotazione, senza squali o seguaci. Non è Barone, Sacerdotessa o Malenti. Parla la lingua della sua comunità. Condotta: sotto 6 PV o a Ferita Profonda cerca acqua, copertura o una trattativa. Fonte: Sahuagin, p. 263.",
+  "note": "Combattente anfibio • frenesia e comando degli squali • Natura Comune.",
   "_bestiario": {
     "edizione": "Mostri 0.69",
-    "sistema_salute": "solo_PV"
+    "sistema_salute": "solo_PV",
+    "campi": {
+      "pv": "Mostri 0.69",
+      "pm": "Mostri 0.69",
+      "caratteristiche": "Mostri 0.69",
+      "ar": "Mostri 0.69",
+      "difese": "Mostri 0.69",
+      "salvezze": "Mostri 0.69",
+      "iniziativa": "Mostri 0.69",
+      "azioni": "Mostri 0.69",
+      "movimento": "Mostri 0.69",
+      "spazio": "Mostri 0.69",
+      "abilita": "Mostri 0.69",
+      "attacchi": "Mostri 0.69",
+      "capacita": "Mostri 0.47",
+      "gs_px": "Mostri 0.69"
+    }
   }
 }

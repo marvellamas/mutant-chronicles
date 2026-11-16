@@ -1,0 +1,117 @@
+{
+  "formato": "mutant-nemico",
+  "versione": 1,
+  "id": "artiglio-strisciante",
+  "nome": "Artiglio strisciante",
+  "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Artiglio strisciante",
+  "note": "Mano animata che esegue ordini semplici, si insinua nei passaggi e tende agguati a breve distanza. Non possiede la memoria completa dell’individuo originario. Condotta. Si nasconde, segue i bordi e colpisce chi si avvicina. Non possiede Parata naturale, presa automatica o attacchi gratuiti; attraversare lo spazio di un avversario segue le normali regole di movimento e Ingaggio.",
+  "pv": 6,
+  "pm": 3,
+  "caratteristiche": {
+    "FOR": 4,
+    "DES": 7,
+    "COS": 4,
+    "INT": 2,
+    "SAG": 5,
+    "CAR": 1
+  },
+  "ar": {
+    "totale": 0,
+    "magica": 0
+  },
+  "difese": 9,
+  "salvezze": {
+    "tempra": 8,
+    "riflessi": 11,
+    "volonta": 6,
+    "magia": 8
+  },
+  "iniziativa": 1,
+  "azioni": {
+    "principali": 1,
+    "movimento": 1
+  },
+  "movimento": {
+    "passo": 4,
+    "corsa": 8,
+    "scatto": 12
+  },
+  "abilita": [
+    {
+      "nome": "Corpo a corpo",
+      "va": 10
+    },
+    {
+      "nome": "Atletica",
+      "va": 9
+    },
+    {
+      "nome": "Furtività",
+      "va": 12
+    },
+    {
+      "nome": "Percezione",
+      "va": 9
+    }
+  ],
+  "attacchi": [
+    {
+      "nome": "Dita artigliate",
+      "tipo": "ravvicinato",
+      "va": 10,
+      "danno": "1d4+1",
+      "natura": "Naturale",
+      "proprieta": [
+        "AC 1"
+      ],
+      "portata_q": 1,
+      "ac": 1
+    }
+  ],
+  "capacita": [
+    {
+      "nome": "Sensi e danni",
+      "effetto": "Scurovisione 12 Q salvo la percezione specifica dell’Artiglio; non vede attraverso ostacoli. Attacchi pronti senza altri bonus da aggiungere. Le immunità e le deroghe sono nelle capacità. I danni di questa scheda non ricevono EQ dei PNG."
+    },
+    {
+      "nome": "Sensi e anatomia",
+      "effetto": "Rileva per contatto e vibrazioni del supporto entro 6 Q, senza distinguere colori, leggere o vedere oltre ostacoli. Il volo o l’isolamento dal supporto impediscono questa percezione. Testa indica le dita sensoriali, Torace il palmo, Braccia le dita prensili, Gambe le porzioni che sostengono l’andatura. Una Menomazione pertinente conserva il proprio effetto."
+    },
+    {
+      "nome": "Ordini",
+      "effetto": "Il creatore assegna un ordine semplice a una mano visibile entro 6 Q con 1 AzP. La mano usa sempre la propria Iniziativa e le proprie Azioni. Continua l’ultimo ordine possibile quando perde il collegamento; non individua un bersaglio soltanto perché viene pronunciato un nome. Aprire una maniglia o usare una chiave raggiungibile richiede la propria AzP."
+    },
+    {
+      "nome": "Tenacia del vincolo",
+      "effetto": "Immune a Terrorizzato e al controllo mentale che richiede una mente vivente. Il legame col creatore non è una Possessione. Negare Potere con confronto di potenza 3 può sciogliere il comando, senza distruggere la mano, che torna a un comportamento ostile autonomo. Non riceve un’immunità universale alla magia."
+    },
+    {
+      "nome": "Altri movimenti",
+      "effetto": "arrampicata 4 Q al Passo; spazio 1 Q condivisibile, senza bloccare il passaggio"
+    }
+  ],
+  "gs_px": {
+    "gs": "Principiante",
+    "px": 10,
+    "per_pg": 4
+  },
+  "_bestiario": {
+    "campi": {
+      "pv": "Mostri 0.69",
+      "pm": "Mostri 0.69",
+      "caratteristiche": "Mostri 0.69",
+      "ar": "Mostri 0.69",
+      "difese": "Mostri 0.69",
+      "salvezze": "Mostri 0.69",
+      "iniziativa": "Mostri 0.69",
+      "azioni": "Mostri 0.69",
+      "movimento": "Mostri 0.69",
+      "abilita": "Mostri 0.69",
+      "attacchi": "Mostri 0.69",
+      "capacita": "Mostri 0.69",
+      "gs_px": "Mostri 0.69"
+    },
+    "edizione": "Mostri 0.69",
+    "sistema_salute": "solo_PV"
+  }
+}

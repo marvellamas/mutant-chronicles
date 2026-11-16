@@ -96,14 +96,21 @@ test('ingombro: dove il manuale dà un ingombro completo e uno parziale, vale il
       const n = esistenti.get(norm(s.nome))?.nemico;
       assert.equal(n.spazio, `${v[1]} × ${v[2]} Q`, `${s.nome}: lo spazio è l'ingombro completo`);
     } else {
-      // **Lotto 203: l'invariante, non l'elenco dei nomi.** La 0.69 porta un terzo modo di avere due misure: non
-      // «completo e parziale», ma due **posture** — l'Ammantato è «2 × 2 Q aperto, 1 × 1 Q raccolto a terra», e
-      // come lui lo Stirge, lo Slaad verde, lo Yuan-ti Malison e il Duergar. Un elenco di nomi si romperebbe a
-      // ogni edizione; quello che deve restare vero è che **nessuna scheda del Bestiario dipende da
-      // un'ambiguità**: o è uno dei due casi noti a due colonne, o è una creatura che nel Bestiario non c'è (e
-      // quando entrerà, le due posture andranno trattate come le configurazioni della A.203).
+      // **Lotto 204: l'invariante, non l'elenco dei nomi.** La 0.69 porta un terzo modo di avere due misure: non
+      // «completo e parziale», ma due **posture o forme** — l'Ammantato è «2 × 2 Q aperto, 1 × 1 Q raccolto a
+      // terra», i licantropi hanno un ingombro per la forma umanoide e uno per quella animale. Nel 203 queste
+      // schede restavano fuori dal Bestiario; adesso ci sono, e **nessuna dipende da un'ambiguità**: o porta la
+      // misura della **forma di base** (la prima scritta, quella in cui la creatura si presenta), oppure
+      // l'ingombro resta dichiaratamente non letto. Che le due forme diventino configurazioni come la A.203 è la
+      // domanda **A.273**. Un elenco di nomi si romperebbe a ogni edizione; questo no.
       const nel = esistenti.get(norm(s.nome));
-      assert.ok(/Raptor|Iene/.test(s.nome) || !nel, `${s.nome}: è nel Bestiario con due misure e senza «Ingombro completo»: quale ha preso?`);
+      if (!nel || /Raptor|Iene/.test(s.nome)) continue;
+      const prima = tab.join(' ').match(/(\d+)\s*×\s*(\d+)\s*Q(?!\s*Tattici)/);
+      const atteso = `${prima[1]} × ${prima[2]} Q`;
+      assert.ok(
+        nel.nemico.spazio === undefined || nel.nemico.spazio === atteso || nel.nemico.spazio === `${prima[1]} Q`,
+        `${s.nome}: con due misure e senza «Ingombro completo» deve portare la forma di base (${atteso}) o nessun ingombro, non «${nel.nemico.spazio}»`,
+      );
     }
   }
   // lotto 203: nella 0.46 erano tre; sulla 0.69 sono di più, e il numero non è l'informazione — lo è che siano

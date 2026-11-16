@@ -1,0 +1,142 @@
+{
+  "formato": "mutant-nemico",
+  "versione": 1,
+  "id": "zombie-di-beholder",
+  "nome": "Zombie di Beholder",
+  "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Zombie di Beholder",
+  "taglia": "grande",
+  "note": "Cadavere levitante di un Beholder con quattro raggi oculari residui. L’occhio centrale non sopprime la magia e non dispone dei dieci raggi o delle azioni del Beholder vivo. 3d6+3 Etereo, una AC, Tempra dimezza per eccesso prima della sola AR magica. Non assorbe PM, AFT o PV massimi, non guarisce lo Zombie e non riduce Caratteristiche. Successo evita, fallimento 4d6+3 Magico, una AC con tutta l’AR. Non ignora protezioni, non polverizza automaticamente chi scende a zero PV e non provoca Ferite dirette aggiuntive.",
+  "pv": 104,
+  "pm": 24,
+  "caratteristiche": {
+    "FOR": 5,
+    "DES": 4,
+    "COS": 7,
+    "INT": 2,
+    "SAG": 4,
+    "CAR": 2
+  },
+  "ar": {
+    "totale": 3,
+    "magica": 0
+  },
+  "difese": 8,
+  "salvezze": {
+    "tempra": 13,
+    "riflessi": 8,
+    "volonta": 8,
+    "magia": 10
+  },
+  "iniziativa": 0,
+  "azioni": {
+    "principali": 2,
+    "movimento": 1
+  },
+  "movimento": {
+    "passo": 0,
+    "corsa": "non_consentito",
+    "scatto": "non_consentito",
+    "volo": 4
+  },
+  "spazio": "2 × 2 Q",
+  "abilita": [
+    {
+      "nome": "Corpo a corpo",
+      "va": 11
+    },
+    {
+      "nome": "Armi da lancio",
+      "va": 10
+    },
+    {
+      "nome": "Percezione",
+      "va": 10
+    }
+  ],
+  "capacita": [
+    {
+      "nome": "Raggio casuale",
+      "effetto": "VA —. Danno: 1d4 nella tabella dedicata. Portata/costo: Un bersaglio visibile entro 12 Q; 1 AzP e 2 PM; "
+    },
+    {
+      "nome": "Corpo e sensi",
+      "effetto": "Non morto corporeo con mente rudimentale e PM personali, immunità biologiche e Tenacia cadaverica comuni, Scurovisione dodici Q. Immune ad A Terra per il Volo fluttuante, non a Paralizzato, Accecato, Paura o controlli compatibili. Da Svenuto resta sospeso e fermo, senza Azioni o Difese attive; non perde automaticamente la quota. Nessuna Parata naturale. Iniziativa soltanto 1d10."
+    },
+    {
+      "nome": "Azioni e sorteggio",
+      "effetto": "Due AzP totali, massimo un Morso e un Raggio per Round, Opportunità soltanto di Morso e compresa nel limite. Per il Raggio paga una AzP e due PM, poi tira 1d4 e sceglie una vittima valida che vede entro dodici Q. Può rinunciare, ma i costi restano; non ritira perché preferisce un altro effetto. Nessuna Azione distribuita o Cono centrale. Zero PM lo rende Svenuto dopo la completa risoluzione del Raggio."
+    },
+    {
+      "nome": "Raggi e protezioni",
+      "effetto": "Sono capacità innate senza Potere o componenti, non contrastabili con Contromagia. Non richiedono un tiro per colpire una creatura e la PS scritta sostituisce le Difese attive, senza aggiungere Elusione. Solidi fermano la linea; ogni Raggio è monobersaglio. Resistenza alla magia aiuta le PS pertinenti e AR si applica soltanto ai danni secondo la Natura. Non si combina la tabella del Beholder vivo con questa."
+    },
+    {
+      "nome": "Anatomia e limiti",
+      "effetto": "Testa riguarda occhio centrale, bocca e sensi; Braccia i peduncoli oculari, Torace la massa, Gambe la funzione di levitazione. Una Menomazione limita il gruppo o la funzione colpita, senza quattro riserve di PV. Non usa invisibilità, telecinesi, pietrificazione o produzione di Zombie per il solo aspetto. Non conserva piani e memoria del Beholder vivo, né un filatterio che lo ricostruisca."
+    },
+    {
+      "nome": "Una AzP e due PM, massimo un Raggio per Round",
+      "effetto": "Prima paga, poi tira 1d4 e sceglie un bersaglio valido visibile entro dodici Q. Nessun tiro per colpire una creatura: applica la sola PS scritta, senza Difese attive o Elusione aggiuntive. Un effetto istantaneo non rimane da dissolvere; uno Stato mantenuto usa le proprie contromisure. Nessun raggio viene ereditato dal Beholder vivo."
+    },
+    {
+      "nome": "1d4",
+      "effetto": "Tabella (celle in ordine di lettura): Raggio e PS | Effetto e contromisure | 1 | Paralizzante • Tempra 0."
+    },
+    {
+      "nome": "Fallimento Paralizzato tre Round",
+      "effetto": "Ripete Tempra 0 a fine di ogni propria Iniziativa: successo termina. Cura Spirituale sei o Negare nove terminano; nessun veleno o danno."
+    },
+    {
+      "nome": "2",
+      "effetto": "Tabella (celle in ordine di lettura): Terrore • Volontà 0."
+    },
+    {
+      "nome": "Fallimento Terrorizzato tre Round",
+      "effetto": "Ripete Volontà 0 a fine di ogni propria Iniziativa: successo termina. Barriera Mentale aiuta; Cura Spirituale uno, Negare sei, Oratoria o cessazione evidente della minaccia rimuovono."
+    },
+    {
+      "nome": "3",
+      "effetto": "Tabella (celle in ordine di lettura): Erosione • Tempra 0."
+    },
+    {
+      "nome": "4",
+      "effetto": "Tabella (celle in ordine di lettura): Disintegrazione • Riflessi 0."
+    },
+    {
+      "nome": "Oggetti e Disintegrazione",
+      "effetto": "Soltanto questo raggio può essere diretto volontariamente a un oggetto visibile dopo il sorteggio: Armi da lancio dieci e normali regole di attacco, Integrità e PI, senza PS Riflessi dell’oggetto immobile. Non cancella automaticamente equipaggiamento indossato, muri, veicoli o barriere magiche e non applica gratuitamente Demolitrice. Solidi interposti fermano anche questo raggio; non attraversa una parete per raggiungere un bersaglio oltre."
+    },
+    {
+      "nome": "Durata e cessazione",
+      "effetto": "Raggi uno e due sono effetti mistici, non veleni, e non richiedono Concentrazione. Restano fino a scadenza o contromisura; Svenuto o morte dello Zombie terminano il Terrore perché cessa la minaccia, non la Paralisi già inflitta. Le ripetizioni di PS avvengono anche quando la vittima non può spendere AzP. Immunità specifica al relativo Stato evita; il solo essere non morto non concede ogni immunità. Negare e Cura Spirituale non restituiscono danni già risolti da Erosione e Disintegrazione."
+    },
+    {
+      "nome": "Altri movimenti",
+      "effetto": "spazio 2 × 2 Q"
+    }
+  ],
+  "gs_px": {
+    "gs": "Eroe",
+    "px": 70,
+    "per_pg": 4
+  },
+  "_bestiario": {
+    "campi": {
+      "pv": "Mostri 0.69",
+      "pm": "Mostri 0.69",
+      "caratteristiche": "Mostri 0.69",
+      "ar": "Mostri 0.69",
+      "difese": "Mostri 0.69",
+      "salvezze": "Mostri 0.69",
+      "iniziativa": "Mostri 0.69",
+      "azioni": "Mostri 0.69",
+      "movimento": "Mostri 0.69",
+      "spazio": "Mostri 0.69",
+      "abilita": "Mostri 0.69",
+      "capacita": "Mostri 0.69",
+      "gs_px": "Mostri 0.69"
+    },
+    "edizione": "Mostri 0.69",
+    "sistema_salute": "solo_PV"
+  }
+}

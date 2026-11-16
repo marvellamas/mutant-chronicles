@@ -1,0 +1,168 @@
+{
+  "formato": "mutant-nemico",
+  "versione": 1,
+  "id": "slaad-verde",
+  "nome": "Slaad verde",
+  "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Slaad verde",
+  "taglia": "grande",
+  "note": "Slaad capace di assumere aspetto umanoide e alternare artigli, fiamme e inganni. Il profilo è privo del bastone opzionale della fonte e usa soltanto le armi naturali e i poteri scritti.",
+  "pv": 136,
+  "pm": 40,
+  "caratteristiche": {
+    "FOR": 8,
+    "DES": 7,
+    "COS": 7,
+    "INT": 6,
+    "SAG": 4,
+    "CAR": 6
+  },
+  "ar": {
+    "totale": 4,
+    "magica": 0
+  },
+  "difese": 12,
+  "salvezze": {
+    "tempra": 13,
+    "riflessi": 12,
+    "volonta": 11,
+    "magia": 12
+  },
+  "iniziativa": 2,
+  "azioni": {
+    "principali": 3,
+    "movimento": 1
+  },
+  "movimento": {
+    "passo": 6,
+    "corsa": 12,
+    "scatto": 18
+  },
+  "spazio": "2 × 2 Q",
+  "abilita": [
+    {
+      "nome": "Corpo a corpo",
+      "va": 15
+    },
+    {
+      "nome": "Armi da lancio",
+      "va": 11
+    },
+    {
+      "nome": "Atletica",
+      "va": 13
+    },
+    {
+      "nome": "Percezione",
+      "va": 12
+    },
+    {
+      "nome": "Occultismo",
+      "va": 12
+    },
+    {
+      "nome": "Raggirare",
+      "va": 12
+    }
+  ],
+  "attacchi": [
+    {
+      "nome": "Morso",
+      "tipo": "ravvicinato",
+      "va": 15,
+      "danno": "2d6+2",
+      "natura": "Naturale",
+      "proprieta": [
+        "Perforazione",
+        "AC 1"
+      ],
+      "portata_q": 1,
+      "ac": 1
+    },
+    {
+      "nome": "Artiglio",
+      "tipo": "ravvicinato",
+      "va": 15,
+      "danno": "1d6+2",
+      "natura": "Naturale",
+      "proprieta": [
+        "Taglio",
+        "AC 1"
+      ],
+      "portata_q": 1,
+      "ac": 1
+    },
+    {
+      "nome": "Fiamma scagliata",
+      "tipo": "ravvicinato",
+      "va": 13,
+      "danno": "3d6",
+      "natura": "Magico",
+      "proprieta": [
+        "Fuoco",
+        "AC 1"
+      ],
+      "portata_q": 12,
+      "ac": 1
+    },
+    {
+      "nome": "Globo di fuoco",
+      "tipo": "ravvicinato",
+      "va": 13,
+      "danno": "4d6+3",
+      "natura": "Magico",
+      "proprieta": [
+        "Fuoco",
+        "AC 1 per vittima"
+      ],
+      "portata_q": 12,
+      "ac": 1
+    }
+  ],
+  "capacita": [
+    {
+      "nome": "Corpo e sensi",
+      "effetto": "Vivente biologico con Protezioni Slaad, Resistenza alla magia +2 e Rigenerazione quattro. Scurovisione dodici Q e percezione cieca sei Q, fermata dai solidi; telepatia dodici Q e lingua degli Slaad. Nessuna Parata naturale. La percezione cieca localizza senza restituire colori, scritte o trasparenza dei muri."
+    },
+    {
+      "nome": "Sequenza",
+      "effetto": "Tre AzP totali. Nel Round sceglie la sequenza ravvicinata, massimo un Morso e due Artigli, oppure fino a due Fiamme scagliate, senza mescolare le due sequenze. L’unica Opportunità ravvicinata consuma la sequenza e il limite pertinente; non è una Fiamma o un Globo. Il Globo e gli altri poteri usano le AzP effettivamente rimaste, senza colpi gratuiti. In forma umanoide non possiede Morso o Artigli e non riceve un profilo armato implicito."
+    },
+    {
+      "nome": "Fiamme e globo",
+      "effetto": "Fiamma: una AzP e due PM, una creatura visibile entro dodici Q, VA tredici comprende Armi da lancio undici più due del proiettile mistico. Normali Difese a distanza e AR; Fuoco residuo e Ignifugo: Riflessi 0 evita Incendiato 1+1d3 Round. Globo: una volta per ventiquattro ore, due AzP e sei PM, procedura comune del Globo innato, VA tredici e Riflessi −2. Non è il lancio ordinario di Esplosione Elementale."
+    },
+    {
+      "nome": "Mutamento e inganni",
+      "effetto": "Possiede Mutamento Slaad, Percepire magia, Lettura superficiale e Mano remota delle regole comuni. Possiede Invisibilità breve, due usi per ventiquattro ore, e Cono di terrore, due usi per ventiquattro ore. Non possiede Volo, immagine animata, contagio, uova o viaggio planare. Il passaggio a Slaad grigio è una trasformazione permanente maturata nel tempo, non un’Azione o una cura disponibile in questa scheda."
+    },
+    {
+      "nome": "Altri movimenti",
+      "effetto": "spazio 2 × 2 Q vero, 1 × 1 Q umanoide"
+    }
+  ],
+  "gs_px": {
+    "gs": "Leggenda",
+    "px": 100,
+    "per_pg": 4
+  },
+  "_bestiario": {
+    "campi": {
+      "pv": "Mostri 0.69",
+      "pm": "Mostri 0.69",
+      "caratteristiche": "Mostri 0.69",
+      "ar": "Mostri 0.69",
+      "difese": "Mostri 0.69",
+      "salvezze": "Mostri 0.69",
+      "iniziativa": "Mostri 0.69",
+      "azioni": "Mostri 0.69",
+      "movimento": "Mostri 0.69",
+      "spazio": "Mostri 0.69",
+      "abilita": "Mostri 0.69",
+      "attacchi": "Mostri 0.69",
+      "capacita": "Mostri 0.69",
+      "gs_px": "Mostri 0.69"
+    },
+    "edizione": "Mostri 0.69",
+    "sistema_salute": "solo_PV"
+  }
+}

@@ -3,7 +3,7 @@
   "versione": 1,
   "id": "bugbear",
   "nome": "Bugbear",
-  "fonte": "dal Manuale dei Mostri v0.46 (Word del 27/10/2026), cap. 8 «Catalogo delle creature» — Bande e grandi avversari",
+  "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Bugbear",
   "caratteristiche": {
     "FOR": 7,
     "DES": 6,
@@ -117,9 +117,25 @@
       "effetto": "Vede entro 12 Q anche nell’oscurità naturale; al buio non distingue i colori, non vede attraverso ostacoli, fumo o oscurità magica e non individua da sé chi è nascosto. Oltre i 12 Q valgono luce e vista ordinarie."
     }
   ],
-  "note": "AR 1 senza scudo (inizia con mazza e scudo piccolo). Due giavellotti FOR 3, PI 4. Comportamento: cerca sorpresa e via di fuga; sotto 8 PV o a Ferita Profonda valuta la ritirata.",
+  "note": "Umanoide goblinoide • assaltatore da imboscata • Natura Comune. Comportamento. Cerca sorpresa e una via di fuga. Dopo il primo colpo prosegue contro un bersaglio vulnerabile; sotto 11 PV valuta la ritirata. Non possiede le resistenze o gli attacchi aggiuntivi del capobanda.",
   "_bestiario": {
     "edizione": "Mostri 0.69",
-    "sistema_salute": "solo_PV"
+    "sistema_salute": "solo_PV",
+    "campi": {
+      "pv": "Mostri 0.69",
+      "pm": "Mostri 0.69",
+      "caratteristiche": "Mostri 0.69",
+      "ar": "Mostri 0.69",
+      "difese": "Mostri 0.69",
+      "salvezze": "Mostri 0.69",
+      "iniziativa": "Mostri 0.69",
+      "azioni": "Mostri 0.69",
+      "movimento": "Mostri 0.69",
+      "spazio": "Mostri 0.69",
+      "abilita": "Mostri 0.69",
+      "attacchi": "Mostri 0.47",
+      "capacita": "Mostri 0.47",
+      "gs_px": "Mostri 0.69"
+    }
   }
 }

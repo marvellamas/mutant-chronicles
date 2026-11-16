@@ -3,7 +3,7 @@
   "versione": 1,
   "id": "cammello",
   "nome": "Cammello",
-  "fonte": "dal Manuale dei Mostri v0.46 (Word del 27/10/2026), cap. 8 «Catalogo delle creature» — Cavalcature e animali da lavoro",
+  "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Cammello",
   "caratteristiche": {
     "FOR": 8,
     "DES": 4,
@@ -48,11 +48,11 @@
       "va": 8,
       "danno": "1d4+1",
       "natura": "Naturale",
-      "portata_q": 1,
-      "ac": 1,
       "proprieta": [
         "Contusione"
-      ]
+      ],
+      "portata_q": 1,
+      "ac": 1
     }
   ],
   "abilita": [
@@ -87,9 +87,26 @@
       "effetto": "Il profilo non assegna un consumo fisso di acqua né un’esenzione dall’Affaticamento: si valutano clima, sforzo e disponibilità con le regole comuni. L’adattamento a un ambiente arido non protegge da lava, Fuoco o gas delle Terre del Fuoco."
     }
   ],
-  "note": "Un Morso per Round, Opportunità compresa; nessun attacco di sputo in questa scheda. Condotta: può fermarsi, arretrare o cercare il gruppo; sotto 6 PV o a Ferita Profonda tende a sottrarsi (se è carico, la fuga conserva gli impedimenti). Fonte: Camel, p. 320.",
+  "note": "Cavalcatura e animale da soma • trasporto robusto • Natura Comune. Condotta. Un Morso per Round, Opportunità compresa. Non comprende linguaggi e non ha un attacco di sputo in questa scheda. Può fermarsi, arretrare o cercare il gruppo; sotto 8 PV tende a sottrarsi. Se è carico, la fuga conserva i relativi impedimenti.",
   "_bestiario": {
     "edizione": "Mostri 0.69",
-    "sistema_salute": "solo_PV"
-  }
+    "sistema_salute": "solo_PV",
+    "campi": {
+      "pv": "Mostri 0.69",
+      "pm": "Mostri 0.69",
+      "caratteristiche": "Mostri 0.69",
+      "ar": "Mostri 0.69",
+      "difese": "Mostri 0.69",
+      "salvezze": "Mostri 0.69",
+      "iniziativa": "Mostri 0.69",
+      "azioni": "Mostri 0.69",
+      "movimento": "Mostri 0.69",
+      "spazio": "Mostri 0.69",
+      "abilita": "Mostri 0.69",
+      "attacchi": "Mostri 0.69",
+      "capacita": "Mostri 0.47",
+      "gs_px": "Mostri 0.69"
+    }
+  },
+  "taglia": "grande"
 }

@@ -3,7 +3,7 @@
   "versione": 1,
   "id": "idra",
   "nome": "Idra",
-  "fonte": "dal Manuale dei Mostri v0.46 (Word del 27/10/2026), cap. 8 «Catalogo delle creature» — Grandi rettili e predatori mostruosi",
+  "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Idra",
   "caratteristiche": {
     "FOR": 10,
     "DES": 6,
@@ -39,8 +39,7 @@
   },
   "azioni": {
     "principali": 3,
-    "movimento": 1,
-    "eccezioni": "Opportunità speciali delle teste (vedi la capacità «Opportunità delle teste»)"
+    "movimento": 1
   },
   "attacchi": [
     {
@@ -49,12 +48,11 @@
       "va": 14,
       "danno": "1d8+2",
       "natura": "Naturale",
-      "portata_q": 2,
-      "ac": 1,
       "proprieta": [
         "Perforazione"
       ],
-      "note": "Una testa funzionale per ogni Morso."
+      "portata_q": 2,
+      "ac": 1
     }
   ],
   "abilita": [
@@ -109,9 +107,26 @@
       "effetto": "Scurovisione 12 Q. Nel sonno almeno una testa resta vigile (Percezione 14). Può trattenere il fiato per 1 ora, poi §5.23. Terra e nuoto 6/12/18 Q."
     }
   ],
-  "note": "Un grande rettile acquatico a cinque teste iniziali. Condotta: nutrimento presso rive e paludi; sotto 19 PV o a Ferita Seria tenta di ritirarsi. Verifica al tavolo: registrare teste attive, colli cauterizzati, PV recuperati e Opportunità effettive. Fonte: Hydra, p. 190.",
+  "note": "Predatore a più teste • morsi, reazioni e ricrescita • Natura Comune. Condotta. Cerca nutrimento presso rive e paludi e può cambiare territorio quando le prede scarseggiano. Sotto 25 PV tenta di ritirarsi; la capacità di ricrescita non rende obbligatorio restare fino alla morte. Le pagine seguenti definiscono teste, resistenze specifiche e cauterizzazione.",
   "_bestiario": {
     "edizione": "Mostri 0.69",
-    "sistema_salute": "solo_PV"
-  }
+    "sistema_salute": "solo_PV",
+    "campi": {
+      "pv": "Mostri 0.69",
+      "pm": "Mostri 0.69",
+      "caratteristiche": "Mostri 0.69",
+      "ar": "Mostri 0.69",
+      "difese": "Mostri 0.69",
+      "salvezze": "Mostri 0.69",
+      "iniziativa": "Mostri 0.69",
+      "azioni": "Mostri 0.69",
+      "movimento": "Mostri 0.69",
+      "spazio": "Mostri 0.69",
+      "abilita": "Mostri 0.69",
+      "attacchi": "Mostri 0.69",
+      "capacita": "Mostri 0.47",
+      "gs_px": "Mostri 0.69"
+    }
+  },
+  "taglia": "grande"
 }

@@ -1,0 +1,140 @@
+{
+  "formato": "mutant-nemico",
+  "versione": 1,
+  "id": "lich",
+  "nome": "Lich",
+  "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Lich",
+  "note": "Incantatore non morto che ha vincolato la propria continuità a un filatterio. La distruzione del corpo è una vittoria immediata, ma il vincolo può consentirgli un ritorno successivo.",
+  "pv": 143,
+  "pm": 90,
+  "caratteristiche": {
+    "FOR": 5,
+    "DES": 7,
+    "COS": 7,
+    "INT": 10,
+    "SAG": 9,
+    "CAR": 8
+  },
+  "ar": {
+    "totale": 5,
+    "magica": 4
+  },
+  "difese": 14,
+  "salvezze": {
+    "tempra": 15,
+    "riflessi": 12,
+    "volonta": 16,
+    "magia": 17
+  },
+  "iniziativa": 3,
+  "azioni": {
+    "principali": 3,
+    "movimento": 1
+  },
+  "movimento": {
+    "passo": 6,
+    "corsa": 12,
+    "scatto": 18
+  },
+  "spazio": "1 Q",
+  "abilita": [
+    {
+      "nome": "Corpo a corpo",
+      "va": 16
+    },
+    {
+      "nome": "Armi da lancio",
+      "va": 15
+    },
+    {
+      "nome": "Potere",
+      "va": 18
+    },
+    {
+      "nome": "Occultismo",
+      "va": 18
+    },
+    {
+      "nome": "Rituali",
+      "va": 18
+    },
+    {
+      "nome": "Percezione",
+      "va": 16
+    },
+    {
+      "nome": "Scienza",
+      "va": 16
+    }
+  ],
+  "attacchi": [
+    {
+      "nome": "Tocco paralizzante",
+      "tipo": "ravvicinato",
+      "va": 16,
+      "danno": "2d6+3",
+      "natura": "Magico",
+      "proprieta": [
+        "Gelo",
+        "AC 1"
+      ],
+      "portata_q": 1,
+      "ac": 1
+    }
+  ],
+  "capacita": [
+    {
+      "nome": "Sensi e danni",
+      "effetto": "Scurovisione 12 Q salvo la percezione specifica dell’Artiglio; non vede attraverso ostacoli. Attacchi pronti senza altri bonus da aggiungere. Le immunità e le deroghe sono nelle capacità. I danni di questa scheda non ricevono EQ dei PNG."
+    },
+    {
+      "nome": "Tocco e coesione",
+      "effetto": "Almeno un danno residuo del Tocco a un vivente impone Tempra −2 o Paralizzato per 3 Round; ripete Tempra −2 alla fine della propria Iniziativa e si libera con successo. Il Tocco non applica anche Rallentato da Gelo: la paralisi lo sostituisce. Tre volte per 24 ore può ripetere una propria PS fallita prima delle conseguenze, accettando il secondo esito. Dimezza Naturale dopo Difese e prima dell’AR; immune a Terrorizzato, fascinazione e paralisi. Nessuna Parata naturale."
+    },
+    {
+      "nome": "Repertorio",
+      "effetto": "Conosce Colpo Elementale, Esplosione Elementale, Telecinesi, Scudo, Armatura di Forza, Teletrasporto, Dardo Psichico, Barriera Mentale, Indurre Sonno, Terrore, Velo Psichico, Possessione, Negare Potere e Individuare. Versioni fino al 18 dove previste, Potere 18 e scala Taumaturgo. Focus Comune portato, nessun bonus o batteria; gesti e voce richiesti. Possiede Contromagia e Contromagia Universale: un’AzP disponibile, entro 10 Q, PM pari al livello avversario, Potere con penalità di livello e ulteriore −2. Occultismo serve prima soltanto contro Magia Occultata."
+    },
+    {
+      "nome": "Azioni distribuite",
+      "effetto": "Tre AzP e una AzM complessive. Può spendere al massimo una AzP alla fine dell’Iniziativa di un avversario per Tocco, un Incantesimo noto di livello massimo 3 o una Difesa. Costi, componenti e normali limiti della Concentrazione restano validi. Non recupera Azioni all’arrivo dell’Iniziativa e non ottiene turni aggiuntivi."
+    },
+    {
+      "nome": "Spezzare la vita",
+      "effetto": "2 AzP e 6 PM, una volta ogni 3 Round; viventi entro 4 Q, raggiungibili senza barriera solida. Tempra −2: fallimento 3d8+3 Etereo, successo dimezza per eccesso prima dell’AR magica. Nessuna Parata o Schivata. Un tiro di danno comune; non porta automaticamente a zero PV e non sottrae livelli o PV massimi. Non richiede Potere, essendo una capacità innata."
+    },
+    {
+      "nome": "Filatterio",
+      "effetto": "Usa la procedura comune dei filatteri di questo blocco: PI 4, AR 4 di cui 2 magica, PS Integrità 14. Se resta integro sullo stesso piano, dopo la distruzione effettiva il corpo si ricrea entro 1 Q dall’oggetto in 1d10 giorni, con risorse, Ferite e Menomazioni ripristinate. Distruggere il filatterio impedisce i ritorni, non abbatte il corpo ancora attivo. La scheda non comprende cattura automatica delle anime, servitori, oggetti magici aggiuntivi o un modulo tana."
+    },
+    {
+      "nome": "Altri movimenti",
+      "effetto": "spazio 1 × 1 Q"
+    }
+  ],
+  "gs_px": {
+    "gs": "Semidio",
+    "px": 440,
+    "per_pg": 4
+  },
+  "_bestiario": {
+    "campi": {
+      "pv": "Mostri 0.69",
+      "pm": "Mostri 0.69",
+      "caratteristiche": "Mostri 0.69",
+      "ar": "Mostri 0.69",
+      "difese": "Mostri 0.69",
+      "salvezze": "Mostri 0.69",
+      "iniziativa": "Mostri 0.69",
+      "azioni": "Mostri 0.69",
+      "movimento": "Mostri 0.69",
+      "spazio": "Mostri 0.69",
+      "abilita": "Mostri 0.69",
+      "attacchi": "Mostri 0.69",
+      "capacita": "Mostri 0.69",
+      "gs_px": "Mostri 0.69"
+    },
+    "edizione": "Mostri 0.69",
+    "sistema_salute": "solo_PV"
+  }
+}

@@ -23,32 +23,31 @@ test('completezza: niente di importabile manca dal Bestiario, e il conto del cap
   const dichiarate = Number(testo.match(/Catalogo delle creature\s+•\s+(\d+)\s+creature/)?.[1]);
   // lotto 203: erano 285 nella 0.46; la 0.69 ne dichiara 424 (il testo porta anche i capitoli dei PNG generici)
   assert.equal(dichiarate, 424, 'il manuale dichiara 424 creature nel capitolo 8');
-  // **Lotto 203, e questa è una notizia.** Nella 0.46 l'unica scheda del manuale fuori dal Bestiario era «Bozzoli
-  // di cristallo», che non è una creatura. Sulla 0.69 sono 152: una è quella, e **151 sono pagine che il lettore
-  // non sa leggere per intero** (manca AR, Difese o il Passo nella forma che si aspetta). Non è il testo che ha
-  // perso dei dati — è il lettore, scritto sull'impaginazione della 0.46, che su quella nuova non arriva. Il lotto
-  // 203 non lo tocca, perché ha rigenerato i **PV** e quelli si leggono; ma l'invariante che resta vero, e che va
-  // controllato, è che **niente di importabile manchi**: ogni scheda fuori dal Bestiario deve avere un motivo.
+  // **Lotto 204.** Nel 203 restavano fuori 152 schede: una non è una creatura e 151 erano pagine che il lettore,
+  // scritto sull'impaginazione della 0.46, non leggeva per intero sulla 0.69. Il 204 gli ha insegnato
+  // l'impaginazione nuova — in sostanza una riga rinominata («Armatura e Difese» per «Protezioni e Difese») — e
+  // adesso resta fuori **la sola scheda che non è una creatura**. L'invariante non cambia: **niente di importabile
+  // manca**, e ogni scheda fuori dal Bestiario ha un motivo scritto.
   const fuori = risultati.filter((r) => !esistenti.has(norm(r.nome)));
   const senzaMotivo = fuori.filter((r) => !r.esclusa);
   assert.deepEqual(senzaMotivo.map((r) => r.nome), [], 'una scheda importabile che non è nel Bestiario sarebbe una creatura perduta');
-  assert.equal(fuori.length, 152, 'una non è una creatura (Bozzoli di cristallo) e 151 sono pagine che il lettore non legge per intero');
+  assert.equal(fuori.length, 1, 'dopo il lotto 204 resta fuori solo «Bozzoli di cristallo», che non è una creatura');
   assert.match(fuori[0].esclusa, /non è una creatura/);
-  // lotto 203: nella 0.46 le schede del cap. 8 nel Bestiario erano esattamente le 285 dichiarate. La 0.69 ne
-  // dichiara 424, e il Bestiario resta a 285: la differenza sono le 151 pagine che il lettore non legge per
-  // intero, contate qui sopra. L'uguaglianza non si può più pretendere, ma il conto deve **tornare**.
+  // lotto 204: nel 203 il Bestiario aveva 285 schede del cap. 8 contro le 424 dichiarate dal manuale, e la
+  // differenza erano le 151 pagine che il lettore non leggeva. Adesso le legge: il conto deve **tornare**, cioè
+  // non possiamo averne meno di quante il manuale ne dichiara meno quelle che restano fuori con un motivo.
   const cap8 = tutteLeSchede.filter(([, n]) => /cap\. 8/.test(n.fonte ?? ''));
-  assert.equal(cap8.length, 285, 'le schede del cap. 8 nel Bestiario');
-  assert.ok(dichiarate > cap8.length, 'il manuale ne dichiara più di quante ne abbiamo: la differenza è il lettore, non il testo');
-  // le 83+ creature dal Word: tutte con la riga della fonte
-  const dalWord = tutteLeSchede.filter(([, n]) => /dal Manuale dei Mostri v0\.46/.test(n.fonte ?? ''));
-  assert.ok(dalWord.length >= 309, `schede con la riga di fonte 0.46: ${dalWord.length}`);
+  assert.ok(cap8.length >= 424, `le schede del cap. 8 nel Bestiario sono ${cap8.length}, il manuale ne dichiara ${dichiarate}`);
+  // ogni scheda che viene dal manuale dichiara da quale edizione, e non una scritta a mano in uno strumento
+  const dalWord = tutteLeSchede.filter(([, n]) => /dal Manuale dei Mostri v0\.\d+/.test(n.fonte ?? ''));
+  assert.ok(dalWord.length >= 459, `schede con la riga di fonte: ${dalWord.length}`);
+  assert.equal(tutteLeSchede.filter(([, n]) => /v0\.46/.test(n.fonte ?? '')).length, 0, 'nessuna scheda può dichiarare ancora la v0.46: l’edizione si chiede al registro');
 });
 
 test('validatore: le schede prodotte dall’importatore passano validaNemico e non hanno dati dedotti', () => {
   for (const r of risultati.filter((x) => x.json)) {
     assert.deepEqual(validaNemico(r.json, dati, r.id), [], r.id);
-    assert.match(r.json.fonte, /^dal Manuale dei Mostri v0\.46/);
+    assert.match(r.json.fonte, /^dal Manuale dei Mostri v0\.\d+/); // lotto 204: l’edizione viene dal registro
     // ogni numero principale della scheda è scritto nel blocco del manuale (niente di calcolato)
     const t = r.testo.replace(/(\d)\.(\d{3})/g, '$1$2');
     for (const k of ['pv', 'pm', 'difese']) if (r.json[k] !== undefined) assert.match(t, new RegExp(`\\b${r.json[k]}\\b`), `${r.id}: ${k} ${r.json[k]} non è nel manuale`);
@@ -122,7 +121,9 @@ test('regole comuni: Iniziativa non negativa, portata 0 Q nello spazio condiviso
   // PV in più parti: il corpo e i tentacoli nella nota/capacità, mai sommati
   // lotto 203: 60 nella 0.46, 78 nella 0.69 (60 × 1,30, una volta sola)
   assert.equal(n('piovra-gigante-di-iris').pv, 78);
-  assert.match(n('piovra-gigante-di-iris').note, /ogni tentacolo: 30 PV/);
+  // lotto 204: la 0.69 scrive «Corpo: 78 PV • ogni tentacolo: 39 PV» (i 60 e 30 della 0.46 col +30% del §4.2,
+  // applicato **una volta** dal manuale). Si prende il numero stampato, non si rifà la moltiplicazione.
+  assert.match(n('piovra-gigante-di-iris').note, /ogni tentacolo: 39 PV/);
 });
 
 test('identificativi unici e nomi che non si confondono (difetto trovato con gli incantesimi, lotto 131)', () => {

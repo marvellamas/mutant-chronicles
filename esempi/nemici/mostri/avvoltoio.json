@@ -3,7 +3,7 @@
   "versione": 1,
   "id": "avvoltoio",
   "nome": "Avvoltoio",
-  "fonte": "dal Manuale dei Mostri v0.46 (Word del 27/10/2026), cap. 8 «Catalogo delle creature» — Fauna delle terre aperte",
+  "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Avvoltoio",
   "caratteristiche": {
     "FOR": 3,
     "DES": 5,
@@ -49,11 +49,11 @@
       "va": 8,
       "danno": "1d4",
       "natura": "Naturale",
-      "portata_q": 1,
-      "ac": 1,
       "proprieta": [
         "Perforazione"
-      ]
+      ],
+      "portata_q": 1,
+      "ac": 1
     }
   ],
   "abilita": [
@@ -101,9 +101,25 @@
       "effetto": "Alimentarsi di carcasse non gli dà immunità generale a veleni, malattie o Corruzione; nessun Morso infetto nel profilo. Distinto dall’Avvoltoio gigante (altri attacchi e comprensione linguistica)."
     }
   ],
-  "note": "Necrofago alato che cerca carcasse e reagisce se intrappolato o minacciato. Condotta: può attendere una carcassa accessibile o lasciare il posto a una minaccia più grande; sotto 2 PV o a Ferita Importante cerca quota e un posatoio sicuro. Fonte: Vulture, p. 339.",
+  "note": "Necrofago alato • vista fiuto e Branco • Natura Comune. Condotta. Può attendere una carcassa accessibile o lasciare il posto a una minaccia più grande. Sotto 3 PV tende a cercare quota e un posatoio sicuro. Non comprende linguaggi e non acquisisce la comprensione linguistica della variante gigante.",
   "_bestiario": {
     "edizione": "Mostri 0.69",
-    "sistema_salute": "solo_PV"
+    "sistema_salute": "solo_PV",
+    "campi": {
+      "pv": "Mostri 0.69",
+      "pm": "Mostri 0.69",
+      "caratteristiche": "Mostri 0.69",
+      "ar": "Mostri 0.69",
+      "difese": "Mostri 0.69",
+      "salvezze": "Mostri 0.69",
+      "iniziativa": "Mostri 0.69",
+      "azioni": "Mostri 0.69",
+      "movimento": "Mostri 0.69",
+      "spazio": "Mostri 0.69",
+      "abilita": "Mostri 0.69",
+      "attacchi": "Mostri 0.69",
+      "capacita": "Mostri 0.47",
+      "gs_px": "Mostri 0.69"
+    }
   }
 }

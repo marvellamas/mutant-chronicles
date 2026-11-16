@@ -3,7 +3,7 @@
   "versione": 1,
   "id": "orrore-in-elmo",
   "nome": "Orrore in elmo",
-  "fonte": "dal Manuale dei Mostri v0.46 (Word del 27/10/2026), cap. 8 «Catalogo delle creature» — Costrutti e Modron",
+  "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Orrore in elmo",
   "caratteristiche": {
     "FOR": 8,
     "DES": 6,
@@ -49,11 +49,11 @@
       "va": 12,
       "danno": "1d8+3",
       "natura": "Naturale",
-      "portata_q": 1,
-      "ac": 1,
       "proprieta": [
         "Taglio"
-      ]
+      ],
+      "portata_q": 1,
+      "ac": 1
     }
   ],
   "abilita": [
@@ -113,9 +113,25 @@
     "terrorizzato",
     "stordito"
   ],
-  "note": "AR 6 con Scudo medio, 4 senza (piastre intrinseche AR 4 + AR passiva +2 dello Scudo). Sentinella intelligente che ragiona sull’intento della consegna: non è la semplice Armatura animata. Fonte: Helmed Horror, p. 183.",
+  "note": "Sentinella intelligente in un corpo di piastre • volo e sigilli • Natura Comune.",
   "_bestiario": {
     "edizione": "Mostri 0.69",
-    "sistema_salute": "solo_PV"
+    "sistema_salute": "solo_PV",
+    "campi": {
+      "pv": "Mostri 0.69",
+      "pm": "Mostri 0.69",
+      "caratteristiche": "Mostri 0.69",
+      "ar": "Mostri 0.69",
+      "difese": "Mostri 0.69",
+      "salvezze": "Mostri 0.69",
+      "iniziativa": "Mostri 0.69",
+      "azioni": "Mostri 0.69",
+      "movimento": "Mostri 0.69",
+      "spazio": "Mostri 0.69",
+      "abilita": "Mostri 0.69",
+      "attacchi": "Mostri 0.69",
+      "capacita": "Mostri 0.47",
+      "gs_px": "Mostri 0.69"
+    }
   }
 }

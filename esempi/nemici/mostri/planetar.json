@@ -1,0 +1,130 @@
+{
+  "formato": "mutant-nemico",
+  "versione": 1,
+  "id": "planetar",
+  "nome": "Planetar",
+  "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Planetar",
+  "taglia": "grande",
+  "note": "Combattente alato dalla pelle opalescente verde, più grande di un umano. Protegge un incarico con lo spadone, muri luminosi e capacità di soccorso.",
+  "pv": 229,
+  "pm": 72,
+  "caratteristiche": {
+    "FOR": 10,
+    "DES": 9,
+    "COS": 10,
+    "INT": 9,
+    "SAG": 9,
+    "CAR": 10
+  },
+  "ar": {
+    "totale": 6,
+    "magica": 0
+  },
+  "difese": 15,
+  "salvezze": {
+    "tempra": 17,
+    "riflessi": 15,
+    "volonta": 17,
+    "magia": 16
+  },
+  "iniziativa": 4,
+  "azioni": {
+    "principali": 4,
+    "movimento": 1
+  },
+  "movimento": {
+    "passo": 8,
+    "corsa": 16,
+    "scatto": 24,
+    "volo": 24
+  },
+  "spazio": "2 × 2 Q",
+  "abilita": [
+    {
+      "nome": "Armi da guerra",
+      "va": 18
+    },
+    {
+      "nome": "Corpo a corpo",
+      "va": 16
+    },
+    {
+      "nome": "Atletica",
+      "va": 17
+    },
+    {
+      "nome": "Percezione",
+      "va": 17
+    },
+    {
+      "nome": "Oratoria",
+      "va": 17
+    },
+    {
+      "nome": "Occultismo",
+      "va": 15
+    },
+    {
+      "nome": "Medicina",
+      "va": 16
+    }
+  ],
+  "capacita": [
+    {
+      "nome": "Spadone luminoso",
+      "effetto": "VA 18. Danno: AC 2: 2d6+6 Magico, Taglio, poi 3d8 Magico, Luce. Portata/costo: 1 Q; due mani; 1 AzP; "
+    },
+    {
+      "nome": "Colonna ardente",
+      "effetto": "VA —. Danno: AC 2: 2d6+3 Magico, Fuoco, poi 2d6 Magico, Luce. Portata/costo: Origine entro 20 Q; raggio 2 Q; 2 AzP e 6 PM; "
+    },
+    {
+      "nome": "Corpo e sensi",
+      "effetto": "Corpo vivente sovrannaturale senza necessità di cibo, acqua o sonno e senza Affaticamento; immune a fascinazione e Terrorizzato. Dimezza Luce e danni Naturali di armi da Contusione, Taglio e Perforazione. Resistenza alla magia +2 non inclusa nelle PS. Vista rivelatrice dodici e telepatia 24 Q; lingue del blocco. Para con Spadone pronto; nessuna Parata naturale. Cade se diventa Svenuto in volo. Mantiene PV, PM e conseguenze ordinarie delle lesioni."
+    },
+    {
+      "nome": "Sequenza e arma",
+      "effetto": "Quattro AzP totali; massimo due Spadoni e una Colonna per Round, Opportunità di Spadone compresa. Spadone Comune: FOR sei, due mani, portata un Q, PI sei, PS Integrità dieci, base 2d6+1 più tre di FOR e due di Forza brutale personale già inclusi. Infusione personale e due AC con un tiro e una Difesa secondo le regole del blocco; nessun allungo gratuito per le dimensioni. L’arma recuperata rimane Comune e infligge il solo danno ordinario del nuovo utilizzatore."
+    },
+    {
+      "nome": "Colonna e muro",
+      "effetto": "Colonna ardente: due AzP e sei PM, disponibile di nuovo alla propria Iniziativa R+3 dopo uso nel Round R. Un punto visibile entro venti Q, cilindro verticale di raggio due Q e altezza quattro Q, alleati compresi, solidi bloccano. Un unico tiro di danno per componente e bersaglio contato una sola volta; Elusione su Riflessi −2 dimezza per eccesso entrambe le AC prima dell’AR, senza altre Difese. Fuoco residuo e Ignifugo superato: Riflessi −2 evita Incendiato per 1+1d3 Round. Muro luminoso innato delle regole comuni: una AzP e nove PM, una parete attiva per volta. Non è una barriera impenetrabile o un controllo del clima."
+    },
+    {
+      "nome": "Cure e rivelazione",
+      "effetto": "Tocco ristoratore: una AzP e nove PM, quattro usi per ventiquattro ore, un altro vivente a Contatto, ventiquattro punti da distribuire fra PV e Sanguinamento. Purificazione separata: una AzP e nove PM per Cura Spirituale nove oppure Cura Avvelenamenti nove, limitate a un altro beneficiario a Contatto. Cura Malattie nove è un diverso uso innato da nove PM e dieci minuti di Concentrazione fuori combattimento su un beneficiario a Contatto; non è una cura istantanea. Possiede Individuare innato nove, nove PM e dieci Round fissi, e Invisibilità breve del blocco."
+    },
+    {
+      "nome": "Ascolto del falso",
+      "effetto": "Una AzP e tre PM, una dichiarazione appena udita entro dodici Q in lingua comprensibile e un parlante validamente percepito. Volontà −2 del parlante evita; fallimento segnala soltanto se crede falsa la dichiarazione. Non rivela la verità, mezze verità omesse, errore sincero o CROS e non obbliga a confessare. Barriera Mentale aiuta; chi resiste è immune a questo Planetar per ventiquattro ore. Non è una certezza passiva. Controllo meteorologico, sciami evocati e ritorno dei morti della fonte non sono compresi nel profilo."
+    },
+    {
+      "nome": "Altri movimenti",
+      "effetto": "spazio 2 × 2 Q"
+    }
+  ],
+  "gs_px": {
+    "gs": "Semidio",
+    "px": 440,
+    "per_pg": 4
+  },
+  "_bestiario": {
+    "campi": {
+      "pv": "Mostri 0.69",
+      "pm": "Mostri 0.69",
+      "caratteristiche": "Mostri 0.69",
+      "ar": "Mostri 0.69",
+      "difese": "Mostri 0.69",
+      "salvezze": "Mostri 0.69",
+      "iniziativa": "Mostri 0.69",
+      "azioni": "Mostri 0.69",
+      "movimento": "Mostri 0.69",
+      "spazio": "Mostri 0.69",
+      "abilita": "Mostri 0.69",
+      "capacita": "Mostri 0.69",
+      "gs_px": "Mostri 0.69"
+    },
+    "edizione": "Mostri 0.69",
+    "sistema_salute": "solo_PV"
+  }
+}

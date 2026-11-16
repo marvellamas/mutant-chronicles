@@ -1,0 +1,106 @@
+{
+  "formato": "mutant-nemico",
+  "versione": 1,
+  "id": "ratto-gigante-infetto",
+  "nome": "Ratto gigante infetto",
+  "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Ratto gigante infetto",
+  "note": "Ratto gigante portatore di un’infezione debilitante. I numeri di combattimento sono quelli del roditore ordinario; il rischio aggiuntivo è il decorso della malattia dopo un morso penetrante.",
+  "pv": 13,
+  "pm": 4,
+  "caratteristiche": {
+    "FOR": 3,
+    "DES": 7,
+    "COS": 4,
+    "INT": 2,
+    "SAG": 5,
+    "CAR": 2
+  },
+  "ar": {
+    "totale": 0,
+    "magica": 0
+  },
+  "difese": 11,
+  "salvezze": {
+    "tempra": 8,
+    "riflessi": 11,
+    "volonta": 7,
+    "magia": 7
+  },
+  "iniziativa": 2,
+  "azioni": {
+    "principali": 1,
+    "movimento": 1
+  },
+  "movimento": {
+    "passo": 6,
+    "corsa": 12,
+    "scatto": 18
+  },
+  "spazio": "1 Q",
+  "attacchi": [
+    {
+      "nome": "Morso",
+      "tipo": "ravvicinato",
+      "va": 10,
+      "danno": "1d4+1",
+      "natura": "Naturale",
+      "proprieta": [
+        "Perforazione",
+        "AC 1",
+        "contagio condizionato"
+      ],
+      "portata_q": 1,
+      "ac": 1
+    }
+  ],
+  "capacita": [
+    {
+      "nome": "Corpo e sensi",
+      "effetto": "Vivente biologico con mente animale e PM personali, Scurovisione dodici Q e olfatto +2 già espresso nel dodici. Nessuna immunità generale al veleno o ad altre malattie, nessuna Parata naturale o linguaggio. Il corpo piccolo usa una pedina di gestione, non occupa realmente un intero Q. Zero PM e zero PV seguono le regole comuni."
+    },
+    {
+      "nome": "Attacco e branco",
+      "effetto": "Una AzP e una AzM totali, massimo un Morso per Round, Opportunità compresa. +2 al VA del Morso quando almeno un alleato cosciente può minacciare realmente quella vittima entro un Q: VA dodici, senza aumenti per altri compagni. Non concede una seconda inoculazione o localizzazione automatica del bersaglio."
+    },
+    {
+      "nome": "Contagio",
+      "effetto": "Dopo almeno un danno finale di Morso a un vivente biologico con fisiologia compatibile: Tempra 0 evita l’Infezione debilitante dei ratti, malattia naturale III. Sono esclusi costrutti, spiriti, non morti e organismi incompatibili. Non è veleno o Corruzione. Nessun contagio attraverso un’Armatura che assorba tutto, semplice vicinanza o contatto con il pelo; nuove esposizioni non sommano l’infezione già attiva."
+    },
+    {
+      "nome": "Condotta e recupero",
+      "effetto": "Cerca nutrimento, un riparo o il gruppo; può fuggire se minacciato. Testa sensi e morso, Torace corpo, Braccia zampe anteriori, Gambe posteriori e coda funzionale. L’infezione non rende il Ratto automaticamente aggressivo, più forte o immune alle lesioni. I 10 PX sono una prima taratura del singolo esemplare, non di una colonia o di una serie di cure obbligatorie ai PG."
+    },
+    {
+      "nome": "Altri movimenti",
+      "effetto": "corpo piccolo, pedina di gestione 1 Q"
+    },
+    {
+      "nome": "Abilità particolari",
+      "effetto": "Percezione 10, 12 per olfatto determinante"
+    }
+  ],
+  "gs_px": {
+    "gs": "Principiante",
+    "px": 10,
+    "per_pg": 4
+  },
+  "_bestiario": {
+    "campi": {
+      "pv": "Mostri 0.69",
+      "pm": "Mostri 0.69",
+      "caratteristiche": "Mostri 0.69",
+      "ar": "Mostri 0.69",
+      "difese": "Mostri 0.69",
+      "salvezze": "Mostri 0.69",
+      "iniziativa": "Mostri 0.69",
+      "azioni": "Mostri 0.69",
+      "movimento": "Mostri 0.69",
+      "spazio": "Mostri 0.69",
+      "attacchi": "Mostri 0.69",
+      "capacita": "Mostri 0.69",
+      "gs_px": "Mostri 0.69"
+    },
+    "edizione": "Mostri 0.69",
+    "sistema_salute": "solo_PV"
+  }
+}

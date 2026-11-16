@@ -1,0 +1,121 @@
+{
+  "formato": "mutant-nemico",
+  "versione": 1,
+  "id": "golem-di-ferro",
+  "nome": "Golem di ferro",
+  "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Golem di ferro",
+  "senza_salvezza": [
+    "volonta"
+  ],
+  "taglia": "grande",
+  "note": "Guardiano senza mente costruito come un’enorme armatura animata. Il suo corpo di ferro sopporta le armi comuni, assorbe il Fuoco e contiene una riserva di esalazioni tossiche.",
+  "pv": 195,
+  "caratteristiche": {
+    "FOR": 10,
+    "DES": 4,
+    "COS": 10,
+    "INT": 1,
+    "SAG": 5,
+    "CAR": 1
+  },
+  "ar": {
+    "totale": 7,
+    "magica": 0
+  },
+  "difese": 8,
+  "salvezze": {
+    "tempra": 16,
+    "riflessi": 8,
+    "magia": 14
+  },
+  "iniziativa": 0,
+  "azioni": {
+    "principali": 2,
+    "movimento": 1
+  },
+  "movimento": {
+    "passo": 6,
+    "corsa": 12,
+    "scatto": 18
+  },
+  "spazio": "2 × 2 Q",
+  "abilita": [
+    {
+      "nome": "Corpo a corpo",
+      "va": 17
+    },
+    {
+      "nome": "Armi da guerra",
+      "va": 17
+    },
+    {
+      "nome": "Atletica",
+      "va": 17
+    },
+    {
+      "nome": "Percezione",
+      "va": 10
+    },
+    {
+      "nome": "Furtività",
+      "va": 4
+    }
+  ],
+  "capacita": [
+    {
+      "nome": "Esalazione",
+      "effetto": "VA —. Danno: 4d6+3 veleno; perdita diretta. Portata/costo: Cono 3 × 1,5 Q; 2 AzP; "
+    },
+    {
+      "nome": "Corpo animato",
+      "effetto": "Applica le procedure condivise dei nuovi golem: PM e Volontà assenti, resistenza fisica, forma immutabile e +2 alle PS contro magia. Scurovisione 24 Q. Immune a Paralizzato, pietrificazione e Affaticamento; l’assenza di mente impedisce paura, fascinazione e altri effetti che richiedono una mente. Non ha Parata naturale o un’armatura da togliere per eliminare l’AR."
+    },
+    {
+      "nome": "Attacchi",
+      "effetto": "Al massimo due attacchi di Schianto o Lama per Round, Opportunità compresa; l’Esalazione occupa entrambe le AzP. La Lama è parte del corpo e usa le sue regole di Ferita e Menomazione, senza una seconda riserva di PI da esaurire per ucciderlo. Non concede una Parata autonoma. Una variante con spada staccabile richiede una dotazione e PX dichiarati prima della scena."
+    },
+    {
+      "nome": "Assorbire il Fuoco",
+      "effetto": "Immune ai danni da Fuoco e ai suoi Stati, qualunque Natura. Per una fonte realmente dannosa calcolare il residuo dopo Difese, riduzioni e AR, ignorando soltanto questo assorbimento: invece di subirlo recupera altrettanti PV, fino a otto PV complessivi per Round da tutte le fonti. Il resto è annullato; un contatto innocuo non cura. Un colpo misto mantiene le componenti non da Fuoco."
+    },
+    {
+      "nome": "Limiti del recupero",
+      "effetto": "Non supera il massimo effettivo dei PV, non ripara oggetti e non cura PM, Ferite, Menomazioni o Morente. Può recuperare da zero PV finché ancora vivo, come il Golem di carne; il ritorno all’attività segue il §4.2. non rianima un corpo effettivamente morto o distrutto. Fuoco ambientale costante può alimentare questo recupero soltanto se produrrebbe davvero danno secondo la procedura."
+    },
+    {
+      "nome": "Esalazione tossica",
+      "effetto": "Due AzP, nessun PM; usata nel Round R torna disponibile alla sua Iniziativa in R + 3. Cono lungo tre Q, largo alla fine 1,5 Q, bloccato dai solidi; colpisce anche gli alleati. Veleno artificiale di Pericolosità V per inalazione: un respiratore completamente sigillato e operativo o l’assenza di respirazione evita l’esposizione. Tempra −4 dimezza per eccesso 4d6+3 danni diretti senza AR; fallimento danno intero. Nessun tiro per colpire, Elusione o seconda Difesa."
+    },
+    {
+      "nome": "Veleno e consegna",
+      "effetto": "L’Esalazione è un danno istantaneo, senza Avvelenato periodico o paralisi; Cura Avvelenamenti non restituisce i PV già persi. Immunità al veleno evita l’effetto, un’armatura ordinaria no. La nube non rimane sul terreno e non offre dosi recuperabili. Comprende gli ordini del creatore senza parlare e prosegue l’ultima consegna valida; non possiede Furia automatica."
+    },
+    {
+      "nome": "Altri movimenti",
+      "effetto": "spazio 2 × 2 Q"
+    }
+  ],
+  "gs_px": {
+    "gs": "Semidio",
+    "px": 400,
+    "per_pg": 4
+  },
+  "_bestiario": {
+    "campi": {
+      "pv": "Mostri 0.69",
+      "caratteristiche": "Mostri 0.69",
+      "ar": "Mostri 0.69",
+      "difese": "Mostri 0.69",
+      "salvezze": "Mostri 0.69",
+      "iniziativa": "Mostri 0.69",
+      "azioni": "Mostri 0.69",
+      "movimento": "Mostri 0.69",
+      "spazio": "Mostri 0.69",
+      "abilita": "Mostri 0.69",
+      "capacita": "Mostri 0.69",
+      "gs_px": "Mostri 0.69"
+    },
+    "edizione": "Mostri 0.69",
+    "sistema_salute": "solo_PV"
+  }
+}

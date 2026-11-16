@@ -1,0 +1,134 @@
+{
+  "formato": "mutant-nemico",
+  "versione": 1,
+  "id": "scheletro-di-minotauro",
+  "nome": "Scheletro di Minotauro",
+  "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Scheletro di Minotauro",
+  "taglia": "grande",
+  "note": "Ossatura animata di un Minotauro armato d’ascia. Conserva una carica cornuta, ma non eredita tutte le capacità e le conoscenze del Minotauro vivente.",
+  "pv": 73,
+  "pm": 6,
+  "caratteristiche": {
+    "FOR": 8,
+    "DES": 5,
+    "COS": 7,
+    "INT": 3,
+    "SAG": 4,
+    "CAR": 2
+  },
+  "ar": {
+    "totale": 2,
+    "magica": 0
+  },
+  "difese": 10,
+  "salvezze": {
+    "tempra": 13,
+    "riflessi": 9,
+    "volonta": 8,
+    "magia": 9
+  },
+  "iniziativa": 0,
+  "azioni": {
+    "principali": 2,
+    "movimento": 1
+  },
+  "movimento": {
+    "passo": 8,
+    "corsa": 16,
+    "scatto": 24
+  },
+  "spazio": "2 × 2 Q",
+  "abilita": [
+    {
+      "nome": "Armi da guerra",
+      "va": 13
+    },
+    {
+      "nome": "Corpo a corpo",
+      "va": 13
+    },
+    {
+      "nome": "Atletica",
+      "va": 12
+    },
+    {
+      "nome": "Percezione",
+      "va": 9
+    }
+  ],
+  "attacchi": [
+    {
+      "nome": "Ascia bipenne",
+      "tipo": "ravvicinato",
+      "va": 13,
+      "danno": "2d6+3",
+      "natura": "Naturale",
+      "proprieta": [
+        "Taglio",
+        "AC 1"
+      ],
+      "portata_q": 1,
+      "ac": 1
+    },
+    {
+      "nome": "Corna",
+      "tipo": "ravvicinato",
+      "va": 13,
+      "danno": "1d8+2",
+      "natura": "Naturale",
+      "proprieta": [
+        "Perforazione",
+        "AC 1"
+      ],
+      "portata_q": 1,
+      "ac": 1
+    }
+  ],
+  "capacita": [
+    {
+      "nome": "Corpo e sensi",
+      "effetto": "Non morto corporeo, immunità biologiche e Ossa fragili comuni, Scurovisione dodici Q. Ha mente rudimentale e PM personali; nessuna immunità a Paura, attacchi mentali o A Terra. Può Parare con Ascia pronta, non con le Corna. Iniziativa soltanto 1d10: nessun bonus positivo di DES è assegnato e non si aggiunge un malus per INT."
+    },
+    {
+      "nome": "Sequenza e carica",
+      "effetto": "Due AzP totali, massimo un attacco di Ascia o Corna per Round, Opportunità compresa; la seconda AzP resta per Difese o altre azioni. Carica cornuta ordinaria: una AzP e una AzM, almeno tre Q sufficientemente rettilinei verso il bersaglio entro sedici Q, VA −2 per tre–sei Q o −4 da sette Q, danno delle Corna ×2. Non aggiungere anche i dadi di carica della fonte. Dopo almeno un danno finale a una creatura di massa non superiore: FOR o DES a scelta, fallimento viene spinta fino a due Q lungo un percorso libero e va A Terra. Ostacoli arrestano lo spostamento, senza ulteriore danno da collisione."
+    },
+    {
+      "nome": "Arma e ordini",
+      "effetto": "Ascia bipenne Comune: FOR sei, due mani, portata un Q, PI sei, PS Integrità dieci, base 2d6+1 più due di FOR già inclusi. Nessuna Natura Magica o infusione. Comprende semplici consegne nella lingua effettivamente assegnata al risveglio, ma non parla e non condivide sensi col creatore. Non possiede Assalto temerario, memoria perfetta dei labirinti o capacità spirituali del Minotauro vivente."
+    },
+    {
+      "nome": "Danni e condotta",
+      "effetto": "Combatte secondo un ordine concreto e non si ricompone dopo una Menomazione. Testa include cranio e corna, Torace il tronco osseo, Braccia e Gambe gli arti reali. I resti non sono un oggetto con PI al posto di PV: Ferite, Menomazioni, Morente e morte seguono le regole dei non morti corporei. L’Ascia recuperata conserva il proprio profilo Comune, non il danno pronto della creatura."
+    },
+    {
+      "nome": "Altri movimenti",
+      "effetto": "spazio 2 × 2 Q"
+    }
+  ],
+  "gs_px": {
+    "gs": "Esperto",
+    "px": 33,
+    "per_pg": 4
+  },
+  "_bestiario": {
+    "campi": {
+      "pv": "Mostri 0.69",
+      "pm": "Mostri 0.69",
+      "caratteristiche": "Mostri 0.69",
+      "ar": "Mostri 0.69",
+      "difese": "Mostri 0.69",
+      "salvezze": "Mostri 0.69",
+      "iniziativa": "Mostri 0.69",
+      "azioni": "Mostri 0.69",
+      "movimento": "Mostri 0.69",
+      "spazio": "Mostri 0.69",
+      "abilita": "Mostri 0.69",
+      "attacchi": "Mostri 0.69",
+      "capacita": "Mostri 0.69",
+      "gs_px": "Mostri 0.69"
+    },
+    "edizione": "Mostri 0.69",
+    "sistema_salute": "solo_PV"
+  }
+}

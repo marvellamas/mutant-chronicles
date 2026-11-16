@@ -3,7 +3,7 @@
   "versione": 1,
   "id": "sciamano-lucertoloide",
   "nome": "Sciamano lucertoloide",
-  "fonte": "dal Manuale dei Mostri v0.46 (Word del 27/10/2026), cap. 8 «Catalogo delle creature» — Popoli delle terre selvagge",
+  "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Sciamano lucertoloide",
   "caratteristiche": {
     "FOR": 6,
     "DES": 5,
@@ -48,11 +48,11 @@
       "va": 11,
       "danno": "1d6+1",
       "natura": "Naturale",
-      "portata_q": 1,
-      "ac": 1,
       "proprieta": [
         "Perforazione"
-      ]
+      ],
+      "portata_q": 1,
+      "ac": 1
     },
     {
       "nome": "Artigli umanoidi",
@@ -60,12 +60,11 @@
       "va": 11,
       "danno": "1d4+1",
       "natura": "Naturale",
-      "portata_q": 1,
-      "ac": 1,
       "proprieta": [
         "Taglio"
       ],
-      "note": "Richiedono una mano libera; nessuna Parata naturale."
+      "portata_q": 1,
+      "ac": 1
     },
     {
       "nome": "Morso di Coccodrillo",
@@ -73,12 +72,11 @@
       "va": 11,
       "danno": "1d8+2",
       "natura": "Naturale",
-      "portata_q": 1,
-      "ac": 1,
       "proprieta": [
         "Perforazione"
       ],
-      "note": "Solo nella forma di Coccodrillo: vedi «Forma di Coccodrillo»."
+      "portata_q": 1,
+      "ac": 1
     }
   ],
   "abilita": [
@@ -169,9 +167,25 @@
       "effetto": "Assume un Coccodrillo di spazio 2 × 2 Q (abilità del profilo, non Trasformazione Totale né un effetto condivisibile; Negare Potere la termina, potenza 3). Un solo corpo: Caratteristiche, Abilità, Difese, PS, INI, PV e PM restano quelli della scheda; conserva PV attuali, PM spesi, Ferite, Menomazioni e Stati; AR biologica sempre 1; non acquista i PV o gli attacchi del Coccodrillo gigante e non recupera il fiato (una sola riserva per entrambe le forme). Gambe e Braccia diventano i gruppi posteriori e anteriori di zampe. Movimento: terra 4 / 8 / 12 Q, Nuoto nativo 6 / 12 / 18 Q; 2 AzP e 1 AzM, ma al massimo un Morso di Coccodrillo per Round, Opportunità e colpo ordinato compresi; nessun Artigli, Coda, arma, lancio del repertorio o Parata naturale; nessuna resistenza al Fuoco o al Gelo né ulteriori immunità. Presa delle mascelle: dopo almeno 1 danno finale di Morso a una creatura fino a 1 × 1 Q, Riflessi senza modificatore; fallimento Immobilizzato (mani non specificamente bloccate); una sola preda, e finché la tiene non morde altre vittime; la vittima o un alleato presso le mascelle spende 1 AzP e contrappone Corpo a corpo o Atletica a Corpo a corpo 11 (il prigioniero con −4 fisico): successo libera, pareggio conserva; nessuno Stringere o danno periodico. Rilascio volontario gratuito alla propria Iniziativa; ritorno umanoide, incoscienza o perdita delle mascelle sciolgono la presa; trascinare la preda consente solo il Passo con distanze dimezzate, senza attraversare solidi; la vittima non perde il fiato per il solo aggancio (se immersa usa la propria riserva e il §5.23). Gli oggetti non si trasformano: deve liberarsi prima di indumenti o vincoli incompatibili; il Focus lasciato a terra non torna in mano. Una presa, un’ancora esterna o uno spazio insufficiente impediscono di iniziare la trasformazione, che non strappa catene né cura lesioni."
     }
   ],
-  "note": "Parla Draconico; nessuna Scurovisione innata. Custode di riti e conoscenze della comunità: il repertorio è convertito in tre incantesimi di Simply RPG. Condotta: sotto 7 PV o a Ferita Profonda cerca riparo o la via d’acqua; la forma animale non rende innocuo l’aspetto, non cura e non crea una seconda riserva. Fonte: Lizardfolk Shaman, p. 205.",
+  "note": "Umanoide rettile • incantatore e mutaforma • Natura Comune.",
   "_bestiario": {
     "edizione": "Mostri 0.69",
-    "sistema_salute": "solo_PV"
+    "sistema_salute": "solo_PV",
+    "campi": {
+      "pv": "Mostri 0.69",
+      "pm": "Mostri 0.69",
+      "caratteristiche": "Mostri 0.69",
+      "ar": "Mostri 0.69",
+      "difese": "Mostri 0.69",
+      "salvezze": "Mostri 0.69",
+      "iniziativa": "Mostri 0.69",
+      "azioni": "Mostri 0.69",
+      "movimento": "Mostri 0.69",
+      "spazio": "Mostri 0.69",
+      "abilita": "Mostri 0.69",
+      "attacchi": "Mostri 0.69",
+      "capacita": "Mostri 0.47",
+      "gs_px": "Mostri 0.69"
+    }
   }
 }

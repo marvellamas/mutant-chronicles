@@ -3,7 +3,7 @@
   "versione": 1,
   "id": "worg",
   "nome": "Worg",
-  "fonte": "dal Manuale dei Mostri v0.46 (Word del 27/10/2026), cap. 8 «Catalogo delle creature» — Predatori straordinari",
+  "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Worg",
   "caratteristiche": {
     "FOR": 7,
     "DES": 6,
@@ -48,11 +48,11 @@
       "va": 12,
       "danno": "1d8+2",
       "natura": "Naturale",
-      "portata_q": 1,
-      "ac": 1,
       "proprieta": [
         "Perforazione"
-      ]
+      ],
+      "portata_q": 1,
+      "ac": 1
     }
   ],
   "abilita": [
@@ -97,9 +97,25 @@
       "effetto": "Udito e olfatto acuti +2 a Percezione, senza sommarli. Parla Goblin e Worg. Non ha Branco, telepatia o controllo sui Goblin. Un solo Morso per Round, Opportunità e attacco ordinato compresi."
     }
   ],
-  "note": "Canide senziente che può collaborare con Goblin e Hobgoblin ma non è un animale obbediente per definizione. Cavalcatura solo con accordo, addestramento, attrezzatura e carico compatibili; il suo Movimento non diventa quello del cavaliere e non dà Azioni condivise. Condotta: sotto 7 PV o a Ferita Profonda cerca una via di fuga oppure tratta. Fonte: Worg, p. 341.",
+  "note": "Canide senziente • cacciatore e possibile alleato di una banda • Natura Comune.",
   "_bestiario": {
     "edizione": "Mostri 0.69",
-    "sistema_salute": "solo_PV"
+    "sistema_salute": "solo_PV",
+    "campi": {
+      "pv": "Mostri 0.69",
+      "pm": "Mostri 0.69",
+      "caratteristiche": "Mostri 0.69",
+      "ar": "Mostri 0.69",
+      "difese": "Mostri 0.69",
+      "salvezze": "Mostri 0.69",
+      "iniziativa": "Mostri 0.69",
+      "azioni": "Mostri 0.69",
+      "movimento": "Mostri 0.69",
+      "spazio": "Mostri 0.69",
+      "abilita": "Mostri 0.69",
+      "attacchi": "Mostri 0.69",
+      "capacita": "Mostri 0.47",
+      "gs_px": "Mostri 0.69"
+    }
   }
 }

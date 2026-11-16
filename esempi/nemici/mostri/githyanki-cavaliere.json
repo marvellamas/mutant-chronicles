@@ -1,0 +1,136 @@
+{
+  "formato": "mutant-nemico",
+  "versione": 1,
+  "id": "githyanki-cavaliere",
+  "nome": "Githyanki cavaliere",
+  "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Githyanki cavaliere",
+  "note": "Githyanki corazzato che canalizza potere nello spadone argentato. Usa gli impulsi psichici come alternativa al colpo materiale e combina brevi trasferimenti con una limitata telecinesi.",
+  "pv": 115,
+  "pm": 36,
+  "caratteristiche": {
+    "FOR": 8,
+    "DES": 7,
+    "COS": 7,
+    "INT": 7,
+    "SAG": 7,
+    "CAR": 7
+  },
+  "ar": {
+    "totale": 5,
+    "magica": 0
+  },
+  "difese": 14,
+  "salvezze": {
+    "tempra": 15,
+    "riflessi": 13,
+    "volonta": 13,
+    "magia": 14
+  },
+  "iniziativa": 2,
+  "azioni": {
+    "principali": 3,
+    "movimento": 1
+  },
+  "movimento": {
+    "passo": 4,
+    "corsa": 10,
+    "scatto": 16
+  },
+  "spazio": "1 Q",
+  "abilita": [
+    {
+      "nome": "Armi da guerra",
+      "va": 16
+    },
+    {
+      "nome": "Armi da lancio",
+      "va": 12
+    },
+    {
+      "nome": "Corpo a corpo",
+      "va": 12
+    },
+    {
+      "nome": "Atletica",
+      "va": 12
+    },
+    {
+      "nome": "Percezione",
+      "va": 12
+    },
+    {
+      "nome": "Furtività",
+      "va": 8
+    }
+  ],
+  "capacita": [
+    {
+      "nome": "Impatto psichico",
+      "effetto": "VA —. Danno: 3d6+2 psichici diretti; Volontà −2 dimezza. Portata/costo: Una mente visibile a Contatto entro 1 Q; 1 AzP e 3 PM; "
+    },
+    {
+      "nome": "Corpo e sensi",
+      "effetto": "Vivente biologico con mente e PM personali, sensi ordinari senza Scurovisione o immunità automatiche. Para con lo Spadone pronto, nessuna Parata naturale. Iniziativa DES +2. Il profilo non assegna drago alleato, residenze astrali o autorità su altri Githyanki. Lingua della propria comunità e lingue apprese."
+    },
+    {
+      "nome": "Azioni e impulsi",
+      "effetto": "Tre AzP totali, massimo due azioni offensive complessive fra Spadone, Impatto e Telecinesi per Round, non più di un Impatto; Opportunità compresa soltanto per Spadone. L’Impatto è alternativo al colpo materiale, non un’aggiunta gratuita: usa la procedura psichica Gith con danno e Volontà −2 della scheda, anche per l’eventuale seconda PS di Svenuto. Le altre AzP servono a poteri, Difese o attività realmente consentite."
+    },
+    {
+      "nome": "Lama canalizzata",
+      "effetto": "Una AzP e tre PM, solo il proprio Spadone impugnato per cinque Round senza Concentrazione: il danno diretto diventa Magico, senza aumenti a VA o danno. Negare sei, fine dell’impugnatura, congedo gratuito, Svenuto o morte terminano. È una capacità personale, non Arma Mistica tre o una proprietà permanente dell’oggetto. L’argentatura elimina soltanto il dimezzamento specifico dei licantropi contro armi Naturali, non ignora AR e non raddoppia danni."
+    },
+    {
+      "nome": "Poteri di base",
+      "effetto": "Mano psionica una AzP e un PM, cinque Round, oggetto due kg. Salto assistito tre usi per ventiquattro ore, una AzP e due PM, tre Round. Passo psionico breve tre usi per ventiquattro ore, una AzP e tre PM, solo sé entro sei Q visibili e liberi. Aura schermata tre usi per ventiquattro ore, una AzP e tre PM, Nascondere Aura tre solo sé per dieci Round. Si applicano le procedure già fissate per il Githyanki guerriero e le penalità effettive di carico e armatura."
+    },
+    {
+      "nome": "Corazza e arma",
+      "effetto": "Spadone Comune: FOR sei, due mani, PI sei, base 2d6+1 più due personali. Pesante Comune: AR cinque, FOR sette, PI dieci. Entrambi PS Integrità dieci. Sono compresi −2 agli attacchi, Agilità e ogni budget MOV della Pesante; togliendola recupera due punti pertinenti e MOV 6 / 12 / 18, senza modificare Parata e PS. L’arma non recide anime o collegamenti astrali con un semplice Magistrale. Sotto 29 PV può ripiegare."
+    },
+    {
+      "nome": "Telecinesi nove innata",
+      "effetto": "Un uso per ventiquattro ore, una AzP e nove PM, Telecinesi nove senza Potere o componenti, durata fissa dieci minuti. Un oggetto visibile entro quindici Q, massimo dieci kg; prima manipolazione o attacco incluso, successivi una AzP ciascuno. Massimo sei Q di movimento per uso lungo un percorso libero, mantenendo vista e portata. Oggetto trattenuto: Tempra −2 del possessore conserva la presa, fallimento lo disarma se fisicamente sfilabile. Non strappa fissaggi o impianti e non solleva creature."
+    },
+    {
+      "nome": "Attacco remoto",
+      "effetto": "Armi da lancio quattordici già comprensivo del +2 di Telecinesi: normali Difese a distanza e AR, 1d6+2 Naturale con una AC indipendentemente dalla forma dell’oggetto, senza ulteriori bonus personali. Il primo attacco può essere quello incluso nell’attivazione e consuma uno dei due attacchi complessivi. L’oggetto non ritorna automaticamente. Ogni manipolazione richiede oggetto e percorso visibili; Negare nove, Svenuto, morte o perdita dei requisiti terminano il sostegno."
+    },
+    {
+      "nome": "Linguaggi tre",
+      "effetto": "Tre usi per ventiquattro ore, una AzP e tre PM, solo sé da una fonte mentale cosciente a Contatto che conosca una lingua scelta; fonte non consenziente Volontà 0 evita, Barriera Mentale aiuta. Trenta minuti, comprensione e uso non superiori alla competenza della fonte, lettura e scrittura soltanto se essa le conosce. Non legge segreti, codici o ricordi; libri e registrazioni non sono fonti mentali. Dopo l’acquisizione distanza e vista non sono richieste. Negare tre rimuove la competenza temporanea."
+    },
+    {
+      "nome": "Trasferimento ampio",
+      "effetto": "Un uso separato per ventiquattro ore, una AzP e sei PM: solo sé con dotazione trasportabile a una destinazione direttamente visibile e libera entro quindici Q. Stessa procedura del Passo psionico, senza AzM, passeggeri o azioni nuove. Il viaggio planare della fonte viene reso in questo profilo come trasferimento locale, senza accessi a mondi non definiti nell’ambientazione. Lascia vincoli materiali esterni, conserva quelli magici personali e non annulla danni già subiti; arrivo senza sostegno applica Caduta."
+    },
+    {
+      "nome": "Altri movimenti",
+      "effetto": "spazio 1 × 1 Q"
+    }
+  ],
+  "gs_px": {
+    "gs": "Leggenda",
+    "px": 110,
+    "per_pg": 4
+  },
+  "_bestiario": {
+    "campi": {
+      "pv": "Mostri 0.69",
+      "pm": "Mostri 0.69",
+      "caratteristiche": "Mostri 0.69",
+      "ar": "Mostri 0.69",
+      "difese": "Mostri 0.69",
+      "salvezze": "Mostri 0.69",
+      "iniziativa": "Mostri 0.69",
+      "azioni": "Mostri 0.69",
+      "movimento": "Mostri 0.69",
+      "spazio": "Mostri 0.69",
+      "abilita": "Mostri 0.69",
+      "capacita": "Mostri 0.69",
+      "gs_px": "Mostri 0.69"
+    },
+    "edizione": "Mostri 0.69",
+    "sistema_salute": "solo_PV"
+  }
+}

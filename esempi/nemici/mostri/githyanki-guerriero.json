@@ -1,0 +1,116 @@
+{
+  "formato": "mutant-nemico",
+  "versione": 1,
+  "id": "githyanki-guerriero",
+  "nome": "Githyanki guerriero",
+  "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Githyanki guerriero",
+  "note": "Umanoide longilineo addestrato allo spadone e a brevi manifestazioni psioniche. Questo modello conserva capacità innate limitate; il cavaliere e il suo armamento speciale non sono compresi.",
+  "pv": 63,
+  "pm": 20,
+  "caratteristiche": {
+    "FOR": 7,
+    "DES": 6,
+    "COS": 6,
+    "INT": 6,
+    "SAG": 6,
+    "CAR": 5
+  },
+  "ar": {
+    "totale": 3,
+    "magica": 0
+  },
+  "difese": 12,
+  "salvezze": {
+    "tempra": 12,
+    "riflessi": 10,
+    "volonta": 10,
+    "magia": 12
+  },
+  "iniziativa": 1,
+  "azioni": {
+    "principali": 2,
+    "movimento": 1
+  },
+  "movimento": {
+    "passo": 5,
+    "corsa": 11,
+    "scatto": 17
+  },
+  "spazio": "1 Q",
+  "abilita": [
+    {
+      "nome": "Armi da guerra",
+      "va": 13
+    },
+    {
+      "nome": "Corpo a corpo",
+      "va": 11
+    },
+    {
+      "nome": "Atletica",
+      "va": 11
+    },
+    {
+      "nome": "Percezione",
+      "va": 11
+    },
+    {
+      "nome": "Furtività",
+      "va": 9
+    }
+  ],
+  "capacita": [
+    {
+      "nome": "Impatto psichico",
+      "effetto": "VA —. Danno: 2d6 psichici diretti; Volontà 0 dimezza. Portata/costo: Una mente a Contatto entro 1 Q; 1 AzP e 2 PM; "
+    },
+    {
+      "nome": "Corpo e sensi",
+      "effetto": "Vivente biologico con mente e PM personali, sensi ordinari senza Scurovisione, resistenze o immunità automatiche. Usa la lingua appresa dalla comunità. L’aspetto non assegna un legame astrale, una Corporazione, un drago alleato o capacità di passare fra piani. Para con lo Spadone pronto; nessuna Parata naturale."
+    },
+    {
+      "nome": "Sequenza e psionica",
+      "effetto": "Due AzP totali, massimo due azioni offensive complessive di Spadone o Impatto per Round, non più di un Impatto; Opportunità compresa soltanto per lo Spadone. L’Impatto è un’alternativa completa al colpo materiale, non danno aggiunto gratis a ogni fendente. Risolve il modulo psichico del blocco e richiede due PM anche se la mente resiste o è protetta. Zero PM causa Svenuto dopo la risoluzione."
+    },
+    {
+      "nome": "Mano e balzo",
+      "effetto": "Mano psionica: una AzP e un PM, oggetto visibile entro sei Q, massimo due kg, cinque Round; manipolazione iniziale inclusa, successive una AzP. Vale il modulo comune. Salto assistito: tre usi per ventiquattro ore, una AzP e due PM, solo sé per tre Round. Per ogni propria AzM può superare fino a sei Q orizzontali o tre in altezza, entro il budget effettivo e con una traiettoria fisica libera; applica il modulo del blocco. Non si sommano due AzM."
+    },
+    {
+      "nome": "Passo breve e aura",
+      "effetto": "Passo psionico: tre usi per ventiquattro ore, una AzP e tre PM, istantaneo, solo sé con dotazione trasportabile a una destinazione libera e visibile entro sei Q. Usa la procedura comune; nessun passeggero o oggetto sottratto ad altri. Aura schermata: tre usi per ventiquattro ore, una AzP e tre PM, Nascondere Aura tre solo sé per dieci Round, senza Concentrazione. Offendere termina l’occultamento prima dell’azione; non è invisibilità."
+    },
+    {
+      "nome": "Dotazione e anatomia",
+      "effetto": "Spadone: FOR sei, due mani, PI sei, base 2d6+1 più uno personale. Media: AR tre, FOR cinque, PI otto; entrambi Comuni, PS Integrità dieci. Le penalità della Media sono comprese: −1 attacchi, Agilità e ogni budget MOV. Togliendola recupera i punti pertinenti e MOV 6 / 12 / 18 Q; Parata e PS non cambiano. L’arma recuperata è ordinaria, priva di argento speciale, taglio di legami astrali o cariche psioniche proprie. Sotto 16 PV può ripiegare."
+    },
+    {
+      "nome": "Altri movimenti",
+      "effetto": "spazio 1 × 1 Q"
+    }
+  ],
+  "gs_px": {
+    "gs": "Veterano",
+    "px": 55,
+    "per_pg": 4
+  },
+  "_bestiario": {
+    "campi": {
+      "pv": "Mostri 0.69",
+      "pm": "Mostri 0.69",
+      "caratteristiche": "Mostri 0.69",
+      "ar": "Mostri 0.69",
+      "difese": "Mostri 0.69",
+      "salvezze": "Mostri 0.69",
+      "iniziativa": "Mostri 0.69",
+      "azioni": "Mostri 0.69",
+      "movimento": "Mostri 0.69",
+      "spazio": "Mostri 0.69",
+      "abilita": "Mostri 0.69",
+      "capacita": "Mostri 0.69",
+      "gs_px": "Mostri 0.69"
+    },
+    "edizione": "Mostri 0.69",
+    "sistema_salute": "solo_PV"
+  }
+}

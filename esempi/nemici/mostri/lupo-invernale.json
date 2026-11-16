@@ -3,7 +3,7 @@
   "versione": 1,
   "id": "lupo-invernale",
   "nome": "Lupo invernale",
-  "fonte": "dal Manuale dei Mostri v0.46 (Word del 27/10/2026), cap. 8 «Catalogo delle creature» — Predatori straordinari",
+  "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Lupo invernale",
   "caratteristiche": {
     "FOR": 8,
     "DES": 6,
@@ -107,9 +107,26 @@
       "effetto": "Immune a danni e conseguenze del Gelo di qualunque Natura; non è vulnerabile automaticamente al Fuoco. Udito e olfatto acuti +2. Sulla neve +2 a Furtività quando il manto bianco aiuta realmente a nascondersi (nessuna invisibilità né cancellazione delle impronte). Nessuna Scurovisione innata. Non guadagna altri Soffi restando al freddo e non assorbe il Gelo per curarsi."
     }
   ],
-  "note": "Parla Comune, Gigante e il linguaggio dei Lupi invernali. Segue tracce sulla neve; può servire come guardiano per accordo o addestramento. Condotta: sotto 13 PV o a Ferita Profonda può proteggere il branco ripiegando. Fonte: Winter Wolf, pp. 340–341.",
+  "note": "Canide senziente dei climi freddi • Morso e Soffio gelido • Natura Comune.",
   "_bestiario": {
     "edizione": "Mostri 0.69",
-    "sistema_salute": "solo_PV"
-  }
+    "sistema_salute": "solo_PV",
+    "campi": {
+      "pv": "Mostri 0.69",
+      "pm": "Mostri 0.69",
+      "caratteristiche": "Mostri 0.69",
+      "ar": "Mostri 0.69",
+      "difese": "Mostri 0.69",
+      "salvezze": "Mostri 0.69",
+      "iniziativa": "Mostri 0.69",
+      "azioni": "Mostri 0.69",
+      "movimento": "Mostri 0.69",
+      "spazio": "Mostri 0.69",
+      "abilita": "Mostri 0.69",
+      "attacchi": "Mostri 0.47",
+      "capacita": "Mostri 0.47",
+      "gs_px": "Mostri 0.69"
+    }
+  },
+  "taglia": "grande"
 }

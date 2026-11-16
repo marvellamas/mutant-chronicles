@@ -3,7 +3,7 @@
   "versione": 1,
   "id": "zanna-di-yeenoghu",
   "nome": "Zanna di Yeenoghu",
-  "fonte": "dal Manuale dei Mostri v0.46 (Word del 27/10/2026), cap. 8 «Catalogo delle creature» — Capi e varianti dei popoli guerrieri",
+  "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Zanna di Yeenoghu",
   "caratteristiche": {
     "FOR": 8,
     "DES": 6,
@@ -49,12 +49,11 @@
       "va": 13,
       "danno": "1d8+2",
       "natura": "Naturale",
-      "portata_q": 1,
-      "ac": 1,
       "proprieta": [
         "Taglio"
       ],
-      "note": "Parte del corpo: non concede Parata."
+      "portata_q": 1,
+      "ac": 1
     },
     {
       "nome": "Morso",
@@ -62,12 +61,12 @@
       "va": 13,
       "danno": "1d6+2",
       "natura": "Naturale",
-      "portata_q": 1,
-      "ac": 1,
       "proprieta": [
-        "Perforazione"
+        "Perforazione",
+        "più tossina se applicabile"
       ],
-      "note": "Più tossina se applicabile: vedi «Tossina». Parte del corpo: non concede Parata."
+      "portata_q": 1,
+      "ac": 1
     }
   ],
   "abilita": [
@@ -131,9 +130,25 @@
       "effetto": "La possessione demoniaca all’origine del campione è conservata come influenza su una creatura vivente: nessun secondo avversario annidato, riserva esterna o trasferimento alla morte; nessuna Natura Oscura Simmetria, CROS, immunità o danno Etereo. Conserva mente e PM: Dardo Psichico, Dardo Spirituale e influenze mentali la raggiungono secondo le proprie schede; la fedeltà al culto non è un’immunità. Nessun contagio: morso, sangue, vicinanza o uccisione non trasferiscono la condizione né aumentano CROS; altri campioni, un demone autonomo o un esorcismo richiedono un effetto o un’avventura definiti separatamente. Negare Potere non cancella artigli, Frenesia o addestramento."
     }
   ],
-  "note": "Nessuna immunità biologica o mentale. Parla Gnoll e Abissale. Variante dal morso tossico e dagli artigli sviluppati: la scheda ne definisce solo il corpo combattente. Condotta: sotto 14 PV o a Ferita Profonda può ripiegare verso il branco oppure obbedire a una consegna fanatica fissata dal Direttore; nessun bonus o PX per il solo appellativo demoniaco. Fonte: Gnoll Fang of Yeenoghu, pp. 162–163.",
+  "note": "Gnoll • campione sotto influenza spirituale • Natura Comune.",
   "_bestiario": {
     "edizione": "Mostri 0.69",
-    "sistema_salute": "solo_PV"
+    "sistema_salute": "solo_PV",
+    "campi": {
+      "pv": "Mostri 0.69",
+      "pm": "Mostri 0.69",
+      "caratteristiche": "Mostri 0.69",
+      "ar": "Mostri 0.69",
+      "difese": "Mostri 0.69",
+      "salvezze": "Mostri 0.69",
+      "iniziativa": "Mostri 0.69",
+      "azioni": "Mostri 0.47",
+      "movimento": "Mostri 0.69",
+      "spazio": "Mostri 0.69",
+      "abilita": "Mostri 0.69",
+      "attacchi": "Mostri 0.69",
+      "capacita": "Mostri 0.47",
+      "gs_px": "Mostri 0.69"
+    }
   }
 }

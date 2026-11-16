@@ -1,0 +1,114 @@
+{
+  "formato": "mutant-nemico",
+  "versione": 1,
+  "id": "beholder",
+  "nome": "Beholder",
+  "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Beholder",
+  "taglia": "grande",
+  "note": "Predatore levitante con un grande occhio centrale e dieci peduncoli oculari. Preferisce caverne verticali, tiene gli intrusi a distanza e alterna i raggi al cono che ostacola la magia.",
+  "pv": 156,
+  "pm": 60,
+  "caratteristiche": {
+    "FOR": 5,
+    "DES": 7,
+    "COS": 8,
+    "INT": 8,
+    "SAG": 7,
+    "CAR": 8
+  },
+  "ar": {
+    "totale": 5,
+    "magica": 0
+  },
+  "difese": 13,
+  "salvezze": {
+    "tempra": 14,
+    "riflessi": 12,
+    "volonta": 15,
+    "magia": 15
+  },
+  "iniziativa": 2,
+  "azioni": {
+    "principali": 3,
+    "movimento": 1
+  },
+  "movimento": {
+    "passo": 0,
+    "corsa": "non_consentito",
+    "scatto": "non_consentito",
+    "volo": 4
+  },
+  "spazio": "2 × 2 Q",
+  "abilita": [
+    {
+      "nome": "Corpo a corpo",
+      "va": 12
+    },
+    {
+      "nome": "Percezione",
+      "va": 17
+    },
+    {
+      "nome": "Occultismo",
+      "va": 14
+    },
+    {
+      "nome": "Raggirare",
+      "va": 14
+    }
+  ],
+  "capacita": [
+    {
+      "nome": "Raggio oculare",
+      "effetto": "VA —. Danno: Tabella comune; una vittima. Portata/costo: 24 Q; 1 AzP e 2 PM; "
+    },
+    {
+      "nome": "Occhi e Azioni",
+      "effetto": "Tre AzP complessive; ogni Raggio costa una AzP e due PM. Estrae 1d10 al momento di usarlo e ritira i tipi già impiegati nel Round; sceglie dopo una vittima valida che vede. Può rinunciare al risultato, consumando comunque AzP e PM. Massimo tre Raggi nel Round, comprese le azioni distribuite. Una sola AzP può essere spesa alla fine dell’Iniziativa di un avversario per un Raggio; non è aggiuntiva. Morso e altre capacità consumano lo stesso totale."
+    },
+    {
+      "nome": "Occhio centrale",
+      "effetto": "Può attivare il Cono di soppressione descritto nella procedura comune: una AzP e tre PM, durata tre Round. Lunghezza 12 Q, larghezza finale 6 Q, origine sul bordo del suo spazio. Il cono ostacola anche i suoi Raggi: deve scegliere orientamento e bersagli compatibili. Non dispone contemporaneamente del Cono necrotico del Tiranno."
+    },
+    {
+      "nome": "Corpo e sensi",
+      "effetto": "Scurovisione 24 Q e visione in tutte le direzioni con occhi funzionali; muri e coperture restano validi. Immune ad A Terra per la levitazione, non a Paralizzato, Accecato o attacchi mentali. Da Svenuto rimane sospeso e fermo, mentre il Cono si spegne. Le Menomazioni colpiscono occhio centrale, bocca e gruppi di peduncoli secondo la funzione: nessuna riserva di PV separata o rigenerazione automatica degli occhi."
+    },
+    {
+      "nome": "Territorio",
+      "effetto": "Non include azioni di tana, servitori o tesori utilizzabili. Altitudine e gallerie fanno parte della mappa fissata prima della scena. Può negoziare o ritirarsi; non conosce la posizione di una creatura soltanto perché questa è entrata nel territorio. Nessun Incantesimo appreso aggiuntivo."
+    },
+    {
+      "nome": "Valori pronti",
+      "effetto": "Attacchi e Difese comprendono le componenti ordinarie. Le immunità sono soltanto quelle dichiarate; la specie non riceve automaticamente la vulnerabilità al freddo della Covata. Abilità e caratteristiche non aggiungono altri bonus ai danni scritti. Restano le normali localizzazioni, ricondotte alle funzioni anatomiche effettive."
+    },
+    {
+      "nome": "Altri movimenti",
+      "effetto": "spazio 2 × 2 Q"
+    }
+  ],
+  "gs_px": {
+    "gs": "Mito",
+    "px": 200,
+    "per_pg": 4
+  },
+  "_bestiario": {
+    "campi": {
+      "pv": "Mostri 0.69",
+      "pm": "Mostri 0.69",
+      "caratteristiche": "Mostri 0.69",
+      "ar": "Mostri 0.69",
+      "difese": "Mostri 0.69",
+      "salvezze": "Mostri 0.69",
+      "iniziativa": "Mostri 0.69",
+      "azioni": "Mostri 0.69",
+      "movimento": "Mostri 0.69",
+      "spazio": "Mostri 0.69",
+      "abilita": "Mostri 0.69",
+      "capacita": "Mostri 0.69",
+      "gs_px": "Mostri 0.69"
+    },
+    "edizione": "Mostri 0.69",
+    "sistema_salute": "solo_PV"
+  }
+}

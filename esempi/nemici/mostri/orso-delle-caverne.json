@@ -1,0 +1,119 @@
+{
+  "formato": "mutant-nemico",
+  "versione": 1,
+  "id": "orso-delle-caverne",
+  "nome": "Orso delle caverne",
+  "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Orso delle caverne",
+  "taglia": "grande",
+  "note": "Grande orso adattato alla vita sotterranea, dal pelo scuro e ruvido. Mantiene il profilo fisico dell’Orso polare e aggiunge vista nel buio ordinario, senza poteri di roccia o gelo.",
+  "pv": 55,
+  "pm": 6,
+  "caratteristiche": {
+    "FOR": 9,
+    "DES": 5,
+    "COS": 7,
+    "INT": 2,
+    "SAG": 6,
+    "CAR": 3
+  },
+  "ar": {
+    "totale": 2,
+    "magica": 0
+  },
+  "difese": 9,
+  "salvezze": {
+    "tempra": 12,
+    "riflessi": 9,
+    "volonta": 8,
+    "magia": 9
+  },
+  "iniziativa": 0,
+  "azioni": {
+    "principali": 2,
+    "movimento": 1
+  },
+  "movimento": {
+    "passo": 8,
+    "corsa": 16,
+    "scatto": 24
+  },
+  "spazio": "2 × 2 Q",
+  "attacchi": [
+    {
+      "nome": "Morso",
+      "tipo": "ravvicinato",
+      "va": 12,
+      "danno": "1d8+2",
+      "natura": "Naturale",
+      "proprieta": [
+        "Perforazione",
+        "AC 1"
+      ],
+      "portata_q": 1,
+      "ac": 1
+    },
+    {
+      "nome": "Artigli",
+      "tipo": "ravvicinato",
+      "va": 13,
+      "danno": "1d8+2",
+      "natura": "Naturale",
+      "proprieta": [
+        "Taglio",
+        "AC 1"
+      ],
+      "portata_q": 1,
+      "ac": 1
+    }
+  ],
+  "capacita": [
+    {
+      "nome": "Corpo e sensi",
+      "effetto": "Vivente biologico con mente animale e PM personali, Scurovisione dodici Q e olfatto +2 già espresso nel tredici. Non vede attraverso pareti, fumo o buio magico. Nessuna Parata naturale, lingua o immunità generale a paura, veleno e malattie. Iniziativa soltanto 1d10: l’INT bassa non applica malus e qui non è assegnata una sostituzione istintiva di SAG."
+    },
+    {
+      "nome": "Sequenza",
+      "effetto": "Due AzP totali, massimo un Morso e un attacco di Artigli per Round, Opportunità compresa. Le zampe non colpiscono tutti gli adiacenti e non impongono automaticamente prese o A Terra. Manovre come Immobilizzare o Sbilanciare richiedono costi, opposizioni e anatomia compatibile secondo il Giocatore."
+    },
+    {
+      "nome": "Nuoto e caverne",
+      "effetto": "Le andature di nuoto sono native come quelle dell’Orso polare; nei tragitti misti usa un solo budget senza duplicare l’AzM. Respira aria e segue il fiato ordinario di COS Round e soffocamento §5.23. L’adattamento sotterraneo non concede Scavo, aderenza a pareti o passaggio attraverso rocce. I varchi devono ospitare davvero il corpo 2 × 2 Q."
+    },
+    {
+      "nome": "Anatomia e condotta",
+      "effetto": "Testa comprende morso e sensi, Torace la massa, Braccia zampe anteriori con artigli, Gambe posteriori. Il mantello non dimezza danni da Gelo e non impedisce Rallentato o Congelato. Cerca nutrimento e riparo, può difendere i piccoli o evitare intrusi; sotto 13 PV può ritirarsi. Il profilo non attribuisce automaticamente addestramento, tesori o rapporti con popoli del sottosuolo."
+    },
+    {
+      "nome": "Altri movimenti",
+      "effetto": "nuoto 6 / 12 / 18 Q; spazio 2 × 2 Q"
+    },
+    {
+      "nome": "Abilità particolari",
+      "effetto": "Percezione 11, 13 per olfatto determinante"
+    }
+  ],
+  "gs_px": {
+    "gs": "Esperto",
+    "px": 30,
+    "per_pg": 4
+  },
+  "_bestiario": {
+    "campi": {
+      "pv": "Mostri 0.69",
+      "pm": "Mostri 0.69",
+      "caratteristiche": "Mostri 0.69",
+      "ar": "Mostri 0.69",
+      "difese": "Mostri 0.69",
+      "salvezze": "Mostri 0.69",
+      "iniziativa": "Mostri 0.69",
+      "azioni": "Mostri 0.69",
+      "movimento": "Mostri 0.69",
+      "spazio": "Mostri 0.69",
+      "attacchi": "Mostri 0.69",
+      "capacita": "Mostri 0.69",
+      "gs_px": "Mostri 0.69"
+    },
+    "edizione": "Mostri 0.69",
+    "sistema_salute": "solo_PV"
+  }
+}

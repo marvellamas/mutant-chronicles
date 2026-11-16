@@ -3,7 +3,7 @@
   "versione": 1,
   "id": "gigante-del-gelo",
   "nome": "Gigante del gelo",
-  "fonte": "dal Manuale dei Mostri v0.46 (Word del 27/10/2026), cap. 8 «Catalogo delle creature» — Giganti e abitanti delle montagne",
+  "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Gigante del gelo",
   "caratteristiche": {
     "FOR": 10,
     "DES": 5,
@@ -88,17 +88,42 @@
   ],
   "capacita": [
     {
-      "nome": "Immunità al Ghiaccio",
-      "effetto": "Non subisce danni da Ghiaccio né i suoi Rallentato e Congelato; il freddo ambientale ordinario non gli dà danni o Affaticamento (restano frane, cadute, seppellimento). Fuoco e Incendiato normali, senza vulnerabilità ×2."
+      "nome": "Dotazione e danni",
+      "effetto": "Ascia bipenne FOR 6, PI 6, due mani: base 2d6+1, +3 ordinario e +2 innato. Armatura civile Media su misura: AR 3, FOR 5, PI 8. Masso: base 2d6 e +4 innato. Le armi non infliggono Ghiaccio per il solo fatto di essere usate dal gigante."
     },
     {
       "nome": "Valori con armatura",
-      "effetto": "I valori pronti includono −1 ad attacchi e Agilità (Schivata compresa) e −1 Q a ogni andatura; Parata 12. Tolta l’armatura: AR 2, Armi da guerra 16, Armi da lancio 12, Schivata 12, Atletica 15, Furtività 8, movimento 8/16/24. Perdere i PI non elimina da solo le penalità."
+      "effetto": "I valori pronti includono −1 ad attacchi e Agilità, compresa Schivata, e −1 Q a ogni andatura. La Parata resta 12. Tolta l’armatura, AR diventa 2, Guerra 16, Lancio 12, Schivata 12, Atletica 15, Furtività 8 e movimento 8 / 16 / 24. La perdita dei PI da sola non elimina le penalità."
+    },
+    {
+      "nome": "Immunità al Ghiaccio",
+      "effetto": "Non subisce danni da Ghiaccio né i suoi Rallentato e Congelato. Il freddo ambientale ordinario non gli impone danni o Affaticamento; non impedisce però frane, cadute o seppellimento nella neve. Fuoco e Incendiato seguono le regole normali, senza vulnerabilità ×2."
+    },
+    {
+      "nome": "Altri movimenti",
+      "effetto": "spazio 3 × 3 Q"
     }
   ],
-  "note": "AR 5 (2 biologica + 3 armatura Media su misura). Difese = Parata 12; Schivata 11. Ascia bipenne a due mani (+3 ordinario, +2 innato, portata 2 Q). Comportamento: alterna ascia e Difese o prepara il tiro; sotto 19 PV o a Ferita Seria cerca copertura o un accordo.",
+  "note": "Gigante • combattente delle terre fredde • Natura Comune. Condotta. Può alternare pressione con l’ascia e Difese, oppure preparare il tiro da una posizione protetta. Non cammina automaticamente su ghiaccio verticale o instabile. Sotto 25 PV cerca copertura o un accordo; disciplina e obiettivi possono guidarne una ritirata organizzata.",
   "_bestiario": {
     "edizione": "Mostri 0.69",
-    "sistema_salute": "solo_PV"
-  }
+    "sistema_salute": "solo_PV",
+    "campi": {
+      "pv": "Mostri 0.69",
+      "pm": "Mostri 0.69",
+      "caratteristiche": "Mostri 0.69",
+      "ar": "Mostri 0.69",
+      "difese": "Mostri 0.69",
+      "salvezze": "Mostri 0.69",
+      "iniziativa": "Mostri 0.69",
+      "azioni": "Mostri 0.69",
+      "movimento": "Mostri 0.69",
+      "spazio": "Mostri 0.69",
+      "abilita": "Mostri 0.69",
+      "attacchi": "Mostri 0.47",
+      "capacita": "Mostri 0.69",
+      "gs_px": "Mostri 0.69"
+    }
+  },
+  "taglia": "grande"
 }

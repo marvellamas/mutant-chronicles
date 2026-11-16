@@ -1,0 +1,116 @@
+{
+  "formato": "mutant-nemico",
+  "versione": 1,
+  "id": "megera-verde",
+  "nome": "Megera verde",
+  "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Megera verde",
+  "note": "Predatrice anfibia che vive tra boschi malati e paludi. Imita richiami e voci per attirare i viaggiatori, poi si nasconde dietro un aspetto innocuo o un passaggio invisibile.",
+  "pv": 73,
+  "pm": 24,
+  "caratteristiche": {
+    "FOR": 8,
+    "DES": 6,
+    "COS": 7,
+    "INT": 6,
+    "SAG": 7,
+    "CAR": 7
+  },
+  "ar": {
+    "totale": 3,
+    "magica": 0
+  },
+  "difese": 11,
+  "salvezze": {
+    "tempra": 12,
+    "riflessi": 10,
+    "volonta": 11,
+    "magia": 12
+  },
+  "iniziativa": 1,
+  "azioni": {
+    "principali": 2,
+    "movimento": 1
+  },
+  "movimento": {
+    "passo": 6,
+    "corsa": 12,
+    "scatto": 18
+  },
+  "spazio": "1 Q",
+  "abilita": [
+    {
+      "nome": "Corpo a corpo",
+      "va": 13
+    },
+    {
+      "nome": "Occultismo",
+      "va": 11
+    },
+    {
+      "nome": "Percezione",
+      "va": 12
+    },
+    {
+      "nome": "Furtività",
+      "va": 12
+    },
+    {
+      "nome": "Raggirare",
+      "va": 13
+    }
+  ],
+  "capacita": [
+    {
+      "nome": "Motteggio perturbante",
+      "effetto": "VA —. Danno: Disorientato; Volontà 0. Portata/costo: Una mente entro 6 Q; 1 AzP e 2 PM; "
+    },
+    {
+      "nome": "Corpo e sensi",
+      "effetto": "Vivente anfibia: respira aria e acqua, ma non riceve Movimento di Nuoto superiore a quello ordinario senza una capacità adatta. Scurovisione 12 Q. Nessuna Parata naturale, Resistenza alla magia o immunità di famiglia. Massimo un attacco di Artigli per Round, Opportunità compresa."
+    },
+    {
+      "nome": "Imitazione e maschera",
+      "effetto": "Può riprodurre con la propria voce richiami animali o frasi e timbri già ascoltati. Non apprende lingue, ricordi o risposte ignote; Percezione contrapposta a Raggirare 13 può riconoscere un’incongruenza uditiva concreta. Un richiamo breve non costa AzP alla propria Iniziativa, senza alterare il turno. Possiede Maschera apparente delle regole comuni, limitata a un umanoide di dimensioni e morfologia compatibili; il tatto incongruente consente l’indagine prevista."
+    },
+    {
+      "nome": "Passaggio invisibile",
+      "effetto": "Una AzP e tre PM: cinque Round a Concentrazione, solo sul proprio corpo e sugli oggetti già indossati. Equivalente a Mimetismo nove per rilevazione e distorsione, Percezione −2, senza quota di Azioni ulteriori alla Concentrazione. Durante il mantenimento soltanto Passo fino a sei Q e nessuna AzP; attaccare o usare un’altra capacità lo termina prima di agire. I suoi appoggi non lasciano nuove impronte ordinarie durante il Passaggio, ma rumori, odori, oggetti urtati e tracce preesistenti rimangono. Non attraversa muri e non è Velo Psichico. Negare Potere nove, fine della Concentrazione, Svenuto o morte terminano."
+    },
+    {
+      "nome": "Inganni e dileggio",
+      "effetto": "Illusione minuta: una AzP e un PM, Illusione tre, origine entro sei Q, raggio due Q, cinque minuti; soltanto scena statica semplice, suoni e odori consentiti dalla versione, Magia 0 per indagine e Negare tre. Motteggio: una AzP e due PM, una mente cosciente visibile entro sei Q che possa udirla; Volontà 0 evita, fallimento Disorientato per tre Round. Nessun danno ai PV o ai PM e nessuna perdita di Azioni. Un solo bersaglio per uso, massimo un Motteggio per Round; Negare sei o Cura Spirituale uno rimuovono. Barriera Mentale aiuta la Volontà."
+    },
+    {
+      "nome": "Luci e accordi",
+      "effetto": "Una AzP e un PM creano fino a quattro luci innocue visibili entro sei Q, luce totale di raggio due Q per cinque Round. Spostarle entro sei Q richiede una AzP, senza attacchi o Copertura reale; Negare tre rimuove. Le menzogne e i patti richiedono accordi e prove sociali pertinenti: non cedono anime o impongono CROS automaticamente. Congrega, Occhio della congrega e tana ostile non sono inclusi nel profilo base."
+    },
+    {
+      "nome": "Altri movimenti",
+      "effetto": "spazio 1 × 1 Q"
+    }
+  ],
+  "gs_px": {
+    "gs": "Veterano",
+    "px": 50,
+    "per_pg": 4
+  },
+  "_bestiario": {
+    "campi": {
+      "pv": "Mostri 0.69",
+      "pm": "Mostri 0.69",
+      "caratteristiche": "Mostri 0.69",
+      "ar": "Mostri 0.69",
+      "difese": "Mostri 0.69",
+      "salvezze": "Mostri 0.69",
+      "iniziativa": "Mostri 0.69",
+      "azioni": "Mostri 0.69",
+      "movimento": "Mostri 0.69",
+      "spazio": "Mostri 0.69",
+      "abilita": "Mostri 0.69",
+      "capacita": "Mostri 0.69",
+      "gs_px": "Mostri 0.69"
+    },
+    "edizione": "Mostri 0.69",
+    "sistema_salute": "solo_PV"
+  }
+}

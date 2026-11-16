@@ -1,0 +1,128 @@
+{
+  "formato": "mutant-nemico",
+  "versione": 1,
+  "id": "slaad-della-morte",
+  "nome": "Slaad della morte",
+  "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Slaad della morte",
+  "note": "Slaad esperto nell’inganno e nel combattimento armato. Le sue ferite producono anche erosione spirituale; può aggiungere una nube tossica ai poteri del grigio.",
+  "pv": 188,
+  "pm": 64,
+  "caratteristiche": {
+    "FOR": 9,
+    "DES": 7,
+    "COS": 9,
+    "INT": 8,
+    "SAG": 5,
+    "CAR": 8
+  },
+  "ar": {
+    "totale": 5,
+    "magica": 0
+  },
+  "difese": 14,
+  "salvezze": {
+    "tempra": 16,
+    "riflessi": 14,
+    "volonta": 14,
+    "magia": 15
+  },
+  "iniziativa": 2,
+  "azioni": {
+    "principali": 3,
+    "movimento": 1
+  },
+  "movimento": {
+    "passo": 6,
+    "corsa": 12,
+    "scatto": 18
+  },
+  "spazio": "1 Q",
+  "abilita": [
+    {
+      "nome": "Armi da guerra",
+      "va": 17
+    },
+    {
+      "nome": "Corpo a corpo",
+      "va": 16
+    },
+    {
+      "nome": "Armi da lancio",
+      "va": 12
+    },
+    {
+      "nome": "Atletica",
+      "va": 15
+    },
+    {
+      "nome": "Percezione",
+      "va": 16
+    },
+    {
+      "nome": "Occultismo",
+      "va": 14
+    },
+    {
+      "nome": "Raggirare",
+      "va": 15
+    }
+  ],
+  "capacita": [
+    {
+      "nome": "Morso",
+      "effetto": "VA 16. Danno: AC 2: 1d8+3 Magico, Perforazione, poi 1d6+2 Etereo. Portata/costo: 1 Q; vera forma; 1 AzP; "
+    },
+    {
+      "nome": "Artiglio",
+      "effetto": "VA 16. Danno: AC 2: 1d10+3 Magico, Taglio, poi 1d6+2 Etereo. Portata/costo: 1 Q; vera forma; 1 AzP; "
+    },
+    {
+      "nome": "Spadone",
+      "effetto": "VA 17. Danno: AC 2: 2d6+4 Magico, Taglio, poi 1d6+2 Etereo. Portata/costo: 1 Q; due mani; 1 AzP; "
+    },
+    {
+      "nome": "Corpo e sensi",
+      "effetto": "Vivente biologico con Protezioni Slaad, Resistenza alla magia +2 e Rigenerazione quattro. Scurovisione, percezione cieca e telepatia dodici Q; i solidi fermano la percezione cieca. Para con Spadone pronto, senza Parata naturale. Non è un non morto, non ha immunità al veleno o agli attacchi spirituali e non risucchia PM per il solo fatto di causare danno Etereo."
+    },
+    {
+      "nome": "Sequenza ed erosione",
+      "effetto": "Tre AzP totali, massimo un Morso e due attacchi complessivi tra Artigli e Spadone per Round, Opportunità compresa. Un tiro, una Difesa e due AC successive; Magistrale soltanto sulla prima, AR ordinaria per Magico e solo quota magica per Etereo. La seconda AC è una capacità spirituale specifica di questa conversione, non una nuova regola per ogni danno necrotico della fonte. Non cura lo Slaad, non riduce i PV massimi e non infligge Corruzione."
+    },
+    {
+      "nome": "Poteri e nube",
+      "effetto": "Possiede Mutamento Slaad, Percepire magia, Lettura superficiale, Mano remota, Invisibilità breve e Immagine animata delle regole comuni. Cono di terrore, Globo di fuoco e Volo breve: due usi per ventiquattro ore ciascuno; Globo VA quattordici. Una volta per ventiquattro ore può creare la Nube mortifera della procedura dedicata, due AzP e sei PM. Tutte le capacità condividono PM e tre AzP, senza attivazioni gratuite alla morte o fuori turno."
+    },
+    {
+      "nome": "Dotazione e forma",
+      "effetto": "Spadone Comune: FOR sei, due mani, portata un Q, PI sei, PS Integrità dieci, base 2d6+1 più tre personali già compresi. Infusione Magica ed Erosione sono personali, assenti nell’arma recuperata. Una mano libera è necessaria per un Artiglio; la forma umanoide perde Morso e Artigli ma può usare lo Spadone. Nessuna gemma di controllo, banda di Slaad, patto o viaggio planare è incluso nei 220 PX."
+    },
+    {
+      "nome": "Altri movimenti",
+      "effetto": "spazio 1 × 1 Q"
+    }
+  ],
+  "gs_px": {
+    "gs": "Mito",
+    "px": 220,
+    "per_pg": 4
+  },
+  "_bestiario": {
+    "campi": {
+      "pv": "Mostri 0.69",
+      "pm": "Mostri 0.69",
+      "caratteristiche": "Mostri 0.69",
+      "ar": "Mostri 0.69",
+      "difese": "Mostri 0.69",
+      "salvezze": "Mostri 0.69",
+      "iniziativa": "Mostri 0.69",
+      "azioni": "Mostri 0.69",
+      "movimento": "Mostri 0.69",
+      "spazio": "Mostri 0.69",
+      "abilita": "Mostri 0.69",
+      "capacita": "Mostri 0.69",
+      "gs_px": "Mostri 0.69"
+    },
+    "edizione": "Mostri 0.69",
+    "sistema_salute": "solo_PV"
+  }
+}

@@ -1,0 +1,144 @@
+{
+  "formato": "mutant-nemico",
+  "versione": 1,
+  "id": "sprite",
+  "nome": "Sprite",
+  "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Sprite",
+  "note": "Sentinella alata armata di piccole lame e frecce soporifere. Sorveglia i boschi e valuta le emozioni degli intrusi senza leggere automaticamente la loro moralità o i loro segreti.",
+  "pv": 8,
+  "pm": 12,
+  "caratteristiche": {
+    "FOR": 1,
+    "DES": 9,
+    "COS": 4,
+    "INT": 7,
+    "SAG": 6,
+    "CAR": 5
+  },
+  "ar": {
+    "totale": 1,
+    "magica": 0
+  },
+  "difese": 13,
+  "salvezze": {
+    "tempra": 8,
+    "riflessi": 13,
+    "volonta": 9,
+    "magia": 10
+  },
+  "iniziativa": 4,
+  "azioni": {
+    "principali": 1,
+    "movimento": 1
+  },
+  "movimento": {
+    "passo": 2,
+    "corsa": 4,
+    "scatto": 6,
+    "volo": 8
+  },
+  "abilita": [
+    {
+      "nome": "Armi da guerra",
+      "va": 11
+    },
+    {
+      "nome": "Armi da lancio",
+      "va": 13
+    },
+    {
+      "nome": "Corpo a corpo",
+      "va": 12
+    },
+    {
+      "nome": "Furtività",
+      "va": 15
+    },
+    {
+      "nome": "Percezione",
+      "va": 11
+    },
+    {
+      "nome": "Raggirare",
+      "va": 10
+    }
+  ],
+  "attacchi": [
+    {
+      "nome": "Lama in miniatura",
+      "tipo": "ravvicinato",
+      "va": 11,
+      "danno": "1d4",
+      "natura": "Naturale",
+      "proprieta": [
+        "Taglio",
+        "AC 1"
+      ],
+      "portata_q": 1,
+      "ac": 1
+    },
+    {
+      "nome": "Freccia soporifera",
+      "tipo": "distanza",
+      "va": 13,
+      "danno": "1d4",
+      "natura": "Naturale",
+      "proprieta": [
+        "Perforazione",
+        "AC 1",
+        "veleno"
+      ],
+      "gittata_q": 8,
+      "modalita": [
+        "S"
+      ],
+      "ac": 1
+    }
+  ],
+  "capacita": [
+    {
+      "nome": "Corpo e difesa",
+      "effetto": "Vivente biologico; nessuna Resistenza alla magia o Parata naturale. Può Parare con la Lama pronta ai costi normali o Schivare; da Svenuto in volo cade. Una sola AzP e massimo un attacco per Round, Opportunità compresa. Le armi su misura usano DES per colpire, con i VA pronti scritti, e il solo danno fisso del loro profilo, senza bonus negativo di FOR."
+    },
+    {
+      "nome": "Veleno soporifero",
+      "effetto": "Solo dopo almeno un danno finale di Freccia a un vivente biologico: Tempra 0 contro veleno naturale di Pericolosità III. Successo evita; fallimento Avvelenato per cinque Round con −2 VA alle Prove fisiche, non alle PS. Maldestro applica anche Svenuto per 1d3+1 Round. Il danno o un’AzP di un alleato a Contatto che scuota il bersaglio terminano solo questo Svenuto; resta il veleno. Alla fine di ogni Iniziativa ripete Tempra 0: successo rimuove dose e relativi Stati. Cura Avvelenamenti almeno tre o antidoto adatto neutralizzano; Cura Spirituale da sola non elimina una causa velenosa attiva. Nuove dosi mantengono la scadenza maggiore, senza sommare penalità."
+    },
+    {
+      "nome": "Emozioni e invisibilità",
+      "effetto": "Lettura del cuore: una AzP e due PM, una mente cosciente a Contatto, Volontà 0. Fallimento rivela l’emozione dominante presente, senza ricordi, intenzioni future o informazioni su CROS, Natura o allineamenti. Barriera Mentale aiuta; nessuna specie fallisce automaticamente. Con un avversario non consenziente serve prima un tocco, Corpo a corpo dodici, compreso nell’Azione, con normali Difese. Possiede Invisibilità breve delle regole comuni; un attacco la termina dopo la propria risoluzione e non garantisce sorpresa."
+    },
+    {
+      "nome": "Dotazione su misura",
+      "effetto": "Lama e Arco in miniatura: FOR uno, PI due ciascuno e PS Integrità dieci; protezione su misura, categoria Leggera, AR uno, FOR uno, PI tre e PS Integrità dieci. Sono profili specifici della specie, senza aggiungere nuovi modelli al catalogo Commerciale ordinario. La Leggera non penalizza attacchi, movimento o Difese; mantiene l’ordinario −1 al lancio con Potere se lo Sprite acquisisce Incantesimi, senza penalizzare le capacità innate. L’Arco richiede due mani e consuma una delle dodici frecce a ogni tiro, anche mancato; incoccare incluso. Le frecce hanno una sola dose inoculabile ciascuna e non producono veleno infinito. Il danno assorbito dall’AR non inocula. Il cambio tra Lama e Arco usa le normali Azioni."
+    },
+    {
+      "nome": "Altri movimenti",
+      "effetto": "spazio 1 Q condivisibile, non blocca il passaggio"
+    }
+  ],
+  "gs_px": {
+    "gs": "Inesperto",
+    "px": 22,
+    "per_pg": 4
+  },
+  "_bestiario": {
+    "campi": {
+      "pv": "Mostri 0.69",
+      "pm": "Mostri 0.69",
+      "caratteristiche": "Mostri 0.69",
+      "ar": "Mostri 0.69",
+      "difese": "Mostri 0.69",
+      "salvezze": "Mostri 0.69",
+      "iniziativa": "Mostri 0.69",
+      "azioni": "Mostri 0.69",
+      "movimento": "Mostri 0.69",
+      "abilita": "Mostri 0.69",
+      "attacchi": "Mostri 0.69",
+      "capacita": "Mostri 0.69",
+      "gs_px": "Mostri 0.69"
+    },
+    "edizione": "Mostri 0.69",
+    "sistema_salute": "solo_PV"
+  }
+}

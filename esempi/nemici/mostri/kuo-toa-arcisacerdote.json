@@ -1,0 +1,171 @@
+{
+  "formato": "mutant-nemico",
+  "versione": 1,
+  "id": "kuo-toa-arcisacerdote",
+  "nome": "Kuo-toa arcisacerdote",
+  "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Kuo-toa arcisacerdote",
+  "note": "Guida Kuo-toa che combina protezioni, cure e controllo con uno scettro attraversato da scariche. Il fervore religioso descrive il ruolo nella comunità e non assegna poteri divini illimitati.",
+  "pv": 99,
+  "pm": 55,
+  "caratteristiche": {
+    "FOR": 7,
+    "DES": 6,
+    "COS": 7,
+    "INT": 6,
+    "SAG": 7,
+    "CAR": 7
+  },
+  "ar": {
+    "totale": 2,
+    "magica": 0
+  },
+  "difese": 11,
+  "salvezze": {
+    "tempra": 13,
+    "riflessi": 11,
+    "volonta": 13,
+    "magia": 13
+  },
+  "iniziativa": 1,
+  "azioni": {
+    "principali": 3,
+    "movimento": 1
+  },
+  "movimento": {
+    "passo": 6,
+    "corsa": 12,
+    "scatto": 18
+  },
+  "spazio": "1 Q",
+  "abilita": [
+    {
+      "nome": "Armi da mischia",
+      "va": 14
+    },
+    {
+      "nome": "Corpo a corpo",
+      "va": 12
+    },
+    {
+      "nome": "Potere",
+      "va": 15
+    },
+    {
+      "nome": "Occultismo",
+      "va": 14
+    },
+    {
+      "nome": "Percezione",
+      "va": 16
+    },
+    {
+      "nome": "Oratoria",
+      "va": 13
+    }
+  ],
+  "attacchi": [
+    {
+      "nome": "Scettro",
+      "tipo": "ravvicinato",
+      "va": 14,
+      "danno": "1d6+1",
+      "natura": "Naturale",
+      "proprieta": [
+        "Contusione",
+        "AC 1"
+      ],
+      "portata_q": 1,
+      "ac": 1
+    },
+    {
+      "nome": "Scettro caricato",
+      "tipo": "ravvicinato",
+      "va": 14,
+      "danno": "2d6+1",
+      "natura": "Naturale",
+      "proprieta": [
+        "Contusione",
+        "Elettricità",
+        "AC 1"
+      ],
+      "portata_q": 1,
+      "ac": 1
+    },
+    {
+      "nome": "Colpo senza armi",
+      "tipo": "ravvicinato",
+      "va": 12,
+      "danno": "1d4+1",
+      "natura": "Naturale",
+      "proprieta": [
+        "Contusione",
+        "AC 1"
+      ],
+      "portata_q": 1,
+      "ac": 1
+    }
+  ],
+  "capacita": [
+    {
+      "nome": "Corpo e sensi",
+      "effetto": "Vivente biologico anfibio con mente e PM personali; Scurovisione 24 Q. Quando è in sole diretto, −2 attacchi e Percezione visiva. +2 alle sole Prove fisiche per sfuggire a prese e legature, non alle PS in generale. Percepisce invisibili o incorporei entro sei Q senza attraversare solidi: movimento localizza il Q, immobilità indica presenza e direzione; non equivale alla vista richiesta da un Incantesimo. Anatomia umanoide e lingua della comunità."
+    },
+    {
+      "nome": "Azioni e scettro",
+      "effetto": "Tre AzP e una AzM totali, massimo due attacchi ravvicinati complessivi per Round, Opportunità compatibile compresa. Scettro come Randello Comune, FOR tre, PI cinque, PS Integrità dieci, base 1d6 più uno personale. Può Parare con lo Scettro pronto; non ha Parata naturale o Scudo adesivo. Una mano rimane libera per il lancio."
+    },
+    {
+      "nome": "Carica corporea",
+      "effetto": "Prima di attaccare può spendere due PM per far scorrere la scarica nello Scettro impugnato: paga anche se manca o il colpo viene evitato. Il danno completo diventa 2d6+1, una sola AC e una sola sottrazione dell’AR. Dopo danno finale e superamento di Isolante, Tempra 0 evita Elettricità per 1+1d3 Round: niente Azioni fuori dalla propria Iniziativa, ma PS, opposizioni passive ed Elusione priva di Azioni restano disponibili. Non aggiunge Disorientato da Fulmine magico. L’oggetto recuperato non produce la carica senza questa capacità personale."
+    },
+    {
+      "nome": "Ruolo e condotta",
+      "effetto": "Il controllo sociale dei seguaci non equivale a Possessione o comando telepatico. Le altre creature hanno risorse e PX propri. Può proteggere una via di fuga, curare un alleato o negoziare; sotto 25 PV tende a ripararsi. Non sottrae Incantesimi ai Kuo-toa frusta con una semplice decisione."
+    },
+    {
+      "nome": "Lancio",
+      "effetto": "Potere quindici, scala Taumaturgo, versioni fino al nove. Conosce Scudo, Scudo Spirituale, Cura Ferite, Cura Spirituale, Catene di Forza, Arma Mistica, Linguaggi, Controllo Elementale, Comunione e Individuare. Una AzP e PM pari al livello, componenti ordinarie; Comunione conserva il proprio tempo e la Concentrazione. Non possiede Contromagia o i Talenti del Mistico. Nessun effetto attivo all’inizio."
+    },
+    {
+      "nome": "Protezioni pronte",
+      "effetto": "Scudo sei: una AzP e sei PM, Potere quindici, un consenziente entro tre Q, venti Round, AR Naturale due e +1 alla sola Parata con disco. Su di sé AR totale quattro; Parata con disco dodici, −4 a distanza o −6 contro Raffica, sempre una AzP. Scudo Spirituale sei: una AzP e sei PM, Potere quindici, un consenziente entro tre Q per cinque minuti, +4 alle PS pertinenti e riduzione di due delle perdite ostili di PM, senza ridurre i costi volontari."
+    },
+    {
+      "nome": "Cure e cattura",
+      "effetto": "Cura Ferite nove: una AzP e nove PM, Potere tredici, un vivente entro sei Q, 4d4+5 senza bonus SAG o massimizzazione; due punti possono ridurre di uno Sanguinamento. Cura Spirituale sei usa Potere quindici e tratta fino a due Stati consentiti entro sei Q. Catene nove usa Potere tredici: fino a due corpi entro quindici Q, Tempra −2 o Immobilizzato cinque Round; liberarsi una AzP e nuova Tempra −2, prima fonte di danno del Round Riflessi −2 o A Terra. Rimangono le normali interazioni di Negare."
+    },
+    {
+      "nome": "Arma e ambiente",
+      "effetto": "Arma Mistica sei, una AzP e sei PM, Potere quindici: un’arma entro tre Q, danno diretto Magico, +1 VA e +1 danno per dieci Round. Sullo Scettro ordinario diventa VA quindici e 1d6+2 Magico; la scarica corporea resta un effetto secondario autonomo e non si converte gratuitamente. Linguaggi, Controllo Elementale, Comunione e Individuare seguono le schede della Magia §§20.2, 13.2, 20.6 e 23.9, nei livelli accessibili: niente lettura onnisciente, creazione di oceani o manifestazione automatica di una divinità."
+    },
+    {
+      "nome": "Altri movimenti",
+      "effetto": "Terra e nuoto 6 / 12 / 18: la stessa andatura vale anche per nuoto; spazio 1 × 1 Q"
+    }
+  ],
+  "gs_px": {
+    "gs": "Eroe",
+    "px": 77,
+    "per_pg": 4
+  },
+  "_bestiario": {
+    "campi": {
+      "pv": "Mostri 0.69",
+      "pm": "Mostri 0.69",
+      "caratteristiche": "Mostri 0.69",
+      "ar": "Mostri 0.69",
+      "difese": "Mostri 0.69",
+      "salvezze": "Mostri 0.69",
+      "iniziativa": "Mostri 0.69",
+      "azioni": "Mostri 0.69",
+      "movimento": "Mostri 0.69",
+      "spazio": "Mostri 0.69",
+      "abilita": "Mostri 0.69",
+      "attacchi": "Mostri 0.69",
+      "capacita": "Mostri 0.69",
+      "gs_px": "Mostri 0.69"
+    },
+    "edizione": "Mostri 0.69",
+    "sistema_salute": "solo_PV"
+  }
+}

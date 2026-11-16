@@ -1,0 +1,147 @@
+{
+  "formato": "mutant-nemico",
+  "versione": 1,
+  "id": "goristro",
+  "nome": "Goristro",
+  "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Goristro",
+  "taglia": "grande",
+  "note": "Colosso taurino usato come sfondatore. Memorizza i percorsi già attraversati e punta a una carica frontale; non diventa un navigatore onnisciente nei luoghi che non conosce.",
+  "pv": 271,
+  "pm": 24,
+  "caratteristiche": {
+    "FOR": 10,
+    "DES": 5,
+    "COS": 10,
+    "INT": 3,
+    "SAG": 7,
+    "CAR": 6
+  },
+  "ar": {
+    "totale": 7,
+    "magica": 0
+  },
+  "difese": 11,
+  "salvezze": {
+    "tempra": 17,
+    "riflessi": 12,
+    "volonta": 11,
+    "magia": 13
+  },
+  "iniziativa": 2,
+  "azioni": {
+    "principali": 3,
+    "movimento": 1
+  },
+  "movimento": {
+    "passo": 8,
+    "corsa": 16,
+    "scatto": 24
+  },
+  "spazio": "3 × 3 Q",
+  "abilita": [
+    {
+      "nome": "Corpo a corpo",
+      "va": 18
+    },
+    {
+      "nome": "Atletica",
+      "va": 18
+    },
+    {
+      "nome": "Percezione",
+      "va": 14
+    }
+  ],
+  "attacchi": [
+    {
+      "nome": "Pugno",
+      "tipo": "ravvicinato",
+      "va": 18,
+      "danno": "3d6+3",
+      "natura": "Naturale",
+      "proprieta": [
+        "Contusione",
+        "AC 1"
+      ],
+      "portata_q": 2,
+      "ac": 1
+    },
+    {
+      "nome": "Zoccolo",
+      "tipo": "ravvicinato",
+      "va": 18,
+      "danno": "3d8+3",
+      "natura": "Naturale",
+      "proprieta": [
+        "Contusione",
+        "AC 1"
+      ],
+      "portata_q": 1,
+      "ac": 1
+    },
+    {
+      "nome": "Incornata",
+      "tipo": "ravvicinato",
+      "va": 18,
+      "danno": "4d8+3",
+      "natura": "Naturale",
+      "proprieta": [
+        "Perforazione",
+        "AC 1"
+      ],
+      "portata_q": 2,
+      "ac": 1
+    }
+  ],
+  "capacita": [
+    {
+      "nome": "Corpo e sensi",
+      "effetto": "Protezione Demone comune, Resistenza alla magia +2 non inclusa nelle PS e Scurovisione 24 Q. Nessuna Parata naturale, telepatia o teletrasporto. Iniziativa 1d10+2 usa SAG come prontezza istintiva, in sostituzione di DES; non usa INT."
+    },
+    {
+      "nome": "Sequenza",
+      "effetto": "Tre AzP totali, massimo due Pugni, uno Zoccolo e una Incornata entro tre attacchi per Round. L’Incornata occupa due AzP: permette al massimo un altro attacco da una AzP. Non è utilizzabile come Opportunità gratuita; Pugno e Zoccolo lo sono e consumano i propri limiti."
+    },
+    {
+      "nome": "Carica",
+      "effetto": "Dopo almeno tre Q realmente percorsi in linea retta verso il bersaglio, può dichiarare una Incornata con +2d8 al danno scritto, stessa AC. Il Movimento e le due AzP restano necessari; il tratto deve essere praticabile, senza teletrasporto, inversione o passaggio attraverso creature. Dopo almeno un danno finale, una creatura fino a 2 × 2 Q effettua Riflessi −2: fallimento viene spinta fino a quattro Q allontanandosi dal Goristro e va A Terra. Il percorso si arresta davanti a ostacoli solidi; non aggiunge danni da collisione. Una sola Carica per Round, dichiarata prima del tiro."
+    },
+    {
+      "nome": "Zoccolo e assedio",
+      "effetto": "Dopo danno finale di Zoccolo a una creatura fino a 2 × 2 Q, Riflessi −2 evita A Terra. Le dimensioni superiori non subiscono questi spostamenti o atterramenti. Quando attacca intenzionalmente un oggetto per romperlo, possiede Demolitrice 2: se fallisce la PS Integrità, l’oggetto perde due PI aggiuntivi nella singola applicazione prevista dagli Armamenti §7.2.1. Non si sottrae direttamente il tiro di danno ai PI e non si raddoppiano arbitrariamente PV o perdite di Integrità."
+    },
+    {
+      "nome": "Memoria e limiti",
+      "effetto": "Ricorda esattamente i percorsi che ha effettivamente seguito, senza Prova per richiamarli. Non conosce modifiche successive, passaggi segreti o direzioni mai osservate; per rilevarli usa Percezione. Due gambe, testa cornuta e due braccia guidano le Menomazioni; non è immune a Sanguinamento, sonno o affaticamento. Nessuna torre, passeggero o arma d’assedio è incluso nei 400 PX."
+    },
+    {
+      "nome": "Altri movimenti",
+      "effetto": "spazio 3 × 3 Q"
+    }
+  ],
+  "gs_px": {
+    "gs": "Semidio",
+    "px": 400,
+    "per_pg": 4
+  },
+  "_bestiario": {
+    "campi": {
+      "pv": "Mostri 0.69",
+      "pm": "Mostri 0.69",
+      "caratteristiche": "Mostri 0.69",
+      "ar": "Mostri 0.69",
+      "difese": "Mostri 0.69",
+      "salvezze": "Mostri 0.69",
+      "iniziativa": "Mostri 0.69",
+      "azioni": "Mostri 0.69",
+      "movimento": "Mostri 0.69",
+      "spazio": "Mostri 0.69",
+      "abilita": "Mostri 0.69",
+      "attacchi": "Mostri 0.69",
+      "capacita": "Mostri 0.69",
+      "gs_px": "Mostri 0.69"
+    },
+    "edizione": "Mostri 0.69",
+    "sistema_salute": "solo_PV"
+  }
+}

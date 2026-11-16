@@ -1,0 +1,183 @@
+{
+  "formato": "mutant-nemico",
+  "versione": 1,
+  "id": "yuan-ti-abominio",
+  "nome": "Yuan-ti abominio",
+  "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Yuan-ti abominio",
+  "taglia": "grande",
+  "note": "Grande serpente dal torso e dalle braccia umanoidi. Alterna morso, spire, lama e frecce avvelenate, sostenendo l’attacco con suggestione e terrore.",
+  "pv": 146,
+  "pm": 36,
+  "caratteristiche": {
+    "FOR": 9,
+    "DES": 8,
+    "COS": 8,
+    "INT": 8,
+    "SAG": 7,
+    "CAR": 9
+  },
+  "ar": {
+    "totale": 3,
+    "magica": 0
+  },
+  "difese": 13,
+  "salvezze": {
+    "tempra": 14,
+    "riflessi": 13,
+    "volonta": 14,
+    "magia": 13
+  },
+  "iniziativa": 3,
+  "azioni": {
+    "principali": 3,
+    "movimento": 1
+  },
+  "movimento": {
+    "passo": 8,
+    "corsa": 16,
+    "scatto": 24
+  },
+  "spazio": "2 × 2 Q",
+  "abilita": [
+    {
+      "nome": "Armi da mischia",
+      "va": 15
+    },
+    {
+      "nome": "Armi da lancio",
+      "va": 14
+    },
+    {
+      "nome": "Corpo a corpo",
+      "va": 15
+    },
+    {
+      "nome": "Atletica",
+      "va": 14
+    },
+    {
+      "nome": "Furtività",
+      "va": 13
+    },
+    {
+      "nome": "Percezione",
+      "va": 13
+    },
+    {
+      "nome": "Oratoria",
+      "va": 14
+    },
+    {
+      "nome": "Raggirare",
+      "va": 14
+    },
+    {
+      "nome": "Sopravvivenza",
+      "va": 13
+    }
+  ],
+  "attacchi": [
+    {
+      "nome": "Morso",
+      "tipo": "ravvicinato",
+      "va": 15,
+      "danno": "1d6+3",
+      "natura": "Naturale",
+      "proprieta": [
+        "Perforazione",
+        "AC 1",
+        "veleno 3d6"
+      ],
+      "portata_q": 1,
+      "ac": 1
+    },
+    {
+      "nome": "Spire",
+      "tipo": "ravvicinato",
+      "va": 15,
+      "danno": "2d6+3",
+      "natura": "Naturale",
+      "proprieta": [
+        "Contusione",
+        "AC 1",
+        "presa"
+      ],
+      "portata_q": 2,
+      "ac": 1
+    },
+    {
+      "nome": "Spada leggera",
+      "tipo": "ravvicinato",
+      "va": 15,
+      "danno": "2d6+3",
+      "natura": "Naturale",
+      "proprieta": [
+        "Taglio",
+        "AC 1"
+      ],
+      "portata_q": 1,
+      "ac": 1
+    },
+    {
+      "nome": "Freccia avvelenata",
+      "tipo": "ravvicinato",
+      "va": 14,
+      "danno": "2d6+3",
+      "natura": "Naturale",
+      "proprieta": [
+        "Perforazione",
+        "AC 1",
+        "veleno 3d6"
+      ],
+      "portata_q": 100,
+      "ac": 1
+    }
+  ],
+  "capacita": [
+    {
+      "nome": "Corpo e sensi",
+      "effetto": "Vivente biologico con Protezioni Yuan-ti: immune a veleno e relativi Stati, Resistenza alla magia +2 non inclusa nelle PS, Scurovisione dodici Q. Lingue come sangue puro. Nessuna Parata naturale o telepatia; Para con Spada pronta. Non ottiene magia universale, immunità a emozioni o CROS dalla propria posizione sociale."
+    },
+    {
+      "nome": "Sequenza e veleno",
+      "effetto": "Tre AzP totali; sceglie fino a tre attacchi ravvicinati, massimo un Morso e una Spira, oppure fino a due Frecce, senza mescolare sequenze. Opportunità compatibile compresa nei massimi. Morso o Freccia con almeno un danno finale: Tempra −2 dimezza per eccesso 3d6 danni diretti da veleno naturale IV, fallimento interi, senza AR o Stato persistente. Il Magistrale fisico non moltiplica la tossina; ogni Freccia consuma una dose al tiro anche mancando. La Spira usa la procedura comune, Corpo a corpo quindici e vittima fino a un Q."
+    },
+    {
+      "nome": "Poteri e forma",
+      "effetto": "Possiede Affinità serpentina e Suggestione vincolata, tre usi di Suggestione per ventiquattro ore, e Cono di terrore una volta per ventiquattro ore, soltanto nella propria forma di abominio. Mutamento Yuan-ti come Malison, una AzP e due PM per un’ora, ma serpente di spazio 1 × 2 Q e Terra 8 / 16 / 24 Q. Mantiene valori e risorse, perde armi, mani, Spire e influenza; massimo un Morso per Round con lo stesso veleno. Scadenza o Negare nove ripristinano l’abominio, Svenuto o morte non interrompono prima la forma."
+    },
+    {
+      "nome": "Dotazione e forza",
+      "effetto": "Spada leggera Comune: FOR tre, una mano, un Q, PI cinque, PS Integrità dieci, base 1d6+1. Arco da guerra Comune: FOR cinque, due mani, cento Q, PI sei, PS Integrità dieci, base 1d6+1; venti frecce preparate, incoccare incluso. I danni pronti includono due personali e 1d6 di Impatto della specie, non trasferiti con gli oggetti: da 1d6+1 a 2d6+3. Non sono armi ingrandite recuperabili con il danno del mostro. Non aggiungere ancora FOR, DES o un altro bonus di taglia ai valori pronti."
+    },
+    {
+      "nome": "Altri movimenti",
+      "effetto": "spazio 2 × 2 Q"
+    }
+  ],
+  "gs_px": {
+    "gs": "Leggenda",
+    "px": 110,
+    "per_pg": 4
+  },
+  "_bestiario": {
+    "campi": {
+      "pv": "Mostri 0.69",
+      "pm": "Mostri 0.69",
+      "caratteristiche": "Mostri 0.69",
+      "ar": "Mostri 0.69",
+      "difese": "Mostri 0.69",
+      "salvezze": "Mostri 0.69",
+      "iniziativa": "Mostri 0.69",
+      "azioni": "Mostri 0.69",
+      "movimento": "Mostri 0.69",
+      "spazio": "Mostri 0.69",
+      "abilita": "Mostri 0.69",
+      "attacchi": "Mostri 0.69",
+      "capacita": "Mostri 0.69",
+      "gs_px": "Mostri 0.69"
+    },
+    "edizione": "Mostri 0.69",
+    "sistema_salute": "solo_PV"
+  }
+}

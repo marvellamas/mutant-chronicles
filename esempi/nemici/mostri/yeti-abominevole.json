@@ -3,7 +3,7 @@
   "versione": 1,
   "id": "yeti-abominevole",
   "nome": "Yeti abominevole",
-  "fonte": "dal Manuale dei Mostri v0.46 (Word del 27/10/2026), cap. 8 «Catalogo delle creature» — Giganti e abitanti delle montagne",
+  "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Yeti abominevole",
   "caratteristiche": {
     "FOR": 10,
     "DES": 5,
@@ -104,9 +104,26 @@
       "effetto": "Immune a Ghiaccio e ai suoi Rallentato/Congelato e al freddo. Dopo almeno 1 danno da Fuoco −2 VA a tutte le Prove di Abilità fino a fine del turno successivo (il maggiore fra questo e Incendiato). Scurovisione 12 Q; +2 Furtività in neve e ghiaccio; olfatto 15."
     }
   ],
-  "note": "AR 4 biologica. Terra e arrampicata 8/16/24 Q. Nelle AzP al massimo due Artigli e una sola fra Sguardo e Soffio. Nessuna Parata naturale. Comportamento: coinvolge più intrusi nel Soffio; sotto 22 PV o a Ferita Seria valuta la ritirata.",
+  "note": "Grande predatore montano • avversario maggiore • Natura Comune. Condotta. Cerca una posizione che coinvolga più intrusi nel Soffio, quindi usa gli Artigli per bloccare la via più accessibile. Il terreno resta decisivo: non provoca valanghe a comando senza condizioni concrete. Sotto 29 PV valuta una ritirata verso un rifugio. Le regole del Soffio sono nella pagina seguente.",
   "_bestiario": {
     "edizione": "Mostri 0.69",
-    "sistema_salute": "solo_PV"
-  }
+    "sistema_salute": "solo_PV",
+    "campi": {
+      "pv": "Mostri 0.69",
+      "pm": "Mostri 0.69",
+      "caratteristiche": "Mostri 0.69",
+      "ar": "Mostri 0.69",
+      "difese": "Mostri 0.69",
+      "salvezze": "Mostri 0.69",
+      "iniziativa": "Mostri 0.69",
+      "azioni": "Mostri 0.69",
+      "movimento": "Mostri 0.69",
+      "spazio": "Mostri 0.69",
+      "abilita": "Mostri 0.47",
+      "attacchi": "Mostri 0.47",
+      "capacita": "Mostri 0.47",
+      "gs_px": "Mostri 0.69"
+    }
+  },
+  "taglia": "grande"
 }

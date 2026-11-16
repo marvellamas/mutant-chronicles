@@ -1,0 +1,134 @@
+{
+  "formato": "mutant-nemico",
+  "versione": 1,
+  "id": "zombie-di-ogre",
+  "nome": "Zombie di Ogre",
+  "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Zombie di Ogre",
+  "taglia": "grande",
+  "note": "Cadavere animato massiccio e lento che usa una mazza. La sua tenacia sostiene le Prove per le Ferite, senza riportarlo automaticamente a un PV dopo ogni colpo.",
+  "pv": 84,
+  "pm": 6,
+  "caratteristiche": {
+    "FOR": 9,
+    "DES": 2,
+    "COS": 8,
+    "INT": 2,
+    "SAG": 3,
+    "CAR": 1
+  },
+  "ar": {
+    "totale": 2,
+    "magica": 0
+  },
+  "difese": 7,
+  "salvezze": {
+    "tempra": 14,
+    "riflessi": 7,
+    "volonta": 8,
+    "magia": 9
+  },
+  "iniziativa": 0,
+  "azioni": {
+    "principali": 1,
+    "movimento": 1
+  },
+  "movimento": {
+    "passo": 6,
+    "corsa": 12,
+    "scatto": 18
+  },
+  "spazio": "2 × 2 Q",
+  "abilita": [
+    {
+      "nome": "Armi da mischia",
+      "va": 12
+    },
+    {
+      "nome": "Corpo a corpo",
+      "va": 11
+    },
+    {
+      "nome": "Atletica",
+      "va": 13
+    },
+    {
+      "nome": "Percezione",
+      "va": 8
+    }
+  ],
+  "attacchi": [
+    {
+      "nome": "Mazza",
+      "tipo": "ravvicinato",
+      "va": 12,
+      "danno": "2d6+3",
+      "natura": "Naturale",
+      "proprieta": [
+        "Contusione",
+        "AC 1"
+      ],
+      "portata_q": 1,
+      "ac": 1
+    },
+    {
+      "nome": "Percossa",
+      "tipo": "ravvicinato",
+      "va": 11,
+      "danno": "1d8+2",
+      "natura": "Naturale",
+      "proprieta": [
+        "Contusione",
+        "AC 1"
+      ],
+      "portata_q": 1,
+      "ac": 1
+    }
+  ],
+  "capacita": [
+    {
+      "nome": "Corpo e sensi",
+      "effetto": "Non morto corporeo con immunità biologiche comuni, mente rudimentale e PM personali. Scurovisione dodici Q, Tenacia cadaverica comune. Non ha Ossa fragili, resistenza generale al danno o immunità a Paura, A Terra e controlli compatibili. Para con la Mazza pronta; nessuna Parata naturale. Iniziativa solo 1d10, senza malus per DES o INT basse."
+    },
+    {
+      "nome": "Unica Azione",
+      "effetto": "Una AzP e una AzM totali; massimo una Mazza o Percossa per Round, Opportunità compresa. Per eseguire Immobilizzare ordinario usa una AzP al posto dell’attacco e Corpo a corpo undici, con una mano libera, normale contrapposta e liberazione; nessun danno simultaneo. Non aggiunge un Morso, una seconda mazza o danno automatico sul prigioniero."
+    },
+    {
+      "nome": "Dotazione",
+      "effetto": "Mazza ferrata Comune: FOR quattro, una mano, portata un Q, PI cinque, PS Integrità dieci, base 1d6+1. Il danno pronto include due personali e 1d6 di Impatto della specie, non trasferiti con l’oggetto: 2d6+3. Non è una nuova mazza ingrandita da aggiungere al catalogo Commerciale. La Percossa richiede una mano effettivamente utilizzabile e non eredita l’arma."
+    },
+    {
+      "nome": "Ordini e recupero",
+      "effetto": "Comprende consegne semplici nelle lingue assegnate, ma non parla e non conserva automaticamente abilità, ricordi o Classi dell’Ogre in vita. Una morte inflitta dallo Zombie non crea altri non morti e nessuna infezione è compresa. Zero PM provoca Svenuto, zero PV non lo distrugge da solo. Le Menomazioni conservano conseguenze anatomiche; Medicina e Cura Ferite biologiche non riparano il corpo."
+    },
+    {
+      "nome": "Altri movimenti",
+      "effetto": "spazio 2 × 2 Q"
+    }
+  ],
+  "gs_px": {
+    "gs": "Esperto",
+    "px": 33,
+    "per_pg": 4
+  },
+  "_bestiario": {
+    "campi": {
+      "pv": "Mostri 0.69",
+      "pm": "Mostri 0.69",
+      "caratteristiche": "Mostri 0.69",
+      "ar": "Mostri 0.69",
+      "difese": "Mostri 0.69",
+      "salvezze": "Mostri 0.69",
+      "iniziativa": "Mostri 0.69",
+      "azioni": "Mostri 0.69",
+      "movimento": "Mostri 0.69",
+      "spazio": "Mostri 0.69",
+      "abilita": "Mostri 0.69",
+      "attacchi": "Mostri 0.69",
+      "capacita": "Mostri 0.69",
+      "gs_px": "Mostri 0.69"
+    },
+    "edizione": "Mostri 0.69",
+    "sistema_salute": "solo_PV"
+  }
+}

@@ -1,0 +1,118 @@
+{
+  "formato": "mutant-nemico",
+  "versione": 1,
+  "id": "girino-di-slaad",
+  "nome": "Girino di Slaad",
+  "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Girino di Slaad",
+  "note": "Larva carnivora che cerca riparo e nutrimento dopo l’emersione. Il profilo rappresenta il girino già separato dall’ospite; non agisce come un secondo avversario dentro un corpo ancora vivo.",
+  "pv": 11,
+  "pm": 4,
+  "caratteristiche": {
+    "FOR": 3,
+    "DES": 7,
+    "COS": 5,
+    "INT": 2,
+    "SAG": 3,
+    "CAR": 2
+  },
+  "ar": {
+    "totale": 0,
+    "magica": 0
+  },
+  "difese": 11,
+  "salvezze": {
+    "tempra": 8,
+    "riflessi": 11,
+    "volonta": 7,
+    "magia": 8
+  },
+  "iniziativa": 2,
+  "azioni": {
+    "principali": 1,
+    "movimento": 1
+  },
+  "movimento": {
+    "passo": 6,
+    "corsa": 12,
+    "scatto": 18
+  },
+  "abilita": [
+    {
+      "nome": "Corpo a corpo",
+      "va": 10
+    },
+    {
+      "nome": "Furtività",
+      "va": 12
+    },
+    {
+      "nome": "Percezione",
+      "va": 8
+    },
+    {
+      "nome": "Sopravvivenza",
+      "va": 9
+    }
+  ],
+  "attacchi": [
+    {
+      "nome": "Morso",
+      "tipo": "ravvicinato",
+      "va": 10,
+      "danno": "1d4+1",
+      "natura": "Naturale",
+      "proprieta": [
+        "Perforazione",
+        "AC 1"
+      ],
+      "portata_q": 1,
+      "ac": 1
+    }
+  ],
+  "capacita": [
+    {
+      "nome": "Corpo e sensi",
+      "effetto": "Vivente biologico, Scurovisione dodici Q. Dimezza Acido, Gelo, Fuoco, Elettricità e tuono magico; non il danno Naturale delle armi. Resistenza alla magia +2 non inclusa nelle PS, nessuna Parata naturale. Non rigenera, non ha telepatia, mutamento, veleno o inoculazione di altre uova. Comprende soltanto segnali elementari degli Slaad; non parla. Iniziativa usa DES +2, senza malus per INT bassa."
+    },
+    {
+      "nome": "Azioni e riparo",
+      "effetto": "Una AzP e una AzM totali; massimo un Morso per Round, Opportunità compresa. Lo spazio condivisibile non è uno Sciame e non annulla Ferite o Menomazioni. Preferisce una via buia e protetta; può mordere per procurarsi cibo o aprirsi un varco. Non attraversa armature, pareti o corpi con il Movimento."
+    },
+    {
+      "nome": "Sviluppo",
+      "effetto": "Dopo l’emersione e il primo pasto sufficiente, tirare una volta 2d12 ore: completato l’intervallo diventa un solo Slaad blu, oppure verde se l’ospite possedeva accesso effettivo a Incantesimi Simply RPG almeno di livello nove prima dell’infezione. Non bastano PM, Focus o oggetti magici. Il processo richiede nutrimento ordinario durante l’intervallo e viene sospeso dalla stasi; non avviene in un singolo Round. Si tratta di una crescita biologica fuori combattimento, senza poterla anticipare con PM."
+    },
+    {
+      "nome": "Passaggio di profilo",
+      "effetto": "Al completamento si usa la scheda adulta corrispondente, senza duplicare larva, equipaggiamento o risorse dell’ospite. PV e PM attuali crescono soltanto della differenza tra i massimi dei due profili, conservando le quantità già perdute. Una Ferita, Menomazione o Affezione ancora presente non è cancellata dalla crescita; restano le conseguenze funzionali compatibili. Il nuovo corpo non nasce con armi o con una gemma di controllo. Non possiede memoria, Classi o identità dell’ospite e non è un suo clone. Medicina e cure seguono la fisiologia di un vivente; Negare Potere non elimina la larva autonoma."
+    },
+    {
+      "nome": "Altri movimenti",
+      "effetto": "spazio 1 Q condivisibile"
+    }
+  ],
+  "gs_px": {
+    "gs": "Principiante",
+    "px": 10,
+    "per_pg": 4
+  },
+  "_bestiario": {
+    "campi": {
+      "pv": "Mostri 0.69",
+      "pm": "Mostri 0.69",
+      "caratteristiche": "Mostri 0.69",
+      "ar": "Mostri 0.69",
+      "difese": "Mostri 0.69",
+      "salvezze": "Mostri 0.69",
+      "iniziativa": "Mostri 0.69",
+      "azioni": "Mostri 0.69",
+      "movimento": "Mostri 0.69",
+      "abilita": "Mostri 0.69",
+      "attacchi": "Mostri 0.69",
+      "capacita": "Mostri 0.69",
+      "gs_px": "Mostri 0.69"
+    },
+    "edizione": "Mostri 0.69",
+    "sistema_salute": "solo_PV"
+  }
+}

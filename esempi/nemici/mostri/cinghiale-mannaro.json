@@ -1,0 +1,126 @@
+{
+  "formato": "mutant-nemico",
+  "versione": 1,
+  "id": "cinghiale-mannaro",
+  "nome": "Cinghiale mannaro",
+  "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Cinghiale mannaro",
+  "note": "Licantropo massiccio dalle zanne sviluppate. Cerca uno spazio di carica e resiste ai colpi, ma può anche proteggere un nucleo familiare senza attaccare gli estranei.",
+  "pv": 73,
+  "pm": 10,
+  "caratteristiche": {
+    "FOR": 9,
+    "DES": 5,
+    "COS": 8,
+    "INT": 5,
+    "SAG": 5,
+    "CAR": 4
+  },
+  "ar": {
+    "totale": 2,
+    "magica": 0
+  },
+  "difese": 9,
+  "salvezze": {
+    "tempra": 14,
+    "riflessi": 9,
+    "volonta": 10,
+    "magia": 11
+  },
+  "iniziativa": 0,
+  "azioni": {
+    "principali": 2,
+    "movimento": 1
+  },
+  "movimento": {
+    "passo": 6,
+    "corsa": 12,
+    "scatto": 18
+  },
+  "abilita": [
+    {
+      "nome": "Corpo a corpo",
+      "va": 13
+    },
+    {
+      "nome": "Atletica",
+      "va": 14
+    },
+    {
+      "nome": "Percezione",
+      "va": 10
+    },
+    {
+      "nome": "Sopravvivenza",
+      "va": 10
+    }
+  ],
+  "attacchi": [
+    {
+      "nome": "Zanne",
+      "tipo": "ravvicinato",
+      "va": 13,
+      "danno": "2d6+2",
+      "natura": "Naturale",
+      "proprieta": [
+        "AC 1",
+        "maledizione"
+      ],
+      "portata_q": 1,
+      "ac": 1
+    },
+    {
+      "nome": "Pugno",
+      "tipo": "ravvicinato",
+      "va": 13,
+      "danno": "1d6+2",
+      "natura": "Naturale",
+      "proprieta": [
+        "AC 1"
+      ],
+      "portata_q": 1,
+      "ac": 1
+    }
+  ],
+  "capacita": [
+    {
+      "nome": "Carica",
+      "effetto": "Dopo almeno tre Q rettilinei con la propria AzM verso il bersaglio, il successivo colpo di Zanne nella stessa Iniziativa aggiunge 1d6 prima di moltiplicatori e AR. Se resta almeno un danno, una vittima di spazio massimo 2 × 2 Q effettua Tempra 0 o cade A Terra. Una sola carica e un solo attacco di Zanne nel Round, comprese le Opportunità; nessuna AzP gratuita."
+    },
+    {
+      "nome": "Tenacia",
+      "effetto": "Una volta ogni 24 ore, se un singolo colpo con danno finale non superiore a dieci porterebbe i PV da un valore positivo a zero, rimane invece a un PV. Si dichiara dopo aver determinato il danno. Non funziona se era già a zero, non cura Ferite o Menomazioni e non annulla danni successivi dello stesso attacco."
+    },
+    {
+      "nome": "Forme e contagio",
+      "effetto": "Mutare costa una AzP e un PM; riduzione dei danni e dotazione seguono la procedura comune. Solo le Zanne penetranti trasmettono la maledizione. Vista e sensi ordinari, nessuna Scurovisione o Parata naturale. In forma animale può usare l’AzP restante per attività compatibili, non per un secondo colpo di Zanne."
+    },
+    {
+      "nome": "Altri movimenti",
+      "effetto": "cinghiale: 8 / 16 / 24 Q, 1 × 2 Q"
+    }
+  ],
+  "gs_px": {
+    "gs": "Veterano",
+    "px": 50,
+    "per_pg": 4
+  },
+  "_bestiario": {
+    "campi": {
+      "pv": "Mostri 0.69",
+      "pm": "Mostri 0.69",
+      "caratteristiche": "Mostri 0.69",
+      "ar": "Mostri 0.69",
+      "difese": "Mostri 0.69",
+      "salvezze": "Mostri 0.69",
+      "iniziativa": "Mostri 0.69",
+      "azioni": "Mostri 0.69",
+      "movimento": "Mostri 0.69",
+      "abilita": "Mostri 0.69",
+      "attacchi": "Mostri 0.69",
+      "capacita": "Mostri 0.69",
+      "gs_px": "Mostri 0.69"
+    },
+    "edizione": "Mostri 0.69",
+    "sistema_salute": "solo_PV"
+  }
+}

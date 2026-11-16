@@ -1,0 +1,128 @@
+{
+  "formato": "mutant-nemico",
+  "versione": 1,
+  "id": "omuncolo",
+  "nome": "Omuncolo",
+  "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Omuncolo",
+  "note": "Piccolo servitore alato creato mediante un legame personale. Possiede una mente semplice e condivide informazioni con il proprio creatore, senza diventare una copia delle sue capacità.",
+  "pv": 8,
+  "pm": 5,
+  "caratteristiche": {
+    "FOR": 2,
+    "DES": 8,
+    "COS": 5,
+    "INT": 5,
+    "SAG": 5,
+    "CAR": 3
+  },
+  "ar": {
+    "totale": 1,
+    "magica": 0
+  },
+  "difese": 11,
+  "salvezze": {
+    "tempra": 9,
+    "riflessi": 12,
+    "volonta": 8,
+    "magia": 10
+  },
+  "iniziativa": 3,
+  "azioni": {
+    "principali": 1,
+    "movimento": 1
+  },
+  "movimento": {
+    "passo": 4,
+    "corsa": 8,
+    "scatto": 12,
+    "volo": 8
+  },
+  "abilita": [
+    {
+      "nome": "Corpo a corpo",
+      "va": 9
+    },
+    {
+      "nome": "Percezione",
+      "va": 9
+    },
+    {
+      "nome": "Furtività",
+      "va": 12
+    },
+    {
+      "nome": "Atletica",
+      "va": 6
+    }
+  ],
+  "attacchi": [
+    {
+      "nome": "Morso",
+      "tipo": "ravvicinato",
+      "va": 9,
+      "danno": "1",
+      "natura": "Naturale",
+      "proprieta": [
+        "Perforazione",
+        "AC 1",
+        "veleno"
+      ],
+      "portata_q": 1,
+      "ac": 1
+    }
+  ],
+  "capacita": [
+    {
+      "nome": "Costrutto con mente",
+      "effetto": "Non è un golem privo di mente: ha PM personali e Volontà, e può essere colpito da effetti mentali compatibili. Immune a fascinazione, veleno, malattie biologiche, Sanguinamento e sonno indotto; non a Svenuto da zero PM o Morente. Non respira e non necessita di cibo o sonno biologico. Nessuna resistenza fisica dei golem, nessuna Parata naturale; Scurovisione 12 Q."
+    },
+    {
+      "nome": "Morso soporifero",
+      "effetto": "Il danno fisso uno non riceve altri bonus di FOR. Dopo almeno un danno finale a un vivente biologico, Tempra 0 contro veleno naturale di Pericolosità II: successo evita; fallimento Disorientato per tre Round; Maldestro Svenuto per 1d3 Round al posto di Disorientato. Nessun danno aggiuntivo o penalità di veleno periodica. Immunità ai veleni evita lo Stato. Cura Avvelenamenti almeno due o antidoto adeguato rimuove la causa; il solo danno non risveglia."
+    },
+    {
+      "nome": "Vincolo personale",
+      "effetto": "Il creatore è un individuo determinato alla creazione, non chi imita la voce o trova il servitore. Comprende le lingue note al creatore senza parlare; comunica telepaticamente con lui sullo stesso piano entro un km. Non legge pensieri altrui e non apprende Incantesimi, Talenti, password mai comunicate o competenze del creatore. Il vincolo non è un oggetto: Rompere Vincolo non lo riassegna."
+    },
+    {
+      "nome": "Sensi condivisi",
+      "effetto": "Il creatore può spendere una AzP per ricevere vista e udito dell’Omuncolo fino all’inizio della propria Iniziativa successiva, entro il limite del vincolo. Usa i sensi e Percezione del servitore, dal suo punto effettivo; non vede contemporaneamente con i propri occhi e non origina poteri attraverso di lui. Per mantenere la visione nei Round successivi spende di nuovo una AzP. Le Prove richieste dal movimento o dagli ostacoli non diventano successi automatici."
+    },
+    {
+      "nome": "Ordini e fine del legame",
+      "effetto": "Un ordine semplice può essere comunicato senza AzP alla propria Iniziativa, entro il vincolo; usa poi le Azioni del servitore alla sua Iniziativa ordinaria. Fuori portata esegue l’ultima consegna possibile, poi cerca il creatore. Svenuto o zero PM del creatore interrompono le comunicazioni, senza uccidere il servitore. Solo la morte effettiva del creatore spegne definitivamente l’animazione: eccezione esplicita del vincolo, non conseguenza di zero PV o Morente."
+    },
+    {
+      "nome": "Recupero e rimozione",
+      "effetto": "Dardo Spirituale può colpire l’animazione: danni PV e risucchio solo dei suoi PM, non del creatore. Riposo compatibile recupera i PM personali; Cura Ferite e Medicina non riparano il corpo, e la scheda non introduce una ricetta di riparazione. Negare Potere può sospendere comunicazioni e sensi condivisi per tre Round, confronto 3, senza cancellare il corpo o cambiare padrone. Ferite e Menomazioni seguono le regole ordinarie."
+    },
+    {
+      "nome": "Altri movimenti",
+      "effetto": "1 Q condivisibile, non blocca il passaggio"
+    }
+  ],
+  "gs_px": {
+    "gs": "Principiante",
+    "px": 10,
+    "per_pg": 4
+  },
+  "_bestiario": {
+    "campi": {
+      "pv": "Mostri 0.69",
+      "pm": "Mostri 0.69",
+      "caratteristiche": "Mostri 0.69",
+      "ar": "Mostri 0.69",
+      "difese": "Mostri 0.69",
+      "salvezze": "Mostri 0.69",
+      "iniziativa": "Mostri 0.69",
+      "azioni": "Mostri 0.69",
+      "movimento": "Mostri 0.69",
+      "abilita": "Mostri 0.69",
+      "attacchi": "Mostri 0.69",
+      "capacita": "Mostri 0.69",
+      "gs_px": "Mostri 0.69"
+    },
+    "edizione": "Mostri 0.69",
+    "sistema_salute": "solo_PV"
+  }
+}

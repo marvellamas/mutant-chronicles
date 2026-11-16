@@ -1,0 +1,98 @@
+{
+  "formato": "mutant-nemico",
+  "versione": 1,
+  "id": "otyugh",
+  "nome": "Otyugh",
+  "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Otyugh",
+  "taglia": "grande",
+  "note": "Grande divoratore di rifiuti e carogne, su tre zampe e con due tentacoli prensili. Può convivere con un insediamento che lo nutra, ma tende agguati quando manca il cibo.",
+  "pv": 99,
+  "pm": 10,
+  "caratteristiche": {
+    "FOR": 8,
+    "DES": 5,
+    "COS": 9,
+    "INT": 3,
+    "SAG": 6,
+    "CAR": 3
+  },
+  "ar": {
+    "totale": 3,
+    "magica": 0
+  },
+  "difese": 9,
+  "salvezze": {
+    "tempra": 15,
+    "riflessi": 9,
+    "volonta": 9,
+    "magia": 11
+  },
+  "iniziativa": 0,
+  "azioni": {
+    "principali": 3,
+    "movimento": 1
+  },
+  "movimento": {
+    "passo": 6,
+    "corsa": 12,
+    "scatto": 18
+  },
+  "spazio": "2 × 2 Q",
+  "capacita": [
+    {
+      "nome": "Sbattere la preda",
+      "effetto": "VA —. Danno: 1d6+2 Naturale; Tempra 0. Portata/costo: Una vittima già presa; 1 AzP; "
+    },
+    {
+      "nome": "Prese e anatomia",
+      "effetto": "Scurovisione 24 Q. I due tentacoli permettono due prese contemporanee, una per arto, contro creature di spazio massimo 1 × 1 Q. Ogni presa si dichiara in alternativa al danno e usa Corpo a corpo 13 con la procedura comune. Non riceve attacchi o danni gratuiti per aver afferrato. La presa occupa il tentacolo; l’altro può attaccare o trattenere. Una Menomazione pertinente rende inutilizzabile quella presa senza ignorare le altre."
+    },
+    {
+      "nome": "Sbattere la preda",
+      "effetto": "Una AzP, una vittima già trattenuta, contro una superficie solida raggiungibile entro due Q. Tempra 0: successo dimezza per eccesso 1d6+2 Naturale prima dell’AR, fallimento danno pieno e Stordito per un Round. Non richiede un secondo tiro per colpire e non consente altra Difesa attiva; non lascia andare la vittima. Due prigionieri richiedono due usi e due AzP. Se manca una superficie non funziona; non aggiunge una caduta, una collisione con altri o un Morso gratuito."
+    },
+    {
+      "nome": "Infezione del morso",
+      "effetto": "Dopo almeno un danno finale del Morso a un vivente biologico: Tempra −2 evita una malattia naturale di Pericolosità III. I sintomi iniziano dopo 1d4 ore: −2 a Tempra e alle Abilità fisiche, senza sommare altre penalità dello stesso tipo di malattia. Ogni 24 ore Tempra 0: successo guarisce, fallimento perde 1d6 PV senza AR, con normali conseguenze se era già a zero. Cura Malattie di livello almeno tre elimina l’infezione. Non riduce PV massimi e non si cura con un semplice antidoto o Negare Potere."
+    },
+    {
+      "nome": "Richiami e condotta",
+      "effetto": "Trasmette immagini e messaggi semplici a menti individuate entro 24 Q: una AzP, senza PM, comunicazione a senso unico. Non legge risposte, non obbliga a seguire il richiamo e non inganna automaticamente chi lo riceve. Per una falsa promessa si usa Raggirare 8 contro Percezione, nei normali limiti di ciò che può esprimere. Non eredita immunità ai veleni o alle malattie dal vivere tra i rifiuti. Una fonte abbondante di cibo può risolvere l’incontro senza ucciderlo."
+    },
+    {
+      "nome": "Valori pronti",
+      "effetto": "Attacchi e Difese comprendono le componenti ordinarie. Le immunità sono soltanto quelle dichiarate; la specie non riceve automaticamente la vulnerabilità al freddo della Covata. Abilità e caratteristiche non aggiungono altri bonus ai danni scritti. Restano le normali localizzazioni, ricondotte alle funzioni anatomiche effettive."
+    },
+    {
+      "nome": "Altri movimenti",
+      "effetto": "spazio 2 × 2 Q"
+    },
+    {
+      "nome": "Abilità particolari",
+      "effetto": "Furtività 10 tra i rifiuti, 6 altrove"
+    }
+  ],
+  "gs_px": {
+    "gs": "Eroe",
+    "px": 70,
+    "per_pg": 4
+  },
+  "_bestiario": {
+    "campi": {
+      "pv": "Mostri 0.69",
+      "pm": "Mostri 0.69",
+      "caratteristiche": "Mostri 0.69",
+      "ar": "Mostri 0.69",
+      "difese": "Mostri 0.69",
+      "salvezze": "Mostri 0.69",
+      "iniziativa": "Mostri 0.69",
+      "azioni": "Mostri 0.69",
+      "movimento": "Mostri 0.69",
+      "spazio": "Mostri 0.69",
+      "capacita": "Mostri 0.69",
+      "gs_px": "Mostri 0.69"
+    },
+    "edizione": "Mostri 0.69",
+    "sistema_salute": "solo_PV"
+  }
+}

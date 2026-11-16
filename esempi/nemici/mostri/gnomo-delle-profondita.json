@@ -1,0 +1,135 @@
+{
+  "formato": "mutant-nemico",
+  "versione": 1,
+  "id": "gnomo-delle-profondita",
+  "nome": "Gnomo delle profondità",
+  "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Gnomo delle profondità",
+  "note": "Piccolo umanoide dalla pelle grigia, abituato a cercare riparo nella roccia. Questo esemplare dispone di un’arma corta da guerra, quattro pugnali avvelenati e limitati inganni innati.",
+  "pv": 26,
+  "pm": 14,
+  "caratteristiche": {
+    "FOR": 6,
+    "DES": 6,
+    "COS": 6,
+    "INT": 6,
+    "SAG": 5,
+    "CAR": 4
+  },
+  "ar": {
+    "totale": 1,
+    "magica": 0
+  },
+  "difese": 10,
+  "salvezze": {
+    "tempra": 10,
+    "riflessi": 10,
+    "volonta": 9,
+    "magia": 10
+  },
+  "iniziativa": 1,
+  "azioni": {
+    "principali": 1,
+    "movimento": 1
+  },
+  "movimento": {
+    "passo": 4,
+    "corsa": 8,
+    "scatto": 12
+  },
+  "spazio": "1 Q",
+  "attacchi": [
+    {
+      "nome": "Martello da guerra",
+      "tipo": "ravvicinato",
+      "va": 11,
+      "danno": "1d8+2",
+      "natura": "Naturale",
+      "proprieta": [
+        "Contusione",
+        "AC 1"
+      ],
+      "portata_q": 1,
+      "ac": 1
+    },
+    {
+      "nome": "Pugnale scagliato",
+      "tipo": "ravvicinato",
+      "va": 11,
+      "danno": "1d4+2",
+      "natura": "Naturale",
+      "proprieta": [
+        "Perforazione",
+        "AC 1",
+        "veleno II"
+      ],
+      "portata_q": 18,
+      "ac": 1
+    }
+  ],
+  "capacita": [
+    {
+      "nome": "Corpo e sensi",
+      "effetto": "Vivente biologico con mente e PM personali. Scurovisione 24 Q; +2 alle PS Volontà e Magia già consentite contro effetti mistici, non incluso nei valori. Non migliora Tempra e Riflessi contro qualunque magia e non concede immunità al sonno o al veleno. Non ha sensibilità solare. Parla le lingue apprese dalla comunità; nessuna conoscenza automatica di gemme, gallerie o identità."
+    },
+    {
+      "nome": "Unica Azione",
+      "effetto": "Una AzP e una AzM totali, massimo un attacco per Round, Opportunità ravvicinata compresa. Può Parare con il Martello pronto ai normali costi. Furtività tredici sostituisce undici quando roccia e posizione consentono davvero di confondersi; il bonus non è invisibilità. Il corpo piccolo non permette attraversamenti di qualsiasi fessura o occultamento senza coperture."
+    },
+    {
+      "nome": "Pugnali avvelenati",
+      "effetto": "Quattro oggetti, ognuno con una dose consumata al primo attacco. Dopo almeno un danno finale a un vivente biologico, Tempra 0 evita Avvelenato cinque Round, −2 alle Abilità fisiche senza malus alle PS; nuova Tempra 0 a fine di ogni propria Iniziativa termina. Veleno naturale II, senza danno periodico. Cura Avvelenamenti due o antidoto adatto neutralizzano. Nuove dosi rinnovano la scadenza senza sommare malus; non creano armi avvelenate illimitate."
+    },
+    {
+      "nome": "Dotazione e ruolo",
+      "effetto": "Martello da guerra: FOR cinque, PI cinque, base 1d8+1. Pugnali: FOR due, PI quattro, base 1d4+1 e gittata FOR × tre; +1 personale già compreso nei danni. Leggera: AR uno, FOR tre, PI sei, nessuna penalità ad attacchi o movimento e −1 a Potere per Incantesimi appresi; le capacità innate qui scritte non tirano Potere. Tutto Comune, PS Integrità dieci. Questi 22 PX non comprendono servitori elementali, una Classe o attrezzi specialistici. Sotto 7 PV cerca riparo o una trattativa."
+    },
+    {
+      "nome": "Aura schermata",
+      "effetto": "Una AzP e tre PM, solo sé, Nascondere Aura tre per dieci Round senza Concentrazione. Occulta l’emanazione spirituale e la dotazione indossata; non vista, tracce o suoni. Blocca Individuare e contro Presenza usa confronto di Occultamento tre come il modulo del blocco. Un atto offensivo termina prima l’aura; Negare tre rimuove. Un uso nuovo sostituisce il precedente e paga nuovamente."
+    },
+    {
+      "nome": "Sfocatura",
+      "effetto": "Un uso per ventiquattro ore, una AzP e tre PM, solo sé per cinque Round senza Concentrazione. Attacchi diretti dipendenti dalla vista contro di lui −2 VA. Aree, PS, effetti automatici e un senso alternativo valido non ricevono la penalità. Nessuna AR o Difesa gratuita. Negare sei, Svenuto e morte terminano; più sfocature non si sommano."
+    },
+    {
+      "nome": "Offuscare un senso",
+      "effetto": "Un uso complessivo per ventiquattro ore, una AzP e tre PM, un organismo visibile entro sei Q: sceglie Accecato oppure Assordato prima della Tempra 0 del bersaglio. Fallimento tre Round, nuova Tempra 0 a fine di ogni propria Iniziativa termina. È un effetto mistico corporeo, non veleno o danno psichico; Difese attive non si aggiungono. Cura Spirituale tre o Negare sei terminano. Senza l’organo o la funzione pertinente il bersaglio non è valido."
+    },
+    {
+      "nome": "Maschera visiva",
+      "effetto": "Un uso per ventiquattro ore, una AzP e due PM, solo sé e dotazione per trenta minuti senza Concentrazione. Cambia aspetto esteriore compatibile con il proprio corpo, senza variazioni oltre un quarto dell’altezza: nessuna nuova anatomia, voce, peso o identità conosciuta automaticamente. Esame deliberato con una AzP o un indizio concreto concede Magia 0; successo riconosce il falso per quel lancio, fallimento richiede un nuovo indizio. Barriera Mentale aiuta; sensori e registrazioni mostrano la realtà. Negare tre, Svenuto o morte terminano. Non è una trasformazione fisica o un’illusione autonoma fuori dal corpo."
+    },
+    {
+      "nome": "Altri movimenti",
+      "effetto": "corpo piccolo, pedina di gestione 1 Q"
+    },
+    {
+      "nome": "Abilità particolari",
+      "effetto": "Furtività 11, 13 fra rocce compatibili"
+    }
+  ],
+  "gs_px": {
+    "gs": "Inesperto",
+    "px": 22,
+    "per_pg": 4
+  },
+  "_bestiario": {
+    "campi": {
+      "pv": "Mostri 0.69",
+      "pm": "Mostri 0.69",
+      "caratteristiche": "Mostri 0.69",
+      "ar": "Mostri 0.69",
+      "difese": "Mostri 0.69",
+      "salvezze": "Mostri 0.69",
+      "iniziativa": "Mostri 0.69",
+      "azioni": "Mostri 0.69",
+      "movimento": "Mostri 0.69",
+      "spazio": "Mostri 0.69",
+      "attacchi": "Mostri 0.69",
+      "capacita": "Mostri 0.69",
+      "gs_px": "Mostri 0.69"
+    },
+    "edizione": "Mostri 0.69",
+    "sistema_salute": "solo_PV"
+  }
+}

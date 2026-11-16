@@ -1,0 +1,166 @@
+{
+  "formato": "mutant-nemico",
+  "versione": 1,
+  "id": "androsfinge",
+  "nome": "Androsfinge",
+  "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Androsfinge",
+  "taglia": "grande",
+  "note": "Guardiano dal corpo leonino, grandi ali e testa umanoide. Mette alla prova coraggio e perseveranza; i tre ruggiti costituiscono una sequenza crescente, dichiarata e limitata. Una AzP per Incantesimo e PM della versione; Potere pronto 17 ai livelli tre e sei, 15 al nove. Restano condizioni di lancio e procedure delle regole comuni dei custodi e delle schede della Magia v1.7. Voce udita e compresa, una sola condotta; nel primo turno successivo massimo una AzP e un Movimento, senza azioni nuove. Limiti morali e PM/PE ordinari; Negare 6 prima dell’esecuzione. 9 PM; dieci Round fissi; raggio 15 Q oppure due Q totali di analisi entro 15 Q Potere rilevazione 9; una fonte e categoria per Round, non vista fisica. Legge fino alla macrofamiglia, non diagnosi CROS. Cambio modalità come scheda; Negare 9. 9 PM; due effetti validamente localizzati entro 15 Q e concatenati entro due Q Superiore termina, inferiore fallisce, pari una Volontà del negatore. Non individua da solo magie nascoste, non annulla cure o altri risultati istantanei. 6 PM; un vivente consenziente o incosciente soccorso entro sei Q Rimuove due tipi di Stato temporaneo compatibile fino a Svenuto, Stordito o Paralizzato. Non elimina cause persistenti, Ferite, PM zero o vincoli materiali. 6 PM; un vivente consenziente o incosciente soccorso visibile entro tre Q Due sostanze attive al massimo, naturali, artificiali o mistiche fino a Pericolosità V; non cura VI né restituisce PV o lesioni. 9 PM; una creatura visibile entro dieci Q; Magia 0 evita; tre Round Confinamento senza azioni, percezioni o recuperi, tempo ed effetti periodici sospesi. Un lancio attivo; ritorno Disorientato 1+1d3 Round. Negare 9 sulla traccia libera. 9 PM; un colpo 4d6+5 Magico Fuoco, una AC, automatico entro quindici Q Bersaglio visibile e percorso libero; Parata o Schivata, non Elusione. AR e secondario Fuoco −2 dopo residuo e Ignifugo. Nessun bonus FOR o altro elemento aggiunto.",
+  "pv": 229,
+  "pm": 64,
+  "caratteristiche": {
+    "FOR": 10,
+    "DES": 5,
+    "COS": 9,
+    "INT": 8,
+    "SAG": 8,
+    "CAR": 10
+  },
+  "ar": {
+    "totale": 6,
+    "magica": 0
+  },
+  "difese": 13,
+  "salvezze": {
+    "tempra": 17,
+    "riflessi": 13,
+    "volonta": 17,
+    "magia": 16
+  },
+  "iniziativa": 3,
+  "azioni": {
+    "principali": 4,
+    "movimento": 1
+  },
+  "movimento": {
+    "passo": 8,
+    "corsa": 16,
+    "scatto": 24,
+    "volo": 12
+  },
+  "spazio": "2 × 2 Q",
+  "abilita": [
+    {
+      "nome": "Corpo a corpo",
+      "va": 18
+    },
+    {
+      "nome": "Atletica",
+      "va": 17
+    },
+    {
+      "nome": "Percezione",
+      "va": 17
+    },
+    {
+      "nome": "Occultismo",
+      "va": 17
+    },
+    {
+      "nome": "Cultura",
+      "va": 19
+    },
+    {
+      "nome": "Oratoria",
+      "va": 17
+    },
+    {
+      "nome": "Potere",
+      "va": 17
+    }
+  ],
+  "capacita": [
+    {
+      "nome": "Ruggito progressivo",
+      "effetto": "VA —. Danno: Tre effetti diversi; pagina dedicata. Portata/costo: Raggio 12 Q; 2 AzP e 6 PM; "
+    },
+    {
+      "nome": "Corpo e sensi",
+      "effetto": "Guardiano vivente sovrannaturale senza necessità di cibo, acqua o sonno; non è per questo immune ad Affaticamento. Immune a fascinazione, Terrorizzato, danno di Dardo Psichico ed equivalenti espressamente psichici e danno Naturale di armi da Contusione, Taglio e Perforazione. Mente schermata comune; Vista rivelatrice dodici entro 24 Q, nessuna Resistenza alla magia +2. Parla le lingue conosciute e quella delle Sfingi, senza comprensione universale o telepatia. Nessuna Parata naturale. Iniziativa usa SAG +3 per vigilanza istintiva, al posto di DES e INT."
+    },
+    {
+      "nome": "Azioni e spostamento",
+      "effetto": "Quattro AzP totali, massimo due Artigli per Round, Opportunità compresa, e un Ruggito; ogni Ruggito costa due AzP. Passaggio personale 24 Q del blocco: una AzP e quattro PM, solo sé e dotazione già portata. Non acquista Azioni leggendarie fuori bilancio. Cade da Svenuto in volo. I Ruggiti e gli Incantesimi non sono Opportunità e non sono inclusi gratis negli Artigli."
+    },
+    {
+      "nome": "Lancio anatomico",
+      "effetto": "Gli Incantesimi della pagina dedicata usano Potere diciassette, PM pari al livello e una AzP salvo la cura delle malattie. Il tratto di specie sostituisce il Focus con il proprio corpo e il Gesto con movimenti del capo o delle ali; non sono oggetti recuperabili né bonus gratuiti al tiro. L’Invocazione resta ordinaria e omettibile a −2, salvo il Comando che richiede la voce. Il lancio è visibile, riconoscibile e contrastabile con Contromagia. Potere pronto diciassette al livello sei, quindici al nove; Ingaggio e altri impedimenti restano. Non possiede Concentrazione Operativa, Anticipazione o Contromagia."
+    },
+    {
+      "nome": "Misteri e tana",
+      "effetto": "Il guardiano conserva informazioni effettivamente note; Cultura non risponde a qualunque domanda e un enigma non obbliga magicamente a rispettare un patto. Non assegna CROS o merito morale con lo sguardo. La tana temporale, l’invecchiamento, i viaggi nel passato, i trasferimenti planari e le protezioni del tesoro della fonte non sono compresi nei suoi 800 PX; vanno costruiti come elementi distinti dell’avventura."
+    },
+    {
+      "nome": "Disponibilità e area",
+      "effetto": "Tre Ruggiti complessivi prima del ripristino, da utilizzare obbligatoriamente nell’ordine primo, secondo e terzo. Due AzP e sei PM ciascuno, massimo uno per Round; paga e consuma l’uso anche se non vi sono vittime. Trascorse ventiquattro ore consecutive dall’ultimo Ruggito, gli usi si ripristinano e la sequenza riparte dal primo. Una sfera di raggio dodici Q dal bordo del corpo, tutte le altre creature capaci di sentirlo e compatibili con l’effetto, alleati compresi. Una sola applicazione per creatura; una barriera realmente insonorizzante o Silenzio appropriato impedisce il suono, non una parete ordinaria per il solo fatto di essere opaca."
+    },
+    {
+      "nome": "Primo ruggito",
+      "effetto": "Una mente cosciente: Volontà −2 evita, fallimento Terrorizzato per cinque Round. Alla fine di ciascuna propria Iniziativa ripete Volontà −2 e termina con successo. Barriera Mentale aiuta; Cura Spirituale uno, Negare dodici o l’evidente cessazione della minaccia rimuovono. Un alleato a Contatto può usare la normale AzP e Oratoria. Non impone confessioni o una fuga attraverso pericoli palesemente letali."
+    },
+    {
+      "nome": "Secondo ruggito",
+      "effetto": "Una mente cosciente: Volontà −2 evita completamente, fallimento Terrorizzato e Assordato cinque Round e Paralizzato fino alla fine della successiva Iniziativa della vittima. Il timore magico sostiene la Paralisi: chi è immune alla paura evita l’intero effetto; rimuovere Terrorizzato termina anche questa Paralisi, non Assordato. Alla fine di ogni propria Iniziativa Volontà −2 libera da tutti gli Stati del secondo Ruggito con successo. Cura Spirituale uno può rimuovere la paura e la Paralisi collegata, tre anche Assordato; sei rimuove direttamente Paralizzato. Negare dodici elimina questo effetto. La mancata percezione dei Ruggiti precedenti non protegge."
+    },
+    {
+      "nome": "Terzo ruggito",
+      "effetto": "Tutti quelli che sentono il Ruggito e possiedono un corpo materiale: Tempra −4 dimezza per eccesso 4d6+3 Magico, Tuono, una AC e AR ordinaria; fallimento danno intero. Nessuna Difesa attiva o Elusione: la PS è già quella di riduzione. Dopo almeno un danno finale, distinta Riflessi −2 evita A Terra. Non richiede una mente e non è fermato da Barriera Mentale; assenza di udito o immunità al suono impediscono questa specifica esposizione. Tuono non applica automaticamente gli effetti di Fulmine o della tecnologia Elettricità. I danni istantanei non sono annullati con Negare Potere."
+    },
+    {
+      "nome": "Incantesimo",
+      "effetto": "Tabella (celle in ordine di lettura): Parametri pronti | Esito e contromisura | Comando 6 • Magia §19.2 | 6 PM; una mente visibile entro 10 Q, breve frase; Volontà 0."
+    },
+    {
+      "nome": "Individuare 9 • §23.9",
+      "effetto": "Tabella (celle in ordine di lettura): ."
+    },
+    {
+      "nome": "Negare Potere 9 • §23.6",
+      "effetto": "Tabella (celle in ordine di lettura): ."
+    },
+    {
+      "nome": "Cura Spirituale 6 • §21.4",
+      "effetto": "Tabella (celle in ordine di lettura): ."
+    },
+    {
+      "nome": "Cura Avvelenamenti 6 • §21.3",
+      "effetto": "Tabella (celle in ordine di lettura): ."
+    },
+    {
+      "nome": "Prigione Dimensionale 9 • §17.10",
+      "effetto": "Tabella (celle in ordine di lettura): ."
+    },
+    {
+      "nome": "Colpo Elementale 9 • §13.1",
+      "effetto": "Tabella (celle in ordine di lettura): ."
+    },
+    {
+      "nome": "Altri movimenti",
+      "effetto": "spazio 2 × 2 Q"
+    }
+  ],
+  "gs_px": {
+    "gs": "Divinità",
+    "px": 800,
+    "per_pg": 4
+  },
+  "_bestiario": {
+    "campi": {
+      "pv": "Mostri 0.69",
+      "pm": "Mostri 0.69",
+      "caratteristiche": "Mostri 0.69",
+      "ar": "Mostri 0.69",
+      "difese": "Mostri 0.69",
+      "salvezze": "Mostri 0.69",
+      "iniziativa": "Mostri 0.69",
+      "azioni": "Mostri 0.69",
+      "movimento": "Mostri 0.69",
+      "spazio": "Mostri 0.69",
+      "abilita": "Mostri 0.69",
+      "capacita": "Mostri 0.69",
+      "gs_px": "Mostri 0.69"
+    },
+    "edizione": "Mostri 0.69",
+    "sistema_salute": "solo_PV"
+  }
+}

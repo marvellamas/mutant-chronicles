@@ -3,7 +3,7 @@
   "versione": 1,
   "id": "budino-nero",
   "nome": "Budino nero",
-  "fonte": "dal Manuale dei Mostri v0.46 (Word del 27/10/2026), cap. 8 «Catalogo delle creature» — Melme funghi e imitatori",
+  "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Budino nero",
   "caratteristiche": {
     "FOR": 8,
     "DES": 3,
@@ -132,9 +132,25 @@
     "a-terra",
     "terrorizzato"
   ],
-  "note": "AR 2 biologica. Condotta: segue il nutrimento percepito, supera dislivelli aderendo e filtra nelle aperture accessibili. Fonte: Black Pudding, p. 241.",
+  "note": "Melma • corrosione e scissione • Natura Comune.",
   "_bestiario": {
     "edizione": "Mostri 0.69",
-    "sistema_salute": "solo_PV"
-  }
+    "sistema_salute": "solo_PV",
+    "campi": {
+      "pv": "Mostri 0.69",
+      "caratteristiche": "Mostri 0.69",
+      "ar": "Mostri 0.69",
+      "difese": "Mostri 0.69",
+      "salvezze": "Mostri 0.69",
+      "iniziativa": "Mostri 0.69",
+      "azioni": "Mostri 0.69",
+      "movimento": "Mostri 0.69",
+      "spazio": "Mostri 0.69",
+      "abilita": "Mostri 0.69",
+      "attacchi": "Mostri 0.47",
+      "capacita": "Mostri 0.47",
+      "gs_px": "Mostri 0.69"
+    }
+  },
+  "taglia": "grande"
 }

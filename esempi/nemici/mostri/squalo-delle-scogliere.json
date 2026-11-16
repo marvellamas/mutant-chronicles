@@ -3,7 +3,7 @@
   "versione": 1,
   "id": "squalo-delle-scogliere",
   "nome": "Squalo delle scogliere",
-  "fonte": "dal Manuale dei Mostri v0.46 (Word del 27/10/2026), cap. 8 «Catalogo delle creature» — Creature delle acque e popoli sommersi",
+  "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Squalo delle scogliere",
   "caratteristiche": {
     "FOR": 6,
     "DES": 6,
@@ -48,11 +48,11 @@
       "va": 10,
       "danno": "1d8+1",
       "natura": "Naturale",
-      "portata_q": 1,
-      "ac": 1,
       "proprieta": [
         "Perforazione"
-      ]
+      ],
+      "portata_q": 1,
+      "ac": 1
     }
   ],
   "abilita": [
@@ -91,9 +91,25 @@
       "effetto": "Respira soltanto acqua; fuori dall’acqua COS Round di fiato e §5.23. Percezione alternativa entro 6 Q nell’acqua comunicante, senza attraversare scafi o pareti né individuare automaticamente chi è nascosto o ogni perdita di sangue. Il Morso non afferra, trascina o inghiotte, non applica Sanguinamento e il limite è un Morso per Round, Opportunità compresa. Per danneggiare una barca serve una parte di scafo raggiungibile, con AR, PS Integrità e PI della struttura. Testa = fauci, Torace = corpo, Braccia = pinne anteriori, Gambe = posteriori e coda (una coda lesa compromette la propulsione); le pinne non impugnano armi né parano. Percezione 11."
     }
   ],
-  "note": "Un Sahuagin non è automaticamente suo alleato senza un rapporto o un comando stabiliti nella scena. Condotta: un branco cerca le prede più accessibili; sotto 6 PV o a Ferita Profonda si stacca. Non comprende linguaggi. Fonte: Reef Shark, p. 336.",
+  "note": "Predatore dei bassi fondali • caccia in gruppo • Natura Comune.",
   "_bestiario": {
     "edizione": "Mostri 0.69",
-    "sistema_salute": "solo_PV"
+    "sistema_salute": "solo_PV",
+    "campi": {
+      "pv": "Mostri 0.69",
+      "pm": "Mostri 0.69",
+      "caratteristiche": "Mostri 0.69",
+      "ar": "Mostri 0.69",
+      "difese": "Mostri 0.69",
+      "salvezze": "Mostri 0.69",
+      "iniziativa": "Mostri 0.69",
+      "azioni": "Mostri 0.69",
+      "movimento": "Mostri 0.69",
+      "spazio": "Mostri 0.69",
+      "abilita": "Mostri 0.69",
+      "attacchi": "Mostri 0.69",
+      "capacita": "Mostri 0.47",
+      "gs_px": "Mostri 0.69"
+    }
   }
 }

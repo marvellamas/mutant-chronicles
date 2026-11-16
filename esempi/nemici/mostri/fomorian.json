@@ -3,7 +3,7 @@
   "versione": 1,
   "id": "fomorian",
   "nome": "Fomorian",
-  "fonte": "dal Manuale dei Mostri v0.46 (Word del 27/10/2026), cap. 8 «Catalogo delle creature» — Giganti e abitanti delle montagne",
+  "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Fomorian",
   "caratteristiche": {
     "FOR": 10,
     "DES": 4,
@@ -92,9 +92,26 @@
       "effetto": "Vede entro 24 Q nel buio naturale, senza colori o vista attraverso ostacoli. Lo sguardo richiede che il Fomorian veda la vittima, non che questa ricambi."
     }
   ],
-  "note": "AR 2 biologica, nessuna armatura; non lancia massi. Maglio = Martello a due mani (+3 ordinario, +2 innato, portata 3 Q). Comportamento: difende una caverna, cerca gli isolati; può essere interlocutore; sotto 18 PV o con meno di 4 PM cerca riparo o una via negoziata.",
+  "note": "Gigante • assaltatore e debilitante • Natura Comune. Condotta. Questo esemplare difende una caverna e cerca vantaggio su chi appare isolato. Può essere trattato come interlocutore, indipendentemente dall’aspetto. Sotto 24 PV o con meno di 4 PM cerca riparo o una via negoziata. Non possiede maledizioni permanenti o poteri ulteriori dedotti dalla storia della specie.",
   "_bestiario": {
     "edizione": "Mostri 0.69",
-    "sistema_salute": "solo_PV"
-  }
+    "sistema_salute": "solo_PV",
+    "campi": {
+      "pv": "Mostri 0.69",
+      "pm": "Mostri 0.69",
+      "caratteristiche": "Mostri 0.69",
+      "ar": "Mostri 0.69",
+      "difese": "Mostri 0.69",
+      "salvezze": "Mostri 0.69",
+      "iniziativa": "Mostri 0.69",
+      "azioni": "Mostri 0.69",
+      "movimento": "Mostri 0.69",
+      "spazio": "Mostri 0.69",
+      "abilita": "Mostri 0.69",
+      "attacchi": "Mostri 0.47",
+      "capacita": "Mostri 0.47",
+      "gs_px": "Mostri 0.69"
+    }
+  },
+  "taglia": "grande"
 }

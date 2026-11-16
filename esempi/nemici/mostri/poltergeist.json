@@ -1,0 +1,125 @@
+{
+  "formato": "mutant-nemico",
+  "versione": 1,
+  "id": "poltergeist",
+  "nome": "Poltergeist",
+  "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Poltergeist",
+  "note": "Spirito invisibile che manifesta la propria presenza con urti e oggetti scagliati. È una variante autonoma dello Spettro: la telecinesi sostituisce il risucchio vitale.",
+  "pv": 32,
+  "pm": 18,
+  "caratteristiche": {
+    "FOR": 1,
+    "DES": 7,
+    "COS": 6,
+    "INT": 5,
+    "SAG": 5,
+    "CAR": 6
+  },
+  "ar": {
+    "totale": 0,
+    "magica": 0
+  },
+  "difese": 11,
+  "salvezze": {
+    "tempra": 10,
+    "riflessi": 12,
+    "volonta": 11,
+    "magia": 11
+  },
+  "iniziativa": 2,
+  "azioni": {
+    "principali": 2,
+    "movimento": 1
+  },
+  "movimento": {
+    "passo": 0,
+    "corsa": "non_consentito",
+    "scatto": "non_consentito",
+    "volo": 10
+  },
+  "spazio": "1 Q",
+  "abilita": [
+    {
+      "nome": "Corpo a corpo",
+      "va": 12
+    },
+    {
+      "nome": "Armi da lancio",
+      "va": 12
+    },
+    {
+      "nome": "Percezione",
+      "va": 11
+    },
+    {
+      "nome": "Furtività",
+      "va": 12
+    }
+  ],
+  "capacita": [
+    {
+      "nome": "Spinta telecinetica",
+      "effetto": "VA —. Danno: Spostamento; Tempra 0 evita. Portata/costo: Una creatura entro 6 Q; 1 AzP e 2 PM; "
+    },
+    {
+      "nome": "Corpo e sensi",
+      "effetto": "Non morto incorporeo con mente e PM personali, immunità biologiche comuni. Applica Corpo immateriale, Attraversare la materia e Volo spettrale come lo Spettro: dimezza per eccesso ogni danno Naturale dopo Difese e prima dell’AR; Magico ed Etereo pieni. Immune ad A Terra, vincoli esclusivamente materiali, fascinazione, Paralizzato e pietrificazione. Non è immune a ogni danno spirituale e può essere Svenuto per esaurimento dei PM. Scurovisione dodici Q; nessuna Parata naturale."
+    },
+    {
+      "nome": "Sequenza e urto",
+      "effetto": "Due AzP totali, massimo un’azione offensiva complessiva per Round tra Urto, Spinta e Oggetto, Opportunità compresa; soltanto l’Urto è un’Opportunità. L’Urto consente le normali Difese ravvicinate e applica AR; non drena PM, PV massimi o AFT. La seconda AzP può servire per Difese o manipolazioni non offensive realmente consentite. Invisibilità e incorporeità non annullano costi o attacchi altrui già in risoluzione."
+    },
+    {
+      "nome": "Invisibilità intrinseca",
+      "effetto": "È invisibile senza AzP, PM o Concentrazione e non torna visibile automaticamente dopo un attacco. Ai fini della rilevazione usa occultamento nove come Mimetismo: quando si muove o agisce produce distorsione, Percezione −2 una volta per Round per osservatore capace di vederla. Successo rivela sagoma e posizione fino alla successiva Iniziativa del Poltergeist mantenendo vista, rendendolo bersagliabile normalmente. Suoni e oggetti mossi restano percepibili; sapere soltanto il Q consente attacchi con arma a −4, non vista per i poteri. La capacità intrinseca non è rimossa con Negare Potere e persiste da Svenuto."
+    },
+    {
+      "nome": "Sole e condotta",
+      "effetto": "Se lo spirito o il bersaglio osservato è sotto sole diretto, −2 ai suoi attacchi e a Percezione visiva, una volta sola anche se sono esposti entrambi; nessun danno solare gratuito. Non parla, ma può comprendere una lingua nota nella sua storia. Può essere distratto, aggirato o affrontato con gli strumenti effettivamente presenti; il luogo infestato non fornisce oggetti illimitati o azioni di tana. Negare Potere non cancella lo spirito autonomo."
+    },
+    {
+      "nome": "Spinta di una creatura",
+      "effetto": "Una AzP e due PM, un corpo fino a un Q visibile entro sei Q e un percorso fisico libero. Tempra 0 evita; fallimento viene spostato fino a sei Q nella direzione scelta, anche verso l’alto, senza essere mantenuto sospeso. Prima di un pericolo immediato, collisione o Caduta, Riflessi 0 permette di arrestarsi nell’ultimo Q sicuro del percorso; non è una seconda PS per annullare tutto lo spostamento. Non attraversa pareti, non sottrae Azioni e non applica automaticamente Immobilizzato."
+    },
+    {
+      "nome": "Collisione e caduta",
+      "effetto": "Se entrambe le PS pertinenti falliscono e il tragitto termina contro una superficie solida, 1d6 Naturale Contusione per ogni due Q effettivamente percorsi, massimo 3d6, una AC e AR normale. Se manca sostegno, applicare invece la Caduta del Giocatore, senza sommare anche il danno orizzontale per lo stesso impatto. Dopo un impatto dannoso va A Terra, se la sua anatomia lo consente. L’effetto è istantaneo: Negare non annulla uno spostamento già compiuto."
+    },
+    {
+      "nome": "Oggetti",
+      "effetto": "Una AzP e due PM, un oggetto fino a settanta kg non indossato o impugnato, visibile entro sei Q; lo muove lungo un percorso libero fino a sei Q dalla posizione iniziale. Può scagliarlo contro una creatura visibile lungo quel percorso, Armi da lancio dodici, con normali Difese a distanza e AR; 2d4+1 Naturale Contusione indipendentemente da un peso inferiore al massimo. Lo stesso uso non può anche manovrare il meccanismo, sparare un’arma o attivare un Artefatto. Per una manipolazione innocua paga gli stessi costi, senza un attacco aggiunto. L’oggetto rimane visibile e non entra nell’incorporeità."
+    },
+    {
+      "nome": "Attraversamento",
+      "effetto": "Materia come Terreno Difficile, due Q di movimento per ogni Q attraversato. Solidi opachi continuano a impedire vista e attacchi attraverso pareti; si termina il movimento in uno spazio libero, senza aspettare volontariamente dentro materia. Se un impedimento lo lascia in un solido, viene espulso lungo il percorso appena seguito e subisce 1d6 Etereo diretto senza AR. Non impugna o trasporta oggetti con mani apparenti: solo la telecinesi espressa permette le manipolazioni descritte. Da Svenuto resta sospeso e invisibile ma non agisce."
+    },
+    {
+      "nome": "Altri movimenti",
+      "effetto": "spazio 1 × 1 Q"
+    }
+  ],
+  "gs_px": {
+    "gs": "Esperto",
+    "px": 30,
+    "per_pg": 4
+  },
+  "_bestiario": {
+    "campi": {
+      "pv": "Mostri 0.69",
+      "pm": "Mostri 0.69",
+      "caratteristiche": "Mostri 0.69",
+      "ar": "Mostri 0.69",
+      "difese": "Mostri 0.69",
+      "salvezze": "Mostri 0.69",
+      "iniziativa": "Mostri 0.69",
+      "azioni": "Mostri 0.69",
+      "movimento": "Mostri 0.69",
+      "spazio": "Mostri 0.69",
+      "abilita": "Mostri 0.69",
+      "capacita": "Mostri 0.69",
+      "gs_px": "Mostri 0.69"
+    },
+    "edizione": "Mostri 0.69",
+    "sistema_salute": "solo_PV"
+  }
+}

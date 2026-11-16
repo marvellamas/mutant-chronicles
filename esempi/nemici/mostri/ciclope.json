@@ -3,7 +3,7 @@
   "versione": 1,
   "id": "ciclope",
   "nome": "Ciclope",
-  "fonte": "dal Manuale dei Mostri v0.46 (Word del 27/10/2026), cap. 8 «Catalogo delle creature» — Giganti e abitanti delle montagne",
+  "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Ciclope",
   "caratteristiche": {
     "FOR": 10,
     "DES": 4,
@@ -88,17 +88,42 @@
   ],
   "capacita": [
     {
+      "nome": "Braccia poderose",
+      "effetto": "Il maglio usa Martello a due mani: due mani, FOR 6, PI 6, base 2d6. Il danno include +3 ordinario e +2 innato del Ciclope. Portata 2 Q è una capacità di questo corpo. Il Masso ha base 2d6 e +3 innato, già compresi. Nessuno dei bonus passa a un PG che recupera l’arma o il proiettile."
+    },
+    {
       "nome": "Percezione della profondità",
-      "effetto": "Contro un bersaglio oltre 6 Q applica un ulteriore −2 VA a tutti gli attacchi diretti a distanza, cumulativo con la penalità di distanza (a 15 Q il Masso usa VA 6). Non penalizza Percezione, i colpi ravvicinati o le Salvezze."
+      "effetto": "Contro un bersaglio oltre 6 Q applica un ulteriore −2 VA a tutti i propri attacchi diretti a distanza, cumulativo con la distanza ordinaria. A 15 Q il Masso usa VA 6: 10 meno 2 e meno 2. Non penalizza Percezione, attacchi ravvicinati o Salvezze."
     },
     {
       "nome": "Un solo occhio",
-      "effetto": "Accecato impedisce la vista normalmente. Il capo resta una sola localizzazione: un colpo alla Testa non distrugge l’occhio da sé. Non possiede scurovisione né un senso alternativo."
+      "effetto": "Accecato impedisce la vista normalmente. Il capo resta una sola localizzazione: un colpo alla Testa non distrugge automaticamente l’occhio. Menomazioni e Colpo Mirato seguono le regole comuni. Il Ciclope non possiede scurovisione né un senso alternativo."
+    },
+    {
+      "nome": "Altri movimenti",
+      "effetto": "spazio 3 × 3 Q"
     }
   ],
-  "note": "AR 2 biologica. Maglio = Martello a due mani (danno con +3 ordinario e +2 innato, portata 2 Q); nessuno scudo, para con il maglio. Lancio di massi: solo Colpo Singolo, serve un masso libero (~20 kg) da raccogliere (1 AzP, due mani). Comportamento: difende rifugio e risorse; sotto 16 PV o a Ferita Seria cerca riparo o tratta.",
+  "note": "Gigante monocolo • guardiano territoriale • Natura Comune. Condotta. Può usare entrambe le AzP con il maglio oppure raccogliere e scagliare un masso se ha già le mani libere. Difende soprattutto rifugio e risorse; inganni e scambi richiedono le Prove pertinenti. Sotto 21 PV cerca riparo o tratta, salvo una minaccia immediata ai suoi protetti.",
   "_bestiario": {
     "edizione": "Mostri 0.69",
-    "sistema_salute": "solo_PV"
-  }
+    "sistema_salute": "solo_PV",
+    "campi": {
+      "pv": "Mostri 0.69",
+      "pm": "Mostri 0.69",
+      "caratteristiche": "Mostri 0.69",
+      "ar": "Mostri 0.69",
+      "difese": "Mostri 0.69",
+      "salvezze": "Mostri 0.69",
+      "iniziativa": "Mostri 0.69",
+      "azioni": "Mostri 0.69",
+      "movimento": "Mostri 0.69",
+      "spazio": "Mostri 0.69",
+      "abilita": "Mostri 0.69",
+      "attacchi": "Mostri 0.47",
+      "capacita": "Mostri 0.69",
+      "gs_px": "Mostri 0.69"
+    }
+  },
+  "taglia": "grande"
 }

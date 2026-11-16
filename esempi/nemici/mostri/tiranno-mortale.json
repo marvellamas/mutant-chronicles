@@ -1,0 +1,114 @@
+{
+  "formato": "mutant-nemico",
+  "versione": 1,
+  "id": "tiranno-mortale",
+  "nome": "Tiranno mortale",
+  "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Tiranno mortale",
+  "taglia": "grande",
+  "note": "Forma non morta del Beholder: un cranio levitante circondato da occhi spettrali. Il grande occhio ostacola il recupero vitale e può vincolare i cadaveri.",
+  "pv": 169,
+  "pm": 65,
+  "caratteristiche": {
+    "FOR": 5,
+    "DES": 7,
+    "COS": 7,
+    "INT": 9,
+    "SAG": 7,
+    "CAR": 9
+  },
+  "ar": {
+    "totale": 6,
+    "magica": 2
+  },
+  "difese": 13,
+  "salvezze": {
+    "tempra": 15,
+    "riflessi": 12,
+    "volonta": 16,
+    "magia": 16
+  },
+  "iniziativa": 2,
+  "azioni": {
+    "principali": 3,
+    "movimento": 1
+  },
+  "movimento": {
+    "passo": 0,
+    "corsa": "non_consentito",
+    "scatto": "non_consentito",
+    "volo": 4
+  },
+  "spazio": "2 × 2 Q",
+  "abilita": [
+    {
+      "nome": "Corpo a corpo",
+      "va": 12
+    },
+    {
+      "nome": "Percezione",
+      "va": 17
+    },
+    {
+      "nome": "Occultismo",
+      "va": 16
+    },
+    {
+      "nome": "Oratoria",
+      "va": 14
+    }
+  ],
+  "capacita": [
+    {
+      "nome": "Raggio oculare",
+      "effetto": "VA —. Danno: Tabella comune; una vittima. Portata/costo: 24 Q; 1 AzP e 2 PM; "
+    },
+    {
+      "nome": "Raggi e immunità",
+      "effetto": "Usa i dieci Raggi e la stessa estrazione senza ripetizioni del Beholder, con tre AzP complessive e massimo tre Raggi per Round. Una sola AzP può essere distribuita dopo l’Iniziativa di un avversario. Immune a Terrorizzato, fascinazione, Paralizzato, pietrificazione, Affaticamento e A Terra. Non respira; immune a soffocamento, malattie, veleni biologici e Sanguinamento. Non riceve immunità generale a Magico o Etereo."
+    },
+    {
+      "nome": "Cono necrotico",
+      "effetto": "Una AzP e tre PM, tre Round senza Concentrazione: cono lungo 12 Q e largo alla fine 6 Q. Orientamento all’inizio della propria Iniziativa; barriere solide fermano la propagazione. Chi entra o inizia la propria Iniziativa nel cono effettua Magia −2, massimo una volta per Round contro quel Tiranno. Fallimento: non recupera PV mentre rimane nell’area in quel Round; successo: non subisce l’interdizione per il resto del Round. Non impedisce cure di Ferite, recuperi di PM o stabilizzazione. Negare Potere può spegnere l’intero cono, confronto 12. Nessuna soppressione generale della magia; i Raggi continuano a funzionare."
+    },
+    {
+      "nome": "Vincolare un cadavere",
+      "effetto": "Una AzP e tre PM, massimo una volta per Round, umanoide effettivamente morto nel cono attivo e ancora presente. Non basta trovarsi a zero PV o Morente. Segna il corpo con un vincolo di potenza 9; dopo tre Round, se il corpo è ancora adatto, sorge uno Zombie con la propria scheda e Iniziativa dal Round successivo. Prima del risveglio Negare Potere sul cadavere interrompe il vincolo; spostarlo fuori dal cono prima della scadenza lo interrompe. Non si rianima più volte lo stesso corpo distrutto."
+    },
+    {
+      "nome": "Servitori e cessazione",
+      "effetto": "Massimo quattro Zombie vincolati contemporaneamente; ordini semplici udibili o visibili entro 12 Q, senza condividere sensi o Azioni. Non parte con servitori; quelli che intervengono si conteggiano con i propri PX. Se il Tiranno diventa Svenuto o muore, il cono cessa e i vincoli non ancora completati terminano; gli Zombie già sorti diventano autonomi. Il cranio resta corporeo, con Scurovisione 24 Q; nessun filatterio o ritorno automatico. Le Ferite seguono la coesione delle parti come per i non morti già descritti."
+    },
+    {
+      "nome": "Valori pronti",
+      "effetto": "Attacchi e Difese comprendono le componenti ordinarie. Le immunità sono soltanto quelle dichiarate; la specie non riceve automaticamente la vulnerabilità al freddo della Covata. Abilità e caratteristiche non aggiungono altri bonus ai danni scritti. Restano le normali localizzazioni, ricondotte alle funzioni anatomiche effettive."
+    },
+    {
+      "nome": "Altri movimenti",
+      "effetto": "spazio 2 × 2 Q"
+    }
+  ],
+  "gs_px": {
+    "gs": "Mito",
+    "px": 200,
+    "per_pg": 4
+  },
+  "_bestiario": {
+    "campi": {
+      "pv": "Mostri 0.69",
+      "pm": "Mostri 0.69",
+      "caratteristiche": "Mostri 0.69",
+      "ar": "Mostri 0.69",
+      "difese": "Mostri 0.69",
+      "salvezze": "Mostri 0.69",
+      "iniziativa": "Mostri 0.69",
+      "azioni": "Mostri 0.69",
+      "movimento": "Mostri 0.69",
+      "spazio": "Mostri 0.69",
+      "abilita": "Mostri 0.69",
+      "capacita": "Mostri 0.69",
+      "gs_px": "Mostri 0.69"
+    },
+    "edizione": "Mostri 0.69",
+    "sistema_salute": "solo_PV"
+  }
+}

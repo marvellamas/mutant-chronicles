@@ -1,0 +1,160 @@
+{
+  "formato": "mutant-nemico",
+  "versione": 1,
+  "id": "divoratore-di-carne",
+  "nome": "Divoratore di Carne",
+  "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Divoratore di Carne",
+  "note": "Predatore infiltrato fra bande e persone senza protezione. Può abbandonare l’aspetto umano per lacerare la preda e investirla di secrezioni digestive.",
+  "pv": 91,
+  "pm": 18,
+  "caratteristiche": {
+    "FOR": 9,
+    "DES": 7,
+    "COS": 9,
+    "INT": 5,
+    "SAG": 6,
+    "CAR": 7
+  },
+  "ar": {
+    "totale": 3,
+    "magica": 0
+  },
+  "difese": 13,
+  "salvezze": {
+    "tempra": 15,
+    "riflessi": 12,
+    "volonta": 12,
+    "magia": 11
+  },
+  "iniziativa": 2,
+  "azioni": {
+    "principali": 2,
+    "movimento": 1
+  },
+  "movimento": {
+    "passo": 6,
+    "corsa": 12,
+    "scatto": 18
+  },
+  "abilita": [
+    {
+      "nome": "Corpo a corpo",
+      "va": 15
+    },
+    {
+      "nome": "Atletica",
+      "va": 15
+    },
+    {
+      "nome": "Oratoria",
+      "va": 14
+    },
+    {
+      "nome": "Raggirare",
+      "va": 13
+    },
+    {
+      "nome": "Percezione",
+      "va": 12
+    },
+    {
+      "nome": "Furtività",
+      "va": 12
+    }
+  ],
+  "attacchi": [
+    {
+      "nome": "Artigli rivelati",
+      "tipo": "ravvicinato",
+      "va": 15,
+      "danno": "2d6+2",
+      "natura": "Naturale",
+      "proprieta": [
+        "Taglio"
+      ],
+      "portata_q": 1,
+      "ac": 1
+    },
+    {
+      "nome": "Morso rivelato",
+      "tipo": "distanza",
+      "va": 15,
+      "danno": "2d8+2",
+      "natura": "Naturale",
+      "proprieta": [
+        "Perforazione"
+      ],
+      "gittata_q": 1,
+      "modalita": [
+        "S"
+      ],
+      "ac": 1
+    },
+    {
+      "nome": "Spruzzo digestivo",
+      "tipo": "ravvicinato",
+      "va": 13,
+      "danno": "1d6+1",
+      "natura": "Naturale",
+      "proprieta": [
+        "secrezione lesiva"
+      ],
+      "portata_q": 3,
+      "ac": 1
+    }
+  ],
+  "capacita": [
+    {
+      "nome": "Fonte del soggetto",
+      "effetto": "Flesh Drinker; Dark Soul, pp. 85–86 e 146–147; capacità numeriche riscritte per Simply RPG. Selezione e adattamento: applicare soltanto le capacità operative di questa scheda."
+    },
+    {
+      "nome": "Forma mostruosa",
+      "effetto": "Alla propria Iniziativa, 1 AzM e 2 PM per rivelarsi; servono 1×2 Q liberi. Un minuto indisturbato e 2 PM per tornare alla copertura, con abiti e documenti appropriati. PV, PM e Ferite sono gli stessi. Coperto non usa Artigli, Morso o Spruzzo: soltanto Corpo a corpo 12, 1d4+2 Naturale, una AC. Nessuna guarigione al cambio di forma."
+    },
+    {
+      "nome": "Spruzzo digestivo",
+      "effetto": "Colpo diretto schivabile e parabile con scudo, non con arma; nessuna Elusione o Area implicita. Se infligge almeno un danno oltre AR, Riflessi 0 dimezza per eccesso Accecato due Round; fallimento mantiene due Round. Magistrale evita lo Stato. Occhi materialmente protetti evitano il solo Accecato. Lavaggio con acqua e 1 AzP a Contatto lo termina; il danno già subito resta. Non infligge ulteriori danni periodici o perdita automatica di PI."
+    },
+    {
+      "nome": "Digerire la preda",
+      "effetto": "Un minuto a Contatto con un corpo biologico realmente morto e accessibile recupera 8 PV. Un uso per corpo, massimo tre per ventiquattro ore. Non inghiotte automaticamente una persona viva, non annulla le Difese e non cura Ferite o Morente. Non concede PM, Azioni, un servitore o un nuovo premio PX per la stessa vittima."
+    },
+    {
+      "nome": "Resistenze e vulnerabilità",
+      "effetto": "+2 a Tempra contro veleni e malattie, da aggiungere solo in questi casi; nessuna immunità. Corpo biologico curabile con mezzi compatibili. Nessuna rigenerazione, resistenza universale o AR magica; attacchi Eterei incontrano quota magica zero."
+    },
+    {
+      "nome": "Tattica",
+      "effetto": "Intimidisce e sfrutta il numero dei complici; scoperto insegue una preda isolata e si ritira se perde gli appoggi. Massimo due azioni offensive per Round, Opportunità compresa. Lo Spruzzo usato nel Round R torna disponibile nel Round R+3; non può usarlo per nutrirsi o paralizzare automaticamente."
+    },
+    {
+      "nome": "Altri movimenti",
+      "effetto": "coperto 1 Q; rivelato 1×2 Q"
+    }
+  ],
+  "gs_px": {
+    "gs": "Eroe",
+    "px": 70,
+    "per_pg": 4
+  },
+  "_bestiario": {
+    "campi": {
+      "pv": "Mostri 0.69",
+      "pm": "Mostri 0.69",
+      "caratteristiche": "Mostri 0.69",
+      "ar": "Mostri 0.69",
+      "difese": "Mostri 0.69",
+      "salvezze": "Mostri 0.69",
+      "iniziativa": "Mostri 0.69",
+      "azioni": "Mostri 0.69",
+      "movimento": "Mostri 0.69",
+      "abilita": "Mostri 0.69",
+      "attacchi": "Mostri 0.69",
+      "capacita": "Mostri 0.69",
+      "gs_px": "Mostri 0.69"
+    },
+    "edizione": "Mostri 0.69",
+    "sistema_salute": "solo_PV"
+  }
+}

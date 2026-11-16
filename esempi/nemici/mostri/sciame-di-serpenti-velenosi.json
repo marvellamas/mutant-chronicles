@@ -3,7 +3,7 @@
   "versione": 1,
   "id": "sciame-di-serpenti-velenosi",
   "nome": "Sciame di serpenti velenosi",
-  "fonte": "dal Manuale dei Mostri v0.46 (Word del 27/10/2026), cap. 8 «Catalogo delle creature» — Sciami e piccola fauna",
+  "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Sciame di serpenti velenosi",
   "caratteristiche": {
     "FOR": 5,
     "DES": 8,
@@ -43,24 +43,28 @@
   },
   "attacchi": [
     {
-      "nome": "Morsi (PV 19–36)",
+      "nome": "Morsi con PV 25–47",
       "tipo": "ravvicinato",
       "va": 12,
       "danno": "2d6",
       "natura": "Naturale",
-      "ac": 1,
-      "note": "Poi veleno: vedi la capacità «Veleno ofidico II».",
-      "portata_q": 0
+      "proprieta": [
+        "poi veleno"
+      ],
+      "portata_q": 0,
+      "ac": 1
     },
     {
-      "nome": "Morsi (PV 0–18)",
+      "nome": "Morsi con PV 1–24",
       "tipo": "ravvicinato",
       "va": 12,
       "danno": "1d6",
       "natura": "Naturale",
-      "ac": 1,
-      "note": "Poi veleno: vedi la capacità «Veleno ofidico II».",
-      "portata_q": 0
+      "proprieta": [
+        "poi veleno"
+      ],
+      "portata_q": 0,
+      "ac": 1
     }
   ],
   "abilita": [
@@ -113,9 +117,25 @@
     "stordito",
     "terrorizzato"
   ],
-  "note": "I due profili di Morsi/Becchi sono le fasce di danno per PV: quello ridotto sostituisce l’altro e non è un attacco separato. Spazio 1 × 1 Q condivisibile con altre creature (portata 0 Q: attacca solo nello spazio condiviso). A 18 PV o meno riduce soltanto il danno fisico a 1d6; i morsi restano AC 1 e non ignorano l’AR. Non ha Costrizione, prese automatiche né immunità generica al veleno. La conversione mantiene una sola inoculazione per attacco. Condotta: a 18 PV o meno oppure a Ferita Profonda tende a raggiungere fessure o acqua libera; non ha bisogno di un comandante telepatico per restare operativo. Fonte: Swarm of Poisonous Snakes, p. 338.",
+  "note": "Gruppo strisciante • morsi e veleno ofidico • Natura Comune.",
   "_bestiario": {
     "edizione": "Mostri 0.69",
-    "sistema_salute": "solo_PV"
+    "sistema_salute": "solo_PV",
+    "campi": {
+      "pv": "Mostri 0.69",
+      "pm": "Mostri 0.69",
+      "caratteristiche": "Mostri 0.69",
+      "ar": "Mostri 0.69",
+      "difese": "Mostri 0.69",
+      "salvezze": "Mostri 0.69",
+      "iniziativa": "Mostri 0.69",
+      "azioni": "Mostri 0.69",
+      "movimento": "Mostri 0.69",
+      "spazio": "Mostri 0.69",
+      "abilita": "Mostri 0.69",
+      "attacchi": "Mostri 0.69",
+      "capacita": "Mostri 0.47",
+      "gs_px": "Mostri 0.69"
+    }
   }
 }

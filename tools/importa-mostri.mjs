@@ -11,7 +11,7 @@
 //
 // Uso:  node tools/importa-mostri.mjs [--testo=file.md] [--dest=cartella] [--scrivi] [--aggiorna=id,id] [--json=file]
 import { readFileSync, writeFileSync, readdirSync, existsSync, mkdirSync } from 'node:fs';
-import { percorsoManuale } from './manuali.mjs';
+import { percorsoManuale, registro } from './manuali.mjs';
 import { fileURLToPath } from 'node:url';
 import { join, dirname } from 'node:path';
 import { iniziativaCreatura } from '../src/iniziativa-creature.js';
@@ -19,7 +19,9 @@ import { iniziativaCreatura } from '../src/iniziativa-creature.js';
 const RADICE = join(dirname(fileURLToPath(import.meta.url)), '..');
 const TESTO_PREDEFINITO = percorsoManuale('mostri');
 const DEST_PREDEFINITA = join(RADICE, 'esempi/nemici/mostri');
-export const FONTE = 'dal Manuale dei Mostri v0.46 (Word del 27/10/2026)';
+// Lotto 204: l'edizione **non si scrive dentro uno strumento** (nona regola, lotto 191): si chiede al registro.
+// Finché era scritta qui, ogni scheda rigenerata dalla 0.69 dichiarava di venire dalla v0.46.
+export const FONTE = `dal Manuale dei Mostri v${registro().manuali.find((m) => m.id === 'mostri').versione}`;
 const LATO_MAX = 20; // data/mappa.json → creatura_ingombro_max (A.167, portato a 20 dalla A.198 del 30/10/2026)
 const Q_TATTICO_IN_Q_BASE = 10; // Mostri 0.46: 1 Q Base = 1,5 m, 1 Q Tattico = 15 m
 const ABILITA = new Set((JSON.parse(readFileSync(join(RADICE, 'data/abilita.json'), 'utf8')).abilita ?? []).map((a) => a.nome));
@@ -115,7 +117,7 @@ export function dividi(R) {
 
 // ---------- tabella dei dati ----------
 // Restituisce { colonne:[nomi], righe:[[etichetta, valore1, valore2?]], fine } oppure null.
-function leggiTabella(R) {
+export function leggiTabella(R) {
   let t = -1;
   for (let i = 0; i < R.length - 1; i += 1) if (/^(Campo|Dato)$/.test(R[i].t) && (/^Valore( pronto)?$/.test(R[i + 1].t) || intestazioneMulti(R, i))) { t = i; break; }
   if (t < 0) return null;
@@ -182,6 +184,21 @@ function leggiAttacchi(R, k) {
 
 const inQ = (v, unita) => (/Tattic/i.test(unita || '') ? v * Q_TATTICO_IN_Q_BASE : v);
 
+/**
+ * Lotto 204 — i modi di movimento scritti in un'etichetta della 0.69: «Terra, scavo e volo», «Terra e arrampicata
+ * con appigli», «Terra e volo levitante», «Solo nuoto». **Una regola, non un elenco di etichette:** si separano i
+ * modi e si guarda se fra loro c'è la terra. Un elenco di etichette va rifatto a ogni edizione; questo no.
+ */
+export function modiDiMovimento(etichetta) {
+  return String(etichetta ?? '')
+    .replace(/^(?:Forma\s+)?/i, '')
+    .replace(/\b(con appigli|magico|magica|levitante|nativo|nativa|assistito|vincolat\w+|in volo)\b/gi, '')
+    .split(/\s*(?:,|\/|\be\b|\bo\b)\s*/i)
+    .map((s) => s.trim().toLowerCase())
+    .filter(Boolean);
+}
+const CON_TERRA = (etichetta) => modiDiMovimento(etichetta).some((m) => /^(solo\s+)?terra|^terrestre$/.test(m));
+
 function leggiMovimento(testo) {
   const out = { extra: [] };
   const segmenti = testo.split(/\s[•·]\s|;\s/).map((s) => s.trim()).filter(Boolean);
@@ -199,12 +216,26 @@ function leggiMovimento(testo) {
       out.passo = inQ(+m3[2], m3[5]); out.corsa = inQ(+m3[3], m3[5]); out.scatto = inQ(+m3[4], m3[5]);
       if (/volo/i.test(etichetta)) out.volo = out.passo;
       out.extra.push(etichetta + ' ' + m3[2] + ' / ' + m3[3] + ' / ' + m3[4] + ': la stessa andatura vale anche per ' + etichetta.replace(/^.*?terra e /i, '').replace(/^terra\s*/i, ''));
+    } else if (m3 && /^(umanoide|umano)\b/i.test(etichetta) && out.passo === undefined) {
+      // Lotto 204 — i licantropi della 0.69 danno due andature e due ingombri, uno per forma: «Umanoide: 6 / 12 / 18 Q,
+      // 1 × 1 Q; orso e ibrido: 8 / 16 / 24 Q, 2 × 2 Q». Il formato dei nemici ha un movimento solo: si legge la
+      // **forma di base** (quella in cui la creatura si presenta) e si dice che l'altra non entra nel campo. Quale
+      // delle due valga al tavolo, e se debbano diventare due configurazioni come la A.203, è la A.273.
+      out.passo = inQ(+m3[2], m3[5]); out.corsa = inQ(+m3[3], m3[5]); out.scatto = inQ(+m3[4], m3[5]);
+      out.dueForme = testo;
+    } else if (m3 && CON_TERRA(etichetta) && out.passo === undefined) {
+      // Lotto 204: «Terra, scavo e volo 6 / 12 / 18 Q» e simili — la terra c'è, e la stessa andatura vale per gli altri modi
+      out.passo = inQ(+m3[2], m3[5]); out.corsa = inQ(+m3[3], m3[5]); out.scatto = inQ(+m3[4], m3[5]);
+      const altri = modiDiMovimento(etichetta).filter((x) => !/^(solo\s+)?terra|^terrestre$/.test(x));
+      if (altri.includes('volo')) out.volo = out.passo;
+      if (altri.length) out.extra.push(`${etichetta} ${m3[2]} / ${m3[3]} / ${m3[4]}: la stessa andatura vale anche per ${altri.join(', ')}`);
     } else if (/^(terra\s+(0|—)(\s*Q)?|immobile)$/i.test(s)) {
       out.zero = true;
     } else if (m3 && /^volo/i.test(etichetta)) {
       out.volo = inQ(+m3[2], m3[5]); // Passo di volo in Q Base (Dragomedusa: 12 Q Tattici → 120)
     } else {
-      const p = s.match(/^Passo\s+(\d+)\s*Q\b.*?Corsa\s+(\d+)\s*Q\b.*?Scatto\s+(\d+)\s*Q\b/i);
+      // «Passo 6 Q, Corsa 12 Q, Scatto 18 Q» e, dalla 0.69, «Passo 6 / Corsa 12 / Scatto 18 Q» (la Q sta solo in fondo)
+      const p = s.match(/^Passo\s+(\d+)\s*(?:Q\b)?.*?Corsa\s+(\d+)\s*(?:Q\b)?.*?Scatto\s+(\d+)\s*Q\b/i);
       if (p && out.passo === undefined) { out.passo = +p[1]; out.corsa = +p[2]; out.scatto = +p[3]; } else out.extra.push(s);
     }
   }
@@ -222,6 +253,7 @@ function leggiMovimentoRighe(righe) {
       if ((pre || pf) && out.passo === undefined) { const m = pre || pf; out.passo = +m[1]; out.corsa = +m[2]; out.scatto = +m[3]; continue; }
       const r = leggiMovimento(v);
       for (const k of ['passo', 'corsa', 'scatto', 'volo']) if (r[k] !== undefined && out[k] === undefined) out[k] = r[k];
+      if (r.dueForme) out.dueForme = r.dueForme;
       if (r.zero) out.zero = true;
       out.extra.push(...r.extra);
     } else if (/^Movimento etereo$/.test(e)) {
@@ -272,7 +304,10 @@ function leggiAttacco(intest, c, nonCapito, acComune) {
   const sede = `${portT}; ${costoT}`;
   const nomeAtt = c[0];
   const va = /^\d+/.test(vaT) ? parseInt(vaT, 10) : null;
-  const dm = dannoT.match(/^(\d+d\d+(?:\s*\+\s*\d+d\d+)*(?:\s*[+−-]\s*\d+)?|\d+)(?:\s*×\s*(\d+))?\s*(?:•\s*)?(Naturale|Magico|Etereo)(?:\s+([A-Za-zÀ-ù]+))?(?:\s*;\s*(.+))?$/);
+  // Lotto 204: la 0.46 scriveva «1d8+2 • Naturale Perforante», la 0.69 «1d8+2 Naturale, Perforazione; AC 1» — il tipo
+  // di danno è separato da una virgola invece che da uno spazio. È la stessa informazione, scritta in un altro modo:
+  // senza questa virgola 395 attacchi di 200 schede finivano fra le capacità, cioè non si potevano tirare.
+  const dm = dannoT.match(/^(\d+d\d+(?:\s*\+\s*\d+d\d+)*(?:\s*[+−-]\s*\d+)?|\d+)(?:\s*×\s*(\d+))?\s*(?:•\s*)?(Naturale|Magico|Etereo)(?:\s*,?\s+([A-Za-zÀ-ù]+))?(?:\s*;\s*(.+))?$/);
   if (va === null || !dm) {
     nonCapito.push(`Attacco «${nomeAtt}» non importato come attacco (VA «${vaT}», danno «${dannoT}»): messo fra le capacità`);
     return { capacita: { nome: nomeAtt, effetto: [`VA ${vaT}`, `Danno: ${dannoT}`, `Portata/costo: ${sede}`].join('. ') } };
@@ -293,7 +328,12 @@ function leggiAttacco(intest, c, nonCapito, acComune) {
     att.portata_q = +tatt[1] * Q_TATTICO_IN_Q_BASE;
     nonCapito.push(`Attacco «${nomeAtt}»: portata in Q Tattici (${tatt[0]}) convertita in Q Base`);
   } else if (q) att.portata_q = +q[1];
-  else {
+  else if (contatto) {
+    // Lotto 204: la 0.69 scrive «Contatto» al posto di «1 Q» per i colpi che si danno toccando il bersaglio
+    // (Morso del Vampiro, prese, tocchi dei non morti). È la portata di un attacco in mischia: 1 Q.
+    att.portata_q = 1;
+    nonCapito.push(`Attacco «${nomeAtt}»: portata «Contatto» letta come 1 Q (attacco in mischia, bersaglio adiacente)`);
+  } else {
     nonCapito.push(`Attacco «${nomeAtt}»: portata non letta («${portT}»): messo fra le capacità, non fra gli attacchi`);
     return { capacita: { nome: nomeAtt, effetto: ['VA ' + vaT, 'Danno: ' + dannoT, 'Portata/costo: ' + sede].join('. ') } };
   }
@@ -445,7 +485,11 @@ function classifica(coppie) {
     else if (/^(Ingombro|Spazio|Dimensioni|Gruppo e spazio)/.test(e)) { c.spazio.push(v); if (!/^(Ingombro|Spazio sulla mappa)$/.test(e) || /Sensi/.test(e)) c.altri.push([e, v]); }
     else if (/^Abilità condizionata$/.test(e)) c.abilCond.push(v);
     else if (/^(Abilità|Altre Abilità|Abilità offensive|Abilità e sensi)$/.test(e)) c.abil.push(v);
-    else if (/^(Caratteristiche|Risorse|Risorse e protezioni|Risorse individuali|Armatura|Protezioni e Difese|Protezioni|Difese e Salvezze|Salvezze|Iniziativa e Azioni|Iniziativa e azioni)$/.test(e)) c.valori.push(v);
+    // Lotto 204: le etichette della 0.69. **La 0.69 non ha tolto dei dati: ha rinominato delle righe.** «Armatura e
+    // Difese» è la stessa riga che la 0.46 chiamava «Protezioni e Difese» (149 schede su 458), e con lei restavano
+    // fuori AR e Difese, cioè due campi obbligatori: la scheda non si scriveva affatto. Qui si elencano le etichette,
+    // non si indovina: un'etichetta che non è in questo elenco finisce in `altri` e viene **detta** nel «non capito».
+    else if (/^(Caratteristiche|Caratteristiche fisiche|Caratteristiche mentali|Risorse|Risorse e protezioni|Risorse individuali|Risorse e AR|Armatura|Armatura e Difese|Protezioni e Difese|Protezioni|Difese|Difese e Salvezze|Salvezze|Salvezze fisiche|Altre Salvezze|Iniziativa|Iniziativa e Azioni|Iniziativa e azioni|Azioni per Round)$/.test(e)) c.valori.push(v);
     else if (/^Dimensioni e spazio$/.test(e)) c.spazio.push(v);
     else c.altri.push([e, v]);
   }
@@ -506,6 +550,9 @@ export function leggiScheda(sch, comuni = [], colonna = null, blocco = null) {
   else if ((ar = valori.match(/AR\s+(\d+)\s+biologic[ao]\s*[,;]\s*(?:di cui\s+)?(\d+)\s+magic/))) o.ar = { totale: +ar[1], magica: +ar[2] };
   else if ((ar = valori.match(/AR\s+(\d+)\s+biologic[ao]\s*;\s*AR magica\s+(\d+)/))) o.ar = { totale: +ar[1] + +ar[2], magica: +ar[2] };
   else if ((ar = valori.match(/AR\s+(\d+)\s*[,;]\s*componente magica\s+(\d+)/))) o.ar = { totale: +ar[1], magica: +ar[2] };
+  // Lotto 204, forma della 0.69: «AR 6 intrinseca, interamente magica» — la parte magica è dichiarata a parole
+  // invece che con un numero, ed è tutta: magica = totale (Demilich, Demone d’ombra, Fuoco fatuo, Acererak).
+  else if ((ar = valori.match(/\bAR\s+(\d+)[^•|]*?\binteramente magic[ao]\b/))) o.ar = { totale: +ar[1], magica: +ar[1] };
   else if ((ar = valori.match(/\bAR\s+0\b(?!\s*,?\s*\d)/))) o.ar = { totale: 0, magica: 0 }; // totale 0: la parte magica non può essere altro
   else if ((ar = valori.match(/\bAR\s+(\d+)(?![\d/])/)) && (valori.match(/magica\s+(\d+)/) || valori.match(/di cui\s+(\d+)\s*magic/) || valori.match(/(\d+)\s*magic[ao]/))) {
     // forme con varianti d'equipaggiamento («AR 2 con scudo, 1 senza», «AR 3 da Armatura media»): vale il primo numero, cioè la scheda col suo equipaggiamento
@@ -519,7 +566,9 @@ export function leggiScheda(sch, comuni = [], colonna = null, blocco = null) {
 
   // Difese e Salvezze
   const dif = valori.match(/\bDifese\s+(\d+)/);
-  const par = !dif && valori.match(/\bParata\s+(\d+)\s*•\s*Schivata[^0-9]*(\d+)/);
+  // Lotto 204: la 0.69 scrive le due Difese anche come «Difese Parata 12; Schivata ed Elusione 10» (col punto e
+  // virgola invece del •). Il formato dei nemici ha un valore solo: si legge la Parata, come già si faceva, e si dice.
+  const par = !dif && valori.match(/\bParata\s+(\d+)\s*(?:•|;)\s*Schivata[^0-9]*(\d+)/);
   if (dif) o.difese = +dif[1];
   else if (par) { o.difese = +par[1]; nonCapito.push('Due Difese scritte (Parata ' + par[1] + ', Schivata/Elusione ' + par[2] + '): il formato ha un solo valore, letto la Parata; da controllare'); }
   else mancano.push('Difese');
@@ -553,11 +602,14 @@ export function leggiScheda(sch, comuni = [], colonna = null, blocco = null) {
   } else if (mov.passo === undefined && mov.volo !== undefined) {
     o.movimento = { passo: 0, corsa: 'non_consentito', scatto: 'non_consentito', volo: mov.volo };
     nonCapito.push('Solo movimento di volo scritto: Passo a terra 0, Corsa e Scatto «non consentito», volo come scritto');
-  } else if (mov.passo === undefined && mov.extra.some((x) => /^Nuoto/i.test(x)) && !mov.extra.some((x) => /^(Terra|Movimento terrestre)/i.test(x))) {
+  } else if (mov.passo === undefined && mov.extra.some((x) => /^(Solo )?[Nn]uoto/i.test(x)) && !mov.extra.some((x) => /^(Terra|Movimento terrestre)/i.test(x))) {
     o.movimento = { passo: 0, corsa: 'non_consentito', scatto: 'non_consentito' };
     nonCapito.push('Solo movimento acquatico scritto (Nuoto): Passo 0, Corsa e Scatto «non consentito» a terra, come nei blocchi già importati');
   } else if (mov.passo === undefined) mancano.push('Passo (movimento a terra)');
-  else {
+  else if (mov.dueForme) {
+    o.movimento = { passo: mov.passo, corsa: mov.corsa, scatto: mov.scatto };
+    nonCapito.push(`Due forme con movimento e ingombro diversi («${mov.dueForme.replace(/\s+/g, ' ').slice(0, 110)}»): letta la forma di base; l’altra resta nelle capacità (A.273)`);
+  } else {
     o.movimento = { passo: mov.passo, corsa: mov.corsa, scatto: mov.scatto };
     if (mov.volo !== undefined) o.movimento.volo = mov.volo;
   }

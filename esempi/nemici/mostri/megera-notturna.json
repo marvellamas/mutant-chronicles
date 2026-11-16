@@ -1,0 +1,159 @@
+{
+  "formato": "mutant-nemico",
+  "versione": 1,
+  "id": "megera-notturna",
+  "nome": "Megera notturna",
+  "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Megera notturna",
+  "note": "Predatrice dei sogni che usa una pietra personale per sfalsare il proprio corpo. L’assalto onirico richiede una lunga permanenza accanto al dormiente e offre tempo e mezzi per interromperlo.",
+  "pv": 104,
+  "pm": 40,
+  "caratteristiche": {
+    "FOR": 8,
+    "DES": 7,
+    "COS": 8,
+    "INT": 8,
+    "SAG": 7,
+    "CAR": 8
+  },
+  "ar": {
+    "totale": 3,
+    "magica": 0
+  },
+  "difese": 12,
+  "salvezze": {
+    "tempra": 13,
+    "riflessi": 12,
+    "volonta": 13,
+    "magia": 14
+  },
+  "iniziativa": 2,
+  "azioni": {
+    "principali": 2,
+    "movimento": 1
+  },
+  "movimento": {
+    "passo": 6,
+    "corsa": 12,
+    "scatto": 18
+  },
+  "spazio": "1 Q",
+  "abilita": [
+    {
+      "nome": "Corpo a corpo",
+      "va": 14
+    },
+    {
+      "nome": "Occultismo",
+      "va": 13
+    },
+    {
+      "nome": "Percezione",
+      "va": 13
+    },
+    {
+      "nome": "Furtività",
+      "va": 12
+    },
+    {
+      "nome": "Raggirare",
+      "va": 15
+    },
+    {
+      "nome": "Oratoria",
+      "va": 12
+    }
+  ],
+  "attacchi": [
+    {
+      "nome": "Artigli",
+      "tipo": "ravvicinato",
+      "va": 14,
+      "danno": "2d8+2",
+      "natura": "Naturale",
+      "proprieta": [
+        "Taglio",
+        "AC 1"
+      ],
+      "portata_q": 1,
+      "ac": 1
+    },
+    {
+      "nome": "Dardo maligno",
+      "tipo": "distanza",
+      "va": 13,
+      "danno": "2d6+2",
+      "natura": "Magico",
+      "proprieta": [
+        "AC 1"
+      ],
+      "gittata_q": 12,
+      "modalita": [
+        "S"
+      ],
+      "ac": 1
+    }
+  ],
+  "capacita": [
+    {
+      "nome": "Corpo e sensi",
+      "effetto": "Vivente biologica, Scurovisione 24 Q, immune alla sola fascinazione. Dimezza Gelo e Fuoco; dimezza anche il danno Naturale di armi non argentate, incluse armi naturali, dopo Difese e prima dell’AR. Argento elimina soltanto questo secondo dimezzamento. Resistenza alla magia +2 non inclusa nelle PS; nessuna Parata naturale. Massimo un Artiglio e un Dardo per Round, entro le due AzP e con la sola Opportunità ravvicinata compatibile."
+    },
+    {
+      "nome": "Pietra e forma",
+      "effetto": "La pietra chiave Comune è un oggetto personale necessario alla Fase e alla Visita onirica: PI quattro, AR zero e PS Integrità dieci; nessuna riserva di PM. Questo profilo converte soltanto la funzione di chiave, non l’artefatto curativo universale o la Sacca delle anime della fonte. In mano ad altri non concede Fase o cure. Sottrarla o romperla interrompe gli effetti che la richiedono; riprenderla non li riattiva. Mutamento personale: una AzP e due PM, umanoide di un Q per un’ora, stessi valori e risorse, senza Artigli nella forma imitata; oggetti non trasformati. Negare nove, Svenuto o morte terminano il Mutamento."
+    },
+    {
+      "nome": "Fase breve",
+      "effetto": "Una AzP e tre PM attivano Fase personale delle regole comuni per cinque Round, potenza nove. Richiede la pietra indossata o impugnata e l’assenza di prese o vincoli materiali esterni. Nessun passeggero. Non può attaccare, affascinare o lanciare Dardi mentre è sfalsata; deve prima rientrare con una AzP o attendere la scadenza. Il rientro non rinnova le Azioni."
+    },
+    {
+      "nome": "Magia offensiva e sonno",
+      "effetto": "Dardo maligno: una AzP e due PM, una creatura visibile entro dodici Q; VA tredici già comprensivo del bonus del proiettile mistico. Normali Difese a distanza e AR, danno Magico senza elemento, veleno o risucchio. Sonno innato: una AzP e tre PM, due usi per ventiquattro ore, applica Indurre Sonno tre senza Potere o componenti: una creatura vivente visibile entro sei Q capace di dormire, Volontà 0, cinque Round, con le procedure comuni di sonno magico e risveglio. Possiede anche Percepire magia delle regole comuni. Nessuno spostamento planare libero o repertorio da congrega."
+    },
+    {
+      "nome": "Avvio",
+      "effetto": "Due AzP e sei PM, una volta per ventiquattro ore, solo fuori da un combattimento già in corso. Una creatura vivente già addormentata, capace di sognare, a Contatto; la Megera deve avere la pietra. Volontà −2 della vittima: successo impedisce la Visita; fallimento avvia un’ora ininterrotta di incubi. Barriera Mentale aiuta la PS. La capacità non addormenta e non impedisce un risveglio con i mezzi adatti al sonno presente."
+    },
+    {
+      "nome": "Permanenza",
+      "effetto": "La Megera entra in una Fase onirica visibile come sagoma tenue, alle condizioni comuni di danno e percezione della Fase, e mantiene Concentrazione per l’intera ora. Rimane a Contatto con il dormiente, senza AzP o movimento che lo interrompa. La Visita è l’unica eccezione al divieto di esercitare un potere su altre creature durante la Fase. Questa durata prolungata vale solo durante la Visita e non si trasferisce alla Fase breve. Danni e Stati seguono i normali tiri di mantenimento; niente attraversamento di pareti per raggiungere il dormiente dopo l’avvio."
+    },
+    {
+      "nome": "Compimento",
+      "effetto": "Solo al termine dell’ora la vittima perde 1d4 PM personali e peggiora di uno Stato di Affaticamento, con Tempra 0 per evitare il solo peggioramento. Il Riposo in corso non concede recuperi al completamento; un nuovo Riposo iniziato dopo funziona normalmente. Scudo Spirituale riduce la perdita di PM secondo le sue regole; nessun PM è trasferito alla Megera. Non riduce PV massimi, non infligge Corruzione o morte automatica e non intrappola anime. A zero PM vale il normale Svenuto, senza danni da eccedenza. I Riposi successivi funzionano normalmente."
+    },
+    {
+      "nome": "Interruzione e soccorso",
+      "effetto": "Risvegliare la vittima, interrompere Concentrazione o Contatto, privare la Megera della pietra, Svenuto o morte della Megera terminano prima del compimento senza penalità retroattive al Riposo. Negare Potere o Esorcizzare Possessione nove possono colpire la Visita validamente localizzata sulla Megera oppure sul dormiente. Non si tratta di un possesso del corpo e nessun ordine viene imposto. Il rientro lascia la Megera nello spazio libero già occupato; i 110 PX comprendono la sola pietra chiave e nessun prigioniero o servitore."
+    },
+    {
+      "nome": "Altri movimenti",
+      "effetto": "spazio 1 × 1 Q"
+    }
+  ],
+  "gs_px": {
+    "gs": "Leggenda",
+    "px": 110,
+    "per_pg": 4
+  },
+  "_bestiario": {
+    "campi": {
+      "pv": "Mostri 0.69",
+      "pm": "Mostri 0.69",
+      "caratteristiche": "Mostri 0.69",
+      "ar": "Mostri 0.69",
+      "difese": "Mostri 0.69",
+      "salvezze": "Mostri 0.69",
+      "iniziativa": "Mostri 0.69",
+      "azioni": "Mostri 0.69",
+      "movimento": "Mostri 0.69",
+      "spazio": "Mostri 0.69",
+      "abilita": "Mostri 0.69",
+      "attacchi": "Mostri 0.69",
+      "capacita": "Mostri 0.69",
+      "gs_px": "Mostri 0.69"
+    },
+    "edizione": "Mostri 0.69",
+    "sistema_salute": "solo_PV"
+  }
+}

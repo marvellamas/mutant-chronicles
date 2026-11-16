@@ -3,7 +3,7 @@
   "versione": 1,
   "id": "gufo-gigante",
   "nome": "Gufo gigante",
-  "fonte": "dal Manuale dei Mostri v0.46 (Word del 27/10/2026), cap. 8 «Catalogo delle creature» — Creature alate e piccoli predatori",
+  "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Gufo gigante",
   "caratteristiche": {
     "FOR": 6,
     "DES": 7,
@@ -49,11 +49,11 @@
       "va": 11,
       "danno": "1d8+1",
       "natura": "Naturale",
-      "portata_q": 1,
-      "ac": 1,
       "proprieta": [
         "Taglio"
-      ]
+      ],
+      "portata_q": 1,
+      "ac": 1
     }
   ],
   "abilita": [
@@ -96,9 +96,26 @@
       "effetto": "+2 a Percezione quando vista o udito sono determinanti (una sola volta per Prova). Furtività 14 richiede la possibilità reale di occultarsi: non è invisibile né perfettamente silenzioso; la vista notturna non rivela automaticamente chi è nascosto. Parla il linguaggio dei Gufi giganti e comprende altre tre lingue della sua comunità (senza poterle necessariamente parlare). Può fare da sentinella o negoziare un passaggio; nessun potere silvano o vincolo con esseri fatati per il solo nome."
     }
   ],
-  "note": "Un solo attacco di Artigli per Round, Opportunità compresa; non afferra automaticamente la preda. Condotta: sotto 5 PV o a Ferita Profonda tende a raggiungere un posatoio protetto. Fonte: Giant Owl, p. 327.",
+  "note": "Rapace notturno senziente • passaggio in volo • Natura Comune. Condotta. Un solo attacco di Artigli per Round, Opportunità compresa. Non afferra automaticamente la preda. Sotto 7 PV tende a raggiungere un posatoio protetto. Se rimane senza spazio per usare le ali, Passaggio in volo non gli apre un percorso attraverso il solido.",
   "_bestiario": {
     "edizione": "Mostri 0.69",
-    "sistema_salute": "solo_PV"
-  }
+    "sistema_salute": "solo_PV",
+    "campi": {
+      "pv": "Mostri 0.69",
+      "pm": "Mostri 0.69",
+      "caratteristiche": "Mostri 0.69",
+      "ar": "Mostri 0.69",
+      "difese": "Mostri 0.69",
+      "salvezze": "Mostri 0.69",
+      "iniziativa": "Mostri 0.69",
+      "azioni": "Mostri 0.69",
+      "movimento": "Mostri 0.69",
+      "spazio": "Mostri 0.69",
+      "abilita": "Mostri 0.69",
+      "attacchi": "Mostri 0.69",
+      "capacita": "Mostri 0.47",
+      "gs_px": "Mostri 0.69"
+    }
+  },
+  "taglia": "grande"
 }

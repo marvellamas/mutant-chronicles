@@ -1,0 +1,133 @@
+{
+  "formato": "mutant-nemico",
+  "versione": 1,
+  "id": "grick-alfa",
+  "nome": "Grick Alfa",
+  "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Grick Alfa",
+  "taglia": "grande",
+  "note": "Grick molto più grande dell’esemplare comune, protetto da una cute elastica spessa. Attende fra le rocce e concatena coda, tentacoli e becco soltanto pagando le relative Azioni.",
+  "pv": 84,
+  "pm": 12,
+  "caratteristiche": {
+    "FOR": 8,
+    "DES": 7,
+    "COS": 7,
+    "INT": 2,
+    "SAG": 6,
+    "CAR": 4
+  },
+  "ar": {
+    "totale": 3,
+    "magica": 0
+  },
+  "difese": 12,
+  "salvezze": {
+    "tempra": 13,
+    "riflessi": 12,
+    "volonta": 9,
+    "magia": 11
+  },
+  "iniziativa": 2,
+  "azioni": {
+    "principali": 3,
+    "movimento": 1
+  },
+  "movimento": {
+    "passo": 6,
+    "corsa": 12,
+    "scatto": 18
+  },
+  "spazio": "2 × 3 Q",
+  "attacchi": [
+    {
+      "nome": "Coda",
+      "tipo": "ravvicinato",
+      "va": 16,
+      "danno": "2d6+2",
+      "natura": "Naturale",
+      "proprieta": [
+        "Contusione",
+        "AC 1"
+      ],
+      "portata_q": 2,
+      "ac": 1
+    },
+    {
+      "nome": "Tentacoli",
+      "tipo": "ravvicinato",
+      "va": 16,
+      "danno": "3d8+2",
+      "natura": "Naturale",
+      "proprieta": [
+        "Taglio",
+        "AC 1"
+      ],
+      "portata_q": 2,
+      "ac": 1
+    },
+    {
+      "nome": "Becco",
+      "tipo": "ravvicinato",
+      "va": 15,
+      "danno": "2d8+2",
+      "natura": "Naturale",
+      "proprieta": [
+        "Perforazione",
+        "AC 1",
+        "condizionato"
+      ],
+      "portata_q": 2,
+      "ac": 1
+    }
+  ],
+  "capacita": [
+    {
+      "nome": "Corpo e sensi",
+      "effetto": "Vivente biologico, Scurovisione dodici Q e nessuna immunità generale o Resistenza alla magia. Nessuna Parata naturale. Cute elastica come il Grick comune: AR totale sette contro danno Naturale da Taglio, Perforazione o impatto fisico, incluse armi naturali e proiettili; contro altri fenomeni ed ogni danno Magico AR tre, contro Etereo zero. Non si sommano sette e tre e non si aggiunge anche un dimezzamento del danno."
+    },
+    {
+      "nome": "Sequenza",
+      "effetto": "Tre AzP totali, massimo una Coda e un Tentacolo per Round, Opportunità compresa. Un Becco può essere effettuato con un’altra AzP soltanto dopo almeno un danno finale dei propri Tentacoli nella stessa Iniziativa e contro quella vittima. Il Becco non è gratuito, non si aggiunge a un’Opportunità e non viene abilitato da Tentacoli di un altro Grick. I Tentacoli non stabiliscono automaticamente una presa."
+    },
+    {
+      "nome": "Mimetismo e movimento",
+      "effetto": "Furtività quattordici è già comprensiva del bonus dell’immobilità fra rocce compatibili; altrimenti undici. Non è invisibilità e rumori, odori o tracce possono tradirlo. Arrampicarsi richiede appigli o irregolarità adeguate e usa il Passo scritto; non aderisce a soffitti levigati. Una superficie difficile può richiedere Atletica come per l’esemplare comune."
+    },
+    {
+      "nome": "Condotta e anatomia",
+      "effetto": "Può essere seguito da Grick comuni, che conservano ciascuno la propria scheda, Azioni e PX; nessun comando telepatico, bonus di branco o gregario implicito nei 100 PX. Testa becco e sensi, Braccia tentacoli, Torace tronco, Gambe porzione locomotoria e coda. Preferisce una preda vicina e una via di riparo; sotto 21 PV può abbandonare l’agguato."
+    },
+    {
+      "nome": "Altri movimenti",
+      "effetto": "arrampicata Passo 6 Q con appigli; spazio 2 × 3 Q"
+    },
+    {
+      "nome": "Abilità particolari",
+      "effetto": "Furtività 11, 14 immobile fra rocce"
+    }
+  ],
+  "gs_px": {
+    "gs": "Leggenda",
+    "px": 100,
+    "per_pg": 4
+  },
+  "_bestiario": {
+    "campi": {
+      "pv": "Mostri 0.69",
+      "pm": "Mostri 0.69",
+      "caratteristiche": "Mostri 0.69",
+      "ar": "Mostri 0.69",
+      "difese": "Mostri 0.69",
+      "salvezze": "Mostri 0.69",
+      "iniziativa": "Mostri 0.69",
+      "azioni": "Mostri 0.69",
+      "movimento": "Mostri 0.69",
+      "spazio": "Mostri 0.69",
+      "attacchi": "Mostri 0.69",
+      "capacita": "Mostri 0.69",
+      "gs_px": "Mostri 0.69"
+    },
+    "edizione": "Mostri 0.69",
+    "sistema_salute": "solo_PV"
+  }
+}

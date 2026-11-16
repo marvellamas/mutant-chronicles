@@ -3,7 +3,7 @@
   "versione": 1,
   "id": "rinoceronte",
   "nome": "Rinoceronte",
-  "fonte": "dal Manuale dei Mostri v0.46 (Word del 27/10/2026), cap. 8 «Catalogo delle creature» — Predatori e grandi erbivori",
+  "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Rinoceronte",
   "caratteristiche": {
     "FOR": 9,
     "DES": 4,
@@ -48,11 +48,11 @@
       "va": 12,
       "danno": "2d6+2",
       "natura": "Naturale",
-      "portata_q": 1,
-      "ac": 1,
       "proprieta": [
         "Perforazione"
-      ]
+      ],
+      "portata_q": 1,
+      "ac": 1
     },
     {
       "nome": "Corno in Impeto",
@@ -60,12 +60,11 @@
       "va": 12,
       "danno": "3d6+2",
       "natura": "Naturale",
-      "portata_q": 1,
-      "ac": 1,
       "proprieta": [
         "Perforazione"
       ],
-      "note": "Dopo almeno 4 Q di Passo rettilineo, al posto del Corno ordinario; comprende un solo 1d6 da slancio. Almeno 1 danno finale: Tempra −2 a una creatura ≤ 2 × 2 Q, fallimento → A Terra. Non infligge un secondo colpo né attraversa la vittima; l’Opportunità usa solo il Corno ordinario."
+      "portata_q": 1,
+      "ac": 1
     }
   ],
   "abilita": [
@@ -100,9 +99,26 @@
       "effetto": "L’AR è biologica complessiva; il corno non ha PI separati e non para (una Menomazione si valuta nella funzione della Testa). Il peso non permette di ignorare trincee, barriere o un pavimento che non lo regge."
     }
   ],
-  "note": "Vista, udito e olfatto ordinari. Condotta: può minacciare prima di attaccare e fermarsi quando gli intrusi cedono spazio; sotto 10 PV o a Ferita Seria si allontana (un piccolo da difendere può cambiarlo). Fonte: Rhinoceros, p. 336.",
+  "note": "Grande erbivoro • corno e impeto • Natura Comune. Condotta. Vista, udito e olfatto ordinari; non comprende linguaggi. Può minacciare prima di attaccare e fermarsi quando gli intrusi cedono spazio. Sotto 13 PV tende ad allontanarsi. Un piccolo da difendere può cambiare tale decisione, senza obbligarlo a inseguire oltre il territorio.",
   "_bestiario": {
     "edizione": "Mostri 0.69",
-    "sistema_salute": "solo_PV"
-  }
+    "sistema_salute": "solo_PV",
+    "campi": {
+      "pv": "Mostri 0.69",
+      "pm": "Mostri 0.69",
+      "caratteristiche": "Mostri 0.69",
+      "ar": "Mostri 0.69",
+      "difese": "Mostri 0.69",
+      "salvezze": "Mostri 0.69",
+      "iniziativa": "Mostri 0.69",
+      "azioni": "Mostri 0.69",
+      "movimento": "Mostri 0.69",
+      "spazio": "Mostri 0.69",
+      "abilita": "Mostri 0.69",
+      "attacchi": "Mostri 0.69",
+      "capacita": "Mostri 0.47",
+      "gs_px": "Mostri 0.69"
+    }
+  },
+  "taglia": "grande"
 }

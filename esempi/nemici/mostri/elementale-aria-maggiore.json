@@ -3,7 +3,7 @@
   "versione": 1,
   "id": "elementale-aria-maggiore",
   "nome": "Elementale dell’Aria Maggiore",
-  "fonte": "dal Manuale dei Mostri v0.46 (Word del 27/10/2026), cap. 8 «Catalogo delle creature» — Costrutti e creature elementali",
+  "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Elementale dell’Aria Maggiore",
   "caratteristiche": {
     "FOR": 8,
     "DES": 10,
@@ -101,9 +101,25 @@
     "sanguinamento",
     "stordito"
   ],
-  "note": "PM —: nessuna riserva. Il VA 16 è quello del Dardo d’aria, già in tabella: «Attacco a distanza» non è un’Abilità (A.169, 18/10), non dà Armi da lancio né altre competenze. Profilo evocato (Magia §14.2): «INI dopo l’evocatore» (qui 0; sulla plancia agisce dopo chi lo evoca). Scompare a 0 PV, a fine durata o al congedo. Spazio 2 × 2 Q. È immune ad A Terra (lo subisce il bersaglio, non l’elementale).",
+  "note": "Manifestazione evocata di Aria • combattente mobile • Natura Comune. Impiego. Può usare due Folate, due Dardi o un attacco di ciascun tipo, oppure conservare Azioni per Difese. A 11–12 Q il Dardo subisce il normale −2 per distanza. La mobilità favorisce cambi di quota e linee di tiro, ma resta necessaria una geometria valida e non si ignorano gli Attacchi di Opportunità. Esegue gli ordini dell’evocatore nei limiti comuni.",
   "_bestiario": {
     "edizione": "Mostri 0.69",
-    "sistema_salute": "solo_PV"
-  }
+    "sistema_salute": "solo_PV",
+    "campi": {
+      "pv": "Mostri 0.69",
+      "caratteristiche": "Mostri 0.69",
+      "ar": "Mostri 0.69",
+      "difese": "Mostri 0.69",
+      "salvezze": "Mostri 0.69",
+      "iniziativa": "Mostri 0.47",
+      "azioni": "Mostri 0.69",
+      "movimento": "Mostri 0.69",
+      "spazio": "Mostri 0.69",
+      "abilita": "Mostri 0.47",
+      "attacchi": "Mostri 0.47",
+      "capacita": "Mostri 0.47",
+      "gs_px": "Mostri 0.69"
+    }
+  },
+  "taglia": "grande"
 }

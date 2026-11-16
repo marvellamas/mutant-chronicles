@@ -3,7 +3,7 @@
   "versione": 1,
   "id": "vespa-gigante",
   "nome": "Vespa gigante",
-  "fonte": "dal Manuale dei Mostri v0.46 (Word del 27/10/2026), cap. 8 «Catalogo delle creature» — Creature alate e piccoli predatori",
+  "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Vespa gigante",
   "caratteristiche": {
     "FOR": 5,
     "DES": 6,
@@ -49,9 +49,11 @@
       "va": 10,
       "danno": "1d6+1",
       "natura": "Naturale",
+      "proprieta": [
+        "poi veleno"
+      ],
       "portata_q": 1,
-      "ac": 1,
-      "note": "Poi veleno: vedi la capacità «Veleno di vespa II»."
+      "ac": 1
     }
   ],
   "abilita": [
@@ -94,9 +96,25 @@
       "effetto": "Un Pungiglione per Round, Opportunità compresa. Testa comprende antenne e mandibole; Torace il corpo e l’apparato alare; Braccia le zampe anteriori e Gambe quelle posteriori con la funzione del pungiglione; la localizzazione individua la parte effettivamente lesa. Nessuna resistenza innata al Fuoco o al calore delle Terre del Fuoco."
     }
   ],
-  "note": "Le sue colonie non coincidono con la Covata. Sensi ordinari, senza Scurovisione; non comprende linguaggi. Condotta: può difendere il nido e interrompere l’inseguimento quando la minaccia si allontana; sotto 4 PV o a Ferita Profonda tende a ritirarsi. Fonte: Giant Wasp, p. 329.",
+  "note": "Insetto alato • pungiglione velenoso • Natura Comune. Condotta. Sensi ordinari, senza Scurovisione; non comprende linguaggi. Può difendere il nido e interrompere l’inseguimento quando la minaccia si allontana. Sotto 6 PV tende a ritirarsi. Il veleno non rende automaticamente stabile o paralizzata una vittima a 0 PV.",
   "_bestiario": {
     "edizione": "Mostri 0.69",
-    "sistema_salute": "solo_PV"
+    "sistema_salute": "solo_PV",
+    "campi": {
+      "pv": "Mostri 0.69",
+      "pm": "Mostri 0.69",
+      "caratteristiche": "Mostri 0.69",
+      "ar": "Mostri 0.69",
+      "difese": "Mostri 0.69",
+      "salvezze": "Mostri 0.69",
+      "iniziativa": "Mostri 0.69",
+      "azioni": "Mostri 0.69",
+      "movimento": "Mostri 0.69",
+      "spazio": "Mostri 0.69",
+      "abilita": "Mostri 0.69",
+      "attacchi": "Mostri 0.69",
+      "capacita": "Mostri 0.47",
+      "gs_px": "Mostri 0.69"
+    }
   }
 }

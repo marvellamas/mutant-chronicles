@@ -1,0 +1,122 @@
+{
+  "formato": "mutant-nemico",
+  "versione": 1,
+  "id": "marid",
+  "nome": "Marid",
+  "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Marid",
+  "taglia": "grande",
+  "note": "Genio dell’Acqua che difende le proprie dimore con tridente, correnti e getti pressurizzati. Vive e respira sia immerso sia all’aria, senza dipendere da un singolo bacino.",
+  "pv": 172,
+  "pm": 60,
+  "caratteristiche": {
+    "FOR": 10,
+    "DES": 6,
+    "COS": 10,
+    "INT": 9,
+    "SAG": 8,
+    "CAR": 9
+  },
+  "ar": {
+    "totale": 4,
+    "magica": 2
+  },
+  "difese": 12,
+  "salvezze": {
+    "tempra": 16,
+    "riflessi": 11,
+    "volonta": 14,
+    "magia": 15
+  },
+  "iniziativa": 1,
+  "azioni": {
+    "principali": 2,
+    "movimento": 1
+  },
+  "movimento": {
+    "passo": 6,
+    "corsa": 12,
+    "scatto": 18,
+    "volo": 12
+  },
+  "spazio": "2 × 2 Q",
+  "abilita": [
+    {
+      "nome": "Armi da guerra",
+      "va": 16
+    },
+    {
+      "nome": "Corpo a corpo",
+      "va": 15
+    },
+    {
+      "nome": "Atletica",
+      "va": 16
+    },
+    {
+      "nome": "Percezione",
+      "va": 14
+    },
+    {
+      "nome": "Oratoria",
+      "va": 14
+    }
+  ],
+  "capacita": [
+    {
+      "nome": "Getto d’acqua",
+      "effetto": "VA —. Danno: 3d8+3 Magico; Contusione; AC 1. Portata/costo: Linea 12 × 1 Q; 2 AzP e 4 PM; "
+    },
+    {
+      "nome": "Acqua e protezioni",
+      "effetto": "Scurovisione 24 Q e percezione cieca sei Q, bloccata da barriere solide. Respira aria e acqua. Dimezza per eccesso i danni da Acido, Gelo ed Elettricità, qualunque Natura, dopo Difese e prima dell’AR. Non è immune ai rispettivi Stati: se rimane danno e la Contromisura è superata applica le conseguenze ordinarie. Il nuoto scritto è già l’andatura dedicata, senza un secondo dimezzamento."
+    },
+    {
+      "nome": "Getto d’acqua",
+      "effetto": "Due AzP e quattro PM, massimo una volta per Round; linea lunga 12 Q e larga un Q, bloccata dai solidi. Una AC per ciascuna creatura, alleati compresi; Elusione Riflessi −2 dimezza per eccesso prima dell’AR, senza Parata o Schivata aggiuntiva. Un fallimento causa anche spinta fino a quattro Q lungo la linea e A Terra a chi poggia su una superficie, se di spazio massimo 2 × 2 Q. Successo evita entrambi gli effetti, non soltanto il danno."
+    },
+    {
+      "nome": "Spinta",
+      "effetto": "Spinge soltanto attraverso un percorso libero che possa contenere il bersaglio, fermandosi al primo ostacolo, senza danni d’urto aggiuntivi. Può portare oltre un bordo se il percorso è aperto: caduta e immersione seguono le regole comuni. Non affoga, Immobilizza o spezza oggetti automaticamente. Non applica anche Concussivo: la spinta e A Terra sono l’effetto specifico del Getto."
+    },
+    {
+      "nome": "Nebbia",
+      "effetto": "Una AzP e due PM: sfera fissa di raggio tre Q, con origine visibile entro 12 Q, per cinque Round. Oscura vista e Scurovisione attraverso la zona, non la percezione cieca entro il suo raggio. Non soffoca o infligge danni. Vento forte sufficiente la disperde; un solo banco attivo. Negare Potere può rimuoverlo, confronto 6; termina anche da Svenuto o morto. La nebbia non rivela automaticamente creature invisibili al Marid."
+    },
+    {
+      "nome": "Respiro e superficie",
+      "effetto": "Una AzP e tre PM, massimo tre consenzienti a Contatto: per un’ora respirano anche sott’acqua, senza recuperare aria già consumata o acquisire nuoto e parola subacquea automatici. In alternativa una AzP e tre PM consentono a un consenziente a Contatto di camminare sull’acqua per dieci minuti, con la propria andatura terrestre; non attraversa un solido, non si libra sopra il vuoto e può immergersi volontariamente terminando l’effetto. Negare Potere rimuove ciascun beneficio dal bersaglio, confronto 6."
+    },
+    {
+      "nome": "Poteri e dotazione",
+      "effetto": "Usa le capacità comuni dei geni ed evoca Acqua. Tridente grande Comune PI 6, PS Integrità 10; qui impugnato a due mani, utilizzabile per Parata ai costi normali. Non è dotato di un attacco a distanza pronto: lanciarlo richiederebbe un profilo e il recupero dell’unica arma. I 220 PX comprendono il tridente, non un elementale o altri abitanti della dimora."
+    },
+    {
+      "nome": "Altri movimenti",
+      "effetto": "nuoto 18 / 36 / 54 Q; spazio 2 × 2 Q"
+    }
+  ],
+  "gs_px": {
+    "gs": "Mito",
+    "px": 220,
+    "per_pg": 4
+  },
+  "_bestiario": {
+    "campi": {
+      "pv": "Mostri 0.69",
+      "pm": "Mostri 0.69",
+      "caratteristiche": "Mostri 0.69",
+      "ar": "Mostri 0.69",
+      "difese": "Mostri 0.69",
+      "salvezze": "Mostri 0.69",
+      "iniziativa": "Mostri 0.69",
+      "azioni": "Mostri 0.69",
+      "movimento": "Mostri 0.69",
+      "spazio": "Mostri 0.69",
+      "abilita": "Mostri 0.69",
+      "capacita": "Mostri 0.69",
+      "gs_px": "Mostri 0.69"
+    },
+    "edizione": "Mostri 0.69",
+    "sistema_salute": "solo_PV"
+  }
+}

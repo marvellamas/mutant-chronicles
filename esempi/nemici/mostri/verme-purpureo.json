@@ -1,0 +1,113 @@
+{
+  "formato": "mutant-nemico",
+  "versione": 1,
+  "id": "verme-purpureo",
+  "nome": "Verme purpureo",
+  "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Verme purpureo",
+  "taglia": "grande",
+  "note": "Enorme predatore scavatore che apre gallerie nella roccia. Il morso può inghiottire una preda e il pungiglione caudale inocula una tossina potente; la sua percezione sotterranea resta limitata ai sensi effettivi.",
+  "pv": 271,
+  "pm": 16,
+  "caratteristiche": {
+    "FOR": 10,
+    "DES": 3,
+    "COS": 9,
+    "INT": 1,
+    "SAG": 6,
+    "CAR": 2
+  },
+  "ar": {
+    "totale": 6,
+    "magica": 0
+  },
+  "difese": 10,
+  "salvezze": {
+    "tempra": 17,
+    "riflessi": 10,
+    "volonta": 9,
+    "magia": 11
+  },
+  "iniziativa": 1,
+  "azioni": {
+    "principali": 3,
+    "movimento": 1
+  },
+  "movimento": {
+    "passo": 10,
+    "corsa": 20,
+    "scatto": 30
+  },
+  "spazio": "3 × 8 Q",
+  "abilita": [
+    {
+      "nome": "Corpo a corpo",
+      "va": 18
+    },
+    {
+      "nome": "Atletica",
+      "va": 18
+    },
+    {
+      "nome": "Percezione",
+      "va": 12
+    },
+    {
+      "nome": "Sopravvivenza",
+      "va": 14
+    }
+  ],
+  "capacita": [
+    {
+      "nome": "Digestione",
+      "effetto": "VA —. Danno: 3d6+3 Naturale Acido per prigioniero; AC 1. Portata/costo: Solo stomaco; 1 AzP; una volta per Round; "
+    },
+    {
+      "nome": "Corpo e sensi",
+      "effetto": "Vivente biologico, nessuna resistenza, immunità generale o Parata naturale. Percezione cieca sei Q, fermata dai solidi, e vibrazioni dodici Q sullo stesso supporto continuo; non percepisce allo stesso modo bersagli sospesi o in volo. Le vibrazioni indicano presenza e posizione del moto, non identità o vista attraverso la roccia. Può emergere dove il percorso è praticabile, senza un turno gratuito di sorpresa. Iniziativa usa SAG +1, senza malus di INT."
+    },
+    {
+      "nome": "Scavo e gallerie",
+      "effetto": "Tre AzP totali, massimo un Morso, un Pungiglione e una Digestione per Round, Opportunità ravvicinata compresa nei primi due. Scava con AzM alle andature scritte; attraversare roccia ordinaria dimezza i budget di scavo. Lascia un cunicolo di circa due Q di diametro, non automaticamente stabile: la mappa stabilisce vuoti e sostegni effettivi. Non attraversa metallo, barriere mistiche o qualunque materiale grazie al solo nome Scavo e non fa collassare gratuitamente l’intera zona."
+    },
+    {
+      "nome": "Inghiottimento e veleno",
+      "effetto": "Dopo almeno un danno finale di Morso a una creatura fino a 2 × 2 Q: Riflessi −2 evita di essere inghiottita. Non richiede una presa precedente e non raddoppia il danno. Capacità: due creature fino a un Q oppure una fino a 2 × 2 Q. Dopo almeno un danno finale di Pungiglione a un vivente biologico: Tempra −4 dimezza per eccesso 5d6 danni diretti da veleno naturale VI, fallimento interi, senza AR o Stato persistente. Il Magistrale fisico non moltiplica la tossina; nessuna infezione o Paralisi implicita."
+    },
+    {
+      "nome": "Digestione e fuga",
+      "effetto": "Una AzP, massimo una per Round, 3d6+3 Naturale Acido per ogni prigioniero, tiro comune, una AC e AR ordinaria; non ha Corrosivo e non produce danno gratuito all’Iniziativa. Fuga contro Atletica diciotto; dopo almeno quindici danni finali interni nello stesso Round, Tempra −2 a fine dell’Iniziativa del prigioniero per rigurgitare, massimo una verifica per Round. Applica la procedura comune di ingestione, soccorso e soffocamento."
+    },
+    {
+      "nome": "Condotta e anatomia",
+      "effetto": "Si orienta verso vibrazioni e nutrimento; può ritirarsi da prede difficili, senza comprendere linguaggi o istruzioni tattiche. Testa indica fauci e sensi, Torace corpo e stomaco, Braccia la funzione anteriore di trazione e Gambe quella posteriore con pungiglione. Una Menomazione limita le funzioni colpite, non genera mostri separati. Non produce tesori, gemme o gallerie sicure come risorsa automatica dopo ogni combattimento."
+    },
+    {
+      "nome": "Altri movimenti",
+      "effetto": "scavo in terra 6 / 12 / 18 Q, roccia ordinaria 3 / 6 / 9 Q; spazio 3 × 8 Q"
+    }
+  ],
+  "gs_px": {
+    "gs": "Semidio",
+    "px": 400,
+    "per_pg": 4
+  },
+  "_bestiario": {
+    "campi": {
+      "pv": "Mostri 0.69",
+      "pm": "Mostri 0.69",
+      "caratteristiche": "Mostri 0.69",
+      "ar": "Mostri 0.69",
+      "difese": "Mostri 0.69",
+      "salvezze": "Mostri 0.69",
+      "iniziativa": "Mostri 0.69",
+      "azioni": "Mostri 0.69",
+      "movimento": "Mostri 0.69",
+      "spazio": "Mostri 0.69",
+      "abilita": "Mostri 0.69",
+      "capacita": "Mostri 0.69",
+      "gs_px": "Mostri 0.69"
+    },
+    "edizione": "Mostri 0.69",
+    "sistema_salute": "solo_PV"
+  }
+}

@@ -3,7 +3,7 @@
   "versione": 1,
   "id": "gargoyle",
   "nome": "Gargoyle",
-  "fonte": "dal Manuale dei Mostri v0.46 (Word del 27/10/2026), cap. 8 «Catalogo delle creature» — Costrutti e creature elementali",
+  "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Gargoyle",
   "caratteristiche": {
     "FOR": 7,
     "DES": 5,
@@ -109,9 +109,25 @@
   "immunita": [
     "sanguinamento"
   ],
-  "note": "Creatura elementale di pietra con mente. Comportamento: difende appostamenti e accessi, sceglie prede isolate, può trattare; sotto 9 PV o a Ferita Seria cerca una posizione protetta.",
+  "note": "Creatura elementale di pietra • guardiano alato • Natura Comune. Condotta. Difende appostamenti e accessi, sceglie prede isolate e può trattare con chi gli offre un accordo. Sotto 12 PV cerca una posizione protetta. Ha una mente e non usa le immunità degli Oggetti animati. Negare Potere non cancella il suo corpo autonomo o il suo volo innato.",
   "_bestiario": {
     "edizione": "Mostri 0.69",
-    "sistema_salute": "solo_PV"
+    "sistema_salute": "solo_PV",
+    "campi": {
+      "pv": "Mostri 0.69",
+      "pm": "Mostri 0.69",
+      "caratteristiche": "Mostri 0.69",
+      "ar": "Mostri 0.69",
+      "difese": "Mostri 0.69",
+      "salvezze": "Mostri 0.69",
+      "iniziativa": "Mostri 0.69",
+      "azioni": "Mostri 0.69",
+      "movimento": "Mostri 0.69",
+      "spazio": "Mostri 0.69",
+      "abilita": "Mostri 0.69",
+      "attacchi": "Mostri 0.47",
+      "capacita": "Mostri 0.47",
+      "gs_px": "Mostri 0.69"
+    }
   }
 }

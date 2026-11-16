@@ -1,0 +1,128 @@
+{
+  "formato": "mutant-nemico",
+  "versione": 1,
+  "id": "imp",
+  "nome": "Imp",
+  "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Imp",
+  "note": "Piccolo ricognitore alato che assume forme animali e colpisce con un pungiglione velenoso. Preferisce raccogliere informazioni e sottrarsi alla risposta del nemico.",
+  "pv": 16,
+  "pm": 16,
+  "caratteristiche": {
+    "FOR": 3,
+    "DES": 8,
+    "COS": 6,
+    "INT": 5,
+    "SAG": 6,
+    "CAR": 7
+  },
+  "ar": {
+    "totale": 1,
+    "magica": 0
+  },
+  "difese": 12,
+  "salvezze": {
+    "tempra": 10,
+    "riflessi": 12,
+    "volonta": 11,
+    "magia": 12
+  },
+  "iniziativa": 3,
+  "azioni": {
+    "principali": 1,
+    "movimento": 1
+  },
+  "movimento": {
+    "passo": 4,
+    "corsa": 8,
+    "scatto": 12,
+    "volo": 8
+  },
+  "abilita": [
+    {
+      "nome": "Corpo a corpo",
+      "va": 11
+    },
+    {
+      "nome": "Furtività",
+      "va": 13
+    },
+    {
+      "nome": "Percezione",
+      "va": 11
+    },
+    {
+      "nome": "Raggirare",
+      "va": 12
+    },
+    {
+      "nome": "Oratoria",
+      "va": 11
+    }
+  ],
+  "attacchi": [
+    {
+      "nome": "Pungiglione o Morso",
+      "tipo": "ravvicinato",
+      "va": 11,
+      "danno": "1d4+1",
+      "natura": "Naturale",
+      "proprieta": [
+        "Perforazione",
+        "AC 1",
+        "veleno"
+      ],
+      "portata_q": 1,
+      "ac": 1
+    }
+  ],
+  "capacita": [
+    {
+      "nome": "Corpo e magia",
+      "effetto": "Protezioni elementali comuni, resistenza alle armi non argentate, Vista infernale 24 Q e Resistenza alla magia +2 non inclusa nelle PS. Nessuna Parata naturale; massimo un attacco per Round, Opportunità compresa. Parla la lingua della propria comunità e una lingua di contatto conosciuta; non ha telepatia ordinaria."
+    },
+    {
+      "nome": "Veleno",
+      "effetto": "Dopo almeno un danno finale di Pungiglione o Morso a un vivente biologico, Tempra 0 dimezza per eccesso 2d6 danni da veleno naturale di Pericolosità III; fallimento danno intero. Perdita diretta senza AR, distinta dal colpo fisico. Nessuna paralisi, penalità o perdita periodica. Immunità al veleno evita questa perdita, non il colpo iniziale; i danni già subiti non sono annullati da Cura Avvelenamenti."
+    },
+    {
+      "nome": "Forme animali",
+      "effetto": "Una AzP e un PM per assumere Ratto, Corvo o Ragno o tornare alla forma propria. Ratto: terra quattro Q al Passo; Corvo: terra quattro e volo dodici; Ragno: terra e arrampicata quattro. Corsa e Scatto valgono due e tre volte il Passo quando praticabili. Conserva caratteristiche, risorse, lesioni e capacità; il Morso sostituisce il Pungiglione senza cambiarne il profilo. Nessuna acquisizione di sensi, reti o abilità delle altre schede. Un Q condivisibile in ogni forma; oggetti non trasformati. Alla morte effettiva torna Imp."
+    },
+    {
+      "nome": "Invisibilità",
+      "effetto": "Una AzP e due PM: tre Round senza Concentrazione, termina dopo un attacco o altra azione ostile, da Svenuto o con Negare Potere, confronto 6. È equivalente a Mimetismo 6 per i sensi di rilevazione. Non silenzia, cancella tracce o permette di passare nei solidi. Non annulla il requisito di una posizione realmente conosciuta per attaccarlo."
+    },
+    {
+      "nome": "Servizio",
+      "effetto": "Il profilo è autonomo. Un accordo non trasferisce Resistenza alla magia o sensi condivisi al padrone. La variante Famiglio richiede un modulo distinto e non è una capacità aggiuntiva delle Classi. L’Imp può riferire ciò che ha osservato, senza leggere pensieri o riconoscere automaticamente la verità di una dichiarazione."
+    },
+    {
+      "nome": "Altri movimenti",
+      "effetto": "spazio 1 Q condivisibile, non blocca il passaggio"
+    }
+  ],
+  "gs_px": {
+    "gs": "Esperto",
+    "px": 30,
+    "per_pg": 4
+  },
+  "_bestiario": {
+    "campi": {
+      "pv": "Mostri 0.69",
+      "pm": "Mostri 0.69",
+      "caratteristiche": "Mostri 0.69",
+      "ar": "Mostri 0.69",
+      "difese": "Mostri 0.69",
+      "salvezze": "Mostri 0.69",
+      "iniziativa": "Mostri 0.69",
+      "azioni": "Mostri 0.69",
+      "movimento": "Mostri 0.69",
+      "abilita": "Mostri 0.69",
+      "attacchi": "Mostri 0.69",
+      "capacita": "Mostri 0.69",
+      "gs_px": "Mostri 0.69"
+    },
+    "edizione": "Mostri 0.69",
+    "sistema_salute": "solo_PV"
+  }
+}

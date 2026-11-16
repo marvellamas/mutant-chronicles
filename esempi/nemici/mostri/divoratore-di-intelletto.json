@@ -1,0 +1,110 @@
+{
+  "formato": "mutant-nemico",
+  "versione": 1,
+  "id": "divoratore-di-intelletto",
+  "nome": "Divoratore d’intelletto",
+  "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Divoratore d’intelletto",
+  "note": "Piccolo cervello ambulante su zampe artigliate. Cerca presenze mentali e corpi vulnerabili da infiltrare. In questa conversione l’invasione è reversibile e non azzera permanentemente INT.",
+  "pv": 24,
+  "pm": 18,
+  "caratteristiche": {
+    "FOR": 3,
+    "DES": 7,
+    "COS": 6,
+    "INT": 6,
+    "SAG": 5,
+    "CAR": 5
+  },
+  "ar": {
+    "totale": 1,
+    "magica": 0
+  },
+  "difese": 11,
+  "salvezze": {
+    "tempra": 10,
+    "riflessi": 11,
+    "volonta": 10,
+    "magia": 11
+  },
+  "iniziativa": 2,
+  "azioni": {
+    "principali": 2,
+    "movimento": 1
+  },
+  "movimento": {
+    "passo": 8,
+    "corsa": 16,
+    "scatto": 24
+  },
+  "abilita": [
+    {
+      "nome": "Corpo a corpo",
+      "va": 11
+    },
+    {
+      "nome": "Furtività",
+      "va": 13
+    },
+    {
+      "nome": "Percezione",
+      "va": 11
+    },
+    {
+      "nome": "Atletica",
+      "va": 9
+    }
+  ],
+  "capacita": [
+    {
+      "nome": "Divorare intelletto",
+      "effetto": "VA —. Danno: 1d6+2 psichici diretti; Volontà −2. Portata/costo: 2 Q; 1 AzP e 2 PM; "
+    },
+    {
+      "nome": "Sensi e resistenza",
+      "effetto": "Percezione non visiva entro 12 Q, schermata dai solidi; immune ad Accecato, non ad Assordato o attacchi mentali. Dimezza per eccesso Naturale dopo Difese e prima dell’AR. Rilevare menti: una AzP e un PM individua per un istante direzione e distanza approssimativa di menti con INT almeno due entro 60 Q, anche dietro pareti, senza vista, identità o Q preciso. Una presenza protetta da Barriera Mentale ha Volontà con il bonus della barriera: successo non viene rilevata. Nessun tiro per chi non è protetto. La lettura non permette da sola di colpire attraverso ostacoli."
+    },
+    {
+      "nome": "Divorare intelletto",
+      "effetto": "Una vittima visibile alla propria percezione precisa entro due Q, con mente e cervello biologico; una AzP e due PM. Volontà −2: successo evita, fallimento perde 1d6+2 PV ordinari ed è Stordito per due Round. Ripete Volontà −2 alla fine della propria Iniziativa e termina Stordito con successo. Equivalenza espressa con Dardo Psichico: Barriera Mentale blocca l’intero attacco. Niente Ferite da questo danno, perdita di INT o cervello consumato; a zero PV segue lo svenimento di Dardo. Cura Spirituale tratta Stordito e lo svenimento nei propri limiti; Negare Potere può rimuovere lo Stordito, confronto 6."
+    },
+    {
+      "nome": "Invasione del corpo",
+      "effetto": "Una AzP e quattro PM, una sola invasione attiva. Umanoide vivente entro un Q, già Svenuto oppure contemporaneamente Immobilizzato e Stordito, con testa accessibile. Volontà −2, anche se Svenuto: successo respinge; fallimento il Divoratore si fonde misticamente nel corpo per dieci Round. Il cervello dell’ospite resta integro. Il parassita non agisce separatamente, usa le sole Azioni residue dell’ospite alla sua Iniziativa e non accede a Incantesimi, Tecniche, PM o PE della vittima. Può muovere il corpo malgrado il solo Svenuto preesistente; conserva le altre lesioni e limitazioni. Nessuna guarigione o ricarica."
+    },
+    {
+      "nome": "Liberazione e rientro",
+      "effetto": "La prima fonte di danno effettivo all’ospite nel Round concede nuova Volontà −2. Successo, scadenza, morte dell’ospite, volontà del parassita o zero PM personali del parassita terminano l’invasione. Esorcizzare Possessione e Negare Potere sono espressamente ammessi, confronto 9. Riappare nel più vicino Q libero entro uno, senza nuova Azione; l’ospite non muore per l’uscita e conserva gli Stati non scaduti. Dopo resistenza o liberazione quel corpo è immune per 24 ore. Barriera Mentale concede il bonus alle Volontà, senza espellere da sola il parassita. Non può imporre autolesionismo o violare i principi profondi dell’ospite; conosce al massimo frammenti della percezione corrente, non ricordi o password."
+    },
+    {
+      "nome": "Valori pronti",
+      "effetto": "Attacchi e Difese comprendono le componenti ordinarie. Le immunità sono soltanto quelle dichiarate; la specie non riceve automaticamente la vulnerabilità al freddo della Covata. Abilità e caratteristiche non aggiungono altri bonus ai danni scritti. Restano le normali localizzazioni, ricondotte alle funzioni anatomiche effettive."
+    },
+    {
+      "nome": "Altri movimenti",
+      "effetto": "spazio 1 Q condivisibile, senza bloccare il passaggio"
+    }
+  ],
+  "gs_px": {
+    "gs": "Eroe",
+    "px": 70,
+    "per_pg": 4
+  },
+  "_bestiario": {
+    "campi": {
+      "pv": "Mostri 0.69",
+      "pm": "Mostri 0.69",
+      "caratteristiche": "Mostri 0.69",
+      "ar": "Mostri 0.69",
+      "difese": "Mostri 0.69",
+      "salvezze": "Mostri 0.69",
+      "iniziativa": "Mostri 0.69",
+      "azioni": "Mostri 0.69",
+      "movimento": "Mostri 0.69",
+      "abilita": "Mostri 0.69",
+      "capacita": "Mostri 0.69",
+      "gs_px": "Mostri 0.69"
+    },
+    "edizione": "Mostri 0.69",
+    "sistema_salute": "solo_PV"
+  }
+}

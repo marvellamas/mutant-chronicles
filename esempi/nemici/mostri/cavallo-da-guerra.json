@@ -3,7 +3,7 @@
   "versione": 1,
   "id": "cavallo-da-guerra",
   "nome": "Cavallo da guerra",
-  "fonte": "dal Manuale dei Mostri v0.46 (Word del 27/10/2026), cap. 8 «Catalogo delle creature» — Cavalcature e animali da lavoro",
+  "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Cavallo da guerra",
   "caratteristiche": {
     "FOR": 8,
     "DES": 6,
@@ -48,11 +48,11 @@
       "va": 11,
       "danno": "1d8+2",
       "natura": "Naturale",
-      "portata_q": 1,
-      "ac": 1,
       "proprieta": [
         "Contusione"
-      ]
+      ],
+      "portata_q": 1,
+      "ac": 1
     },
     {
       "nome": "Calpestare",
@@ -60,12 +60,11 @@
       "va": 11,
       "danno": "1d8+2",
       "natura": "Naturale",
-      "portata_q": 1,
-      "ac": 1,
       "proprieta": [
         "Contusione"
       ],
-      "note": "Richiede una vittima già A Terra non maggiore di 1 × 1 Q e un appoggio che consenta il colpo; non entra automaticamente nello spazio della vittima."
+      "portata_q": 1,
+      "ac": 1
     }
   ],
   "abilita": [
@@ -104,9 +103,26 @@
       "effetto": "Richiede almeno 4 Q di Passo rettilineo verso la vittima nella stessa Iniziativa (usa l’AzM ordinaria e l’AzP del colpo; si dichiara prima del tiro; non si combina con Carica, Corsa, Scatto o altre manovre offensive). Il danno speciale sostituisce quello normale, senza il ×2 della Carica. Con almeno 1 danno finale: Tempra senza modificatore a una creatura non maggiore di 1 × 1 Q; fallimento → A Terra. Il Magistrale non ne peggiora la Salvezza. Non aumenta il danno degli Zoccoli. Un eventuale Calpestare costa la seconda AzP; se l’ha spesa per una Difesa non può recuperarla. Nessun attacco gratuito dell’originale."
     }
   ],
-  "note": "Descrive l’animale senza armatura: la tabella di bardature della fonte non si trasferisce al sistema AR. Può eseguire segnali di combattimento già appresi; l’addestramento non lo rende immune a Paura, Terrorizzato o dolore. Condotta: sotto 7 PV o a Ferita Profonda tende a cercare riparo o il conduttore. Fonte: Warhorse, p. 340.",
+  "note": "Equino addestrato allo scontro • Impeto e Calpestare • Natura Comune.",
   "_bestiario": {
     "edizione": "Mostri 0.69",
-    "sistema_salute": "solo_PV"
-  }
+    "sistema_salute": "solo_PV",
+    "campi": {
+      "pv": "Mostri 0.69",
+      "pm": "Mostri 0.69",
+      "caratteristiche": "Mostri 0.69",
+      "ar": "Mostri 0.69",
+      "difese": "Mostri 0.69",
+      "salvezze": "Mostri 0.69",
+      "iniziativa": "Mostri 0.69",
+      "azioni": "Mostri 0.69",
+      "movimento": "Mostri 0.69",
+      "spazio": "Mostri 0.69",
+      "abilita": "Mostri 0.69",
+      "attacchi": "Mostri 0.69",
+      "capacita": "Mostri 0.47",
+      "gs_px": "Mostri 0.69"
+    }
+  },
+  "taglia": "grande"
 }

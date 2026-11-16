@@ -1,0 +1,136 @@
+{
+  "formato": "mutant-nemico",
+  "versione": 1,
+  "id": "legionario-eretico",
+  "nome": "Legionario Eretico",
+  "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Legionario Eretico",
+  "note": "Fante umano trasformato in strumento di Semai. Avanza sotto il fuoco nemico e tiene impegnati i difensori mentre gli infiltratori raggiungono il loro obiettivo. Comportamento. Tiene una linea di tiro e obbedisce a ordini semplici; non escogita autonomamente imboscate. Perde tempo contro un diversivo credibile. Disarmarlo o interrompere gli ordini riduce le sue opzioni, ma non lo spegne. Non è un normale soldato eretico da aggiungere ai venticinque modelli PNG.",
+  "pv": 50,
+  "pm": 10,
+  "caratteristiche": {
+    "FOR": 6,
+    "DES": 5,
+    "COS": 7,
+    "INT": 3,
+    "SAG": 4,
+    "CAR": 2
+  },
+  "ar": {
+    "totale": 3,
+    "magica": 0
+  },
+  "difese": 10,
+  "salvezze": {
+    "tempra": 12,
+    "riflessi": 9,
+    "volonta": 11,
+    "magia": 8
+  },
+  "iniziativa": 0,
+  "azioni": {
+    "principali": 2,
+    "movimento": 1
+  },
+  "movimento": {
+    "passo": 6,
+    "corsa": 12,
+    "scatto": 18
+  },
+  "abilita": [
+    {
+      "nome": "Armi medie",
+      "va": 12
+    },
+    {
+      "nome": "Armi da mischia",
+      "va": 11
+    },
+    {
+      "nome": "Percezione",
+      "va": 8
+    },
+    {
+      "nome": "Atletica",
+      "va": 10
+    }
+  ],
+  "attacchi": [
+    {
+      "nome": "Kratach, tiro singolo",
+      "tipo": "distanza",
+      "va": 12,
+      "danno": "1d8+1",
+      "natura": "Naturale",
+      "proprieta": [
+        "Perforazione"
+      ],
+      "gittata_q": 60,
+      "modalita": [
+        "S"
+      ],
+      "ac": 1
+    },
+    {
+      "nome": "Baionetta",
+      "tipo": "ravvicinato",
+      "va": 11,
+      "danno": "1d6+1",
+      "natura": "Naturale",
+      "proprieta": [
+        "Perforazione"
+      ],
+      "portata_q": 1,
+      "ac": 1
+    }
+  ],
+  "capacita": [
+    {
+      "nome": "Fonte del soggetto",
+      "effetto": "Heretic Legionnaire; Warzone, regolamento italiano, legioni di Semai; Mutant Chronicles 3ª ed., p. 327. Selezione e adattamento: applicare soltanto le capacità operative di questa scheda."
+    },
+    {
+      "nome": "Dotazione pronta",
+      "effetto": "Kratach a due mani, baionetta e protezione leggera; caricatore 30, due ricambi da 30. Ricarica 1 AzP. Sono dati astratti di questa conversione; non si aggiunge il modulo EQ dei PNG generici."
+    },
+    {
+      "nome": "Raffica",
+      "effetto": "Il Kratach ammette Breve e Media: rispettivamente VA 14, tre munizioni e una AC, oppure VA 10, cinque munizioni e tre AC. Ogni AC infligge 1d8+1 e incontra separatamente AR; una sola Difesa con le penalità da Raffica. Massimo due AzP offensive per Round; le baionette di Opportunità rientrano nello stesso massimo."
+    },
+    {
+      "nome": "Mente asservita",
+      "effetto": "Immune a Terrorizzato. Le illusioni sensoriali, le influenze mentali diverse dalla paura e la perdita di PM restano applicabili. Non può usare questa immunità per individuare automaticamente un inganno o una presenza nascosta."
+    },
+    {
+      "nome": "Dolore e Ferite",
+      "effetto": "La facoltà di ignorare penalità da Ferite non si applica al profilo senza Ferite: non si spendono i 2 PM per attivarla e non si ottiene un beneficio sostitutivo."
+    },
+    {
+      "nome": "Altri movimenti",
+      "effetto": "spazio 1 Q"
+    }
+  ],
+  "gs_px": {
+    "gs": "Esperto",
+    "px": 33,
+    "per_pg": 4
+  },
+  "_bestiario": {
+    "campi": {
+      "pv": "Mostri 0.69",
+      "pm": "Mostri 0.69",
+      "caratteristiche": "Mostri 0.69",
+      "ar": "Mostri 0.69",
+      "difese": "Mostri 0.69",
+      "salvezze": "Mostri 0.69",
+      "iniziativa": "Mostri 0.69",
+      "azioni": "Mostri 0.69",
+      "movimento": "Mostri 0.69",
+      "abilita": "Mostri 0.69",
+      "attacchi": "Mostri 0.69",
+      "capacita": "Mostri 0.69",
+      "gs_px": "Mostri 0.69"
+    },
+    "edizione": "Mostri 0.69",
+    "sistema_salute": "solo_PV"
+  }
+}

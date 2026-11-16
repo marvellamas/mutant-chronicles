@@ -1,0 +1,123 @@
+{
+  "formato": "mutant-nemico",
+  "versione": 1,
+  "id": "pixie",
+  "nome": "Pixie",
+  "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Pixie",
+  "note": "Piccolo folletto alato curioso e schivo. La polvere accompagna poteri di inganno, sonno e mutamento; la sua disponibilità non è una riserva di oggetti magici raccoglibili dopo lo scontro.",
+  "pv": 6,
+  "pm": 28,
+  "caratteristiche": {
+    "FOR": 1,
+    "DES": 10,
+    "COS": 3,
+    "INT": 5,
+    "SAG": 7,
+    "CAR": 7
+  },
+  "ar": {
+    "totale": 0,
+    "magica": 0
+  },
+  "difese": 14,
+  "salvezze": {
+    "tempra": 7,
+    "riflessi": 14,
+    "volonta": 11,
+    "magia": 12
+  },
+  "iniziativa": 5,
+  "azioni": {
+    "principali": 2,
+    "movimento": 1
+  },
+  "movimento": {
+    "passo": 2,
+    "corsa": 4,
+    "scatto": 6,
+    "volo": 6
+  },
+  "abilita": [
+    {
+      "nome": "Furtività",
+      "va": 15
+    },
+    {
+      "nome": "Percezione",
+      "va": 12
+    },
+    {
+      "nome": "Raggirare",
+      "va": 10
+    },
+    {
+      "nome": "Occultismo",
+      "va": 10
+    }
+  ],
+  "capacita": [
+    {
+      "nome": "Sonno e inganni",
+      "effetto": "VA —. Danno: Capacità innate; nessun attacco d’arma. Portata/costo: Costi e bersagli nelle capacità; "
+    },
+    {
+      "nome": "Corpo e magia",
+      "effetto": "Vivente biologico, Resistenza alla magia +2 non inclusa nelle PS. Nessuna Parata naturale o immunità generale a sonno e veleni. Non possiede un attacco offensivo o una Opportunità di danno nel profilo; può Schivare ai costi normali. Da Svenuto in volo cade. Il corpo piccolo non è automaticamente uno Sciame o un gregario senza Ferite."
+    },
+    {
+      "nome": "Invisibilità e polvere",
+      "effetto": "Una AzP e due PM, Invisibilità a Concentrazione per massimo dieci Round, equivalente a Mimetismo nove per rilevazione e distorsione con Percezione −2. Soltanto Passo fino a sei Q e nessuna AzP mentre mantiene; non può lanciare altri poteri e conservarla. Fine Concentrazione, Svenuto, morte e Negare nove terminano. Le tracce fisiche, suoni e odori restano. Le capacità richiedono la sua polvere biologica, prodotta e usata nella stessa Azione; non è un Focus, non ha PM, cariche o proprietà trasferibili."
+    },
+    {
+      "nome": "Sonno e confusione",
+      "effetto": "Sonno innato: una AzP e tre PM, una volta per ventiquattro ore, Indurre Sonno tre secondo le regole comuni: un vivente visibile entro sei Q, Volontà 0, cinque Round. Confusione tenue: una AzP e tre PM, una volta per ventiquattro ore, una mente visibile entro sei Q, Volontà 0; fallimento Disorientato per tre Round, senza attacchi obbligati o perdita di Azioni. Negare sei o Cura Spirituale uno rimuovono la Confusione; Barriera Mentale aiuta le Volontà."
+    },
+    {
+      "nome": "Illusione e rilevazione",
+      "effetto": "Illusione innata: una AzP e tre PM, una volta per ventiquattro ore, Illusione sei, origine entro dieci Q e raggio due Q per dieci minuti: scena statica complessa, indagine Magia 0, senza materia o attacchi reali. Negare sei rimuove. Rilevazione breve: una AzP e due PM applicano Percepire magia delle regole comuni; non giudica bontà, allineamento o Corruzione. Negazione: una AzP e nove PM, una volta per ventiquattro ore, Negare Potere nove secondo le regole comuni della Magia, senza Potere o componenti; fino a due effetti localizzati entro quindici Q e concatenati entro due Q."
+    },
+    {
+      "nome": "Volo condiviso",
+      "effetto": "Una AzP e quattro PM, una volta per ventiquattro ore, un consenziente a Contatto riceve Volo 6 / 12 / 18 Q per cinque Round senza Concentrazione. Conserva le normali AzM e azioni; non le rinnova. Negare nove, Svenuto o morte del beneficiario terminano il Volo; Svenuto o morte del Pixie non interrompono l’effetto già attivo a durata fissa. Il Pixie non deve rimanere vicino. Al termine occorre sostegno o si risolve la Caduta."
+    },
+    {
+      "nome": "Rovi annodanti",
+      "effetto": "Una AzP e tre PM, una volta per ventiquattro ore, area fissa 3 × 3 Q su terreno con vegetazione e origine visibile entro sei Q, cinque Round. Terreno Difficile per tutti; chi vi è alla creazione o entra effettua Riflessi 0. Fallimento Immobilizzato con braccia libere se occupa al massimo un Q. Nessuna nuova PS per la sola permanenza. Liberarsi, anche con alleato a Contatto, costa una AzP e Atletica contrapposta a dodici, con −4 al solo Immobilizzato; pareggi ai rovi. Ogni sezione di un Q ha PI tre, AR zero e PS Integrità dieci: distruggerla libera la presa. Negare sei rimuove l’animazione e libera tutti; restano normali piante senza intralcio soprannaturale. Non attiva un terreno privo di vegetazione."
+    },
+    {
+      "nome": "Metamorfosi della Rana",
+      "effetto": "Una AzP e sei PM, una volta per ventiquattro ore, un vivente visibile entro sei Q che occupi al massimo un Q. Magia −2 evita, nessuna PS con consenso. Fallimento forma di Rana per cinque Round esclusivamente a Concentrazione del Pixie: spazio un Q condivisibile, terra e nuoto 3 / 6 / 9 Q, niente Volo, mani, parola o attacchi del profilo originario. Conserva sei caratteristiche, Abilità, PV, PM, Ferite, Stati e capacità passive compatibili; non riceve il profilo di un animale con una seconda riserva di PV. Non ottiene respirazione anfibia o nuovi sensi."
+    },
+    {
+      "nome": "Oggetti e liberazione",
+      "effetto": "L’equipaggiamento già indossato o impugnato viene assorbito temporaneamente dalla forma: non è utilizzabile e non fornisce AR o altri benefici, ma non viene distrutto. Restano l’AR biologica e le resistenze innate. Gli eventuali Incantesimi personali restano possibili soltanto se compatibili con la forma e con normali penalità per componenti mancanti; nessuna voce obbligatoria viene aggirata. La prima fonte di danno effettivo per Round concede Magia −2 per terminare il mutamento. Scudo Spirituale aiuta Magia; Barriera Mentale non protegge dalla trasformazione fisica. Negare nove, fine Concentrazione, Svenuto o morte del Pixie terminano e ripristinano il corpo con gli oggetti, senza cure o nuove Azioni. Questo è un potere innato specifico e non l’Incantesimo Trasformazione Totale."
+    },
+    {
+      "nome": "Altri movimenti",
+      "effetto": "spazio 1 Q condivisibile, non blocca il passaggio"
+    }
+  ],
+  "gs_px": {
+    "gs": "Esperto",
+    "px": 30,
+    "per_pg": 4
+  },
+  "_bestiario": {
+    "campi": {
+      "pv": "Mostri 0.69",
+      "pm": "Mostri 0.69",
+      "caratteristiche": "Mostri 0.69",
+      "ar": "Mostri 0.69",
+      "difese": "Mostri 0.69",
+      "salvezze": "Mostri 0.69",
+      "iniziativa": "Mostri 0.69",
+      "azioni": "Mostri 0.69",
+      "movimento": "Mostri 0.69",
+      "abilita": "Mostri 0.69",
+      "capacita": "Mostri 0.69",
+      "gs_px": "Mostri 0.69"
+    },
+    "edizione": "Mostri 0.69",
+    "sistema_salute": "solo_PV"
+  }
+}

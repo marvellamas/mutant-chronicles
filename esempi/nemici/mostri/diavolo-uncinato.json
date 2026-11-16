@@ -1,0 +1,153 @@
+{
+  "formato": "mutant-nemico",
+  "versione": 1,
+  "id": "diavolo-uncinato",
+  "nome": "Diavolo uncinato",
+  "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Diavolo uncinato",
+  "note": "Sentinella dalla pelle ricoperta di uncini e dalla coda robusta. Punisce chi la trattiene e può colpire a distanza con globi di fiamma. Condotta. Presidia passaggi e tesori, usando le Fiamme contro chi cerca spazio. Gli uncini non rendono la pelle un’armatura asportabile né producono veleni. Un patto o una minaccia verbale non crea un controllo mentale; le capacità sociali richiedono le normali condizioni della scena.",
+  "pv": 94,
+  "pm": 26,
+  "caratteristiche": {
+    "FOR": 8,
+    "DES": 8,
+    "COS": 9,
+    "INT": 6,
+    "SAG": 7,
+    "CAR": 7
+  },
+  "ar": {
+    "totale": 3,
+    "magica": 0
+  },
+  "difese": 12,
+  "salvezze": {
+    "tempra": 13,
+    "riflessi": 13,
+    "volonta": 12,
+    "magia": 13
+  },
+  "iniziativa": 3,
+  "azioni": {
+    "principali": 3,
+    "movimento": 1
+  },
+  "movimento": {
+    "passo": 6,
+    "corsa": 12,
+    "scatto": 18
+  },
+  "spazio": "1 Q",
+  "abilita": [
+    {
+      "nome": "Corpo a corpo",
+      "va": 14
+    },
+    {
+      "nome": "Armi da lancio",
+      "va": 12
+    },
+    {
+      "nome": "Percezione",
+      "va": 15
+    },
+    {
+      "nome": "Raggirare",
+      "va": 12
+    },
+    {
+      "nome": "Atletica",
+      "va": 13
+    }
+  ],
+  "attacchi": [
+    {
+      "nome": "Artiglio",
+      "tipo": "ravvicinato",
+      "va": 14,
+      "danno": "1d6+2",
+      "natura": "Naturale",
+      "proprieta": [
+        "Perforazione",
+        "AC 1"
+      ],
+      "portata_q": 1,
+      "ac": 1
+    },
+    {
+      "nome": "Coda",
+      "tipo": "ravvicinato",
+      "va": 14,
+      "danno": "2d6+2",
+      "natura": "Naturale",
+      "proprieta": [
+        "Perforazione",
+        "AC 1"
+      ],
+      "portata_q": 1,
+      "ac": 1
+    },
+    {
+      "nome": "Fiamma scagliata",
+      "tipo": "distanza",
+      "va": 14,
+      "danno": "3d6+2",
+      "natura": "Magico",
+      "proprieta": [
+        "Fuoco",
+        "AC 1"
+      ],
+      "gittata_q": 30,
+      "modalita": [
+        "S"
+      ],
+      "ac": 1
+    }
+  ],
+  "capacita": [
+    {
+      "nome": "Corpo e sensi",
+      "effetto": "Protezioni elementali comuni, resistenza alle armi non argentate, Vista infernale 24 Q e Resistenza alla magia +2 non inclusa nelle PS. Telepatia entro 24 Q. Nessuna Parata naturale; l’elevata Percezione non garantisce di evitare ogni Sorpresa."
+    },
+    {
+      "nome": "Sequenza",
+      "effetto": "Massimo due Artigli, una Coda e due Fiamme per Round, entro il limite complessivo di tre attacchi, Opportunità compresa. Non somma cinque attacchi. Attivare una Fiamma consuma i propri PM anche se manca e non è un’Opportunità ravvicinata. Non infligge danni gratuiti a chiunque gli sia adiacente."
+    },
+    {
+      "nome": "Uncini della pelle",
+      "effetto": "All’inizio della propria Iniziativa ogni creatura che lo stia trattenendo con un contatto corporeo diretto subisce 1d4+1 Naturale, Perforazione, ridotto dall’AR, una sola volta per Round per questo corpo. Nessun tiro per colpire o Difesa attiva: è una conseguenza della presa già mantenuta. Una corda, catena, telecinesi o vincolo mistico che non esponga direttamente il corpo non infligge questo contraccolpo al controllore distante. Essere trattenuti dal Diavolo, da solo, non soddisfa il requisito."
+    },
+    {
+      "nome": "Proiettile di fuoco",
+      "effetto": "Il VA 14 comprende Armi da lancio +2 per il proiettile mistico. Applicare distanza, Copertura e condizioni; Parata a distanza o Schivata ai costi normali. Dopo almeno un danno finale e superamento di Ignifugo, Riflessi 0 evita Incendiato per 1+1d3 Round. Un solo danno diretto, senza una seconda componente fisica o un’esplosione ad area."
+    },
+    {
+      "nome": "Altri movimenti",
+      "effetto": "spazio 1 × 1 Q"
+    }
+  ],
+  "gs_px": {
+    "gs": "Eroe",
+    "px": 70,
+    "per_pg": 4
+  },
+  "_bestiario": {
+    "campi": {
+      "pv": "Mostri 0.69",
+      "pm": "Mostri 0.69",
+      "caratteristiche": "Mostri 0.69",
+      "ar": "Mostri 0.69",
+      "difese": "Mostri 0.69",
+      "salvezze": "Mostri 0.69",
+      "iniziativa": "Mostri 0.69",
+      "azioni": "Mostri 0.69",
+      "movimento": "Mostri 0.69",
+      "spazio": "Mostri 0.69",
+      "abilita": "Mostri 0.69",
+      "attacchi": "Mostri 0.69",
+      "capacita": "Mostri 0.69",
+      "gs_px": "Mostri 0.69"
+    },
+    "edizione": "Mostri 0.69",
+    "sistema_salute": "solo_PV"
+  }
+}

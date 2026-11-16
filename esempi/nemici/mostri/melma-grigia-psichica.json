@@ -1,0 +1,105 @@
+{
+  "formato": "mutant-nemico",
+  "versione": 1,
+  "id": "melma-grigia-psichica",
+  "nome": "Melma grigia psichica",
+  "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Melma grigia psichica",
+  "note": "Melma grigia che ha sviluppato una mente rudimentale e una limitata pressione psionica. Conserva corpo amorfo e corrosione del metallo, ma perde le immunità dovute all’assenza di mente del modello ordinario.",
+  "pv": 32,
+  "pm": 12,
+  "caratteristiche": {
+    "FOR": 6,
+    "DES": 3,
+    "COS": 7,
+    "INT": 3,
+    "SAG": 4,
+    "CAR": 2
+  },
+  "ar": {
+    "totale": 1,
+    "magica": 0
+  },
+  "difese": 6,
+  "salvezze": {
+    "tempra": 12,
+    "riflessi": 6,
+    "volonta": 8,
+    "magia": 9
+  },
+  "iniziativa": 0,
+  "azioni": {
+    "principali": 1,
+    "movimento": 1
+  },
+  "movimento": {
+    "passo": 2,
+    "corsa": 4,
+    "scatto": 6
+  },
+  "spazio": "1 Q",
+  "capacita": [
+    {
+      "nome": "Pseudopodo",
+      "effetto": "VA 10. Danno: 1d6+2 Naturale Acido, Corrosivo; AC 1. Portata/costo: 1 Q; 1 AzP; "
+    },
+    {
+      "nome": "Pressione psichica",
+      "effetto": "VA —. Danno: 2d6+2 psichici diretti; Volontà 0 dimezza. Portata/costo: Una mente percepita direttamente entro 12 Q; 1 AzP e 3 PM; R+3; "
+    },
+    {
+      "nome": "Mente e corpo",
+      "effetto": "Vivente biologico con mente rudimentale, Volontà otto e dodici PM personali. Non applica le immunità della Melma grigia a paura, fascinazione, controllo e danni psichici: sono bersagli validi nei propri requisiti. Zero PM causa Svenuto dopo l’azione. Mantiene immunità ad Accecato, Assordato, A Terra e accumulo di AFT del corpo distribuito; gli altri Stati compatibili restano. Dimezza Acido, Fuoco e Gelo dopo Difese e prima dell’AR."
+    },
+    {
+      "nome": "Senso diffuso",
+      "effetto": "Percezione diffusa dodici Q senza occhi o udito, fermata dai solidi e soggetta al confronto Percezione–Furtività. Localizza corpi ma non legge colori, scritte, identità o pensieri. La Pressione può usare questa percezione diretta come requisito specifico al posto della vista, entro la medesima portata; non colpisce attraverso una parete o un occultamento che impedisca realmente di localizzare la mente. Nessuna telepatia o linguaggio automatici."
+    },
+    {
+      "nome": "Una sola Azione",
+      "effetto": "Una AzP totale, massimo un attacco di Pseudopodo o una Pressione per Round; Opportunità compresa soltanto nello Pseudopodo. Pressione: tre PM, disponibile di nuovo alla propria Iniziativa R+3 dopo uso nel Round R. Volontà 0 dimezza 2d6+2 psichici diretti come Dardo Psichico, niente AR, PV temporanei, Difese o Ferite. Barriera Mentale già attiva blocca interamente. Se esaurisce PV, seconda Volontà 0 per Svenuto 1+1d4 Round; nessun risucchio di PM."
+    },
+    {
+      "nome": "Fessure e mimetismo",
+      "effetto": "Corpo amorfo della Melma grigia: apertura di almeno tre cm, una AzM intera per un percorso continuo non oltre il Passo e uscita libera; non attacca durante il passaggio, lascia prima gli oggetti rigidi incompatibili. Scala asperità, senza aderenza ai soffitti lisci. Furtività quattordici richiede immobilità e fondo di roccia umida, fango o liquido scuro. Non possiede Scissione e mutare forma non cura le lesioni."
+    },
+    {
+      "nome": "Metallo e corrosione",
+      "effetto": "Come la Melma grigia corrode solo metallo non magico compatibile effettivamente raggiunto. Dopo danno finale, una protezione metallica che abbia fornito almeno un AR effettua PS Integrità: fallimento un PI, Anticorrosivo X evita se il residuo non supera X. Un’arma metallica non magica che tocchi il corpo effettua PS Integrità anche se l’AR assorbe il colpo; fallimento un PI, Anticorrosivo almeno uno sullo strumento evita. Una sola verifica per causa e oggetto del colpo, con cumulo del PI potenziale del Magistrale nella stessa PS. Dettagli e riparazioni in Melme corrosione e oggetti."
+    },
+    {
+      "nome": "Anatomia e condotta",
+      "effetto": "Usa le localizzazioni funzionali delle melme, senza un cervello aggiuntivo separato o PV per ogni pseudopodo. Scambia gas col corpo e non necessita di sonno fisiologico, ma ciò non è immunità generale a poteri mentali compatibili. Può riconoscere un pericolo o scegliere copertura con la propria mente rudimentale; non conosce automaticamente lingue, Classi o tattiche degli Illithid vicini. Le cure biologiche compatibili restano applicabili."
+    },
+    {
+      "nome": "Altri movimenti",
+      "effetto": "Terra e arrampicata 2 / 4 / 6: la stessa andatura vale anche per arrampicata; spazio 1 × 1 Q"
+    },
+    {
+      "nome": "Abilità particolari",
+      "effetto": "Furtività 10, 14 immobile su fondale compatibile"
+    }
+  ],
+  "gs_px": {
+    "gs": "Esperto",
+    "px": 30,
+    "per_pg": 4
+  },
+  "_bestiario": {
+    "campi": {
+      "pv": "Mostri 0.69",
+      "pm": "Mostri 0.69",
+      "caratteristiche": "Mostri 0.69",
+      "ar": "Mostri 0.69",
+      "difese": "Mostri 0.69",
+      "salvezze": "Mostri 0.69",
+      "iniziativa": "Mostri 0.69",
+      "azioni": "Mostri 0.69",
+      "movimento": "Mostri 0.69",
+      "spazio": "Mostri 0.69",
+      "capacita": "Mostri 0.69",
+      "gs_px": "Mostri 0.69"
+    },
+    "edizione": "Mostri 0.69",
+    "sistema_salute": "solo_PV"
+  }
+}

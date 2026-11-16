@@ -1,0 +1,116 @@
+{
+  "formato": "mutant-nemico",
+  "versione": 1,
+  "id": "scheletro-di-cavallo-da-guerra",
+  "nome": "Scheletro di cavallo da guerra",
+  "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Scheletro di cavallo da guerra",
+  "note": "Resti animati di una cavalcatura da guerra. Mantiene una locomozione rapida e colpisce con gli zoccoli; non include un cavaliere o una bardatura utilizzabile.",
+  "pv": 32,
+  "pm": 5,
+  "caratteristiche": {
+    "FOR": 8,
+    "DES": 6,
+    "COS": 6,
+    "INT": 1,
+    "SAG": 4,
+    "CAR": 2
+  },
+  "ar": {
+    "totale": 1,
+    "magica": 0
+  },
+  "difese": 9,
+  "salvezze": {
+    "tempra": 11,
+    "riflessi": 10,
+    "volonta": 7,
+    "magia": 8
+  },
+  "iniziativa": 1,
+  "azioni": {
+    "principali": 1,
+    "movimento": 1
+  },
+  "movimento": {
+    "passo": 12,
+    "corsa": 24,
+    "scatto": 36
+  },
+  "spazio": "1 × 2 Q",
+  "abilita": [
+    {
+      "nome": "Corpo a corpo",
+      "va": 12
+    },
+    {
+      "nome": "Atletica",
+      "va": 12
+    },
+    {
+      "nome": "Percezione",
+      "va": 9
+    }
+  ],
+  "attacchi": [
+    {
+      "nome": "Zoccoli",
+      "tipo": "ravvicinato",
+      "va": 12,
+      "danno": "2d6+2",
+      "natura": "Naturale",
+      "proprieta": [
+        "Contusione",
+        "AC 1"
+      ],
+      "portata_q": 1,
+      "ac": 1
+    }
+  ],
+  "capacita": [
+    {
+      "nome": "Corpo e sensi",
+      "effetto": "Non morto corporeo con mente rudimentale e PM personali. Applica le immunità biologiche e Ossa fragili comuni; Scurovisione dodici Q. Nessuna immunità automatica a Paura o controllo mentale, nessuna Parata naturale. I resti superficiali forniscono AR intrinseca uno, non una bardatura Commerciale recuperabile. Zero PM può renderlo Svenuto e A 0 PV il profilo senza Ferite è fuori combattimento secondo il §4.2; morte o distruzione effettiva restano distinte."
+    },
+    {
+      "nome": "Azioni e zoccoli",
+      "effetto": "Una AzP e una AzM totali, massimo uno Zoccolo per Round, Opportunità compresa. Non possiede Carica travolgente o atterramento automatico del cavallo vivo; un’eventuale Carica ordinaria deve rispettare costi, traiettoria e penalità comuni. Nessuna Azione aggiuntiva per il cavaliere e nessuna immunità agli ostacoli o ad A Terra."
+    },
+    {
+      "nome": "Trasporto e controllo",
+      "effetto": "Trasporto robusto della sua anatomia equina: ordinario 160 kg, sovraccarico fino a 320 kg e spinta o traino fino a 640 kg, con effetti ordinari del carico. Sella, cavaliere e oggetti contano nel peso; non sono inclusi nel profilo. Occorre una consegna o un legame di controllo effettivamente assegnato per usarlo come cavalcatura, non il solo contatto con le ossa. Non comprende linguaggi complessi o comunica una mappa al creatore."
+    },
+    {
+      "nome": "Menomazioni e recupero",
+      "effetto": "Le quattro zampe sono registrate come arti locomotori: una Menomazione limita la funzione interessata senza quattro riserve di PV. Mancanza di nutrimento e Affaticamento non consuma il corpo, ma non ripara danni o ossa perdute. Medicina e Cura Ferite biologiche non lo ricostruiscono; un recupero deve essere compatibile con un non morto corporeo. Nessuna ricomposizione dopo la distruzione o negazione automatica dell’autonomia con Negare Potere."
+    },
+    {
+      "nome": "Altri movimenti",
+      "effetto": "spazio 1 × 2 Q"
+    }
+  ],
+  "gs_px": {
+    "gs": "Inesperto",
+    "px": 20,
+    "per_pg": 4
+  },
+  "_bestiario": {
+    "campi": {
+      "pv": "Mostri 0.69",
+      "pm": "Mostri 0.69",
+      "caratteristiche": "Mostri 0.69",
+      "ar": "Mostri 0.69",
+      "difese": "Mostri 0.69",
+      "salvezze": "Mostri 0.69",
+      "iniziativa": "Mostri 0.69",
+      "azioni": "Mostri 0.69",
+      "movimento": "Mostri 0.69",
+      "spazio": "Mostri 0.69",
+      "abilita": "Mostri 0.69",
+      "attacchi": "Mostri 0.69",
+      "capacita": "Mostri 0.69",
+      "gs_px": "Mostri 0.69"
+    },
+    "edizione": "Mostri 0.69",
+    "sistema_salute": "solo_PV"
+  }
+}

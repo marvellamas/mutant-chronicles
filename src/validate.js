@@ -2876,6 +2876,36 @@ function validaFormatoNemici(dati, err) {
     if (!isOggetto(CO.dettaglio) || !['dalla_edizione', 'provvisorie', 'non_leggibili'].every((k) => isTesto(CO.dettaglio[k]))) {
       err(F, 'corpus.dettaglio', 'per ogni gruppo, da dove vengono quelle schede: un numero senza il perché non si può ricontrollare');
     }
+    // **Lotto 204: lo stesso conto, per campo.** «Il Bestiario è alla 0.69» non è un'informazione finché non si
+    // dice quanti campi ne vengono davvero e quanti sono rimasti indietro. Anche qui i numeri devono sommarsi, e
+    // ogni campo ereditato deve avere il suo perché: un elenco senza motivo è un campo dimenticato.
+    const CA = CO.campi;
+    if (!isOggetto(CA)) err(F, 'corpus.campi', 'quanti campi vengono dall’edizione corrente e quanti sono ereditati (lotto 204)');
+    else {
+      for (const k of ['letti', 'ereditati', 'senza_provenienza', 'miste']) {
+        if (!isIntero(CA[k]) || CA[k] < 0) err(F, `corpus.campi.${k}`, 'intero non negativo');
+      }
+      if (!isOggetto(CA.ereditati_per_campo)) err(F, 'corpus.campi.ereditati_per_campo', 'quali campi sono rimasti indietro, e quanti per ciascuno');
+      else {
+        const somma = Object.values(CA.ereditati_per_campo).reduce((a, x) => a + (isIntero(x) ? x : NaN), 0);
+        if (isIntero(CA.ereditati) && somma !== CA.ereditati) {
+          err(F, 'corpus.campi.ereditati', `il conto per campo non torna: la somma di ereditati_per_campo è ${somma}, ma i campi ereditati dichiarati sono ${CA.ereditati}`);
+        }
+        for (const [k, n] of Object.entries(CA.ereditati_per_campo)) if (!isIntero(n) || n <= 0) err(F, `corpus.campi.ereditati_per_campo.${k}`, 'intero positivo');
+      }
+      if (isIntero(CA.miste) && isIntero(CO.dalla_edizione) && CA.miste > CO.dalla_edizione) {
+        err(F, 'corpus.campi.miste', `le schede miste (${CA.miste}) non possono essere più di quelle che vengono dall’edizione (${CO.dalla_edizione})`);
+      }
+      if (!isOggetto(CA.dettaglio) || !['letti', 'ereditati', 'senza_provenienza', 'miste'].every((k) => isTesto(CA.dettaglio[k]))) {
+        err(F, 'corpus.campi.dettaglio', 'per ogni numero, il perché: un numero senza motivo non si può ricontrollare');
+      }
+      // ogni campo che risulta ereditato in quantità deve avere un motivo scritto
+      for (const k of Object.keys(CA.ereditati_per_campo ?? {})) {
+        if ((CA.ereditati_per_campo[k] ?? 0) >= 50 && !isTesto(CA.dettaglio?.[k])) {
+          err(F, `corpus.campi.dettaglio.${k}`, `${CA.ereditati_per_campo[k]} schede tengono il campo «${k}» dell’edizione precedente: il motivo va scritto`);
+        }
+      }
+    }
   }
   // scala del GS (Direttore §9.3.1): nomi unici, PX interi crescenti
   if (!Array.isArray(f.gs_scala) || !f.gs_scala.length) err(F, 'gs_scala', 'lista della scala del GS mancante');

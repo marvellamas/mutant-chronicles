@@ -3,7 +3,7 @@
   "versione": 1,
   "id": "avvizzito-ramoso",
   "nome": "Avvizzito ramoso",
-  "fonte": "dal Manuale dei Mostri v0.46 (Word del 27/10/2026), cap. 8 «Catalogo delle creature» — Vegetali e custodi delle foreste",
+  "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Avvizzito ramoso",
   "caratteristiche": {
     "FOR": 3,
     "DES": 6,
@@ -48,11 +48,11 @@
       "va": 9,
       "danno": "1d4+1",
       "natura": "Naturale",
-      "portata_q": 1,
-      "ac": 1,
       "proprieta": [
         "Perforazione"
-      ]
+      ],
+      "portata_q": 1,
+      "ac": 1
     }
   ],
   "abilita": [
@@ -91,9 +91,25 @@
     "accecato",
     "assordato"
   ],
-  "note": "Furtività 14 immobile fra cespugli secchi o detriti compatibili. Capisce istruzioni semplici in una lingua assegnata all’infestazione ma non parla. Non è nella Covata né ha Natura Oscura Simmetria. Un gruppo richiede esemplari distinti con proprie Azioni. Condotta: attacca da un nascondiglio; sotto 3 PV o a Ferita Profonda cerca copertura. Fonte: Twig Blight, pp. 31–32.",
+  "note": "Vegetale infestante • agguato fra rami secchi • Natura Comune. Condotta. Può comprendere istruzioni semplici in una lingua assegnata all’infestazione, ma non parla. Attacca prede vicine da un nascondiglio e cerca copertura sotto 4 PV. Un gruppo richiede esemplari distinti, ciascuno con proprie Azioni: l’aspetto di una catasta non concede attacchi collettivi gratuiti.",
   "_bestiario": {
     "edizione": "Mostri 0.69",
-    "sistema_salute": "solo_PV"
+    "sistema_salute": "solo_PV",
+    "campi": {
+      "pv": "Mostri 0.69",
+      "pm": "Mostri 0.69",
+      "caratteristiche": "Mostri 0.69",
+      "ar": "Mostri 0.69",
+      "difese": "Mostri 0.69",
+      "salvezze": "Mostri 0.69",
+      "iniziativa": "Mostri 0.69",
+      "azioni": "Mostri 0.69",
+      "movimento": "Mostri 0.69",
+      "spazio": "Mostri 0.69",
+      "abilita": "Mostri 0.47",
+      "attacchi": "Mostri 0.69",
+      "capacita": "Mostri 0.47",
+      "gs_px": "Mostri 0.69"
+    }
   }
 }

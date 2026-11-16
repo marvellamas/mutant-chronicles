@@ -1,0 +1,143 @@
+{
+  "formato": "mutant-nemico",
+  "versione": 1,
+  "id": "marilith",
+  "nome": "Marilith",
+  "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Marilith",
+  "taglia": "grande",
+  "note": "Comandante dal torso umanoide, sei braccia e parte inferiore serpentina. Alterna le spade, trattiene con la coda e reagisce con una difesa addestrata; i sei arti non possiedono turni separati.",
+  "pv": 198,
+  "pm": 48,
+  "caratteristiche": {
+    "FOR": 9,
+    "DES": 10,
+    "COS": 10,
+    "INT": 9,
+    "SAG": 8,
+    "CAR": 10
+  },
+  "ar": {
+    "totale": 6,
+    "magica": 0
+  },
+  "difese": 15,
+  "salvezze": {
+    "tempra": 16,
+    "riflessi": 16,
+    "volonta": 15,
+    "magia": 15
+  },
+  "iniziativa": 5,
+  "azioni": {
+    "principali": 4,
+    "movimento": 1
+  },
+  "movimento": {
+    "passo": 8,
+    "corsa": 16,
+    "scatto": 24
+  },
+  "spazio": "2 × 2 Q",
+  "abilita": [
+    {
+      "nome": "Armi da guerra",
+      "va": 18
+    },
+    {
+      "nome": "Corpo a corpo",
+      "va": 17
+    },
+    {
+      "nome": "Atletica",
+      "va": 16
+    },
+    {
+      "nome": "Percezione",
+      "va": 14
+    },
+    {
+      "nome": "Oratoria",
+      "va": 15
+    }
+  ],
+  "attacchi": [
+    {
+      "nome": "Spada lunga",
+      "tipo": "ravvicinato",
+      "va": 18,
+      "danno": "1d8+6",
+      "natura": "Magico",
+      "proprieta": [
+        "Taglio",
+        "AC 1"
+      ],
+      "portata_q": 1,
+      "ac": 1
+    },
+    {
+      "nome": "Coda",
+      "tipo": "ravvicinato",
+      "va": 17,
+      "danno": "3d6+3",
+      "natura": "Magico",
+      "proprieta": [
+        "Contusione",
+        "AC 1",
+        "presa"
+      ],
+      "portata_q": 2,
+      "ac": 1
+    }
+  ],
+  "capacita": [
+    {
+      "nome": "Corpo e sensi",
+      "effetto": "Protezione Demone della tabella comune, Resistenza alla magia +2 non inclusa nelle PS, Vista rivelatrice 9 entro 24 Q e telepatia 24 Q. Le lame e la Coda hanno danno Magico innato. Non possiede Parata naturale."
+    },
+    {
+      "nome": "Sequenza",
+      "effetto": "Quattro AzP totali; massimo tre colpi di Spada e una Coda per Round, Opportunità compresa. Può distribuire i colpi tra le spade utilizzabili: perderne una non elimina un attacco se un altro arto armato può eseguirlo. Una Menomazione delle Braccia riguarda l’arto colpito, registrato tra i sei, senza sei riserve di PV."
+    },
+    {
+      "nome": "Parate reattive",
+      "effetto": "Con almeno una Spada pronta può effettuare due Parate gratuite per Round, anche fuori dalla propria Iniziativa, con VA 17: Difese 15 più due personali già compresi qui. Le ulteriori Parate costano una AzP. Una sola Difesa per attacco; requisiti, esiti e penalità a distanza ordinari. Non ottiene una nuova reazione a ogni turno altrui, né bonus all’AR."
+    },
+    {
+      "nome": "Spire",
+      "effetto": "Dopo almeno un danno finale di Coda a una creatura fino a 1 × 1 Q: Riflessi −2, fallimento Immobilizzato con braccia bloccate. Una sola vittima; la Coda impegnata non colpisce altri. Liberarsi richiede una AzP e Atletica o Corpo a corpo contrapposto a Corpo a corpo 17; applicare il −4 dell’Immobilizzato e favorire chi trattiene nei pareggi. Un alleato a Contatto può tentare la stessa liberazione. Stringere costa una AzP e la stessa contrapposta: successo danno della Coda con AR normale, fallimento mantiene la presa senza danno. Stringere conta nel limite di una Coda per Round; nessun colpo automatico."
+    },
+    {
+      "nome": "Passaggio e dotazione",
+      "effetto": "Possiede Passaggio personale 24 Q delle regole comuni, una AzP e quattro PM. Non porta la vittima avvolta. Ogni Spada lunga Comune: FOR 4, una mano, portata un Q, PI 5, PS Integrità 10, base 1d8+1. Il danno pronto comprende tre di FOR e due di Forza brutale personale; la Natura Magica dura soltanto mentre la Marilith impugna l’arma. Le sei armi non acquisiscono la capacità una volta recuperate; i 440 PX includono la dotazione."
+    },
+    {
+      "nome": "Altri movimenti",
+      "effetto": "spazio 2 × 2 Q"
+    }
+  ],
+  "gs_px": {
+    "gs": "Semidio",
+    "px": 440,
+    "per_pg": 4
+  },
+  "_bestiario": {
+    "campi": {
+      "pv": "Mostri 0.69",
+      "pm": "Mostri 0.69",
+      "caratteristiche": "Mostri 0.69",
+      "ar": "Mostri 0.69",
+      "difese": "Mostri 0.69",
+      "salvezze": "Mostri 0.69",
+      "iniziativa": "Mostri 0.69",
+      "azioni": "Mostri 0.69",
+      "movimento": "Mostri 0.69",
+      "spazio": "Mostri 0.69",
+      "abilita": "Mostri 0.69",
+      "attacchi": "Mostri 0.69",
+      "capacita": "Mostri 0.69",
+      "gs_px": "Mostri 0.69"
+    },
+    "edizione": "Mostri 0.69",
+    "sistema_salute": "solo_PV"
+  }
+}

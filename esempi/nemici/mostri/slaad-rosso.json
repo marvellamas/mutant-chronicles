@@ -1,0 +1,135 @@
+{
+  "formato": "mutant-nemico",
+  "versione": 1,
+  "id": "slaad-rosso",
+  "nome": "Slaad rosso",
+  "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Slaad rosso",
+  "taglia": "grande",
+  "note": "Predatore anfibio nell’aspetto, dalla pelle rossa e artigli capaci di introdurre un uovo parassita. Combatte a distanza ravvicinata; l’incubazione è un effetto differito e non produce larve durante lo scontro.",
+  "pv": 104,
+  "pm": 12,
+  "caratteristiche": {
+    "FOR": 7,
+    "DES": 6,
+    "COS": 7,
+    "INT": 3,
+    "SAG": 3,
+    "CAR": 4
+  },
+  "ar": {
+    "totale": 3,
+    "magica": 0
+  },
+  "difese": 11,
+  "salvezze": {
+    "tempra": 13,
+    "riflessi": 11,
+    "volonta": 9,
+    "magia": 10
+  },
+  "iniziativa": 1,
+  "azioni": {
+    "principali": 3,
+    "movimento": 1
+  },
+  "movimento": {
+    "passo": 6,
+    "corsa": 12,
+    "scatto": 18
+  },
+  "spazio": "2 × 2 Q",
+  "abilita": [
+    {
+      "nome": "Corpo a corpo",
+      "va": 14
+    },
+    {
+      "nome": "Atletica",
+      "va": 13
+    },
+    {
+      "nome": "Percezione",
+      "va": 10
+    },
+    {
+      "nome": "Sopravvivenza",
+      "va": 11
+    }
+  ],
+  "attacchi": [
+    {
+      "nome": "Morso",
+      "tipo": "ravvicinato",
+      "va": 14,
+      "danno": "2d4+2",
+      "natura": "Naturale",
+      "proprieta": [
+        "Perforazione",
+        "AC 1"
+      ],
+      "portata_q": 1,
+      "ac": 1
+    },
+    {
+      "nome": "Artiglio",
+      "tipo": "ravvicinato",
+      "va": 14,
+      "danno": "1d8+2",
+      "natura": "Naturale",
+      "proprieta": [
+        "Taglio",
+        "AC 1",
+        "possibile uovo"
+      ],
+      "portata_q": 1,
+      "ac": 1
+    }
+  ],
+  "capacita": [
+    {
+      "nome": "Corpo e sensi",
+      "effetto": "Vivente biologico con Protezioni Slaad e Rigenerazione quattro delle regole comuni. Scurovisione dodici Q e telepatia dodici Q verso menti validamente percepite; parla la lingua degli Slaad. Resistenza alla magia +2 non inclusa nelle PS. Nessuna Parata naturale, immunità al veleno o capacità di respirare sott’acqua assegnata dal solo aspetto simile a un rospo."
+    },
+    {
+      "nome": "Sequenza",
+      "effetto": "Tre AzP totali, massimo un Morso e due Artigli per Round, Opportunità compresa. La Rigenerazione non concede un’Azione e il danno delle armi naturali resta Naturale. Non salta distanze eccezionali, non lancia Incantesimi e non cambia forma."
+    },
+    {
+      "nome": "Inoculazione",
+      "effetto": "Una volta per Round può dichiarare un Artiglio inoculante prima del tiro; l’occasione si consuma anche mancando. Solo se infligge almeno un danno finale a un umano o umanoide biologicamente vivente: Tempra −2 evita l’impianto di un uovo. Nessun costo in PM, danno aggiuntivo, veleno o Stato immediato. L’AR che assorbe tutto impedisce l’inoculazione. La Resistenza alla magia non aiuta questa PS biologica e un Magistrale fisico non aumenta le uova."
+    },
+    {
+      "nome": "Incubazione e limiti",
+      "effetto": "La procedura comune dell’Uovo parassita specifica diagnosi, novanta giorni di incubazione, fase finale e cure. Una vittima ospita al massimo un uovo e non può contrarre contemporaneamente la Fagosi del blu; applicare la prima affezione attecchita. Nuovi colpi infliggono soltanto il normale danno finché l’affezione permane. La morte dello Slaad rosso non elimina l’uovo già impiantato. Nessuna larva, adulto aggiuntivo o gemma della variante è compresa nei 70 PX."
+    },
+    {
+      "nome": "Altri movimenti",
+      "effetto": "spazio 2 × 2 Q"
+    }
+  ],
+  "gs_px": {
+    "gs": "Eroe",
+    "px": 70,
+    "per_pg": 4
+  },
+  "_bestiario": {
+    "campi": {
+      "pv": "Mostri 0.69",
+      "pm": "Mostri 0.69",
+      "caratteristiche": "Mostri 0.69",
+      "ar": "Mostri 0.69",
+      "difese": "Mostri 0.69",
+      "salvezze": "Mostri 0.69",
+      "iniziativa": "Mostri 0.69",
+      "azioni": "Mostri 0.69",
+      "movimento": "Mostri 0.69",
+      "spazio": "Mostri 0.69",
+      "abilita": "Mostri 0.69",
+      "attacchi": "Mostri 0.69",
+      "capacita": "Mostri 0.69",
+      "gs_px": "Mostri 0.69"
+    },
+    "edizione": "Mostri 0.69",
+    "sistema_salute": "solo_PV"
+  }
+}

@@ -3,7 +3,7 @@
   "versione": 1,
   "id": "pipistrello",
   "nome": "Pipistrello",
-  "fonte": "dal Manuale dei Mostri v0.46 (Word del 27/10/2026), cap. 8 «Catalogo delle creature» — Sciami e piccola fauna",
+  "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Pipistrello",
   "caratteristiche": {
     "FOR": 1,
     "DES": 7,
@@ -49,11 +49,11 @@
       "va": 6,
       "danno": "1",
       "natura": "Naturale",
-      "ac": 1,
       "proprieta": [
         "Perforazione"
       ],
-      "portata_q": 1
+      "portata_q": 1,
+      "ac": 1
     }
   ],
   "abilita": [
@@ -92,9 +92,25 @@
       "effetto": "+2 a Percezione quando l’udito è determinante, anche per una Prova di ecolocalizzazione che richieda di distinguere un suono (una sola volta; non riattiva il senso da Assordato). Il semplice rumore non lo stordisce automaticamente."
     }
   ],
-  "note": "Braccia = ali; Gambe = arti posteriori; lo spazio tattico non ne rappresenta la larghezza reale. Il Morso non trasmette automaticamente malattie né suzione di sangue. Non ha volo stazionario: decollo, dislivello e atterraggio consumano la stessa AzM. Condotta: cerca normalmente una fuga in volo; a Ferita Superficiale tende ad abbandonare lo scontro. Fonte: Bat, p. 318.",
+  "note": "Piccolo mammifero alato • ecolocalizzazione • Natura Comune.",
   "_bestiario": {
     "edizione": "Mostri 0.69",
-    "sistema_salute": "solo_PV"
+    "sistema_salute": "solo_PV",
+    "campi": {
+      "pv": "Mostri 0.69",
+      "pm": "Mostri 0.69",
+      "caratteristiche": "Mostri 0.69",
+      "ar": "Mostri 0.69",
+      "difese": "Mostri 0.69",
+      "salvezze": "Mostri 0.69",
+      "iniziativa": "Mostri 0.69",
+      "azioni": "Mostri 0.69",
+      "movimento": "Mostri 0.69",
+      "spazio": "Mostri 0.69",
+      "abilita": "Mostri 0.69",
+      "attacchi": "Mostri 0.69",
+      "capacita": "Mostri 0.47",
+      "gs_px": "Mostri 0.69"
+    }
   }
 }

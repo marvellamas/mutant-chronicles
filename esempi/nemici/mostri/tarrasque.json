@@ -1,0 +1,129 @@
+{
+  "formato": "mutant-nemico",
+  "versione": 1,
+  "id": "tarrasque",
+  "nome": "Tarrasque",
+  "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Tarrasque",
+  "taglia": "grande",
+  "note": "Colosso bipede dal carapace riflettente, capace di devastare fortificazioni. La coda bilancia il corpo e le fauci possono trattenere prede enormi; non possiede rigenerazione o un ritorno automatico dopo la morte.",
+  "pv": 624,
+  "pm": 48,
+  "caratteristiche": {
+    "FOR": 10,
+    "DES": 5,
+    "COS": 10,
+    "INT": 1,
+    "SAG": 6,
+    "CAR": 5
+  },
+  "ar": {
+    "totale": 12,
+    "magica": 0
+  },
+  "difese": 12,
+  "salvezze": {
+    "tempra": 20,
+    "riflessi": 14,
+    "volonta": 15,
+    "magia": 16
+  },
+  "iniziativa": 1,
+  "azioni": {
+    "principali": 5,
+    "movimento": 1
+  },
+  "movimento": {
+    "passo": 8,
+    "corsa": 16,
+    "scatto": 24
+  },
+  "spazio": "6 × 10 Q",
+  "abilita": [
+    {
+      "nome": "Corpo a corpo",
+      "va": 22
+    },
+    {
+      "nome": "Atletica",
+      "va": 21
+    },
+    {
+      "nome": "Percezione",
+      "va": 16
+    },
+    {
+      "nome": "Sopravvivenza",
+      "va": 15
+    }
+  ],
+  "capacita": [
+    {
+      "nome": "Digestione",
+      "effetto": "VA —. Danno: 6d6 Naturale Acido per prigioniero; AC 1. Portata/costo: Solo stomaco; 1 AzP; una volta per Round; "
+    },
+    {
+      "nome": "Corpo e sensi",
+      "effetto": "Vivente biologico, immune a Fuoco, veleno e Stati mantenuti dal veleno, fascinazione, Terrorizzato e Paralizzato. Immune al danno Naturale di armi da Contusione, Taglio e Perforazione, incluse armi naturali; non a ogni fenomeno ambientale, Gelo, Acido, Magico o Etereo. Resistenza alla magia +2 non inclusa nelle PS. Percezione cieca 24 Q fermata dai solidi, senza vista attraverso muri, scritte o lettura mentale. Nessuna Parata naturale o linguaggio; Iniziativa usa SAG +1 per istinto."
+    },
+    {
+      "nome": "Azioni e sequenza",
+      "effetto": "Cinque AzP totali, massimo un Morso, due Artigli, una Incornata e una Coda per Round, Opportunità compatibile compresa. Può riservare fino a due AzP del totale ad Artiglio o Coda alla fine dell’Iniziativa di altri avversari, massimo una per ciascuna Iniziativa; conservano i limiti del Round. Non riceve un altro movimento o Azioni leggendarie fuori bilancio. Digestione e Presenza occupano le stesse AzP, quindi non si aggiungono gratis ai cinque colpi."
+    },
+    {
+      "nome": "Fauci e coda",
+      "effetto": "Dopo almeno un danno finale di Morso a una creatura fino a 2 × 2 Q: Riflessi −4 evita Immobilizzato con braccia bloccate. Una sola preda esterna, nessun Morso su altri finché la trattiene; liberarsi richiede una AzP e Atletica o Corpo a corpo contrapposto a Corpo a corpo ventidue, −4 del prigioniero e pareggi a favore di chi trattiene. Un alleato presso le fauci può tentare lo stesso soccorso con accesso e strumenti adatti. Dopo danno finale di Coda a una creatura di massa non superiore: Riflessi −4 evita A Terra, senza danni da collisione aggiunti. Nessuna presa della Coda."
+    },
+    {
+      "nome": "Ingestione",
+      "effetto": "Il Morso di un impiego successivo contro la propria preda già nelle fauci può inghiottire dopo almeno un danno finale: stesso Morso del Round, senza danno duplicato. Stomaco: quattro prigionieri fino a un Q, oppure una creatura fino a 2 × 2 Q che lo occupa interamente. Digestione una AzP, una volta per Round, 6d6 Naturale Acido con AR, tiro comune e una AC ciascuno. Fuga contro Atletica ventuno; almeno venticinque danni finali dall’interno nello stesso Round impongono Tempra −4 per rigurgitare, una verifica per Round. Restano uscita, soccorso e soffocamento della procedura comune."
+    },
+    {
+      "nome": "Presenza e tenacia",
+      "effetto": "Presenza terrificante: una AzP e quattro PM, una volta per Round, menti coscienti scelte che ne percepiscano la minaccia entro 24 Q. Volontà −4 evita; fallimento Terrorizzato cinque Round, nuova Volontà −4 a fine di ogni propria Iniziativa libera. Chi resiste o viene liberato è immune a questo Tarrasque per ventiquattro ore. Barriera Mentale aiuta; Cura Spirituale uno, Negare dodici, Oratoria ordinaria o evidente cessazione della minaccia rimuovono. Tenacia colossale: tre volte per ventiquattro ore paga quattro PM per ritirare una propria PS appena fallita, anche Maldestra, prima delle conseguenze; accetta il secondo tiro, nessun ulteriore ritento della stessa PS e nessun successo automatico."
+    },
+    {
+      "nome": "Carapace riflettente",
+      "effetto": "Prima delle Difese, quando un raggio o proiettile mistico Magico monobersaglio che ammette Parata o Schivata a distanza lo raggiungerebbe dall’esterno, tirare 1d6: da uno a cinque il carapace lo annulla; sei lo annulla sul Tarrasque e lo riflette verso l’emittente. Comprende Colpo Elementale Magico, non l’intero lancio con colpi diretti altrove. Non costa AzP o PM e non richiede coscienza. È una capacità intrinseca, non un’armatura rimovibile con Negare Potere."
+    },
+    {
+      "nome": "Effetto riflesso",
+      "effetto": "Solo se l’emittente è nel raggio originario misurato dal Tarrasque e lungo un percorso libero, l’effetto raggiunge il nuovo bersaglio con il tiro già risolto, se presente, e gli stessi danni e parametri. L’emittente può usare Difese e protezioni compatibili ai normali costi, senza ripetere gratuitamente il lancio o riottenere PM. Un effetto già riflesso non viene riflesso ancora da questa capacità. Se mancano portata o percorso la manifestazione si disperde. Ogni colpo distinto risolve il proprio 1d6."
+    },
+    {
+      "nome": "Cosa supera il carapace",
+      "effetto": "Non riflette armi materiali anche se Magiche, munizioni reali, fenomeni tecnologici Naturali, Coni, Aree, effetti ad acquisizione diretta che non ammettano Difese attive o danni Eterei. Non riflette poteri esercitati dall’interno contro il corpo. Questi attacchi applicano comunque le immunità, Resistenza alla magia dove pertinente e AR del profilo; essere esclusi dalla riflessione non rende efficace un’arma Naturale altrimenti innocua. L’immunità al Fuoco resta indipendente."
+    },
+    {
+      "nome": "Assedio e limiti",
+      "effetto": "Demolitrice quattro: contro un oggetto risolto con PI e PS Integrità, aggiunge quattro PI alla perdita soltanto se fallisce la sua unica PS, secondo gli Armamenti. Non raddoppia anche il danno o i PV strutturali. Scafi e grandi opere seguono il loro profilo e il Manuale dei Veicoli. Non distrugge automaticamente quartieri attraversandoli e non dispone di un’onda d’urto gratuita. Il carapace, le corna e la coda non sono tre avversari con PX distinti; il profilo non rende unico un esemplare nell’intero universo e non assegna un culto o Natura divina."
+    },
+    {
+      "nome": "Altri movimenti",
+      "effetto": "spazio 6 × 10 Q; altezza 10 Q"
+    }
+  ],
+  "gs_px": {
+    "gs": "Entità Suprema",
+    "px": 3200,
+    "per_pg": 4
+  },
+  "_bestiario": {
+    "campi": {
+      "pv": "Mostri 0.69",
+      "pm": "Mostri 0.69",
+      "caratteristiche": "Mostri 0.69",
+      "ar": "Mostri 0.69",
+      "difese": "Mostri 0.69",
+      "salvezze": "Mostri 0.69",
+      "iniziativa": "Mostri 0.69",
+      "azioni": "Mostri 0.69",
+      "movimento": "Mostri 0.69",
+      "spazio": "Mostri 0.69",
+      "abilita": "Mostri 0.69",
+      "capacita": "Mostri 0.69",
+      "gs_px": "Mostri 0.69"
+    },
+    "edizione": "Mostri 0.69",
+    "sistema_salute": "solo_PV"
+  }
+}

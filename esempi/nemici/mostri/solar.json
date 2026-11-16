@@ -1,0 +1,154 @@
+{
+  "formato": "mutant-nemico",
+  "versione": 1,
+  "id": "solar",
+  "nome": "Solar",
+  "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Solar",
+  "taglia": "grande",
+  "note": "Raro combattente alato capace di dirigere la propria spada a distanza e colpire con un arco luminoso. La sua freccia può abbattere una vittima ferita, senza produrre morte automatica.",
+  "pv": 302,
+  "pm": 96,
+  "caratteristiche": {
+    "FOR": 10,
+    "DES": 10,
+    "COS": 10,
+    "INT": 10,
+    "SAG": 10,
+    "CAR": 10
+  },
+  "ar": {
+    "totale": 8,
+    "magica": 0
+  },
+  "difese": 17,
+  "salvezze": {
+    "tempra": 18,
+    "riflessi": 17,
+    "volonta": 19,
+    "magia": 18
+  },
+  "iniziativa": 5,
+  "azioni": {
+    "principali": 4,
+    "movimento": 1
+  },
+  "movimento": {
+    "passo": 10,
+    "corsa": 20,
+    "scatto": 30,
+    "volo": 30
+  },
+  "spazio": "2 × 2 Q",
+  "abilita": [
+    {
+      "nome": "Armi da guerra",
+      "va": 20
+    },
+    {
+      "nome": "Armi da lancio",
+      "va": 18
+    },
+    {
+      "nome": "Corpo a corpo",
+      "va": 17
+    },
+    {
+      "nome": "Atletica",
+      "va": 18
+    },
+    {
+      "nome": "Percezione",
+      "va": 19
+    },
+    {
+      "nome": "Oratoria",
+      "va": 19
+    },
+    {
+      "nome": "Occultismo",
+      "va": 18
+    },
+    {
+      "nome": "Medicina",
+      "va": 18
+    }
+  ],
+  "capacita": [
+    {
+      "nome": "Spadone luminoso",
+      "effetto": "VA 20. Danno: AC 2: 2d6+7 Magico, Taglio, poi 4d8 Magico, Luce. Portata/costo: 1 Q impugnato; vedi lama guidata; 1 AzP; "
+    },
+    {
+      "nome": "Freccia abbattente",
+      "effetto": "VA 18. Danno: AC 2: 1d6+4 Magico, Perforazione, poi 4d8 Magico, Luce. Portata/costo: 100 Q; due mani; 1 AzP e una freccia; "
+    },
+    {
+      "nome": "Esplosione radiante",
+      "effetto": "VA —. Danno: AC 2: 2d6+3 Magico, Fuoco, poi 3d6 Magico, Luce. Portata/costo: Raggio 2 Q attorno al corpo; 2 AzP e 6 PM; "
+    },
+    {
+      "nome": "Sguardo accecante",
+      "effetto": "VA —. Danno: Accecato cinque Round; Tempra −2. Portata/costo: Una creatura entro 6 Q; 1 AzP e 4 PM; "
+    },
+    {
+      "nome": "Corpo e sensi",
+      "effetto": "Corpo vivente sovrannaturale senza necessità di cibo, acqua o sonno e senza Affaticamento; immune a fascinazione, Terrorizzato, veleno e Stati mantenuti da veleno. Dimezza Luce e danni Naturali di armi da Contusione, Taglio e Perforazione. Non è immune a ogni danno Etereo: la necrosi della fonte non coincide con una Natura del sistema. Resistenza alla magia +2 non inclusa nelle PS. Vista rivelatrice quindici e telepatia 24 Q; lingue del blocco. Para solo con Spadone davvero impugnato; cade da Svenuto in volo."
+    },
+    {
+      "nome": "Sequenza e freccia",
+      "effetto": "Quattro AzP totali, massimo due Spadoni, una Freccia e una Esplosione per Round entro le AzP disponibili; ogni attacco di lama guidata e l’Opportunità di Spadone consumano il limite dei due Spadoni. Una Freccia con almeno un danno finale, contro una creatura già a metà dei PV massimi o meno prima del colpo: il Solar può pagare tre PM dichiarati prima del tiro; Tempra −2 evita Svenuto fino alla fine della successiva Iniziativa della vittima. Non porta PV a zero e non uccide. Cura Spirituale sei, Negare dodici sull’abbattimento o scuotere a Contatto con una AzP terminano questo Svenuto; niente risveglio se i PM restano zero. Un uso per Round."
+    },
+    {
+      "nome": "Cure e poteri comuni",
+      "effetto": "Tocco ristoratore: una AzP e dodici PM, quattro usi per ventiquattro ore, un altro vivente a Contatto, trentadue punti per PV e Sanguinamento. Purificazione e Cura Malattie come Planetar, rispettivamente una AzP oppure dieci minuti di Concentrazione e nove PM, un altro beneficiario a Contatto. Possiede Muro luminoso nove, Invisibilità breve, Passaggio personale 24 Q, Individuare innato dodici per venti Round fissi e Ascolto del falso come Planetar. Non possiede resurrezione, immunità generale ai risucchi o accesso a tutti gli Incantesimi."
+    },
+    {
+      "nome": "Esplosione e sguardo",
+      "effetto": "Esplosione: due AzP e sei PM, raggio due Q dal bordo del corpo, soltanto creature scelte visibili; un tiro comune per AC, una applicazione per vittima. Elusione Riflessi −4 dimezza le due AC prima dell’AR; solidi bloccano, nessuna altra Difesa. Fuoco residuo e Ignifugo: Riflessi −4 evita Incendiato 1+1d3 Round. Sguardo: una AzP e quattro PM, una creatura visibile entro sei Q che veda gli occhi; Tempra −2 evita, fallimento Accecato cinque Round, nuova Tempra −2 alla fine di ogni propria Iniziativa libera. Massimo uno Sguardo per Round; Cura Spirituale tre, Negare dodici, Svenuto o morte del Solar terminano lo Sguardo, senza annullare danni già prodotti."
+    },
+    {
+      "nome": "Avvio e controllo",
+      "effetto": "Una AzP e quattro PM liberano lo Spadone già impugnato in uno spazio libero entro un Q dal Solar, per cinque Round senza Concentrazione. Una sola lama. Rimane visibile e non occupa un Q di creatura, non blocca il passaggio e non ha Azioni proprie. Per ogni colpo il Solar spende una propria AzP, vede lama, bersaglio e percorso e paga un ulteriore PM: la muove fino a dieci Q entro dodici Q dal corpo, quindi attacca a portata un Q con i valori pronti. Non attraversa solidi; vale la Difesa rispetto alla posizione della lama, con normale AR. Non offre vista remota."
+    },
+    {
+      "nome": "Rientro e contromisure",
+      "effetto": "Una AzP di comando può invece muovere la lama fino a dieci Q verso una mano libera, senza attacco: se la raggiunge, torna impugnata. Non effettua Opportunità e non concede Parate mentre fluttua. Il Solar può usare l’Arco a due mani nel frattempo, rispettando estrazioni e cambi di impugnatura ordinari. La lama è un oggetto con i propri PI: gli attacchi intenzionali contro di essa usano la procedura degli Armamenti, senza un secondo corpo o riserva di PV. Può difenderla solo con una Difesa che sia realmente praticabile dalla propria posizione; nessuna Schivata a distanza concessa alla lama."
+    },
+    {
+      "nome": "Cessazione",
+      "effetto": "Scadenza, oltre dodici Q, perdita della vista della lama, Negare dodici, Svenuto o morte del Solar fanno cadere l’arma nel Q occupato, senza annullare il colpo già risolto. Romperla impedisce di comandarla. Quando la lama non è impugnata, Luce e infusione Magica persistono soltanto durante l’effetto: l’arma caduta è Comune. Impugnarla di nuovo ripristina l’infusione personale ordinaria. Non vengono generati duplicati e i PM spesi non sono restituiti."
+    },
+    {
+      "nome": "Oggetti recuperabili",
+      "effetto": "Spadone Comune: FOR sei, due mani, portata un Q, PI sei, PS Integrità dieci, base 2d6+1; il profilo aggiunge tre di FOR e tre di Forza brutale personale. Arco da guerra Comune: Armi da lancio, FOR cinque, due mani, gittata cento Q, PI sei, PS Integrità dieci, base 1d6+1 più tre personali già compresi. Venti frecce, una consumata a ogni tiro anche mancato; incoccare incluso. La capacità abbattente e la Luce non rimangono su arco o munizioni recuperati. I 1760 PX comprendono questa dotazione e nessuna lama autonoma aggiuntiva."
+    },
+    {
+      "nome": "Altri movimenti",
+      "effetto": "spazio 2 × 2 Q"
+    }
+  ],
+  "gs_px": {
+    "gs": "Divinità Maggiore",
+    "px": 1760,
+    "per_pg": 4
+  },
+  "_bestiario": {
+    "campi": {
+      "pv": "Mostri 0.69",
+      "pm": "Mostri 0.69",
+      "caratteristiche": "Mostri 0.69",
+      "ar": "Mostri 0.69",
+      "difese": "Mostri 0.69",
+      "salvezze": "Mostri 0.69",
+      "iniziativa": "Mostri 0.69",
+      "azioni": "Mostri 0.69",
+      "movimento": "Mostri 0.69",
+      "spazio": "Mostri 0.69",
+      "abilita": "Mostri 0.69",
+      "capacita": "Mostri 0.69",
+      "gs_px": "Mostri 0.69"
+    },
+    "edizione": "Mostri 0.69",
+    "sistema_salute": "solo_PV"
+  }
+}

@@ -82,8 +82,9 @@ test('Dragomedusa giovane e adulto: GS, PX, valori e fonte del Manuale dei Mostr
   assert.deepEqual(validaNemico(a, dati, 'a'), []);
   assert.deepEqual(g.gs_px, { gs: 'Mito', px: 200, per_pg: 4 });
   assert.deepEqual(a.gs_px, { gs: 'Semidio', px: 400, per_pg: 4 });
-  assert.match(g.fonte, /dal Manuale dei Mostri v0\.46/);
-  assert.match(a.fonte, /dal Manuale dei Mostri v0\.46/);
+  // lotto 204: l’edizione della fonte viene dal registro, non da una scritta a mano nello strumento
+  assert.match(g.fonte, /dal Manuale dei Mostri v0\.\d+/);
+  assert.match(a.fonte, /dal Manuale dei Mostri v0\.\d+/);
   // lotto 203: i PV sono quelli stampati nella 0.69 — 1.170 e 2.080, cioè i 900 e i 1.600 della 0.46 convertiti
   // **una volta** (§7.12). Tutto il resto non cambia: AR, PM, GS e PX restano quelli della A.194.
   assert.deepEqual([g.pv, a.pv, g.ar, a.ar, g.pm, a.pm], [1170, 2080, { totale: 18, magica: 4 }, { totale: 24, magica: 6 }, 80, 120]);

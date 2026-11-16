@@ -1,0 +1,138 @@
+{
+  "formato": "mutant-nemico",
+  "versione": 1,
+  "id": "diavolo-barbuto",
+  "nome": "Diavolo barbuto",
+  "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Diavolo barbuto",
+  "note": "Combattente da prima linea che unisce un’arma inastata a tentacoli velenosi attorno al volto. Può ostacolare il recupero dei PV mentre le sue lacerazioni provocano Sanguinamento.",
+  "pv": 60,
+  "pm": 12,
+  "caratteristiche": {
+    "FOR": 8,
+    "DES": 7,
+    "COS": 7,
+    "INT": 4,
+    "SAG": 5,
+    "CAR": 5
+  },
+  "ar": {
+    "totale": 2,
+    "magica": 0
+  },
+  "difese": 11,
+  "salvezze": {
+    "tempra": 12,
+    "riflessi": 11,
+    "volonta": 10,
+    "magia": 11
+  },
+  "iniziativa": 2,
+  "azioni": {
+    "principali": 2,
+    "movimento": 1
+  },
+  "movimento": {
+    "passo": 6,
+    "corsa": 12,
+    "scatto": 18
+  },
+  "spazio": "1 Q",
+  "abilita": [
+    {
+      "nome": "Armi da guerra",
+      "va": 13
+    },
+    {
+      "nome": "Corpo a corpo",
+      "va": 12
+    },
+    {
+      "nome": "Atletica",
+      "va": 12
+    },
+    {
+      "nome": "Percezione",
+      "va": 10
+    }
+  ],
+  "attacchi": [
+    {
+      "nome": "Arma inastata",
+      "tipo": "ravvicinato",
+      "va": 13,
+      "danno": "1d8+3",
+      "natura": "Naturale",
+      "proprieta": [
+        "Taglio",
+        "AC 1"
+      ],
+      "portata_q": 2,
+      "ac": 1
+    },
+    {
+      "nome": "Barba",
+      "tipo": "ravvicinato",
+      "va": 12,
+      "danno": "1d8+2",
+      "natura": "Naturale",
+      "proprieta": [
+        "Perforazione",
+        "AC 1",
+        "veleno"
+      ],
+      "portata_q": 1,
+      "ac": 1
+    }
+  ],
+  "capacita": [
+    {
+      "nome": "Corpo e sensi",
+      "effetto": "Protezioni elementali comuni, resistenza alle armi non argentate, Vista infernale 24 Q e Resistenza alla magia +2 non inclusa nelle PS. Telepatia entro 24 Q. Nessuna Parata naturale; Parata con arma pronta e costi normali. Massimo un attacco d’arma e uno di Barba per Round, Opportunità compresa."
+    },
+    {
+      "nome": "Barba tossica",
+      "effetto": "Dopo almeno un danno finale di Barba a un vivente biologico: Tempra 0 contro veleno naturale di Pericolosità IV. Successo evita; fallimento Avvelenato per tre Round, senza danno ulteriore ma con recupero dei PV impedito. Alla fine di ogni propria Iniziativa ripete Tempra 0: successo termina. Non penalizza VA, PM o PS e non blocca la rimozione di Ferite o Menomazioni, ma l’eventuale quota di PV di una cura rimane persa finché il veleno è attivo."
+    },
+    {
+      "nome": "Rimozione del veleno",
+      "effetto": "Antidoto adeguato o Cura Avvelenamenti almeno cinque rimuove la sostanza e permette i successivi recuperi, senza restituire quelli già impediti. Immunità al veleno evita il blocco. Non è una maledizione da annullare con Negare Potere; Cure Spirituali e un semplice recupero di PV non eliminano la causa. Nuove dosi mantengono la scadenza maggiore senza sommare un altro blocco."
+    },
+    {
+      "nome": "Lacerazione",
+      "effetto": "Dopo almeno un danno finale dell’arma inastata a un organismo che possa sanguinare: Tempra 0, fallimento Sanguinamento due. Si applica la perdita immediata e le ricorrenze del Giocatore §5.15; più colpi non sommano il valore. Medicina e cure seguono la procedura comune, senza arresto automatico con una sola AzP. È una capacità personale, non una proprietà aggiunta all’arma recuperata; non è un effetto mistico mantenuto da rimuovere con Negare Potere."
+    },
+    {
+      "nome": "Disciplina e dotazione",
+      "effetto": "Immune a Terrorizzato finché vede entro sei Q almeno un alleato cosciente e capace di combattere; quando il requisito cessa eventuali paure ancora attive riprendono, senza nuovi tiri. Arma inastata pesante Comune: due mani, FOR 6, PI 6, PS Integrità 10, base 1d8+1 più due personali già compresi. I 55 PX comprendono l’arma. Nessun alleato, bonus di Branco o evocazione è incluso."
+    },
+    {
+      "nome": "Altri movimenti",
+      "effetto": "spazio 1 × 1 Q"
+    }
+  ],
+  "gs_px": {
+    "gs": "Veterano",
+    "px": 55,
+    "per_pg": 4
+  },
+  "_bestiario": {
+    "campi": {
+      "pv": "Mostri 0.69",
+      "pm": "Mostri 0.69",
+      "caratteristiche": "Mostri 0.69",
+      "ar": "Mostri 0.69",
+      "difese": "Mostri 0.69",
+      "salvezze": "Mostri 0.69",
+      "iniziativa": "Mostri 0.69",
+      "azioni": "Mostri 0.69",
+      "movimento": "Mostri 0.69",
+      "spazio": "Mostri 0.69",
+      "abilita": "Mostri 0.69",
+      "attacchi": "Mostri 0.69",
+      "capacita": "Mostri 0.69",
+      "gs_px": "Mostri 0.69"
+    },
+    "edizione": "Mostri 0.69",
+    "sistema_salute": "solo_PV"
+  }
+}

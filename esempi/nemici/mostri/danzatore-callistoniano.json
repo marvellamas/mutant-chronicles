@@ -1,0 +1,144 @@
+{
+  "formato": "mutant-nemico",
+  "versione": 1,
+  "id": "danzatore-callistoniano",
+  "nome": "Danzatore Callistoniano",
+  "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Danzatore Callistoniano",
+  "note": "Tiratore callistoniano specializzato nelle lunghe distanze. Cerca postazioni dominanti e si nutre del sangue delle vittime; il profilo adotta il ruolo di cecchino delle fonti Warzone.",
+  "pv": 76,
+  "pm": 20,
+  "caratteristiche": {
+    "FOR": 6,
+    "DES": 9,
+    "COS": 7,
+    "INT": 6,
+    "SAG": 7,
+    "CAR": 3
+  },
+  "ar": {
+    "totale": 4,
+    "magica": 0
+  },
+  "difese": 15,
+  "salvezze": {
+    "tempra": 12,
+    "riflessi": 15,
+    "volonta": 12,
+    "magia": 12
+  },
+  "iniziativa": 4,
+  "azioni": {
+    "principali": 2,
+    "movimento": 1
+  },
+  "movimento": {
+    "passo": 6,
+    "corsa": 12,
+    "scatto": 18
+  },
+  "abilita": [
+    {
+      "nome": "Armi medie",
+      "va": 16
+    },
+    {
+      "nome": "Armi da mischia",
+      "va": 12
+    },
+    {
+      "nome": "Furtività",
+      "va": 16
+    },
+    {
+      "nome": "Percezione",
+      "va": 15
+    },
+    {
+      "nome": "Atletica",
+      "va": 14
+    }
+  ],
+  "attacchi": [
+    {
+      "nome": "Fucile Zracth",
+      "tipo": "distanza",
+      "va": 16,
+      "danno": "2d8+2",
+      "natura": "Naturale",
+      "proprieta": [
+        "Perforazione"
+      ],
+      "gittata_q": 120,
+      "modalita": [
+        "S"
+      ],
+      "ac": 1
+    },
+    {
+      "nome": "Lama da campo",
+      "tipo": "ravvicinato",
+      "va": 12,
+      "danno": "1d6+1",
+      "natura": "Naturale",
+      "proprieta": [
+        "Taglio"
+      ],
+      "portata_q": 1,
+      "ac": 1
+    }
+  ],
+  "capacita": [
+    {
+      "nome": "Fonte del soggetto",
+      "effetto": "Callistonian Sundancer; Dawn of War, p. 74; Universe Under Siege, p. 474; Vittime di Guerra, sezione Danzatori Callistoniani. Selezione e adattamento: applicare soltanto le capacità operative di questa scheda."
+    },
+    {
+      "nome": "Dotazione pronta",
+      "effetto": "Zracth a due mani con ottica, lama e protezione leggera. Cinque colpi nel caricatore, tre ricambi da cinque; ricarica 1 AzP. Tiro singolo, senza Raffiche. Danno e VA non comprendono un Tiro Mirato già eseguito."
+    },
+    {
+      "nome": "Tiro preparato",
+      "effetto": "Può applicare Tiro Mirato del Giocatore, pagando tempo e Azioni previsti; non ottiene un bonus separato da cecchino da sommare. Massimo due attacchi nel Round, compresa l’eventuale Opportunità ravvicinata. L’ottica non supera oscuramenti o Copertura Totale."
+    },
+    {
+      "nome": "Sangue della preda",
+      "effetto": "Una AzP a Contatto con un corpo biologico morto da non oltre dieci minuti; recupera 6 PV e ottiene +2 al VA del prossimo singolo attacco entro tre Round. Massimo una volta per corpo e tre volte per ventiquattro ore, anche cambiando scena. Nessuna Azione aggiuntiva, nessun PM e nessun trattamento di Ferite o Morente. Non si nutre così di un prigioniero vivo."
+    },
+    {
+      "nome": "Sensi e disciplina",
+      "effetto": "Visione nel buio ordinario 18 Q; non supera solidi o oscuramento magico. Immune a Terrorizzato, non a ogni influenza mentale. Corpo biologico e normale vulnerabilità a veleno e malattie; nessun danno Etereo o AR magica impliciti."
+    },
+    {
+      "nome": "Tattica e contromisure",
+      "effetto": "Spara sul bersaglio esposto, poi cambia feritoia. Obbligarlo a lasciare l’appoggio o chiudere le linee di tiro ne riduce l’efficacia. Il bisogno di raggiungere una vittima per nutrirsi crea un’apertura reale; non può farlo attraverso lo Zracth o a distanza."
+    },
+    {
+      "nome": "Altri movimenti",
+      "effetto": "spazio 1 Q"
+    }
+  ],
+  "gs_px": {
+    "gs": "Eroe",
+    "px": 77,
+    "per_pg": 4
+  },
+  "_bestiario": {
+    "campi": {
+      "pv": "Mostri 0.69",
+      "pm": "Mostri 0.69",
+      "caratteristiche": "Mostri 0.69",
+      "ar": "Mostri 0.69",
+      "difese": "Mostri 0.69",
+      "salvezze": "Mostri 0.69",
+      "iniziativa": "Mostri 0.69",
+      "azioni": "Mostri 0.69",
+      "movimento": "Mostri 0.69",
+      "abilita": "Mostri 0.69",
+      "attacchi": "Mostri 0.69",
+      "capacita": "Mostri 0.69",
+      "gs_px": "Mostri 0.69"
+    },
+    "edizione": "Mostri 0.69",
+    "sistema_salute": "solo_PV"
+  }
+}

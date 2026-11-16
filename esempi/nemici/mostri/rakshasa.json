@@ -1,0 +1,149 @@
+{
+  "formato": "mutant-nemico",
+  "versione": 1,
+  "id": "rakshasa",
+  "nome": "Rakshasa",
+  "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Rakshasa",
+  "note": "Predatore dalla testa felina e dalle mani rivolte al contrario. Nasconde l’aspetto, legge pensieri superficiali e compromette il riposo della vittima; la difesa dalla magia minore ha un ambito esplicito.",
+  "pv": 125,
+  "pm": 56,
+  "caratteristiche": {
+    "FOR": 6,
+    "DES": 8,
+    "COS": 9,
+    "INT": 6,
+    "SAG": 8,
+    "CAR": 10
+  },
+  "ar": {
+    "totale": 4,
+    "magica": 0
+  },
+  "difese": 13,
+  "salvezze": {
+    "tempra": 13,
+    "riflessi": 13,
+    "volonta": 15,
+    "magia": 15
+  },
+  "iniziativa": 3,
+  "azioni": {
+    "principali": 2,
+    "movimento": 1
+  },
+  "movimento": {
+    "passo": 8,
+    "corsa": 16,
+    "scatto": 24
+  },
+  "spazio": "1 Q",
+  "abilita": [
+    {
+      "nome": "Corpo a corpo",
+      "va": 14
+    },
+    {
+      "nome": "Raggirare",
+      "va": 17
+    },
+    {
+      "nome": "Oratoria",
+      "va": 16
+    },
+    {
+      "nome": "Percezione",
+      "va": 14
+    },
+    {
+      "nome": "Furtività",
+      "va": 13
+    }
+  ],
+  "attacchi": [
+    {
+      "nome": "Artiglio",
+      "tipo": "ravvicinato",
+      "va": 14,
+      "danno": "2d6+1",
+      "natura": "Naturale",
+      "proprieta": [
+        "Taglio",
+        "AC 1",
+        "maledizione"
+      ],
+      "portata_q": 1,
+      "ac": 1
+    }
+  ],
+  "capacita": [
+    {
+      "nome": "Corpo e sensi",
+      "effetto": "Vivente biologico, Scurovisione 12 Q, niente telepatia o Parata naturale. Non usa le protezioni elementali dei demoni, diavoli o yugoloth. Immune soltanto al danno Naturale di armi, incluse armi naturali, da Contusione, Taglio e Perforazione; Magico ed Etereo lo danneggiano normalmente. Cadute, incendi, veleno, soffocamento e fenomeni ambientali non sono resi innocui dall’immunità alle armi. Massimo due Artigli per Round, Opportunità compresa."
+    },
+    {
+      "nome": "Falla argentata",
+      "effetto": "Un’arma effettivamente argentata nella parte offensiva che infligga Magico da Perforazione raddoppia quella componente prima dell’AR, dopo le Difese. Non raddoppia veleni, effetti periodici o componenti diverse. Argento da solo non supera l’immunità a un’arma Naturale. Il criterio materiale sostituisce la vulnerabilità agli allineamenti della fonte: non si deduce dalla personalità del PG o dalla Natura Comune."
+    },
+    {
+      "nome": "Maledizione degli incubi",
+      "effetto": "Dopo almeno un danno finale di Artiglio a una mente capace di dormire: Magia −2; fallimento maledizione per sette giorni. Il bersaglio non recupera PV, PM o AFT attraverso sonno, Riposo o Meditazione; il tempo trascorre normalmente e non viene costretto ad addormentarsi. Cure, medicinali e altre fonti dirette continuano a funzionare. Non produce subito danni o affaticamento. Dosi nuove mantengono la scadenza maggiore, senza effetti sommati. Il Rakshasa paga due PM per attivarla prima del tiro per colpire; senza questa spesa resta il solo Artiglio e un colpo mancato non restituisce PM."
+    },
+    {
+      "nome": "Resistere e rimuovere",
+      "effetto": "Alla fine di ogni periodo che avrebbe completato un Riposo completo, una sola Magia −2: successo rimuove la maledizione e consente i benefici di quel Riposo; fallimento mantiene il blocco. Non si ripete con soste brevi artificiali. Scudo Spirituale aiuta le PS pertinenti, Barriera Mentale non dà immunità e non aggiunge bonus a questa maledizione spirituale. Negare Potere confronto 12 rimuove, senza restituire retroattivamente recuperi già negati. Rompere Vincolo e Cura Spirituale da soli non la eliminano. Uccidere il Rakshasa non cancella la maledizione già attiva."
+    },
+    {
+      "nome": "Maschere e influenza",
+      "effetto": "Possiede Invisibilità breve, Percepire magia, Lettura superficiale e Dominio breve delle regole comuni; Dominio una volta per 24 ore. Maschera apparente: una AzP e tre PM, Alterare Immagine 9 soltanto su di sé per trenta minuti, indagine Magia −2, confronto 9 per Negare. Illusione innata: una AzP e nove PM, Illusione 9, origine entro 15 Q, raggio tre Q, trenta minuti, scena animata senza materia; indagine Magia −2, gestione una AzP, registrazioni non alterate e Negare 9. Volo innato: una AzP e quattro PM, cinque Round senza Concentrazione, 12 / 24 / 36 Q, termina da Svenuto, morte o Negare 9. Non possiede ritorno automatico dopo la morte o spostamento planare."
+    },
+    {
+      "nome": "Soglia dello Schermo",
+      "effetto": "È immune agli effetti di Incantesimi di livello da uno a sei che agiscono direttamente sul suo corpo, mente o risorse, incluse le componenti di danno di un’area. La soglia usa i livelli di Simply RPG, non quelli della fonte. Può scegliere di accettare un singolo effetto prima della sua risoluzione; non decide dopo il tiro. Lo Schermo è passivo, non costa PM e non è rimovibile con Negare Potere."
+    },
+    {
+      "nome": "Ambito",
+      "effetto": "Un Dardo Spirituale sei o un’esplosione sei non gli sottraggono PV o PM, ma gli altri bersagli si risolvono. Non dissolve il lancio né protegge equipaggiamento, alleati, muri o terreno. Magia lanciata su un’altra creatura, armi magiche, poteri innati di mostri, proprietà tecnologiche e danni ambientali non sono Incantesimi minori diretti sul Rakshasa. Un’arma resa Magica da un Incantesimo minore resta capace di colpirlo, perché il potenziamento è sull’arma."
+    },
+    {
+      "nome": "Conseguenze materiali",
+      "effetto": "Una parete creata con magia può ostacolarlo, il terreno modificato resta terreno e la Caduta provocata da un sostegno distrutto resta una Caduta. Una prigione o barriera esterna non viene attraversata automaticamente: conserva i propri requisiti e gli effetti diretti sul corpo si valutano separatamente. Lo Schermo non cancella fuoco reale, gas, trappole o collassi prodotti indirettamente. Una mera illusione percettiva minore sul suo osservare è invece un effetto diretto sulla mente e non lo inganna."
+    },
+    {
+      "nome": "Sopra soglia",
+      "effetto": "Contro Incantesimi dal livello sette e poteri mistici non già annullati aggiunge Resistenza alla magia +2 alle sole PS previste, non incluso nei VA pronti. Non riceve un tiro se la fonte non lo consente. Le capacità innate con un numero di confronto per Negare non sono automaticamente Incantesimi di quel livello. L’AR resta applicabile secondo la Natura: tutta l’AR quattro contro Magico, nessuna contro Etereo salvo protezioni aggiunte espressamente."
+    },
+    {
+      "nome": "Pianificare lo scontro",
+      "effetto": "Il profilo richiede alternative effettive: armi Magiche o Eteree, Incantesimi almeno sette, capacità innate pertinenti oppure conseguenze ambientali. L’arma Magica argentata da Perforazione sfrutta inoltre la Falla della scheda. Non si aggiungono immunità generiche ai controlli, alle cure, al sonno o ai bisogni biologici; non occorre assegnare un allineamento morale al PG. L’avversario può negoziare o ritirarsi secondo la scena e non riceve rinascita automatica dopo la sconfitta."
+    },
+    {
+      "nome": "Altri movimenti",
+      "effetto": "spazio 1 × 1 Q"
+    }
+  ],
+  "gs_px": {
+    "gs": "Mito",
+    "px": 200,
+    "per_pg": 4
+  },
+  "_bestiario": {
+    "campi": {
+      "pv": "Mostri 0.69",
+      "pm": "Mostri 0.69",
+      "caratteristiche": "Mostri 0.69",
+      "ar": "Mostri 0.69",
+      "difese": "Mostri 0.69",
+      "salvezze": "Mostri 0.69",
+      "iniziativa": "Mostri 0.69",
+      "azioni": "Mostri 0.69",
+      "movimento": "Mostri 0.69",
+      "spazio": "Mostri 0.69",
+      "abilita": "Mostri 0.69",
+      "attacchi": "Mostri 0.69",
+      "capacita": "Mostri 0.69",
+      "gs_px": "Mostri 0.69"
+    },
+    "edizione": "Mostri 0.69",
+    "sistema_salute": "solo_PV"
+  }
+}

@@ -1,0 +1,152 @@
+{
+  "formato": "mutant-nemico",
+  "versione": 1,
+  "id": "couatl",
+  "nome": "Couatl",
+  "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Couatl",
+  "note": "Serpente piumato dalle ali variopinte, custode discreto di luoghi o persone. Immobilizza con le spire e addormenta con il morso, preferendo contenere l’avversario.",
+  "pv": 84,
+  "pm": 40,
+  "caratteristiche": {
+    "FOR": 7,
+    "DES": 9,
+    "COS": 7,
+    "INT": 8,
+    "SAG": 9,
+    "CAR": 8
+  },
+  "ar": {
+    "totale": 4,
+    "magica": 0
+  },
+  "difese": 14,
+  "salvezze": {
+    "tempra": 13,
+    "riflessi": 14,
+    "volonta": 13,
+    "magia": 14
+  },
+  "iniziativa": 4,
+  "azioni": {
+    "principali": 2,
+    "movimento": 1
+  },
+  "movimento": {
+    "passo": 6,
+    "corsa": 12,
+    "scatto": 18,
+    "volo": 18
+  },
+  "spazio": "1 Q",
+  "abilita": [
+    {
+      "nome": "Corpo a corpo",
+      "va": 14
+    },
+    {
+      "nome": "Atletica",
+      "va": 13
+    },
+    {
+      "nome": "Percezione",
+      "va": 14
+    },
+    {
+      "nome": "Occultismo",
+      "va": 13
+    },
+    {
+      "nome": "Cultura",
+      "va": 14
+    },
+    {
+      "nome": "Oratoria",
+      "va": 13
+    },
+    {
+      "nome": "Furtività",
+      "va": 13
+    }
+  ],
+  "attacchi": [
+    {
+      "nome": "Morso soporifero",
+      "tipo": "ravvicinato",
+      "va": 14,
+      "danno": "1d6+2",
+      "natura": "Magico",
+      "proprieta": [
+        "Perforazione",
+        "AC 1",
+        "veleno"
+      ],
+      "portata_q": 1,
+      "ac": 1
+    },
+    {
+      "nome": "Spire",
+      "tipo": "ravvicinato",
+      "va": 14,
+      "danno": "2d6+2",
+      "natura": "Magico",
+      "proprieta": [
+        "Contusione",
+        "AC 1",
+        "presa"
+      ],
+      "portata_q": 2,
+      "ac": 1
+    }
+  ],
+  "capacita": [
+    {
+      "nome": "Corpo e sensi",
+      "effetto": "Vivente sovrannaturale senza necessità di aria, cibo o acqua; può dormire e subisce Affaticamento compatibile, malattie e vecchiaia. Immune al danno di Dardo Psichico ed equivalenti espressamente psichici, non a ogni influenza mentale. Immune al danno Naturale di armi da Contusione, Taglio e Perforazione; dimezza Luce. Cadute e fenomeni ambientali non sono armi. Mente schermata comune, Vista rivelatrice nove, telepatia 24 Q e lingue del blocco. Nessuna Resistenza alla magia o Parata naturale; cade da Svenuto in volo."
+    },
+    {
+      "nome": "Morso e sonno",
+      "effetto": "Due AzP totali, massimo un Morso e una Spira per Round, Opportunità ravvicinata compresa; Morso e danno delle Spire sono Magici innati. Dopo almeno un danno finale di Morso a un vivente biologico, Tempra 0 evita veleno naturale di Pericolosità IV: fallimento Avvelenato e Svenuto per cinque Round, senza danni periodici. Avvelenato impone −2 VA fisici, non alle PS. Alla fine di ogni propria Iniziativa Tempra 0 elimina dose e Stati con successo. Danni o scuotere con una AzP risvegliano soltanto da questo Svenuto; il veleno rimasto non riaddormenta automaticamente. Cura Avvelenamenti cinque o antidoto adatto eliminano la dose; Cura Spirituale da sola non neutralizza la causa."
+    },
+    {
+      "nome": "Spire e liberazione",
+      "effetto": "Dopo almeno un danno finale a una creatura fino a un Q: Riflessi −2 evita Immobilizzato con braccia bloccate. Una sola vittima, niente Spire su altri. Liberarsi costa una AzP e Atletica o Corpo a corpo contrapposto a Corpo a corpo quattordici, applicando il −4 dell’Immobilizzato; pareggi favoriscono il Couatl. Un alleato a Contatto può tentare la stessa liberazione. Stringere costa una AzP e la stessa contrapposta: successo danno scritto con AR, fallimento mantiene senza danno; consuma il limite di una Spira per Round. Svenuto, morte o liberazione volontaria del Couatl sciolgono la presa, che non è rimossa da Negare Potere."
+    },
+    {
+      "nome": "Sostegno innato",
+      "effetto": "Una AzP per uso, PM pagati anche se non vi sono effetti compatibili: Benedizione tre, tre PM, fino a due consenzienti visibili entro sei Q e concatenati entro due, +1 a Prove e PS dieci Round; Cura Ferite sei, sei PM, un vivente entro tre Q, 1d4+5 punti per PV e Sanguinamento; Cura Spirituale sei o Cura Avvelenamenti sei, sei PM, un beneficiario entro tre Q e limiti comuni. Massimo tre usi per ventiquattro ore di ciascuna capacità. Benedizione segue il maggiore bonus magico pertinente e Negare tre; le cure istantanee non si dissolvono."
+    },
+    {
+      "nome": "Mutamento e informazioni",
+      "effetto": "Mutamento personale come Deva: una AzP e tre PM, un’ora, forma conosciuta di un Q e stessi valori, senza nuove capacità; le ali consentono il volo solo se realmente presenti. Nella forma priva di anatomia serpentina non usa le Spire; il Morso resta disponibile soltanto con un vero apparato mordente e ha gli stessi valori, senza acquistare un secondo veleno. Possiede Individuare innato sei e Lettura superficiale del blocco. Non mente deliberatamente nella condotta abituale, ma può tacere: nessuna costrizione automatica sugli altri e nessuna divinazione onnisciente. Non possiede visione remota o sogno a distanza in questo profilo."
+    },
+    {
+      "nome": "Altri movimenti",
+      "effetto": "spazio 1 × 1 Q"
+    }
+  ],
+  "gs_px": {
+    "gs": "Eroe",
+    "px": 70,
+    "per_pg": 4
+  },
+  "_bestiario": {
+    "campi": {
+      "pv": "Mostri 0.69",
+      "pm": "Mostri 0.69",
+      "caratteristiche": "Mostri 0.69",
+      "ar": "Mostri 0.69",
+      "difese": "Mostri 0.69",
+      "salvezze": "Mostri 0.69",
+      "iniziativa": "Mostri 0.69",
+      "azioni": "Mostri 0.69",
+      "movimento": "Mostri 0.69",
+      "spazio": "Mostri 0.69",
+      "abilita": "Mostri 0.69",
+      "attacchi": "Mostri 0.69",
+      "capacita": "Mostri 0.69",
+      "gs_px": "Mostri 0.69"
+    },
+    "edizione": "Mostri 0.69",
+    "sistema_salute": "solo_PV"
+  }
+}

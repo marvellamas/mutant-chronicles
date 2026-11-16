@@ -1,0 +1,112 @@
+{
+  "formato": "mutant-nemico",
+  "versione": 1,
+  "id": "mormorante",
+  "nome": "Mormorante",
+  "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Mormorante",
+  "note": "Massa strisciante di occhi e bocche che altera il terreno immediatamente vicino e disorienta chi ascolta le sue voci sovrapposte.",
+  "pv": 60,
+  "pm": 14,
+  "caratteristiche": {
+    "FOR": 5,
+    "DES": 4,
+    "COS": 7,
+    "INT": 2,
+    "SAG": 5,
+    "CAR": 3
+  },
+  "ar": {
+    "totale": 0,
+    "magica": 0
+  },
+  "difese": 7,
+  "salvezze": {
+    "tempra": 12,
+    "riflessi": 7,
+    "volonta": 8,
+    "magia": 10
+  },
+  "iniziativa": 0,
+  "azioni": {
+    "principali": 2,
+    "movimento": 1
+  },
+  "movimento": {
+    "passo": 2,
+    "corsa": 4,
+    "scatto": 6
+  },
+  "spazio": "1 Q",
+  "abilita": [
+    {
+      "nome": "Corpo a corpo",
+      "va": 10
+    },
+    {
+      "nome": "Atletica",
+      "va": 9
+    },
+    {
+      "nome": "Percezione",
+      "va": 10
+    },
+    {
+      "nome": "Furtività",
+      "va": 6
+    }
+  ],
+  "capacita": [
+    {
+      "nome": "Sputo abbagliante",
+      "effetto": "VA —. Danno: Accecato; Riflessi 0. Portata/costo: Punto entro 3 Q; raggio 1 Q; 1 AzP; "
+    },
+    {
+      "nome": "Corpo e Morsi",
+      "effetto": "Immune ad A Terra; ha metabolismo vivente e non eredita le immunità delle melme. Gli occhi diffusi danno Scurovisione sei Q, non percezione attraverso ostacoli. Morsi usa una sola AC. Almeno un danno finale a una creatura di spazio massimo 1 × 1 Q impone Tempra 0: fallimento A Terra. Assorbe i resti di una preda effettivamente morta con un minuto continuativo, senza guarirsi o uccidere automaticamente chi è a zero PV."
+    },
+    {
+      "nome": "Terreno aberrante",
+      "effetto": "Finché cosciente rende difficile il terreno solido entro due Q dal bordo del proprio spazio; il solo Mormorante ignora questo effetto. All’inizio della propria Iniziativa chi vi poggia i piedi effettua Tempra 0, una sola volta per Round: fallimento non può spostarsi fino alla propria Iniziativa successiva, ma conserva AzP, Difese e PS. L’area segue il corpo e il terreno torna normale quando ne esce. Non liquefa muri, attrezzature o strutture e non interessa chi vola senza contatto col terreno. Negare Potere può sopprimere l’aura per tre Round, confronto 6."
+    },
+    {
+      "nome": "Mormorio",
+      "effetto": "Una AzP e due PM attivano per tre Round il coro, udibile entro quattro Q quando il Mormorante è cosciente e percepisce una preda. All’inizio della propria Iniziativa ogni creatura con mente che lo ode effettua Volontà 0: fallimento Disorientato fino all’inizio della propria Iniziativa successiva. Una sola esposizione per Round, senza cumulo tra più cori. Non impone attacchi casuali o perdita di tutte le Azioni. Barriera Mentale applica il bonus; isolamento acustico effettivo impedisce l’esposizione. Negare Potere spegne il coro, confronto 6. Un nuovo uso rinnova la scadenza, non l’intensità."
+    },
+    {
+      "nome": "Sputo e contromisure",
+      "effetto": "Sputo è una secrezione biologica che genera un lampo, una volta ogni tre Round senza PM. Punto visibile entro tre Q, percorso libero; ogni creatura con vista esposta nel raggio di un Q effettua Riflessi 0 o è Accecata per un Round. Nessun danno, Parata, Schivata o Elusione aggiuntiva; una schermatura opaca interposta impedisce l’esposizione. Cura Spirituale può rimuovere lo Stato prodotto, ma Negare Potere non annulla il lampo già concluso. La lentezza del corpo e la distanza sono le principali difese contro il predatore."
+    },
+    {
+      "nome": "Valori pronti",
+      "effetto": "Attacchi e Difese comprendono le componenti ordinarie. Le immunità sono soltanto quelle dichiarate; la specie non riceve automaticamente la vulnerabilità al freddo della Covata. Abilità e caratteristiche non aggiungono altri bonus ai danni scritti. Restano le normali localizzazioni, ricondotte alle funzioni anatomiche effettive."
+    },
+    {
+      "nome": "Altri movimenti",
+      "effetto": "Terra e nuoto 2 / 4 / 6: la stessa andatura vale anche per nuoto; spazio 1 × 1 Q"
+    }
+  ],
+  "gs_px": {
+    "gs": "Esperto",
+    "px": 30,
+    "per_pg": 4
+  },
+  "_bestiario": {
+    "campi": {
+      "pv": "Mostri 0.69",
+      "pm": "Mostri 0.69",
+      "caratteristiche": "Mostri 0.69",
+      "ar": "Mostri 0.69",
+      "difese": "Mostri 0.69",
+      "salvezze": "Mostri 0.69",
+      "iniziativa": "Mostri 0.69",
+      "azioni": "Mostri 0.69",
+      "movimento": "Mostri 0.69",
+      "spazio": "Mostri 0.69",
+      "abilita": "Mostri 0.69",
+      "capacita": "Mostri 0.69",
+      "gs_px": "Mostri 0.69"
+    },
+    "edizione": "Mostri 0.69",
+    "sistema_salute": "solo_PV"
+  }
+}

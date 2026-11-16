@@ -3,7 +3,7 @@
   "versione": 1,
   "id": "ghoul",
   "nome": "Ghoul",
-  "fonte": "dal Manuale dei Mostri v0.46 (Word del 27/10/2026), cap. 8 «Catalogo delle creature» — Non morti",
+  "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Ghoul",
   "caratteristiche": {
     "FOR": 6,
     "DES": 6,
@@ -96,9 +96,25 @@
   "immunita": [
     "sanguinamento"
   ],
-  "note": "Nessuna dotazione né Parata naturale. Con una sola AzP sceglie Artigli, Morso o Difesa; gli Artigli non aggiungono un Morso gratuito. Comportamento: preda isolata; a Ferita Profonda o sotto 6 PV cerca riparo.",
+  "note": "Non morto corporeo • predatore e controllore • Natura Comune. Comportamento. Cerca una preda isolata e sfrutta la rigidità per avvicinare il branco. Può trascinare una preda già inerme solo con le normali regole fisiche. se gravemente minacciato o sotto 8 PV cerca riparo se non è vincolato a un ordine. Dotazione: nessuna.",
   "_bestiario": {
     "edizione": "Mostri 0.69",
-    "sistema_salute": "solo_PV"
+    "sistema_salute": "solo_PV",
+    "campi": {
+      "pv": "Mostri 0.69",
+      "pm": "Mostri 0.69",
+      "caratteristiche": "Mostri 0.69",
+      "ar": "Mostri 0.69",
+      "difese": "Mostri 0.69",
+      "salvezze": "Mostri 0.69",
+      "iniziativa": "Mostri 0.69",
+      "azioni": "Mostri 0.69",
+      "movimento": "Mostri 0.69",
+      "spazio": "Mostri 0.69",
+      "abilita": "Mostri 0.69",
+      "attacchi": "Mostri 0.47",
+      "capacita": "Mostri 0.47",
+      "gs_px": "Mostri 0.69"
+    }
   }
 }

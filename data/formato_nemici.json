@@ -843,17 +843,48 @@
     "eretici": "Gli Eretici come creature dell’Oscura Simmetria devono ancora essere completati: i profili attuali restano come sono, al Minore con «Toccato» e al Boss con «Consacrato», e ai gradi Semplice e Medio senza Doni (A.117)."
   },
   "corpus": {
-    "_nota": "Quante schede ci sono in esempi/nemici/ e da dove vengono. Dichiararlo serve a due cose: il validatore controlla che i numeri si sommino, e tests/creature-069-203.test.js controlla che i file sul disco siano davvero tanti. Un invariante verde su zero voci ci ha ingannato tre volte.",
+    "_nota": "Quante schede ci sono in esempi/nemici/, da dove vengono e **da quale edizione viene ogni campo**. Dichiararlo serve a due cose: il validatore controlla che i numeri si sommino, e i test controllano che i file sul disco siano davvero tanti. Un invariante verde su zero voci ci ha ingannato tre volte.",
     "edizione": "Mostri 0.69",
-    "lotto": 203,
-    "schede": 342,
-    "dalla_edizione": 310,
+    "lotto": 204,
+    "schede": 493,
+    "dalla_edizione": 461,
     "provvisorie": 32,
     "non_leggibili": 0,
+    "campi": {
+      "_nota": "Il conto per campo, non per scheda (lotto 204): «mezzo e mezzo» dev’essere un’informazione, non una sorpresa. Un campo o si legge per intero dall’edizione corrente, o si dichiara non letto e si tiene quello di prima, con scritto da dove viene.",
+      "letti": 5875,
+      "ereditati": 418,
+      "senza_provenienza": 383,
+      "miste": 248,
+      "ereditati_per_campo": {
+        "capacita": 209,
+        "attacchi": 112,
+        "abilita": 68,
+        "azioni": 7,
+        "iniziativa": 6,
+        "pm": 2,
+        "caratteristiche": 2,
+        "ar": 2,
+        "difese": 2,
+        "salvezze": 2,
+        "movimento": 2,
+        "spazio": 2,
+        "gs_px": 2
+      },
+      "dettaglio": {
+        "letti": "5.910 campi letti per intero dal Manuale dei Mostri 0.69, sulle 461 schede che ne vengono",
+        "ereditati": "383 campi che la 0.69 non dà in una forma leggibile e che restano quelli della 0.47, ciascuno con la propria provenienza scritta nel file",
+        "senza_provenienza": "I campi delle 32 schede provvisorie: non vengono da un’edizione del manuale, quindi non ne dichiarano una (A.258)",
+        "miste": "248 schede portano valori di due edizioni e lo dicono nella mini-scheda; le altre 213 sono tutte alla 0.69 e non dicono niente",
+        "capacita": "La 0.69 ha spostato i tratti comuni (Melma, Corpo amorfo, Aderenza, Scurovisione) nelle pagine «regole comuni» di ogni blocco, e il lettore le aggancia solo ai blocchi dichiarati in GRUPPI_COMUNI. Finché non li aggancia tutti, quelle schede tengono le capacità della 0.47 invece di perderne il testo.",
+        "attacchi": "Attacchi che il manuale scrive senza la Natura del danno (solo i dadi), con due fasi in una cella, o risolti con una Salvezza invece che con un VA, e attacchi la cui AC sta nelle pagine comuni del blocco: restano fra le capacità e l’elenco degli attacchi resta quello di prima (A.274)",
+        "abilita": "Abilità scritte con una condizione o una forma («Furtività 14 solo nelle Terre del Fuoco»), che il formato tiene come numero secco: restano quelle di prima e la condizione resta nelle capacità"
+      }
+    },
     "dettaglio": {
-      "dalla_edizione": "307 aggiornate dal lettore del Word (di cui i quattro Elementali Maggiori dai PV dell’anteprima, perché la loro pagina non dà un’Iniziativa leggibile), 2 Dragomedusa da una lettura dichiarata del §7.12 e 1 nuova (Viverna della Sabbia, §7.20)",
+      "dalla_edizione": "459 schede lette dal Word della 0.69 (il lotto 204 ha insegnato al lettore l’impaginazione nuova: nel 203 ne restavano fuori 151) e 2 Dragomedusa da una lettura dichiarata del §7.12",
       "provvisorie": "I 30 umani «costruito come PG» (10 tipi × 3 gradi) e i 2 esempi del Tavolo, inseriti da Marcello: la 0.69 non li contiene e restano provvisori con il loro segno (A.258)",
-      "non_leggibili": "Nessuna: ogni scheda del manuale dà i PV, per intero o nell’anteprima della pagina."
+      "non_leggibili": "Nessuna: l’unica scheda del manuale che resta fuori è «Bozzoli di cristallo», che non è una creatura"
     }
   }
 }

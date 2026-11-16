@@ -3,7 +3,7 @@
   "versione": 1,
   "id": "anchilosauro",
   "nome": "Anchilosauro",
-  "fonte": "dal Manuale dei Mostri v0.46 (Word del 27/10/2026), cap. 8 «Catalogo delle creature» — Grandi rettili e predatori mostruosi",
+  "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Anchilosauro",
   "caratteristiche": {
     "FOR": 9,
     "DES": 5,
@@ -48,11 +48,11 @@
       "va": 12,
       "danno": "2d6+2",
       "natura": "Naturale",
-      "portata_q": 2,
-      "ac": 1,
       "proprieta": [
         "Contundente"
-      ]
+      ],
+      "portata_q": 2,
+      "ac": 1
     }
   ],
   "abilita": [
@@ -87,9 +87,26 @@
       "effetto": "L’AR è biologica e complessiva (nessuna piastra con PI separati). Non consente di parare con il dorso e non dà immunità a proiettili, Fuoco, Ghiaccio o effetti mentali."
     }
   ],
-  "note": "Vista e udito ordinari. Una coda non utilizzabile impedisce l’attacco. Non comprende linguaggi. Condotta: difende il proprio spazio e i piccoli; non è un predatore e può smettere quando gli aggressori si allontanano; sotto 11 PV o a Ferita Seria raggiunge il gruppo o una zona protetta. Fonte: Ankylosaurus, p. 79.",
+  "note": "Erbivoro corazzato • difesa con la coda • Natura Comune. Condotta. Difende il proprio spazio e i piccoli, cercando di tenere le minacce lontane dal corpo. Non è un predatore e può smettere di combattere quando gli aggressori si allontanano. Sotto 15 PV tenta di raggiungere il gruppo o una zona protetta. Non comprende linguaggi.",
   "_bestiario": {
     "edizione": "Mostri 0.69",
-    "sistema_salute": "solo_PV"
-  }
+    "sistema_salute": "solo_PV",
+    "campi": {
+      "pv": "Mostri 0.69",
+      "pm": "Mostri 0.69",
+      "caratteristiche": "Mostri 0.69",
+      "ar": "Mostri 0.69",
+      "difese": "Mostri 0.69",
+      "salvezze": "Mostri 0.69",
+      "iniziativa": "Mostri 0.69",
+      "azioni": "Mostri 0.69",
+      "movimento": "Mostri 0.69",
+      "spazio": "Mostri 0.69",
+      "abilita": "Mostri 0.69",
+      "attacchi": "Mostri 0.69",
+      "capacita": "Mostri 0.47",
+      "gs_px": "Mostri 0.69"
+    }
+  },
+  "taglia": "grande"
 }

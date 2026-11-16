@@ -1,0 +1,110 @@
+{
+  "formato": "mutant-nemico",
+  "versione": 1,
+  "id": "sciacallo-mannaro",
+  "nome": "Sciacallo mannaro",
+  "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Sciacallo mannaro",
+  "note": "Sciacallo mutaforma che assume un aspetto umanoide fisso e una forma ibrida. Usa il sonno magico per rapire o allontanare una minaccia; non è un licantropo contagioso.",
+  "pv": 24,
+  "pm": 12,
+  "caratteristiche": {
+    "FOR": 5,
+    "DES": 7,
+    "COS": 5,
+    "INT": 6,
+    "SAG": 5,
+    "CAR": 5
+  },
+  "ar": {
+    "totale": 1,
+    "magica": 0
+  },
+  "difese": 11,
+  "salvezze": {
+    "tempra": 9,
+    "riflessi": 11,
+    "volonta": 10,
+    "magia": 10
+  },
+  "iniziativa": 1,
+  "azioni": {
+    "principali": 1,
+    "movimento": 1
+  },
+  "movimento": {
+    "passo": 8,
+    "corsa": 16,
+    "scatto": 24
+  },
+  "attacchi": [
+    {
+      "nome": "Morso",
+      "tipo": "ravvicinato",
+      "va": 10,
+      "danno": "1d4+2",
+      "natura": "Naturale",
+      "proprieta": [
+        "AC 1"
+      ],
+      "portata_q": 1,
+      "ac": 1
+    },
+    {
+      "nome": "Pugnale",
+      "tipo": "ravvicinato",
+      "va": 10,
+      "danno": "1d4+2",
+      "natura": "Naturale",
+      "proprieta": [
+        "AC 1"
+      ],
+      "portata_q": 1,
+      "ac": 1
+    }
+  ],
+  "capacita": [
+    {
+      "nome": "Tre forme",
+      "effetto": "Una AzP e un PM per passare tra sciacallo, ibrido e il proprio unico aspetto umanoide. Nessuna copia di individui diversi. Equipaggiamento non trasformato, valori e lesioni conservati; alla morte torna sciacallo. Dimezza Naturale da armi non argentate come i licantropi, senza rigenerazione o Parata naturale. Il Morso non trasmette la loro maledizione."
+    },
+    {
+      "nome": "Sguardo soporifero",
+      "effetto": "Una AzP e due PM, un umanoide cosciente entro sei Q che lo vede e che può vedere: Volontà 0 evita Svenuto per cinque Round. Esclusi non morti, costrutti e immuni al sonno o alla fascinazione. Due Round di scuotimento energico, Cura Spirituale almeno sei o Negare Potere, confronto 3, risvegliano; danni non risvegliano. Barriera Mentale concede il bonus, non immunità. Dopo resistenza o risveglio, immunità allo Sguardo di questo esemplare per 24 ore. Evitare preventivamente i suoi occhi impedisce il contatto, con le normali limitazioni visive."
+    },
+    {
+      "nome": "Branco e oggetti",
+      "effetto": "+2 VA ravvicinato contro chi ha entro un Q almeno un alleato dello Sciacallo vigile e capace di minacciarlo; non già compreso, non cresce con più alleati. Vista ordinaria, udito e olfatto acuti. Pugnale Comune: una mano, PI 4 e PS Integrità 10; i 33 PX lo comprendono. Non ha altri servitori o un padrone imposto dall’ambientazione d’origine."
+    },
+    {
+      "nome": "Altri movimenti",
+      "effetto": "umanoide e ibrido 1 × 1 Q, sciacallo 1 Q condivisibile senza bloccare il passaggio"
+    },
+    {
+      "nome": "Abilità particolari",
+      "effetto": "Percezione 10, 12 con olfatto o udito"
+    }
+  ],
+  "gs_px": {
+    "gs": "Esperto",
+    "px": 33,
+    "per_pg": 4
+  },
+  "_bestiario": {
+    "campi": {
+      "pv": "Mostri 0.69",
+      "pm": "Mostri 0.69",
+      "caratteristiche": "Mostri 0.69",
+      "ar": "Mostri 0.69",
+      "difese": "Mostri 0.69",
+      "salvezze": "Mostri 0.69",
+      "iniziativa": "Mostri 0.69",
+      "azioni": "Mostri 0.69",
+      "movimento": "Mostri 0.69",
+      "attacchi": "Mostri 0.69",
+      "capacita": "Mostri 0.69",
+      "gs_px": "Mostri 0.69"
+    },
+    "edizione": "Mostri 0.69",
+    "sistema_salute": "solo_PV"
+  }
+}

@@ -1,0 +1,106 @@
+{
+  "formato": "mutant-nemico",
+  "versione": 1,
+  "id": "orca",
+  "nome": "Orca",
+  "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Orca",
+  "taglia": "grande",
+  "note": "Grande mammifero marino che respira aria. Il corpo è adatto al nuoto rapido e all’ecolocalizzazione subacquea; il profilo non è un mostro inghiottitore o un assalitore automatico di imbarcazioni.",
+  "pv": 104,
+  "pm": 10,
+  "caratteristiche": {
+    "FOR": 9,
+    "DES": 5,
+    "COS": 7,
+    "INT": 2,
+    "SAG": 6,
+    "CAR": 4
+  },
+  "ar": {
+    "totale": 2,
+    "magica": 0
+  },
+  "difese": 9,
+  "salvezze": {
+    "tempra": 13,
+    "riflessi": 9,
+    "volonta": 9,
+    "magia": 10
+  },
+  "iniziativa": 1,
+  "azioni": {
+    "principali": 2,
+    "movimento": 1
+  },
+  "movimento": {
+    "passo": 0,
+    "corsa": "non_consentito",
+    "scatto": "non_consentito"
+  },
+  "spazio": "2 × 4 Q",
+  "attacchi": [
+    {
+      "nome": "Morso",
+      "tipo": "ravvicinato",
+      "va": 14,
+      "danno": "3d6+2",
+      "natura": "Naturale",
+      "proprieta": [
+        "Perforazione",
+        "AC 1"
+      ],
+      "portata_q": 2,
+      "ac": 1
+    }
+  ],
+  "capacita": [
+    {
+      "nome": "Corpo e sensi",
+      "effetto": "Vivente biologico con mente animale e PM personali, nessuna resistenza o immunità generale. Iniziativa usa SAG +1 per prontezza istintiva. Ecolocalizzazione immersa entro 24 Q, sospesa da Assordato o isolamento acustico effettivo; localizza corpi anche al buio secondo il modulo comune, senza vedere attraverso rocce o scafi. Il +2 all’udito è già espresso nel tredici e si applica una volta. Nessun linguaggio."
+    },
+    {
+      "nome": "Azioni e nuoto",
+      "effetto": "Due AzP totali, massimo un Morso per Round, Opportunità compresa. La seconda AzP può servire a una Difesa o altra attività, non concede una seconda azzannata. Nessuna Parata naturale. Il Morso non stabilisce automaticamente una presa, non inghiotte e non trascina una nave. Nuota con la propria AzM nelle acque fisicamente praticabili; una secca non diventa percorribile grazie al budget."
+    },
+    {
+      "nome": "Aria e superficie",
+      "effetto": "Può trattenere il fiato per trenta minuti. Un Round di respirazione effettiva in superficie ripristina la riserva; accesso allo sfiatatoio necessario. Esaurita l’apnea si applica soffocamento del Giocatore §5.23, senza danni inventati ogni Round. Svenuto, blocco dello sfiatatoio e impossibilità di emergere seguono la stessa procedura quando impediscono di respirare; essere acquatica non permette di respirare acqua."
+    },
+    {
+      "nome": "Anatomia e condotta",
+      "effetto": "Testa comprende mascelle e sensi, Torace tronco e apparato respiratorio, Braccia pinne pettorali, Gambe peduncolo caudale e pinna motrice. Una Menomazione coinvolge la funzione effettiva senza riserve separate. Può cacciare in gruppo, difendere un piccolo o evitare estranei; nessun bonus di branco automatico. Sotto 26 PV tende a cercare acque aperte. Le altre orche conservano schede, azioni e PX propri."
+    },
+    {
+      "nome": "Altri movimenti",
+      "effetto": "nuoto 12 / 24 / 36 Q; spazio 2 × 4 Q"
+    },
+    {
+      "nome": "Abilità particolari",
+      "effetto": "Percezione 11, 13 se l’udito è determinante"
+    }
+  ],
+  "gs_px": {
+    "gs": "Veterano",
+    "px": 50,
+    "per_pg": 4
+  },
+  "_bestiario": {
+    "campi": {
+      "pv": "Mostri 0.69",
+      "pm": "Mostri 0.69",
+      "caratteristiche": "Mostri 0.69",
+      "ar": "Mostri 0.69",
+      "difese": "Mostri 0.69",
+      "salvezze": "Mostri 0.69",
+      "iniziativa": "Mostri 0.69",
+      "azioni": "Mostri 0.69",
+      "movimento": "Mostri 0.69",
+      "spazio": "Mostri 0.69",
+      "attacchi": "Mostri 0.69",
+      "capacita": "Mostri 0.69",
+      "gs_px": "Mostri 0.69"
+    },
+    "edizione": "Mostri 0.69",
+    "sistema_salute": "solo_PV"
+  }
+}

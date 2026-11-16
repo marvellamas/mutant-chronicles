@@ -1,0 +1,137 @@
+{
+  "formato": "mutant-nemico",
+  "versione": 1,
+  "id": "sciame-di-coleotteri",
+  "nome": "Sciame di coleotteri",
+  "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Sciame di coleotteri",
+  "note": "Sciame di coleotteri che può aprirsi un percorso lento in terreno sciolto. Una sola pedina e una sola riserva rappresentano il gruppo.",
+  "pv": 32,
+  "pm": 4,
+  "caratteristiche": {
+    "FOR": 3,
+    "DES": 6,
+    "COS": 5,
+    "INT": 1,
+    "SAG": 3,
+    "CAR": 1
+  },
+  "ar": {
+    "totale": 1,
+    "magica": 0
+  },
+  "difese": 9,
+  "salvezze": {
+    "tempra": 9,
+    "riflessi": 10,
+    "volonta": 6,
+    "magia": 7
+  },
+  "iniziativa": 1,
+  "azioni": {
+    "principali": 1,
+    "movimento": 1
+  },
+  "movimento": {
+    "passo": 4,
+    "corsa": 8,
+    "scatto": 12
+  },
+  "spazio": "1 Q",
+  "abilita": [
+    {
+      "nome": "Corpo a corpo",
+      "va": 10
+    },
+    {
+      "nome": "Atletica",
+      "va": 9
+    },
+    {
+      "nome": "Percezione",
+      "va": 7
+    },
+    {
+      "nome": "Furtività",
+      "va": 10
+    }
+  ],
+  "attacchi": [
+    {
+      "nome": "Morsi con PV 17–32",
+      "tipo": "ravvicinato",
+      "va": 10,
+      "danno": "2d4",
+      "natura": "Naturale",
+      "proprieta": [
+        "Perforazione",
+        "AC 1"
+      ],
+      "portata_q": 0,
+      "ac": 1
+    },
+    {
+      "nome": "Morsi con PV 1–16",
+      "tipo": "ravvicinato",
+      "va": 10,
+      "danno": "1d4",
+      "natura": "Naturale",
+      "proprieta": [
+        "Perforazione",
+        "AC 1"
+      ],
+      "portata_q": 0,
+      "ac": 1
+    }
+  ],
+  "capacita": [
+    {
+      "nome": "Corpo distribuito",
+      "effetto": "Una riserva di ventiquattro PV e quattro PM personali, una AzP e una AzM per Round. Applica integralmente Sciami specializzati corpo e dispersione: dimezzamento fisico da Contusione, Taglio e Perforazione di qualunque Natura prima dell’AR uno, immunità collettive elencate, nessun recupero di PV o PV temporanei e normali localizzazioni funzionali. Non è privo di mente e non è immune a tutti i danni psichici."
+    },
+    {
+      "nome": "Attacco collettivo",
+      "effetto": "Morsi è un solo attacco con una AC, dentro il Q realmente condiviso con una vittima accessibile, massimo uno per Round compresa Opportunità compatibile. A tredici–ventiquattro PV infligge 2d4; a dodici o meno 1d4, senza modificare altre risorse. Normali Difese e AR, nessun danno automatico per il solo ingresso nel Q. Fessure, contenitori e protezioni si valutano rispetto agli animali effettivi."
+    },
+    {
+      "nome": "Movimento",
+      "effetto": "Scavo fino a un Q al Passo con l’intera AzM in terra, sabbia o materiale sciolto realmente attraversabile. Niente scavo in roccia compatta, metallo, pareti o strutture; l’apertura non diventa un tunnel utilizzabile da un umanoide. Non può attaccare una creatura oltre un pavimento integro. Il movimento misto conserva una sola AzM e lo Scavo non conferisce vista attraverso solidi. Arrampica soltanto su appigli compatibili, senza aderenza ai soffitti lisci."
+    },
+    {
+      "nome": "Sensi e stati",
+      "effetto": "Percezione sette entro due Q sul supporto continuo come nello Sciame di insetti, fermata dai solidi; in volo usa sensi ordinari e Percezione, senza localizzazione cieca a distanza. Nessuna Scurovisione o capacità di leggere pensieri. Il freddo applica i normali effetti della fonte; non importa il blocco specifico della Covata. Non aggiunge tossine paralizzanti o veleno lesivo al danno della scheda."
+    },
+    {
+      "nome": "Dispersione e PX",
+      "effetto": "Sotto metà PV può cercare riparo con le proprie Azioni. Disperdere e ricomporre conserva PV, PM e condizioni; A 0 PV il profilo senza Ferite è fuori combattimento secondo il §4.2; morte o distruzione effettiva restano distinte. Nessun secondo premio per i superstiti della stessa minaccia. I venti PX valgono per uno Sciame intero e quattro PG, non per ogni componente."
+    },
+    {
+      "nome": "Altri movimenti",
+      "effetto": "Terra e arrampicata con appigli 4 / 8 / 12: la stessa andatura vale anche per arrampicata; Scavo 1 Q al Passo; spazio condivisibile 1 × 1 Q"
+    }
+  ],
+  "gs_px": {
+    "gs": "Inesperto",
+    "px": 20,
+    "per_pg": 4
+  },
+  "_bestiario": {
+    "campi": {
+      "pv": "Mostri 0.69",
+      "pm": "Mostri 0.69",
+      "caratteristiche": "Mostri 0.69",
+      "ar": "Mostri 0.69",
+      "difese": "Mostri 0.69",
+      "salvezze": "Mostri 0.69",
+      "iniziativa": "Mostri 0.69",
+      "azioni": "Mostri 0.69",
+      "movimento": "Mostri 0.69",
+      "spazio": "Mostri 0.69",
+      "abilita": "Mostri 0.69",
+      "attacchi": "Mostri 0.69",
+      "capacita": "Mostri 0.69",
+      "gs_px": "Mostri 0.69"
+    },
+    "edizione": "Mostri 0.69",
+    "sistema_salute": "solo_PV"
+  }
+}

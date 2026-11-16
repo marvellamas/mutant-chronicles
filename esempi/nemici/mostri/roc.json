@@ -3,7 +3,7 @@
   "versione": 1,
   "id": "roc",
   "nome": "Roc",
-  "fonte": "dal Manuale dei Mostri v0.46 (Word del 27/10/2026), cap. 8 «Catalogo delle creature» — Predatori straordinari",
+  "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Roc",
   "caratteristiche": {
     "FOR": 10,
     "DES": 5,
@@ -49,11 +49,11 @@
       "va": 16,
       "danno": "2d8+3",
       "natura": "Naturale",
-      "portata_q": 2,
-      "ac": 1,
       "proprieta": [
         "Perforazione"
-      ]
+      ],
+      "portata_q": 2,
+      "ac": 1
     },
     {
       "nome": "Artigli",
@@ -61,12 +61,11 @@
       "va": 16,
       "danno": "2d6+3",
       "natura": "Naturale",
-      "portata_q": 1,
-      "ac": 1,
       "proprieta": [
         "Taglio"
       ],
-      "note": "Possono innescare una presa solo dopo il danno: vedi «Presa e trasporto»."
+      "portata_q": 1,
+      "ac": 1
     }
   ],
   "abilita": [
@@ -106,9 +105,26 @@
       "effetto": "Aggancio: dopo almeno 1 danno finale di Artigli a una creatura fino a 3 × 3 Q, Riflessi senza modificatore evita; fallimento Immobilizzato (mani non specificamente bloccate), trattenuta da una o entrambe le zampe. Una sola vittima esterna; finché la tiene non usa Artigli contro altri bersagli; mantenerla non costa Azioni né altri danni; può Beccarla con un normale attacco a portata. Liberarsi: la vittima o un alleato a contatto con gli artigli spende 1 AzP e contrappone Corpo a corpo o Atletica a Corpo a corpo 16 del Roc (il prigioniero con −4 fisico): successo termina la presa, pareggio la conserva; un attrezzo deve essere adatto; un attacco riuscito non spezza la presa. Capacità specifica: può sollevare una sola preda fino a 3 × 3 Q e non oltre 1.000 kg complessivi (oggetti indossati inclusi); con preda sollevata il Volo è limitato al Passo di 12 Q, senza Corsa o Scatto (decollo e quota rientrano nell’unica AzM). Non trascina la preda attraverso solidi, Q occupati o passaggi troppo stretti; la vittima segue il Roc e agisce nei limiti della presa. Liberarsi in quota termina Immobilizzato ma non dà Volo né un atterraggio sicuro (valgono le regole di Caduta). Rilascio: gratuito alla propria Iniziativa, senza tiro o lancio offensivo aggiuntivo; senza appoggio la vittima cade verticalmente. Svenuto, morte o Menomazione che impedisca la presa la sciolgono (0 PV da soli no); interrompere il Volo può far precipitare entrambi. Un passeggero consenziente, un’imbracatura o un carico esterno richiedono attrezzatura, accordo e condizioni proprie. La capacità non vale per altre grandi aquile o creature di FOR 10."
     }
   ],
-  "note": "Uccello enorme, il cui nido domina pareti e vette isolate; predilige prede grandi o lente e può ignorare chi trova riparo sotto una copertura adatta. Condotta: sotto 32 PV o a Ferita Seria può abbandonare una preda e cercare un posatoio; difende nido e piccoli, ma non riceve un’ira senza limiti, una Carica gratuita o danni maggiori per la sola taglia; non è una cavalcatura addestrata per definizione. Eventuali resti e tesori nel nido appartengono alla scena. Fonte: Roc, p. 260.",
+  "note": "Rapace gigantesco • cattura e trasporto della preda • Natura Comune. Condotta. Sotto 42 PV può abbandonare una preda e cercare un posatoio. Difende nido e piccoli, ma non riceve un’ira senza limiti, una Carica gratuita o danni maggiori per la sola taglia. Non è una cavalcatura addestrata per definizione. Dotazione: nessuna; eventuali resti e tesori nel nido appartengono alla scena, non al corpo.",
   "_bestiario": {
     "edizione": "Mostri 0.69",
-    "sistema_salute": "solo_PV"
-  }
+    "sistema_salute": "solo_PV",
+    "campi": {
+      "pv": "Mostri 0.69",
+      "pm": "Mostri 0.69",
+      "caratteristiche": "Mostri 0.69",
+      "ar": "Mostri 0.69",
+      "difese": "Mostri 0.69",
+      "salvezze": "Mostri 0.69",
+      "iniziativa": "Mostri 0.69",
+      "azioni": "Mostri 0.69",
+      "movimento": "Mostri 0.69",
+      "spazio": "Mostri 0.69",
+      "abilita": "Mostri 0.69",
+      "attacchi": "Mostri 0.69",
+      "capacita": "Mostri 0.47",
+      "gs_px": "Mostri 0.69"
+    }
+  },
+  "taglia": "grande"
 }

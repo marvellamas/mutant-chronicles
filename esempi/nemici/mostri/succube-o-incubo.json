@@ -1,0 +1,113 @@
+{
+  "formato": "mutant-nemico",
+  "versione": 1,
+  "id": "succube-o-incubo",
+  "nome": "Succube o Incubo",
+  "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Succube o Incubo",
+  "note": "Mutaforma alato che cerca fiducia e contatto ravvicinato. Succube e Incubo condividono questo profilo; il fascino non equivale al consenso a qualsiasi richiesta e il risucchio riguarda risorse definite.",
+  "pv": 68,
+  "pm": 36,
+  "caratteristiche": {
+    "FOR": 4,
+    "DES": 8,
+    "COS": 6,
+    "INT": 7,
+    "SAG": 6,
+    "CAR": 10
+  },
+  "ar": {
+    "totale": 2,
+    "magica": 0
+  },
+  "difese": 12,
+  "salvezze": {
+    "tempra": 10,
+    "riflessi": 12,
+    "volonta": 14,
+    "magia": 12
+  },
+  "iniziativa": 3,
+  "azioni": {
+    "principali": 2,
+    "movimento": 1
+  },
+  "movimento": {
+    "passo": 6,
+    "corsa": 12,
+    "scatto": 18,
+    "volo": 12
+  },
+  "spazio": "1 Q",
+  "abilita": [
+    {
+      "nome": "Corpo a corpo",
+      "va": 12
+    },
+    {
+      "nome": "Percezione",
+      "va": 12
+    },
+    {
+      "nome": "Furtività",
+      "va": 13
+    },
+    {
+      "nome": "Raggirare",
+      "va": 16
+    },
+    {
+      "nome": "Oratoria",
+      "va": 16
+    }
+  ],
+  "capacita": [
+    {
+      "nome": "Bacio vitale",
+      "effetto": "VA —. Danno: 2d6+3 Etereo e 1d4 PM; Tempra −2. Portata/costo: Contatto accettato; 1 AzP e 3 PM; "
+    },
+    {
+      "nome": "Corpo e sensi",
+      "effetto": "Vivente biologico, Scurovisione 12 Q e telepatia dodici Q. Dimezza Gelo, Fuoco, Elettricità, danni diretti da veleno e danno Naturale di armi da Contusione, Taglio e Perforazione; non è immune ad Avvelenato o Stati elementali. Nessuna Parata naturale o Resistenza alla magia implicita. Massimo un Artiglio e un Bacio per Round, entro le due AzP; soltanto l’Artiglio può essere l’unica Opportunità."
+    },
+    {
+      "nome": "Fascino",
+      "effetto": "Una AzP e tre PM, una mente umanoide cosciente visibile entro sei Q che possa vedere il volto, Volontà −2. Fallimento considera la creatura un’alleata fidata per dieci Round, senza Concentrazione; conserva principi, memoria, legami e decisioni. Non impone attacchi ai compagni, segreti, suicidio o accettazione del Bacio. Un solo affascinato; nuovo uso sostituisce il precedente. Ogni primo atto dannoso per Round contro la vittima concede subito Volontà −2, anche se il danno viene dalla fonte del Fascino. Barriera Mentale aiuta; Negare nove, Svenuto o morte dell’utilizzatore terminano. Resistenza o liberazione danno immunità al suo Fascino per ventiquattro ore."
+    },
+    {
+      "nome": "Bacio e risorse",
+      "effetto": "Una AzP e tre PM, soltanto a Contatto con una creatura vivente cosciente che accetti concretamente il contatto; nessun attacco automatico contro un nemico non consenziente e nessun consenso dedotto dalla sola condizione di affascinato. Tempra −2 dimezza separatamente per eccesso 2d6+3 danni Eterei a una AC e 1d4 PM personali; fallimento valori interi. Nessun tiro per colpire o Difesa attiva, AR magica sul danno ai PV, non sulla perdita di PM. Scudo Spirituale può ridurre la perdita di PM; il suo bonus alle PS Magia non modifica Tempra. Barriera Mentale non protegge questo risucchio spirituale. Non è Dardo Psichico: i danni possono produrre Ferite e non riducono PV massimi. Nessuna risorsa è guadagnata dall’utilizzatore e nessun danno aggiuntivo nasce dall’eccedenza dei PM."
+    },
+    {
+      "nome": "Mutaforma e Fase",
+      "effetto": "Una AzP e due PM per assumere un umanoide di un Q per un’ora o tornare alla forma vera, senza riserve nuove o abilità dell’identità. Se la forma non possiede ali perde il Volo; conserva le altre statistiche e le lesioni. Oggetti non trasformati. Negare nove, Svenuto o morte terminano. Fase personale: una AzP e tre PM, cinque Round, potenza nove, alle regole condivise; nessuna altra creatura, Artiglio, Bacio o Fascino durante la Fase. Il legame telepatico con l’affascinato rimane entro dodici Q e non ne rivela posizione, sensi o pensieri; nessun contatto interplanetario automatico."
+    },
+    {
+      "nome": "Altri movimenti",
+      "effetto": "spazio 1 × 1 Q"
+    }
+  ],
+  "gs_px": {
+    "gs": "Eroe",
+    "px": 70,
+    "per_pg": 4
+  },
+  "_bestiario": {
+    "campi": {
+      "pv": "Mostri 0.69",
+      "pm": "Mostri 0.69",
+      "caratteristiche": "Mostri 0.69",
+      "ar": "Mostri 0.69",
+      "difese": "Mostri 0.69",
+      "salvezze": "Mostri 0.69",
+      "iniziativa": "Mostri 0.69",
+      "azioni": "Mostri 0.69",
+      "movimento": "Mostri 0.69",
+      "spazio": "Mostri 0.69",
+      "abilita": "Mostri 0.69",
+      "capacita": "Mostri 0.69",
+      "gs_px": "Mostri 0.69"
+    },
+    "edizione": "Mostri 0.69",
+    "sistema_salute": "solo_PV"
+  }
+}

@@ -3,7 +3,7 @@
   "versione": 1,
   "id": "driade",
   "nome": "Driade",
-  "fonte": "dal Manuale dei Mostri v0.46 (Word del 27/10/2026), cap. 8 «Catalogo delle creature» — Vegetali e custodi delle foreste",
+  "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Driade",
   "caratteristiche": {
     "FOR": 5,
     "DES": 6,
@@ -162,9 +162,25 @@
       }
     }
   ],
-  "note": "AR 0; con Corteccia 3 Naturale e movimento 5/10/15 Q. Randello di legno Comune, una mano, FOR 3, PS Integrità 10, PI 5, già pronto (1d6 base +1 da DES già compreso); nessuna armatura o scudo. Oratoria 13 (A.205: nel manuale «Diplomazia» è Oratoria, a valori invariati). L’albero legato va definito nella scena: danni a quell’albero sono un motivo narrativo, non trasferiscono danni o Ferite alla Driade. Condotta: allontana chi danneggia il bosco, negozia o usa i passaggi arborei; sotto 6 PV o a Ferita Profonda cerca riparo. Fonte: Dryad, p. 121.",
+  "note": "Custode silvana • dialogo, fascino e passaggi fra alberi • Natura Comune. Condotta. Cerca di allontanare chi danneggia il bosco, negoziare o sfruttare i passaggi arborei. Sotto 8 PV tenta il riparo. Corteccia e altri poteri non sono già attivi all’inizio della scena. Le due pagine seguenti precisano fascino, movimento e magia di supporto.",
   "_bestiario": {
     "edizione": "Mostri 0.69",
-    "sistema_salute": "solo_PV"
+    "sistema_salute": "solo_PV",
+    "campi": {
+      "pv": "Mostri 0.69",
+      "pm": "Mostri 0.69",
+      "caratteristiche": "Mostri 0.69",
+      "ar": "Mostri 0.69",
+      "difese": "Mostri 0.69",
+      "salvezze": "Mostri 0.69",
+      "iniziativa": "Mostri 0.69",
+      "azioni": "Mostri 0.69",
+      "movimento": "Mostri 0.69",
+      "spazio": "Mostri 0.69",
+      "abilita": "Mostri 0.69",
+      "attacchi": "Mostri 0.47",
+      "capacita": "Mostri 0.47",
+      "gs_px": "Mostri 0.69"
+    }
   }
 }

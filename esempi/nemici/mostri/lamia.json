@@ -1,0 +1,125 @@
+{
+  "formato": "mutant-nemico",
+  "versione": 1,
+  "id": "lamia",
+  "nome": "Lamia",
+  "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Lamia",
+  "taglia": "grande",
+  "note": "Creatura con busto umanoide e corpo leonino. Costruisce inganni intorno alla propria dimora e indebolisce la volontà degli intrusi prima di tentarne l’assoggettamento.",
+  "pv": 73,
+  "pm": 35,
+  "caratteristiche": {
+    "FOR": 8,
+    "DES": 6,
+    "COS": 7,
+    "INT": 7,
+    "SAG": 7,
+    "CAR": 8
+  },
+  "ar": {
+    "totale": 2,
+    "magica": 0
+  },
+  "difese": 12,
+  "salvezze": {
+    "tempra": 12,
+    "riflessi": 11,
+    "volonta": 13,
+    "magia": 13
+  },
+  "iniziativa": 2,
+  "azioni": {
+    "principali": 2,
+    "movimento": 1
+  },
+  "movimento": {
+    "passo": 6,
+    "corsa": 12,
+    "scatto": 18
+  },
+  "spazio": "2 × 2 Q",
+  "abilita": [
+    {
+      "nome": "Corpo a corpo",
+      "va": 12
+    },
+    {
+      "nome": "Armi da mischia",
+      "va": 12
+    },
+    {
+      "nome": "Raggirare",
+      "va": 15
+    },
+    {
+      "nome": "Oratoria",
+      "va": 14
+    },
+    {
+      "nome": "Percezione",
+      "va": 12
+    },
+    {
+      "nome": "Furtività",
+      "va": 11
+    }
+  ],
+  "capacita": [
+    {
+      "nome": "Tocco inebriante",
+      "effetto": "VA 16. Danno: Indebolimento mentale; Volontà −2. Portata/costo: Contatto; 1 AzP e 2 PM; "
+    },
+    {
+      "nome": "Tocco inebriante",
+      "effetto": "Il VA 16 comprende già Corpo a corpo +4 per questo Contatto mistico. Un contatto non completamente evitato, anche con danno assente, impone Volontà −2. Fallimento: −2 alle Abilità e alle PS Volontà e Magia contro effetti mentali per cinque Round; non a Tempra o Riflessi. Nessun danno, perdita di SAG o Corruzione. Barriera Mentale concede il bonus; Negare Potere può rimuovere l’effetto, confronto 6. La Parata ordinaria dimezza un danno inesistente e non evita il Tocco; una Difesa che annulla il contatto lo impedisce."
+    },
+    {
+      "nome": "Fascino e suggestione",
+      "effetto": "Fascino: una AzP e tre PM, umanoide cosciente visibile entro sei Q che la vede, Volontà 0; fallimento la considera amica per cinque Round. Qualsiasi atto dannoso della Lamia o dei suoi alleati contro la vittima lo termina. Suggestione: una AzP e quattro PM, una mente visibile entro sei Q che comprenda la richiesta, Volontà −2; fallimento esegue un singolo compito plausibile per cinque Round, con le proprie Azioni residue alla propria Iniziativa. Nessun autolesionismo o violazione dei principi profondi. Prima fonte di danno nel Round concede nuova Volontà −2; successo libera. Una sola vittima controllata. Svenuto o morte della Lamia terminano entrambi; Negare Potere confronto 6, Barriera Mentale alle Volontà. Dopo resistenza o liberazione, immunità a quella capacità della stessa Lamia per 24 ore."
+    },
+    {
+      "nome": "Immagini della dimora",
+      "effetto": "Una AzP e tre PM, cubo di massimo 3 × 3 × 3 Q con origine visibile entro 12 Q, per cinque Round a Concentrazione. Può alterare un’unica scena visiva, senza sostanza, danni, luce reale, suono o controllo delle Azioni. Un’interazione fisica incongruente concede Magia 0, massimo una per Round: successo riconosce l’illusione e la ignora. La Concentrazione permette solo Passo e nessuna AzP. Negare Potere rimuove la scena, confronto 6."
+    },
+    {
+      "nome": "Velo umanoide",
+      "effetto": "Una AzP e due PM crea per dieci minuti una maschera visiva umanoide sul proprio corpo. Non riduce lo spazio di 2 × 2 Q, non modifica contatti o sagoma per la Copertura. Muoversi in passaggi o urtare il corpo reale può rivelare l’inganno con Magia 0. Non copia documenti, ricordi o voci non studiate; Raggirare sostiene l’identità. Negare Potere confronto 6. Non è una trasformazione corporea."
+    },
+    {
+      "nome": "Duplicati e sorveglianza",
+      "effetto": "Duplicati: una AzP e tre PM, una volta per 24 ore; applica esattamente Duplicati dell’Ammantato, tre copie ottiche per dieci Round, potenza 6, ma la luce intensa non le dissolve. Specchio: una AzP e quattro PM, dieci minuti a Concentrazione, mostra un luogo già visto entro un km attraverso uno specchio presente e utilizzabile. Il punto osservato è fisso, visione di raggio sei Q con i suoi normali sensi, senza attacchi o altre capacità originate da lì. Occultamenti compatibili si applicano. Negare Potere sullo specchio termina la visione, confronto 6."
+    },
+    {
+      "nome": "Sensi e dotazione",
+      "effetto": "Scurovisione 12 Q. Non ha Parata naturale; con pugnale pronto può Parare ai costi normali. Pugnale Comune PI 4, PS Integrità 10; 77 PX già comprensivi della dotazione. Non possiede un giuramento coercitivo permanente, schiavi inclusi o il repertorio di una Classe. Le sue capacità innate non richiedono Potere o componenti."
+    },
+    {
+      "nome": "Altri movimenti",
+      "effetto": "spazio 2 × 2 Q"
+    }
+  ],
+  "gs_px": {
+    "gs": "Eroe",
+    "px": 77,
+    "per_pg": 4
+  },
+  "_bestiario": {
+    "campi": {
+      "pv": "Mostri 0.69",
+      "pm": "Mostri 0.69",
+      "caratteristiche": "Mostri 0.69",
+      "ar": "Mostri 0.69",
+      "difese": "Mostri 0.69",
+      "salvezze": "Mostri 0.69",
+      "iniziativa": "Mostri 0.69",
+      "azioni": "Mostri 0.69",
+      "movimento": "Mostri 0.69",
+      "spazio": "Mostri 0.69",
+      "abilita": "Mostri 0.69",
+      "capacita": "Mostri 0.69",
+      "gs_px": "Mostri 0.69"
+    },
+    "edizione": "Mostri 0.69",
+    "sistema_salute": "solo_PV"
+  }
+}

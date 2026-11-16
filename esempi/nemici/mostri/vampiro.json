@@ -1,0 +1,172 @@
+{
+  "formato": "mutant-nemico",
+  "versione": 1,
+  "id": "vampiro",
+  "nome": "Vampiro",
+  "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Vampiro",
+  "note": "Signore vampirico autonomo, capace di dominare, mutare forma e ritirarsi come nebbia. La scheda descrive il profilo base senza Classi o dotazioni aggiuntive.",
+  "pv": 156,
+  "pm": 40,
+  "caratteristiche": {
+    "FOR": 8,
+    "DES": 8,
+    "COS": 8,
+    "INT": 8,
+    "SAG": 7,
+    "CAR": 9
+  },
+  "ar": {
+    "totale": 4,
+    "magica": 1
+  },
+  "difese": 15,
+  "salvezze": {
+    "tempra": 14,
+    "riflessi": 15,
+    "volonta": 16,
+    "magia": 15
+  },
+  "iniziativa": 3,
+  "azioni": {
+    "principali": 3,
+    "movimento": 1
+  },
+  "movimento": {
+    "passo": 8,
+    "corsa": 16,
+    "scatto": 24
+  },
+  "spazio": "1 Q",
+  "abilita": [
+    {
+      "nome": "Corpo a corpo",
+      "va": 16
+    },
+    {
+      "nome": "Atletica",
+      "va": 15
+    },
+    {
+      "nome": "Furtività",
+      "va": 16
+    },
+    {
+      "nome": "Percezione",
+      "va": 15
+    },
+    {
+      "nome": "Oratoria",
+      "va": 16
+    },
+    {
+      "nome": "Raggirare",
+      "va": 16
+    }
+  ],
+  "attacchi": [
+    {
+      "nome": "Colpo disarmato",
+      "tipo": "ravvicinato",
+      "va": 16,
+      "danno": "2d6+3",
+      "natura": "Naturale",
+      "proprieta": [
+        "AC 1"
+      ],
+      "portata_q": 1,
+      "ac": 1
+    },
+    {
+      "nome": "Morso",
+      "tipo": "ravvicinato",
+      "va": 16,
+      "danno": "1d8+3",
+      "natura": "Naturale",
+      "proprieta": [
+        "AC 1",
+        "più nutrimento"
+      ],
+      "portata_q": 1,
+      "ac": 1
+    }
+  ],
+  "capacita": [
+    {
+      "nome": "Sensi e danni",
+      "effetto": "Scurovisione 12 Q salvo la percezione specifica dell’Artiglio; non vede attraverso ostacoli. Attacchi pronti senza altri bonus da aggiungere. Le immunità e le deroghe sono nelle capacità. I danni di questa scheda non ricevono EQ dei PNG."
+    },
+    {
+      "nome": "Sequenza e presa",
+      "effetto": "Tre AzP totali, con massimo un Morso per Round comprese le Opportunità. Una AzP può essere usata alla fine dell’Iniziativa di un avversario per Colpo disarmato o Difesa, non per un secondo Morso o Movimento gratuito. Può sostituire il danno del Colpo con Immobilizzare, secondo la manovra comune. Nessuna Parata naturale. Morso solo contro vivente consenziente, Svenuto o Immobilizzato con accesso materiale al collo; restano le Difese concretamente praticabili."
+    },
+    {
+      "nome": "Nutrimento e resistenza",
+      "effetto": "Dopo un Morso riuscito recupera i PV effettivamente sottratti alla riserva della vittima, massimo 8 per attacco; da una vittima già a 0 PV non ricava PV. Non riduce PV massimi o livelli e non cura Ferite. Dimezza per eccesso il danno Naturale dopo Difese e prima dell’AR; Magico ed Etereo normali. È immune a Terrorizzato e Affaticamento, non genericamente ai danni spirituali."
+    },
+    {
+      "nome": "Fascino",
+      "effetto": "1 AzP e 3 PM, umanoide cosciente visibile entro 6 Q che lo vede, Volontà −2. Successo evita; fallimento lo considera un alleato fidato per 10 Round, senza controllo diretto o ordini autolesivi. Può offrirsi al Morso se ciò è plausibile; ogni atto dannoso suo o dei suoi alleati concede subito una nuova Volontà −2, massimo una per Round. Barriera Mentale concede il bonus. Negare Potere, confronto 9, termina; può scioglierlo volontariamente alla propria Iniziativa senza Azioni."
+    },
+    {
+      "nome": "Rigenerazione e volontà",
+      "effetto": "Recupera 8 PV all’inizio della propria Iniziativa se ne possiede almeno 1, non è Morente e non è al sole o nell’acqua corrente. Non cura Ferite o Menomazioni. Un danno finale Etereo interrompe la sola prossima rigenerazione. Tre volte per 24 ore può ripetere una propria PS fallita, senza costi e prima delle conseguenze, accettando il secondo risultato; non trasforma automaticamente i fallimenti in successi."
+    },
+    {
+      "nome": "Mutare forma",
+      "effetto": "1 AzP e 2 PM, vietato al sole o nell’acqua corrente. Pipistrello: corpo piccolo, volo 8 / 16 / 24 Q, niente parola, oggetti, Colpo disarmato o Fascino; Morso conserva requisiti e costo. Nebbia: volo levitante 4 Q al Passo, niente AP offensive, parola o manipolazioni; passa solo dove passa l’aria, mai attraverso pareti integre o acqua. In nebbia dimezza Naturale, senza sommare un secondo dimezzamento a Carne resistente. Una AP per tornare umanoide; nessuna Concentrazione. Equipaggiamento indossato segue la forma, non gli oggetti lasciati o presi dopo."
+    },
+    {
+      "nome": "Figli della notte",
+      "effetto": "Una volta per 24 ore, di notte, 1 AzP e 4 PM richiama due Sciami di pipistrelli o ratti già presenti nell’ambiente; all’aperto può invece richiamare tre Lupi. Arrivano dopo 1d4 Round solo se il percorso lo consente, con schede e Azioni proprie, per un’ora. Non li crea in un luogo sigillato e non li teletrasporta. Si conteggiano separatamente se partecipano alla sfida; il Vampiro parte senza servitori."
+    },
+    {
+      "nome": "Sole",
+      "effetto": "All’inizio della propria Iniziativa in luce solare diretta subisce 2d6 Eterei diretti senza Difesa o AR e −4 alle Prove di Abilità finché esposto, non alle PS. Luce Mistica e torce non equivalgono al sole. Acqua corrente: se termina la propria Iniziativa immerso in un corso d’acqua subisce 2d6 Eterei diretti; pioggia e schizzi non bastano. I due eventi si risolvono separatamente e impediscono la rigenerazione."
+    },
+    {
+      "nome": "Invito e paletto",
+      "effetto": "Non oltrepassa la soglia di una dimora abitata senza invito cosciente di un occupante legittimo per quell’ingresso. Un Vampiro già Svenuto nel proprio rifugio può essere bloccato con un paletto di legno nel cuore: un minuto continuativo e accesso al torace. Rimane Paralizzato finché il paletto non viene tolto, senza trasformarsi in nebbia; non viene distrutto automaticamente. I normali colpi di legno in combattimento non impongono questo esito."
+    },
+    {
+      "nome": "Nebbia di fuga",
+      "effetto": "Una volta per ventiquattro ore, quando un danno lo porterebbe a 0 PV fuori dal rifugio, può trasformarsi automaticamente nella nebbia descritta, se non è al sole o immerso nell’acqua corrente. Questa è un’eccezione specifica al fuori combattimento: rimane a 0 PV e dispone di due ore per raggiungere il rifugio. Non attacca, non usa Fascino, non rigenera e non torna umanoide lungo il tragitto. La forma non è immune ai danni: gli ulteriori attacchi conservano i propri effetti e possono causarne la morte o distruzione effettiva secondo il §4.2. Non riattiva la fuga sullo stesso danno o una seconda volta."
+    },
+    {
+      "nome": "Ricomposizione",
+      "effetto": "Se raggiunge il rifugio in tempo, torna umanoide e rimane fuori combattimento. Dopo un’ora ininterrotta recupera 1 PV, può riprendere la rigenerazione e torna all’attività al proprio turno successivo salvo altri impedimenti; dopo ventiquattro ore indisturbate nel rifugio ricompone anche le Menomazioni espressamente subite. Il paletto impedisce entrambi i recuperi finché presente. Se non arriva entro due ore, il corpo si distrugge. Non si usa un contatore di Morente."
+    },
+    {
+      "nome": "Progenie e obiettivi",
+      "effetto": "Un umanoide morto effettivamente per il Morso e sepolto può diventare Progenie dopo ventiquattro ore: prima del risveglio il vincolo è rimovibile con Negare Potere, confronto 9, oppure impedito rendendo il cadavere inadatto. Nessuna trasformazione da zero PV o da un singolo Morso. Massimo quattro Progenie vincolate, ciascuna con propria scheda, Azioni e PX. Ordini udibili entro dodici Q alla propria Iniziativa, senza Azioni aggiuntive o condivisione dei sensi. Se il Vampiro è distrutto, le Progenie già animate diventano autonome."
+    },
+    {
+      "nome": "Altri movimenti",
+      "effetto": "arrampicata 6 Q al Passo; spazio 1 × 1 Q"
+    }
+  ],
+  "gs_px": {
+    "gs": "Mito",
+    "px": 200,
+    "per_pg": 4
+  },
+  "_bestiario": {
+    "campi": {
+      "pv": "Mostri 0.69",
+      "pm": "Mostri 0.69",
+      "caratteristiche": "Mostri 0.69",
+      "ar": "Mostri 0.69",
+      "difese": "Mostri 0.69",
+      "salvezze": "Mostri 0.69",
+      "iniziativa": "Mostri 0.69",
+      "azioni": "Mostri 0.69",
+      "movimento": "Mostri 0.69",
+      "spazio": "Mostri 0.69",
+      "abilita": "Mostri 0.69",
+      "attacchi": "Mostri 0.69",
+      "capacita": "Mostri 0.69",
+      "gs_px": "Mostri 0.69"
+    },
+    "edizione": "Mostri 0.69",
+    "sistema_salute": "solo_PV"
+  }
+}

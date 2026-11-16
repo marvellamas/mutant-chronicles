@@ -1,0 +1,122 @@
+{
+  "formato": "mutant-nemico",
+  "versione": 1,
+  "id": "djinni",
+  "nome": "Djinni",
+  "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Djinni",
+  "taglia": "grande",
+  "note": "Genio dell’Aria che domina le correnti e combatte tra vortici e scariche. È capace di restare sospeso, ma il suo corpo è tangibile e non attraversa automaticamente una parete.",
+  "pv": 125,
+  "pm": 60,
+  "caratteristiche": {
+    "FOR": 10,
+    "DES": 8,
+    "COS": 9,
+    "INT": 7,
+    "SAG": 7,
+    "CAR": 10
+  },
+  "ar": {
+    "totale": 4,
+    "magica": 2
+  },
+  "difese": 14,
+  "salvezze": {
+    "tempra": 14,
+    "riflessi": 14,
+    "volonta": 15,
+    "magia": 14
+  },
+  "iniziativa": 3,
+  "azioni": {
+    "principali": 3,
+    "movimento": 1
+  },
+  "movimento": {
+    "passo": 6,
+    "corsa": 12,
+    "scatto": 18,
+    "volo": 18
+  },
+  "spazio": "2 × 2 Q",
+  "abilita": [
+    {
+      "nome": "Armi da mischia",
+      "va": 16
+    },
+    {
+      "nome": "Corpo a corpo",
+      "va": 14
+    },
+    {
+      "nome": "Atletica",
+      "va": 14
+    },
+    {
+      "nome": "Percezione",
+      "va": 14
+    },
+    {
+      "nome": "Oratoria",
+      "va": 15
+    }
+  ],
+  "capacita": [
+    {
+      "nome": "Vortice",
+      "effetto": "VA —. Danno: Immobilizzato; Tempra −2. Portata/costo: Origine entro 12 Q; 1 AzP e 4 PM; "
+    },
+    {
+      "nome": "Aria e protezioni",
+      "effetto": "Scurovisione 24 Q. Immune a danni ed effetti secondari da Elettricità e Fulmine e ai danni da tuono magico; non è immune a ogni Contusione o onda d’urto meccanica. Il Fulmine della scimitarra è una capacità personale: l’arma recuperata resta Comune e Naturale, senza questa proprietà. Nessuna Parata naturale."
+    },
+    {
+      "nome": "Creare il vortice",
+      "effetto": "Una AzP e quattro PM: cilindro di raggio un Q e altezza sei Q, con base libera visibile entro 12 Q, per tre Round senza Concentrazione. Un solo vortice attivo. All’attivazione ogni altra creatura al suo interno, alleati compresi, effettua Tempra −2; fallimento Immobilizzato, con braccia utilizzabili. Non infligge danni, non solleva dal suolo, non affoga e non insegue da solo. Taglia massimo 2 × 2 Q; solidi bloccano la propagazione. Il Djinni non ne è trattenuto."
+    },
+    {
+      "nome": "Guidare e liberarsi",
+      "effetto": "Una AzP del Djinni sposta il vortice fino a sei Q lungo un percorso libero e visibile entro 12 Q da lui. Trascina le vittime già trattenute soltanto dove passano, senza urti dannosi; in caso di ostacolo il movimento si ferma. Una creatura appena raggiunta effettua Tempra −2, al massimo una esposizione per Round per questo vortice. Liberarsi costa una AzP e Atletica −2: successo termina la propria presa; può poi uscire usando il Movimento ancora disponibile, senza spostamento gratuito. Un alleato a Contatto usa la stessa procedura. Non riprende chi si è liberato nello stesso Round."
+    },
+    {
+      "nome": "Termine del vortice",
+      "effetto": "Svenuto o morte del Djinni, perdita di vista della base, scadenza o Negare Potere terminano il vortice, confronto 9. Può scioglierlo senza AzP alla propria Iniziativa. La durata fissa sostituisce la Concentrazione dell’originale: guidarlo e combattere consumano le tre AzP ordinarie, senza turni o attacchi supplementari."
+    },
+    {
+      "nome": "Armi e Fulmine",
+      "effetto": "Massimo tre attacchi d’arma o Pugno per Round, Opportunità compresa; usare o guidare Vortice consuma le stesse AzP. Dopo danno finale di scimitarra e superamento di Isolante, Tempra 0 o impossibilità di spendere Azioni fuori dalla propria Iniziativa per 1+1d3 Round, secondo Fulmine del Giocatore. Nessun secondo danno elettrico o Stordito automatico."
+    },
+    {
+      "nome": "Servizio e dotazione",
+      "effetto": "Usa le capacità comuni dei geni ed evoca Aria. Volo levitante: non deve atterrare quando riposa, ma da Svenuto perde il sostegno e cade. Scimitarra grande Comune PI 6, PS Integrità 10; può Parare con l’arma pronta. I valori dell’arma in questa scheda richiedono la corporatura del Djinni. I 220 PX non includono un elementale o altri servitori."
+    },
+    {
+      "nome": "Altri movimenti",
+      "effetto": "spazio 2 × 2 Q"
+    }
+  ],
+  "gs_px": {
+    "gs": "Mito",
+    "px": 220,
+    "per_pg": 4
+  },
+  "_bestiario": {
+    "campi": {
+      "pv": "Mostri 0.69",
+      "pm": "Mostri 0.69",
+      "caratteristiche": "Mostri 0.69",
+      "ar": "Mostri 0.69",
+      "difese": "Mostri 0.69",
+      "salvezze": "Mostri 0.69",
+      "iniziativa": "Mostri 0.69",
+      "azioni": "Mostri 0.69",
+      "movimento": "Mostri 0.69",
+      "spazio": "Mostri 0.69",
+      "abilita": "Mostri 0.69",
+      "capacita": "Mostri 0.69",
+      "gs_px": "Mostri 0.69"
+    },
+    "edizione": "Mostri 0.69",
+    "sistema_salute": "solo_PV"
+  }
+}

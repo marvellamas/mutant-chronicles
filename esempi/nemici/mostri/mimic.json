@@ -3,7 +3,7 @@
   "versione": 1,
   "id": "mimic",
   "nome": "Mimic",
-  "fonte": "dal Manuale dei Mostri v0.46 (Word del 27/10/2026), cap. 8 «Catalogo delle creature» — Melme funghi e imitatori",
+  "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Mimic",
   "caratteristiche": {
     "FOR": 8,
     "DES": 6,
@@ -101,9 +101,25 @@
   "immunita": [
     "a-terra"
   ],
-  "note": "Non ha automaticamente un linguaggio parlato; un esemplare che comprende un’offerta può scambiare il passaggio con nutrimento. Un Mimic che imita una porta non sostituisce un’intera parete. Condotta: immobilizza una preda e la morde; sotto 9 PV o a Ferita Profonda può rilasciarla e fuggire. Fonte: Mimic, p. 220.",
+  "note": "Predatore mutaforma • oggetto mimetico e adesione • Natura Comune. Condotta. Immobilizza una preda e la morde; mantenere l’adesione non concede altri attacchi. Sotto 12 PV può rilasciarla e tentare la fuga. Un esemplare capace di comprendere un’offerta può scambiare il passaggio con nutrimento; questo profilo non possiede automaticamente un linguaggio parlato.",
   "_bestiario": {
     "edizione": "Mostri 0.69",
-    "sistema_salute": "solo_PV"
+    "sistema_salute": "solo_PV",
+    "campi": {
+      "pv": "Mostri 0.69",
+      "pm": "Mostri 0.69",
+      "caratteristiche": "Mostri 0.69",
+      "ar": "Mostri 0.69",
+      "difese": "Mostri 0.69",
+      "salvezze": "Mostri 0.69",
+      "iniziativa": "Mostri 0.69",
+      "azioni": "Mostri 0.69",
+      "movimento": "Mostri 0.69",
+      "spazio": "Mostri 0.69",
+      "abilita": "Mostri 0.47",
+      "attacchi": "Mostri 0.47",
+      "capacita": "Mostri 0.47",
+      "gs_px": "Mostri 0.69"
+    }
   }
 }

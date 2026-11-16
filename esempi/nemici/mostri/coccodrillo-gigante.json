@@ -3,7 +3,7 @@
   "versione": 1,
   "id": "coccodrillo-gigante",
   "nome": "Coccodrillo gigante",
-  "fonte": "dal Manuale dei Mostri v0.46 (Word del 27/10/2026), cap. 8 «Catalogo delle creature» — Bestie e predatori",
+  "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Coccodrillo gigante",
   "caratteristiche": {
     "FOR": 9,
     "DES": 4,
@@ -97,9 +97,26 @@
       "effetto": "Nuoto 10 / 20 / 30 Q. Apnea 30 minuti (sostituisce i Round pari a COS, senza respirazione acquatica); esaurita, PS, perdita di coscienza e danni del §5.23, un Round d’aria la ripristina. +2 a Furtività nell’acqua con riparo (Furtività 13). Per trascinare una preda riluttante mentre tiene (niente Corsa/Scatto/Carica): 1 AzP e l’AzM intera, nuova opposizione, poi fino a 2 Q a terra o 4 Q a nuoto; percorso misto con budget 4 (1 Q a terra = 2, 1 Q a nuoto = 1). Prima di un pericolo letale la vittima effettua la normale PS Riflessi."
     }
   ],
-  "note": "Condotta: sfrutta occultamento e sponde senza sorpresa automatica; sotto 16 PV o a Ferita Seria rilascia la preda e cerca acqua profonda.",
+  "note": "Bestia rettile • predatore anfibio da agguato • Natura Comune. Condotta. Sfrutta occultamento e sponde, senza ottenere sorpresa automatica. Sotto 21 PV può rilasciare la preda e cercare acqua profonda. Nuoto, apnea e trascinamento sono descritti nella pagina seguente.",
   "_bestiario": {
     "edizione": "Mostri 0.69",
-    "sistema_salute": "solo_PV"
-  }
+    "sistema_salute": "solo_PV",
+    "campi": {
+      "pv": "Mostri 0.69",
+      "pm": "Mostri 0.69",
+      "caratteristiche": "Mostri 0.69",
+      "ar": "Mostri 0.69",
+      "difese": "Mostri 0.69",
+      "salvezze": "Mostri 0.69",
+      "iniziativa": "Mostri 0.69",
+      "azioni": "Mostri 0.69",
+      "movimento": "Mostri 0.69",
+      "spazio": "Mostri 0.69",
+      "abilita": "Mostri 0.47",
+      "attacchi": "Mostri 0.47",
+      "capacita": "Mostri 0.47",
+      "gs_px": "Mostri 0.69"
+    }
+  },
+  "taglia": "grande"
 }

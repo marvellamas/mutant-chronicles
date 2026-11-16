@@ -3,7 +3,7 @@
   "versione": 1,
   "id": "manticora",
   "nome": "Manticora",
-  "fonte": "dal Manuale dei Mostri v0.46 (Word del 27/10/2026), cap. 8 «Catalogo delle creature» — prime quindici schede",
+  "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Manticora",
   "caratteristiche": {
     "FOR": 8,
     "DES": 7,
@@ -71,8 +71,7 @@
       "modalita": [
         "S"
       ],
-      "ac": 1,
-      "note": "VA 12 a 1–10 Q, 10 a 11–20 Q, 8 a 21–40 Q; oltre 40 Q non colpisce. Riserva di 24 spine."
+      "ac": 1
     }
   ],
   "abilita": [
@@ -115,9 +114,26 @@
       "effetto": "Vede entro 12 Q nel buio naturale, senza colori; non attraversa ostacoli né individua da sola chi è nascosto."
     }
   ],
-  "note": "Comprende e parla una lingua dell’ambientazione; può trattare (un tributo può risolvere l’incontro). Nome originale: Manticore, p. 213. Comportamento: cerca quota e Copertura; a Ferita Seria, con poche spine o davanti a una preda troppo costosa può ritirarsi o chiedere un tributo.",
+  "note": "Bestia alata • Natura Comune • tiratrice e predatrice • Manticore, p. 213. Sensi e protezioni: Scurovisione 12 Q; nessuna immunità. Comprende e parla una lingua dell’ambientazione.",
   "_bestiario": {
     "edizione": "Mostri 0.69",
-    "sistema_salute": "solo_PV"
-  }
+    "sistema_salute": "solo_PV",
+    "campi": {
+      "pv": "Mostri 0.69",
+      "pm": "Mostri 0.69",
+      "caratteristiche": "Mostri 0.69",
+      "ar": "Mostri 0.69",
+      "difese": "Mostri 0.69",
+      "salvezze": "Mostri 0.69",
+      "iniziativa": "Mostri 0.69",
+      "azioni": "Mostri 0.69",
+      "movimento": "Mostri 0.69",
+      "spazio": "Mostri 0.69",
+      "abilita": "Mostri 0.69",
+      "attacchi": "Mostri 0.69",
+      "capacita": "Mostri 0.47",
+      "gs_px": "Mostri 0.69"
+    }
+  },
+  "taglia": "grande"
 }

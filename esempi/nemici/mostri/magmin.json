@@ -3,7 +3,7 @@
   "versione": 1,
   "id": "magmin",
   "nome": "Magmin",
-  "fonte": "dal Manuale dei Mostri v0.46 (Word del 27/10/2026), cap. 8 «Catalogo delle creature» — Costrutti e creature elementali",
+  "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Magmin",
   "caratteristiche": {
     "FOR": 3,
     "DES": 7,
@@ -94,9 +94,24 @@
     "sanguinamento",
     "incendiato"
   ],
-  "note": "PM —: nessuna riserva. Creatura elementale di magma con mente. Comportamento: cerca calore e combustibile; sotto 4 PV o a Ferita Profonda cerca calore o fuga. Acqua e sabbia spengono gli incendi ma non lo distruggono.",
+  "note": "Creatura elementale in guscio di magma • incendiario • Natura Comune.",
   "_bestiario": {
     "edizione": "Mostri 0.69",
-    "sistema_salute": "solo_PV"
+    "sistema_salute": "solo_PV",
+    "campi": {
+      "pv": "Mostri 0.69",
+      "caratteristiche": "Mostri 0.69",
+      "ar": "Mostri 0.69",
+      "difese": "Mostri 0.69",
+      "salvezze": "Mostri 0.69",
+      "iniziativa": "Mostri 0.69",
+      "azioni": "Mostri 0.69",
+      "movimento": "Mostri 0.69",
+      "spazio": "Mostri 0.69",
+      "abilita": "Mostri 0.69",
+      "attacchi": "Mostri 0.47",
+      "capacita": "Mostri 0.47",
+      "gs_px": "Mostri 0.69"
+    }
   }
 }

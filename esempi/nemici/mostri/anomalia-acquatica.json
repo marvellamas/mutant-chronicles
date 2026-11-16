@@ -1,0 +1,119 @@
+{
+  "formato": "mutant-nemico",
+  "versione": 1,
+  "id": "anomalia-acquatica",
+  "nome": "Anomalia acquatica",
+  "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Anomalia acquatica",
+  "taglia": "grande",
+  "note": "Spirito dell’Acqua legato a un bacino, capace di sollevare una forma serpentiforme e trascinare un intruso sotto la superficie. Non è una piovra né un genio e non porta con sé il proprio luogo di vincolo.",
+  "pv": 55,
+  "caratteristiche": {
+    "FOR": 8,
+    "DES": 8,
+    "COS": 6,
+    "INT": 5,
+    "SAG": 5,
+    "CAR": 5
+  },
+  "ar": {
+    "totale": 2,
+    "magica": 0
+  },
+  "difese": 12,
+  "salvezze": {
+    "tempra": 11,
+    "riflessi": 13,
+    "volonta": 10,
+    "magia": 11
+  },
+  "iniziativa": 3,
+  "azioni": {
+    "principali": 2,
+    "movimento": 1
+  },
+  "movimento": {
+    "passo": 0,
+    "corsa": "non_consentito",
+    "scatto": "non_consentito"
+  },
+  "spazio": "2 × 2 Q",
+  "abilita": [
+    {
+      "nome": "Corpo a corpo",
+      "va": 13
+    },
+    {
+      "nome": "Atletica",
+      "va": 13
+    },
+    {
+      "nome": "Furtività",
+      "va": 13
+    },
+    {
+      "nome": "Percezione",
+      "va": 11
+    }
+  ],
+  "capacita": [
+    {
+      "nome": "Avvolgere",
+      "effetto": "VA 13. Danno: Presa contrapposta; nessun danno. Portata/costo: 2 Q; 1 AzP; "
+    },
+    {
+      "nome": "Stringere",
+      "effetto": "VA 13. Danno: 2d6+2 Naturale, Contusione; AC 1. Portata/costo: Vittima già trattenuta; 1 AzP; "
+    },
+    {
+      "nome": "Acqua animata",
+      "effetto": "Non respira e non necessita di cibo o sonno. Immune a veleno, malattie biologiche, Sanguinamento, Affaticamento, Paralizzato e sonno indotto. Dimezza per eccesso danni da Fuoco e Naturali da Contusione, Taglio o Perforazione dopo Difese e prima dell’AR; altre fonti normali. Ha una mente e Volontà ma nessuna riserva PM: il trattino non è zero. Dardo Spirituale può ferire l’animazione, senza drenare un bacino o un evocatore."
+    },
+    {
+      "nome": "Bacino vincolato",
+      "effetto": "Prima della scena definire il volume materiale al quale è legata: almeno un bacino di 2 × 2 Q e un Q di profondità. Può muoversi soltanto nell’acqua in continuità con quel bacino; la forma può protendersi fino a due Q oltre il bordo mantenendo il collegamento. Non segue una borraccia riempita dal bacino, non salta sulla terra e non attraversa pareti a tenuta. La zona non comprende automaticamente un intero fiume o una falda sconosciuta."
+    },
+    {
+      "nome": "Presa e stritolamento",
+      "effetto": "Avvolgere costa una AzP: Corpo a corpo 13 contrapposto a Corpo a corpo o Atletica di un bersaglio di spazio massimo un Q. Successo Immobilizzato con braccia libere, nessun danno; una sola vittima alla volta. Stringere costa una AzP e ripete la contrapposta, con il normale −4 fisico della vittima: se prevale infligge il danno scritto, ridotto dall’AR. Il mantenimento da solo non causa danni. Nessuna seconda Difesa alla stessa contrapposta."
+    },
+    {
+      "nome": "Trascinare e affogare",
+      "effetto": "Una AzP e nuova contrapposta come Stringere, senza danno: successo trascina la vittima di un Q verso uno spazio libero del bacino. Quando la posizione consente davvero di immergerle le vie respiratorie può usare Affogare, una AzP e contrapposta Corpo a corpo contro Corpo a corpo o Atletica, senza danno di Schianto; successo mantiene Immobilizzato e impedisce il respiro. Una sola vittima complessiva. Aria, PS e soffocamento seguono Giocatore §5.23; presa e trascinamento non fanno perdere tutti i PV o PM."
+    },
+    {
+      "nome": "Liberazione e invisibilità",
+      "effetto": "Vittima o alleato a Contatto possono spendere una AzP e contrapporre Corpo a corpo o Atletica al 13 dell’Anomalia per liberare; applicare il −4 a chi è Immobilizzato, pareggi a chi trattiene. Rilascio o incapacità di agire dell’Anomalia terminano la presa. È invisibile soltanto quando tutto il corpo è immerso: applicare le normali limitazioni contro non visto; una parte emersa è visibile. Percezione cieca sei Q, bloccata dai solidi. Non ha Parata naturale."
+    },
+    {
+      "nome": "Fine della manifestazione",
+      "effetto": "Negare Potere può sciogliere il legame al bacino, confronto 9, dissolvendo la manifestazione e liberando le vittime. Lo stesso avviene se tutto il volume vincolato viene realmente prosciugato o separato dal corpo; un secchio sottratto o un attacco da Fuoco non bastano. Sono eccezioni esplicite del legame. Gli attacchi ordinari consumano i PV; a 0 è fuori combattimento senza dissoluzione automatica (§4.2). La scheda non assegna una procedura di creazione o un recupero di PM dal bacino."
+    },
+    {
+      "nome": "Altri movimenti",
+      "effetto": "Solo nuoto 12 / 24 / 36 Q nel bacino vincolato; spazio 2 × 2 Q"
+    }
+  ],
+  "gs_px": {
+    "gs": "Veterano",
+    "px": 50,
+    "per_pg": 4
+  },
+  "_bestiario": {
+    "campi": {
+      "pv": "Mostri 0.69",
+      "caratteristiche": "Mostri 0.69",
+      "ar": "Mostri 0.69",
+      "difese": "Mostri 0.69",
+      "salvezze": "Mostri 0.69",
+      "iniziativa": "Mostri 0.69",
+      "azioni": "Mostri 0.69",
+      "movimento": "Mostri 0.69",
+      "spazio": "Mostri 0.69",
+      "abilita": "Mostri 0.69",
+      "capacita": "Mostri 0.69",
+      "gs_px": "Mostri 0.69"
+    },
+    "edizione": "Mostri 0.69",
+    "sistema_salute": "solo_PV"
+  }
+}

@@ -3,7 +3,7 @@
   "versione": 1,
   "id": "ratto",
   "nome": "Ratto",
-  "fonte": "dal Manuale dei Mostri v0.46 (Word del 27/10/2026), cap. 8 «Catalogo delle creature» — Sciami e piccola fauna",
+  "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Ratto",
   "caratteristiche": {
     "FOR": 1,
     "DES": 5,
@@ -48,11 +48,11 @@
       "va": 6,
       "danno": "1",
       "natura": "Naturale",
-      "ac": 1,
       "proprieta": [
         "Perforazione"
       ],
-      "portata_q": 1
+      "portata_q": 1,
+      "ac": 1
     }
   ],
   "abilita": [
@@ -91,9 +91,25 @@
       "effetto": "+2 a Percezione quando l’olfatto è determinante: un odore accessibile può rivelare una traccia, ma non localizza ogni creatura oltre pareti o in un ambiente saturo di altri odori (restano le Prove per seguire una pista). Può usare un varco adatto al suo corpo reale; una fessura chiusa non diventa percorribile perché occupa una pedina. Nessuna aderenza a pareti lisce."
     }
   ],
-  "note": "Un Morso per Round, Opportunità compresa; non inocula veleno o malattie automaticamente e non ha Tattiche di branco. Testa e Torace = capo e tronco; Braccia = zampe anteriori; Gambe = posteriori. Condotta: cerca un anfratto libero; a Ferita Superficiale tende alla fuga. Fonte: Rat, p. 335.",
+  "note": "Piccolo roditore • olfatto acuto e scurovisione • Natura Comune. Condotta. Un Morso per Round, Opportunità compresa. Non comprende linguaggi e non inocula veleno o malattie automaticamente. Cerca un anfratto libero; a Ferita Superficiale tende alla fuga. Il profilo non aggiunge Tattiche di branco quando sono presenti altri ratti.",
   "_bestiario": {
     "edizione": "Mostri 0.69",
-    "sistema_salute": "solo_PV"
+    "sistema_salute": "solo_PV",
+    "campi": {
+      "pv": "Mostri 0.69",
+      "pm": "Mostri 0.69",
+      "caratteristiche": "Mostri 0.69",
+      "ar": "Mostri 0.69",
+      "difese": "Mostri 0.69",
+      "salvezze": "Mostri 0.69",
+      "iniziativa": "Mostri 0.69",
+      "azioni": "Mostri 0.69",
+      "movimento": "Mostri 0.69",
+      "spazio": "Mostri 0.69",
+      "abilita": "Mostri 0.69",
+      "attacchi": "Mostri 0.69",
+      "capacita": "Mostri 0.47",
+      "gs_px": "Mostri 0.69"
+    }
   }
 }

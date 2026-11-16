@@ -3,7 +3,7 @@
   "versione": 1,
   "id": "bulette",
   "nome": "Bulette",
-  "fonte": "dal Manuale dei Mostri v0.46 (Word del 27/10/2026), cap. 8 «Catalogo delle creature» — prime quindici schede",
+  "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Bulette",
   "caratteristiche": {
     "FOR": 10,
     "DES": 5,
@@ -100,9 +100,26 @@
       "effetto": "Vede entro 12 Q nel buio naturale, senza colori; non attraversa ostacoli né individua da sola chi è nascosto."
     }
   ],
-  "note": "Furtività 9 sotto terra, 6 in superficie. Nessuna Parata naturale; non è immune a Terrorizzato. Nome originale: Bulette, p. 34. Comportamento: punta alla preda raggiungibile; a Ferita Seria può ritirarsi sottoterra. Dopo il salto non ha l’AzM per una Schivata nello stesso Round.",
+  "note": "Bestia corazzata • Natura Comune • predatrice sotterranea • Bulette, p. 34. Sensi e protezioni: Scurovisione 12 Q; percezione delle vibrazioni 12 Q. Nessuna immunità generale.",
   "_bestiario": {
     "edizione": "Mostri 0.69",
-    "sistema_salute": "solo_PV"
-  }
+    "sistema_salute": "solo_PV",
+    "campi": {
+      "pv": "Mostri 0.69",
+      "pm": "Mostri 0.69",
+      "caratteristiche": "Mostri 0.69",
+      "ar": "Mostri 0.69",
+      "difese": "Mostri 0.69",
+      "salvezze": "Mostri 0.69",
+      "iniziativa": "Mostri 0.69",
+      "azioni": "Mostri 0.69",
+      "movimento": "Mostri 0.69",
+      "spazio": "Mostri 0.69",
+      "abilita": "Mostri 0.47",
+      "attacchi": "Mostri 0.47",
+      "capacita": "Mostri 0.47",
+      "gs_px": "Mostri 0.69"
+    }
+  },
+  "taglia": "grande"
 }

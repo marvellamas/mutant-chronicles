@@ -1,0 +1,116 @@
+{
+  "formato": "mutant-nemico",
+  "versione": 1,
+  "id": "lemure",
+  "nome": "Lemure",
+  "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Lemure",
+  "note": "Creatura lenta dalla forma carnosa e incompleta. Comprende consegne elementari e colpisce con i pugni, senza trasformarsi in un diavolo più potente durante il combattimento.",
+  "pv": 16,
+  "pm": 4,
+  "caratteristiche": {
+    "FOR": 5,
+    "DES": 2,
+    "COS": 5,
+    "INT": 1,
+    "SAG": 5,
+    "CAR": 1
+  },
+  "ar": {
+    "totale": 0,
+    "magica": 0
+  },
+  "difese": 6,
+  "salvezze": {
+    "tempra": 9,
+    "riflessi": 6,
+    "volonta": 6,
+    "magia": 9
+  },
+  "iniziativa": 0,
+  "azioni": {
+    "principali": 1,
+    "movimento": 1
+  },
+  "movimento": {
+    "passo": 3,
+    "corsa": 6,
+    "scatto": 9
+  },
+  "spazio": "1 Q",
+  "abilita": [
+    {
+      "nome": "Corpo a corpo",
+      "va": 9
+    },
+    {
+      "nome": "Atletica",
+      "va": 7
+    },
+    {
+      "nome": "Percezione",
+      "va": 8
+    },
+    {
+      "nome": "Furtività",
+      "va": 6
+    }
+  ],
+  "attacchi": [
+    {
+      "nome": "Pugno",
+      "tipo": "ravvicinato",
+      "va": 9,
+      "danno": "1d4",
+      "natura": "Naturale",
+      "proprieta": [
+        "Contusione",
+        "AC 1"
+      ],
+      "portata_q": 1,
+      "ac": 1
+    }
+  ],
+  "capacita": [
+    {
+      "nome": "Corpo e sensi",
+      "effetto": "Usa le protezioni elementali comuni dei diavoli e la Vista infernale entro 24 Q. Non possiede la resistenza alle armi non argentate o Resistenza alla magia +2. Immune a fascinazione e Terrorizzato, non a ogni effetto mentale. Nessuna Parata naturale; massimo un Pugno per Round, Opportunità compresa."
+    },
+    {
+      "nome": "Mente e consegna",
+      "effetto": "Ha mente e quattro PM personali: sviene a zero PM e può subire poteri mentali compatibili. Comprende la lingua della propria comunità, senza parlare o usare telepatia. Le cure biologiche compatibili agiscono sul corpo vivente."
+    },
+    {
+      "nome": "Sconfitta",
+      "effetto": "Zero PV non provoca scomparsa o rianimazione. La ricostituzione dopo giorni e le promozioni della fonte non fanno parte del profilo base: richiederebbero un legame distinto, con condizioni di termine e PX dichiarati. Non occorre un oggetto benedetto per rendere efficace una normale sconfitta."
+    },
+    {
+      "nome": "Altri movimenti",
+      "effetto": "spazio 1 × 1 Q"
+    }
+  ],
+  "gs_px": {
+    "gs": "Principiante",
+    "px": 10,
+    "per_pg": 4
+  },
+  "_bestiario": {
+    "campi": {
+      "pv": "Mostri 0.69",
+      "pm": "Mostri 0.69",
+      "caratteristiche": "Mostri 0.69",
+      "ar": "Mostri 0.69",
+      "difese": "Mostri 0.69",
+      "salvezze": "Mostri 0.69",
+      "iniziativa": "Mostri 0.69",
+      "azioni": "Mostri 0.69",
+      "movimento": "Mostri 0.69",
+      "spazio": "Mostri 0.69",
+      "abilita": "Mostri 0.69",
+      "attacchi": "Mostri 0.69",
+      "capacita": "Mostri 0.69",
+      "gs_px": "Mostri 0.69"
+    },
+    "edizione": "Mostri 0.69",
+    "sistema_salute": "solo_PV"
+  }
+}

@@ -3,7 +3,7 @@
   "versione": 1,
   "id": "wight",
   "nome": "Wight",
-  "fonte": "dal Manuale dei Mostri v0.46 (Word del 27/10/2026), cap. 8 «Catalogo delle creature» — Non morti",
+  "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Wight",
   "caratteristiche": {
     "FOR": 7,
     "DES": 6,
@@ -125,9 +125,25 @@
   "immunita": [
     "sanguinamento"
   ],
-  "note": "AR 3 (2 intrinseca + 1 da armatura leggera). Inizia con spada e mano libera per il Tocco; l’arco richiede due mani (Colpo Singolo e Tiro Rapido). Comportamento: usa ripari dal sole; sotto 10 PV o a Ferita Seria valuta la ritirata.",
+  "note": "Non morto corporeo • combattente e comandante • Natura Comune. Condotta. Usa ripari dal sole e concentra i colpi su una minaccia. Comunica ordini udibili, senza telepatia o Azioni gratuite. Sotto 13 PV valuta una ritirata per conservare il proprio obiettivo.",
   "_bestiario": {
     "edizione": "Mostri 0.69",
-    "sistema_salute": "solo_PV"
+    "sistema_salute": "solo_PV",
+    "campi": {
+      "pv": "Mostri 0.69",
+      "pm": "Mostri 0.69",
+      "caratteristiche": "Mostri 0.69",
+      "ar": "Mostri 0.69",
+      "difese": "Mostri 0.69",
+      "salvezze": "Mostri 0.69",
+      "iniziativa": "Mostri 0.69",
+      "azioni": "Mostri 0.69",
+      "movimento": "Mostri 0.69",
+      "spazio": "Mostri 0.69",
+      "abilita": "Mostri 0.69",
+      "attacchi": "Mostri 0.47",
+      "capacita": "Mostri 0.47",
+      "gs_px": "Mostri 0.69"
+    }
   }
 }

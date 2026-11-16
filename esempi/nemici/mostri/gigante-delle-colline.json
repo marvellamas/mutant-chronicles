@@ -3,7 +3,7 @@
   "versione": 1,
   "id": "gigante-delle-colline",
   "nome": "Gigante delle colline",
-  "fonte": "dal Manuale dei Mostri v0.46 (Word del 27/10/2026), cap. 8 «Catalogo delle creature» — Giganti e abitanti delle montagne",
+  "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Gigante delle colline",
   "caratteristiche": {
     "FOR": 10,
     "DES": 4,
@@ -96,9 +96,26 @@
       "effetto": "Atletica 15 e soglie FOR × 20 / × 40 / × 80 kg per sollevare, trascinare o forzare (§4), rispettando Integrità e caratteristiche dell’ostacolo. Nessun danno doppio da assedio."
     }
   ],
-  "note": "AR 2 biologica, nessuna armatura. Maglio = Martello a due mani (+3 ordinario, +1 innato, portata 2 Q). Comportamento: raggiunge il bersaglio più accessibile; sotto 15 PV o a Ferita Profonda valuta fuga, resa o trattativa.",
+  "note": "Gigante • assaltatore e razziatore • Natura Comune. Condotta. Tende a raggiungere il bersaglio più accessibile e può farsi attirare lontano da una posizione. Cibo, territorio e allontanamento dei rivali permettono obiettivi diversi dall’uccisione. Sotto 20 PV valuta fuga o resa; un vantaggio numerico concreto può trattenerlo.",
   "_bestiario": {
     "edizione": "Mostri 0.69",
-    "sistema_salute": "solo_PV"
-  }
+    "sistema_salute": "solo_PV",
+    "campi": {
+      "pv": "Mostri 0.69",
+      "pm": "Mostri 0.69",
+      "caratteristiche": "Mostri 0.69",
+      "ar": "Mostri 0.69",
+      "difese": "Mostri 0.69",
+      "salvezze": "Mostri 0.69",
+      "iniziativa": "Mostri 0.69",
+      "azioni": "Mostri 0.69",
+      "movimento": "Mostri 0.69",
+      "spazio": "Mostri 0.69",
+      "abilita": "Mostri 0.69",
+      "attacchi": "Mostri 0.47",
+      "capacita": "Mostri 0.47",
+      "gs_px": "Mostri 0.69"
+    }
+  },
+  "taglia": "grande"
 }

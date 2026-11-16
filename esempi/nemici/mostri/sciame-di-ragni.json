@@ -1,0 +1,137 @@
+{
+  "formato": "mutant-nemico",
+  "versione": 1,
+  "id": "sciame-di-ragni",
+  "nome": "Sciame di ragni",
+  "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Sciame di ragni",
+  "note": "Sciame di piccoli ragni che si muove come un solo avversario. Aderisce a superfici adatte e usa le vibrazioni delle tele presenti; il profilo non aggiunge veleno o lancio di ragnatele da combattimento.",
+  "pv": 32,
+  "pm": 4,
+  "caratteristiche": {
+    "FOR": 3,
+    "DES": 6,
+    "COS": 5,
+    "INT": 1,
+    "SAG": 3,
+    "CAR": 1
+  },
+  "ar": {
+    "totale": 1,
+    "magica": 0
+  },
+  "difese": 9,
+  "salvezze": {
+    "tempra": 9,
+    "riflessi": 10,
+    "volonta": 6,
+    "magia": 7
+  },
+  "iniziativa": 1,
+  "azioni": {
+    "principali": 1,
+    "movimento": 1
+  },
+  "movimento": {
+    "passo": 4,
+    "corsa": 8,
+    "scatto": 12
+  },
+  "spazio": "1 Q",
+  "abilita": [
+    {
+      "nome": "Corpo a corpo",
+      "va": 10
+    },
+    {
+      "nome": "Atletica",
+      "va": 9
+    },
+    {
+      "nome": "Percezione",
+      "va": 7
+    },
+    {
+      "nome": "Furtività",
+      "va": 10
+    }
+  ],
+  "attacchi": [
+    {
+      "nome": "Morsi con PV 17–32",
+      "tipo": "ravvicinato",
+      "va": 10,
+      "danno": "2d4",
+      "natura": "Naturale",
+      "proprieta": [
+        "Perforazione",
+        "AC 1"
+      ],
+      "portata_q": 0,
+      "ac": 1
+    },
+    {
+      "nome": "Morsi con PV 1–16",
+      "tipo": "ravvicinato",
+      "va": 10,
+      "danno": "1d4",
+      "natura": "Naturale",
+      "proprieta": [
+        "Perforazione",
+        "AC 1"
+      ],
+      "portata_q": 0,
+      "ac": 1
+    }
+  ],
+  "capacita": [
+    {
+      "nome": "Corpo distribuito",
+      "effetto": "Un solo vivente biologico collettivo ai fini della scheda, con una riserva di PV, PM e Azioni. Applica resistenze, immunità, Ferite e limiti di recupero comuni degli sciami. A dodici PV o meno danno ridotto. Nessuna Parata naturale, veleno automatico o mente telepatica. Iniziativa usa il bonus positivo di DES +1."
+    },
+    {
+      "nome": "Un solo attacco",
+      "effetto": "Una AzP totale e massimo un attacco di Morsi per Round, Opportunità compatibile compresa; deve condividere lo spazio reale della vittima. L’AR non viene aggirata per il numero di ragni, le zampe attraversate o la presenza di una tela. Nessuna presa, cecità o paralisi implicita. Un vetro o contenitore chiuso che impedisca l’accesso continua a proteggere."
+    },
+    {
+      "nome": "Aderenza e passaggi",
+      "effetto": "Percorre pareti e soffitti solidi compatibili senza Prova, fino a quattro Q al Passo con la propria AzM; supporti friabili o eccezionali possono richiedere Atletica o impedire l’aderenza. Ignora Terreno Difficile e restrizioni delle ragnatele ordinarie, non ogni vincolo magico. Non attraversa materia compatta e le fessure devono consentire il passaggio dei ragni."
+    },
+    {
+      "nome": "Percezione della tela",
+      "effetto": "Mantiene Percezione sette entro due Q sul supporto continuo come lo Sciame di insetti. In contatto con una tela continua esistente può inoltre tentare Percezione entro sei Q per localizzare il Q di creature in movimento sulla stessa tela; ostacoli che interrompono la continuità la fermano. Niente identità, pensieri o vista per poteri. Un corpo immobile non viene individuato automaticamente. Non crea una Rete da attacco con questa capacità."
+    },
+    {
+      "nome": "Condotta e anatomia",
+      "effetto": "Può seguire prede accessibili, difendere una tela o disperdersi verso ripari, senza Volo o Scavo. A metà PV tende al riparo usando le Azioni disponibili. Localizzazioni funzionali degli sciami: orientamento, coesione, componenti offensive e locomozione. Ricomporre il gruppo mantiene risorse e condizioni annotate; non genera un nuovo avversario o PX aggiuntivi."
+    },
+    {
+      "nome": "Altri movimenti",
+      "effetto": "aderenza 4 Q al Passo; spazio condivisibile 1 × 1 Q"
+    }
+  ],
+  "gs_px": {
+    "gs": "Inesperto",
+    "px": 20,
+    "per_pg": 4
+  },
+  "_bestiario": {
+    "campi": {
+      "pv": "Mostri 0.69",
+      "pm": "Mostri 0.69",
+      "caratteristiche": "Mostri 0.69",
+      "ar": "Mostri 0.69",
+      "difese": "Mostri 0.69",
+      "salvezze": "Mostri 0.69",
+      "iniziativa": "Mostri 0.69",
+      "azioni": "Mostri 0.69",
+      "movimento": "Mostri 0.69",
+      "spazio": "Mostri 0.69",
+      "abilita": "Mostri 0.69",
+      "attacchi": "Mostri 0.69",
+      "capacita": "Mostri 0.69",
+      "gs_px": "Mostri 0.69"
+    },
+    "edizione": "Mostri 0.69",
+    "sistema_salute": "solo_PV"
+  }
+}

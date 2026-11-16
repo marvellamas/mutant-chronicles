@@ -3,7 +3,7 @@
   "versione": 1,
   "id": "cane-della-morte",
   "nome": "Cane della morte",
-  "fonte": "dal Manuale dei Mostri v0.46 (Word del 27/10/2026), cap. 8 «Catalogo delle creature» — Predatori straordinari",
+  "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Cane della morte",
   "caratteristiche": {
     "FOR": 6,
     "DES": 6,
@@ -48,12 +48,11 @@
       "va": 11,
       "danno": "1d6+2",
       "natura": "Naturale",
-      "portata_q": 1,
-      "ac": 1,
       "proprieta": [
         "Perforazione"
       ],
-      "note": "Con almeno 1 danno fisico finale a un vivente vulnerabile: vedi «Saliva infetta»."
+      "portata_q": 1,
+      "ac": 1
     }
   ],
   "abilita": [
@@ -98,9 +97,25 @@
       "effetto": "Malattia biologica naturale di Pericolosità IV, Seria; non infligge danni tossici immediati né modifica i PV massimi. Dopo almeno 1 danno fisico finale da Morso, Tempra senza modificatore evita; al massimo una PS di esposizione per bersaglio e Round, anche contro più Cani (superarla non dà immunità); chi è già infetto non aggiunge dosi o decorsi paralleli; l’immunità alle malattie biologiche (non quella ai veleni) impedisce l’infezione. Esordio dopo un’ora: febbre e infiammazione, −2 alle Prove fisiche (attacchi e Difese compresi), nessuna penalità alle PS; non è lo Stato Avvelenato. Decorso: ogni 24 ore dall’esposizione Tempra senza modificatore; fallimento 1d6 Naturale interni ai PV (ignora l’AR) e si azzera la sequenza di guarigione; successo senza danno e si registra una riuscita: due successi consecutivi eliminano la malattia. Il danno giornaliero usa PV e Ferite ordinari (se già a 0 PV, anche la Tempra per Ferite); la morte segue Morente. Cura Malattie dal livello 5 (10 minuti) la rimuove con la penalità, non danni e Ferite; Medicina può riconoscerla e impostare una terapia; Cura Avvelenamenti e antidoti non la curano. Contagio solo tramite saliva inoculata; nessun contagio per vicinanza, sangue o cura; la guarigione non dà immunità."
     }
   ],
-  "note": "Canide bicefalo; il nome non conferisce attacchi di morte istantanea. Non comprende linguaggi. Condotta: sotto 8 PV o a Ferita Profonda tende a ritirarsi. Fonte: Death Dog, p. 321.",
+  "note": "Canide bicefalo • assaltatore e portatore di malattia • Natura Comune.",
   "_bestiario": {
     "edizione": "Mostri 0.69",
-    "sistema_salute": "solo_PV"
+    "sistema_salute": "solo_PV",
+    "campi": {
+      "pv": "Mostri 0.69",
+      "pm": "Mostri 0.69",
+      "caratteristiche": "Mostri 0.69",
+      "ar": "Mostri 0.69",
+      "difese": "Mostri 0.69",
+      "salvezze": "Mostri 0.69",
+      "iniziativa": "Mostri 0.69",
+      "azioni": "Mostri 0.69",
+      "movimento": "Mostri 0.69",
+      "spazio": "Mostri 0.69",
+      "abilita": "Mostri 0.69",
+      "attacchi": "Mostri 0.69",
+      "capacita": "Mostri 0.47",
+      "gs_px": "Mostri 0.69"
+    }
   }
 }

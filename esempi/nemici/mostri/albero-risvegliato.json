@@ -3,7 +3,7 @@
   "versione": 1,
   "id": "albero-risvegliato",
   "nome": "Albero risvegliato",
-  "fonte": "dal Manuale dei Mostri v0.46 (Word del 27/10/2026), cap. 8 «Catalogo delle creature» — Vegetali e custodi delle foreste",
+  "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Albero risvegliato",
   "caratteristiche": {
     "FOR": 9,
     "DES": 3,
@@ -48,11 +48,11 @@
       "va": 12,
       "danno": "2d6+2",
       "natura": "Naturale",
-      "portata_q": 2,
-      "ac": 1,
       "proprieta": [
         "Contundente"
-      ]
+      ],
+      "portata_q": 2,
+      "ac": 1
     }
   ],
   "abilita": [
@@ -87,9 +87,26 @@
       "effetto": "Conosce una lingua legata al risveglio e può parlare. Non è un incantesimo mantenuto: Negare Potere non gli toglie la coscienza. Non ha Animare alberi, lanci di roccia o capacità da assedio. La chioma deve entrare nel passaggio."
     }
   ],
-  "note": "Altezza circa 6 Q. Furtività 13 immobile fra alberi compatibili. Vista e udito ordinari. Distinto dagli alberi mossi da un Treant. Condotta: blocca un accesso, avverte gli altri abitanti; sotto 10 PV o a Ferita Seria cerca riparo; con una sola AzP la Schivata impedisce lo Schianto di quel Round. Fonte: Awakened Tree, p. 317.",
+  "note": "Vegetale senziente • guardiano massiccio • Natura Comune. Condotta. Può bloccare un accesso con il corpo, avvertire altri abitanti o chiedere che si risparmino le piante. Sotto 13 PV tenta di fermare lo scontro o raggiungere riparo. Con una sola AzP scegliere una Schivata impedisce lo Schianto di quel Round.",
   "_bestiario": {
     "edizione": "Mostri 0.69",
-    "sistema_salute": "solo_PV"
-  }
+    "sistema_salute": "solo_PV",
+    "campi": {
+      "pv": "Mostri 0.69",
+      "pm": "Mostri 0.69",
+      "caratteristiche": "Mostri 0.69",
+      "ar": "Mostri 0.69",
+      "difese": "Mostri 0.69",
+      "salvezze": "Mostri 0.69",
+      "iniziativa": "Mostri 0.69",
+      "azioni": "Mostri 0.69",
+      "movimento": "Mostri 0.69",
+      "spazio": "Mostri 0.69",
+      "abilita": "Mostri 0.47",
+      "attacchi": "Mostri 0.69",
+      "capacita": "Mostri 0.47",
+      "gs_px": "Mostri 0.69"
+    }
+  },
+  "taglia": "grande"
 }

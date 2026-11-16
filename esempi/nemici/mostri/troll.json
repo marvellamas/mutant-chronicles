@@ -3,7 +3,7 @@
   "versione": 1,
   "id": "troll",
   "nome": "Troll",
-  "fonte": "dal Manuale dei Mostri v0.46 (Word del 27/10/2026), cap. 8 «Catalogo delle creature» — Bande e grandi avversari",
+  "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Troll",
   "caratteristiche": {
     "FOR": 8,
     "DES": 6,
@@ -105,9 +105,26 @@
       "effetto": "Vede entro 12 Q anche nell’oscurità naturale; al buio non distingue i colori, non vede attraverso ostacoli, fumo o oscurità magica e non individua da sé chi è nascosto. Oltre i 12 Q valgono luce e vista ordinarie."
     }
   ],
-  "note": "AR 3 biologica. Nessun equipaggiamento: artigli, pelle e rigenerazione sono biologici; nessuna Parata naturale. Contromisure: Fuoco e Corrosivo bloccano il recupero; separarlo dalle prede. Comportamento: mantiene il contatto con una preda isolata; sotto 15 PV o dopo ripetuti blocchi cerca riparo.",
+  "note": "Gigante • assaltatore rigenerante • Natura Comune. Comportamento. Tenta di mantenere il contatto con una preda isolata. Quando riconosce fuoco o agenti corrosivi può cercare prima il loro utilizzatore, oppure interrompere il contatto. Sotto 20 PV o dopo ripetuti blocchi della rigenerazione, cerca un riparo se non difende un obiettivo essenziale.",
   "_bestiario": {
     "edizione": "Mostri 0.69",
-    "sistema_salute": "solo_PV"
-  }
+    "sistema_salute": "solo_PV",
+    "campi": {
+      "pv": "Mostri 0.69",
+      "pm": "Mostri 0.69",
+      "caratteristiche": "Mostri 0.69",
+      "ar": "Mostri 0.69",
+      "difese": "Mostri 0.69",
+      "salvezze": "Mostri 0.69",
+      "iniziativa": "Mostri 0.69",
+      "azioni": "Mostri 0.69",
+      "movimento": "Mostri 0.69",
+      "spazio": "Mostri 0.69",
+      "abilita": "Mostri 0.47",
+      "attacchi": "Mostri 0.47",
+      "capacita": "Mostri 0.47",
+      "gs_px": "Mostri 0.69"
+    }
+  },
+  "taglia": "grande"
 }

@@ -1,0 +1,123 @@
+{
+  "formato": "mutant-nemico",
+  "versione": 1,
+  "id": "thri-kreen",
+  "nome": "Thri-kreen",
+  "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Thri-kreen",
+  "note": "Predatore insettoide nomade con quattro braccia e due gambe. Si mimetizza con il carapace, balza senza rincorsa e usa morso velenoso e artigli; è una specie autonoma, distinta dalla Covata di Iris.",
+  "pv": 37,
+  "pm": 12,
+  "caratteristiche": {
+    "FOR": 6,
+    "DES": 8,
+    "COS": 6,
+    "INT": 4,
+    "SAG": 6,
+    "CAR": 3
+  },
+  "ar": {
+    "totale": 2,
+    "magica": 0
+  },
+  "difese": 12,
+  "salvezze": {
+    "tempra": 10,
+    "riflessi": 12,
+    "volonta": 8,
+    "magia": 10
+  },
+  "iniziativa": 3,
+  "azioni": {
+    "principali": 2,
+    "movimento": 1
+  },
+  "movimento": {
+    "passo": 8,
+    "corsa": 16,
+    "scatto": 24
+  },
+  "spazio": "1 Q",
+  "attacchi": [
+    {
+      "nome": "Morso",
+      "tipo": "ravvicinato",
+      "va": 12,
+      "danno": "1d6+1",
+      "natura": "Naturale",
+      "proprieta": [
+        "Perforazione",
+        "AC 1",
+        "veleno"
+      ],
+      "portata_q": 1,
+      "ac": 1
+    },
+    {
+      "nome": "Artigli",
+      "tipo": "ravvicinato",
+      "va": 12,
+      "danno": "2d4+1",
+      "natura": "Naturale",
+      "proprieta": [
+        "Taglio",
+        "AC 1"
+      ],
+      "portata_q": 1,
+      "ac": 1
+    }
+  ],
+  "capacita": [
+    {
+      "nome": "Corpo e sensi",
+      "effetto": "Vivente biologico, Scurovisione dodici Q. Non necessita di sonno e può riposare restando vigile con attività leggere compatibili; non ottiene recuperi combattendo o correndo. Non è immune ad Affaticamento, magia del sonno o altri Svenuti compatibili. Nessuna Parata naturale, Resistenza alla magia, telepatia o immunità al veleno. Non eredita resistenze o legami di comando della Covata. Iniziativa usa DES +3, senza penalità per INT quattro."
+    },
+    {
+      "nome": "Sequenza e anatomia",
+      "effetto": "Due AzP totali, massimo un Morso e un attacco di Artigli per Round, Opportunità compresa. Quattro braccia non concedono Azioni, Difese gratuite o attacchi ulteriori; si registra l’arto colpito da una Menomazione senza quattro riserve di PV. Non impugna armi nel profilo base. Non produce ragnatele, Volo o onde psichiche."
+    },
+    {
+      "nome": "Veleno",
+      "effetto": "Dopo almeno un danno finale di Morso a un vivente biologico: Tempra 0 evita veleno naturale di Pericolosità IV. Fallimento Avvelenato per cinque Round, −2 VA alle Abilità fisiche ma non alle PS; Fallimento Maldestro anche Paralizzato finché persiste questa dose. Nessun danno periodico. Alla fine di ogni propria Iniziativa Tempra 0 elimina dose e relativi Stati con successo. Cura Avvelenamenti almeno cinque o antidoto adatto neutralizzano; Cura Spirituale da sola non elimina la sostanza. Dosi successive mantengono la scadenza maggiore, senza sommare penalità."
+    },
+    {
+      "nome": "Carapace e salto",
+      "effetto": "Adattare il colore costa una AzP e dura finché resta nello stesso tipo di ambiente: Furtività quindici già comprensiva di +2 mimetico, invece della base tredici, quando sfondo e luce consentono l’occultamento. Non è invisibilità, non impedisce Percezione cieca e non cancella suoni o tracce. Una volta nella propria Iniziativa può saltare senza rincorsa fino a sei Q in lungo oppure tre Q in alto come parte dell’AzM, consumando il Movimento effettivamente percorso; non lo aggiunge al budget. Pericoli di partenza o arrivo richiedono le normali Prove di Atletica."
+    },
+    {
+      "nome": "Comunicazione e varianti",
+      "effetto": "Comunica mediante mandibole, antenne e posture nella lingua Thri-kreen; può usare disegni e gesti per intendersi con altre specie, senza conoscere automaticamente lingue o pensieri. La condotta dipende dal singolo e dal gruppo incontrato. Gythka, chatkcha e poteri psionici della variante della fonte non sono inclusi nei 30 PX: richiedono una variante distinta, non capacità da aggiungere gratuitamente a questo profilo."
+    },
+    {
+      "nome": "Altri movimenti",
+      "effetto": "spazio 1 × 1 Q"
+    },
+    {
+      "nome": "Abilità particolari",
+      "effetto": "Furtività 13, 15 mimetizzato"
+    }
+  ],
+  "gs_px": {
+    "gs": "Esperto",
+    "px": 30,
+    "per_pg": 4
+  },
+  "_bestiario": {
+    "campi": {
+      "pv": "Mostri 0.69",
+      "pm": "Mostri 0.69",
+      "caratteristiche": "Mostri 0.69",
+      "ar": "Mostri 0.69",
+      "difese": "Mostri 0.69",
+      "salvezze": "Mostri 0.69",
+      "iniziativa": "Mostri 0.69",
+      "azioni": "Mostri 0.69",
+      "movimento": "Mostri 0.69",
+      "spazio": "Mostri 0.69",
+      "attacchi": "Mostri 0.69",
+      "capacita": "Mostri 0.69",
+      "gs_px": "Mostri 0.69"
+    },
+    "edizione": "Mostri 0.69",
+    "sistema_salute": "solo_PV"
+  }
+}

@@ -1,0 +1,138 @@
+{
+  "formato": "mutant-nemico",
+  "versione": 1,
+  "id": "kuo-toa-monitor",
+  "nome": "Kuo-toa monitor",
+  "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Kuo-toa monitor",
+  "note": "Kuo-toa addestrato al combattimento ravvicinato senza bastone o repertorio. I pugni producono una scarica bioelettrica e la disciplina migliora le Difese effettivamente pagate.",
+  "pv": 63,
+  "pm": 18,
+  "caratteristiche": {
+    "FOR": 6,
+    "DES": 5,
+    "COS": 6,
+    "INT": 6,
+    "SAG": 6,
+    "CAR": 5
+  },
+  "ar": {
+    "totale": 1,
+    "magica": 0
+  },
+  "difese": 12,
+  "salvezze": {
+    "tempra": 11,
+    "riflessi": 9,
+    "volonta": 10,
+    "magia": 11
+  },
+  "iniziativa": 0,
+  "azioni": {
+    "principali": 3,
+    "movimento": 1
+  },
+  "movimento": {
+    "passo": 6,
+    "corsa": 12,
+    "scatto": 18
+  },
+  "spazio": "1 Q",
+  "abilita": [
+    {
+      "nome": "Corpo a corpo",
+      "va": 14
+    },
+    {
+      "nome": "Atletica",
+      "va": 12
+    },
+    {
+      "nome": "Percezione",
+      "va": 14
+    },
+    {
+      "nome": "Occultismo",
+      "va": 11
+    }
+  ],
+  "attacchi": [
+    {
+      "nome": "Morso",
+      "tipo": "ravvicinato",
+      "va": 14,
+      "danno": "1d4+1",
+      "natura": "Naturale",
+      "proprieta": [
+        "Perforazione",
+        "AC 1"
+      ],
+      "portata_q": 1,
+      "ac": 1
+    },
+    {
+      "nome": "Pugno bioelettrico",
+      "tipo": "ravvicinato",
+      "va": 14,
+      "danno": "1d6+1d4+1",
+      "natura": "Naturale",
+      "proprieta": [
+        "Contusione",
+        "Elettricità",
+        "AC 1"
+      ],
+      "portata_q": 1,
+      "ac": 1
+    }
+  ],
+  "capacita": [
+    {
+      "nome": "Corpo e sensi",
+      "effetto": "Vivente biologico anfibio con mente e PM personali, Scurovisione 24 Q e sensibilità solare Kuo-toa. +2 alle sole Prove fisiche per liberarsi da prese o legature, non alle PS in generale. Come il Kuo-toa frusta percepisce invisibili o incorporei entro sei Q senza attraversare solidi: movimento localizza il Q, immobilità soltanto presenza e direzione. Non li rende visibili. Iniziativa solo 1d10."
+    },
+    {
+      "nome": "Tre Azioni",
+      "effetto": "Tre AzP totali, massimo un Morso e due Pugni per Round, Opportunità compatibile compresa. La disciplina fornisce +2 Difese già incluso nel dodici e non AR, Azioni o Parate gratuite. Può Parare senz’armi a Contatto attacchi fisici compatibili; non ferma proiettili o poteri con le mani. Non possiede Incantesimi, Scudo adesivo, bastone da cattura o poteri dell’arcisacerdote."
+    },
+    {
+      "nome": "Scarica integrata",
+      "effetto": "Il Pugno ha un solo danno pronto e una AC: sommare 1d6+1d4+1 e sottrarre AR una volta. Non aggiungere un altro pacchetto elettrico. Dopo almeno un danno finale e superamento di Isolante, Tempra 0 evita Elettricità per 1+1d3 Round: fallimento non può spendere Azioni fuori dalla propria Iniziativa, ma conserva PS, contrapposte passive ed Elusioni che non consumino Azioni. Non è Fulmine magico e non aggiunge anche Disorientato o Stordito."
+    },
+    {
+      "nome": "Durata e anatomia",
+      "effetto": "Una PS elettrica per bersaglio e attacco, senza un tiro per ogni dado. Applicazioni ripetute mantengono la scadenza più lontana senza sommare limitazioni; il danno resta anche con PS riuscita. Le scariche sono corporee e non cariche tecnologiche trasferibili a oggetti. Anatomia umanoide; gli arti menomati limitano i colpi realmente eseguibili, senza riserve separate."
+    },
+    {
+      "nome": "Comunità e condotta",
+      "effetto": "Parla la lingua appresa; il nome monitor indica il ruolo della fonte e non concede controllo mentale sugli altri Kuo-toa. Può difendere un accesso, separare intrusi o trattare. Sotto 16 PV può ritirarsi. Non è immune all’elettricità, al veleno o alla paura per il solo fatto di produrre una scarica; gli altri membri della comunità hanno le proprie schede e PX."
+    },
+    {
+      "nome": "Altri movimenti",
+      "effetto": "Terra e nuoto 6 / 12 / 18: la stessa andatura vale anche per nuoto; spazio 1 × 1 Q"
+    }
+  ],
+  "gs_px": {
+    "gs": "Veterano",
+    "px": 50,
+    "per_pg": 4
+  },
+  "_bestiario": {
+    "campi": {
+      "pv": "Mostri 0.69",
+      "pm": "Mostri 0.69",
+      "caratteristiche": "Mostri 0.69",
+      "ar": "Mostri 0.69",
+      "difese": "Mostri 0.69",
+      "salvezze": "Mostri 0.69",
+      "iniziativa": "Mostri 0.69",
+      "azioni": "Mostri 0.69",
+      "movimento": "Mostri 0.69",
+      "spazio": "Mostri 0.69",
+      "abilita": "Mostri 0.69",
+      "attacchi": "Mostri 0.69",
+      "capacita": "Mostri 0.69",
+      "gs_px": "Mostri 0.69"
+    },
+    "edizione": "Mostri 0.69",
+    "sistema_salute": "solo_PV"
+  }
+}

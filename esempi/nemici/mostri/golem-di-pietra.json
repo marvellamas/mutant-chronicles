@@ -1,0 +1,117 @@
+{
+  "formato": "mutant-nemico",
+  "versione": 1,
+  "id": "golem-di-pietra",
+  "nome": "Golem di pietra",
+  "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Golem di pietra",
+  "senza_salvezza": [
+    "volonta"
+  ],
+  "taglia": "grande",
+  "note": "Statua animata che presidia un luogo e altera il ritmo dei movimenti degli intrusi. È priva di mente e può restare immobile per tempi lunghissimi senza cessare di vigilare.",
+  "pv": 143,
+  "caratteristiche": {
+    "FOR": 10,
+    "DES": 4,
+    "COS": 10,
+    "INT": 1,
+    "SAG": 5,
+    "CAR": 1
+  },
+  "ar": {
+    "totale": 5,
+    "magica": 0
+  },
+  "difese": 8,
+  "salvezze": {
+    "tempra": 15,
+    "riflessi": 8,
+    "magia": 13
+  },
+  "iniziativa": 0,
+  "azioni": {
+    "principali": 2,
+    "movimento": 1
+  },
+  "movimento": {
+    "passo": 6,
+    "corsa": 12,
+    "scatto": 18
+  },
+  "spazio": "2 × 2 Q",
+  "abilita": [
+    {
+      "nome": "Corpo a corpo",
+      "va": 16
+    },
+    {
+      "nome": "Atletica",
+      "va": 16
+    },
+    {
+      "nome": "Percezione",
+      "va": 10
+    },
+    {
+      "nome": "Furtività",
+      "va": 5
+    }
+  ],
+  "capacita": [
+    {
+      "nome": "Campo di lentezza",
+      "effetto": "VA —. Danno: Rallentato; Magia −2. Portata/costo: Raggio 2 Q; 1 AzP; "
+    },
+    {
+      "nome": "Statua animata",
+      "effetto": "Usa le procedure condivise dei nuovi golem, comprese resistenza fisica, forma immutabile e +2 alle PS contro magia. Scurovisione 24 Q. PM e Volontà assenti; immune ad Affaticamento, Paralizzato e pietrificazione. L’assenza di mente impedisce gli effetti che ne richiedono una. Non possiede Parata naturale, un’armatura asportabile o PI in aggiunta ai PV."
+    },
+    {
+      "nome": "Schianti",
+      "effetto": "Al massimo due Schianti per Round, Opportunità compresa. Usare il Campo lascia una sola AzP per attacco, Difesa o altra attività. La forza non permette di attraversare una barriera senza danneggiarla secondo le regole degli oggetti, e non conferisce danni Eterei o attacchi ad area."
+    },
+    {
+      "nome": "Campo di lentezza",
+      "effetto": "Una AzP, senza PM; usato nel Round R torna disponibile alla sua Iniziativa in R + 3. Sceglie fino a quattro creature visibili entro due Q dal proprio spazio, senza attraversare solidi. Ciascuna effettua Magia −2: successo evita; fallimento Rallentato per tre Round. Non richiede tiro per colpire o una seconda Difesa. Il Campo è una pulsazione iniziale, non un’aura che applica nuovi tiri a ogni passo."
+    },
+    {
+      "nome": "Rallentamento",
+      "effetto": "Applica Rallentato del Giocatore: Passo massimo tre Q, niente Corsa o Scatto, −2 a Prove fisiche e Difese. Non sottrae AzP, non raddoppia costi e non impedisce di agire fuori dalla propria Iniziativa. Alla fine di ciascuna successiva Iniziativa della vittima ripete Magia −2: successo termina. Più applicazioni conservano soltanto la scadenza maggiore, senza sommare penalità."
+    },
+    {
+      "nome": "Rimozione e protezioni",
+      "effetto": "Il rallentamento è un effetto mistico sul movimento, non mentale: Barriera Mentale non concede il bonus a questa Magia. Negare Potere lo rimuove dal bersaglio, confronto 9. La pulsazione già applicata può durare anche se il Golem cade o muore. Non è Ghiaccio e non progredisce a Congelato. Cura Spirituale può rimuovere lo Stato soltanto dopo che ne sia cessata la causa mistica."
+    },
+    {
+      "nome": "Servizio",
+      "effetto": "Comprende gli ordini del creatore riconosciuto senza parlare. Immobile può sembrare una statua; Percezione e circostanze verificano dettagli rivelatori, senza invisibilità o Sorpresa garantita. Non ha Furia, Rigenerazione o assorbimenti elementali. Le condizioni di servizio non concedono ai PG un procedimento gratuito per costruirlo o ripararlo."
+    },
+    {
+      "nome": "Altri movimenti",
+      "effetto": "spazio 2 × 2 Q"
+    }
+  ],
+  "gs_px": {
+    "gs": "Leggenda",
+    "px": 100,
+    "per_pg": 4
+  },
+  "_bestiario": {
+    "campi": {
+      "pv": "Mostri 0.69",
+      "caratteristiche": "Mostri 0.69",
+      "ar": "Mostri 0.69",
+      "difese": "Mostri 0.69",
+      "salvezze": "Mostri 0.69",
+      "iniziativa": "Mostri 0.69",
+      "azioni": "Mostri 0.69",
+      "movimento": "Mostri 0.69",
+      "spazio": "Mostri 0.69",
+      "abilita": "Mostri 0.69",
+      "capacita": "Mostri 0.69",
+      "gs_px": "Mostri 0.69"
+    },
+    "edizione": "Mostri 0.69",
+    "sistema_salute": "solo_PV"
+  }
+}

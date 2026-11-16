@@ -3,7 +3,7 @@
   "versione": 1,
   "id": "centauro",
   "nome": "Centauro",
-  "fonte": "dal Manuale dei Mostri v0.46 (Word del 27/10/2026), cap. 8 «Catalogo delle creature» — Popoli delle terre selvagge",
+  "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Centauro",
   "caratteristiche": {
     "FOR": 8,
     "DES": 6,
@@ -48,11 +48,11 @@
       "va": 12,
       "danno": "1d6+3",
       "natura": "Naturale",
-      "portata_q": 3,
-      "ac": 1,
       "proprieta": [
         "Perforazione"
-      ]
+      ],
+      "portata_q": 3,
+      "ac": 1
     },
     {
       "nome": "Zoccoli",
@@ -60,12 +60,11 @@
       "va": 12,
       "danno": "1d8+2",
       "natura": "Naturale",
-      "portata_q": 1,
-      "ac": 1,
       "proprieta": [
         "Contusione"
       ],
-      "note": "Non concedono Parata né un terzo attacco per gli arti posteriori."
+      "portata_q": 1,
+      "ac": 1
     },
     {
       "nome": "Arco da guerra",
@@ -73,14 +72,14 @@
       "va": 11,
       "danno": "1d6+1",
       "natura": "Naturale",
+      "proprieta": [
+        "Perforazione"
+      ],
       "gittata_q": 100,
       "modalita": [
         "S"
       ],
-      "ac": 1,
-      "proprieta": [
-        "Perforazione"
-      ]
+      "ac": 1
     }
   ],
   "abilita": [
@@ -135,9 +134,26 @@
       "effetto": "Testa e Braccia umanoidi, Torace comprendente entrambe le masse corporee, Gambe agli arti equini. Un passeggero richiede consenso, appoggio e carico compatibili, senza condividere Azioni né rinnovare il Movimento del Centauro. Scale e passaggi stretti devono essere concretamente percorribili. Parla Elfico e Silvano; nessuna Scurovisione innata."
     }
   ],
-  "note": "Viaggiatore dal corpo equino e tronco umanoide che sa usare armi e leggere le piste; la mobilità non lo rende una cavalcatura disponibile a chiunque. Condotta: sotto 10 PV o a Ferita Profonda cerca spazio per ripiegare. Fonte: Centaur, p. 38.",
+  "note": "Umanoide equino • esploratore e combattente mobile • Natura Comune.",
   "_bestiario": {
     "edizione": "Mostri 0.69",
-    "sistema_salute": "solo_PV"
-  }
+    "sistema_salute": "solo_PV",
+    "campi": {
+      "pv": "Mostri 0.69",
+      "pm": "Mostri 0.69",
+      "caratteristiche": "Mostri 0.69",
+      "ar": "Mostri 0.69",
+      "difese": "Mostri 0.69",
+      "salvezze": "Mostri 0.69",
+      "iniziativa": "Mostri 0.69",
+      "azioni": "Mostri 0.69",
+      "movimento": "Mostri 0.69",
+      "spazio": "Mostri 0.69",
+      "abilita": "Mostri 0.69",
+      "attacchi": "Mostri 0.69",
+      "capacita": "Mostri 0.47",
+      "gs_px": "Mostri 0.69"
+    }
+  },
+  "taglia": "grande"
 }

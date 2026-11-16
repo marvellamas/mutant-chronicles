@@ -1,0 +1,123 @@
+{
+  "formato": "mutant-nemico",
+  "versione": 1,
+  "id": "tigre-mannara",
+  "nome": "Tigre mannara",
+  "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Tigre mannara",
+  "note": "Cacciatrice licantropa agile e territoriale. Alterna avvicinamento furtivo e balzo sulle prede isolate; in forma umanoide può trattare e ragionare normalmente.",
+  "pv": 85,
+  "pm": 10,
+  "caratteristiche": {
+    "FOR": 9,
+    "DES": 8,
+    "COS": 8,
+    "INT": 5,
+    "SAG": 6,
+    "CAR": 5
+  },
+  "ar": {
+    "totale": 1,
+    "magica": 0
+  },
+  "difese": 12,
+  "salvezze": {
+    "tempra": 13,
+    "riflessi": 13,
+    "volonta": 11,
+    "magia": 12
+  },
+  "iniziativa": 2,
+  "azioni": {
+    "principali": 2,
+    "movimento": 1
+  },
+  "movimento": {
+    "passo": 6,
+    "corsa": 12,
+    "scatto": 18
+  },
+  "attacchi": [
+    {
+      "nome": "Artiglio",
+      "tipo": "ravvicinato",
+      "va": 13,
+      "danno": "1d8+3",
+      "natura": "Naturale",
+      "proprieta": [
+        "AC 1"
+      ],
+      "portata_q": 1,
+      "ac": 1
+    },
+    {
+      "nome": "Morso",
+      "tipo": "ravvicinato",
+      "va": 13,
+      "danno": "1d10+3",
+      "natura": "Naturale",
+      "proprieta": [
+        "AC 1",
+        "maledizione"
+      ],
+      "portata_q": 1,
+      "ac": 1
+    },
+    {
+      "nome": "Colpo disarmato",
+      "tipo": "ravvicinato",
+      "va": 13,
+      "danno": "1d6+2",
+      "natura": "Naturale",
+      "proprieta": [
+        "AC 1"
+      ],
+      "portata_q": 1,
+      "ac": 1
+    }
+  ],
+  "capacita": [
+    {
+      "nome": "Balzo predatorio",
+      "effetto": "In forma animale o ibrida, dopo almeno tre Q rettilinei verso una vittima con la propria AzM, il primo Artiglio a segno con danno finale impone Tempra −2 a una creatura di spazio massimo 2 × 2 Q. Fallimento: A Terra. Un eventuale Morso successivo consuma la normale AzP ancora disponibile, senza attacco gratuito o danno aggiunto dal balzo."
+    },
+    {
+      "nome": "Forme e sensi",
+      "effetto": "Mutare costa una AzP e un PM. Scurovisione 12 Q in ogni forma; olfatto e udito acuti. Dimezza Naturale da armi non argentate secondo la procedura comune. Non ottiene Parata naturale, salti senza limiti o movimenti che attraversano creature e ostacoli."
+    },
+    {
+      "nome": "Morso e condotta",
+      "effetto": "Massimo un Morso per Round, comprese le Opportunità; soltanto questo attacco può trasmettere la maledizione. Può impedirne la trasmissione dichiarandolo prima dell’attacco. Non riceve un bonus di Branco automatico; le normali regole degli attaccanti multipli restano applicabili."
+    },
+    {
+      "nome": "Altri movimenti",
+      "effetto": "ibrida: 6 / 12 / 18 Q, 2 × 2 Q; tigre: 8 / 16 / 24 Q, 1 × 2 Q"
+    },
+    {
+      "nome": "Abilità particolari",
+      "effetto": "Percezione 12, 14 con olfatto o udito"
+    }
+  ],
+  "gs_px": {
+    "gs": "Veterano",
+    "px": 50,
+    "per_pg": 4
+  },
+  "_bestiario": {
+    "campi": {
+      "pv": "Mostri 0.69",
+      "pm": "Mostri 0.69",
+      "caratteristiche": "Mostri 0.69",
+      "ar": "Mostri 0.69",
+      "difese": "Mostri 0.69",
+      "salvezze": "Mostri 0.69",
+      "iniziativa": "Mostri 0.69",
+      "azioni": "Mostri 0.69",
+      "movimento": "Mostri 0.69",
+      "attacchi": "Mostri 0.69",
+      "capacita": "Mostri 0.69",
+      "gs_px": "Mostri 0.69"
+    },
+    "edizione": "Mostri 0.69",
+    "sistema_salute": "solo_PV"
+  }
+}

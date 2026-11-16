@@ -3,7 +3,7 @@
   "versione": 1,
   "id": "arbusto-risvegliato",
   "nome": "Arbusto risvegliato",
-  "fonte": "dal Manuale dei Mostri v0.46 (Word del 27/10/2026), cap. 8 «Catalogo delle creature» — Vegetali e custodi delle foreste",
+  "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Arbusto risvegliato",
   "caratteristiche": {
     "FOR": 2,
     "DES": 4,
@@ -48,11 +48,11 @@
       "va": 7,
       "danno": "1d4",
       "natura": "Naturale",
-      "portata_q": 1,
-      "ac": 1,
       "proprieta": [
         "Taglio"
-      ]
+      ],
+      "portata_q": 1,
+      "ac": 1
     }
   ],
   "abilita": [
@@ -87,9 +87,25 @@
       "effetto": "Conosce una lingua assegnata alla sua origine e può parlare. Il risveglio è una trasformazione permanente: Negare Potere non lo toglie. Non dipende dal creatore per le proprie Azioni."
     }
   ],
-  "note": "Furtività 14 immobile fra vegetazione compatibile. Vista e udito ordinari, senza scurovisione. Condotta: nascondigli, richiami o trattative; sotto 3 PV o a Ferita Profonda cerca riparo. Fonte: Awakened Shrub, p. 317.",
+  "note": "Vegetale senziente • piccolo guardiano o interlocutore • Natura Comune. Condotta. Si affida a nascondigli, richiami o trattative. Può difendersi con i rami, ma sotto 4 PV cerca riparo. Il GS minimo descrive un eventuale impiego combattente; accompagnarlo in un compito o ottenere informazioni può risolvere la scena senza violenza.",
   "_bestiario": {
     "edizione": "Mostri 0.69",
-    "sistema_salute": "solo_PV"
+    "sistema_salute": "solo_PV",
+    "campi": {
+      "pv": "Mostri 0.69",
+      "pm": "Mostri 0.69",
+      "caratteristiche": "Mostri 0.69",
+      "ar": "Mostri 0.69",
+      "difese": "Mostri 0.69",
+      "salvezze": "Mostri 0.69",
+      "iniziativa": "Mostri 0.69",
+      "azioni": "Mostri 0.69",
+      "movimento": "Mostri 0.69",
+      "spazio": "Mostri 0.69",
+      "abilita": "Mostri 0.47",
+      "attacchi": "Mostri 0.69",
+      "capacita": "Mostri 0.47",
+      "gs_px": "Mostri 0.69"
+    }
   }
 }

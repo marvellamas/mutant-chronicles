@@ -3,7 +3,7 @@
   "versione": 1,
   "id": "sciacallo",
   "nome": "Sciacallo",
-  "fonte": "dal Manuale dei Mostri v0.46 (Word del 27/10/2026), cap. 8 «Catalogo delle creature» — Fauna delle terre aperte",
+  "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Sciacallo",
   "caratteristiche": {
     "FOR": 3,
     "DES": 7,
@@ -48,11 +48,11 @@
       "va": 8,
       "danno": "1d4",
       "natura": "Naturale",
-      "portata_q": 1,
-      "ac": 1,
       "proprieta": [
         "Perforazione"
-      ]
+      ],
+      "portata_q": 1,
+      "ac": 1
     }
   ],
   "abilita": [
@@ -96,9 +96,25 @@
       "effetto": "Può seguire indizi accessibili con Sopravvivenza 11 quando occorre una Prova. Un odore non apre una chiusura e una fessura deve essere adatta al corpo reale. Nessun movimento speciale di scavo o arrampicata."
     }
   ],
-  "note": "Piccolo canide che cerca piccole prede e resti alimentari ai margini di un territorio frequentato. Distinto dallo Sciacallo mannaro: nessuna trasformazione o influenza soprannaturale. Condotta: evita il confronto diretto con avversari grandi e vigili; sotto 2 PV, a Ferita Importante o dopo la dispersione del gruppo tende a ritirarsi. Fonte: Jackal, p. 331.",
+  "note": "Piccolo canide • udito fiuto e Branco • Natura Comune. Condotta. Tende a evitare un confronto diretto con avversari grandi e vigili, preferendo resti accessibili o prede isolate. Sotto 3 PV, a Ferita Importante o dopo la dispersione del gruppo tende a ritirarsi. Non comprende linguaggi ed è distinto dallo Sciacallo mannaro: nessuna trasformazione o influenza soprannaturale in questa scheda.",
   "_bestiario": {
     "edizione": "Mostri 0.69",
-    "sistema_salute": "solo_PV"
+    "sistema_salute": "solo_PV",
+    "campi": {
+      "pv": "Mostri 0.69",
+      "pm": "Mostri 0.69",
+      "caratteristiche": "Mostri 0.69",
+      "ar": "Mostri 0.69",
+      "difese": "Mostri 0.69",
+      "salvezze": "Mostri 0.69",
+      "iniziativa": "Mostri 0.69",
+      "azioni": "Mostri 0.69",
+      "movimento": "Mostri 0.69",
+      "spazio": "Mostri 0.69",
+      "abilita": "Mostri 0.69",
+      "attacchi": "Mostri 0.69",
+      "capacita": "Mostri 0.47",
+      "gs_px": "Mostri 0.69"
+    }
   }
 }

@@ -3,7 +3,7 @@
   "versione": 1,
   "id": "mezzogre",
   "nome": "Mezzogre (Ogrillon)",
-  "fonte": "dal Manuale dei Mostri v0.46 (Word del 27/10/2026), cap. 8 «Catalogo delle creature» — Capi e varianti dei popoli guerrieri",
+  "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Mezzogre (Ogrillon)",
   "caratteristiche": {
     "FOR": 8,
     "DES": 5,
@@ -48,11 +48,11 @@
       "va": 11,
       "danno": "1d6+3",
       "natura": "Naturale",
-      "portata_q": 1,
-      "ac": 1,
       "proprieta": [
         "Taglio"
-      ]
+      ],
+      "portata_q": 1,
+      "ac": 1
     },
     {
       "nome": "Giavellotto a mano",
@@ -60,11 +60,11 @@
       "va": 11,
       "danno": "1d6+2",
       "natura": "Naturale",
-      "portata_q": 1,
-      "ac": 1,
       "proprieta": [
         "Perforazione"
-      ]
+      ],
+      "portata_q": 1,
+      "ac": 1
     },
     {
       "nome": "Giavellotto lanciato",
@@ -72,14 +72,14 @@
       "va": 9,
       "danno": "1d6",
       "natura": "Naturale",
+      "proprieta": [
+        "Perforazione"
+      ],
       "gittata_q": 24,
       "modalita": [
         "S"
       ],
-      "ac": 1,
-      "proprieta": [
-        "Perforazione"
-      ]
+      "ac": 1
     }
   ],
   "abilita": [
@@ -127,9 +127,26 @@
       "effetto": "Lo spazio 2 × 2 Q non concede più danni, Azioni, PI, qualità o portata; la portata si misura dal bordo dello spazio secondo il Giocatore. Barriere, oggetti, carico e passaggi stretti seguono le regole ordinarie: la grande forza non sfonda automaticamente muri e porte."
     }
   ],
-  "note": "Parla Comune e Gigante. Umanoide di discendenza ogre, meno massiccio di un Ogre: può lavorare come guardia, guida o mercenario, la discendenza non decide le sue scelte. Condotta: sotto 9 PV o a Ferita Profonda cerca una via di fuga o tratta. Fonte: Half-Ogre, p. 238.",
+  "note": "Umanoide di discendenza ogre • combattente robusto • Natura Comune.",
   "_bestiario": {
     "edizione": "Mostri 0.69",
-    "sistema_salute": "solo_PV"
-  }
+    "sistema_salute": "solo_PV",
+    "campi": {
+      "pv": "Mostri 0.69",
+      "pm": "Mostri 0.69",
+      "caratteristiche": "Mostri 0.69",
+      "ar": "Mostri 0.69",
+      "difese": "Mostri 0.69",
+      "salvezze": "Mostri 0.69",
+      "iniziativa": "Mostri 0.69",
+      "azioni": "Mostri 0.69",
+      "movimento": "Mostri 0.69",
+      "spazio": "Mostri 0.69",
+      "abilita": "Mostri 0.69",
+      "attacchi": "Mostri 0.69",
+      "capacita": "Mostri 0.47",
+      "gs_px": "Mostri 0.69"
+    }
+  },
+  "taglia": "grande"
 }

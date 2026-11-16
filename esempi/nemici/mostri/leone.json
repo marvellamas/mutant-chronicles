@@ -3,7 +3,7 @@
   "versione": 1,
   "id": "leone",
   "nome": "Leone",
-  "fonte": "dal Manuale dei Mostri v0.46 (Word del 27/10/2026), cap. 8 «Catalogo delle creature» — Bestie e predatori",
+  "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Leone",
   "caratteristiche": {
     "FOR": 7,
     "DES": 7,
@@ -86,24 +86,44 @@
   "capacita": [
     {
       "nome": "Branco e fiuto",
-      "effetto": "Applica Branco e +2 a Percezione quando l’olfatto è determinante. Il terreno può permettere Furtività, ma non diventa invisibile nell’erba e non sorprende chi lo ha già individuato."
+      "effetto": "Applica Branco e ottiene +2 a Percezione quando l’olfatto è determinante. Il terreno può permettere Furtività, ma il leone non diventa invisibile nell’erba e non sorprende automaticamente chi lo ha già individuato."
     },
     {
       "nome": "Balzo predatorio",
-      "effetto": "Una volta per Round, dopo almeno 4 Q di Passo rettilineo verso una preda non superiore a 2 × 2 Q, attacca con Artigli (AzP; danno non raddoppiato). Se infligge almeno 1 danno finale, la preda effettua Tempra senza modificatore: fallimento o Maldestro applica A Terra, e se cade proprio per questo il Leone ottiene subito una sola AzP vincolata a un Morso contro di lei. Una preda già A Terra non concede il Morso. Il percorso usa l’AzM. Non si combina con Carica, Corsa, Scatto o altre manovre. Senza appoggio niente A Terra né Morso aggiuntivo.",
-      "usi": {
-        "quanti": 1,
-        "per": "Round"
-      }
+      "effetto": "Una volta per Round, dopo almeno 4 Q di Passo rettilineo verso una preda non superiore a 2 × 2 Q, può attaccare con Artigli. Se infligge almeno 1 danno finale, la preda effettua Tempra senza modificatore: fallimento o Maldestro applica A Terra. Se cade proprio per questo effetto, il Leone ottiene subito una sola AzP vincolata a un Morso contro di lei. Una preda già A Terra non concede il Morso aggiuntivo."
     },
     {
-      "nome": "Salto",
-      "effetto": "Con almeno 2 Q di rincorsa salta fino a 5 Q in orizzontale senza Prova in condizioni ordinarie, contando rincorsa e salto nel movimento; serve un atterraggio adatto. Ostacoli o circostanze difficili richiedono Atletica."
+      "nome": "Costi del balzo",
+      "effetto": "Il percorso usa l’AzM ordinaria, gli Artigli l’AzP ordinaria; il danno non viene raddoppiato. Non si combina con Carica, Corsa, Scatto o altre manovre offensive. Il Morso aggiuntivo richiede ancora portata e mezzo disponibile, usa le Difese normali e non genera altre Azioni. Senza appoggio non si applica A Terra e non si ottiene il Morso aggiuntivo."
+    },
+    {
+      "nome": "Salto e condotta",
+      "effetto": "Con almeno 2 Q di rincorsa può saltare fino a 5 Q in orizzontale senza Prova nelle condizioni ordinarie, contando rincorsa e salto nel movimento disponibile; serve un atterraggio adatto. Ostacoli o circostanze difficili richiedono Atletica. Sotto 10 PV cerca riparo e sostegno, salvo una minaccia immediata ai piccoli."
+    },
+    {
+      "nome": "Altri movimenti",
+      "effetto": "spazio 2 × 1 Q"
     }
   ],
-  "note": "Condotta: sotto 7 PV o a Ferita Profonda cerca riparo e sostegno, salvo minaccia immediata ai piccoli.",
+  "note": "Bestia quadrupede • predatore da agguato • Natura Comune.",
   "_bestiario": {
     "edizione": "Mostri 0.69",
-    "sistema_salute": "solo_PV"
+    "sistema_salute": "solo_PV",
+    "campi": {
+      "pv": "Mostri 0.69",
+      "pm": "Mostri 0.69",
+      "caratteristiche": "Mostri 0.69",
+      "ar": "Mostri 0.69",
+      "difese": "Mostri 0.69",
+      "salvezze": "Mostri 0.69",
+      "iniziativa": "Mostri 0.69",
+      "azioni": "Mostri 0.69",
+      "movimento": "Mostri 0.69",
+      "spazio": "Mostri 0.69",
+      "abilita": "Mostri 0.69",
+      "attacchi": "Mostri 0.47",
+      "capacita": "Mostri 0.69",
+      "gs_px": "Mostri 0.69"
+    }
   }
 }

@@ -1,0 +1,108 @@
+{
+  "formato": "mutant-nemico",
+  "versione": 1,
+  "id": "mezzoloth",
+  "nome": "Mezzoloth",
+  "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Mezzoloth",
+  "note": "Fante insettoide con quattro braccia, carapace e tridente. Usa il buio per coprire i movimenti e una nube tossica per negare un passaggio.",
+  "pv": 84,
+  "pm": 30,
+  "caratteristiche": {
+    "FOR": 8,
+    "DES": 5,
+    "COS": 8,
+    "INT": 3,
+    "SAG": 5,
+    "CAR": 5
+  },
+  "ar": {
+    "totale": 4,
+    "magica": 0
+  },
+  "difese": 11,
+  "salvezze": {
+    "tempra": 12,
+    "riflessi": 10,
+    "volonta": 9,
+    "magia": 11
+  },
+  "iniziativa": 0,
+  "azioni": {
+    "principali": 2,
+    "movimento": 1
+  },
+  "movimento": {
+    "passo": 8,
+    "corsa": 16,
+    "scatto": 24
+  },
+  "spazio": "1 Q",
+  "abilita": [
+    {
+      "nome": "Armi da guerra",
+      "va": 14
+    },
+    {
+      "nome": "Corpo a corpo",
+      "va": 13
+    },
+    {
+      "nome": "Atletica",
+      "va": 12
+    },
+    {
+      "nome": "Percezione",
+      "va": 11
+    }
+  ],
+  "capacita": [
+    {
+      "nome": "Nube tossica",
+      "effetto": "VA —. Danno: 2d6+3 danni diretti da veleno. Portata/costo: Origine entro 12 Q; 2 AzP e 6 PM; "
+    },
+    {
+      "nome": "Corpo e sensi",
+      "effetto": "Protezione Yugoloth comune, Resistenza alla magia +2 non inclusa nelle PS. Scurovisione 12 Q, percezione cieca 12 Q fermata dai solidi, telepatia 12 Q. Para con il Tridente pronto ai costi normali; nessuna Parata naturale. Massimo un attacco di Artigli e uno di Tridente per Round, Opportunità compresa."
+    },
+    {
+      "nome": "Dotazione e passaggio",
+      "effetto": "Tridente Comune: FOR 4, una mano, portata due Q, PI 6, PS Integrità 10, base 1d8+1 più due di FOR già inclusi. Magico soltanto mentre lo impugna il Mezzoloth. Non ha lancio o impugnatura Versatile aggiunti al catalogo. Possiede Passaggio personale 12 Q, Buio e Negazione 9 delle regole comuni. Quattro braccia non concedono altre Azioni, armi o difese gratuite."
+    },
+    {
+      "nome": "Nube",
+      "effetto": "Due AzP e sei PM, una volta per 24 ore. Sfera fissa di raggio tre Q centrata su un punto visibile entro 12 Q, durata cinque Round, bloccata dai solidi ermetici. Chi è presente alla creazione, entra o inizia la propria Iniziativa subisce l’esposizione al massimo una volta per Round per questa nube. Veleno inalatorio naturale di Pericolosità V: Tempra −2 dimezza per eccesso 2d6+3 danni diretti senza AR; fallimento danno intero. Nessuno Stato Avvelenato persistente. Alleati compresi, immunità al veleno e respirazione ermeticamente isolata evitano. Non respirare usando le normali riserve d’apnea evita finché regge l’apnea."
+    },
+    {
+      "nome": "Visibilità e rimozione",
+      "effetto": "La nube è opaca: impedisce vista e Scurovisione attraverso il proprio volume; la percezione cieca del Mezzoloth resta utilizzabile nella portata. Non si sposta su ordine, non attraversa barriere ermetiche e non somma esposizioni per i molti Q occupati. Un vento forte e continuo sgombra la porzione raggiunta dopo un Round completo. Negare Potere confronto 9 rimuove l’intera nube, che termina anche da Svenuto o morte del creatore. La singola perdita già subita richiede cure dei PV, non Cura Avvelenamenti. Nessun mercenario aggiuntivo compreso nei 77 PX."
+    },
+    {
+      "nome": "Altri movimenti",
+      "effetto": "spazio 1 × 1 Q"
+    }
+  ],
+  "gs_px": {
+    "gs": "Eroe",
+    "px": 77,
+    "per_pg": 4
+  },
+  "_bestiario": {
+    "campi": {
+      "pv": "Mostri 0.69",
+      "pm": "Mostri 0.69",
+      "caratteristiche": "Mostri 0.69",
+      "ar": "Mostri 0.69",
+      "difese": "Mostri 0.69",
+      "salvezze": "Mostri 0.69",
+      "iniziativa": "Mostri 0.69",
+      "azioni": "Mostri 0.69",
+      "movimento": "Mostri 0.69",
+      "spazio": "Mostri 0.69",
+      "abilita": "Mostri 0.69",
+      "capacita": "Mostri 0.69",
+      "gs_px": "Mostri 0.69"
+    },
+    "edizione": "Mostri 0.69",
+    "sistema_salute": "solo_PV"
+  }
+}

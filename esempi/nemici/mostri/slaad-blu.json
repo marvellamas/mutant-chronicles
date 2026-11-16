@@ -1,0 +1,135 @@
+{
+  "formato": "mutant-nemico",
+  "versione": 1,
+  "id": "slaad-blu",
+  "nome": "Slaad blu",
+  "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Slaad blu",
+  "taglia": "grande",
+  "note": "Slaad massiccio dagli uncini ossei sulle mani. Le lesioni possono trasmettere una malattia mutagena che impedisce il recupero dei PV e compromette progressivamente il corpo dell’ospite.",
+  "pv": 136,
+  "pm": 16,
+  "caratteristiche": {
+    "FOR": 9,
+    "DES": 7,
+    "COS": 8,
+    "INT": 3,
+    "SAG": 4,
+    "CAR": 5
+  },
+  "ar": {
+    "totale": 4,
+    "magica": 0
+  },
+  "difese": 12,
+  "salvezze": {
+    "tempra": 15,
+    "riflessi": 12,
+    "volonta": 10,
+    "magia": 11
+  },
+  "iniziativa": 2,
+  "azioni": {
+    "principali": 3,
+    "movimento": 1
+  },
+  "movimento": {
+    "passo": 6,
+    "corsa": 12,
+    "scatto": 18
+  },
+  "spazio": "2 × 2 Q",
+  "abilita": [
+    {
+      "nome": "Corpo a corpo",
+      "va": 16
+    },
+    {
+      "nome": "Atletica",
+      "va": 15
+    },
+    {
+      "nome": "Percezione",
+      "va": 11
+    },
+    {
+      "nome": "Sopravvivenza",
+      "va": 12
+    }
+  ],
+  "attacchi": [
+    {
+      "nome": "Morso",
+      "tipo": "ravvicinato",
+      "va": 16,
+      "danno": "2d6+3",
+      "natura": "Naturale",
+      "proprieta": [
+        "Perforazione",
+        "AC 1"
+      ],
+      "portata_q": 1,
+      "ac": 1
+    },
+    {
+      "nome": "Artiglio uncinato",
+      "tipo": "ravvicinato",
+      "va": 16,
+      "danno": "2d6+3",
+      "natura": "Naturale",
+      "proprieta": [
+        "Taglio",
+        "AC 1",
+        "possibile Fagosi"
+      ],
+      "portata_q": 1,
+      "ac": 1
+    }
+  ],
+  "capacita": [
+    {
+      "nome": "Corpo e sensi",
+      "effetto": "Vivente biologico con Protezioni Slaad e Rigenerazione quattro. Scurovisione e telepatia dodici Q, lingua degli Slaad, Resistenza alla magia +2 non inclusa nelle PS. Nessuna Parata naturale o immunità al veleno, alla malattia o a tutti gli Stati. La resistenza a Gelo non annulla automaticamente il relativo Rallentato."
+    },
+    {
+      "nome": "Sequenza",
+      "effetto": "Tre AzP totali; massimo un Morso e due Artigli per Round, Opportunità compresa. Il danno resta Naturale. Non inocula uova, non acquisisce poteri del verde e non trasforma la vittima in un solo attacco."
+    },
+    {
+      "nome": "Contagio",
+      "effetto": "Una volta per Round può dichiarare un Artiglio contagioso prima del tiro; l’occasione si consuma anche se manca. Dopo almeno un danno finale a un umano o umanoide biologicamente vivente: Tempra −2 evita Fagosi mutagena, malattia naturale di Pericolosità VI. Nessun PM o danno aggiuntivo immediato. L’AR che assorbe tutto impedisce il contagio; Resistenza alla magia non aiuta una PS contro questo agente biologico. Immunità alle malattie evita la Fagosi, immunità al solo veleno no."
+    },
+    {
+      "nome": "Progressione",
+      "effetto": "Dopo il contagio si applica la procedura comune: blocco dei recuperi di PV e riduzione del massimo ogni ventiquattro ore, fino all’eventuale metamorfosi definitiva. Non si applicano CROS, Oscura Simmetria o un’ulteriore perdita di PM. Una sola Fagosi attiva e nessuna coesistenza con l’Uovo parassita; nuovi colpi non accelerano il decorso. La morte del blu non guarisce le vittime già infette."
+    },
+    {
+      "nome": "Altri movimenti",
+      "effetto": "spazio 2 × 2 Q"
+    }
+  ],
+  "gs_px": {
+    "gs": "Leggenda",
+    "px": 100,
+    "per_pg": 4
+  },
+  "_bestiario": {
+    "campi": {
+      "pv": "Mostri 0.69",
+      "pm": "Mostri 0.69",
+      "caratteristiche": "Mostri 0.69",
+      "ar": "Mostri 0.69",
+      "difese": "Mostri 0.69",
+      "salvezze": "Mostri 0.69",
+      "iniziativa": "Mostri 0.69",
+      "azioni": "Mostri 0.69",
+      "movimento": "Mostri 0.69",
+      "spazio": "Mostri 0.69",
+      "abilita": "Mostri 0.69",
+      "attacchi": "Mostri 0.69",
+      "capacita": "Mostri 0.69",
+      "gs_px": "Mostri 0.69"
+    },
+    "edizione": "Mostri 0.69",
+    "sistema_salute": "solo_PV"
+  }
+}

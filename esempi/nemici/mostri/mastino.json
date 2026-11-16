@@ -3,7 +3,7 @@
   "versione": 1,
   "id": "mastino",
   "nome": "Mastino",
-  "fonte": "dal Manuale dei Mostri v0.46 (Word del 27/10/2026), cap. 8 «Catalogo delle creature» — Cavalcature e animali da lavoro",
+  "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Mastino",
   "caratteristiche": {
     "FOR": 5,
     "DES": 7,
@@ -48,11 +48,11 @@
       "va": 9,
       "danno": "1d6+1",
       "natura": "Naturale",
-      "portata_q": 1,
-      "ac": 1,
       "proprieta": [
         "Perforazione"
-      ]
+      ],
+      "portata_q": 1,
+      "ac": 1
     }
   ],
   "abilita": [
@@ -95,9 +95,25 @@
       "effetto": "+2 a Percezione quando udito oppure olfatto sono determinanti (una sola volta per Prova). Per seguire una traccia usa Sopravvivenza 9 con indizi accessibili; il bonus di Percezione non si trasferisce a quell’Abilità. Nessuna Scurovisione o individuazione oltre ogni ostacolo."
     }
   ],
-  "note": "Cane robusto addestrabile a guardia, ricerca e accompagnamento: non riconosce automaticamente intenzioni o appartenenze. Un Morso per Round, Opportunità compresa; non trasmette malattie automaticamente. Può apprendere segnali. Condotta: sotto 3 PV o a Ferita Profonda tende a ritirarsi o tornare al conduttore. Fonte: Mastiff, p. 332.",
+  "note": "Cane da guardia • sensi acuti e atterramento • Natura Comune.",
   "_bestiario": {
     "edizione": "Mostri 0.69",
-    "sistema_salute": "solo_PV"
+    "sistema_salute": "solo_PV",
+    "campi": {
+      "pv": "Mostri 0.69",
+      "pm": "Mostri 0.69",
+      "caratteristiche": "Mostri 0.69",
+      "ar": "Mostri 0.69",
+      "difese": "Mostri 0.69",
+      "salvezze": "Mostri 0.69",
+      "iniziativa": "Mostri 0.69",
+      "azioni": "Mostri 0.69",
+      "movimento": "Mostri 0.69",
+      "spazio": "Mostri 0.69",
+      "abilita": "Mostri 0.69",
+      "attacchi": "Mostri 0.69",
+      "capacita": "Mostri 0.47",
+      "gs_px": "Mostri 0.69"
+    }
   }
 }

@@ -3,7 +3,7 @@
   "versione": 1,
   "id": "orog",
   "nome": "Orog",
-  "fonte": "dal Manuale dei Mostri v0.46 (Word del 27/10/2026), cap. 8 «Catalogo delle creature» — Popoli delle terre selvagge",
+  "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Orog",
   "caratteristiche": {
     "FOR": 8,
     "DES": 5,
@@ -48,11 +48,11 @@
       "va": 12,
       "danno": "2d6+3",
       "natura": "Naturale",
-      "portata_q": 1,
-      "ac": 1,
       "proprieta": [
         "Taglio"
-      ]
+      ],
+      "portata_q": 1,
+      "ac": 1
     },
     {
       "nome": "Giavellotto a mano",
@@ -60,11 +60,11 @@
       "va": 12,
       "danno": "1d6+2",
       "natura": "Naturale",
-      "portata_q": 1,
-      "ac": 1,
       "proprieta": [
         "Perforazione"
-      ]
+      ],
+      "portata_q": 1,
+      "ac": 1
     },
     {
       "nome": "Giavellotto lanciato",
@@ -72,14 +72,14 @@
       "va": 10,
       "danno": "1d6+1",
       "natura": "Naturale",
+      "proprieta": [
+        "Perforazione"
+      ],
       "gittata_q": 24,
       "modalita": [
         "S"
       ],
-      "ac": 1,
-      "proprieta": [
-        "Perforazione"
-      ]
+      "ac": 1
     }
   ],
   "abilita": [
@@ -131,9 +131,25 @@
       "effetto": "Può usare la propria AzM come Passo di 6 Q anziché 4 verso un nemico visibile. Il percorso non può allontanarlo da quel nemico e deve terminare più vicino. Nessuna AzM aggiuntiva o aumento a Corsa, Scatto, Carica e Schivata; Opportunità normali. Non ha Furia di Gruumsh, Urlo di guerra o Frenesia gnoll."
     }
   ],
-  "note": "Parata 12 (valore delle Difese), Schivata / Elusione 8. Rimossa la Pesante recupera +2 ai VA fisici penalizzati e Movimento 6 / 12 / 18 Q (Passo aggressivo 8 Q); Parata, Percezione e PS restano invariate. Parla Comune e Orchesco. Variante dell’Orco, combattente robusto e disciplinato che valuta terreno e ritirata; non acquisisce i poteri del Capoguerra o dell’Occhio di Gruumsh. Condotta: sotto 11 PV o a Ferita Profonda può arretrare per salvare il reparto o trattare. Fonte: Orog, p. 247.",
+  "note": "Variante dell’Orco • combattente in armatura pesante • Natura Comune.",
   "_bestiario": {
     "edizione": "Mostri 0.69",
-    "sistema_salute": "solo_PV"
+    "sistema_salute": "solo_PV",
+    "campi": {
+      "pv": "Mostri 0.69",
+      "pm": "Mostri 0.69",
+      "caratteristiche": "Mostri 0.69",
+      "ar": "Mostri 0.69",
+      "difese": "Mostri 0.69",
+      "salvezze": "Mostri 0.69",
+      "iniziativa": "Mostri 0.69",
+      "azioni": "Mostri 0.69",
+      "movimento": "Mostri 0.69",
+      "spazio": "Mostri 0.69",
+      "abilita": "Mostri 0.69",
+      "attacchi": "Mostri 0.69",
+      "capacita": "Mostri 0.47",
+      "gs_px": "Mostri 0.69"
+    }
   }
 }

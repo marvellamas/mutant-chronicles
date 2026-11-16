@@ -1,0 +1,154 @@
+{
+  "formato": "mutant-nemico",
+  "versione": 1,
+  "id": "ginosfinge",
+  "nome": "Ginosfinge",
+  "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Ginosfinge",
+  "taglia": "grande",
+  "note": "Sfinge custode di archivi e segreti. Predilige illusioni, rimozione degli incantesimi e confinamento dimensionale, senza possedere il ruggito progressivo dell’Androsfinge. Una AzP per Incantesimo e PM della versione; Potere pronto 16 ai livelli tre e sei, 14 al nove. Restano condizioni di lancio e procedure delle regole comuni dei custodi e delle schede della Magia v1.7. 9 PM; centro visibile entro 15 Q, raggio tre Q; scena animata trenta minuti Una AzP per modificarla; indagine Magia −2 per l’osservatore, nessuna materia, attacco o Copertura reale. Registrazioni mostrano il reale; Negare 9. 9 PM; un consenziente entro tre Q; cinque minuti fissi; quota una Azione 9 PM; dieci Round fissi; raggio 15 Q oppure due Q totali di analisi entro 15 Q Potere rilevazione 9; una fonte e categoria per Round, non vista fisica. Legge fino alla macrofamiglia, non diagnosi CROS. Cambio modalità come scheda; Negare 9. 9 PM; due effetti validamente localizzati entro 15 Q e concatenati entro due Q Superiore termina, inferiore fallisce, pari una Volontà del negatore. Non individua da solo magie nascoste, non annulla cure o altri risultati istantanei. 9 PM; una creatura visibile entro dieci Q; Magia 0 evita; tre Round Confinamento senza azioni, percezioni o recuperi, tempo ed effetti periodici sospesi. Un lancio attivo; ritorno Disorientato 1+1d3 Round. Negare 9 sulla traccia libera. 6 PM; una mente cosciente visibile entro dieci Q; Volontà 0 evita Fallimento −4 a tutte le Abilità cinque Round e interrompe la Concentrazione presente; nessun malus a PS, danno o Movimento e nessuna perdita di Azioni. Negare 6.",
+  "pv": 146,
+  "pm": 56,
+  "caratteristiche": {
+    "FOR": 8,
+    "DES": 7,
+    "COS": 8,
+    "INT": 9,
+    "SAG": 9,
+    "CAR": 9
+  },
+  "ar": {
+    "totale": 5,
+    "magica": 0
+  },
+  "difese": 14,
+  "salvezze": {
+    "tempra": 14,
+    "riflessi": 13,
+    "volonta": 15,
+    "magia": 15
+  },
+  "iniziativa": 2,
+  "azioni": {
+    "principali": 3,
+    "movimento": 1
+  },
+  "movimento": {
+    "passo": 8,
+    "corsa": 16,
+    "scatto": 24,
+    "volo": 12
+  },
+  "spazio": "2 × 2 Q",
+  "abilita": [
+    {
+      "nome": "Corpo a corpo",
+      "va": 16
+    },
+    {
+      "nome": "Atletica",
+      "va": 14
+    },
+    {
+      "nome": "Percezione",
+      "va": 16
+    },
+    {
+      "nome": "Occultismo",
+      "va": 18
+    },
+    {
+      "nome": "Cultura",
+      "va": 19
+    },
+    {
+      "nome": "Potere",
+      "va": 16
+    },
+    {
+      "nome": "Oratoria",
+      "va": 15
+    },
+    {
+      "nome": "Raggirare",
+      "va": 14
+    }
+  ],
+  "capacita": [
+    {
+      "nome": "Incantesimi",
+      "effetto": "VA —. Danno: Repertorio dedicato; PM e Potere indicati. Portata/costo: Una AzP salvo eccezione; "
+    },
+    {
+      "nome": "Corpo e sensi",
+      "effetto": "Guardiano vivente sovrannaturale senza necessità di cibo, acqua o sonno, ma senza immunità generale ad Affaticamento. Immune a fascinazione, Terrorizzato e danno di Dardo Psichico o equivalenti espressamente psichici. Dimezza soltanto il danno Naturale di armi da Contusione, Taglio e Perforazione; non è immune come l’Androsfinge. Mente schermata, Vista rivelatrice dodici entro 24 Q; nessuna Resistenza alla magia +2, telepatia o Parata naturale. Parla le lingue apprese e quella delle Sfingi. Cade da Svenuto in volo."
+    },
+    {
+      "nome": "Sequenza e passaggio",
+      "effetto": "Tre AzP totali, massimo due Artigli per Round, Opportunità compresa. Passaggio personale dodici Q, una AzP e quattro PM; soltanto corpo e oggetti già portati, spazio visibile libero e nessun passeggero. Nessuna Azione fuori turno si ripristina automaticamente e nessun potere è una Opportunità. L’arma naturale Magica non rende tutto il corpo immune a danni fisici."
+    },
+    {
+      "nome": "Incantesimi e indagine",
+      "effetto": "Lancio anatomico come Androsfinge; Potere base sedici, pronto sedici al livello sei e quattordici al nove, senza altri bonus. Una AzP e PM della versione, voce ordinaria e movimenti possibili, lancio contrastabile con Contromagia. Nessuna Concentrazione Operativa, Anticipazione o Contromagia assegnata. Le conoscenze dipendono dalla storia realmente appresa: Cultura e Occultismo possono analizzare prove, senza ricostruire automaticamente nomi, futuri o pensieri mai esaminati."
+    },
+    {
+      "nome": "Giudizio e limiti",
+      "effetto": "Per interpretare sincerità o intenzioni della Sfinge, le sole Prove sociali di lettura del comportamento subiscono −2; non è un malus a ogni conversazione. Presenza e letture mentali sono fermate dalla Mente schermata, non i normali indizi materiali. Non vi sono Ruggiti, invecchiamento, riscrittura del tempo o bandimento permanente automatico per chi fallisce un enigma. Il profilo comprende la creatura isolata e non le protezioni del luogo sorvegliato."
+    },
+    {
+      "nome": "Incantesimo",
+      "effetto": "Tabella (celle in ordine di lettura): Parametri pronti | Esito e contromisura | Illusione 9 • §19.4."
+    },
+    {
+      "nome": "Mimetismo 9 • §16.9",
+      "effetto": "Tabella (celle in ordine di lettura): ."
+    },
+    {
+      "nome": "Movimento ordinario escluso dalla quota",
+      "effetto": "Distorsione Percezione −2 una volta per Round; l’Azione dopo la quota si risolve e poi termina. Negare 9."
+    },
+    {
+      "nome": "Individuare 9 • §23.9",
+      "effetto": "Tabella (celle in ordine di lettura): ."
+    },
+    {
+      "nome": "Negare Potere 9 • §23.6",
+      "effetto": "Tabella (celle in ordine di lettura): ."
+    },
+    {
+      "nome": "Prigione Dimensionale 9 • §17.10",
+      "effetto": "Tabella (celle in ordine di lettura): ."
+    },
+    {
+      "nome": "Distrazione 6 • §19.3",
+      "effetto": "Tabella (celle in ordine di lettura): ."
+    },
+    {
+      "nome": "Altri movimenti",
+      "effetto": "spazio 2 × 2 Q"
+    }
+  ],
+  "gs_px": {
+    "gs": "Mito",
+    "px": 200,
+    "per_pg": 4
+  },
+  "_bestiario": {
+    "campi": {
+      "pv": "Mostri 0.69",
+      "pm": "Mostri 0.69",
+      "caratteristiche": "Mostri 0.69",
+      "ar": "Mostri 0.69",
+      "difese": "Mostri 0.69",
+      "salvezze": "Mostri 0.69",
+      "iniziativa": "Mostri 0.69",
+      "azioni": "Mostri 0.69",
+      "movimento": "Mostri 0.69",
+      "spazio": "Mostri 0.69",
+      "abilita": "Mostri 0.69",
+      "capacita": "Mostri 0.69",
+      "gs_px": "Mostri 0.69"
+    },
+    "edizione": "Mostri 0.69",
+    "sistema_salute": "solo_PV"
+  }
+}

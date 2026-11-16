@@ -3,7 +3,7 @@
   "versione": 1,
   "id": "falco",
   "nome": "Falco",
-  "fonte": "dal Manuale dei Mostri v0.46 (Word del 27/10/2026), cap. 8 «Catalogo delle creature» — Fauna delle terre aperte",
+  "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Falco",
   "caratteristiche": {
     "FOR": 2,
     "DES": 8,
@@ -49,11 +49,11 @@
       "va": 9,
       "danno": "1",
       "natura": "Naturale",
-      "portata_q": 1,
-      "ac": 1,
       "proprieta": [
         "Taglio"
-      ]
+      ],
+      "portata_q": 1,
+      "ac": 1
     }
   ],
   "abilita": [
@@ -96,9 +96,25 @@
       "effetto": "Un attacco di Artigli per Round, Opportunità compresa. La piccola taglia non concede Colpo Mirato agli occhi, Accecato o un attacco contro un organo esposto (le manovre mantengono costi e penalità). Nessun Branco, Passaggio in volo o danno da picchiata. Un Falco addestrato risponde a richiami e svolge compiti compatibili con l’addestramento, senza comprendere una conversazione né riferire a parole ciò che ha visto; non condivide i sensi con un padrone né fornisce una visuale a distanza."
     }
   ],
-  "note": "La pedina tattica 1 × 1 Q non rappresenta la larghezza reale; gli oggetti trasportabili devono essere compatibili con artigli, becco e carico. Piccolo rapace distinto dal Falco sanguinario della fonte. Condotta: preferisce quota e posatoi e tende ad abbandonare il contatto quando ferito, già da Ferita Superficiale, se ha percorso e funzione alare utilizzabili. Fonte: Hawk, p. 330.",
+  "note": "Piccolo rapace • osservazione e agilità • Natura Comune. Condotta. Preferisce quota e posatoi e tende ad abbandonare il contatto quando ferito, già da Ferita Superficiale. Può fuggire soltanto con un percorso e una funzione alare utilizzabili. Gli oggetti trasportabili devono essere compatibili con artigli, becco e carico: la pedina tattica non ne aumenta le dimensioni reali.",
   "_bestiario": {
     "edizione": "Mostri 0.69",
-    "sistema_salute": "solo_PV"
+    "sistema_salute": "solo_PV",
+    "campi": {
+      "pv": "Mostri 0.69",
+      "pm": "Mostri 0.69",
+      "caratteristiche": "Mostri 0.69",
+      "ar": "Mostri 0.69",
+      "difese": "Mostri 0.69",
+      "salvezze": "Mostri 0.69",
+      "iniziativa": "Mostri 0.69",
+      "azioni": "Mostri 0.69",
+      "movimento": "Mostri 0.69",
+      "spazio": "Mostri 0.69",
+      "abilita": "Mostri 0.69",
+      "attacchi": "Mostri 0.69",
+      "capacita": "Mostri 0.47",
+      "gs_px": "Mostri 0.69"
+    }
   }
 }

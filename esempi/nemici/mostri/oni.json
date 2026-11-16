@@ -1,0 +1,119 @@
+{
+  "formato": "mutant-nemico",
+  "versione": 1,
+  "id": "oni",
+  "nome": "Oni",
+  "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Oni",
+  "note": "Grande predatore umanoide che nasconde la propria forma e usa poteri di buio, sonno e gelo. Può fuggire in forma di nebbia e ricostituire lentamente i propri PV.",
+  "pv": 102,
+  "pm": 40,
+  "caratteristiche": {
+    "FOR": 9,
+    "DES": 5,
+    "COS": 8,
+    "INT": 7,
+    "SAG": 6,
+    "CAR": 7
+  },
+  "ar": {
+    "totale": 4,
+    "magica": 0
+  },
+  "difese": 12,
+  "salvezze": {
+    "tempra": 14,
+    "riflessi": 11,
+    "volonta": 13,
+    "magia": 13
+  },
+  "iniziativa": 1,
+  "azioni": {
+    "principali": 2,
+    "movimento": 1
+  },
+  "movimento": {
+    "passo": 6,
+    "corsa": 12,
+    "scatto": 18,
+    "volo": 6
+  },
+  "abilita": [
+    {
+      "nome": "Armi da guerra",
+      "va": 15
+    },
+    {
+      "nome": "Corpo a corpo",
+      "va": 14
+    },
+    {
+      "nome": "Raggirare",
+      "va": 15
+    },
+    {
+      "nome": "Percezione",
+      "va": 12
+    },
+    {
+      "nome": "Occultismo",
+      "va": 12
+    }
+  ],
+  "capacita": [
+    {
+      "nome": "Cono gelido",
+      "effetto": "VA —. Danno: 4d6+3 Magico, Gelo; AC 1. Portata/costo: Cono 12 × 6 Q; 2 AzP e 6 PM; "
+    },
+    {
+      "nome": "Cambiare forma",
+      "effetto": "Una AzP e due PM, senza Concentrazione: assume un aspetto umanoide già visto entro un Q oppure torna alla propria forma grande. Conserva caratteristiche, risorse e lesioni; non copia capacità o conoscenze. Solo il falcione si riduce o ingrandisce con lui; nella forma piccola usa il danno e la portata ridotti. La corazza grande deve essere tolta o si sfila durante la trasformazione; non rimane indossata né torna addosso gratuitamente. La pelle conserva soltanto AR 1. Alla morte corpo e falcione tornano grandi."
+    },
+    {
+      "nome": "Rigenerazione e armi",
+      "effetto": "All’inizio della propria Iniziativa recupera cinque PV se ne ha almeno uno e non è Morente; nessuna guarigione di Ferite, Menomazioni o Stati. Non si rialza automaticamente da zero PV. I suoi Artigli e il falcione mentre lo impugna infliggono danno Magico per capacità personale; un falcione recuperato è un’arma Comune Naturale. Corazza PI 8, falcione PI 6, PS Integrità 10. La Parata richiede il falcione pronto e le normali Azioni. Scurovisione 12 Q; da Svenuto in volo cade."
+    },
+    {
+      "nome": "Buio e invisibilità",
+      "effetto": "Buio: una AzP e due PM, sfera fissa di raggio tre Q con origine visibile entro sei Q, cinque Round senza Concentrazione. Oscura vista e Scurovisione; Luce Mistica illumina la propria porzione raggiunta, senza cancellare tutta la sfera. Una sola sfera attiva; Negare Potere confronto 6. Invisibilità: una AzP e tre PM su di sé per tre Round senza Concentrazione; termina dopo un attacco o potere ostile, da Svenuto o con Negare Potere, confronto 6. Non silenzia, cancella tracce o rende incorporeo."
+    },
+    {
+      "nome": "Cono gelido",
+      "effetto": "Due AzP e sei PM, una volta ogni 24 ore. Cono lungo 12 Q e largo alla fine sei Q, fermato da solidi; un solo danno comune, una AC per creatura. Elusione Riflessi −2 dimezza per eccesso prima dell’AR; nessuna Parata o Schivata. Dopo danno residuo e Contromisura Termico superata, Tempra −2 o Rallentato per 1+1d3 Round, secondo Gelo del Giocatore §5.24. Non congela automaticamente o paralizza."
+    },
+    {
+      "nome": "Sonno e fascino",
+      "effetto": "Sonno: una AzP e quattro PM, una volta per 24 ore, fino a tre umanoidi visibili entro sei Q e in catena entro due Q; Volontà 0 o Svenuto per cinque Round. Due Round di scuotimento energico, Cura Spirituale almeno sei o Negare Potere, confronto 6, risvegliano; danni non risvegliano. Fascino: una AzP e tre PM, una volta per 24 ore, umanoide visibile entro sei Q che lo vede, Volontà 0 o lo considera amico per cinque Round; un atto dannoso dell’Oni o dei suoi alleati termina il Fascino. Barriera Mentale aggiunge il bonus alle Volontà di entrambe le capacità, senza immunità. Negare Potere confronto 6; dopo resistenza o liberazione, immunità al Fascino di quell’Oni per 24 ore."
+    },
+    {
+      "nome": "Nebbia di fuga",
+      "effetto": "Una volta per ventiquattro ore, quando un danno lo porterebbe a 0 PV fuori dal rifugio, può trasformarsi automaticamente nella nebbia descritta, se non è al sole o immerso nell’acqua corrente. Questa è un’eccezione specifica al fuori combattimento: rimane a 0 PV e dispone di due ore per raggiungere il rifugio. Non attacca, non usa Fascino, non rigenera e non torna umanoide lungo il tragitto. La forma non è immune ai danni: gli ulteriori attacchi conservano i propri effetti e possono causarne la morte o distruzione effettiva secondo il §4.2. Non riattiva la fuga sullo stesso danno o una seconda volta."
+    },
+    {
+      "nome": "Altri movimenti",
+      "effetto": "Terra e volo 6 / 12 / 18: la stessa andatura vale anche per volo; forma grande 2 × 2 Q, umanoide 1 × 1 Q"
+    }
+  ],
+  "gs_px": {
+    "gs": "Leggenda",
+    "px": 110,
+    "per_pg": 4
+  },
+  "_bestiario": {
+    "campi": {
+      "pv": "Mostri 0.69",
+      "pm": "Mostri 0.69",
+      "caratteristiche": "Mostri 0.69",
+      "ar": "Mostri 0.69",
+      "difese": "Mostri 0.69",
+      "salvezze": "Mostri 0.69",
+      "iniziativa": "Mostri 0.69",
+      "azioni": "Mostri 0.69",
+      "movimento": "Mostri 0.69",
+      "abilita": "Mostri 0.69",
+      "capacita": "Mostri 0.69",
+      "gs_px": "Mostri 0.69"
+    },
+    "edizione": "Mostri 0.69",
+    "sistema_salute": "solo_PV"
+  }
+}

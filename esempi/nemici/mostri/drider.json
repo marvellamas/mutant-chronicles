@@ -1,0 +1,177 @@
+{
+  "formato": "mutant-nemico",
+  "versione": 1,
+  "id": "drider",
+  "nome": "Drider",
+  "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Drider",
+  "taglia": "grande",
+  "note": "Predatore dal torso umanoide e dal corpo aracnide. Si muove su pareti e soffitti e usa armi preparate, zanne velenose e pochi effetti innati di luce e oscuramento.",
+  "pv": 125,
+  "pm": 20,
+  "caratteristiche": {
+    "FOR": 7,
+    "DES": 7,
+    "COS": 8,
+    "INT": 6,
+    "SAG": 6,
+    "CAR": 6
+  },
+  "ar": {
+    "totale": 4,
+    "magica": 0
+  },
+  "difese": 12,
+  "salvezze": {
+    "tempra": 14,
+    "riflessi": 13,
+    "volonta": 10,
+    "magia": 12
+  },
+  "iniziativa": 2,
+  "azioni": {
+    "principali": 3,
+    "movimento": 1
+  },
+  "movimento": {
+    "passo": 6,
+    "corsa": 12,
+    "scatto": 18
+  },
+  "spazio": "2 × 2 Q",
+  "abilita": [
+    {
+      "nome": "Corpo a corpo",
+      "va": 14
+    },
+    {
+      "nome": "Armi da guerra",
+      "va": 14
+    },
+    {
+      "nome": "Armi da lancio",
+      "va": 14
+    },
+    {
+      "nome": "Atletica",
+      "va": 13
+    },
+    {
+      "nome": "Percezione",
+      "va": 13
+    },
+    {
+      "nome": "Furtività",
+      "va": 16
+    }
+  ],
+  "attacchi": [
+    {
+      "nome": "Spada lunga",
+      "tipo": "ravvicinato",
+      "va": 14,
+      "danno": "1d8+2",
+      "natura": "Naturale",
+      "proprieta": [
+        "Taglio",
+        "AC 1"
+      ],
+      "portata_q": 1,
+      "ac": 1
+    },
+    {
+      "nome": "Arco da guerra",
+      "tipo": "ravvicinato",
+      "va": 14,
+      "danno": "1d6+2",
+      "natura": "Naturale",
+      "proprieta": [
+        "Perforazione",
+        "AC 1",
+        "eventuale tossina"
+      ],
+      "portata_q": 100,
+      "ac": 1
+    },
+    {
+      "nome": "Morso",
+      "tipo": "ravvicinato",
+      "va": 14,
+      "danno": "1d4+1",
+      "natura": "Naturale",
+      "proprieta": [
+        "Perforazione",
+        "AC 1",
+        "veleno 2d6"
+      ],
+      "portata_q": 1,
+      "ac": 1
+    }
+  ],
+  "capacita": [
+    {
+      "nome": "Corpo e sensi",
+      "effetto": "Vivente biologico con mente e PM personali. Scurovisione 24 Q; +2 alle PS già previste contro fascinazione e immunità al sonno prodotto da magia, senza immunità generale ai veleni o a Svenuto. Sensibilità solare comune del blocco. Parla le lingue effettivamente apprese; nessuna lettura mentale o Parata naturale."
+    },
+    {
+      "nome": "Tre Azioni",
+      "effetto": "Tre AzP totali, massimo tre attacchi complessivi di Spada, Arco e Morso per Round, non più di un Morso; Opportunità compatibile compresa. L’Arco non è Opportunità. Armi, poteri e Difese consumano le stesse AzP. Dispone di due braccia umanoidi utilizzabili: l’Arco richiede entrambe libere e cambiare oggetti mantiene i costi ordinari. Parte con la Spada pronta e l’Arco riposto."
+    },
+    {
+      "nome": "Pareti e tela",
+      "effetto": "L’arrampicata aderente funziona sulle superfici solide capaci di sostenere il corpo, anche a testa in giù; non richiede Atletica per un tragitto ordinario e usa l’AzM alle andature scritte. Materiali friabili, mobili o privi di sostegno possono imporre una Prova o interrompere l’aderenza. Ignora il Terreno Difficile e le restrizioni di movimento delle normali ragnatele, senza liberarsi da qualunque vincolo magico. Non produce reti o ragnatele da combattimento. Una perdita di coscienza o una Menomazione che impedisca l’aderenza può causare Caduta."
+    },
+    {
+      "nome": "Veleni e dotazione",
+      "effetto": "Morso: dopo almeno un danno finale a un vivente biologico, Tempra −2 dimezza per eccesso 2d6 danni diretti da veleno naturale III. Dieci frecce hanno una dose ciascuna: consumata al tiro, dopo danno finale Tempra 0 dimezza 1d6 diretto, veleno naturale II. Nessun Avvelenato persistente, raddoppio della tossina col Magistrale o rinnovo gratuito delle dosi. Spada: FOR quattro, PI cinque, base 1d8+1. Arco: FOR cinque, PI sei, base 1d6+1; incoccare incluso. I danni pronti comprendono +1 personale; tutto Comune, PS Integrità dieci."
+    },
+    {
+      "nome": "Anatomia e condotta",
+      "effetto": "Testa include sensi e zanne, Torace la massa centrale, Braccia gli arti umanoidi, Gambe le otto zampe locomotorie. Si registra l’arto menomato senza creare otto riserve di PV. Tende a usare dislivelli, oscurità e ritirate; può trattare. I 77 PX comprendono la dotazione, non Ragni giganti, culti, una maledizione d’origine o una Classe da incantatore. La variante della fonte con un repertorio da sacerdote richiede una scheda distinta."
+    },
+    {
+      "nome": "Luci mobili",
+      "effetto": "Una AzP e un PM creano fino a quattro luci innocue entro sei Q, durata cinque Round e luce totale di raggio due Q; una AzP per spostarle mantenendole entro sei Q. Nessun danno o luce solare, nessuna creatura o copertura materiale. Negare tre rimuove, Svenuto o morte terminano. Non è Luce Mistica e non ha effetti contro l’Oscura Simmetria."
+    },
+    {
+      "nome": "Oscuramento",
+      "effetto": "Un uso per ventiquattro ore, una AzP e tre PM, centro visibile entro sei Q con percorso libero; sfera fissa di raggio tre Q per cinque Round, fermata dai solidi. Come l’Oscuramento del Mantoscuro blocca vista e Scurovisione: il Drider non vede nella propria sfera. Torce e fari non la dissipano; Luce Mistica illumina la porzione raggiunta dalla propria aura. Negare sei, congedo gratuito alla propria Iniziativa, Svenuto o morte terminano l’intera sfera. Una sola sfera per esemplare, senza Concentrazione."
+    },
+    {
+      "nome": "Luminescenza",
+      "effetto": "Un uso per ventiquattro ore, una AzP e tre PM, raggio due Q attorno a un punto visibile entro sei Q, percorso libero e solidi bloccanti; coinvolge anche alleati. Ogni corpo presente effettua Riflessi 0: fallimento è contornato da luce tenue per tre Round. Gli attacchi diretti dipendenti dalla vista contro il corpo hanno +2 VA quando è realmente visibile; nessun danno o nuova Azione. Non somma altri bonus magici di puntamento sul medesimo tiro."
+    },
+    {
+      "nome": "Occultamenti e termine",
+      "effetto": "La luminescenza usa Rilevazione sei contro Mimetismo: superiore ne distingue la sagoma, inferiore resta occultata, parità una sola Magia dell’osservatore per coppia di effetti. Non spegne Mimetismo e non supera Velo Psichico, solidi o una nube opaca. Un corpo riconosciuto è bersagliabile normalmente mantenendo vista; sapere soltanto il Q non basta per un potere che richieda visibilità. Negare sei o scadenza rimuovono il contorno; uscire dall’Area dopo l’applicazione non lo elimina. Non segue altri corpi e non rivela menti nascoste."
+    },
+    {
+      "nome": "Altri movimenti",
+      "effetto": "Terra e arrampicata 6 / 12 / 18: la stessa andatura vale anche per arrampicata; spazio 2 × 2 Q"
+    }
+  ],
+  "gs_px": {
+    "gs": "Eroe",
+    "px": 77,
+    "per_pg": 4
+  },
+  "_bestiario": {
+    "campi": {
+      "pv": "Mostri 0.69",
+      "pm": "Mostri 0.69",
+      "caratteristiche": "Mostri 0.69",
+      "ar": "Mostri 0.69",
+      "difese": "Mostri 0.69",
+      "salvezze": "Mostri 0.69",
+      "iniziativa": "Mostri 0.69",
+      "azioni": "Mostri 0.69",
+      "movimento": "Mostri 0.69",
+      "spazio": "Mostri 0.69",
+      "abilita": "Mostri 0.69",
+      "attacchi": "Mostri 0.69",
+      "capacita": "Mostri 0.69",
+      "gs_px": "Mostri 0.69"
+    },
+    "edizione": "Mostri 0.69",
+    "sistema_salute": "solo_PV"
+  }
+}

@@ -1,0 +1,121 @@
+{
+  "formato": "mutant-nemico",
+  "versione": 1,
+  "id": "ultroloth",
+  "nome": "Ultroloth",
+  "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Ultroloth",
+  "note": "Comandante dalla testa allungata e dagli occhi opalescenti. Sostiene il fronte con la spada, ma preferisce separare i nemici e sfruttare un breve sguardo ipnotico.",
+  "pv": 156,
+  "pm": 60,
+  "caratteristiche": {
+    "FOR": 7,
+    "DES": 8,
+    "COS": 9,
+    "INT": 9,
+    "SAG": 7,
+    "CAR": 9
+  },
+  "ar": {
+    "totale": 5,
+    "magica": 0
+  },
+  "difese": 13,
+  "salvezze": {
+    "tempra": 14,
+    "riflessi": 14,
+    "volonta": 15,
+    "magia": 15
+  },
+  "iniziativa": 3,
+  "azioni": {
+    "principali": 3,
+    "movimento": 1
+  },
+  "movimento": {
+    "passo": 6,
+    "corsa": 12,
+    "scatto": 18,
+    "volo": 12
+  },
+  "spazio": "1 Q",
+  "abilita": [
+    {
+      "nome": "Armi da guerra",
+      "va": 16
+    },
+    {
+      "nome": "Corpo a corpo",
+      "va": 13
+    },
+    {
+      "nome": "Potere",
+      "va": 15
+    },
+    {
+      "nome": "Percezione",
+      "va": 14
+    },
+    {
+      "nome": "Furtività",
+      "va": 13
+    },
+    {
+      "nome": "Oratoria",
+      "va": 16
+    }
+  ],
+  "capacita": [
+    {
+      "nome": "Sguardo ipnotico",
+      "effetto": "VA —. Danno: Stordito; Volontà −2. Portata/costo: Una mente entro 6 Q; 1 AzP e 4 PM; "
+    },
+    {
+      "nome": "Corpo e sensi",
+      "effetto": "Protezione Yugoloth comune, immune a fascinazione e Terrorizzato; Resistenza alla magia +2 non inclusa nelle PS. Vista rivelatrice 9 e telepatia entro 24 Q. Nessuna Parata naturale; Para con Spada pronta ai costi ordinari. Da Svenuto in volo cade. Massimo tre Spade per Round, Opportunità compresa; poteri e attacchi condividono le tre AzP."
+    },
+    {
+      "nome": "Sguardo",
+      "effetto": "Una AzP e quattro PM, disponibile di nuovo alla propria Iniziativa R+3 dopo uso nel Round R. Una mente cosciente visibile entro sei Q che possa vederne gli occhi: Volontà −2 evita; fallimento Stordito fino alla fine della successiva Iniziativa della vittima. Non impone alleanza, confessioni o ordini. Barriera Mentale aiuta, immunità alla fascinazione evita; Cura Spirituale almeno sei o Negare Potere confronto 9 rimuovono. Chi resiste o viene liberato diventa immune allo Sguardo di questo esemplare per 24 ore. Non è un’aura: non basta incrociare lo sguardo senza l’Azione."
+    },
+    {
+      "nome": "Mobilità e inganni",
+      "effetto": "Possiede Passaggio personale 12 Q, Buio, Invisibilità breve, Percepire magia, Lettura superficiale e Negazione 9 delle regole comuni. Maschera apparente: una AzP e tre PM, soltanto su di sé, applica Alterare Immagine 9 per trenta minuti con indagine Magia −2. Non cambia volume o morfologia e non fornisce ricordi; registrazioni mostrano l’aspetto reale. Negare Potere confronto 9 rimuove."
+    },
+    {
+      "nome": "Ordini e fuoco",
+      "effetto": "Comando innato: una AzP e nove PM, Comando 9, fino a due menti visibili entro 15 Q e concatenate entro due Q, breve frase identica e Volontà −2; conserva voce obbligatoria, comprensione, limiti morali e massimo una AzP e un Movimento del bersaglio nel turno previsto, senza Azioni nuove. Terrore mirato innato: una AzP e nove PM, due menti nella stessa disposizione, Volontà −4 o Terrorizzato per tre Round, rimozioni ordinarie e Negare 9. Muro di fuoco innato: una AzP e nove PM, Muro Elementale 9 solo Fuoco, otto segmenti entro 15 Q, dieci minuti, 2d4+5 Magico, conseguenze −2; un solo Muro attivo e Negare 9. Le capacità non richiedono Potere o componenti eccetto la voce del Comando."
+    },
+    {
+      "nome": "Dotazione e comando",
+      "effetto": "Spada lunga Comune: FOR 4, una mano, portata un Q, PI 5, PS Integrità 10, base 1d8+1 più due di FOR già compresi; Magica solo mentre impugnata dall’Ultroloth. Non è Versatile. I 220 PX includono l’arma; ordini tattici, rango e contratti non regalano Azioni o bonus ai subordinati. Nessuna evocazione, tempesta di fuoco, suggestione collettiva o chiaroveggenza remota aggiunta al profilo."
+    },
+    {
+      "nome": "Altri movimenti",
+      "effetto": "spazio 1 × 1 Q"
+    }
+  ],
+  "gs_px": {
+    "gs": "Mito",
+    "px": 220,
+    "per_pg": 4
+  },
+  "_bestiario": {
+    "campi": {
+      "pv": "Mostri 0.69",
+      "pm": "Mostri 0.69",
+      "caratteristiche": "Mostri 0.69",
+      "ar": "Mostri 0.69",
+      "difese": "Mostri 0.69",
+      "salvezze": "Mostri 0.69",
+      "iniziativa": "Mostri 0.69",
+      "azioni": "Mostri 0.69",
+      "movimento": "Mostri 0.69",
+      "spazio": "Mostri 0.69",
+      "abilita": "Mostri 0.69",
+      "capacita": "Mostri 0.69",
+      "gs_px": "Mostri 0.69"
+    },
+    "edizione": "Mostri 0.69",
+    "sistema_salute": "solo_PV"
+  }
+}

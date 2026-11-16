@@ -1,0 +1,146 @@
+{
+  "formato": "mutant-nemico",
+  "versione": 1,
+  "id": "drow",
+  "nome": "Drow",
+  "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Drow",
+  "note": "Umanoide elfico adattato al sottosuolo. Questo esemplare combatte con spada leggera e balestra piccola, dispone di poche dosi sedative e usa la stessa magia innata di luce e oscuramento del Drider.",
+  "pv": 24,
+  "pm": 10,
+  "caratteristiche": {
+    "FOR": 5,
+    "DES": 6,
+    "COS": 5,
+    "INT": 5,
+    "SAG": 5,
+    "CAR": 6
+  },
+  "ar": {
+    "totale": 1,
+    "magica": 0
+  },
+  "difese": 10,
+  "salvezze": {
+    "tempra": 9,
+    "riflessi": 10,
+    "volonta": 10,
+    "magia": 9
+  },
+  "iniziativa": 1,
+  "azioni": {
+    "principali": 1,
+    "movimento": 1
+  },
+  "movimento": {
+    "passo": 6,
+    "corsa": 12,
+    "scatto": 18
+  },
+  "spazio": "1 Q",
+  "abilita": [
+    {
+      "nome": "Armi da mischia",
+      "va": 11
+    },
+    {
+      "nome": "Armi da lancio",
+      "va": 11
+    },
+    {
+      "nome": "Corpo a corpo",
+      "va": 9
+    },
+    {
+      "nome": "Atletica",
+      "va": 9
+    },
+    {
+      "nome": "Percezione",
+      "va": 11
+    },
+    {
+      "nome": "Furtività",
+      "va": 12
+    }
+  ],
+  "attacchi": [
+    {
+      "nome": "Spada leggera",
+      "tipo": "ravvicinato",
+      "va": 11,
+      "danno": "1d6+2",
+      "natura": "Naturale",
+      "proprieta": [
+        "Taglio",
+        "AC 1"
+      ],
+      "portata_q": 1,
+      "ac": 1
+    },
+    {
+      "nome": "Balestra piccola",
+      "tipo": "ravvicinato",
+      "va": 11,
+      "danno": "1d4+2",
+      "natura": "Naturale",
+      "proprieta": [
+        "Perforazione",
+        "AC 1",
+        "eventuale sedativo"
+      ],
+      "portata_q": 30,
+      "ac": 1
+    }
+  ],
+  "capacita": [
+    {
+      "nome": "Corpo e sensi",
+      "effetto": "Vivente biologico con mente e PM personali, Scurovisione 24 Q. +2 alle PS già consentite contro fascinazione, non compreso nei valori; immune al sonno prodotto da magia, non a sedativi biologici, esaurimento dei PM o tutti gli effetti mentali. Sensibilità solare del blocco. Parla le lingue apprese; può Parare con la Spada pronta, senza Parata naturale."
+    },
+    {
+      "nome": "Azioni e mani",
+      "effetto": "Una AzP e una AzM totali, massimo un attacco per Round, Opportunità compresa solo con Spada o colpo ravvicinato compatibile. Parte con Spada pronta e Balestra carica riposta. Ricaricare la Balestra richiede una AzM e una mano libera, un quadrello per tiro. Preparare, riporre o cambiare armi usa i costi ordinari; il caricamento non fornisce movimento o un tiro aggiuntivo."
+    },
+    {
+      "nome": "Luci e oscuramento",
+      "effetto": "Capacità innate, senza Potere o componenti: Luci mobili una AzP e un PM, cinque Round; Oscuramento una AzP e tre PM, un uso per ventiquattro ore; Luminescenza stessi costi e un uso separato per ventiquattro ore. Applica il modulo comune Drow, identico alle procedure del Drider. Non vede nella propria Oscurità e non ripristina PM o usi passando all’ombra."
+    },
+    {
+      "nome": "Quadrelli sedativi",
+      "effetto": "Sei dei dodici quadrelli contengono una dose ciascuno, consumata al tiro. Dopo almeno un danno fisico finale a un vivente biologico: Tempra 0 contro Tossina sedativa Drow III. Successo evita, fallimento Avvelenato cinque Round, Maldestro anche Svenuto; ripetizioni, soccorso e antidoti nel modulo comune. Se l’AR assorbe tutto il danno, il quadrello non inocula."
+    },
+    {
+      "nome": "Dotazione e condotta",
+      "effetto": "Spada leggera: FOR tre, PI cinque, base 1d6+1. Balestra piccola: FOR tre, PI quattro, base 1d4+1. +1 personale già incluso nei danni; Leggera AR uno, FOR tre, PI sei, −1 a Potere per eventuali Incantesimi appresi e nessun malus agli attacchi. Tutto Comune, PS Integrità dieci. Non ha Scudo o veleno sulla Spada. Sotto 7 PV può ripiegare o trattare; appartenenza, moralità e Corporazione non derivano dalla specie."
+    },
+    {
+      "nome": "Altri movimenti",
+      "effetto": "spazio 1 × 1 Q"
+    }
+  ],
+  "gs_px": {
+    "gs": "Inesperto",
+    "px": 22,
+    "per_pg": 4
+  },
+  "_bestiario": {
+    "campi": {
+      "pv": "Mostri 0.69",
+      "pm": "Mostri 0.69",
+      "caratteristiche": "Mostri 0.69",
+      "ar": "Mostri 0.69",
+      "difese": "Mostri 0.69",
+      "salvezze": "Mostri 0.69",
+      "iniziativa": "Mostri 0.69",
+      "azioni": "Mostri 0.69",
+      "movimento": "Mostri 0.69",
+      "spazio": "Mostri 0.69",
+      "abilita": "Mostri 0.69",
+      "attacchi": "Mostri 0.69",
+      "capacita": "Mostri 0.69",
+      "gs_px": "Mostri 0.69"
+    },
+    "edizione": "Mostri 0.69",
+    "sistema_salute": "solo_PV"
+  }
+}

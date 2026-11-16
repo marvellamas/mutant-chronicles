@@ -1,0 +1,117 @@
+{
+  "formato": "mutant-nemico",
+  "versione": 1,
+  "id": "diavolo-spinato",
+  "nome": "Diavolo spinato",
+  "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Diavolo spinato",
+  "note": "Piccolo volatore ricoperto di spine, adatto alla ricognizione e al tiro. Porta un tridente e dispone di una riserva finita di aculei che si incendiano all’impatto.",
+  "pv": 32,
+  "pm": 10,
+  "caratteristiche": {
+    "FOR": 5,
+    "DES": 7,
+    "COS": 6,
+    "INT": 5,
+    "SAG": 7,
+    "CAR": 4
+  },
+  "ar": {
+    "totale": 2,
+    "magica": 0
+  },
+  "difese": 11,
+  "salvezze": {
+    "tempra": 10,
+    "riflessi": 12,
+    "volonta": 10,
+    "magia": 12
+  },
+  "iniziativa": 2,
+  "azioni": {
+    "principali": 2,
+    "movimento": 1
+  },
+  "movimento": {
+    "passo": 4,
+    "corsa": 8,
+    "scatto": 12,
+    "volo": 8
+  },
+  "spazio": "1 Q",
+  "abilita": [
+    {
+      "nome": "Corpo a corpo",
+      "va": 10
+    },
+    {
+      "nome": "Armi da guerra",
+      "va": 10
+    },
+    {
+      "nome": "Armi da lancio",
+      "va": 12
+    },
+    {
+      "nome": "Furtività",
+      "va": 11
+    },
+    {
+      "nome": "Percezione",
+      "va": 12
+    }
+  ],
+  "capacita": [
+    {
+      "nome": "Aculeo incendiario",
+      "effetto": "VA 12. Danno: AC 2: 1d4+1 Naturale, poi 1d6 Magico, Fuoco. Portata/costo: Massimo 16 Q; 1 AzP; un aculeo; "
+    },
+    {
+      "nome": "Corpo e sensi",
+      "effetto": "Protezioni elementali comuni, resistenza alle armi non argentate, Vista infernale 24 Q e Resistenza alla magia +2 non inclusa nelle PS. Telepatia entro 24 Q. Nessuna Parata naturale; può Parare con il Tridente pronto ai costi normali."
+    },
+    {
+      "nome": "Sequenza",
+      "effetto": "Due AzP totali. Per Round massimo un Morso e un Tridente, oppure due Aculei; può sostituire uno dei due attacchi della sequenza ravvicinata con un Aculeo, senza superare due attacchi complessivi, Opportunità compresa. Gli Aculei non sono Opportunità ravvicinate. Non dispone di Tiro Rapido o di più proiettili con una sola AzP."
+    },
+    {
+      "nome": "Due componenti",
+      "effetto": "Un tiro per colpire e una sola Difesa per Aculeo. La prima applicazione è Naturale da Perforazione, la seconda Magica da Fuoco: Parata e AR si applicano separatamente, una Schivata riuscita evita entrambe. Il Magistrale moltiplica soltanto la prima. Solo il residuo da Fuoco può applicare Incendiato, con Riflessi 0 dopo superamento di Ignifugo; il danno fisico da solo non lo attiva."
+    },
+    {
+      "nome": "Riserva e volo",
+      "effetto": "Dodici aculei per esemplare; ogni tiro ne consuma uno anche se manca. Si ricostituiscono dopo un Riposo completo, al massimo una volta per 24 ore, senza superare dodici. Non ricrescono cambiando forma o scena e gli aculei scagliati non si riutilizzano. Il suo Movimento in volo non provoca Opportunità per l’uscita dalla portata: restano gli attacchi a distanza e le altre reazioni compatibili. Da Svenuto in volo cade."
+    },
+    {
+      "nome": "Dotazione",
+      "effetto": "Tridente Comune: Armi da guerra, una mano, FOR 4, base 1d8+1, portata due Q, PI 6, PS Integrità 10. Il danno pronto non aggiunge un bonus FOR, poiché FOR cinque non ne fornisce uno positivo. I 33 PX comprendono l’arma; le spine sono parte del corpo, senza cariche trasferibili a un altro utilizzatore."
+    },
+    {
+      "nome": "Altri movimenti",
+      "effetto": "spazio 1 × 1 Q"
+    }
+  ],
+  "gs_px": {
+    "gs": "Esperto",
+    "px": 33,
+    "per_pg": 4
+  },
+  "_bestiario": {
+    "campi": {
+      "pv": "Mostri 0.69",
+      "pm": "Mostri 0.69",
+      "caratteristiche": "Mostri 0.69",
+      "ar": "Mostri 0.69",
+      "difese": "Mostri 0.69",
+      "salvezze": "Mostri 0.69",
+      "iniziativa": "Mostri 0.69",
+      "azioni": "Mostri 0.69",
+      "movimento": "Mostri 0.69",
+      "spazio": "Mostri 0.69",
+      "abilita": "Mostri 0.69",
+      "capacita": "Mostri 0.69",
+      "gs_px": "Mostri 0.69"
+    },
+    "edizione": "Mostri 0.69",
+    "sistema_salute": "solo_PV"
+  }
+}

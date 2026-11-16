@@ -1,0 +1,81 @@
+{
+  "formato": "mutant-nemico",
+  "versione": 1,
+  "id": "esempio-applicato-mezzodrago-rosso-veterano",
+  "nome": "Esempio applicato Mezzodrago rosso veterano",
+  "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Esempio applicato Mezzodrago rosso veterano",
+  "note": "Profilo già compreso nelle 424 creature del catalogo; Natura Comune. Combattente terrestre con discendenza rossa, senza volo innato e senza Incantesimi appresi. I valori mantengono la configurazione già presente.",
+  "pv": 85,
+  "pm": 20,
+  "caratteristiche": {
+    "FOR": 7,
+    "DES": 6,
+    "COS": 7,
+    "INT": 5,
+    "SAG": 6,
+    "CAR": 6
+  },
+  "ar": {
+    "totale": 5,
+    "magica": 0
+  },
+  "difese": 10,
+  "salvezze": {
+    "tempra": 12,
+    "riflessi": 11,
+    "volonta": 11,
+    "magia": 11
+  },
+  "iniziativa": 1,
+  "azioni": {
+    "principali": 2,
+    "movimento": 1
+  },
+  "movimento": {
+    "passo": 5,
+    "corsa": 11,
+    "scatto": 17
+  },
+  "spazio": "1 Q",
+  "capacita": [
+    {
+      "nome": "Soffio di Fuoco",
+      "effetto": "VA —. Danno: 4d10 × 2 Magico Fuoco; Elusione Riflessi 0 dimezza. Portata/costo: Cono 6 × 3 Q Base; 2 AzP e 6 PM; R+3; "
+    },
+    {
+      "nome": "Dotazione e limiti",
+      "effetto": "Spada lunga FOR quattro, PI cinque; Media FOR cinque, PI otto; entrambe Integrità dieci. Massimo due attacchi fisici per Round, Opportunità compresa. Le penalità della Media sono già incluse; rimossa, +1 ai VA fisici penalizzati e MOV 6 / 12 / 18. Dimezza Fuoco prima dell’AR senza immunità a Incendiato. Il soffio mantiene PS secondaria 0 del profilo; nessun bonus SAG da aggiungere."
+    },
+    {
+      "nome": "Altri movimenti",
+      "effetto": "spazio 1 × 1 Q Base"
+    },
+    {
+      "nome": "Abilità particolari",
+      "effetto": "Scurovisione 12 Q, percezione non visiva 2 Q"
+    }
+  ],
+  "gs_px": {
+    "gs": "Eroe",
+    "px": 77,
+    "per_pg": 4
+  },
+  "_bestiario": {
+    "campi": {
+      "pv": "Mostri 0.69",
+      "pm": "Mostri 0.69",
+      "caratteristiche": "Mostri 0.69",
+      "ar": "Mostri 0.69",
+      "difese": "Mostri 0.69",
+      "salvezze": "Mostri 0.69",
+      "iniziativa": "Mostri 0.69",
+      "azioni": "Mostri 0.69",
+      "movimento": "Mostri 0.69",
+      "spazio": "Mostri 0.69",
+      "capacita": "Mostri 0.69",
+      "gs_px": "Mostri 0.69"
+    },
+    "edizione": "Mostri 0.69",
+    "sistema_salute": "solo_PV"
+  }
+}

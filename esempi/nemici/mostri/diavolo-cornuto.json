@@ -1,0 +1,159 @@
+{
+  "formato": "mutant-nemico",
+  "versione": 1,
+  "id": "diavolo-cornuto",
+  "nome": "Diavolo cornuto",
+  "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Diavolo cornuto",
+  "taglia": "grande",
+  "note": "Grande combattente alato che usa tridente, coda e proiettili di fiamma. Alterna distanza e mischia per sfruttare le lacerazioni inflitte senza rinunciare alla propria mobilità.",
+  "pv": 167,
+  "pm": 40,
+  "caratteristiche": {
+    "FOR": 10,
+    "DES": 8,
+    "COS": 10,
+    "INT": 6,
+    "SAG": 8,
+    "CAR": 8
+  },
+  "ar": {
+    "totale": 5,
+    "magica": 0
+  },
+  "difese": 12,
+  "salvezze": {
+    "tempra": 16,
+    "riflessi": 14,
+    "volonta": 13,
+    "magia": 14
+  },
+  "iniziativa": 3,
+  "azioni": {
+    "principali": 3,
+    "movimento": 1
+  },
+  "movimento": {
+    "passo": 4,
+    "corsa": 8,
+    "scatto": 12,
+    "volo": 12
+  },
+  "spazio": "2 × 2 Q",
+  "abilita": [
+    {
+      "nome": "Armi da guerra",
+      "va": 16
+    },
+    {
+      "nome": "Corpo a corpo",
+      "va": 16
+    },
+    {
+      "nome": "Armi da lancio",
+      "va": 13
+    },
+    {
+      "nome": "Atletica",
+      "va": 15
+    },
+    {
+      "nome": "Percezione",
+      "va": 13
+    }
+  ],
+  "attacchi": [
+    {
+      "nome": "Tridente",
+      "tipo": "ravvicinato",
+      "va": 16,
+      "danno": "1d8+6",
+      "natura": "Naturale",
+      "proprieta": [
+        "Perforazione",
+        "AC 1"
+      ],
+      "portata_q": 2,
+      "ac": 1
+    },
+    {
+      "nome": "Coda",
+      "tipo": "ravvicinato",
+      "va": 16,
+      "danno": "2d6+3",
+      "natura": "Naturale",
+      "proprieta": [
+        "Perforazione",
+        "AC 1"
+      ],
+      "portata_q": 2,
+      "ac": 1
+    },
+    {
+      "nome": "Fiamma scagliata",
+      "tipo": "distanza",
+      "va": 15,
+      "danno": "4d6+3",
+      "natura": "Magico",
+      "proprieta": [
+        "Fuoco",
+        "AC 1"
+      ],
+      "gittata_q": 30,
+      "modalita": [
+        "S"
+      ],
+      "ac": 1
+    }
+  ],
+  "capacita": [
+    {
+      "nome": "Corpo e sensi",
+      "effetto": "Protezioni elementali comuni, resistenza alle armi non argentate, Vista infernale 24 Q e Resistenza alla magia +2 non inclusa nelle PS. Telepatia entro 24 Q. Nessuna Parata naturale; Parata con Tridente pronto e costi normali. Ali funzionali e spazio sono necessari; da Svenuto in volo cade."
+    },
+    {
+      "nome": "Attacchi e forza",
+      "effetto": "Tre AzP totali, massimo due Tridenti, una Coda e due Fiamme per Round, entro tre attacchi complessivi, Opportunità compresa. Forza brutale aggiunge due al danno personale del Tridente, già compresi; non alla Coda, alle Fiamme, al Sanguinamento o all’oggetto recuperato. Non si aggiungono dadi per la taglia."
+    },
+    {
+      "nome": "Lacerazione della coda",
+      "effetto": "Dopo almeno un danno finale della Coda a un organismo che possa sanguinare: Tempra −2, fallimento Sanguinamento tre. Perdita immediata e ricorrenze secondo Giocatore §5.15, massimo una per Round; altri colpi non sommano il valore. Non è una perdita continua dei PV massimi, un veleno o una paralisi. Le normali Ferite restano distinte dal Sanguinamento."
+    },
+    {
+      "nome": "Fiamme",
+      "effetto": "Ogni Fiamma costa una AzP e tre PM; VA 15 già comprensivo di Armi da lancio +2 per il proiettile mistico. È un attacco diretto a distanza, con Difese ordinarie e modificatori pertinenti, non un’area o un’Opportunità ravvicinata. Dopo danno finale e superamento di Ignifugo, Riflessi 0 evita Incendiato per 1+1d3 Round. Nessun ulteriore danno da impatto o seconda applicazione di Fuoco."
+    },
+    {
+      "nome": "Cure e dotazione",
+      "effetto": "Sanguinamento segue la procedura comune di Medicina e l’eventuale assegnazione dei punti di Cura Ferite: non basta ricevere un PV magico per annullarlo. Negare Potere non richiude una lesione fisica. Tridente Comune: FOR 4, una mano, portata due Q, PI 6, PS Integrità 10, base 1d8+1 più tre ordinari e due di Forza brutale. I 220 PX comprendono l’arma, senza altri diavoli o un comando coercitivo sui presenti."
+    },
+    {
+      "nome": "Altri movimenti",
+      "effetto": "spazio 2 × 2 Q"
+    }
+  ],
+  "gs_px": {
+    "gs": "Mito",
+    "px": 220,
+    "per_pg": 4
+  },
+  "_bestiario": {
+    "campi": {
+      "pv": "Mostri 0.69",
+      "pm": "Mostri 0.69",
+      "caratteristiche": "Mostri 0.69",
+      "ar": "Mostri 0.69",
+      "difese": "Mostri 0.69",
+      "salvezze": "Mostri 0.69",
+      "iniziativa": "Mostri 0.69",
+      "azioni": "Mostri 0.69",
+      "movimento": "Mostri 0.69",
+      "spazio": "Mostri 0.69",
+      "abilita": "Mostri 0.69",
+      "attacchi": "Mostri 0.69",
+      "capacita": "Mostri 0.69",
+      "gs_px": "Mostri 0.69"
+    },
+    "edizione": "Mostri 0.69",
+    "sistema_salute": "solo_PV"
+  }
+}

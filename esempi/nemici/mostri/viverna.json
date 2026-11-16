@@ -3,7 +3,7 @@
   "versione": 1,
   "id": "viverna",
   "nome": "Viverna",
-  "fonte": "dal Manuale dei Mostri v0.46 (Word del 27/10/2026), cap. 8 «Catalogo delle creature» — Grandi rettili e predatori mostruosi",
+  "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Viverna",
   "caratteristiche": {
     "FOR": 9,
     "DES": 5,
@@ -49,11 +49,11 @@
       "va": 13,
       "danno": "1d8+2",
       "natura": "Naturale",
-      "portata_q": 2,
-      "ac": 1,
       "proprieta": [
         "Perforazione"
-      ]
+      ],
+      "portata_q": 2,
+      "ac": 1
     },
     {
       "nome": "Pungiglione",
@@ -61,9 +61,11 @@
       "va": 13,
       "danno": "1d6+2",
       "natura": "Naturale",
+      "proprieta": [
+        "poi veleno"
+      ],
       "portata_q": 2,
-      "ac": 1,
-      "note": "Poi veleno (una dose dichiarata prima del tiro): vedi la capacità «Veleno»."
+      "ac": 1
     },
     {
       "nome": "Artigli",
@@ -71,12 +73,11 @@
       "va": 13,
       "danno": "1d8+2",
       "natura": "Naturale",
-      "portata_q": 1,
-      "ac": 1,
       "proprieta": [
         "Taglio"
       ],
-      "note": "Solo in volo."
+      "portata_q": 1,
+      "ac": 1
     }
   ],
   "abilita": [
@@ -120,9 +121,26 @@
       }
     }
   ],
-  "note": "Non comprende linguaggi nel profilo base e non ha un soffio. Condotta: insegue una preda accessibile cercando spazio per la coda; sotto 14 PV o a Ferita Profonda si allontana in volo. Fonte: Wyvern, p. 303.",
+  "note": "Predatore alato • pungiglione velenoso • Natura Comune. Condotta. Insegue una preda accessibile, cercando spazio per usare la coda. Non comprende linguaggi nel profilo base e non possiede un soffio. Sotto 19 PV tenta di allontanarsi in volo, se possibile. Una vittima che raggiunge un riparo può indurla ad attendere oppure cercare altro nutrimento.",
   "_bestiario": {
     "edizione": "Mostri 0.69",
-    "sistema_salute": "solo_PV"
-  }
+    "sistema_salute": "solo_PV",
+    "campi": {
+      "pv": "Mostri 0.69",
+      "pm": "Mostri 0.69",
+      "caratteristiche": "Mostri 0.69",
+      "ar": "Mostri 0.69",
+      "difese": "Mostri 0.69",
+      "salvezze": "Mostri 0.69",
+      "iniziativa": "Mostri 0.69",
+      "azioni": "Mostri 0.69",
+      "movimento": "Mostri 0.69",
+      "spazio": "Mostri 0.69",
+      "abilita": "Mostri 0.69",
+      "attacchi": "Mostri 0.69",
+      "capacita": "Mostri 0.47",
+      "gs_px": "Mostri 0.69"
+    }
+  },
+  "taglia": "grande"
 }

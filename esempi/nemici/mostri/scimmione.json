@@ -3,7 +3,7 @@
   "versione": 1,
   "id": "scimmione",
   "nome": "Scimmione",
-  "fonte": "dal Manuale dei Mostri v0.46 (Word del 27/10/2026), cap. 8 «Catalogo delle creature» — Predatori e grandi erbivori",
+  "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Scimmione",
   "caratteristiche": {
     "FOR": 7,
     "DES": 6,
@@ -48,11 +48,11 @@
       "va": 11,
       "danno": "1d6+2",
       "natura": "Naturale",
-      "portata_q": 1,
-      "ac": 1,
       "proprieta": [
         "Contusione"
-      ]
+      ],
+      "portata_q": 1,
+      "ac": 1
     },
     {
       "nome": "Pietra",
@@ -60,15 +60,14 @@
       "va": 10,
       "danno": "1d6+1",
       "natura": "Naturale",
+      "proprieta": [
+        "Contusione"
+      ],
       "gittata_q": 6,
       "modalita": [
         "S"
       ],
-      "ac": 1,
-      "proprieta": [
-        "Contusione"
-      ],
-      "note": "Una mano; serve una pietra pronta (circa 1 kg)."
+      "ac": 1
     }
   ],
   "abilita": [
@@ -111,9 +110,25 @@
       "effetto": "Il lancio richiede una pietra pronta e una mano libera; raccogliere una pietra accessibile entro 1 Q costa 1 AzP (non è incorporabile nel tiro); estrarre un proiettile già trasportato segue il §5.1.1 (−4 VA per una sola estrazione incorporata). Il Direttore stabilisce prima della scena le pietre raggiungibili; roccia compatta o terreno senza pietre non sono una riserva. Ogni tiro richiede un nuovo proiettile; il danno non si replica sui bersagli adiacenti; nessuna Parata naturale."
     }
   ],
-  "note": "Non comprende linguaggi nel profilo selvatico; può apprendere segnali tramite un rapporto stabilito nella scena. Condotta: minaccia con richiami e posture prima dello scontro; sotto 6 PV o a Ferita Profonda raggiunge il gruppo o un riparo. Fonte: Ape, p. 317.",
+  "note": "Primate • pugni e lancio di pietre • Natura Comune. Condotta. Vista e udito ordinari. Non comprende linguaggi nel profilo selvatico; può apprendere segnali tramite un rapporto stabilito nella scena. Può minacciare con richiami e posture prima dello scontro. Sotto 8 PV tende a raggiungere il gruppo o un riparo. Pietre e pugni non concedono una Parata naturale.",
   "_bestiario": {
     "edizione": "Mostri 0.69",
-    "sistema_salute": "solo_PV"
+    "sistema_salute": "solo_PV",
+    "campi": {
+      "pv": "Mostri 0.69",
+      "pm": "Mostri 0.69",
+      "caratteristiche": "Mostri 0.69",
+      "ar": "Mostri 0.69",
+      "difese": "Mostri 0.69",
+      "salvezze": "Mostri 0.69",
+      "iniziativa": "Mostri 0.69",
+      "azioni": "Mostri 0.69",
+      "movimento": "Mostri 0.69",
+      "spazio": "Mostri 0.69",
+      "abilita": "Mostri 0.69",
+      "attacchi": "Mostri 0.69",
+      "capacita": "Mostri 0.47",
+      "gs_px": "Mostri 0.69"
+    }
   }
 }

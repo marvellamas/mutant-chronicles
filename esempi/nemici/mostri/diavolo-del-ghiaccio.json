@@ -1,0 +1,133 @@
+{
+  "formato": "mutant-nemico",
+  "versione": 1,
+  "id": "diavolo-del-ghiaccio",
+  "nome": "Diavolo del ghiaccio",
+  "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Diavolo del ghiaccio",
+  "taglia": "grande",
+  "note": "Grande insettoide bipede con coda e mandibole. Colpisce con appendici gelide e crea un muro che spezza le linee di attacco; il suo corpo tollera sia Fuoco sia Gelo, mentre il ghiaccio creato resta vulnerabile alle fiamme.",
+  "pv": 188,
+  "pm": 52,
+  "caratteristiche": {
+    "FOR": 10,
+    "DES": 7,
+    "COS": 9,
+    "INT": 9,
+    "SAG": 8,
+    "CAR": 9
+  },
+  "ar": {
+    "totale": 6,
+    "magica": 0
+  },
+  "difese": 12,
+  "salvezze": {
+    "tempra": 16,
+    "riflessi": 14,
+    "volonta": 15,
+    "magia": 15
+  },
+  "iniziativa": 2,
+  "azioni": {
+    "principali": 3,
+    "movimento": 1
+  },
+  "movimento": {
+    "passo": 8,
+    "corsa": 16,
+    "scatto": 24
+  },
+  "spazio": "2 × 2 Q",
+  "abilita": [
+    {
+      "nome": "Corpo a corpo",
+      "va": 17
+    },
+    {
+      "nome": "Atletica",
+      "va": 16
+    },
+    {
+      "nome": "Percezione",
+      "va": 13
+    },
+    {
+      "nome": "Occultismo",
+      "va": 15
+    },
+    {
+      "nome": "Oratoria",
+      "va": 14
+    }
+  ],
+  "capacita": [
+    {
+      "nome": "Morso",
+      "effetto": "VA 17. Danno: AC 2: 2d6+3 Naturale, poi 2d6 Magico, Gelo. Portata/costo: 1 Q; 1 AzP; "
+    },
+    {
+      "nome": "Artigli",
+      "effetto": "VA 17. Danno: AC 2: 2d4+3 Naturale, poi 2d6 Magico, Gelo. Portata/costo: 1 Q; 1 AzP; "
+    },
+    {
+      "nome": "Coda",
+      "effetto": "VA 17. Danno: AC 2: 2d6+3 Naturale, poi 2d6 Magico, Gelo. Portata/costo: 2 Q; 1 AzP; "
+    },
+    {
+      "nome": "Muro di ghiaccio",
+      "effetto": "VA —. Danno: Barriera; aria gelida nelle brecce. Portata/costo: Entro 12 Q; 2 AzP e 8 PM; "
+    },
+    {
+      "nome": "Corpo e sensi",
+      "effetto": "Protezioni elementali comuni e resistenza alle armi non argentate; è inoltre immune al Gelo e ai suoi Stati, non soltanto resistente. Vista infernale 24 Q e percezione cieca 12 Q fermata dai solidi. Resistenza alla magia +2 non inclusa nelle PS; telepatia entro 24 Q. Nessuna Parata naturale o volo innato."
+    },
+    {
+      "nome": "Attacchi gelidi",
+      "effetto": "Massimo un Morso, un attacco di Artigli e una Coda per Round, Opportunità compresa. Per ogni attacco un tiro per colpire e una sola Difesa: prima Naturale, poi Magico da Gelo, AR separata; Magistrale soltanto sulla prima applicazione. Morso perfora, Artigli tagliano, Coda contunde. Dopo residuo del solo Gelo e superamento di Termico, Tempra −2 o Rallentato per 1+1d3 Round. Il colpo fisico da solo non lo attiva; non applica automaticamente Congelato."
+    },
+    {
+      "nome": "Creare il muro",
+      "effetto": "Due AzP e otto PM; usato nel Round R torna disponibile alla sua Iniziativa in R + 3. Parete opaca fino a sei Q contigui, alta due Q e spessa mezzo Q, su superficie solida visibile entro 12 Q, per cinque Round senza Concentrazione. Non nasce nei Q occupati e deve lasciare un varco se altrimenti sigillerebbe interamente una creatura. Blocca vista e passaggio; non spinge o danneggia gratuitamente alla creazione. Un solo muro: il nuovo termina il precedente e la sua aria gelida."
+    },
+    {
+      "nome": "Aprire una breccia",
+      "effetto": "Ogni tratto lungo due Q ha PI 12, AR 3 e PS Integrità 12, con regole degli oggetti degli Armamenti. Il Fuoco raddoppia il danno diretto pertinente prima dell’AR; Gelo e veleni non lo danneggiano. Distruggere un tratto apre soltanto quel varco e lascia aria gelida nel volume che occupava fino al termine del muro. I PI del muro non sono PV aggiuntivi del Diavolo."
+    },
+    {
+      "nome": "Aria gelida",
+      "effetto": "Chi entra o attraversa un tratto d’aria gelida, oppure vi inizia la propria Iniziativa, subisce 2d6+3 Magico, Gelo, una sola applicazione per Round per questo muro anche attraversando più brecce. Elusione Riflessi −2 dimezza prima dell’AR, senza seconda Difesa; dopo residuo e Termico superato, Tempra −2 o Rallentato per 1+1d3 Round. Colpisce anche gli alleati. Non applica anche danni iniziali del muro o un cono aggiuntivo."
+    },
+    {
+      "nome": "Termine e limiti",
+      "effetto": "Scadenza, Svenuto o morte del Diavolo terminano muro e aria gelida; può scioglierli gratis alla propria Iniziativa. Negare Potere rimuove l’intero muro come un solo effetto continuo, confronto 12, comprese le brecce gelide. L’immunità al Fuoco appartiene al corpo, non alla barriera. Nessuna lancia, cupola, evocazione o riserva di ghiaccio raccoglibile come arma magica è inclusa nei 400 PX."
+    },
+    {
+      "nome": "Altri movimenti",
+      "effetto": "spazio 2 × 2 Q"
+    }
+  ],
+  "gs_px": {
+    "gs": "Semidio",
+    "px": 400,
+    "per_pg": 4
+  },
+  "_bestiario": {
+    "campi": {
+      "pv": "Mostri 0.69",
+      "pm": "Mostri 0.69",
+      "caratteristiche": "Mostri 0.69",
+      "ar": "Mostri 0.69",
+      "difese": "Mostri 0.69",
+      "salvezze": "Mostri 0.69",
+      "iniziativa": "Mostri 0.69",
+      "azioni": "Mostri 0.69",
+      "movimento": "Mostri 0.69",
+      "spazio": "Mostri 0.69",
+      "abilita": "Mostri 0.69",
+      "capacita": "Mostri 0.69",
+      "gs_px": "Mostri 0.69"
+    },
+    "edizione": "Mostri 0.69",
+    "sistema_salute": "solo_PV"
+  }
+}

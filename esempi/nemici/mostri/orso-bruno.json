@@ -3,7 +3,7 @@
   "versione": 1,
   "id": "orso-bruno",
   "nome": "Orso bruno",
-  "fonte": "dal Manuale dei Mostri v0.46 (Word del 27/10/2026), cap. 8 «Catalogo delle creature» — Bestie e predatori",
+  "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Orso bruno",
   "caratteristiche": {
     "FOR": 8,
     "DES": 4,
@@ -82,20 +82,41 @@
   "capacita": [
     {
       "nome": "Sequenza",
-      "effetto": "Con le due AzP un attacco di Artigli e un Morso, al massimo uno di ciascuno per Round; ogni attacco si risolve a parte, con la propria Difesa e AR. Può conservare Azioni per Schivata. Gli Artigli non infliggono due colpi per l’uso di due zampe."
+      "effetto": "Può spendere le due AzP per un attacco di Artigli e un Morso, al massimo uno di ciascuno nelle proprie AzP per Round. Ogni attacco si risolve separatamente, con la propria Difesa e AR. Può conservare Azioni per Schivata o altre attività. Gli Artigli non infliggono due colpi per il solo fatto di usare due zampe."
     },
     {
       "nome": "Fiuto e arrampicata",
-      "effetto": "+2 a Percezione quando l’olfatto è determinante. Si arrampica fino a 4 Q per AzM su tronchi e superfici con appigli adatti al suo peso, con Atletica se la difficoltà lo richiede; non aderisce a soffitti o pareti lisce."
+      "effetto": "Ottiene +2 a Percezione quando l’olfatto è determinante. Può arrampicarsi fino a 4 Q per AzM su tronchi e superfici con appigli adatti al suo peso, applicando Atletica quando la difficoltà lo richiede. Non aderisce a soffitti o pareti lisce."
     },
     {
       "nome": "Forza e anatomia",
-      "effetto": "Gli arti anteriori sono Braccia anche da sollevato: esegue manovre fisicamente praticabili pagandone costi e penalità. Il Morso non crea una presa automatica e la zampata non atterra automaticamente. Pelliccia e massa non danno immunità al freddo o ai proiettili."
+      "effetto": "Gli arti anteriori sono Braccia anche quando l’orso si solleva. Può eseguire manovre fisicamente praticabili, pagandone costi e penalità ordinarie; il Morso non crea automaticamente una presa e la zampata non atterra automaticamente. Pelliccia e massa non concedono immunità al freddo o ai proiettili."
+    },
+    {
+      "nome": "Altri movimenti",
+      "effetto": "arrampicata 4 al Passo; spazio 2 × 2 Q"
     }
   ],
-  "note": "Condotta: difende piccoli, spazio e cibo; sotto 9 PV o a Ferita Seria interrompe lo scontro se ha via libera, più ostinato a difesa dei piccoli. Non combatte fino alla morte per una regola automatica.",
+  "note": "Bestia quadrupede • difensore territoriale • Natura Comune. Condotta. Difende piccoli, spazio e accesso al cibo. Ruggiti, postura e avanzate possono precedere l’attacco. Se dispone di una via libera tende a interrompere lo scontro sotto 12 PV; la difesa dei piccoli può renderlo più ostinato. Non combatte fino alla morte per una regola automatica.",
   "_bestiario": {
     "edizione": "Mostri 0.69",
-    "sistema_salute": "solo_PV"
-  }
+    "sistema_salute": "solo_PV",
+    "campi": {
+      "pv": "Mostri 0.69",
+      "pm": "Mostri 0.69",
+      "caratteristiche": "Mostri 0.69",
+      "ar": "Mostri 0.69",
+      "difese": "Mostri 0.69",
+      "salvezze": "Mostri 0.69",
+      "iniziativa": "Mostri 0.69",
+      "azioni": "Mostri 0.69",
+      "movimento": "Mostri 0.69",
+      "spazio": "Mostri 0.69",
+      "abilita": "Mostri 0.69",
+      "attacchi": "Mostri 0.47",
+      "capacita": "Mostri 0.69",
+      "gs_px": "Mostri 0.69"
+    }
+  },
+  "taglia": "grande"
 }

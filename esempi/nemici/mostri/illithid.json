@@ -1,0 +1,124 @@
+{
+  "formato": "mutant-nemico",
+  "versione": 1,
+  "id": "illithid",
+  "nome": "Illithid",
+  "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Illithid",
+  "note": "Predatore umanoide dalla testa tentacolata. Usa la pressione psichica per catturare menti e corpi, protegge la propria ritirata e preferisce prede isolate a un combattimento aperto.",
+  "pv": 63,
+  "pm": 38,
+  "caratteristiche": {
+    "FOR": 5,
+    "DES": 6,
+    "COS": 6,
+    "INT": 9,
+    "SAG": 8,
+    "CAR": 8
+  },
+  "ar": {
+    "totale": 3,
+    "magica": 0
+  },
+  "difese": 12,
+  "salvezze": {
+    "tempra": 11,
+    "riflessi": 11,
+    "volonta": 14,
+    "magia": 15
+  },
+  "iniziativa": 2,
+  "azioni": {
+    "principali": 2,
+    "movimento": 1
+  },
+  "movimento": {
+    "passo": 6,
+    "corsa": 12,
+    "scatto": 18
+  },
+  "spazio": "1 Q",
+  "abilita": [
+    {
+      "nome": "Corpo a corpo",
+      "va": 14
+    },
+    {
+      "nome": "Percezione",
+      "va": 14
+    },
+    {
+      "nome": "Occultismo",
+      "va": 15
+    },
+    {
+      "nome": "Oratoria",
+      "va": 14
+    },
+    {
+      "nome": "Raggirare",
+      "va": 14
+    },
+    {
+      "nome": "Furtività",
+      "va": 12
+    }
+  ],
+  "capacita": [
+    {
+      "nome": "Onda mentale",
+      "effetto": "VA —. Danno: 2d6+3 psichici diretti; vedi Volontà. Portata/costo: Cono 12 × 6 Q; 2 AzP e 5 PM; "
+    },
+    {
+      "nome": "Onda mentale",
+      "effetto": "Due AzP e cinque PM, una volta ogni tre Round. Cono lungo 12 Q e largo alla fine sei Q, fermato da barriere solide; creature con mente raggiunte, compresi alleati. Volontà −2: successo dimezza per eccesso i danni, fallimento li subisce e diventa Stordito per tre Round. Nuova Volontà −2 alla fine della propria Iniziativa termina Stordito. È un’equivalenza espressa con Dardo Psichico: Barriera Mentale impedisce completamente Onda, senza danno o PS. I danni riguardano solo i PV ordinari, non provocano Ferite; a zero PV lo svenimento segue Dardo Psichico. Negare Potere può rimuovere Stordito, confronto 9; Cura Spirituale può trattare lo Stato nei suoi limiti."
+    },
+    {
+      "nome": "Tentacoli e cattura",
+      "effetto": "Può sostituire il danno dei Tentacoli con una presa dichiarata, Corpo a corpo 14 e procedura comune, contro un umanoide di spazio massimo 1 × 1 Q. Una sola vittima trattenuta. Dopo una presa vinta può spendere due PM: Volontà −2 della vittima evita Stordito per un Round; Barriera Mentale concede qui il bonus, senza immunità. Non ripete questa pressione sullo stesso corpo nello stesso Round. Liberare la presa termina soltanto lo Stordito prodotto da essa, non quello dell’Onda."
+    },
+    {
+      "nome": "Lacerare il cranio",
+      "effetto": "Richiede un umanoide già Svenuto e trattenuto dai tentacoli, con capo materialmente accessibile. Spende due AzP per un solo attacco: i danni seguono AR, PV, Tempra e Ferite, senza estrazione o morte automatica al raggiungimento di zero PV. La preparazione è visibile a chi osserva; un alleato può tentare di liberare la presa con le normali Azioni. Nutrimento su un cervello effettivamente morto richiede un minuto e non fornisce recuperi istantanei o tutti i ricordi della vittima."
+    },
+    {
+      "nome": "Poteri e protezioni",
+      "effetto": "Scurovisione 24 Q. Resistenza mistica: +2 alle PS contro effetti magici, non già inclusa. Telepatia bidirezionale entro 24 Q con una mente individuata; non legge automaticamente pensieri. Lettura superficiale: una AzP, due PM, vivente visibile entro sei Q, Magia −2; fallimento rivela un solo pensiero attualmente cosciente, non segreti o memoria completa. Barriera Mentale applica il bonus. Non possiede il repertorio dell’Arcanista, trasferimenti tra piani o schiavi inclusi."
+    },
+    {
+      "nome": "Levitazione e soggezione",
+      "effetto": "Levitare su di sé: una AzP e tre PM, cinque Round senza Concentrazione; AzM per spostarsi al Passo fino a quattro Q, anche verticalmente, senza attraversare solidi o sciogliere prese. Termina da Svenuto o con Negare Potere, confronto 6; se manca appoggio cade. Soggezione: una AzP e quattro PM, umanoide visibile entro sei Q, Volontà −2 o controllo per cinque Round senza Concentrazione. La vittima usa le sole proprie Azioni residue alla sua Iniziativa; l’Illithid dà un ordine semplice alla propria Iniziativa senza AzP, senza trasferire Azioni. Svenuto o morte dell’Illithid terminano il legame. Nessun autolesionismo o ordine contrario a principi profondi; prima fonte di danno di ogni Round concede nuova Volontà −2. Negare Potere confronto 9; Barriera Mentale aiuta le Volontà. Un solo soggiogato, non una Possessione; dopo resistenza o liberazione quel corpo è immune per 24 ore. Corazza Comune AR 2, PI 6, PS Integrità 10, già compresa nei valori e nei 110 PX."
+    },
+    {
+      "nome": "Valori pronti",
+      "effetto": "Attacchi e Difese comprendono le componenti ordinarie. Le immunità sono soltanto quelle dichiarate; la specie non riceve automaticamente la vulnerabilità al freddo della Covata. Abilità e caratteristiche non aggiungono altri bonus ai danni scritti. Restano le normali localizzazioni, ricondotte alle funzioni anatomiche effettive."
+    },
+    {
+      "nome": "Altri movimenti",
+      "effetto": "spazio 1 × 1 Q"
+    }
+  ],
+  "gs_px": {
+    "gs": "Leggenda",
+    "px": 110,
+    "per_pg": 4
+  },
+  "_bestiario": {
+    "campi": {
+      "pv": "Mostri 0.69",
+      "pm": "Mostri 0.69",
+      "caratteristiche": "Mostri 0.69",
+      "ar": "Mostri 0.69",
+      "difese": "Mostri 0.69",
+      "salvezze": "Mostri 0.69",
+      "iniziativa": "Mostri 0.69",
+      "azioni": "Mostri 0.69",
+      "movimento": "Mostri 0.69",
+      "spazio": "Mostri 0.69",
+      "abilita": "Mostri 0.69",
+      "capacita": "Mostri 0.69",
+      "gs_px": "Mostri 0.69"
+    },
+    "edizione": "Mostri 0.69",
+    "sistema_salute": "solo_PV"
+  }
+}

@@ -3,7 +3,7 @@
   "versione": 1,
   "id": "spaventapasseri",
   "nome": "Spaventapasseri",
-  "fonte": "dal Manuale dei Mostri v0.46 (Word del 27/10/2026), cap. 8 «Catalogo delle creature» — Costrutti e Modron",
+  "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Spaventapasseri",
   "caratteristiche": {
     "FOR": 5,
     "DES": 6,
@@ -48,12 +48,11 @@
       "va": 10,
       "danno": "1d6+1",
       "natura": "Naturale",
-      "portata_q": 1,
-      "ac": 1,
       "proprieta": [
         "Taglio"
       ],
-      "note": "Con almeno 1 danno finale, una vittima dotata di mente effettua Volontà senza modificatore: fallimento Terrorizzato per 1 Round (nessuna seconda PS iniziale; Barriera Mentale dà il proprio bonus; un’AR che annulla il colpo evita anche questa applicazione)."
+      "portata_q": 1,
+      "ac": 1
     }
   ],
   "abilita": [
@@ -107,9 +106,25 @@
     "sanguinamento",
     "terrorizzato"
   ],
-  "note": "Sentinella di legno, stoffa e paglia animata da uno spirito (impulsi e reazioni, senza i ricordi di una vita precedente). Al massimo due Artigli per Round, Opportunità compresa. Fonte: Scarecrow, p. 268.",
+  "note": "Costrutto animato da uno spirito • terrore e agguato • Natura Comune.",
   "_bestiario": {
     "edizione": "Mostri 0.69",
-    "sistema_salute": "solo_PV"
+    "sistema_salute": "solo_PV",
+    "campi": {
+      "pv": "Mostri 0.69",
+      "pm": "Mostri 0.69",
+      "caratteristiche": "Mostri 0.69",
+      "ar": "Mostri 0.69",
+      "difese": "Mostri 0.69",
+      "salvezze": "Mostri 0.69",
+      "iniziativa": "Mostri 0.69",
+      "azioni": "Mostri 0.69",
+      "movimento": "Mostri 0.69",
+      "spazio": "Mostri 0.69",
+      "abilita": "Mostri 0.69",
+      "attacchi": "Mostri 0.69",
+      "capacita": "Mostri 0.47",
+      "gs_px": "Mostri 0.69"
+    }
   }
 }

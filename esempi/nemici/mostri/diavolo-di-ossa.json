@@ -1,0 +1,140 @@
+{
+  "formato": "mutant-nemico",
+  "versione": 1,
+  "id": "diavolo-di-ossa",
+  "nome": "Diavolo d’ossa",
+  "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Diavolo d’ossa",
+  "taglia": "grande",
+  "note": "Grande creatura alata dall’aspetto scheletrico e dalla coda simile a quella di uno scorpione. Il corpo è vivente: non appartiene ai non morti per la sola forma delle ossa.",
+  "pv": 136,
+  "pm": 28,
+  "caratteristiche": {
+    "FOR": 9,
+    "DES": 8,
+    "COS": 9,
+    "INT": 6,
+    "SAG": 7,
+    "CAR": 8
+  },
+  "ar": {
+    "totale": 5,
+    "magica": 0
+  },
+  "difese": 12,
+  "salvezze": {
+    "tempra": 14,
+    "riflessi": 13,
+    "volonta": 13,
+    "magia": 14
+  },
+  "iniziativa": 3,
+  "azioni": {
+    "principali": 3,
+    "movimento": 1
+  },
+  "movimento": {
+    "passo": 8,
+    "corsa": 16,
+    "scatto": 24,
+    "volo": 8
+  },
+  "spazio": "2 × 2 Q",
+  "abilita": [
+    {
+      "nome": "Corpo a corpo",
+      "va": 16
+    },
+    {
+      "nome": "Atletica",
+      "va": 14
+    },
+    {
+      "nome": "Percezione",
+      "va": 12
+    },
+    {
+      "nome": "Raggirare",
+      "va": 14
+    }
+  ],
+  "attacchi": [
+    {
+      "nome": "Artiglio",
+      "tipo": "ravvicinato",
+      "va": 16,
+      "danno": "2d6+2",
+      "natura": "Naturale",
+      "proprieta": [
+        "Taglio",
+        "AC 1"
+      ],
+      "portata_q": 2,
+      "ac": 1
+    },
+    {
+      "nome": "Pungiglione",
+      "tipo": "ravvicinato",
+      "va": 16,
+      "danno": "2d8+3",
+      "natura": "Naturale",
+      "proprieta": [
+        "Perforazione",
+        "AC 1",
+        "veleno"
+      ],
+      "portata_q": 2,
+      "ac": 1
+    }
+  ],
+  "capacita": [
+    {
+      "nome": "Corpo e sensi",
+      "effetto": "Protezioni elementali comuni, resistenza alle armi non argentate, Vista infernale 24 Q e Resistenza alla magia +2 non inclusa nelle PS. Telepatia entro 24 Q. Nessuna Parata naturale; da Svenuto in volo cade."
+    },
+    {
+      "nome": "Attacchi",
+      "effetto": "Massimo due Artigli e un Pungiglione per Round, Opportunità compresa. La portata di due Q è quella delle appendici del profilo, non un raddoppio automatico ottenuto per la taglia. Non afferra con gli Artigli e non riceve un attacco d’arma in aggiunta."
+    },
+    {
+      "nome": "Veleno",
+      "effetto": "Dopo almeno un danno finale di Pungiglione a un vivente biologico: una sola Tempra −2 contro veleno naturale di Pericolosità IV. Successo dimezza per eccesso 2d6+3 danni diretti senza AR ed evita la penalità; fallimento danno intero e Avvelenato per tre Round con −2 VA alle Prove fisiche, non alle PS. La perdita è distinta dal colpo iniziale; non si ripete ogni Round e non paralizza."
+    },
+    {
+      "nome": "Recupero",
+      "effetto": "Alla fine di ogni propria Iniziativa chi è Avvelenato ripete Tempra −2: successo termina la penalità. Antidoto adeguato o Cura Avvelenamenti almeno cinque rimuove la sostanza, senza restituire PV o curare Ferite già prodotte. Immunità al veleno evita perdita e penalità; un effetto che curi solo lo Stato senza neutralizzare la sostanza non annulla la causa."
+    },
+    {
+      "nome": "Anatomia e condotta",
+      "effetto": "Testa comprende i sensi, Braccia i due arti con Artigli, Gambe gli appoggi; Torace registra anche il gruppo alare. La coda è annotata come appendice distinta per gli impedimenti funzionali. Cerca di tenere la preda entro portata e usare gli alleati come schermo; nessuna aura di terrore, fetore velenoso o autorità mistica deriva automaticamente dal suo aspetto."
+    },
+    {
+      "nome": "Altri movimenti",
+      "effetto": "Terra e volo 8 / 16 / 24: la stessa andatura vale anche per volo; spazio 2 × 2 Q"
+    }
+  ],
+  "gs_px": {
+    "gs": "Mito",
+    "px": 200,
+    "per_pg": 4
+  },
+  "_bestiario": {
+    "campi": {
+      "pv": "Mostri 0.69",
+      "pm": "Mostri 0.69",
+      "caratteristiche": "Mostri 0.69",
+      "ar": "Mostri 0.69",
+      "difese": "Mostri 0.69",
+      "salvezze": "Mostri 0.69",
+      "iniziativa": "Mostri 0.69",
+      "azioni": "Mostri 0.69",
+      "movimento": "Mostri 0.69",
+      "spazio": "Mostri 0.69",
+      "abilita": "Mostri 0.69",
+      "attacchi": "Mostri 0.69",
+      "capacita": "Mostri 0.69",
+      "gs_px": "Mostri 0.69"
+    },
+    "edizione": "Mostri 0.69",
+    "sistema_salute": "solo_PV"
+  }
+}

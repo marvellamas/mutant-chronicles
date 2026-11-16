@@ -3,7 +3,7 @@
   "versione": 1,
   "id": "orso-nero",
   "nome": "Orso nero",
-  "fonte": "dal Manuale dei Mostri v0.46 (Word del 27/10/2026), cap. 8 «Catalogo delle creature» — Fauna delle terre aperte",
+  "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Orso nero",
   "caratteristiche": {
     "FOR": 6,
     "DES": 5,
@@ -48,11 +48,11 @@
       "va": 11,
       "danno": "1d6+2",
       "natura": "Naturale",
-      "portata_q": 1,
-      "ac": 1,
       "proprieta": [
         "Taglio"
-      ]
+      ],
+      "portata_q": 1,
+      "ac": 1
     },
     {
       "nome": "Morso",
@@ -60,11 +60,11 @@
       "va": 10,
       "danno": "1d6+1",
       "natura": "Naturale",
-      "portata_q": 1,
-      "ac": 1,
       "proprieta": [
         "Perforazione"
-      ]
+      ],
+      "portata_q": 1,
+      "ac": 1
     }
   ],
   "abilita": [
@@ -107,9 +107,25 @@
       "effetto": "Con la propria AzM percorre fino a 6 Q al Passo su appigli adatti, senza Prova in condizioni ordinarie; superfici precarie o altre difficoltà concrete richiedono la Prova pertinente. Non aderisce a soffitti o pareti lisce e non ottiene un secondo budget passando da terra a un tronco. Sollevarsi sulle zampe posteriori non cambia spazio, riserve o localizzazioni."
     }
   ],
-  "note": "Orso di taglia media, più piccolo del Bruno già nel catalogo. Pelliccia e massa non aggiungono resistenze al freddo, alle armi da fuoco o agli Stati. Condotta: può difendere piccoli o cibo e cercare distanza quando gli viene lasciata una via libera; sotto 6 PV o a Ferita Profonda tende a ritirarsi. Fonte: Black Bear, p. 318.",
+  "note": "Orso di taglia media • fiuto e arrampicata • Natura Comune. Condotta. Può difendere piccoli o cibo e cercare distanza quando gli viene lasciata una via libera. Sotto 8 PV tende a ritirarsi. Pelliccia e massa non aggiungono resistenze al freddo, alle armi da fuoco o agli Stati; Morso e Artigli non impongono una presa automatica.",
   "_bestiario": {
     "edizione": "Mostri 0.69",
-    "sistema_salute": "solo_PV"
+    "sistema_salute": "solo_PV",
+    "campi": {
+      "pv": "Mostri 0.69",
+      "pm": "Mostri 0.69",
+      "caratteristiche": "Mostri 0.69",
+      "ar": "Mostri 0.69",
+      "difese": "Mostri 0.69",
+      "salvezze": "Mostri 0.69",
+      "iniziativa": "Mostri 0.69",
+      "azioni": "Mostri 0.69",
+      "movimento": "Mostri 0.69",
+      "spazio": "Mostri 0.69",
+      "abilita": "Mostri 0.69",
+      "attacchi": "Mostri 0.69",
+      "capacita": "Mostri 0.47",
+      "gs_px": "Mostri 0.69"
+    }
   }
 }

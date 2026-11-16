@@ -1,0 +1,120 @@
+{
+  "formato": "mutant-nemico",
+  "versione": 1,
+  "id": "duergar",
+  "nome": "Duergar",
+  "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Duergar",
+  "note": "Umanoide robusto dalla pelle grigia, adattato alla vita sotterranea. Questo esemplare usa martello, lancia e scudo e può ingrandirsi o occultarsi per un tempo limitato.",
+  "pv": 47,
+  "pm": 12,
+  "caratteristiche": {
+    "FOR": 7,
+    "DES": 5,
+    "COS": 7,
+    "INT": 5,
+    "SAG": 5,
+    "CAR": 4
+  },
+  "ar": {
+    "totale": 5,
+    "magica": 0
+  },
+  "difese": 11,
+  "salvezze": {
+    "tempra": 12,
+    "riflessi": 9,
+    "volonta": 9,
+    "magia": 10
+  },
+  "iniziativa": 0,
+  "azioni": {
+    "principali": 2,
+    "movimento": 1
+  },
+  "movimento": {
+    "passo": 5,
+    "corsa": 11,
+    "scatto": 17
+  },
+  "spazio": "1 Q",
+  "abilita": [
+    {
+      "nome": "Armi da guerra",
+      "va": 11
+    },
+    {
+      "nome": "Armi da lancio",
+      "va": 10
+    },
+    {
+      "nome": "Corpo a corpo",
+      "va": 10
+    },
+    {
+      "nome": "Atletica",
+      "va": 10
+    },
+    {
+      "nome": "Percezione",
+      "va": 10
+    },
+    {
+      "nome": "Furtività",
+      "va": 8
+    }
+  ],
+  "capacita": [
+    {
+      "nome": "Ingrandito",
+      "effetto": "VA come arma. Danno: Martello 2d8+2; Lancia 2d6+2; stessa Natura. Portata/costo: Portate invariate; stessa AzP; "
+    },
+    {
+      "nome": "Corpo e sensi",
+      "effetto": "Vivente biologico con mente e PM personali, Scurovisione 24 Q e sensibilità solare comune. Dimezza per eccesso il danno da veleno, dopo la relativa PS e prima dell’eventuale AR. +2 alle PS già consentite contro effetti mistici, veleno, fascinazione e Paralizzato; una sola volta se ricadono in più categorie, bonus non incluso nei valori. Non concede PS nuove o immunità al veleno. Può Parare con arma o Scudo pronti."
+    },
+    {
+      "nome": "Azioni e armatura",
+      "effetto": "Due AzP totali, massimo un attacco complessivo per Round, Opportunità ravvicinata compresa. Martello e Scudo inizialmente pronti; le Lance sono riposte. I valori comprendono le penalità della Media: −1 attacchi, Agilità e budget di movimento, non Parata, Salvezze o Percezione. Togliendola recupera quei punti e MOV 6 / 12 / 18 Q; a zero PI perde AR ma conserva gli ingombri finché indossata. Senza Scudo perde due AR. Iniziativa soltanto 1d10."
+    },
+    {
+      "nome": "Ingrandimento",
+      "effetto": "Un uso per ventiquattro ore, una AzP e tre PM, cinque Round senza Concentrazione. Deve esserci spazio libero per 2 × 2 Q: se manca, l’uso fallisce consumando costi e disponibilità, senza sfondare ostacoli. Corpo e dotazione personale assumono la dimensione scritta; i danni diventano quelli della tabella, senza aggiungere anche altri dadi. +2 alle Prove fisiche di FOR, Atletica o Corpo a corpo nelle manovre di forza, non alle normali Prove per colpire o alle PS. FOR, PV, PM, AR, attacchi, portate e Azioni non aumentano."
+    },
+    {
+      "nome": "Cessazione e invisibilità",
+      "effetto": "Negare sei, scadenza, congedo con una AzP senza PM, Svenuto o morte terminano l’Ingrandimento. Oggetti lasciati riprendono dimensioni ordinarie; nessuna duplicazione o scorta gigante permanente. Invisibilità: un uso per ventiquattro ore, una AzP e due PM, solo sé con dotazione, massimo dieci Round a Concentrazione. Usa il modulo Invisibilità sei del blocco; attaccare, lanciare un potere o Ingrandirsi termina prima l’occultamento. Non può mantenere Concentrazione e usare le altre AzP."
+    },
+    {
+      "nome": "Dotazione e impiego",
+      "effetto": "Martello da guerra: FOR cinque, PI cinque, base 1d8+1; Lancia: FOR cinque, PI sei, base a una mano 1d6+1, il lancio lascia l’arma nel luogo d’arrivo. Danni pronti +1 personale. Media: AR tre, FOR cinque, PI otto; Scudo Medio: AR due, FOR cinque, PI sei. Tutto Comune, PS Integrità dieci. Il profilo non comprende una Corporazione, prigionieri, officine o una predisposizione morale obbligatoria. Sotto 12 PV può ripiegare o trattare."
+    },
+    {
+      "nome": "Altri movimenti",
+      "effetto": "spazio 1 × 1 Q, ingrandito 2 × 2 Q"
+    }
+  ],
+  "gs_px": {
+    "gs": "Esperto",
+    "px": 33,
+    "per_pg": 4
+  },
+  "_bestiario": {
+    "campi": {
+      "pv": "Mostri 0.69",
+      "pm": "Mostri 0.69",
+      "caratteristiche": "Mostri 0.69",
+      "ar": "Mostri 0.69",
+      "difese": "Mostri 0.69",
+      "salvezze": "Mostri 0.69",
+      "iniziativa": "Mostri 0.69",
+      "azioni": "Mostri 0.69",
+      "movimento": "Mostri 0.69",
+      "spazio": "Mostri 0.69",
+      "abilita": "Mostri 0.69",
+      "capacita": "Mostri 0.69",
+      "gs_px": "Mostri 0.69"
+    },
+    "edizione": "Mostri 0.69",
+    "sistema_salute": "solo_PV"
+  }
+}

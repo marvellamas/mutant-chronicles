@@ -1,0 +1,118 @@
+{
+  "formato": "mutant-nemico",
+  "versione": 1,
+  "id": "scrutatore-dei-peccati",
+  "nome": "Scrutatore dei Peccati",
+  "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Scrutatore dei Peccati",
+  "note": "Esploratore a sei arti e molti occhi. È uno strumento di sorveglianza del culto: il nome non gli concede la conoscenza soprannaturale delle colpe.",
+  "pv": 37,
+  "pm": 12,
+  "caratteristiche": {
+    "FOR": 4,
+    "DES": 8,
+    "COS": 5,
+    "INT": 4,
+    "SAG": 8,
+    "CAR": 1
+  },
+  "ar": {
+    "totale": 2,
+    "magica": 0
+  },
+  "difese": 13,
+  "salvezze": {
+    "tempra": 10,
+    "riflessi": 13,
+    "volonta": 10,
+    "magia": 10
+  },
+  "iniziativa": 3,
+  "azioni": {
+    "principali": 1,
+    "movimento": 1
+  },
+  "movimento": {
+    "passo": 6,
+    "corsa": 12,
+    "scatto": 18
+  },
+  "abilita": [
+    {
+      "nome": "Corpo a corpo",
+      "va": 11
+    },
+    {
+      "nome": "Furtività",
+      "va": 16
+    },
+    {
+      "nome": "Percezione",
+      "va": 16
+    },
+    {
+      "nome": "Sopravvivenza",
+      "va": 14
+    },
+    {
+      "nome": "Atletica",
+      "va": 14
+    }
+  ],
+  "capacita": [
+    {
+      "nome": "Balzo assistito",
+      "effetto": "VA —. Danno: Nessun danno. Portata/costo: 1 AzM e 2 PM; massimo uno per Round; "
+    },
+    {
+      "nome": "Fonte del soggetto",
+      "effetto": "Sin Sighter; Dark Soul, pp. 84–86; capacità numeriche riscritte per Simply RPG. Selezione e adattamento: applicare soltanto le capacità operative di questa scheda."
+    },
+    {
+      "nome": "Occhi e mimetismo",
+      "effetto": "Visione nel buio ordinario e termica entro 12 Q, entrambe fermate dai solidi; nessuna vista attraverso pareti. Il mimetismo cutaneo aggiunge +2 alla sola Furtività visiva se immobile o al Passo, già compreso in 16: contro l’udito usa 14. Aderisce a pareti e soffitti; non attraversa barriere chiuse."
+    },
+    {
+      "nome": "Trasmissione sensoriale",
+      "effetto": "Innestare una sonda organica su un osservatore consenziente richiede un minuto a Contatto. Poi lo Scrutatore può allontanarsi e trasmettergli vista e udito entro 100 Q: 1 PM dello Scrutatore per minuto iniziato. Un solo ricevente; fuori portata, sonda rimossa, PM insufficienti, Svenuto o morte della fonte interrompono il flusso. Le immagini mostrano solo ciò che l’animale percepisce. Il canale non trasmette ordini e non concede Azioni al ricevente; Negare 5 interrompe il flusso, non distrugge il corpo."
+    },
+    {
+      "nome": "Tossina paralizzante III",
+      "effetto": "Dopo almeno un danno della Puntura oltre AR: Tempra 0. Successo evita; fallimento Paralizzato due Round. Non può muoversi, attaccare o usare Difese attive; mantiene le PS. Alla fine di ogni propria Iniziativa ripete Tempra 0: successo termina subito. Nuove dosi attive aggiornano solo la scadenza più lontana. Immunità, antidoto appropriato o Cura Avvelenamenti 3 impediscono o terminano la tossina; Negare e Cura Spirituale da soli non la neutralizzano."
+    },
+    {
+      "nome": "Balzo e tracce",
+      "effetto": "Il Balzo sostituisce il Movimento dell’AzM: fino a 6 Q orizzontali e 3 Q di altezza, percorso e arrivo liberi, nessuna penetrazione dei muri. Può seguire con Sopravvivenza una pista odorosa realmente raccolta; vento, acqua, contenitori sigillati e tempo la possono cancellare. Non localizza un soggetto per il solo fatto di conoscerne il nome."
+    },
+    {
+      "nome": "Tattica e risorse",
+      "effetto": "Evita lo scontro e torna al punto di raccolta secondo gli ordini ricevuti prima della missione. Una sola azione offensiva per Round, Opportunità compresa; il Balzo non include Puntura. Biologico, senza immunità generali, senza rigenerazione e senza una riserva mentale del controllore a cui attingere."
+    },
+    {
+      "nome": "Altri movimenti",
+      "effetto": "arrampicata 6 Q con AzM, senza Corsa/Scatto; spazio 1 Q"
+    }
+  ],
+  "gs_px": {
+    "gs": "Esperto",
+    "px": 30,
+    "per_pg": 4
+  },
+  "_bestiario": {
+    "campi": {
+      "pv": "Mostri 0.69",
+      "pm": "Mostri 0.69",
+      "caratteristiche": "Mostri 0.69",
+      "ar": "Mostri 0.69",
+      "difese": "Mostri 0.69",
+      "salvezze": "Mostri 0.69",
+      "iniziativa": "Mostri 0.69",
+      "azioni": "Mostri 0.69",
+      "movimento": "Mostri 0.69",
+      "abilita": "Mostri 0.69",
+      "capacita": "Mostri 0.69",
+      "gs_px": "Mostri 0.69"
+    },
+    "edizione": "Mostri 0.69",
+    "sistema_salute": "solo_PV"
+  }
+}

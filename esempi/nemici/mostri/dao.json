@@ -1,0 +1,147 @@
+{
+  "formato": "mutant-nemico",
+  "versione": 1,
+  "id": "dao",
+  "nome": "Dao",
+  "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Dao",
+  "taglia": "grande",
+  "note": "Genio della Terra dalla corporatura massiccia. Attraversa la roccia naturale, scava dimore sotterranee e usa un grande maglio per respingere chi minaccia il suo dominio.",
+  "pv": 156,
+  "pm": 55,
+  "caratteristiche": {
+    "FOR": 10,
+    "DES": 6,
+    "COS": 10,
+    "INT": 6,
+    "SAG": 6,
+    "CAR": 7
+  },
+  "ar": {
+    "totale": 5,
+    "magica": 2
+  },
+  "difese": 11,
+  "salvezze": {
+    "tempra": 16,
+    "riflessi": 11,
+    "volonta": 12,
+    "magia": 13
+  },
+  "iniziativa": 1,
+  "azioni": {
+    "principali": 2,
+    "movimento": 1
+  },
+  "movimento": {
+    "passo": 6,
+    "corsa": 12,
+    "scatto": 18,
+    "volo": 6
+  },
+  "spazio": "2 × 2 Q",
+  "abilita": [
+    {
+      "nome": "Corpo a corpo",
+      "va": 15
+    },
+    {
+      "nome": "Armi da guerra",
+      "va": 16
+    },
+    {
+      "nome": "Atletica",
+      "va": 16
+    },
+    {
+      "nome": "Percezione",
+      "va": 13
+    },
+    {
+      "nome": "Occultismo",
+      "va": 12
+    }
+  ],
+  "attacchi": [
+    {
+      "nome": "Pugno",
+      "tipo": "ravvicinato",
+      "va": 15,
+      "danno": "2d8+3",
+      "natura": "Naturale",
+      "proprieta": [
+        "Contusione",
+        "AC 1"
+      ],
+      "portata_q": 1,
+      "ac": 1
+    },
+    {
+      "nome": "Maglio grande",
+      "tipo": "ravvicinato",
+      "va": 16,
+      "danno": "3d6+3",
+      "natura": "Naturale",
+      "proprieta": [
+        "Contusione",
+        "AC 1"
+      ],
+      "portata_q": 2,
+      "ac": 1
+    }
+  ],
+  "capacita": [
+    {
+      "nome": "Corpo e sensi",
+      "effetto": "Scurovisione 24 Q. Immune alla pietrificazione; +2 a Tempra e Riflessi soltanto contro effetti che lo farebbero cadere A Terra, non già compreso. Non è immune ai danni fisici, al veleno o al soffocamento. Può Parare solo con il maglio pronto, ai costi normali."
+    },
+    {
+      "nome": "Scorrere nella terra",
+      "effetto": "Con la propria AzM attraversa terra e roccia naturale non lavorata e non magica, senza lasciare un tunnel. Non attraversa metallo, murature, pavimenti lavorati o barriere mistiche. Non porta altre creature con sé. Nella roccia non vede né attacca attraverso le pareti e non percepisce automaticamente gli occupanti all’esterno; deve emergere per usare i propri sensi su di loro. Può scavare invece un passaggio reale, ma la sola andatura non svuota istantaneamente un volume di roccia."
+    },
+    {
+      "nome": "Abbattere con il maglio",
+      "effetto": "Dopo un colpo di Maglio con danno finale, una vittima appoggiata a terra e di spazio massimo 2 × 2 Q effettua Tempra −2: fallimento A Terra. Al massimo una applicazione per Round a ciascuna vittima, anche con Opportunità. Non è una spinta attraverso muri e non aggiunge un attacco gratuito."
+    },
+    {
+      "nome": "Modellare la pietra",
+      "effetto": "Una AzP e quattro PM, superficie naturale non magica a Contatto: modella fino a un Q cubo di terra o pietra in un minuto a Concentrazione. Non crea materiale, metallo, oggetti di precisione o un passaggio oltre il volume lavorato. Non modifica il Q occupato da una creatura o il sostegno sotto di essa; non crolla istantaneamente un edificio. Il risultato è materiale e persiste: Negare Potere non richiude una galleria già modellata."
+    },
+    {
+      "nome": "Muro di pietra",
+      "effetto": "Due AzP e sei PM, entro 12 Q visibili: fino a sei Q contigui di parete, alta due Q e spessa mezzo Q, per cinque Round senza Concentrazione. Deve poggiare su un sostegno stabile; non nasce in spazi occupati e lascia una via d’uscita a ogni creatura, senza sigillarla completamente. Ogni tratto di un Q ha PI 12, AR 4 e PS Integrità 12; distruggerlo apre soltanto quel tratto. Un solo muro attivo; crearne un altro termina il precedente. Negare Potere può rimuovere il muro, confronto 9."
+    },
+    {
+      "nome": "Poteri comuni e dotazione",
+      "effetto": "Usa le capacità condivise dei geni, compresa l’evocazione della Terra. Il maglio è un’arma grande Comune: PI 8, PS Integrità 10. Danno e portata scritti richiedono questa corporatura e due mani; recuperarlo non assegna i valori del Dao a un PG. Nessun bonus EQ da PNG. I 220 PX comprendono il maglio, non un elementale evocato."
+    },
+    {
+      "nome": "Altri movimenti",
+      "effetto": "Terra, scavo e volo 6 / 12 / 18: la stessa andatura vale anche per scavo, volo; spazio 2 × 2 Q"
+    }
+  ],
+  "gs_px": {
+    "gs": "Mito",
+    "px": 220,
+    "per_pg": 4
+  },
+  "_bestiario": {
+    "campi": {
+      "pv": "Mostri 0.69",
+      "pm": "Mostri 0.69",
+      "caratteristiche": "Mostri 0.69",
+      "ar": "Mostri 0.69",
+      "difese": "Mostri 0.69",
+      "salvezze": "Mostri 0.69",
+      "iniziativa": "Mostri 0.69",
+      "azioni": "Mostri 0.69",
+      "movimento": "Mostri 0.69",
+      "spazio": "Mostri 0.69",
+      "abilita": "Mostri 0.69",
+      "attacchi": "Mostri 0.69",
+      "capacita": "Mostri 0.69",
+      "gs_px": "Mostri 0.69"
+    },
+    "edizione": "Mostri 0.69",
+    "sistema_salute": "solo_PV"
+  }
+}

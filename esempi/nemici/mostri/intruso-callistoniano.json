@@ -1,0 +1,163 @@
+{
+  "formato": "mutant-nemico",
+  "versione": 1,
+  "id": "intruso-callistoniano",
+  "nome": "Intruso Callistoniano",
+  "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Intruso Callistoniano",
+  "note": "Assassino alieno di corporatura snella, pelle scura e occhi luminosi celati dalla maschera. Colpisce dalle vie secondarie e abbandona le posizioni ormai individuate.",
+  "pv": 68,
+  "pm": 18,
+  "caratteristiche": {
+    "FOR": 7,
+    "DES": 8,
+    "COS": 7,
+    "INT": 5,
+    "SAG": 6,
+    "CAR": 3
+  },
+  "ar": {
+    "totale": 4,
+    "magica": 0
+  },
+  "difese": 14,
+  "salvezze": {
+    "tempra": 12,
+    "riflessi": 14,
+    "volonta": 11,
+    "magia": 11
+  },
+  "iniziativa": 3,
+  "azioni": {
+    "principali": 2,
+    "movimento": 1
+  },
+  "movimento": {
+    "passo": 6,
+    "corsa": 12,
+    "scatto": 18
+  },
+  "abilita": [
+    {
+      "nome": "Armi da mischia",
+      "va": 14
+    },
+    {
+      "nome": "Armi da lancio",
+      "va": 14
+    },
+    {
+      "nome": "Armi medie",
+      "va": 13
+    },
+    {
+      "nome": "Furtività",
+      "va": 16
+    },
+    {
+      "nome": "Percezione",
+      "va": 13
+    },
+    {
+      "nome": "Atletica",
+      "va": 14
+    }
+  ],
+  "attacchi": [
+    {
+      "nome": "Vassht",
+      "tipo": "ravvicinato",
+      "va": 14,
+      "danno": "1d8+2",
+      "natura": "Naturale",
+      "proprieta": [
+        "Taglio"
+      ],
+      "portata_q": 1,
+      "ac": 1
+    },
+    {
+      "nome": "Disco Jakht",
+      "tipo": "distanza",
+      "va": 14,
+      "danno": "1d8+2",
+      "natura": "Naturale",
+      "proprieta": [
+        "Taglio"
+      ],
+      "gittata_q": 24,
+      "modalita": [
+        "S"
+      ],
+      "ac": 1
+    },
+    {
+      "nome": "Kratach silenziato",
+      "tipo": "distanza",
+      "va": 13,
+      "danno": "1d8+2",
+      "natura": "Naturale",
+      "proprieta": [
+        "Perforazione"
+      ],
+      "gittata_q": 60,
+      "modalita": [
+        "S"
+      ],
+      "ac": 1
+    }
+  ],
+  "capacita": [
+    {
+      "nome": "Fonte del soggetto",
+      "effetto": "Callistonian Intruder; Warzone 1ª ed., pp. 130–131; Universe Under Siege, p. 474; riscontro nella voce Callistonian Intruder della wiki. Selezione e adattamento: applicare soltanto le capacità operative di questa scheda."
+    },
+    {
+      "nome": "Dotazione pronta",
+      "effetto": "Spada, tre dischi, Kratach silenziato e protezione leggera con maschera. Caricatore 30 e un ricambio; ricarica 1 AzP. In questo assetto usa solo tiro singolo. Il disco non ritorna da solo: recuperarlo accessibile richiede 1 AzM. Nessuna granata inclusa."
+    },
+    {
+      "nome": "Agguato",
+      "effetto": "Una volta per Round il primo colpo che porta contro una creatura realmente ignara della sua posizione infligge +1d6 Naturale nello stesso danno, prima di Difese e AR. Occorre aver superato la normale opposizione Furtività/Percezione; sparare da copertura non rende automaticamente ignoto il tiratore. Massimo due azioni offensive per Round, Opportunità compresa."
+    },
+    {
+      "nome": "Visione notturna",
+      "effetto": "Distingue forme nel buio ordinario entro 18 Q. La maschera nasconde la luminosità degli occhi, senza rendere invisibile il corpo. Fumo, ostacoli opachi, oscuramenti magici e camuffamento mantengono le proprie regole. Il silenziatore attenua lo sparo: non cancella impatti, tracce o lampi osservabili."
+    },
+    {
+      "nome": "Recupero rapido",
+      "effetto": "Alla propria Iniziativa può spendere 1 AzP e 2 PM per recuperare 1d6+2 PV, massimo tre usi per ventiquattro ore. Nessun recupero automatico fra due attacchi; non tratta Ferite, Menomazioni o Morente e non si attiva da Svenuto."
+    },
+    {
+      "nome": "Tattica e indizi",
+      "effetto": "Cerca altezza, penombra e percorsi di fuga; se due avversari lo raggiungono preferisce ritirarsi. Maschera, sangue anomalo e dischi recuperati sono indizi concreti. Nessuna immunità generale a veleni, malattie o controllo mentale; cure e fisiologia sono biologiche."
+    },
+    {
+      "nome": "Altri movimenti",
+      "effetto": "spazio 1 Q"
+    }
+  ],
+  "gs_px": {
+    "gs": "Veterano",
+    "px": 55,
+    "per_pg": 4
+  },
+  "_bestiario": {
+    "campi": {
+      "pv": "Mostri 0.69",
+      "pm": "Mostri 0.69",
+      "caratteristiche": "Mostri 0.69",
+      "ar": "Mostri 0.69",
+      "difese": "Mostri 0.69",
+      "salvezze": "Mostri 0.69",
+      "iniziativa": "Mostri 0.69",
+      "azioni": "Mostri 0.69",
+      "movimento": "Mostri 0.69",
+      "abilita": "Mostri 0.69",
+      "attacchi": "Mostri 0.69",
+      "capacita": "Mostri 0.69",
+      "gs_px": "Mostri 0.69"
+    },
+    "edizione": "Mostri 0.69",
+    "sistema_salute": "solo_PV"
+  }
+}

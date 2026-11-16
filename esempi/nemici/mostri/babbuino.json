@@ -3,7 +3,7 @@
   "versione": 1,
   "id": "babbuino",
   "nome": "Babbuino",
-  "fonte": "dal Manuale dei Mostri v0.46 (Word del 27/10/2026), cap. 8 «Catalogo delle creature» — Fauna delle terre aperte",
+  "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Babbuino",
   "caratteristiche": {
     "FOR": 3,
     "DES": 7,
@@ -48,11 +48,11 @@
       "va": 8,
       "danno": "1d4",
       "natura": "Naturale",
-      "portata_q": 1,
-      "ac": 1,
       "proprieta": [
         "Perforazione"
-      ]
+      ],
+      "portata_q": 1,
+      "ac": 1
     }
   ],
   "abilita": [
@@ -96,9 +96,25 @@
       "effetto": "Può afferrare cibo o un oggetto accessibile e trasportabile con le Azioni ordinarie; gli arti anteriori mantengono la funzione prensile. Nessuna Abilità d’arma, comprensione di dispositivi complessi o attivazione automatica di un Artefatto. Manipolare con un arto occupato può impedire un appiglio necessario."
     }
   ],
-  "note": "Primate sociale vigile che cerca cibo in gruppo e sorveglia gli accessi. Non ha Scurovisione innata. Condotta: tende a difendere gruppo e piccoli cercando rumore, distanza e una via sui rami; sotto 2 PV o a Ferita Importante tende a disimpegnarsi; un branco non diventa uno Sciame. Fonte: Baboon, p. 318.",
+  "note": "Primate sociale • arrampicata e Branco • Natura Comune. Condotta. Non comprende linguaggi e non ha Scurovisione innata. Tende a difendere gruppo e piccoli, cercando rumore, distanza e una via sui rami; sotto 3 PV tende a disimpegnarsi. Un branco non diventa una sola creatura o uno Sciame per il solo fatto di riunirsi.",
   "_bestiario": {
     "edizione": "Mostri 0.69",
-    "sistema_salute": "solo_PV"
+    "sistema_salute": "solo_PV",
+    "campi": {
+      "pv": "Mostri 0.69",
+      "pm": "Mostri 0.69",
+      "caratteristiche": "Mostri 0.69",
+      "ar": "Mostri 0.69",
+      "difese": "Mostri 0.69",
+      "salvezze": "Mostri 0.69",
+      "iniziativa": "Mostri 0.69",
+      "azioni": "Mostri 0.69",
+      "movimento": "Mostri 0.69",
+      "spazio": "Mostri 0.69",
+      "abilita": "Mostri 0.69",
+      "attacchi": "Mostri 0.69",
+      "capacita": "Mostri 0.47",
+      "gs_px": "Mostri 0.69"
+    }
   }
 }

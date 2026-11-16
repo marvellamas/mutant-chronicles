@@ -3,7 +3,7 @@
   "versione": 1,
   "id": "troglodita",
   "nome": "Troglodita",
-  "fonte": "dal Manuale dei Mostri v0.46 (Word del 27/10/2026), cap. 8 «Catalogo delle creature» — Creature del sottosuolo",
+  "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Troglodita",
   "caratteristiche": {
     "FOR": 6,
     "DES": 5,
@@ -82,20 +82,72 @@
   "capacita": [
     {
       "nome": "Sequenza",
-      "effetto": "Fino a due attacchi naturali per Round (1 AzP ciascuno), al massimo uno è Morso. Può conservare Azioni per Schivare. Attacco di Opportunità con Artiglio o Morso."
+      "effetto": "Può effettuare fino a due attacchi naturali per Round, ciascuno con 1 AzP; al massimo uno è Morso. La conversione non aggiunge il terzo attacco dell’originale. Può conservare Azioni per Schivare; non possiede Parata naturale. Attacco di Opportunità ordinario con Artiglio o Morso, senza una combinazione gratuita."
     },
     {
-      "nome": "Fetore",
-      "effetto": "Passivo, senza AzP o PM. Una creatura biologica che respira aria entro 1 Q da un Troglodita cosciente fa Tempra senza modificatore alla prima esposizione e a inizio di ogni propria Iniziativa ancora esposta (una sola Prova per Round per tutti i Trogloditi). Successo: evita e immunità al fetore di tutti i Trogloditi per un’ora. Fallimento: Avvelenato fino all’inizio della propria Iniziativa successiva, −2 VA alle Prove fisiche (Difese comprese), senza danno periodico. Veleno naturale di Pericolosità I; Cura Avvelenamenti (liv. 1) o un antidoto lo termina senza dare l’immunità. Pareti, separazione ermetica o un sistema respiratorio autonomo lo evitano; più Trogloditi non moltiplicano il −2."
+      "nome": "Pelle mimetica",
+      "effetto": "Furtività 13 richiede immobilità e un fondale naturale adatto, con possibilità concreta di nascondersi. Muoversi o esporsi riporta il VA a 10. Il colore della pelle non nasconde l’odore e non permette Sorpresa automatica. Le localizzazioni sono quelle umanoidi omonime."
     },
     {
-      "nome": "Sole",
-      "effetto": "Scurovisione 12 Q. In luce solare diretta −2 VA agli attacchi e alla Percezione visiva (non a Salvezze o Difese); luce artificiale e Luce Mistica non contano."
+      "nome": "Sensi e sole",
+      "effetto": "Scurovisione 12 Q. In luce solare diretta subisce −2 VA agli attacchi e alla Percezione visiva; non a Salvezze, Difese o agli altri sensi. La normale illuminazione artificiale e Luce Mistica non contano come sole. Ombra e ripari eliminano la penalità quando schermano concretamente la luce solare."
+    },
+    {
+      "nome": "Fetore e condotta",
+      "effetto": "Le secrezioni possono debilitare chi respira vicino al corpo, secondo la pagina seguente. Il Troglodita non colpisce selettivamente i nemici con il fetore. Difende cibo, rifugio o compagni e può essere un interlocutore; sotto 7 PV cerca riparo. Un’eventuale arma recuperata cambia la dotazione del profilo."
+    },
+    {
+      "nome": "Esposizione",
+      "effetto": "Una creatura biologica che respira aria entro 1 Q da un Troglodita cosciente effettua Tempra senza modificatore alla prima esposizione e all’inizio di ciascuna propria Iniziativa successiva ancora esposta. Al massimo una Prova per Round contro il fetore di tutti i Trogloditi presenti, non una per ciascun corpo. Le pareti e una separazione ermetica interrompono l’esposizione."
+    },
+    {
+      "nome": "Salvezza",
+      "effetto": "Successo evita l’effetto e rende immune al fetore di tutti i Trogloditi per un’ora. Con fallimento si applica Avvelenato fino all’inizio della propria Iniziativa successiva: −2 VA alle Prove fisiche, comprese le Difese, senza danno periodico e senza penalità alle Salvezze. È un’eccezione espressa alla durata e al dimezzamento ordinari dei veleni. La nuova esposizione si risolve dopo la scadenza precedente."
+    },
+    {
+      "nome": "Natura della sostanza",
+      "effetto": "Veleno naturale di Pericolosità I, Superficiale. Le secrezioni non sono una malattia o un effetto di paura. Trogloditi, organismi che non respirano e creature immuni ai veleni sono protetti. Un sistema respiratorio autonomo funzionante o un filtro specificamente adatto ai gas evita l’inalazione; trattenere il fiato prima dell’esposizione applica i normali limiti del §5.23."
+    },
+    {
+      "nome": "Uscire e curare",
+      "effetto": "Allontanarsi impedisce nuove esposizioni ma non cancella istantaneamente la breve intossicazione già presente. Cura Avvelenamenti dal livello 1 o un antidoto adeguato terminano il veleno e il suo −2. Non danno l’immunità di un’ora della Tempra riuscita: restare nell’area può causare una nuova esposizione nel Round successivo. Medicina può identificare il problema, senza rimuoverlo automaticamente."
+    },
+    {
+      "nome": "Sovrapposizioni",
+      "effetto": "Più Trogloditi non moltiplicano il −2 e non estendono la zona oltre 1 Q dal corpo più vicino. Veleni diversi restano distinti secondo le regole comuni. Il fetore non consuma AzP o PM, non provoca Attacchi di Opportunità e non aggiunge danni agli Artigli. La protezione da un odore sgradevole ordinario non è automaticamente un antidoto."
+    },
+    {
+      "nome": "Uso nella scena",
+      "effetto": "Un passaggio stretto può rendere difficile allontanarsi, ma non crea un nuovo effetto di soffocamento o una nube persistente. La capacità cessa di emettere esposizioni quando il Troglodita perde coscienza o muore; gli effetti già applicati seguono la propria scadenza. Gli alleati vulnerabili sono coinvolti come gli avversari."
+    },
+    {
+      "nome": "Altri movimenti",
+      "effetto": "spazio 1 × 1 Q"
+    },
+    {
+      "nome": "Abilità particolari",
+      "effetto": "mimetizzato 13"
     }
   ],
-  "note": "Furtività 13 mimetizzato (immobile, fondale naturale adatto; muoversi la riporta a 10). AR 1 biologica; nessuna dotazione. Comportamento: difende cibo, rifugio o compagni, può trattare; sotto 5 PV o a Ferita Profonda cerca riparo.",
+  "note": "Umanoide rettiliano • agguato e fetore • Natura Comune.",
   "_bestiario": {
     "edizione": "Mostri 0.69",
-    "sistema_salute": "solo_PV"
+    "sistema_salute": "solo_PV",
+    "campi": {
+      "pv": "Mostri 0.69",
+      "pm": "Mostri 0.69",
+      "caratteristiche": "Mostri 0.69",
+      "ar": "Mostri 0.69",
+      "difese": "Mostri 0.69",
+      "salvezze": "Mostri 0.69",
+      "iniziativa": "Mostri 0.69",
+      "azioni": "Mostri 0.69",
+      "movimento": "Mostri 0.69",
+      "spazio": "Mostri 0.69",
+      "abilita": "Mostri 0.47",
+      "attacchi": "Mostri 0.47",
+      "capacita": "Mostri 0.69",
+      "gs_px": "Mostri 0.69"
+    }
   }
 }

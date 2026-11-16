@@ -3,7 +3,7 @@
   "versione": 1,
   "id": "guardiano-protettore",
   "nome": "Guardiano protettore",
-  "fonte": "dal Manuale dei Mostri v0.46 (Word del 27/10/2026), cap. 8 «Catalogo delle creature» — Costrutti e Modron",
+  "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Guardiano protettore",
   "caratteristiche": {
     "FOR": 9,
     "DES": 4,
@@ -49,11 +49,11 @@
       "va": 13,
       "danno": "2d6+2",
       "natura": "Naturale",
-      "portata_q": 1,
-      "ac": 1,
       "proprieta": [
         "Contusione"
-      ]
+      ],
+      "portata_q": 1,
+      "ac": 1
     }
   ],
   "abilita": [
@@ -118,9 +118,25 @@
     "avvelenato",
     "sanguinamento"
   ],
-  "note": "PM — e Volontà —: nessun dato (un dato assente non vale 0); AR magica 0 a riposo. Sentinella pesante che segue il portatore della chiave mistica. Al massimo due Pugni per Round, Opportunità compresa. Fonte: Shield Guardian, p. 271.",
+  "note": "Costrutto senza mente • amuleto e protezione del portatore • Natura Comune.",
   "_bestiario": {
     "edizione": "Mostri 0.69",
-    "sistema_salute": "solo_PV"
-  }
+    "sistema_salute": "solo_PV",
+    "campi": {
+      "pv": "Mostri 0.69",
+      "caratteristiche": "Mostri 0.69",
+      "ar": "Mostri 0.69",
+      "difese": "Mostri 0.69",
+      "salvezze": "Mostri 0.69",
+      "iniziativa": "Mostri 0.69",
+      "azioni": "Mostri 0.69",
+      "movimento": "Mostri 0.69",
+      "spazio": "Mostri 0.69",
+      "abilita": "Mostri 0.69",
+      "attacchi": "Mostri 0.69",
+      "capacita": "Mostri 0.47",
+      "gs_px": "Mostri 0.69"
+    }
+  },
+  "taglia": "grande"
 }

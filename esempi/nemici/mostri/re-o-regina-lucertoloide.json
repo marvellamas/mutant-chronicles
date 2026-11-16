@@ -3,7 +3,7 @@
   "versione": 1,
   "id": "re-o-regina-lucertoloide",
   "nome": "Re o Regina lucertoloide",
-  "fonte": "dal Manuale dei Mostri v0.46 (Word del 27/10/2026), cap. 8 «Catalogo delle creature» — Popoli delle terre selvagge",
+  "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Re o Regina lucertoloide",
   "caratteristiche": {
     "FOR": 8,
     "DES": 6,
@@ -48,12 +48,11 @@
       "va": 13,
       "danno": "1d8+3",
       "natura": "Naturale",
-      "portata_q": 2,
-      "ac": 1,
       "proprieta": [
         "Perforazione"
       ],
-      "note": "Con «Impalare» (2 PM, prima del tiro) +2 al danno del colpo: 1d8+5."
+      "portata_q": 2,
+      "ac": 1
     },
     {
       "nome": "Morso",
@@ -61,12 +60,11 @@
       "va": 12,
       "danno": "1d6+2",
       "natura": "Naturale",
-      "portata_q": 1,
-      "ac": 1,
       "proprieta": [
         "Perforazione"
       ],
-      "note": "Non causa Corruzione."
+      "portata_q": 1,
+      "ac": 1
     },
     {
       "nome": "Artiglio",
@@ -74,12 +72,11 @@
       "va": 12,
       "danno": "1d4+2",
       "natura": "Naturale",
-      "portata_q": 1,
-      "ac": 1,
       "proprieta": [
         "Taglio"
       ],
-      "note": "Richiede una mano libera."
+      "portata_q": 1,
+      "ac": 1
     }
   ],
   "abilita": [
@@ -143,9 +140,25 @@
   "immunita": [
     "terrorizzato"
   ],
-  "note": "Immune a Terrorizzato, senza immunità generale al controllo mentale. Parla Abissale e Draconico. Capo combattente dalla forte presenza, distinto dallo Sciamano: il titolo non conferisce autorità automatica sui Lucertoloidi, non impone una fedeltà soprannaturale e non dà Natura Oscura Simmetria né CROS per l’origine demoniaca della fonte. Condotta: sotto 14 PV o a Ferita Profonda può ritirarsi, chiedere aiuto o trattare. Fonte: Lizard King/Queen, p. 205.",
+  "note": "Campione rettile • Tridente e impeto vitale • Natura Comune.",
   "_bestiario": {
     "edizione": "Mostri 0.69",
-    "sistema_salute": "solo_PV"
+    "sistema_salute": "solo_PV",
+    "campi": {
+      "pv": "Mostri 0.69",
+      "pm": "Mostri 0.69",
+      "caratteristiche": "Mostri 0.69",
+      "ar": "Mostri 0.69",
+      "difese": "Mostri 0.69",
+      "salvezze": "Mostri 0.69",
+      "iniziativa": "Mostri 0.69",
+      "azioni": "Mostri 0.69",
+      "movimento": "Mostri 0.69",
+      "spazio": "Mostri 0.69",
+      "abilita": "Mostri 0.69",
+      "attacchi": "Mostri 0.69",
+      "capacita": "Mostri 0.47",
+      "gs_px": "Mostri 0.69"
+    }
   }
 }

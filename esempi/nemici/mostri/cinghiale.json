@@ -3,7 +3,7 @@
   "versione": 1,
   "id": "cinghiale",
   "nome": "Cinghiale",
-  "fonte": "dal Manuale dei Mostri v0.46 (Word del 27/10/2026), cap. 8 «Catalogo delle creature» — Fauna delle terre aperte",
+  "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Cinghiale",
   "caratteristiche": {
     "FOR": 5,
     "DES": 5,
@@ -48,11 +48,11 @@
       "va": 10,
       "danno": "1d6+1",
       "natura": "Naturale",
-      "portata_q": 1,
-      "ac": 1,
       "proprieta": [
         "Taglio"
-      ]
+      ],
+      "portata_q": 1,
+      "ac": 1
     }
   ],
   "abilita": [
@@ -100,9 +100,25 @@
       "effetto": "Prima di effettuare Tempra per nuove Ferite mentre è già a 0 PV, può ottenere +2 a quella PS se il danno è Naturale e non deriva da un Successo Magistrale. L’uso si consuma qualunque sia l’esito; non evita la Ferita minima, non recupera PV e non annulla Morente; una pausa nello stesso scontro non lo ripristina."
     }
   ],
-  "note": "Ungulato robusto che può caricare per allontanare una minaccia o aprire una via di uscita; usa le stesse procedure di Carica e Ferite del Cinghiale gigante, con valori inferiori. Nessuna Scurovisione o capacità sensoriale speciale. Condotta: sotto 5 PV o a Ferita Profonda cerca di allontanarsi; può caricare verso un varco. Fonte: Boar, p. 319.",
+  "note": "Ungulato robusto • Carica e Tenacia • Natura Comune. Condotta. Un attacco di Zanne per Round, normale oppure in Carica, Opportunità comprese. Nessuna Scurovisione o capacità sensoriale speciale in questo profilo. Sotto 7 PV cerca di allontanarsi se può; può caricare verso un varco, ma non riceve un movimento o un secondo attacco gratuito.",
   "_bestiario": {
     "edizione": "Mostri 0.69",
-    "sistema_salute": "solo_PV"
+    "sistema_salute": "solo_PV",
+    "campi": {
+      "pv": "Mostri 0.69",
+      "pm": "Mostri 0.69",
+      "caratteristiche": "Mostri 0.69",
+      "ar": "Mostri 0.69",
+      "difese": "Mostri 0.69",
+      "salvezze": "Mostri 0.69",
+      "iniziativa": "Mostri 0.69",
+      "azioni": "Mostri 0.69",
+      "movimento": "Mostri 0.69",
+      "spazio": "Mostri 0.69",
+      "abilita": "Mostri 0.69",
+      "attacchi": "Mostri 0.69",
+      "capacita": "Mostri 0.47",
+      "gs_px": "Mostri 0.69"
+    }
   }
 }

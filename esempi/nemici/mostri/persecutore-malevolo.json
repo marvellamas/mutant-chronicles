@@ -1,0 +1,122 @@
+{
+  "formato": "mutant-nemico",
+  "versione": 1,
+  "id": "persecutore-malevolo",
+  "nome": "Persecutore Malevolo",
+  "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Persecutore Malevolo",
+  "note": "Rivale costruito per alimentare invidia e risentimento. Presenta due identità umane preparate e lavora contro una persona scelta, finché questa non perde fiducia nei propri legami.",
+  "pv": 65,
+  "pm": 28,
+  "caratteristiche": {
+    "FOR": 7,
+    "DES": 7,
+    "COS": 7,
+    "INT": 8,
+    "SAG": 8,
+    "CAR": 9
+  },
+  "ar": {
+    "totale": 2,
+    "magica": 0
+  },
+  "difese": 13,
+  "salvezze": {
+    "tempra": 12,
+    "riflessi": 12,
+    "volonta": 14,
+    "magia": 14
+  },
+  "iniziativa": 2,
+  "azioni": {
+    "principali": 2,
+    "movimento": 1
+  },
+  "movimento": {
+    "passo": 6,
+    "corsa": 12,
+    "scatto": 18
+  },
+  "abilita": [
+    {
+      "nome": "Corpo a corpo",
+      "va": 13
+    },
+    {
+      "nome": "Raggirare",
+      "va": 17
+    },
+    {
+      "nome": "Oratoria",
+      "va": 16
+    },
+    {
+      "nome": "Percezione",
+      "va": 15
+    },
+    {
+      "nome": "Cultura",
+      "va": 14
+    },
+    {
+      "nome": "Furtività",
+      "va": 13
+    }
+  ],
+  "capacita": [
+    {
+      "nome": "Seme del sospetto",
+      "effetto": "VA PS. Danno: Nessun danno; influenza mentale. Portata/costo: Una mente entro 6 Q; 1 AzP e 3 PM; modulo comune; "
+    },
+    {
+      "nome": "Fonte del soggetto",
+      "effetto": "Vile Antagonist; Dark Soul, pp. 83–84; capacità numeriche riscritte per Simply RPG. Selezione e adattamento: applicare soltanto le capacità operative di questa scheda."
+    },
+    {
+      "nome": "Due identità",
+      "effetto": "Corpo necrobiotico. Scegliere alla preparazione due aspetti umani fissi con altezza compatibile, abiti e storie verificabili. Cambiare aspetto richiede un minuto e 2 PM; non cura né ripristina risorse. Raggirare/Percezione e prove materiali restano efficaci; non copia all’istante un volto appena visto."
+    },
+    {
+      "nome": "Rivale preparato",
+      "effetto": "Dopo una giornata di osservazione di un soggetto sceglie una sola fra Cultura, Intrattenere o un’attività professionale non mistica concretamente studiata. VA 16 per quell’attività per sette giorni, poi va ripreparata; non si somma al VA preesistente. Non copia Classi, Talenti, poteri, caratteristiche fisiche o equipaggiamenti."
+    },
+    {
+      "nome": "Vincolo emotivo",
+      "effetto": "Dopo dieci minuti di conversazione, 1 AzP e 3 PM per una sola persona entro 2 Q: Volontà 0 evita. Fallimento crea per ventiquattro ore un legame che comunica solo l’emozione dominante, a qualunque distanza sullo stesso pianeta, non parole, luogo o ricordi. Una sola persona legata; un nuovo legame termina il precedente. Barriera Mentale impedisce la ricezione mentre attiva; Negare 6, Svenuto o morte della fonte termina il vincolo."
+    },
+    {
+      "nome": "Pressione e recupero",
+      "effetto": "Può usare Seme del sospetto soltanto su una persona visibile, non attraverso il vincolo emotivo. Recupero necrobiotico: 1 AzP e 2 PM, 1d6 PV, massimo tre usi per ventiquattro ore; non cura Ferite o Morente. Il soggetto può denunciare, affrontare o abbandonare il rivale senza costrizione magica."
+    },
+    {
+      "nome": "Tattica",
+      "effetto": "Prepara umiliazioni pubbliche e indizi falsi; uno scontro aperto è una sconfitta del suo piano. Esporre documenti incompatibili o separarlo dalla vittima conta più del danno immediato. Massimo due azioni offensive per Round; nessun bersaglio diventa eretico per una semplice opposizione sociale fallita."
+    },
+    {
+      "nome": "Altri movimenti",
+      "effetto": "spazio 1 Q"
+    }
+  ],
+  "gs_px": {
+    "gs": "Veterano",
+    "px": 50,
+    "per_pg": 4
+  },
+  "_bestiario": {
+    "campi": {
+      "pv": "Mostri 0.69",
+      "pm": "Mostri 0.69",
+      "caratteristiche": "Mostri 0.69",
+      "ar": "Mostri 0.69",
+      "difese": "Mostri 0.69",
+      "salvezze": "Mostri 0.69",
+      "iniziativa": "Mostri 0.69",
+      "azioni": "Mostri 0.69",
+      "movimento": "Mostri 0.69",
+      "abilita": "Mostri 0.69",
+      "capacita": "Mostri 0.69",
+      "gs_px": "Mostri 0.69"
+    },
+    "edizione": "Mostri 0.69",
+    "sistema_salute": "solo_PV"
+  }
+}

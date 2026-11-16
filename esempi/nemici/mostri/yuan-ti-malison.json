@@ -1,0 +1,197 @@
+{
+  "formato": "mutant-nemico",
+  "versione": 1,
+  "id": "yuan-ti-malison",
+  "nome": "Yuan-ti Malison",
+  "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Yuan-ti Malison",
+  "note": "Ibrido serpentino presente in tre anatomie alternative. Si sceglie il tipo prima dell’incontro: non sono tre trasformazioni liberamente combinabili durante il combattimento.",
+  "pv": 73,
+  "pm": 24,
+  "caratteristiche": {
+    "FOR": 7,
+    "DES": 7,
+    "COS": 6,
+    "INT": 7,
+    "SAG": 6,
+    "CAR": 8
+  },
+  "ar": {
+    "totale": 1,
+    "magica": 0
+  },
+  "difese": 11,
+  "salvezze": {
+    "tempra": 11,
+    "riflessi": 12,
+    "volonta": 12,
+    "magia": 12
+  },
+  "iniziativa": 2,
+  "azioni": {
+    "principali": 2,
+    "movimento": 1
+  },
+  "movimento": {
+    "passo": 6,
+    "corsa": 12,
+    "scatto": 18
+  },
+  "spazio": "1 Q",
+  "abilita": [
+    {
+      "nome": "Armi da mischia",
+      "va": 13
+    },
+    {
+      "nome": "Armi da lancio",
+      "va": 12
+    },
+    {
+      "nome": "Corpo a corpo",
+      "va": 13
+    },
+    {
+      "nome": "Atletica",
+      "va": 12
+    },
+    {
+      "nome": "Furtività",
+      "va": 12
+    },
+    {
+      "nome": "Percezione",
+      "va": 11
+    },
+    {
+      "nome": "Raggirare",
+      "va": 13
+    },
+    {
+      "nome": "Oratoria",
+      "va": 12
+    },
+    {
+      "nome": "Sopravvivenza",
+      "va": 12
+    }
+  ],
+  "attacchi": [
+    {
+      "nome": "Morso",
+      "tipo": "ravvicinato",
+      "va": 13,
+      "danno": "1d4+2",
+      "natura": "Naturale",
+      "proprieta": [
+        "Perforazione",
+        "AC 1",
+        "veleno 2d6"
+      ],
+      "portata_q": 1,
+      "ac": 1
+    },
+    {
+      "nome": "Spada leggera",
+      "tipo": "ravvicinato",
+      "va": 13,
+      "danno": "1d6+2",
+      "natura": "Naturale",
+      "proprieta": [
+        "Taglio",
+        "AC 1"
+      ],
+      "portata_q": 1,
+      "ac": 1
+    },
+    {
+      "nome": "Arco da guerra",
+      "tipo": "ravvicinato",
+      "va": 12,
+      "danno": "1d6+2",
+      "natura": "Naturale",
+      "proprieta": [
+        "Perforazione",
+        "AC 1"
+      ],
+      "portata_q": 100,
+      "ac": 1
+    },
+    {
+      "nome": "Spire",
+      "tipo": "ravvicinato",
+      "va": 13,
+      "danno": "2d6+2",
+      "natura": "Naturale",
+      "proprieta": [
+        "Contusione",
+        "AC 1",
+        "presa"
+      ],
+      "portata_q": 1,
+      "ac": 1
+    }
+  ],
+  "capacita": [
+    {
+      "nome": "Corpo e sensi",
+      "effetto": "Vivente biologico con Protezioni Yuan-ti: immune a veleno e relativi Stati, Resistenza alla magia +2 non inclusa nelle PS, Scurovisione dodici Q. Nessuna Parata naturale, telepatia o immunità mentale generale. Tipi I e III Parano con Spada pronta; il tipo II non ha mani per impugnare armi, scudi o strumenti. Lingue come sangue puro. Nessun cambiamento delle risorse scegliendo l’anatomia."
+    },
+    {
+      "nome": "Due Azioni",
+      "effetto": "Due AzP totali e massimi della tipologia, Opportunità compatibile compresa. Il danno del Morso inocula soltanto dopo almeno un danno finale: veleno naturale III, Tempra 0 dimezza 2d6 danni diretti per eccesso, senza AR e senza Stato persistente. Nessuna dose moltiplicata dal Magistrale fisico. Le frecce del solo tipo I hanno lo stesso veleno; quelle del tipo III sono ordinarie."
+    },
+    {
+      "nome": "Influenza e mutamento",
+      "effetto": "Possiede Affinità serpentina e Suggestione vincolata, quest’ultima tre usi per ventiquattro ore, soltanto nella propria forma di Malison. Mutamento Yuan-ti: una AzP e due PM, un’ora, serpente di un Q che conserva tutti i valori e risorse ma perde uso di mani, armi, strumenti, Spire e poteri d’influenza; massimo un Morso per Round. Terra 6 / 12 / 18 Q, nessun Nuoto o scavo nuovo. Equipaggiamento non trasformato; i vincoli già presenti non si dissolvono. Può tornare volontariamente Malison con una AzP senza PM. Scadenza o Negare nove lo ripristinano senza cura; Svenuto o morte non interrompono la forma prima della scadenza."
+    },
+    {
+      "nome": "Dotazione e PX",
+      "effetto": "Tipi I e III: Spada leggera Comune FOR tre, una mano, PI cinque, base 1d6+1; Arco da guerra Comune FOR cinque, due mani, cento Q, PI sei, base 1d6+1; tutti PS Integrità dieci. I danni pronti aggiungono una unità personale già inclusa. Dodici frecce, una a tiro, incoccare incluso; solo il tipo I le ha preparate con una dose III ciascuna. Tipo II senza oggetti: 50 PX. Tipi I e III con dotazione: 55 PX. La scelta non aggiunge un modello PNG o un’altra creatura al catalogo."
+    },
+    {
+      "nome": "Tipo I testa serpentina",
+      "effetto": "Tronco e braccia umanoidi, testa di serpente e due gambe. Spazio un Q; due attacchi ravvicinati complessivi, massimo un Morso, oppure due Frecce, senza mescolare la sequenza ravvicinata e quella a distanza. Può usare Morso e una Spada nel medesimo Round; non possiede Spire. Le dodici frecce hanno veleno 2d6 naturale III dopo danno finale, Tempra 0 dimezza; ogni tiro consuma la dose anche mancando."
+    },
+    {
+      "nome": "Tipo II braccia serpentine",
+      "effetto": "Testa e gambe umanoidi, due serpenti al posto delle braccia, spazio un Q. Può eseguire fino a due Morsi per Round, ciascuno con i valori pronti e il veleno; nessuna Spada, Freccia o Spira e nessuna Parata naturale. Le braccia non manipolano strumenti come mani; una Menomazione a un braccio interessa il serpente colpito, senza creare riserve di PV separate. Può comunicare e usare i poteri innati in forma Malison."
+    },
+    {
+      "nome": "Tipo III coda serpentina",
+      "effetto": "Tronco, testa e braccia umanoidi, corpo inferiore serpentino, spazio 1 × 2 Q. Due attacchi ravvicinati complessivi, massimo una Spira, oppure due Frecce ordinarie, senza mescolare le sequenze. Nella forma Malison non ha Morso: lo ottiene solo nel Mutamento a serpente, con il massimo di uno. Può usare Spada e Spira nello stesso Round. La presa segue la procedura comune con Corpo a corpo tredici e vittima fino a un Q."
+    },
+    {
+      "nome": "Risorse condivise",
+      "effetto": "Sono tre alternative della medesima scheda: caratteristiche, PV, PM, AR, PS e GS non si sommano. Si registrano gli arti della tipologia effettiva per le Menomazioni. Il Mutamento a serpente non permette di scegliere al ritorno una diversa tipologia, non rinnova munizioni o usi e non crea un nuovo corpo. Al ritorno conserva Ferite, Menomazioni, Affezioni e risorse consumate."
+    },
+    {
+      "nome": "Altri movimenti",
+      "effetto": "spazio 1 × 1 Q tipi I e II, 1 × 2 Q tipo III"
+    }
+  ],
+  "gs_px": {
+    "gs": "Veterano",
+    "px": 50,
+    "per_pg": 4
+  },
+  "_bestiario": {
+    "campi": {
+      "pv": "Mostri 0.69",
+      "pm": "Mostri 0.69",
+      "caratteristiche": "Mostri 0.69",
+      "ar": "Mostri 0.69",
+      "difese": "Mostri 0.69",
+      "salvezze": "Mostri 0.69",
+      "iniziativa": "Mostri 0.69",
+      "azioni": "Mostri 0.69",
+      "movimento": "Mostri 0.69",
+      "spazio": "Mostri 0.69",
+      "abilita": "Mostri 0.69",
+      "attacchi": "Mostri 0.69",
+      "capacita": "Mostri 0.69",
+      "gs_px": "Mostri 0.69"
+    },
+    "edizione": "Mostri 0.69",
+    "sistema_salute": "solo_PV"
+  }
+}

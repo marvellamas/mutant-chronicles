@@ -3,7 +3,7 @@
   "versione": 1,
   "id": "sciame-di-insetti",
   "nome": "Sciame di insetti",
-  "fonte": "dal Manuale dei Mostri v0.46 (Word del 27/10/2026), cap. 8 «Catalogo delle creature» — Sciami e piccola fauna",
+  "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Sciame di insetti",
   "caratteristiche": {
     "FOR": 3,
     "DES": 6,
@@ -43,28 +43,28 @@
   },
   "attacchi": [
     {
-      "nome": "Morsi (PV 13–24)",
+      "nome": "Morsi con PV 17–32",
       "tipo": "ravvicinato",
       "va": 10,
       "danno": "2d4",
       "natura": "Naturale",
-      "ac": 1,
       "proprieta": [
         "Perforazione"
       ],
-      "portata_q": 0
+      "portata_q": 0,
+      "ac": 1
     },
     {
-      "nome": "Morsi (PV 0–12)",
+      "nome": "Morsi con PV 1–16",
       "tipo": "ravvicinato",
       "va": 10,
       "danno": "1d4",
       "natura": "Naturale",
-      "ac": 1,
       "proprieta": [
         "Perforazione"
       ],
-      "portata_q": 0
+      "portata_q": 0,
+      "ac": 1
     }
   ],
   "abilita": [
@@ -113,9 +113,25 @@
     "stordito",
     "terrorizzato"
   ],
-  "note": "I due profili di Morsi/Becchi sono le fasce di danno per PV: quello ridotto sostituisce l’altro e non è un attacco separato. Spazio 1 × 1 Q condivisibile con altre creature (portata 0 Q: attacca solo nello spazio condiviso). Profilo generico distinto dalla Covata e dalle varianti volanti o velenose (le varianti di vespe, ragni, scarabei e centopiedi della fonte non sono in questa scheda). L’AR 1 si sottrae dopo la resistenza pertinente; il carapace non dà PI separati né Parata naturale. Non ha Volo, Scavo, veleno, telepatia o adattamento alle Terre del Fuoco. Condotta: può difendere un nido o seguire una fonte di nutrimento; a 12 PV o meno oppure a Ferita Profonda tende a ripararsi nelle crepe. Fonte: Swarm of Insects, p. 338.",
+  "note": "Gruppo terrestre • morsi e arrampicata • Natura Comune. Condotta. Può difendere un nido o seguire una fonte di nutrimento; a 16 PV o meno tende a riparare nelle crepe. Non ha Volo, Scavo, veleno, telepatia o adattamento alle Terre del Fuoco. Le varianti di vespe, ragni, scarabei e centopiedi della fonte non sono aggiunte a questa scheda.",
   "_bestiario": {
     "edizione": "Mostri 0.69",
-    "sistema_salute": "solo_PV"
+    "sistema_salute": "solo_PV",
+    "campi": {
+      "pv": "Mostri 0.69",
+      "pm": "Mostri 0.69",
+      "caratteristiche": "Mostri 0.69",
+      "ar": "Mostri 0.69",
+      "difese": "Mostri 0.69",
+      "salvezze": "Mostri 0.69",
+      "iniziativa": "Mostri 0.69",
+      "azioni": "Mostri 0.69",
+      "movimento": "Mostri 0.69",
+      "spazio": "Mostri 0.69",
+      "abilita": "Mostri 0.69",
+      "attacchi": "Mostri 0.69",
+      "capacita": "Mostri 0.47",
+      "gs_px": "Mostri 0.69"
+    }
   }
 }

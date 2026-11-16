@@ -1,0 +1,126 @@
+{
+  "formato": "mutant-nemico",
+  "versione": 1,
+  "id": "diavolo-della-fossa",
+  "nome": "Diavolo della fossa",
+  "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Diavolo della fossa",
+  "taglia": "grande",
+  "note": "Generale alato dalla corazza di scaglie, capace di alternare quattro attacchi, veleno e controllo del campo. Gli altri diavoli non ricevono bonus soltanto perché sono sotto il suo comando.",
+  "pv": 292,
+  "pm": 80,
+  "caratteristiche": {
+    "FOR": 10,
+    "DES": 8,
+    "COS": 10,
+    "INT": 10,
+    "SAG": 9,
+    "CAR": 10
+  },
+  "ar": {
+    "totale": 8,
+    "magica": 0
+  },
+  "difese": 14,
+  "salvezze": {
+    "tempra": 18,
+    "riflessi": 16,
+    "volonta": 17,
+    "magia": 17
+  },
+  "iniziativa": 3,
+  "azioni": {
+    "principali": 4,
+    "movimento": 1
+  },
+  "movimento": {
+    "passo": 6,
+    "corsa": 12,
+    "scatto": 18,
+    "volo": 12
+  },
+  "spazio": "2 × 2 Q",
+  "abilita": [
+    {
+      "nome": "Corpo a corpo",
+      "va": 19
+    },
+    {
+      "nome": "Armi da mischia",
+      "va": 19
+    },
+    {
+      "nome": "Armi da lancio",
+      "va": 14
+    },
+    {
+      "nome": "Atletica",
+      "va": 17
+    },
+    {
+      "nome": "Percezione",
+      "va": 15
+    },
+    {
+      "nome": "Oratoria",
+      "va": 17
+    }
+  ],
+  "capacita": [
+    {
+      "nome": "Mazza infuocata",
+      "effetto": "VA 19. Danno: AC 2: 1d6+6 Magico, Contusione, poi 3d6 Magico, Fuoco. Portata/costo: 2 Q personali; una mano; 1 AzP; "
+    },
+    {
+      "nome": "Corpo e sensi",
+      "effetto": "Protezioni elementali dei diavoli, resistenza alle armi non argentate e Resistenza alla magia +2, non inclusa nelle PS. Vista rivelatrice 9 entro 24 Q, inoltre vede il buio magico con Vista infernale; telepatia 24 Q. Para con Mazza pronta ai costi normali; nessuna Parata naturale. Da Svenuto in volo cade."
+    },
+    {
+      "nome": "Sequenza e arma",
+      "effetto": "Quattro AzP totali, massimo un Morso, un Artiglio, una Mazza e una Coda per Round, Opportunità compresa. Usare i poteri sostituisce le AzP disponibili, senza quattro attacchi ulteriori. La Mazza ha un solo tiro e una Difesa, AR separata per le due componenti e Magistrale sulla prima. Mazza ferrata Comune: FOR 4, PI 5, PS Integrità 10, base 1d6+1 più tre di FOR e due di Forza brutale già compresi. Portata due Q e infusione appartengono al Diavolo; l’arma recuperata ha portata un Q e danno Naturale ordinario."
+    },
+    {
+      "nome": "Veleno del Morso",
+      "effetto": "Dopo almeno un danno finale contro un vivente biologico, Tempra −4: successo evita il veleno; fallimento Avvelenato per cinque Round. All’inizio di ogni Iniziativa successiva della vittima infligge 2d6+3 danni diretti senza AR e impedisce ogni recupero di PV. Alla fine della stessa Iniziativa ripete Tempra −4: successo termina la dose. Nessun danno da veleno immediato al Morso e nessuna penalità aggiuntiva alle Prove. Dosi successive mantengono la scadenza maggiore, senza sommare danni. Veleno naturale di Pericolosità VI: antidoto adeguato o Cura Avvelenamenti almeno nove rimuove la sostanza; non restituisce PV. Non blocca la cura di Ferite o Menomazioni, ma impedisce la quota di recupero dei PV finché è attivo."
+    },
+    {
+      "nome": "Aura di terrore",
+      "effetto": "Una AzP e quattro PM: aura mobile di raggio quattro Q per cinque Round, un solo effetto attivo. Ogni altra mente suscettibile alla paura, alleati compresi, in linea di vista effettua Volontà −2 alla prima esposizione: fallimento Terrorizzato fino alla scadenza comune. Successo o liberazione rendono immuni a quella attivazione; permanenza e rientro non ripetono. Barriera Mentale aiuta; Oratoria adiacente con una AzP può liberare secondo lo Stato. Negare Potere confronto 12 rimuove l’aura o il singolo Terrore; Svenuto e morte del Diavolo terminano entrambi. Non è un’aura gratuita permanente."
+    },
+    {
+      "nome": "Poteri di battaglia",
+      "effetto": "Globo incendiario: una AzP e sei PM, massimo uno per Round, Q visibile entro 20 Q, tiro Armi da lancio +2 già pronto a 16 e scarto ordinario se manca. Raggio tre Q, 4d6+3 Magico Fuoco su una sola AC, un tiro comune, Elusione Riflessi −2 dimezza, solidi bloccano, alleati inclusi. Muro infernale: una AzP e nove PM, applica solo Muro Elementale 9 Fuoco, otto segmenti entro 15 Q, dieci minuti, 2d4+5 Magico e conseguenze −2; nessun danno iniziale, una applicazione per Round, un solo Muro attivo, Negare 9. Per ogni residuo da Fuoco di Mazza, Globo o Muro, dopo Ignifugo Riflessi −2 evita Incendiato per 1+1d3 Round."
+    },
+    {
+      "nome": "Vincolo e percezione",
+      "effetto": "Vincolo mentale: due AzP e otto PM, una mente visibile entro 12 Q, Magia −2; fallimento Immobilizzato con braccia bloccate per cinque Round. Ripete Magia −2 alla fine di ogni propria Iniziativa; successo termina. Nessun danno, vantaggio d’attacco automatico o controllo delle scelte. Barriera Mentale aiuta la PS; Negare Potere confronto 12 rimuove, Svenuto o morte del Diavolo termina. Possiede inoltre Percepire magia delle regole comuni. Nessuna evocazione, teletrasporto o promozione dei subordinati inclusi."
+    },
+    {
+      "nome": "Altri movimenti",
+      "effetto": "spazio 2 × 2 Q"
+    }
+  ],
+  "gs_px": {
+    "gs": "Divinità",
+    "px": 880,
+    "per_pg": 4
+  },
+  "_bestiario": {
+    "campi": {
+      "pv": "Mostri 0.69",
+      "pm": "Mostri 0.69",
+      "caratteristiche": "Mostri 0.69",
+      "ar": "Mostri 0.69",
+      "difese": "Mostri 0.69",
+      "salvezze": "Mostri 0.69",
+      "iniziativa": "Mostri 0.69",
+      "azioni": "Mostri 0.69",
+      "movimento": "Mostri 0.69",
+      "spazio": "Mostri 0.69",
+      "abilita": "Mostri 0.69",
+      "capacita": "Mostri 0.69",
+      "gs_px": "Mostri 0.69"
+    },
+    "edizione": "Mostri 0.69",
+    "sistema_salute": "solo_PV"
+  }
+}

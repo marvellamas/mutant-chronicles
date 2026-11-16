@@ -1,0 +1,121 @@
+{
+  "formato": "mutant-nemico",
+  "versione": 1,
+  "id": "glabrezu",
+  "nome": "Glabrezu",
+  "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Glabrezu",
+  "taglia": "grande",
+  "note": "Grande demone a quattro braccia, due terminate in chele e due in mani. Trattiene gli avversari mentre usa poteri di oscuramento, disorientamento e negazione mistica.",
+  "pv": 146,
+  "pm": 45,
+  "caratteristiche": {
+    "FOR": 10,
+    "DES": 7,
+    "COS": 10,
+    "INT": 9,
+    "SAG": 8,
+    "CAR": 8
+  },
+  "ar": {
+    "totale": 5,
+    "magica": 0
+  },
+  "difese": 12,
+  "salvezze": {
+    "tempra": 16,
+    "riflessi": 12,
+    "volonta": 14,
+    "magia": 15
+  },
+  "iniziativa": 2,
+  "azioni": {
+    "principali": 3,
+    "movimento": 1
+  },
+  "movimento": {
+    "passo": 8,
+    "corsa": 16,
+    "scatto": 24
+  },
+  "spazio": "2 × 2 Q",
+  "abilita": [
+    {
+      "nome": "Corpo a corpo",
+      "va": 16
+    },
+    {
+      "nome": "Atletica",
+      "va": 16
+    },
+    {
+      "nome": "Percezione",
+      "va": 13
+    },
+    {
+      "nome": "Raggirare",
+      "va": 15
+    },
+    {
+      "nome": "Occultismo",
+      "va": 15
+    }
+  ],
+  "capacita": [
+    {
+      "nome": "Parola stordente",
+      "effetto": "VA —. Danno: Stordito; Volontà −2. Portata/costo: 6 Q; 1 AzP e 6 PM; "
+    },
+    {
+      "nome": "Corpo e sensi",
+      "effetto": "Resistenze corporee comuni e resistenza fisica comune, immunità a veleno e Avvelenato. Resistenza alla magia +2 non inclusa nelle PS. Usa Vista rivelatrice 9 delle regole condivise entro 24 Q. Nessuna Parata naturale; telepatia entro 24 Q. Massimo due Chele e un Pugno per Round, Opportunità compresa; usare poteri consuma le medesime tre AzP."
+    },
+    {
+      "nome": "Presa delle chele",
+      "effetto": "Dopo almeno un danno finale di una Chela libera, una vittima fino a un Q di spazio effettua Riflessi −2: fallimento Immobilizzato con braccia libere. Una vittima per chela, massimo due; la chela impegnata non colpisce altri. Stringere costa una AzP e Corpo a corpo 16 contrapposto a Corpo a corpo o Atletica della vittima, con il suo −4 fisico: successo infligge il danno della Chela, ridotto dall’AR; fallimento non libera. Liberarsi costa una AzP e la stessa contrapposta, anche a un alleato a Contatto; pareggi al trattenitore. Nessun danno gratuito di mantenimento."
+    },
+    {
+      "nome": "Buio e percezione",
+      "effetto": "Buio: una AzP e due PM, sfera fissa di raggio tre Q con origine visibile entro 12 Q, cinque Round senza Concentrazione. Oscura vista e Scurovisione; Luce Mistica illumina la porzione raggiunta. Vista rivelatrice non vede attraverso questo buio magico. Un solo Buio attivo; Negare Potere confronto 6. Percepire magia: una AzP e due PM rileva presenza di una fonte mistica attiva visibile entro sei Q, senza identificarne autore, valori o moralità o vedere attraverso muri."
+    },
+    {
+      "nome": "Confusione",
+      "effetto": "Una AzP e quattro PM, una volta per 24 ore: una mente visibile entro sei Q, Volontà −2. Fallimento −2 VA alle Prove di Abilità per tre Round, senza malus alle PS, attacchi imposti agli alleati o perdita di Azioni. Alla fine di ogni propria Iniziativa ripete Volontà −2: successo termina. Barriera Mentale aggiunge il bonus; Negare Potere rimuove, confronto 6. Non è Dardo Psichico e non infligge danni."
+    },
+    {
+      "nome": "Parola stordente",
+      "effetto": "Una AzP e sei PM, una volta per 24 ore, una mente cosciente entro sei Q che possa udirlo, senza doverne conoscere la lingua. Volontà −2 evita; fallimento Stordito fino alla fine della successiva Iniziativa della vittima. Barriera Mentale concede il bonus, non immunità. Cura Spirituale almeno sei o Negare Potere, confronto 9, rimuovono lo Stato. Nessuna soglia dei PV o riuscita automatica importata dall’originale; non è un veleno."
+    },
+    {
+      "nome": "Negazione e volo",
+      "effetto": "Negazione: una AzP e nove PM, applica Negare Potere 9 senza Potere o componenti; massimo due effetti validamente localizzati entro 15 Q, concatenati entro due Q, con la propria Volontà in parità e tutti gli altri limiti della Magia §23.6. Non spegne capacità innate o corpi autonomi non rimovibili. Volo: una AzP e quattro PM, una volta per 24 ore, volo 12 / 24 / 36 Q per cinque Round senza Concentrazione; termina da Svenuto o con Negare Potere, confronto 9. Nessun portale o alleato evocato incluso."
+    },
+    {
+      "nome": "Altri movimenti",
+      "effetto": "spazio 2 × 2 Q"
+    }
+  ],
+  "gs_px": {
+    "gs": "Mito",
+    "px": 200,
+    "per_pg": 4
+  },
+  "_bestiario": {
+    "campi": {
+      "pv": "Mostri 0.69",
+      "pm": "Mostri 0.69",
+      "caratteristiche": "Mostri 0.69",
+      "ar": "Mostri 0.69",
+      "difese": "Mostri 0.69",
+      "salvezze": "Mostri 0.69",
+      "iniziativa": "Mostri 0.69",
+      "azioni": "Mostri 0.69",
+      "movimento": "Mostri 0.69",
+      "spazio": "Mostri 0.69",
+      "abilita": "Mostri 0.69",
+      "capacita": "Mostri 0.69",
+      "gs_px": "Mostri 0.69"
+    },
+    "edizione": "Mostri 0.69",
+    "sistema_salute": "solo_PV"
+  }
+}

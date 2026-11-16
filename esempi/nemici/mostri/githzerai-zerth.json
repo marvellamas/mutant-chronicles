@@ -1,0 +1,132 @@
+{
+  "formato": "mutant-nemico",
+  "versione": 1,
+  "id": "githzerai-zerth",
+  "nome": "Githzerai Zerth",
+  "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Githzerai Zerth",
+  "note": "Githzerai esperto nel combattimento senz’armi e nella pressione mentale. Può evocare un incubo personale e dispone di un trasferimento locale più ampio, conservando i limiti della disciplina di base.",
+  "pv": 104,
+  "pm": 36,
+  "caratteristiche": {
+    "FOR": 7,
+    "DES": 8,
+    "COS": 7,
+    "INT": 8,
+    "SAG": 8,
+    "CAR": 6
+  },
+  "ar": {
+    "totale": 0,
+    "magica": 0
+  },
+  "difese": 15,
+  "salvezze": {
+    "tempra": 14,
+    "riflessi": 15,
+    "volonta": 12,
+    "magia": 15
+  },
+  "iniziativa": 3,
+  "azioni": {
+    "principali": 3,
+    "movimento": 1
+  },
+  "movimento": {
+    "passo": 6,
+    "corsa": 12,
+    "scatto": 18
+  },
+  "spazio": "1 Q",
+  "abilita": [
+    {
+      "nome": "Corpo a corpo",
+      "va": 16
+    },
+    {
+      "nome": "Atletica",
+      "va": 14
+    },
+    {
+      "nome": "Percezione",
+      "va": 14
+    },
+    {
+      "nome": "Furtività",
+      "va": 13
+    },
+    {
+      "nome": "Occultismo",
+      "va": 13
+    }
+  ],
+  "capacita": [
+    {
+      "nome": "Impatto psichico",
+      "effetto": "VA —. Danno: 3d6+2 psichici diretti; Volontà −2 dimezza. Portata/costo: Una mente visibile a Contatto entro 1 Q; 1 AzP e 3 PM; "
+    },
+    {
+      "nome": "Incubo personale",
+      "effetto": "VA —. Danno: 3d6+2 psichici diretti e Terrore condizionato. Portata/costo: Una mente visibile entro 12 Q; 2 AzP e 5 PM; "
+    },
+    {
+      "nome": "Corpo e sensi",
+      "effetto": "Vivente biologico con mente e PM personali, sensi ordinari senza Scurovisione o immunità automatiche. Disciplina +2 Difese senza armatura o Scudo fisico, già compresa nel quindici; compatibile con il disco mistico. Colpi senz’armi Magici intrinseci, non Eterei, Parata senz’armi a Contatto contro attacchi fisici compatibili. Non para proiettili con le mani. Iniziativa DES +3, senza sommare SAG."
+    },
+    {
+      "nome": "Azioni e attacchi",
+      "effetto": "Tre AzP totali, massimo due azioni offensive complessive di Colpo, Impatto o Incubo per Round, non più di un Impatto e un Incubo; l’Incubo costa comunque due AzP. Opportunità soltanto di Colpo e compresa nel limite. L’Impatto usa il modulo psichico Gith, con Volontà −2 anche per l’eventuale Svenuto. Difese quindici non significa una Difesa gratuita. Nessuna riserva separata di PM per le capacità."
+    },
+    {
+      "nome": "Capacità ereditate",
+      "effetto": "Mano psionica una AzP e un PM, oggetto due kg, cinque Round. Salto assistito tre usi per ventiquattro ore, una AzP e due PM, tre Round. Caduta protetta tre usi per ventiquattro ore, una AzP disponibile e due PM anche fuori dalla propria Iniziativa, massimo un’attivazione per Round. Si applicano le procedure del Githzerai monaco e del modulo Gith, senza Azioni aggiuntive o Concentrazione Operativa implicita."
+    },
+    {
+      "nome": "Vista e disco",
+      "effetto": "Vista rivelatrice tre usi per ventiquattro ore, una AzP e tre PM, cinque Round: Rilevazione sei contro Mimetismo entro sei Q, linea di vista e illuminazione sufficiente; non concede Scurovisione, Negare sei, Svenuto o morte terminano. Scudo uno tre usi per ventiquattro ore, una AzP e un PM alla propria Iniziativa per cinque Round: AR Naturale due e Parata con disco a Difese quindici, −4 a distanza o −6 contro Raffica, pagando una AzP. Negare uno termina; nessuna protezione Eterea o attivazione retroattiva."
+    },
+    {
+      "nome": "Trasferimento e condotta",
+      "effetto": "Un uso per ventiquattro ore, una AzP e sei PM, solo sé con dotazione trasportabile a uno spazio libero direttamente visibile entro quindici Q. Stesse regole del Trasferimento ampio del Cavaliere, senza viaggio fra piani. Anatomia umanoide; nessuna Classe aggiunta o proprietà trasferibile a oggetti. Sotto 26 PV può cercare riparo o trattare; alleati e comunità non sono compresi nei 70 PX."
+    },
+    {
+      "nome": "Incubo personale",
+      "effetto": "Un uso per ventiquattro ore, due AzP e cinque PM, una mente cosciente visibile entro dodici Q con linea libera. Volontà −2 dimezza per eccesso 3d6+2 danni psichici diretti; fallimento danno intero e Terrorizzato tre Round. Nessun tiro per colpire o Difesa attiva, nessun drenaggio di PM. I danni seguono Dardo Psichico: ignorano AR e PV temporanei, non causano Ferite e, se esauriscono i PV, impongono la seconda Volontà −2 per Svenuto 1+1d4 Round. Risolvere danni e questa seconda PS prima di applicare il Terrore."
+    },
+    {
+      "nome": "Resistere al Terrore",
+      "effetto": "A fine di ogni propria Iniziativa, Volontà −2 termina la paura con successo; si applicano i modificatori già attivi di Terrorizzato. Cura Spirituale uno, Negare nove, soccorso ordinario con Oratoria o cessazione evidente della minaccia rimuovono il Terrore. Non annullano i danni o un separato Svenuto psichico, per cui occorre Cura Spirituale sei o la sua scadenza. Chi è immune alla paura evita il solo Terrore, non i danni psichici se vulnerabile a essi."
+    },
+    {
+      "nome": "Barriera Mentale",
+      "effetto": "Già attiva blocca interamente la componente di danno psichico e la sua seconda PS di Svenuto. La sola paura rimane un’influenza mentale e concede Volontà −2 con il bonus della Barriera; non riceve un’immunità generale aggiuntiva. Una creatura priva di mente non è un bersaglio valido dell’intera capacità. Negare non restituisce PV già perduti. L’Incubo è un’applicazione istantanea con paura a durata fissa, senza danno gratuito nei Round successivi o un secondo attacco a ogni Iniziativa."
+    },
+    {
+      "nome": "Altri movimenti",
+      "effetto": "spazio 1 × 1 Q"
+    }
+  ],
+  "gs_px": {
+    "gs": "Eroe",
+    "px": 70,
+    "per_pg": 4
+  },
+  "_bestiario": {
+    "campi": {
+      "pv": "Mostri 0.69",
+      "pm": "Mostri 0.69",
+      "caratteristiche": "Mostri 0.69",
+      "ar": "Mostri 0.69",
+      "difese": "Mostri 0.69",
+      "salvezze": "Mostri 0.69",
+      "iniziativa": "Mostri 0.69",
+      "azioni": "Mostri 0.69",
+      "movimento": "Mostri 0.69",
+      "spazio": "Mostri 0.69",
+      "abilita": "Mostri 0.69",
+      "capacita": "Mostri 0.69",
+      "gs_px": "Mostri 0.69"
+    },
+    "edizione": "Mostri 0.69",
+    "sistema_salute": "solo_PV"
+  }
+}

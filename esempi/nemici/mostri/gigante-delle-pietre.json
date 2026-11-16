@@ -3,7 +3,7 @@
   "versione": 1,
   "id": "gigante-delle-pietre",
   "nome": "Gigante delle pietre",
-  "fonte": "dal Manuale dei Mostri v0.46 (Word del 27/10/2026), cap. 8 «Catalogo delle creature» — Giganti e abitanti delle montagne",
+  "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Gigante delle pietre",
   "caratteristiche": {
     "FOR": 10,
     "DES": 7,
@@ -97,9 +97,26 @@
       "effetto": "Vede entro 12 Q nel buio naturale, senza colori né vista attraverso ostacoli. Furtività +2 in terreno roccioso quando può nascondersi, senza Sorpresa automatica."
     }
   ],
-  "note": "AR 4 biologica, nessuna armatura. Maglio = Martello a due mani (+3 ordinario, +2 innato, portata 3 Q). Comportamento: difende luoghi e opere proprie; sotto 18 PV o a Ferita Seria cerca una strettoia o negozia.",
+  "note": "Gigante • guardiano e tiratore • Natura Comune.",
   "_bestiario": {
     "edizione": "Mostri 0.69",
-    "sistema_salute": "solo_PV"
-  }
+    "sistema_salute": "solo_PV",
+    "campi": {
+      "pv": "Mostri 0.69",
+      "pm": "Mostri 0.69",
+      "caratteristiche": "Mostri 0.69",
+      "ar": "Mostri 0.69",
+      "difese": "Mostri 0.69",
+      "salvezze": "Mostri 0.69",
+      "iniziativa": "Mostri 0.69",
+      "azioni": "Mostri 0.69",
+      "movimento": "Mostri 0.69",
+      "spazio": "Mostri 0.69",
+      "abilita": "Mostri 0.69",
+      "attacchi": "Mostri 0.47",
+      "capacita": "Mostri 0.47",
+      "gs_px": "Mostri 0.69"
+    }
+  },
+  "taglia": "grande"
 }

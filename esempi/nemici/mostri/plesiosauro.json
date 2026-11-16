@@ -3,7 +3,7 @@
   "versione": 1,
   "id": "plesiosauro",
   "nome": "Plesiosauro",
-  "fonte": "dal Manuale dei Mostri v0.46 (Word del 27/10/2026), cap. 8 «Catalogo delle creature» — Grandi rettili e predatori mostruosi",
+  "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Plesiosauro",
   "caratteristiche": {
     "FOR": 9,
     "DES": 7,
@@ -48,11 +48,11 @@
       "va": 12,
       "danno": "2d6+2",
       "natura": "Naturale",
-      "portata_q": 2,
-      "ac": 1,
       "proprieta": [
         "Perforazione"
-      ]
+      ],
+      "portata_q": 2,
+      "ac": 1
     }
   ],
   "abilita": [
@@ -91,9 +91,26 @@
       "effetto": "La portata (2 Q) consente di mordere una creatura in superficie o lungo una riva accessibile, non di attraversare pareti o barriere. Il Morso non afferra, trascina o inghiotte. Un bersaglio che non riesce a raggiungere concretamente resta fuori."
     }
   ],
-  "note": "Vista e udito ordinari, senza percezione attraverso l’acqua torbida. Furtività 13 in acqua, con una possibilità reale di occultarsi. Braccia = pinne anteriori, Gambe = posteriori (coda come appendice). Condotta: cerca nutrimento e può attaccare da un nascondiglio immerso; sotto 10 PV o a Ferita Profonda si allontana verso acque libere. Fonte: Plesiosaurus, p. 80.",
+  "note": "Predatore acquatico • morso a collo lungo • Natura Comune. Condotta. Cerca nutrimento raggiungibile e può attaccare da un nascondiglio immerso. Non comprende linguaggi. Sotto 13 PV si allontana verso acque libere; non riceve una fuga gratuita e la necessità di tornare a respirare resta reale.",
   "_bestiario": {
     "edizione": "Mostri 0.69",
-    "sistema_salute": "solo_PV"
-  }
+    "sistema_salute": "solo_PV",
+    "campi": {
+      "pv": "Mostri 0.69",
+      "pm": "Mostri 0.69",
+      "caratteristiche": "Mostri 0.69",
+      "ar": "Mostri 0.69",
+      "difese": "Mostri 0.69",
+      "salvezze": "Mostri 0.69",
+      "iniziativa": "Mostri 0.69",
+      "azioni": "Mostri 0.69",
+      "movimento": "Mostri 0.69",
+      "spazio": "Mostri 0.69",
+      "abilita": "Mostri 0.47",
+      "attacchi": "Mostri 0.69",
+      "capacita": "Mostri 0.47",
+      "gs_px": "Mostri 0.69"
+    }
+  },
+  "taglia": "grande"
 }

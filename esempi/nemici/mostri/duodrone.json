@@ -3,7 +3,7 @@
   "versione": 1,
   "id": "duodrone",
   "nome": "Duodrone",
-  "fonte": "dal Manuale dei Mostri v0.46 (Word del 27/10/2026), cap. 8 «Catalogo delle creature» — Costrutti e Modron",
+  "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Duodrone",
   "caratteristiche": {
     "FOR": 5,
     "DES": 6,
@@ -48,12 +48,11 @@
       "va": 9,
       "danno": "1d4",
       "natura": "Naturale",
-      "portata_q": 1,
-      "ac": 1,
       "proprieta": [
         "Contusione"
       ],
-      "note": "Richiede una mano libera; non permette Parata."
+      "portata_q": 1,
+      "ac": 1
     },
     {
       "nome": "Giavellotto a mano",
@@ -61,11 +60,11 @@
       "va": 9,
       "danno": "1d6",
       "natura": "Naturale",
-      "portata_q": 1,
-      "ac": 1,
       "proprieta": [
         "Perforazione"
-      ]
+      ],
+      "portata_q": 1,
+      "ac": 1
     },
     {
       "nome": "Giavellotto lanciato",
@@ -73,14 +72,14 @@
       "va": 9,
       "danno": "1d6+1",
       "natura": "Naturale",
+      "proprieta": [
+        "Perforazione"
+      ],
       "gittata_q": 15,
       "modalita": [
         "S"
       ],
-      "ac": 1,
-      "proprieta": [
-        "Perforazione"
-      ]
+      "ac": 1
     }
   ],
   "abilita": [
@@ -123,9 +122,25 @@
       "effetto": "Tre Giavellotti Comuni della sentinella (FOR 3, PI 4, PS Integrità 10): due già pronti nelle mani, uno riposto. Può lasciarne uno gratuitamente per liberare una mano, ma raccoglierlo o estrarre quello riposto costa 1 AzP. Ogni lancio consuma un esemplare; nessuna riserva si ricarica. Al massimo due attacchi di Pugno o Giavellotto per Round complessivi, Opportunità compresa. I 22 PX comprendono la dotazione."
     }
   ],
-  "note": "Modron di secondo grado: corpo squadrato che coordina consegne semplici; le due funzioni gestite non sono due azioni simultanee gratuite. Sotto 4 PV o a Ferita Profonda può ripiegare per riferire e preservare la consegna, senza immunità a paura o dolore. Fonte: Duodrone, p. 225.",
+  "note": "Modron di secondo grado • sorvegliante di esecutori • Natura Comune.",
   "_bestiario": {
     "edizione": "Mostri 0.69",
-    "sistema_salute": "solo_PV"
+    "sistema_salute": "solo_PV",
+    "campi": {
+      "pv": "Mostri 0.69",
+      "pm": "Mostri 0.69",
+      "caratteristiche": "Mostri 0.69",
+      "ar": "Mostri 0.69",
+      "difese": "Mostri 0.69",
+      "salvezze": "Mostri 0.69",
+      "iniziativa": "Mostri 0.69",
+      "azioni": "Mostri 0.69",
+      "movimento": "Mostri 0.69",
+      "spazio": "Mostri 0.69",
+      "abilita": "Mostri 0.69",
+      "attacchi": "Mostri 0.69",
+      "capacita": "Mostri 0.47",
+      "gs_px": "Mostri 0.69"
+    }
   }
 }

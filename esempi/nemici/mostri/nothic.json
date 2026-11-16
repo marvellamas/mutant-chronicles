@@ -1,0 +1,97 @@
+{
+  "formato": "mutant-nemico",
+  "versione": 1,
+  "id": "nothic",
+  "nome": "Nothic",
+  "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Nothic",
+  "note": "Creatura dall’occhio unico e dalla curiosità ossessiva per la magia. Osserva, ricatta e tratta in cambio di segreti o oggetti, usando lo sguardo per minacciare chi si avvicina.",
+  "pv": 42,
+  "pm": 16,
+  "caratteristiche": {
+    "FOR": 6,
+    "DES": 8,
+    "COS": 7,
+    "INT": 6,
+    "SAG": 5,
+    "CAR": 4
+  },
+  "ar": {
+    "totale": 2,
+    "magica": 0
+  },
+  "difese": 12,
+  "salvezze": {
+    "tempra": 11,
+    "riflessi": 12,
+    "volonta": 10,
+    "magia": 11
+  },
+  "iniziativa": 2,
+  "azioni": {
+    "principali": 2,
+    "movimento": 1
+  },
+  "movimento": {
+    "passo": 6,
+    "corsa": 12,
+    "scatto": 18
+  },
+  "spazio": "1 Q",
+  "capacita": [
+    {
+      "nome": "Sguardo corruttore",
+      "effetto": "VA —. Danno: 2d6+2 Etereo; Tempra 0. Portata/costo: 6 Q; 1 AzP e 2 PM; "
+    },
+    {
+      "nome": "Sguardo corruttore",
+      "effetto": "Una vittima biologicamente vivente visibile entro sei Q; non richiede che ricambi lo sguardo. Tempra 0: successo evita tutti i danni, fallimento subisce 2d6+2 Etereo contro sola AR magica. Nessuna Parata, Schivata o Elusione; non è Dardo Psichico e Barriera Mentale non blocca il danno. Non aggiunge malattie, Corruzione, perdita di PM o morte automatica. L’effetto è istantaneo e non viene annullato retroattivamente."
+    },
+    {
+      "nome": "Vista penetrante",
+      "effetto": "Scurovisione 24 Q. Entro 12 Q individua sagome occultate da Invisibilità o semplici illusioni ottiche di potenza fino a sei, se il percorso visivo è libero. Questa eccezione permette di scegliere la sagoma reale ma non dissolve l’effetto per altri osservatori, legge oggetti chiusi o vede oltre muri. Le protezioni di potenza superiore e gli occultamenti non ottici mantengono le proprie regole. La vista penetrante è sopprimibile per tre Round con Negare Potere, confronto 6."
+    },
+    {
+      "nome": "Intuizione inquietante",
+      "effetto": "Una AzP e due PM, una mente visibile entro sei Q. Magia 0 del bersaglio: successo nasconde, fallimento rivela al Nothic un singolo fatto vero attualmente conosciuto dal bersaglio, scelto dal Direttore. Non può esigere una password precisa, leggere un intero ricordo o ottenere un sapere che il bersaglio ignora. Barriera Mentale concede qui il proprio bonus a Magia; immunità alla lettura mentale impedisce il tentativo. Dopo aver resistito, la vittima è immune a questa lettura per 24 ore."
+    },
+    {
+      "nome": "Origine e comportamento",
+      "effetto": "La trasformazione già avvenuta non è una Possessione, una malattia o una Concentrazione. Nessuna connessione obbligatoria con divinità del manuale d’origine: il Direttore sceglie una causa compatibile con Lux Imperium. Non possiede un repertorio da incantatore o Parata naturale. Le sue conoscenze sono quelle di Occultismo, non risposte infallibili a ogni enigma."
+    },
+    {
+      "nome": "Valori pronti",
+      "effetto": "Attacchi e Difese comprendono le componenti ordinarie. Le immunità sono soltanto quelle dichiarate; la specie non riceve automaticamente la vulnerabilità al freddo della Covata. Abilità e caratteristiche non aggiungono altri bonus ai danni scritti. Restano le normali localizzazioni, ricondotte alle funzioni anatomiche effettive."
+    },
+    {
+      "nome": "Altri movimenti",
+      "effetto": "spazio 1 × 1 Q"
+    },
+    {
+      "nome": "Abilità particolari",
+      "effetto": "Percezione 12, 14 con la vista"
+    }
+  ],
+  "gs_px": {
+    "gs": "Esperto",
+    "px": 30,
+    "per_pg": 4
+  },
+  "_bestiario": {
+    "campi": {
+      "pv": "Mostri 0.69",
+      "pm": "Mostri 0.69",
+      "caratteristiche": "Mostri 0.69",
+      "ar": "Mostri 0.69",
+      "difese": "Mostri 0.69",
+      "salvezze": "Mostri 0.69",
+      "iniziativa": "Mostri 0.69",
+      "azioni": "Mostri 0.69",
+      "movimento": "Mostri 0.69",
+      "spazio": "Mostri 0.69",
+      "capacita": "Mostri 0.69",
+      "gs_px": "Mostri 0.69"
+    },
+    "edizione": "Mostri 0.69",
+    "sistema_salute": "solo_PV"
+  }
+}

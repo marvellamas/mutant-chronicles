@@ -1,0 +1,124 @@
+{
+  "formato": "mutant-nemico",
+  "versione": 1,
+  "id": "medusa",
+  "nome": "Medusa",
+  "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Medusa",
+  "note": "Umanoide dalla chioma di serpenti velenosi. Sfrutta il contatto degli sguardi e può combattere con arco o pugnale; conserva una personalità e obiettivi propri.",
+  "pv": 84,
+  "pm": 24,
+  "caratteristiche": {
+    "FOR": 5,
+    "DES": 8,
+    "COS": 7,
+    "INT": 6,
+    "SAG": 6,
+    "CAR": 7
+  },
+  "ar": {
+    "totale": 3,
+    "magica": 0
+  },
+  "difese": 12,
+  "salvezze": {
+    "tempra": 12,
+    "riflessi": 13,
+    "volonta": 13,
+    "magia": 12
+  },
+  "iniziativa": 1,
+  "azioni": {
+    "principali": 3,
+    "movimento": 1
+  },
+  "movimento": {
+    "passo": 6,
+    "corsa": 12,
+    "scatto": 18
+  },
+  "spazio": "1 Q",
+  "abilita": [
+    {
+      "nome": "Armi da mischia",
+      "va": 13
+    },
+    {
+      "nome": "Armi da lancio",
+      "va": 13
+    },
+    {
+      "nome": "Corpo a corpo",
+      "va": 12
+    },
+    {
+      "nome": "Percezione",
+      "va": 12
+    },
+    {
+      "nome": "Furtività",
+      "va": 12
+    },
+    {
+      "nome": "Raggirare",
+      "va": 12
+    }
+  ],
+  "capacita": [
+    {
+      "nome": "Sguardo pietrificante",
+      "effetto": "VA —. Danno: Due fasi; Tempra −2. Portata/costo: 6 Q; 1 AzP e 3 PM; "
+    },
+    {
+      "nome": "Azioni e strumenti",
+      "effetto": "Tre AzP totali, massimo due tiri d’Arco e un attacco dei Serpenti per Round, comprese le Opportunità. Non si presumono Tiro Rapido o una terza freccia gratuita. Incoccare è compreso nel tiro; i normali modificatori di gittata e copertura restano da applicare al VA. Arco da guerra Comune PI 6; pugnale Comune PI 4; PS Integrità 10. Tutti i requisiti soddisfatti e danni già completi. Con pugnale pronto può Parare ai costi normali; i Serpenti non offrono Parata naturale. Scurovisione 12 Q."
+    },
+    {
+      "nome": "Veleno",
+      "effetto": "Serpenti e le dieci frecce preparate trasportano veleno naturale di Pericolosità III. Dopo almeno un danno finale a un organismo biologicamente vivente: Tempra 0 dimezza per eccesso 2d4+2 danni da veleno; fallimento li subisce interamente. Perdita diretta senza AR, con normali Ferite se già a zero PV. Non aggiunge Paralizzato o uno Stato periodico. Una dose per freccia, consumata con il tiro; frecce recuperate non restano avvelenate. Non produce nuove dosi durante lo scontro. Immunità ai veleni evita questa perdita, non il colpo fisico. Non somma più dosi nella stessa freccia."
+    },
+    {
+      "nome": "Attivare lo Sguardo",
+      "effetto": "Una AzP e tre PM, al massimo una volta per Round: un bersaglio biologicamente vivente entro sei Q. Medusa e vittima devono guardarsi direttamente negli occhi; una posizione percepita o un’immagine registrata non basta. Tempra −2: successo evita; fallimento Immobilizzato e cosciente. Alla fine della successiva Iniziativa della vittima, nuova Tempra −2: successo annulla, fallimento completa la pietrificazione. Nessuna Difesa attiva, danno immediato o trasformazione completa dopo un solo fallimento, anche Maldestro."
+    },
+    {
+      "nome": "Statua e rimozione",
+      "effetto": "Le due fasi formano un solo effetto persistente di potenza 9, espressamente rimovibile con Negare Potere. Si applica integralmente la statua del Basilisco: niente Azioni, Movimento, percezione o Difese attive; non è morta e non ha necessità di respiro o nutrimento. Mantiene PV, PM, AR, Ferite e Menomazioni precedenti; nessuna nuova corazza. Danni e Morente restano normali, affezioni biologiche sospese e riprese al ritorno. Non si cura biologicamente finché è statua. La morte della Medusa non annulla la trasformazione; nuovi Sguardi non anticipano il secondo tiro."
+    },
+    {
+      "nome": "Evitare gli occhi",
+      "effetto": "Chi conosce il pericolo e non è Sorpreso può distogliere gli occhi prima di essere bersagliato, senza AzP: non vede direttamente la Medusa e applica le conseguenze sensoriali pertinenti contro di lei, senza diventare cieco al resto dell’ambiente. Non termina una pietrificazione iniziata. Un riflesso nitido dei propri occhi entro sei Q in luce intensa può rivolgere lo Sguardo alla Medusa stessa: se li guarda mentre attiva il potere paga AzP e PM e risolve entrambe le Tempra su di sé. Presentare uno specchio costa una AzP e non obbliga la Medusa a guardarlo o attaccare."
+    },
+    {
+      "nome": "Origine e condotta",
+      "effetto": "L’aspetto non implica appartenenza alla Simmetria Oscura, immunità ai veleni o ostilità verso tutti. La trasformazione del proprio corpo è già avvenuta e non è lo stesso effetto della pietrificazione inflitta: Negare Potere su una statua non cura la condizione della Medusa. Non possiede azioni di tana, servitori o una maledizione di origine automaticamente importata da un’altra ambientazione."
+    },
+    {
+      "nome": "Altri movimenti",
+      "effetto": "spazio 1 × 1 Q"
+    }
+  ],
+  "gs_px": {
+    "gs": "Eroe",
+    "px": 77,
+    "per_pg": 4
+  },
+  "_bestiario": {
+    "campi": {
+      "pv": "Mostri 0.69",
+      "pm": "Mostri 0.69",
+      "caratteristiche": "Mostri 0.69",
+      "ar": "Mostri 0.69",
+      "difese": "Mostri 0.69",
+      "salvezze": "Mostri 0.69",
+      "iniziativa": "Mostri 0.69",
+      "azioni": "Mostri 0.69",
+      "movimento": "Mostri 0.69",
+      "spazio": "Mostri 0.69",
+      "abilita": "Mostri 0.69",
+      "capacita": "Mostri 0.69",
+      "gs_px": "Mostri 0.69"
+    },
+    "edizione": "Mostri 0.69",
+    "sistema_salute": "solo_PV"
+  }
+}

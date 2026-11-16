@@ -3,7 +3,7 @@
   "versione": 1,
   "id": "grimlock",
   "nome": "Grimlock",
-  "fonte": "dal Manuale dei Mostri v0.46 (Word del 27/10/2026), cap. 8 «Catalogo delle creature» — Creature del sottosuolo",
+  "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Grimlock",
   "caratteristiche": {
     "FOR": 7,
     "DES": 6,
@@ -76,13 +76,45 @@
   ],
   "capacita": [
     {
+      "nome": "Dotazione",
+      "effetto": "Mazza ferrata di qualità Comune, PS Integrità 10, PI 5, FOR 4, una mano; già pronta. Il danno comprende 1d6+1 base e +1 da DES. Nessuna armatura o scudo. Può usare Parata con la mazza; con una sola AzP scegliere una Difesa limita l’attacco di quel Round. Il profilo non attribuisce stordimenti automatici ai colpi."
+    },
+    {
       "nome": "Percezione senza occhi",
-      "effetto": "Entro 6 Q localizza con udito e olfatto abbastanza da combattere senza penalità di buio o mancanza di vista. Assordato: solo olfatto entro 2 Q; senza olfatto non localizza. Ostacoli e bersagli nascosti richiedono le normali Prove; oltre la portata non ha vista alternativa. Non legge, non distingue i colori né soddisfa requisiti di visione reciproca: immune agli accecamenti sugli occhi e agli sguardi che richiedono di essere visti, non a ogni effetto mentale."
+      "effetto": "Entro 6 Q localizza tramite udito e olfatto abbastanza bene da combattere senza penalità dovute al buio o alla mancanza di vista. Se è Assordato resta il solo olfatto entro 2 Q; se perde anche l’olfatto non localizza con questa capacità. Ostacoli, rumori e condizioni che nascondono il bersaglio richiedono le normali Prove. Oltre la portata non possiede una vista alternativa."
+    },
+    {
+      "nome": "Limiti sensoriali",
+      "effetto": "Non legge, distingue colori o soddisfa requisiti di visione reciproca. È immune agli accecamenti che agiscono sugli occhi e agli sguardi che richiedono di essere visti; non a ogni effetto mentale. Contro bersagli che non riesce a percepire valgono le conseguenze pertinenti di Accecato. La capacità non permette attacchi attraverso pareti né rivela automaticamente creature immobili e nascoste."
+    },
+    {
+      "nome": "Altri movimenti",
+      "effetto": "spazio 1 × 1 Q"
+    },
+    {
+      "nome": "Abilità particolari",
+      "effetto": "fra rocce 13"
     }
   ],
-  "note": "Furtività 13 fra le rocce. Mazza ferrata Comune FOR 4, PI 5, una mano, già pronta; nessuna armatura o scudo; può parare con la mazza. Linguaggio delle profondità, può negoziare. Comportamento: sotto 4 PV o a Ferita Profonda cerca una via nota.",
+  "note": "Umanoide cavernicolo • esploratore e combattente ravvicinato • Natura Comune. Condotta. Usa il terreno e segnala i movimenti avvertiti; può parlare il linguaggio delle profondità della fonte e negoziare. La sua organizzazione dipende dalla comunità descritta dal Direttore. Sotto 6 PV cerca una via nota. Le localizzazioni sono umanoidi ordinarie; l’assenza degli occhi non rende la Testa immune alle Menomazioni.",
   "_bestiario": {
     "edizione": "Mostri 0.69",
-    "sistema_salute": "solo_PV"
+    "sistema_salute": "solo_PV",
+    "campi": {
+      "pv": "Mostri 0.69",
+      "pm": "Mostri 0.69",
+      "caratteristiche": "Mostri 0.69",
+      "ar": "Mostri 0.69",
+      "difese": "Mostri 0.69",
+      "salvezze": "Mostri 0.69",
+      "iniziativa": "Mostri 0.69",
+      "azioni": "Mostri 0.69",
+      "movimento": "Mostri 0.69",
+      "spazio": "Mostri 0.69",
+      "abilita": "Mostri 0.47",
+      "attacchi": "Mostri 0.47",
+      "capacita": "Mostri 0.69",
+      "gs_px": "Mostri 0.69"
+    }
   }
 }

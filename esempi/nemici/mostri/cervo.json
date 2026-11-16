@@ -3,7 +3,7 @@
   "versione": 1,
   "id": "cervo",
   "nome": "Cervo",
-  "fonte": "dal Manuale dei Mostri v0.46 (Word del 27/10/2026), cap. 8 «Catalogo delle creature» — Fauna delle terre aperte",
+  "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Cervo",
   "caratteristiche": {
     "FOR": 4,
     "DES": 8,
@@ -48,11 +48,11 @@
       "va": 7,
       "danno": "1d4",
       "natura": "Naturale",
-      "portata_q": 1,
-      "ac": 1,
       "proprieta": [
         "Perforazione"
-      ]
+      ],
+      "portata_q": 1,
+      "ac": 1
     }
   ],
   "abilita": [
@@ -91,9 +91,25 @@
       "effetto": "Vista e udito ordinari, senza Scurovisione o bonus sensoriale innato. Riconoscere una minaccia nascosta richiede Percezione contro Furtività quando pertinente."
     }
   ],
-  "note": "Ungulato rapido pronto a prendere distanza da una minaccia; il profilo mantiene il Morso dell’originale. La rapidità non lo rende una cavalcatura utilizzabile. Condotta: tende a fuggire quando la minaccia si avvicina e a mantenere un passaggio verso il gruppo; sotto 2 PV o a Ferita Importante evita di prolungare il contatto. Fonte: Deer, p. 321.",
+  "note": "Ungulato rapido • fuga e orientamento • Natura Comune. Condotta. Tende a fuggire quando la minaccia si avvicina e a mantenere un passaggio verso il gruppo. Sotto 3 PV evita di prolungare il contatto, rispettando gli impedimenti della lesione. Non comprende linguaggi e la rapidità non lo rende automaticamente una cavalcatura utilizzabile.",
   "_bestiario": {
     "edizione": "Mostri 0.69",
-    "sistema_salute": "solo_PV"
+    "sistema_salute": "solo_PV",
+    "campi": {
+      "pv": "Mostri 0.69",
+      "pm": "Mostri 0.69",
+      "caratteristiche": "Mostri 0.69",
+      "ar": "Mostri 0.69",
+      "difese": "Mostri 0.69",
+      "salvezze": "Mostri 0.69",
+      "iniziativa": "Mostri 0.69",
+      "azioni": "Mostri 0.69",
+      "movimento": "Mostri 0.69",
+      "spazio": "Mostri 0.69",
+      "abilita": "Mostri 0.69",
+      "attacchi": "Mostri 0.69",
+      "capacita": "Mostri 0.47",
+      "gs_px": "Mostri 0.69"
+    }
   }
 }

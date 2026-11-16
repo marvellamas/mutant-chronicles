@@ -1,0 +1,106 @@
+{
+  "formato": "mutant-nemico",
+  "versione": 1,
+  "id": "gufo",
+  "nome": "Gufo",
+  "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Gufo",
+  "note": "Piccolo rapace notturno che caccia con udito e vista acuti. È un animale ordinario, distinto dal Gufo gigante senziente già presente nel catalogo.",
+  "pv": 6,
+  "pm": 2,
+  "caratteristiche": {
+    "FOR": 1,
+    "DES": 6,
+    "COS": 3,
+    "INT": 1,
+    "SAG": 6,
+    "CAR": 2
+  },
+  "ar": {
+    "totale": 0,
+    "magica": 0
+  },
+  "difese": 10,
+  "salvezze": {
+    "tempra": 6,
+    "riflessi": 10,
+    "volonta": 7,
+    "magia": 8
+  },
+  "iniziativa": 1,
+  "azioni": {
+    "principali": 1,
+    "movimento": 1
+  },
+  "movimento": {
+    "passo": 1,
+    "corsa": 2,
+    "scatto": 3,
+    "volo": 12
+  },
+  "spazio": "1 Q",
+  "attacchi": [
+    {
+      "nome": "Artigli",
+      "tipo": "ravvicinato",
+      "va": 9,
+      "danno": "1",
+      "natura": "Naturale",
+      "proprieta": [
+        "Taglio",
+        "AC 1"
+      ],
+      "portata_q": 1,
+      "ac": 1
+    }
+  ],
+  "capacita": [
+    {
+      "nome": "Corpo e sensi",
+      "effetto": "Vivente biologico con mente animale e PM personali; Scurovisione 24 Q, +2 a Percezione quando vista o udito sono determinanti, una sola volta per Prova e già espresso nel tredici. Nessuna immunità generale o Parata naturale. La pedina di un Q serve alla gestione e non trasforma l’animale in un ostacolo grande come una persona. Nessun linguaggio o telepatia con un padrone."
+    },
+    {
+      "nome": "Passaggio in volo",
+      "effetto": "Come il Gufo gigante, non provoca Opportunità per l’uscita dalla portata di un nemico mediante il proprio Volo. Può dividere il Passo prima e dopo l’attacco entro un unico budget, senza una seconda AzM. Al massimo un attacco di Artigli per Round, Opportunità compresa. Gli altri atti rischiosi o l’uscita a terra conservano le regole ordinarie."
+    },
+    {
+      "nome": "Ali e appoggi",
+      "effetto": "Il Volo usa ali effettivamente funzionali e spazio adeguato; se resta in aria durante il proprio movimento deve percorrere almeno un Q oppure raggiungere un appoggio. Non dispone di fluttuazione magica o di un tratto stazionario. Svenuto, Paralizzato o Menomazione che impedisca il battito possono causare Caduta. Un soffitto o una rete non si attraversano grazie al Passaggio."
+    },
+    {
+      "nome": "Comportamento e anatomia",
+      "effetto": "Cerca un posatoio protetto e caccia piccole prede; Furtività richiede condizioni reali, senza invisibilità o silenzio assoluto. Testa sensi e becco, Torace corpo, Braccia ali, Gambe zampe e artigli. Sotto 3 PV tende a fuggire. Addestramento e legame con un personaggio vanno stabiliti: questa scheda non concede esplorazione condivisa, ordini perfetti o Azioni al proprietario."
+    },
+    {
+      "nome": "Altri movimenti",
+      "effetto": "corpo piccolo, pedina di gestione 1 Q"
+    },
+    {
+      "nome": "Abilità particolari",
+      "effetto": "Percezione 11, 13 per vista o udito determinanti"
+    }
+  ],
+  "gs_px": {
+    "gs": "Principiante",
+    "px": 10,
+    "per_pg": 4
+  },
+  "_bestiario": {
+    "campi": {
+      "pv": "Mostri 0.69",
+      "pm": "Mostri 0.69",
+      "caratteristiche": "Mostri 0.69",
+      "ar": "Mostri 0.69",
+      "difese": "Mostri 0.69",
+      "salvezze": "Mostri 0.69",
+      "iniziativa": "Mostri 0.69",
+      "azioni": "Mostri 0.69",
+      "movimento": "Mostri 0.69",
+      "spazio": "Mostri 0.69",
+      "attacchi": "Mostri 0.69",
+      "capacita": "Mostri 0.69",
+      "gs_px": "Mostri 0.69"
+    },
+    "edizione": "Mostri 0.69",
+    "sistema_salute": "solo_PV"
+  }
+}

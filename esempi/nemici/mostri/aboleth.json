@@ -3,7 +3,7 @@
   "versione": 1,
   "id": "aboleth",
   "nome": "Aboleth",
-  "fonte": "dal Manuale dei Mostri v0.46 (Word del 27/10/2026), cap. 8 «Catalogo delle creature» — prime quindici schede",
+  "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Aboleth",
   "caratteristiche": {
     "FOR": 9,
     "DES": 4,
@@ -174,9 +174,25 @@
       "effetto": "Entro 1,6 km dalla tana il Direttore può collocare superfici scivolose e fangose (Terreno Difficile sulla mappa) e fonti contaminate imbevibili; svaniscono in 3d10 giorni dopo la morte dell’Aboleth. Non sono attacchi ogni Round."
     }
   ],
-  "note": "Massa paragonabile a quella di un veicolo ai fini del limite di Sbalzante (taglia Grande). GS e PX con modulo tana attivo (solo quando incide davvero sull’incontro): Leggenda, 100 PX. Braccia = gruppi di tentacoli laterali; Gambe = porzioni locomotorie. Natura Comune (la malvagità dell’originale non dà Oscura Simmetria). Fonte: pp. 13–14. Comportamento: tratta e inganna prima di combattere; a 20 PV o Ferita Profonda cerca una via sommersa.",
+  "note": "Aberrazione acquatica • Natura Comune • controllore. Spazio e sensi: 2 × 3 Q • scurovisione 24 Q; solo vista nell’oscurità, senza attraversare ostacoli. Protezioni specifiche: Nessuna immunità generale. Respira sia aria sia acqua. Linguaggio delle profondità nell’originale. Un ordine breve, comune alle vittime, è gratuito una volta nella propria Iniziativa; ordini diversi nello stesso turno richiedono complessivamente 1 ulteriore AzP. Il collegamento per nuovi ordini funziona entro 24 Q. Fuori portata permane l’ultimo ordine possibile, senza nuova comunicazione. Gli ordini evidentemente suicidi terminano immediatamente il controllo; colpire un alleato non è automaticamente suicidio. La vittima ripete Volontà senza la penalità iniziale alla fine di ogni propria Iniziativa e subito dopo ciascun attacco o evento che le abbia effettivamente inflitto danno. Un successo termina il controllo. Non si moltiplicano le ripetizioni per le AC dello stesso attacco. L’effetto termina anche alla scadenza, se l’Aboleth perde conoscenza o muore, oppure per suo rilascio gratuito nella propria Iniziativa. Il danno psichico ignora AR e PV temporanei, non infligge Ferite e non riduce sotto 0 i PV. Se porta a 0 PV, la vittima effettua la Volontà prevista dalla procedura di Dardo Psichico: fallimento causa Svenuto per 1+1d4 Round. Il danno viene bloccato da Barriera Mentale. L’Aboleth recupera soltanto tanti PV quanti ne ha effettivamente sottratti, entro il proprio massimo; non recupera PM né rimuove Ferite o Menomazioni. Il bonus individuale ai suoi danni psichici è +2, già compreso nelle formule di Drenaggio e Rabbia nelle acque. Modulo facoltativo per un Aboleth insediato in una tana preparata. Queste opzioni non sono comprese in un incontro con un esemplare errante. Usano le sue normali AzP e i suoi PM, alla sua Iniziativa: nessuna azione gratuita a Iniziativa 20. Al massimo una delle prime tre opzioni per Round. Comportamento. Tratta e inganna prima di combattere; usa acqua e servitori per isolare i nemici. A 26 PV cerca una via sommersa di fuga. La memoria antica resta una risorsa narrativa: non autorizza il Direttore a conoscere automaticamente i piani segreti dei PG. Un eventuale ritorno dopo la distruzione del corpo appartiene alla cosmologia originale e non è una resurrezione automatica di questa scheda.",
   "_bestiario": {
     "edizione": "Mostri 0.69",
-    "sistema_salute": "solo_PV"
+    "sistema_salute": "solo_PV",
+    "campi": {
+      "pv": "Mostri 0.69",
+      "pm": "Mostri 0.69",
+      "caratteristiche": "Mostri 0.69",
+      "ar": "Mostri 0.69",
+      "difese": "Mostri 0.69",
+      "salvezze": "Mostri 0.69",
+      "iniziativa": "Mostri 0.69",
+      "azioni": "Mostri 0.47",
+      "movimento": "Mostri 0.69",
+      "spazio": "Mostri 0.69",
+      "abilita": "Mostri 0.47",
+      "attacchi": "Mostri 0.69",
+      "capacita": "Mostri 0.47",
+      "gs_px": "Mostri 0.69"
+    }
   }
 }

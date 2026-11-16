@@ -1,0 +1,122 @@
+{
+  "formato": "mutant-nemico",
+  "versione": 1,
+  "id": "profeta-metropolitano",
+  "nome": "Profeta Metropolitano",
+  "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Profeta Metropolitano",
+  "note": "Sabotatore dormiente sotto un aspetto umano, capace di rivelare un corpo da sfondamento. Questa scheda descrive un Profeta già formato, pronto a interrompere la copertura.",
+  "pv": 111,
+  "pm": 30,
+  "caratteristiche": {
+    "FOR": 10,
+    "DES": 6,
+    "COS": 10,
+    "INT": 5,
+    "SAG": 7,
+    "CAR": 4
+  },
+  "ar": {
+    "totale": 4,
+    "magica": 0
+  },
+  "difese": 11,
+  "salvezze": {
+    "tempra": 16,
+    "riflessi": 10,
+    "volonta": 13,
+    "magia": 12
+  },
+  "iniziativa": 2,
+  "azioni": {
+    "principali": 2,
+    "movimento": 1
+  },
+  "movimento": {
+    "passo": 6,
+    "corsa": 12,
+    "scatto": 18
+  },
+  "abilita": [
+    {
+      "nome": "Corpo a corpo",
+      "va": 16
+    },
+    {
+      "nome": "Armi medie",
+      "va": 14
+    },
+    {
+      "nome": "Raggirare",
+      "va": 14
+    },
+    {
+      "nome": "Percezione",
+      "va": 13
+    },
+    {
+      "nome": "Atletica",
+      "va": 15
+    },
+    {
+      "nome": "Oratoria",
+      "va": 10
+    }
+  ],
+  "capacita": [
+    {
+      "nome": "Suscitare terrore",
+      "effetto": "VA PS. Danno: Terrorizzato; nessun danno. Portata/costo: Una mente entro 6 Q; 1 AzP e 4 PM; modulo comune; "
+    },
+    {
+      "nome": "Fonte del soggetto",
+      "effetto": "Metropolitan Prophet; Siege of the Citadel Crossover, cap. 6, pp. 128–129. Selezione e adattamento: applicare soltanto le capacità operative di questa scheda."
+    },
+    {
+      "nome": "Un solo profilo",
+      "effetto": "PV, PM, Ferite e spese sono condivisi fra le forme; nessuna guarigione alla trasformazione e un solo premio PX. La copertura limita FOR e COS a 6, AR a 1, spazio a 1 Q; Pugno VA 12 e 1d4+1. Restano gli altri VA e le Salvezze pronti. Il cannone non può sparare finché nascosto."
+    },
+    {
+      "nome": "Rivelazione",
+      "effetto": "Una AzP e 3 PM alla propria Iniziativa; richiede spazio libero per 1×2 Q e rivela i valori della tabella. Una sola volta nella vita del profilo, senza ritorno spontaneo umano. Non concede attacchi immediati, sorpresa automatica o una nuova Iniziativa. Il rituale che genera un nuovo Profeta non è concesso da questa scheda."
+    },
+    {
+      "nome": "Armamento e spinta",
+      "effetto": "Cannone a due mani, sei colpi e un ricambio da sei; ricarica 1 AzP, solo tiro singolo. Il Pugno che causa danno oltre AR permette Riflessi 0: fallimento A Terra, successo evita. Non aggiunge anche Stordito o uno spostamento automatico. Massimo due azioni offensive per Round, Opportunità compresa."
+    },
+    {
+      "nome": "Lettura dei flussi",
+      "effetto": "Il bonus +2 all’Iniziativa sostituisce il bonus da Caratteristica. Riconosce movimenti immediati, senza agire automaticamente per primo, leggere pensieri o vedere attraverso muri. Contro la copertura si usa Raggirare/Percezione; esami appropriati e danni che espongono la struttura forniscono indizi reali."
+    },
+    {
+      "nome": "Disfacimento e resistenze",
+      "effetto": "Immune a veleno biologico e malattie; non immune a danni fisici, calore, freddo o danni psichici. Il corpo si dissolve soltanto alla morte effettiva: A 0 PV il profilo senza Ferite è fuori combattimento secondo il §4.2; morte o distruzione effettiva restano distinte. Dotazione separata sopravvive se integra. La dissoluzione non esplode, non infligge CROS e non guarisce il Profeta."
+    },
+    {
+      "nome": "Altri movimenti",
+      "effetto": "coperto 1 Q; rivelato 1×2 Q"
+    }
+  ],
+  "gs_px": {
+    "gs": "Leggenda",
+    "px": 110,
+    "per_pg": 4
+  },
+  "_bestiario": {
+    "campi": {
+      "pv": "Mostri 0.69",
+      "pm": "Mostri 0.69",
+      "caratteristiche": "Mostri 0.69",
+      "ar": "Mostri 0.69",
+      "difese": "Mostri 0.69",
+      "salvezze": "Mostri 0.69",
+      "iniziativa": "Mostri 0.69",
+      "azioni": "Mostri 0.69",
+      "movimento": "Mostri 0.69",
+      "abilita": "Mostri 0.69",
+      "capacita": "Mostri 0.69",
+      "gs_px": "Mostri 0.69"
+    },
+    "edizione": "Mostri 0.69",
+    "sistema_salute": "solo_PV"
+  }
+}

@@ -1,0 +1,136 @@
+{
+  "formato": "mutant-nemico",
+  "versione": 1,
+  "id": "grell",
+  "nome": "Grell",
+  "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Grell",
+  "note": "Cervello levitante con becco e tentacoli uncinati. Individua le prede attraverso suoni, vibrazioni e campi prossimi e cerca di portare via individui isolati.",
+  "pv": 55,
+  "pm": 12,
+  "caratteristiche": {
+    "FOR": 7,
+    "DES": 7,
+    "COS": 6,
+    "INT": 6,
+    "SAG": 5,
+    "CAR": 4
+  },
+  "ar": {
+    "totale": 1,
+    "magica": 0
+  },
+  "difese": 12,
+  "salvezze": {
+    "tempra": 11,
+    "riflessi": 12,
+    "volonta": 9,
+    "magia": 10
+  },
+  "iniziativa": 2,
+  "azioni": {
+    "principali": 2,
+    "movimento": 1
+  },
+  "movimento": {
+    "passo": 2,
+    "corsa": 4,
+    "scatto": 6,
+    "volo": 6
+  },
+  "spazio": "1 Q",
+  "abilita": [
+    {
+      "nome": "Corpo a corpo",
+      "va": 12
+    },
+    {
+      "nome": "Atletica",
+      "va": 13
+    },
+    {
+      "nome": "Furtività",
+      "va": 14
+    },
+    {
+      "nome": "Percezione",
+      "va": 13
+    }
+  ],
+  "attacchi": [
+    {
+      "nome": "Tentacoli",
+      "tipo": "ravvicinato",
+      "va": 12,
+      "danno": "1d8+2",
+      "natura": "Naturale",
+      "proprieta": [
+        "AC 1"
+      ],
+      "portata_q": 2,
+      "ac": 1
+    },
+    {
+      "nome": "Becco",
+      "tipo": "ravvicinato",
+      "va": 12,
+      "danno": "2d4+2",
+      "natura": "Naturale",
+      "proprieta": [
+        "AC 1"
+      ],
+      "portata_q": 1,
+      "ac": 1
+    }
+  ],
+  "capacita": [
+    {
+      "nome": "Sensi e difesa",
+      "effetto": "Percezione non visiva entro 12 Q, senza precisione oltre il raggio. Coperture solide schermano normalmente; il solo silenzio non elimina tutte le modalità di percezione. Non legge, non distingue colori e non vede oltre muri. Immune a Fulmine, Accecato e A Terra; nessuna Parata naturale. La levitazione lo sostiene anche da Svenuto, ma non mantiene la presa."
+    },
+    {
+      "nome": "Tossina",
+      "effetto": "Dopo almeno un danno finale dei Tentacoli, un organismo biologicamente vivente effettua Tempra 0: fallimento Paralizzato per tre Round. Ripete Tempra 0 alla fine della propria Iniziativa; un successo libera. Veleno naturale di Pericolosità III, curabile con antidoto pertinente o Cura Avvelenamenti di livello almeno tre. L’immunità ai veleni evita la paralisi; non evita il danno del tentacolo. Nessun costo PM o ulteriore attacco gratuito."
+    },
+    {
+      "nome": "Presa dei tentacoli",
+      "effetto": "In alternativa al danno, dichiara prima del tiro una presa contro una creatura di spazio massimo 1 × 1 Q entro due Q. Usa la procedura comune delle prese, Corpo a corpo 12; una sola vittima. Non infligge danni né inocula veleno con la sola opposizione vinta. Mentre mantiene la presa può ancora colpire quella vittima con Tentacoli o Becco, pagando le normali AzP, senza bonus automatico oltre agli Stati effettivi."
+    },
+    {
+      "nome": "Trasporto e soccorso",
+      "effetto": "Con la propria AzM trascina o solleva la vittima trattenuta al massimo a metà del movimento, nei propri limiti di carico e lungo un percorso libero. Prima di oltrepassare un bordo pericoloso la vittima ha Riflessi 0: successo la ferma all’ultimo appoggio sicuro e scioglie la presa se il Grell si allontana oltre portata. Una liberazione in quota può causare caduta ordinaria. Recidere o menomare la funzione di presa libera; non si assegnano PV o PX separati ai tentacoli. Preferisce nutrirsi in un luogo appartato."
+    },
+    {
+      "nome": "Valori pronti",
+      "effetto": "Attacchi e Difese comprendono le componenti ordinarie. Le immunità sono soltanto quelle dichiarate; la specie non riceve automaticamente la vulnerabilità al freddo della Covata. Abilità e caratteristiche non aggiungono altri bonus ai danni scritti. Restano le normali localizzazioni, ricondotte alle funzioni anatomiche effettive."
+    },
+    {
+      "nome": "Altri movimenti",
+      "effetto": "spazio 1 × 1 Q"
+    }
+  ],
+  "gs_px": {
+    "gs": "Veterano",
+    "px": 50,
+    "per_pg": 4
+  },
+  "_bestiario": {
+    "campi": {
+      "pv": "Mostri 0.69",
+      "pm": "Mostri 0.69",
+      "caratteristiche": "Mostri 0.69",
+      "ar": "Mostri 0.69",
+      "difese": "Mostri 0.69",
+      "salvezze": "Mostri 0.69",
+      "iniziativa": "Mostri 0.69",
+      "azioni": "Mostri 0.69",
+      "movimento": "Mostri 0.69",
+      "spazio": "Mostri 0.69",
+      "abilita": "Mostri 0.69",
+      "attacchi": "Mostri 0.69",
+      "capacita": "Mostri 0.69",
+      "gs_px": "Mostri 0.69"
+    },
+    "edizione": "Mostri 0.69",
+    "sistema_salute": "solo_PV"
+  }
+}

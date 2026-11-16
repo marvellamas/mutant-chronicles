@@ -1,0 +1,122 @@
+{
+  "formato": "mutant-nemico",
+  "versione": 1,
+  "id": "cacciatore-di-anime",
+  "nome": "Cacciatore di Anime",
+  "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Cacciatore di Anime",
+  "note": "Negoziatore oscuro che propone favori in cambio di impegni personali. Studia il desiderio della vittima e costruisce attorno a esso un debito sempre più difficile da sciogliere.",
+  "pv": 72,
+  "pm": 45,
+  "caratteristiche": {
+    "FOR": 6,
+    "DES": 6,
+    "COS": 7,
+    "INT": 9,
+    "SAG": 9,
+    "CAR": 9
+  },
+  "ar": {
+    "totale": 3,
+    "magica": 0
+  },
+  "difese": 12,
+  "salvezze": {
+    "tempra": 12,
+    "riflessi": 11,
+    "volonta": 17,
+    "magia": 16
+  },
+  "iniziativa": 4,
+  "azioni": {
+    "principali": 2,
+    "movimento": 1
+  },
+  "movimento": {
+    "passo": 6,
+    "corsa": 12,
+    "scatto": 18
+  },
+  "abilita": [
+    {
+      "nome": "Corpo a corpo",
+      "va": 11
+    },
+    {
+      "nome": "Oratoria",
+      "va": 18
+    },
+    {
+      "nome": "Raggirare",
+      "va": 17
+    },
+    {
+      "nome": "Percezione",
+      "va": 16
+    },
+    {
+      "nome": "Cultura",
+      "va": 16
+    },
+    {
+      "nome": "Occultismo",
+      "va": 16
+    }
+  ],
+  "capacita": [
+    {
+      "nome": "Desiderio ossessivo",
+      "effetto": "VA PS. Danno: Nessun danno; penalità mentale. Portata/costo: Una mente a Contatto entro 1 Q; 1 AzP e 4 PM; "
+    },
+    {
+      "nome": "Fonte del soggetto",
+      "effetto": "Soul Hunter; Dark Soul, pp. 86–88; patti e limiti operativi qui definiti sono una conversione Simply RPG. Selezione e adattamento: applicare soltanto le capacità operative di questa scheda."
+    },
+    {
+      "nome": "Desiderio ossessivo",
+      "effetto": "Occorre conoscere un obiettivo già espresso dal bersaglio. Contatto reale, Volontà −2: successo evita; fallimento −2 alle Abilità per attività manifestamente estranee a quell’obiettivo per tre Round. Non penalizza Salvezze o Difese, non impedisce soccorso e difesa della propria vita e non impone azioni. Massimo una vittima attiva; nuova attivazione sostituisce la precedente. Barriera Mentale concede il bonus pertinente; Negare 7, Svenuto o morte della fonte termina. Nessuna nuova attivazione sulla stessa persona nella scena."
+    },
+    {
+      "nome": "Termini del patto",
+      "effetto": "Un solo patto attivo. Dichiarare prima dell’accettazione beneficio concreto, favore dovuto, scadenza entro trenta giorni e possibilità di rifiuto. Il beneficio deve essere realizzabile con beni, informazioni e alleati effettivamente disponibili: non crea desideri, resurrezioni o poteri di Classe. Nessun beneficio consegnato, nessun debito. Non comprende il rituale di creazione di nuovi servitori."
+    },
+    {
+      "nome": "Marchio consapevole",
+      "effetto": "La persona deve accettare liberamente il patto e il successivo contatto rituale di un minuto; il Cacciatore paga 6 PM. Poi Magia +2, esposizione Debole di Intensità 1, una sola volta alla stipula. Gli esiti CROS seguono il Giocatore. Accettare un favore non sostituisce la PS; nessun peggioramento quotidiano o potere di esigere il suicidio. Se il marchio è evitato, il patto resta soltanto un accordo sociale."
+    },
+    {
+      "nome": "Debito e soccorso",
+      "effetto": "Il marchio è una contaminazione istantanea, non Possessione né anima trasferita in un oggetto. Negare non restituisce Stati CROS; Esorcizzare Corruzione e recupero seguono le normali procedure. Pagamento del favore o morte del Cacciatore non purificano automaticamente. Alla scadenza il ricatto richiede azioni e mezzi reali: nessuna morte automatica o richiamo gratuito di un Corruttore."
+    },
+    {
+      "nome": "Tattica",
+      "effetto": "Conversa, offre una via d’uscita e cerca di andarsene se scoperto. Percezione 16 interpreta indizi e parole: non è lettura completa del pensiero. Corpo biologico, nessuna immunità universale e nessun drenaggio automatico di PM o anime con un pugno. Massimo due azioni offensive per Round."
+    },
+    {
+      "nome": "Altri movimenti",
+      "effetto": "spazio 1 Q"
+    }
+  ],
+  "gs_px": {
+    "gs": "Eroe",
+    "px": 70,
+    "per_pg": 4
+  },
+  "_bestiario": {
+    "campi": {
+      "pv": "Mostri 0.69",
+      "pm": "Mostri 0.69",
+      "caratteristiche": "Mostri 0.69",
+      "ar": "Mostri 0.69",
+      "difese": "Mostri 0.69",
+      "salvezze": "Mostri 0.69",
+      "iniziativa": "Mostri 0.69",
+      "azioni": "Mostri 0.69",
+      "movimento": "Mostri 0.69",
+      "abilita": "Mostri 0.69",
+      "capacita": "Mostri 0.69",
+      "gs_px": "Mostri 0.69"
+    },
+    "edizione": "Mostri 0.69",
+    "sistema_salute": "solo_PV"
+  }
+}

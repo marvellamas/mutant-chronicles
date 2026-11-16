@@ -3,7 +3,7 @@
   "versione": 1,
   "id": "cockatrice",
   "nome": "Cockatrice",
-  "fonte": "dal Manuale dei Mostri v0.46 (Word del 27/10/2026), cap. 8 «Catalogo delle creature» — prime quindici schede",
+  "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Cockatrice",
   "caratteristiche": {
     "FOR": 3,
     "DES": 6,
@@ -49,6 +49,9 @@
       "va": 10,
       "danno": "1d4",
       "natura": "Naturale",
+      "proprieta": [
+        "possibile pietrificazione"
+      ],
       "portata_q": 1,
       "ac": 1
     }
@@ -85,9 +88,25 @@
       "effetto": "Vede entro 12 Q nel buio naturale, senza colori; non attraversa ostacoli né individua da sola chi è nascosto."
     }
   ],
-  "note": "Piccola bestia alata (Braccia = ali, Gambe = zampe); un’ala inutilizzabile impedisce il volo; nessun modificatore speciale a chi la attacca. Non comprende ordini complessi. Differisce dal Basilisco: qui servono una ferita e due Tempra con +2, e l’effetto termina dopo 24 ore. Nome originale: Cockatrice, p. 42. Comportamento: sibila e becca la minaccia più vicina; a Ferita Profonda si ritira verso un riparo.",
+  "note": "Piccola bestia alata • Natura Comune • difesa pietrificante • Cockatrice, p. 42. Sensi e protezioni: Scurovisione 12 Q; nessuna immunità generale. Non comprende ordini complessi. Comportamento. Si agita, sibila e tenta una beccata contro la minaccia più vicina. Non pianifica di distruggere sistematicamente le statue prodotte. se gravemente minacciato si ritira verso un riparo; allontanarsi dal nido può evitare lo scontro se non è già intrappolata. Alla fine della successiva Iniziativa della vittima, una nuova Tempra con +2. Successo: termina Immobilizzato. Fallimento: la vittima diventa una statua per 24 ore dal completamento. Infliggono i normali danni, ma non accelerano una trasformazione già avviata e non impongono ulteriori tiri prima della seconda resistenza. Dopo 24 ore torna alla condizione biologica originaria, conservando danni, Ferite e Menomazioni. La morte della Cockatrice non termina anticipatamente l’effetto.",
   "_bestiario": {
     "edizione": "Mostri 0.69",
-    "sistema_salute": "solo_PV"
+    "sistema_salute": "solo_PV",
+    "campi": {
+      "pv": "Mostri 0.69",
+      "pm": "Mostri 0.69",
+      "caratteristiche": "Mostri 0.69",
+      "ar": "Mostri 0.69",
+      "difese": "Mostri 0.69",
+      "salvezze": "Mostri 0.69",
+      "iniziativa": "Mostri 0.69",
+      "azioni": "Mostri 0.69",
+      "movimento": "Mostri 0.69",
+      "spazio": "Mostri 0.69",
+      "abilita": "Mostri 0.69",
+      "attacchi": "Mostri 0.69",
+      "capacita": "Mostri 0.47",
+      "gs_px": "Mostri 0.69"
+    }
   }
 }

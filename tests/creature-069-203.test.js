@@ -78,11 +78,12 @@ test('il conto del corpus torna, e ogni scheda dichiara l’edizione da cui vien
   const dichiarato = JSON.parse(readFileSync(join(RADICE, 'data', 'formato_nemici.json'), 'utf8')).corpus;
   const edizione = `Mostri ${registro().manuali.find((m) => m.id === 'mostri').versione}`;
   assert.equal(edizione, 'Mostri 0.69', 'il registro deve essere alla 0.69: il corpus viene da lì');
-  assert.equal(C.size, 342, 'le schede del corpus sono 341 più la Viverna della Sabbia della 0.69');
+  // lotto 204: 342 + le 151 schede che il lettore ora legge per intero sulla 0.69
+  assert.equal(C.size, 493, 'le 342 del lotto 203 più le 151 che il lettore non leggeva');
 
   const conEdizione = [...C.values()].filter((s) => s._bestiario?.edizione);
   const alla069 = conEdizione.filter((s) => s._bestiario.edizione === edizione);
-  assert.equal(alla069.length, 310, '307 dal lettore (i quattro Elementali dai PV dell’anteprima) + 2 Dragomedusa dal testo + 1 nuova');
+  assert.equal(alla069.length, 461, 'lotto 204: 459 lette dal lettore + 2 Dragomedusa da una lettura dichiarata del §7.12');
   // e il numero deve coincidere con quello dichiarato nei dati: se i due non tornano, uno dei due mente
   assert.equal(alla069.length, dichiarato.dalla_edizione, 'il conto dichiarato in data/formato_nemici.json → corpus non coincide coi file');
   assert.equal(C.size, dichiarato.schede);

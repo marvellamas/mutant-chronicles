@@ -1,0 +1,144 @@
+{
+  "formato": "mutant-nemico",
+  "versione": 1,
+  "id": "naga-di-ossa",
+  "nome": "Naga d’ossa",
+  "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Naga d’ossa",
+  "note": "Resti animati di una Naga, privati del ritorno naturale. Conserva un repertorio ridotto scelto in base alla specie originaria; le due origini sono varianti della stessa scheda. Una AzP per Incantesimo e PM della versione; Potere pronto 13 ai livelli tre e sei, 11 al nove. Restano condizioni di lancio e procedure delle regole comuni dei custodi e delle schede della Magia v1.7. Voce udita e compresa, una sola condotta; nel primo turno successivo massimo una AzP e un Movimento, senza azioni nuove. Limiti morali e PM/PE ordinari; Negare 6 prima dell’esecuzione. 6 PM; una mente cosciente visibile entro dieci Q; Volontà 0 evita Fallimento −4 a tutte le Abilità cinque Round e interrompe la Concentrazione presente; nessun malus a PS, danno o Movimento e nessuna perdita di Azioni. Negare 6. 6 PM; una creatura visibile entro dieci Q; Magia 0 evita; dieci Round −2 a Prove di Abilità, Caratteristica e PS, non alla PS iniziale di questo stesso lancio. Nessuna nuova PS automatica; maggiore penalità magica, Negare 6. 3 PM; un vivente visibile entro sei Q capace di dormire; Volontà 0 evita; cinque Round +4 alla PS se già cosciente in combattimento o pericolo concreto. Danni e rumori non svegliano; scuotere una AzP per due turni consecutivi, Cura Spirituale 6 o Negare 3. 9 PM; fino a due menti visibili entro 15 Q concatenate entro due; Volontà −2 evita; dieci minuti fissi Emozioni e pensieri spontanei superficiali, non ricordi o verità garantita. Perdere vista o portata termina il singolo legame; Barriera Mentale aiuta, Negare 9. 9 PM; un colpo 4d6+5 Magico Fulmine, una AC, automatico entro quindici Q",
+  "pv": 63,
+  "pm": 30,
+  "caratteristiche": {
+    "FOR": 7,
+    "DES": 7,
+    "COS": 6,
+    "INT": 7,
+    "SAG": 7,
+    "CAR": 7
+  },
+  "ar": {
+    "totale": 3,
+    "magica": 1
+  },
+  "difese": 11,
+  "salvezze": {
+    "tempra": 11,
+    "riflessi": 12,
+    "volonta": 12,
+    "magia": 12
+  },
+  "iniziativa": 2,
+  "azioni": {
+    "principali": 2,
+    "movimento": 1
+  },
+  "movimento": {
+    "passo": 6,
+    "corsa": 12,
+    "scatto": 18
+  },
+  "spazio": "1 × 2 Q",
+  "abilita": [
+    {
+      "nome": "Corpo a corpo",
+      "va": 13
+    },
+    {
+      "nome": "Percezione",
+      "va": 11
+    },
+    {
+      "nome": "Potere",
+      "va": 13
+    },
+    {
+      "nome": "Occultismo",
+      "va": 13
+    },
+    {
+      "nome": "Cultura",
+      "va": 12
+    }
+  ],
+  "capacita": [
+    {
+      "nome": "Incantesimi",
+      "effetto": "VA —. Danno: Scegliere una delle due origini prima dello scontro. Portata/costo: Una AzP salvo eccezione; "
+    },
+    {
+      "nome": "Corpo e sensi",
+      "effetto": "Non morto corporeo autonomo con mente e PM personali; niente bisogni biologici, Affaticamento, Sanguinamento, malattie o veleno. Immune a fascinazione e Paralizzato; non immune a Terrorizzato, Stordito, Svenuto da PM zero o controlli compatibili. Scurovisione dodici Q, nessuna telepatia, Parata naturale o Resistenza alla magia +2. Le Menomazioni limitano struttura, movimento e Morso; A 0 PV il profilo senza Ferite è fuori combattimento secondo il §4.2; morte o distruzione effettiva restano distinte. Non riceve cure biologiche."
+    },
+    {
+      "nome": "Sequenza e veleno residuo",
+      "effetto": "Due AzP totali, massimo un Morso per Round, Opportunità compresa. La tossina necrobiologica conservata è veleno naturale di Pericolosità III, non un danno Etereo: dopo almeno un danno finale di Morso, Tempra 0 dimezza per eccesso 2d6 danni diretti senza AR, fallimento interi. Nessun Avvelenato persistente o risucchio e nessun moltiplicatore del veleno per il Magistrale del Morso. Il profilo produce la propria dose, senza scorte infinite estraibili dalle ossa."
+    },
+    {
+      "nome": "Lancio e origine",
+      "effetto": "Lancio serpentino: nessun Focus o Gesto, voce obbligatoria, riconoscimento e Contromagia ordinari. Potere tredici, pronto tredici al livello sei e undici al nove; PM pagati prima della Prova, senza Concentrazione Operativa, Anticipazione o Contromagia propria. Prima dell’incontro scegliere origine Guardiana oppure Spirituale; non si combinano i due repertori e non si cambiano spendendo una AzP. La scelta non modifica GS o PX, già riferiti al profilo intero."
+    },
+    {
+      "nome": "Legami e recupero",
+      "effetto": "Non possiede Ritorno della Naga. Il suo creatore non è presente come alleato implicito e non ha automaticamente un comando telepatico sul corpo. Negare Potere può rimuovere gli Incantesimi attivi, ma non dissolve il non morto autonomo. Gli effetti di possesso o comando realmente assegnati si trattano separatamente; romperli non guarisce il corpo. Recuperi e riparazioni devono essere compatibili con un non morto corporeo, senza applicare Cura Ferite o Medicina biologica."
+    },
+    {
+      "nome": "Origine Guardiana",
+      "effetto": "Comando sei, Distrazione sei e Maledizione sei. Origine Spirituale: Indurre Sonno tre, Empatia nove e Colpo Elementale nove Fulmine. Scegliere prima dell’incontro; non si combinano. Nessuna cura biologica sul proprio corpo."
+    },
+    {
+      "nome": "Incantesimo",
+      "effetto": "Tabella (celle in ordine di lettura): Parametri pronti | Esito e contromisura | Comando 6 • Magia §19.2 | 6 PM; una mente visibile entro 10 Q, breve frase; Volontà 0."
+    },
+    {
+      "nome": "Distrazione 6 • §19.3",
+      "effetto": "Tabella (celle in ordine di lettura): ."
+    },
+    {
+      "nome": "Maledizione 6 • §23.4",
+      "effetto": "Tabella (celle in ordine di lettura): ."
+    },
+    {
+      "nome": "Indurre Sonno 3 • §18.6",
+      "effetto": "Tabella (celle in ordine di lettura): ."
+    },
+    {
+      "nome": "Empatia 9 • §20.1",
+      "effetto": "Tabella (celle in ordine di lettura): ."
+    },
+    {
+      "nome": "Colpo Elementale 9 • §13.1",
+      "effetto": "Tabella (celle in ordine di lettura): ."
+    },
+    {
+      "nome": "Vista e percorso libero; Parata o Schivata, non Elusione",
+      "effetto": "AR e secondario Fulmine −2 dopo residuo e Isolante, senza effetto tecnologico aggiuntivo."
+    },
+    {
+      "nome": "Altri movimenti",
+      "effetto": "spazio 1 × 2 Q"
+    }
+  ],
+  "gs_px": {
+    "gs": "Eroe",
+    "px": 70,
+    "per_pg": 4
+  },
+  "_bestiario": {
+    "campi": {
+      "pv": "Mostri 0.69",
+      "pm": "Mostri 0.69",
+      "caratteristiche": "Mostri 0.69",
+      "ar": "Mostri 0.69",
+      "difese": "Mostri 0.69",
+      "salvezze": "Mostri 0.69",
+      "iniziativa": "Mostri 0.69",
+      "azioni": "Mostri 0.69",
+      "movimento": "Mostri 0.69",
+      "spazio": "Mostri 0.69",
+      "abilita": "Mostri 0.69",
+      "capacita": "Mostri 0.69",
+      "gs_px": "Mostri 0.69"
+    },
+    "edizione": "Mostri 0.69",
+    "sistema_salute": "solo_PV"
+  }
+}

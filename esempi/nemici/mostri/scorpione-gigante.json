@@ -3,7 +3,7 @@
   "versione": 1,
   "id": "scorpione-gigante",
   "nome": "Scorpione gigante",
-  "fonte": "dal Manuale dei Mostri v0.46 (Word del 27/10/2026), cap. 8 «Catalogo delle creature» — Bestie e predatori",
+  "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Scorpione gigante",
   "caratteristiche": {
     "FOR": 7,
     "DES": 5,
@@ -101,9 +101,26 @@
       "effetto": "Trattenere non dà spostamenti gratuiti. Per trascinare una vittima riluttante spende 1 AzP e l’AzM intera, vince una nuova opposizione della Presa, poi muove al massimo 2 Q al Passo. Una sola vittima alla volta; deve liberare l’altra chela e avere spazio per entrambi. Il fallimento consuma le Azioni senza spostare. Prima di un pericolo letale la vittima effettua la normale PS Riflessi."
     }
   ],
-  "note": "Condotta: cerca contatto e trattiene una preda minacciando gli altri con la coda; sotto 11 PV o a Ferita Seria cerca un riparo.",
+  "note": "Bestia aracnide • predatore corazzato • Natura Comune. Condotta. Cerca contatto e trattiene una preda mentre minaccia gli altri con la coda. Sotto 15 PV tende a cercare un riparo. La gestione del veleno e del trasporto della preda è descritta di seguito.",
   "_bestiario": {
     "edizione": "Mostri 0.69",
-    "sistema_salute": "solo_PV"
-  }
+    "sistema_salute": "solo_PV",
+    "campi": {
+      "pv": "Mostri 0.69",
+      "pm": "Mostri 0.69",
+      "caratteristiche": "Mostri 0.69",
+      "ar": "Mostri 0.69",
+      "difese": "Mostri 0.69",
+      "salvezze": "Mostri 0.69",
+      "iniziativa": "Mostri 0.69",
+      "azioni": "Mostri 0.69",
+      "movimento": "Mostri 0.69",
+      "spazio": "Mostri 0.69",
+      "abilita": "Mostri 0.69",
+      "attacchi": "Mostri 0.47",
+      "capacita": "Mostri 0.47",
+      "gs_px": "Mostri 0.69"
+    }
+  },
+  "taglia": "grande"
 }

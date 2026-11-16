@@ -1,0 +1,141 @@
+{
+  "formato": "mutant-nemico",
+  "versione": 1,
+  "id": "miconide-sovrano",
+  "nome": "Miconide sovrano",
+  "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Miconide sovrano",
+  "taglia": "grande",
+  "note": "Grande Miconide che guida un circolo attraverso le spore di rapporto. Protegge la comunità con secrezioni pacificanti o allucinogene e mantiene le sensibilità biologiche dei Miconidi già descritti.",
+  "pv": 63,
+  "pm": 12,
+  "caratteristiche": {
+    "FOR": 6,
+    "DES": 5,
+    "COS": 7,
+    "INT": 7,
+    "SAG": 8,
+    "CAR": 5
+  },
+  "ar": {
+    "totale": 2,
+    "magica": 0
+  },
+  "difese": 10,
+  "salvezze": {
+    "tempra": 12,
+    "riflessi": 9,
+    "volonta": 12,
+    "magia": 12
+  },
+  "iniziativa": 0,
+  "azioni": {
+    "principali": 2,
+    "movimento": 1
+  },
+  "movimento": {
+    "passo": 6,
+    "corsa": 12,
+    "scatto": 18
+  },
+  "spazio": "2 × 2 Q",
+  "abilita": [
+    {
+      "nome": "Corpo a corpo",
+      "va": 12
+    },
+    {
+      "nome": "Atletica",
+      "va": 10
+    },
+    {
+      "nome": "Percezione",
+      "va": 13
+    },
+    {
+      "nome": "Sopravvivenza",
+      "va": 14
+    },
+    {
+      "nome": "Medicina",
+      "va": 12
+    },
+    {
+      "nome": "Cultura",
+      "va": 12
+    }
+  ],
+  "capacita": [
+    {
+      "nome": "Spore pacificanti",
+      "effetto": "VA —. Danno: Stordito tre Round; Tempra −2 evita. Portata/costo: Un organismo entro 1 Q; 1 AzP; "
+    },
+    {
+      "nome": "Spore allucinogene",
+      "effetto": "VA —. Danno: Avvelenato e Stordito tre Round; Tempra 0 evita. Portata/costo: Un organismo entro 1 Q; 1 AzP; "
+    },
+    {
+      "nome": "Spore di rapporto",
+      "effetto": "VA —. Danno: Comunicazione consensuale, un’ora. Portata/costo: Raggio iniziale 6 Q; 1 AzP; "
+    },
+    {
+      "nome": "Corpo e sensi",
+      "effetto": "Vivente fungino biologico con mente e PM personali, Scurovisione 24 Q. Nessuna immunità generale a veleno, sonno o effetti mentali e nessuna Parata naturale. I poteri di spore sono biologici, senza PM, Potere o componenti; non sono fermati con Contromagia o dissolti con Negare Potere. Si applicano le Spore di allarme e la sensibilità solare comuni dei Miconidi. Iniziativa soltanto 1d10; la SAG elevata non riceve qui una sostituzione istintiva."
+    },
+    {
+      "nome": "Azioni e pugno",
+      "effetto": "Due AzP totali, massimo un Pugno e una emissione offensiva di spore per Round, Opportunità compresa soltanto nel Pugno. Spore di rapporto, Difese o altre azioni usano le AzP rimaste. Dopo almeno un danno finale di Pugno a chi respira le secrezioni: Tempra 0 evita Avvelenato un Round, −2 alle Abilità fisiche ma non alle PS. Veleno naturale di Pericolosità II, senza danno periodico; Cura Avvelenamenti due o antidoto adatto neutralizzano. Non aggiunge gratuitamente Pacificazione o Allucinazioni."
+    },
+    {
+      "nome": "Pacificazione",
+      "effetto": "Tre usi per ventiquattro ore, una AzP, un vivente biologico visibile entro un Q che respiri la nube diretta, con percorso libero. Tempra −2 evita, fallimento Stordito tre Round, nuova Tempra −2 a fine di ogni propria Iniziativa termina. È veleno naturale di Pericolosità III, senza danno; immunità al veleno o a Stordito impedisce l’effetto. Cura Avvelenamenti almeno tre o antidoto adatto rimuovono; Cura Spirituale da sola non elimina la secrezione che lo mantiene. Non somma Stati o penalità con dosi precedenti."
+    },
+    {
+      "nome": "Allucinazioni",
+      "effetto": "Una AzP, massimo una emissione offensiva insieme alla Pacificazione nel Round; un vivente biologico visibile entro un Q che respiri la nube. Tempra 0 evita, fallimento Avvelenato e Stordito per tre Round; nuova Tempra 0 a fine di ogni propria Iniziativa elimina dose e relativi Stati con successo. Veleno naturale III, nessun danno o obbedienza imposta: l’allucinazione non consegna ricordi o informazioni al sovrano. Immunità al veleno, filtri idonei o respirazione isolata impediscono; Cura Avvelenamenti tre o antidoto adatto neutralizzano. Le spore non attraversano pareti o protezioni ermetiche."
+    },
+    {
+      "nome": "Rapporto",
+      "effetto": "Una AzP, senza PM o limite giornaliero, raggio iniziale sei Q attraverso aria comunicante. Creature biologiche dotate di mente possono accettare o rifiutare senza PS; non morti, costrutti ed elementali non sono compatibili. Per un’ora gli aderenti alla stessa emissione scambiano soltanto pensieri intenzionalmente formulati entro sei Q l’uno dall’altro, anche oltre una parete dopo il collegamento. Niente lettura involontaria, sensi condivisi, posizione automatica o azioni nuove. Fuori portata la comunicazione è sospesa; ciascuno può chiudere il proprio legame gratuitamente alla propria Iniziativa. Si applicano le altre regole delle Spore di rapporto già approvate."
+    },
+    {
+      "nome": "Allarme",
+      "effetto": "Dopo almeno un danno ai PV, se cosciente, emette automaticamente l’allarme biologico al massimo una volta per Round: altri Miconidi entro 48 Q e lungo aria comunicante percepiscono pericolo e direzione approssimativa. Separazioni ermetiche bloccano. Non trasmette mappe, nomi, vista attraverso muri o un turno gratuito e non costringe gli altri membri a combattere."
+    },
+    {
+      "nome": "Sole",
+      "effetto": "Sole diretto: −2 a tutte le Abilità e PS, fino a schermatura effettiva. Ogni dieci minuti continuativi, Tempra 0 con il −2 solare: fallimento un AFT. Dal sessantesimo minuto ogni verifica infligge anche 1d6 Naturale interno senza AR, qualunque sia l’esito; nessuna morte automatica. Un minuto continuativo d’ombra azzera soltanto il conteggio di esposizione. Luce artificiale e Luce Mistica non sono sole, PV e conseguenze già subite restano."
+    },
+    {
+      "nome": "Profilo e servitori",
+      "effetto": "Questo profilo comprende il sovrano senza servitori o capacità di animazione dei cadaveri. Le Spore animanti della fonte richiedono la variante con l’archetipo Servitore delle spore e non si aggiungono gratuitamente a questi 30 PX. La condivisione del circolo non è una possessione della mente del sovrano: il gruppo può scegliere trattativa, riparo o ritirata. Il corpo fungino usa le localizzazioni funzionali umanoidi, senza riserve di PV per ogni porzione del cappello."
+    },
+    {
+      "nome": "Altri movimenti",
+      "effetto": "spazio 2 × 2 Q"
+    }
+  ],
+  "gs_px": {
+    "gs": "Esperto",
+    "px": 30,
+    "per_pg": 4
+  },
+  "_bestiario": {
+    "campi": {
+      "pv": "Mostri 0.69",
+      "pm": "Mostri 0.69",
+      "caratteristiche": "Mostri 0.69",
+      "ar": "Mostri 0.69",
+      "difese": "Mostri 0.69",
+      "salvezze": "Mostri 0.69",
+      "iniziativa": "Mostri 0.69",
+      "azioni": "Mostri 0.69",
+      "movimento": "Mostri 0.69",
+      "spazio": "Mostri 0.69",
+      "abilita": "Mostri 0.69",
+      "capacita": "Mostri 0.69",
+      "gs_px": "Mostri 0.69"
+    },
+    "edizione": "Mostri 0.69",
+    "sistema_salute": "solo_PV"
+  }
+}

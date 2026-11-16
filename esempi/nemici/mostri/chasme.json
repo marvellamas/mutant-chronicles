@@ -1,0 +1,118 @@
+{
+  "formato": "mutant-nemico",
+  "versione": 1,
+  "id": "chasme",
+  "nome": "Chasme",
+  "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Chasme",
+  "taglia": "grande",
+  "note": "Grande insettoide volante dalla lunga proboscide. Il suo ronzio induce un torpore mistico e prepara un attacco che indebolisce temporaneamente la vitalità.",
+  "pv": 84,
+  "pm": 24,
+  "caratteristiche": {
+    "FOR": 7,
+    "DES": 7,
+    "COS": 6,
+    "INT": 5,
+    "SAG": 7,
+    "CAR": 5
+  },
+  "ar": {
+    "totale": 3,
+    "magica": 0
+  },
+  "difese": 12,
+  "salvezze": {
+    "tempra": 11,
+    "riflessi": 13,
+    "volonta": 11,
+    "magia": 13
+  },
+  "iniziativa": 2,
+  "azioni": {
+    "principali": 2,
+    "movimento": 1
+  },
+  "movimento": {
+    "passo": 4,
+    "corsa": 8,
+    "scatto": 12,
+    "volo": 12
+  },
+  "spazio": "2 × 2 Q",
+  "abilita": [
+    {
+      "nome": "Corpo a corpo",
+      "va": 14
+    },
+    {
+      "nome": "Atletica",
+      "va": 11
+    },
+    {
+      "nome": "Percezione",
+      "va": 13
+    },
+    {
+      "nome": "Furtività",
+      "va": 10
+    }
+  ],
+  "capacita": [
+    {
+      "nome": "Ronzio soporifero",
+      "effetto": "VA —. Danno: Svenuto; Tempra 0. Portata/costo: Raggio 6 Q; 1 AzP e 2 PM; "
+    },
+    {
+      "nome": "Corpo e sensi",
+      "effetto": "Resistenze corporee comuni, immunità a veleno e Avvelenato, Resistenza alla magia +2 non inclusa nelle PS. Scurovisione 24 Q e percezione cieca due Q fermata dai solidi. Nessuna Parata naturale; massimo una Proboscide per Round, Opportunità compresa. Telepatia entro 24 Q."
+    },
+    {
+      "nome": "Attivare il ronzio",
+      "effetto": "Una AzP e due PM: per tre Round senza Concentrazione emette un suono udibile entro sei Q, secondo ostacoli e isolamento acustico. Una sola emissione attiva; può cessarla gratis alla propria Iniziativa. Termina da Svenuto o morto, oppure sopprimendola sul Chasme con Negare Potere, confronto 6. I dieci demoni di questo blocco sono immuni al solo Ronzio e al Grido del Vrock, come precisato nelle regole condivise."
+    },
+    {
+      "nome": "Torpore e risveglio",
+      "effetto": "Chi inizia la propria Iniziativa nell’area e sente il Ronzio effettua Tempra 0: fallimento Svenuto per tre Round; successo evita. Dopo resistenza o risveglio è immune al Ronzio di questo Chasme per 24 ore. Assordato o isolamento che impedisca realmente di udirlo evita l’esposizione. Danno finale positivo risveglia immediatamente da questo solo torpore, come eccezione esplicita della capacità; anche un aiutante a Contatto con una AzP, Cura Spirituale almeno sei o Negare Potere sul dormiente, confronto 6. Altre cause di Svenuto rimangono. Barriera Mentale non migliora questa Tempra."
+    },
+    {
+      "nome": "Indebolimento vitale",
+      "effetto": "Dopo almeno un danno finale di Proboscide a un vivente con PV massimi ordinari: Tempra −2. Fallimento riduce di due il massimo dei PV per un’ora dall’ultima applicazione fallita, fino a una riduzione complessiva di sei da questa capacità, anche con più Chasme, senza abbassare il massimo sotto uno. I PV attuali eccedenti il nuovo massimo si perdono senza una seconda applicazione di danno o Ferite. Non sottrae PM, COS o il contatore di Morente."
+    },
+    {
+      "nome": "Ripristino",
+      "effetto": "Negare Potere rimuove l’intera riduzione della capacità da una vittima, confronto 9. Scadenza o rimozione restituiscono il massimo ma non i PV mancanti; cure ordinarie rispettano il tetto finché dura. Non è un veleno o una malattia, e immunità a questi non protegge. Il Ronzio e l’Indebolimento sono effetti distinti, da trattare separatamente. Nessun danno necrotico aggiuntivo oltre al danno completo della Proboscide."
+    },
+    {
+      "nome": "Anatomia e volo",
+      "effetto": "Testa comprende sensi, apparato sonoro e proboscide; Braccia le appendici anteriori, Gambe gli arti d’appoggio. Il gruppo alare è annotato nel Torace per gli impedimenti al volo. Se perde il sostegno o sviene in aria cade; più zampe non annullano una Menomazione. Zero PV non lo disgrega o lo rende automaticamente incapace di ronzare."
+    },
+    {
+      "nome": "Altri movimenti",
+      "effetto": "arrampicata 4 Q al Passo anche capovolto; spazio 2 × 2 Q"
+    }
+  ],
+  "gs_px": {
+    "gs": "Leggenda",
+    "px": 100,
+    "per_pg": 4
+  },
+  "_bestiario": {
+    "campi": {
+      "pv": "Mostri 0.69",
+      "pm": "Mostri 0.69",
+      "caratteristiche": "Mostri 0.69",
+      "ar": "Mostri 0.69",
+      "difese": "Mostri 0.69",
+      "salvezze": "Mostri 0.69",
+      "iniziativa": "Mostri 0.69",
+      "azioni": "Mostri 0.69",
+      "movimento": "Mostri 0.69",
+      "spazio": "Mostri 0.69",
+      "abilita": "Mostri 0.69",
+      "capacita": "Mostri 0.69",
+      "gs_px": "Mostri 0.69"
+    },
+    "edizione": "Mostri 0.69",
+    "sistema_salute": "solo_PV"
+  }
+}

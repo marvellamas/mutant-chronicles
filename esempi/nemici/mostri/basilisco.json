@@ -3,7 +3,7 @@
   "versione": 1,
   "id": "basilisco",
   "nome": "Basilisco",
-  "fonte": "dal Manuale dei Mostri v0.46 (Word del 27/10/2026), cap. 8 «Catalogo delle creature» — prime quindici schede",
+  "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Basilisco",
   "caratteristiche": {
     "FOR": 7,
     "DES": 4,
@@ -88,9 +88,25 @@
       "effetto": "Vede entro 12 Q nel buio naturale, senza colori; non attraversa ostacoli né individua da sola chi è nascosto."
     }
   ],
-  "note": "AR 3 naturale. Non è immune al proprio sguardo riflesso. Nessuna Parata naturale. Otto zampe (Braccia = gruppo anteriore, Gambe = posteriore). Nome originale: Basilisk, p. 24. Comportamento: preferisce incontrare lo sguardo di un intruso e attendere che rallenti; a Ferita Seria cerca riparo.",
+  "note": "Bestia soprannaturale • Natura Comune • controllore a corto raggio. Protezioni specifiche: Nessuna immunità o Contromisura; non è immune al proprio sguardo riflesso. Comportamento. Preferisce incontrare lo sguardo di un intruso e attendere che rallenti. Se non trova un bersaglio valido per lo sguardo, morde o protegge la tana. se gravemente minacciato cerca riparo. Mangia la preda pietrificata; questo comportamento non genera attacchi gratuiti contro chi sta ancora resistendo.",
   "_bestiario": {
     "edizione": "Mostri 0.69",
-    "sistema_salute": "solo_PV"
+    "sistema_salute": "solo_PV",
+    "campi": {
+      "pv": "Mostri 0.69",
+      "pm": "Mostri 0.69",
+      "caratteristiche": "Mostri 0.69",
+      "ar": "Mostri 0.69",
+      "difese": "Mostri 0.69",
+      "salvezze": "Mostri 0.69",
+      "iniziativa": "Mostri 0.69",
+      "azioni": "Mostri 0.69",
+      "movimento": "Mostri 0.69",
+      "spazio": "Mostri 0.69",
+      "abilita": "Mostri 0.47",
+      "attacchi": "Mostri 0.47",
+      "capacita": "Mostri 0.47",
+      "gs_px": "Mostri 0.69"
+    }
   }
 }

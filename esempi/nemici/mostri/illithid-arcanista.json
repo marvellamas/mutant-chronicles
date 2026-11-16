@@ -1,0 +1,160 @@
+{
+  "formato": "mutant-nemico",
+  "versione": 1,
+  "id": "illithid-arcanista",
+  "nome": "Illithid arcanista",
+  "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Illithid arcanista",
+  "note": "Illithid che integra i poteri psionici della specie con Incantesimi appresi. La doppia competenza amplia le scelte ma conserva una sola riserva di PM e un unico totale di Azioni.",
+  "pv": 63,
+  "pm": 60,
+  "caratteristiche": {
+    "FOR": 5,
+    "DES": 6,
+    "COS": 6,
+    "INT": 9,
+    "SAG": 8,
+    "CAR": 8
+  },
+  "ar": {
+    "totale": 3,
+    "magica": 0
+  },
+  "difese": 12,
+  "salvezze": {
+    "tempra": 11,
+    "riflessi": 11,
+    "volonta": 14,
+    "magia": 15
+  },
+  "iniziativa": 1,
+  "azioni": {
+    "principali": 2,
+    "movimento": 1
+  },
+  "movimento": {
+    "passo": 6,
+    "corsa": 12,
+    "scatto": 18
+  },
+  "spazio": "1 Q",
+  "abilita": [
+    {
+      "nome": "Corpo a corpo",
+      "va": 14
+    },
+    {
+      "nome": "Armi da lancio",
+      "va": 12
+    },
+    {
+      "nome": "Potere",
+      "va": 16
+    },
+    {
+      "nome": "Occultismo",
+      "va": 16
+    },
+    {
+      "nome": "Percezione",
+      "va": 14
+    },
+    {
+      "nome": "Oratoria",
+      "va": 14
+    },
+    {
+      "nome": "Raggirare",
+      "va": 14
+    },
+    {
+      "nome": "Furtività",
+      "va": 12
+    }
+  ],
+  "capacita": [
+    {
+      "nome": "Onda mentale",
+      "effetto": "VA —. Danno: 2d6+3 psichici diretti; Volontà −2. Portata/costo: Cono 12 × 6 Q; 2 AzP e 5 PM; R+3; "
+    },
+    {
+      "nome": "Corpo e sensi",
+      "effetto": "Vivente biologico con mente e PM personali; Scurovisione 24 Q e telepatia bidirezionale con una mente individuata entro 24 Q, senza lettura automatica dei pensieri. Resistenza mistica +2 alle PS già previste contro effetti magici, non inclusa nei valori. Nessuna Parata naturale. La corazza è quella del profilo Illithid: AR due, PI sei e PS Integrità dieci, senza aggiungere una penalità di armatura non prevista da quel modello."
+    },
+    {
+      "nome": "Tentacoli e presa",
+      "effetto": "Due AzP totali. Può sostituire il danno dei Tentacoli con una presa dichiarata contro un umanoide fino a un Q, Corpo a corpo quattordici e procedura comune. Una vittima. Dopo una presa vinta, due PM e Volontà −2 del prigioniero o Stordito un Round, massimo una pressione sullo stesso corpo per Round. Barriera Mentale aiuta questa PS senza immunità; liberare la presa termina soltanto lo Stordito dovuto a essa. Opportunità soltanto per un attacco ravvicinato compatibile, mai Onda o Incantesimi."
+    },
+    {
+      "nome": "Onda mentale",
+      "effetto": "Due AzP e cinque PM, riutilizzabile all’Iniziativa R+3 dopo l’uso in R. Cono lungo dodici Q e largo sei, solidi bloccano, menti raggiunte anche alleate. Volontà −2 dimezza 2d6+3 danni psichici diretti; fallimento anche Stordito tre Round, nuova Volontà −2 a fine Iniziativa libera. Equivale a Dardo Psichico: Barriera Mentale blocca tutto, niente AR, PV temporanei, Ferite o risucchio di PM. A zero PV seconda Volontà −2 evita Svenuto 1+1d4 Round. Negare nove termina Stordito, non i danni."
+    },
+    {
+      "nome": "Lacerazione e recupero",
+      "effetto": "Due AzP per un solo attacco contro un umanoide già Svenuto e trattenuto, capo accessibile; normali AR, PV, Tempra e Ferite. Non estrae automaticamente il cervello a zero PV. Un alleato può liberare la presa con le normali Azioni. Nutrimento su un cervello effettivamente morto richiede un minuto, senza recuperi istantanei o memoria completa. Corazza e Focus non duplicano la riserva."
+    },
+    {
+      "nome": "Poteri ereditati",
+      "effetto": "Conserva Lettura superficiale, Levitazione e Soggezione dell’Illithid, con gli stessi costi, durate, PS e contromisure descritti nella pagina successiva. Non ottiene il trasferimento planare della fonte: le sue opzioni di spostamento sono quelle espressamente elencate. Sotto 16 PV può cercare una via di fuga."
+    },
+    {
+      "nome": "Lettura superficiale",
+      "effetto": "Una AzP e due PM, vivente visibile entro sei Q, Magia −2 evita; fallimento rivela un solo pensiero attualmente cosciente, non archivi di ricordi. Barriera Mentale aggiunge il bonus. Lettura, Levitazione e Soggezione sono capacità innate senza Potere, componenti o Contromagia, come nel profilo base."
+    },
+    {
+      "nome": "Levitazione",
+      "effetto": "Una AzP e tre PM, cinque Round fissi; sé e dotazione, fino a quattro Q al Passo con la propria AzM, anche verticalmente. Non attraversa solidi o scioglie prese. Negare sei, Svenuto, morte o scadenza terminano e senza sostegno si applica Caduta."
+    },
+    {
+      "nome": "Soggezione",
+      "effetto": "Una AzP e quattro PM, umanoide visibile entro sei Q, Volontà −2 evita; fallimento cinque Round senza Concentrazione. Un solo soggiogato, che usa soltanto le proprie Azioni residue alla sua Iniziativa. Ordine semplice alla propria Iniziativa senza AzP, niente autolesionismo o violazione di principi profondi. Prima fonte di danno di ogni Round nuova Volontà −2; resistere o liberarsi concede immunità a quell’Illithid per ventiquattro ore. Barriera Mentale aiuta, Negare nove rimuove, Svenuto o morte dell’Illithid terminano. Non è Possessione e non trasferisce talenti o PM."
+    },
+    {
+      "nome": "Repertorio appreso",
+      "effetto": "Scala Taumaturgo, Potere sedici e versioni fino al nove: Colpo Elementale, Armatura di Forza, Scudo, Indurre Sonno, Alterare Immagine, Mimetismo, Catene di Forza, Velo Psichico, Telecinesi, Barriera di Forza, Telepatia e Individuare. Focus indossato, Gesto e Invocazione; i tentacoli usati per la presa non eliminano da soli la necessità di una mano per il Gesto. Incantesimi contrastabili con Contromagia e Negare nei propri limiti. Non possiede i Talenti della Classe Arcanista soltanto per questo nome."
+    },
+    {
+      "nome": "Attacco elettrico",
+      "effetto": "Colpo Elementale Fulmine nove: una AzP e nove PM, Potere quattordici, una vittima visibile entro quindici Q; un colpo automatico dopo il lancio, 4d6+7 Magico, una AC. SAG +2 già inclusa; Parata o Schivata a distanza, nessuna PS per dimezzare il danno. Dopo residuo e Isolante, Tempra −2 evita Disorientato 1+1d3 Round; Maldestro anche Stordito un Round."
+    },
+    {
+      "nome": "Barriera e protezione",
+      "effetto": "Barriera di Forza nove: una AzP e nove PM, Potere quattordici, parete rettilinea a terra entro quindici Q, lunga fino a otto Q e alta due, cinque minuti. Segmenti da un Q con cento PV ciascuno, AR zero, nessuna AC o Ferita. Blocca corpi e armi; gli Incantesimi la attraversano con Potere −2, tranne le eccezioni della Magia §17.5. La sola Natura Eterea di un’arma non la supera. Armatura di Forza sei: una AzP e sei PM, Potere sedici, +3 AR Magica per venti Round a un consenziente entro tre Q."
+    },
+    {
+      "nome": "Telecinesi",
+      "effetto": "Telecinesi nove: una AzP e nove PM, Potere quattordici, oggetto visibile entro quindici Q fino a dieci kg per dieci minuti fissi. Prima manipolazione inclusa; successive una AzP, fino a sei Q di movimento per uso e percorso libero. Tempra −2 del possessore può conservare un oggetto trattenuto; non strappa impianti o solleva creature. Attacco con Armi da lancio quattordici già comprensivo del +2 della magia, 1d6+2 Naturale, una AC e normali Difese a distanza. Non usa il danno di un’arma remota o altri bonus personali."
+    },
+    {
+      "nome": "Occultamento",
+      "effetto": "Mimetismo nove fisso: una AzP e nove PM, Potere quattordici, cinque minuti, un beneficiario entro tre Q e una sola Azione ammessa oltre al Movimento nell’intera durata. L’Azione successiva si risolve e termina il proprio effetto. Percezione −2 per la distorsione in movimento; non nasconde rumori o pensieri. Indurre Sonno, Velo Psichico e gli altri Incantesimi usano le proprie schede complete. Senza Concentrazione Operativa, mantenere un effetto a Concentrazione lascia solo Passo fino a sei Q, senza AzP."
+    },
+    {
+      "nome": "Altri movimenti",
+      "effetto": "spazio 1 × 1 Q"
+    }
+  ],
+  "gs_px": {
+    "gs": "Mito",
+    "px": 220,
+    "per_pg": 4
+  },
+  "_bestiario": {
+    "campi": {
+      "pv": "Mostri 0.69",
+      "pm": "Mostri 0.69",
+      "caratteristiche": "Mostri 0.69",
+      "ar": "Mostri 0.69",
+      "difese": "Mostri 0.69",
+      "salvezze": "Mostri 0.69",
+      "iniziativa": "Mostri 0.69",
+      "azioni": "Mostri 0.69",
+      "movimento": "Mostri 0.69",
+      "spazio": "Mostri 0.69",
+      "abilita": "Mostri 0.69",
+      "capacita": "Mostri 0.69",
+      "gs_px": "Mostri 0.69"
+    },
+    "edizione": "Mostri 0.69",
+    "sistema_salute": "solo_PV"
+  }
+}

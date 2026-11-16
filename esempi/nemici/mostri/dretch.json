@@ -1,0 +1,112 @@
+{
+  "formato": "mutant-nemico",
+  "versione": 1,
+  "id": "dretch",
+  "nome": "Dretch",
+  "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Dretch",
+  "note": "Demone minuto che combatte con morso e artigli e rilascia una nube irritante per intralciare chi gli si avvicina. Può cooperare con altri esemplari senza ricevere attacchi aggiuntivi dal loro numero.",
+  "pv": 24,
+  "pm": 6,
+  "caratteristiche": {
+    "FOR": 5,
+    "DES": 5,
+    "COS": 6,
+    "INT": 2,
+    "SAG": 4,
+    "CAR": 1
+  },
+  "ar": {
+    "totale": 1,
+    "magica": 0
+  },
+  "difese": 9,
+  "salvezze": {
+    "tempra": 10,
+    "riflessi": 9,
+    "volonta": 7,
+    "magia": 9
+  },
+  "iniziativa": 0,
+  "azioni": {
+    "principali": 2,
+    "movimento": 1
+  },
+  "movimento": {
+    "passo": 4,
+    "corsa": 8,
+    "scatto": 12
+  },
+  "spazio": "1 Q",
+  "abilita": [
+    {
+      "nome": "Corpo a corpo",
+      "va": 10
+    },
+    {
+      "nome": "Atletica",
+      "va": 9
+    },
+    {
+      "nome": "Percezione",
+      "va": 8
+    },
+    {
+      "nome": "Furtività",
+      "va": 8
+    }
+  ],
+  "capacita": [
+    {
+      "nome": "Nube fetida",
+      "effetto": "VA —. Danno: Irritazione da veleno; Tempra 0. Portata/costo: Raggio 2 Q; 1 AzP; "
+    },
+    {
+      "nome": "Corpo e sensi",
+      "effetto": "Resistenze corporee comuni, immunità a veleno e Avvelenato, Scurovisione 12 Q. Non ha Parata naturale o bonus +2 contro magia. Massimo un Morso e un attacco di Artigli per Round, Opportunità compresa; la Nube occupa una delle due AzP."
+    },
+    {
+      "nome": "Emettere la nube",
+      "effetto": "Una AzP, nessun PM, una volta per 24 ore: nube fissa di raggio due Q centrata sulla posizione attuale, per cinque Round. Si propaga lungo passaggi aperti intorno agli angoli, senza attraversare solidi o riempire ambienti sigillati. Vento forte adeguato la disperde. Non si sposta con il Dretch e non procura danni immediati ai PV."
+    },
+    {
+      "nome": "Esposizione",
+      "effetto": "Veleno naturale di Pericolosità II per inalazione. Alla creazione, e poi all’inizio della propria Iniziativa se immersa nella nube, ogni creatura che respira effettua Tempra 0; massimo una esposizione per Round per questa nube. Successo evita, fallimento Avvelenato fino alla fine della propria Iniziativa successiva: −2 VA alle Prove di Abilità e impossibilità di spendere Azioni fuori dalla propria Iniziativa. Le PS non sono penalizzate; non perde le AzP del proprio turno o la propria AzM."
+    },
+    {
+      "nome": "Contromisure",
+      "effetto": "Respirazione sigillata e operativa o immunità al veleno impediscono l’effetto. Uscire dalla nube evita nuove esposizioni, ma la penalità già acquisita segue la sua scadenza. Antidoto adeguato o Cura Avvelenamenti almeno due rimuovono la sostanza, senza conferire immunità a un nuovo ingresso. Non è un effetto da annullare con Negare Potere. Più esposizioni conservano la scadenza maggiore senza sommare penalità."
+    },
+    {
+      "nome": "Comunicazione e condotta",
+      "effetto": "Comprende la lingua della comunità e produce richiami semplici. Telepatia entro 12 Q soltanto con chi conosce quella lingua; nessuna lettura mentale o controllo. Ha PM personali ma nessun repertorio di Incantesimi. Cerca di lasciare la nube tra sé e l’inseguitore, senza ricevere una fuga o uno spostamento gratuito."
+    },
+    {
+      "nome": "Altri movimenti",
+      "effetto": "spazio 1 × 1 Q"
+    }
+  ],
+  "gs_px": {
+    "gs": "Inesperto",
+    "px": 20,
+    "per_pg": 4
+  },
+  "_bestiario": {
+    "campi": {
+      "pv": "Mostri 0.69",
+      "pm": "Mostri 0.69",
+      "caratteristiche": "Mostri 0.69",
+      "ar": "Mostri 0.69",
+      "difese": "Mostri 0.69",
+      "salvezze": "Mostri 0.69",
+      "iniziativa": "Mostri 0.69",
+      "azioni": "Mostri 0.69",
+      "movimento": "Mostri 0.69",
+      "spazio": "Mostri 0.69",
+      "abilita": "Mostri 0.69",
+      "capacita": "Mostri 0.69",
+      "gs_px": "Mostri 0.69"
+    },
+    "edizione": "Mostri 0.69",
+    "sistema_salute": "solo_PV"
+  }
+}
