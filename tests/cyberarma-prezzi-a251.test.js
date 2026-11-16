@@ -60,29 +60,36 @@ test('A.251: le due conversioni sono alternative e non si cumulano', () => {
   assert.match(a.errori[0], /non si cumulano/);
 });
 
-test('A.251: i consumi si contano in colpi — 1 CM + 1 AzP ogni 10 colpi, 1 carica ogni 10 colpi', () => {
+// **A.260 (Davide, 15/11/2026) supera la A.251 su questo punto.** La A.251 del 06/11 misurava il consumo delle
+// conversioni «ogni 10 colpi» e questo test lo pretendeva; gli Armamenti 0.83, pubblicati dopo, dicevano 10 Round
+// «indipendentemente dal numero di attacchi», e la A.260 ha confermato il manuale. Il resto della A.251 (quali
+// modifiche toccano l'alimentazione, che cosa si perde, che non si cumulano) resta valido e resta provato qui.
+test('A.260: i consumi si contano in Round — 1 CM + 1 AzP per 10 Round, 1 carica per 10 Round', () => {
   const cm = consumoAlimentazione('riserva_cm', dati);
   assert.equal(cm.cm, 1);
-  assert.equal(cm.ogni_colpi, 10);
+  assert.equal(cm.round, 10);
+  assert.equal(cm.ogni_colpi, undefined, 'il conteggio a colpi è superato: il campo non esiste più');
+  assert.equal(cm.indipendente_dagli_attacchi, true);
   assert.equal(cm.azione, '1 AzP');
-  assert.match(cm.testo, /1 CM \+ 1 AzP ogni 10 colpi/);
+  assert.match(cm.testo, /1 CM \+ 1 AzP · 10 Round/);
   const nec = consumoAlimentazione('nec', dati);
   assert.equal(nec.cariche, 1);
   assert.equal(nec.colore, 'Rosso');
-  assert.equal(nec.ogni_colpi, 10);
-  assert.match(nec.testo, /ogni 10 colpi/);
+  assert.equal(nec.round, 10);
+  assert.equal(nec.ogni_colpi, undefined);
+  assert.match(nec.testo, /10 Round/);
   // niente consumo per cristallo e SIN: non cambiano l'alimentazione
   assert.equal(consumoAlimentazione('cristallo', dati), null);
 });
 
-test('A.251: nella scheda la sintesi dice i colpi, non i Round', () => {
+test('A.260: nella scheda la sintesi dice i Round, e dei colpi non resta traccia', () => {
   const scheda = { classi: [{ nome: 'Tecnomante', grado: 3 }] };
   const t = testoAttivazione(arma('cyberarma-batteria-verde'), scheda, {}, 'u1');
-  assert.equal(t.ogniColpi, 10);
-  assert.equal(t.sintesi, '1 CM · 10 colpi');
-  // l'originale, senza conversione, resta a Round
+  assert.equal(t.sintesi, '1 CM · 10 Round');
+  assert.equal(t.indipendenteDagliAttacchi, true);
+  assert.equal('ogniColpi' in t, false, 'nessun campo dei colpi esce più da testoAttivazione');
+  // l'originale, senza conversione, era già a Round e non cambia
   const o = testoAttivazione(arma('cyberarma'), scheda, {}, 'u1');
-  assert.equal(o.ogniColpi, null);
   assert.match(o.sintesi, /Round$/);
 });
 
@@ -161,7 +168,7 @@ test('A.251: l’arma consegnata con una conversione ha il profilo della convers
   // il riepilogo porta la scelta e il suo consumo
   const rp = riepilogoProgetto(l.find((p) => p.id === id), dati);
   assert.equal(rp.alimentazione.id, 'nec');
-  assert.match(rp.alimentazione.consumo.testo, /ogni 10 colpi/);
+  assert.match(rp.alimentazione.consumo.testo, /10 Round/); // A.260
 });
 
 test('A.251: senza scelta l’arma consegnata resta a PM personali, come il progetto base', () => {

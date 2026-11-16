@@ -56,7 +56,7 @@ test('uso per Classe: i numeri stanno nei dati, non nel codice', () => {
   assert.deepEqual([tecno.pm, tecno.round, tecno.va], [2, 10, 0]);
   const altre = usoPerClasse(o, ['Agente']);
   assert.equal(altre.ammesso, false, 'il modello originale non si usa senza batteria');
-  // Armamenti 0.74: le altre Classi solo con la conversione a NeC (1 carica; A.251 del 06/11: ogni 10 colpi)
+  // Armamenti 0.74: le altre Classi solo con la conversione a NeC (1 carica; A.260 del 15/11: per 10 Round)
   assert.equal(usoPerClasse(b, ['Agente']).ammesso, false);
   const altreN = usoPerClasse(r('armi:cyberarma-nec'), ['Agente']);
   assert.deepEqual([altreN.ammesso, altreN.nec, altreN.round, altreN.va], [undefined, 1, 10, 0]);
@@ -73,8 +73,9 @@ test('«Attacca!»: l’arma attiva mostra costo, durata e Round che restano', (
   const sessione = { ...inizializzaSessione(massimiSessione(scheda, MISHIMA_AGENTE, dati)), round: 3 };
   const prima = testoAttivazione(b, scheda, sessione, 'c1');
   assert.deepEqual([prima.attiva, prima.costo, prima.round, prima.va], [false, '1 carica NEC', 10, 0]);
-  // A.251 (Davide, 06/11/2026; lotto 181): il consumo delle conversioni si conta in colpi, non in Round
-  assert.equal(prima.sintesi, '1 carica NEC · 10 colpi');
+  // A.260 (Davide, 15/11/2026; lotto 206): il consumo delle conversioni si conta in **Round**, non in colpi —
+  // supera la A.251 del 06/11, che diceva «ogni 10 colpi», e conferma gli Armamenti 0.83
+  assert.equal(prima.sintesi, '1 carica NEC · 10 Round');
   // attivata al Round 3: al Round 3 restano 10 Round, al Round 12 ne resta 1, al 13 è finita
   const attiva = { ...sessione, attivazioniArmi: { c1: { dal: 3, round: 10 } } };
   assert.equal(statoAttivazioneArma(attiva, 'c1').rimasti, 10);

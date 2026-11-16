@@ -20,9 +20,14 @@ test('KEP 808: pistola al plasma, Armi al Plasma, AC 1d3, +1 VA già nella sched
   assert.deepEqual(r('munizioni:cella-kep-808').cella, { capacita: 10, unita: 'colpi', ricarica_costo: 100 });
 });
 
-test('Colt Hammershot: revolver pesante, Pistole, tamburo da 6 caricato direttamente (A.135: 2 cartucce per AzP)', () => {
+test('Colt Hammershot: revolver pesante, Pistole, tamburo fisso da 4 caricato direttamente (A.135: 2 cartucce per AzP)', () => {
   const c = r('armi_distanza_corporative:colt-hammershot');
   assert.equal(c.specializzazione, 'specializzazione-pistole');
-  assert.deepEqual([c.famiglia, c.danno.una_mano, c.modificatore_va, c.munizioni.capacita, c.for_richiesta, c.inc, c.qualita, c.costo], ['Revolver', '1d6+3', -1, 6, 5, 5, 'Rara', 3500]); // FOR 5 dalla 0.59 (06/10/2026)
+  // **Lotto 206: il tamburo passa da 6 a 4 colpi.** Questo test congelava il 6 della 0.59; gli Armamenti 0.86 lo
+  // dicono tre volte — la colonna CC della tabella (§7.8), «revolver pesante con tamburo fisso da quattro colpi» e
+  // «un carichino Ricarica per Tamburo trasferisce fino a 4 colpi». È l'unico dei cinque cambiamenti del lotto che
+  // tocca uno dei sette: la Colt è di Michele, che nell'istantanea del 14/11 ha 3 colpi in canna, sotto il nuovo
+  // massimo, quindi nessun valore salvato diventa invalido.
+  assert.deepEqual([c.famiglia, c.danno.una_mano, c.modificatore_va, c.munizioni.capacita, c.for_richiesta, c.inc, c.qualita, c.costo], ['Revolver', '1d6+3', -1, 4, 5, 5, 'Rara', 3500]); // FOR 5 dalla 0.59 (06/10/2026)
   assert.deepEqual([modoRicarica(c, dati, cat).modo, modoRicarica(c, dati, cat).famiglia, modoRicarica(c, dati, cat).carichino], ['inserimento', 'pistola', 'tamburo']); // §7.20.9; A.135
 });
