@@ -135,8 +135,9 @@ test('il monte è 7 punti per Grado (§8.3.1), e il caso del livello 8 è dichia
     assert.equal(m.atteso8, 21, 'al livello 8, con tre Gradi, fa i 21 del blocco approvato');
     // il monte non è scritto nel codice: se il personaggio non è al livello 8, la procedura lo dice
     const p = pianoAdeguamento(copia(file), dati);
-    // un personaggio bloccato dalla A.267 non arriva ai casi: si ferma prima, ed è giusto così
-    if (m.differenza !== 0 && !p.bloccato) assert.ok(p.casi.some((c) => /livello 8/.test(c)), `${dove}: la differenza dal blocco approvato va detta`);
+    // lotto 207: la frase del monte è quella di `stradeDelLivello`, che dice anche le strade per arrivare al
+    // livello approvato (A.272: i PX, o la concessione della A.187) invece di presumerne una
+    if (m.differenza !== 0) assert.ok(p.casi.some((c) => /livello 8/.test(c)), `${dove}: la differenza dal blocco approvato va detta`);
   }
 });
 
@@ -232,25 +233,38 @@ test('la plancia dice a che punto è ciascuno', () => {
 
 // --- quello che l'app non decide ----------------------------------------------------------------------------
 
-test('A.267: se un’Abilità scende di categoria la procedura si ferma e lo dice, invece di scegliere', () => {
-  // nessuno dei personaggi del repo la subisce (lotto 192), e il controllo lo pretende
+test('A.267 (15/11/2026): la discesa è accettata, la procedura parte, e resta scritta', () => {
+  // **La risposta ha superato il comportamento del 194.** Allora la procedura si fermava, ed era la cosa giusta
+  // senza una risposta. Davide ha deciso: «Se il VA personale diminuisce, la diminuzione è accettata: non si
+  // conserva automaticamente il valore precedente e non si assegna una compensazione automatica. Ogni eccezione
+  // del Direttore è separata, esplicita e registrata.» Quindi non blocca più — e non sparisce nel silenzio.
   for (const { dove, file } of tutti) {
     const p = pianoAdeguamento(copia(file), dati);
-    if (p.scendono.length) assert.equal(p.bloccato, true, `${dove}: con una base che scende non si procede`);
+    assert.equal(p.bloccato, false, `${dove}: la A.267 non blocca più`);
+    if (p.scendono.length) {
+      assert.ok(p.nuovo, `${dove}: con una base che scende si procede comunque`);
+      assert.ok(p.casi.some((c) => /A\.267/.test(c)), `${dove}: e la discesa si dice`);
+    }
   }
-  // costruito apposta: una Classe in cui un'Abilità passa da Specializzata a Non competente
-  const d = copia(dati);
-  const c = d.classi.classi[0];
-  const giu = c.competenze.S[0];
-  c.competenze = { ...c.competenze, S: [...c.competenze.S.filter((x) => x !== giu), c.competenze.N[0]], N: [...c.competenze.N.filter((x) => x !== c.competenze.N[0]), giu] };
-  const pg = copia(tutti.find((x) => (x.file.scelte.classe ?? x.file.scelte.classi?.[0]?.nome) === c.nome)?.file ?? null);
-  if (!pg) return; // nessun personaggio di quella Classe fra quelli del repo
-  const p = pianoAdeguamento(pg, d);
-  assert.equal(p.bloccato, true, 'la A.267 è aperta: non si inventa un comportamento');
-  assert.ok(p.scendono.length >= 1);
-  assert.match(p.motivo, /A\.267/);
-  assert.equal(p.nuovo, null, 'e non si scrive niente');
-  assert.ok(p.nota, 'la nota di prima però c’è: serve comunque');
+  // il caso vero del repo: il Custode d'esempio perde Artefatti (P→G) e Intrattenere (G→N), che è esattamente il
+  // profilo del Custode approvato nel blocco E&L dell'11/11
+  const custode = tutti.find((x) => (x.file.scelte.classe ?? x.file.scelte.classi?.[0]?.nome) === 'Custode');
+  assert.ok(custode, 'il Custode d’esempio deve esserci: è il solo caso di discesa fra i file del repo');
+  const p = pianoAdeguamento(copia(custode.file), dati);
+  assert.equal(p.bloccato, false);
+  assert.ok(p.nuovo, 'si procede');
+  assert.ok(p.scendono.length >= 1, 'e le Abilità che scendono si contano');
+  assert.ok(p.casi.some((c) => /A\.267/.test(c) && /accettata/.test(c)));
+  // **la riga del registro porta i due numeri**: un VA che scende senza spiegazione, fra sei mesi, è una
+  // discussione al tavolo; con la riga è una decisione con una data
+  const riga = p.nuovo.correzioni_master.at(-1);
+  assert.ok(Array.isArray(riga.scendonoA267) && riga.scendonoA267.length === p.scendono.length);
+  for (const x of riga.scendonoA267) {
+    assert.ok(x.nome && x.da && x.a);
+    assert.ok(Number.isInteger(x.vaPrima) && Number.isInteger(x.vaDopo) && x.vaDopo < x.vaPrima);
+  }
+  // e niente compensazione automatica: i punti liberi restano azzerati, come per tutti
+  assert.deepEqual(p.nuovo.scelte.puntiAbilitaLiberi, {});
 });
 
 test('un personaggio non ancora adeguato resta identico a come è oggi', () => {

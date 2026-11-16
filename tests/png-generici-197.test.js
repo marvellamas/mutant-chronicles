@@ -297,19 +297,23 @@ test('A.270: il Lottatore di I Grado non ha Parata («—»), la Difesa che rest
   assert.equal(l.attacchi.II[0].va - l.abilita['Corpo a corpo'][1], 2, 'dal II anche la Maestria, una volta');
 });
 
-test('A.269: «Spada» è un alias dichiarato della riga «Arma da guerra», con il motivo e il numero della domanda', () => {
-  assert.equal(P.alias_armi.Spada.riga, 'Arma da guerra');
-  assert.equal(P.alias_armi.Spada.domanda, 'A.269');
-  assert.ok(P.alias_armi.Spada.motivo.length > 30);
+test('A.269 (15/11/2026): la riga è «Spada» e l’alias non c’è più', () => {
+  // **La risposta ha superato l'ipotesi del lotto 197.** Allora «Spada» era un alias dichiarato della riga «Arma
+  // da guerra», perché le tabelle di Classe scrivevano l'uno e quella degli armamenti astratti l'altro: Davide ha
+  // deciso che la voce si chiama «Spada» e che «Arma da guerra» «non resta come arma separata né come alias».
+  assert.equal(P.alias_armi, undefined, 'nessun alias dichiarato: la riga ha il nome giusto');
+  assert.ok(P.armamenti.some((a) => a.tipo === 'Spada'), 'la riga della tabella si chiama «Spada»');
+  assert.ok(!P.armamenti.some((a) => a.tipo === 'Arma da guerra'), '«Arma da guerra» non è più una riga');
   const arma = armamentoPng('Spada', dati);
   assert.equal(arma.dado, '1d8'); assert.equal(arma.mani, 1); assert.equal(arma.q, 1);
   assert.equal(profiloPng({ classe: 'assaltatore', grado: 'I', eq: 0 }, dati).nemico.attacchi[0].nome, 'Spada');
-  // un alias senza motivo o senza domanda non passa il validatore
+  // il meccanismo degli alias resta, per un nome nuovo che un domani vada dichiarato: un alias senza motivo o
+  // senza il numero della domanda non passa il validatore
   const x = structuredClone(dati);
-  x.png_generici.alias_armi.Spada = { riga: 'Arma da guerra' };
+  x.png_generici.alias_armi = { Spadone: { riga: 'Spada' } };
   const e = validaDati(x).map((y) => `${y.chiave}: ${y.problema}`).join('\n');
-  assert.match(e, /alias_armi\.Spada\.motivo/);
-  assert.match(e, /alias_armi\.Spada\.domanda/);
+  assert.match(e, /alias_armi\.Spadone\.motivo/);
+  assert.match(e, /alias_armi\.Spadone\.domanda/);
   // e un'arma sconosciuta che non è un alias resta un errore
   const y = structuredClone(dati);
   y.png_generici.classi.agente.attacchi.I[0].arma = 'Cannone';
