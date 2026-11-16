@@ -97,11 +97,20 @@ export function blocchiDelTesto(pagine, schede = []) {
   ].sort((a, b) => a.x.riga - b.x.riga);
   const blocchi = [];
   let corrente = null;
+  // **Le code del blocco precedente non aprono quello nuovo.** Fra l'ultima creatura di un blocco e la prima del
+  // successivo il manuale mette, di fila, sia le pagine che continuano le creature appena viste («Coccodrillo
+  // mascelle trascinamento e soccorso», «Polpo presa e nube di inchiostro») sia quelle che aprono il blocco dopo
+  // («Non morti spiriti e signori»). Prese tutte, il Lich si trovava fra le capacità la presa del Polpo.
+  // Si riconoscono come le riconosce già `dividi`: una continuazione **nomina una creatura già passata**.
+  const nomiVisti = new Set();
   for (const e of elementi) {
     if (e.tipo === 'p') {
+      if (nomiVisti.has(primaParola(e.x.titolo))) continue;
       if (!corrente || corrente.chiuso) { corrente = { titolo: e.x.titolo, pagine: [], riga: e.x.riga, fine: Infinity, chiuso: false }; blocchi.push(corrente); }
       corrente.pagine.push(e.x);
-    } else if (corrente) {
+    } else if (e.tipo === 's') {
+      nomiVisti.add(primaParola(e.x.nome));
+      if (!corrente) continue;
       corrente.chiuso = true;
       corrente.fine = Math.max(corrente.fine === Infinity ? 0 : corrente.fine, e.x.riga + 1);
     }

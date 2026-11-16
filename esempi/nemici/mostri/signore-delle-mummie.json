@@ -99,30 +99,6 @@
       "effetto": "Due AzP e quattro PM, una volta ogni tre Round. Viventi entro sei Q che può percepire: Magia −2; fallimento impedisce recuperi di PV fino alla fine del Round successivo. Non impedisce la cura delle Ferite, il recupero di PM o la stabilizzazione. Negare Potere può terminarla, confronto 9. Nessun danno o Ferita automatica."
     },
     {
-      "nome": "Presa e stretta",
-      "effetto": "Al posto del Morso ordinario: 1 AzP e opposizione di Corpo a corpo 11 contro Corpo a corpo o Atletica di una preda fino a 1 × 1 Q. Successo: Immobilizzato e 1d8+2 Naturale con AR normale. Mani e braccia restano disponibili con il −4 fisico. Una sola preda e una sola azione di mascelle per Round; non morde altri bersagli finché la trattiene. Stringere nuovamente richiede una nuova AzP e opposizione: successo infligge il danno del Morso; fallimento conserva la presa senza danno. Mantenere la presa non infligge danni gratuiti. Liberarsi costa 1 AzP, Corpo a corpo o Atletica della vittima con −4 contro Corpo a corpo 11; pareggio resta afferrata. Un alleato può intervenire con la procedura comune delle Prese naturali."
-    },
-    {
-      "nome": "Trascinare",
-      "effetto": "1 AzP e 1 AzM, nuova opposizione della presa. Successo: fino a 2 Q a terra oppure 3 Q a nuoto, usando una sola modalità. Non infligge contemporaneamente il danno della stretta. Fallimento consuma le Azioni senza spostare nessuno. Si applicano Opportunità ordinarie al predatore; lo spostamento forzato della vittima non ne provoca. L’ingresso in un pericolo immediatamente letale concede la normale Salvezza prevista per il trascinamento: Riflessi può lasciare la vittima nell’ultimo Q sicuro. Il Coccodrillo si ferma conservando la portata oppure la rilascia. Affogare inizia soltanto quando le vie respiratorie sono realmente immerse e manca un mezzo adeguato per respirare."
-    },
-    {
-      "nome": "Apnea e liberazione",
-      "effetto": "Il Coccodrillo può trattenere il fiato per 15 minuti, poi segue le regole comuni del soffocamento. La vittima conserva la propria riserva di fiato. Un Round di respirazione normale ripristina il fiato secondo le regole comuni; uscire dall’acqua non cura PV o Ferite. Il predatore può rilasciare gratuitamente alla propria Iniziativa; incoscienza, morte o perdita funzionale delle mascelle interrompono la presa. PV 0 da soli non bastano."
-    },
-    {
-      "nome": "Presa dei tentacoli",
-      "effetto": "Al posto dell’attacco dannoso: 1 AzP e opposizione di Corpo a corpo 9 contro Corpo a corpo o Atletica di una preda lunga fino a circa 0,5 m. Successo: Immobilizzato. Una sola preda; mantenere la presa non causa danni. Liberazione con la normale procedura delle Prese naturali, applicando i modificatori pertinenti. Le appendici non concedono attacchi, PV o premi separati."
-    },
-    {
-      "nome": "Inchiostro",
-      "effetto": "1 AzP, una volta ogni 24 ore, soltanto immerso. Crea una nube non magica di raggio 1 Q per 5 Round. L’area iniziale resta dove viene rilasciata e può essere spostata o dispersa da una corrente significativa. Nessun tiro per colpire o Salvezza: è un mezzo opaco. Le attività visive attraverso la nube subiscono Accecato; questo riguarda anche il Polpo. Uscire o ristabilire una linea libera elimina la limitazione. Scurovisione non vede attraverso l’inchiostro; altri sensi pertinenti conservano i propri limiti. Il rilascio non concede movimento aggiuntivo gratuito: il Polpo può usare soltanto la propria AzM rimasta."
-    },
-    {
-      "nome": "Respiro e condotta",
-      "effetto": "Respira acqua e può trattenere il fiato fuori dall’acqua per 30 minuti, poi segue le regole comuni del soffocamento. +2 a Furtività richiede che possa realmente mimetizzarsi nell’ambiente sommerso. Di fronte a minacce troppo grandi cerca un riparo o usa l’inchiostro per fuggire."
-    },
-    {
       "nome": "Non morti spiriti e signori",
       "effetto": "Dieci nuovi profili del catalogo, distinti dai non morti ordinari già descritti. Il legame con un sepolcro, una vendetta o un filatterio definisce obiettivi e possibilità di risoluzione dell’incontro; non assegna automaticamente Natura Oscura Simmetria. I valori comprendono capacità e dotazione scritte nella singola scheda. Servitori iniziali e moduli di tana: nessuno. Creature richiamate o alleati che partecipano effettivamente si conteggiano con la propria scheda. La procedura dei premi rimane nel Direttore §9.3; il modulo EQ dei venticinque PNG non si applica a questi profili. Tabella (celle in ordine di lettura): Creatura | GS iniziale | PX per 4 PG | Artiglio strisciante | Principiante | 10 | Banshee | Veterano | 50 | Fantasma | Eroe | 70 | Teschio fiammante | Eroe | 70 | Revenant | Eroe | 77 | Vampiro | Mito | 200 | Cavaliere della Morte | Semidio | 440 | Signore delle Mummie | Mito | 200 | Lich | Semidio | 440 | Demilich | Semidio | 400."
     },

@@ -190,58 +190,6 @@
       "effetto": "Sfrutta coperture e linee di tiro pulite, identifica il bersaglio prioritario e conserva AP per Reazione Operativa quando disponibile. Strumenti. Corredo operativo generico adatto alla Classe, senza bonus aggiuntivi ai VA. Le capacità che richiedono materiali, accessi o coperture necessitano comunque di condizioni reali. Fonte della Classe. Giocatore 0.63 §3.5.2. L’equipaggiamento astratto e la matrice EQ sono propri di questi modelli PNG. Costruzione. Incrementi automatici delle cinque Abilità di Classe e sette punti liberi a ogni Grado; i limiti sono applicati a ogni assegnazione. Priorità degli aumenti di Caratteristica: DES, SAG, COS, CAR. I dadi dei PV e la selezione dei Talenti sono fissati per rendere il modello pronto."
     },
     {
-      "nome": "Cacciatore PNG generico",
-      "effetto": "Ricerca e inseguimento di una preda. Può rappresentare un battitore, un cacciatore di taglie o un sorvegliante di territori selvaggi."
-    },
-    {
-      "nome": "Caratteristiche per Grado",
-      "effetto": "Liv. Tabella (celle in ordine di lettura): Grado | FOR | DES | COS | INT | SAG | CAR | I | 1 | 6 | 6 | 5 | 7 | 7 | 5 | II | 4 | 6 | 6 | 5 | 9 | 7 | 5 | III | 8 | 6 | 6 | 5 | 10 | 8 | 5 | IV | 12 | 6 | 6 | 5 | 10 | 10 | 5 | V | 16 | 6 | 6 | 7 | 10 | 10 | 5 | VI | 20 | 6 | 8 | 7 | 10 | 10 | 5."
-    },
-    {
-      "nome": "Risorse e Difese base con EQ Comune",
-      "effetto": "Aggiungere EQ a INI, AR, Parata e Schivata; al tiro di Iniziativa si aggiunge 1d10. Sempre 1 AM. Movimento: 6/12/18 Q Base. Tabella (celle in ordine di lettura): Grado | PV | PM | INI + | AP | AR | Parata | Schivata | I | 15 | 10 | 3 | 1 | 1 | 7 | 7 | II | 23 | 13 | 5 | 1 | 1 | 9 | 9 | III | 31 | 17 | 6 | 1 | 1 | 11 | 11 | IV | 44 | 22 | 6 | 2 | 1 | 13 | 13 | V | 54 | 25 | 6 | 2 | 1 | 15 | 15 | VI | 62 | 28 | 8 | 2 | 1 | 19 | 19."
-    },
-    {
-      "nome": "Salvezze base con EQ Comune",
-      "effetto": "Tabella (celle in ordine di lettura): Grado | Tempra | Riflessi | Volontà | Magia | I | 9 | 10 | 9 | 9 | II | 10 | 11 | 10 | 10 | III | 10 | 11 | 10 | 11 | IV | 11 | 12 | 11 | 13 | V | 13 | 12 | 11 | 13 | VI | 14 | 15 | 13 | 14."
-    },
-    {
-      "nome": "Attacchi pronti base con EQ Comune",
-      "effetto": "Aggiungere EQ una volta al VA e al danno di ogni colpo, e alle quattro PS. Sono esclusi i bonus condizionati dei Talenti. Le portate, mani e modalità sono nella tabella degli armamenti astratti. Tabella (celle in ordine di lettura): Grado | Carabina VA | Danno | Lama leggera VA | Danno | I | 12 | 1d8+2 | 8 | 1d6+1 | II | 15 | 1d8+2 | 11 | 1d6+1 | III | 17 | 1d8+3 | 13 | 1d6+1 | IV | 19 | 1d8+3 | 15 | 1d6+1 | V | 21 | 1d8+4 | 16 | 1d6+1 | VI | 23 | 1d8+4 | 19 | 1d6+2."
-    },
-    {
-      "nome": "Cacciatore Abilità",
-      "effetto": "VA personali prima di EQ, strumenti, Specializzazioni e condizioni. EQ si aggiunge agli impieghi offensivi e alle Difese, non alle normali Prove non offensive della stessa Abilità. Tabella (celle in ordine di lettura): Abilità | I | II | III | IV | V | VI | Armi da lancio | 7 | 7 | 7 | 7 | 7 | 9 | Armi leggere | 6 | 6 | 6 | 6 | 6 | 8 | Armi medie | 11 | 14 | 16 | 18 | 20 | 22 | Armi pesanti | 4 | 4 | 4 | 4 | 4 | 4 | Armi da guerra | 4 | 4 | 4 | 4 | 4 | 4 | Armi da mischia | 8 | 11 | 13 | 15 | 16 | 19 | Corpo a corpo | 6 | 6 | 6 | 6 | 6 | 6 | Difese | 7 | 9 | 11 | 13 | 15 | 19 | Artefatti | 7 | 7 | 8 | 10 | 10 | 10 | Occultismo | 8 | 10 | 12 | 13 | 14 | 15 | Potere | 5 | 5 | 6 | 8 | 8 | 8 | Rituali | 5 | 7 | 8 | 8 | 8 | 8 | Atletica | 7 | 8 | 10 | 11 | 12 | 13 | Furtività | 11 | 14 | 16 | 18 | 19 | 22 | Percezione | 12 | 13 | 15 | 18 | 20 | 22 | Sopravvivenza | 12 | 13 | 15 | 18 | 20 | 22 | Cultura | 5 | 5 | 5 | 5 | 5 | 5 | Intrattenere | 5 | 5 | 5 | 5 | 5 | 5 | Oratoria | 5 | 5 | 5 | 5 | 5 | 5 | Raggirare | 5 | 5 | 5 | 5 | 5 | 5 | Medicina | 8 | 8 | 9 | 11 | 11 | 11 | Pilotare | 7 | 9 | 10 | 10 | 10 | 10 | Scienza | 8 | 10 | 11 | 11 | 11 | 11 | Tecnologia | 7 | 9 | 10 | 10 | 10 | 10."
-    },
-    {
-      "nome": "Cacciatore acquisizioni per livello",
-      "effetto": "Scelte cumulative ai livelli raggiunti. I Gradi I–VI corrispondono ai livelli 1, 4, 8, 12, 16 e 20."
-    },
-    {
-      "nome": "Specializzazioni",
-      "effetto": "Tabella (celle in ordine di lettura): Livello | Specializzazioni | 1 | Carabine | 4 | Seguire Tracce | 8 | Ricercare | 12 | Ambienti Forestali | 16 | Erboristeria | 20 | Resistenza."
-    },
-    {
-      "nome": "Maestrie",
-      "effetto": "Tabella (celle in ordine di lettura): Livello | Maestrie | 2 | Tiro Mirato Migliorato | 6 | Parata Istintiva | 10 | Schivata Istintiva | 14 | Imboscata Migliorata | 18 | Preparazione Rapida."
-    },
-    {
-      "nome": "Talenti Liberi",
-      "effetto": "Tabella (celle in ordine di lettura): Livello | Talenti Liberi | 3 | Visione Perfetta | 5 | Mezzofondista | 7 | Sempre Allerta | 9 | Mulo da Soma | 11 | Buona Costituzione | 13 | Resistenza ai Veleni | 15 | Prova Salvezza Migliorata (Tempra) | 17 | Prova Salvezza Migliorata (Riflessi) | 19 | Prova Salvezza Migliorata (Volontà)."
-    },
-    {
-      "nome": "Impiego delle acquisizioni",
-      "effetto": "Carabine è già inclusa negli attacchi dal I Grado. Tiro Mirato Migliorato conserva la preparazione della manovra. Mezzofondista limita un peggioramento pertinente dell’Affaticamento una volta al giorno. Mulo da Soma migliora le Prove per carichi, senza aumentare nuovamente soglie di peso o ridurre requisiti delle armi. Schede complete: Giocatore 0.63 §§8.6–8.10 e Magia 1.19. Talenti di Classe nella pagina seguente."
-    },
-    {
-      "nome": "Cacciatore Talenti di Classe",
-      "effetto": "I Grado Predatore. Scoprendo, seguendo o colpendo una creatura la può designare Preda fino a fine scena; una sola alla volta. Una volta per Round, colpendola sceglie: +1 danno ai PV; proprio spostamento di 1 Q senza Opportunità; oppure +1 alla prossima Prova di un alleato per colpirla entro fine Round, se può ricevere la segnalazione. II Grado Trappola Improvvisata. Con 1 AP, materiali adatti e Sopravvivenza riuscita, o Tecnologia per un dispositivo tecnico, prepara una trappola semplice. Percezione la individua; chi la attiva tenta Riflessi. Se fallisce subisce l’effetto scelto alla preparazione: −2 alle Prove fisiche fino a fine Round oppure arresto del Movimento e perdita della parte residua. Dura fino a fine scena, attivazione o disinnesco. III Grado Segugio. Dopo Percezione o Sopravvivenza riuscita sulle tracce ricava un dettaglio pertinente aggiuntivo e deducibile. Con Magistrale, nella scena successiva il gruppo non può essere sorpreso dalla Preda o dal gruppo seguito, salvo occultamento eccezionale o intervento imprevedibile. IV Grado Colpo di Abbattimento. Contro la Preda A Terra, Immobilizzata o soggetta alla penalità fisica di Trappola Improvvisata o Pressione, raddoppia il danno della prima istanza dell’attacco. Una penalità generica non basta. Con Magistrale ×3; si usa il moltiplicatore più alto senza cumularli. V Grado Maestro della Caccia. Una volta per combattimento, quando percepisce la Preda muoversi, attaccare un alleato o nascondersi, spende 1 AP disponibile e sceglie: attacco immediato, pagando anche le altre AP necessarie; movimento fino a 3 Q verso di essa senza Opportunità; oppure Pressione, che impone −2 alle Prove fisiche fino a fine Round se la colpisce nello stesso Round con un attacco pagato normalmente. VI Grado Cacciatore Instancabile. Guidando il gruppo durante inseguimento o marcia forzata, concede +5 alla prima PS di Tempra già richiesta per sforzo, ritmo, fame, sete o terreno ostile. Non trasforma un peggioramento automatico dell’Affaticamento in una Prova."
-    },
-    {
-      "nome": "Comportamento e gestione",
-      "effetto": "Designa la Preda, prepara una trappola dove possibile e sfrutta il suo effetto per Colpo di Abbattimento. Le condizioni devono verificarsi realmente. Strumenti. Corredo operativo generico adatto alla Classe, senza bonus aggiuntivi ai VA. Le capacità che richiedono materiali, accessi o coperture necessitano comunque di condizioni reali. Fonte della Classe. Giocatore 0.63 §3.5.2. L’equipaggiamento astratto e la matrice EQ sono propri di questi modelli PNG. Costruzione. Incrementi automatici delle cinque Abilità di Classe e sette punti liberi a ogni Grado; i limiti sono applicati a ogni assegnazione. Priorità degli aumenti di Caratteristica: INT, SAG, COS, DES. I dadi dei PV e la selezione dei Talenti sono fissati per rendere il modello pronto."
-    },
-    {
       "nome": "Esploratore PNG generico",
       "effetto": "Ricognizione, percorsi e movimento del gruppo. Può rappresentare una guida, uno scout o un apripista di spedizione."
     },
