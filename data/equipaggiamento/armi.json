@@ -1,1855 +1,2305 @@
 {
-  "versione_manuale": "Armamenti 0.74",
-  "fonte": "Manuale degli Armamenti v0.50, §7.1.1–7.1.3 (catalogo Commerciale delle armi ravvicinate); lotto 1 dal pilota di estrazione · Armamenti §7.25 e §7.25.1 (0.62); A.158, risposta approvata il 13/10/2026",
-  "_nota": "Generato da tools/lotti/lotto1_pilota.mjs; da qui in poi si modifica questo file. «abilita» è il nome in abilita.json; «specializzazione» è l’id della Specializzazione nelle armi (§8.8.1) che si applica.",
-  "oggetti": [
-    {
-      "id": "coltello",
-      "nome": "Coltello",
-      "tipo": "arma_ravvicinata",
-      "catalogo": "Commerciale",
-      "famiglia": "Coltelli e pugnali",
-      "nomi_alternativi": [
-        "Pugnale triangolare"
-      ],
-      "note_manuale": "",
-      "paragrafo": "§7.1.1",
-      "versione_manuale": "Armamenti 0.50",
-      "abilita": "Armi da mischia",
-      "specializzazione": "specializzazione-coltelli-e-pugnali",
-      "mani": 1,
-      "danno": {
-        "una_mano": "1d4",
-        "due_mani": null
-      },
-      "portata_q": 1,
-      "gittata_q": null,
-      "for_richiesta": 2,
-      "inc": null,
-      "pi": 4,
-      "qualita": "Comune",
-      "ps_int": 10,
-      "reperibilita": "CO",
-      "costo": 80,
-      "manovre": [
-        "Affondo"
-      ],
-      "proprieta": []
-    },
-    {
-      "id": "pugnale",
-      "nome": "Pugnale",
-      "tipo": "arma_ravvicinata",
-      "catalogo": "Commerciale",
-      "famiglia": "Coltelli e pugnali",
-      "nomi_alternativi": [
-        "Pugnale da caccia"
-      ],
-      "note_manuale": "Si può lanciare con il profilo a distanza del catalogo Commerciale (§7.7), stesso oggetto, prezzo e Integrità.",
-      "paragrafo": "§7.1.1",
-      "versione_manuale": "Armamenti 0.50",
-      "abilita": "Armi da mischia",
-      "specializzazione": "specializzazione-coltelli-e-pugnali",
-      "mani": 1,
-      "danno": {
-        "una_mano": "1d4+1",
-        "due_mani": null
-      },
-      "portata_q": 1,
-      "gittata_q": null,
-      "for_richiesta": 2,
-      "inc": null,
-      "pi": 4,
-      "qualita": "Comune",
-      "ps_int": 10,
-      "reperibilita": "CO",
-      "costo": 150,
-      "manovre": [
-        "Affondo"
-      ],
-      "proprieta": []
-    },
-    {
-      "id": "daga",
-      "nome": "Daga",
-      "tipo": "arma_ravvicinata",
-      "catalogo": "Commerciale",
-      "famiglia": "Coltelli e pugnali",
-      "nomi_alternativi": [],
-      "note_manuale": "",
-      "paragrafo": "§7.1.1",
-      "versione_manuale": "Armamenti 0.50",
-      "abilita": "Armi da mischia",
-      "specializzazione": "specializzazione-coltelli-e-pugnali",
-      "mani": 1,
-      "danno": {
-        "una_mano": "1d6",
-        "due_mani": null
-      },
-      "portata_q": 1,
-      "gittata_q": null,
-      "for_richiesta": 3,
-      "inc": null,
-      "pi": 4,
-      "qualita": "Comune",
-      "ps_int": 10,
-      "reperibilita": "NC",
-      "costo": 220,
-      "manovre": [
-        "Affondo"
-      ],
-      "proprieta": []
-    },
-    {
-      "id": "pugnale-da-combattimento",
-      "nome": "Pugnale da combattimento",
-      "tipo": "arma_ravvicinata",
-      "catalogo": "Commerciale",
-      "famiglia": "Coltelli e pugnali",
-      "nomi_alternativi": [],
-      "note_manuale": "",
-      "paragrafo": "§7.1.1",
-      "versione_manuale": "Armamenti 0.50",
-      "abilita": "Armi da mischia",
-      "specializzazione": "specializzazione-coltelli-e-pugnali",
-      "mani": 1,
-      "danno": {
-        "una_mano": "1d6+1",
-        "due_mani": null
-      },
-      "portata_q": 1,
-      "gittata_q": null,
-      "for_richiesta": 3,
-      "inc": null,
-      "pi": 4,
-      "qualita": "Comune",
-      "ps_int": 10,
-      "reperibilita": "NC",
-      "costo": 300,
-      "manovre": [
-        "Affondo"
-      ],
-      "proprieta": []
-    },
-    {
-      "id": "spada-leggera",
-      "nome": "Spada leggera",
-      "tipo": "arma_ravvicinata",
-      "catalogo": "Commerciale",
-      "famiglia": "Spade",
-      "nomi_alternativi": [
-        "Spada corta",
-        "Sciabola"
-      ],
-      "note_manuale": "",
-      "paragrafo": "§7.1.1",
-      "versione_manuale": "Armamenti 0.50",
-      "abilita": "Armi da mischia",
-      "specializzazione": "specializzazione-spade",
-      "mani": 1,
-      "danno": {
-        "una_mano": "1d6+1",
-        "due_mani": null
-      },
-      "portata_q": 1,
-      "gittata_q": null,
-      "for_richiesta": 3,
-      "inc": null,
-      "pi": 5,
-      "qualita": "Comune",
-      "ps_int": 10,
-      "reperibilita": "NC",
-      "costo": 350,
-      "manovre": [
-        "Affondo",
-        "Spazzata"
-      ],
-      "proprieta": []
-    },
-    {
-      "id": "stocco",
-      "nome": "Stocco",
-      "tipo": "arma_ravvicinata",
-      "catalogo": "Commerciale",
-      "famiglia": "Spade",
-      "nomi_alternativi": [],
-      "note_manuale": "",
-      "paragrafo": "§7.1.1",
-      "versione_manuale": "Armamenti 0.50",
-      "abilita": "Armi da mischia",
-      "specializzazione": "specializzazione-spade",
-      "mani": 1,
-      "danno": {
-        "una_mano": "1d6",
-        "due_mani": null
-      },
-      "portata_q": 1,
-      "gittata_q": null,
-      "for_richiesta": 3,
-      "inc": null,
-      "pi": 5,
-      "qualita": "Comune",
-      "ps_int": 10,
-      "reperibilita": "NC",
-      "costo": 450,
-      "manovre": [
-        "Affondo"
-      ],
-      "proprieta": [
-        {
-          "nome": "Sanguinante 1",
-          "testo": "Stocco e Artigli applicano Sanguinamento 1 quando infliggono almeno 1 danno dopo l’Armatura. Restano la perdita immediata, le ricorrenze all’Iniziativa della fonte e le regole di cumulo e arresto del §5.15."
-        }
-      ]
-    },
-    {
-      "id": "spada-lunga",
-      "nome": "Spada lunga",
-      "tipo": "arma_ravvicinata",
-      "catalogo": "Commerciale",
-      "famiglia": "Spade",
-      "nomi_alternativi": [],
-      "note_manuale": "",
-      "paragrafo": "§7.1.1",
-      "versione_manuale": "Armamenti 0.50",
-      "abilita": "Armi da guerra",
-      "specializzazione": "specializzazione-spade",
-      "mani": 1,
-      "danno": {
-        "una_mano": "1d8+1",
-        "due_mani": null
-      },
-      "portata_q": 1,
-      "gittata_q": null,
-      "for_richiesta": 4,
-      "inc": null,
-      "pi": 5,
-      "qualita": "Comune",
-      "ps_int": 10,
-      "reperibilita": "NC",
-      "costo": 500,
-      "manovre": [
-        "Affondo",
-        "Spazzata"
-      ],
-      "proprieta": []
-    },
-    {
-      "id": "spada-bastarda",
-      "nome": "Spada bastarda",
-      "tipo": "arma_ravvicinata",
-      "catalogo": "Commerciale",
-      "famiglia": "Spade",
-      "nomi_alternativi": [],
-      "note_manuale": "",
-      "paragrafo": "§7.1.1",
-      "versione_manuale": "Armamenti 0.50",
-      "abilita": "Armi da guerra",
-      "specializzazione": "specializzazione-spade",
-      "mani": "1/2",
-      "danno": {
-        "una_mano": "1d8+1",
-        "due_mani": "2d6"
-      },
-      "portata_q": 1,
-      "gittata_q": null,
-      "for_richiesta": 5,
-      "inc": null,
-      "pi": 6,
-      "qualita": "Comune",
-      "ps_int": 10,
-      "reperibilita": "NC",
-      "costo": 700,
-      "manovre": [
-        "Affondo",
-        "Spazzata"
-      ],
-      "proprieta": [
-        {
-          "nome": "Versatile",
-          "testo": "Spada bastarda e Lancia possono essere impugnate a una oppure a due mani, infliggendo il danno corrispondente riportato nel catalogo. Entrambe utilizzano sempre Armi da guerra."
-        }
-      ]
-    },
-    {
-      "id": "spadone",
-      "nome": "Spadone",
-      "tipo": "arma_ravvicinata",
-      "catalogo": "Commerciale",
-      "famiglia": "Spade",
-      "nomi_alternativi": [],
-      "note_manuale": "",
-      "paragrafo": "§7.1.1",
-      "versione_manuale": "Armamenti 0.50",
-      "abilita": "Armi da guerra",
-      "specializzazione": "specializzazione-spade",
-      "mani": 2,
-      "danno": {
-        "una_mano": null,
-        "due_mani": "2d6+1"
-      },
-      "portata_q": 1,
-      "gittata_q": null,
-      "for_richiesta": 6,
-      "inc": null,
-      "pi": 6,
-      "qualita": "Comune",
-      "ps_int": 10,
-      "reperibilita": "NC",
-      "costo": 850,
-      "manovre": [
-        "Spazzata"
-      ],
-      "proprieta": []
-    },
-    {
-      "id": "ascia-leggera",
-      "nome": "Ascia leggera",
-      "tipo": "arma_ravvicinata",
-      "catalogo": "Commerciale",
-      "famiglia": "Asce",
-      "nomi_alternativi": [
-        "Accetta"
-      ],
-      "note_manuale": "Si può lanciare con il profilo a distanza del catalogo Commerciale (§7.7), stesso oggetto, prezzo e Integrità.",
-      "paragrafo": "§7.1.1",
-      "versione_manuale": "Armamenti 0.50",
-      "abilita": "Armi da mischia",
-      "specializzazione": "specializzazione-asce",
-      "mani": 1,
-      "danno": {
-        "una_mano": "1d6+1",
-        "due_mani": null
-      },
-      "portata_q": 1,
-      "gittata_q": null,
-      "for_richiesta": 4,
-      "inc": null,
-      "pi": 5,
-      "qualita": "Comune",
-      "ps_int": 10,
-      "reperibilita": "CO",
-      "costo": 180,
-      "manovre": [
-        "Spazzata"
-      ],
-      "proprieta": []
-    },
-    {
-      "id": "ascia-bipenne",
-      "nome": "Ascia bipenne",
-      "tipo": "arma_ravvicinata",
-      "catalogo": "Commerciale",
-      "famiglia": "Asce",
-      "nomi_alternativi": [],
-      "note_manuale": "",
-      "paragrafo": "§7.1.1",
-      "versione_manuale": "Armamenti 0.59",
-      "abilita": "Armi da guerra",
-      "specializzazione": "specializzazione-asce",
-      "mani": 2,
-      "danno": {
-        "una_mano": null,
-        "due_mani": "2d6+1"
-      },
-      "portata_q": 1,
-      "gittata_q": null,
-      "for_richiesta": 6,
-      "inc": null,
-      "pi": 6,
-      "qualita": "Comune",
-      "ps_int": 10,
-      "reperibilita": "NC",
-      "costo": 500,
-      "manovre": [
-        "Spazzata"
-      ],
-      "proprieta": []
-    },
-    {
-      "id": "martello",
-      "nome": "Martello",
-      "tipo": "arma_ravvicinata",
-      "catalogo": "Commerciale",
-      "famiglia": "Martelli",
-      "nomi_alternativi": [],
-      "note_manuale": "",
-      "paragrafo": "§7.1.1",
-      "versione_manuale": "Armamenti 0.50",
-      "abilita": "Armi da mischia",
-      "specializzazione": "specializzazione-martelli",
-      "mani": 1,
-      "danno": {
-        "una_mano": "1d6+2",
-        "due_mani": null
-      },
-      "portata_q": 1,
-      "gittata_q": null,
-      "for_richiesta": 4,
-      "inc": null,
-      "pi": 5,
-      "qualita": "Comune",
-      "ps_int": 10,
-      "reperibilita": "CO",
-      "costo": 80,
-      "manovre": [
-        "Stordire"
-      ],
-      "proprieta": []
-    },
-    {
-      "id": "martello-da-guerra",
-      "nome": "Martello da guerra",
-      "tipo": "arma_ravvicinata",
-      "catalogo": "Commerciale",
-      "famiglia": "Martelli",
-      "nomi_alternativi": [],
-      "note_manuale": "",
-      "paragrafo": "§7.1.1",
-      "versione_manuale": "Armamenti 0.50",
-      "abilita": "Armi da guerra",
-      "specializzazione": "specializzazione-martelli",
-      "mani": 1,
-      "danno": {
-        "una_mano": "1d8+1",
-        "due_mani": null
-      },
-      "portata_q": 1,
-      "gittata_q": null,
-      "for_richiesta": 5,
-      "inc": null,
-      "pi": 5,
-      "qualita": "Comune",
-      "ps_int": 10,
-      "reperibilita": "NC",
-      "costo": 280,
-      "manovre": [
-        "Stordire"
-      ],
-      "proprieta": []
-    },
-    {
-      "id": "martello-a-due-mani",
-      "nome": "Martello a due mani",
-      "tipo": "arma_ravvicinata",
-      "catalogo": "Commerciale",
-      "famiglia": "Martelli",
-      "nomi_alternativi": [],
-      "note_manuale": "",
-      "paragrafo": "§7.1.1",
-      "versione_manuale": "Armamenti 0.50",
-      "abilita": "Armi da guerra",
-      "specializzazione": "specializzazione-martelli",
-      "mani": 2,
-      "danno": {
-        "una_mano": null,
-        "due_mani": "2d6"
-      },
-      "portata_q": 1,
-      "gittata_q": null,
-      "for_richiesta": 6,
-      "inc": null,
-      "pi": 6,
-      "qualita": "Comune",
-      "ps_int": 10,
-      "reperibilita": "CO",
-      "costo": 180,
-      "manovre": [
-        "Spazzata",
-        "Stordire"
-      ],
-      "proprieta": []
-    },
-    {
-      "id": "randello",
-      "nome": "Randello",
-      "tipo": "arma_ravvicinata",
-      "catalogo": "Commerciale",
-      "famiglia": "Mazze e bastoni",
-      "nomi_alternativi": [
-        "Bastone",
-        "Manganello"
-      ],
-      "note_manuale": "",
-      "paragrafo": "§7.1.1",
-      "versione_manuale": "Armamenti 0.50",
-      "abilita": "Armi da mischia",
-      "specializzazione": "specializzazione-mazze-e-bastoni",
-      "mani": 1,
-      "danno": {
-        "una_mano": "1d6",
-        "due_mani": null
-      },
-      "portata_q": 1,
-      "gittata_q": null,
-      "for_richiesta": 3,
-      "inc": null,
-      "pi": 5,
-      "qualita": "Comune",
-      "ps_int": 10,
-      "reperibilita": "CO",
-      "costo": 40,
-      "manovre": [
-        "Stordire"
-      ],
-      "proprieta": []
-    },
-    {
-      "id": "mazza-ferrata",
-      "nome": "Mazza ferrata",
-      "tipo": "arma_ravvicinata",
-      "catalogo": "Commerciale",
-      "famiglia": "Mazze e bastoni",
-      "nomi_alternativi": [],
-      "note_manuale": "",
-      "paragrafo": "§7.1.1",
-      "versione_manuale": "Armamenti 0.50",
-      "abilita": "Armi da mischia",
-      "specializzazione": "specializzazione-mazze-e-bastoni",
-      "mani": 1,
-      "danno": {
-        "una_mano": "1d6+1",
-        "due_mani": null
-      },
-      "portata_q": 1,
-      "gittata_q": null,
-      "for_richiesta": 4,
-      "inc": null,
-      "pi": 5,
-      "qualita": "Comune",
-      "ps_int": 10,
-      "reperibilita": "NC",
-      "costo": 160,
-      "manovre": [
-        "Stordire"
-      ],
-      "proprieta": []
-    },
-    {
-      "id": "tonfa",
-      "nome": "Tonfa",
-      "tipo": "arma_ravvicinata",
-      "catalogo": "Commerciale",
-      "famiglia": "Mazze e bastoni",
-      "nomi_alternativi": [],
-      "note_manuale": "Comprende i modelli militari (§7.1.1).",
-      "paragrafo": "§7.1.1",
-      "versione_manuale": "Armamenti 0.50",
-      "abilita": "Armi da mischia",
-      "specializzazione": "specializzazione-mazze-e-bastoni",
-      "mani": 1,
-      "danno": {
-        "una_mano": "1d4+1",
-        "due_mani": null
-      },
-      "portata_q": 1,
-      "gittata_q": null,
-      "for_richiesta": 3,
-      "inc": null,
-      "pi": 4,
-      "qualita": "Comune",
-      "ps_int": 10,
-      "reperibilita": "NC",
-      "costo": 90,
-      "manovre": [
-        "Stordire"
-      ],
-      "proprieta": [
-        {
-          "nome": "Difensiva +2",
-          "testo": "Il Tonfa concede +2 VA alla Prova di Parata effettuata con quest’arma. Il beneficio non aumenta direttamente l’Armatura. Il confronto e l’impiego insieme agli Scudi sono descritti nel §7.4.",
-          "effetto": {
-            "parata_va": 2
-          }
-        }
-      ]
-    },
-    {
-      "id": "baionetta-montata",
-      "nome": "Baionetta montata",
-      "tipo": "arma_ravvicinata",
-      "catalogo": "Commerciale",
-      "famiglia": "Armi inastate",
-      "nomi_alternativi": [],
-      "note_manuale": "",
-      "paragrafo": "§7.1.1",
-      "versione_manuale": "Armamenti 0.50",
-      "abilita": "Armi da guerra",
-      "specializzazione": "specializzazione-armi-inastate",
-      "mani": 2,
-      "danno": {
-        "una_mano": null,
-        "due_mani": "1d4+1"
-      },
-      "portata_q": 1,
-      "gittata_q": null,
-      "for_richiesta": 6,
-      "inc": null,
-      "pi": 4,
-      "qualita": "Comune",
-      "ps_int": 10,
-      "reperibilita": "NC",
-      "costo": 180,
-      "manovre": [
-        "Affondo"
-      ],
-      "proprieta": [
-        {
-          "nome": "Montata",
-          "testo": "Il profilo della Baionetta montata si utilizza con la baionetta fissata al fucile, impugnato a due mani."
-        }
-      ]
-    },
-    {
-      "id": "lancia",
-      "nome": "Lancia",
-      "tipo": "arma_ravvicinata",
-      "catalogo": "Commerciale",
-      "famiglia": "Armi inastate",
-      "nomi_alternativi": [],
-      "note_manuale": "Portata 2 Q con entrambe le impugnature (§7.1.2).",
-      "paragrafo": "§7.1.1",
-      "versione_manuale": "Armamenti 0.50",
-      "abilita": "Armi da guerra",
-      "specializzazione": "specializzazione-armi-inastate",
-      "mani": "1/2",
-      "danno": {
-        "una_mano": "1d6+1",
-        "due_mani": "1d6+3"
-      },
-      "portata_q": 2,
-      "gittata_q": null,
-      "for_richiesta": 5,
-      "inc": null,
-      "pi": 6,
-      "qualita": "Comune",
-      "ps_int": 10,
-      "reperibilita": "CO",
-      "costo": 220,
-      "manovre": [
-        "Affondo"
-      ],
-      "proprieta": [
-        {
-          "nome": "Versatile",
-          "testo": "Spada bastarda e Lancia possono essere impugnate a una oppure a due mani, infliggendo il danno corrispondente riportato nel catalogo. Entrambe utilizzano sempre Armi da guerra."
-        }
-      ]
-    },
-    {
-      "id": "picca",
-      "nome": "Picca",
-      "tipo": "arma_ravvicinata",
-      "catalogo": "Commerciale",
-      "famiglia": "Armi inastate",
-      "nomi_alternativi": [],
-      "note_manuale": "",
-      "paragrafo": "§7.1.1",
-      "versione_manuale": "Armamenti 0.50",
-      "abilita": "Armi da guerra",
-      "specializzazione": "specializzazione-armi-inastate",
-      "mani": 2,
-      "danno": {
-        "una_mano": null,
-        "due_mani": "1d6+1"
-      },
-      "portata_q": 3,
-      "gittata_q": null,
-      "for_richiesta": 6,
-      "inc": null,
-      "pi": 6,
-      "qualita": "Comune",
-      "ps_int": 10,
-      "reperibilita": "NC",
-      "costo": 250,
-      "manovre": [
-        "Affondo"
-      ],
-      "proprieta": []
-    },
-    {
-      "id": "tridente",
-      "nome": "Tridente",
-      "tipo": "arma_ravvicinata",
-      "catalogo": "Commerciale",
-      "famiglia": "Armi inastate",
-      "nomi_alternativi": [],
-      "note_manuale": "",
-      "paragrafo": "§7.1.1",
-      "versione_manuale": "Armamenti 0.50",
-      "abilita": "Armi da guerra",
-      "specializzazione": "specializzazione-armi-inastate",
-      "mani": 1,
-      "danno": {
-        "una_mano": "1d8+1",
-        "due_mani": null
-      },
-      "portata_q": 2,
-      "gittata_q": null,
-      "for_richiesta": 4,
-      "inc": null,
-      "pi": 6,
-      "qualita": "Comune",
-      "ps_int": 10,
-      "reperibilita": "NC",
-      "costo": 320,
-      "manovre": [
-        "Affondo"
-      ],
-      "proprieta": []
-    },
-    {
-      "id": "arma-inastata-pesante",
-      "nome": "Arma inastata pesante",
-      "tipo": "arma_ravvicinata",
-      "catalogo": "Commerciale",
-      "famiglia": "Armi inastate",
-      "nomi_alternativi": [
-        "Alabarda",
-        "Azza"
-      ],
-      "note_manuale": "",
-      "paragrafo": "§7.1.1",
-      "versione_manuale": "Armamenti 0.59",
-      "abilita": "Armi da guerra",
-      "specializzazione": "specializzazione-armi-inastate",
-      "mani": 2,
-      "danno": {
-        "una_mano": null,
-        "due_mani": "1d8+1"
-      },
-      "portata_q": 2,
-      "gittata_q": null,
-      "for_richiesta": 6,
-      "inc": null,
-      "pi": 6,
-      "qualita": "Comune",
-      "ps_int": 10,
-      "reperibilita": "NC",
-      "costo": 450,
-      "manovre": [
-        "Affondo",
-        "Spazzata"
-      ],
-      "proprieta": []
-    },
-    {
-      "id": "frusta",
-      "nome": "Frusta",
-      "tipo": "arma_ravvicinata",
-      "catalogo": "Commerciale",
-      "famiglia": "Armi flessibili",
-      "nomi_alternativi": [],
-      "note_manuale": "",
-      "paragrafo": "§7.1.1",
-      "versione_manuale": "Armamenti 0.50",
-      "abilita": "Armi da mischia",
-      "specializzazione": "specializzazione-armi-flessibili",
-      "mani": 1,
-      "danno": {
-        "una_mano": "1d4",
-        "due_mani": null
-      },
-      "portata_q": 3,
-      "gittata_q": null,
-      "for_richiesta": 4,
-      "inc": null,
-      "pi": 4,
-      "qualita": "Comune",
-      "ps_int": 10,
-      "reperibilita": "CO",
-      "costo": 100,
-      "manovre": [
-        "generali"
-      ],
-      "proprieta": [
-        {
-          "nome": "Immobilizzare a distanza",
-          "testo": "La Frusta permette l’impiego descritto nel §7.1.5 entro la propria portata di 3 Q."
-        }
-      ]
-    },
-    {
-      "id": "mazzafrusto",
-      "nome": "Mazzafrusto",
-      "tipo": "arma_ravvicinata",
-      "catalogo": "Commerciale",
-      "famiglia": "Armi flessibili",
-      "nomi_alternativi": [],
-      "note_manuale": "",
-      "paragrafo": "§7.1.1",
-      "versione_manuale": "Armamenti 0.50",
-      "abilita": "Armi da guerra",
-      "specializzazione": "specializzazione-armi-flessibili",
-      "mani": 1,
-      "danno": {
-        "una_mano": "1d6+1",
-        "due_mani": null
-      },
-      "portata_q": 1,
-      "gittata_q": null,
-      "for_richiesta": 4,
-      "inc": null,
-      "pi": 5,
-      "qualita": "Comune",
-      "ps_int": 10,
-      "reperibilita": "NC",
-      "costo": 350,
-      "manovre": [
-        "Spazzata"
-      ],
-      "proprieta": [
-        {
-          "nome": "Parata avversaria −2 VA",
-          "testo": "Il Mazzafrusto impone −2 VA a ogni Prova di Parata contro i propri attacchi, sia con arma sia con Scudo. La proprietà non elimina l’AR passiva dello Scudo."
-        }
-      ]
-    },
-    {
-      "id": "artigli",
-      "nome": "Artigli",
-      "tipo": "arma_ravvicinata",
-      "catalogo": "Commerciale",
-      "famiglia": "Armi da pugno",
-      "nomi_alternativi": [],
-      "note_manuale": "",
-      "paragrafo": "§7.1.1",
-      "versione_manuale": "Armamenti 0.50",
-      "abilita": "Armi da mischia",
-      "specializzazione": "specializzazione-armi-da-pugno",
-      "mani": 1,
-      "danno": {
-        "una_mano": "1d4+1",
-        "due_mani": null
-      },
-      "portata_q": 1,
-      "gittata_q": null,
-      "for_richiesta": 3,
-      "inc": null,
-      "pi": 4,
-      "qualita": "Comune",
-      "ps_int": 10,
-      "reperibilita": "NC",
-      "costo": 250,
-      "manovre": [
-        "Affondo"
-      ],
-      "proprieta": [
-        {
-          "nome": "Sanguinante 1",
-          "testo": "Stocco e Artigli applicano Sanguinamento 1 quando infliggono almeno 1 danno dopo l’Armatura. Restano la perdita immediata, le ricorrenze all’Iniziativa della fonte e le regole di cumulo e arresto del §5.15."
-        }
-      ]
-    },
-    {
-      "id": "tirapugni",
-      "nome": "Tirapugni",
-      "tipo": "arma_ravvicinata",
-      "catalogo": "Commerciale",
-      "famiglia": "Armi da pugno",
-      "nomi_alternativi": [],
-      "note_manuale": "",
-      "paragrafo": "§7.1.1",
-      "versione_manuale": "Armamenti 0.50",
-      "abilita": "Corpo a corpo",
-      "specializzazione": "specializzazione-armi-da-pugno",
-      "mani": 1,
-      "danno": {
-        "una_mano": "1",
-        "due_mani": null
-      },
-      "portata_q": 1,
-      "gittata_q": null,
-      "for_richiesta": 2,
-      "inc": null,
-      "pi": 4,
-      "qualita": "Comune",
-      "ps_int": 10,
-      "reperibilita": "CO",
-      "costo": 35,
-      "manovre": [
-        "Stordire"
-      ],
-      "proprieta": []
-    },
-    {
-      "id": "tirapugni-chiodato",
-      "nome": "Tirapugni chiodato",
-      "tipo": "arma_ravvicinata",
-      "catalogo": "Commerciale",
-      "famiglia": "Armi da pugno",
-      "nomi_alternativi": [],
-      "note_manuale": "",
-      "paragrafo": "§7.1.1",
-      "versione_manuale": "Armamenti 0.50",
-      "abilita": "Corpo a corpo",
-      "specializzazione": "specializzazione-armi-da-pugno",
-      "mani": 1,
-      "danno": {
-        "una_mano": "3",
-        "due_mani": null
-      },
-      "portata_q": 1,
-      "gittata_q": null,
-      "for_richiesta": 3,
-      "inc": null,
-      "pi": 4,
-      "qualita": "Comune",
-      "ps_int": 10,
-      "reperibilita": "NC",
-      "costo": 70,
-      "manovre": [
-        "Stordire"
-      ],
-      "proprieta": []
-    },
-    {
-      "id": "tirapugni-concussivo",
-      "nome": "Tirapugni concussivo",
-      "tipo": "arma_ravvicinata",
-      "catalogo": "Commerciale",
-      "famiglia": "Armi da pugno",
-      "nomi_alternativi": [],
-      "note_manuale": "",
-      "paragrafo": "§7.1.1",
-      "versione_manuale": "Armamenti 0.50",
-      "abilita": "Corpo a corpo",
-      "specializzazione": "specializzazione-armi-da-pugno",
-      "mani": 1,
-      "danno": {
-        "una_mano": "2",
-        "due_mani": null
-      },
-      "portata_q": 1,
-      "gittata_q": null,
-      "for_richiesta": 6,
-      "inc": null,
-      "munizioni": {
-        "capacita": 5,
-        "unita": "cariche",
-        "ricarica": "sostituire la cella pronta richiede 1 AzP (§7.1.4)",
-        "consumo": "una carica per attivazione (§7.1.4)",
-        "riferimento": "cella energetica sostituibile (§7.20.5)"
-      },
-      "attivazione": {
-        "testo": "+1d6 Concussivo; 5 cariche a cella",
-        "danno_extra": "1d6",
-        "natura": "Concussivo"
-      },
-      "pi": 4,
-      "qualita": "Non comune",
-      "ps_int": 12,
-      "reperibilita": "RA",
-      "costo": 1200,
-      "manovre": [
-        "Stordire"
-      ],
-      "proprieta": [
-        {
-          "nome": "Concussivo e Cariche 5",
-          "testo": "Il Tirapugni concussivo dispone di cinque cariche in una cella energetica sostituibile. Spendendone una aggiunge 1d6 danni al danno base di 2 e applica Concussivo all’attacco. A zero cariche conserva il danno ordinario di 2. La dichiarazione e l’eventuale risparmio della carica seguono il §7.1.4. Può usare la Manovra Stordire anche senza carica; Concussivo resta un effetto distinto."
-        }
-      ]
-    },
-    {
-      "tipo": "arma_ravvicinata",
-      "catalogo": "Artefatti di campagna",
-      "famiglia": "Spade",
-      "nomi_alternativi": [
-        "Cyber Arma",
-        "Cyber-Arma"
-      ],
-      "paragrafo": "§§7.25–7.25.4",
-      "versione_manuale": "Armamenti 0.83 (§§7.25–7.25.4) / A.231, A.235, A.251, A.265",
-      "abilita": "Armi da mischia",
-      "specializzazione": "specializzazione-spade",
-      "manovre": [
-        "Affondo",
-        "Spazzata"
-      ],
-      "mani": 1,
-      "danno": {
-        "una_mano": "1d8",
-        "due_mani": null
-      },
-      "natura_danno": "Magico",
-      "portata_q": 1,
-      "gittata_q": null,
-      "for_richiesta": 3,
-      "inc": null,
-      "pi": 4,
-      "qualita": "Non comune",
-      "ps_int": 12,
-      "reperibilita": "EP",
-      "costo": 7500,
-      "_nota_costo": "Armamenti 0.83 §7.25: «Con un costo di costruzione base di 1.250 cr, il valore indicativo dell’originale è 7.500 cr: costo × 3 × coefficiente 2 della rarità Rara». La cifra è scritta nel manuale e si prende così (A.261); la formula del §24.3 la ritrova. Resta un valore indicativo di un pezzo unico: «molto difficile da collocare sul mercato comune», e compratore, disponibilità e prezzo effettivo li stabilisce il Direttore.",
-      "proprieta": [],
-      "manifestazioni": {
-        "fonte": "Armamenti 0.74 §7.25 (ritoccato il 02/11/2026); A.231 e A.235 (Davide, 02/11/2026); A.166 del 16/10/2026 per le forme",
-        "abilita": "Armi da mischia",
-        "_abilita": "Si usa sempre con Armi da mischia, qualunque forma sia manifestata: non si passa ad Armi da guerra, Corpo a corpo o altro perché l’arma ordinaria corrispondente usa quell’Abilità.",
-        "scelta_libera": [
-          "Custode"
-        ],
-        "_scelta_libera": "Il Custode manifesta qualsiasi tipo di arma ravvicinata. Il Tecnomante e gli altri utilizzatori ammessi usano la forma del progetto; cambiarla è una modifica del manufatto (nell’app si cambia in «Modifica master»), non una facoltà di cambio forma.",
-        "progetto": "lama-lunga",
-        "una_sola_specializzazione": true,
-        "_una_sola_specializzazione": "La Specializzazione posseduta pertinente alla forma dà i normali +1 VA e +1 danno (§8.8.1); non si cumulano Specializzazioni di forme diverse.",
-        "elenco": [
-          {
-            "id": "lama-lunga",
-            "nome": "Lama (una mano, 1 Q)",
-            "esempio": "Lama, ascia o altra forma ravvicinata a una mano",
-            "mani": 1,
-            "portata_q": 1,
-            "famiglia": "Spade",
-            "specializzazione": "specializzazione-spade",
-            "manovre": [
-              "Affondo",
-              "Spazzata"
-            ]
-          },
-          {
-            "id": "ascia-bipenne",
-            "nome": "Ascia bipenne (due mani, 1 Q)",
-            "esempio": "Ascia bipenne o altra forma ravvicinata a due mani",
-            "mani": 2,
-            "portata_q": 1,
-            "famiglia": "Asce",
-            "specializzazione": "specializzazione-asce",
-            "manovre": [
-              "Spazzata"
-            ],
-            "due_mani_impugnatura": true
-          },
-          {
-            "id": "punta",
-            "nome": "Punta (una mano, 2 Q)",
-            "esempio": "Punta o lancia con impugnatura a una mano",
-            "mani": 1,
-            "portata_q": 2,
-            "famiglia": "Armi inastate",
-            "specializzazione": "specializzazione-armi-inastate",
-            "manovre": [
-              "Affondo"
-            ]
-          },
-          {
-            "id": "lancia",
-            "nome": "Lancia (due mani, 2 Q)",
-            "esempio": "Lancia o altra forma allungata a due mani",
-            "mani": 2,
-            "portata_q": 2,
-            "famiglia": "Armi inastate",
-            "specializzazione": "specializzazione-armi-inastate",
-            "manovre": [
-              "Affondo"
-            ],
-            "due_mani_impugnatura": true
-          },
-          {
-            "id": "frusta",
-            "nome": "Frusta (una mano, 3 Q)",
-            "esempio": "Frusta o altra manifestazione flessibile",
-            "mani": 1,
-            "portata_q": 3,
-            "famiglia": "Armi flessibili",
-            "specializzazione": "specializzazione-armi-flessibili",
-            "manovre": [
-              "generali"
-            ],
-            "nota": "Famiglia Armi flessibili. La forma a frusta non concede da sola Immobilizzare a distanza: le Manovre seguono la compatibilità della forma e i requisiti ordinari, senza le proprietà della frusta commerciale (A.235, che corregge la A.166)."
-          },
-          {
-            "id": "picca",
-            "nome": "Picca (due mani, 3 Q)",
-            "esempio": "Picca o altra manifestazione lunga a due mani",
-            "mani": 2,
-            "portata_q": 3,
-            "famiglia": "Armi inastate",
-            "specializzazione": "specializzazione-armi-inastate",
-            "manovre": [
-              "Affondo"
-            ],
-            "due_mani_impugnatura": true
-          },
-          {
-            "id": "ascia",
-            "nome": "Ascia (una mano, 1 Q)",
-            "esempio": "Ascia a una mano",
-            "mani": 1,
-            "portata_q": 1,
-            "famiglia": "Asce",
-            "specializzazione": "specializzazione-asce",
-            "manovre": [
-              "Spazzata"
-            ]
-          }
-        ],
-        "_altre_forme": "A.166: per le forme non elencate si usa la famiglia corrispondente del catalogo, con la sua Specializzazione e le sue Manovre.",
-        "_forma": "La forma cambia esclusivamente mani occupate e portata: danno, Abilità, requisito FOR, durata e costi restano quelli della CyberArma; non si copiano le proprietà delle armi commerciali (Armamenti 0.74 §7.25). Le opzioni a due mani richiedono un’impugnatura esistente compatibile. La forma resta fissa: per cambiarla serve un nuovo intervento sul dispositivo (riconfigurazione, §7.25.2).",
-        "_a235": "A.235 (Davide, 02/11/2026): famiglia e Specializzazione seguono la forma manifestata — Spade per una lama, Asce per un’ascia, Armi Inastate per una lancia, Armi Flessibili per una frusta — e si applica una sola Specializzazione pertinente. Restano fissi il profilo dell’utilizzatore e l’Abilità Armi da mischia (Tecnomante: 1d8 Magico, FOR 3, 1 AzP e 2 PM per 10 Round): la forma cambia mani e portata, senza importare danno, requisiti o proprietà dell’arma commerciale. Le Manovre seguono compatibilità della forma e requisiti ordinari."
-      },
-      "id": "cyberarma",
-      "nome": "CyberArma",
-      "effetto_breve": "Artefatto TecnoMistico dei Custodi, pezzo unico: Custode SnT 1, Tecnomante SnT 2 con i PM personali. 1d8 Magico per Tecnomante e conversioni; la forma cambia solo mani e portata.",
-      "peso": 0.5,
-      "_nota_peso": "A.235 (Davide, 02/11/2026): peso e Integrità si registrano per esemplare. 0,5 kg, Qualità Non Comune, PS Integrità 12 e 4 PI sono i valori del supporto originale recuperato da Park (fissati con la A.158) e restano quelli di questa voce; non diventano obbligatori per ogni CyberArma originale. Le modifiche fisiche si annotano sul singolo esemplare (`esemplare.fisico`); la manifestazione energetica non aggiunge peso.",
-      "uso_per_classe": {
-        "fonte": "Armamenti 0.83 §7.25 (A.265): SnT base 3, Tecnomante 2, Custode 1, Custode costruttore e proprietario 0",
-        "predefinito": "altre",
-        "classi": [
-          {
-            "classe": "Custode",
-            "pm": 1,
-            "round": 15,
-            "danno_extra": 1,
-            "va": 0,
-            "sintonizzazione": 1,
-            "testo": "Custode (SnT 1): evoca l’Arma Astrale per 1 PM e 15 Round, includendo l’evocazione nell’Azione del primo attacco, +1 al danno (Maestro d’Arma). Danno base e altri benefici seguono il Grado e i Talenti del Custode (Giocatore §3.9.2)."
-          },
-          {
-            "classe": "Custode costruttore",
-            "pm": 1,
-            "round": 15,
-            "danno_extra": 1,
-            "va": 0,
-            "sintonizzazione": 0,
-            "condizione": "il Custode che ha costruito quell’esemplare e lo usa come propria arma personale",
-            "testo": "Custode costruttore (SnT 0): il Custode che l’ha costruita e la usa come propria arma personale non paga capacità di Sintonizzazione. Per il resto l’impiego è quello del Custode (A.265)."
-          },
-          {
-            "classe": "Tecnomante",
-            "pm": 2,
-            "round": 10,
-            "danno_extra": 0,
-            "va": 0,
-            "sintonizzazione": 2,
-            "testo": "Tecnomante (SnT 2): 1 AzP e 2 PM personali, lama stabile per 10 Round, senza Concentrazione; 1d8 Magico più i modificatori pertinenti. Attivazione automatica dopo la Sintonizzazione; restano le normali Prove per attaccare."
-          },
-          {
-            "classe": "altre",
-            "pm": null,
-            "cariche": null,
-            "round": null,
-            "danno_extra": 0,
-            "va": 0,
-            "ammesso": false,
-            "testo": "Altre Classi: l’originale non si usa senza la conversione a NeC (Armamenti 0.74 §7.25)."
-          }
-        ]
-      },
-      "costruzione": {
-        "fonte": "Armamenti 0.74 §7.25 (ritoccato il 02/11/2026); A.231 e A.235 (Davide, 02/11/2026)",
-        "chi": "Soltanto i Custodi costruiscono le CyberArmi originali. Il Tecnomante può studiare e modificare un originale esistente, senza costruirne di nuovi: è superata l’autorizzazione alla costruzione della A.158.",
-        "procedura_base": {
-          "chi": "Custode con Maestro d’Arma",
-          "passi": [
-            {
-              "fase": "Assemblaggio",
-              "prova": {
-                "abilita": "Tecnologia",
-                "modificatore": -4
-              },
-              "ore": 16,
-              "cr": 1000
-            },
-            {
-              "fase": "Infusione",
-              "prova": {
-                "abilita": "Rituali",
-                "modificatore": 0
-              },
-              "ore": 1,
-              "cr": 250,
-              "pm": 3
-            }
-          ],
-          "totale": {
-            "ore": 17,
-            "cr": 1250,
-            "pm": 3,
-            "nota": "con il progetto disponibile"
-          },
-          "progetto": {
-            "fase": "Sviluppo del progetto",
-            "prova": {
-              "abilita": "Artefatti",
-              "modificatore": 0
-            },
-            "ore": 4,
-            "cr": 100,
-            "nota": "solo se il progetto va sviluppato"
-          },
-          "nota": "Costi di realizzazione della configurazione base, non un prezzo universale di vendita. Restano gli esiti delle Prove e le particolarità dell’esemplare."
-        },
-        "nomi": "Ogni CyberArma originale ha un nome univoco derivato dal Custode che l’ha creata. Il profilo originario resta nello storico; dopo le modifiche confermate dal Direttore il profilo attuale prende il nome di chi la personalizza (Armamenti 0.74 §7.25, «Denominazione e storico»). I due nomi sono lo stesso esemplare: una sola voce fisica."
-      },
-      "modulatore_neurale": {
-        "sin": 1,
-        "classe": "Tecnomante",
-        "richiede": "interfaccia_neurale",
-        "fonte": "Armamenti 0.74 §7.25.2",
-        "testo": "SIN 1: +1 VA alle Prove per colpire con la CyberArma, comprese le Manovre che richiedono quel tiro, soltanto al Tecnomante con interfaccia neurale compatibile, funzionante e collegata. Non aggiunge bonus a Parate, danni o altre Prove; un solo SIN per Prova (§7.15.1)."
-      },
-      "modifiche": {
-        "fonte": "Armamenti 0.83 §7.25 e §7.25.2: prezzi indicativi su un originale esistente; si aggiungono al valore dell’arma originale",
-        "predisposizione_batteria": {
-          "cr": 1000
-        },
-        "conversione_nec": {
-          "cr": 2000,
-          "nota": "NeC escluso"
-        },
-        "modulatore_neurale": {
-          "cr": 1500,
-          "ore": 8,
-          "prova": {
-            "abilita": "Tecnologia",
-            "modificatore": -2
-          },
-          "nota": "servizio completo con progetto disponibile; interfaccia e batteria escluse"
-        },
-        "riconfigurazione": {
-          "cr": 300,
-          "ore": 8,
-          "prova": {
-            "abilita": "Tecnologia",
-            "modificatore": -2
-          },
-          "nota": "nuova forma sullo stesso modulatore; il nuovo profilo sostituisce il precedente"
-        },
-        "totali": "Armamenti 0.83 §7.25, sommando il valore indicativo dell’originale (7.500 cr): CyberArma con 10 CM 12.500 cr; con NeC Rosso 10 9.900 cr; con 10 CM e SIN 1 14.000 cr; con NeC Rosso 10 e SIN 1 11.400 cr. «Le tariffe degli interventi sono già prezzi indicativi completi e non ricevono nuovamente il moltiplicatore di rarità.»",
-        "riserva_cm_5": {
-          "cr": 2000,
-          "nota": "capacità ordinaria; con la predisposizione 3.000 cr"
-        },
-        "riserva_cm_10": {
-          "cr": 4000,
-          "nota": "richiede un progetto specifico; con la predisposizione 5.000 cr"
-        },
-        "nec_rosso_10_carico": {
-          "cr": 400,
-          "nota": "il NeC non è compreso nella conversione"
-        }
-      },
-      "progetti": [
-        {
-          "id": "paradise-dimitri",
-          "nome": "CyberArma: lavori a Paradise (Dimitri)",
-          "fonte": "Armamenti 0.74 §7.25 (ritoccato il 02/11/2026); A.231 e A.235 (Davide, 02/11/2026); appunti di Dimitri v1.2; scheda «CyberArma Opzioni per Dimitri» 1.0",
-          "classe": "Tecnomante",
-          "giorni_disponibili": 3,
-          "budget": {
-            "ore": 24,
-            "cr": 400
-          },
-          "descrizione": "Sulla CyberArma originale di Park, già nell’inventario: preparare la scheggia Verde instabile già posseduta e metterla al posto del frammento Viola, recuperare e integrare il modulo SIN della spada Cybertronic, personalizzare la forma e collaudare. Configurazione a PM personali: 1 AzP e 2 PM per 10 Round, SnT 2, SIN 1 al tiro per colpire con il modulo collegato. Batteria interna e conversione a NeC restano sviluppi successivi.",
-          "forma": {
-            "chi": "giocatore",
-            "quando": "prima della lavorazione",
-            "elenco": [
-              "lama-lunga",
-              "ascia-bipenne",
-              "punta",
-              "lancia",
-              "frusta",
-              "picca"
-            ]
-          },
-          "componenti": [
-            {
-              "id": "scheggia",
-              "nome": "Scheggia instabile Verde (già posseduta)",
-              "rif": "artefatti:scheggia-instabile-da-5-pm-chroma-verde",
-              "nota": "Prende il posto del frammento Viola come focalizzatore. Si lavora scarica; gli eventuali PM si possono usare prima. Con successo diventa un componente integrato: colore Verde, nessuna riserva di PM, nessuna SnT in più; esce dall’inventario. Un semplice fallimento non la distrugge."
-            },
-            {
-              "id": "modulo",
-              "nome": "Modulo neurale della spada Cybertronic",
-              "rif": "armi_corporative:spada-elettrificata-csa-404",
-              "nota": "Il modulo trasferito viene rimosso dalla spada donatrice: la spada perde il proprio SIN; con il circuito elettrico intatto conserva danno ordinario e scariche. Il modulo non trasferisce Elettricità alla CyberArma."
-            },
-            {
-              "id": "viola",
-              "nome": "Frammento Viola estratto",
-              "rif": "artefatti:chroma-viola-frammento",
-              "esce": true,
-              "nota": "Estratto dall’esemplare di Park, resta un oggetto separato nell’inventario, con le proprie conseguenze (Corruzione) e la necessità di contenimento: le decide il Direttore (A.231)."
-            }
-          ],
-          "giorni": [
-            {
-              "n": 1,
-              "ore": 8,
-              "lavoro": "Studio e progetto",
-              "prova": {
-                "abilita": "Artefatti",
-                "modificatore": -2
-              },
-              "risorse_cr": 200,
-              "esiti": "progetto"
-            },
-            {
-              "n": 2,
-              "ore": 8,
-              "lavoro": "Preparazione della scheggia Verde, sostituzione del Viola e collaudo",
-              "prova": {
-                "abilita": "Tecnologia",
-                "modificatore": -2
-              },
-              "risorse_cr": 100,
-              "esiti": "lavorazione"
-            },
-            {
-              "n": 3,
-              "ore": 8,
-              "lavoro": "Recupero e integrazione del modulo SIN dalla spada Cybertronic, personalizzazione della forma e collaudo finale",
-              "prova": {
-                "abilita": "Tecnologia",
-                "modificatore": -2
-              },
-              "risorse_cr": 100,
-              "esiti": "lavorazione"
-            }
-          ],
-          "esiti": {
-            "progetto": {
-              "magistrale": "Successo Magistrale: progetto magistrale, +2 VA per sempre alle Prove di Tecnologia per realizzarlo (Magia §24.3).",
-              "successo": "Successo: progetto ordinario (Magia §24.3).",
-              "fallimento": "Fallimento: nuovo tentativo con metà del tempo base e tutte le risorse di progettazione (Magia §24.3).",
-              "maldestro": "Fallimento Maldestro: nuovo tentativo con il tempo base intero e tutte le risorse (Magia §24.3)."
-            },
-            "lavorazione": {
-              "magistrale": "Successo Magistrale: lavorazione riuscita; +2 VA alla Prova di Rituali d’infusione di quell’esemplare, se ce n’è una (Magia §24.4).",
-              "successo": "Successo: lavorazione riuscita (Magia §24.4).",
-              "fallimento": "Fallimento: nuovo tentativo con metà del tempo base e materiali aggiuntivi pari al 25% del costo di lavorazione (Magia §24.4).",
-              "maldestro": "Fallimento Maldestro: nuovo tentativo con tempo intero e costo intero dei materiali; supporto e componenti restano recuperabili (Magia §24.4)."
-            }
-          },
-          "regole": [
-            "Gli eventuali nuovi tentativi devono rientrare nel tempo e nelle risorse disponibili; un semplice fallimento non distrugge automaticamente la scheggia.",
-            "Le risorse indicate sono materiali e consumabili. I componenti già posseduti e il lavoro svolto personalmente non vengono acquistati di nuovo; la tariffa del servizio completo non si somma automaticamente.",
-            "Il programma non registra come già eseguiti gli interventi: li conferma soltanto il Direttore, che rende disponibile il profilo modificato con «Consegna l’arma».",
-            "«Consegna l’arma» aggiorna lo stesso esemplare, conservandone provenienza e storico: nessuna seconda CyberArma (A.231).",
-            "Il profilo del Custode di Park rimane distinto: danni e Talenti personali di Park non passano all’utilizzatore.",
-            "La forma la sceglie il giocatore e si registra nel progetto. Batteria interna e conversione a NeC restano sviluppi successivi, non compresi in questi tre giorni.",
-            "L’alimentazione scelta decide se l’arma consegnata può ancora usare i PM personali: cristallo e SIN sì, riserva interna di CM e conversione a NeC no, e in più fanno perdere le proprietà da Custode (A.251).",
-            "L’alimentazione scelta decide se l’arma consegnata può ancora usare i PM personali: cristallo e SIN sì, riserva interna di CM e conversione a NeC no, e in più fanno perdere le proprietà da Custode (A.251)."
-          ],
-          "risultato": {
-            "rif": "armi:cyberarma",
-            "voce": {
-              "modulatore_neurale": true,
-              "focalizzatore": "Verde",
-              "configurazione": "PM personali"
-            },
-            "nome": "CyberArma Dimitri",
-            "aggiorna_esemplare": true
-          },
-          "esemplare_di_partenza": {
-            "rif": "armi:cyberarma",
-            "nome": "CyberArma Park",
-            "provenienza": "CyberArma originale di Park, recuperata",
-            "focalizzatore": "Viola",
-            "corruzione": "Corruzione 1",
-            "manifestazione_precedente": "frusta",
-            "nota": "A.231: la frusta era la manifestazione usata da Park; Dimitri non acquisisce le statistiche personali di Park né le capacità del Custode. La voce già presente nell’inventario va verificata e ricondotta a questo esemplare: la sua presenza non certifica che le modifiche siano già state eseguite."
-          },
-          "alimentazione": {
-            "fonte": "A.251 (Davide, 06/11/2026); Armamenti 0.74 §§7.25–7.25.4",
-            "chi": "giocatore",
-            "quando": "prima della lavorazione",
-            "elenco": [
-              "cristallo",
-              "sin",
-              "riserva_cm",
-              "nec"
-            ],
-            "comprese": [
-              "cristallo",
-              "sin"
-            ],
-            "predefinita": "cristallo",
-            "solo_direttore": [
-              "riserva_cm",
-              "nec"
-            ],
-            "_nota": "A.251: la scelta dice cosa si perde prima di confermare. Cristallo e SIN sono comprese nei tre giorni e tengono i PM personali; la riserva interna di CM e la conversione a NeC restano sviluppi successivi (descrizione del progetto), fanno perdere i PM personali e le proprietà da Custode e le autorizza soltanto il Direttore, con la conferma in chiaro."
-          }
-        }
-      ],
-      "alimentazione_modifiche": {
-        "fonte": "A.251 (Davide, 06/11/2026); A.265 (14/11/2026); Armamenti 0.83 §§7.25–7.25.4",
-        "_nota": "A.251: due famiglie di modifiche che non si comportano allo stesso modo. Cristallo sostituito e SIN inserita non toccano l’alimentazione: l’arma continua a potersi alimentare con i PM personali e le due cose possono coesistere con quell’alimentazione. Riserva interna di CM e conversione a NeC sono conversioni energetiche alternative: impediscono l’uso dei PM personali, fanno perdere le proprietà da Custode e non si cumulano fra loro. La scelta non si torna indietro facilmente: va detta in chiaro prima di confermare, perché chi la fa da un tablet non ha il manuale davanti.",
-        "pm_personali_predefiniti": true,
-        "perdite": [
-          "l’alimentazione con i PM personali",
-          "le proprietà da Custode"
-        ],
-        "famiglie": [
-          {
-            "id": "cristallo",
-            "nome": "Cristallo sostituito",
-            "conversione": false,
-            "pm_personali": true,
-            "proprieta_custode": true,
-            "testo": "Il cristallo focalizzatore è sostituito. L’arma continua a potersi alimentare con i PM personali e conserva le proprietà da Custode; coesiste con la SIN."
-          },
-          {
-            "id": "sin",
-            "nome": "Modulo SIN inserito",
-            "conversione": false,
-            "pm_personali": true,
-            "proprieta_custode": true,
-            "testo": "Il modulo neurale SIN è inserito (§7.25.2). L’arma continua a potersi alimentare con i PM personali e conserva le proprietà da Custode; coesiste con il cristallo sostituito."
-          },
-          {
-            "id": "riserva_cm",
-            "nome": "Riserva interna di CM",
-            "conversione": true,
-            "pm_personali": false,
-            "proprieta_custode": false,
-            "voce": "armi:cyberarma-batteria-verde",
-            "consumo": {
-              "cm": 1,
-              "azione": "1 AzP",
-              "ogni_colpi": 10,
-              "testo": "1 CM + 1 AzP ogni 10 colpi"
-            },
-            "testo": "Conversione energetica: la riserva interna di Cariche Mistiche alimenta l’arma. Si perdono l’alimentazione con i PM personali e le proprietà da Custode. Consumo: 1 CM + 1 AzP ogni 10 colpi. Non si cumula con la conversione a NeC."
-          },
-          {
-            "id": "nec",
-            "nome": "Conversione a NeC",
-            "conversione": true,
-            "pm_personali": false,
-            "proprieta_custode": false,
-            "voce": "armi:cyberarma-nec",
-            "consumo": {
-              "cariche": 1,
-              "colore": "Rosso",
-              "azione": "1 AzP",
-              "ogni_colpi": 10,
-              "testo": "1 carica NeC Rossa + 1 AzP ogni 10 colpi"
-            },
-            "testo": "Conversione energetica: un NeC Rosso compatibile alimenta l’arma. Si perdono l’alimentazione con i PM personali e le proprietà da Custode. Consumo: 1 carica + 1 AzP ogni 10 colpi. Non si cumula con la riserva interna di CM."
-          }
-        ],
-        "non_cumulabili": [
-          "riserva_cm",
-          "nec"
-        ],
-        "TODO(Davide)": "A.260: la A.251 misura il consumo delle due conversioni «ogni 10 colpi», la A.236 del 02/11 diceva «1 CM per 10 Round». L’app applica la A.251, che è la più recente: 10 colpi. Da confermare."
-      },
-      "unico": true,
-      "_nota_unico": "Armamenti 0.83 §7.25: «Ogni originale è un pezzo unico». Dalla A.265 il manuale gli dà comunque un valore indicativo (7.500 cr): l’app lo mostra come prezzo letto dal catalogo e dice che è indicativo, non che è un listino. La formula della A.256 non si applica da sé a un pezzo unico.",
-      "creazione_cr": 1250
-    },
-    {
-      "tipo": "arma_ravvicinata",
-      "catalogo": "Artefatti di campagna",
-      "famiglia": "Spade",
-      "nomi_alternativi": [
-        "Cyber Arma",
-        "Cyber-Arma"
-      ],
-      "paragrafo": "§7.25 («Batteria interna opzionale»), §7.25.2",
-      "versione_manuale": "Armamenti 0.83 (§§7.25–7.25.4) / A.231, A.235, A.251, A.265",
-      "abilita": "Armi da mischia",
-      "specializzazione": "specializzazione-spade",
-      "manovre": [
-        "Affondo",
-        "Spazzata"
-      ],
-      "mani": 1,
-      "danno": {
-        "una_mano": "1d8",
-        "due_mani": null
-      },
-      "natura_danno": "Magico",
-      "portata_q": 1,
-      "gittata_q": null,
-      "for_richiesta": 3,
-      "inc": null,
-      "pi": 4,
-      "qualita": "Non comune",
-      "ps_int": 12,
-      "reperibilita": "EP",
-      "costo": null,
-      "_nota_costo": "Armamenti 0.83 §7.25: il prezzo di una configurazione modificata è il valore indicativo dell’originale (7.500 cr) più le tariffe degli interventi, che il manuale elenca nella voce «cyberarma» → modifiche e somma per i quattro casi dichiarati. Non c’è un prezzo di catalogo di questa variante: nell’app il prezzo risulta non disponibile, non zero.",
-      "proprieta": [],
-      "manifestazioni": {
-        "fonte": "Armamenti 0.74 §7.25 (ritoccato il 02/11/2026); A.231 e A.235 (Davide, 02/11/2026); A.166 del 16/10/2026 per le forme",
-        "abilita": "Armi da mischia",
-        "_abilita": "Si usa sempre con Armi da mischia, qualunque forma sia manifestata: non si passa ad Armi da guerra, Corpo a corpo o altro perché l’arma ordinaria corrispondente usa quell’Abilità.",
-        "scelta_libera": [
-          "Custode"
-        ],
-        "_scelta_libera": "Il Custode manifesta qualsiasi tipo di arma ravvicinata. Il Tecnomante e gli altri utilizzatori ammessi usano la forma del progetto; cambiarla è una modifica del manufatto (nell’app si cambia in «Modifica master»), non una facoltà di cambio forma.",
-        "progetto": "lama-lunga",
-        "una_sola_specializzazione": true,
-        "_una_sola_specializzazione": "La Specializzazione posseduta pertinente alla forma dà i normali +1 VA e +1 danno (§8.8.1); non si cumulano Specializzazioni di forme diverse.",
-        "elenco": [
-          {
-            "id": "lama-lunga",
-            "nome": "Lama (una mano, 1 Q)",
-            "esempio": "Lama, ascia o altra forma ravvicinata a una mano",
-            "mani": 1,
-            "portata_q": 1,
-            "famiglia": "Spade",
-            "specializzazione": "specializzazione-spade",
-            "manovre": [
-              "Affondo",
-              "Spazzata"
-            ]
-          },
-          {
-            "id": "ascia-bipenne",
-            "nome": "Ascia bipenne (due mani, 1 Q)",
-            "esempio": "Ascia bipenne o altra forma ravvicinata a due mani",
-            "mani": 2,
-            "portata_q": 1,
-            "famiglia": "Asce",
-            "specializzazione": "specializzazione-asce",
-            "manovre": [
-              "Spazzata"
-            ],
-            "due_mani_impugnatura": true
-          },
-          {
-            "id": "punta",
-            "nome": "Punta (una mano, 2 Q)",
-            "esempio": "Punta o lancia con impugnatura a una mano",
-            "mani": 1,
-            "portata_q": 2,
-            "famiglia": "Armi inastate",
-            "specializzazione": "specializzazione-armi-inastate",
-            "manovre": [
-              "Affondo"
-            ]
-          },
-          {
-            "id": "lancia",
-            "nome": "Lancia (due mani, 2 Q)",
-            "esempio": "Lancia o altra forma allungata a due mani",
-            "mani": 2,
-            "portata_q": 2,
-            "famiglia": "Armi inastate",
-            "specializzazione": "specializzazione-armi-inastate",
-            "manovre": [
-              "Affondo"
-            ],
-            "due_mani_impugnatura": true
-          },
-          {
-            "id": "frusta",
-            "nome": "Frusta (una mano, 3 Q)",
-            "esempio": "Frusta o altra manifestazione flessibile",
-            "mani": 1,
-            "portata_q": 3,
-            "famiglia": "Armi flessibili",
-            "specializzazione": "specializzazione-armi-flessibili",
-            "manovre": [
-              "generali"
-            ],
-            "nota": "Famiglia Armi flessibili. La forma a frusta non concede da sola Immobilizzare a distanza: le Manovre seguono la compatibilità della forma e i requisiti ordinari, senza le proprietà della frusta commerciale (A.235, che corregge la A.166)."
-          },
-          {
-            "id": "picca",
-            "nome": "Picca (due mani, 3 Q)",
-            "esempio": "Picca o altra manifestazione lunga a due mani",
-            "mani": 2,
-            "portata_q": 3,
-            "famiglia": "Armi inastate",
-            "specializzazione": "specializzazione-armi-inastate",
-            "manovre": [
-              "Affondo"
-            ],
-            "due_mani_impugnatura": true
-          },
-          {
-            "id": "ascia",
-            "nome": "Ascia (una mano, 1 Q)",
-            "esempio": "Ascia a una mano",
-            "mani": 1,
-            "portata_q": 1,
-            "famiglia": "Asce",
-            "specializzazione": "specializzazione-asce",
-            "manovre": [
-              "Spazzata"
-            ]
-          }
-        ],
-        "_altre_forme": "A.166: per le forme non elencate si usa la famiglia corrispondente del catalogo, con la sua Specializzazione e le sue Manovre.",
-        "_forma": "La forma cambia esclusivamente mani occupate e portata: danno, Abilità, requisito FOR, durata e costi restano quelli della CyberArma; non si copiano le proprietà delle armi commerciali (Armamenti 0.74 §7.25). Le opzioni a due mani richiedono un’impugnatura esistente compatibile. La forma resta fissa: per cambiarla serve un nuovo intervento sul dispositivo (riconfigurazione, §7.25.2).",
-        "_a235": "A.235 (Davide, 02/11/2026): famiglia e Specializzazione seguono la forma manifestata — Spade per una lama, Asce per un’ascia, Armi Inastate per una lancia, Armi Flessibili per una frusta — e si applica una sola Specializzazione pertinente. Restano fissi il profilo dell’utilizzatore e l’Abilità Armi da mischia (Tecnomante: 1d8 Magico, FOR 3, 1 AzP e 2 PM per 10 Round): la forma cambia mani e portata, senza importare danno, requisiti o proprietà dell’arma commerciale. Le Manovre seguono compatibilità della forma e requisiti ordinari."
-      },
-      "id": "cyberarma-batteria-verde",
-      "nome": "CyberArma con Batteria Verde",
-      "effetto_breve": "Originale con riserva interna Verde da 5 Cariche Mistiche, esclusiva dell’arma (1 CM per 10 Round, cinque attivazioni), SnT 2 complessiva; resta l’alternativa dei PM personali.",
-      "peso": 0.7,
-      "_nota_peso": "A.158, punto 3: peso complessivo della configurazione modificata.",
-      "uso_per_classe": {
-        "fonte": "Armamenti 0.83 §7.25 (A.265): SnT base 3, Tecnomante 2, Custode 1, Custode costruttore e proprietario 0",
-        "predefinito": "altre",
-        "classi": [
-          {
-            "classe": "Custode",
-            "pm": null,
-            "round": null,
-            "danno_extra": 1,
-            "va": 0,
-            "sintonizzazione": 1,
-            "testo": "Custode: con questa conversione si perdono le proprietà da Custode e l’alimentazione con i PM personali (A.251). L’impiego del Custode non è disponibile su un esemplare convertito.",
-            "ogni_colpi": 10,
-            "ammesso": false,
-            "cm": null
-          },
-          {
-            "classe": "Custode costruttore",
-            "pm": null,
-            "round": null,
-            "danno_extra": 0,
-            "va": 0,
-            "sintonizzazione": 0,
-            "condizione": "il Custode che ha costruito quell’esemplare e lo usa come propria arma personale",
-            "testo": "Custode costruttore (SnT 0): la SnT resta quella della scala, ma su un esemplare convertito si perdono le proprietà da Custode e l’alimentazione con i PM personali (A.251): l’impiego del Custode non è disponibile.",
-            "ammesso": false
-          },
-          {
-            "classe": "Tecnomante",
-            "pm": 2,
-            "round": 10,
-            "danno_extra": 0,
-            "va": 0,
-            "sintonizzazione": 2,
-            "testo": "Tecnomante (SnT 2): 1 AzP e 1 CM della riserva interna, oppure 2 PM personali; lama stabile, 1 CM ogni 10 colpi, senza Concentrazione; 1d8 Magico più i modificatori pertinenti (revisione «Cariche Mistiche», A.236). (A.251: 1 CM + 1 AzP ogni 10 colpi; si perdono i PM personali e le proprietà da Custode)",
-            "cm": 1,
-            "ogni_colpi": 10
-          },
-          {
-            "classe": "altre",
-            "pm": null,
-            "cariche": null,
-            "round": null,
-            "danno_extra": 0,
-            "va": 0,
-            "ammesso": false,
-            "testo": "Altre Classi: l’originale non si usa senza la conversione a NeC (Armamenti 0.74 §7.25)."
-          }
-        ]
-      },
-      "modulatore_neurale": {
-        "sin": 1,
-        "classe": "Tecnomante",
-        "richiede": "interfaccia_neurale",
-        "fonte": "Armamenti 0.74 §7.25.2",
-        "testo": "SIN 1: +1 VA alle Prove per colpire con la CyberArma, comprese le Manovre che richiedono quel tiro, soltanto al Tecnomante con interfaccia neurale compatibile, funzionante e collegata. Non aggiunge bonus a Parate, danni o altre Prove; un solo SIN per Prova (§7.15.1)."
-      },
-      "_nota_batteria": "Armamenti 0.83 §7.25 e revisione «Cariche Mistiche» (A.236): riserva interna Verde dedicata esclusivamente alla CyberArma, capacità ordinaria 5 CM; «una riserva da 10 CM richiede un progetto specifico». Non paga Incantesimi, altre capacità o altri oggetti e non si converte in PM personali. Per il Tecnomante 1 CM e 1 AzP manifestano l’arma per 10 Round (cinque attivazioni con 5 CM); dopo l’installazione i PM personali e le proprietà del Custode sono perduti (A.251). Ricarica: CM mancanti × 2 × rapporto, quindi 30 PM da vuota a 3:1, 20 a 2:1, 10 a 1:1; con 10 CM i valori raddoppiano. Prezzo indicativo: predisposizione 1.000 cr + riserva 2.000 cr (5 CM) o 4.000 cr (10 CM).",
-      "costo_modifica": 3000,
-      "alimentazione_modifiche_rif": {
-        "famiglia": "riserva_cm",
-        "rif": "armi:cyberarma",
-        "fonte": "A.251 (Davide, 06/11/2026); Armamenti 0.74 §§7.25–7.25.4"
-      },
-      "unico": true,
-      "_nota_unico": "Armamenti 0.74 §7.25: «Ogni originale è un pezzo unico». Rarità «Unico o reliquia» della A.256: senza prezzo di catalogo. Il valore dipende da fattura, unicità, proprietà e provenienza, e lo decide il Direttore."
-    },
-    {
-      "tipo": "arma_ravvicinata",
-      "catalogo": "Artefatti di campagna",
-      "famiglia": "Spade",
-      "nomi_alternativi": [],
-      "paragrafo": "§7.25 («Conversione a NeC»), §7.25.2",
-      "versione_manuale": "Armamenti 0.83 (§§7.25–7.25.4) / A.231, A.235, A.251, A.265",
-      "abilita": "Armi da mischia",
-      "specializzazione": "specializzazione-spade",
-      "manovre": [
-        "Affondo",
-        "Spazzata"
-      ],
-      "mani": 1,
-      "danno": {
-        "una_mano": "1d8",
-        "due_mani": null
-      },
-      "natura_danno": "Magico",
-      "portata_q": 1,
-      "gittata_q": null,
-      "for_richiesta": 3,
-      "inc": null,
-      "pi": 4,
-      "qualita": "Non comune",
-      "ps_int": 12,
-      "reperibilita": "EP",
-      "costo": null,
-      "_nota_costo": "Armamenti 0.83 §7.25: il prezzo di una configurazione modificata è il valore indicativo dell’originale (7.500 cr) più le tariffe degli interventi, che il manuale elenca nella voce «cyberarma» → modifiche e somma per i quattro casi dichiarati. Non c’è un prezzo di catalogo di questa variante: nell’app il prezzo risulta non disponibile, non zero.",
-      "proprieta": [],
-      "manifestazioni": {
-        "fonte": "Armamenti 0.74 §7.25 (ritoccato il 02/11/2026); A.231 e A.235 (Davide, 02/11/2026); A.166 del 16/10/2026 per le forme",
-        "abilita": "Armi da mischia",
-        "_abilita": "Si usa sempre con Armi da mischia, qualunque forma sia manifestata: non si passa ad Armi da guerra, Corpo a corpo o altro perché l’arma ordinaria corrispondente usa quell’Abilità.",
-        "scelta_libera": [
-          "Custode"
-        ],
-        "_scelta_libera": "Il Custode manifesta qualsiasi tipo di arma ravvicinata. Il Tecnomante e gli altri utilizzatori ammessi usano la forma del progetto; cambiarla è una modifica del manufatto (nell’app si cambia in «Modifica master»), non una facoltà di cambio forma.",
-        "progetto": "lama-lunga",
-        "una_sola_specializzazione": true,
-        "_una_sola_specializzazione": "La Specializzazione posseduta pertinente alla forma dà i normali +1 VA e +1 danno (§8.8.1); non si cumulano Specializzazioni di forme diverse.",
-        "elenco": [
-          {
-            "id": "lama-lunga",
-            "nome": "Lama (una mano, 1 Q)",
-            "esempio": "Lama, ascia o altra forma ravvicinata a una mano",
-            "mani": 1,
-            "portata_q": 1,
-            "famiglia": "Spade",
-            "specializzazione": "specializzazione-spade",
-            "manovre": [
-              "Affondo",
-              "Spazzata"
-            ]
-          },
-          {
-            "id": "ascia-bipenne",
-            "nome": "Ascia bipenne (due mani, 1 Q)",
-            "esempio": "Ascia bipenne o altra forma ravvicinata a due mani",
-            "mani": 2,
-            "portata_q": 1,
-            "famiglia": "Asce",
-            "specializzazione": "specializzazione-asce",
-            "manovre": [
-              "Spazzata"
-            ],
-            "due_mani_impugnatura": true
-          },
-          {
-            "id": "punta",
-            "nome": "Punta (una mano, 2 Q)",
-            "esempio": "Punta o lancia con impugnatura a una mano",
-            "mani": 1,
-            "portata_q": 2,
-            "famiglia": "Armi inastate",
-            "specializzazione": "specializzazione-armi-inastate",
-            "manovre": [
-              "Affondo"
-            ]
-          },
-          {
-            "id": "lancia",
-            "nome": "Lancia (due mani, 2 Q)",
-            "esempio": "Lancia o altra forma allungata a due mani",
-            "mani": 2,
-            "portata_q": 2,
-            "famiglia": "Armi inastate",
-            "specializzazione": "specializzazione-armi-inastate",
-            "manovre": [
-              "Affondo"
-            ],
-            "due_mani_impugnatura": true
-          },
-          {
-            "id": "frusta",
-            "nome": "Frusta (una mano, 3 Q)",
-            "esempio": "Frusta o altra manifestazione flessibile",
-            "mani": 1,
-            "portata_q": 3,
-            "famiglia": "Armi flessibili",
-            "specializzazione": "specializzazione-armi-flessibili",
-            "manovre": [
-              "generali"
-            ],
-            "nota": "Famiglia Armi flessibili. La forma a frusta non concede da sola Immobilizzare a distanza: le Manovre seguono la compatibilità della forma e i requisiti ordinari, senza le proprietà della frusta commerciale (A.235, che corregge la A.166)."
-          },
-          {
-            "id": "picca",
-            "nome": "Picca (due mani, 3 Q)",
-            "esempio": "Picca o altra manifestazione lunga a due mani",
-            "mani": 2,
-            "portata_q": 3,
-            "famiglia": "Armi inastate",
-            "specializzazione": "specializzazione-armi-inastate",
-            "manovre": [
-              "Affondo"
-            ],
-            "due_mani_impugnatura": true
-          },
-          {
-            "id": "ascia",
-            "nome": "Ascia (una mano, 1 Q)",
-            "esempio": "Ascia a una mano",
-            "mani": 1,
-            "portata_q": 1,
-            "famiglia": "Asce",
-            "specializzazione": "specializzazione-asce",
-            "manovre": [
-              "Spazzata"
-            ]
-          }
-        ],
-        "_altre_forme": "A.166: per le forme non elencate si usa la famiglia corrispondente del catalogo, con la sua Specializzazione e le sue Manovre.",
-        "_forma": "La forma cambia esclusivamente mani occupate e portata: danno, Abilità, requisito FOR, durata e costi restano quelli della CyberArma; non si copiano le proprietà delle armi commerciali (Armamenti 0.74 §7.25). Le opzioni a due mani richiedono un’impugnatura esistente compatibile. La forma resta fissa: per cambiarla serve un nuovo intervento sul dispositivo (riconfigurazione, §7.25.2).",
-        "_a235": "A.235 (Davide, 02/11/2026): famiglia e Specializzazione seguono la forma manifestata — Spade per una lama, Asce per un’ascia, Armi Inastate per una lancia, Armi Flessibili per una frusta — e si applica una sola Specializzazione pertinente. Restano fissi il profilo dell’utilizzatore e l’Abilità Armi da mischia (Tecnomante: 1d8 Magico, FOR 3, 1 AzP e 2 PM per 10 Round): la forma cambia mani e portata, senza importare danno, requisiti o proprietà dell’arma commerciale. Le Manovre seguono compatibilità della forma e requisiti ordinari."
-      },
-      "id": "cyberarma-nec",
-      "nome": "CyberArma convertita a NeC",
-      "effetto_breve": "Originale con la conversione a NeC Rosso: qualsiasi Classe, rispettando competenze e requisiti; 1 carica per 10 Round, SnT 3 complessiva.",
-      "peso": 0.5,
-      "_nota_peso": "Armamenti 0.74 §7.25: peso, dimensioni e Integrità del supporto si registrano per esemplare. 0,5 kg, Qualità Non comune, PS Integrità 12 e 4 PI sono i valori della A.158 (13/10) e restano finché l’esemplare non ne ha di propri (A.235).",
-      "uso_per_classe": {
-        "fonte": "Armamenti 0.83 §7.25 (A.265): SnT base 3, Tecnomante 2, Custode 1, Custode costruttore e proprietario 0",
-        "predefinito": "altre",
-        "classi": [
-          {
-            "classe": "Custode costruttore",
-            "pm": null,
-            "round": null,
-            "danno_extra": 0,
-            "va": 0,
-            "sintonizzazione": 0,
-            "condizione": "il Custode che ha costruito quell’esemplare e lo usa come propria arma personale",
-            "testo": "Custode costruttore (SnT 0): la SnT resta quella della scala, ma su un esemplare convertito si perdono le proprietà da Custode e l’alimentazione con i PM personali (A.251): l’impiego del Custode non è disponibile.",
-            "ammesso": false
-          },
-          {
-            "classe": "altre",
-            "pm": null,
-            "cariche": null,
-            "nec": 1,
-            "round": 10,
-            "danno_extra": 0,
-            "va": 0,
-            "sintonizzazione": 3,
-            "testo": "Qualsiasi Classe (SnT 3), rispettando competenze e requisiti dell’esemplare: 1 AzP e 1 carica di un NeC Rosso compatibile, arma manifestata per 10 colpi, senza PM personali né Concentrazione. Il consumo è per attivazione, non per attacco; il circuito alimenta solo questa CyberArma. La carica si scala nella riga del NeC (Inventario). (A.251: 1 carica + 1 AzP ogni 10 colpi; si perdono i PM personali e le proprietà da Custode)",
-            "ogni_colpi": 10
-          }
-        ]
-      },
-      "modulatore_neurale": {
-        "sin": 1,
-        "classe": "Tecnomante",
-        "richiede": "interfaccia_neurale",
-        "fonte": "Armamenti 0.74 §7.25.2",
-        "testo": "SIN 1: +1 VA alle Prove per colpire con la CyberArma, comprese le Manovre che richiedono quel tiro, soltanto al Tecnomante con interfaccia neurale compatibile, funzionante e collegata. Non aggiunge bonus a Parate, danni o altre Prove; un solo SIN per Prova (§7.15.1)."
-      },
-      "_nota_nec": "Armamenti 0.83 §7.25 e A.237: un NeC Rosso compatibile diventa l’unica fonte di alimentazione; ogni attivazione costa 1 AzP e una carica intera e mantiene la manifestazione per 10 Round, quindi un NeC Rosso 10 consente dieci attivazioni. Qualsiasi personaggio può usarla dopo la Sintonizzazione, rispettando competenze e requisiti dell’esemplare. Le conversioni non danno il +1 danno di Maestro d’Arma né i benefici del Custode (A.251). Prezzo indicativo della conversione: 2.000 cr, NeC escluso; un NeC Rosso 10 carico costa 400 cr.",
-      "costo_modifica": 2000,
-      "alimentazione": {
-        "nec": "nec:nec-rosso-10",
-        "usi": 10,
-        "unita_usi": "cariche",
-        "descrizione": "NEC Rosso da 10 cariche: una carica per attivazione (1 AzP, 10 Round), non per attacco; la carica residua resta al NEC. Sostituzione e ricarica secondo le regole dei NEC e la A.215. Non converte cariche tecnologiche in PM o in energia mistica.",
-        "paragrafo": "A.237 (Davide, 02/11/2026); Armamenti 0.74 §7.25"
-      },
-      "alimentazione_modifiche_rif": {
-        "famiglia": "nec",
-        "rif": "armi:cyberarma",
-        "fonte": "A.251 (Davide, 06/11/2026); Armamenti 0.74 §§7.25–7.25.4"
-      },
-      "unico": true,
-      "_nota_unico": "Armamenti 0.74 §7.25: «Ogni originale è un pezzo unico». Rarità «Unico o reliquia» della A.256: senza prezzo di catalogo. Il valore dipende da fattura, unicità, proprietà e provenienza, e lo decide il Direttore."
+ "versione_manuale": "Armamenti 0.86",
+ "fonte": "Manuale degli Armamenti v0.50, §7.1.1–7.1.3 (catalogo Commerciale delle armi ravvicinate); lotto 1 dal pilota di estrazione · Armamenti §7.25 e §7.25.1 (0.62); A.158, risposta approvata il 13/10/2026",
+ "_nota": "Generato da tools/lotti/lotto1_pilota.mjs; da qui in poi si modifica questo file. «abilita» è il nome in abilita.json; «specializzazione» è l’id della Specializzazione nelle armi (§8.8.1) che si applica.",
+ "oggetti": [
+  {
+   "id": "coltello",
+   "nome": "Coltello",
+   "tipo": "arma_ravvicinata",
+   "catalogo": "Commerciale",
+   "famiglia": "Coltelli e pugnali",
+   "nomi_alternativi": [
+    "Pugnale triangolare"
+   ],
+   "note_manuale": "",
+   "paragrafo": "§7.1.1",
+   "versione_manuale": "Armamenti 0.86",
+   "abilita": "Armi da mischia",
+   "specializzazione": "specializzazione-coltelli-e-pugnali",
+   "mani": 1,
+   "danno": {
+    "una_mano": "1d4",
+    "due_mani": null
+   },
+   "portata_q": 1,
+   "gittata_q": null,
+   "for_richiesta": 2,
+   "inc": null,
+   "pi": 4,
+   "qualita": "Comune",
+   "ps_int": 10,
+   "reperibilita": "CO",
+   "costo": 80,
+   "manovre": [
+    "Affondo"
+   ],
+   "proprieta": [],
+   "_edizione": {
+    "campi": {
+     "abilita": "Armamenti 0.86",
+     "famiglia": "Armamenti 0.86",
+     "catalogo": "Armamenti 0.86",
+     "mani": "Armamenti 0.86",
+     "danno": "Armamenti 0.86",
+     "portata_q": "Armamenti 0.86",
+     "for_richiesta": "Armamenti 0.86",
+     "pi": "Armamenti 0.86",
+     "qualita": "Armamenti 0.86",
+     "ps_int": "Armamenti 0.86",
+     "reperibilita": "Armamenti 0.86",
+     "costo": "Armamenti 0.86"
     }
-  ]
+   }
+  },
+  {
+   "id": "pugnale",
+   "nome": "Pugnale",
+   "tipo": "arma_ravvicinata",
+   "catalogo": "Commerciale",
+   "famiglia": "Coltelli e pugnali",
+   "nomi_alternativi": [
+    "Pugnale da caccia"
+   ],
+   "note_manuale": "Si può lanciare con il profilo a distanza del catalogo Commerciale (§7.7), stesso oggetto, prezzo e Integrità.",
+   "paragrafo": "§7.1.1",
+   "versione_manuale": "Armamenti 0.86",
+   "abilita": "Armi da mischia",
+   "specializzazione": "specializzazione-coltelli-e-pugnali",
+   "mani": 1,
+   "danno": {
+    "una_mano": "1d4+1",
+    "due_mani": null
+   },
+   "portata_q": 1,
+   "gittata_q": null,
+   "for_richiesta": 2,
+   "inc": null,
+   "pi": 4,
+   "qualita": "Comune",
+   "ps_int": 10,
+   "reperibilita": "CO",
+   "costo": 150,
+   "manovre": [
+    "Affondo"
+   ],
+   "proprieta": [],
+   "_edizione": {
+    "campi": {
+     "abilita": "Armamenti 0.86",
+     "famiglia": "Armamenti 0.86",
+     "catalogo": "Armamenti 0.86",
+     "mani": "Armamenti 0.86",
+     "danno": "Armamenti 0.86",
+     "portata_q": "Armamenti 0.86",
+     "for_richiesta": "Armamenti 0.86",
+     "pi": "Armamenti 0.86",
+     "qualita": "Armamenti 0.86",
+     "ps_int": "Armamenti 0.86",
+     "reperibilita": "Armamenti 0.86",
+     "costo": "Armamenti 0.86"
+    }
+   }
+  },
+  {
+   "id": "daga",
+   "nome": "Daga",
+   "tipo": "arma_ravvicinata",
+   "catalogo": "Commerciale",
+   "famiglia": "Coltelli e pugnali",
+   "nomi_alternativi": [],
+   "note_manuale": "",
+   "paragrafo": "§7.1.1",
+   "versione_manuale": "Armamenti 0.86",
+   "abilita": "Armi da mischia",
+   "specializzazione": "specializzazione-coltelli-e-pugnali",
+   "mani": 1,
+   "danno": {
+    "una_mano": "1d6",
+    "due_mani": null
+   },
+   "portata_q": 1,
+   "gittata_q": null,
+   "for_richiesta": 3,
+   "inc": null,
+   "pi": 4,
+   "qualita": "Comune",
+   "ps_int": 10,
+   "reperibilita": "NC",
+   "costo": 220,
+   "manovre": [
+    "Affondo"
+   ],
+   "proprieta": [],
+   "_edizione": {
+    "campi": {
+     "abilita": "Armamenti 0.86",
+     "famiglia": "Armamenti 0.86",
+     "catalogo": "Armamenti 0.86",
+     "mani": "Armamenti 0.86",
+     "danno": "Armamenti 0.86",
+     "portata_q": "Armamenti 0.86",
+     "for_richiesta": "Armamenti 0.86",
+     "pi": "Armamenti 0.86",
+     "qualita": "Armamenti 0.86",
+     "ps_int": "Armamenti 0.86",
+     "reperibilita": "Armamenti 0.86",
+     "costo": "Armamenti 0.86"
+    }
+   }
+  },
+  {
+   "id": "pugnale-da-combattimento",
+   "nome": "Pugnale da combattimento",
+   "tipo": "arma_ravvicinata",
+   "catalogo": "Commerciale",
+   "famiglia": "Coltelli e pugnali",
+   "nomi_alternativi": [],
+   "note_manuale": "",
+   "paragrafo": "§7.1.1",
+   "versione_manuale": "Armamenti 0.86",
+   "abilita": "Armi da mischia",
+   "specializzazione": "specializzazione-coltelli-e-pugnali",
+   "mani": 1,
+   "danno": {
+    "una_mano": "1d6+1",
+    "due_mani": null
+   },
+   "portata_q": 1,
+   "gittata_q": null,
+   "for_richiesta": 3,
+   "inc": null,
+   "pi": 4,
+   "qualita": "Comune",
+   "ps_int": 10,
+   "reperibilita": "NC",
+   "costo": 300,
+   "manovre": [
+    "Affondo"
+   ],
+   "proprieta": [],
+   "_edizione": {
+    "campi": {
+     "abilita": "Armamenti 0.86",
+     "famiglia": "Armamenti 0.86",
+     "catalogo": "Armamenti 0.86",
+     "mani": "Armamenti 0.86",
+     "danno": "Armamenti 0.86",
+     "portata_q": "Armamenti 0.86",
+     "for_richiesta": "Armamenti 0.86",
+     "pi": "Armamenti 0.86",
+     "qualita": "Armamenti 0.86",
+     "ps_int": "Armamenti 0.86",
+     "reperibilita": "Armamenti 0.86",
+     "costo": "Armamenti 0.86"
+    }
+   }
+  },
+  {
+   "id": "spada-leggera",
+   "nome": "Spada leggera",
+   "tipo": "arma_ravvicinata",
+   "catalogo": "Commerciale",
+   "famiglia": "Spade",
+   "nomi_alternativi": [
+    "Spada corta",
+    "Sciabola"
+   ],
+   "note_manuale": "",
+   "paragrafo": "§7.1.1",
+   "versione_manuale": "Armamenti 0.86",
+   "abilita": "Armi da mischia",
+   "specializzazione": "specializzazione-spade",
+   "mani": 1,
+   "danno": {
+    "una_mano": "1d6+1",
+    "due_mani": null
+   },
+   "portata_q": 1,
+   "gittata_q": null,
+   "for_richiesta": 3,
+   "inc": null,
+   "pi": 5,
+   "qualita": "Comune",
+   "ps_int": 10,
+   "reperibilita": "NC",
+   "costo": 350,
+   "manovre": [
+    "Affondo",
+    "Spazzata"
+   ],
+   "proprieta": [],
+   "_edizione": {
+    "campi": {
+     "abilita": "Armamenti 0.86",
+     "famiglia": "Armamenti 0.86",
+     "catalogo": "Armamenti 0.86",
+     "mani": "Armamenti 0.86",
+     "danno": "Armamenti 0.86",
+     "portata_q": "Armamenti 0.86",
+     "for_richiesta": "Armamenti 0.86",
+     "pi": "Armamenti 0.86",
+     "qualita": "Armamenti 0.86",
+     "ps_int": "Armamenti 0.86",
+     "reperibilita": "Armamenti 0.86",
+     "costo": "Armamenti 0.86"
+    }
+   }
+  },
+  {
+   "id": "stocco",
+   "nome": "Stocco",
+   "tipo": "arma_ravvicinata",
+   "catalogo": "Commerciale",
+   "famiglia": "Spade",
+   "nomi_alternativi": [],
+   "note_manuale": "",
+   "paragrafo": "§7.1.1",
+   "versione_manuale": "Armamenti 0.86",
+   "abilita": "Armi da mischia",
+   "specializzazione": "specializzazione-spade",
+   "mani": 1,
+   "danno": {
+    "una_mano": "1d6",
+    "due_mani": null
+   },
+   "portata_q": 1,
+   "gittata_q": null,
+   "for_richiesta": 3,
+   "inc": null,
+   "pi": 5,
+   "qualita": "Comune",
+   "ps_int": 10,
+   "reperibilita": "NC",
+   "costo": 450,
+   "manovre": [
+    "Affondo"
+   ],
+   "proprieta": [
+    {
+     "nome": "Sanguinante 1",
+     "testo": "Stocco e Artigli applicano Sanguinamento 1 quando infliggono almeno 1 danno dopo l’Armatura. Restano la perdita immediata, le ricorrenze all’Iniziativa della fonte e le regole di cumulo e arresto del §5.15."
+    }
+   ],
+   "_edizione": {
+    "campi": {
+     "abilita": "Armamenti 0.86",
+     "famiglia": "Armamenti 0.86",
+     "catalogo": "Armamenti 0.86",
+     "mani": "Armamenti 0.86",
+     "danno": "Armamenti 0.86",
+     "portata_q": "Armamenti 0.86",
+     "for_richiesta": "Armamenti 0.86",
+     "pi": "Armamenti 0.86",
+     "qualita": "Armamenti 0.86",
+     "ps_int": "Armamenti 0.86",
+     "reperibilita": "Armamenti 0.86",
+     "costo": "Armamenti 0.86"
+    }
+   }
+  },
+  {
+   "id": "spada-lunga",
+   "nome": "Spada lunga",
+   "tipo": "arma_ravvicinata",
+   "catalogo": "Commerciale",
+   "famiglia": "Spade",
+   "nomi_alternativi": [],
+   "note_manuale": "",
+   "paragrafo": "§7.1.1",
+   "versione_manuale": "Armamenti 0.86",
+   "abilita": "Armi da guerra",
+   "specializzazione": "specializzazione-spade",
+   "mani": 1,
+   "danno": {
+    "una_mano": "1d8+1",
+    "due_mani": null
+   },
+   "portata_q": 1,
+   "gittata_q": null,
+   "for_richiesta": 4,
+   "inc": null,
+   "pi": 5,
+   "qualita": "Comune",
+   "ps_int": 10,
+   "reperibilita": "NC",
+   "costo": 500,
+   "manovre": [
+    "Affondo",
+    "Spazzata"
+   ],
+   "proprieta": [],
+   "_edizione": {
+    "campi": {
+     "abilita": "Armamenti 0.86",
+     "famiglia": "Armamenti 0.86",
+     "catalogo": "Armamenti 0.86",
+     "mani": "Armamenti 0.86",
+     "danno": "Armamenti 0.86",
+     "portata_q": "Armamenti 0.86",
+     "for_richiesta": "Armamenti 0.86",
+     "pi": "Armamenti 0.86",
+     "qualita": "Armamenti 0.86",
+     "ps_int": "Armamenti 0.86",
+     "reperibilita": "Armamenti 0.86",
+     "costo": "Armamenti 0.86"
+    }
+   }
+  },
+  {
+   "id": "spada-bastarda",
+   "nome": "Spada bastarda",
+   "tipo": "arma_ravvicinata",
+   "catalogo": "Commerciale",
+   "famiglia": "Spade",
+   "nomi_alternativi": [],
+   "note_manuale": "",
+   "paragrafo": "§7.1.1",
+   "versione_manuale": "Armamenti 0.86",
+   "abilita": "Armi da guerra",
+   "specializzazione": "specializzazione-spade",
+   "mani": "1/2",
+   "danno": {
+    "una_mano": "1d8+1",
+    "due_mani": "2d6"
+   },
+   "portata_q": 1,
+   "gittata_q": null,
+   "for_richiesta": 5,
+   "inc": null,
+   "pi": 6,
+   "qualita": "Comune",
+   "ps_int": 10,
+   "reperibilita": "NC",
+   "costo": 700,
+   "manovre": [
+    "Affondo",
+    "Spazzata"
+   ],
+   "proprieta": [
+    {
+     "nome": "Versatile",
+     "testo": "Spada bastarda e Lancia possono essere impugnate a una oppure a due mani, infliggendo il danno corrispondente riportato nel catalogo. Entrambe utilizzano sempre Armi da guerra."
+    }
+   ],
+   "_edizione": {
+    "campi": {
+     "abilita": "Armamenti 0.86",
+     "famiglia": "Armamenti 0.86",
+     "catalogo": "Armamenti 0.86",
+     "mani": "Armamenti 0.86",
+     "danno": "Armamenti 0.86",
+     "portata_q": "Armamenti 0.86",
+     "for_richiesta": "Armamenti 0.86",
+     "pi": "Armamenti 0.86",
+     "qualita": "Armamenti 0.86",
+     "ps_int": "Armamenti 0.86",
+     "reperibilita": "Armamenti 0.86",
+     "costo": "Armamenti 0.86"
+    }
+   }
+  },
+  {
+   "id": "spadone",
+   "nome": "Spadone",
+   "tipo": "arma_ravvicinata",
+   "catalogo": "Commerciale",
+   "famiglia": "Spade",
+   "nomi_alternativi": [],
+   "note_manuale": "",
+   "paragrafo": "§7.1.1",
+   "versione_manuale": "Armamenti 0.86",
+   "abilita": "Armi da guerra",
+   "specializzazione": "specializzazione-spade",
+   "mani": 2,
+   "danno": {
+    "una_mano": null,
+    "due_mani": "2d6+1"
+   },
+   "portata_q": 1,
+   "gittata_q": null,
+   "for_richiesta": 6,
+   "inc": null,
+   "pi": 6,
+   "qualita": "Comune",
+   "ps_int": 10,
+   "reperibilita": "NC",
+   "costo": 850,
+   "manovre": [
+    "Spazzata"
+   ],
+   "proprieta": [],
+   "_edizione": {
+    "campi": {
+     "abilita": "Armamenti 0.86",
+     "famiglia": "Armamenti 0.86",
+     "catalogo": "Armamenti 0.86",
+     "mani": "Armamenti 0.86",
+     "danno": "Armamenti 0.86",
+     "portata_q": "Armamenti 0.86",
+     "for_richiesta": "Armamenti 0.86",
+     "pi": "Armamenti 0.86",
+     "qualita": "Armamenti 0.86",
+     "ps_int": "Armamenti 0.86",
+     "reperibilita": "Armamenti 0.86",
+     "costo": "Armamenti 0.86"
+    }
+   }
+  },
+  {
+   "id": "ascia-leggera",
+   "nome": "Ascia leggera",
+   "tipo": "arma_ravvicinata",
+   "catalogo": "Commerciale",
+   "famiglia": "Asce",
+   "nomi_alternativi": [
+    "Accetta"
+   ],
+   "note_manuale": "Si può lanciare con il profilo a distanza del catalogo Commerciale (§7.7), stesso oggetto, prezzo e Integrità.",
+   "paragrafo": "§7.1.1",
+   "versione_manuale": "Armamenti 0.86",
+   "abilita": "Armi da mischia",
+   "specializzazione": "specializzazione-asce",
+   "mani": 1,
+   "danno": {
+    "una_mano": "1d6+1",
+    "due_mani": null
+   },
+   "portata_q": 1,
+   "gittata_q": null,
+   "for_richiesta": 4,
+   "inc": null,
+   "pi": 5,
+   "qualita": "Comune",
+   "ps_int": 10,
+   "reperibilita": "CO",
+   "costo": 180,
+   "manovre": [
+    "Spazzata"
+   ],
+   "proprieta": [],
+   "_edizione": {
+    "campi": {
+     "abilita": "Armamenti 0.86",
+     "famiglia": "Armamenti 0.86",
+     "catalogo": "Armamenti 0.86",
+     "mani": "Armamenti 0.86",
+     "danno": "Armamenti 0.86",
+     "portata_q": "Armamenti 0.86",
+     "for_richiesta": "Armamenti 0.86",
+     "pi": "Armamenti 0.86",
+     "qualita": "Armamenti 0.86",
+     "ps_int": "Armamenti 0.86",
+     "reperibilita": "Armamenti 0.86",
+     "costo": "Armamenti 0.86"
+    }
+   }
+  },
+  {
+   "id": "ascia-bipenne",
+   "nome": "Ascia bipenne",
+   "tipo": "arma_ravvicinata",
+   "catalogo": "Commerciale",
+   "famiglia": "Asce",
+   "nomi_alternativi": [],
+   "note_manuale": "",
+   "paragrafo": "§7.1.1",
+   "versione_manuale": "Armamenti 0.86",
+   "abilita": "Armi da guerra",
+   "specializzazione": "specializzazione-asce",
+   "mani": 2,
+   "danno": {
+    "una_mano": null,
+    "due_mani": "2d6+1"
+   },
+   "portata_q": 1,
+   "gittata_q": null,
+   "for_richiesta": 6,
+   "inc": null,
+   "pi": 6,
+   "qualita": "Comune",
+   "ps_int": 10,
+   "reperibilita": "NC",
+   "costo": 500,
+   "manovre": [
+    "Spazzata"
+   ],
+   "proprieta": [],
+   "_edizione": {
+    "campi": {
+     "abilita": "Armamenti 0.86",
+     "famiglia": "Armamenti 0.86",
+     "catalogo": "Armamenti 0.86",
+     "mani": "Armamenti 0.86",
+     "danno": "Armamenti 0.86",
+     "portata_q": "Armamenti 0.86",
+     "for_richiesta": "Armamenti 0.86",
+     "pi": "Armamenti 0.86",
+     "qualita": "Armamenti 0.86",
+     "ps_int": "Armamenti 0.86",
+     "reperibilita": "Armamenti 0.86",
+     "costo": "Armamenti 0.86"
+    }
+   }
+  },
+  {
+   "id": "martello",
+   "nome": "Martello",
+   "tipo": "arma_ravvicinata",
+   "catalogo": "Commerciale",
+   "famiglia": "Martelli",
+   "nomi_alternativi": [],
+   "note_manuale": "",
+   "paragrafo": "§7.1.1",
+   "versione_manuale": "Armamenti 0.86",
+   "abilita": "Armi da mischia",
+   "specializzazione": "specializzazione-martelli",
+   "mani": 1,
+   "danno": {
+    "una_mano": "1d6+2",
+    "due_mani": null
+   },
+   "portata_q": 1,
+   "gittata_q": null,
+   "for_richiesta": 4,
+   "inc": null,
+   "pi": 5,
+   "qualita": "Comune",
+   "ps_int": 10,
+   "reperibilita": "CO",
+   "costo": 80,
+   "manovre": [
+    "Stordire"
+   ],
+   "proprieta": [],
+   "_edizione": {
+    "campi": {
+     "abilita": "Armamenti 0.86",
+     "famiglia": "Armamenti 0.86",
+     "catalogo": "Armamenti 0.86",
+     "mani": "Armamenti 0.86",
+     "danno": "Armamenti 0.86",
+     "portata_q": "Armamenti 0.86",
+     "for_richiesta": "Armamenti 0.86",
+     "pi": "Armamenti 0.86",
+     "qualita": "Armamenti 0.86",
+     "ps_int": "Armamenti 0.86",
+     "reperibilita": "Armamenti 0.86",
+     "costo": "Armamenti 0.86"
+    }
+   }
+  },
+  {
+   "id": "martello-da-guerra",
+   "nome": "Martello da guerra",
+   "tipo": "arma_ravvicinata",
+   "catalogo": "Commerciale",
+   "famiglia": "Martelli",
+   "nomi_alternativi": [],
+   "note_manuale": "",
+   "paragrafo": "§7.1.1",
+   "versione_manuale": "Armamenti 0.86",
+   "abilita": "Armi da guerra",
+   "specializzazione": "specializzazione-martelli",
+   "mani": 1,
+   "danno": {
+    "una_mano": "1d8+1",
+    "due_mani": null
+   },
+   "portata_q": 1,
+   "gittata_q": null,
+   "for_richiesta": 5,
+   "inc": null,
+   "pi": 5,
+   "qualita": "Comune",
+   "ps_int": 10,
+   "reperibilita": "NC",
+   "costo": 280,
+   "manovre": [
+    "Stordire"
+   ],
+   "proprieta": [],
+   "_edizione": {
+    "campi": {
+     "abilita": "Armamenti 0.86",
+     "famiglia": "Armamenti 0.86",
+     "catalogo": "Armamenti 0.86",
+     "mani": "Armamenti 0.86",
+     "danno": "Armamenti 0.86",
+     "portata_q": "Armamenti 0.86",
+     "for_richiesta": "Armamenti 0.86",
+     "pi": "Armamenti 0.86",
+     "qualita": "Armamenti 0.86",
+     "ps_int": "Armamenti 0.86",
+     "reperibilita": "Armamenti 0.86",
+     "costo": "Armamenti 0.86"
+    }
+   }
+  },
+  {
+   "id": "martello-a-due-mani",
+   "nome": "Martello a due mani",
+   "tipo": "arma_ravvicinata",
+   "catalogo": "Commerciale",
+   "famiglia": "Martelli",
+   "nomi_alternativi": [],
+   "note_manuale": "",
+   "paragrafo": "§7.1.1",
+   "versione_manuale": "Armamenti 0.86",
+   "abilita": "Armi da guerra",
+   "specializzazione": "specializzazione-martelli",
+   "mani": 2,
+   "danno": {
+    "una_mano": null,
+    "due_mani": "2d6"
+   },
+   "portata_q": 1,
+   "gittata_q": null,
+   "for_richiesta": 6,
+   "inc": null,
+   "pi": 6,
+   "qualita": "Comune",
+   "ps_int": 10,
+   "reperibilita": "CO",
+   "costo": 180,
+   "manovre": [
+    "Spazzata",
+    "Stordire"
+   ],
+   "proprieta": [],
+   "_edizione": {
+    "campi": {
+     "abilita": "Armamenti 0.86",
+     "famiglia": "Armamenti 0.86",
+     "catalogo": "Armamenti 0.86",
+     "mani": "Armamenti 0.86",
+     "danno": "Armamenti 0.86",
+     "portata_q": "Armamenti 0.86",
+     "for_richiesta": "Armamenti 0.86",
+     "pi": "Armamenti 0.86",
+     "qualita": "Armamenti 0.86",
+     "ps_int": "Armamenti 0.86",
+     "reperibilita": "Armamenti 0.86",
+     "costo": "Armamenti 0.86"
+    }
+   }
+  },
+  {
+   "id": "randello",
+   "nome": "Randello",
+   "tipo": "arma_ravvicinata",
+   "catalogo": "Commerciale",
+   "famiglia": "Mazze e bastoni",
+   "nomi_alternativi": [
+    "Bastone",
+    "Manganello"
+   ],
+   "note_manuale": "",
+   "paragrafo": "§7.1.1",
+   "versione_manuale": "Armamenti 0.86",
+   "abilita": "Armi da mischia",
+   "specializzazione": "specializzazione-mazze-e-bastoni",
+   "mani": 1,
+   "danno": {
+    "una_mano": "1d6",
+    "due_mani": null
+   },
+   "portata_q": 1,
+   "gittata_q": null,
+   "for_richiesta": 3,
+   "inc": null,
+   "pi": 5,
+   "qualita": "Comune",
+   "ps_int": 10,
+   "reperibilita": "CO",
+   "costo": 40,
+   "manovre": [
+    "Stordire"
+   ],
+   "proprieta": [],
+   "_edizione": {
+    "campi": {
+     "abilita": "Armamenti 0.86",
+     "famiglia": "Armamenti 0.86",
+     "catalogo": "Armamenti 0.86",
+     "mani": "Armamenti 0.86",
+     "danno": "Armamenti 0.86",
+     "portata_q": "Armamenti 0.86",
+     "for_richiesta": "Armamenti 0.86",
+     "pi": "Armamenti 0.86",
+     "qualita": "Armamenti 0.86",
+     "ps_int": "Armamenti 0.86",
+     "reperibilita": "Armamenti 0.86",
+     "costo": "Armamenti 0.86"
+    }
+   }
+  },
+  {
+   "id": "mazza-ferrata",
+   "nome": "Mazza ferrata",
+   "tipo": "arma_ravvicinata",
+   "catalogo": "Commerciale",
+   "famiglia": "Mazze e bastoni",
+   "nomi_alternativi": [],
+   "note_manuale": "",
+   "paragrafo": "§7.1.1",
+   "versione_manuale": "Armamenti 0.86",
+   "abilita": "Armi da mischia",
+   "specializzazione": "specializzazione-mazze-e-bastoni",
+   "mani": 1,
+   "danno": {
+    "una_mano": "1d6+1",
+    "due_mani": null
+   },
+   "portata_q": 1,
+   "gittata_q": null,
+   "for_richiesta": 4,
+   "inc": null,
+   "pi": 5,
+   "qualita": "Comune",
+   "ps_int": 10,
+   "reperibilita": "NC",
+   "costo": 160,
+   "manovre": [
+    "Stordire"
+   ],
+   "proprieta": [],
+   "_edizione": {
+    "campi": {
+     "abilita": "Armamenti 0.86",
+     "famiglia": "Armamenti 0.86",
+     "catalogo": "Armamenti 0.86",
+     "mani": "Armamenti 0.86",
+     "danno": "Armamenti 0.86",
+     "portata_q": "Armamenti 0.86",
+     "for_richiesta": "Armamenti 0.86",
+     "pi": "Armamenti 0.86",
+     "qualita": "Armamenti 0.86",
+     "ps_int": "Armamenti 0.86",
+     "reperibilita": "Armamenti 0.86",
+     "costo": "Armamenti 0.86"
+    }
+   }
+  },
+  {
+   "id": "tonfa",
+   "nome": "Tonfa",
+   "tipo": "arma_ravvicinata",
+   "catalogo": "Commerciale",
+   "famiglia": "Mazze e bastoni",
+   "nomi_alternativi": [],
+   "note_manuale": "Comprende i modelli militari (§7.1.1).",
+   "paragrafo": "§7.1.1",
+   "versione_manuale": "Armamenti 0.86",
+   "abilita": "Armi da mischia",
+   "specializzazione": "specializzazione-mazze-e-bastoni",
+   "mani": 1,
+   "danno": {
+    "una_mano": "1d4+1",
+    "due_mani": null
+   },
+   "portata_q": 1,
+   "gittata_q": null,
+   "for_richiesta": 3,
+   "inc": null,
+   "pi": 4,
+   "qualita": "Comune",
+   "ps_int": 10,
+   "reperibilita": "NC",
+   "costo": 90,
+   "manovre": [
+    "Stordire"
+   ],
+   "proprieta": [
+    {
+     "nome": "Difensiva +2",
+     "testo": "Il Tonfa concede +2 VA alla Prova di Parata effettuata con quest’arma. Il beneficio non aumenta direttamente l’Armatura. Il confronto e l’impiego insieme agli Scudi sono descritti nel §7.4.",
+     "effetto": {
+      "parata_va": 2
+     }
+    }
+   ],
+   "_edizione": {
+    "campi": {
+     "abilita": "Armamenti 0.86",
+     "famiglia": "Armamenti 0.86",
+     "catalogo": "Armamenti 0.86",
+     "mani": "Armamenti 0.86",
+     "danno": "Armamenti 0.86",
+     "portata_q": "Armamenti 0.86",
+     "for_richiesta": "Armamenti 0.86",
+     "pi": "Armamenti 0.86",
+     "qualita": "Armamenti 0.86",
+     "ps_int": "Armamenti 0.86",
+     "reperibilita": "Armamenti 0.86",
+     "costo": "Armamenti 0.86"
+    }
+   }
+  },
+  {
+   "id": "baionetta-montata",
+   "nome": "Baionetta montata",
+   "tipo": "arma_ravvicinata",
+   "catalogo": "Commerciale",
+   "famiglia": "Armi inastate",
+   "nomi_alternativi": [],
+   "note_manuale": "",
+   "paragrafo": "§7.1.1",
+   "versione_manuale": "Armamenti 0.86",
+   "abilita": "Armi da guerra",
+   "specializzazione": "specializzazione-armi-inastate",
+   "mani": 2,
+   "danno": {
+    "una_mano": null,
+    "due_mani": "1d4+1"
+   },
+   "portata_q": 1,
+   "gittata_q": null,
+   "for_richiesta": 6,
+   "inc": null,
+   "pi": 4,
+   "qualita": "Comune",
+   "ps_int": 10,
+   "reperibilita": "NC",
+   "costo": 180,
+   "manovre": [
+    "Affondo"
+   ],
+   "proprieta": [
+    {
+     "nome": "Montata",
+     "testo": "Il profilo della Baionetta montata si utilizza con la baionetta fissata al fucile, impugnato a due mani."
+    }
+   ],
+   "_edizione": {
+    "campi": {
+     "abilita": "Armamenti 0.86",
+     "famiglia": "Armamenti 0.86",
+     "catalogo": "Armamenti 0.86",
+     "mani": "Armamenti 0.86",
+     "danno": "Armamenti 0.86",
+     "portata_q": "Armamenti 0.86",
+     "for_richiesta": "Armamenti 0.86",
+     "pi": "Armamenti 0.86",
+     "qualita": "Armamenti 0.86",
+     "ps_int": "Armamenti 0.86",
+     "reperibilita": "Armamenti 0.86",
+     "costo": "Armamenti 0.86"
+    }
+   }
+  },
+  {
+   "id": "lancia",
+   "nome": "Lancia",
+   "tipo": "arma_ravvicinata",
+   "catalogo": "Commerciale",
+   "famiglia": "Armi inastate",
+   "nomi_alternativi": [],
+   "note_manuale": "Portata 2 Q con entrambe le impugnature (§7.1.2).",
+   "paragrafo": "§7.1.1",
+   "versione_manuale": "Armamenti 0.86",
+   "abilita": "Armi da guerra",
+   "specializzazione": "specializzazione-armi-inastate",
+   "mani": "1/2",
+   "danno": {
+    "una_mano": "1d6+1",
+    "due_mani": "1d6+3"
+   },
+   "portata_q": 2,
+   "gittata_q": null,
+   "for_richiesta": 5,
+   "inc": null,
+   "pi": 6,
+   "qualita": "Comune",
+   "ps_int": 10,
+   "reperibilita": "CO",
+   "costo": 220,
+   "manovre": [
+    "Affondo"
+   ],
+   "proprieta": [
+    {
+     "nome": "Versatile",
+     "testo": "Spada bastarda e Lancia possono essere impugnate a una oppure a due mani, infliggendo il danno corrispondente riportato nel catalogo. Entrambe utilizzano sempre Armi da guerra."
+    }
+   ],
+   "_edizione": {
+    "campi": {
+     "abilita": "Armamenti 0.86",
+     "famiglia": "Armamenti 0.86",
+     "catalogo": "Armamenti 0.86",
+     "mani": "Armamenti 0.86",
+     "danno": "Armamenti 0.86",
+     "portata_q": "Armamenti 0.86",
+     "for_richiesta": "Armamenti 0.86",
+     "pi": "Armamenti 0.86",
+     "qualita": "Armamenti 0.86",
+     "ps_int": "Armamenti 0.86",
+     "reperibilita": "Armamenti 0.86",
+     "costo": "Armamenti 0.86"
+    }
+   }
+  },
+  {
+   "id": "picca",
+   "nome": "Picca",
+   "tipo": "arma_ravvicinata",
+   "catalogo": "Commerciale",
+   "famiglia": "Armi inastate",
+   "nomi_alternativi": [],
+   "note_manuale": "",
+   "paragrafo": "§7.1.1",
+   "versione_manuale": "Armamenti 0.86",
+   "abilita": "Armi da guerra",
+   "specializzazione": "specializzazione-armi-inastate",
+   "mani": 2,
+   "danno": {
+    "una_mano": null,
+    "due_mani": "1d6+1"
+   },
+   "portata_q": 3,
+   "gittata_q": null,
+   "for_richiesta": 6,
+   "inc": null,
+   "pi": 6,
+   "qualita": "Comune",
+   "ps_int": 10,
+   "reperibilita": "NC",
+   "costo": 250,
+   "manovre": [
+    "Affondo"
+   ],
+   "proprieta": [],
+   "_edizione": {
+    "campi": {
+     "abilita": "Armamenti 0.86",
+     "famiglia": "Armamenti 0.86",
+     "catalogo": "Armamenti 0.86",
+     "mani": "Armamenti 0.86",
+     "danno": "Armamenti 0.86",
+     "portata_q": "Armamenti 0.86",
+     "for_richiesta": "Armamenti 0.86",
+     "pi": "Armamenti 0.86",
+     "qualita": "Armamenti 0.86",
+     "ps_int": "Armamenti 0.86",
+     "reperibilita": "Armamenti 0.86",
+     "costo": "Armamenti 0.86"
+    }
+   }
+  },
+  {
+   "id": "tridente",
+   "nome": "Tridente",
+   "tipo": "arma_ravvicinata",
+   "catalogo": "Commerciale",
+   "famiglia": "Armi inastate",
+   "nomi_alternativi": [],
+   "note_manuale": "",
+   "paragrafo": "§7.1.1",
+   "versione_manuale": "Armamenti 0.86",
+   "abilita": "Armi da guerra",
+   "specializzazione": "specializzazione-armi-inastate",
+   "mani": 1,
+   "danno": {
+    "una_mano": "1d8+1",
+    "due_mani": null
+   },
+   "portata_q": 2,
+   "gittata_q": null,
+   "for_richiesta": 4,
+   "inc": null,
+   "pi": 6,
+   "qualita": "Comune",
+   "ps_int": 10,
+   "reperibilita": "NC",
+   "costo": 320,
+   "manovre": [
+    "Affondo"
+   ],
+   "proprieta": [],
+   "_edizione": {
+    "campi": {
+     "abilita": "Armamenti 0.86",
+     "famiglia": "Armamenti 0.86",
+     "catalogo": "Armamenti 0.86",
+     "mani": "Armamenti 0.86",
+     "danno": "Armamenti 0.86",
+     "portata_q": "Armamenti 0.86",
+     "for_richiesta": "Armamenti 0.86",
+     "pi": "Armamenti 0.86",
+     "qualita": "Armamenti 0.86",
+     "ps_int": "Armamenti 0.86",
+     "reperibilita": "Armamenti 0.86",
+     "costo": "Armamenti 0.86"
+    }
+   }
+  },
+  {
+   "id": "arma-inastata-pesante",
+   "nome": "Arma inastata pesante",
+   "tipo": "arma_ravvicinata",
+   "catalogo": "Commerciale",
+   "famiglia": "Armi inastate",
+   "nomi_alternativi": [
+    "Alabarda",
+    "Azza"
+   ],
+   "note_manuale": "",
+   "paragrafo": "§7.1.1",
+   "versione_manuale": "Armamenti 0.86",
+   "abilita": "Armi da guerra",
+   "specializzazione": "specializzazione-armi-inastate",
+   "mani": 2,
+   "danno": {
+    "una_mano": null,
+    "due_mani": "1d8+1"
+   },
+   "portata_q": 2,
+   "gittata_q": null,
+   "for_richiesta": 6,
+   "inc": null,
+   "pi": 6,
+   "qualita": "Comune",
+   "ps_int": 10,
+   "reperibilita": "NC",
+   "costo": 450,
+   "manovre": [
+    "Affondo",
+    "Spazzata"
+   ],
+   "proprieta": [],
+   "_edizione": {
+    "campi": {
+     "abilita": "Armamenti 0.86",
+     "famiglia": "Armamenti 0.86",
+     "catalogo": "Armamenti 0.86",
+     "mani": "Armamenti 0.86",
+     "danno": "Armamenti 0.86",
+     "portata_q": "Armamenti 0.86",
+     "for_richiesta": "Armamenti 0.86",
+     "pi": "Armamenti 0.86",
+     "qualita": "Armamenti 0.86",
+     "ps_int": "Armamenti 0.86",
+     "reperibilita": "Armamenti 0.86",
+     "costo": "Armamenti 0.86"
+    }
+   }
+  },
+  {
+   "id": "frusta",
+   "nome": "Frusta",
+   "tipo": "arma_ravvicinata",
+   "catalogo": "Commerciale",
+   "famiglia": "Armi flessibili",
+   "nomi_alternativi": [],
+   "note_manuale": "",
+   "paragrafo": "§7.1.1",
+   "versione_manuale": "Armamenti 0.86",
+   "abilita": "Armi da mischia",
+   "specializzazione": "specializzazione-armi-flessibili",
+   "mani": 1,
+   "danno": {
+    "una_mano": "1d4",
+    "due_mani": null
+   },
+   "portata_q": 3,
+   "gittata_q": null,
+   "for_richiesta": 4,
+   "inc": null,
+   "pi": 4,
+   "qualita": "Comune",
+   "ps_int": 10,
+   "reperibilita": "CO",
+   "costo": 100,
+   "manovre": [
+    "generali"
+   ],
+   "proprieta": [
+    {
+     "nome": "Immobilizzare a distanza",
+     "testo": "La Frusta permette l’impiego descritto nel §7.1.5 entro la propria portata di 3 Q."
+    }
+   ],
+   "_edizione": {
+    "campi": {
+     "abilita": "Armamenti 0.86",
+     "famiglia": "Armamenti 0.86",
+     "catalogo": "Armamenti 0.86",
+     "mani": "Armamenti 0.86",
+     "danno": "Armamenti 0.86",
+     "portata_q": "Armamenti 0.86",
+     "for_richiesta": "Armamenti 0.86",
+     "pi": "Armamenti 0.86",
+     "qualita": "Armamenti 0.86",
+     "ps_int": "Armamenti 0.86",
+     "reperibilita": "Armamenti 0.86",
+     "costo": "Armamenti 0.86"
+    }
+   }
+  },
+  {
+   "id": "mazzafrusto",
+   "nome": "Mazzafrusto",
+   "tipo": "arma_ravvicinata",
+   "catalogo": "Commerciale",
+   "famiglia": "Armi flessibili",
+   "nomi_alternativi": [],
+   "note_manuale": "",
+   "paragrafo": "§7.1.1",
+   "versione_manuale": "Armamenti 0.86",
+   "abilita": "Armi da guerra",
+   "specializzazione": "specializzazione-armi-flessibili",
+   "mani": 1,
+   "danno": {
+    "una_mano": "1d6+1",
+    "due_mani": null
+   },
+   "portata_q": 1,
+   "gittata_q": null,
+   "for_richiesta": 4,
+   "inc": null,
+   "pi": 5,
+   "qualita": "Comune",
+   "ps_int": 10,
+   "reperibilita": "NC",
+   "costo": 350,
+   "manovre": [
+    "Spazzata"
+   ],
+   "proprieta": [
+    {
+     "nome": "Parata avversaria −2 VA",
+     "testo": "Il Mazzafrusto impone −2 VA a ogni Prova di Parata contro i propri attacchi, sia con arma sia con Scudo. La proprietà non elimina l’AR passiva dello Scudo."
+    }
+   ],
+   "_edizione": {
+    "campi": {
+     "abilita": "Armamenti 0.86",
+     "famiglia": "Armamenti 0.86",
+     "catalogo": "Armamenti 0.86",
+     "mani": "Armamenti 0.86",
+     "danno": "Armamenti 0.86",
+     "portata_q": "Armamenti 0.86",
+     "for_richiesta": "Armamenti 0.86",
+     "pi": "Armamenti 0.86",
+     "qualita": "Armamenti 0.86",
+     "ps_int": "Armamenti 0.86",
+     "reperibilita": "Armamenti 0.86",
+     "costo": "Armamenti 0.86"
+    }
+   }
+  },
+  {
+   "id": "artigli",
+   "nome": "Artigli",
+   "tipo": "arma_ravvicinata",
+   "catalogo": "Commerciale",
+   "famiglia": "Armi da pugno",
+   "nomi_alternativi": [],
+   "note_manuale": "",
+   "paragrafo": "§7.1.1",
+   "versione_manuale": "Armamenti 0.86",
+   "abilita": "Armi da mischia",
+   "specializzazione": "specializzazione-armi-da-pugno",
+   "mani": 1,
+   "danno": {
+    "una_mano": "1d4+1",
+    "due_mani": null
+   },
+   "portata_q": 1,
+   "gittata_q": null,
+   "for_richiesta": 3,
+   "inc": null,
+   "pi": 4,
+   "qualita": "Comune",
+   "ps_int": 10,
+   "reperibilita": "NC",
+   "costo": 250,
+   "manovre": [
+    "Affondo"
+   ],
+   "proprieta": [
+    {
+     "nome": "Sanguinante 1",
+     "testo": "Stocco e Artigli applicano Sanguinamento 1 quando infliggono almeno 1 danno dopo l’Armatura. Restano la perdita immediata, le ricorrenze all’Iniziativa della fonte e le regole di cumulo e arresto del §5.15."
+    }
+   ],
+   "_edizione": {
+    "campi": {
+     "abilita": "Armamenti 0.86",
+     "famiglia": "Armamenti 0.86",
+     "catalogo": "Armamenti 0.86",
+     "mani": "Armamenti 0.86",
+     "danno": "Armamenti 0.86",
+     "portata_q": "Armamenti 0.86",
+     "for_richiesta": "Armamenti 0.86",
+     "pi": "Armamenti 0.86",
+     "qualita": "Armamenti 0.86",
+     "ps_int": "Armamenti 0.86",
+     "reperibilita": "Armamenti 0.86",
+     "costo": "Armamenti 0.86"
+    }
+   }
+  },
+  {
+   "id": "tirapugni",
+   "nome": "Tirapugni",
+   "tipo": "arma_ravvicinata",
+   "catalogo": "Commerciale",
+   "famiglia": "Armi da pugno",
+   "nomi_alternativi": [],
+   "note_manuale": "",
+   "paragrafo": "§7.1.1",
+   "versione_manuale": "Armamenti 0.86",
+   "abilita": "Corpo a corpo",
+   "specializzazione": "specializzazione-armi-da-pugno",
+   "mani": 1,
+   "danno": {
+    "una_mano": "1",
+    "due_mani": null
+   },
+   "portata_q": 1,
+   "gittata_q": null,
+   "for_richiesta": 2,
+   "inc": null,
+   "pi": 4,
+   "qualita": "Comune",
+   "ps_int": 10,
+   "reperibilita": "CO",
+   "costo": 35,
+   "manovre": [
+    "Stordire"
+   ],
+   "proprieta": [],
+   "_edizione": {
+    "campi": {
+     "abilita": "Armamenti 0.86",
+     "famiglia": "Armamenti 0.86",
+     "catalogo": "Armamenti 0.86",
+     "mani": "Armamenti 0.86",
+     "danno": "Armamenti 0.86",
+     "portata_q": "Armamenti 0.86",
+     "for_richiesta": "Armamenti 0.86",
+     "pi": "Armamenti 0.86",
+     "qualita": "Armamenti 0.86",
+     "ps_int": "Armamenti 0.86",
+     "reperibilita": "Armamenti 0.86",
+     "costo": "Armamenti 0.86"
+    }
+   }
+  },
+  {
+   "id": "tirapugni-chiodato",
+   "nome": "Tirapugni chiodato",
+   "tipo": "arma_ravvicinata",
+   "catalogo": "Commerciale",
+   "famiglia": "Armi da pugno",
+   "nomi_alternativi": [],
+   "note_manuale": "",
+   "paragrafo": "§7.1.1",
+   "versione_manuale": "Armamenti 0.86",
+   "abilita": "Corpo a corpo",
+   "specializzazione": "specializzazione-armi-da-pugno",
+   "mani": 1,
+   "danno": {
+    "una_mano": "3",
+    "due_mani": null
+   },
+   "portata_q": 1,
+   "gittata_q": null,
+   "for_richiesta": 3,
+   "inc": null,
+   "pi": 4,
+   "qualita": "Comune",
+   "ps_int": 10,
+   "reperibilita": "NC",
+   "costo": 70,
+   "manovre": [
+    "Stordire"
+   ],
+   "proprieta": [],
+   "_edizione": {
+    "campi": {
+     "abilita": "Armamenti 0.86",
+     "famiglia": "Armamenti 0.86",
+     "catalogo": "Armamenti 0.86",
+     "mani": "Armamenti 0.86",
+     "danno": "Armamenti 0.86",
+     "portata_q": "Armamenti 0.86",
+     "for_richiesta": "Armamenti 0.86",
+     "pi": "Armamenti 0.86",
+     "qualita": "Armamenti 0.86",
+     "ps_int": "Armamenti 0.86",
+     "reperibilita": "Armamenti 0.86",
+     "costo": "Armamenti 0.86"
+    }
+   }
+  },
+  {
+   "id": "tirapugni-concussivo",
+   "nome": "Tirapugni concussivo",
+   "tipo": "arma_ravvicinata",
+   "catalogo": "Commerciale",
+   "famiglia": "Armi da pugno",
+   "nomi_alternativi": [],
+   "note_manuale": "",
+   "paragrafo": "§7.1.1",
+   "versione_manuale": "Armamenti 0.50",
+   "abilita": "Corpo a corpo",
+   "specializzazione": "specializzazione-armi-da-pugno",
+   "mani": 1,
+   "danno": {
+    "una_mano": "2",
+    "due_mani": null
+   },
+   "portata_q": 1,
+   "gittata_q": null,
+   "for_richiesta": 6,
+   "inc": null,
+   "munizioni": {
+    "capacita": 5,
+    "unita": "cariche",
+    "ricarica": "sostituire la cella pronta richiede 1 AzP (§7.1.4)",
+    "consumo": "una carica per attivazione (§7.1.4)",
+    "riferimento": "cella energetica sostituibile (§7.20.5)"
+   },
+   "attivazione": {
+    "testo": "+1d6 Concussivo; 5 cariche a cella",
+    "danno_extra": "1d6",
+    "natura": "Concussivo"
+   },
+   "pi": 4,
+   "qualita": "Non comune",
+   "ps_int": 12,
+   "reperibilita": "RA",
+   "costo": 1200,
+   "manovre": [
+    "Stordire"
+   ],
+   "proprieta": [
+    {
+     "nome": "Concussivo e Cariche 5",
+     "testo": "Il Tirapugni concussivo dispone di cinque cariche in una cella energetica sostituibile. Spendendone una aggiunge 1d6 danni al danno base di 2 e applica Concussivo all’attacco. A zero cariche conserva il danno ordinario di 2. La dichiarazione e l’eventuale risparmio della carica seguono il §7.1.4. Può usare la Manovra Stordire anche senza carica; Concussivo resta un effetto distinto."
+    }
+   ],
+   "_edizione": {
+    "campi": {
+     "abilita": "Armamenti 0.86",
+     "famiglia": "Armamenti 0.86",
+     "catalogo": "Armamenti 0.86",
+     "mani": "Armamenti 0.86",
+     "danno": "Armamenti 0.86",
+     "portata_q": "Armamenti 0.86",
+     "munizioni": "Armamenti 0.74",
+     "for_richiesta": "Armamenti 0.86",
+     "pi": "Armamenti 0.86",
+     "qualita": "Armamenti 0.86",
+     "ps_int": "Armamenti 0.86",
+     "reperibilita": "Armamenti 0.86",
+     "costo": "Armamenti 0.86"
+    }
+   }
+  },
+  {
+   "tipo": "arma_ravvicinata",
+   "catalogo": "Artefatti di campagna",
+   "famiglia": "Spade",
+   "nomi_alternativi": [
+    "Cyber Arma",
+    "Cyber-Arma"
+   ],
+   "paragrafo": "§§7.25–7.25.4",
+   "versione_manuale": "Armamenti 0.83 (§§7.25–7.25.4) / A.231, A.235, A.251, A.265",
+   "abilita": "Armi da mischia",
+   "specializzazione": "specializzazione-spade",
+   "manovre": [
+    "Affondo",
+    "Spazzata"
+   ],
+   "mani": 1,
+   "danno": {
+    "una_mano": "1d8",
+    "due_mani": null
+   },
+   "natura_danno": "Magico",
+   "portata_q": 1,
+   "gittata_q": null,
+   "for_richiesta": 3,
+   "inc": null,
+   "pi": 4,
+   "qualita": "Non comune",
+   "ps_int": 12,
+   "reperibilita": "EP",
+   "costo": 7500,
+   "_nota_costo": "Armamenti 0.83 §7.25: «Con un costo di costruzione base di 1.250 cr, il valore indicativo dell’originale è 7.500 cr: costo × 3 × coefficiente 2 della rarità Rara». La cifra è scritta nel manuale e si prende così (A.261); la formula del §24.3 la ritrova. Resta un valore indicativo di un pezzo unico: «molto difficile da collocare sul mercato comune», e compratore, disponibilità e prezzo effettivo li stabilisce il Direttore.",
+   "proprieta": [],
+   "manifestazioni": {
+    "fonte": "Armamenti 0.74 §7.25 (ritoccato il 02/11/2026); A.231 e A.235 (Davide, 02/11/2026); A.166 del 16/10/2026 per le forme",
+    "abilita": "Armi da mischia",
+    "_abilita": "Si usa sempre con Armi da mischia, qualunque forma sia manifestata: non si passa ad Armi da guerra, Corpo a corpo o altro perché l’arma ordinaria corrispondente usa quell’Abilità.",
+    "scelta_libera": [
+     "Custode"
+    ],
+    "_scelta_libera": "Il Custode manifesta qualsiasi tipo di arma ravvicinata. Il Tecnomante e gli altri utilizzatori ammessi usano la forma del progetto; cambiarla è una modifica del manufatto (nell’app si cambia in «Modifica master»), non una facoltà di cambio forma.",
+    "progetto": "lama-lunga",
+    "una_sola_specializzazione": true,
+    "_una_sola_specializzazione": "La Specializzazione posseduta pertinente alla forma dà i normali +1 VA e +1 danno (§8.8.1); non si cumulano Specializzazioni di forme diverse.",
+    "elenco": [
+     {
+      "id": "lama-lunga",
+      "nome": "Lama (una mano, 1 Q)",
+      "esempio": "Lama, ascia o altra forma ravvicinata a una mano",
+      "mani": 1,
+      "portata_q": 1,
+      "famiglia": "Spade",
+      "specializzazione": "specializzazione-spade",
+      "manovre": [
+       "Affondo",
+       "Spazzata"
+      ]
+     },
+     {
+      "id": "ascia-bipenne",
+      "nome": "Ascia bipenne (due mani, 1 Q)",
+      "esempio": "Ascia bipenne o altra forma ravvicinata a due mani",
+      "mani": 2,
+      "portata_q": 1,
+      "famiglia": "Asce",
+      "specializzazione": "specializzazione-asce",
+      "manovre": [
+       "Spazzata"
+      ],
+      "due_mani_impugnatura": true
+     },
+     {
+      "id": "punta",
+      "nome": "Punta (una mano, 2 Q)",
+      "esempio": "Punta o lancia con impugnatura a una mano",
+      "mani": 1,
+      "portata_q": 2,
+      "famiglia": "Armi inastate",
+      "specializzazione": "specializzazione-armi-inastate",
+      "manovre": [
+       "Affondo"
+      ]
+     },
+     {
+      "id": "lancia",
+      "nome": "Lancia (due mani, 2 Q)",
+      "esempio": "Lancia o altra forma allungata a due mani",
+      "mani": 2,
+      "portata_q": 2,
+      "famiglia": "Armi inastate",
+      "specializzazione": "specializzazione-armi-inastate",
+      "manovre": [
+       "Affondo"
+      ],
+      "due_mani_impugnatura": true
+     },
+     {
+      "id": "frusta",
+      "nome": "Frusta (una mano, 3 Q)",
+      "esempio": "Frusta o altra manifestazione flessibile",
+      "mani": 1,
+      "portata_q": 3,
+      "famiglia": "Armi flessibili",
+      "specializzazione": "specializzazione-armi-flessibili",
+      "manovre": [
+       "generali"
+      ],
+      "nota": "Famiglia Armi flessibili. La forma a frusta non concede da sola Immobilizzare a distanza: le Manovre seguono la compatibilità della forma e i requisiti ordinari, senza le proprietà della frusta commerciale (A.235, che corregge la A.166)."
+     },
+     {
+      "id": "picca",
+      "nome": "Picca (due mani, 3 Q)",
+      "esempio": "Picca o altra manifestazione lunga a due mani",
+      "mani": 2,
+      "portata_q": 3,
+      "famiglia": "Armi inastate",
+      "specializzazione": "specializzazione-armi-inastate",
+      "manovre": [
+       "Affondo"
+      ],
+      "due_mani_impugnatura": true
+     },
+     {
+      "id": "ascia",
+      "nome": "Ascia (una mano, 1 Q)",
+      "esempio": "Ascia a una mano",
+      "mani": 1,
+      "portata_q": 1,
+      "famiglia": "Asce",
+      "specializzazione": "specializzazione-asce",
+      "manovre": [
+       "Spazzata"
+      ]
+     }
+    ],
+    "_altre_forme": "A.166: per le forme non elencate si usa la famiglia corrispondente del catalogo, con la sua Specializzazione e le sue Manovre.",
+    "_forma": "La forma cambia esclusivamente mani occupate e portata: danno, Abilità, requisito FOR, durata e costi restano quelli della CyberArma; non si copiano le proprietà delle armi commerciali (Armamenti 0.74 §7.25). Le opzioni a due mani richiedono un’impugnatura esistente compatibile. La forma resta fissa: per cambiarla serve un nuovo intervento sul dispositivo (riconfigurazione, §7.25.2).",
+    "_a235": "A.235 (Davide, 02/11/2026): famiglia e Specializzazione seguono la forma manifestata — Spade per una lama, Asce per un’ascia, Armi Inastate per una lancia, Armi Flessibili per una frusta — e si applica una sola Specializzazione pertinente. Restano fissi il profilo dell’utilizzatore e l’Abilità Armi da mischia (Tecnomante: 1d8 Magico, FOR 3, 1 AzP e 2 PM per 10 Round): la forma cambia mani e portata, senza importare danno, requisiti o proprietà dell’arma commerciale. Le Manovre seguono compatibilità della forma e requisiti ordinari."
+   },
+   "id": "cyberarma",
+   "nome": "CyberArma",
+   "effetto_breve": "Artefatto TecnoMistico dei Custodi, pezzo unico: Custode SnT 1, Tecnomante SnT 2 con i PM personali. 1d8 Magico per Tecnomante e conversioni; la forma cambia solo mani e portata.",
+   "peso": 0.5,
+   "_nota_peso": "A.235 (Davide, 02/11/2026): peso e Integrità si registrano per esemplare. 0,5 kg, Qualità Non Comune, PS Integrità 12 e 4 PI sono i valori del supporto originale recuperato da Park (fissati con la A.158) e restano quelli di questa voce; non diventano obbligatori per ogni CyberArma originale. Le modifiche fisiche si annotano sul singolo esemplare (`esemplare.fisico`); la manifestazione energetica non aggiunge peso.",
+   "uso_per_classe": {
+    "fonte": "Armamenti 0.83 §7.25 (A.265): SnT base 3, Tecnomante 2, Custode 1, Custode costruttore e proprietario 0",
+    "predefinito": "altre",
+    "classi": [
+     {
+      "classe": "Custode",
+      "pm": 1,
+      "round": 15,
+      "danno_extra": 1,
+      "va": 0,
+      "sintonizzazione": 1,
+      "testo": "Custode (SnT 1): evoca l’Arma Astrale per 1 PM e 15 Round, includendo l’evocazione nell’Azione del primo attacco, +1 al danno (Maestro d’Arma). Danno base e altri benefici seguono il Grado e i Talenti del Custode (Giocatore §3.9.2)."
+     },
+     {
+      "classe": "Custode costruttore",
+      "pm": 1,
+      "round": 15,
+      "danno_extra": 1,
+      "va": 0,
+      "sintonizzazione": 0,
+      "condizione": "il Custode che ha costruito quell’esemplare e lo usa come propria arma personale",
+      "testo": "Custode costruttore (SnT 0): il Custode che l’ha costruita e la usa come propria arma personale non paga capacità di Sintonizzazione. Per il resto l’impiego è quello del Custode (A.265)."
+     },
+     {
+      "classe": "Tecnomante",
+      "pm": 2,
+      "round": 10,
+      "danno_extra": 0,
+      "va": 0,
+      "sintonizzazione": 2,
+      "testo": "Tecnomante (SnT 2): 1 AzP e 2 PM personali, lama stabile per 10 Round, senza Concentrazione; 1d8 Magico più i modificatori pertinenti. Attivazione automatica dopo la Sintonizzazione; restano le normali Prove per attaccare."
+     },
+     {
+      "classe": "altre",
+      "pm": null,
+      "cariche": null,
+      "round": null,
+      "danno_extra": 0,
+      "va": 0,
+      "ammesso": false,
+      "testo": "Altre Classi: l’originale non si usa senza la conversione a NeC (Armamenti 0.74 §7.25)."
+     }
+    ]
+   },
+   "costruzione": {
+    "fonte": "Armamenti 0.74 §7.25 (ritoccato il 02/11/2026); A.231 e A.235 (Davide, 02/11/2026)",
+    "chi": "Soltanto i Custodi costruiscono le CyberArmi originali. Il Tecnomante può studiare e modificare un originale esistente, senza costruirne di nuovi: è superata l’autorizzazione alla costruzione della A.158.",
+    "procedura_base": {
+     "chi": "Custode con Maestro d’Arma",
+     "passi": [
+      {
+       "fase": "Assemblaggio",
+       "prova": {
+        "abilita": "Tecnologia",
+        "modificatore": -4
+       },
+       "ore": 16,
+       "cr": 1000
+      },
+      {
+       "fase": "Infusione",
+       "prova": {
+        "abilita": "Rituali",
+        "modificatore": 0
+       },
+       "ore": 1,
+       "cr": 250,
+       "pm": 3
+      }
+     ],
+     "totale": {
+      "ore": 17,
+      "cr": 1250,
+      "pm": 3,
+      "nota": "con il progetto disponibile"
+     },
+     "progetto": {
+      "fase": "Sviluppo del progetto",
+      "prova": {
+       "abilita": "Artefatti",
+       "modificatore": 0
+      },
+      "ore": 4,
+      "cr": 100,
+      "nota": "solo se il progetto va sviluppato"
+     },
+     "nota": "Costi di realizzazione della configurazione base, non un prezzo universale di vendita. Restano gli esiti delle Prove e le particolarità dell’esemplare."
+    },
+    "nomi": "Ogni CyberArma originale ha un nome univoco derivato dal Custode che l’ha creata. Il profilo originario resta nello storico; dopo le modifiche confermate dal Direttore il profilo attuale prende il nome di chi la personalizza (Armamenti 0.74 §7.25, «Denominazione e storico»). I due nomi sono lo stesso esemplare: una sola voce fisica."
+   },
+   "modulatore_neurale": {
+    "sin": 1,
+    "classe": "Tecnomante",
+    "richiede": "interfaccia_neurale",
+    "fonte": "Armamenti 0.74 §7.25.2",
+    "testo": "SIN 1: +1 VA alle Prove per colpire con la CyberArma, comprese le Manovre che richiedono quel tiro, soltanto al Tecnomante con interfaccia neurale compatibile, funzionante e collegata. Non aggiunge bonus a Parate, danni o altre Prove; un solo SIN per Prova (§7.15.1)."
+   },
+   "modifiche": {
+    "fonte": "Armamenti 0.83 §7.25 e §7.25.2: prezzi indicativi su un originale esistente; si aggiungono al valore dell’arma originale",
+    "predisposizione_batteria": {
+     "cr": 1000
+    },
+    "conversione_nec": {
+     "cr": 2000,
+     "nota": "NeC escluso"
+    },
+    "modulatore_neurale": {
+     "cr": 1500,
+     "ore": 8,
+     "prova": {
+      "abilita": "Tecnologia",
+      "modificatore": -2
+     },
+     "nota": "servizio completo con progetto disponibile; interfaccia e batteria escluse"
+    },
+    "riconfigurazione": {
+     "cr": 300,
+     "ore": 8,
+     "prova": {
+      "abilita": "Tecnologia",
+      "modificatore": -2
+     },
+     "nota": "nuova forma sullo stesso modulatore; il nuovo profilo sostituisce il precedente"
+    },
+    "totali": "Armamenti 0.83 §7.25, sommando il valore indicativo dell’originale (7.500 cr): CyberArma con 10 CM 12.500 cr; con NeC Rosso 10 9.900 cr; con 10 CM e SIN 1 14.000 cr; con NeC Rosso 10 e SIN 1 11.400 cr. «Le tariffe degli interventi sono già prezzi indicativi completi e non ricevono nuovamente il moltiplicatore di rarità.»",
+    "riserva_cm_5": {
+     "cr": 2000,
+     "nota": "capacità ordinaria; con la predisposizione 3.000 cr"
+    },
+    "riserva_cm_10": {
+     "cr": 4000,
+     "nota": "richiede un progetto specifico; con la predisposizione 5.000 cr"
+    },
+    "nec_rosso_10_carico": {
+     "cr": 400,
+     "nota": "il NeC non è compreso nella conversione"
+    }
+   },
+   "progetti": [
+    {
+     "id": "paradise-dimitri",
+     "nome": "CyberArma: lavori a Paradise (Dimitri)",
+     "fonte": "Armamenti 0.74 §7.25 (ritoccato il 02/11/2026); A.231 e A.235 (Davide, 02/11/2026); appunti di Dimitri v1.2; scheda «CyberArma Opzioni per Dimitri» 1.0",
+     "classe": "Tecnomante",
+     "giorni_disponibili": 3,
+     "budget": {
+      "ore": 24,
+      "cr": 400
+     },
+     "descrizione": "Sulla CyberArma originale di Park, già nell’inventario: preparare la scheggia Verde instabile già posseduta e metterla al posto del frammento Viola, recuperare e integrare il modulo SIN della spada Cybertronic, personalizzare la forma e collaudare. Configurazione a PM personali: 1 AzP e 2 PM per 10 Round, SnT 2, SIN 1 al tiro per colpire con il modulo collegato. Batteria interna e conversione a NeC restano sviluppi successivi.",
+     "forma": {
+      "chi": "giocatore",
+      "quando": "prima della lavorazione",
+      "elenco": [
+       "lama-lunga",
+       "ascia-bipenne",
+       "punta",
+       "lancia",
+       "frusta",
+       "picca"
+      ]
+     },
+     "componenti": [
+      {
+       "id": "scheggia",
+       "nome": "Scheggia instabile Verde (già posseduta)",
+       "rif": "artefatti:scheggia-instabile-da-5-pm-chroma-verde",
+       "nota": "Prende il posto del frammento Viola come focalizzatore. Si lavora scarica; gli eventuali PM si possono usare prima. Con successo diventa un componente integrato: colore Verde, nessuna riserva di PM, nessuna SnT in più; esce dall’inventario. Un semplice fallimento non la distrugge."
+      },
+      {
+       "id": "modulo",
+       "nome": "Modulo neurale della spada Cybertronic",
+       "rif": "armi_corporative:spada-elettrificata-csa-404",
+       "nota": "Il modulo trasferito viene rimosso dalla spada donatrice: la spada perde il proprio SIN; con il circuito elettrico intatto conserva danno ordinario e scariche. Il modulo non trasferisce Elettricità alla CyberArma."
+      },
+      {
+       "id": "viola",
+       "nome": "Frammento Viola estratto",
+       "rif": "artefatti:chroma-viola-frammento",
+       "esce": true,
+       "nota": "Estratto dall’esemplare di Park, resta un oggetto separato nell’inventario, con le proprie conseguenze (Corruzione) e la necessità di contenimento: le decide il Direttore (A.231)."
+      }
+     ],
+     "giorni": [
+      {
+       "n": 1,
+       "ore": 8,
+       "lavoro": "Studio e progetto",
+       "prova": {
+        "abilita": "Artefatti",
+        "modificatore": -2
+       },
+       "risorse_cr": 200,
+       "esiti": "progetto"
+      },
+      {
+       "n": 2,
+       "ore": 8,
+       "lavoro": "Preparazione della scheggia Verde, sostituzione del Viola e collaudo",
+       "prova": {
+        "abilita": "Tecnologia",
+        "modificatore": -2
+       },
+       "risorse_cr": 100,
+       "esiti": "lavorazione"
+      },
+      {
+       "n": 3,
+       "ore": 8,
+       "lavoro": "Recupero e integrazione del modulo SIN dalla spada Cybertronic, personalizzazione della forma e collaudo finale",
+       "prova": {
+        "abilita": "Tecnologia",
+        "modificatore": -2
+       },
+       "risorse_cr": 100,
+       "esiti": "lavorazione"
+      }
+     ],
+     "esiti": {
+      "progetto": {
+       "magistrale": "Successo Magistrale: progetto magistrale, +2 VA per sempre alle Prove di Tecnologia per realizzarlo (Magia §24.3).",
+       "successo": "Successo: progetto ordinario (Magia §24.3).",
+       "fallimento": "Fallimento: nuovo tentativo con metà del tempo base e tutte le risorse di progettazione (Magia §24.3).",
+       "maldestro": "Fallimento Maldestro: nuovo tentativo con il tempo base intero e tutte le risorse (Magia §24.3)."
+      },
+      "lavorazione": {
+       "magistrale": "Successo Magistrale: lavorazione riuscita; +2 VA alla Prova di Rituali d’infusione di quell’esemplare, se ce n’è una (Magia §24.4).",
+       "successo": "Successo: lavorazione riuscita (Magia §24.4).",
+       "fallimento": "Fallimento: nuovo tentativo con metà del tempo base e materiali aggiuntivi pari al 25% del costo di lavorazione (Magia §24.4).",
+       "maldestro": "Fallimento Maldestro: nuovo tentativo con tempo intero e costo intero dei materiali; supporto e componenti restano recuperabili (Magia §24.4)."
+      }
+     },
+     "regole": [
+      "Gli eventuali nuovi tentativi devono rientrare nel tempo e nelle risorse disponibili; un semplice fallimento non distrugge automaticamente la scheggia.",
+      "Le risorse indicate sono materiali e consumabili. I componenti già posseduti e il lavoro svolto personalmente non vengono acquistati di nuovo; la tariffa del servizio completo non si somma automaticamente.",
+      "Il programma non registra come già eseguiti gli interventi: li conferma soltanto il Direttore, che rende disponibile il profilo modificato con «Consegna l’arma».",
+      "«Consegna l’arma» aggiorna lo stesso esemplare, conservandone provenienza e storico: nessuna seconda CyberArma (A.231).",
+      "Il profilo del Custode di Park rimane distinto: danni e Talenti personali di Park non passano all’utilizzatore.",
+      "La forma la sceglie il giocatore e si registra nel progetto. Batteria interna e conversione a NeC restano sviluppi successivi, non compresi in questi tre giorni.",
+      "L’alimentazione scelta decide se l’arma consegnata può ancora usare i PM personali: cristallo e SIN sì, riserva interna di CM e conversione a NeC no, e in più fanno perdere le proprietà da Custode (A.251).",
+      "L’alimentazione scelta decide se l’arma consegnata può ancora usare i PM personali: cristallo e SIN sì, riserva interna di CM e conversione a NeC no, e in più fanno perdere le proprietà da Custode (A.251)."
+     ],
+     "risultato": {
+      "rif": "armi:cyberarma",
+      "voce": {
+       "modulatore_neurale": true,
+       "focalizzatore": "Verde",
+       "configurazione": "PM personali"
+      },
+      "nome": "CyberArma Dimitri",
+      "aggiorna_esemplare": true
+     },
+     "esemplare_di_partenza": {
+      "rif": "armi:cyberarma",
+      "nome": "CyberArma Park",
+      "provenienza": "CyberArma originale di Park, recuperata",
+      "focalizzatore": "Viola",
+      "corruzione": "Corruzione 1",
+      "manifestazione_precedente": "frusta",
+      "nota": "A.231: la frusta era la manifestazione usata da Park; Dimitri non acquisisce le statistiche personali di Park né le capacità del Custode. La voce già presente nell’inventario va verificata e ricondotta a questo esemplare: la sua presenza non certifica che le modifiche siano già state eseguite."
+     },
+     "alimentazione": {
+      "fonte": "A.251 (Davide, 06/11/2026); Armamenti 0.74 §§7.25–7.25.4",
+      "chi": "giocatore",
+      "quando": "prima della lavorazione",
+      "elenco": [
+       "cristallo",
+       "sin",
+       "riserva_cm",
+       "nec"
+      ],
+      "comprese": [
+       "cristallo",
+       "sin"
+      ],
+      "predefinita": "cristallo",
+      "solo_direttore": [
+       "riserva_cm",
+       "nec"
+      ],
+      "_nota": "A.251: la scelta dice cosa si perde prima di confermare. Cristallo e SIN sono comprese nei tre giorni e tengono i PM personali; la riserva interna di CM e la conversione a NeC restano sviluppi successivi (descrizione del progetto), fanno perdere i PM personali e le proprietà da Custode e le autorizza soltanto il Direttore, con la conferma in chiaro."
+     }
+    }
+   ],
+   "alimentazione_modifiche": {
+    "fonte": "A.251 (Davide, 06/11/2026); A.265 (14/11/2026); Armamenti 0.83 §§7.25–7.25.4",
+    "_nota": "A.251: due famiglie di modifiche che non si comportano allo stesso modo. Cristallo sostituito e SIN inserita non toccano l’alimentazione: l’arma continua a potersi alimentare con i PM personali e le due cose possono coesistere con quell’alimentazione. Riserva interna di CM e conversione a NeC sono conversioni energetiche alternative: impediscono l’uso dei PM personali, fanno perdere le proprietà da Custode e non si cumulano fra loro. La scelta non si torna indietro facilmente: va detta in chiaro prima di confermare, perché chi la fa da un tablet non ha il manuale davanti.",
+    "pm_personali_predefiniti": true,
+    "perdite": [
+     "l’alimentazione con i PM personali",
+     "le proprietà da Custode"
+    ],
+    "famiglie": [
+     {
+      "id": "cristallo",
+      "nome": "Cristallo sostituito",
+      "conversione": false,
+      "pm_personali": true,
+      "proprieta_custode": true,
+      "testo": "Il cristallo focalizzatore è sostituito. L’arma continua a potersi alimentare con i PM personali e conserva le proprietà da Custode; coesiste con la SIN."
+     },
+     {
+      "id": "sin",
+      "nome": "Modulo SIN inserito",
+      "conversione": false,
+      "pm_personali": true,
+      "proprieta_custode": true,
+      "testo": "Il modulo neurale SIN è inserito (§7.25.2). L’arma continua a potersi alimentare con i PM personali e conserva le proprietà da Custode; coesiste con il cristallo sostituito."
+     },
+     {
+      "id": "riserva_cm",
+      "nome": "Riserva interna di CM",
+      "conversione": true,
+      "pm_personali": false,
+      "proprieta_custode": false,
+      "voce": "armi:cyberarma-batteria-verde",
+      "consumo": {
+       "cm": 1,
+       "azione": "1 AzP",
+       "testo": "1 CM + 1 AzP · 10 Round",
+       "round": 10,
+       "indipendente_dagli_attacchi": true
+      },
+      "testo": "Conversione energetica: la riserva interna di Cariche Mistiche alimenta l’arma. Si perdono l’alimentazione con i PM personali e le proprietà da Custode. Consumo: 1 CM + 1 AzP per 10 Round consecutivi, indipendentemente da attacchi, colpi o Azioni (A.260). Non si cumula con la conversione a NeC."
+     },
+     {
+      "id": "nec",
+      "nome": "Conversione a NeC",
+      "conversione": true,
+      "pm_personali": false,
+      "proprieta_custode": false,
+      "voce": "armi:cyberarma-nec",
+      "consumo": {
+       "cariche": 1,
+       "colore": "Rosso",
+       "azione": "1 AzP",
+       "testo": "1 carica NeC Rosso + 1 AzP · 10 Round",
+       "round": 10,
+       "indipendente_dagli_attacchi": true
+      },
+      "testo": "Conversione energetica: un NeC Rosso compatibile alimenta l’arma. Si perdono l’alimentazione con i PM personali e le proprietà da Custode. Consumo: 1 carica NeC Rosso + 1 AzP per 10 Round consecutivi, indipendentemente da attacchi, colpi o Azioni (A.260). Non si cumula con la riserva interna di CM."
+     }
+    ],
+    "non_cumulabili": [
+     "riserva_cm",
+     "nec"
+    ],
+    "_nota_a260": "A.260 (Davide, 15/11/2026): l’attivazione di una conversione consuma 1 CM intero, oppure 1 carica intera di NeC Rosso, e alimenta la manifestazione per 10 Round consecutivi, indipendentemente da attacchi, colpi o Azioni; trascorsi i 10 Round serve una nuova carica. Non si usano frazioni. Il «ogni 10 colpi» della A.251 è superato. La CyberArma convertita è un’arma ravvicinata e non effettua Raffiche."
+   },
+   "unico": true,
+   "_nota_unico": "Armamenti 0.83 §7.25: «Ogni originale è un pezzo unico». Dalla A.265 il manuale gli dà comunque un valore indicativo (7.500 cr): l’app lo mostra come prezzo letto dal catalogo e dice che è indicativo, non che è un listino. La formula della A.256 non si applica da sé a un pezzo unico.",
+   "creazione_cr": 1250,
+   "ravvicinata_senza_raffiche": true,
+   "_nota_ravvicinata": "A.260 (15/11/2026): la CyberArma è un’arma ravvicinata e non effettua Raffiche, in nessuna configurazione. Oggi nessuna delle tre voci ha modalità di fuoco e «Attacca!» non le offrirebbe, ma la regola è scritta perché un domani non torni per sbaglio: tests/a260-cyberarma-round.test.js fallisce se una modalità di Raffica compare su una CyberArma."
+  },
+  {
+   "tipo": "arma_ravvicinata",
+   "catalogo": "Artefatti di campagna",
+   "famiglia": "Spade",
+   "nomi_alternativi": [
+    "Cyber Arma",
+    "Cyber-Arma"
+   ],
+   "paragrafo": "§7.25 («Batteria interna opzionale»), §7.25.2",
+   "versione_manuale": "Armamenti 0.83 (§§7.25–7.25.4) / A.231, A.235, A.251, A.265",
+   "abilita": "Armi da mischia",
+   "specializzazione": "specializzazione-spade",
+   "manovre": [
+    "Affondo",
+    "Spazzata"
+   ],
+   "mani": 1,
+   "danno": {
+    "una_mano": "1d8",
+    "due_mani": null
+   },
+   "natura_danno": "Magico",
+   "portata_q": 1,
+   "gittata_q": null,
+   "for_richiesta": 3,
+   "inc": null,
+   "pi": 4,
+   "qualita": "Non comune",
+   "ps_int": 12,
+   "reperibilita": "EP",
+   "costo": null,
+   "_nota_costo": "Armamenti 0.83 §7.25: il prezzo di una configurazione modificata è il valore indicativo dell’originale (7.500 cr) più le tariffe degli interventi, che il manuale elenca nella voce «cyberarma» → modifiche e somma per i quattro casi dichiarati. Non c’è un prezzo di catalogo di questa variante: nell’app il prezzo risulta non disponibile, non zero.",
+   "proprieta": [],
+   "manifestazioni": {
+    "fonte": "Armamenti 0.74 §7.25 (ritoccato il 02/11/2026); A.231 e A.235 (Davide, 02/11/2026); A.166 del 16/10/2026 per le forme",
+    "abilita": "Armi da mischia",
+    "_abilita": "Si usa sempre con Armi da mischia, qualunque forma sia manifestata: non si passa ad Armi da guerra, Corpo a corpo o altro perché l’arma ordinaria corrispondente usa quell’Abilità.",
+    "scelta_libera": [
+     "Custode"
+    ],
+    "_scelta_libera": "Il Custode manifesta qualsiasi tipo di arma ravvicinata. Il Tecnomante e gli altri utilizzatori ammessi usano la forma del progetto; cambiarla è una modifica del manufatto (nell’app si cambia in «Modifica master»), non una facoltà di cambio forma.",
+    "progetto": "lama-lunga",
+    "una_sola_specializzazione": true,
+    "_una_sola_specializzazione": "La Specializzazione posseduta pertinente alla forma dà i normali +1 VA e +1 danno (§8.8.1); non si cumulano Specializzazioni di forme diverse.",
+    "elenco": [
+     {
+      "id": "lama-lunga",
+      "nome": "Lama (una mano, 1 Q)",
+      "esempio": "Lama, ascia o altra forma ravvicinata a una mano",
+      "mani": 1,
+      "portata_q": 1,
+      "famiglia": "Spade",
+      "specializzazione": "specializzazione-spade",
+      "manovre": [
+       "Affondo",
+       "Spazzata"
+      ]
+     },
+     {
+      "id": "ascia-bipenne",
+      "nome": "Ascia bipenne (due mani, 1 Q)",
+      "esempio": "Ascia bipenne o altra forma ravvicinata a due mani",
+      "mani": 2,
+      "portata_q": 1,
+      "famiglia": "Asce",
+      "specializzazione": "specializzazione-asce",
+      "manovre": [
+       "Spazzata"
+      ],
+      "due_mani_impugnatura": true
+     },
+     {
+      "id": "punta",
+      "nome": "Punta (una mano, 2 Q)",
+      "esempio": "Punta o lancia con impugnatura a una mano",
+      "mani": 1,
+      "portata_q": 2,
+      "famiglia": "Armi inastate",
+      "specializzazione": "specializzazione-armi-inastate",
+      "manovre": [
+       "Affondo"
+      ]
+     },
+     {
+      "id": "lancia",
+      "nome": "Lancia (due mani, 2 Q)",
+      "esempio": "Lancia o altra forma allungata a due mani",
+      "mani": 2,
+      "portata_q": 2,
+      "famiglia": "Armi inastate",
+      "specializzazione": "specializzazione-armi-inastate",
+      "manovre": [
+       "Affondo"
+      ],
+      "due_mani_impugnatura": true
+     },
+     {
+      "id": "frusta",
+      "nome": "Frusta (una mano, 3 Q)",
+      "esempio": "Frusta o altra manifestazione flessibile",
+      "mani": 1,
+      "portata_q": 3,
+      "famiglia": "Armi flessibili",
+      "specializzazione": "specializzazione-armi-flessibili",
+      "manovre": [
+       "generali"
+      ],
+      "nota": "Famiglia Armi flessibili. La forma a frusta non concede da sola Immobilizzare a distanza: le Manovre seguono la compatibilità della forma e i requisiti ordinari, senza le proprietà della frusta commerciale (A.235, che corregge la A.166)."
+     },
+     {
+      "id": "picca",
+      "nome": "Picca (due mani, 3 Q)",
+      "esempio": "Picca o altra manifestazione lunga a due mani",
+      "mani": 2,
+      "portata_q": 3,
+      "famiglia": "Armi inastate",
+      "specializzazione": "specializzazione-armi-inastate",
+      "manovre": [
+       "Affondo"
+      ],
+      "due_mani_impugnatura": true
+     },
+     {
+      "id": "ascia",
+      "nome": "Ascia (una mano, 1 Q)",
+      "esempio": "Ascia a una mano",
+      "mani": 1,
+      "portata_q": 1,
+      "famiglia": "Asce",
+      "specializzazione": "specializzazione-asce",
+      "manovre": [
+       "Spazzata"
+      ]
+     }
+    ],
+    "_altre_forme": "A.166: per le forme non elencate si usa la famiglia corrispondente del catalogo, con la sua Specializzazione e le sue Manovre.",
+    "_forma": "La forma cambia esclusivamente mani occupate e portata: danno, Abilità, requisito FOR, durata e costi restano quelli della CyberArma; non si copiano le proprietà delle armi commerciali (Armamenti 0.74 §7.25). Le opzioni a due mani richiedono un’impugnatura esistente compatibile. La forma resta fissa: per cambiarla serve un nuovo intervento sul dispositivo (riconfigurazione, §7.25.2).",
+    "_a235": "A.235 (Davide, 02/11/2026): famiglia e Specializzazione seguono la forma manifestata — Spade per una lama, Asce per un’ascia, Armi Inastate per una lancia, Armi Flessibili per una frusta — e si applica una sola Specializzazione pertinente. Restano fissi il profilo dell’utilizzatore e l’Abilità Armi da mischia (Tecnomante: 1d8 Magico, FOR 3, 1 AzP e 2 PM per 10 Round): la forma cambia mani e portata, senza importare danno, requisiti o proprietà dell’arma commerciale. Le Manovre seguono compatibilità della forma e requisiti ordinari."
+   },
+   "id": "cyberarma-batteria-verde",
+   "nome": "CyberArma con Batteria Verde",
+   "effetto_breve": "Originale con riserva interna Verde da 5 Cariche Mistiche, esclusiva dell’arma (1 CM per 10 Round, cinque attivazioni), SnT 2 complessiva; resta l’alternativa dei PM personali.",
+   "peso": 0.7,
+   "_nota_peso": "A.158, punto 3: peso complessivo della configurazione modificata.",
+   "uso_per_classe": {
+    "fonte": "Armamenti 0.83 §7.25 (A.265): SnT base 3, Tecnomante 2, Custode 1, Custode costruttore e proprietario 0",
+    "predefinito": "altre",
+    "classi": [
+     {
+      "classe": "Custode",
+      "pm": null,
+      "round": null,
+      "danno_extra": 1,
+      "va": 0,
+      "sintonizzazione": 1,
+      "testo": "Custode: con questa conversione si perdono le proprietà da Custode e l’alimentazione con i PM personali (A.251). L’impiego del Custode non è disponibile su un esemplare convertito.",
+      "ammesso": false,
+      "cm": null
+     },
+     {
+      "classe": "Custode costruttore",
+      "pm": null,
+      "round": null,
+      "danno_extra": 0,
+      "va": 0,
+      "sintonizzazione": 0,
+      "condizione": "il Custode che ha costruito quell’esemplare e lo usa come propria arma personale",
+      "testo": "Custode costruttore (SnT 0): la SnT resta quella della scala, ma su un esemplare convertito si perdono le proprietà da Custode e l’alimentazione con i PM personali (A.251): l’impiego del Custode non è disponibile.",
+      "ammesso": false
+     },
+     {
+      "classe": "Tecnomante",
+      "pm": 2,
+      "round": 10,
+      "danno_extra": 0,
+      "va": 0,
+      "sintonizzazione": 2,
+      "testo": "Tecnomante (SnT 2): 1 AzP e 1 CM della riserva interna, oppure 2 PM personali; lama stabile 1 CM per 10 Round, senza Concentrazione; 1d8 Magico più i modificatori pertinenti (revisione «Cariche Mistiche», A.236). (A.260: 1 CM + 1 AzP · 10 Round, indipendentemente da attacchi, colpi o Azioni; si perdono i PM personali e le proprietà da Custode)",
+      "cm": 1
+     },
+     {
+      "classe": "altre",
+      "pm": null,
+      "cariche": null,
+      "round": null,
+      "danno_extra": 0,
+      "va": 0,
+      "ammesso": false,
+      "testo": "Altre Classi: l’originale non si usa senza la conversione a NeC (Armamenti 0.74 §7.25)."
+     }
+    ]
+   },
+   "modulatore_neurale": {
+    "sin": 1,
+    "classe": "Tecnomante",
+    "richiede": "interfaccia_neurale",
+    "fonte": "Armamenti 0.74 §7.25.2",
+    "testo": "SIN 1: +1 VA alle Prove per colpire con la CyberArma, comprese le Manovre che richiedono quel tiro, soltanto al Tecnomante con interfaccia neurale compatibile, funzionante e collegata. Non aggiunge bonus a Parate, danni o altre Prove; un solo SIN per Prova (§7.15.1)."
+   },
+   "_nota_batteria": "Armamenti 0.83 §7.25 e revisione «Cariche Mistiche» (A.236): riserva interna Verde dedicata esclusivamente alla CyberArma, capacità ordinaria 5 CM; «una riserva da 10 CM richiede un progetto specifico». Non paga Incantesimi, altre capacità o altri oggetti e non si converte in PM personali. Per il Tecnomante 1 CM e 1 AzP manifestano l’arma per 10 Round (cinque attivazioni con 5 CM); dopo l’installazione i PM personali e le proprietà del Custode sono perduti (A.251). Ricarica: CM mancanti × 2 × rapporto, quindi 30 PM da vuota a 3:1, 20 a 2:1, 10 a 1:1; con 10 CM i valori raddoppiano. Prezzo indicativo: predisposizione 1.000 cr + riserva 2.000 cr (5 CM) o 4.000 cr (10 CM).",
+   "costo_modifica": 3000,
+   "alimentazione_modifiche_rif": {
+    "famiglia": "riserva_cm",
+    "rif": "armi:cyberarma",
+    "fonte": "A.251 (Davide, 06/11/2026); Armamenti 0.74 §§7.25–7.25.4"
+   },
+   "unico": true,
+   "_nota_unico": "Armamenti 0.74 §7.25: «Ogni originale è un pezzo unico». Rarità «Unico o reliquia» della A.256: senza prezzo di catalogo. Il valore dipende da fattura, unicità, proprietà e provenienza, e lo decide il Direttore."
+  },
+  {
+   "tipo": "arma_ravvicinata",
+   "catalogo": "Artefatti di campagna",
+   "famiglia": "Spade",
+   "nomi_alternativi": [],
+   "paragrafo": "§7.25 («Conversione a NeC»), §7.25.2",
+   "versione_manuale": "Armamenti 0.83 (§§7.25–7.25.4) / A.231, A.235, A.251, A.265",
+   "abilita": "Armi da mischia",
+   "specializzazione": "specializzazione-spade",
+   "manovre": [
+    "Affondo",
+    "Spazzata"
+   ],
+   "mani": 1,
+   "danno": {
+    "una_mano": "1d8",
+    "due_mani": null
+   },
+   "natura_danno": "Magico",
+   "portata_q": 1,
+   "gittata_q": null,
+   "for_richiesta": 3,
+   "inc": null,
+   "pi": 4,
+   "qualita": "Non comune",
+   "ps_int": 12,
+   "reperibilita": "EP",
+   "costo": null,
+   "_nota_costo": "Armamenti 0.83 §7.25: il prezzo di una configurazione modificata è il valore indicativo dell’originale (7.500 cr) più le tariffe degli interventi, che il manuale elenca nella voce «cyberarma» → modifiche e somma per i quattro casi dichiarati. Non c’è un prezzo di catalogo di questa variante: nell’app il prezzo risulta non disponibile, non zero.",
+   "proprieta": [],
+   "manifestazioni": {
+    "fonte": "Armamenti 0.74 §7.25 (ritoccato il 02/11/2026); A.231 e A.235 (Davide, 02/11/2026); A.166 del 16/10/2026 per le forme",
+    "abilita": "Armi da mischia",
+    "_abilita": "Si usa sempre con Armi da mischia, qualunque forma sia manifestata: non si passa ad Armi da guerra, Corpo a corpo o altro perché l’arma ordinaria corrispondente usa quell’Abilità.",
+    "scelta_libera": [
+     "Custode"
+    ],
+    "_scelta_libera": "Il Custode manifesta qualsiasi tipo di arma ravvicinata. Il Tecnomante e gli altri utilizzatori ammessi usano la forma del progetto; cambiarla è una modifica del manufatto (nell’app si cambia in «Modifica master»), non una facoltà di cambio forma.",
+    "progetto": "lama-lunga",
+    "una_sola_specializzazione": true,
+    "_una_sola_specializzazione": "La Specializzazione posseduta pertinente alla forma dà i normali +1 VA e +1 danno (§8.8.1); non si cumulano Specializzazioni di forme diverse.",
+    "elenco": [
+     {
+      "id": "lama-lunga",
+      "nome": "Lama (una mano, 1 Q)",
+      "esempio": "Lama, ascia o altra forma ravvicinata a una mano",
+      "mani": 1,
+      "portata_q": 1,
+      "famiglia": "Spade",
+      "specializzazione": "specializzazione-spade",
+      "manovre": [
+       "Affondo",
+       "Spazzata"
+      ]
+     },
+     {
+      "id": "ascia-bipenne",
+      "nome": "Ascia bipenne (due mani, 1 Q)",
+      "esempio": "Ascia bipenne o altra forma ravvicinata a due mani",
+      "mani": 2,
+      "portata_q": 1,
+      "famiglia": "Asce",
+      "specializzazione": "specializzazione-asce",
+      "manovre": [
+       "Spazzata"
+      ],
+      "due_mani_impugnatura": true
+     },
+     {
+      "id": "punta",
+      "nome": "Punta (una mano, 2 Q)",
+      "esempio": "Punta o lancia con impugnatura a una mano",
+      "mani": 1,
+      "portata_q": 2,
+      "famiglia": "Armi inastate",
+      "specializzazione": "specializzazione-armi-inastate",
+      "manovre": [
+       "Affondo"
+      ]
+     },
+     {
+      "id": "lancia",
+      "nome": "Lancia (due mani, 2 Q)",
+      "esempio": "Lancia o altra forma allungata a due mani",
+      "mani": 2,
+      "portata_q": 2,
+      "famiglia": "Armi inastate",
+      "specializzazione": "specializzazione-armi-inastate",
+      "manovre": [
+       "Affondo"
+      ],
+      "due_mani_impugnatura": true
+     },
+     {
+      "id": "frusta",
+      "nome": "Frusta (una mano, 3 Q)",
+      "esempio": "Frusta o altra manifestazione flessibile",
+      "mani": 1,
+      "portata_q": 3,
+      "famiglia": "Armi flessibili",
+      "specializzazione": "specializzazione-armi-flessibili",
+      "manovre": [
+       "generali"
+      ],
+      "nota": "Famiglia Armi flessibili. La forma a frusta non concede da sola Immobilizzare a distanza: le Manovre seguono la compatibilità della forma e i requisiti ordinari, senza le proprietà della frusta commerciale (A.235, che corregge la A.166)."
+     },
+     {
+      "id": "picca",
+      "nome": "Picca (due mani, 3 Q)",
+      "esempio": "Picca o altra manifestazione lunga a due mani",
+      "mani": 2,
+      "portata_q": 3,
+      "famiglia": "Armi inastate",
+      "specializzazione": "specializzazione-armi-inastate",
+      "manovre": [
+       "Affondo"
+      ],
+      "due_mani_impugnatura": true
+     },
+     {
+      "id": "ascia",
+      "nome": "Ascia (una mano, 1 Q)",
+      "esempio": "Ascia a una mano",
+      "mani": 1,
+      "portata_q": 1,
+      "famiglia": "Asce",
+      "specializzazione": "specializzazione-asce",
+      "manovre": [
+       "Spazzata"
+      ]
+     }
+    ],
+    "_altre_forme": "A.166: per le forme non elencate si usa la famiglia corrispondente del catalogo, con la sua Specializzazione e le sue Manovre.",
+    "_forma": "La forma cambia esclusivamente mani occupate e portata: danno, Abilità, requisito FOR, durata e costi restano quelli della CyberArma; non si copiano le proprietà delle armi commerciali (Armamenti 0.74 §7.25). Le opzioni a due mani richiedono un’impugnatura esistente compatibile. La forma resta fissa: per cambiarla serve un nuovo intervento sul dispositivo (riconfigurazione, §7.25.2).",
+    "_a235": "A.235 (Davide, 02/11/2026): famiglia e Specializzazione seguono la forma manifestata — Spade per una lama, Asce per un’ascia, Armi Inastate per una lancia, Armi Flessibili per una frusta — e si applica una sola Specializzazione pertinente. Restano fissi il profilo dell’utilizzatore e l’Abilità Armi da mischia (Tecnomante: 1d8 Magico, FOR 3, 1 AzP e 2 PM per 10 Round): la forma cambia mani e portata, senza importare danno, requisiti o proprietà dell’arma commerciale. Le Manovre seguono compatibilità della forma e requisiti ordinari."
+   },
+   "id": "cyberarma-nec",
+   "nome": "CyberArma convertita a NeC",
+   "effetto_breve": "Originale con la conversione a NeC Rosso: qualsiasi Classe, rispettando competenze e requisiti; 1 carica per 10 Round, SnT 3 complessiva.",
+   "peso": 0.5,
+   "_nota_peso": "Armamenti 0.74 §7.25: peso, dimensioni e Integrità del supporto si registrano per esemplare. 0,5 kg, Qualità Non comune, PS Integrità 12 e 4 PI sono i valori della A.158 (13/10) e restano finché l’esemplare non ne ha di propri (A.235).",
+   "uso_per_classe": {
+    "fonte": "Armamenti 0.83 §7.25 (A.265): SnT base 3, Tecnomante 2, Custode 1, Custode costruttore e proprietario 0",
+    "predefinito": "altre",
+    "classi": [
+     {
+      "classe": "Custode costruttore",
+      "pm": null,
+      "round": null,
+      "danno_extra": 0,
+      "va": 0,
+      "sintonizzazione": 0,
+      "condizione": "il Custode che ha costruito quell’esemplare e lo usa come propria arma personale",
+      "testo": "Custode costruttore (SnT 0): la SnT resta quella della scala, ma su un esemplare convertito si perdono le proprietà da Custode e l’alimentazione con i PM personali (A.251): l’impiego del Custode non è disponibile.",
+      "ammesso": false
+     },
+     {
+      "classe": "altre",
+      "pm": null,
+      "cariche": null,
+      "nec": 1,
+      "round": 10,
+      "danno_extra": 0,
+      "va": 0,
+      "sintonizzazione": 3,
+      "testo": "Qualsiasi Classe (SnT 3), rispettando competenze e requisiti dell’esemplare: 1 AzP e 1 carica di un NeC Rosso compatibile, arma manifestata per 10 Round, senza PM personali né Concentrazione. Il consumo è per attivazione, non per attacco; il circuito alimenta solo questa CyberArma. La carica si scala nella riga del NeC (Inventario). (A.260: 1 carica + 1 AzP · 10 Round, indipendentemente da attacchi, colpi o Azioni; si perdono i PM personali e le proprietà da Custode)"
+     }
+    ]
+   },
+   "modulatore_neurale": {
+    "sin": 1,
+    "classe": "Tecnomante",
+    "richiede": "interfaccia_neurale",
+    "fonte": "Armamenti 0.74 §7.25.2",
+    "testo": "SIN 1: +1 VA alle Prove per colpire con la CyberArma, comprese le Manovre che richiedono quel tiro, soltanto al Tecnomante con interfaccia neurale compatibile, funzionante e collegata. Non aggiunge bonus a Parate, danni o altre Prove; un solo SIN per Prova (§7.15.1)."
+   },
+   "_nota_nec": "Armamenti 0.83 §7.25 e A.237: un NeC Rosso compatibile diventa l’unica fonte di alimentazione; ogni attivazione costa 1 AzP e una carica intera e mantiene la manifestazione per 10 Round, quindi un NeC Rosso 10 consente dieci attivazioni. Qualsiasi personaggio può usarla dopo la Sintonizzazione, rispettando competenze e requisiti dell’esemplare. Le conversioni non danno il +1 danno di Maestro d’Arma né i benefici del Custode (A.251). Prezzo indicativo della conversione: 2.000 cr, NeC escluso; un NeC Rosso 10 carico costa 400 cr.",
+   "costo_modifica": 2000,
+   "alimentazione": {
+    "nec": "nec:nec-rosso-10",
+    "usi": 10,
+    "unita_usi": "cariche",
+    "descrizione": "NEC Rosso da 10 cariche: una carica per attivazione (1 AzP, 10 Round), non per attacco; la carica residua resta al NEC. Sostituzione e ricarica secondo le regole dei NEC e la A.215. Non converte cariche tecnologiche in PM o in energia mistica.",
+    "paragrafo": "A.237 (Davide, 02/11/2026); Armamenti 0.74 §7.25"
+   },
+   "alimentazione_modifiche_rif": {
+    "famiglia": "nec",
+    "rif": "armi:cyberarma",
+    "fonte": "A.251 (Davide, 06/11/2026); Armamenti 0.74 §§7.25–7.25.4"
+   },
+   "unico": true,
+   "_nota_unico": "Armamenti 0.74 §7.25: «Ogni originale è un pezzo unico». Rarità «Unico o reliquia» della A.256: senza prezzo di catalogo. Il valore dipende da fattura, unicità, proprietà e provenienza, e lo decide il Direttore."
+  }
+ ]
 }

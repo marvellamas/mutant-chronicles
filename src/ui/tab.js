@@ -2123,6 +2123,9 @@ function riquadroArmi(ctx, d, mani) {
         a.proprieta?.length ? { etichetta: 'Proprietà', testo: a.proprieta.map((x) => `${x.nome}${x.testo ? `: ${x.testo}` : ''}`).join('\n') } : null,
         a.accessori?.length ? { etichetta: 'Accessori', testo: a.accessori.map((x) => x.nome).join(', ') } : null,
         a.condizioneArma && a.condizioneArma.id !== 'integra' ? { etichetta: 'Condizione', testo: `${a.condizioneArma.nome}: ${a.condizioneArma.testo}` } : null,
+        // lotto 206: quando non tutti i valori di questa voce vengono dall'edizione corrente del manuale, si dice
+        // quali e da dove; quando è tutta corrente la riga non c'è (il segno si spegne da sé, come il ⚑ del 204)
+        a.rigaEdizione ? { etichetta: '⚑ Edizione', testo: a.rigaEdizione } : null,
       ].filter(Boolean),
     }, { classe: 'info-gradi' });
   };

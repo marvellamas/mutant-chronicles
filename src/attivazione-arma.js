@@ -97,9 +97,12 @@ export function testoAttivazione(def, scheda, sessione, uid) {
     alternativaPm: uso.cm && uso.pm ? uso.pm : null,
     nec: uso.nec ?? null,
     round: uso.round ?? null,
-    // A.251 (Davide, 06/11/2026): per le conversioni energetiche della CyberArma il consumo si conta in colpi, non
-    // in Round: «1 CM + 1 AzP ogni 10 colpi», «1 carica + 1 AzP ogni 10 colpi». Vale sulla A.236, più vecchia.
-    ogniColpi: Number.isInteger(uso.ogni_colpi) && uso.ogni_colpi >= 1 ? uso.ogni_colpi : null,
+    // **A.260 (Davide, 15/11/2026): il consumo si conta in Round, non in colpi.** La A.251 del 06/11 lo dava
+    // «ogni 10 colpi» e l'app contava i colpi; gli Armamenti 0.83, pubblicati dopo, dicevano 10 Round
+    // «indipendentemente dal numero di attacchi», e la A.260 ha confermato il manuale: una carica alimenta la
+    // manifestazione per 10 Round consecutivi, qualunque cosa il personaggio faccia. Nessun `ogniColpi` esce più
+    // da qui: un campo che non esiste si rompe, un campo che resta a null si legge come «nessun limite».
+    indipendenteDagliAttacchi: true,
     va: uso.va ?? 0,
     dannoExtra: uso.danno_extra ?? 0,
     testo: uso.testo ?? null,
@@ -107,7 +110,6 @@ export function testoAttivazione(def, scheda, sessione, uid) {
     rimasti: stato?.rimasti ?? 0,
     // «1 PM · 15 Round» oppure «attiva · 7 Round»
     sintesi: stato?.attiva ? `attiva · ${stato.rimasti} Round`
-      : costo && Number.isInteger(uso.ogni_colpi) ? `${costo} · ${uso.ogni_colpi} colpi`
-        : costo && uso.round ? `${costo} · ${uso.round} Round` : null,
+      : costo && uso.round ? `${costo} · ${uso.round} Round` : null,
   };
 }

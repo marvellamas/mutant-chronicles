@@ -5,7 +5,8 @@
 //    conserva le proprietà da Custode; le due cose coesistono con quell'alimentazione;
 //  - **riserva interna di CM** e **conversione a NeC**: impediscono l'uso dei PM personali e fanno perdere le
 //    proprietà da Custode. Sono conversioni energetiche alternative: non si cumulano fra loro.
-// Consumi: configurazione CM 1 CM + 1 AzP ogni 10 colpi; conversione NeC rossa 1 carica + 1 AzP ogni 10 colpi.
+// Consumi (A.260 del 15/11/2026): configurazione CM 1 CM + 1 AzP per 10 Round; conversione NeC rossa 1 carica
+// + 1 AzP per 10 Round. Si contano i Round, non i colpi: «indipendentemente da attacchi, colpi o Azioni».
 //
 // È una scelta che non si torna indietro facilmente, e chi la fa dal tablet non ha il manuale davanti: nel
 // progetto (src/progetti.js, lotto 157) la scelta dice in chiaro che cosa si perde, prima di confermare, e le due
@@ -82,13 +83,15 @@ export function alimentazioneCyberArma(modifiche, dati) {
 }
 
 /**
- * Il consumo di una conversione, come si legge: «1 CM + 1 AzP ogni 10 colpi». null per cristallo e SIN.
+ * Il consumo di una conversione, come si legge: «1 CM + 1 AzP · 10 Round». null per cristallo e SIN.
+ * A.260 (15/11/2026): si conta in **Round**, non in colpi — una carica alimenta la manifestazione per i Round
+ * dichiarati, indipendentemente da attacchi, colpi o Azioni.
  */
 export function consumoAlimentazione(id, dati) {
   const c = famigliaAlimentazione(id, dati)?.consumo;
   if (!isOggetto(c)) return null;
   const quanto = Number.isFinite(c.cm) ? `${c.cm} CM` : Number.isFinite(c.cariche) ? `${c.cariche} caric${c.cariche === 1 ? 'a' : 'he'}${c.colore ? ` NeC ${c.colore}` : ''}` : null;
-  return { ...c, quanto, testo: c.testo ?? [quanto, c.azione].filter(Boolean).join(' + ') + (c.ogni_colpi ? ` ogni ${c.ogni_colpi} colpi` : '') };
+  return { ...c, quanto, testo: c.testo ?? [quanto, c.azione].filter(Boolean).join(' + ') + (c.round ? ` · ${c.round} Round` : '') };
 }
 
 /**

@@ -191,6 +191,19 @@ function versioniDati(dati) {
   return versioniCompatte(Object.values(versioniPersonaggio(dati)));
 }
 
+/**
+ * Lotto 206: la riga che dice da quale edizione vengono **le armi** del catalogo, quando è diversa da quella che
+ * il resto del catalogo dichiara. Sparisce da sé quando sono la stessa.
+ */
+function rigaCatalogoArmi(dati) {
+  const c = dati?.equipaggiamento?.indice?.catalogo_armi;
+  const resto = dati?.equipaggiamento?.versione_manuale ?? null;
+  if (!c?.edizione || !resto || c.edizione === resto) return null;
+  const mista = Number.isInteger(c.miste) && c.miste > 0 ? ` ${c.miste} voci su ${c.voci} tengono ancora qualche valore di prima e lo dicono nella propria scheda.` : '';
+  return h('p', { class: 'nota' },
+    `Armi del catalogo: ${c.edizione}. Protezioni, munizioni, accessori e dispositivi vengono ancora da ${resto}.${mista}`);
+}
+
 function mostraErroriDati(errori) {
   const perFile = Map.groupBy ? Map.groupBy(errori, (e) => e.file) : raggruppa(errori);
   svuota(radice, h('section', { class: 'pagina-errori' },
@@ -1035,6 +1048,11 @@ function renderHome(unito = null) {
     h('section', { class: 'info-dati' },
       h('h2', {}, 'Dati delle regole'),
       h('p', {}, stato.versioni),
+      // Lotto 206: il catalogo è a due edizioni, e la riga qui sopra tiene la più **bassa** per ogni manuale
+      // (`versioniCompatte` sceglie una versione sola). Dire «Armamenti 0.86» manderebbe fuori strada chi cerca
+      // un valore di un'armatura; dire solo 0.74 manderebbe fuori strada chi cerca un valore di un'arma. Si
+      // dicono entrambe, e questa riga sparisce da sé quando il catalogo è tutto alla stessa edizione.
+      rigaCatalogoArmi(stato.dati),
       stato.avvisiDati.length ? h('details', {}, h('summary', {}, `${stato.avvisiDati.length} avvisi sui dati (non bloccanti)`),
         h('ul', {}, stato.avvisiDati.map((a) => h('li', {}, h('code', {}, `${a.file} › ${a.chiave}`), ': ', a.problema)))) : null,
       todo.length ? h('details', {}, h('summary', {}, `${todo.length} valori o domande marcati TODO(Davide) nei dati`),

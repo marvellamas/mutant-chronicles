@@ -39,9 +39,12 @@ export function edizioneCorrente(dati) {
   return isOggetto(c) && typeof c.edizione === 'string' ? c.edizione : null;
 }
 
-/** La mappa campo → edizione di una scheda, come sta nel file (vuota se la scheda non la dichiara). */
-export function provenienza(nemico) {
-  const c = nemico?._bestiario?.campi;
+/**
+ * La mappa campo → edizione di una scheda, come sta nel file (vuota se la scheda non la dichiara).
+ * `contenitore` è la chiave che la porta: `_bestiario` per le creature, `_edizione` per le voci del catalogo.
+ */
+export function provenienza(nemico, contenitore = '_bestiario') {
+  const c = nemico?.[contenitore]?.campi;
   return isOggetto(c) ? c : {};
 }
 
@@ -108,12 +111,16 @@ export function rigaProvenienza(nemico, corrente) {
  * @param opz.nonLetti      i campi che la lettura **non** ha letto per intero: `{ campo: motivo }`
  * @param opz.edizionePrima l'edizione da attribuire ai campi di `vecchia` che non dichiarano la propria
  * @param opz.campi         i campi su cui lavorare (per i test; di norma CAMPI)
+ * @param opz.contenitore   la chiave che porta la provenienza nel file (`_bestiario` per le creature,
+ *                          `_edizione` per le voci del catalogo del lotto 206). **La regola sta qui e in nessun
+ *                          altro posto:** chi tiene la provenienza per campo di un altro insieme di dati passa la
+ *                          sua chiave invece di riscrivere la regola, che è l'unico modo di non farla divergere.
  * @returns { json, campi, scritti, ereditati, nonLeggibili, parziali }
  */
-export function unisciPerCampo(vecchia, letta, { edizione, nonLetti = {}, edizionePrima = null, campi = CAMPI } = {}) {
+export function unisciPerCampo(vecchia, letta, { edizione, nonLetti = {}, edizionePrima = null, campi = CAMPI, contenitore = '_bestiario' } = {}) {
   if (!edizione) throw new Error('unisciPerCampo: serve l’edizione da cui viene la lettura');
   const prima = isOggetto(vecchia) ? vecchia : null;
-  const provPrima = provenienza(prima);
+  const provPrima = provenienza(prima, contenitore);
   const json = { ...(prima ?? {}), ...Object.fromEntries(Object.entries(letta ?? {}).filter(([k]) => !campi.includes(k))) };
   const mappa = {};
   const scritti = []; const ereditati = []; const nonLeggibili = []; const parziali = [];
@@ -156,8 +163,8 @@ export function unisciPerCampo(vecchia, letta, { edizione, nonLetti = {}, edizio
       nonLeggibili.push({ campo: k, motivo: nonLetti[k] });
     }
   }
-  const _bestiario = { ...(prima?._bestiario ?? {}), ...(letta?._bestiario ?? {}), campi: mappa };
-  return { json: { ...json, _bestiario }, campi: mappa, scritti, ereditati, nonLeggibili, parziali };
+  const dentro = { ...(prima?.[contenitore] ?? {}), ...(letta?.[contenitore] ?? {}), campi: mappa };
+  return { json: { ...json, [contenitore]: dentro }, campi: mappa, scritti, ereditati, nonLeggibili, parziali };
 }
 
 /**

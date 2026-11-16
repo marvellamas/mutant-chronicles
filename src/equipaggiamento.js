@@ -21,6 +21,7 @@ import { riga, provenienza, rigaBonusCaratteristica as rigaBonus } from './prove
 import { calcolaAR, oggettiConPi, oggettiSenzaPi, oggettiIndistruttibili, oggettiIntegritaDaDefinire } from './protezione.js';
 import { conManifestazione, manifestazioniDi, sceltaLibera } from './manifestazione.js';
 import { tipoRiserva, alimentazione as alimentazioneRiserva, fontePerPg } from './fonti.js';
+import { rigaProvenienzaVoce } from './provenienza-catalogo.js';
 
 export const TIPI = ['arma_ravvicinata', 'arma_distanza', 'scudo', 'armatura', 'rinforzo', 'elmetto', 'accessorio', 'munizioni', 'sanitario', 'artefatto', 'impianto', 'altro'];
 
@@ -191,6 +192,20 @@ const normalizzaTesto = (s) => String(s).normalize('NFD').replace(/[̀-ͯ]/g, ''
  * Catalogo piatto degli oggetti di tutti i file elencati in data/equipaggiamento/index.json.
  * Ogni oggetto riceve `rif` ("<file>:<id>") e un riferimento alle tabelle del suo file.
  */
+/**
+ * L'edizione del manuale da cui viene il file del catalogo in cui sta questa voce.
+ *
+ * Lotto 206: il `rif` di una voce è `"<file>:<id>"`, e ogni file del catalogo dichiara il suo `versione_manuale`
+ * (quarto principio). Così l'edizione corrente con cui confrontare la provenienza per campo si **legge dai dati**
+ * e non si scrive in un modulo: un numero di edizione dentro il codice è un posto in più in cui restare indietro
+ * in silenzio (nona regola, lotto 191).
+ */
+export function edizioneDelFile(rif, dati) {
+  const id = String(rif ?? '').split(':')[0];
+  if (!id) return null;
+  return dati?.equipaggiamento?.file?.[id]?.versione_manuale ?? null;
+}
+
 /** Legenda delle modalità di fuoco (§7.7) raccolta dai file del catalogo. */
 export function legendaModalita(dati) {
   const out = {};
@@ -1342,6 +1357,9 @@ export function calcolaEquipaggiamento(base, voci, dati) {
     ] : null;
     armi.push({
       uid: o.uid, rif: d?.rif ?? null, nome: o.nome, tipo: o.tipo, abilita: nomeAbilita, va, componenti,
+      // lotto 206: la riga che dice se non tutti i valori di questa voce vengono dall'edizione corrente del
+      // manuale, e **null** quando è tutta corrente — il segno si spegne da sé (come il ⚑ del Bestiario, 204)
+      rigaEdizione: rigaProvenienzaVoce(d, edizioneDelFile(d?.rif, dati)),
       righeDanno,
       danno: dannoBase ? { una_mano: aggiungiDanno(dannoBase.una_mano, bonusDanno + dannoAccessori + dannoCar), due_mani: aggiungiDanno(dannoBase.due_mani, bonusDanno + dannoAccessori + dannoCar) } : null,
       dannoAccessori, bonusCaratteristica,

@@ -2265,6 +2265,7 @@ function validaUmanita(dati, err) {
   }
   // rif sostituiti: la voce nuova deve esistere, la vecchia non più
   const FI = 'equipaggiamento/index';
+  validaCatalogoArmi(dati, err, FI);
   const sost = dati.equipaggiamento.indice?.rif_sostituiti;
   if (sost === undefined) return;
   if (!isOggetto(sost)) return err(FI, 'rif_sostituiti', 'oggetto { "file:id vecchio": { rif, stati? } } atteso');
@@ -2279,6 +2280,53 @@ function validaUmanita(dati, err) {
     if (!nuovo) { err(FI, `${k}.rif`, `"${v?.rif}" non è nel catalogo`); continue; }
     for (const [da, a] of Object.entries(v.stati ?? {})) {
       if (!(STATI[nuovo.tipo] ?? []).includes(a)) err(FI, `${k}.stati.${da}`, `"${a}" non è uno stato del tipo "${nuovo.tipo}"`);
+    }
+  }
+}
+
+/**
+ * Lotto 206: **il conto del catalogo delle armi si dichiara e deve tornare coi file.**
+ *
+ * È la difesa che il Bestiario ci ha insegnato a mettere (lotto 203: `342 = 310 + 32`; 204: i campi letti ed
+ * ereditati): un invariante che gira su zero voci resta verde e non prova niente, e ci ha ingannato tre volte.
+ * Qui il numero dichiarato in `index.json` → `catalogo_armi` si ricalcola dai file e, se non torna, è un errore
+ * con scritto che cosa non torna.
+ */
+function validaCatalogoArmi(dati, err, F) {
+  const C = dati.equipaggiamento.indice?.catalogo_armi;
+  if (C === undefined) return;
+  if (!isOggetto(C)) return err(F, 'catalogo_armi', 'il conto delle voci d’arma, dichiarato (lotto 206)');
+  if (!isTesto(C.edizione)) err(F, 'catalogo_armi.edizione', 'l’edizione del manuale da cui vengono le voci');
+  for (const k of ['voci', 'dalla_edizione', 'miste', 'non_nel_manuale']) {
+    if (!isIntero(C[k]) || C[k] < 0) err(F, `catalogo_armi.${k}`, 'intero non negativo');
+  }
+  if (!Array.isArray(C.file) || !C.file.length) err(F, 'catalogo_armi.file', 'i file del catalogo che contengono armi');
+  else {
+    // il conto deve tornare **coi file veri**, non con sé stesso
+    const vere = C.file.reduce((n, f) => n + (dati.equipaggiamento.file?.[String(f).replace(/\.json$/, '')]?.oggetti ?? []).length, 0);
+    if (isIntero(C.voci) && vere !== C.voci) err(F, 'catalogo_armi.voci', `dichiarate ${C.voci} voci, nei file ne risultano ${vere}`);
+  }
+  if (['voci', 'dalla_edizione', 'miste', 'non_nel_manuale'].every((k) => isIntero(C[k]))) {
+    const somma = C.dalla_edizione + C.miste + C.non_nel_manuale;
+    if (somma !== C.voci) {
+      err(F, 'catalogo_armi.voci', `il conto non torna: ${C.dalla_edizione} dall’edizione + ${C.miste} miste + ${C.non_nel_manuale} non nel manuale = ${somma}, ma le voci dichiarate sono ${C.voci}`);
+    }
+  }
+  const CA = C.campi;
+  if (!isOggetto(CA)) return err(F, 'catalogo_armi.campi', 'quanti campi vengono dall’edizione corrente e quanti sono ereditati');
+  for (const k of ['letti', 'ereditati', 'senza_provenienza']) {
+    if (!isIntero(CA[k]) || CA[k] < 0) err(F, `catalogo_armi.campi.${k}`, 'intero non negativo');
+  }
+  if (!isOggetto(CA.per_campo)) err(F, 'catalogo_armi.campi.per_campo', 'quali campi sono rimasti indietro, e quanti per ciascuno');
+  else {
+    const somma = Object.values(CA.per_campo).reduce((a, b) => a + (isIntero(b) ? b : 0), 0);
+    if (isIntero(CA.ereditati) && somma !== CA.ereditati) {
+      err(F, 'catalogo_armi.campi.ereditati', `il conto per campo non torna: la somma di per_campo è ${somma}, ma i campi ereditati dichiarati sono ${CA.ereditati}`);
+    }
+    for (const [k, n] of Object.entries(CA.per_campo)) if (!isIntero(n) || n <= 0) err(F, `catalogo_armi.campi.per_campo.${k}`, 'intero positivo');
+    // **un numero senza il perché non si può ricontrollare**: ogni campo rimasto indietro ha il suo motivo scritto
+    for (const k of Object.keys(CA.per_campo)) {
+      if (!isTesto(C.motivi?.[k])) err(F, `catalogo_armi.motivi.${k}`, `${CA.per_campo[k]} voci tengono il campo «${k}» di un’edizione precedente: il motivo va scritto`);
     }
   }
 }
