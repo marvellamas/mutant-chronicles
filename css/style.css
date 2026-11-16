@@ -324,6 +324,10 @@ dl.voci.in-linea dt::after { content: ":"; }
 /* A.258 (08/11/2026): creatura provvisoria, che verrà sostituita. Un'indicazione, non un allarme: la stessa sigla
    tenue del resto, in corsivo per distinguerla dal nome e dall'origine. */
 .sigla.provvisoria { font-style: italic; }
+/* Lotto 204 (16/11/2026): la scheda porta valori di due edizioni del Manuale dei Mostri. Un avviso, non un
+   allarme — i valori sono buoni, semplicemente non vengono tutti dal manuale che il Direttore ha davanti —
+   quindi la riga tenue del resto, con il ⚑ che nella scheda del PG segna già «attenzione a questo numero». */
+.riga-provenienza { margin: 0.2rem 0 0; color: var(--tenue); font-size: 0.78rem; line-height: 1.35; }
 .etichetta { display: inline-block; margin-left: 0.4rem; padding: 0 0.4rem; border-radius: 4px; background: var(--accento-tenue); color: var(--accento); font-size: 0.7rem; font-weight: 600; vertical-align: middle; }
 
 .tabella .formula { display: none; font-weight: 400; color: var(--tenue); font-size: 0.78rem; }

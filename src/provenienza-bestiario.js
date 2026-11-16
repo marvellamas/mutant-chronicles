@@ -29,6 +29,16 @@ export const NOMI_CAMPI = {
   attacchi: 'Attacchi', capacita: 'Capacità', gs_px: 'GS e PX',
 };
 
+/**
+ * L'edizione corrente del Bestiario, dai dati (`formato_nemici.json` → `corpus.edizione`). **Non si scrive a mano
+ * in nessun modulo** (nona regola, lotto 191): un numero di edizione dentro il codice è un posto in più in cui
+ * restare indietro in silenzio.
+ */
+export function edizioneCorrente(dati) {
+  const c = dati?.formato_nemici?.corpus ?? dati?.corpus ?? null;
+  return isOggetto(c) && typeof c.edizione === 'string' ? c.edizione : null;
+}
+
 /** La mappa campo → edizione di una scheda, come sta nel file (vuota se la scheda non la dichiara). */
 export function provenienza(nemico) {
   const c = nemico?._bestiario?.campi;

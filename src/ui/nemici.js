@@ -20,6 +20,7 @@ import { elencoCartella, leggiCartella } from './cartella.js';
 import { ultimiPerPersonaggio } from '../cartella.js';
 import { rigaDurate } from './durate.js';
 import { segnoProvvisoria } from '../provvisorie.js';
+import { rigaProvenienza, edizioneCorrente } from '../provenienza-bestiario.js';
 
 const numero = (n) => (n < 0 ? `−${-n}` : String(n));
 
@@ -378,6 +379,18 @@ export function cartaNemico(ctx, p, { modifica, durate = [], diTurnoOra = false,
           onclick: () => modifica((x) => cambiaForma(x, p.id, f.id, { fino: (scontro?.round ?? 1) + 1 })) }, f.nome)) : null,
         forma && forma.id !== prima.id ? h('button', { type: 'button', class: 'btn btn-piccolo', disabled: !modifica, onclick: () => modifica((x) => cambiaForma(x, p.id, prima.id)) }, `Torna ${prima.nome.toLowerCase()}`) : null,
         forma && forma.muove === false ? h('small', { class: 'nota' }, ' Non si muove, non attacca, non attraversa la roccia, non Schiva.') : null);
+    })(),
+    // Lotto 204: **quando una scheda porta valori di due edizioni, al tavolo si deve leggere.** Davide prepara gli
+    // scontri dal suo manuale: deve sapere quando l'app gli mostra un numero che da quel manuale non viene. Una
+    // riga, non un riquadro — in alto, lo spazio è quello che è — e si spegne da sé quando la scheda è tutta
+    // all'edizione corrente, come il segno delle creature provvisorie del lotto 183.
+    (() => {
+      const corrente = edizioneCorrente(dati);
+      if (!corrente) return null;
+      const riga = rigaProvenienza(p.scheda ?? p, corrente);
+      if (!riga) return null;
+      return h('p', { class: 'nota riga-provenienza', title: 'Lotto 204: ogni campo di una scheda del Bestiario porta scritta l’edizione da cui viene.' },
+        h('strong', {}, '⚑ '), riga);
     })(),
     // Lotto 203: le creature senza Ferite. La riga si legge **sempre**, anche sopra 0 PV: dice che non hanno il
     // tracciato e che a 0 PV non avranno un contatore di Morente. Detta prima, al tavolo la domanda non nasce —
