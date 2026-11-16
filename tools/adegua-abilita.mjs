@@ -80,6 +80,10 @@ export function righeRapporto({ piani }) {
     const stato = p.giaFatto ? 'già adeguato' : p.bloccato ? 'NON SI PARTE' : `pronto · monte ${p.monte?.monte} punti`;
     out.push(`${p.nome.padEnd(20)} liv ${String(p.livello).padEnd(2)} · ${stato}`);
     if (p.motivo) out.push(`    ${p.motivo}`);
+    // lotto 207: il conto del solo profilo, quello che si deve sapere prima di convocare la serata
+    if (p.cambi) {
+      out.push(`    profilo nuovo: ${p.cambi.cambiano.length} Abilità cambiano categoria · ${p.cambi.salgono.length} salgono di VA · ${p.cambi.scendono.length} scendono`);
+    }
     for (const c of p.casi) out.push(`    da guardare: ${c}`);
     if (p.nota) out.push(`    nota di prima: ${p.nota.abilita.length} Abilità, ${p.nota.eventi.length} eventi, ${p.nota.monteDiPrima} punti liberi di adesso`);
   }

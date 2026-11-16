@@ -200,7 +200,7 @@
       ]
     },
     {
-      "tipo": "Arma da guerra",
+      "tipo": "Spada",
       "abilita": "guerra",
       "dado": "1d8",
       "mani": 1,
@@ -276,13 +276,6 @@
     "Resistenza ai Veleni": "+2 alla PS pertinente per evitare o attenuare l’avvelenamento; non alle Tempra per nuove Ferite da quei danni a 0 PV.",
     "Resistenza alla Paura": "+2 alle PS contro paura, terrore, panico e demoralizzazione. Più Resistenze specifiche sulla stessa Prova non superano +2 complessivo.",
     "Salvezza Migliorata": "+1 alla Salvezza indicata, già inclusa. Limite strutturale 18 secondo Giocatore §1.2.3; EQ si applica successivamente."
-  },
-  "alias_armi": {
-    "Spada": {
-      "riga": "Arma da guerra",
-      "motivo": "Mostri 0.67: le tabelle di Classe di Assaltatore e Incursore scrivono «Spada», la tabella degli armamenti astratti ha ancora la riga «Arma da guerra». Stesso dado (1d8), una mano, ravvicinato, e la Specializzazione della famiglia si chiama «Spade»: è la stessa riga con il nome nuovo. Ipotesi dichiarata, non una certezza.",
-      "domanda": "A.269"
-    }
   },
   "classi": {
     "agente": {

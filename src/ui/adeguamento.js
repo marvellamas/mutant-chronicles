@@ -44,13 +44,26 @@ export function riquadroAdeguamento(ctx) {
   const s = statoAssegnazione(file, ctx.bozzaAdeguamento ?? null, ctx.dati);
   if (!s) return null;
   const cambiate = s.abilita.filter((a) => a.cambiaCategoria).length;
+  // A.267 (15/11/2026): le Abilità che col profilo nuovo perdono base. La diminuzione è accettata, ma **si dice**:
+  // un VA che scende senza spiegazione, al tavolo, è una discussione — e il giocatore ha diritto di sapere che non
+  // è un errore dell'app ma una decisione, e di chi.
+  const giu = s.abilita.filter((a) => a.prima && Number.isInteger(a.prima.base) && Number.isInteger(a.base) && a.base < a.prima.base);
   return h('section', { class: `riquadro riquadro-adeguamento${s.finito ? ' adeguamento-finito' : ''}`, 'aria-label': 'Adeguamento delle Abilità' },
     h('header', { class: 'testa-gradi' },
       h('h3', {}, 'Adeguamento delle Abilità'),
       h('span', { class: 'contatore-adeguamento' }, s.finito ? 'fatto' : `${s.rimasti} punti`)),
     h('p', { class: 'nota' }, s.finito
       ? `Hai assegnato tutti i ${s.monte} punti. Controlla i numeri e tocca «Conferma»: da lì in poi la scheda è quella nuova.`
-      : `Le tue Abilità passano al profilo nuovo del manuale: ${cambiate} cambiano categoria. I punti liberi si riassegnano da capo: ne hai ${s.monte} in tutto, te ne restano ${s.rimasti}.`),
+      // lotto 207, dalla prova: la colonna «Prima» porta il VA **coi punti liberi di allora**, e «Adesso» quello
+      // senza, perché sono tutti da riassegnare. Senza dirlo, un giocatore che vede la sua Abilità migliore
+      // passare da VA 10 a 7 ferma la serata per chiedere se è un errore — e non lo è.
+      : `Le tue Abilità passano al profilo nuovo del manuale: ${cambiate} cambiano categoria. I punti liberi si riassegnano da capo: ne hai ${s.monte} in tutto, te ne restano ${s.rimasti}. `
+        + 'Nella colonna «Prima» il VA comprende i punti liberi che avevi: in «Adesso» non ci sono ancora, perché li riassegni tu qui sotto.'),
+    giu.length ? h('p', { class: 'nota nota-a267' },
+      `${giu.length === 1 ? 'Un’Abilità passa' : `${giu.length} Abilità passano`} a una categoria più bassa e `
+      + `${giu.length === 1 ? 'perde' : 'perdono'} base: ${giu.map((a) => `${a.nome} ${a.prima.competenza}→${a.competenza}, base ${a.prima.base}→${a.base}`).join('; ')}. `
+      + 'Davide ha deciso il 15/11 (A.267) che la diminuzione è accettata: non si tiene il valore di prima e non c’è una compensazione automatica. '
+      + 'Puoi usare i punti liberi dove vuoi, nei limiti. Se il Direttore vuole fare un’eccezione, la fa a parte e resta scritta nel registro.') : null,
     h('table', { class: 'tabella compatta tabella-adeguamento' },
       h('thead', {}, h('tr', {}, h('th', {}, 'Abilità'), h('th', {}, 'Prima'), h('th', {}, 'Adesso / limite'), h('th', {}, 'Punti'), h('th', {}, ''))),
       h('tbody', {}, s.abilita.map((a) => riga(ctx, a, s)))),

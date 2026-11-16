@@ -20,6 +20,22 @@
 // livello 8, con tre Gradi, fa i 21 del blocco approvato dell'11/11; a un livello diverso fa un altro numero, e la
 // procedura lo dice invece di inventare. I punti si assegnano **sull'ultimo evento**, perché il §8.3.1 vuole stato
 // e limiti attuali: metterli alla creazione li farebbe tagliare dal limite del I Grado.
+//
+// **A.267 (Davide, 15/11/2026) — la discesa è accettata, e la procedura parte** (lotto 207). Fino a ieri, se
+// un'Abilità passava a una categoria più bassa e perdeva base, `pianoAdeguamento` si fermava: la domanda era
+// aperta e decidere da sé sarebbe stato inventare. La risposta dice:
+//
+//   «Si adeguano prima categorie e basi al nuovo profilo. Se il VA personale diminuisce, la diminuzione è
+//   accettata: non si conserva automaticamente il valore precedente e non si assegna una compensazione
+//   automatica. Il giocatore usa normalmente i 21 punti liberi, nei limiti previsti. Ogni eccezione del Direttore
+//   è separata, esplicita e registrata.»
+//
+// Quindi: la discesa **non blocca più**, non si compensa e non si conserva niente di nascosto. Resta **detta** in
+// tre posti, perché un VA che scende senza spiegazione al tavolo è una discussione: nel piano (`scendono`,
+// `cambi`), nella riga di registro (`scendonoA267`, che resta nel file) e nel pannello del giocatore, dove la riga
+// dell'Abilità mostra com'era e come diventa. L'eccezione del Direttore **non la fa questa procedura**: è un atto
+// separato, esplicito e registrato, e nell'app è il ✎ di «Modifica master» sul VA, che chiede il motivo e scrive
+// la sua riga — esattamente «separata, esplicita e registrata».
 import { calcolaSchedaPersonaggio, migraPersonaggio } from './avanzamento.js';
 import { nuovaCorrezione, aggiungiCorrezione, normalizzaCorrezioni } from './correzioni-master.js';
 import { profiloCompetenze, competenzaDi, limiteAbilita, PROFILO_NUOVO } from './competenze.js';
@@ -170,6 +186,97 @@ export function notaPerScheda(correzioni) {
 }
 
 /**
+ * Il livello che il blocco approvato dell'11/11 prende come destinazione: quello del **terzo Grado**, cioè l'8°.
+ * Non è il numero 8 scritto qui: è il terzo livello che dà Punti Abilità Liberi secondo i dati, così se Davide
+ * cambiasse i Gradi la procedura seguirebbe i dati invece di una costante.
+ */
+export function livelloDestinazione(dati, gradi = 3) {
+  const livelli = [];
+  for (let n = 1; n <= 20 && livelli.length < gradi; n += 1) if (puntiPrevisti(n, dati)) livelli.push(n);
+  return livelli.length === gradi ? livelli[gradi - 1] : null;
+}
+
+/**
+ * **A.272 — da che livello si fa l'adeguamento: le strade, dette e non presunte** (lotto 207).
+ *
+ * Le due risposte che la decidono, e vanno lette insieme:
+ *  - il **blocco approvato dell'11/11** (E&L, «Adeguamento approvato delle Abilità e passaggio al livello 8»):
+ *    «La destinazione dei sette PG è il livello 8 … A livello 8 il monte totale spettante è 7 × 3 = 21 punti
+ *    liberi». E per chi non ha i PX: «il Direttore seleziona le … Schede e autorizza espressamente il solo
+ *    passaggio 7 → 8», con i PX reali invariati. **«I nomi dei destinatari non sono stati specificati in questa
+ *    decisione e non devono essere dedotti o inventati»**: chi, lo sceglie il Direttore, non questa funzione.
+ *  - la **A.268 del 15/11**: «Si effettua un solo avanzamento 7→8 e, successivamente, l'adeguamento delle Abilità
+ *    con 21 punti complessivi da ridistribuire».
+ *
+ * Quindi la destinazione approvata è il livello 8 con 21 punti, e le strade per arrivarci sono **due**: i PX veri,
+ * oppure l'autorizzazione del Direttore (la concessione della A.187, che l'app ha già). Adeguare al livello
+ * attuale con meno punti **non è** quello che Davide ha approvato, e la funzione lo dice invece di lasciarlo
+ * credere. I PX e la soglia si leggono dai dati (`px_partita.json` → `soglie_px`), mai da un numero scritto qui.
+ */
+export function stradeDelLivello(o, dati) {
+  const m = monteAdeguamento(o, dati);
+  const soglie = Array.isArray(dati?.px_partita?.soglie_px) ? dati.px_partita.soglie_px : [];
+  const px = Number.isInteger(o?.scelte?.puntiEsperienza) ? o.scelte.puntiEsperienza : null;
+  const destinazione = livelloDestinazione(dati);
+  const soglia = Number.isInteger(soglie[destinazione - 1]) ? soglie[destinazione - 1] : null;
+  const bastano = Number.isInteger(px) && Number.isInteger(soglia) ? px >= soglia : null;
+  const mancano = Number.isInteger(px) && Number.isInteger(soglia) ? Math.max(0, soglia - px) : null;
+  const strade = [];
+  if (bastano === true) strade.push(`ha i PX per il ${destinazione}°: basta il normale «Sali di livello»`);
+  if (bastano === false) {
+    strade.push(`una serata di PX: gliene mancano ${mancano} per la soglia del ${destinazione}° (${soglia})`);
+    strade.push('la concessione del Direttore (A.187): «Concedi il passaggio al livello N» con il motivo, i PX reali non cambiano');
+  }
+  if (bastano === null) strade.push(`i PX non sono scritti nel file: la soglia del ${destinazione}° è ${soglia ?? 'sconosciuta'}`);
+  const frase = `è al livello ${m.livello} con ${m.gradi} Grad${m.gradi === 1 ? 'o' : 'i'}, quindi il monte di adesso è ${m.monte} punti (§8.3.1: 7 per Grado). `
+    + `La destinazione approvata è il livello ${destinazione} con ${m.atteso8} punti (blocco dell'11/11 e A.268): `
+    + `${strade.join('; ')}. Adeguare adesso al livello ${m.livello} con ${m.monte} punti non è la strada approvata.`;
+  return { livello: m.livello, destinazione, px, soglia, bastano, mancano, monte: m.monte, monteDestinazione: m.atteso8, strade, frase };
+}
+
+/** Lo stesso file con tutti i punti liberi azzerati: la base di confronto per misurare il solo profilo. */
+function senzaLiberi(o, extra = {}) {
+  return {
+    ...o,
+    scelte: { ...o.scelte, ...extra, puntiAbilitaLiberi: {} },
+    livelli: (o.livelli ?? []).map((v) => ({ ...v, puntiAbilita: {} })),
+  };
+}
+
+/**
+ * Che cosa cambia **per il solo profilo**: categoria, base, limite e VA di ogni Abilità, prima e dopo.
+ *
+ * Il confronto si fa **a punti liberi azzerati su entrambi i lati**, perché i punti liberi si ridistribuiscono
+ * comunque: confrontare il VA di prima (coi suoi punti) con quello di dopo (senza) direbbe che scendono quasi
+ * tutte, che è falso e spaventerebbe il tavolo per niente. Quello che resta è il solo effetto del profilo nuovo.
+ *
+ * @returns { cambiano, salgono, scendono, abilita } — `scendono` sono i casi della A.267
+ */
+export function cambiDelProfilo(o, dati) {
+  const prima = calcolaSchedaPersonaggio(migraPersonaggio(personaggio(senzaLiberi(o))), dati);
+  const dopo = calcolaSchedaPersonaggio(migraPersonaggio(personaggio(senzaLiberi(o, { regimeAbilita: PROFILO_NUOVO }))), dati);
+  const perNome = new Map((prima.abilita ?? []).map((a) => [a.nome, a]));
+  const abilita = (dopo.abilita ?? []).map((d) => {
+    const p = perNome.get(d.nome) ?? null;
+    return {
+      nome: d.nome,
+      da: p?.competenza ?? null, a: d.competenza ?? null,
+      basePrima: p?.base ?? null, baseDopo: d.base ?? null,
+      limitePrima: p?.limite ?? null, limiteDopo: d.limite ?? null,
+      vaPrima: p?.totale ?? null, vaDopo: d.totale ?? null,
+      cambiaCategoria: !!p && p.competenza !== d.competenza,
+    };
+  });
+  const delta = (x) => (Number.isInteger(x.vaPrima) && Number.isInteger(x.vaDopo) ? x.vaDopo - x.vaPrima : 0);
+  return {
+    abilita,
+    cambiano: abilita.filter((x) => x.cambiaCategoria),
+    salgono: abilita.filter((x) => delta(x) > 0),
+    scendono: abilita.filter((x) => delta(x) < 0),
+  };
+}
+
+/**
  * Che cosa succede a un personaggio con l'adeguamento, **senza scrivere niente**.
  * @returns {{ nome, livello, giaFatto, bloccato, motivo, nota, monte, casi, scendono, nuovo }}
  *   `bloccato`: la procedura non parte (la nota non si scrive, o la scheda non si calcola).
@@ -178,7 +285,7 @@ export function notaPerScheda(correzioni) {
 export function pianoAdeguamento(o, dati, { quando = new Date() } = {}) {
   const nome = String(o?.scelte?.nome ?? '').trim() || 'Senza nome';
   const livello = livelloDi(o);
-  const vuoto = { nome, livello, giaFatto: false, bloccato: false, motivo: null, nota: null, monte: null, casi: [], scendono: [], nuovo: null };
+  const vuoto = { nome, livello, giaFatto: false, bloccato: false, motivo: null, nota: null, monte: null, casi: [], scendono: [], cambi: null, px: null, nuovo: null };
   if (o?.scelte?.regimeAbilita === PROFILO_NUOVO) return { ...vuoto, giaFatto: true, motivo: 'è già adeguato al profilo 4/7/9/4' };
 
   // A: la nota di prima, prima di qualunque altra cosa. Senza, non si parte.
@@ -188,36 +295,17 @@ export function pianoAdeguamento(o, dati, { quando = new Date() } = {}) {
   }
 
   const m = monteAdeguamento(o, dati);
+  const px = stradeDelLivello(o, dati);
   const casi = [];
-  if (m.differenza !== 0) {
-    casi.push(`è al livello ${m.livello} con ${m.gradi} Grad${m.gradi === 1 ? 'o' : 'i'}: il monte è ${m.monte} punti (§8.3.1: 7 per Grado). `
-      + `Il blocco approvato dell'11/11 parla del livello 8, cioè ${m.atteso8} punti: se la destinazione è quella, fallo salire prima.`);
-  }
+  if (m.differenza !== 0) casi.push(px.frase);
 
-  // E: l'A.267 è aperta. Se un'Abilità scenderebbe di categoria e di base, la procedura si ferma e lo dice.
-  const prima = profiloCompetenze(dati.regole, o.scelte);
-  const dopo = profiloCompetenze(dati.regole, { ...o.scelte, regimeAbilita: PROFILO_NUOVO });
-  const classePrima = dati.classi.classi.find((c) => c.nome === (o.scelte?.classe ?? o.scelte?.classi?.[0]?.nome));
-  const scendono = [];
-  if (classePrima) {
-    for (const a of nota.abilita) {
-      const catDopo = competenzaDi(classePrima, a.nome, dopo);
-      const baseDopo = catDopo ? dopo.categorie[catDopo].base : null;
-      if (Number.isInteger(baseDopo) && Number.isInteger(a.base) && baseDopo < a.base) {
-        scendono.push({ nome: a.nome, da: a.competenza, a: catDopo, basePrima: a.base, baseDopo });
-      }
-    }
-  }
+  // **A.267 (15/11/2026): la discesa è accettata e non ferma più la procedura.** Si calcola, si dice e si scrive.
+  const cambi = cambiDelProfilo(o, dati);
+  const scendono = cambi.scendono;
   if (scendono.length) {
-    return {
-      ...vuoto,
-      nota,
-      monte: m,
-      scendono,
-      bloccato: true,
-      motivo: `${scendono.length} Abilità passano a una categoria più bassa e perderebbero base (${scendono.map((x) => `${x.nome} ${x.da}→${x.a}`).join(', ')}): `
-        + 'è la A.267, ancora aperta, e la procedura non decide da sé. Serve la risposta di Davide, oppure il Direttore decide al tavolo caso per caso.',
-    };
+    casi.push(`${scendono.length} Abilità perdono VA col profilo nuovo (${scendono.map((x) => `${x.nome} ${x.da}→${x.a}, VA ${x.vaPrima}→${x.vaDopo}`).join('; ')}). `
+      + 'La A.267 del 15/11 dice che la diminuzione è accettata: non si conserva il valore di prima e non si compensa. '
+      + 'Un\'eccezione la fa il Direttore a parte, con il ✎ di «Modifica master», che chiede il motivo e la registra.');
   }
 
   const riga = rigaNotaDiPrima(nota, { quando });
@@ -239,9 +327,12 @@ export function pianoAdeguamento(o, dati, { quando = new Date() } = {}) {
       primaDelAdeguamento: primaDelAdeguamento(o),
       monte: m.monte,
       eventoAssegnazione: ultimo,
+      // A.267: le Abilità che perdono VA restano scritte nel file, con i due numeri. Un VA che scende senza
+      // spiegazione, fra sei mesi, è una discussione al tavolo; con la riga è una decisione con una data.
+      ...(scendono.length ? { scendonoA267: scendono.map((x) => ({ nome: x.nome, da: x.da, a: x.a, vaPrima: x.vaPrima, vaDopo: x.vaDopo })) } : {}),
     }),
   };
-  return { ...vuoto, nota, monte: m, casi, nuovo };
+  return { ...vuoto, nota, monte: m, casi, scendono, cambi, px, nuovo };
 }
 
 /** Il personaggio ha un adeguamento aperto (contrassegno messo, punti ancora da assegnare)? */

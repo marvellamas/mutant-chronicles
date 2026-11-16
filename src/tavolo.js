@@ -14,6 +14,11 @@ import { chiaveDaFile, NOME_FILE } from './cartella.js';
 import { versioniPersonaggio } from './rules.js';
 import { alRound } from './round-scontro.js';
 import { caricatoreInserito, caricatoriDiScorta } from './ricarica.js';
+// lotto 207: `statoPerPlancia` era **usato e non importato** dal lotto 194, e il `catch` nudo della riga che lo
+// chiama trasformava il ReferenceError in `adeguamento: null`: la riga «Abilità: in corso…» non è mai comparsa
+// sulla plancia, e il Direttore avrebbe visto tutti e sette come se avessero finito. L'ha trovato la prova nel
+// browser; `tests/adeguamento-serata-207.test.js` la pretende passando da `vistaPlancia`, cioè dalla via vera.
+import { statoPerPlancia } from './adeguamento-abilita.js';
 
 /**
  * Scheda compatta di un PG per la plancia.

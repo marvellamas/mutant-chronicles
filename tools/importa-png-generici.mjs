@@ -44,6 +44,12 @@ export const RIGHE_DI_GRADO = 25 * 6;
 /** I totali del blocco E&L del 13/11/2026: sei Specializzazioni, cinque Maestrie e nove Talenti Liberi per modello. */
 export const ACQUISIZIONI_ATTESE = { specializzazioni: 150, maestrie: 125, talenti_liberi: 225 };
 
+/**
+ * A.269 (15/11/2026): la riga della tabella degli armamenti astratti si chiama «Spada», non «Arma da guerra».
+ * Sta qui e non in un elenco sparso perché una rinomina decisa da una risposta si legge in un posto solo.
+ */
+export const RINOMINA_A269 = { 'Arma da guerra': 'Spada' };
+
 const slug = (s) => s.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/[’']/g, '-').replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
 
 export function leggiRigheTesto(testo) {
@@ -277,17 +283,20 @@ export function importaPng(testoWord, fonte, { versione_manuale, nota_fonte } = 
     if (!m) throw new Error(`il JSON non ha il modello «${nome}»: ${[...perClasse.keys()].join(', ')}`);
     classi[slug(nome)] = { ...leggiProsa(righe, nome, categoria), ...dalJson(m) };
   }
-  // «Spada» nelle tabelle di Classe, «Arma da guerra» nella tabella degli armamenti astratti: A.269.
+  // **A.269 (Davide, 15/11/2026): la riga si rinomina, e l'alias non esiste più.** Il lotto 197 aveva dichiarato
+  // «Spada» come alias della riga «Arma da guerra», perché le tabelle di Classe scrivevano l'uno e la tabella
+  // degli armamenti astratti l'altro, e sceglierne uno sarebbe stato inventare. La risposta dice:
+  //
+  //   «"Armi da Guerra" è l'Abilità; "Spada" è l'arma; "Spade" è la Specializzazione. La voce "Arma da guerra" va
+  //   rinominata "Spada", profilo 1d8, una mano, ravvicinata. Non resta come arma separata né come alias.»
+  //
+  // Quindi si rinomina la riga letta dal manuale — una risposta vale più del manuale, come la A.206 per la Parata
+  // del Lottatore — e `alias_armi` sparisce da sé, perché «Spada» è ora nella tabella.
+  for (const a of comuni.armamenti) if (RINOMINA_A269[a.tipo]) a.tipo = RINOMINA_A269[a.tipo];
   const tipi = new Set(comuni.armamenti.map((a) => a.tipo));
   const usate = new Set(Object.values(classi).flatMap((c) => Object.values(c.attacchi).flat().map((a) => a.arma)));
-  const alias_armi = {};
   for (const a of usate) if (!tipi.has(a)) {
-    if (a !== 'Spada') throw new Error(`l’arma «${a}» non è nella tabella degli armamenti astratti e non è un alias dichiarato`);
-    alias_armi[a] = {
-      riga: 'Arma da guerra',
-      motivo: 'Mostri 0.67: le tabelle di Classe di Assaltatore e Incursore scrivono «Spada», la tabella degli armamenti astratti ha ancora la riga «Arma da guerra». Stesso dado (1d8), una mano, ravvicinato, e la Specializzazione della famiglia si chiama «Spade»: è la stessa riga con il nome nuovo. Ipotesi dichiarata, non una certezza.',
-      domanda: 'A.269',
-    };
+    throw new Error(`l’arma «${a}» non è nella tabella degli armamenti astratti: se è un nome nuovo del manuale, va letta o dichiarata`);
   }
   return {
     versione_manuale: versione_manuale ?? 'Mostri 0.67; Direttore 0.51 §§9.6–9.6.2',
@@ -297,7 +306,6 @@ export function importaPng(testoWord, fonte, { versione_manuale, nota_fonte } = 
     valori_pronti: 'I valori pronti delle tabelle comprendono già i benefici fissi delle acquisizioni raggiunte, una volta sola (Mostri 0.67, «Bonus permanenti»; Direttore 0.51 §9.6.2). I VA delle 24 Abilità sono personali, prima di Specializzazioni, EQ, strumenti e condizioni. Non si risommano: si aggiunge EQ una volta sola e i soli modificatori condizionati pertinenti.',
     livelli_acquisizioni: fonte.livelli_acquisizioni,
     ...comuni,
-    ...(Object.keys(alias_armi).length ? { alias_armi } : {}),
     classi,
   };
 }
