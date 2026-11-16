@@ -3136,3 +3136,39 @@ dedotto non si scrive sopra un'assenza voluta.
 scritto senza la Natura: «Naturale» per impostazione?), **A.275** (la Taglia si deduce dall'ingombro?). Il primo
 numero libero diventa **A.276**. **Resta aperta** la richiesta del 203: il JSON dei PNG rigenerato dall'edizione
 corrente.
+
+
+## Lotto 205 — 16/11/2026 — il Bestiario si chiude sulla 0.69
+
+**Le pagine «regole comuni» di ogni blocco si agganciano per posizione.** Il primo tentativo cercava i titoli che
+finiscono per «regole comuni» o «regole operative»: ne trovava **20 su 57**, e i blocchi che il manuale apre con
+un altro titolo («Non morti spiriti e signori», «Geni e guardiani elementali») finivano inghiottiti dal
+precedente — «Fauna terrestre acquatica e volante» si sarebbe presa 161 schede, draghi e demoni compresi. La
+struttura vera è posizionale: *una sequenza di pagine senza schede in mezzo apre un blocco, e le schede che la
+seguono gli appartengono*. Sono **57 blocchi** e coprono **tutte le 436 schede del catalogo**. Due limiti
+dichiarati: solo dal capitolo 8 (nel 7 la posizione direbbe il falso — «La Covata regole comuni» finirebbe addosso
+a 37 schede che non ne fanno parte), e le pagine che **continuano una creatura già passata** non aprono il blocco
+nuovo.
+
+**Il Bestiario oggi: 493 schede — 255 complete, 206 miste, 32 provvisorie.** Il ⚑ si spegne su 43 schede in più
+del lotto 204. Le miste restano per tre ragioni nostre e dichiarate: le capacità (158) perché alcune regole comuni
+stanno in una **pagina finale** che segue le creature invece di precederle, e la regola di posizione guarda
+indietro; le Abilità (68) perché scritte con una condizione che il formato non tiene; le note (55) perché portano
+le nostre annotazioni, che il manuale non scrive in quella forma.
+
+**Gli attacchi: 174 restano fuori dall'elenco, ma 127 non sono attacchi** — si risolvono con una Salvezza o una
+Prova, o sono prese senza danno, e stanno fra le capacità dove si leggono. Dei 47 che resterebbero da tirare, **43
+aspettano una risposta** (24 la A.274, 19 la **A.276** nuova: il danno a due fasi in una cella) e 4 sono casi
+singoli in cui il manuale non dà il dato in una forma che il formato possa tenere.
+
+**La regola del 204 non si è allentata: si è stretta due volte**, e tutte e due per un danno trovato. Il controllo
+di non-regressione ha visto il Capoguerra orco passare da tre attacchi a due (ora un elenco più corto di prima è
+una lettura parziale, sempre) e una creatura **nuova** perdere gli attacchi letti perché uno dei tre si risolve
+con una Salvezza (la regola protegge un valore buono: dove non ce n'è nessuno non c'è niente da proteggere). La
+prova sulla plancia ha trovato il Lich con le capacità del Polpo. E la condizione di un attacco ora **si porta
+dietro**: il Calpestare del Triceratopo non diventa un attacco sempre disponibile perché la 0.69 scrive il «solo
+contro una vittima già A Terra» nella prosa.
+
+**Domande nuove: A.276** (un attacco con due danni in sequenza: due attacchi distinti, o uno con la seconda fase
+come promemoria?) e **A.277** (la «pagina finale» di un blocco: resta dov'è o va prima delle creature?). Il primo
+numero libero diventa **A.278**.
