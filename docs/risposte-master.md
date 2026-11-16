@@ -3172,3 +3172,60 @@ contro una vittima già A Terra» nella prosa.
 **Domande nuove: A.276** (un attacco con due danni in sequenza: due attacchi distinti, o uno con la seconda fase
 come promemoria?) e **A.277** (la «pagina finale» di un blocco: resta dov'è o va prima delle creature?). Il primo
 numero libero diventa **A.278**.
+
+
+## Lotto 206 — 16/11/2026 — gli Armamenti 0.86, e le risposte di Davide del 15/11
+
+**Cinque risposte nuove in coda alla sezione 7 del Doc «Per Davide», tutte del 15/11/2026.** Registrate qui tutte e
+cinque; di queste il lotto 206 ha applicato la A.260, le altre quattro vanno in lotti a sé e sono dichiarate.
+
+- **A.260 — Alimentazione della manifestazione della CyberArma (risposta del 15/11/2026). APPLICATA.**
+  «La CyberArma convertita è un'arma ravvicinata e non effettua Raffiche. L'attivazione consuma 1 CM intero oppure
+  1 carica intera di NeC rosso e alimenta la manifestazione per **10 Round consecutivi, indipendentemente da
+  attacchi, colpi o Azioni**. Trascorsi i 10 Round serve una nuova carica. Non si usano frazioni; il precedente
+  riferimento a «10 colpi» è superato. Gli altri costi restano invariati.»
+  *Perché conta:* la A.236 (02/11) diceva 10 Round, la A.251 (06/11) diceva 10 colpi e l'app seguiva quella perché
+  più recente, gli Armamenti 0.83 — pubblicati dopo entrambe — tornavano a dire 10 Round. Non è «un manuale contro
+  una risposta» (il caso della A.270): è una **risposta che supera una risposta**, e si applica la più recente. Il
+  «ogni 10 colpi» resta scritto una volta sola, nella nota che dice che è superato: una regola che cambia senza il
+  suo perché, fra sei mesi, qualcuno la rimette come stava. Per Dimitri (Tecnomante, 5 CM) le due letture
+  coincidono finché attacca una volta per Round; con due attacchi per Round la carica gli durerà il doppio.
+
+- **A.267 — Adeguamento straordinario e possibile diminuzione del VA (risposta del 15/11/2026). Da applicare, lotto
+  a sé.** «Si adeguano prima categorie e basi al nuovo profilo. Se questo riduce il VA personale di un'Abilità, la
+  diminuzione è accettata e non genera compensazioni automatiche né conservazione del valore precedente. Il
+  giocatore può impiegare normalmente i 21 punti liberi dell'adeguamento, rispettando i limiti. Qualunque eccezione
+  del Direttore deve essere separata, esplicita e registrata.» *Sblocca la procedura del lotto 194*, che oggi si
+  ferma quando un'Abilità scenderebbe di categoria (nessuno dei sette la subisce, il Predicatore d'esempio sì).
+
+- **A.268 — Livello corrente dei sette PG (risposta del 15/11/2026).** Conferma l'istantanea: tutti e sette al
+  livello 7, un solo avanzamento dal 7° all'8°, poi l'adeguamento con 21 punti complessivi. La domanda era stata
+  **ritirata** dal lotto 199 perché nasceva dalla copia vecchia: Davide ha risposto comunque, e la risposta
+  conferma quello che l'istantanea diceva.
+
+- **A.269 — Terminologia dell'arma generica (risposta del 15/11/2026). Da applicare col lotto dei PNG.** «"Armi da
+  Guerra" è il nome dell'Abilità; "Spada" è l'arma specifica; "Spade" è la Specializzazione. La voce astratta "Arma
+  da guerra" deve essere rinominata "Spada", con profilo 1d8, una mano, ravvicinata. "Arma da guerra" non deve
+  restare come arma separata né come alias.» Tocca `data/png_generici.json`, fermo alla **0.67** in attesa del JSON
+  dei PNG dell'edizione corrente (lotto 203): si fa con quel lotto. L'alias dichiarato dal lotto 197 va tolto.
+
+- **A.270 — Parata a mani nude del Lottatore (risposta del 15/11/2026). Già applicata dal lotto 197.** Il PG
+  Lottatore conserva la A.206 e para a mani nude dal I Grado; il **PNG** Lottatore generico segue il Mostri 0.67 e
+  0.69 (Schivare 13 al I Grado, parata dal II). «Parata a Mani Nude Migliorata» resta un Talento distinto. È
+  esattamente ciò che il lotto 197 aveva applicato come ipotesi dichiarata: la risposta la conferma.
+
+**Gli Armamenti sono alla 0.86 (15/11, 17:37), e le 218 voci d'arma del catalogo vengono da lì.** Il corpo della
+0.86 è identico a quello della 0.83 recepita: l'unica aggiunta è il §7.27, le cinque armi lunari dei Mutanti, che
+restano un lotto a sé. Dal confronto riga per riga **cinque valori cambiano**, tutti e cinque su campi che si
+vedono in combattimento: Colt Hammershot capacità **6 → 4** (il manuale lo dice tre volte: «tamburo fisso da
+quattro colpi»), Bolter 13 gittata **15 → 20**, Bolter 20 capacità **25 → 30**, Lanciagranate Deathlock Drum e
+Lanciafiamme Purifier MOV **0 → −3**. **Nessuna famiglia si è spostata e nessuna Specializzazione cambia**: delle
+41 che il manuale nomina nella prosa, zero differiscono dalle nostre, quindi nessuno cambia il +1 VA e il +1 danno.
+Le altre dieci tabelle del catalogo degli Armamenti — protezioni, munizioni, accessori, dispositivi — restano alla
+0.74, dichiarate col motivo.
+
+**Niente cancello, e il perché.** Delle 14 armi dei sette (istantanea del 14/11) **una sola cambia, per una sola
+persona**: la Colt Hammershot di Michele. Un cancello come il `regimeAbilita` del lotto 192 vorrebbe dire
+lasciargli un revolver da 6 colpi che il manuale dice averne 4 — al tavolo più sbagliato del cambiamento. E niente
+diventa invalido: Michele ha 3 colpi in canna, sotto il nuovo massimo. I file dei personaggi non sono stati
+toccati.
