@@ -3229,3 +3229,50 @@ persona**: la Colt Hammershot di Michele. Un cancello come il `regimeAbilita` de
 lasciargli un revolver da 6 colpi che il manuale dice averne 4 — al tavolo più sbagliato del cambiamento. E niente
 diventa invalido: Michele ha 3 colpi in canna, sotto il nuovo massimo. I file dei personaggi non sono stati
 toccati.
+
+
+## Lotto 207 — 16/11/2026 — le cinque risposte del 15/11 applicate, e la A.272 che era già risposta
+
+**A.267 — Adeguamento straordinario e diminuzione del VA: APPLICATA.** Testo approvato (E&L e Doc, 15/11,
+identici): «Si adeguano prima categorie e basi al nuovo profilo. Se il VA personale diminuisce, la diminuzione è
+accettata: non si conserva automaticamente il valore precedente e non si assegna una compensazione automatica. Il
+giocatore usa normalmente i 21 punti liberi, nei limiti previsti. Ogni eccezione del Direttore è separata,
+esplicita e registrata.» Quindi: **la procedura di adeguamento non si rifiuta più** quando un'Abilità scende di
+categoria (il lotto 194 si fermava, ed era giusto senza una risposta); il VA scende davvero; niente compensazione
+e niente valore conservato; e l'eccezione **non la fa la procedura** — è il ✎ di «Modifica master» sul VA, che
+chiede il motivo e scrive la sua riga, cioè «separata, esplicita e registrata». La discesa resta **detta** nel
+piano, nella riga di registro del file (`scendonoA267`, coi due VA) e nel pannello del giocatore. Il solo caso del
+repo è il **Custode d'esempio** (Artefatti P→G, Intrattenere G→N), che è il profilo del Custode approvato l'11/11;
+sui sette veri la discesa non si presenta (zero VA in discesa).
+
+**A.268 — Stato dei sette PG: risolta, niente da applicare.** La domanda era stata **ritirata dal lotto 199**
+perché l'istantanea del 14/11 l'aveva chiusa; Davide ha risposto comunque e la risposta conferma: tutti e sette al
+livello 7, un solo avanzamento 7→8, poi l'adeguamento con 21 punti complessivi.
+
+**A.269 — «Armi da Guerra», «Spada», «Spade»: APPLICATA.** «La voce "Arma da guerra" va rinominata "Spada",
+profilo 1d8, una mano, ravvicinata. Non resta come arma separata né come alias.» La riga della tabella degli
+armamenti astratti dei PNG si chiama ora **Spada** (`RINOMINA_A269` in `tools/importa-png-generici.mjs`, la stessa
+via con cui una risposta vale sul manuale) e l'`alias_armi` che il lotto 197 aveva dichiarato non nasce più: una
+riga aggiunta, otto togliate in `data/png_generici.json`. Resta una **frase del manuale**, non un dato: la prosa
+del §9.6 dice ancora «Assaltatore con arma da guerra e scudo», ed è testo di Davide, riletto dal Word a ogni
+importazione.
+
+**A.270 — Parata a mani nude del Lottatore: già applicata dal lotto 197.** La risposta conferma l'ipotesi
+dichiarata: il PG conserva la A.206 e para dal I Grado, il PNG generico usa Schivare 13 al I Grado e para dal II.
+Voce chiusa, niente da rifare.
+
+**A.260 — CyberArma: già applicata dal lotto 206** (10 Round indipendentemente dagli attacchi, non 10 colpi).
+Voce chiusa.
+
+**A.272 — da che livello si fa l'adeguamento: RISOLTA, e la risposta era nei blocchi non numerati dell'E&L.** Il
+blocco **«Adeguamento approvato delle Abilità e passaggio al livello 8 — 11 novembre 2026»** dice: «La destinazione
+dei sette PG è il livello 8, con tre Gradi complessivi… A livello 8 il monte totale spettante è 7 × 3 = 21 punti
+liberi… Per i due PG sotto la soglia di PX, il Direttore seleziona le due Schede e autorizza espressamente il solo
+passaggio 7 → 8», e aggiunge che **«i nomi dei destinatari non sono stati specificati in questa decisione e non
+devono essere dedotti o inventati»**; la A.268 del 15/11 lo ripete. Quindi la destinazione è il **livello 8 con 21
+punti** e le strade sono **due** — i PX veri, o l'autorizzazione espressa del Direttore (la concessione della
+A.187, che l'app ha già). **Adeguare adesso al livello 7 con 14 punti non è la strada approvata**, e lo strumento
+lo dice invece di lasciarlo credere (`stradeDelLivello`, con i PX dal file e la soglia da `px_partita.json`).
+Quello che resta non è una domanda ma una **decisione di Davide**: nessuno dei sette ha i 1.050 PX dell'ottavo
+(mancano da 28 a Lucas a 144 a Dimitri), quindi o si gioca una serata di PX, o l'autorizzazione serve per tutti e
+sette — e i nomi non si deducono.
