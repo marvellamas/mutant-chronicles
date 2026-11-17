@@ -2524,6 +2524,13 @@ function schedaArma(ctx, a) {
       a.famigliaMunizioni ? `${NOMI_FAMIGLIE_MUNIZIONI[a.famigliaMunizioni]} (§7.20.9)` : null,
       // quantità rimasta: la voce meno quanto inserito ricaricando nella sessione (src/ricarica.js)
       a.scorte?.length ? `${a.famigliaMunizioni ? ' · ' : ''}in lista: ${a.scorte.map((x) => `${x.nome} ×${Math.max(0, x.quantita - (ctx.sessione.scorte?.[x.uid] ?? 0))}${ctx.sessione.scorte?.[x.uid] ? ` (di ${x.quantita})` : ''}`).join(', ')}` : null) : null,
+    // lotto 210: il focalizzatore della CyberArma, con ciò che dà e da dove viene (§7.25); un colore senza numero lo dice
+    a.focalizzatore ? h('p', { class: 'nota focalizzatore', title: a.focalizzatore.senzaNumero ?? a.focalizzatore.condizionale?.testo ?? null },
+      h('strong', {}, `Focalizzatore ${a.focalizzatore.colore}: `),
+      a.focalizzatore.custode ? 'il Custode usa la sua tabella per Grado, che lo comprende già'
+        : [a.focalizzatore.va ? `VA ${segno(a.focalizzatore.va)}` : null, a.focalizzatore.parata ? `Parata ${segno(a.focalizzatore.parata)}` : null, a.focalizzatore.danno ? `danno ${segno(a.focalizzatore.danno)}` : null].filter(Boolean).join(' · ')
+          || (a.focalizzatore.proprietaDanno ? `${a.focalizzatore.proprietaDanno} (§5.24), nessun numero nel manuale: la applica il Direttore` : 'nessun numero nel manuale'),
+      a.focalizzatore.condizionale ? ` · ${a.focalizzatore.condizionale.testo}` : null) : null,
     a.accessori?.length ? h('p', { class: 'nota' }, h('strong', {}, 'Accessori: '), a.accessori.map((x) => x.nome).join(', '),
       a.dannoAccessori ? ` · danno ${segno(a.dannoAccessori)}` : null) : null,
     a.mirino ? h('p', { class: 'nota', title: a.mirino.testo }, `${a.mirino.nome}: −${a.mirino.riduzione} alla penalità di distanza (fino a 0), ${a.mirino.distanza_max_q ? `fino a ${a.mirino.distanza_max_q} Q` : 'entro la gittata'}${a.mirino.azp_minime ? `, almeno ${a.mirino.azp_minime} AzP` : ''} (§7.3)`) : null,

@@ -268,3 +268,47 @@ export function descriviAlimentazione(a) {
 }
 const NOMI_CONVERSIONE = { riserva_cm: 'riserva interna di CM', nec: 'conversione a NeC' };
 const famigliaNomePerId = (id) => NOMI_CONVERSIONE[id] ?? id;
+
+// ---------------------------------------------------------------------------
+// Lotto 210: i focalizzatori — un bonus per colore, calcolato dove si calcola il VA.
+//
+// Il 209 ha lasciato una lacuna: il manuale dà al Verde +1 VA di Attacco, +1 alla Parata e +1 al danno e la scheda di
+// Dimitri non li mostrava (VA 9 senza niente). I colori sono cinque e stanno tutti nei dati (`focalizzatori` della voce
+// `cyberarma`, `tools/lotti/lotto_210_focalizzatori.mjs`): un valore scritto a mano nella voce invecchia, uno calcolato no.
+
+/** Il blocco `focalizzatori` dei dati, o null. */
+export function focalizzatoriCyberArma(dati) {
+  const voci = dati?.equipaggiamento?.file?.armi?.oggetti ?? dati?.equipaggiamento?.oggetti ?? [];
+  return lista(voci).find((x) => isOggetto(x.focalizzatori))?.focalizzatori ?? null;
+}
+
+const idColore = (s) => String(s ?? '').normalize('NFD').replace(/[̀-ͯ]/g, '').trim().toLowerCase();
+
+/**
+ * Il bonus del focalizzatore di una CyberArma dell'inventario.
+ *
+ * **La firma non ha valori predefiniti, di proposito** (la lezione del 192): `classi` è obbligatorio e se manca si ferma con
+ * un errore. Il Custode non riceve il bonus qui, perché la sua tabella per Grado ha già il cristallo dentro e sommarlo lo
+ * conterebbe due volte; un chiamante che dimenticasse le Classi darebbe a un Custode il bonus due volte, in silenzio.
+ *
+ * @param voce la voce dell'inventario (`rif`, `esemplare.focalizzatore`)
+ * @param classi i nomi delle Classi del personaggio
+ * @returns {null | { colore, id, va, parata, danno, custode, senzaNumero, condizionale, paragrafo } | { sconosciuto }}
+ *   null: nessun focalizzatore dichiarato (o non è una CyberArma); `sconosciuto`: colore che i dati non conoscono.
+ */
+export function bonusFocalizzatore(voce, classi, dati) {
+  if (!Array.isArray(classi)) throw new TypeError('bonusFocalizzatore: servono le Classi del personaggio (un array): il Custode non riceve il bonus qui');
+  if (typeof voce?.rif !== 'string' || !voce.rif.startsWith('armi:cyberarma')) return null;
+  const colore = voce.esemplare?.focalizzatore;
+  if (!colore) return null;
+  const F = focalizzatoriCyberArma(dati);
+  if (!F) return { sconosciuto: colore };
+  const f = lista(F.elenco).find((x) => x.id === idColore(colore));
+  if (!f) return { sconosciuto: colore };
+  const custode = F.si_applica_a === 'non_custode' && classi.includes('Custode');
+  return {
+    colore: f.nome, id: f.id, custode,
+    va: custode ? 0 : f.va_attacco ?? 0, parata: custode ? 0 : f.va_parata ?? 0, danno: custode ? 0 : f.danno ?? 0,
+    senzaNumero: f.senza_numero ?? null, condizionale: f.condizionale ?? null, proprietaDanno: f.proprieta_danno ?? null, paragrafo: f.paragrafo ?? null,
+  };
+}

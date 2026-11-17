@@ -1897,7 +1897,65 @@
    "_nota_unico": "Armamenti 0.83 §7.25: «Ogni originale è un pezzo unico». Dalla A.265 il manuale gli dà comunque un valore indicativo (7.500 cr): l’app lo mostra come prezzo letto dal catalogo e dice che è indicativo, non che è un listino. La formula della A.256 non si applica da sé a un pezzo unico.",
    "creazione_cr": 1250,
    "ravvicinata_senza_raffiche": true,
-   "_nota_ravvicinata": "A.260 (15/11/2026): la CyberArma è un’arma ravvicinata e non effettua Raffiche, in nessuna configurazione. Oggi nessuna delle tre voci ha modalità di fuoco e «Attacca!» non le offrirebbe, ma la regola è scritta perché un domani non torni per sbaglio: tests/a260-cyberarma-round.test.js fallisce se una modalità di Raffica compare su una CyberArma."
+   "_nota_ravvicinata": "A.260 (15/11/2026): la CyberArma è un’arma ravvicinata e non effettua Raffiche, in nessuna configurazione. Oggi nessuna delle tre voci ha modalità di fuoco e «Attacca!» non le offrirebbe, ma la regola è scritta perché un domani non torni per sbaglio: tests/a260-cyberarma-round.test.js fallisce se una modalità di Raffica compare su una CyberArma.",
+   "focalizzatori": {
+    "fonte": "Armamenti 0.86 §7.25 (Cristallo focalizzatore; tabella dei profili) e §7.25.5 (Riferimento rapido); Equipaggiamento 0.41 §10.9 (esemplare di Dimitri)",
+    "_nota": "Lotto 210: un bonus per colore, calcolato dove si calcola il VA (src/cyberarma.js → bonusFocalizzatore, src/equipaggiamento.js). Vale per il Tecnomante e per le conversioni a CM e NeC; il Custode usa la sua tabella per Grado, che il cristallo ce l'ha già dentro (sommarlo lo conterebbe due volte). Un colore senza numero qui sotto non ha numero nel manuale: non si inventa.",
+    "si_applica_a": "non_custode",
+    "elenco": [
+     {
+      "id": "bianco",
+      "nome": "Bianco",
+      "va_attacco": 0,
+      "va_parata": 0,
+      "danno": 3,
+      "condizionale": {
+       "testo": "Contro l’Oscura Simmetria ×2 al danno complessivo del colpo, +3 compreso",
+       "moltiplicatore_danno": 2,
+       "contro": "Oscura Simmetria"
+      },
+      "paragrafo": "§7.25, §7.25.5"
+     },
+     {
+      "id": "rosso",
+      "nome": "Rosso",
+      "va_attacco": 0,
+      "va_parata": 0,
+      "danno": 0,
+      "proprieta_danno": "Plasma",
+      "senza_numero": "Plasma (§5.24): è un effetto sul bersaglio (PS Tempra, −2 VA), non un bonus al VA o al danno. «Nessun dado aggiuntivo»: lo applica il Direttore.",
+      "paragrafo": "§7.25, §7.25.5"
+     },
+     {
+      "id": "blu",
+      "nome": "Blu",
+      "va_attacco": 0,
+      "va_parata": 0,
+      "danno": 0,
+      "proprieta_danno": "Elettricità",
+      "senza_numero": "Elettricità (§5.24): è un effetto sul bersaglio (PS Tempra, niente Azioni fuori Iniziativa), non un bonus al VA o al danno. «Nessun dado aggiuntivo»: lo applica il Direttore.",
+      "paragrafo": "§7.25, §7.25.5"
+     },
+     {
+      "id": "verde",
+      "nome": "Verde",
+      "va_attacco": 1,
+      "va_parata": 1,
+      "danno": 1,
+      "paragrafo": "§7.25, §7.25.4, §7.25.5"
+     },
+     {
+      "id": "viola",
+      "nome": "Viola",
+      "va_attacco": 0,
+      "va_parata": 0,
+      "danno": 0,
+      "corruzione": true,
+      "senza_numero": "Eccezionale: porta Corruzione, «annotare il valore del singolo frammento» (§7.25). Il manuale non dà un bonus numerico né il valore della Corruzione: sta nell’esemplare (A.246).",
+      "paragrafo": "§7.25"
+     }
+    ]
+   }
   },
   {
    "tipo": "arma_ravvicinata",
