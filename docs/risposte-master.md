@@ -3322,4 +3322,12 @@ succeduta all'ASA») i manuali scrivono **SIA**: la «Valigetta investigativa SI
 peso da 3 a 3,5 kg) e «SIA Recon». Il nostro catalogo dice ancora **ASA** («Valigetta investigativa ASA», «Elmetto ASA Recon», «Divisa operativa
 ASA», che compare nel Calcolo di Lucas come «Lancio: Divisa operativa ASA −1»). *La domanda:* rinominiamo in SIA tutti gli oggetti ASA del catalogo,
 o gli oggetti storici restano ASA (come le «Dotazioni storiche ASA della Neverlost», Armamenti §7.26)? *Nel frattempo:* nessun nome cambia; gli
-oggetti degli Armamenti (valigetta, elmetto, divisa) stanno nei file ancora alla 0.74, un lotto a parte.
+oggetti degli Armamenti (valigetta, elmetto, divisa) stanno nei file ancora alla 0.74, un lotto a parte. **Esteso dal lotto 213:** il Veicoli 0.19 chiama
+«SIA Scout MK4» lo Scout del catalogo (il modello generico, 126.510 cr) e «Scout MK4 ASA» il FIAT LUX, l'esemplare storico dei PG; il profilo del
+nostro catalogo si chiama ancora «ASA Scout MK4»: non lo rinominiamo finché non rispondi.
+
+**A.285 — quale dei due record «Neverlost» è quello vero: APERTA (lotto 213).** Nel registro dei veicoli (istantanea del 15/11/2026, sola lettura) ci sono
+**due record Neverlost**: `veimvzoj07y0` (del gruppo, revisione 7, conducente Pablo, con le riserve a 100/10/30, il circuito e le munizioni 600/600/—/6, l'ultima
+modifica il 14/11) e `veimvzojvax1` (di proprietà di Pablo, revisione 1, del 2/11, con le riserve «da registrare»). Il Veicoli 0.19 §11 dice che la Neverlost
+è **un esemplare, non un modello**; la A.240 vuole un solo record. *La domanda:* il vero è quello del gruppo (e quello di Pablo si toglie), o il contrario? *Nel
+frattempo:* nessun record si tocca e nessuno si fonde; l'app li mostra tutti e due.
