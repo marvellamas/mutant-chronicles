@@ -15,7 +15,7 @@
 //
 // Quello che questo programma fa è il minimo: nota, contrassegno e punti azzerati. I 21 (o quanti sono) punti li
 // assegna **il giocatore dal suo tablet**, nella scheda, una scelta alla volta; il Direttore guarda la plancia.
-import { readFileSync, writeFileSync, mkdirSync } from 'node:fs';
+import { readFileSync, writeFileSync, mkdirSync, accessSync, constants } from 'node:fs';
 import { join, dirname } from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 import { creaZip } from './salva-sessione.mjs';
@@ -107,19 +107,33 @@ export function copiaZip({ cartella, salvataggi, quando = new Date() }) {
  * per nessuno. Poi si scrive.
  * @returns {{ fatto, zip, scritti, bloccati, motivo }}
  */
-export async function applica({ cartella, salvataggi, d = null, quando = new Date() }) {
+export async function applica({ cartella, salvataggi, d = null, quando = new Date(), scrivi = scriviPersonaggio }) {
   const D = d ?? await dati();
   const r = await rapporto({ cartella, d: D, quando });
   if (r.bloccati.length) {
     return { fatto: false, zip: null, scritti: [], bloccati: r.bloccati, motivo: `${r.bloccati.length} personaggi non hanno la nota di prima: non tocco nessuno (è la regola del 26 ottobre).` };
   }
   if (!r.pronti.length) return { fatto: false, zip: null, scritti: [], bloccati: [], motivo: 'nessun personaggio da adeguare.' };
+  // lotto 212: **prima di scrivere a chiunque**, ogni file deve essere scrivibile. La prova sulla copia dell'istantanea del 15/11 ha
+  // mostrato che con un solo file di sola lettura (Lucas) gli altri cinque erano già stati scritti e la procedura moriva a metà con
+  // un errore di sistema: il rifiuto «non tocco nessuno» valeva solo per la nota mancante, non per un file che non si scrive.
+  const nonScrivibili = r.pronti.filter((p) => { try { accessSync(join(cartella, p.file), constants.W_OK); return false; } catch { return true; } });
+  if (nonScrivibili.length) {
+    return { fatto: false, zip: null, scritti: [], bloccati: [], motivo: `${nonScrivibili.length} file non si possono scrivere (${nonScrivibili.map((p) => p.nome).join(', ')}): non tocco nessuno.` };
+  }
   const zip = copiaZip({ cartella, salvataggi, quando });
   const scritti = [];
+  const prima = new Map(r.pronti.map((p) => [p.file, readFileSync(join(cartella, p.file), 'utf8')]));
   // si scrive **sul file attuale** di ciascuno: le versioni vecchie non si toccano (lotto 200)
   for (const p of r.pronti) {
     // lotto 210: la versione di salvataggio sale e `aggiornato_*` si aggiornano, come per l'app (`scriviPersonaggio`)
-    scriviPersonaggio(join(cartella, p.file), p.nuovo, { chi: 'master', quando });
+    try {
+      scrivi(join(cartella, p.file), p.nuovo, { chi: 'master', quando });
+    } catch (e) {
+      // lotto 212: se una scrittura fallisce a metà, quelle già fatte si rimettono com'erano (byte per byte): mai a metà
+      for (const s of scritti) writeFileSync(join(cartella, s.file), prima.get(s.file));
+      return { fatto: false, zip, scritti: [], bloccati: [], motivo: `la scrittura di ${p.nome} è fallita (${e.code ?? e.message}): rimesse a posto le ${scritti.length} già scritte, nessuno è adeguato.` };
+    }
     scritti.push({ nome: p.nome, file: p.file, monte: p.monte.monte, versioniNonToccate: Math.max(0, (p.versioni ?? 1) - 1) });
   }
   return { fatto: true, zip, scritti, bloccati: [], motivo: null };

@@ -28,6 +28,7 @@ import { permessoSalita, sfasamento, scelteDelLivello, TIPO_CONCESSIONE, CHIAVE_
 import { eventiConPunti, applicaSpostamento, descriviSpostamento, descriviEccezioni, descriviRiassegnazione, controllaPuntiDaTablet } from '../sposta-punti.js';
 import { apriSpostaPunti } from './sposta-punti.js';
 import { leggiMomento, attoCampagna, serverCartella, elencoCartella, leggiCartella, leggiCartellaConRevisione, scriviCartella, contestoMasterQui, pingMasterQui, salvaBackupMaster, leggiBackupMaster } from './cartella.js';
+import { bozzaDi, impostaBozza, leggiBozzaSalvata, salvaBozza } from '../bozza-adeguamento.js';
 import { confermaAssegnazione, assegna as assegnaAdeguamento, adeguamentoAperto, puntiDellEvento, conPunti } from '../adeguamento-abilita.js';
 import { modalitaMaster, mostraMarchio, statoContestoMaster, registro as registroMaster, nuovaCorrezione, aggiungiCorrezione, annullaCorrezione, avvisoAnnulla, registraDiretta, differenzeDirette, differenzeOggetti, ripristinoDiretta, descriviScelte, soloScelte, ripristinaScelte, masterDiverso, normalizzaCircostanzeMaster } from '../correzioni-master.js';
 import { descriviVoce, postiTalenti, applicaSceltaTalento, eccezioneSpecializzazione, scelteSuccessive, applicaSceltaSuccessiva, adattaScelteSuccessive } from '../avanzamento.js';
@@ -186,6 +187,25 @@ async function avvia() {
   daIndirizzo();
 }
 
+/**
+ * Lotto 212: **la bozza dell'adeguamento è di un personaggio solo.** Stava in una variabile di stato, una per tutta l'app: la prova
+ * sulla copia ha mostrato Dimitri con 5 punti assegnati e, aprendo Pablo, «9 punti» da assegnare — i cinque di Dimitri nella scheda
+ * di Pablo, e un «Conferma» che li avrebbe scritti a lui. Sul PC del Direttore, che apre le schede una dopo l'altra, è il caso normale.
+ * Ora la bozza porta l'id del personaggio e dell'adeguamento, e sopravvive a un ricaricamento (localStorage, per-viewer: se manca
+ * si perde soltanto la bozza, mai un punto già confermato).
+ */
+const statoBozza = { bozza: null, di: null };
+function bozzaAdeguamentoDi() {
+  return bozzaDi(statoBozza, stato.id, () => {
+    const ap = stato.id ? adeguamentoAperto(fileDelPersonaggio(), stato.dati) : null;
+    return ap ? leggiBozzaSalvata(globalThis.localStorage, stato.id, ap.riga) : null;
+  });
+}
+function impostaBozzaAdeguamento(bozza, ap) {
+  impostaBozza(statoBozza, stato.id, bozza);
+  salvaBozza(globalThis.localStorage, stato.id, ap?.riga ?? null, bozza);
+}
+
 // piè di pagina della stampa: ogni manuale una volta, con la versione più recente (src/stampa.js → versioniCompatte)
 function versioniDati(dati) {
   return versioniCompatte(Object.values(versioniPersonaggio(dati)));
@@ -215,6 +235,17 @@ function rigaSchedeIncantesimi(dati) {
   if (!sched || !resto || sched === resto) return null;
   return h('p', { class: 'nota' },
     `Schede dei ${dati.incantesimi.corpus.schede} incantesimi: Magia ${sched}. Le regole di Poteri, Chroma e Cariche Mistiche vengono ancora dalla ${resto}.`);
+}
+
+/**
+ * Lotto 212: come per le armi e per le schede degli incantesimi, la riga sopra tiene un numero solo per manuale. Gli oggetti dell'Equipaggiamento
+ * (strumenti, corredi, sanitario, impianti) sono alla 0.42; i blocchi dell'energia (NEC, trasformatori, carico) ancora alla 0.30. Sparisce da sé.
+ */
+function rigaEquipaggiamento(dati) {
+  const ogg = /Equipaggiamento (\d+\.\d+)/.exec(dati?.equipaggiamento?.file?.esplorazione?.versione_manuale ?? '')?.[1] ?? null;
+  const resto = /Equipaggiamento (\d+\.\d+)/.exec(dati?.regole?.versione_manuale ?? '')?.[1] ?? null;
+  if (!ogg || !resto || ogg === resto) return null;
+  return h('p', { class: 'nota' }, `Oggetti dell'Equipaggiamento (strumenti, corredi, sanitario, impianti): ${ogg}. NEC, trasformatori e carico vengono ancora dalla ${resto}.`);
 }
 
 function mostraErroriDati(errori) {
@@ -1067,6 +1098,7 @@ function renderHome(unito = null) {
       // dicono entrambe, e questa riga sparisce da sé quando il catalogo è tutto alla stessa edizione.
       rigaCatalogoArmi(stato.dati),
       rigaSchedeIncantesimi(stato.dati),
+      rigaEquipaggiamento(stato.dati),
       stato.avvisiDati.length ? h('details', {}, h('summary', {}, `${stato.avvisiDati.length} avvisi sui dati (non bloccanti)`),
         h('ul', {}, stato.avvisiDati.map((a) => h('li', {}, h('code', {}, `${a.file} › ${a.chiave}`), ': ', a.problema)))) : null,
       todo.length ? h('details', {}, h('summary', {}, `${todo.length} valori o domande marcati TODO(Davide) nei dati`),
@@ -2221,7 +2253,7 @@ function renderSchedaInterna({ mantieniScorrimento = false } = {}) {
     // Lotto 194: l'adeguamento delle Abilità (§8.3.1). Il pannello legge il file com'è adesso; la bozza è il numero
     // che il giocatore vede, non un'aggiunta a qualcosa di nascosto, così «−» torna indietro senza ricominciare.
     fileAdeguamento: () => fileDelPersonaggio(),
-    bozzaAdeguamento: stato.bozzaAdeguamento ?? null,
+    bozzaAdeguamento: bozzaAdeguamentoDi(),
     azioni: {
       vaiTab,
       // Lotto 194: l'adeguamento delle Abilità, una scelta alla volta
@@ -2230,21 +2262,21 @@ function renderSchedaInterna({ mantieniScorrimento = false } = {}) {
           const file = fileDelPersonaggio();
           const ap = adeguamentoAperto(file, dati);
           if (!ap) return;
-          const bozza = stato.bozzaAdeguamento ?? puntiDellEvento(file, ap.livello);
-          stato.bozzaAdeguamento = assegnaAdeguamento(file, bozza, nome, delta, dati);
+          const bozza = bozzaAdeguamentoDi() ?? puntiDellEvento(file, ap.livello);
+          impostaBozzaAdeguamento(assegnaAdeguamento(file, bozza, nome, delta, dati), ap);
           renderScheda({ mantieniScorrimento: true });
         },
-        azzera: () => { stato.bozzaAdeguamento = {}; renderScheda({ mantieniScorrimento: true }); },
+        azzera: () => { impostaBozzaAdeguamento({}, adeguamentoAperto(fileDelPersonaggio(), dati)); renderScheda({ mantieniScorrimento: true }); },
         conferma: () => {
           const file = fileDelPersonaggio();
           const ap = adeguamentoAperto(file, dati);
           if (!ap) return;
-          const bozza = stato.bozzaAdeguamento ?? puntiDellEvento(file, ap.livello);
+          const bozza = bozzaAdeguamentoDi() ?? puntiDellEvento(file, ap.livello);
           const esito = confermaAssegnazione(file, bozza, dati);
           if (!esito.ok) { stato.messaggioScheda = { tipo: 'errore', testo: esito.motivo }; renderScheda({ mantieniScorrimento: true }); return; }
           stato.scelte = { ...esito.file.scelte, correzioniMaster: esito.file.correzioni_master ?? stato.scelte.correzioniMaster };
           stato.livelli = esito.file.livelli;
-          stato.bozzaAdeguamento = null;
+          impostaBozzaAdeguamento(null, ap);
           persisti();
           stato.messaggioScheda = { tipo: 'ok', testo: 'Adeguamento confermato: la scheda è quella nuova. La nota di prima resta, se qualcosa non torna.' };
           renderScheda({ mantieniScorrimento: true });
