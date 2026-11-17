@@ -24,6 +24,7 @@ import { fermaSeSconosciuti, ARGOMENTI } from './argomenti.mjs';
 // lotto 200: la scelta del file attuale sta in un posto solo, e di là viene anche il rifiuto sui nomi ambigui
 import { personaggiDellaCartella, trovaPersonaggio, tuttiIFileDiPersonaggio, rigaSuCosa } from './personaggi-cartella.mjs';
 import { PROFILO_NUOVO } from '../src/competenze.js';
+import { scriviPersonaggio } from './scrivi-personaggio.mjs';
 
 const RADICE = dirname(dirname(fileURLToPath(import.meta.url)));
 export const PREFISSO = 'prima-dell-adeguamento-abilita_';
@@ -117,7 +118,8 @@ export async function applica({ cartella, salvataggi, d = null, quando = new Dat
   const scritti = [];
   // si scrive **sul file attuale** di ciascuno: le versioni vecchie non si toccano (lotto 200)
   for (const p of r.pronti) {
-    writeFileSync(join(cartella, p.file), `${JSON.stringify(p.nuovo, null, 2)}\n`);
+    // lotto 210: la versione di salvataggio sale e `aggiornato_*` si aggiornano, come per l'app (`scriviPersonaggio`)
+    scriviPersonaggio(join(cartella, p.file), p.nuovo, { chi: 'master', quando });
     scritti.push({ nome: p.nome, file: p.file, monte: p.monte.monte, versioniNonToccate: Math.max(0, (p.versioni ?? 1) - 1) });
   }
   return { fatto: true, zip, scritti, bloccati: [], motivo: null };
@@ -140,7 +142,7 @@ export async function annulla({ cartella, chi, d = null }) {
   const voce = trovato.voce;
   const esito = annullaAdeguamento(voce.json);
   if (!esito.ok) return { ok: false, motivo: esito.motivo, nome: voce.nome, file: voce.file };
-  writeFileSync(voce.percorso, `${JSON.stringify(esito.file, null, 2)}\n`);
+  scriviPersonaggio(voce.percorso, esito.file, { chi: 'master', quando: new Date() });
   // si controlla, non si dichiara: si rilegge il file attuale e si guarda se il contrassegno è andato via
   const riletto = personaggiDellaCartella(cartella).find((v) => v.id === voce.id);
   if (!riletto || riletto.file !== voce.file || riletto.json?.scelte?.regimeAbilita === PROFILO_NUOVO) {

@@ -33,7 +33,7 @@ import { deserializzaPersonaggio, normalizza, serializza } from '../src/characte
 import { calcolaScheda } from '../src/calc.js';
 import { massimiSessione, allineaSessione } from '../src/sessione.js';
 import { rigaStorico } from '../src/storico.js';
-import { conMetadati } from '../src/storico-personaggi.js';
+import { scriviPersonaggio } from './scrivi-personaggio.mjs';
 import { conversioneDellaVoce, alimentazioneDellaVoce, famigliaAlimentazione, consumoAlimentazione } from '../src/cyberarma.js';
 import { fermaSeSconosciuti, ARGOMENTI } from './argomenti.mjs';
 import { personaggiDellaCartella, trovaPersonaggio, rigaSuCosa } from './personaggi-cartella.mjs';
@@ -182,8 +182,7 @@ async function principale() {
   const sessione = allineaSessione(c.sessione, m);
   // i metadati di salvataggio (versione, quando, da chi) li scrive l'app a ogni salvataggio e `serializza` non li porta: senza
   // questo passaggio il file perderebbe `versione_salvataggio` e `aggiornato_*`, che il server e il confronto fra versioni leggono
-  const fuori = JSON.stringify(conMetadati(JSON.parse(serializza(c.creazione, { versioniDati: vecchio.versioni_dati, livelli: personaggio.livelli, sessione, calendario: pg.calendario, pg: pg.pg })), vecchio, { chi: 'master', quando: adesso }), null, 2);
-  writeFileSync(t.voce.percorso, `${fuori}\n`);
+  scriviPersonaggio(t.voce.percorso, JSON.parse(serializza(c.creazione, { versioniDati: vecchio.versioni_dati, livelli: personaggio.livelli, sessione, calendario: pg.calendario, pg: pg.pg })), { chi: 'master', quando: adesso });
   console.log(`\nScritto ${t.voce.file}. Copia di prima: ${t.voce.file}.prima-a271. Riga nello storico: «${c.riga}»`);
 }
 

@@ -21,6 +21,7 @@ import { cartellaDati } from './dati-pc.mjs';
 import { fermaSeSconosciuti, ARGOMENTI } from './argomenti.mjs';
 import { personaggiDellaCartella, rigaSuCosa } from './personaggi-cartella.mjs';
 import { join as unisci } from 'node:path';
+import { scriviPersonaggio } from './scrivi-personaggio.mjs';
 
 const RADICE = dirname(dirname(fileURLToPath(import.meta.url)));
 
@@ -135,7 +136,7 @@ export async function applica({ personaggi: cartellaPg, veicoli: cartellaVeicoli
     if (!fatte.length) { scritti.push({ personaggio: voce.nome, file: voce.file, righe }); continue; }
     const sessione = rigaStorico(voce.json.sessione ?? null, `Lotto 201: ${fatte.join(' ')}`, quando);
     const fuori = { ...voce.json, scelte, ...(sessione ? { sessione } : {}) };
-    writeFileSync(voce.percorso, `${JSON.stringify(fuori, null, 2)}\n`);
+    scriviPersonaggio(voce.percorso, fuori, { chi: 'master', quando });
     scritti.push({ personaggio: voce.nome, file: voce.file, righe });
   }
   return { scritti, lasciati, senzaCandidati };

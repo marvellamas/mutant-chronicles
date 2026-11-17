@@ -15,6 +15,7 @@ import { join, dirname, relative, sep } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { fermaSeSconosciuti, ARGOMENTI } from './argomenti.mjs';
 import { attualiFraIFile } from './personaggi-cartella.mjs';
+import { scriviPersonaggio } from './scrivi-personaggio.mjs';
 
 export const VECCHIO = 'Parata a Mani Nude';
 export const NUOVO = 'Parata a Mani Nude Migliorata';
@@ -113,7 +114,7 @@ if (process.argv[1] && fileURLToPath(import.meta.url) === process.argv[1]) {
     for (const r of righe) {
       if (!r.ricondotte.length) continue;
       copyFileSync(r.file, join(a.backup, r.nome.replace(/[\\/]/g, '__')));
-      writeFileSync(r.file, JSON.stringify(applicaParata(JSON.parse(readFileSync(r.file, 'utf8'))), null, 2) + '\n');
+      scriviPersonaggio(r.file, applicaParata(JSON.parse(readFileSync(r.file, 'utf8'))), { chi: 'master', quando: new Date() });
       n += r.ricondotte.length;
     }
     console.log(`Riscritte ${n} scelte; gli originali sono in ${a.backup}.`);

@@ -21,6 +21,7 @@ import { conFrazione, interoRiserva, numeroRiserva } from '../src/cariche-mistic
 import { normalizzaVeicoli } from '../src/veicoli.js';
 import { fermaSeSconosciuti, ARGOMENTI } from './argomenti.mjs';
 import { personaggiDellaCartella, rigaSuCosa } from './personaggi-cartella.mjs';
+import { scriviPersonaggio } from './scrivi-personaggio.mjs';
 
 const SCRIVI = process.argv.includes('--scrivi');
 const QUANDO = new Date().toISOString();
@@ -91,8 +92,9 @@ async function personaggi(cartella, dati) {
     // riga leggibile nello storico del personaggio, che dice da dove si viene
     const sessione = rigaStorico(allineaSessione(pg.sessione, m), `A.252: riserve portate a cariche intere — ${prima.map(riga).join('; ')}`, new Date(QUANDO));
     const vecchio = JSON.parse(testo);
-    const fuori = serializza(scelte, { versioniDati: vecchio.versioni_dati, livelli: pg.livelli, sessione, calendario: pg.calendario, pg: pg.pg });
-    await writeFile(join(cartella, f), fuori.endsWith('\n') ? fuori : `${fuori}\n`);
+    // lotto 210: `serializza` non porta i metadati di salvataggio (versione, quando, da chi): senza `scriviPersonaggio` il file
+    // usciva senza `versione_salvataggio` e `aggiornato_*`, e il primo che lo lanciava li rovinava a tutti e sette i personaggi
+    scriviPersonaggio(join(cartella, f), JSON.parse(serializza(scelte, { versioniDati: vecchio.versioni_dati, livelli: pg.livelli, sessione, calendario: pg.calendario, pg: pg.pg })), { chi: 'master', quando: new Date(QUANDO) });
     scritti += 1;
   }
   console.log(`${file.length} personaggi, ${conFrazioni} con riserve da arrotondare${SCRIVI ? `, ${scritti} scritti (solo il file attuale di ciascuno)` : ''}.`);

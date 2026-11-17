@@ -101,6 +101,25 @@ export function improntaCartella(cartella) {
   return out;
 }
 
+/**
+ * L'impronta della cartella **senza i tre campi di salvataggio** (lotto 210): `versione_salvataggio`, `aggiornato_il`, `aggiornato_da`.
+ * Serve a chi prova che un annullamento riporta il contenuto di prima: tutto il file è identico, tranne il contatore di versione
+ * e l'ora, che salgono a ogni scrittura (`tools/scrivi-personaggio.mjs`). I file che non sono personaggi restano com’erano.
+ */
+export function improntaSenzaMetadati(cartella) {
+  const out = {};
+  for (const f of readdirSync(cartella).sort()) {
+    const b = readFileSync(join(cartella, f));
+    try {
+      const o = JSON.parse(b.toString('utf8'));
+      if (o?.formato !== 'mutant-personaggio') { out[f] = b; continue; }
+      delete o.versione_salvataggio; delete o.aggiornato_il; delete o.aggiornato_da;
+      out[f] = Buffer.from(`${JSON.stringify(o, null, 2)}\n`, 'utf8');
+    } catch { out[f] = b; }
+  }
+  return out;
+}
+
 /** Che cosa è cambiato fra due impronte: [{ file, cosa }]. */
 export function differenze(prima, dopo) {
   const out = [];

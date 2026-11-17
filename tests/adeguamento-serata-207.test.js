@@ -25,7 +25,7 @@ import {
 } from '../src/adeguamento-abilita.js';
 import { PROFILO_NUOVO } from '../src/competenze.js';
 import { applica, annulla, rapporto, righeRapporto } from '../tools/adegua-abilita.mjs';
-import { cartellaComeDavide, improntaCartella, differenze } from './cartella-come-davide.mjs';
+import { cartellaComeDavide, improntaCartella, improntaSenzaMetadati, differenze } from './cartella-come-davide.mjs';
 import { datiReali, copia } from './helpers.js';
 
 const { dati } = await datiReali();
@@ -121,13 +121,17 @@ test('il conto del solo profilo si misura a punti liberi azzerati da entrambi i 
   for (const x of c.abilita) assert.ok(Number.isInteger(x.vaPrima) && Number.isInteger(x.vaDopo));
 });
 
-test('IL CONTROLLO DELLA SERATA: annullare riporta il file byte per byte, sul disco', async () => {
+// Lotto 210: «identico byte per byte» vale per tutto TRANNE i tre campi di salvataggio (`versione_salvataggio`, `aggiornato_il`,
+// `aggiornato_da`). Annullare è una scrittura come un'altra, e il contatore di versione sale sempre: un file che tornasse alla
+// versione di prima lascerebbe passare il salvataggio di un tablet partito dalla versione vecchia, senza il conflitto dovuto.
+test('IL CONTROLLO DELLA SERATA: annullare riporta il file com’era (salvo i metadati di salvataggio), sul disco', async () => {
   // **passa dal disco, non dall'oggetto.** Il 194 confrontava `JSON.stringify` del file in memoria: provava che
   // la funzione torna indietro, non che il file sulla cartella torna indietro. E la cartella è come quella di
   // Davide — cinque versioni per personaggio — perché con un file ciascuno il difetto del lotto 200 era invisibile.
   const { cartella, salvataggi, voci, quantiFile } = cartellaComeDavide({ quanti: 3, versioni: 5 });
   assert.equal(quantiFile, 15);
   const prima = improntaCartella(cartella);
+  const primaSenza = improntaSenzaMetadati(cartella);
   await applica({ cartella, salvataggi, d: dati });
   const dopo = improntaCartella(cartella);
   const cambiati = differenze(prima, dopo);
@@ -137,9 +141,9 @@ test('IL CONTROLLO DELLA SERATA: annullare riporta il file byte per byte, sul di
   // annullato uno, il suo file torna **identico byte per byte** e gli altri non si muovono
   const chi = voci[1];
   await annulla({ cartella, chi: chi.nome, d: dati });
-  const finale = improntaCartella(cartella);
-  assert.ok(finale[chi.attuale.nome].equals(prima[chi.attuale.nome]), `${chi.nome}: il file è tornato identico`);
-  const restanti = differenze(prima, finale).map((x) => x.file);
+  const finale = improntaSenzaMetadati(cartella);
+  assert.ok(finale[chi.attuale.nome].equals(primaSenza[chi.attuale.nome]), `${chi.nome}: il file è tornato identico (a parte i metadati di salvataggio)`);
+  const restanti = differenze(primaSenza, finale).map((x) => x.file);
   assert.equal(restanti.length, 2, `restano adeguati solo gli altri due: ${restanti.join(', ')}`);
   assert.ok(!restanti.includes(chi.attuale.nome));
 });

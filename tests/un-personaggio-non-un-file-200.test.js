@@ -22,7 +22,7 @@ import { join } from 'node:path';
 import { rapporto, applica, annulla, stato } from '../tools/adegua-abilita.mjs';
 import { fileAttuale, idStabileDiFile } from '../src/cartella.js';
 import { PROFILO_NUOVO } from '../src/competenze.js';
-import { cartellaComeDavide, improntaCartella, differenze, SETTE } from './cartella-come-davide.mjs';
+import { cartellaComeDavide, improntaCartella, improntaSenzaMetadati, differenze, SETTE } from './cartella-come-davide.mjs';
 import { datiReali } from './helpers.js';
 
 const { dati } = await datiReali();
@@ -107,13 +107,17 @@ test('--annulla riporta il FILE ATTUALE, non la versione più vecchia che ha que
   }
 });
 
-test('annullare riporta il file byte per byte, su una cartella con cinque versioni per personaggio', async () => {
+// Lotto 210: «identico byte per byte» vale per tutto TRANNE i tre campi di salvataggio (`versione_salvataggio`, `aggiornato_il`,
+// `aggiornato_da`). Annullare è una scrittura come un'altra, e il contatore di versione sale sempre: un file che tornasse alla
+// versione di prima lascerebbe passare il salvataggio di un tablet partito dalla versione vecchia, senza il conflitto dovuto.
+test('annullare riporta il file com’era (salvo i metadati di salvataggio), su una cartella con cinque versioni per personaggio', async () => {
   const c = cartellaComeDavide(SENZA_PREDICATORE);
-  const prima = improntaCartella(c.cartella);
+  const prima = improntaSenzaMetadati(c.cartella);
+  const primaGrezza = improntaCartella(c.cartella);
   const e = await applica({ cartella: c.cartella, salvataggi: c.salvataggi, d: dati });
   assert.ok(e.fatto, e.motivo);
   // toccati solo i sette file attuali
-  const toccati = differenze(prima, improntaCartella(c.cartella));
+  const toccati = differenze(primaGrezza, improntaCartella(c.cartella));
   assert.deepEqual(
     toccati.map((x) => x.file).sort(),
     c.voci.map((v) => v.attuale.nome).sort(),
@@ -124,8 +128,10 @@ test('annullare riporta il file byte per byte, su una cartella con cinque versio
     const r = await annulla({ cartella: c.cartella, chi: v.nome, d: dati });
     assert.ok(r.ok, `${v.nome}: ${r.motivo}`);
   }
-  assert.deepEqual(differenze(prima, improntaCartella(c.cartella)), [],
-    'la cartella non è tornata identica byte per byte: con sette persone che aspettano non si rifà la serata');
+  assert.deepEqual(differenze(prima, improntaSenzaMetadati(c.cartella)), [],
+    'la cartella non è tornata identica (a parte i metadati di salvataggio): con sette persone che aspettano non si rifà la serata');
+  // e i metadati SÌ sono cambiati: l'annullamento è una scrittura, il contatore sale (adeguamento +1, annullamento +1)
+  assert.ok(differenze(primaGrezza, improntaCartella(c.cartella)).length === 7, 'ogni file attuale porta la versione e l’ora nuove');
 });
 
 test('--annulla si rifiuta invece di scegliere: nome che non c’è, nome ambiguo', async () => {
