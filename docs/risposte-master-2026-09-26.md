@@ -3371,4 +3371,36 @@ La CyberArma convertita è ravvicinata e non può effettuare Raffiche. 1 CM inte
 ## A.269 — Armi da Guerra, Spada e Spade
 
 «Armi da Guerra» è l’Abilità; «Spada» è l’arma; «Spade» è la Specializzazione. La voce «Arma da guerra» va rinominata «Spada», profilo 1d8, una mano, ravvicinata. Non resta come arma separata né come alias.  
-Stato di implementazione: queste decisioni sono approvate come regole. Il loro inserimento nei manuali viene registrato separatamente; questo blocco non attesta modifiche al codice dell’app, ai JSON o alle schede dei PG.  
+Stato di implementazione: queste decisioni sono approvate come regole. Il loro inserimento nei manuali viene registrato separatamente; questo blocco non attesta modifiche al codice dell’app, ai JSON o alle schede dei PG.
+
+# 17 novembre 2026 — Risposte approvate A.273–A.279
+
+## A.273 — Creature con due forme
+
+Le creature con due forme, come licantropi e Ammantato, sono un’unica creatura con una sola scheda e una sola pedina. Il Direttore sceglie la forma iniziale; il cambio di forma aggiorna ingombro, movimento, attacchi e gli eventuali valori specifici, mantenendo identità, iniziativa, PV attuali, condizioni ed effetti. La pedina conserva la posizione e si ridimensiona rispetto allo stesso punto. Le forme non vengono create come creature distinte. Si applica lo stesso principio già usato per le configurazioni della Madre delle Murene.
+
+## A.274 — Attacchi senza Natura del danno
+
+Non esiste un valore Naturale predefinito universale. Morso, artigli, pugno, coda, corna, armi e proiettili comuni sono Naturali quando la natura fisica è inequivocabile. Soffi, raggi, esplosioni, poteri e attacchi elementali, mistici, consacrati o dell’Oscura Simmetria devono dichiarare espressamente la Natura. L’app può importare come Naturali soltanto gli attacchi fisici inequivocabili; gli altri restano segnalati finché il manuale non viene corretto.
+
+## A.275 — Taglia e ingombro
+
+La Taglia e l’ingombro sulla mappa sono dati distinti. L’ingombro indica soltanto i quadretti occupati; la Taglia è una caratteristica regolamentare e deve essere dichiarata nel profilo. Se manca, l’app mostra «Taglia non specificata» e non applica modificatori di Taglia. Non si deduce automaticamente «Grande» da 2 × 2 o più. Le 93 Taglie già ricavate automaticamente vanno controllate e mantenute soltanto quando confermate dal manuale; alle altre 86 non va attribuita alcuna Taglia per deduzione.
+
+## A.276 — Attacchi con più componenti di danno
+
+Un attacco che dichiara due danni in sequenza usa un solo tiro per colpire e, se riesce, risolve separatamente tutte le componenti. I danni non si sommano prima delle mitigazioni: ciascuna componente incontra la propria Armatura, Natura, resistenza, immunità ed eventuale effetto. Se una componente viene annullata, le altre si risolvono comunque. Un bonus elementale o magico con Natura diversa dal danno base costituisce normalmente una componente separata; per esempio una spada con 1d8+1 Naturale e \+1d6 Magico, Fuoco. Se la scheda dichiara «componente unica» oppure converte espressamente l’intero danno alla stessa Natura, si applica una sola mitigazione. La Katana Ryūjin resta 1d8+1+1d6 Naturale, Plasma, componente unica, come stabilito nella sua scheda.
+
+## A.277 — Collocazione delle regole comuni nel Bestiario
+
+Ogni famiglia o blocco di creature deve presentare le regole comuni prima delle singole schede. Una regola valida soltanto per un sottogruppo va collocata immediatamente prima delle creature interessate. Le schede possono rimandare al paragrafo comune precedente, senza ripeterlo integralmente, ma non devono dipendere da una futura «pagina finale». Le pagine finali possono contenere riepiloghi, esempi o note narrative, non regole indispensabili ai profili precedenti.
+
+## A.278 — Denominazioni delle sei armi
+
+Quattro voci dell’app sono gli stessi modelli del manuale corrente e vanno rinominate in luogo, conservando l’identificativo e aggiornando i valori alla 0.86: Enforcer → Colt Enforcer; Jemson 45 → Colt Jemson 45; Ironfist 15 → Bolter 15 Ironfist; Lanciagranate Ironfist 15 → Lanciagranate Ironfist, modulo integrato della Bolter 15 Ironfist. La grafia canonica è «Jemson» con la E; «Colt Jamson 45» nel manuale va corretto. Bolter 09 e Lanciagranate Bolter 20 sono profili superati: vengono tolti dal catalogo acquistabile e archiviati, non cancellati fisicamente. La Bolter 20 corrente non possiede un lanciagranate integrato.
+
+## A.279 — Profili presenti nel manuale ma assenti dall’app
+
+Colt Trooper e Colt Frontier devono entrare tra le armi leggere Capitol acquistabili. Il Modulo al plasma Banshee deve entrare fra i moduli Bauhaus, ma non come arma autonoma: può essere acquistato e installato soltanto su un Banshee compatibile, utilizza il proprio profilo e la propria alimentazione e non può essere impugnato o gestito come oggetto indipendente. Prezzo e reperibilità seguono il manuale; disponibilità concreta e valore reale in gioco restano stabiliti dal Direttore.  
+Stato di implementazione: queste decisioni sono approvate come regole, nomenclature e criteri editoriali. Il loro inserimento nei manuali, nel catalogo, nei JSON e nel codice dell’app viene registrato e verificato separatamente.
+

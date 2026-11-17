@@ -50,7 +50,7 @@
    "formato": "doc",
    "versione": "0.42",
    "testo": "equipaggiamento-0.42.md",
-   "modificato": "2026-11-15T17:37:58Z",
+   "modificato": "2026-11-13T12:38:21Z",
    "confronto": "alla cieca (in sezione 7 c’è la riga della 0.40, non della 0.41)",
    "recepita": {
     "versione": "0.42",
@@ -83,7 +83,7 @@
    "formato": "docx",
    "versione": "0.69",
    "testo": "mostri-0.69.md",
-   "modificato": "2026-11-15T13:25:00Z",
+   "modificato": "2026-11-15T13:25:23Z",
    "confronto": "alla cieca",
    "nota": "Il Google Doc 0.23 è archiviato: vale il Word (lotto 187 su Drive, lotto 188 nel repo).",
    "sha256_docx": "48a832aa2bde9cf4786846bd5f2e2da8eca05683435d9f4518b5e45fb1a4efdf",
@@ -196,8 +196,8 @@
    "drive": "1Jg5rqbBtcHGE1E10xYElO_qCDCwh8K87LAInovtpF6A",
    "formato": "doc",
    "testo": "../per-davide.md",
-   "modificato": "2026-11-16T17:45:40Z",
-   "impronta": "f52045ec3ad9",
+   "modificato": "2026-11-17T17:09:10Z",
+   "impronta": "6c51a3d77c53",
    "nota": "Fonte unica delle domande; lo scrive solo Davide (e Cowork per il pacchetto). docs/protocollo-davide.md."
   },
   {
@@ -206,8 +206,8 @@
    "drive": "1VaqZaAe4NK5P8A956Eahua_ZT60eh3ohnR2xSqh-tVs",
    "formato": "doc",
    "testo": "../risposte-master-2026-09-26.md",
-   "modificato": "2026-11-15T13:28:38Z",
-   "impronta": "ef59c55f974e"
+   "modificato": "2026-11-17T17:09:16Z",
+   "impronta": "b93700f626c0"
   }
  ],
  "archiviati": [
