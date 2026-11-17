@@ -20,6 +20,11 @@
     "lotto": 195,
     "cosa": "Quattro righe in tutto rispetto alla 0.62: il numero di edizione e il §2.16.1, che adesso dice «Una carica CEC contiene 10 UE; mediante il trasformatore dedicato viene trasferita integralmente in un tampone da 100 cariche NEC da 0,1 UE ciascuna». È la risposta alla A.266, e descrive il modello che l’app ha dal lotto 146. Verificato col diff: nient’altro cambia, e l’ambito del lotto 192 (§§2.3, 8.3, 8.7) è identico byte per byte.",
     "documento": "docs/diff-lotto195-2026-11-14.md"
+   },
+   "recepimento_in_attesa": {
+    "versione": "0.64",
+    "motivo": "Su Drive il Manuale del Giocatore è la 0.64 (modificata il 15/11/2026 alle 13:19 UTC, «EDIZIONE CONSULTABILE 0.64»); il registro e il testo salvato sono la 0.63. Il lotto 211 è sulla Magia e non l’ha letta: la differenza non è nota, quindi il registro non finge di essere aggiornato (nona regola, lotto 191). Va diffata e recepita in un lotto a sé.",
+    "documento": "docs/diff-lotto211-2026-11-17.md"
    }
   },
   {
@@ -27,15 +32,11 @@
    "nome": "Manuale della Magia",
    "drive": "1F5npdIujLUEVcHVX6CvF5jOHNMG5LS7dx0tgklDpzAY",
    "formato": "doc",
-   "versione": "1.17",
-   "testo": "magia-1.17.md",
+   "versione": "1.19",
+   "testo": "magia-1.19.md",
    "modificato": "2026-11-13T12:38:14Z",
    "confronto": "alla cieca",
-   "recepimento_in_attesa": {
-    "versione": "1.19",
-    "motivo": "Il 13/11 Davide ha allineato le copie Drive ai Word correnti (blocco E&L del 13/11, «Raccordo dei manufatti lunari»). La differenza con l’edizione recepita è solo l’aggiunta dei manufatti lunari dei Mutanti (§26.8 ritoccato e §28.5 nuovo) e, negli Armamenti, il sommario rinumerato: verificato col diff, nessuna riga dell’ambito del lotto 195 — prezzi del §10, Anello §25.4, CyberArma §7.25 — cambia di un carattere. I quattro manufatti nuovi (Collana di papiro, Pugnale e Spada lunare d’osso, Spada dei Tre Riflessi) sono un lotto a sé: la Spada è la prima ricetta di Grado V, Epica, SnT 5 con una riserva condivisa di 3 CM Bianche e tre poteri cromatici, e tocca «Attacca!», le durate e le Cariche Mistiche. Recepirla qui vorrebbe dire mettere in cartella un testo diverso da quello su cui sono scritte le risposte A.261, A.263 e A.265 della ricognizione del lotto 190.",
-    "documento": "docs/diff-lotto195-2026-11-14.md"
-   }
+   "nota_recepimento": "Lotto 211 (17/11/2026): recepita la 1.19 (Drive, modificata il 13/11 12:38 UTC, invariata da allora). Rispetto alla 1.17 cambia solo la frase delle Pietre di Luna del §26.8 e il §28.5 nuovo (manufatti lunari dei Mutanti); rispetto alla 1.11, da cui vengono i dati, le 90 schede cambiano in sei punti di solo testo (Morente) e nessuna tabella (docs/diff-lotto211-2026-11-17.md)."
   },
   {
    "id": "armamenti",
@@ -276,13 +277,6 @@
     "documento": "docs/ricognizione-manuali-2026-11-12-lotto190.md"
    }
   },
-  "data/incantesimi.json": {
-   "magia": {
-    "motivo": "Magia 1.17: cambia il Grado e la Sintonizzazione dell’Anello con Rigenerazione 9 (Grado IV, SnT 4) e i prezzi degli Artefatti, che la 1.11 dava diversi. Si applica nel lotto F; fino a lì l’etichetta resta quella dell’edizione da cui i dati vengono davvero.",
-    "lotto": "F",
-    "documento": "docs/ricognizione-manuali-2026-11-12-lotto190.md"
-   }
-  },
   "data/mappa.json": {
    "giocatore": {
     "motivo": "Giocatore 0.62: riscrive il profilo delle Abilità (da 2/6/12/4 a 4/7/9/4), i punti base (122 → 127), i limiti del VA e i 25 profili di Classe, e aggiunge le regole del Morente (§§5.14.2–3). I dati non sono ancora stati rigenerati: l’etichetta si aggiorna nel lotto che li rigenera (lotto B, poi D per il Morente e G per i testi dei Talenti). Scriverla adesso direbbe che i dati vengono dalla 0.62, e non è vero.",
@@ -297,9 +291,9 @@
     "documento": "docs/diff-lotto193-2026-11-13.md"
    },
    "magia": {
-    "motivo": "Lotto 195: il blocco `prezzi_artefatti` (formula, coefficienti compresa l’Epica, §24.3 e §27.2) e la frase dei Cristalli Matrice (§26.3) vengono dalla 1.17. Il resto del file cita ancora la 1.11 — `chroma`, `cariche_mistiche`, `lancio` — e non è l’ambito di questo lotto: l’etichetta del file resta 1.11 finché quei blocchi non sono riletti.",
+    "motivo": "Lotto 211: la Magia 1.19 è letta per intero (docs/diff-lotto211-2026-11-17.md). Cambia, rispetto alla 1.11 da cui vengono questi blocchi: il §6 (un cristallo a 0 PM è «scarico» e conserva il colore; «Esausto neutro» è un altro stato, non ricaricabile) — applicato come parola e come dato (`chroma.colori.Trasparente`); le regole del Morente (§6, già in `ferite.morente` dal lotto 193). Restano alla 1.11 `chroma`, `cariche_mistiche` e `lancio` perché nessun loro numero cambia; NON applicati, con il motivo: il §26.8 Pietre di Luna e il §28.5 manufatti lunari dei Mutanti (vanno con Armamenti §7.27 ed Equipaggiamento §10.14: lotto a sé), i costi di creazione nuovi dei §§24.4–24.7 (supporto 100 cr, corredo 1.200 cr, dotazione rituale 300 cr, Chroma grezzo 200/800 cr per PM: la procedura di creazione non è nel motore). Il prezzo di vendita del §24.3 e i prezzi del §24.7 (lotto 195) NON sono contraddetti dalla 1.19.",
     "lotto": "G",
-    "documento": "docs/diff-lotto195-2026-11-14.md"
+    "documento": "docs/diff-lotto211-2026-11-17.md"
    },
    "equipaggiamento": {
     "motivo": "Lotto 195: la A.266 ha risposta (Giocatore 0.63 §2.16.1 conta le cariche come l’Equipaggiamento 0.41 e come l’app), quindi non c’è più una regola in sospeso. Resta che i blocchi dell’energia di questo file — `nec`, i trasformatori, il carico — sono stati scritti sulla 0.30 e la 0.41 li riorganizza: si rileggono nel lotto che li rigenera, non qui. Il blocco `prezzi_artefatti` cita la 0.41, da cui viene davvero.",
@@ -318,11 +312,6 @@
    "giocatore": {
     "motivo": "Giocatore 0.62: riscrive il profilo delle Abilità (da 2/6/12/4 a 4/7/9/4), i punti base (122 → 127), i limiti del VA e i 25 profili di Classe, e aggiunge le regole del Morente (§§5.14.2–3). I dati non sono ancora stati rigenerati: l’etichetta si aggiorna nel lotto che li rigenera (lotto B, poi D per il Morente e G per i testi dei Talenti). Scriverla adesso direbbe che i dati vengono dalla 0.62, e non è vero.",
     "lotto": "B",
-    "documento": "docs/ricognizione-manuali-2026-11-12-lotto190.md"
-   },
-   "magia": {
-    "motivo": "Magia 1.17: cambia il Grado e la Sintonizzazione dell’Anello con Rigenerazione 9 (Grado IV, SnT 4) e i prezzi degli Artefatti, che la 1.11 dava diversi. Si applica nel lotto F; fino a lì l’etichetta resta quella dell’edizione da cui i dati vengono davvero.",
-    "lotto": "F",
     "documento": "docs/ricognizione-manuali-2026-11-12-lotto190.md"
    }
   },
@@ -470,7 +459,8 @@
   "equipaggiamento-0.30.md": "l'edizione da cui vengono i dati di `regole.json` e di 9 file del catalogo (`edizioni_in_attesa`, lotto F)",
   "mostri-0.67.md": "l’edizione del JSON dei PNG generici (`dati` → png-abilita, `sha256_manuale`): i venticinque modelli di `data/png_generici.json` vengono da lì e restano dichiarati alla 0.67 (`edizioni_in_attesa`, lotto 203)",
   "veicoli-0.19.md": "l'edizione da cui vengono i profili della motocicletta civile (§12) e del furgone civile (§13) di `data/veicoli.json` (lotto 209, `fonte_edizione`); il resto del file resta alla 0.10 (le tabelle dei capitoli 1–11 sono identiche; il testo del capitolo 10 dello Scout no, e non è ancora applicato)",
-  "armamenti-0.83.md": "l'edizione da cui vengono le tre voci della CyberArma di `data/equipaggiamento/armi.json` (lotto 195, §§7.25–7.25.4): il corpo della 0.86 è identico, ma la voce dichiara l'edizione su cui è stata scritta"
+  "armamenti-0.83.md": "l'edizione da cui vengono le tre voci della CyberArma di `data/equipaggiamento/armi.json` (lotto 195, §§7.25–7.25.4): il corpo della 0.86 è identico, ma la voce dichiara l'edizione su cui è stata scritta",
+  "magia-1.17.md": "l’edizione da cui vengono le etichette «Magia 1.17 §…» di tre voci del catalogo degli Artefatti (lotto 195: Anello §25.4, Consumabili §27, configurazione di Dimitri); la 1.19 ha le stesse pagine, parola per parola (lotto 211)"
  },
  "_testi_archiviati": "Lotto 191: le edizioni superate che nessun dato e nessuno strumento cita più, spostate in `docs/manuali-txt/archivio/` e non cancellate. Un archiviato non è un doppione (regola 5 del protocollo, applicata qui alla cartella del repo come su Drive).",
  "testi_archiviati": [

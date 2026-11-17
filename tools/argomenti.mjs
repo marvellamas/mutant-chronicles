@@ -89,6 +89,8 @@ export const ARGOMENTI = {
   'lotto_210_focalizzatori.mjs': ['scrivi'],
   'lotto_210_settori.mjs': ['scrivi'],
   'lotto_210_paradise.mjs': ['scrivi'],
+  'lotto_211_magia.mjs': ['scrivi'],
+  'importa-incantesimi.mjs': ['file', 'testo'],
   'lotto_209_veicoli_civili.mjs': ['scrivi'],
   'correggi-cyberarma-dimitri.mjs': ['cartella', 'nome', 'scrivi'],
   'importa-armi.mjs': ['modello', 'specializzazioni'],

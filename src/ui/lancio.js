@@ -7,6 +7,7 @@ import { h } from './dom.js';
 import { pillola } from './attacco.js';
 import { listaProvenienza } from './tooltip.js';
 import { riquadroDanno, rigaScelte, interruttore, pannelloPassi } from './pannello-passi.js';
+import { rigaProvenienzaIncantesimo, edizioneCorrenteIncantesimi, motivoIndietro } from '../provenienza-incantesimi.js';
 import { calcolaLancio, dichiarazioneLancio, versioniLancio, contenitoriLancio, livelloVersione } from '../lancio.js';
 import { incantesimiDaOggetti, trovaIncantesimoOggetto, attivazioneOggetto } from '../incantesimi-artefatti.js';
 import { classeMacrofamiglia } from '../palette.js';
@@ -87,6 +88,11 @@ function corpo(ctx, inc, intestazione) {
       (() => {
         const v = versioni.find((x) => x.livello === d.versione);
         return v ? h('dl', { class: 'voci griglia-voci riga-versione' }, Object.entries(v.riga).map(([k, x]) => h('div', {}, h('dt', {}, k), h('dd', {}, x)))) : null;
+      })(),
+      // lotto 211: il segno compare solo se un campo della scheda non è della Magia corrente, e si spegne da sé (come ⚑ Edizione delle armi)
+      (() => {
+        const riga = rigaProvenienzaIncantesimo(inc, edizioneCorrenteIncantesimi(ctx.dati.incantesimi), motivoIndietro(ctx.dati.incantesimi, inc));
+        return riga ? h('p', { class: 'nota edizione-indietro', role: 'note' }, '⚑ ', riga) : null;
       })(),
     ],
     Anticipazione: conAnticipazione ? [

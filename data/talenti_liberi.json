@@ -1,5 +1,5 @@
 {
-  "versione_manuale": "Giocatore 0.54; Magia 1.11; Talenti v1.0 del 07/10/2026",
+  "versione_manuale": "Giocatore 0.54; Magia 1.19; Talenti v1.0 del 07/10/2026",
   "fonte": "Manuale del Giocatore §8.6 (8.6.1–8.6.10); Manuale della Magia sezioni 1, 2, 3, 6 (32 Talenti magici e mistici)",
   "_nota": "molteplicita: una | per_caratteristica | per_salvezza_max2 | illimitata | limitata (con max_acquisizioni). parametro: null | caratteristica | salvezza. prerequisiti: id di Talenti o condizioni di «condizioni_prerequisiti», eventualmente precedute da «non:». effetti solo per i Talenti che modificano valori della scheda.",
   "attesi": {

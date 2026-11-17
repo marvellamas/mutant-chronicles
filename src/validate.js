@@ -109,6 +109,7 @@ export function validaDati(dati) {
   if (isOggetto(dati.px_partita)) validaPxPartita(dati, err);
   if (isOggetto(dati.png_generici)) validaPngGenerici(dati, err);
   if (dati.incantesimi?.incantesimi?.length) validaDurateIncantesimi(dati, err);
+  validaCorpusIncantesimi(dati, err);
   // durate in Round (Giocatore §8.9.1, §5.18): il Round di attivazione conta o no (src/tecniche.js → fineDurata)
   if (dati.regole?.durate_round !== undefined && typeof dati.regole.durate_round?.round_attivazione_conta !== 'boolean') err('regole', 'durate_round.round_attivazione_conta', 'vero o falso: il Round di attivazione conta nella durata?');
 
@@ -2328,6 +2329,52 @@ function validaCatalogoArmi(dati, err, F) {
     for (const k of Object.keys(CA.per_campo)) {
       if (!isTesto(C.motivi?.[k])) err(F, `catalogo_armi.motivi.${k}`, `${CA.per_campo[k]} voci tengono il campo «${k}» di un’edizione precedente: il motivo va scritto`);
     }
+  }
+}
+
+/**
+ * Lotto 211: **il conto delle schede d'incantesimo si dichiara e deve tornare coi dati** (come `342 = 310 + 32`, `493`, `218`).
+ *
+ * Per ogni scheda, ogni campo letto dal manuale porta la sua edizione (`_edizione.campi`): quelli all'edizione corrente
+ * sono il conto «letti», gli altri sono «indietro» e **ognuno ha il suo motivo scritto** (`corpus.motivi_indietro`).
+ * Un conto che gira su zero schede resta verde e non prova niente: qui le schede devono essere 90 e il numero deve
+ * tornare coi file, non con sé stesso.
+ */
+function validaCorpusIncantesimi(dati, err) {
+  const F = 'incantesimi';
+  const inc = dati.incantesimi;
+  const C = inc?.corpus;
+  if (C === undefined) return;
+  if (!isOggetto(C)) return err(F, 'corpus', 'il conto delle schede, dichiarato (lotto 211)');
+  if (!isTesto(C.edizione)) err(F, 'corpus.edizione', 'l’edizione della Magia da cui vengono le schede');
+  const schede = inc.incantesimi ?? [];
+  if (C.schede !== schede.length) err(F, 'corpus.schede', `dichiarate ${C.schede} schede, nei dati ne risultano ${schede.length}`);
+  if (schede.length !== 90) err(F, 'incantesimi', `il manuale ha 90 schede (tre macrofamiglie × tre specializzazioni × dieci), nei dati ce ne sono ${schede.length}`);
+  const letti = Array.isArray(C.campi_letti) ? C.campi_letti : [];
+  if (!letti.length) err(F, 'corpus.campi_letti', 'i campi che il lettore rilegge dal manuale: senza, il conto non prova niente');
+  if (!isTesto(C.motivo_campi_nostri)) err(F, 'corpus.motivo_campi_nostri', 'perché id, pagina, livello base e meccanica non vengono dal lettore');
+  let indietro = 0;
+  const senzaMotivo = new Set();
+  const motivi = new Map((C.motivi_indietro ?? []).map((m) => [m.scheda, m]));
+  for (const s of schede) {
+    const campi = s._edizione?.campi;
+    if (!isOggetto(campi)) { err(F, `${s.scheda}._edizione`, `la scheda ${s.scheda} ${s.nome} non dichiara da quale edizione viene ciascun campo`); continue; }
+    for (const c of letti) {
+      if (!isTesto(campi[c])) { err(F, `${s.scheda}._edizione.campi.${c}`, 'edizione del campo mancante'); continue; }
+      if (campi[c] !== C.edizione) {
+        indietro++;
+        const m = motivi.get(s.scheda);
+        if (!m || !Array.isArray(m.campi) || !m.campi.some((x) => (x.campo ?? x) === c) || !isTesto(m.campi.find((x) => (x.campo ?? x) === c)?.motivo)) senzaMotivo.add(`${s.scheda}.${c}`);
+      }
+    }
+  }
+  if (C.campi_indietro !== indietro) err(F, 'corpus.campi_indietro', `dichiarati ${C.campi_indietro} campi indietro, nei dati ne risultano ${indietro}`);
+  for (const k of senzaMotivo) err(F, `corpus.motivi_indietro.${k}`, `il campo ${k} è di un’edizione precedente: il motivo va scritto, accanto alla scheda`);
+  const conf = C.confronto_lotto_211;
+  if (isOggetto(conf) && [conf.invariate, conf.cambiate, conf.nuove, conf.sparite].every(isIntero)) {
+    const somma = conf.invariate + conf.cambiate;
+    if (somma !== schede.length) err(F, 'corpus.confronto_lotto_211', `il conto non torna: ${conf.invariate} invariate + ${conf.cambiate} cambiate = ${somma}, ma le schede sono ${schede.length}`);
+    if (Array.isArray(conf.aggiornate) && conf.aggiornate.length !== conf.cambiate) err(F, 'corpus.confronto_lotto_211.aggiornate', `elencate ${conf.aggiornate.length} schede aggiornate, dichiarate ${conf.cambiate} cambiate`);
   }
 }
 

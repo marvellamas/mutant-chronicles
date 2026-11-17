@@ -1,5 +1,5 @@
 {
-  "versione_manuale": "Magia 1.11 (Google Doc del 09/11/2026)",
+  "versione_manuale": "Magia 1.19 (Google Doc del 13/11/2026, 12:38 UTC)",
   "fonte": "Manuale della Magia: sezione 11 (indice), sezioni 13 e 16–23 (schede)",
   "_nota": "Schede estratte dal PDF. «versioni» è la tabella principale (una riga per livello, chiavi = intestazioni della scheda); «altre_tabelle» contiene le tabelle successive; «regole» il testo dopo la tabella principale.",
   "macrofamiglie": [
@@ -172,7 +172,7 @@
           "Mod PS": "−4"
         }
       ],
-      "regole": "Anticipazione: un solo aspetto di un gradino, con PM raddoppiati e Potere più difficile di una categoria. Si sceglie Colpi 1 → 2 → 3 → 4, natura Naturale → Magico, elementi 1 → 2 → 3 oppure Mod. PS peggiorato di 2. Il danno non è anticipabile. I massimi sono 5d6+5 per colpo, 4 Colpi e natura Magica: non si ottiene danno Etereo. Al livello 18 resta anticipabile soltanto il Mod. PS. La PS resta assente per gli effetti automatici.",
+      "regole": "Anticipazione: un solo aspetto di un gradino, con PM raddoppiati e Potere più difficile di una categoria. Si sceglie Colpi 1 → 2 → 3 → 4, natura Naturale → Magico, elementi 1 → 2 → 3 oppure Mod. PS peggiorato di 2. Il danno non è anticipabile. I massimi sono 5d6+5 per colpo, 4 Colpi e natura Magica: non si ottiene danno Etereo. Al livello 18 resta anticipabile soltanto il Mod. PS. La PS resta assente per gli effetti automatici.\nIl Mod. PS di Colpo Elementale riguarda soltanto le Salvezze degli effetti secondari dell’elemento, dopo il danno. Non concede una Salvezza per evitare il colpo o il danno; gli effetti automatici restano tali.",
       "meccanica": {
         "azioni": {
           "azioni_principali": 1
@@ -300,6 +300,20 @@
         "_nota": "E&L del 29/09, risposta 17 (A.39.2): colpisce automaticamente; «Mod PS» riguarda soltanto gli effetti secondari.",
         "durata": {
           "tipo": "istantanea"
+        }
+      },
+      "_edizione": {
+        "corrente": "1.19",
+        "campi": {
+          "nome": "1.19",
+          "intestazione": "1.19",
+          "macrofamiglia": "1.19",
+          "specializzazione": "1.19",
+          "lancio": "1.19",
+          "descrizione": "1.19",
+          "versioni": "1.19",
+          "regole": "1.19",
+          "altre_tabelle": "1.19"
         }
       }
     },
@@ -602,6 +616,20 @@
           "colonna": "Senza Concentrazione",
           "concentrazione": "Con Concentrazione"
         }
+      },
+      "_edizione": {
+        "corrente": "1.19",
+        "campi": {
+          "nome": "1.19",
+          "intestazione": "1.19",
+          "macrofamiglia": "1.19",
+          "specializzazione": "1.19",
+          "lancio": "1.19",
+          "descrizione": "1.19",
+          "versioni": "1.19",
+          "regole": "1.19",
+          "altre_tabelle": "1.19"
+        }
       }
     },
     {
@@ -814,6 +842,20 @@
           "tipo": "durata",
           "colonna": "Durata"
         }
+      },
+      "_edizione": {
+        "corrente": "1.19",
+        "campi": {
+          "nome": "1.19",
+          "intestazione": "1.19",
+          "macrofamiglia": "1.19",
+          "specializzazione": "1.19",
+          "lancio": "1.19",
+          "descrizione": "1.19",
+          "versioni": "1.19",
+          "regole": "1.19",
+          "altre_tabelle": "1.19"
+        }
       }
     },
     {
@@ -961,6 +1003,20 @@
         "durata": {
           "tipo": "durata",
           "colonna": "Durata"
+        }
+      },
+      "_edizione": {
+        "corrente": "1.19",
+        "campi": {
+          "nome": "1.19",
+          "intestazione": "1.19",
+          "macrofamiglia": "1.19",
+          "specializzazione": "1.19",
+          "lancio": "1.19",
+          "descrizione": "1.19",
+          "versioni": "1.19",
+          "regole": "1.19",
+          "altre_tabelle": "1.19"
         }
       }
     },
@@ -1194,6 +1250,20 @@
           "tipo": "durata",
           "colonna": "Durata"
         }
+      },
+      "_edizione": {
+        "corrente": "1.19",
+        "campi": {
+          "nome": "1.19",
+          "intestazione": "1.19",
+          "macrofamiglia": "1.19",
+          "specializzazione": "1.19",
+          "lancio": "1.19",
+          "descrizione": "1.19",
+          "versioni": "1.19",
+          "regole": "1.19",
+          "altre_tabelle": "1.19"
+        }
       }
     },
     {
@@ -1385,6 +1455,20 @@
         "durata": {
           "tipo": "istantanea"
         }
+      },
+      "_edizione": {
+        "corrente": "1.19",
+        "campi": {
+          "nome": "1.19",
+          "intestazione": "1.19",
+          "macrofamiglia": "1.19",
+          "specializzazione": "1.19",
+          "lancio": "1.19",
+          "descrizione": "1.19",
+          "versioni": "1.19",
+          "regole": "1.19",
+          "altre_tabelle": "1.19"
+        }
       }
     },
     {
@@ -1566,6 +1650,20 @@
         "durata": {
           "tipo": "istantanea"
         }
+      },
+      "_edizione": {
+        "corrente": "1.19",
+        "campi": {
+          "nome": "1.19",
+          "intestazione": "1.19",
+          "macrofamiglia": "1.19",
+          "specializzazione": "1.19",
+          "lancio": "1.19",
+          "descrizione": "1.19",
+          "versioni": "1.19",
+          "regole": "1.19",
+          "altre_tabelle": "1.19"
+        }
       }
     },
     {
@@ -1714,6 +1812,20 @@
         "durata": {
           "tipo": "durata",
           "colonna": "Durata"
+        }
+      },
+      "_edizione": {
+        "corrente": "1.19",
+        "campi": {
+          "nome": "1.19",
+          "intestazione": "1.19",
+          "macrofamiglia": "1.19",
+          "specializzazione": "1.19",
+          "lancio": "1.19",
+          "descrizione": "1.19",
+          "versioni": "1.19",
+          "regole": "1.19",
+          "altre_tabelle": "1.19"
         }
       }
     },
@@ -1873,6 +1985,20 @@
         "durata": {
           "tipo": "durata",
           "colonna": "Durata"
+        }
+      },
+      "_edizione": {
+        "corrente": "1.19",
+        "campi": {
+          "nome": "1.19",
+          "intestazione": "1.19",
+          "macrofamiglia": "1.19",
+          "specializzazione": "1.19",
+          "lancio": "1.19",
+          "descrizione": "1.19",
+          "versioni": "1.19",
+          "regole": "1.19",
+          "altre_tabelle": "1.19"
         }
       }
     },
@@ -2084,6 +2210,20 @@
           "tipo": "durata",
           "colonna": "Durata"
         }
+      },
+      "_edizione": {
+        "corrente": "1.19",
+        "campi": {
+          "nome": "1.19",
+          "intestazione": "1.19",
+          "macrofamiglia": "1.19",
+          "specializzazione": "1.19",
+          "lancio": "1.19",
+          "descrizione": "1.19",
+          "versioni": "1.19",
+          "regole": "1.19",
+          "altre_tabelle": "1.19"
+        }
       }
     },
     {
@@ -2274,6 +2414,20 @@
           "tipo": "durata",
           "colonna": "Durata"
         }
+      },
+      "_edizione": {
+        "corrente": "1.19",
+        "campi": {
+          "nome": "1.19",
+          "intestazione": "1.19",
+          "macrofamiglia": "1.19",
+          "specializzazione": "1.19",
+          "lancio": "1.19",
+          "descrizione": "1.19",
+          "versioni": "1.19",
+          "regole": "1.19",
+          "altre_tabelle": "1.19"
+        }
       }
     },
     {
@@ -2426,6 +2580,20 @@
         "durata": {
           "tipo": "durata",
           "colonna": "Durata"
+        }
+      },
+      "_edizione": {
+        "corrente": "1.19",
+        "campi": {
+          "nome": "1.19",
+          "intestazione": "1.19",
+          "macrofamiglia": "1.19",
+          "specializzazione": "1.19",
+          "lancio": "1.19",
+          "descrizione": "1.19",
+          "versioni": "1.19",
+          "regole": "1.19",
+          "altre_tabelle": "1.19"
         }
       }
     },
@@ -2596,6 +2764,20 @@
             }
           ]
         }
+      },
+      "_edizione": {
+        "corrente": "1.19",
+        "campi": {
+          "nome": "1.19",
+          "intestazione": "1.19",
+          "macrofamiglia": "1.19",
+          "specializzazione": "1.19",
+          "lancio": "1.19",
+          "descrizione": "1.19",
+          "versioni": "1.19",
+          "regole": "1.19",
+          "altre_tabelle": "1.19"
+        }
       }
     },
     {
@@ -2711,6 +2893,20 @@
         "durata": {
           "tipo": "durata",
           "colonna": "Durata"
+        }
+      },
+      "_edizione": {
+        "corrente": "1.19",
+        "campi": {
+          "nome": "1.19",
+          "intestazione": "1.19",
+          "macrofamiglia": "1.19",
+          "specializzazione": "1.19",
+          "lancio": "1.19",
+          "descrizione": "1.19",
+          "versioni": "1.19",
+          "regole": "1.19",
+          "altre_tabelle": "1.19"
         }
       }
     },
@@ -2886,6 +3082,20 @@
             }
           ]
         }
+      },
+      "_edizione": {
+        "corrente": "1.19",
+        "campi": {
+          "nome": "1.19",
+          "intestazione": "1.19",
+          "macrofamiglia": "1.19",
+          "specializzazione": "1.19",
+          "lancio": "1.19",
+          "descrizione": "1.19",
+          "versioni": "1.19",
+          "regole": "1.19",
+          "altre_tabelle": "1.19"
+        }
       }
     },
     {
@@ -3027,6 +3237,20 @@
         "durata": {
           "tipo": "durata",
           "colonna": "Durata"
+        }
+      },
+      "_edizione": {
+        "corrente": "1.19",
+        "campi": {
+          "nome": "1.19",
+          "intestazione": "1.19",
+          "macrofamiglia": "1.19",
+          "specializzazione": "1.19",
+          "lancio": "1.19",
+          "descrizione": "1.19",
+          "versioni": "1.19",
+          "regole": "1.19",
+          "altre_tabelle": "1.19"
         }
       }
     },
@@ -3170,6 +3394,20 @@
           "tipo": "durata",
           "colonna": "Durata"
         }
+      },
+      "_edizione": {
+        "corrente": "1.19",
+        "campi": {
+          "nome": "1.19",
+          "intestazione": "1.19",
+          "macrofamiglia": "1.19",
+          "specializzazione": "1.19",
+          "lancio": "1.19",
+          "descrizione": "1.19",
+          "versioni": "1.19",
+          "regole": "1.19",
+          "altre_tabelle": "1.19"
+        }
       }
     },
     {
@@ -3230,7 +3468,7 @@
           "PV massimi ciascuno": "50"
         }
       ],
-      "regole": "Beneficiari multipli: si verificano gittata e visibilità al lancio e si usa la disposizione a catena entro 2 Q; successivamente i beneficiari possono muoversi liberamente.\nRecupero: avviene all’inizio del turno del beneficiario, a partire dal primo turno successivo al lancio, per dieci applicazioni. I PV recuperati rimangono dopo la scadenza dell’incantesimo.\nNon si supera il massimo dei PV ordinari e l’eccedenza non diventa PV temporanei. Se il beneficiario è già al massimo, quel recupero è perso; l’effetto rimane attivo e può curare lesioni successive finché dura.\nSanguinamento: prima della relativa perdita di PV si può sacrificare interamente l’applicazione periodica.\nSanguinamento si riduce di tanti punti quanti sarebbero i PV normalmente recuperati in quel RND, fino a 0: 1 / 2 / 3 / 4 / 5 secondo la versione, incluso l’eventuale +1 dell’Anticipazione. Quell’applicazione non recupera PV e non conserva eccedenze. Il +1 una tantum di Canale Vitale non aumenta la riduzione. La procedura è utilizzabile anche contro un nuovo Sanguinamento.\nUn Sanguinamento fermato in questo modo non ricompare alla scadenza. I massimi in tabella presuppongono che tutte e dieci le applicazioni siano usate interamente per recuperare PV.\nEsempio: Corpo Adattivo 9 su Sanguinamento 3 sacrifica la prima applicazione per ridurlo a 1 e la seconda per arrestarlo. Le otto applicazioni rimaste possono recuperare 2 PV ciascuna, per un massimo di 16 PV.\nLimiti: funziona anche a 0 PV se il beneficiario è vivo, ma non rimuove Ferite o menomazioni e non fa rivivere un morto. Richiede un organismo biologicamente vivente: nei cyborg cura i PV viventi, senza riparare gli impianti; esclude elementali evocati, Ectoplasma, costrutti puramente meccanici ed entità spirituali salvo eccezioni del Bestiario del Manuale del Direttore. Durante Forma Elementale le applicazioni trascorrono senza curare la forma o il corpo sospeso. Le cure rispettano il limite dei PV sacrificati nella conversione della sezione 6. Compatibilità: più lanci non sommano il recupero; un nuovo lancio può sostituire e rinnovare l’effetto. Fra recuperi periodici concorrenti si applica il maggiore. Le cure istantanee possono essere ricevute normalmente. Se Corpo Adattivo usa un’applicazione per fermare il Sanguinamento, Psicometabolismo può comunque applicare il proprio recupero periodico. Canale Vitale concede +1 PV una sola volta per beneficiario e lancio, nella prima applicazione che recupera effettivamente PV; non aumenta le applicazioni successive né l’emostasi.\nAnticipazione: si forza un solo aspetto di un solo gradino, raddoppiando il costo base in PM e rendendo Potere più difficile di una categoria. Livello e altri parametri restano invariati. Si sceglie +1 PV recuperabile per RND oppure la durata da 10 a 15 RND. Restano le stesse regole per Sanguinamento, limite dei PV e inizio del recupero.",
+      "regole": "Beneficiari multipli: si verificano gittata e visibilità al lancio e si usa la disposizione a catena entro 2 Q; successivamente i beneficiari possono muoversi liberamente.\nRecupero: avviene all’inizio del turno del beneficiario, a partire dal primo turno successivo al lancio, per dieci applicazioni. I PV recuperati rimangono dopo la scadenza dell’incantesimo.\nNon si supera il massimo dei PV ordinari e l’eccedenza non diventa PV temporanei. Se il beneficiario è già al massimo, quel recupero è perso; l’effetto rimane attivo e può curare lesioni successive finché dura.\nSanguinamento: prima della relativa perdita di PV si può sacrificare interamente l’applicazione periodica. Sanguinamento si riduce di tanti punti quanti sarebbero i PV normalmente recuperati in quel RND, fino a 0: 1 / 2 / 3 / 4 / 5 secondo la versione, incluso l’eventuale +1 dell’Anticipazione. Quell’applicazione non recupera PV e non conserva eccedenze. Il +1 una tantum di Canale Vitale non aumenta la riduzione. La procedura è utilizzabile anche contro un nuovo Sanguinamento.\nUn Sanguinamento fermato in questo modo non ricompare alla scadenza. I massimi in tabella presuppongono che tutte e dieci le applicazioni siano usate interamente per recuperare PV.\nEsempio: Corpo Adattivo 9 su Sanguinamento 3 sacrifica la prima applicazione per ridurlo a 1 e la seconda per arrestarlo. Le otto applicazioni rimaste possono recuperare 2 PV ciascuna, per un massimo di 16 PV.\nLimiti: funziona anche a 0 PV se il beneficiario è vivo, ma non rimuove Ferite o menomazioni e non fa rivivere un morto. Richiede un organismo biologicamente vivente: nei cyborg cura i PV viventi, senza riparare gli impianti; esclude elementali evocati, Ectoplasma, costrutti puramente meccanici ed entità spirituali salvo eccezioni del Bestiario del Manuale del Direttore. Durante Forma Elementale le applicazioni trascorrono senza curare la forma o il corpo sospeso. Le cure rispettano il limite dei PV sacrificati nella conversione della sezione 6. Non stabilizza Morente e non disattiva il suo contatore, neppure quando arresta il Sanguinamento.\nCompatibilità: più lanci non sommano il recupero; un nuovo lancio può sostituire e rinnovare l’effetto. Fra recuperi periodici concorrenti si applica il maggiore. Le cure istantanee possono essere ricevute normalmente. Se Corpo Adattivo usa un’applicazione per fermare il Sanguinamento, Psicometabolismo può comunque applicare il proprio recupero periodico. Canale Vitale concede +1 PV una sola volta per beneficiario e lancio, nella prima applicazione che recupera effettivamente PV; non aumenta le applicazioni successive né l’emostasi.\nAnticipazione: si forza un solo aspetto di un solo gradino, raddoppiando il costo base in PM e rendendo Potere più difficile di una categoria. Livello e altri parametri restano invariati. Si sceglie +1 PV recuperabile per RND oppure la durata da 10 a 15 RND. Restano le stesse regole per Sanguinamento, limite dei PV e inizio del recupero.",
       "meccanica": {
         "azioni": {
           "azioni_principali": 1
@@ -3289,6 +3527,20 @@
         "durata": {
           "tipo": "durata",
           "colonna": "Durata"
+        }
+      },
+      "_edizione": {
+        "corrente": "1.19",
+        "campi": {
+          "nome": "1.19",
+          "intestazione": "1.19",
+          "macrofamiglia": "1.19",
+          "specializzazione": "1.19",
+          "lancio": "1.19",
+          "descrizione": "1.19",
+          "versioni": "1.19",
+          "regole": "1.19",
+          "altre_tabelle": "1.19"
         }
       }
     },
@@ -3423,6 +3675,20 @@
           "colonna": "Durata fissa",
           "concentrazione": "Durata con Conc"
         }
+      },
+      "_edizione": {
+        "corrente": "1.19",
+        "campi": {
+          "nome": "1.19",
+          "intestazione": "1.19",
+          "macrofamiglia": "1.19",
+          "specializzazione": "1.19",
+          "lancio": "1.19",
+          "descrizione": "1.19",
+          "versioni": "1.19",
+          "regole": "1.19",
+          "altre_tabelle": "1.19"
+        }
       }
     },
     {
@@ -3542,6 +3808,20 @@
         "durata": {
           "tipo": "durata",
           "colonna": "Durata"
+        }
+      },
+      "_edizione": {
+        "corrente": "1.19",
+        "campi": {
+          "nome": "1.19",
+          "intestazione": "1.19",
+          "macrofamiglia": "1.19",
+          "specializzazione": "1.19",
+          "lancio": "1.19",
+          "descrizione": "1.19",
+          "versioni": "1.19",
+          "regole": "1.19",
+          "altre_tabelle": "1.19"
         }
       }
     },
@@ -3764,6 +4044,20 @@
           "colonna": "Durata fissa",
           "concentrazione": "Durata Con"
         }
+      },
+      "_edizione": {
+        "corrente": "1.19",
+        "campi": {
+          "nome": "1.19",
+          "intestazione": "1.19",
+          "macrofamiglia": "1.19",
+          "specializzazione": "1.19",
+          "lancio": "1.19",
+          "descrizione": "1.19",
+          "versioni": "1.19",
+          "regole": "1.19",
+          "altre_tabelle": "1.19"
+        }
       }
     },
     {
@@ -3916,6 +4210,20 @@
           "colonna": "Durata fissa",
           "concentrazione_doppia": true
         }
+      },
+      "_edizione": {
+        "corrente": "1.19",
+        "campi": {
+          "nome": "1.19",
+          "intestazione": "1.19",
+          "macrofamiglia": "1.19",
+          "specializzazione": "1.19",
+          "lancio": "1.19",
+          "descrizione": "1.19",
+          "versioni": "1.19",
+          "regole": "1.19",
+          "altre_tabelle": "1.19"
+        }
       }
     },
     {
@@ -4050,6 +4358,20 @@
         "durata": {
           "tipo": "durata",
           "colonna": "Durata"
+        }
+      },
+      "_edizione": {
+        "corrente": "1.19",
+        "campi": {
+          "nome": "1.19",
+          "intestazione": "1.19",
+          "macrofamiglia": "1.19",
+          "specializzazione": "1.19",
+          "lancio": "1.19",
+          "descrizione": "1.19",
+          "versioni": "1.19",
+          "regole": "1.19",
+          "altre_tabelle": "1.19"
         }
       }
     },
@@ -4210,6 +4532,20 @@
         },
         "durata": {
           "tipo": "istantanea"
+        }
+      },
+      "_edizione": {
+        "corrente": "1.19",
+        "campi": {
+          "nome": "1.19",
+          "intestazione": "1.19",
+          "macrofamiglia": "1.19",
+          "specializzazione": "1.19",
+          "lancio": "1.19",
+          "descrizione": "1.19",
+          "versioni": "1.19",
+          "regole": "1.19",
+          "altre_tabelle": "1.19"
         }
       }
     },
@@ -4373,6 +4709,20 @@
         "durata": {
           "tipo": "durata",
           "colonna": "Durata"
+        }
+      },
+      "_edizione": {
+        "corrente": "1.19",
+        "campi": {
+          "nome": "1.19",
+          "intestazione": "1.19",
+          "macrofamiglia": "1.19",
+          "specializzazione": "1.19",
+          "lancio": "1.19",
+          "descrizione": "1.19",
+          "versioni": "1.19",
+          "regole": "1.19",
+          "altre_tabelle": "1.19"
         }
       }
     },
@@ -4538,6 +4888,20 @@
         "durata": {
           "tipo": "durata",
           "colonna": "Durata max"
+        }
+      },
+      "_edizione": {
+        "corrente": "1.19",
+        "campi": {
+          "nome": "1.19",
+          "intestazione": "1.19",
+          "macrofamiglia": "1.19",
+          "specializzazione": "1.19",
+          "lancio": "1.19",
+          "descrizione": "1.19",
+          "versioni": "1.19",
+          "regole": "1.19",
+          "altre_tabelle": "1.19"
         }
       }
     },
@@ -4759,6 +5123,20 @@
           "colonna": "Durata fissa",
           "concentrazione": "Durata Con"
         }
+      },
+      "_edizione": {
+        "corrente": "1.19",
+        "campi": {
+          "nome": "1.19",
+          "intestazione": "1.19",
+          "macrofamiglia": "1.19",
+          "specializzazione": "1.19",
+          "lancio": "1.19",
+          "descrizione": "1.19",
+          "versioni": "1.19",
+          "regole": "1.19",
+          "altre_tabelle": "1.19"
+        }
       }
     },
     {
@@ -4920,6 +5298,20 @@
           "tipo": "durata",
           "colonna": "Durata"
         }
+      },
+      "_edizione": {
+        "corrente": "1.19",
+        "campi": {
+          "nome": "1.19",
+          "intestazione": "1.19",
+          "macrofamiglia": "1.19",
+          "specializzazione": "1.19",
+          "lancio": "1.19",
+          "descrizione": "1.19",
+          "versioni": "1.19",
+          "regole": "1.19",
+          "altre_tabelle": "1.19"
+        }
       }
     },
     {
@@ -5078,6 +5470,20 @@
         "durata": {
           "tipo": "istantanea"
         }
+      },
+      "_edizione": {
+        "corrente": "1.19",
+        "campi": {
+          "nome": "1.19",
+          "intestazione": "1.19",
+          "macrofamiglia": "1.19",
+          "specializzazione": "1.19",
+          "lancio": "1.19",
+          "descrizione": "1.19",
+          "versioni": "1.19",
+          "regole": "1.19",
+          "altre_tabelle": "1.19"
+        }
       }
     },
     {
@@ -5207,6 +5613,20 @@
         "durata": {
           "tipo": "durata",
           "colonna": "Durata"
+        }
+      },
+      "_edizione": {
+        "corrente": "1.19",
+        "campi": {
+          "nome": "1.19",
+          "intestazione": "1.19",
+          "macrofamiglia": "1.19",
+          "specializzazione": "1.19",
+          "lancio": "1.19",
+          "descrizione": "1.19",
+          "versioni": "1.19",
+          "regole": "1.19",
+          "altre_tabelle": "1.19"
         }
       }
     },
@@ -5343,6 +5763,20 @@
           "tipo": "durata",
           "colonna": "Durata"
         }
+      },
+      "_edizione": {
+        "corrente": "1.19",
+        "campi": {
+          "nome": "1.19",
+          "intestazione": "1.19",
+          "macrofamiglia": "1.19",
+          "specializzazione": "1.19",
+          "lancio": "1.19",
+          "descrizione": "1.19",
+          "versioni": "1.19",
+          "regole": "1.19",
+          "altre_tabelle": "1.19"
+        }
       }
     },
     {
@@ -5477,6 +5911,20 @@
         "durata": {
           "tipo": "durata",
           "colonna": "Durata"
+        }
+      },
+      "_edizione": {
+        "corrente": "1.19",
+        "campi": {
+          "nome": "1.19",
+          "intestazione": "1.19",
+          "macrofamiglia": "1.19",
+          "specializzazione": "1.19",
+          "lancio": "1.19",
+          "descrizione": "1.19",
+          "versioni": "1.19",
+          "regole": "1.19",
+          "altre_tabelle": "1.19"
         }
       }
     },
@@ -5651,6 +6099,20 @@
         "durata": {
           "tipo": "durata",
           "colonna": "Durata"
+        }
+      },
+      "_edizione": {
+        "corrente": "1.19",
+        "campi": {
+          "nome": "1.19",
+          "intestazione": "1.19",
+          "macrofamiglia": "1.19",
+          "specializzazione": "1.19",
+          "lancio": "1.19",
+          "descrizione": "1.19",
+          "versioni": "1.19",
+          "regole": "1.19",
+          "altre_tabelle": "1.19"
         }
       }
     },
@@ -5853,6 +6315,20 @@
         "durata": {
           "tipo": "istantanea"
         }
+      },
+      "_edizione": {
+        "corrente": "1.19",
+        "campi": {
+          "nome": "1.19",
+          "intestazione": "1.19",
+          "macrofamiglia": "1.19",
+          "specializzazione": "1.19",
+          "lancio": "1.19",
+          "descrizione": "1.19",
+          "versioni": "1.19",
+          "regole": "1.19",
+          "altre_tabelle": "1.19"
+        }
       }
     },
     {
@@ -6042,6 +6518,20 @@
           "tipo": "durata",
           "colonna": "Durata"
         }
+      },
+      "_edizione": {
+        "corrente": "1.19",
+        "campi": {
+          "nome": "1.19",
+          "intestazione": "1.19",
+          "macrofamiglia": "1.19",
+          "specializzazione": "1.19",
+          "lancio": "1.19",
+          "descrizione": "1.19",
+          "versioni": "1.19",
+          "regole": "1.19",
+          "altre_tabelle": "1.19"
+        }
       }
     },
     {
@@ -6190,6 +6680,20 @@
           "tipo": "durata",
           "colonna": "Durata"
         }
+      },
+      "_edizione": {
+        "corrente": "1.19",
+        "campi": {
+          "nome": "1.19",
+          "intestazione": "1.19",
+          "macrofamiglia": "1.19",
+          "specializzazione": "1.19",
+          "lancio": "1.19",
+          "descrizione": "1.19",
+          "versioni": "1.19",
+          "regole": "1.19",
+          "altre_tabelle": "1.19"
+        }
       }
     },
     {
@@ -6259,7 +6763,7 @@
           "Totale massimo": "COS + 30"
         }
       ],
-      "regole": "Recupero: il valore immediato è pari alla COS del beneficiario, non al modificatore, e si applica una sola volta dopo il lancio riuscito. Il recupero periodico avviene all’inizio dei cinque turni successivi del beneficiario, prima del Sanguinamento, senza azioni o prove.\nGittata e contatto si verificano soltanto al lancio; il recupero prosegue anche se il beneficiario si allontana. Ai livelli 3 e 6 l’effetto è esclusivamente Personale.\nLimiti: recupera soltanto PV ordinari fino al massimo; l’eccedenza viene persa e non diventa PV temporanei.\nFunziona su una creatura viva a 0 PV, ma non rimuove Ferite, menomazioni, Affaticamento, veleni, malattie o stati magici e non recupera PM. Non sveglia chi è sotto Indurre Sonno o lo svenimento di Dardo Psichico.\nFunziona soltanto su organismi biologicamente viventi; nei cyborg cura i PV viventi, non gli impianti. Sono esclusi elementali evocati, Ectoplasma, costrutti puramente meccanici ed entità spirituali salvo eccezioni del Bestiario del Manuale del Direttore. Durante Forma Elementale non cura forma o corpo sospeso; le applicazioni periodiche trascorrono senza effetto. Rispetta il limite dei PV sacrificati nella conversione, sezione 6. Canale Vitale aggiunge 1 PV una sola volta per beneficiario e lancio al recupero immediato pari alla COS.\nSanguinamento: continua normalmente e non viene arrestato da Psicometabolismo. Per esempio, con 0 PV, Sanguinamento 1 e recupero 2, il beneficiario recupera 2 PV e poi ne perde 1.\nCorpo Adattivo: fra recuperi periodici concorrenti si applica il maggiore, senza sommarli. Se Corpo Adattivo usa la propria applicazione per fermare Sanguinamento, Psicometabolismo può comunque recuperare i suoi PV periodici. Il recupero immediato si applica normalmente anche in presenza di Corpo Adattivo.\nNuovo lancio e dissoluzione: un nuovo lancio concede nuovamente il recupero immediato e può sostituire il recupero periodico, senza cumularne le applicazioni. Negare Potere interrompe i recuperi futuri e non annulla i PV già recuperati.\nAnticipazione: un solo aspetto di un solo gradino; PM raddoppiati e Potere più difficile di una categoria. Livello e altri parametri restano invariati. Si sceglie +1 PV per RND, fino a 7 al livello 18, oppure durata periodica da 5 a 10 RND. Il recupero immediato resta pari alla COS, non è anticipabile e si applica una sola volta per lancio.",
+      "regole": "Recupero: il valore immediato è pari alla COS del beneficiario, non al modificatore, e si applica una sola volta dopo il lancio riuscito. Il recupero periodico avviene all’inizio dei cinque turni successivi del beneficiario, prima del Sanguinamento, senza azioni o prove.\nGittata e contatto si verificano soltanto al lancio; il recupero prosegue anche se il beneficiario si allontana. Ai livelli 3 e 6 l’effetto è esclusivamente Personale.\nLimiti: recupera soltanto PV ordinari fino al massimo; l’eccedenza viene persa e non diventa PV temporanei. Funziona su una creatura viva a 0 PV, ma non rimuove Ferite, menomazioni, Affaticamento, veleni, malattie o stati magici e non recupera PM. Non sveglia chi è sotto Indurre Sonno o lo svenimento di Dardo Psichico. Funziona soltanto su organismi biologicamente viventi; nei cyborg cura i PV viventi, non gli impianti. Sono esclusi elementali evocati, Ectoplasma, costrutti puramente meccanici ed entità spirituali salvo eccezioni del Bestiario del Manuale del Direttore. Durante Forma Elementale non cura forma o corpo sospeso; le applicazioni periodiche trascorrono senza effetto. Rispetta il limite dei PV sacrificati nella conversione, sezione 6. Canale Vitale aggiunge 1 PV una sola volta per beneficiario e lancio al recupero immediato pari alla COS. Non stabilizza Morente e non disattiva il suo contatore.\nSanguinamento: continua normalmente e non viene arrestato da Psicometabolismo. Per esempio, con 0 PV, Sanguinamento 1 e recupero 2, il beneficiario recupera 2 PV e poi ne perde 1.\nCorpo Adattivo: fra recuperi periodici concorrenti si applica il maggiore, senza sommarli. Se Corpo Adattivo usa la propria applicazione per fermare Sanguinamento, Psicometabolismo può comunque recuperare i suoi PV periodici. Il recupero immediato si applica normalmente anche in presenza di Corpo Adattivo.\nNuovo lancio e dissoluzione: un nuovo lancio concede nuovamente il recupero immediato e può sostituire il recupero periodico, senza cumularne le applicazioni. Negare Potere interrompe i recuperi futuri e non annulla i PV già recuperati.\nAnticipazione: un solo aspetto di un solo gradino; PM raddoppiati e Potere più difficile di una categoria. Livello e altri parametri restano invariati. Si sceglie +1 PV per RND, fino a 7 al livello 18, oppure durata periodica da 5 a 10 RND. Il recupero immediato resta pari alla COS, non è anticipabile e si applica una sola volta per lancio.",
       "meccanica": {
         "azioni": {
           "azioni_principali": 1
@@ -6316,6 +6820,20 @@
         "durata": {
           "tipo": "durata",
           "colonna": "Durata periodica"
+        }
+      },
+      "_edizione": {
+        "corrente": "1.19",
+        "campi": {
+          "nome": "1.19",
+          "intestazione": "1.19",
+          "macrofamiglia": "1.19",
+          "specializzazione": "1.19",
+          "lancio": "1.19",
+          "descrizione": "1.19",
+          "versioni": "1.19",
+          "regole": "1.19",
+          "altre_tabelle": "1.19"
         }
       }
     },
@@ -6456,6 +6974,20 @@
           "tipo": "durata",
           "colonna": "Durata"
         }
+      },
+      "_edizione": {
+        "corrente": "1.19",
+        "campi": {
+          "nome": "1.19",
+          "intestazione": "1.19",
+          "macrofamiglia": "1.19",
+          "specializzazione": "1.19",
+          "lancio": "1.19",
+          "descrizione": "1.19",
+          "versioni": "1.19",
+          "regole": "1.19",
+          "altre_tabelle": "1.19"
+        }
       }
     },
     {
@@ -6592,6 +7124,20 @@
         "durata": {
           "tipo": "durata",
           "concentrazione": "Durata max Con"
+        }
+      },
+      "_edizione": {
+        "corrente": "1.19",
+        "campi": {
+          "nome": "1.19",
+          "intestazione": "1.19",
+          "macrofamiglia": "1.19",
+          "specializzazione": "1.19",
+          "lancio": "1.19",
+          "descrizione": "1.19",
+          "versioni": "1.19",
+          "regole": "1.19",
+          "altre_tabelle": "1.19"
         }
       }
     },
@@ -6758,6 +7304,20 @@
         "durata": {
           "tipo": "durata",
           "colonna": "Durata"
+        }
+      },
+      "_edizione": {
+        "corrente": "1.19",
+        "campi": {
+          "nome": "1.19",
+          "intestazione": "1.19",
+          "macrofamiglia": "1.19",
+          "specializzazione": "1.19",
+          "lancio": "1.19",
+          "descrizione": "1.19",
+          "versioni": "1.19",
+          "regole": "1.19",
+          "altre_tabelle": "1.19"
         }
       }
     },
@@ -6983,6 +7543,20 @@
           "tipo": "durata",
           "colonna": "Durata"
         }
+      },
+      "_edizione": {
+        "corrente": "1.19",
+        "campi": {
+          "nome": "1.19",
+          "intestazione": "1.19",
+          "macrofamiglia": "1.19",
+          "specializzazione": "1.19",
+          "lancio": "1.19",
+          "descrizione": "1.19",
+          "versioni": "1.19",
+          "regole": "1.19",
+          "altre_tabelle": "1.19"
+        }
       }
     },
     {
@@ -7198,6 +7772,20 @@
           "tipo": "condizione",
           "testo": "fino alla fine del primo turno del bersaglio successivo al lancio, senza Concentrazione"
         }
+      },
+      "_edizione": {
+        "corrente": "1.19",
+        "campi": {
+          "nome": "1.19",
+          "intestazione": "1.19",
+          "macrofamiglia": "1.19",
+          "specializzazione": "1.19",
+          "lancio": "1.19",
+          "descrizione": "1.19",
+          "versioni": "1.19",
+          "regole": "1.19",
+          "altre_tabelle": "1.19"
+        }
       }
     },
     {
@@ -7362,6 +7950,20 @@
         "durata": {
           "tipo": "durata",
           "colonna": "Durata"
+        }
+      },
+      "_edizione": {
+        "corrente": "1.19",
+        "campi": {
+          "nome": "1.19",
+          "intestazione": "1.19",
+          "macrofamiglia": "1.19",
+          "specializzazione": "1.19",
+          "lancio": "1.19",
+          "descrizione": "1.19",
+          "versioni": "1.19",
+          "regole": "1.19",
+          "altre_tabelle": "1.19"
         }
       }
     },
@@ -7582,6 +8184,20 @@
         "durata": {
           "tipo": "durata",
           "colonna": "Durata"
+        }
+      },
+      "_edizione": {
+        "corrente": "1.19",
+        "campi": {
+          "nome": "1.19",
+          "intestazione": "1.19",
+          "macrofamiglia": "1.19",
+          "specializzazione": "1.19",
+          "lancio": "1.19",
+          "descrizione": "1.19",
+          "versioni": "1.19",
+          "regole": "1.19",
+          "altre_tabelle": "1.19"
         }
       }
     },
@@ -7808,6 +8424,20 @@
           "tipo": "durata",
           "colonna": "Durata alterazione"
         }
+      },
+      "_edizione": {
+        "corrente": "1.19",
+        "campi": {
+          "nome": "1.19",
+          "intestazione": "1.19",
+          "macrofamiglia": "1.19",
+          "specializzazione": "1.19",
+          "lancio": "1.19",
+          "descrizione": "1.19",
+          "versioni": "1.19",
+          "regole": "1.19",
+          "altre_tabelle": "1.19"
+        }
       }
     },
     {
@@ -7978,6 +8608,20 @@
         "durata": {
           "tipo": "durata",
           "colonna": "Durata"
+        }
+      },
+      "_edizione": {
+        "corrente": "1.19",
+        "campi": {
+          "nome": "1.19",
+          "intestazione": "1.19",
+          "macrofamiglia": "1.19",
+          "specializzazione": "1.19",
+          "lancio": "1.19",
+          "descrizione": "1.19",
+          "versioni": "1.19",
+          "regole": "1.19",
+          "altre_tabelle": "1.19"
         }
       }
     },
@@ -8170,6 +8814,20 @@
           "tipo": "durata",
           "colonna": "Durata"
         }
+      },
+      "_edizione": {
+        "corrente": "1.19",
+        "campi": {
+          "nome": "1.19",
+          "intestazione": "1.19",
+          "macrofamiglia": "1.19",
+          "specializzazione": "1.19",
+          "lancio": "1.19",
+          "descrizione": "1.19",
+          "versioni": "1.19",
+          "regole": "1.19",
+          "altre_tabelle": "1.19"
+        }
       }
     },
     {
@@ -8356,6 +9014,20 @@
         "durata": {
           "tipo": "durata",
           "colonna": "Durata"
+        }
+      },
+      "_edizione": {
+        "corrente": "1.19",
+        "campi": {
+          "nome": "1.19",
+          "intestazione": "1.19",
+          "macrofamiglia": "1.19",
+          "specializzazione": "1.19",
+          "lancio": "1.19",
+          "descrizione": "1.19",
+          "versioni": "1.19",
+          "regole": "1.19",
+          "altre_tabelle": "1.19"
         }
       }
     },
@@ -8576,6 +9248,20 @@
           "colonna": "Durata fissa",
           "concentrazione": "Durata max Con"
         }
+      },
+      "_edizione": {
+        "corrente": "1.19",
+        "campi": {
+          "nome": "1.19",
+          "intestazione": "1.19",
+          "macrofamiglia": "1.19",
+          "specializzazione": "1.19",
+          "lancio": "1.19",
+          "descrizione": "1.19",
+          "versioni": "1.19",
+          "regole": "1.19",
+          "altre_tabelle": "1.19"
+        }
       }
     },
     {
@@ -8736,6 +9422,20 @@
         "durata": {
           "tipo": "durata",
           "concentrazione": "Durata max Con"
+        }
+      },
+      "_edizione": {
+        "corrente": "1.19",
+        "campi": {
+          "nome": "1.19",
+          "intestazione": "1.19",
+          "macrofamiglia": "1.19",
+          "specializzazione": "1.19",
+          "lancio": "1.19",
+          "descrizione": "1.19",
+          "versioni": "1.19",
+          "regole": "1.19",
+          "altre_tabelle": "1.19"
         }
       }
     },
@@ -8921,6 +9621,20 @@
           "tipo": "durata",
           "colonna": "Durata fissa",
           "concentrazione": "Durata max Con"
+        }
+      },
+      "_edizione": {
+        "corrente": "1.19",
+        "campi": {
+          "nome": "1.19",
+          "intestazione": "1.19",
+          "macrofamiglia": "1.19",
+          "specializzazione": "1.19",
+          "lancio": "1.19",
+          "descrizione": "1.19",
+          "versioni": "1.19",
+          "regole": "1.19",
+          "altre_tabelle": "1.19"
         }
       }
     },
@@ -9109,6 +9823,20 @@
           "tipo": "durata",
           "colonna": "Durata"
         }
+      },
+      "_edizione": {
+        "corrente": "1.19",
+        "campi": {
+          "nome": "1.19",
+          "intestazione": "1.19",
+          "macrofamiglia": "1.19",
+          "specializzazione": "1.19",
+          "lancio": "1.19",
+          "descrizione": "1.19",
+          "versioni": "1.19",
+          "regole": "1.19",
+          "altre_tabelle": "1.19"
+        }
       }
     },
     {
@@ -9180,7 +9908,7 @@
           "Mod. PS¹": "−4"
         }
       ],
-      "regole": "¹ Il modificatore riguarda esclusivamente la PS Volontà concessa da Barriera Mentale. Le presenze prive di questa protezione non effettuano una PS.\nPercezione continua: il numero, le direzioni e gli ingressi o le uscite si aggiornano senza AP. Le direzioni possono indicare anche sopra o sotto, ma non distanza esatta, Q occupato o acquisizione visiva. L’aura attraversa ostacoli solidi ordinari e non richiede linea di vista. Le presenze fuori dal raggio non vengono seguite.\nAnalisi individuale: il Taumaturgo può approfondire una presenza rilevabile per proprio turno, senza AP aggiuntive. La prima analisi è compresa nel lancio. Si ottengono tutte le informazioni individuali disponibili alla versione usata; precisione del conteggio e profondità dell’analisi sono parametri distinti.\nMenti valide: comprende creature dotate di mente, inclusi animali, dormienti e incoscienti. Non comprende piante ordinarie, cadaveri, oggetti o automi privi di mente. Ectoplasma non possiede una mente autonoma da rilevare. Il Taumaturgo non conta la propria mente.\nRiservatezza: i soggetti non avvertono automaticamente la rilevazione; possono notare le normali componenti del lancio. Presenza non rivela nome, identità, ricordi, intenzioni, PV, PM, equipaggiamento o Talenti scelti.\nLivelli formazione e creature\nPersonaggi: il livello complessivo è distinto dai Gradi delle singole Classi. L’Addestramento iniziale resta quello originario anche quando una Classe successiva appartiene a un altro Addestramento. La Classe predominante è quella con il Grado individuale più alto; a parità vengono indicate tutte le Classi al massimo Grado posseduto. Creature senza Classi o Addestramento: al livello 6 si distingue Domestica o Selvaggia; al livello 12 si aggiunge Predatore o Preda. Sono classificazioni indipendenti, riportate nelle schede del Bestiario del Manuale del Direttore, che verranno integrate successivamente. Quando il ruolo prevalente comprende entrambe le funzioni, il Bestiario del Manuale del Direttore può indicare Misto. Domestica non significa amichevole, Selvaggia non significa aggressiva e Predatore non significa attualmente ostile.\nLivelli delle creature: seguono la stessa precisione dei personaggi, con fasce di 5 dal livello 3, fasce di 2 dal livello 9 e valore esatto dal livello 15. Le schede del Bestiario del Manuale del Direttore, con i livelli delle creature, verranno integrate successivamente nel Manuale del Direttore. Dal livello 18 una creatura priva di Classi non rivela dati di Classe inesistenti; restano utili il raggio e le durate superiori.\nEsempio: un personaggio di livello 14, Addestramento iniziale Combattente, Soldato III ed Esploratore I, risulta di livello 11–15 con Presenza 3; Combattente con Presenza 6; livello 13–14 con Presenza 9; Soldato come Classe predominante con Presenza 12; livello 14 con Presenza 15; Soldato III ed Esploratore I con Presenza 18.\nProtezioni contro Presenza\nVelo Psichico: impedisce completamente a Presenza di rilevare le creature che protegge. Non vengono conteggiate né analizzate e Presenza non concede una PS per superare il Velo.\nBarriera Mentale: quando una presenza protetta dovrebbe essere rilevata, concede una PS Volontà con il proprio bonus e il Mod. PS della versione di Presenza. Il successo la nasconde a quel lancio finché la barriera rimane attiva; il fallimento consente di rilevarla, senza eliminare gli altri benefici della barriera. Quando la barriera termina, il successo non continua a nascondere la mente.\nFrequenza della PS: una sola per creatura e per lancio di Presenza, al primo tentativo di rilevazione mentre Barriera Mentale è attiva. Vale anche se la barriera viene attivata dopo Presenza. Uscire e rientrare nell’aura non concede nuovi tentativi.\nAltre interazioni: Mimetismo non ostacola Presenza. Nascondere Aura richiede invece un confronto: Presenza usa il proprio livello come Potere di Rilevazione; inferiore non supera, superiore supera, parità richiede PS Magia dell’osservatore, una sola per coppia di lanci e valida per tutti i beneficiari. Questo confronto è distinto dalla PS Volontà concessa da Barriera Mentale. Alterare Aura non falsifica le informazioni mentali. Rilevare non dissolve gli occultamenti; si applica la matrice della sezione 8. Occhio Interiore segue le proprie regole al lancio.\nAnticipazione: un solo aspetto di un solo gradino; PM raddoppiati e Potere più difficile di una categoria. Il livello e tutti gli altri parametri rimangono invariati. Si sceglie raggio 6 → 10 → 15 → 20 → 25 → 30 → 40 Q; precisione del numero Approssimata → Generica → Precisa → Esatta; profondità delle informazioni individuali alla riga successiva, mantenendo quelle già accessibili; durata a Concentrazione 5 → 10 → 30 minuti → 1 → 2 → 4 → 8 → 12 ore; oppure durata fissa 10 → 20 RND → 5 → 10 → 30 minuti → 1 → 2 → 4 ore. Il conteggio esatto e le informazioni individuali del livello 18 sono i rispettivi limiti. Il Mod. PS non è anticipabile. Esempio: Presenza 6 può anticipare il conteggio esatto oppure le fasce di livello di 2, senza ottenere entrambi.",
+      "regole": "¹ Il modificatore riguarda esclusivamente la PS Volontà concessa da Barriera Mentale. Le presenze prive di questa protezione non effettuano una PS.\nConteggio e analisi delle presenze\nPercezione continua: il numero, le direzioni e gli ingressi o le uscite si aggiornano senza AP. Le direzioni possono indicare anche sopra o sotto, ma non distanza esatta, Q occupato o acquisizione visiva. L’aura attraversa ostacoli solidi ordinari e non richiede linea di vista. Le presenze fuori dal raggio non vengono seguite.\nAnalisi individuale: il Taumaturgo può approfondire una presenza rilevabile per proprio turno, senza AP aggiuntive. La prima analisi è compresa nel lancio. Si ottengono tutte le informazioni individuali disponibili alla versione usata; precisione del conteggio e profondità dell’analisi sono parametri distinti.\nMenti valide: comprende creature dotate di mente, inclusi animali, dormienti e incoscienti. Non comprende piante ordinarie, cadaveri, oggetti o automi privi di mente. Ectoplasma non possiede una mente autonoma da rilevare. Il Taumaturgo non conta la propria mente.\nRiservatezza: i soggetti non avvertono automaticamente la rilevazione; possono notare le normali componenti del lancio. Presenza non rivela nome, identità, ricordi, intenzioni, PV, PM, equipaggiamento o Talenti scelti.\nLivelli formazione e creature\nPersonaggi: il livello complessivo è distinto dai Gradi delle singole Classi. L’Addestramento iniziale resta quello originario anche quando una Classe successiva appartiene a un altro Addestramento. La Classe predominante è quella con il Grado individuale più alto; a parità vengono indicate tutte le Classi al massimo Grado posseduto.\nCreature senza Classi o Addestramento: al livello 6 si distingue Domestica o Selvaggia; al livello 12 si aggiunge Predatore o Preda. Sono classificazioni indipendenti, riportate nelle schede del Bestiario del Manuale del Direttore, che verranno integrate successivamente. Quando il ruolo prevalente comprende entrambe le funzioni, il Bestiario del Manuale del Direttore può indicare Misto. Domestica non significa amichevole, Selvaggia non significa aggressiva e Predatore non significa attualmente ostile.\nLivelli delle creature: seguono la stessa precisione dei personaggi, con fasce di 5 dal livello 3, fasce di 2 dal livello 9 e valore esatto dal livello 15. Le schede del Bestiario del Manuale del Direttore, con i livelli delle creature, verranno integrate successivamente nel Manuale del Direttore. Dal livello 18 una creatura priva di Classi non rivela dati di Classe inesistenti; restano utili il raggio e le durate superiori.\nEsempio: un personaggio di livello 14, Addestramento iniziale Combattente, Soldato III ed Esploratore I, risulta di livello 11–15 con Presenza 3; Combattente con Presenza 6; livello 13–14 con Presenza 9; Soldato come Classe predominante con Presenza 12; livello 14 con Presenza 15; Soldato III ed Esploratore I con Presenza 18.\nProtezioni contro Presenza\nVelo Psichico: impedisce completamente a Presenza di rilevare le creature che protegge. Non vengono conteggiate né analizzate e Presenza non concede una PS per superare il Velo.\nBarriera Mentale: quando una presenza protetta dovrebbe essere rilevata, concede una PS Volontà con il proprio bonus e il Mod. PS della versione di Presenza. Il successo la nasconde a quel lancio finché la barriera rimane attiva; il fallimento consente di rilevarla, senza eliminare gli altri benefici della barriera. Quando la barriera termina, il successo non continua a nascondere la mente.\nFrequenza della PS: una sola per creatura e per lancio di Presenza, al primo tentativo di rilevazione mentre Barriera Mentale è attiva. Vale anche se la barriera viene attivata dopo Presenza. Uscire e rientrare nell’aura non concede nuovi tentativi.\nAltre interazioni: Mimetismo non ostacola Presenza. Nascondere Aura richiede invece un confronto: Presenza usa il proprio livello come Potere di Rilevazione; inferiore non supera, superiore supera, parità richiede PS Magia dell’osservatore, una sola per coppia di lanci e valida per tutti i beneficiari. Questo confronto è distinto dalla PS Volontà concessa da Barriera Mentale. Alterare Aura non falsifica le informazioni mentali. Rilevare non dissolve gli occultamenti; si applica la matrice della sezione 8. Occhio Interiore segue le proprie regole al lancio.\nAnticipazione: un solo aspetto di un solo gradino; PM raddoppiati e Potere più difficile di una categoria. Il livello e tutti gli altri parametri rimangono invariati. Si sceglie raggio 6 → 10 → 15 → 20 → 25 → 30 → 40 Q; precisione del numero Approssimata → Generica → Precisa → Esatta; profondità delle informazioni individuali alla riga successiva, mantenendo quelle già accessibili; durata a Concentrazione 5 → 10 → 30 minuti → 1 → 2 → 4 → 8 → 12 ore; oppure durata fissa 10 → 20 RND → 5 → 10 → 30 minuti → 1 → 2 → 4 ore. Il conteggio esatto e le informazioni individuali del livello 18 sono i rispettivi limiti. Il Mod. PS non è anticipabile. Esempio: Presenza 6 può anticipare il conteggio esatto oppure le fasce di livello di 2, senza ottenere entrambi.",
       "altre_tabelle": [
         {
           "righe": [
@@ -9397,6 +10125,20 @@
           "tipo": "durata",
           "colonna": "Durata fissa",
           "concentrazione": "Durata max Con"
+        }
+      },
+      "_edizione": {
+        "corrente": "1.19",
+        "campi": {
+          "nome": "1.19",
+          "intestazione": "1.19",
+          "macrofamiglia": "1.19",
+          "specializzazione": "1.19",
+          "lancio": "1.19",
+          "descrizione": "1.19",
+          "versioni": "1.19",
+          "regole": "1.19",
+          "altre_tabelle": "1.19"
         }
       }
     },
@@ -9633,6 +10375,20 @@
           "colonna": "Durata fissa",
           "concentrazione": "Durata max Con"
         }
+      },
+      "_edizione": {
+        "corrente": "1.19",
+        "campi": {
+          "nome": "1.19",
+          "intestazione": "1.19",
+          "macrofamiglia": "1.19",
+          "specializzazione": "1.19",
+          "lancio": "1.19",
+          "descrizione": "1.19",
+          "versioni": "1.19",
+          "regole": "1.19",
+          "altre_tabelle": "1.19"
+        }
       }
     },
     {
@@ -9787,6 +10543,20 @@
           "tipo": "durata",
           "colonna": "Durata"
         }
+      },
+      "_edizione": {
+        "corrente": "1.19",
+        "campi": {
+          "nome": "1.19",
+          "intestazione": "1.19",
+          "macrofamiglia": "1.19",
+          "specializzazione": "1.19",
+          "lancio": "1.19",
+          "descrizione": "1.19",
+          "versioni": "1.19",
+          "regole": "1.19",
+          "altre_tabelle": "1.19"
+        }
       }
     },
     {
@@ -9914,6 +10684,20 @@
         "durata": {
           "tipo": "durata",
           "colonna": "Durata"
+        }
+      },
+      "_edizione": {
+        "corrente": "1.19",
+        "campi": {
+          "nome": "1.19",
+          "intestazione": "1.19",
+          "macrofamiglia": "1.19",
+          "specializzazione": "1.19",
+          "lancio": "1.19",
+          "descrizione": "1.19",
+          "versioni": "1.19",
+          "regole": "1.19",
+          "altre_tabelle": "1.19"
         }
       }
     },
@@ -10072,6 +10856,20 @@
         "durata": {
           "tipo": "procedura",
           "testo": "effetto alla fine della procedura descritta nella scheda; nessuna durata da contare"
+        }
+      },
+      "_edizione": {
+        "corrente": "1.19",
+        "campi": {
+          "nome": "1.19",
+          "intestazione": "1.19",
+          "macrofamiglia": "1.19",
+          "specializzazione": "1.19",
+          "lancio": "1.19",
+          "descrizione": "1.19",
+          "versioni": "1.19",
+          "regole": "1.19",
+          "altre_tabelle": "1.19"
         }
       }
     },
@@ -10357,6 +11155,20 @@
           ],
           "fonte": "Magia, scheda 20.8 (seconda tabella)"
         }
+      },
+      "_edizione": {
+        "corrente": "1.19",
+        "campi": {
+          "nome": "1.19",
+          "intestazione": "1.19",
+          "macrofamiglia": "1.19",
+          "specializzazione": "1.19",
+          "lancio": "1.19",
+          "descrizione": "1.19",
+          "versioni": "1.19",
+          "regole": "1.19",
+          "altre_tabelle": "1.19"
+        }
       }
     },
     {
@@ -10489,6 +11301,20 @@
         "durata": {
           "tipo": "durata",
           "colonna": "Durata"
+        }
+      },
+      "_edizione": {
+        "corrente": "1.19",
+        "campi": {
+          "nome": "1.19",
+          "intestazione": "1.19",
+          "macrofamiglia": "1.19",
+          "specializzazione": "1.19",
+          "lancio": "1.19",
+          "descrizione": "1.19",
+          "versioni": "1.19",
+          "regole": "1.19",
+          "altre_tabelle": "1.19"
         }
       }
     },
@@ -10645,6 +11471,20 @@
           "colonna": "Durata fissa",
           "concentrazione": "Durata max Con"
         }
+      },
+      "_edizione": {
+        "corrente": "1.19",
+        "campi": {
+          "nome": "1.19",
+          "intestazione": "1.19",
+          "macrofamiglia": "1.19",
+          "specializzazione": "1.19",
+          "lancio": "1.19",
+          "descrizione": "1.19",
+          "versioni": "1.19",
+          "regole": "1.19",
+          "altre_tabelle": "1.19"
+        }
       }
     },
     {
@@ -10657,7 +11497,7 @@
       "pagina": 112,
       "intestazione": "Scheda 21.1 • Macrofamiglia Spirituale • Specializzazione Esorcismo • Rituale: consentito • PM utilizzabili: universali o spirituali.",
       "lancio": "Lancio: 1 AP; Focus, Gesto e Invocazione. Una creatura vivente consenziente, incluso il Taumaturgo, oppure incosciente soccorsa. Nessuna PS. Effetto istantaneo.",
-      "descrizione": "Ripristina i Punti Vita e permette di destinare parte della guarigione ad arrestare o ridurre Sanguinamento. Non riduce Ferite né Menomazioni.",
+      "descrizione": "Ripristina i Punti Vita e permette di destinare parte della guarigione ad arrestare o ridurre Sanguinamento. Non riduce Ferite né Menomazioni. Non stabilizza Morente e non disattiva il suo contatore, neppure se arresta il Sanguinamento.",
       "versioni": [
         {
           "Livello": "1",
@@ -10827,6 +11667,20 @@
         },
         "durata": {
           "tipo": "istantanea"
+        }
+      },
+      "_edizione": {
+        "corrente": "1.19",
+        "campi": {
+          "nome": "1.19",
+          "intestazione": "1.19",
+          "macrofamiglia": "1.19",
+          "specializzazione": "1.19",
+          "lancio": "1.19",
+          "descrizione": "1.19",
+          "versioni": "1.19",
+          "regole": "1.19",
+          "altre_tabelle": "1.19"
         }
       }
     },
@@ -11011,6 +11865,20 @@
           "tipo": "procedura",
           "testo": "effetto alla fine della procedura descritta nella scheda; nessuna durata da contare"
         }
+      },
+      "_edizione": {
+        "corrente": "1.19",
+        "campi": {
+          "nome": "1.19",
+          "intestazione": "1.19",
+          "macrofamiglia": "1.19",
+          "specializzazione": "1.19",
+          "lancio": "1.19",
+          "descrizione": "1.19",
+          "versioni": "1.19",
+          "regole": "1.19",
+          "altre_tabelle": "1.19"
+        }
       }
     },
     {
@@ -11194,6 +12062,20 @@
           "tipo": "procedura",
           "testo": "effetto alla fine della procedura descritta nella scheda; nessuna durata da contare"
         }
+      },
+      "_edizione": {
+        "corrente": "1.19",
+        "campi": {
+          "nome": "1.19",
+          "intestazione": "1.19",
+          "macrofamiglia": "1.19",
+          "specializzazione": "1.19",
+          "lancio": "1.19",
+          "descrizione": "1.19",
+          "versioni": "1.19",
+          "regole": "1.19",
+          "altre_tabelle": "1.19"
+        }
       }
     },
     {
@@ -11258,7 +12140,7 @@
           "Stati rimossi ciascuno": "Tutti consentiti"
         }
       ],
-      "regole": "Beneficiari: creature viventi consenzienti, incluso il Taumaturgo; è consentito soccorrere chi è incosciente. I beneficiari a distanza devono essere visibili e in gittata. Più beneficiari rispettano la concatenazione entro 2 Q; a contatto devono essere effettivamente toccati.\nConteggio: si contano tipi di Stato, non singole cause. Scegliere uno Stato rimuove tutte le sue applicazioni curabili sul beneficiario; restano quelle sostenute da una causa che questa cura non può eliminare.\nCause persistenti e interazioni\nCausa: può rimuovere l’accecamento temporaneo di un lampo, non quello dovuto a una Menomazione. Stordito mantenuto da una droga richiede Cura Avvelenamenti; Rallentato mantenuto da una malattia richiede Cura Malattie. Non rimuove legami fisici e, a 0 PM, non sostituisce il recupero di almeno 1 PM necessario al risveglio. Indurre Sonno: dalla capacità del livello 6, la cura risveglia istantaneamente senza richiedere i due turni di scuotimento. Il beneficiario eventualmente A Terra deve comunque rialzarsi. Può anche rimuovere lo svenimento prodotto da Dardo Psichico, senza recuperare PV; non sostituisce il recupero di almeno 1 PM per chi è Svenuto da esaurimento della riserva.\nTerrore: rimuove Terrorizzato. La medesima aura non riapplica lo Stato a quel bersaglio, secondo la regola di un’applicazione per lancio; un nuovo lancio richiede una nuova PS secondo la propria scheda.\nSovraccarico Sinaptico: non rimuove Rallentato o Stordito mentre la Concentrazione del Taumaturgo mantiene l’interferenza nervosa. Occorre interrompere la fonte o ricorrere a Negare Potere, quando applicabile. Congelato richiede di rimuovere o sciogliere il Ghiaccio materiale. Rimuoverlo completamente termina anche il Rallentamento prodotto dallo stesso gelo; alla sola scadenza naturale di Congelato segue invece il Rallentamento di 1 RND. Cura Spirituale 1 può rimuovere Rallentato soltanto quando non permane un vincolo materiale che lo sostiene.\nAltri limiti: non annulla Comando, Ipnosi, Possessione, Distrazione o Silenzio Mentale. Non restituisce azioni già perse, non ripristina la Concentrazione, non rialza da A Terra e non recupera PV, PM o Affaticamento. Non cura Corruzione, dipendenza o Menomazioni.\nAnticipazione: un solo aspetto di un solo gradino; PM raddoppiati e Potere più difficile di una categoria. Il livello e gli altri parametri rimangono invariati. Si sceglie beneficiari 1 → 2 → 4 → 6 → 8 (massimo 8); numero di Stati 1 → 2 → 3 → tutti consentiti; gittata Contatto → 3 → 6 → 10 → 15 → 20 → 25 → 30 Q; oppure gruppo di capacità livello 1 → livello 3 → livello 6. Aumentare il numero non sblocca contemporaneamente nuovi tipi di Stato.\nEsempio: al livello 3, spendendo 6 PM per anticipare il gruppo di capacità, si può rimuovere un solo Stordito oppure risvegliare un solo beneficiario a 3 Q.",
+      "regole": "Beneficiari: creature viventi consenzienti, incluso il Taumaturgo; è consentito soccorrere chi è incosciente. I beneficiari a distanza devono essere visibili e in gittata. Più beneficiari rispettano la concatenazione entro 2 Q; a contatto devono essere effettivamente toccati.\nConteggio: si contano tipi di Stato, non singole cause. Scegliere uno Stato rimuove tutte le sue applicazioni curabili sul beneficiario; restano quelle sostenute da una causa che questa cura non può eliminare.\nCause persistenti e interazioni\nCausa: può rimuovere l’accecamento temporaneo di un lampo, non quello dovuto a una Menomazione. Stordito mantenuto da una droga richiede Cura Avvelenamenti; Rallentato mantenuto da una malattia richiede Cura Malattie. Non rimuove legami fisici e, a 0 PM, non sostituisce il recupero di almeno 1 PM necessario al risveglio. Non rimuove Svenuto dovuto a Morente: occorre prima una cura specifica di stabilizzazione.\nIndurre Sonno: dalla capacità del livello 6, la cura risveglia istantaneamente senza richiedere i due turni di scuotimento. Il beneficiario eventualmente A Terra deve comunque rialzarsi. Può anche rimuovere lo svenimento prodotto da Dardo Psichico, senza recuperare PV; non sostituisce il recupero di almeno 1 PM per chi è Svenuto da esaurimento della riserva.\nTerrore: rimuove Terrorizzato. La medesima aura non riapplica lo Stato a quel bersaglio, secondo la regola di un’applicazione per lancio; un nuovo lancio richiede una nuova PS secondo la propria scheda.\nSovraccarico Sinaptico: non rimuove Rallentato o Stordito mentre la Concentrazione del Taumaturgo mantiene l’interferenza nervosa. Occorre interrompere la fonte o ricorrere a Negare Potere, quando applicabile. Congelato richiede di rimuovere o sciogliere il Ghiaccio materiale. Rimuoverlo completamente termina anche il Rallentamento prodotto dallo stesso gelo; alla sola scadenza naturale di Congelato segue invece il Rallentamento di 1 RND. Cura Spirituale 1 può rimuovere Rallentato soltanto quando non permane un vincolo materiale che lo sostiene.\nAltri limiti: non annulla Comando, Ipnosi, Possessione, Distrazione o Silenzio Mentale. Non restituisce azioni già perse, non ripristina la Concentrazione, non rialza da A Terra e non recupera PV, PM o Affaticamento. Non cura Corruzione, dipendenza o Menomazioni.\nAnticipazione: un solo aspetto di un solo gradino; PM raddoppiati e Potere più difficile di una categoria. Il livello e gli altri parametri rimangono invariati. Si sceglie beneficiari 1 → 2 → 4 → 6 → 8 (massimo 8); numero di Stati 1 → 2 → 3 → tutti consentiti; gittata Contatto → 3 → 6 → 10 → 15 → 20 → 25 → 30 Q; oppure gruppo di capacità livello 1 → livello 3 → livello 6. Aumentare il numero non sblocca contemporaneamente nuovi tipi di Stato.\nEsempio: al livello 3, spendendo 6 PM per anticipare il gruppo di capacità, si può rimuovere un solo Stordito oppure risvegliare un solo beneficiario a 3 Q.",
       "altre_tabelle": [
         {
           "righe": [
@@ -11408,6 +12290,20 @@
         },
         "durata": {
           "tipo": "istantanea"
+        }
+      },
+      "_edizione": {
+        "corrente": "1.19",
+        "campi": {
+          "nome": "1.19",
+          "intestazione": "1.19",
+          "macrofamiglia": "1.19",
+          "specializzazione": "1.19",
+          "lancio": "1.19",
+          "descrizione": "1.19",
+          "versioni": "1.19",
+          "regole": "1.19",
+          "altre_tabelle": "1.19"
         }
       }
     },
@@ -11571,6 +12467,20 @@
           "tipo": "procedura",
           "testo": "effetto alla fine della procedura descritta nella scheda; nessuna durata da contare"
         }
+      },
+      "_edizione": {
+        "corrente": "1.19",
+        "campi": {
+          "nome": "1.19",
+          "intestazione": "1.19",
+          "macrofamiglia": "1.19",
+          "specializzazione": "1.19",
+          "lancio": "1.19",
+          "descrizione": "1.19",
+          "versioni": "1.19",
+          "regole": "1.19",
+          "altre_tabelle": "1.19"
+        }
       }
     },
     {
@@ -11621,7 +12531,7 @@
           "Stati di Ferita rimossi": "5"
         }
       ],
-      "regole": "Beneficiari: creature viventi consenzienti, incluso il Taumaturgo; è consentito soccorrere chi è incosciente. I beneficiari a distanza devono essere visibili e in gittata. Più beneficiari rispettano la concatenazione entro 2 Q; a contatto devono essere effettivamente toccati.\nProgressione: Grave → Seria → Profonda → Importante → Superficiale → Guarita. Può intervenire da qualsiasi stato di Ferita di una creatura ancora vivente; i passaggi eccedenti la guarigione completa sono persi.\nPV e penalità: si aggiorna la penalità dello stato di Ferita. Se il beneficiario è a 0 PV, recupera anche 1 PV; altrimenti non recupera normalmente PV. Non resuscita e non rimuove automaticamente Svenuto dovuto a una causa distinta.\nFrequenza e interazioni con le altre cure\nUna volta ogni 24 ore: si applica il limite per creatura, indipendentemente da Taumaturgo o versione. Una nuova Ferita non azzera il limite. Un lancio fallito non lo consuma; i PM seguono le normali regole.\nSanguinamento e conseguenze: Sanguinamento non viene arrestato. La cura può essere effettuata mentre è attivo, ma i danni successivi continuano ad applicarsi. Restano le Menomazioni, le Affezioni, l’Affaticamento e le altre cause indipendenti.\nTalenti: Tocco Sacro non modifica il numero fisso di passaggi rimossi. Canale Vitale aggiunge 1 PV al recupero, per un totale di 2 PV se il beneficiario era a 0. Flusso Sacro, quando viene effettivamente curata una Ferita, permette al Taumaturgo di recuperare 1 PM una volta al giorno secondo il Talento.\nAnticipazione: un solo aspetto di un solo gradino; PM raddoppiati e Potere più difficile di una categoria. Il livello e gli altri parametri rimangono invariati. Si sceglie passaggi rimossi 1 → 2 → 3 → 4 → 5, senza superare cinque; gittata Contatto → 3 → 6 → 10 → 15 Q; oppure beneficiari 1 → 2. Entrambi ricevono l’intera cura, rispettando gittata, visibilità, contatto quando necessario e concatenazione entro 2 Q; il limite delle 24 ore resta individuale. Esempio: Guarigione di livello 9 porta una creatura Grave a Importante e, se era a 0 PV, a 1 PV. Un’eventuale Menomazione al braccio rimane.",
+      "regole": "Beneficiari: creature viventi consenzienti, incluso il Taumaturgo; è consentito soccorrere chi è incosciente. I beneficiari a distanza devono essere visibili e in gittata. Più beneficiari rispettano la concatenazione entro 2 Q; a contatto devono essere effettivamente toccati.\nProgressione ordinaria: Grave → Seria → Profonda → Importante → Superficiale → Guarita. Si applica agli stati ordinari di Ferita di una creatura ancora vivente; i passaggi eccedenti la guarigione completa sono persi. Su Morente si usa invece esclusivamente la modalità di stabilizzazione d’emergenza seguente.\nPV e penalità nella cura ordinaria: si aggiorna la penalità dello stato di Ferita a VA, PS e Iniziativa. Se il beneficiario è a 0 PV, recupera anche 1 PV; altrimenti non recupera normalmente PV. Non resuscita e non rimuove automaticamente Svenuto dovuto a una causa distinta.\nStabilizzazione d’emergenza\nChi può utilizzare Guarigione di livello 3 o superiore può soccorrere un solo beneficiario vivente Morente a Contatto. Costo 3 PM, tempo 1 AP; restano Focus, Gesto e Invocazione e la normale Prova di lancio. L’effetto deve completarsi prima che il contatore attivo raggiunga 0.\nCon lancio riuscito, Morente diventa Grave (−8 a VA, PS e Iniziativa), il contatore viene azzerato e disattivato e il beneficiario recupera 1 PV, fino al massimo. Riprende coscienza all’inizio del proprio turno successivo, salvo altre cause. Non arresta il Sanguinamento, non elimina Menomazioni e non agisce su un morto.\nQuesto impiego è distinto dalla cura ordinaria e dal suo limite condiviso di 24 ore: è consentito anche dopo una cura ordinaria già ricevuta, non ne consuma né azzera il limite e può essere ripetuto in un nuovo episodio di Morente pagando di nuovo il costo. Il ritorno è sempre a Grave; una versione superiore non aggiunge passaggi di guarigione, gittata o beneficiari alla modalità d’emergenza.\nFrequenza e interazioni con le altre cure\nCura ordinaria, una volta ogni 24 ore: si applica un unico limite per creatura, condiviso con l’opzione di Imposizione della Mano Curativa che riduce la Ferita, indipendentemente dall’utilizzatore, dalla capacità o dalla versione impiegata. Una nuova Ferita non azzera il limite. Un lancio fallito non lo consuma; i PM seguono le normali regole. Le altre opzioni di Imposizione della Mano Curativa non consumano questo limite e rimangono ripetibili secondo la propria scheda.\nSanguinamento e conseguenze: Sanguinamento non viene arrestato. La cura può essere effettuata mentre è attivo, ma i danni successivi continuano ad applicarsi. Restano le Menomazioni, le Affezioni, l’Affaticamento e le altre cause indipendenti.\nTalenti: Tocco Sacro non modifica il numero fisso di passaggi rimossi. Canale Vitale aggiunge 1 PV al recupero, per un totale di 2 PV se il beneficiario era a 0. Flusso Sacro, quando viene effettivamente curata una Ferita, permette al Taumaturgo di recuperare 1 PM una volta al giorno secondo il Talento.\nAnticipazione: un solo aspetto di un solo gradino; PM raddoppiati e Potere più difficile di una categoria. Il livello e gli altri parametri rimangono invariati. Si sceglie passaggi rimossi 1 → 2 → 3 → 4 → 5, senza superare cinque; gittata Contatto → 3 → 6 → 10 → 15 Q; oppure beneficiari 1 → 2. Entrambi ricevono l’intera cura, rispettando gittata, visibilità, contatto quando necessario e concatenazione entro 2 Q; il limite delle 24 ore resta individuale.\nEsempio: Guarigione di livello 9 porta una creatura Grave a Importante e, se era a 0 PV, a 1 PV. Un’eventuale Menomazione al braccio rimane.",
       "meccanica": {
         "azioni": {
           "azioni_principali": 1
@@ -11702,6 +12612,20 @@
         },
         "durata": {
           "tipo": "istantanea"
+        }
+      },
+      "_edizione": {
+        "corrente": "1.19",
+        "campi": {
+          "nome": "1.19",
+          "intestazione": "1.19",
+          "macrofamiglia": "1.19",
+          "specializzazione": "1.19",
+          "lancio": "1.19",
+          "descrizione": "1.19",
+          "versioni": "1.19",
+          "regole": "1.19",
+          "altre_tabelle": "1.19"
         }
       }
     },
@@ -11865,6 +12789,20 @@
           "tipo": "procedura",
           "testo": "effetto alla fine della procedura descritta nella scheda; nessuna durata da contare"
         }
+      },
+      "_edizione": {
+        "corrente": "1.19",
+        "campi": {
+          "nome": "1.19",
+          "intestazione": "1.19",
+          "macrofamiglia": "1.19",
+          "specializzazione": "1.19",
+          "lancio": "1.19",
+          "descrizione": "1.19",
+          "versioni": "1.19",
+          "regole": "1.19",
+          "altre_tabelle": "1.19"
+        }
       }
     },
     {
@@ -12027,6 +12965,20 @@
         ],
         "durata": {
           "tipo": "istantanea"
+        }
+      },
+      "_edizione": {
+        "corrente": "1.19",
+        "campi": {
+          "nome": "1.19",
+          "intestazione": "1.19",
+          "macrofamiglia": "1.19",
+          "specializzazione": "1.19",
+          "lancio": "1.19",
+          "descrizione": "1.19",
+          "versioni": "1.19",
+          "regole": "1.19",
+          "altre_tabelle": "1.19"
         }
       }
     },
@@ -12235,6 +13187,20 @@
         "durata": {
           "tipo": "istantanea"
         }
+      },
+      "_edizione": {
+        "corrente": "1.19",
+        "campi": {
+          "nome": "1.19",
+          "intestazione": "1.19",
+          "macrofamiglia": "1.19",
+          "specializzazione": "1.19",
+          "lancio": "1.19",
+          "descrizione": "1.19",
+          "versioni": "1.19",
+          "regole": "1.19",
+          "altre_tabelle": "1.19"
+        }
       }
     },
     {
@@ -12415,6 +13381,20 @@
         "durata": {
           "tipo": "procedura",
           "testo": "effetto alla fine della procedura descritta nella scheda; nessuna durata da contare"
+        }
+      },
+      "_edizione": {
+        "corrente": "1.19",
+        "campi": {
+          "nome": "1.19",
+          "intestazione": "1.19",
+          "macrofamiglia": "1.19",
+          "specializzazione": "1.19",
+          "lancio": "1.19",
+          "descrizione": "1.19",
+          "versioni": "1.19",
+          "regole": "1.19",
+          "altre_tabelle": "1.19"
         }
       }
     },
@@ -12620,6 +13600,20 @@
           "tipo": "durata",
           "colonna": "Durata"
         }
+      },
+      "_edizione": {
+        "corrente": "1.19",
+        "campi": {
+          "nome": "1.19",
+          "intestazione": "1.19",
+          "macrofamiglia": "1.19",
+          "specializzazione": "1.19",
+          "lancio": "1.19",
+          "descrizione": "1.19",
+          "versioni": "1.19",
+          "regole": "1.19",
+          "altre_tabelle": "1.19"
+        }
       }
     },
     {
@@ -12698,7 +13692,7 @@
           "Durata": "40 RND"
         }
       ],
-      "regole": "Bersagli: al lancio devono essere visibili e in gittata, con concatenazione entro 2 Q quando sono multipli. Dopo il lancio possono separarsi e cambiare utilizzatore senza perdere l’effetto.\nCopertura: protegge soltanto le AC coperte dall’equipaggiamento. Il bonus si applica una volta all’AR pertinente, senza moltiplicarsi per pezzi sovrapposti. Peso, ingombro e penalità rimangono invariati; non ripara l’armatura.\nBersagli esclusi: scudi, pelle naturale, Pelle Corazzata e protezioni generate da altri incantesimi. La natura dell’AR rimane Magica a tutti i livelli; non viene introdotta un’AR Eterea.\nCumulo: la conversione dell’AR fisica in Magica permane anche con altre protezioni. Il bonus aggiuntivo di Armatura Mistica non si somma con Armatura di Forza o Pelle Corazzata: si usa il maggiore contributo applicabile, aggiunto all’AR base dell’equipaggiamento convertita. Restano le compatibilità con Scudo e Armatura Elementale. La conversione riguarda soltanto l’equipaggiamento incantato e non cambia la natura di Pelle Corazzata, Scudo o altre protezioni. L’equipaggiamento assorbito in Forma Elementale non fornisce questo beneficio.\nEsempio: un’armatura con AR 5, incantata al livello 3, raggiunge AR Magica 6. Con Armatura di Forza AR 3 raggiunge AR Magica 8: 5 dell’equipaggiamento convertito più il contributo maggiore di 3, non 9.\nAnticipazione: un solo aspetto di un solo gradino; PM raddoppiati e Potere più difficile di una categoria. Livello e altri parametri rimangono invariati. Si sceglie bonus AR 0 → +1 → +2 → +3 → +4; armature 1 → 2 → 3 → 4; gittata Contatto → 3 → 6 → 10 → 15 → 20 → 25 Q; oppure durata 3 → 5 → 10 → 15 → 20 → 30 → 40 → 60 RND. La natura dell’AR resta Magica.",
+      "regole": "Bersagli: al lancio devono essere visibili e in gittata, con concatenazione entro 2 Q quando sono multipli. Dopo il lancio possono separarsi e cambiare utilizzatore senza perdere l’effetto.\nProtezione: converte in magica l’AR dell’equipaggiamento interessato e aggiunge una sola volta il bonus previsto all’AR complessiva, senza suddivisioni per parti anatomiche o moltiplicazioni per pezzi sovrapposti. Peso, ingombro e penalità rimangono invariati; non ripara l’armatura. A 0 PI la protezione dipendente dall’equipaggiamento inutilizzabile non fornisce AR.\nBersagli esclusi: scudi, pelle naturale, Pelle Corazzata e protezioni generate da altri incantesimi. La natura dell’AR rimane Magica a tutti i livelli; non viene introdotta un’AR Eterea.\nCumulo: la conversione dell’AR fisica in Magica permane anche con altre protezioni. Il bonus aggiuntivo di Armatura Mistica non si somma con Armatura di Forza o Pelle Corazzata: si usa il maggiore contributo applicabile, aggiunto all’AR base dell’equipaggiamento convertita. Restano le compatibilità con Scudo e Armatura Elementale. La conversione riguarda soltanto l’equipaggiamento incantato e non cambia la natura di Pelle Corazzata, Scudo o altre protezioni. L’equipaggiamento assorbito in Forma Elementale non fornisce questo beneficio.\nEsempio: un’armatura con AR 5, incantata al livello 3, raggiunge AR Magica 6. Con Armatura di Forza AR 3 raggiunge AR Magica 8: 5 dell’equipaggiamento convertito più il contributo maggiore di 3, non 9.\nAnticipazione: un solo aspetto di un solo gradino; PM raddoppiati e Potere più difficile di una categoria. Livello e altri parametri rimangono invariati. Si sceglie bonus AR 0 → +1 → +2 → +3 → +4; armature 1 → 2 → 3 → 4; gittata Contatto → 3 → 6 → 10 → 15 → 20 → 25 Q; oppure durata 3 → 5 → 10 → 15 → 20 → 30 → 40 → 60 RND. La natura dell’AR resta Magica.",
       "meccanica": {
         "azioni": {
           "azioni_principali": 1
@@ -12804,6 +13798,20 @@
         "durata": {
           "tipo": "durata",
           "colonna": "Durata"
+        }
+      },
+      "_edizione": {
+        "corrente": "1.19",
+        "campi": {
+          "nome": "1.19",
+          "intestazione": "1.19",
+          "macrofamiglia": "1.19",
+          "specializzazione": "1.19",
+          "lancio": "1.19",
+          "descrizione": "1.19",
+          "versioni": "1.19",
+          "regole": "1.19",
+          "altre_tabelle": "1.19"
         }
       }
     },
@@ -13023,6 +14031,20 @@
         "durata": {
           "tipo": "durata",
           "colonna": "Durata"
+        }
+      },
+      "_edizione": {
+        "corrente": "1.19",
+        "campi": {
+          "nome": "1.19",
+          "intestazione": "1.19",
+          "macrofamiglia": "1.19",
+          "specializzazione": "1.19",
+          "lancio": "1.19",
+          "descrizione": "1.19",
+          "versioni": "1.19",
+          "regole": "1.19",
+          "altre_tabelle": "1.19"
         }
       }
     },
@@ -13299,6 +14321,20 @@
           "tipo": "durata",
           "colonna": "Durata interfer."
         }
+      },
+      "_edizione": {
+        "corrente": "1.19",
+        "campi": {
+          "nome": "1.19",
+          "intestazione": "1.19",
+          "macrofamiglia": "1.19",
+          "specializzazione": "1.19",
+          "lancio": "1.19",
+          "descrizione": "1.19",
+          "versioni": "1.19",
+          "regole": "1.19",
+          "altre_tabelle": "1.19"
+        }
       }
     },
     {
@@ -13494,6 +14530,20 @@
           "tipo": "durata",
           "colonna": "Durata"
         }
+      },
+      "_edizione": {
+        "corrente": "1.19",
+        "campi": {
+          "nome": "1.19",
+          "intestazione": "1.19",
+          "macrofamiglia": "1.19",
+          "specializzazione": "1.19",
+          "lancio": "1.19",
+          "descrizione": "1.19",
+          "versioni": "1.19",
+          "regole": "1.19",
+          "altre_tabelle": "1.19"
+        }
       }
     },
     {
@@ -13545,7 +14595,7 @@
           "Durata": "60 giorni"
         }
       ],
-      "regole": "Capacità: si somma a quella propria del contenitore, senza cambiare i PM già presenti. Una batteria con 3/5 PM, potenziata al livello 3, diventa 3/10 PM. Può essere utilizzata e ricaricata più volte durante la durata, che decorre dal completamento del lancio.\nChroma: sono consentiti Rosso, Blu, Verde e Bianco, anche esausti; il colore e il tipo di energia rimangono invariati. Rosso conserva PM Fisici, Blu Mentali, Verde Spirituali e Bianco Universali. Il Chroma Viola non è utilizzabile con questo incantesimo. Il costo di lancio di Batteria Mistica usa comunque PM universali o spirituali.\nRicarica: richiede Addestramento Taumaturgo, contatto e sintonizzazione e segue la procedura in gruppi della sezione 6 di questo manuale. Batteria Mistica non concede ricarica autonoma.\nImpiego: il contenitore deve essere trasportato e sintonizzato. Per un singolo lancio si può usare un solo contenitore compatibile, eventualmente insieme ai PM personali. Il potenziamento temporaneo non aumenta il costo di sintonizzazione, non concede altre proprietà e non modifica i requisiti degli incantesimi alimentati. Scadenza e dissoluzione: la capacità torna al valore originario e i soli PM eccedenti si disperdono senza danni. Una batteria con 9/10 PM e capacità originaria 5 rimane con 5/5 PM. Negare Potere produce lo stesso risultato rimuovendo il potenziamento. Più lanci non sommano la capacità aggiuntiva: si applica il valore maggiore.\nEsempio di preparazione: al livello 3 si spendono 3 PM per ottenere cinque posti aggiuntivi; riempirli con rapporto ordinario richiede altri 15 PM, eventualmente distribuiti fra più momenti. La durata di tre giorni permette di preparare la riserva e recuperare i PM personali prima dell’impiego.\nAnticipazione: un solo aspetto di un solo gradino; PM raddoppiati e Potere più difficile di una categoria. Livello e altri parametri rimangono invariati. Si sceglie capacità aggiuntiva +5 → +8 → +12 → +16 → +20 → +25 → +30 PM; oppure durata 3 → 5 → 7 → 15 → 30 → 60 → 90 giorni.",
+      "regole": "Capacità: si somma a quella propria del contenitore, senza cambiare i PM già presenti. Una batteria con 3/5 PM, potenziata al livello 3, diventa 3/10 PM. Può essere utilizzata e ricaricata più volte durante la durata, che decorre dal completamento del lancio.\nChroma: sono consentiti Rosso, Blu, Verde e Bianco, anche scarichi; il colore e il tipo di energia rimangono invariati. Rosso conserva PM Fisici, Blu Mentali, Verde Spirituali e Bianco Universali. Il Chroma Viola non è utilizzabile con questo incantesimo. Il costo di lancio di Batteria Mistica usa comunque PM universali o spirituali.\nRicarica: richiede Addestramento Taumaturgo, contatto e sintonizzazione e segue la procedura in gruppi della sezione 6 di questo manuale. Batteria Mistica non concede ricarica autonoma.\nImpiego: il contenitore deve essere trasportato e sintonizzato. Per un singolo lancio si può usare un solo contenitore compatibile, eventualmente insieme ai PM personali. Il potenziamento temporaneo non aumenta il costo di sintonizzazione, non concede altre proprietà e non modifica i requisiti degli incantesimi alimentati.\nScadenza e dissoluzione: la capacità torna al valore originario e i soli PM eccedenti si disperdono senza danni. Una batteria con 9/10 PM e capacità originaria 5 rimane con 5/5 PM. Negare Potere produce lo stesso risultato rimuovendo il potenziamento. Più lanci non sommano la capacità aggiuntiva: si applica il valore maggiore.\nEsempio di preparazione: al livello 3 si spendono 3 PM per ottenere cinque posti aggiuntivi; riempirli con rapporto ordinario richiede altri 15 PM, eventualmente distribuiti fra più momenti. La durata di tre giorni permette di preparare la riserva e recuperare i PM personali prima dell’impiego.\nAnticipazione: un solo aspetto di un solo gradino; PM raddoppiati e Potere più difficile di una categoria. Livello e altri parametri rimangono invariati. Si sceglie capacità aggiuntiva +5 → +8 → +12 → +16 → +20 → +25 → +30 PM; oppure durata 3 → 5 → 7 → 15 → 30 → 60 → 90 giorni.",
       "altre_tabelle": [
         {
           "righe": [
@@ -13636,6 +14686,20 @@
         "durata": {
           "tipo": "durata",
           "colonna": "Durata"
+        }
+      },
+      "_edizione": {
+        "corrente": "1.19",
+        "campi": {
+          "nome": "1.19",
+          "intestazione": "1.19",
+          "macrofamiglia": "1.19",
+          "specializzazione": "1.19",
+          "lancio": "1.19",
+          "descrizione": "1.19",
+          "versioni": "1.19",
+          "regole": "1.19",
+          "altre_tabelle": "1.19"
         }
       }
     },
@@ -13789,6 +14853,20 @@
         },
         "durata": {
           "tipo": "istantanea"
+        }
+      },
+      "_edizione": {
+        "corrente": "1.19",
+        "campi": {
+          "nome": "1.19",
+          "intestazione": "1.19",
+          "macrofamiglia": "1.19",
+          "specializzazione": "1.19",
+          "lancio": "1.19",
+          "descrizione": "1.19",
+          "versioni": "1.19",
+          "regole": "1.19",
+          "altre_tabelle": "1.19"
         }
       }
     },
@@ -13996,6 +15074,20 @@
         "durata": {
           "tipo": "istantanea"
         }
+      },
+      "_edizione": {
+        "corrente": "1.19",
+        "campi": {
+          "nome": "1.19",
+          "intestazione": "1.19",
+          "macrofamiglia": "1.19",
+          "specializzazione": "1.19",
+          "lancio": "1.19",
+          "descrizione": "1.19",
+          "versioni": "1.19",
+          "regole": "1.19",
+          "altre_tabelle": "1.19"
+        }
       }
     },
     {
@@ -14175,6 +15267,20 @@
         "durata": {
           "tipo": "durata",
           "colonna": "Durata"
+        }
+      },
+      "_edizione": {
+        "corrente": "1.19",
+        "campi": {
+          "nome": "1.19",
+          "intestazione": "1.19",
+          "macrofamiglia": "1.19",
+          "specializzazione": "1.19",
+          "lancio": "1.19",
+          "descrizione": "1.19",
+          "versioni": "1.19",
+          "regole": "1.19",
+          "altre_tabelle": "1.19"
         }
       }
     },
@@ -14366,6 +15472,20 @@
           "tipo": "procedura",
           "testo": "effetto alla fine della procedura descritta nella scheda; nessuna durata da contare"
         }
+      },
+      "_edizione": {
+        "corrente": "1.19",
+        "campi": {
+          "nome": "1.19",
+          "intestazione": "1.19",
+          "macrofamiglia": "1.19",
+          "specializzazione": "1.19",
+          "lancio": "1.19",
+          "descrizione": "1.19",
+          "versioni": "1.19",
+          "regole": "1.19",
+          "altre_tabelle": "1.19"
+        }
       }
     },
     {
@@ -14519,6 +15639,20 @@
         "durata": {
           "tipo": "durata",
           "colonna": "Durata"
+        }
+      },
+      "_edizione": {
+        "corrente": "1.19",
+        "campi": {
+          "nome": "1.19",
+          "intestazione": "1.19",
+          "macrofamiglia": "1.19",
+          "specializzazione": "1.19",
+          "lancio": "1.19",
+          "descrizione": "1.19",
+          "versioni": "1.19",
+          "regole": "1.19",
+          "altre_tabelle": "1.19"
         }
       }
     },
@@ -14728,6 +15862,20 @@
           "tipo": "durata",
           "colonna": "Durata"
         }
+      },
+      "_edizione": {
+        "corrente": "1.19",
+        "campi": {
+          "nome": "1.19",
+          "intestazione": "1.19",
+          "macrofamiglia": "1.19",
+          "specializzazione": "1.19",
+          "lancio": "1.19",
+          "descrizione": "1.19",
+          "versioni": "1.19",
+          "regole": "1.19",
+          "altre_tabelle": "1.19"
+        }
       }
     },
     {
@@ -14900,6 +16048,20 @@
         "durata": {
           "tipo": "durata",
           "colonna": "Durata"
+        }
+      },
+      "_edizione": {
+        "corrente": "1.19",
+        "campi": {
+          "nome": "1.19",
+          "intestazione": "1.19",
+          "macrofamiglia": "1.19",
+          "specializzazione": "1.19",
+          "lancio": "1.19",
+          "descrizione": "1.19",
+          "versioni": "1.19",
+          "regole": "1.19",
+          "altre_tabelle": "1.19"
         }
       }
     },
@@ -15094,6 +16256,20 @@
         "durata": {
           "tipo": "durata",
           "colonna": "Durata"
+        }
+      },
+      "_edizione": {
+        "corrente": "1.19",
+        "campi": {
+          "nome": "1.19",
+          "intestazione": "1.19",
+          "macrofamiglia": "1.19",
+          "specializzazione": "1.19",
+          "lancio": "1.19",
+          "descrizione": "1.19",
+          "versioni": "1.19",
+          "regole": "1.19",
+          "altre_tabelle": "1.19"
         }
       }
     },
@@ -15296,6 +16472,20 @@
         "durata": {
           "tipo": "istantanea"
         }
+      },
+      "_edizione": {
+        "corrente": "1.19",
+        "campi": {
+          "nome": "1.19",
+          "intestazione": "1.19",
+          "macrofamiglia": "1.19",
+          "specializzazione": "1.19",
+          "lancio": "1.19",
+          "descrizione": "1.19",
+          "versioni": "1.19",
+          "regole": "1.19",
+          "altre_tabelle": "1.19"
+        }
       }
     },
     {
@@ -15423,7 +16613,7 @@
           "Effetti": "3"
         }
       ],
-      "regole": "Livelli intermedi: sono consentiti tutti gli interi della tabella. Il costo e il Potere di Negazione seguono il livello effettivo; gittata e numero di effetti cambiano soltanto alle soglie 3, 6, 9, 12, 15 e 18.\nParità: una sola PS Volontà per lancio risolve tutti gli effetti a parità. Si applicano i modificatori personali pertinenti, senza una penalità aggiuntiva per la parità. È distinta dalla Prova Potere. Né il creatore dell’effetto né il suo beneficiario effettuano una PS.\nLivello da confrontare: quello effettivamente dichiarato per l’effetto attivo, non il livello del personaggio o i PM spesi. L’Anticipazione dell’effetto da rimuovere non ne aumenta il livello.\nNegare Potere e scelta degli effetti\nIndividuazione: occorre percepire o localizzare validamente l’effetto, senza doverne conoscere nome o livello.\nL’incantesimo non individua automaticamente magie nascoste; indicare alla cieca un’area non basta. Tutti i punti selezionati devono essere in gittata, con concatenazione entro 2 Q se multipli.\nConteggio: un beneficio o una penalità su una creatura conta come un effetto. Lo stesso lancio applicato a tre beneficiari conta come tre effetti distinti; due incantesimi sulla stessa persona ne contano due. Una parete, barriera, aura o scena illusoria continua conta come un effetto e viene rimossa interamente. Ogni creatura evocata o creata e ancora mantenuta conta separatamente; lo stesso vale per ciascun collegamento di Comunione.\nApplicazioni: può rimuovere effetti attivi delle tre macrofamiglie. Termina penalità, controllo, Silenzio Mentale e Indurre Sonno nei limiti delle rispettive schede. Termina il mantenimento di Sovraccarico Sinaptico e dei suoi Stati, senza annullare il danno iniziale. Interrompe una Possessione prodotta da un incantesimo.\nMente Disincarnata: può scegliere l’effetto sul corpo oppure l’emanazione localizzata. La rimozione provoca il ritorno al corpo e interrompe i collegamenti con i compagni, senza danni aggiuntivi.\nOggetti ed effetti conservati: termina Arma Mistica, Armatura Mistica e Batteria Mistica con le conseguenze previste alla cessazione. Rimuove Trappola Mistica e Impronta Mistica ancora attive, insieme al contenuto conservato, senza attivarlo.\nRisultati già prodotti: non annulla retroattivamente danni, guarigioni, teletrasporti o ricostruzioni completate.\nInterrompe i recuperi futuri di Psicometabolismo e la Rigenerazione ancora in corso. Un fuoco ormai reale o un Sanguinamento dovuto a una lesione non svaniscono solo perché la fonte era magica.\nBarriere: se bersaglia direttamente Barriera di Forza, Campo di Forza o Barriera Mistica, non subisce la penalità di attraversamento imposta da quella stessa barriera. Per colpire un diverso effetto oltre la barriera, si applicano invece le normali penalità.\nLimiti: non elimina proprietà intrinseche degli artefatti; può eliminare gli incantesimi attivi applicati o prodotti da essi quando ne sia definito il livello. Rompere Vincolo resta necessario per i legami intrinseci pertinenti.\nEsorcizzare Possessione può trattare anche possessioni innate; Negare Potere riguarda quelle dovute a incantesimi. Non concede immunità a nuovi lanci.\nAnticipazione: un solo aspetto di un solo gradino; PM raddoppiati e Potere più difficile di una categoria. Livello e altri parametri rimangono invariati. Si sceglie Potere di Negazione aumentato di 3, anche ai livelli intermedi, massimo 21; numero di effetti 1 → 2 → 3 → 4; oppure gittata 6 → 10 → 15 → 20 → 25 → 30 → 40 Q.\nEsempio: contro un effetto di livello 4, Negare Potere 3 non basta; a livello 4 richiede la PS Volontà del Taumaturgo; a livello 5 lo rimuove dopo il lancio riuscito. Anticipare il solo Potere di Negazione al livello 4 costa",
+      "regole": "Livelli intermedi: sono consentiti tutti gli interi della tabella. Il costo e il Potere di Negazione seguono il livello effettivo; gittata e numero di effetti cambiano soltanto alle soglie 3, 6, 9, 12, 15 e 18.\nParità: una sola PS Volontà per lancio risolve tutti gli effetti a parità. Si applicano i modificatori personali pertinenti, senza una penalità aggiuntiva per la parità. È distinta dalla Prova Potere. Né il creatore dell’effetto né il suo beneficiario effettuano una PS.\nLivello da confrontare: quello effettivamente dichiarato per l’effetto attivo, non il livello del personaggio o i PM spesi. L’Anticipazione dell’effetto da rimuovere non ne aumenta il livello.\nNegare Potere e scelta degli effetti\nIndividuazione: occorre percepire o localizzare validamente l’effetto, senza doverne conoscere nome o livello. L’incantesimo non individua automaticamente magie nascoste; indicare alla cieca un’area non basta. Tutti i punti selezionati devono essere in gittata, con concatenazione entro 2 Q se multipli.\nConteggio: un beneficio o una penalità su una creatura conta come un effetto. Lo stesso lancio applicato a tre beneficiari conta come tre effetti distinti; due incantesimi sulla stessa persona ne contano due. Una parete, barriera, aura o scena illusoria continua conta come un effetto e viene rimossa interamente. Ogni creatura evocata o creata e ancora mantenuta conta separatamente; lo stesso vale per ciascun collegamento di Comunione.\nApplicazioni: può rimuovere effetti attivi delle tre macrofamiglie. Termina penalità, controllo, Silenzio Mentale e Indurre Sonno nei limiti delle rispettive schede. Termina il mantenimento di Sovraccarico Sinaptico e dei suoi Stati, senza annullare il danno iniziale. Interrompe una Possessione prodotta da un incantesimo.\nMente Disincarnata: può scegliere l’effetto sul corpo oppure l’emanazione localizzata. La rimozione provoca il ritorno al corpo e interrompe i collegamenti con i compagni, senza danni aggiuntivi.\nOggetti ed effetti conservati: termina Arma Mistica, Armatura Mistica e Batteria Mistica con le conseguenze previste alla cessazione. Rimuove Trappola Mistica e Impronta Mistica ancora attive, insieme al contenuto conservato, senza attivarlo.\nRisultati già prodotti: non annulla retroattivamente danni, guarigioni, teletrasporti o ricostruzioni completate. Interrompe i recuperi futuri di Psicometabolismo e la Rigenerazione ancora in corso. Un fuoco ormai reale o un Sanguinamento dovuto a una lesione non svaniscono solo perché la fonte era magica.\nBarriere: se bersaglia direttamente Barriera di Forza, Campo di Forza o Barriera Mistica, non subisce la penalità di attraversamento imposta da quella stessa barriera. Per colpire un diverso effetto oltre la barriera, si applicano invece le normali penalità.\nLimiti: non elimina proprietà intrinseche degli artefatti; può eliminare gli incantesimi attivi applicati o prodotti da essi quando ne sia definito il livello. Rompere Vincolo resta necessario per i legami intrinseci pertinenti. Esorcizzare Possessione può trattare anche possessioni innate; Negare Potere riguarda quelle dovute a incantesimi. Non concede immunità a nuovi lanci.\nAnticipazione: un solo aspetto di un solo gradino; PM raddoppiati e Potere più difficile di una categoria. Livello e altri parametri rimangono invariati. Si sceglie Potere di Negazione aumentato di 3, anche ai livelli intermedi, massimo 21; numero di effetti 1 → 2 → 3 → 4; oppure gittata 6 → 10 → 15 → 20 → 25 → 30 → 40 Q.\nEsempio: contro un effetto di livello 4, Negare Potere 3 non basta; a livello 4 richiede la PS Volontà del Taumaturgo; a livello 5 lo rimuove dopo il lancio riuscito. Anticipare il solo Potere di Negazione al livello 4 costa 8 PM e dà potere 7, conservando gittata 6 Q e un effetto.",
       "altre_tabelle": [
         {
           "righe": [
@@ -15518,6 +16708,20 @@
         },
         "durata": {
           "tipo": "istantanea"
+        }
+      },
+      "_edizione": {
+        "corrente": "1.19",
+        "campi": {
+          "nome": "1.19",
+          "intestazione": "1.19",
+          "macrofamiglia": "1.19",
+          "specializzazione": "1.19",
+          "lancio": "1.19",
+          "descrizione": "1.19",
+          "versioni": "1.19",
+          "regole": "1.19",
+          "altre_tabelle": "1.19"
         }
       }
     },
@@ -15731,6 +16935,20 @@
           "colonna": "Durata fissa",
           "concentrazione": "Concentrazione massima"
         }
+      },
+      "_edizione": {
+        "corrente": "1.19",
+        "campi": {
+          "nome": "1.19",
+          "intestazione": "1.19",
+          "macrofamiglia": "1.19",
+          "specializzazione": "1.19",
+          "lancio": "1.19",
+          "descrizione": "1.19",
+          "versioni": "1.19",
+          "regole": "1.19",
+          "altre_tabelle": "1.19"
+        }
       }
     },
     {
@@ -15904,6 +17122,20 @@
         "durata": {
           "tipo": "durata",
           "colonna": "Durata"
+        }
+      },
+      "_edizione": {
+        "corrente": "1.19",
+        "campi": {
+          "nome": "1.19",
+          "intestazione": "1.19",
+          "macrofamiglia": "1.19",
+          "specializzazione": "1.19",
+          "lancio": "1.19",
+          "descrizione": "1.19",
+          "versioni": "1.19",
+          "regole": "1.19",
+          "altre_tabelle": "1.19"
         }
       }
     },
@@ -16253,6 +17485,20 @@
           "colonna": "Durata fissa",
           "concentrazione": "Concentr. massima"
         }
+      },
+      "_edizione": {
+        "corrente": "1.19",
+        "campi": {
+          "nome": "1.19",
+          "intestazione": "1.19",
+          "macrofamiglia": "1.19",
+          "specializzazione": "1.19",
+          "lancio": "1.19",
+          "descrizione": "1.19",
+          "versioni": "1.19",
+          "regole": "1.19",
+          "altre_tabelle": "1.19"
+        }
       }
     },
     {
@@ -16482,7 +17728,64 @@
           "colonna": "Durata fissa",
           "concentrazione": "Concentrazione massima"
         }
+      },
+      "_edizione": {
+        "corrente": "1.19",
+        "campi": {
+          "nome": "1.19",
+          "intestazione": "1.19",
+          "macrofamiglia": "1.19",
+          "specializzazione": "1.19",
+          "lancio": "1.19",
+          "descrizione": "1.19",
+          "versioni": "1.19",
+          "regole": "1.19",
+          "altre_tabelle": "1.19"
+        }
       }
     }
-  ]
+  ],
+  "corpus": {
+    "edizione": "1.19",
+    "schede": 90,
+    "campi_letti": [
+      "nome",
+      "intestazione",
+      "macrofamiglia",
+      "specializzazione",
+      "lancio",
+      "descrizione",
+      "versioni",
+      "regole",
+      "altre_tabelle"
+    ],
+    "campi_nostri": [
+      "id",
+      "pagina",
+      "livello_base",
+      "meccanica"
+    ],
+    "motivo_campi_nostri": "Non vengono dal testo della scheda: l’identificativo e la pagina li assegniamo noi, il livello base sta nell’indice (§11) e `meccanica` è derivata da `tools/estrai_lancio.py`, `tools/durate_incantesimi.mjs` e `tools/scale_anticipazione.mjs`. Il lettore non li tocca.",
+    "confronto_lotto_211": {
+      "base": "Magia 1.11 (l’edizione da cui i dati venivano)",
+      "invariate": 80,
+      "cambiate": 10,
+      "nuove": 0,
+      "sparite": 0,
+      "aggiornate": [
+        "13.1 Colpo Elementale: regole",
+        "16.8 Corpo Adattivo: regole",
+        "18.7 Psicometabolismo: regole",
+        "20.3 Presenza: regole",
+        "21.1 Cura Ferite: descrizione",
+        "21.4 Cura Spirituale: regole",
+        "21.6 Guarigione: regole",
+        "22.2 Armatura Mistica: regole",
+        "22.6 Batteria Mistica: regole",
+        "23.6 Negare Potere: regole"
+      ]
+    },
+    "campi_indietro": 0,
+    "motivi_indietro": []
+  }
 }

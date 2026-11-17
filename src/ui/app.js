@@ -204,6 +204,19 @@ function rigaCatalogoArmi(dati) {
     `Armi del catalogo: ${c.edizione}. Protezioni, munizioni, accessori e dispositivi vengono ancora da ${resto}.${mista}`);
 }
 
+/**
+ * Lotto 211: la riga che dice da quale edizione della Magia vengono **le schede degli incantesimi**, quando le regole di
+ * Poteri, Chroma e Cariche Mistiche (`regole.json`) vengono ancora da un'altra. Stessa idea della riga delle armi: la riga
+ * sopra tiene un numero solo per manuale e da sola direbbe «1.19» per tutto. Sparisce da sé quando le due edizioni coincidono.
+ */
+function rigaSchedeIncantesimi(dati) {
+  const sched = dati?.incantesimi?.corpus?.edizione ?? null;
+  const resto = /Magia (\d+\.\d+)/.exec(dati?.regole?.versione_manuale ?? '')?.[1] ?? null;
+  if (!sched || !resto || sched === resto) return null;
+  return h('p', { class: 'nota' },
+    `Schede dei ${dati.incantesimi.corpus.schede} incantesimi: Magia ${sched}. Le regole di Poteri, Chroma e Cariche Mistiche vengono ancora dalla ${resto}.`);
+}
+
 function mostraErroriDati(errori) {
   const perFile = Map.groupBy ? Map.groupBy(errori, (e) => e.file) : raggruppa(errori);
   svuota(radice, h('section', { class: 'pagina-errori' },
@@ -1053,6 +1066,7 @@ function renderHome(unito = null) {
       // un valore di un'armatura; dire solo 0.74 manderebbe fuori strada chi cerca un valore di un'arma. Si
       // dicono entrambe, e questa riga sparisce da sé quando il catalogo è tutto alla stessa edizione.
       rigaCatalogoArmi(stato.dati),
+      rigaSchedeIncantesimi(stato.dati),
       stato.avvisiDati.length ? h('details', {}, h('summary', {}, `${stato.avvisiDati.length} avvisi sui dati (non bloccanti)`),
         h('ul', {}, stato.avvisiDati.map((a) => h('li', {}, h('code', {}, `${a.file} › ${a.chiave}`), ': ', a.problema)))) : null,
       todo.length ? h('details', {}, h('summary', {}, `${todo.length} valori o domande marcati TODO(Davide) nei dati`),
