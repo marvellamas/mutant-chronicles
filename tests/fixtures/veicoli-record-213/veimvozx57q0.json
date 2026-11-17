@@ -1,0 +1,68 @@
+{
+  "formato": "mutant-veicolo",
+  "versione": 1,
+  "id": "veimvozx57q0",
+  "revisione": 21,
+  "aggiornato": "2026-11-14T19:00:36.994Z",
+  "proprietario": {
+    "tipo": "gruppo"
+  },
+  "conducente": {
+    "pg": "pg-089fc8cb15d29b70dd7d83e4",
+    "chiave": "PABLO-ZAION",
+    "nome": "PABLO ZAION"
+  },
+  "mitragliere": null,
+  "mezzo": {
+    "uid": "veimvozx57q0",
+    "profilo": "asa-scout-mk4",
+    "nome": "FIAT LUX",
+    "andatura": "fermo",
+    "pi": {
+      "corpo": 60,
+      "propulsione": 36,
+      "motore": 24
+    },
+    "rinforzi": {
+      "copriruote-petra": {
+        "montati": [
+          3,
+          3,
+          0,
+          0
+        ],
+        "ricambi": []
+      }
+    },
+    "energia": {
+      "rosso": [
+        50000,
+        50000
+      ],
+      "rosso_ricambi": [
+        50000
+      ],
+      "verde": [
+        10000
+      ],
+      "verde_ricambi": [
+        10000
+      ],
+      "aria": {
+        "fissa": 8,
+        "bombole": [
+          8,
+          8
+        ]
+      }
+    },
+    "munizioni": [
+      {
+        "caricate": 400,
+        "riserva": 800
+      }
+    ],
+    "avarie": ""
+  },
+  "movimento": null
+}

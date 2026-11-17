@@ -21,7 +21,7 @@ const mezzo = (id, extra = {}) => ({ profilo: id, andatura: 'controllata', ...ex
 
 test('i dati dei veicoli passano il validatore e dicono da dove vengono', () => {
   assert.deepEqual(errori.filter((e) => e.file === 'veicoli.json'), []);
-  assert.match(V.versione_manuale, /Veicoli 0\.2/);
+  assert.match(V.versione_manuale, /Veicoli 0\.19/); // lotto 213: il manuale recepito è la 0.19
   assert.equal(V.pilotare.caratteristica, 'INT');
   // la PS Integrità non è duplicata: viene dalla Qualità (regole.json → integrita)
   assert.equal(auto.ps_integrita, dati.regole.integrita.ps_per_qualita[auto.qualita]);

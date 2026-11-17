@@ -8,6 +8,7 @@ import { dettagliRicordati } from './apribili.js';
 import { partiRiserva } from '../cariche-mistiche.js';
 import { cambiaDotazioneExtra } from '../valore-veicolo.js';
 import { h, segno } from './dom.js';
+import { rigaProvenienzaProfilo, edizioneCorrenteVeicoli, motivoIndietroProfilo } from '../provenienza-veicoli.js';
 import { infoValore } from './tooltip.js';
 import { rigaScelte } from './pannello-passi.js';
 import {
@@ -306,6 +307,8 @@ function schedaVeicolo(ctx, mezzo, pilotare, registro = null) {
       h('label', { class: 'casella-veicolo' }, h('input', { type: 'checkbox', checked: mezzo.conducente === true, onchange: (e) => (registro ? registro.guida(e.target.checked) : aggiorna({ ...mezzo, conducente: e.target.checked })) }), ' Lo guido io'),
       registro ? registro.rimuovi : pulsanteRimuovi(ctx, mezzo)),
     registro?.righe ?? null,
+    // lotto 213: il segno compare solo se un campo del profilo non è del Manuale dei Veicoli corrente, e si spegne da sé
+    (() => { const riga = rigaProvenienzaProfilo(p, edizioneCorrenteVeicoli(ctx.dati.veicoli), motivoIndietroProfilo(ctx.dati.veicoli, p)); return riga ? h('p', { class: 'nota edizione-indietro', role: 'note' }, '⚑ ', riga) : null; })(),
     v.vista.fuoriUso ? h('p', { class: 'riquadro errore' }, 'Fuori uso: Corpo principale o Motore a 0 PI. Il mezzo non funziona, non esplode e il movimento residuo prosegue (§5.5).') : null,
     v.gruppo && !registro ? h('p', { class: 'nota' }, 'Veicolo del gruppo: senza il server le modifiche restano in questa scheda (A.91).') : null,
     h('div', { class: 'veicolo-colonne' },

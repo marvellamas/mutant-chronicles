@@ -16,7 +16,8 @@ import { testoManuale } from './manuali.mjs';
 /** I file di dati che vengono dall'Equipaggiamento (non dagli Armamenti). */
 export const FILE_EQUIPAGGIAMENTO = ['comunicazione', 'dotazioni_personali', 'esplorazione', 'impianti', 'sanitario', 'strumenti_professionali'];
 
-const pulisci = (s) => String(s ?? '').replace(/\*\*/g, '').replace(/\\([\\`*_{}\[\]()#+\-.!=<>|~$])/g, '$1').replace(/ /g, ' ').trim();
+// (il grassetto si toglie sia scritto «**» sia «\*\*»: la 0.10 dei Veicoli lo scrive con le barre)
+const pulisci = (s) => String(s ?? '').replace(/(\\?\*){2}/g, '').replace(/\\([\\`*_{}\[\]()#+\-.!=<>|~$])/g, '$1').replace(/ /g, ' ').trim();
 export const chiave = (s) => pulisci(s).toLowerCase().replace(/[’‘]/g, "'").replace(/[“”]/g, '"').replace(/[−–—]/g, '-').replace(/\s+/g, ' ');
 
 /** Tutte le tabelle: [{ colonne, righe:[[cella…]], riga }]. */
@@ -24,7 +25,7 @@ export function leggiTabelle(testo) {
   const r = String(testo).split(/\r?\n/);
   const out = [];
   for (let i = 0; i < r.length - 1; i++) {
-    if (!r[i].trim().startsWith('|') || !/^\|?\s*:?-{2,}/.test(r[i + 1].trim())) continue;
+    if (!r[i].trim().startsWith('|') || !/^\|?\s*:?-+:?\s*(\||$)/.test(r[i + 1].trim())) continue; // anche «:-:» (un solo trattino, come nella 0.10 dei Veicoli)
     const celle = (l) => l.trim().replace(/^\|/, '').replace(/\|$/, '').split('|').map(pulisci);
     const righe = [];
     let j = i + 2;

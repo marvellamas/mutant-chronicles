@@ -151,7 +151,10 @@ test('la Neverlost, lo Scout e l\'autovettura non sono cambiati dal lotto', () =
   // lotto 210: i settori di tiro delle armi di bordo sono ora strutturati (e quello dello Scout è a 120°, A.280): quelle chiavi non fanno
   // parte del confronto. Tutto il resto del profilo — PI, MOV, AR, prezzi, munizioni, riparazioni — è quello di prima del 209.
   const CHIAVI = ['arco', 'arco_di_tiro', 'arco_di_tiro_precedente', 'postazione', 'smontabile', 'schermo'];
-  const pulito = (p) => ({ ...p, armi: (p.armi ?? []).map((a) => { const x = { ...a }; for (const k of CHIAVI) delete x[k]; return x; }) });
+  // lotto 213: la provenienza (`_edizione`) e le citazioni del manuale (`versione_manuale`, `paragrafo`) passano alla 0.19: sono etichette, non valori (la rete di
+  // `tests/veicoli-record-213.test.js` prova che i numeri sono gli stessi sulla 0.10 e sulla 0.19)
+  const ETICHETTE = ['_edizione', 'versione_manuale', 'paragrafo'];
+  const pulito = (p) => ({ ...Object.fromEntries(Object.entries(p).filter(([k]) => !ETICHETTE.includes(k))), armi: (p.armi ?? []).map((a) => { const x = { ...a }; for (const k of CHIAVI) delete x[k]; return x; }) });
   const imp = (id) => createHash('sha1').update(JSON.stringify(pulito(profiloVeicolo(id, dati)))).digest('hex').slice(0, 10);
   const git = JSON.parse(readFileSync(new URL('./fixtures/veicoli-profili-209.json', import.meta.url), 'utf8'));
   for (const id of ['neverlost', 'asa-scout-mk4', 'autovettura-civile']) assert.equal(imp(id), git[id], `${id}: il profilo è cambiato`);

@@ -1,0 +1,67 @@
+{
+  "formato": "mutant-veicolo",
+  "versione": 1,
+  "id": "veimvzojvax1",
+  "revisione": 1,
+  "aggiornato": "2026-11-02T19:56:56.173Z",
+  "proprietario": {
+    "tipo": "pg",
+    "pg": "pg-089fc8cb15d29b70dd7d83e4",
+    "chiave": "PABLO-ZAION",
+    "nome": "PABLO ZAION"
+  },
+  "conducente": null,
+  "mitragliere": null,
+  "mezzo": {
+    "uid": "veimvzojvax1",
+    "profilo": "neverlost",
+    "nome": "Neverlost",
+    "andatura": "fermo",
+    "pi": {
+      "corpo": 300,
+      "propulsione": 180,
+      "motore": 120
+    },
+    "rinforzi": {},
+    "energia": {
+      "modello": "neverlost",
+      "rosso": null,
+      "blu": null,
+      "verde": null,
+      "volo_cariche": 0,
+      "approdo_alimentato": false,
+      "traiettoria": {
+        "dentro": false,
+        "giorni": 0,
+        "traversate": []
+      }
+    },
+    "scudo": {
+      "sce": null,
+      "attivo": false,
+      "ore_pagate": 0,
+      "round_senza_colpi": 0,
+      "ampliato": false
+    },
+    "circuito": {
+      "pm": null
+    },
+    "munizioni": [
+      {
+        "caricate": 600,
+        "riserva": 0
+      },
+      {
+        "caricate": 600,
+        "riserva": 0
+      },
+      null,
+      {
+        "caricate": 6,
+        "riserva": 0
+      }
+    ],
+    "avarie": ""
+  },
+  "movimento": null
+}

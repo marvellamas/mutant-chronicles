@@ -1,5 +1,5 @@
 {
-  "versione_manuale": "Veicoli 0.2 (Google Doc del 02/10/2026, 13:31 UTC), scheda ASA Scout MK4 0.2; energia, aria e bombole (Autovettura §9.1, Scout §10): Veicoli 0.10 e scheda ASA Scout MK4 0.6 (Doc del 30/10/2026, 17:38 UTC); prezzo, corredo, munizioni e riparazioni dello Scout 0.6 ancora da applicare",
+  "versione_manuale": "Veicoli 0.19 (Google Doc del 12/11/2026, 19:49 UTC), scheda ASA Scout MK4 0.2; energia, aria e bombole (Autovettura §9.1, Scout §10): Veicoli 0.10 e scheda ASA Scout MK4 0.6 (Doc del 30/10/2026, 17:38 UTC); prezzo, corredo, munizioni e riparazioni dello Scout 0.6 ancora da applicare",
   "fonte": "Manuale dei Veicoli v0.2, cap. 1-10; docs/manuali-txt/veicoli.md e docs/manuali-txt/asa-scout-mk4.md",
   "_nota": "Lotto 2 di docs/ricognizione-2026-10-03.md: regole e profili dei veicoli; lotto 3 (04/10/2026): tab Veicoli della scheda e foglio Veicoli della stampa. Motore in src/veicoli.js (funzioni pure). La PS Integrità per Qualità non è duplicata: regole.json → integrita.ps_per_qualita.",
   "personaggio": {
@@ -1078,6 +1078,21 @@
         "regola": "A.193",
         "nota": "Riserve salvate in Lx (modello del 05/10/2026): si conserva la frazione residua rispetto alla capacità di prima.",
         "rosso_lx": 50000
+      },
+      "_edizione": {
+        "corrente": "0.19",
+        "campi": {
+          "mov_q": "0.19",
+          "man": "0.19",
+          "pi": "0.19",
+          "ar": "0.19",
+          "corazzato": "0.19",
+          "qualita": "0.19",
+          "ps_integrita": "0.19",
+          "carico_kg": "0.19",
+          "prezzo_cr": "0.19",
+          "ricambi_cr_per_pi": "0.19"
+        }
       }
     },
     {
@@ -1429,12 +1444,25 @@
         "solo_gruppo": true,
         "rif": "A.226",
         "nota": "L’esemplare dei PG si chiama FIAT LUX (A.226, risposte del 02 e 03/11/2026); «ASA Scout MK4» è il modello di riferimento. Il nome è dell’esemplare: il modello nei dati non cambia."
+      },
+      "_edizione": {
+        "corrente": "0.19",
+        "campi": {
+          "mov_q": "0.19",
+          "man": "0.19",
+          "ar": "0.19",
+          "corazzato": "0.19",
+          "qualita": "0.19",
+          "ps_integrita": "0.19",
+          "carico_kg": "0.19",
+          "ricambi_cr_per_pi": "0.19"
+        }
       }
     },
     {
       "id": "neverlost",
       "nome": "Neverlost",
-      "paragrafo": "Veicoli 0.10, «Neverlost scheda del veicolo»; scheda tecnica 1.6",
+      "paragrafo": "Veicoli 0.19 §11 «Neverlost e combattimento navale»; scheda tecnica 1.6",
       "fonte": "Manuale dei Veicoli 0.10, «Neverlost scheda del veicolo»; Neverlost scheda tecnica 1.6 (29/10/2026)",
       "tipo": "aerospaziale",
       "descrizione": "Trasporto tattico ASA tecnomistico di categoria media, molto modificato, per missioni autonome di ricognizione, ricerca, trasporto e recupero. Atmosfera e spazio; decollo verticale e volo stazionario.",
@@ -1821,6 +1849,13 @@
           "massima": 24
         },
         "_nota": "I movimenti della scala tattica, 8 / 16 / 24 Q Tattici per Round. Non si convertono in Q Base (A.253): su una mappa terrestre si passa alla scala tattica o si esce dalla mappa."
+      },
+      "_edizione": {
+        "corrente": "0.19",
+        "campi": {
+          "pi": "0.19",
+          "carico_kg": "0.19"
+        }
       }
     },
     {
@@ -1891,7 +1926,22 @@
       "da_definire": [
         "officina_cr_per_ora"
       ],
-      "senza_energia_precedente": true
+      "senza_energia_precedente": true,
+      "_edizione": {
+        "corrente": "0.19",
+        "campi": {
+          "mov_q": "0.19",
+          "man": "0.19",
+          "pi": "0.19",
+          "ar": "0.19",
+          "corazzato": "0.19",
+          "qualita": "0.19",
+          "ps_integrita": "0.19",
+          "carico_kg": "0.19",
+          "prezzo_cr": "0.19",
+          "ricambi_cr_per_pi": "0.19"
+        }
+      }
     },
     {
       "id": "furgone-civile",
@@ -1963,7 +2013,22 @@
       "da_definire": [
         "officina_cr_per_ora"
       ],
-      "senza_energia_precedente": true
+      "senza_energia_precedente": true,
+      "_edizione": {
+        "corrente": "0.19",
+        "campi": {
+          "mov_q": "0.19",
+          "man": "0.19",
+          "pi": "0.19",
+          "ar": "0.19",
+          "corazzato": "0.19",
+          "qualita": "0.19",
+          "ps_integrita": "0.19",
+          "carico_kg": "0.19",
+          "prezzo_cr": "0.19",
+          "ricambi_cr_per_pi": "0.19"
+        }
+      }
     }
   ],
   "opportunita": {
@@ -2131,6 +2196,66 @@
         "passare alla scala tattica (regolazioni della mappa → Scala)",
         "uscire dalla mappa: il volo si gioca fuori dalla scena terrestre"
       ]
+    }
+  },
+  "fuori_catalogo": {
+    "capitoli": [
+      14,
+      15
+    ],
+    "mezzi": [
+      {
+        "id": "nave-mineraria",
+        "nome": "Nave mineraria Commerciale",
+        "paragrafo": "§14.1"
+      },
+      {
+        "id": "rimorchiatore",
+        "nome": "Rimorchiatore Commerciale",
+        "paragrafo": "§14.2"
+      },
+      {
+        "id": "nave-passeggeri-lusso",
+        "nome": "Nave passeggeri Commerciale, allestimento Lusso",
+        "paragrafo": "§15 (§15.5)"
+      },
+      {
+        "id": "nave-passeggeri-sonno",
+        "nome": "Nave passeggeri Commerciale, allestimento Sonno",
+        "paragrafo": "§15 (§15.6)"
+      }
+    ],
+    "motivo": "Sono astronavi civili della categoria Spaziali con un modello che l’app non ha, e il gruppo non ne possiede nessuna: non vale un lotto adesso. Non mancano un campo o due: manca un modello. La Neverlost ne ha una versione scritta a mano per l’esemplare unico (src/neverlost.js); le quattro schede non entrano finché nessuno non la generalizza.",
+    "servirebbe": [
+      "Tre riserve di cariche per colore (Rosso, Blu, Verde) con il consumo per attività — volo per regime, stazionamento, estrazione, Traiettoria, ingresso e uscita — invece della sola CEC Rossa dei mezzi terrestri (la Neverlost le ha, in `src/neverlost.js`, non in forma generale).",
+      "Movimento per regime in km/h atmosferici e spaziali e in Q Tattici per Round (3/6/9), invece del MOV in Q Base: la mappa ha già la conversione di scala (A.225), non i regimi.",
+      "Traiettoria in giorni con ingresso e uscita da 1 carica Blu, e il sostentamento in giornate-persona (50 cr a persona al giorno): per la Neverlost è codice dedicato.",
+      "Equipaggio e postazioni (estrazione a 20 t/h con 4 cariche Rosse all’ora; rimorchio con regimi ridotti e MAN −2), cabine e occupanti, stiva in m³ e carico in tonnellate.",
+      "Per le navi passeggeri: allestimenti (48 passeggeri svegli o 144 in capsule), tariffe al giorno per passeggero (250 e 30 cr) e la traversata di riferimento di 20 giorni.",
+      "Un record del registro con riserve per colore, giorni di Traiettoria e scorte: oggi il record ha le sole strutture, una CEC e le munizioni."
+    ]
+  },
+  "corpus": {
+    "edizione": "0.19",
+    "mezzi_nel_manuale": 9,
+    "profili": 5,
+    "fuori_catalogo": 4,
+    "campi_letti": {
+      "autovettura-civile": 10,
+      "asa-scout-mk4": 8,
+      "neverlost": 2,
+      "motocicletta-civile": 10,
+      "furgone-civile": 10
+    },
+    "campi_indietro": 0,
+    "motivi_indietro": [],
+    "non_letti": "Equipaggio, posti, dimensioni, massa, autonomia, armi e dotazioni, scudo, riserve e tabelle di regole (capitoli 1–8) non vengono dal lettore delle schede: si confrontano con le tabelle identiche della 0.10 (lotto 209: tutte le tabelle dei capitoli 1–11 sono uguali fra le due edizioni). Il lettore le dichiara «non lette» per capitolo.",
+    "confronto_lotto_213": {
+      "base": "Veicoli 0.10 (l’edizione da cui i profili venivano)",
+      "scarti_sulla_010": 0,
+      "scarti_sulla_019": 0,
+      "scritti": [],
+      "nuovi_campi_con_provenienza": 40
     }
   }
 }

@@ -103,7 +103,7 @@ export function validaDati(dati) {
   if (dati.incantesimi?.incantesimi?.some((i) => i.meccanica)) validaMeccanicaIncantesimi(dati, err);
   if (isOggetto(dati.formato_nemici)) validaFormatoNemici(dati, err);
   if (isOggetto(dati.bestiario)) validaBestiario(dati, err);
-  if (isOggetto(dati.veicoli)) validaVeicoli(dati, err);
+  if (isOggetto(dati.veicoli)) { validaVeicoli(dati, err); validaCorpusVeicoli(dati, err); }
   if (isOggetto(dati.mappa)) validaMappa(dati, err);
   if (isOggetto(dati.galleria)) validaGalleria(dati, err);
   if (isOggetto(dati.px_partita)) validaPxPartita(dati, err);
@@ -3263,6 +3263,54 @@ function validaDurateIncantesimi(dati, err) {
 
 // Veicoli (veicoli.json, Manuale dei Veicoli 0.2): regole dei cap. 1–7 e profili dei mezzi. La PS Integrità per
 // Qualità non si duplica qui: ogni profilo deve riportare quella della sua Qualità in regole.json → integrita.
+/**
+ * Lotto 213: **il conto dei mezzi del Manuale dei Veicoli si dichiara e deve tornare coi dati** (come 342 = 310 + 32, 493, 218, 90).
+ * Ogni mezzo del manuale è un profilo del catalogo oppure è dichiarato in `fuori_catalogo` con il motivo e ciò che servirebbe: un'astronave
+ * che resta fuori senza che nessuno sappia perché è proprio quello che questo controllo vieta. Ogni profilo con una provenienza dichiara l'edizione
+ * di ciascun campo; un campo di un'edizione diversa da quella corrente ha il suo motivo scritto, e il numero deve tornare.
+ */
+function validaCorpusVeicoli(dati, err) {
+  const F = 'veicoli';
+  const v = dati.veicoli;
+  const C = v.corpus;
+  if (C === undefined) return;
+  if (!isOggetto(C)) return err(F, 'corpus', 'il conto dei mezzi del manuale, dichiarato (lotto 213)');
+  if (!isTesto(C.edizione)) err(F, 'corpus.edizione', 'l’edizione del Manuale dei Veicoli da cui vengono i profili');
+  const profili = v.profili ?? [];
+  const FC = v.fuori_catalogo;
+  if (!isOggetto(FC) || !Array.isArray(FC.mezzi) || !FC.mezzi.length) err(F, 'fuori_catalogo', 'i mezzi del manuale senza un profilo (le astronavi dei capitoli 14 e 15), dichiarati uno per uno');
+  else {
+    for (const [i, m] of FC.mezzi.entries()) if (!isTesto(m?.id) || !isTesto(m?.nome) || !isTesto(m?.paragrafo)) err(F, `fuori_catalogo.mezzi[${i}]`, 'id, nome e paragrafo del mezzo');
+    if (!isTesto(FC.motivo)) err(F, 'fuori_catalogo.motivo', 'perché i mezzi restano fuori dal catalogo: senza il motivo restano fuori in silenzio');
+    if (!Array.isArray(FC.servirebbe) || FC.servirebbe.length < 3 || !FC.servirebbe.every(isTesto)) err(F, 'fuori_catalogo.servirebbe', 'che cosa servirebbe perché l’app sappia tenerli (almeno tre voci, ciascuna un testo)');
+    const id = new Set(profili.map((p) => p.id));
+    for (const m of FC.mezzi) if (id.has(m.id)) err(F, 'fuori_catalogo', `«${m.id}» è sia un profilo sia fuori catalogo`);
+    if (C.fuori_catalogo !== FC.mezzi.length) err(F, 'corpus.fuori_catalogo', `dichiarati ${C.fuori_catalogo} mezzi fuori catalogo, ne risultano ${FC.mezzi.length}`);
+  }
+  if (C.profili !== profili.length) err(F, 'corpus.profili', `dichiarati ${C.profili} profili, nei dati ne risultano ${profili.length}`);
+  if (isOggetto(FC) && Array.isArray(FC.mezzi) && C.mezzi_nel_manuale !== profili.length + FC.mezzi.length) {
+    err(F, 'corpus.mezzi_nel_manuale', `il conto non torna: ${profili.length} profili + ${FC.mezzi.length} fuori catalogo = ${profili.length + FC.mezzi.length}, ma i mezzi dichiarati nel manuale sono ${C.mezzi_nel_manuale}`);
+  }
+  if (!isTesto(C.non_letti)) err(F, 'corpus.non_letti', 'che cosa il lettore non legge: un conto senza il suo limite non si può ricontrollare');
+  let indietro = 0; const senzaMotivo = [];
+  const motivi = new Map((C.motivi_indietro ?? []).map((m) => [`${m.profilo}.${m.campo}`, m]));
+  for (const p of profili) {
+    const campi = p._edizione?.campi;
+    if (campi === undefined) continue; // moto e furgone dichiarano la loro edizione con `fonte_edizione` (lotto 209)
+    if (!isOggetto(campi) || !Object.keys(campi).length) { err(F, `${p.id}._edizione`, 'provenienza vuota: o campi letti o niente'); continue; }
+    for (const [k, ed] of Object.entries(campi)) {
+      if (!isTesto(ed)) { err(F, `${p.id}._edizione.campi.${k}`, 'edizione mancante'); continue; }
+      if (ed !== C.edizione) { indietro++; if (!isTesto(motivi.get(`${p.id}.${k}`)?.motivo)) senzaMotivo.push(`${p.id}.${k}`); }
+    }
+  }
+  if (C.campi_indietro !== indietro) err(F, 'corpus.campi_indietro', `dichiarati ${C.campi_indietro} campi indietro, nei dati ne risultano ${indietro}`);
+  for (const k of senzaMotivo) err(F, `corpus.motivi_indietro.${k}`, `il campo ${k} è di un’edizione precedente: il motivo va scritto`);
+  const lettiDichiarati = isOggetto(C.campi_letti) ? Object.values(C.campi_letti).reduce((a, b) => a + (isIntero(b) ? b : 0), 0) : 0;
+  const lettiVeri = profili.reduce((n, p) => n + Object.keys(p._edizione?.campi ?? {}).length, 0);
+  if (lettiDichiarati !== lettiVeri) err(F, 'corpus.campi_letti', `dichiarati ${lettiDichiarati} campi letti, nei profili ne risultano ${lettiVeri}: un conto su zero campi non prova niente`);
+  if (lettiVeri === 0) err(F, 'corpus.campi_letti', 'nessun campo letto dal manuale: il conto non prova niente');
+}
+
 function validaVeicoli(dati, err) {
   const F = 'veicoli';
   const v = dati.veicoli;
