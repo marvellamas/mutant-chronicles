@@ -71,9 +71,9 @@
    "testo": "veicoli-0.10.md",
    "modificato": "2026-11-03T11:37:10Z",
    "recepimento_in_attesa": {
-    "versione": "0.18",
-    "motivo": "Il testo su Drive è cambiato alle 14:12 del 12/11, dopo la ricognizione del lotto 190: recepirlo vorrebbe dire mettere in cartella un file diverso da quello su cui sono scritte le conclusioni del 190. La differenza è tutta nell’indice e nelle figure — nessuna regola, nessun numero (docs/diff-lotto191-2026-11-12.md). Il numero non è più da indovinare: il 12/11 Davide ha rinominato il file in «Manuale dei Veicoli v0.18» e la prima pagina dice 0.18, quindi la regola 3 è tornata rispettata.",
-    "documento": "docs/diff-lotto191-2026-11-12.md"
+    "versione": "0.19",
+    "motivo": "Su Drive c’è la 0.19 (12/11 19:49 UTC; la 0.18 era del 12/11 14:12 e aggiungeva i capitoli 14, la 0.19 il 15). Il documento ha QUATTRO schede: «Tab 1» (cap. 1–10), «Neverlost» (cap. 11, 12, 13 e le tavole), «Astronavi commerciali» (cap. 14) e «Navi passeggeri» (cap. 15). Il lotto 209 ha letto tutte e quattro: nei capitoli 1–11 TUTTE le tabelle sono identiche alla 0.10 (numeri compresi) e cambiano soltanto il testo del capitolo 10 — lo Scout diventa «SIA Scout MK4», il FIAT LUX è lo «Scout MK4 ASA dei PG», la postazione della M606 ha un settore di rotazione di 120° (nell’app 360°) e lo schermo leggero concede Copertura senza AR — e un paragrafo introduttivo del capitolo 11 (la Neverlost è un esemplare, non un modello); la Neverlost non cambia; il 12 (Motocicletta civile) e il 13 (Furgone civile) sono entrati nel catalogo e citano la 0.19 (fonte_edizione); i capitoli 14 e 15 (Nave mineraria, Rimorchiatore, Navi passeggeri Lusso e Sonno) NON sono nell’app: sono astronavi con Traiettoria, equipaggi e tariffe, un modello che l’app non ha. Il recepimento vero — testo corrente, edizione dei dati, astronavi — è un lotto suo.",
+    "documento": "docs/diff-lotto209-2026-11-17.md"
    }
   },
   {
@@ -469,6 +469,7 @@
   "armamenti-0.74.md": "l'edizione da cui vengono i dati di 10 file del catalogo — protezioni, munizioni, accessori, dispositivi (`edizioni_in_attesa`); le 218 voci d'arma sono passate alla 0.86 col lotto 206",
   "equipaggiamento-0.30.md": "l'edizione da cui vengono i dati di `regole.json` e di 9 file del catalogo (`edizioni_in_attesa`, lotto F)",
   "mostri-0.67.md": "l’edizione del JSON dei PNG generici (`dati` → png-abilita, `sha256_manuale`): i venticinque modelli di `data/png_generici.json` vengono da lì e restano dichiarati alla 0.67 (`edizioni_in_attesa`, lotto 203)",
+  "veicoli-0.19.md": "l'edizione da cui vengono i profili della motocicletta civile (§12) e del furgone civile (§13) di `data/veicoli.json` (lotto 209, `fonte_edizione`); il resto del file resta alla 0.10 (le tabelle dei capitoli 1–11 sono identiche; il testo del capitolo 10 dello Scout no, e non è ancora applicato)",
   "armamenti-0.83.md": "l'edizione da cui vengono le tre voci della CyberArma di `data/equipaggiamento/armi.json` (lotto 195, §§7.25–7.25.4): il corpo della 0.86 è identico, ma la voce dichiara l'edizione su cui è stata scritta"
  },
  "_testi_archiviati": "Lotto 191: le edizioni superate che nessun dato e nessuno strumento cita più, spostate in `docs/manuali-txt/archivio/` e non cancellate. Un archiviato non è un doppione (regola 5 del protocollo, applicata qui alla cartella del repo come su Drive).",

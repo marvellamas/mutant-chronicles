@@ -1786,6 +1786,148 @@
         },
         "_nota": "I movimenti della scala tattica, 8 / 16 / 24 Q Tattici per Round. Non si convertono in Q Base (A.253): su una mappa terrestre si passa alla scala tattica o si esce dalla mappa."
       }
+    },
+    {
+      "id": "motocicletta-civile",
+      "nome": "Motocicletta civile",
+      "paragrafo": "§12",
+      "fonte_edizione": "Veicoli 0.19",
+      "tipo": "terrestre",
+      "descrizione": "Motocicletta stradale a due ruote per un conducente e un passeggero. Il profilo privilegia agilità e ingombro ridotto; entrambi gli occupanti sono esposti e utilizzano le proprie protezioni personali. L’allestimento è tecnologico.",
+      "equipaggio": {
+        "conducente": 1,
+        "passeggeri": 1,
+        "posti": 2,
+        "minimo": 1
+      },
+      "dimensioni": {
+        "lunghezza_m": 2.4,
+        "larghezza_m": 0.9,
+        "ingombro_q": "2 × 1"
+      },
+      "massa_kg": 250,
+      "carico_kg": 200,
+      "mov_q": 50,
+      "man": 2,
+      "qualita": "Comune",
+      "ps_integrita": 10,
+      "ar": {
+        "totale": 1,
+        "magica": 0
+      },
+      "corazzato": 0,
+      "pi": {
+        "corpo": 8,
+        "propulsione": 6,
+        "motore": 6
+      },
+      "ricambi_cr_per_pi": {
+        "corpo": 100,
+        "propulsione": 50,
+        "motore": 150
+      },
+      "alimentazione": {
+        "nec": "1 CEC Rossa",
+        "tipo": "cec",
+        "colore": "rosso",
+        "cariche": 10,
+        "km_per_carica": 100,
+        "autonomia_km": 1000,
+        "peso_kg": 5,
+        "prezzo_cr": 1000,
+        "prezzo_vuota_cr": 900,
+        "ricarica_cr": 100,
+        "ricarica_ore": 1,
+        "ricarica_cr_per_carica": 10,
+        "ricarica_minuti_per_carica": 6,
+        "sostituzione_minuti": 1,
+        "ricambi_iniziali": [],
+        "nota": "Veicoli 0.19: 1 CEC Rossa, 10 cariche; i km delle tratte brevi si sommano e alla chiusura del viaggio o della giornata si sottrae una carica ogni 100 km o frazione, arrotondando una sola volta. Consumo chilometrico uguale nelle tre andature su strada ordinaria. Ricaricare ripristina energia, non ripara; riparare non ricarica. (§12.5)"
+      },
+      "prezzo_cr": 8000,
+      "reperibilita": "Comune",
+      "decisione_reperibilita": "Veicoli 0.19 §12: REP Comune; prezzo completo 8.000 cr con la prima CEC Rossa piena inclusa.",
+      "armi": [],
+      "proprieta": [],
+      "dotazione": "Sella biposto, pedane, fari, indicatori, retrovisori, strumentazione, cavalletto, agganci per bagagli e prima CEC Rossa piena. Caschi, abbigliamento protettivo, borse e attrezzi si acquistano separatamente; i bagagli rientrano nel carico utile di 200 kg.",
+      "ambiente": "Motocicletta stradale a due ruote. Non concede Copertura automatica e non trasferisce l’AR 1 agli occupanti: chi è colpito personalmente usa le proprie protezioni, PV e Salvezze (§12.3).",
+      "note_manuale": "Recuperare tutte le strutture da 0 costa 2.000 cr di materiali: Corpo 800, Propulsione 300, Motore 900 (§12.6). Una CEC di ricambio pesa 5 kg e costa 1.000 cr.",
+      "da_definire": [
+        "officina_cr_per_ora"
+      ],
+      "senza_energia_precedente": true
+    },
+    {
+      "id": "furgone-civile",
+      "nome": "Furgone civile",
+      "paragrafo": "§13",
+      "fonte_edizione": "Veicoli 0.19",
+      "tipo": "terrestre",
+      "descrizione": "Veicolo civile per il trasporto di merci, ricambi e attrezzature, con cabina chiusa a tre posti e vano merci separato. Il modello standard è destinato alle strade e alle piste carrabili compatte.",
+      "equipaggio": {
+        "conducente": 1,
+        "passeggeri": 2,
+        "posti": 3,
+        "minimo": 1
+      },
+      "dimensioni": {
+        "lunghezza_m": 6,
+        "larghezza_m": 2,
+        "altezza_m": 2.6,
+        "ingombro_q": "4 × 2"
+      },
+      "massa_kg": 2500,
+      "carico_kg": 1500,
+      "volume_utile_m3": 10,
+      "mov_q": 30,
+      "man": -1,
+      "qualita": "Comune",
+      "ps_integrita": 10,
+      "ar": {
+        "totale": 1,
+        "magica": 0
+      },
+      "corazzato": 0,
+      "pi": {
+        "corpo": 20,
+        "propulsione": 12,
+        "motore": 12
+      },
+      "ricambi_cr_per_pi": {
+        "corpo": 250,
+        "propulsione": 100,
+        "motore": 250
+      },
+      "alimentazione": {
+        "nec": "1 CEC Rossa",
+        "tipo": "cec",
+        "colore": "rosso",
+        "cariche": 10,
+        "km_per_carica": 50,
+        "autonomia_km": 500,
+        "peso_kg": 5,
+        "prezzo_cr": 1000,
+        "prezzo_vuota_cr": 900,
+        "ricarica_cr": 100,
+        "ricarica_ore": 1,
+        "ricarica_cr_per_carica": 10,
+        "ricarica_minuti_per_carica": 6,
+        "sostituzione_minuti": 1,
+        "ricambi_iniziali": [],
+        "nota": "Veicoli 0.19: 1 CEC Rossa, 10 cariche; i km delle tratte brevi si sommano e alla chiusura del viaggio o della giornata si sottrae una carica ogni 50 km o frazione, arrotondando una sola volta. Consumo chilometrico uguale nelle tre andature su strada ordinaria. Ricaricare ripristina energia, non ripara; riparare non ricarica. (§13.5)"
+      },
+      "prezzo_cr": 35000,
+      "reperibilita": "Comune",
+      "decisione_reperibilita": "Veicoli 0.19 §13: REP Comune; prezzo completo 35.000 cr con la prima CEC Rossa piena inclusa.",
+      "armi": [],
+      "proprieta": [],
+      "dotazione": "Cabina chiusa a tre posti, vano merci con portelloni posteriori, accesso laterale e punti di fissaggio, alloggiamento per la CEC Rossa. Trasportare persone nel vano merci richiede un allestimento dedicato (§13.3).",
+      "ambiente": "Strade e piste carrabili compatte. Persone, merci e attrezzature condividono il carico utile di 1.500 kg e il volume del vano merci è di 10 m³: il carico deve rispettare entrambi i limiti (§13.3). La Copertura degli occupanti dipende dalla posizione e dalla struttura interposta; l’AR 1 non si trasferisce agli occupanti.",
+      "note_manuale": "Recuperare tutti i PI delle tre strutture da 0 costa 9.200 cr di materiali: Corpo 5.000, Propulsione 1.200, Motore 3.000 (§13.5). Una CEC di ricambio pesa 5 kg, costa 1.000 cr e occupa carico.",
+      "da_definire": [
+        "officina_cr_per_ora"
+      ],
+      "senza_energia_precedente": true
     }
   ],
   "opportunita": {

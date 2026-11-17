@@ -3367,7 +3367,8 @@ function validaVeicoli(dati, err) {
       if (!isIntero(a?.km_per_carica) || a.km_per_carica < 1) err(F, `${k}.alimentazione.km_per_carica`, 'intero ≥ 1 atteso (chilometri per carica)');
       else if (isIntero(a?.cariche) && a.autonomia_km !== a.cariche * a.km_per_carica) err(F, `${k}.alimentazione.autonomia_km`, `${a.cariche * a.km_per_carica} atteso (cariche × km a carica)`);
       if (!isIntero(a?.ricarica_cr_per_carica) || !isIntero(a?.ricarica_minuti_per_carica)) err(F, `${k}.alimentazione`, 'ricarica_cr_per_carica e ricarica_minuti_per_carica interi attesi');
-      if (!isOggetto(p.energia_precedente) || !isIntero(p.energia_precedente.rosso_lx) || p.energia_precedente.rosso_lx < 1) err(F, `${k}.energia_precedente.rosso_lx`, 'capacità di prima in Lx attesa (A.193), per convertire le riserve salvate');
+      // lotto 209: un profilo nato dopo la conversione in cariche (motocicletta e furgone, Veicoli 0.19) non ha mai avuto Lx salvati
+      if (p.senza_energia_precedente !== true && (!isOggetto(p.energia_precedente) || !isIntero(p.energia_precedente.rosso_lx) || p.energia_precedente.rosso_lx < 1)) err(F, `${k}.energia_precedente.rosso_lx`, 'capacità di prima in Lx attesa (A.193), per convertire le riserve salvate');
     }
     if (p?.supporto_vitale !== undefined) {
       const sv = p.supporto_vitale;
