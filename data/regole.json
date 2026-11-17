@@ -1528,8 +1528,11 @@
         "corruzione_passiva": "chroma_viola"
       },
       "Trasparente": {
-        "energia": "Nessuna energia residua",
+        "energia": "Nessuna energia cromatica",
         "macrofamiglie": [],
+        "nome_manuale": "Esausto neutro",
+        "ricaricabile": false,
+        "nota": "Magia 1.19 §6: l’Esausto neutro è materia prima e non si ricarica; un cristallo a 0 PM è invece «scarico» e conserva colore e capacità (la 1.11 lo diceva «Trasparente, ancora ricaricabile»). Lotto 211: la chiave resta, il significato è quello nuovo.",
         "esausto": true
       }
     },

@@ -88,7 +88,8 @@ test('cristallo: numero, barra, alone e tasti di quella riga cambiano; la riga e
   cambia(c, (s) => ({ chroma: { ...s.chroma, rosso: { pmAttuali: 0 } } }), ['chroma:rosso']);
   assert.equal(barra.getAttribute('aria-valuenow'), '0');
   assert.match(punto.className, /esausto/);
-  assert.match(riga.textContent, /Trasparente \(alone Rosso\)/);
+  // lotto 211: la Magia 1.19 (§6) chiama «scarico» un cristallo a 0 PM che conserva il colore; «Trasparente» era la parola della 1.11
+  assert.match(riga.textContent, /Scarico \(colore Rosso\)/);
   assert.equal(riga.tutti().find((n) => n.tagName === 'BUTTON' && n.getAttribute('aria-label')?.startsWith('Togli 1')).disabled, true);
   cambia(c, (s) => ({ chroma: { ...s.chroma, rosso: { pmAttuali: 7 } } }), ['chroma:rosso']);
   assert.equal(barra.getAttribute('aria-valuenow'), '7');

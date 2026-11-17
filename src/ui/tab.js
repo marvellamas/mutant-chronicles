@@ -2821,7 +2821,7 @@ function testoAlimenta(c) {
 /**
  * Riga di un contenitore di Chroma: colore, PM attuali / capacità, barra e +/− manuali. È l'unico
  * controllo che modifica i PM di un cristallo (riquadro Punti Magia e riserva accanto all'arma).
- * A 0 PM il Chroma è Trasparente, con l'alone del colore. I contenitori non trasportati o non
+ * A 0 PM il cristallo è «scarico» e conserva colore e capacità (Magia 1.19 §6; la 1.11 lo chiamava «Trasparente»). L'«Esausto neutro» è un altro stato: non si ricarica più. I contenitori non trasportati o non
  * sintonizzati sono in grigio.
  */
 function rigaCristallo(ctx, c) {
@@ -2843,7 +2843,7 @@ function rigaCristallo(ctx, c) {
   };
   // Cariche Mistiche (lotto 171): l'unità sta accanto al colore, così non si scambiano per PM; una riserva da convertire lo dice
   const da = ctx.sessione.chroma?.[c.uid]?.daConvertire;
-  const stato = (x) => (x === 0 ? `Trasparente (alone ${c.energia})` : `Chroma ${c.energia}`) + (c.unita === 'CM' ? ' · Cariche Mistiche (CM)' : '') + (da ? ' · riserva da convertire (A.193)' : '') + (pronto ? '' : c.sintonizzato ? ' · non trasportato' : ' · non sintonizzato');
+  const stato = (x) => (x === 0 ? `Scarico (colore ${c.energia})` : `Chroma ${c.energia}`) + (c.unita === 'CM' ? ' · Cariche Mistiche (CM)' : '') + (da ? ' · riserva da convertire (A.193)' : '') + (pronto ? '' : c.sintonizzato ? ' · non trasportato' : ' · non sintonizzato');
   const punto = h('span', { class: `chroma-punto chroma-${c.energia.toLowerCase()}${esausto ? ' esausto' : ''}`, 'aria-hidden': 'true' });
   const sigla = h('small', { class: 'sigla' }, ` · ${stato(pm)}`);
   const bm = pulsante(-1);
@@ -2910,7 +2910,7 @@ function pannelloChroma(ctx, c, { conPulsanti = true } = {}) {
       : regioneVivaSe(`chroma:${c.uid}`, () => {
         const x = ctx.sessione.chroma?.[c.uid]?.pmAttuali ?? 0;
         return [h('span', { class: `chroma-punto chroma-${c.energia.toLowerCase()}${x === 0 ? ' esausto' : ''}`, 'aria-hidden': 'true' }),
-          x === 0 ? `Trasparente (alone ${c.energia}) ` : `Chroma ${c.energia} `, h('strong', {}, numeroRiserva(x)), ` / ${c.capacita} ${c.unita ?? 'PM'}`];
+          x === 0 ? `Scarico (colore ${c.energia}) ` : `Chroma ${c.energia} `, h('strong', {}, numeroRiserva(x)), ` / ${c.capacita} ${c.unita ?? 'PM'}`];
       }, { tag: 'p', classe: 'riga-chroma-viva' }),
     h('small', { class: 'nota' }, [
       testoAlimenta(c),
