@@ -338,6 +338,8 @@ function statoCreazione(creazione, dati) {
       dotazioniTecniche: [],
       tecniche: [],
       incantesimi: [...(creazione.incantesimi ?? [])],
+      // lotto 216 (A.287): le correzioni del Direttore viaggiano con lo stato, perché i liberi degli incantesimi vengono dall'Intelligenza **corretta**
+      correzioniMaster: creazione.correzioniMaster ?? [],
       // punti liberi salvati che non aumentano il VA personale: { livello, abilita, punti } (da riassegnare)
       inattivi,
       scuola: null, // { nome, livello }: iniziazione dichiarata con la spunta (§8.9.3)
@@ -408,7 +410,27 @@ function conflittiRisorseInteriori(stato, dati) {
 // Incantesimi e Tecniche Interiori
 
 /** Quote di incantesimi conosciuti nello stato (ipotesi permissive dei TODO in regole.json). */
+/**
+ * Lotto 216 (A.287) — **le Caratteristiche come le vede il Direttore: con le sue correzioni.** Una Caratteristica corretta in «Modifica master» cambia
+ * «tutto ciò che ne deriva» (src/correzioni-master.js), e gli incantesimi liberi derivano dal modificatore di Intelligenza. Fino al 216 la scheda
+ * (`schedaARiposo`, che applica le correzioni prima di contare) e i controlli (creazione, «Sali di livello», «Da scegliere», storico, che leggevano lo
+ * stato senza correzioni) davano **due numeri di liberi diversi** su chi ha una correzione di Intelligenza: Dimitri, −2 del 26/10, 6 contro 8, cioè
+ * «18/20» sulla scheda e «ne mancano 2» sul controllo anche a 20. Qui il conto è uno: chi ha già applicato le correzioni lo dichiara (`carCorrette`) e
+ * non le si riapplicano due volte.
+ */
+export function caratteristicheEffettive(stato, dati) {
+  if (stato.carCorrette || !(stato.correzioniMaster ?? []).length) return stato.car;
+  const out = { ...stato.car };
+  for (const sigla of Object.keys(out)) {
+    const c = applicaCorrezioni(out[sigla], stato.correzioniMaster, `car:${sigla}`, { minimo: dati.caratteristiche.valore_minimo ?? 1, massimo: dati.caratteristiche.valore_massimo ?? Infinity });
+    if (c.righe.length) out[sigla] = c.valore;
+  }
+  return out;
+}
+
 function quoteIncantesimi(stato, dati) {
+  const carEff = caratteristicheEffettive(stato, dati);
+  const modDi = (st, sigla, d) => modOrdinario(carEff[sigla], d.caratteristiche.modificatore_ordinario); // lotto 216: sempre la Caratteristica corretta
   const r = dati.regole;
   const perMacro = Object.fromEntries(dati.incantesimi.macrofamiglie.map((m) => [m.nome, 0]));
   let gradiTaum = 0;
@@ -447,7 +469,7 @@ function quoteIncantesimi(stato, dati) {
   };
 }
 
-function statoQuote(stato, dati) {
+export function statoQuote(stato, dati) {
   const q = quoteIncantesimi(stato, dati);
   const catalogo = dati.incantesimi.incantesimi;
   const noti = stato.incantesimi.map((n) => trova(catalogo, n)).filter(Boolean);
@@ -1282,7 +1304,17 @@ export function validaLivello(personaggio, scelte, dati, { procedi = false } = {
   const sceltaTalento = (e) => (stato.regime === 'nuovo' && /(^|\.)(talentoLibero|maestria|specializzazione|specializzazioneIniziale)$/.test(e.campo ?? '')) || /(^|\.)incantesimi$/.test(e.campo ?? '');
   const forzate = errori.filter((e) => e.tipo === 'violazione' && sceltaTalento(e));
   const bloccanti = errori.filter((e) => e.tipo === 'violazione' && !sceltaTalento(e));
-  if (forzate.length && !bloccanti.length && !procedi) return [{ campo: 'livelli', problema: `una scelta dei Talenti o degli incantesimi non è ammessa dalle regole (forzata dal Direttore: ${forzate[0].problema})`, tipo: 'violazione', procedibile: true }];
+  // lotto 216 (A.287): se il conto degli incantesimi non torna perché il Direttore ha corretto in meno l'Intelligenza, non è una scelta forzata e non è colpa
+  // del giocatore: lo si dice, perché «forzata dal Direttore» su una scheda che nessuno ha forzato fa fermare il tavolo
+  const sigla = dati.regole.taumaturgo?.incantesimi_liberi?.caratteristica;
+  const abbassata = sigla && caratteristicheEffettive(stato, dati)[sigla] < stato.car[sigla];
+  const soloIncantesimi = forzate.length && forzate.every((e) => /(^|.)incantesimi$/.test(e.campo ?? ''));
+  if (forzate.length && !bloccanti.length && !procedi) {
+    const motivo = soloIncantesimi && abbassata
+      ? `i tuoi incantesimi superano le quote di oggi perché il Direttore ha corretto l'Intelligenza (${forzate[0].problema}): non è un tuo errore, i livelli già acquisiti restano com'erano e puoi procedere`
+      : `una scelta dei Talenti o degli incantesimi non è ammessa dalle regole (forzata dal Direttore: ${forzate[0].problema})`;
+    return [{ campo: 'livelli', problema: motivo, tipo: 'violazione', procedibile: true }];
+  }
   if (bloccanti.length) {
     return [{ campo: 'livelli', problema: `i livelli già acquisiti contengono errori (${bloccanti[0].problema}): annulla l’ultimo livello e correggilo`, tipo: 'violazione' }];
   }
@@ -1701,6 +1733,7 @@ function schedaARiposo(personaggio, dati) {
     const c = corretto(stato.car[s], `car:${s}`, { minimo: dati.caratteristiche.valore_minimo ?? 1, massimo: dati.caratteristiche.valore_massimo ?? Infinity });
     if (c.righe.length) { carMaster[s] = c; stato.car[s] = c.valore; }
   }
+  stato.carCorrette = true; // lotto 216: le correzioni sono già dentro stato.car (src/avanzamento.js → caratteristicheEffettive)
   const carBase = { ...stato.car };
   const temporanei = modificatoriAttivi(personaggio?.sessione, dati);
   for (const [s, v] of Object.entries(temporanei)) if (s in stato.car) stato.car[s] = Math.min(dati.caratteristiche.valore_massimo ?? Infinity, Math.max(dati.caratteristiche.valore_minimo ?? 1, stato.car[s] + v));

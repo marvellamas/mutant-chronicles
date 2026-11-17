@@ -3,7 +3,7 @@
 // restano in una bozza ("voce") e non si salva nulla. Tutti i controlli vengono da
 // validaLivello() e prossimoLivello() del motore.
 import { h, segno, dadi } from './dom.js';
-import { avvisoIncantesimo, contoDaScheda } from '../quote-incantesimi.js';
+import { avvisoIncantesimo, contoDaScheda, motivoBloccoIncantesimi } from '../quote-incantesimi.js';
 import { contaComeConosciuto } from '../incantesimi-a-mano.js';
 import { calcolaScheda, validaLivello, modOrdinario } from '../calc.js';
 import { prossimoLivello, applicaLivello } from '../character.js';
@@ -373,6 +373,8 @@ function passoIncantesimi(c) {
   // l'incantesimo fuori regola è in grigio con il motivo, e lo può forzare solo il Direttore
   return [
     h('p', { class: 'guida' }, `Quote di Classe per macrofamiglia (qualunque specializzazione) più ${q.quote.liberi} incantesimi liberi di qualunque famiglia (comprese quelle dei Talenti). Livello massimo degli incantesimi conosciuti: ${q.livelloMassimo}. Quelli fuori dalle quote, dalle famiglie o dal livello massimo sono in grigio con il motivo${c.master ? ' (come Direttore puoi forzarli)' : ''}.`),
+    // lotto 216 (A.287, C): chi non può procedere deve sapere cosa manca e chi lo sblocca — una riga, non un riquadro
+    (() => { const m = motivoBloccoIncantesimi(conto, catalogo, { noti, nuovi, master: c.master }); return m ? h('p', { class: 'nota attenzione', role: 'status' }, m) : null; })(),
     h('div', { class: 'contatori' },
       h('p', { class: `contatore ${conto.residuo === 0 ? 'ok' : 'attenzione'}` }, h('strong', {}, `${conto.imparati} / ${conto.totale}`), ' incantesimi conosciuti'),
       Object.entries(conto.perMacro).map(([m, x]) => h('p', { class: 'contatore piccolo' }, h('strong', {}, m), `: ${x.scelti} conosciuti, quota di Classe ${x.quota}`)),

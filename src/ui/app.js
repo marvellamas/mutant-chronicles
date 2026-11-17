@@ -1629,9 +1629,22 @@ function renderSaliPagina() {
       }
       const inMaster = modalitaMaster({ server: stato.cartella, daQuestoPc: stato.master, aperta: modalitaMasterDi(sessionStorage), id: stato.id });
       // A.188: un incantesimo fuori dalle regole lo forza solo il Direttore, e resta nello storico
-      const errLivello = validaLivello(personaggio(), bozza.voce, dati, { procedi: !!bozza.procedi });
-      const forzati = inMaster ? errLivello.filter((e) => e.campo === 'incantesimi' && e.tipo === 'violazione') : [];
-      if (errLivello.length > forzati.length) return renderSaliPagina();
+      let errLivello = validaLivello(personaggio(), bozza.voce, dati, { procedi: !!bozza.procedi });
+      let forzati = inMaster ? errLivello.filter((e) => e.campo === 'incantesimi' && e.tipo === 'violazione') : [];
+      // lotto 216 (A.287, C): il wizard dice «alla conferma puoi procedere comunque», ma per la salita normale la finestrella non c'era: un avviso
+      // procedibile fermava il tablet in silenzio (Conferma che non fa niente). Ora chiede, come la correzione di un livello, e lascia la riga nello storico.
+      if (errLivello.length > forzati.length) {
+        const altri = errLivello.filter((e) => !forzati.includes(e));
+        if (!bozza.procedi && altri.length && altri.every((e) => e.procedibile)) {
+          const ok = await chiedi({ titolo: `Avviso: salita al ${2 + stato.livelli.length}° livello`, testo: `${altri.map((e) => e.problema).join('; ')}. L’app avvisa e non blocca: se il master è d’accordo puoi procedere; resta una riga nello storico del personaggio.`, si: 'Procedi comunque' });
+          if (!ok) return undefined;
+          bozza.procedi = true;
+          registraStorico(testoProcedi(`salita al ${2 + stato.livelli.length}° livello`, altri.map((e) => e.problema).join('; ')));
+          errLivello = validaLivello(personaggio(), bozza.voce, dati, { procedi: true });
+          forzati = inMaster ? errLivello.filter((e) => e.campo === 'incantesimi' && e.tipo === 'violazione') : [];
+        }
+        if (errLivello.length > forzati.length) return renderSaliPagina();
+      }
       if (forzati.length) storicoIncantesimi(`Aggiunti ${(bozza.voce.incantesimi ?? []).join(', ')} (${2 + stato.livelli.length}° livello), forzato dal Direttore: ${forzati[0].problema}`);
       const primaSalita = personaggio();
       cambiaLivelli(applicaLivello(personaggio(), bozza.voce).livelli);

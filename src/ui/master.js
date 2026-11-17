@@ -214,7 +214,12 @@ export function bloccoLivelloMaster(ctx, livello) {
     } }, 'Tieni come concessione'));
   } else if (!permesso.ok && !permesso.concessione) {
     azioni.push(h('button', { type: 'button', class: 'btn btn-piccolo', onclick: async () => {
-      const motivo = await chiediMotivoObbligatorio({ titolo: `Concedi il passaggio al livello ${permesso.prossimo}`, testo: 'Il giocatore potrà salire senza i PX richiesti. I PX non cambiano; il motivo va nel registro e il giocatore non lo vede.', conferma: `Concedi il livello ${permesso.prossimo}` });
+      // lotto 216: sette concessioni di fila a fine serata, con la mano stanca: la finestrella **nomina il personaggio e i due livelli** e il pulsante di
+      // conferma li ripete, così «Concedi … livello 9» a chi è già all'8° (che il §9.8.3 non autorizza) non passa per un tocco distratto.
+      const nome = String(ctx.scelte?.nome ?? '').trim() || 'questo personaggio';
+      const dopoDestinazione = permesso.prossimo > 8;
+      const testo = `${nome} è al livello ${livello}: stai concedendo il passaggio al livello ${permesso.prossimo} senza i PX richiesti.${dopoDestinazione ? ` Attenzione: se ${nome} è già salito all'8° per il §9.8.3, questo è un secondo passaggio, non quello autorizzato.` : ''} I PX non cambiano; il motivo va nel registro e il giocatore non lo vede.`;
+      const motivo = await chiediMotivoObbligatorio({ titolo: `Concedi a ${nome}: livello ${livello} → ${permesso.prossimo}`, testo, conferma: `Concedi il livello ${permesso.prossimo} a ${nome}` });
       if (motivo) ctx.master.concediLivello({ livello: permesso.prossimo, motivo });
     } }, `Concedi il passaggio al livello ${permesso.prossimo}`));
   }

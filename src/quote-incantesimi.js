@@ -34,3 +34,16 @@ export function contoDaScheda(inc) {
     liberi: inc?.quote?.liberi ?? 0, liberiUsati: inc?.quote?.liberiUsati ?? 0, totale, imparati, residuo: totale - imparati,
   };
 }
+
+/**
+ * Lotto 216 (A.287, C): mancano incantesimi da scegliere ma ogni riga rimasta è fuori quota (grigia). Per un giocatore è un vicolo cieco, e un vicolo cieco
+ * deve dire **cosa manca e chi lo sblocca**, in una riga. Il Direttore (che le righe grigie le forza) e chi non ha niente da scegliere non lo vedono.
+ * @returns il testo, o null
+ */
+export function motivoBloccoIncantesimi(conto, catalogo, { noti, nuovi, master = false }) {
+  const mancano = conto.residuo;
+  if (!(mancano > 0) || master) return null;
+  const liberi = catalogo.filter((i) => !noti.has(i.nome) && !nuovi.includes(i.nome) && !avvisoIncantesimo(i, conto));
+  if (liberi.length) return null;
+  return `Ti mancano ${mancano} incantesimi, ma tutti i posti che restano sono fuori dalle quote: non puoi sceglierli da solo. Chiedi al Direttore: da «Modifica master» può forzarli.`;
+}
