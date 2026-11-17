@@ -6,14 +6,16 @@
 
 1. **«Salva sessione»** (voce 3 di `Mutant.bat`). Lo zip di `--applica` si fa *dopo* le salite di livello: per tornare a prima di tutto serve questo.
 2. **Michele** ha un posto Specializzazione del 1° livello ancora da scegliere («Da scegliere: 1 Specializzazione», sul file dell'istantanea): finché non lo sceglie, «Sali al livello 8» resta spento. Lo sceglie prima.
-3. **Lucas** deve scegliere 4 incantesimi nuovi nel passo «Incantesimi» e **Dimitri** ne deve scegliere **4, non 2**: la scheda gli dice «18/20», ma il controllo ne vuole 22 (con 20 chiede ancora 2 e a un tablet le righe sono in grigio). Dimitri lo fa il Direttore da «Modifica master», dove si possono forzare. È l'unico difetto della prova che non ho corretto (A.287).
+3. **Lucas** sceglie 4 incantesimi nuovi nel passo «Incantesimi»; **Dimitri** ne sceglie **2** (18/20), **dal tablet, senza forzare niente** (A.287, lotto 216: il conto era doppio e ora è uno solo). Prima di confermare vede una riga «perché il Direttore ha corretto l'Intelligenza… puoi procedere» e una finestrella **«Procedi comunque»**: basta toccarla. Se un giocatore non può proseguire, la scheda dice cosa manca e chi lo sblocca (una riga).
+
+4. **Ogni tablet sceglie il suo personaggio** (in alto «collegato · scegli il tuo personaggio» → «Scegli»). Senza, ogni salvataggio dal tablet dà 403 («Questo tablet non ha ancora scelto un personaggio»): me ne sono accorto provando.
 
 ## La serata, in ordine
 
 | # | Chi | Che cosa | Tempo |
 |---|---|---|---|
 | 1 | Davide, PC | `node tools/adegua-abilita.mjs` — deve dire **7 pronti, 0 bloccati**, 14 punti ciascuno e, in fondo, «ATTENZIONE» se qualcuno non è al livello 8 | macchina 0,3 s |
-| 2 | Davide, PC | «Modifica master» → **«Concedi il passaggio al livello 8»**, con il motivo, **un tocco ciascuno** (§9.8.3). **Una volta sola per personaggio**: dopo la salita il pulsante diventa «Concedi … livello 9»: non toccarlo | tavolo ~1 min × 7 |
+| 2 | Davide, PC | «Modifica master» → **«Concedi il passaggio al livello 8»**, con il motivo, **un tocco ciascuno** (§9.8.3). **Una volta sola per personaggio**: dopo la salita il pulsante diventa «Concedi … livello 9» (la finestrella nomina personaggio e livelli: se dice «livello 8 → 9», **Annulla**) | tavolo ~1 min × 7 |
 | 3 | i giocatori, tablet | «**Sali al livello 8**»: Classe (Grado III), tiro dei dadi, Specializzazione, incantesimi (Lucas, Dimitri), 7 punti qualunque (**li azzera l'adeguamento, non contano**), Conferma | macchina 9 s; tavolo 5–8 min, 10–15 per i taumaturghi |
 | 4 | Davide, PC | `node tools/adegua-abilita.mjs` — ora **monte 21 per tutti e sette**, 0 bloccati, nessuna Abilità che scende. Poi `--applica` | macchina 0,5 s |
 | 5 | i giocatori, tablet | tab Abilità: **21 punti** con «+» e «−», una scelta alla volta; a 0 punti restanti «Conferma» | macchina 10 s; tavolo 8–12 min |
@@ -28,6 +30,9 @@
 - **«Conferma» dà un errore sul tablet:** prima di tutto guardare il messaggio; da questo lotto la conferma dei tablet **passa** (prima era 403). Se compare ancora, `--stato` dice a che punto è il file.
 - **La plancia dice «0/21» e il giocatore dice di aver messo dei punti:** vale il tablet (la plancia legge ciò che il tablet comunica; se il server è stato riavviato quel numero si perde, e riappare al primo «+» o «−»).
 - **La Neverlost doppia** resta nel registro dei veicoli: non c'entra con la serata.
+
+## Due tablet sullo stesso personaggio
+Se due persone guardano la stessa scheda e scrivono, il secondo a salvare — se aveva letto prima — vede un avviso di conflitto e **non sovrascrive niente**; riletta la scheda, scrive. Provato (409).
 
 ## Cosa NON si vede
 
