@@ -3288,3 +3288,16 @@ sbagliato. Applicato: lo strumento `tools/correggi-cyberarma-dimitri.mjs` (sola 
 Davide) riporta la voce a `armi:cyberarma` e scrive il focalizzatore Verde; la consegna di un progetto si ferma se
 lascerebbe insieme riserva interna e PM personali (A.251 supera la A.236); la voce `cyberarma-batteria-verde` non offre
 più l'alternativa dei PM; il progetto dice prima quale configurazione applica. Voce chiusa.
+
+**A.280 — dove sta il centro del settore di 120° della M606 dello Scout: APERTA (lotto 210).** Veicoli 0.19 §10 e l'E&L
+dell'11/11 dicono che l'intera struttura (arma e schermo) ha un settore di rotazione orizzontale di 120°, limitato dagli ostacoli
+reali; non dicono **centrato dove** (davanti? di lato? dove punta l'artigliere?). Per i cannoni della Neverlost il manuale dice
+«frontale», per lo Scout no. *Nel frattempo*: l'app dice «settore di 120° · centro non indicato dal manuale (A.280)» nella tabella
+delle armi di bordo e non controlla niente sulla mappa (il motore non sa niente di settori di tiro: serve un'arma di bordo che
+spara da una pedina e un centro); lo giudica il Direttore.
+
+**A.281 — le due correzioni +1 al VA di Armi da mischia di Dimitri (2/11): APERTA (lotto 210).** Nel file di Dimitri ci sono due
+correzioni del master di +1 al «VA di Armi da mischia», del 2/11 alle 18:32 e alle 18:34, senza motivo. Con il bonus del
+focalizzatore Verde ora calcolato (+1 VA d'attacco, +1 Parata, +1 danno), se erano il modo di darlo a mano, il VA è contato due
+volte. *Nel frattempo*: non toccate; valgono per ogni arma da mischia (sono sull'Abilità); le annulla Davide da «Modifica master»,
+riga per riga, se erano per il Verde.
