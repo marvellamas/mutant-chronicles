@@ -77,7 +77,7 @@ export const ARGOMENTI = {
   'prezzi-prima-dopo.mjs': ['da'],
   'istantanea.mjs': ['cartella', 'dove', 'tieni', 'stato', 'elenco'],
   'prove.mjs': ['concorrenza', 'solo'],
-  'ricognizione-manuali.mjs': ['drive'],
+  'ricognizione-manuali.mjs': ['drive', 'testi'],
   'lotto_189_edizioni.mjs': ['file', 'scrivi'],
   'edizioni-dati.mjs': [],
   'lotto_192_profilo_abilita.mjs': ['scrivi'],
@@ -85,6 +85,9 @@ export const ARGOMENTI = {
   'adegua-abilita.mjs': ['cartella', 'salvataggi', 'applica', 'annulla', 'stato'],
   'lotto_206_armi.mjs': ['scrivi', 'sette', 'voce'],
   'lotto_206_a260.mjs': ['scrivi'],
+  'lotto_209_cyberarma.mjs': ['scrivi'],
+  'lotto_209_veicoli_civili.mjs': ['scrivi'],
+  'correggi-cyberarma-dimitri.mjs': ['cartella', 'nome', 'scrivi'],
   'importa-armi.mjs': ['modello', 'specializzazioni'],
   'armi-prima-dopo.mjs': ['da', 'cartella'],
 };

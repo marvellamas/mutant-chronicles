@@ -9,6 +9,8 @@ Dal 26 settembre 2026 i manuali vivono come Google Doc nella cartella Drive di D
 
 ## Registro
 
+**Controllo del 17 novembre 2026 (lotto 209).** Tutti i manuali invariati dal 16/11 (Giocatore 0.64, Armamenti 0.86, Magia 1.19, Equipaggiamento 0.42, Mostri 0.69, Direttore 0.51, Veicoli 0.19). Novità: il **Doc «per-davide.md» è cambiato il 16/11 17:45 UTC** (il pacchetto del lotto 208, applicato; identico nel contenuto a `docs/per-davide-nuovo.md`, sezione 7 invariata: nessuna risposta nuova di Davide) e su Drive c'è **`mutant-stato_2026-11-15_1845.zip`** (non in `istantanee/`). **L'E&L è invariato** (15/11 13:28:38, impronta `ef59c55f974e`, byte per byte). Il registro ora porta `impronta` accanto a `modificato` per i due documenti di scambio, e la ricognizione li dice «DA LEGGERE PER INTERO» se cambiano (decima regola, `CLAUDE.md`). **Veicoli 0.19** (quattro schede: Tab 1, «Neverlost», «Astronavi commerciali», «Navi passeggeri»; cap. 1–15): salvata come `veicoli-0.19.md` (edizione citata), recepimento ancora in attesa; entrati nel catalogo il cap. 12 (Motocicletta) e il 13 (Furgone); **non** i cap. 14–15 (astronavi) e **non** le tre differenze di testo dei cap. 10–11 (Scout «SIA», settore di rotazione della M606 a 120°, introduzione della Neverlost): `docs/diff-lotto209-2026-11-17.md`.
+
 Ultimo controllo: **12 novembre 2026 (lotti 190 e 191)**. Il 190 ha fatto la ricognizione dei sette manuali che
 Davide ha riscritto l'11 e il 12/11 (`docs/ricognizione-manuali-2026-11-12-lotto190.md`); il 191 li ha recepiti nel
 repo (`docs/diff-lotto191-2026-11-12.md`). Lo stato: **Giocatore 0.62, Magia 1.17, Armamenti 0.83, Equipaggiamento

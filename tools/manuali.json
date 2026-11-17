@@ -3,7 +3,7 @@
  "_protocollo": "docs/manuali-drive.md e la sezione «Protocollo dei manuali» di CLAUDE.md",
  "cartella_lavoro": "1p4jh2tKIN9kRimD4ifzth_YjWUZTH6-6",
  "cartella_archivio": "1tVAzASERKxCEZPCrAf-LFHiYLqhey9Rc",
- "controllato": "2026-11-16",
+ "controllato": "2026-11-17",
  "manuali": [
   {
    "id": "giocatore",
@@ -195,7 +195,8 @@
    "drive": "1Jg5rqbBtcHGE1E10xYElO_qCDCwh8K87LAInovtpF6A",
    "formato": "doc",
    "testo": "../per-davide.md",
-   "modificato": "2026-11-15T13:28:31Z",
+   "modificato": "2026-11-16T17:45:40Z",
+   "impronta": "f52045ec3ad9",
    "nota": "Fonte unica delle domande; lo scrive solo Davide (e Cowork per il pacchetto). docs/protocollo-davide.md."
   },
   {
@@ -204,7 +205,8 @@
    "drive": "1VaqZaAe4NK5P8A956Eahua_ZT60eh3ohnR2xSqh-tVs",
    "formato": "doc",
    "testo": "../risposte-master-2026-09-26.md",
-   "modificato": "2026-11-15T13:28:38Z"
+   "modificato": "2026-11-15T13:28:38Z",
+   "impronta": "ef59c55f974e"
   }
  ],
  "archiviati": [

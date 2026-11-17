@@ -37,11 +37,71 @@ export function versioneNelTitolo(titolo) {
 /** È un file archiviato? Il prefisso lo dice, e un archiviato non è mai un doppione. */
 export const eArchiviato = (titolo) => /^\s*ARCHIVIO\b/i.test(String(titolo));
 
+/** I titoli dei blocchi di un documento di scambio (# e ##), e se portano un numero A.n. Quelli senza numero sono i «raccordi». */
+export function blocchiDelTesto(testo) {
+  const out = [];
+  for (const r of String(testo).replace(/\r/g, '').split('\n')) {
+    const m = r.match(/^(?:> > )?#{1,3}\s+(.+?)\s*$/);
+    if (!m) continue;
+    const titolo = m[1].replace(/\*\*/g, '').replace(/\\/g, '').trim();
+    out.push({ titolo, numerato: /\bA\.\d+/.test(titolo) });
+  }
+  return out;
+}
+
+const alSecondo = (iso) => String(iso ?? '').slice(0, 19);
+
+/**
+ * **Quando un documento di scambio va riletto per intero (lotto 209).**
+ *
+ * L'E&L non ha un numero di versione, quindi la regola 4 del 188 («comanda il numero, non la data») non si può
+ * applicare: il criterio scelto è **la data esatta, al secondo**, e l'**impronta del testo** quando si ha il testo
+ * fresco. Una data diversa basta da sola, perché un blocco aggiunto in coda cambia la data del file e non il titolo
+ * di niente; l'impronta serve nel caso opposto — la data è uguale ma il testo salvato non è quello che il registro
+ * dice (qualcuno l'ha risalvato) o il testo scaricato adesso è diverso da quello visto. In tutti i casi la
+ * conseguenza è una sola: **va letto per intero, blocchi non numerati compresi**, perché è lì che sta quello che non
+ * passa dal Doc (il lotto C, i PNG 0.67, la A.271, metà del manuale dei Veicoli: quattro raccordi in un mese).
+ */
+export function letturaScambio(v, f, testoSalvato, testoFresco) {
+  const motivi = [];
+  if (f && v.modificato && alSecondo(f.modifiedTime) !== alSecondo(v.modificato)) {
+    motivi.push(`la data è cambiata: registro ${alSecondo(v.modificato)}, Drive ${alSecondo(f.modifiedTime)}`);
+  }
+  let improntaLocaleIncoerente = false;
+  if (v.impronta && testoSalvato != null && improntaTesto(testoSalvato) !== v.impronta) {
+    improntaLocaleIncoerente = true;
+    motivi.push('il testo salvato in cartella non è quello che il registro dice (risalvato senza aggiornare l’impronta)');
+  }
+  let blocchiNuovi = [];
+  if (testoFresco != null) {
+    if (v.impronta && improntaTesto(testoFresco) !== v.impronta) motivi.push('l’impronta del testo scaricato adesso è diversa da quella registrata');
+    if (testoSalvato != null) {
+      const visti = new Set(blocchiDelTesto(testoSalvato).map((b) => b.titolo));
+      blocchiNuovi = blocchiDelTesto(testoFresco).filter((b) => !visti.has(b.titolo));
+    }
+  }
+  return { daLeggere: motivi.length > 0, motivi, blocchiNuovi, improntaLocaleIncoerente };
+}
+
+/** Le righe da stampare per i documenti di scambio da rileggere: è la riga che non deve mancare mai. */
+export function righeDaLeggere(r) {
+  const out = [];
+  for (const x of r.righe.filter((y) => y.da_leggere)) {
+    out.push(`DA LEGGERE PER INTERO — ${x.nome}: ${x.motivi_lettura.join('; ')}.`);
+    out.push('  Blocchi non numerati compresi: è lì che sta ciò che non passa dal Doc «per-davide» (raccordi, specifiche di un lotto).');
+    if (x.blocchi_nuovi.length) {
+      out.push(`  Blocchi nuovi rispetto al testo salvato (${x.blocchi_nuovi.length}), di cui senza numero: ${x.blocchi_nuovi.filter((b) => !b.numerato).length}:`);
+      for (const b of x.blocchi_nuovi) out.push(`    ${b.numerato ? '   ' : '(!)'} ${b.titolo.slice(0, 110)}`);
+    }
+  }
+  return out;
+}
+
 /**
  * Il quadro: una riga per voce del registro, con la versione sul disco, quella su Drive e se coincidono.
  * @param files l'elenco dei file della cartella di lavoro di Drive (o null: solo il repo)
  */
-export function quadro(files = null) {
+export function quadro(files = null, testiFreschi = null) {
   // le scorciatoie di Drive puntano al file vero (per-davide.md è una scorciatoia): si seguono, altrimenti
   // il registro sembrerebbe pieno di ID spariti
   const perId = new Map();
@@ -57,6 +117,9 @@ export function quadro(files = null) {
     const testo = ci ? readFileSync(p, 'utf8') : '';
     const f = perId.get(v.drive) ?? null;
     const suDrive = f ? versioneNelTitolo(f.title) : null;
+    // lotto 209: un documento di scambio non ha un numero di versione, e finora «coincidono» voleva dire solo «l'ID
+    // risponde». Così l'E&L è rimasto un mese indietro con quattro raccordi non numerati dentro.
+    const lettura = v.versione ? null : letturaScambio(v, f, ci ? testo : null, testiFreschi?.[v.id] ?? null);
     righe.push({
       id: v.id,
       nome: v.nome,
@@ -69,8 +132,14 @@ export function quadro(files = null) {
       impronta: ci ? improntaTesto(testo) : null,
       manca: !ci,
       sparito: Boolean(files) && !f,
-      // i documenti di scambio (per-davide, E&L) non portano un numero di versione: basta che l'ID risponda
-      coincidono: !files ? null : v.versione ? Boolean(suDrive) && suDrive === v.versione : Boolean(f),
+      // i documenti di scambio (per-davide, E&L) non portano un numero di versione: il criterio è la data esatta e,
+      // quando c'è il testo fresco, l'impronta (CRITERIO DICHIARATO, lotto 209: docs/diff-lotto209-2026-11-17.md)
+      coincidono: !files ? null : v.versione ? Boolean(suDrive) && suDrive === v.versione : Boolean(f) && !lettura?.daLeggere,
+      scambio: !v.versione,
+      da_leggere: Boolean(lettura?.daLeggere),
+      motivi_lettura: lettura?.motivi ?? [],
+      blocchi_nuovi: lettura?.blocchiNuovi ?? [],
+      impronta_incoerente: Boolean(lettura?.improntaLocaleIncoerente),
     });
   }
   return righe;
@@ -110,14 +179,15 @@ export const confrontiAllaCieca = () => [...registro().manuali, ...registro().sc
   .map((v) => ({ id: v.id, nome: v.nome, versione: v.versione, confronto: v.confronto }));
 
 /** Le righe da stampare, e se c'è qualcosa che deve fermare chi legge. */
-export function referto(files = null) {
-  const righe = quadro(files);
+export function referto(files = null, testiFreschi = null) {
+  const righe = quadro(files, testiFreschi);
   const dop = files ? doppioni(files) : [];
   const spariti = righe.filter((r) => r.sparito);
   const diverse = righe.filter((r) => r.coincidono === false && !r.sparito);
   const incoerenti = righe.filter((r) => r.dentro && r.nome_file && r.dentro !== r.nome_file);
   const mancanti = righe.filter((r) => r.manca);
-  return { righe, doppioni: dop, spariti, diverse, incoerenti, mancanti, fermati: dop.length > 0 || spariti.length > 0 || incoerenti.length > 0 || mancanti.length > 0 };
+  const daLeggere = righe.filter((x) => x.da_leggere);
+  return { righe, doppioni: dop, spariti, diverse, incoerenti, mancanti, daLeggere, fermati: dop.length > 0 || spariti.length > 0 || incoerenti.length > 0 || mancanti.length > 0 };
 }
 
 /**
@@ -230,11 +300,15 @@ async function stampa(r, conDrive) {
     console.log('\nFERMARSI — un ID del registro non risponde più (il file è stato sostituito o spostato):');
     for (const x of r.spariti) console.log(`  ${x.nome} (${x.id})`);
   }
+  const letture = righeDaLeggere(r);
+  if (conDrive && letture.length) { console.log(''); for (const l of letture) console.log(l); }
+  const locali = r.righe.filter((x) => x.impronta_incoerente);
+  if (!conDrive && locali.length) { console.log(''); for (const x of locali) console.log(`DA LEGGERE PER INTERO — ${x.nome}: il testo salvato non è quello che il registro dice.`); }
   if (conDrive && r.diverse.length) {
     console.log('\nDa guardare — su Drive c’è un numero di versione diverso da quello del registro:');
     for (const x of r.diverse) console.log(`  ${x.nome}: registro ${x.disco}, Drive ${x.drive} («${x.titolo}»)`);
   }
-  if (!r.fermati && !r.diverse.length) console.log(conDrive ? '\nTutto in ordine: un file corrente per manuale, versioni coincidenti.' : '\nRepo in ordine. Per il confronto con Drive: --drive=<elenco.json>.');
+  if (!r.fermati && !r.diverse.length && !r.daLeggere.length) console.log(conDrive ? '\nTutto in ordine: un file corrente per manuale, versioni coincidenti.' : '\nRepo in ordine. Per il confronto con Drive: --drive=<elenco.json>.');
   const attesa = recepimentiInAttesa();
   if (attesa.length) {
     console.log('\nSappiamo di non sapere — su Drive c’è un’edizione più recente che in cartella non è, e si sa perché:');
@@ -258,7 +332,10 @@ if (process.argv[1] && import.meta.url.endsWith(process.argv[1].replace(/\\/g, '
   fermaSeSconosciuti(argv, ARGOMENTI['ricognizione-manuali.mjs'], 'ricognizione-manuali.mjs');
   const da = argv.find((a) => a.startsWith('--drive='))?.slice(8) ?? null;
   const files = da ? (JSON.parse(readFileSync(da, 'utf8')).files ?? JSON.parse(readFileSync(da, 'utf8'))) : null;
-  const r = referto(files);
+  const dirTesti = argv.find((a) => a.startsWith('--testi='))?.slice(8) ?? null;
+  const freschi = {};
+  if (dirTesti) for (const v of registro().scambio) { const p = join(dirTesti, `${v.id}.md`); if (existsSync(p)) freschi[v.id] = readFileSync(p, 'utf8'); }
+  const r = referto(files, dirTesti ? freschi : null);
   await stampa(r, Boolean(files));
-  process.exit(r.fermati ? 2 : 0);
+  process.exit(r.fermati ? 2 : r.daLeggere.length ? 3 : 0);
 }
