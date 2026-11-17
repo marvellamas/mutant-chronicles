@@ -60,8 +60,9 @@ test('uso per Classe: i numeri stanno nei dati, non nel codice', () => {
   assert.equal(usoPerClasse(b, ['Agente']).ammesso, false);
   const altreN = usoPerClasse(r('armi:cyberarma-nec'), ['Agente']);
   assert.deepEqual([altreN.ammesso, altreN.nec, altreN.round, altreN.va], [undefined, 1, 10, 0]);
-  // lotto 171: il Tecnomante paga 1 CM della riserva interna o 2 PM personali; per il Custode la revisione non dà un costo in CM (A.251)
-  assert.deepEqual([usoPerClasse(b, ['Tecnomante']).cm, usoPerClasse(b, ['Tecnomante']).pm], [1, 2]);
+  // lotto 171: il Tecnomante paga 1 CM della riserva interna; per il Custode la revisione non dà un costo in CM (A.251)
+  // Lotto 209 (A.271): la A.251 del 06/11 supera la A.236 — una riserva interna di CM è l'unica alimentazione e i PM personali si perdono; la voce non offre più «oppure 2 PM personali» (tests/cyberarma-a271-209.test.js lo fa fallire se torna).
+  assert.deepEqual([usoPerClasse(b, ['Tecnomante']).cm, usoPerClasse(b, ['Tecnomante']).pm], [1, null]);
   assert.match(usoPerClasse(b, ['Custode']).testo, /A.251/);
   assert.equal(usoPerClasse({ }, ['Custode']), null, 'le armi senza il blocco non si attivano');
 });
@@ -84,7 +85,7 @@ test('«Attacca!»: l’arma attiva mostra costo, durata e Round che restano', (
   assert.equal(statoAttivazioneArma({ ...attiva, round: 13 }, 'c1').attiva, false);
 });
 
-test('«Attiva» del Tecnomante: 1 CM della riserva interna o 2 PM personali, la durata parte dal Round e «Termina» la spegne; riserva da 5 CM', () => {
+test('«Attiva» del Tecnomante: 1 CM della riserva interna (niente PM personali, A.251), la durata parte dal Round e «Termina» la spegne; riserva da 5 CM', () => {
   const p = deserializzaPersonaggio(readFileSync(new URL('./fixtures/talenti-vecchi/Dimitri-Orlav_liv6_2026-10-04.json', import.meta.url), 'utf8'));
   const base = normalizza(p.creazione, dati).scelte;
   const voce = { uid: 'c1', rif: 'armi:cyberarma-batteria-verde', stato: 'impugnata', quantita: 1, note: '', sintonizzato: true };
@@ -94,19 +95,21 @@ test('«Attiva» del Tecnomante: 1 CM della riserva interna o 2 PM personali, la
   const s = allineaSessione({ ...inizializzaSessione(m), round: 2 }, m);
   assert.deepEqual([s.chroma.c1?.pmAttuali, s.chroma.c1?.unita], [5, 'CM'], 'la riserva interna Verde da 5 CM (A.236)');
   const uso = usoPerClasse(r('armi:cyberarma-batteria-verde'), classiDi(scheda));
-  assert.deepEqual([uso.classe, uso.cm, uso.pm, uso.round], ['Tecnomante', 1, 2, 10]);
+  // Lotto 209 (A.271): la A.251 del 06/11 supera la A.236 — una riserva interna di CM è l'unica alimentazione e i PM personali si perdono; la voce non offre più «oppure 2 PM personali» (tests/cyberarma-a271-209.test.js lo fa fallire se torna).
+  assert.deepEqual([uso.classe, uso.cm, uso.pm, uso.round], ['Tecnomante', 1, null, 10]);
   // dalla riserva interna: 1 CM, i PM personali non si toccano
   const conCm = attivaArmaSessione(s, 'c1', uso, m);
   assert.deepEqual([conCm.chroma.c1.pmAttuali, conCm.pmAttuali], [4, s.pmAttuali]);
-  // con l'alternativa dei PM personali (A.236): 2 PM, la riserva non si tocca
-  const dopo = attivaArmaSessione(s, 'c1', { ...uso, conPm: true }, m);
-  assert.equal(dopo.pmAttuali, s.pmAttuali - 2, '2 PM personali');
-  assert.equal(dopo.chroma.c1.pmAttuali, 5);
+  // niente alternativa dei PM personali (A.251): la scheda non la offre, e la seconda attivazione paga ancora la riserva
+  assert.equal(testoAttivazione({ uso_per_classe: r('armi:cyberarma-batteria-verde').uso_per_classe }, scheda, s, 'c1').alternativaPm, null);
+  const dopo = attivaArmaSessione(s, 'c1', uso, m);
+  assert.equal(dopo.pmAttuali, s.pmAttuali, 'i PM personali non si toccano');
+  assert.equal(dopo.chroma.c1.pmAttuali, 4);
   assert.deepEqual(dopo.attivazioniArmi.c1, { dal: 2, round: 10 });
   assert.equal(allineaSessione({ ...dopo, round: 12 }, m).attivazioniArmi, undefined);
   const spenta = terminaArmaSessione(dopo, 'c1', m);
   assert.equal(spenta.attivazioniArmi, undefined);
-  assert.equal(spenta.pmAttuali, s.pmAttuali - 2, 'il costo resta pagato');
+  assert.equal(spenta.chroma.c1.pmAttuali, 4, 'il costo resta pagato');
 });
 
 test('Custodia del Silenzio (§7.25.1) nel catalogo', () => {

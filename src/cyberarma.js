@@ -205,3 +205,66 @@ export function sntProgetto(modello, dati, { costruttore = false } = {}) {
   const altre = s.scala.filter((x) => x.chi !== s.chi).map((x) => `${x.chi} ${x.snt}`).join(', ');
   return { ...s, testo: `SnT ${s.snt} — ${s.perche}${altre ? ` (nella scala: ${altre})` : ''}` };
 }
+
+// ---------------------------------------------------------------------------
+// Lotto 209 (A.271): «riserva interna e PM personali insieme» non deve poter esistere.
+//
+// Il 16/11/2026 la risposta alla A.271 ha detto che la CyberArma di Dimitri ha un focalizzatore Verde e **nessuna**
+// SIN, riserva di CM o conversione a NeC (E&L, raccordo dell'11 novembre; Armamenti 0.86 §7.25.4). Nel suo file è
+// `armi:cyberarma-batteria-verde` con 5 CM — il modello sbagliato — e quella voce offriva anche «attiva con 2 PM
+// personali» (A.236, la regola di prima). La A.251 del 06/11 dice il contrario: una riserva interna o un NeC sono
+// l'**unica** alimentazione, e i PM personali si perdono. Le due cose insieme sono un'incoerenza del dato, non una
+// scelta del Direttore: qui la si riconosce, e la consegna di un progetto si ferma invece di scriverla.
+
+/** La conversione (riserva di CM, NeC) la cui voce di catalogo è `rif`, o null per l'originale e per ogni altra voce. */
+export const conversioneDellaVoce = (rif, dati) => conversioniAlimentazione(dati).find((f) => f.voce === rif) ?? null;
+
+/**
+ * Come si alimenta una voce dell'inventario, **dalla voce stessa**: una voce di conversione non spende PM personali
+ * qualunque cosa dica l'esemplare. @returns {{ conversione: string|null, pmPersonali: boolean, proprietaCustode: boolean }}
+ */
+export function alimentazioneDellaVoce(voce, dati) {
+  const conv = conversioneDellaVoce(voce?.rif, dati);
+  const d = isOggetto(voce?.esemplare?.alimentazione) ? voce.esemplare.alimentazione : null;
+  if (conv) return { conversione: conv.id, pmPersonali: false, proprietaCustode: false };
+  return { conversione: d?.conversione ? d.id ?? null : null, pmPersonali: d ? d.pm_personali !== false : true, proprietaCustode: d ? d.proprieta_custode !== false : true };
+}
+
+/** Le incoerenze di una voce già scritta: riserva interna e PM personali dichiarati insieme, o due conversioni. [] se coerente. */
+export function incoerenzeAlimentazione(voce, dati) {
+  const conv = conversioneDellaVoce(voce?.rif, dati);
+  const d = isOggetto(voce?.esemplare?.alimentazione) ? voce.esemplare.alimentazione : null;
+  const out = [];
+  if (conv && d && d.conversione !== true && d.pm_personali !== false) {
+    out.push(`la voce è «${conv.nome}» (riserva dedicata) ma l'esemplare dichiara l'alimentazione con i PM personali: una riserva interna o un NeC sono l'unica alimentazione (A.251)`);
+  }
+  if (conv && d?.conversione === true && d.id && d.id !== conv.id) {
+    out.push(`la voce è «${conv.nome}» ma l'esemplare dichiara «${famigliaAlimentazione(d.id, dati)?.nome ?? d.id}»: le conversioni energetiche non si cumulano (A.251)`);
+  }
+  return out;
+}
+
+/**
+ * Che cosa succederebbe consegnando un progetto con l'alimentazione scelta (`alimentazioneId`, null = nessuna scelta)
+ * all'esemplare `bersaglio`. @returns {{ errori: string[], installata, scelta }} — `errori` non vuoto = la consegna si ferma.
+ */
+export function controllaConsegna(bersaglio, alimentazioneId, dati) {
+  const installata = conversioneDellaVoce(bersaglio?.rif, dati);
+  const scelta = alimentazioneId ? famigliaAlimentazione(alimentazioneId, dati) : null;
+  const errori = [];
+  if (installata && scelta && scelta.conversione !== true) {
+    errori.push(`l'esemplare ha già «${installata.nome}»: con «${scelta.nome}» resterebbero insieme la riserva interna e l'alimentazione con i PM personali, e la A.251 dice che le due cose non stanno insieme (una riserva interna o un NeC sono l'unica alimentazione). Se la voce è quella sbagliata, si corregge prima (node tools/correggi-cyberarma-dimitri.mjs, A.271)`);
+  }
+  if (installata && scelta && scelta.conversione === true && scelta.id !== installata.id) {
+    errori.push(`l'esemplare ha già «${installata.nome}»: aggiungere «${scelta.nome}» sarebbe una seconda conversione, e le conversioni energetiche non si cumulano (A.251)`);
+  }
+  return { errori, installata, scelta };
+}
+
+/** Come si legge un'alimentazione, in una riga: «PM personali (2 PM · 10 Round)», «riserva interna di CM», «NeC Rosso». */
+export function descriviAlimentazione(a) {
+  if (a?.conversione) return `${famigliaNomePerId(a.conversione)} — niente PM personali, niente proprietà da Custode`;
+  return 'PM personali — proprietà da Custode conservate';
+}
+const NOMI_CONVERSIONE = { riserva_cm: 'riserva interna di CM', nec: 'conversione a NeC' };
+const famigliaNomePerId = (id) => NOMI_CONVERSIONE[id] ?? id;

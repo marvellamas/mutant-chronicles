@@ -20,7 +20,7 @@
 //    (src/correzioni-master.js → proteggiBlocchiMaster con formaDaTablet e vociConsegnaDaTablet).
 // L'app avvisa, non blocca, quando il Direttore procede (forma non scelta, progetto non riuscito, budget superato).
 
-import { famigliaAlimentazione, opzioniAlimentazione, perditeAlimentazione, alimentazioneSceglibile, sntProgetto } from './cyberarma.js';
+import { famigliaAlimentazione, opzioniAlimentazione, perditeAlimentazione, alimentazioneSceglibile, sntProgetto, controllaConsegna, alimentazioneDellaVoce, incoerenzeAlimentazione } from './cyberarma.js';
 
 const isOggetto = (v) => v !== null && typeof v === 'object' && !Array.isArray(v);
 const testo = (v) => (typeof v === 'string' ? v.trim() : '');
@@ -262,7 +262,7 @@ export function consegnaArma(creazione, id, dati, { quando, master = false, dona
   // A.251: l'alimentazione scelta decide quale profilo si consegna. Con una conversione energetica (riserva interna
   // di CM, conversione a NeC) la voce è quella della conversione: senza, l'arma consegnata sarebbe sbagliata.
   const al = alimentazioneConsegnata(p, dati);
-  if (m.risultato?.aggiorna_esemplare) return aggiornaEsemplare(creazione, lista, p, m, forma, { quando, donatore, scheggia, provenienza, uid, esemplare, al });
+  if (m.risultato?.aggiorna_esemplare) return aggiornaEsemplare(creazione, lista, p, m, forma, { quando, donatore, scheggia, provenienza, uid, esemplare, al, dati });
   const voce = {
     uid, rif: al?.rif ?? m.risultato?.rif ?? m.rif, stato: 'trasportato', quantita: 1, note: '',
     ...(forma ? { manifestazione: forma } : {}),
@@ -303,7 +303,7 @@ export function alimentazioneConsegnata(p, dati) {
 }
 
 /** A.231: la consegna sull'esemplare che c'è già. Vedi consegnaArma. */
-function aggiornaEsemplare(creazione, lista, p, m, forma, { quando, donatore, scheggia, provenienza, uid, esemplare, al = null }) {
+function aggiornaEsemplare(creazione, lista, p, m, forma, { quando, donatore, scheggia, provenienza, uid, esemplare, al = null, dati }) {
   const voci = creazione.equipaggiamento ?? [];
   const fam = esemplariDi(voci, m);
   const nome = m.esemplare_di_partenza?.nome ?? 'l’esemplare di partenza';
@@ -314,6 +314,9 @@ function aggiornaEsemplare(creazione, lista, p, m, forma, { quando, donatore, sc
     if (!fam.length) return { errore: `nell’inventario non c’è la CyberArma da modificare: ${nome} va aggiunta e ricondotta prima della consegna (A.231: il progetto lavora sull’esemplare recuperato)` };
     [bersaglio] = fam;
   }
+  // lotto 209 (A.271): una consegna non lascia mai insieme riserva interna e PM personali. Si ferma, e dice perché.
+  const ctl = controllaConsegna(bersaglio, p.alimentazione?.id ?? null, dati);
+  if (ctl.errori.length) return { errore: ctl.errori.join('. ') };
   const e0 = isOggetto(bersaglio.esemplare) ? bersaglio.esemplare : {};
   const partenza = m.esemplare_di_partenza ?? {};
   const nomePrima = testo(e0.nome) || partenza.nome || null;
@@ -350,6 +353,8 @@ function aggiornaEsemplare(creazione, lista, p, m, forma, { quando, donatore, sc
     },
     consegna: { quando, da: 'Direttore', progetto: p.id },
   };
+  const residue = incoerenzeAlimentazione(voce, dati);
+  if (residue.length) return { errore: `la consegna lascerebbe un esemplare incoerente: ${residue.join('; ')}` };
   // il frammento Viola estratto: un oggetto a parte, con le sue conseguenze (A.231)
   const viola = m.componenti?.find((c) => c.id === 'viola');
   const corruzione = testo(e0.corruzione) || partenza.corruzione || '';
@@ -464,4 +469,39 @@ export function vociProgetti(progetti, dati, { equipaggiamento = null } = {}) {
     }
     return { nome, nomeProgetto: p.nome, consegnata: false, stato: 'progetto non ancora consegnato', testo: `${a.titolo}. ${a.testo}` };
   });
+}
+
+/**
+ * **Che configurazione sta applicando questa consegna, e che cosa comporta** (lotto 209, A.271). Il Direttore deve
+ * poterlo leggere **prima** di premere «Consegna l'arma», non dopo: la differenza fra «PM personali» e «riserva
+ * interna» è la differenza fra un'arma che si accende con 2 PM e una con 1 CM, e una perde le proprietà da Custode.
+ *
+ * @param bersaglio la voce dell'inventario che si aggiorna (o null: nessuna / più d'una)
+ * @returns {{ da, a, perde, errori, nota }}
+ *   da/a: { voce, alimentazione, proprietaCustode, consumo } — `errori` non vuoto = la consegna si ferma (e il motivo è qui)
+ */
+export function configurazioneConsegna(p, bersaglio, dati) {
+  const m = modelloDi(p, dati);
+  if (!m) return null;
+  const sceltaId = p?.alimentazione?.id ?? null;
+  const scelta = sceltaId ? famigliaAlimentazione(sceltaId, dati) : null;
+  const ora = bersaglio ? alimentazioneDellaVoce(bersaglio, dati) : null;
+  const ctl = bersaglio ? controllaConsegna(bersaglio, sceltaId, dati) : { errori: [], installata: null, scelta };
+  const nomeFam = (id) => (id ? famigliaAlimentazione(id, dati)?.nome ?? id : null);
+  const riga = (a) => (a.conversione ? `${nomeFam(a.conversione)}: niente PM personali, niente proprietà da Custode` : 'PM personali: proprietà da Custode conservate');
+  // dopo: la conversione scelta, se c'è; altrimenti resta com'è (cristallo e SIN non toccano l'alimentazione, A.251)
+  const dopo = scelta?.conversione === true
+    ? { conversione: scelta.id, pmPersonali: false, proprietaCustode: false }
+    : ora ?? { conversione: null, pmPersonali: true, proprietaCustode: true };
+  const consumo = scelta?.consumo?.testo ?? (dopo.pmPersonali ? '1 AzP e 2 PM personali · 10 Round (Tecnomante)' : null);
+  const perde = scelta?.conversione === true && ora?.pmPersonali ? ['l’alimentazione con i PM personali', 'le proprietà da Custode'] : [];
+  const nota = !bersaglio ? 'Nessuna CyberArma sicura da aggiornare: scegli quale nell’elenco (A.231).'
+    : !sceltaId ? 'Nessuna alimentazione scelta nel progetto: l’arma resta alimentata com’è oggi.' : '';
+  return {
+    nomeScelta: scelta?.nome ?? null,
+    da: ora ? { voce: bersaglio.rif, alimentazione: riga(ora), pmPersonali: ora.pmPersonali, proprietaCustode: ora.proprietaCustode } : null,
+    // con la consegna ferma non si scrive «dopo» una configurazione che non ci sarà: si dice che non c'è
+    a: ctl.errori.length ? { alimentazione: 'nessuna: la consegna è ferma finché l’esemplare è incoerente (vedi sotto)', pmPersonali: ora?.pmPersonali ?? null, proprietaCustode: ora?.proprietaCustode ?? null, consumo: null } : { alimentazione: riga(dopo), pmPersonali: dopo.pmPersonali, proprietaCustode: dopo.proprietaCustode, consumo },
+    perde, errori: ctl.errori, nota,
+  };
 }

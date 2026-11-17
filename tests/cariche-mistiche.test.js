@@ -100,7 +100,7 @@ test('i Guanti con le CM: usati fino a scaricarli (Pugno 1, Getto 3, Doppio 6) e
   assert.equal(6 * pmPerGruppo(c, 3, dati), 36);
 });
 
-test('la batteria della CyberArma: 5 CM esclusive, 1 CM per 10 Round, l’alternativa dei PM personali (A.236)', () => {
+test('la batteria della CyberArma: 5 CM esclusive, 1 CM per 10 Round, nessuna alternativa dei PM personali (A.236, A.251)', () => {
   const vb = voce('cb', 'armi:cyberarma-batteria-verde', 'impugnata');
   const di = pg(FILE_DIMITRI, { equip: (e) => [...e, vb] });
   const c = di.scheda.equipaggiamento.contenitori.find((x) => x.uid === 'cb');
@@ -110,16 +110,15 @@ test('la batteria della CyberArma: 5 CM esclusive, 1 CM per 10 Round, l’altern
   assert.ok(!contenitoriLancio({ scheda: di.scheda, sessione: di.sessione }, inc).some((x) => x.uid === 'cb'));
   // cinque attivazioni complete, poi la riserva è vuota; i PM personali restano
   const uso = usoPerClasse(dati.equipaggiamento.file.armi.oggetti.find((o) => o.id === 'cyberarma-batteria-verde'), classiDi(di.scheda));
-  assert.deepEqual([uso.classe, uso.cm, uso.pm, uso.round], ['Tecnomante', 1, 2, 10]);
+  // Lotto 209 (A.271): la A.251 del 06/11 supera la A.236 — una riserva interna di CM è l'unica alimentazione e i PM personali si perdono; la voce non offre più «oppure 2 PM personali» (tests/cyberarma-a271-209.test.js lo fa fallire se torna).
+  assert.deepEqual([uso.classe, uso.cm, uso.pm, uso.round], ['Tecnomante', 1, null, 10]);
   let s = { ...di.sessione, round: 1 };
   for (let i = 0; i < 5; i++) { s = attivaArmaSessione({ ...s, attivazioniArmi: {} }, 'cb', uso, di.m); assert.ok(s, `attivazione ${i + 1}`); }
   assert.deepEqual([s.chroma.cb.pmAttuali, s.pmAttuali], [0, di.sessione.pmAttuali]);
   assert.equal(attivaArmaSessione({ ...s, attivazioniArmi: {} }, 'cb', uso, di.m), null, 'la sesta non c’è: avviso e «Procedi comunque»');
-  // l'alternativa: 2 PM personali, la riserva non si tocca
-  const conPm = attivaArmaSessione({ ...s, attivazioniArmi: {} }, 'cb', { ...uso, conPm: true }, di.m);
-  assert.deepEqual([conPm.pmAttuali, conPm.chroma.cb.pmAttuali], [di.sessione.pmAttuali - 2, 0]);
+  // niente alternativa dei PM personali (A.251): a riserva vuota l'arma non si accende con i PM, e la scheda non offre il pulsante
   const t = testoAttivazione({ uso_per_classe: uso ? dati.equipaggiamento.file.armi.oggetti.find((o) => o.id === 'cyberarma-batteria-verde').uso_per_classe : null }, di.scheda, di.sessione, 'cb');
-  assert.deepEqual([t.costo, t.alternativaPm], ['1 CM', 2]);
+  assert.deepEqual([t.costo, t.alternativaPm], ['1 CM', null]);
   // la CyberArma che Dimitri ha (l'originale, senza batteria) non riceve una riserva: «non aggiungere una riserva dove non era installata»
   const orig = pg(FILE_DIMITRI, { equip: (e) => [...e, voce('co', 'armi:cyberarma', 'impugnata')] });
   assert.equal(orig.sessione.chroma.co, undefined);

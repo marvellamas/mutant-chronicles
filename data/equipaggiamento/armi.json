@@ -2071,13 +2071,14 @@
      },
      {
       "classe": "Tecnomante",
-      "pm": 2,
+      "pm": null,
       "round": 10,
       "danno_extra": 0,
       "va": 0,
       "sintonizzazione": 2,
-      "testo": "Tecnomante (SnT 2): 1 AzP e 1 CM della riserva interna, oppure 2 PM personali; lama stabile 1 CM per 10 Round, senza Concentrazione; 1d8 Magico più i modificatori pertinenti (revisione «Cariche Mistiche», A.236). (A.260: 1 CM + 1 AzP · 10 Round, indipendentemente da attacchi, colpi o Azioni; si perdono i PM personali e le proprietà da Custode)",
-      "cm": 1
+      "testo": "Tecnomante (SnT 2): 1 AzP e 1 CM della riserva interna,; lama stabile 1 CM per 10 Round, senza Concentrazione; 1d8 Magico più i modificatori pertinenti (A.236, A.251). (A.260: 1 CM + 1 AzP · 10 Round, indipendentemente da attacchi, colpi o Azioni; si perdono i PM personali e le proprietà da Custode)",
+      "cm": 1,
+      "_a271": "A.271 (Davide, E&L 11/11/2026, Armamenti 0.86 §7.25): una conversione energetica (riserva interna di CM, NeC) è l’unica alimentazione e i PM personali si perdono (A.251). Questa riga non offre più l’alternativa dei PM personali che la A.236 aveva lasciato."
      },
      {
       "classe": "altre",

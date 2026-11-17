@@ -21,7 +21,7 @@ import { pianoGetto } from '../getti-artefatto.js';
 import { costoRiserva, numeroRiserva, testoCosto, interoRiserva } from '../cariche-mistiche.js';
 import { prezzoArtefatto } from '../prezzi-artefatti.js';
 import { alimentazioneSceglibile } from '../cyberarma.js';
-import { modelliProgetto, apriProgetto, scegliForma, scegliAlimentazione, registraTentativo, togliUltimoTentativo, chiudiProgetto, riapriProgetto, riepilogoProgetto, formaSceglibile, avvisiConsegna, avvisoNonConsegnata, esemplariDi, storicoDi, ESITI_TENTATIVO, NOMI_ESITO, ESITI_FINALI, NOMI_FINALE } from '../progetti.js';
+import { modelliProgetto, apriProgetto, scegliForma, scegliAlimentazione, registraTentativo, togliUltimoTentativo, chiudiProgetto, riapriProgetto, riepilogoProgetto, formaSceglibile, avvisiConsegna, avvisoNonConsegnata, esemplariDi, storicoDi, configurazioneConsegna, ESITI_TENTATIVO, NOMI_ESITO, ESITI_FINALI, NOMI_FINALE } from '../progetti.js';
 import { circostanzeMasterAttive } from '../correzioni-master.js';
 import { conAvviso } from './procedi.js';
 import { h, segno, svuota } from './dom.js';
@@ -3629,6 +3629,9 @@ function sezioneProgetti(ctx) {
         h('input', { type: 'text', placeholder: 'nota (facoltativa)', value: ui.chiusura[kc] ?? '', oninput: (e) => { ui.chiusura[kc] = e.target.value; } }),
         ESITI_FINALI.map((e) => h('button', { type: 'button', class: 'btn btn-piccolo', onclick: () => { const nota = ui.chiusura[kc] ?? ''; ui.chiusura[kc] = ''; applica(chiudiProgetto(lista, p.id, e, { quando: ora(), nota })); } }, NOMI_FINALE[e])))) : null;
     const avv = avvisiConsegna(p, ctx.dati);
+    // lotto 209 (A.271): la configurazione che questa consegna applica, letta prima di confermare
+    const bers = fam.length === 1 ? fam[0] : (fam.find((v) => v.uid === c.esemplare) ?? null);
+    const cfg = r.modello.risultato?.aggiorna_esemplare && !p.consegna ? configurazioneConsegna(p, bers, ctx.dati) : null;
     const consegna = p.consegna
       ? h('p', { class: 'riquadro ok' }, h('strong', {}, 'Consegnata: '), `${p.consegna.aggiornato ? 'il Direttore ha confermato le modifiche sulla stessa CyberArma' : 'il Direttore ha messo l’arma nell’inventario'} il ${data(p.consegna.quando)}${p.consegna.donatore ? '; la spada donatrice ha perso il SIN' : ''}${p.consegna.scheggia ? '; la scheggia è diventata il focalizzatore ed è uscita dall’inventario' : ''}${p.consegna.estratto ? '; il frammento Viola estratto è nell’inventario, a parte' : ''}.`)
       : master ? h('div', { class: 'progetto-consegna' }, h('h4', {}, 'Consegna (solo il Direttore)'),
@@ -3640,8 +3643,16 @@ function sezioneProgetti(ctx) {
           h('option', { value: '', selected: !c.donatore }, 'nessuna'), opzioni(comp('modulo')?.rif).map((v) => h('option', { value: v.uid, selected: c.donatore === v.uid }, nomeVoce(v))))),
         h('label', { class: 'campo' }, h('span', {}, 'Scheggia diventata focalizzatore (esce dall’inventario)'), h('select', { onchange: (e) => { c.scheggia = e.target.value; } },
           h('option', { value: '', selected: !c.scheggia }, 'nessuna'), opzioni(comp('scheggia')?.rif).map((v) => h('option', { value: v.uid, selected: c.scheggia === v.uid }, nomeVoce(v))))),
+        cfg ? h('div', { class: `riquadro configurazione-consegna${cfg.errori.length ? ' attenzione' : ''}`, 'data-configurazione-consegna': '' },
+          h('strong', {}, 'Configurazione che applica questa consegna'),
+          cfg.da ? h('p', {}, h('span', { class: 'sigla' }, 'Oggi: '), cfg.da.alimentazione, h('span', { class: 'nota' }, ` (voce ${cfg.da.voce})`)) : null,
+          h('p', {}, h('span', { class: 'sigla' }, 'Dopo la consegna: '), cfg.a.alimentazione, cfg.a.consumo ? h('span', { class: 'nota' }, ` · ${cfg.a.consumo}`) : null),
+          cfg.nomeScelta ? h('p', { class: 'nota' }, `Alimentazione scelta nel progetto: ${cfg.nomeScelta}.`) : null,
+          cfg.perde.length ? h('p', { class: 'nota motivo' }, `Si perdono: ${cfg.perde.join(' e ')} (A.251).`) : null,
+          cfg.nota ? h('p', { class: 'nota' }, cfg.nota) : null,
+          cfg.errori.length ? h('p', { class: 'nota motivo', role: 'alert' }, h('strong', {}, 'La consegna è ferma: '), cfg.errori.join('. ') + '.') : null) : null,
         avv.length ? h('p', { class: 'nota motivo' }, `Avviso: ${avv.join('; ')}.`) : null,
-        h('button', { type: 'button', class: `btn primario${avv.length ? ' con-avviso' : ''}`,
+        h('button', { type: 'button', class: `btn primario${avv.length ? ' con-avviso' : ''}`, disabled: !!cfg?.errori.length, title: cfg?.errori.length ? cfg.errori.join('. ') : null,
           onclick: () => conAvviso(ctx.azioni.storico, { azione: `consegnare l’arma del progetto «${p.nome}»`, motivo: avv.join('; ') || null,
             fai: () => ctx.azioni.consegnaArma(p.id, { provenienza: c.provenienza, donatore: c.donatore || null, scheggia: c.scheggia || null, esemplare: c.esemplare || null }) }) }, 'Consegna l’arma'))
         : h('p', { class: 'nota' }, 'Le modifiche diventano valide soltanto quando il Direttore consegna l’arma.');

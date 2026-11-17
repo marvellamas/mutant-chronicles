@@ -77,7 +77,8 @@ test('la CyberArma è un’arma ravvicinata e non effettua Raffiche, in nessuna 
 test('gli altri costi restano invariati: «Gli altri costi restano invariati» (A.260)', () => {
   const b = { ...voce('cyberarma-batteria-verde'), rif: 'armi:cyberarma-batteria-verde' };
   const t = usoPerClasse(b, ['Tecnomante']);
-  assert.deepEqual([t.cm, t.pm, t.va, t.sintonizzazione], [1, 2, 0, 2], '1 CM o 2 PM personali, SnT 2');
+  // Lotto 209 (A.271): la A.251 del 06/11 supera la A.236 — una riserva interna di CM è l'unica alimentazione e i PM personali si perdono; la voce non offre più «oppure 2 PM personali» (tests/cyberarma-a271-209.test.js lo fa fallire se torna).
+  assert.deepEqual([t.cm, t.pm, t.va, t.sintonizzazione], [1, null, 0, 2], '1 CM (niente PM personali), SnT 2');
   // su un esemplare convertito l'impiego del Custode resta non disponibile (A.251, non toccata dalla A.260)
   assert.equal(usoPerClasse(b, ['Custode']).ammesso, false);
 });

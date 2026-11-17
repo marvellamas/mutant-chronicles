@@ -3276,3 +3276,15 @@ lo dice invece di lasciarlo credere (`stradeDelLivello`, con i PX dal file e la 
 Quello che resta non è una domanda ma una **decisione di Davide**: nessuno dei sette ha i 1.050 PX dell'ottavo
 (mancano da 28 a Lucas a 144 a Dimitri), quindi o si gioca una serata di PX, o l'autorizzazione serve per tutti e
 sette — e i nomi non si deducono.
+
+**A.271 — che CyberArma ha Dimitri: RISOLTA dall'E&L (blocco «Raccordo Armamenti e Veicoli — 11 novembre 2026»),
+applicata dal lotto 209 (17/11/2026).** La risposta non era una risposta numerata: stava in un blocco non numerato
+dell'E&L, che la nostra copia, ferma al 15/10, non aveva. Dice: «l'attuale CyberArma di Dimitri ha focalizzatore Verde
+e non ha ancora il SIN installato, né CM o NeC. Il recupero da Park e le modifiche successive riguardano lo stesso
+esemplare: non duplicare oggetto, peso, riserve o benefici», e gli Armamenti 0.86 §7.25.4 lo confermano («È installato
+soltanto il focalizzatore Verde… la riserva interna e la conversione a NeC restano interventi futuri»). Nel file di
+Dimitri (11/11, istantanee del 14 e del 15/11) la voce era `armi:cyberarma-batteria-verde` con 5 CM: il modello
+sbagliato. Applicato: lo strumento `tools/correggi-cyberarma-dimitri.mjs` (sola lettura di suo, `--scrivi` lo lancia
+Davide) riporta la voce a `armi:cyberarma` e scrive il focalizzatore Verde; la consegna di un progetto si ferma se
+lascerebbe insieme riserva interna e PM personali (A.251 supera la A.236); la voce `cyberarma-batteria-verde` non offre
+più l'alternativa dei PM; il progetto dice prima quale configurazione applica. Voce chiusa.
