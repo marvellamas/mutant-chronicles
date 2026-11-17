@@ -25,7 +25,7 @@ import { pathToFileURL } from 'node:url';
 import { registro, voci, CARTELLA_TESTI, versioneDichiarata, versioneNelNome, improntaTesto } from './manuali.mjs';
 import { fermaSeSconosciuti, ARGOMENTI } from './argomenti.mjs';
 import { cartellaIstantanee, leggiConfig } from './salva-sessione.mjs';
-import { ultimaIstantanea, rigaFreschezza, RADICE as RADICE_APP } from './istantanea.mjs';
+import { ultimaIstantanea, rigaFreschezza, elencoIstantanee, quandoDalNome, RADICE as RADICE_APP } from './istantanea.mjs';
 import { cartellaDati } from './dati-pc.mjs';
 
 /** Il numero di versione dal titolo di un file di Drive: «… v0.74», «… 0.47.docx», «… — scheda v0.6». */
@@ -179,15 +179,16 @@ export const confrontiAllaCieca = () => [...registro().manuali, ...registro().sc
   .map((v) => ({ id: v.id, nome: v.nome, versione: v.versione, confronto: v.confronto }));
 
 /** Le righe da stampare, e se c'è qualcosa che deve fermare chi legge. */
-export function referto(files = null, testiFreschi = null) {
+export function referto(files = null, testiFreschi = null, { istantaneeLocali = null } = {}) {
   const righe = quadro(files, testiFreschi);
+  const istantanea = files ? confrontaIstantanee(files, istantaneeLocali ?? []) : null;
   const dop = files ? doppioni(files) : [];
   const spariti = righe.filter((r) => r.sparito);
   const diverse = righe.filter((r) => r.coincidono === false && !r.sparito);
   const incoerenti = righe.filter((r) => r.dentro && r.nome_file && r.dentro !== r.nome_file);
   const mancanti = righe.filter((r) => r.manca);
   const daLeggere = righe.filter((x) => x.da_leggere);
-  return { righe, doppioni: dop, spariti, diverse, incoerenti, mancanti, daLeggere, fermati: dop.length > 0 || spariti.length > 0 || incoerenti.length > 0 || mancanti.length > 0 };
+  return { righe, istantanea, doppioni: dop, spariti, diverse, incoerenti, mancanti, daLeggere, fermati: dop.length > 0 || spariti.length > 0 || incoerenti.length > 0 || mancanti.length > 0 };
 }
 
 /**
@@ -209,12 +210,46 @@ export function referto(files = null, testiFreschi = null) {
  * quella cartella: così il controllo di inizio sessione dice il giorno dei personaggi anche da noi, che è il posto
  * dove serve. Chi scrive continua a guardare solo l'impostazione.
  */
+export function cartellaIstantaneeLocale() {
+  const dd = cartellaDati(RADICE_APP).cartella;
+  const impostata = cartellaIstantanee(leggiConfig(join(dd, 'config-salvataggi.json')));
+  const ricevute = join(dd, 'istantanee');
+  return [impostata, ricevute].filter(Boolean).find((c) => ultimaIstantanea(c)) ?? impostata;
+}
+
+/**
+ * **Su Drive c'è un'istantanea più recente di quella che abbiamo? (lotto 210).** Lo stesso principio dell'E&L del 209: la copia
+ * dei personaggi è la base di ogni affermazione sui sette, e il 15/11 alle 18:45 Davide ne ha scritta una nuova che per due
+ * giorni non abbiamo visto — l'avevamo trovata per caso, cercando altro. Il nome del file (`mutant-stato_AAAA-MM-GG_HHMM.zip`)
+ * dice quando; si confronta con le istantanee che stanno in locale.
+ *
+ * Pura: non guarda il disco né la rete (si passano l'elenco di Drive e i nomi locali), così si prova.
+ * @param files l'elenco dei file della cartella di lavoro di Drive
+ * @param nomiLocali i nomi dei file zip delle istantanee che abbiamo (`elencoIstantanee(...).map(x => x.file)`)
+ * @returns {{ suDrive: string|null, locale: string|null, piuRecente: boolean, daPortare: string[] }}
+ */
+export function confrontaIstantanee(files, nomiLocali) {
+  const quando = (n) => quandoDalNome(n)?.getTime() ?? null;
+  const drive = (files ?? []).map((f) => f.title ?? f.name).filter((n) => typeof n === 'string' && quando(n) !== null).sort((a, b) => quando(b) - quando(a));
+  const locali = (nomiLocali ?? []).filter((n) => quando(n) !== null).sort((a, b) => quando(b) - quando(a));
+  const ultimaLocale = locali[0] ?? null;
+  const daPortare = drive.filter((n) => !locali.includes(n) && (ultimaLocale === null || quando(n) > quando(ultimaLocale)));
+  return { suDrive: drive[0] ?? null, locale: ultimaLocale, piuRecente: daPortare.length > 0, daPortare };
+}
+
+/** La riga da stampare: dice se su Drive c'è di meglio, e che cosa fare. Vuota se tutto torna. */
+export function righeIstantaneaDrive(c) {
+  if (!c?.piuRecente) return [];
+  return [
+    `ISTANTANEA PIÙ RECENTE SU DRIVE — ${c.daPortare[0]}, e noi abbiamo ${c.locale ?? 'nessuna istantanea'}.`,
+    '  È la base di ogni affermazione sui sette: va portata in istantanee/ (in sola lettura) prima di dire qualcosa sui livelli, i PX o gli inventari.',
+    ...(c.daPortare.length > 1 ? [`  Da portare: ${c.daPortare.join(', ')}.`] : []),
+  ];
+}
+
 export function rigaIstantanea() {
   try {
-    const dd = cartellaDati(RADICE_APP).cartella;
-    const impostata = cartellaIstantanee(leggiConfig(join(dd, 'config-salvataggi.json')));
-    const ricevute = join(dd, 'istantanee');
-    const dove = [impostata, ricevute].filter(Boolean).find((c) => ultimaIstantanea(c)) ?? impostata;
+    const dove = cartellaIstantaneeLocale();
     if (!dove) return 'Istantanea dei personaggi: cartella non impostata su questo PC. Ogni affermazione sui personaggi riguarda la copia locale di personaggi/, con la data del file su cui si basa.';
     return rigaFreschezza(ultimaIstantanea(dove)).riga;
   } catch (e) {
@@ -272,6 +307,7 @@ export async function righeRiferimentiRotti() {
 async function stampa(r, conDrive) {
   const L = (s, n) => String(s ?? '—').padEnd(n);
   console.log(rigaIstantanea());
+  if (conDrive) for (const riga of righeIstantaneaDrive(r.istantanea)) console.log(riga);
   // lotto 201: accanto alla data dei personaggi, i riferimenti che non puntano a niente. I due di Pablo e Lucas
   // c'erano dal 4 e dal 9 ottobre e li abbiamo trovati il 15 novembre per caso: da qui si vedono aprendo la sessione.
   for (const riga of await righeRiferimentiRotti()) console.log(riga);
@@ -308,7 +344,7 @@ async function stampa(r, conDrive) {
     console.log('\nDa guardare — su Drive c’è un numero di versione diverso da quello del registro:');
     for (const x of r.diverse) console.log(`  ${x.nome}: registro ${x.disco}, Drive ${x.drive} («${x.titolo}»)`);
   }
-  if (!r.fermati && !r.diverse.length && !r.daLeggere.length) console.log(conDrive ? '\nTutto in ordine: un file corrente per manuale, versioni coincidenti.' : '\nRepo in ordine. Per il confronto con Drive: --drive=<elenco.json>.');
+  if (!r.fermati && !r.diverse.length && !r.daLeggere.length && !r.istantanea?.piuRecente) console.log(conDrive ? '\nTutto in ordine: un file corrente per manuale, versioni coincidenti.' : '\nRepo in ordine. Per il confronto con Drive: --drive=<elenco.json>.');
   const attesa = recepimentiInAttesa();
   if (attesa.length) {
     console.log('\nSappiamo di non sapere — su Drive c’è un’edizione più recente che in cartella non è, e si sa perché:');
@@ -335,7 +371,8 @@ if (process.argv[1] && import.meta.url.endsWith(process.argv[1].replace(/\\/g, '
   const dirTesti = argv.find((a) => a.startsWith('--testi='))?.slice(8) ?? null;
   const freschi = {};
   if (dirTesti) for (const v of registro().scambio) { const p = join(dirTesti, `${v.id}.md`); if (existsSync(p)) freschi[v.id] = readFileSync(p, 'utf8'); }
-  const r = referto(files, dirTesti ? freschi : null);
+  const locali = files ? elencoIstantanee(cartellaIstantaneeLocale()).map((x) => x.file) : [];
+  const r = referto(files, dirTesti ? freschi : null, { istantaneeLocali: locali });
   await stampa(r, Boolean(files));
-  process.exit(r.fermati ? 2 : r.daLeggere.length ? 3 : 0);
+  process.exit(r.fermati ? 2 : r.daLeggere.length || r.istantanea?.piuRecente ? 3 : 0);
 }
