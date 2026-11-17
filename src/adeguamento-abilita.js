@@ -225,7 +225,9 @@ export function stradeDelLivello(o, dati) {
   if (bastano === true) strade.push(`ha i PX per il ${destinazione}°: basta il normale «Sali di livello»`);
   if (bastano === false) {
     strade.push(`una serata di PX: gliene mancano ${mancano} per la soglia del ${destinazione}° (${soglia})`);
-    strade.push('la concessione del Direttore (A.187): «Concedi il passaggio al livello N» con il motivo, i PX reali non cambiano');
+    // lotto 214: il Direttore 0.51 §9.8.3 (13/11) scrive che Davide autorizza il passaggio dei sette dal 7 all'8 senza assegnare i PX mancanti: qui il
+    // Direttore **registra** ciò che è già scritto, non lo decide da capo; l'app non concede da sola (§9.8.2: l'autorizzazione si registra a parte)
+    strade.push('la concessione del Direttore (A.187; Direttore 0.51 §9.8.3 la scrive già per i sette): «Concedi il passaggio al livello N» con il motivo, i PX reali non cambiano');
   }
   if (bastano === null) strade.push(`i PX non sono scritti nel file: la soglia del ${destinazione}° è ${soglia ?? 'sconosciuta'}`);
   const frase = `è al livello ${m.livello} con ${m.gradi} Grad${m.gradi === 1 ? 'o' : 'i'}, quindi il monte di adesso è ${m.monte} punti (§8.3.1: 7 per Grado). `

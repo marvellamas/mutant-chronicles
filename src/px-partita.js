@@ -15,7 +15,10 @@
 import { idStabileDiFile, fileDiPgStabile } from './cartella.js';
 
 const num = (n) => (Number.isFinite(Number(n)) ? Number(n) : 0);
-const arrotonda = (n) => Math.round(num(n));
+// Direttore §9.3.2: «si arrotonda una sola volta, all'intero più vicino; 0,5 si arrotonda per eccesso». In virgola mobile 45 × 0,7 fa
+// 31,499999999999996 e Math.round dava 31 invece di 32 (l'esempio «Due Grifoni» del §9.3.3): si somma una tolleranza molto più piccola di ogni
+// frazione che il calcolo può produrre (i coefficienti hanno due decimali).
+const arrotonda = (n) => Math.floor(num(n) + 0.5 + 1e-9);
 
 /** Il Titolo del livello (l'ultimo se il livello supera l'ultima fascia). */
 export function titoloPerLivello(livello, p) {
@@ -70,7 +73,8 @@ export function livelloPg(px, atto, p) {
 /** Correttivo per il numero di PG presenti: max(minimo, 1 + passo × (base − n)). */
 export function correttivoPg(nPresenti, p) {
   const c = p.correttivo_pg;
-  return Math.max(c.minimo, 1 + c.passo * (c.base - num(nPresenti)));
+  // il coefficiente ha due decimali (§9.3.2: ×1,30 … ×0,50): si toglie il rumore della virgola mobile (1 + 0,1 × (4 − 7) = 0,7000000000000002)
+  return Math.max(c.minimo, Math.round((1 + c.passo * (c.base - num(nPresenti))) * 100) / 100);
 }
 
 /** Unità di PX di un nemico dell'incontro: il suo px (dotazione già compresa), o il px del suo Titolo/GS. */
@@ -212,15 +216,22 @@ export function rettificaPremio(db, { atto, id, dallaPartitaId, motivo, quando =
 
 /**
  * Componenti e totale suggerito di un giocatore. `pxPg` sono i PX attuali del suo PG (per Titolo e livello).
+ * `livelloScheda` è il livello **raggiunto** dal PG nella sua scheda, se si conosce: dopo un avanzamento autorizzato senza aumento dei PX
+ * (Direttore §9.8.2) è più alto di quello che danno i PX, e «i moltiplicatori dei Titoli seguono il livello raggiunto» (§9.8.2, §9.4): il
+ * Titolo di una partita **non ancora assegnata** è quello del più alto fra i due, nei limiti dell'Atto. Una partita già assegnata tiene il
+ * suo (`pxPrima`, `livelloPrima`): assegnare non si ricalcola con le scelte di dopo.
  * Non assegna nulla.
  */
-export function componentiGiocatore(partita, pgId, pxPg, p) {
+export function componentiGiocatore(partita, pgId, pxPg, p, livelloScheda = null) {
   const part = partita?.partecipanti?.[pgId] ?? {};
   const presente = !!part.presente;
   // A.168 (18/10): il Titolo di una partita dipende dai PX che il PG aveva PRIMA della sua assegnazione
   // (`pxPrima`, salvato alla prima assegnazione); il Direttore può cambiarlo a mano (`titoliManuali`)
   const pxBase = Number.isFinite(Number(partita?.pxPrima?.[pgId])) ? Number(partita.pxPrima[pgId]) : pxPg;
-  const livello = livelloPg(pxBase, partita?.atto, p);
+  const assegnata = Number.isFinite(Number(partita?.pxPrima?.[pgId]));
+  const daScheda = assegnata ? partita?.livelloPrima?.[pgId] : livelloScheda;
+  const livelloPx = livelloPg(pxBase, partita?.atto, p);
+  const livello = Number.isFinite(Number(daScheda)) && Number(daScheda) > livelloPx ? Math.min(Number(daScheda), limiteAtto(partita?.atto, p)) : livelloPx;
   const manuale = p.titoli.find((x) => x.nome === partita?.titoliManuali?.[pgId]);
   const titoloT = manuale ?? titoloPerLivello(livello, p);
   const fattore = titoloT.fattore;
@@ -246,10 +257,10 @@ export function componentiGiocatore(partita, pgId, pxPg, p) {
  * Calcolo completo della partita. `pxGiocatori`: { pgId: px attuali }. Per ogni giocatore le componenti e il
  * totale finale modificabile (`partita.finali[pgId]` se c'è, altrimenti il suggerito). Non assegna nulla.
  */
-export function calcolaPartita(partita, pxGiocatori, p) {
+export function calcolaPartita(partita, pxGiocatori, p, livelliScheda = null) {
   const perGiocatore = {};
   for (const pgId of Object.keys(partita?.partecipanti ?? {})) {
-    const comp = componentiGiocatore(partita, pgId, num(pxGiocatori?.[pgId]), p);
+    const comp = componentiGiocatore(partita, pgId, num(pxGiocatori?.[pgId]), p, livelliScheda?.[pgId] ?? null);
     const finale = partita?.finali?.[pgId];
     perGiocatore[pgId] = {
       ...comp,
@@ -268,8 +279,8 @@ const contaNellaPartita = (partita, pgId, g) => !!g.presente || haPremio(partita
  * totale finale scelto e quanto già assegnato da QUESTA partita (così correggere aggiorna, non raddoppia).
  * Ritorna { pgId: delta } solo per i presenti con delta ≠ 0.
  */
-export function deltaAssegnazione(partita, pxGiocatori, p) {
-  const { perGiocatore } = calcolaPartita(partita, pxGiocatori, p);
+export function deltaAssegnazione(partita, pxGiocatori, p, livelliScheda = null) {
+  const { perGiocatore } = calcolaPartita(partita, pxGiocatori, p, livelliScheda);
   const delta = {};
   for (const [pgId, g] of Object.entries(perGiocatore)) {
     if (!contaNellaPartita(partita, pgId, g)) continue;
@@ -286,8 +297,8 @@ export function deltaAssegnazione(partita, pxGiocatori, p) {
  * giocatore con «Sali di livello». `limitatoDallAtto` dice che l'Atto corrente non consente ancora di salire fin lì.
  * @returns [{ id, da, a, pxPrima, pxDopo, limitatoDallAtto }] con `da` e `a` livelli dai PX (senza il limite dell'Atto)
  */
-export function passaggiDiLivello(partita, pxGiocatori, p) {
-  const delta = deltaAssegnazione(partita, pxGiocatori, p);
+export function passaggiDiLivello(partita, pxGiocatori, p, livelliScheda = null) {
+  const delta = deltaAssegnazione(partita, pxGiocatori, p, livelliScheda);
   const passaggi = [];
   for (const [id, d] of Object.entries(delta)) {
     const pxPrima = num(pxGiocatori?.[id]);
@@ -310,16 +321,21 @@ export function frasePassaggio(passaggio, nome) {
  * Partita dopo l'assegnazione: registra gli importi finali in `assegnato`, lo stato e la data. I totali finali
  * si rileggono dal calcolo (con i px attuali). Idempotente a parità di px e di totali finali.
  */
-export function partitaAssegnata(partita, pxGiocatori, quando, p) {
-  const { perGiocatore } = calcolaPartita(partita, pxGiocatori, p);
+export function partitaAssegnata(partita, pxGiocatori, quando, p, livelliScheda = null) {
+  const { perGiocatore } = calcolaPartita(partita, pxGiocatori, p, livelliScheda);
   const assegnato = {};
   const pxPrima = { ...(partita?.pxPrima ?? {}) };
+  const livelloPrima = { ...(partita?.livelloPrima ?? {}) };
   for (const [pgId, g] of Object.entries(perGiocatore)) {
     if (!contaNellaPartita(partita, pgId, g)) continue;
     assegnato[pgId] = arrotonda(g.totaleFinale);
-    if (!Number.isFinite(Number(pxPrima[pgId]))) pxPrima[pgId] = num(pxGiocatori?.[pgId]); // solo alla prima assegnazione
+    if (!Number.isFinite(Number(pxPrima[pgId]))) {
+      pxPrima[pgId] = num(pxGiocatori?.[pgId]); // solo alla prima assegnazione
+      // lotto 214: anche il livello raggiunto di allora (§9.8.2): se il PG sale dopo, il Titolo di questa partita non si sposta
+      if (Number.isFinite(Number(livelliScheda?.[pgId]))) livelloPrima[pgId] = Number(livelliScheda[pgId]);
+    }
   }
-  return { ...partita, assegnato, pxPrima, statoAssegnazione: 'assegnata', assegnataIl: quando };
+  return { ...partita, assegnato, pxPrima, ...(Object.keys(livelloPrima).length ? { livelloPrima } : {}), statoAssegnazione: 'assegnata', assegnataIl: quando };
 }
 
 /**

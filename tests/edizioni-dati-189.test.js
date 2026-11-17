@@ -52,8 +52,11 @@ test('ogni file di data/ ha una versione_manuale, e si capisce quale manuale cit
     assert.ok(r.dichiarata, `${r.file}: manca versione_manuale`);
     if (!r.manuali.length) senzaManuale.push(r.file);
   }
-  // i file che non citano un manuale del registro sono pochi e si sanno: bestiario, galleria, PX
-  assert.deepEqual(senzaManuale.sort(), ['data/bestiario.json', 'data/galleria.json', 'data/px_partita.json']);
+  // i file che non citano un manuale del registro sono pochi e si sanno: bestiario, galleria. I PX (px_partita.json) ne
+  // erano il terzo fino al lotto 214: ora dichiarano Direttore 0.51, e il controllo delle edizioni li vede.
+  assert.deepEqual(senzaManuale.sort(), ['data/bestiario.json', 'data/galleria.json']);
+  const px = quadroEdizioni().find((r) => r.file === 'data/px_partita.json');
+  assert.ok(px.manuali.some((m) => m.id === 'direttore' && m.allineata), 'px_partita.json deve dichiarare il Direttore (lotto 214)');
 });
 
 test('il lettore di versione_manuale non confonde un paragrafo con un’edizione', () => {

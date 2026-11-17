@@ -94,6 +94,7 @@ export const ARGOMENTI = {
   'importa-equipaggiamento.mjs': ['file'],
   'lotto_213_veicoli.mjs': ['scrivi'],
   'importa-veicoli.mjs': ['file'],
+  'importa-direttore.mjs': ['file'],
   'importa-incantesimi.mjs': ['file', 'testo'],
   'lotto_209_veicoli_civili.mjs': ['scrivi'],
   'correggi-cyberarma-dimitri.mjs': ['cartella', 'nome', 'scrivi'],

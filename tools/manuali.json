@@ -104,6 +104,7 @@
    "testo": "direttore-0.51.md",
    "modificato": "2026-11-13T11:58:17Z",
    "confronto": "alla cieca",
+   "nota": "Lotto 214 (17/11/2026): i dati dal capitolo 9 (PX, scala dei GS, correttivo dei PG, Titoli, PNG generici per Grado ed EQ) letti con tools/importa-direttore.mjs sulle edizioni 0.46, 0.49 e 0.51: 0 scarti. Cambia nel codice solo l’arrotondamento a mezzo (31,5 → 32) e il Titolo dal livello raggiunto (§9.8.2–3). Procedure del manuale che l’app non ha: docs/diff-lotto214-2026-11-17.md.",
    "recepita": {
     "versione": "0.51",
     "quando": "2026-11-14",

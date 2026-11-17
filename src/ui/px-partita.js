@@ -181,13 +181,13 @@ function vistaPartita(ctx, st, az, salva, partita) {
       h('p', {}, `Il premio dell’Atto ${partita.atto} è già stato dato a ${giaDatoA.map(nomeGiocatore).join(', ')} in un’altra partita: non si dà due volte, la casella è bloccata. Per correggere un’assegnazione sbagliata usa la rettifica (con il motivo). Un premio in più deciso da te va nel «Bonus».`),
       h('div', { class: 'riga-azioni' }, ...giaDatoA.map((id) => h('button', { class: 'btn small ghost', onclick: () => rettifica(id) }, `Rettifica: ${nomeGiocatore(id)}`)))) : null;
 
-  const calc = calcolaPartita(partita, st.pxGiocatori, p(st));
-  const passaggi = Object.fromEntries(passaggiDiLivello(partita, st.pxGiocatori, p(st)).map((x) => [x.id, x]));
+  const calc = calcolaPartita(partita, st.pxGiocatori, p(st), st.livelliPg);
+  const passaggi = Object.fromEntries(passaggiDiLivello(partita, st.pxGiocatori, p(st), st.livelliPg).map((x) => [x.id, x]));
   const nPresenti = presentiNella(partita);
 
   const righeGiocatori = (db.giocatori ?? []).map((g) => {
     const part = partita.partecipanti[g.id] ?? (partita.partecipanti[g.id] = { presente: false, partecipazione: p(st).voti.default, interpretazione: p(st).voti.default, contributo: p(st).voti.default, eccezionale: 0 });
-    const c = calc.perGiocatore[g.id] ?? componentiGiocatore(partita, g.id, st.pxGiocatori?.[g.id] ?? 0, p(st));
+    const c = calc.perGiocatore[g.id] ?? componentiGiocatore(partita, g.id, st.pxGiocatori?.[g.id] ?? 0, p(st), st.livelliPg?.[g.id] ?? null);
     const voto = (chiave) => h('input', { type: 'number', min: p(st).voti.min, max: p(st).voti.max, value: part[chiave], class: 'px-voto',
       oninput: (e) => { part[chiave] = Number(e.target.value); az.salva(); az.ridisegna(); } });
     const finaleVal = partita.finali?.[g.id];
@@ -219,7 +219,7 @@ function vistaPartita(ctx, st, az, salva, partita) {
     h('tbody', {}, ...righeGiocatori));
 
   const assegna = h('button', { class: 'btn', onclick: async () => {
-    const delta = deltaAssegnazione(partita, st.pxGiocatori, p(st));
+    const delta = deltaAssegnazione(partita, st.pxGiocatori, p(st), st.livelliPg);
     const nomi = Object.keys(delta);
     if (!nomi.length) { avviso('Niente da assegnare: i totali sono già quelli assegnati.', { tipo: 'info' }); return; }
     const testo = nomi.map((id) => `${(db.giocatori.find((g) => g.id === id)?.pg) || id}: ${delta[id] > 0 ? '+' : ''}${fmt(delta[id])}`).join('\n');

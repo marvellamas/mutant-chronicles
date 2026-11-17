@@ -1,5 +1,5 @@
 {
-  "versione_manuale": "Manuale del Direttore §9.3 (riferimento funzionale: EROI_LEGGENDE_Gestore_PX v1.2 di Davide, 16/10/2026; fasce dei Titoli: A.168, 18/10/2026)",
+  "versione_manuale": "Direttore 0.51 §9.3 e §9.8.2 (confermati dal manuale al lotto 214; riferimento funzionale: EROI_LEGGENDE_Gestore_PX v1.2 di Davide, 16/10/2026; fasce dei Titoli: A.168, 18/10/2026)",
   "_nota": "Regole del calcolatore «PX della partita» del Tavolo del Direttore (A.161, approvata il 16/10/2026). Riferimento funzionale: il gestore di Davide (docs/riferimenti/EROI_LEGGENDE_Gestore_PX_v1_2.html), non codice da copiare. Il Manuale del Direttore §9.3 non è fra i Doc che controlliamo: i fattori qui sotto vengono dal gestore, salvo le fasce dei Titoli corrette da Davide il 18/10 (A.168); il resto è DA CONFERMARE (A.170). L'app non assegna mai PX da sola: il calcolatore propone, il Direttore vede il totale finale modificabile e solo «Assegna PX della partita» aggiorna i PG. Tutti i numeri sono qui, modificabili dal Direttore.",
   "voti": {
     "min": 1,
@@ -34,7 +34,7 @@
   ],
   "_nota_atti": "L'Atto corrente limita il livello massimo raggiungibile (i PX in eccesso restano e valgono quando l'Atto si sblocca). «premio» è il premio di fine Atto, incluso SOLO quando il Direttore lo dispone, una volta per partita.",
   "soglie_px": [0, 50, 110, 180, 340, 520, 720, 1050, 1410, 1800, 2220, 2820, 3460, 4140, 4860, 5810, 6810, 7860, 8960, 10340],
-  "_nota_soglie": "Soglie cumulative di PX per i livelli 1–20 (soglie_px[n-1] = PX minimi per il livello n). Dal gestore di Davide, DA CONFERMARE (A.170).",
+  "_nota_soglie": "Soglie cumulative di PX per i livelli 1–20 (soglie_px[n-1] = PX minimi per il livello n). Dal gestore di Davide (A.170); il Direttore 0.51 §9.8 conferma il passaggio di livello per PX e per concessione, le soglie restano quelle del gestore.",
   "incontro": {
     "principale": 1,
     "altri": 0.5,

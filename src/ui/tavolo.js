@@ -486,7 +486,7 @@ export function renderTavolo(radice, ctx) {
     const fascia = fasciaGalleria(ctx, stato.galleria, { nascondi: nascondiGalleria, vai: () => (ctx.inMappa?.vaiAlGruppo ? ctx.inMappa.vaiAlGruppo('galleria') : document.querySelector('.galleria-pannello')?.scrollIntoView({ behavior: 'smooth', block: 'start' })) });
     // PX della partita (A.161): la tab, solo sul PC del master e non dentro la mappa
     const px = (ctx.master && !ctx.inMappa && stato.db) ? pannelloPx(ctx, {
-      db: stato.db, dati: ctx.dati, uiPx: stato.uiPx, pxGiocatori: pxGiocatori(),
+      db: stato.db, dati: ctx.dati, uiPx: stato.uiPx, pxGiocatori: pxGiocatori(), livelliPg: livelliPg(),
       // 20/10: un personaggio una volta sola nel menu (prima c'erano tutti i file datati: tre o quattro copie per PG)
       schede: ultimiPerPg(stato.elenco), scontri: stato.scontro ? [stato.scontro] : [],
       // 21/10/2026, parte C: righe non migrate da pgFile a pgStabile (il file non c'è più nell'elenco)
@@ -1012,10 +1012,10 @@ export function renderTavolo(radice, ctx) {
       try {
         const res = await fetch(`api/personaggi/${encodeURIComponent(r.file)}`, { cache: 'no-store' });
         const o = res.ok ? await res.json() : null;
-        pxDaFile.set(g.id, { mtime: r.mtime, px: Number.isFinite(Number(o?.scelte?.puntiEsperienza)) ? Number(o.scelte.puntiEsperienza) : null });
+        pxDaFile.set(g.id, { mtime: r.mtime, px: Number.isFinite(Number(o?.scelte?.puntiEsperienza)) ? Number(o.scelte.puntiEsperienza) : null, livello: Array.isArray(o?.livelli) ? o.livelli.length + 1 : null });
       } catch { /* resta il valore di prima */ }
     }
-    const firma = JSON.stringify([db, [...pxDaFile].map(([id, v]) => [id, v.px])]);
+    const firma = JSON.stringify([db, [...pxDaFile].map(([id, v]) => [id, v.px, v.livello])]);
     if (firma === stato.firmaPx) return false;
     stato.firmaPx = firma;
     stato.db = db;
@@ -1023,14 +1023,17 @@ export function renderTavolo(radice, ctx) {
   };
   // i PX attuali di ogni giocatore, dal file del suo PG (scelte.puntiEsperienza); altrimenti i PX iniziali comuni
   const pxGiocatori = () => Object.fromEntries((stato.db?.giocatori ?? []).map((g) => [g.id, pxDaFile.get(g.id)?.px ?? stato.db?.impostazioni?.baseline ?? 0]));
+  // lotto 214 (Direttore §9.4, §9.8.2): il livello raggiunto nella scheda, che dopo un avanzamento autorizzato senza PX è più alto di quello dei PX; il Titolo lo segue
+  const livelliPg = () => Object.fromEntries((stato.db?.giocatori ?? []).map((g) => [g.id, pxDaFile.get(g.id)?.livello ?? null]).filter(([, l]) => l !== null));
   const salvaPxDb = () => archivioPx.modifica();
   // «Assegna PX della partita»: applica i delta ai PG presenti come Modifica master «diretta» su puntiEsperienza
   const assegnaPx = async (partita) => {
     const p = ctx.dati.px_partita;
     const pxPrima = pxGiocatori(); // gli stessi PX per il delta e per gli importi registrati (un aggiornamento in mezzo non li sposta)
-    const delta = deltaAssegnazione(partita, pxPrima, p);
+    const livelliSch = livelliPg();
+    const delta = deltaAssegnazione(partita, pxPrima, p, livelliSch);
     // 25/10/2026: chi supera la soglia del livello successivo (solo un avviso, calcolato sui PX di prima)
-    const livelli = passaggiDiLivello(partita, pxPrima, p).map((x) => frasePassaggio(x, stato.db.giocatori.find((g) => g.id === x.id)?.pg || x.id));
+    const livelli = passaggiDiLivello(partita, pxPrima, p, livelliSch).map((x) => frasePassaggio(x, stato.db.giocatori.find((g) => g.id === x.id)?.pg || x.id));
     const etichetta = `PX della partita del ${partita.data || new Date().toISOString().slice(0, 10)}`;
     const senzaPg = [];
     for (const [id, d] of Object.entries(delta)) {
@@ -1045,7 +1048,7 @@ export function renderTavolo(radice, ctx) {
       if (!put.ok) throw new Error((await put.json().catch(() => ({}))).errore ?? `errore ${put.status} su ${r.file}`);
     }
     const idx = stato.db.partite.findIndex((m) => m.id === partita.id);
-    if (idx >= 0) stato.db.partite[idx] = partitaAssegnata(partita, pxPrima, new Date().toISOString().slice(0, 10), p);
+    if (idx >= 0) stato.db.partite[idx] = partitaAssegnata(partita, pxPrima, new Date().toISOString().slice(0, 10), p, livelliSch);
     archivioPx.modifica();
     await archivioPx.salva();
     avviso(senzaPg.length ? `PX assegnati. Senza PG associato (non aggiornati): ${senzaPg.join(', ')}. Collegali in «Impostazioni».` : 'PX della partita assegnati ai PG presenti (Modifica master).', { tipo: senzaPg.length ? 'info' : 'ok', durata: 8000 });
