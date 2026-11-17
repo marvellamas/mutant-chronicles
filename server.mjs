@@ -138,6 +138,10 @@ import { proteggiBlocchiMaster } from './src/correzioni-master.js';
 import { controllaTalentiDaTablet } from './src/talenti-tablet.js';
 import { controllaLivelloDaTablet } from './src/livello-px.js';
 import { controllaPuntiDaTablet } from './src/sposta-punti.js';
+import { normalizzaAvanzamento } from './src/avanzamento-tablet.js';
+import { confermaAdeguamentoLegittima } from './src/adeguamento-abilita.js';
+// lotto 215: chiave del PG → { riga, assegnati, monte, quando }, solo in memoria
+const avanzamentiTablet = new Map();
 import { nuoviPremiDoppi } from './src/px-partita.js';
 import { createServer } from 'node:http';
 import { readFileSync, createReadStream } from 'node:fs';
@@ -1888,6 +1892,25 @@ async function api(req, res, percorso, cartella, tavolo, scontri, nemici, radice
     }
     return json(res, 405, { errore: 'metodo non ammesso' });
   }
+  // lotto 215: l'avanzamento dell'adeguamento delle Abilità comunicato dal tablet (solo in memoria: non scrive nessun file, src/avanzamento-tablet.js)
+  if (percorso === '/api/adeguamento/avanzamento') {
+    if (req.method === 'GET') return json(res, 200, { avanzamenti: Object.fromEntries(avanzamentiTablet) });
+    if (req.method === 'POST') {
+      let c;
+      try { c = JSON.parse((await leggiCorpo(req, 4096)).toString('utf8')); } catch { return json(res, 400, { errore: 'corpo non valido' }); }
+      const av = normalizzaAvanzamento(c);
+      if (!av) return json(res, 400, { errore: 'avanzamento non valido' });
+      avanzamentiTablet.set(av.chiave, av);
+      while (avanzamentiTablet.size > 60) avanzamentiTablet.delete(avanzamentiTablet.keys().next().value);
+      return json(res, 200, { ok: true });
+    }
+    if (req.method === 'DELETE') {
+      const chiave = new URL(req.url, 'http://x').searchParams.get('chiave');
+      if (chiave) avanzamentiTablet.delete(chiave);
+      return json(res, 200, { ok: true });
+    }
+    return json(res, 405, { errore: 'metodo non ammesso' });
+  }
   if (percorso === '/api/tavolo') {
     const dove = join(tavolo, 'sessione.json');
     if (req.method === 'GET') {
@@ -1987,7 +2010,9 @@ async function api(req, res, percorso, cartella, tavolo, scontri, nemici, radice
         const l = controllaLivelloDaTablet(o, disco, { atto, p: dati.px_partita });
         if (!l.ok) return json(res, l.stato, { errore: l.errore, livelloPx: true });
         // lotto 165 (02/11/2026): i Punti Abilità già spesi in un livello li sposta solo il Direttore (src/sposta-punti.js)
-        const pa = controllaPuntiDaTablet(o, disco, dati);
+        // lotto 215: la «Conferma» dell'adeguamento delle Abilità è l'unica scrittura di un tablet che cambia puntiDirettore e il registro del master;
+        // passa solo se è esattamente la conferma legittima di un adeguamento aperto (src/adeguamento-abilita.js → confermaAdeguamentoLegittima)
+        const pa = confermaAdeguamentoLegittima(o, disco, dati) ? { ok: true } : controllaPuntiDaTablet(o, disco, dati);
         if (!pa.ok) return json(res, pa.stato, { errore: pa.errore, puntiAbilita: true });
       }
       await mkdir(cartella, { recursive: true });
@@ -1998,7 +2023,9 @@ async function api(req, res, percorso, cartella, tavolo, scontri, nemici, radice
         // A.251: le conversioni dell'alimentazione della CyberArma le decide il Direttore, e per riconoscerle
         // servono i dati del catalogo (src/cyberarma.js → alimentazioneDaTablet)
         const { dati: datiProtezione } = await datiDelServer(radice);
-        const p = proteggiBlocchiMaster(o, await fileAttualeDelPg(cartella, file, typeof o.pg === 'string' ? o.pg : null), datiProtezione);
+        const discoP = await fileAttualeDelPg(cartella, file, typeof o.pg === 'string' ? o.pg : null);
+        // lotto 215: nella conferma legittima la riga della nota passa a «confermato»: non è una modifica del tablet da annullare
+        const p = proteggiBlocchiMaster(o, confermaAdeguamentoLegittima(o, discoP, datiProtezione) ? { ...discoP, correzioni_master: o.correzioni_master } : discoP, datiProtezione);
         if (p.ripristinato) { masterRipristinato = true; corpo = Buffer.from(JSON.stringify(p.file, null, 2), 'utf8'); }
       }
       // «un originale solo» (20/10): il file che si sta per sovrascrivere va nello storico, e quello nuovo porta la sua

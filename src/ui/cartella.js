@@ -157,6 +157,31 @@ export async function leggiMomento() {
   }
 }
 
+/**
+ * Lotto 215: il tablet dice al server quanti punti dell'adeguamento ha messo (solo in memoria sul server, per la plancia: non scrive
+ * nessun file). Silenzioso: se non c'è il server o la richiesta fallisce non succede niente, e i punti restano dove sono.
+ */
+export async function comunicaAvanzamento(av) {
+  try {
+    if (!(await serverCartella())) return;
+    await fetch('api/adeguamento/avanzamento', { method: 'POST', body: JSON.stringify(av), headers: { 'Content-Type': 'application/json' } });
+  } catch { /* è solo informazione per il Direttore */ }
+}
+export async function togliAvanzamento(chiave) {
+  try {
+    if (!(await serverCartella())) return;
+    await fetch(`api/adeguamento/avanzamento?chiave=${encodeURIComponent(chiave)}`, { method: 'DELETE' });
+  } catch { /* come sopra */ }
+}
+/** { chiave: { riga, assegnati, monte, quando } } come lo ha il server; {} senza server. */
+export async function leggiAvanzamenti() {
+  try {
+    if (!(await serverCartella())) return {};
+    const r = await fetch('api/adeguamento/avanzamento', { cache: 'no-store' });
+    return r.ok ? (await r.json()).avanzamenti ?? {} : {};
+  } catch { return {}; }
+}
+
 /** «Nuova scena», «Nuovo capitolo» o «Annulla» del Direttore (403 dai tablet). Restituisce il momento nuovo. */
 export async function comandoMomento(azione) {
   const r = await fetch('api/momento', { method: 'POST', body: JSON.stringify({ azione }), headers: { 'Content-Type': 'application/json' } });

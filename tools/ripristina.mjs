@@ -26,6 +26,8 @@ export const TIPI = {
   sessione: 'sessione',
   'prima-del-ripristino': 'prima di un ripristino',
   'prima-aggiornamento': 'prima di un aggiornamento',
+  // lotto 215: la copia che `tools/adegua-abilita.mjs --applica` fa prima di scrivere (prima non compariva in «Ripristina», e dopo una serata andata storta era la sola via)
+  'prima-adeguamento': 'prima dell’adeguamento delle Abilità',
   autosave: 'automatico (ultimo)',
   'autosave-precedente': 'automatico (quello prima)',
 };
@@ -43,7 +45,8 @@ export const TIPI = {
 export function elencoSalvataggi({ salvataggi, autosave, backup = null, drive = null, massimo = 30 }) {
   const out = [];
   const tipoDaNome = (n) => (n.startsWith('prima-del-ripristino_') ? 'prima-del-ripristino'
-    : n.startsWith('sessione_') ? 'sessione' : n.startsWith('locali_') ? 'prima-aggiornamento' : null);
+    : n.startsWith('sessione_') ? 'sessione' : n.startsWith('locali_') ? 'prima-aggiornamento'
+      : n.startsWith('prima-dell-adeguamento-abilita_') ? 'prima-adeguamento' : null);
   const cartella = (dove, etichettaDove) => {
     if (!dove || !existsSync(dove)) return;
     for (const n of readdirSync(dove)) {

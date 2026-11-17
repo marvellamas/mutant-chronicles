@@ -40,6 +40,7 @@ import { calcolaSchedaPersonaggio, migraPersonaggio } from './avanzamento.js';
 import { nuovaCorrezione, aggiungiCorrezione, normalizzaCorrezioni } from './correzioni-master.js';
 import { profiloCompetenze, competenzaDi, limiteAbilita, PROFILO_NUOVO } from './competenze.js';
 import { nomeEvento, puntiPrevisti } from './sposta-punti.js';
+import { concessioniLivello } from './livello-px.js';
 
 const isOggetto = (x) => x !== null && typeof x === 'object' && !Array.isArray(x);
 const somma = (o) => Object.values(o ?? {}).reduce((a, b) => a + (Number.isInteger(b) ? b : 0), 0);
@@ -230,6 +231,13 @@ export function stradeDelLivello(o, dati) {
     strade.push('la concessione del Direttore (A.187; Direttore 0.51 §9.8.3 la scrive già per i sette): «Concedi il passaggio al livello N» con il motivo, i PX reali non cambiano');
   }
   if (bastano === null) strade.push(`i PX non sono scritti nel file: la soglia del ${destinazione}° è ${soglia ?? 'sconosciuta'}`);
+  // lotto 215, dalla prova generale: la concessione registrata **non** fa salire di livello, e il monte non cambia finché il passaggio vero
+  // non è fatto (Classe, Specializzazione, incantesimi per i taumaturghi, 7 punti del nuovo Grado che l'adeguamento poi azzera). Lo strumento lo dice.
+  const concessa = concessioniLivello(o?.correzioni_master).some((c) => c.livello >= destinazione);
+  if (concessa && bastano === false) {
+    strade.length = 0;
+    strade.push(`la concessione per il ${destinazione}° è già registrata (i PX non cambiano), ma il personaggio non è ancora salito: manca il passaggio vero, «Sali al livello ${destinazione}» dalla scheda; solo allora il monte diventa ${m.atteso8}`);
+  }
   const frase = `è al livello ${m.livello} con ${m.gradi} Grad${m.gradi === 1 ? 'o' : 'i'}, quindi il monte di adesso è ${m.monte} punti (§8.3.1: 7 per Grado). `
     + `La destinazione approvata è il livello ${destinazione} con ${m.atteso8} punti (blocco dell'11/11 e A.268): `
     + `${strade.join('; ')}. Adeguare adesso al livello ${m.livello} con ${m.monte} punti non è la strada approvata.`;
@@ -435,6 +443,39 @@ export function confermaAssegnazione(o, bozza, dati, { quando = new Date().toISO
 }
 
 /**
+ * Lotto 215 — **la «Conferma» di un tablet, che il server deve lasciar passare e nient'altro.**
+ *
+ * La prova generale (17/11/2026) ha fatto la serata dal lato tablet, cioè da chi NON è il PC del Direttore: ogni «Conferma» tornava 403.
+ * Il server non lascia a un tablet toccare `puntiDirettore` (lotto 165) né le righe del registro del master (12/10), e la conferma
+ * dell'adeguamento scrive proprio quelle due cose (il totale dell'evento diventa il monte, e la riga della nota passa a «confermato»).
+ * Sul PC del Direttore, dove avevamo provato tutto fino a ieri, quelle protezioni non esistono: per questo nessun test l'aveva visto.
+ *
+ * Questa funzione dice se un file che arriva da un tablet è **esattamente** la conferma legittima di un adeguamento aperto sul disco:
+ * stesso evento, punti che fanno il monte (`confermaAssegnazione` li controlla: residuo 0, nessuna Abilità oltre il limite),
+ * stessa riga di registro con il solo `confermato` in più, e **nessun'altra differenza** nei punti degli altri eventi, in
+ * `puntiDirettore` o nel registro. Un tablet che prova qualunque altra cosa (togliere punti da un altro evento, scriversi una
+ * correzione, chiudere un adeguamento senza aver messo i punti) non passa: torna alle regole di sempre.
+ *
+ * @returns true solo per la conferma legittima
+ */
+export function confermaAdeguamentoLegittima(nuovo, disco, dati) {
+  try {
+    const ap = adeguamentoAperto(disco, dati);
+    if (!ap) return false;
+    const atteso = confermaAssegnazione(disco, puntiDellEvento(nuovo, ap.livello), dati);
+    if (!atteso.ok) return false;
+    const impronta = (f) => JSON.stringify({
+      liberi: f.scelte?.puntiAbilitaLiberi ?? null,
+      diretto: f.scelte?.puntiDirettore ?? null,
+      livelli: (f.livelli ?? []).map((v) => [v?.puntiAbilita ?? null, v?.puntiDirettore ?? null]),
+      // il registro **grezzo**, non normalizzato: `normalizzaCorrezioni` scarta le righe che non capisce, e una riga abusiva scomparirebbe dal confronto
+      registro: (Array.isArray(f.correzioni_master) ? f.correzioni_master : []).map((r) => (r?.[MARCA] === true ? { ...r, confermato: !!r.confermato } : r)),
+    });
+    return impronta(nuovo) === impronta(atteso.file);
+  } catch { return false; }
+}
+
+/**
  * Annulla l'adeguamento di **questo** personaggio: rimette i campi toccati com'erano e toglie la riga della nota.
  * Il file torna identico a com'era, contrassegno compreso.
  */
@@ -462,5 +503,6 @@ export function statoPerPlancia(o, dati) {
   const ap = adeguamentoAperto(o, dati);
   if (!ap) return { nome, stato: 'adeguato', testo: 'adeguato', assegnati: 0, monte: null, finito: true };
   if (ap.finito) return { nome, stato: 'fatto', testo: `fatto: ${ap.assegnati}/${ap.monte} punti`, assegnati: ap.assegnati, monte: ap.monte, finito: true };
-  return { nome, stato: 'in corso', testo: `in corso: ${ap.assegnati}/${ap.monte} punti, ne restano ${ap.rimasti}`, assegnati: ap.assegnati, monte: ap.monte, finito: false };
+  // lotto 215: `riga` è l'identificativo di questo adeguamento (la nota di prima): l'avanzamento che il tablet comunica vale solo se coincide
+  return { nome, stato: 'in corso', testo: `in corso: ${ap.assegnati}/${ap.monte} punti, ne restano ${ap.rimasti}`, assegnati: ap.assegnati, monte: ap.monte, finito: false, riga: ap.riga };
 }

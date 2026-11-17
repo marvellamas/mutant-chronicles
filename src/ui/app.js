@@ -27,7 +27,7 @@ import { provaSostituzione, rigaIncantesimi, sorgenteModifica, confrontaIncantes
 import { permessoSalita, sfasamento, scelteDelLivello, TIPO_CONCESSIONE, CHIAVE_CONCESSIONE } from '../livello-px.js';
 import { eventiConPunti, applicaSpostamento, descriviSpostamento, descriviEccezioni, descriviRiassegnazione, controllaPuntiDaTablet } from '../sposta-punti.js';
 import { apriSpostaPunti } from './sposta-punti.js';
-import { leggiMomento, attoCampagna, serverCartella, elencoCartella, leggiCartella, leggiCartellaConRevisione, scriviCartella, contestoMasterQui, pingMasterQui, salvaBackupMaster, leggiBackupMaster } from './cartella.js';
+import { comunicaAvanzamento, togliAvanzamento, leggiMomento, attoCampagna, serverCartella, elencoCartella, leggiCartella, leggiCartellaConRevisione, scriviCartella, contestoMasterQui, pingMasterQui, salvaBackupMaster, leggiBackupMaster } from './cartella.js';
 import { bozzaDi, impostaBozza, leggiBozzaSalvata, salvaBozza } from '../bozza-adeguamento.js';
 import { confermaAssegnazione, assegna as assegnaAdeguamento, adeguamentoAperto, puntiDellEvento, conPunti } from '../adeguamento-abilita.js';
 import { modalitaMaster, mostraMarchio, statoContestoMaster, registro as registroMaster, nuovaCorrezione, aggiungiCorrezione, annullaCorrezione, avvisoAnnulla, registraDiretta, differenzeDirette, differenzeOggetti, ripristinoDiretta, descriviScelte, soloScelte, ripristinaScelte, masterDiverso, normalizzaCircostanzeMaster } from '../correzioni-master.js';
@@ -204,6 +204,11 @@ function bozzaAdeguamentoDi() {
 function impostaBozzaAdeguamento(bozza, ap) {
   impostaBozza(statoBozza, stato.id, bozza);
   salvaBozza(globalThis.localStorage, stato.id, ap?.riga ?? null, bozza);
+  // lotto 215: la plancia del Direttore vede quanti punti ha messo chi sta assegnando, senza che la bozza entri nel file
+  const chiave = chiavePersonaggio(stato.scelte?.nome ?? '');
+  if (!chiave) return;
+  if (bozza && ap) comunicaAvanzamento({ chiave, riga: ap.riga ?? null, monte: ap.monte, assegnati: Object.values(bozza).reduce((s, n) => s + (Number(n) || 0), 0) });
+  else togliAvanzamento(chiave);
 }
 
 // piè di pagina della stampa: ogni manuale una volta, con la versione più recente (src/stampa.js → versioniCompatte)

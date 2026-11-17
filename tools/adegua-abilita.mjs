@@ -88,6 +88,13 @@ export function righeRapporto({ piani }) {
     for (const c of p.casi) out.push(`    da guardare: ${c}`);
     if (p.nota) out.push(`    nota di prima: ${p.nota.abilita.length} Abilità, ${p.nota.eventi.length} eventi, ${p.nota.monteDiPrima} punti liberi di adesso`);
   }
+  // lotto 215, dalla prova generale: con un personaggio ancora al livello 7 `--applica` gli dà il monte di adesso (14) e non quello della destinazione (21).
+  // Si dice in fondo al rapporto, dove si guarda prima di decidere, e non solo dentro la sua riga.
+  const indietro = piani.filter((p) => p.nuovo && Number.isInteger(p.monte?.monte) && Number.isInteger(p.monte?.atteso8) && p.monte.monte < p.monte.atteso8);
+  if (indietro.length) {
+    out.push('', `ATTENZIONE: ${indietro.length} su ${piani.length} non sono ancora al livello di destinazione (${indietro.map((p) => `${p.nome}: ${p.monte.monte} punti invece di ${p.monte.atteso8}`).join('; ')}).`,
+      '    Con --applica prenderebbero quel monte: falli salire prima («Sali al livello» dalla scheda, dopo la concessione), poi riguarda questo rapporto.');
+  }
   return out;
 }
 

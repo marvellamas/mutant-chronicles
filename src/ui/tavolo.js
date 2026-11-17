@@ -16,7 +16,8 @@ import { vistaPlancia, testoConSessione, sessioneDaFile, pgDaAggiungere } from '
 import { riallinea, alRound, terminaDurate, collegamentoScontro, durateCarta, testoDurata } from '../round-scontro.js';
 import { rigaDurate } from './durate.js';
 import { ultimiPerPersonaggio, ultimiPerPg, chiaveDaFile, nomiCheSiConfondono } from '../cartella.js';
-import { elencoCartella, leggiCartella, leggiCartellaConRevisione, scriviCartella, creaInCartella, leggiMomento } from './cartella.js';
+import { elencoCartella, leggiCartella, leggiCartellaConRevisione, scriviCartella, creaInCartella, leggiMomento, leggiAvanzamenti } from './cartella.js';
+import { conAvanzamentoTablet } from '../avanzamento-tablet.js';
 import { gruppoMomento } from './momento-plancia.js';
 import { apriColpo, specDaFormula } from './colpo.js';
 import { tira } from '../tiri.js';
@@ -796,6 +797,7 @@ export function renderTavolo(radice, ctx) {
     await aggiorna(true);
   };
   ctx.scontroAperto = () => !!stato.scontro;
+  ctx.avanzamenti = () => stato.avanzamenti ?? {}; // lotto 215: i punti dell'adeguamento messi sul tablet, per la riga della plancia
   // «Aggiungi PG al tavolo»: file dal computer → controllo come «Importa» → personaggi/ (mai sovrascritti) → al tavolo
   const sceltaFile = h('input', { type: 'file', accept: '.json,application/json', multiple: true, hidden: true, onchange: async (e) => {
     const files = [...e.target.files];
@@ -1238,6 +1240,9 @@ export function renderTavolo(radice, ctx) {
       // lotto 175 (A.233): scena e capitolo della campagna, per il gruppo «Campagna» della testata
       const mo = await leggiMomento();
       if (mo && JSON.stringify(mo) !== JSON.stringify(stato.momento)) { stato.momento = mo; cambiato = true; }
+      // lotto 215: quanti punti ha già messo, sul tablet, chi sta assegnando l'adeguamento delle Abilità
+      const av = await leggiAvanzamenti();
+      if (JSON.stringify(av) !== JSON.stringify(stato.avanzamenti ?? {})) { stato.avanzamenti = av; cambiato = true; }
     } catch (e) {
       stato.errore = e.message;
     }
@@ -1378,9 +1383,12 @@ function cartaPg(ctx, v, r, diTurnoOra = false, colpito = null, durate = [], rou
         h('h2', {}, h('button', { type: 'button', class: 'btn-link nome-plancia', title: `Apri ${v.nome} (le modifiche si fanno nella sua scheda)`, onclick: apri }, v.nome)),
         h('p', { class: 'nota' }, `${v.livello}° livello · ${v.completa ? [v.corporazione, v.classi.map((c) => `${c.nome} ${c.grado}`).join(', ')].filter(Boolean).join(' · ') : 'scheda incompleta'}`),
         // lotto 194: a che punto è l'adeguamento delle Abilità, così il Direttore non passa la serata a chiedere
-        v.adeguamento && v.adeguamento.stato !== 'adeguato'
-          ? h('p', { class: `nota adeguamento-plancia adeguamento-${v.adeguamento.stato.replace(' ', '-')}` }, `Abilità: ${v.adeguamento.testo}`)
-          : null),
+        (() => {
+          const ad = conAvanzamentoTablet(v.adeguamento, ctx.avanzamenti?.()?.[v.chiaveCartella] ?? null);
+          return ad && ad.stato !== 'adeguato'
+            ? h('p', { class: `nota adeguamento-plancia adeguamento-${ad.stato.replace(' ', '-')}${ad.sulTablet ? ' sul-tablet' : ''}` }, `Abilità: ${ad.testo}`)
+            : null;
+        })()),
       v.completa && colpito && ctx.scontroAperto?.() ? pulsanteColpito(ctx, () => colpito(v, r)) : null),
     // «Modifica master» (12/10/2026): solo sul PC del server; apre la scheda in modalità master
     ctx.master !== true ? h('p', { class: 'plancia-master nota non-master', title: ctx.statoMaster?.motivo ?? null }, RIGA_CARTA_NON_MASTER) : h('p', { class: 'plancia-master' },
