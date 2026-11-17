@@ -3398,6 +3398,13 @@ function validaVeicoli(dati, err) {
       if (!isTesto(a?.nome)) err(F, ka, 'nome mancante');
       if (!(dati.abilita?.abilita ?? []).some((x) => x.nome === a?.abilita)) err(F, `${ka}.abilita`, `«${a?.abilita}» non è un'Abilità esistente (§3.1)`);
       if (!isTesto(a?.operatore)) err(F, `${ka}.operatore`, 'chi usa l’arma (§3.1: operatore, postazione, arco di tiro)');
+      // lotto 210: il settore di tiro è strutturato (gradi e orientamento), non solo testo; senza centro dichiarato dal manuale lo dice
+      if (a?.arco_di_tiro !== undefined) {
+        const ar = a.arco;
+        if (!isOggetto(ar) || !isIntero(ar.gradi) || ar.gradi < 1 || ar.gradi > 360) err(F, `${ka}.arco.gradi`, 'intero fra 1 e 360 atteso (settore di tiro, lotto 210)');
+        else if (![null, 'libero', 'frontale'].includes(ar.orientamento ?? null)) err(F, `${ka}.arco.orientamento`, 'null, «libero» o «frontale» attesi');
+        else if (ar.gradi < 360 && (ar.orientamento ?? null) === null && !isTesto(ar.da_definire)) err(F, `${ka}.arco.da_definire`, 'un settore sotto i 360° senza centro dichiarato deve dire quale domanda lo definisce (A.n)');
+      }
       if (!isTesto(a?.danno)) err(F, `${ka}.danno`, 'danno mancante');
     });
     // rinforzi di una struttura (Copriruote di Petra): struttura esistente e numeri coerenti

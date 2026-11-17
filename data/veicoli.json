@@ -1225,8 +1225,8 @@
           "rif": "armi_distanza_corporative:m606",
           "prezzo_cr": 19000,
           "operatore": "artigliere, uno degli occupanti",
-          "postazione": "Postazione manuale presso la botola",
-          "arco_di_tiro": "360°, limitato dagli ostacoli reali",
+          "postazione": "Postazione manuale ravvicinata alla botola",
+          "arco_di_tiro": "Settore di rotazione orizzontale di 120° (l’intera struttura: arma e schermo), limitato dagli ostacoli reali",
           "abilita": "Armi pesanti",
           "danno": "1d8+3",
           "ac": 1,
@@ -1249,7 +1249,23 @@
           "pi": 8,
           "qualita_arma": "Comune",
           "ps_integrita_arma": 10,
-          "imbracciata_dal_supporto": true
+          "imbracciata_dal_supporto": true,
+          "arco": {
+            "gradi": 120,
+            "orientamento": null,
+            "da_definire": "A.280",
+            "fonte": "Veicoli 0.19 §10 e tavola del FIAT LUX; E&L 11/11/2026 (raccordo Armamenti e Veicoli)"
+          },
+          "smontabile": true,
+          "schermo": {
+            "testo": "Arma e protezione bassa sono smontabili per l’allestimento civile. Lo schermo leggero comprende la mitragliatrice e lascia libera la canna. La protezione concede Copertura soltanto nelle direzioni in cui scherma effettivamente il tiratore, secondo le regole generali; non aumenta l’AR del veicolo o dell’occupante.",
+            "aggiunge_ar": false,
+            "fonte": "Veicoli 0.19 §10 e tavola del FIAT LUX; E&L 11/11/2026 (raccordo Armamenti e Veicoli)"
+          },
+          "arco_di_tiro_precedente": {
+            "testo": "360°, limitato dagli ostacoli reali",
+            "fonte": "scheda ASA Scout MK4 0.6 (30/10/2026), superata da Veicoli 0.19 e dall’E&L dell’11/11/2026"
+          }
         }
       ],
       "proprieta": [
@@ -1515,6 +1531,11 @@
           "munizioni_iniziali": {
             "caricate": 600,
             "riserva": 0
+          },
+          "arco": {
+            "gradi": 360,
+            "orientamento": "libero",
+            "fonte": "Neverlost 1.6, Settori"
           }
         },
         {
@@ -1535,6 +1556,11 @@
           "munizioni_iniziali": {
             "caricate": 600,
             "riserva": 0
+          },
+          "arco": {
+            "gradi": 360,
+            "orientamento": "libero",
+            "fonte": "Neverlost 1.6, Settori"
           }
         },
         {
@@ -1552,6 +1578,11 @@
           "consumo": "1 carica Rossa per colpo, anche se manca il bersaglio",
           "energia_per_colpo": {
             "rosso": 1
+          },
+          "arco": {
+            "gradi": 90,
+            "orientamento": "frontale",
+            "fonte": "Neverlost 1.6, Settori"
           }
         },
         {
@@ -1573,7 +1604,12 @@
             "caricate": 6,
             "riserva": 0
           },
-          "nota": "Serve un bersaglio rilevato e tracciato, senza un’azione aggiuntiva di aggancio; si risolve nel turno del lancio, senza pedina missile né area di esplosione automatica."
+          "nota": "Serve un bersaglio rilevato e tracciato, senza un’azione aggiuntiva di aggancio; si risolve nel turno del lancio, senza pedina missile né area di esplosione automatica.",
+          "arco": {
+            "gradi": 180,
+            "orientamento": "frontale",
+            "fonte": "Neverlost 1.6, Settori"
+          }
         }
       ],
       "regole_armi": [

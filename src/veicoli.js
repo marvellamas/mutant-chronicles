@@ -698,6 +698,19 @@ function energiaIniziale(profilo) {
   return e.rosso !== undefined || e.verde !== undefined || e.aria !== undefined ? e : null;
 }
 
+/**
+ * Lotto 210: il settore di tiro di un'arma di bordo, in parole, dai dati strutturati (`arco: { gradi, orientamento }`).
+ * Dove il manuale non dice dove sta il centro del settore (la M606 dello Scout: 120° di rotazione, A.280) lo dice, invece di
+ * lasciar credere che il settore sia davanti. Senza `arco` torna il testo libero del profilo, o null.
+ */
+export function testoArco(arma) {
+  const a = arma?.arco;
+  if (!a || !Number.isFinite(a.gradi)) return arma?.arco_di_tiro ?? null;
+  if (a.gradi >= 360) return '360°, limitato dagli ostacoli reali';
+  if (a.orientamento === 'frontale') return `arco frontale ${a.gradi}°`;
+  return `settore di ${a.gradi}° · centro non indicato dal manuale${a.da_definire ? ` (${a.da_definire})` : ''}`;
+}
+
 /** Munizioni iniziali delle armi di bordo che le hanno (stesso ordine di profilo.armi; null le altre). */
 function munizioniIniziali(profilo) {
   const m = lista(profilo?.armi).map((a) => (isOggetto(a.munizioni_iniziali) ? { caricate: intero(a.munizioni_iniziali.caricate), riserva: intero(a.munizioni_iniziali.riserva) } : null));

@@ -13,7 +13,7 @@ import { rigaScelte } from './pannello-passi.js';
 import {
   nuovoVeicolo, vistaVeicoloPersonaggio, pilotareDelPersonaggio, colpisciVeicolo, applicaRiparazione, conPi,
   montaRicambio, profiliCreabili, registraMunizioniVeicolo, struttureVeicolo, profiloDi, registraViaggio, registraSupportoVitale, chiudiGiornata, ricaricaEnergia, ricaricaBombole, installaRicambioEnergia, aggiungiRicambioEnergia, testoCariche, munizioniArmaVeicolo,
-  sollecitazioneFallita, eseguiCambioAndatura, movimentoMassimo, profiloVeicolo as profiloDelCatalogo,
+  sollecitazioneFallita, eseguiCambioAndatura, movimentoMassimo, profiloVeicolo as profiloDelCatalogo, testoArco,
 } from '../veicoli.js';
 import { migraVeicoli, nuovoRecord, riferimento, vede, eRiferimento, statoMovimento, muoviVeicolo, cambiaConducente, movimentoResiduo, stessaChiave, scegliAndatura, conCopie, mezzoDallaCopia } from '../veicoli-registro.js';
 import { elencoVeicoli, scriviVeicolo, aggiornaVeicolo } from './veicoli-registro.js';
@@ -586,9 +586,9 @@ function armiEProprieta(v) {
   if (!(p.armi ?? []).length && !(p.proprieta ?? []).length && !(p.sistemi ?? []).length) return null;
   return h('div', { class: 'armi-proprieta-veicolo' },
     (p.armi ?? []).length ? h('div', { class: 'tabella-scorre' }, h('table', { class: 'tabella compatta' },
-      h('thead', {}, h('tr', {}, ['Arma di bordo', 'Abilità', 'Danno', 'Gittata', 'Modalità', 'Operatore'].map((c) => h('th', {}, c)))),
+      h('thead', {}, h('tr', {}, ['Arma di bordo', 'Abilità', 'Danno', 'Gittata', 'Modalità', 'Operatore', 'Arco di tiro'].map((c) => h('th', {}, c)))),
       h('tbody', {}, p.armi.map((a) => h('tr', {}, h('th', { scope: 'row' }, a.nome), h('td', {}, a.abilita), h('td', {}, a.danno), h('td', {}, a.gittata_testo ?? `${numero(a.gittata_q)} Q`),
-        h('td', {}, (a.modalita ?? []).join(', ')), h('td', {}, a.operatore ?? '—')))))) : null,
+        h('td', {}, (a.modalita ?? []).join(', ')), h('td', {}, a.operatore ?? '—'), h('td', { class: 'arco-di-tiro', title: a.schermo?.testo ?? null }, testoArco(a) ?? '—')))))) : null,
     [...(p.proprieta ?? []), ...(p.sistemi ?? [])].length ? h('ul', { class: 'proprieta-veicolo' }, [...(p.proprieta ?? []), ...(p.sistemi ?? [])].map((x) => h('li', {}, h('strong', {}, `${x.nome}: `), x.testo))) : null);
 }
 

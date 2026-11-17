@@ -148,7 +148,11 @@ test('un colpo sulla motocicletta si risolve con le sue strutture, e il furgone 
 
 test('la Neverlost, lo Scout e l\'autovettura non sono cambiati dal lotto', () => {
   // il profilo non cambia da quando il lotto 158/173/149 l'ha scritto: se cambia, il lotto 209 ha toccato ciò che non doveva
-  const imp = (id) => createHash('sha1').update(JSON.stringify(profiloVeicolo(id, dati))).digest('hex').slice(0, 10);
+  // lotto 210: i settori di tiro delle armi di bordo sono ora strutturati (e quello dello Scout è a 120°, A.280): quelle chiavi non fanno
+  // parte del confronto. Tutto il resto del profilo — PI, MOV, AR, prezzi, munizioni, riparazioni — è quello di prima del 209.
+  const CHIAVI = ['arco', 'arco_di_tiro', 'arco_di_tiro_precedente', 'postazione', 'smontabile', 'schermo'];
+  const pulito = (p) => ({ ...p, armi: (p.armi ?? []).map((a) => { const x = { ...a }; for (const k of CHIAVI) delete x[k]; return x; }) });
+  const imp = (id) => createHash('sha1').update(JSON.stringify(pulito(profiloVeicolo(id, dati)))).digest('hex').slice(0, 10);
   const git = JSON.parse(readFileSync(new URL('./fixtures/veicoli-profili-209.json', import.meta.url), 'utf8'));
   for (const id of ['neverlost', 'asa-scout-mk4', 'autovettura-civile']) assert.equal(imp(id), git[id], `${id}: il profilo è cambiato`);
 });
