@@ -3316,3 +3316,10 @@ sola all'AR complessiva, e che **«a 0 PI la protezione dipendente dall'equipagg
 per tutta la durata dell'incantesimo, a prescindere dall'armatura. Nessuno dei sette ha Armatura Mistica. *La domanda:* basta il
 promemoria (il principio dell'app: propone, non obbliga) o vuoi che il bonus si azzeri da solo quando l'armatura è a 0 PI? *Nel frattempo:*
 nessun calcolo; la regola si legge nella scheda dell'incantesimo («i»).
+
+**A.284 — ASA o SIA nei nomi degli oggetti: APERTA (lotto 212).** Dal Veicoli 0.18 («Nel 504 PE la SIA è l'agenzia attiva dell'Alleanza,
+succeduta all'ASA») i manuali scrivono **SIA**: la «Valigetta investigativa SIA» (Armamenti 0.86 §7.12; l'Equipaggiamento 0.42 ne porta anche il
+peso da 3 a 3,5 kg) e «SIA Recon». Il nostro catalogo dice ancora **ASA** («Valigetta investigativa ASA», «Elmetto ASA Recon», «Divisa operativa
+ASA», che compare nel Calcolo di Lucas come «Lancio: Divisa operativa ASA −1»). *La domanda:* rinominiamo in SIA tutti gli oggetti ASA del catalogo,
+o gli oggetti storici restano ASA (come le «Dotazioni storiche ASA della Neverlost», Armamenti §7.26)? *Nel frattempo:* nessun nome cambia; gli
+oggetti degli Armamenti (valigetta, elmetto, divisa) stanno nei file ancora alla 0.74, un lotto a parte.

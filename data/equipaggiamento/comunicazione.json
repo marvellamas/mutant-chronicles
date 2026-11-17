@@ -1,5 +1,5 @@
 {
-  "versione_manuale": "Equipaggiamento 0.30",
+  "versione_manuale": "Equipaggiamento 0.42",
   "fonte": "Manuale dell’Equipaggiamento 0.5, cap. 4 (Google Doc del 01/10/2026)",
   "_nota": "Generato da tools/lotti/lotto_equipaggiamento_03.mjs (docs/equipaggiamento-lotti.md). Solo i campi che la scheda dà: un dato mancante è assente, mai 0 (Equipaggiamento §1.11). Catalogo Commerciale. Gli effetti numerici seguono docs/effetti-oggetti.md; il resto è testo in «note_manuale». «alimentazione»: NEC del catalogo (nec.json), consumo e autonomia o usi (Equipaggiamento 0.5, §5.4.7).",
   "oggetti": [
@@ -12,8 +12,8 @@
       "nomi_alternativi": [],
       "note_manuale": "Portata 1 km. Comunicazioni vocali fra dispositivi sullo stesso canale; bidirezionale entro la portata del dispositivo più debole. Accendere, spegnere o cambiare canale 1 AzP. Le comunicazioni ordinarie sono ascoltabili da ricevitori compatibili sul canale; la cifratura richiede il modulo del §4.4. Intercettazione specialistica e disturbo intenzionale non sono funzioni dei comunicatori ordinari. I comunicatori personali e da squadra e la stazione radio portatile ordinaria usano NEC Verdi, senza conteggio dell’ascolto, delle trasmissioni o delle ore (§5.4.3).",
       "paragrafo": "§4.1",
-      "versione_manuale": "Equipaggiamento 0.13",
-      "peso": 0.1,
+      "versione_manuale": "Equipaggiamento 0.42 (§4)",
+      "peso": 0.2,
       "reperibilita": "CO",
       "costo": 200,
       "alimentazione": {

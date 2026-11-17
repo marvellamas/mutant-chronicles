@@ -7,6 +7,7 @@
 //    contatori dell'energia a parte.
 import '../tools/guardia-subito.mjs'; // la guardia sulle cartelle vere, comunque si lanci il test
 import { test } from 'node:test';
+import { CORREZIONI } from '../tools/lotti/lotto_212_equipaggiamento.mjs';
 import assert from 'node:assert/strict';
 import { readFileSync, readdirSync } from 'node:fs';
 import { execFileSync } from 'node:child_process';
@@ -64,6 +65,10 @@ test('nessun contatore per l’elettronica ordinaria; al suo posto la riga «NEC
 const RADICE = fileURLToPath(new URL('../', import.meta.url));
 const daGit = (nome) => Promise.resolve(execFileSync('git', ['-C', RADICE, 'show', `c314aed:data/${nome}.json`], { encoding: 'utf8', maxBuffer: 1e8 }));
 const prima = (await caricaDati(daGit)).dati;
+// Lotto 212: i dati di allora hanno i pesi e i costi della 0.30; l'Equipaggiamento 0.42 ne ha cambiati quattro (Corredo da assalto verticale 4 → 5 kg, ecc.)
+// e Duncan e Oshi hanno quel corredo: il carico cambia di 1 kg **apposta**. Li si porta anche sul lato «prima», così il test guarda ancora tutto il resto
+// (e fallisce se cambia qualcosa che non sia una di quelle quattro voci: tests/equipaggiamento-lettore-212.test.js le elenca).
+for (const c of CORREZIONI) prima.equipaggiamento.file[c.file].oggetti.find((x) => x.id === c.id)[c.campo] = c.a;
 
 /** I valori che contano al tavolo, senza i contatori dell'energia. */
 function valori(o, d) {
