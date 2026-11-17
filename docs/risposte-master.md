@@ -3301,3 +3301,18 @@ correzioni del master di +1 al «VA di Armi da mischia», del 2/11 alle 18:32 e 
 focalizzatore Verde ora calcolato (+1 VA d'attacco, +1 Parata, +1 danno), se erano il modo di darlo a mano, il VA è contato due
 volte. *Nel frattempo*: non toccate; valgono per ogni arma da mischia (sono sull'Abilità); le annulla Davide da «Modifica master»,
 riga per riga, se erano per il Verde.
+
+**A.282 — che cosa fa diventare «Esausto neutro» un cristallo: APERTA (lotto 211).** La Magia 1.19 §6 distingue due stati che la 1.11
+confondeva: un cristallo **scarico** (0 PM attuali, conserva colore, capacità e sintonizzazione) e l'**Esausto neutro** (ha perso per sempre
+la capacità di trattenere energia, non si ricarica, è materia prima). Il §26.5 dice che i Cristalli Instabili «diventano Esausti quando
+perdono definitivamente la capacità», che «l'uso ordinario non riduce tale capacità» e che «la frattura non causa da sola l'esaurimento»;
+non dice **che cosa** la fa perdere. *La domanda:* che cosa rende Esausto un cristallo (o una Batteria, una Pietra, i Guanti)? Lo decidi tu
+al tavolo, o c'è una regola? *Nel frattempo:* l'app chiama «scarico» un cristallo a 0 PM (prima «Trasparente») e **non rende mai Esausto
+nessun contenitore da sé**; `chroma.colori.Trasparente` (chiave invariata, significato nuovo: `ricaricabile: false`) c'è per quando servirà.
+
+**A.283 — Armatura Mistica a 0 PI dell'armatura: l'app deve calcolarlo? APERTA (lotto 211).** La scheda 22.2 (Magia 1.11 e seguenti, rimasta
+indietro nei nostri dati fino a oggi) dice che l'incantesimo converte in Magica l'AR dell'armatura indossata e aggiunge il bonus una volta
+sola all'AR complessiva, e che **«a 0 PI la protezione dipendente dall'equipaggiamento inutilizzabile non fornisce AR»**. L'app dà il bonus
+per tutta la durata dell'incantesimo, a prescindere dall'armatura. Nessuno dei sette ha Armatura Mistica. *La domanda:* basta il
+promemoria (il principio dell'app: propone, non obbliga) o vuoi che il bonus si azzeri da solo quando l'armatura è a 0 PI? *Nel frattempo:*
+nessun calcolo; la regola si legge nella scheda dell'incantesimo («i»).
