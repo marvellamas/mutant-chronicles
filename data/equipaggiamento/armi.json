@@ -1693,7 +1693,7 @@
       "ore": 24,
       "cr": 400
      },
-     "descrizione": "Sulla CyberArma originale di Park, già nell’inventario: preparare la scheggia Verde instabile già posseduta e metterla al posto del frammento Viola, recuperare e integrare il modulo SIN della spada Cybertronic, personalizzare la forma e collaudare. Configurazione a PM personali: 1 AzP e 2 PM per 10 Round, SnT 2, SIN 1 al tiro per colpire con il modulo collegato. Batteria interna e conversione a NeC restano sviluppi successivi.",
+     "descrizione": "Sulla CyberArma di Dimitri, l’esemplare recuperato da Park, che ha già il focalizzatore Verde al posto del Viola: la scheggia Verde stabilizzata è installata (§7.25.4: «È installato soltanto il focalizzatore Verde»). I giorni 1 e 2 qui sotto sono quel lavoro, già compreso nella configurazione attuale; resta da fare il giorno 3: recuperare e integrare il modulo SIN della spada Cybertronic, personalizzare la forma e collaudare. Configurazione a PM personali: 1 AzP e 2 PM per 10 Round, SnT 2, SIN 1 al tiro per colpire con il modulo collegato. Batteria interna e conversione a NeC restano sviluppi successivi.",
      "forma": {
       "chi": "giocatore",
       "quando": "prima della lavorazione",
@@ -1711,7 +1711,7 @@
        "id": "scheggia",
        "nome": "Scheggia instabile Verde (già posseduta)",
        "rif": "artefatti:scheggia-instabile-da-5-pm-chroma-verde",
-       "nota": "Prende il posto del frammento Viola come focalizzatore. Si lavora scarica; gli eventuali PM si possono usare prima. Con successo diventa un componente integrato: colore Verde, nessuna riserva di PM, nessuna SnT in più; esce dall’inventario. Un semplice fallimento non la distrugge."
+       "nota": "È il focalizzatore già installato al posto del Viola (§7.25.3, §7.25.4): scheggia Verde stabilizzata, componente integrato dell’arma, nessuna riserva di PM, nessuna SnT in più. Se nell’inventario di Dimitri ci sono ancora schegge Verdi, nessuna si toglie da sola: una potrebbe essere quella integrata, e lo decide il Direttore. Si lavora scarica; un semplice fallimento non la distrugge."
       },
       {
        "id": "modulo",
@@ -1724,14 +1724,14 @@
        "nome": "Frammento Viola estratto",
        "rif": "artefatti:chroma-viola-frammento",
        "esce": true,
-       "nota": "Estratto dall’esemplare di Park, resta un oggetto separato nell’inventario, con le proprie conseguenze (Corruzione) e la necessità di contenimento: le decide il Direttore (A.231)."
+       "nota": "Il frammento Viola è già stato rimosso dall’esemplare di Park (§7.25.4: «La Corruzione 1 era legata al frammento rimosso»). Dove sia oggi non è scritto: se entra nell’inventario come oggetto separato, con le sue conseguenze (Corruzione) e la necessità di contenimento, lo decide il Direttore (A.231, A.246)."
       }
      ],
      "giorni": [
       {
        "n": 1,
        "ore": 8,
-       "lavoro": "Studio e progetto",
+       "lavoro": "Studio e progetto (già compreso nella configurazione attuale, §7.25.4)",
        "prova": {
         "abilita": "Artefatti",
         "modificatore": -2
@@ -1742,7 +1742,7 @@
       {
        "n": 2,
        "ore": 8,
-       "lavoro": "Preparazione della scheggia Verde, sostituzione del Viola e collaudo",
+       "lavoro": "Preparazione della scheggia Verde, sostituzione del Viola e collaudo (già eseguiti: il Verde è installato, §7.25.4)",
        "prova": {
         "abilita": "Tecnologia",
         "modificatore": -2
@@ -1753,7 +1753,7 @@
       {
        "n": 3,
        "ore": 8,
-       "lavoro": "Recupero e integrazione del modulo SIN dalla spada Cybertronic, personalizzazione della forma e collaudo finale",
+       "lavoro": "Da fare: recupero e integrazione del modulo SIN dalla spada Cybertronic, personalizzazione della forma e collaudo finale (§7.25.4: «non compresa nella configurazione attuale»)",
        "prova": {
         "abilita": "Tecnologia",
         "modificatore": -2
@@ -1784,7 +1784,7 @@
       "Il profilo del Custode di Park rimane distinto: danni e Talenti personali di Park non passano all’utilizzatore.",
       "La forma la sceglie il giocatore e si registra nel progetto. Batteria interna e conversione a NeC restano sviluppi successivi, non compresi in questi tre giorni.",
       "L’alimentazione scelta decide se l’arma consegnata può ancora usare i PM personali: cristallo e SIN sì, riserva interna di CM e conversione a NeC no, e in più fanno perdere le proprietà da Custode (A.251).",
-      "L’alimentazione scelta decide se l’arma consegnata può ancora usare i PM personali: cristallo e SIN sì, riserva interna di CM e conversione a NeC no, e in più fanno perdere le proprietà da Custode (A.251)."
+      "Il focalizzatore Verde è già installato (§7.25.4, A.271): la consegna aggiunge il modulo SIN e la forma, non lo sostituisce di nuovo e non estrae un frammento Viola dall’arma."
      ],
      "risultato": {
       "rif": "armi:cyberarma",
@@ -1825,6 +1825,11 @@
        "nec"
       ],
       "_nota": "A.251: la scelta dice cosa si perde prima di confermare. Cristallo e SIN sono comprese nei tre giorni e tengono i PM personali; la riserva interna di CM e la conversione a NeC restano sviluppi successivi (descrizione del progetto), fanno perdere i PM personali e le proprietà da Custode e le autorizza soltanto il Direttore, con la conferma in chiaro."
+     },
+     "aggiornato_lotto_210": {
+      "quando": "2026-11-17",
+      "fonte": "Armamenti 0.86 §7.25.4; E&L 11/11/2026 (A.271)",
+      "nota": "Solo il testo: giorni, prove, ore e risorse non cambiano."
      }
     }
    ],

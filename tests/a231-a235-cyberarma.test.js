@@ -178,7 +178,9 @@ test('A.235: peso e Integrità per esemplare (Park); costruzione solo dei Custod
 
 test('A.231: il programma dei tre giorni degli appunti v1.2', () => {
   const m = modello();
-  assert.deepEqual(m.giorni.map((g) => g.lavoro), [
+  // lotto 210 (parte D): il testo dice anche che i giorni 1 e 2 sono già compresi nella configurazione attuale (§7.25.4) e che resta il 3;
+  // il lavoro di ogni giorno è quello degli appunti v1.2, e i numeri non sono cambiati (tests/progetto-paradise-210.test.js)
+  assert.deepEqual(m.giorni.map((g) => g.lavoro.replace(/ \(.*$/, '').replace(/^Da fare: /, '').replace(/^./, (c) => c.toUpperCase())), [
     'Studio e progetto',
     'Preparazione della scheggia Verde, sostituzione del Viola e collaudo',
     'Recupero e integrazione del modulo SIN dalla spada Cybertronic, personalizzazione della forma e collaudo finale',
