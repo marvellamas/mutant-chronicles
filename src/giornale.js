@@ -87,6 +87,7 @@ export const ASSEGNA_DICHIARATI = [
   'sessione.morente.tolti',
   'sessione.attivazioniArmi.*.dal',
   'sessione.attivazioniArmi.*.round',
+  'sessione.attivazioniArmi.*.opzione',
   // elenchi di numeri uguali fra loro: due carichini da 3 colpi sono due cose, non una (un insieme li fonderebbe)
   'sessione.carichini.*',
   'sessione.munizioni.*.parziali',

@@ -1004,6 +1004,8 @@ export function scalaMorente(sessione, n, m, dati) {
 export function attivaArmaSessione(sessione, uid, uso, m, { forza = false } = {}) {
   const s = allineaSessione(sessione, m);
   if (!uso?.round) return null;
+  // lotto 219 (A.252): una carica si spende intera. Un costo in CM che non è un intero ≥ 1 non si paga mai.
+  if (uso.cm !== undefined && uso.cm !== null && !(Number.isInteger(uso.cm) && uso.cm >= 1)) return null;
   const modifica = {};
   // A.237 (Davide, 02/11/2026): la CyberArma convertita consuma una carica del NEC Rosso che ha inserito (il contatore del
   // NEC sulla voce, Inventario), una per attivazione; la carica residua resta lì
@@ -1030,6 +1032,8 @@ export function attivaArmaSessione(sessione, uid, uso, m, { forza = false } = {}
     modifica.pmAttuali = Math.max(0, s.pmAttuali - uso.pm);
   }
   modifica.attivazioniArmi = attivaArma(s, uid, uso.round);
+  // lotto 219: il colore scelto (Spada dei Tre Riflessi); un'altra attivazione sostituisce il colore e riparte dalla durata completa
+  if (typeof uso.opzione === 'string' && uso.opzione) modifica.attivazioniArmi[uid] = { ...modifica.attivazioniArmi[uid], opzione: uso.opzione };
   return modificaSessione(s, modifica, m);
 }
 

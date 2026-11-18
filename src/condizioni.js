@@ -435,10 +435,12 @@ export function applicaCondizioni(scheda, sessione, dati) {
       && (e.ambito === 'generale' || (e.ambito === 'situazionale' && talAccesi.has(e.chiave))));
     const etichettaT = (e) => (e.ambito === 'situazionale' ? `${e.talento} (condizione attiva)` : e.talento);
     const vociT = attiviT.filter(vale).map((e) => voce(etichettaT(e), e.valore, fonteEffetto(e)));
-    s.scomposizione = [voce('Valore da regole', s.totale, 'regole'), ...vociT, ...cond];
+    // lotto 219: un oggetto con un bonus generale alla Prova Salvezza (Collana di papiro dei Mutanti, Equipaggiamento §10.14)
+    const vociOggetti = effettiOggetti.filter((e) => e.tipo === 'salvezza' && e.salvezza === id && e.ambito === 'generale').map((e) => voce(e.oggetto, e.valore, 'equipaggiamento'));
+    s.scomposizione = [voce('Valore da regole', s.totale, 'regole'), ...vociOggetti, ...vociT, ...cond];
     s.effettivo = somma(s.scomposizione);
     s.daRegole = s.totale;
-    s.provenienza = provenienza([...righeRegoleSalvezza(s, scheda), ...righeDaScomposizione(vociT), ...attiviT.filter((e) => !vale(e)).map((e) => spento(e, etichettaT(e))), ...righeDaScomposizione(cond)], s.effettivo);
+    s.provenienza = provenienza([...righeRegoleSalvezza(s, scheda), ...righeDaScomposizione(vociOggetti), ...righeDaScomposizione(vociT), ...attiviT.filter((e) => !vale(e)).map((e) => spento(e, etichettaT(e))), ...righeDaScomposizione(cond)], s.effettivo);
   }
   // usi specifici dei Talenti (e delle Tecniche in corso) sulle Prove Salvezza e sulle Prove di
   // Caratteristica: valori a parte.

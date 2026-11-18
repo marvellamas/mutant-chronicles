@@ -1,0 +1,133 @@
+// Lotto 219 (18/11/2026) — **i manufatti lunari dei Mutanti**, l'ultimo contenuto dichiarato fuori.
+//
+// Dove stavano (ricontrollato sui testi, perché i manuali sono tutti recepiti ma questi paragrafi no):
+//   - Armamenti 0.86 §7.27 (cinque schede) e §7.27.2–7.27.3 (la Spada dei Tre Riflessi: attivazione e poteri);
+//   - Equipaggiamento 0.42 §10.14 (Collana di papiro) e §5.4.12 (Esausto lunare, solo come ingrediente);
+//   - Magia 1.19 §26.8 (Pietre di Luna: schegge, accessori, pietre intere) e §28.5 (tabella dei manufatti);
+//   - il blocco del 13/11 «Raccordo dei manufatti lunari nelle fonti Drive dell'app» del Doc E&L (istruzioni per l'app:
+//     «tenere distinti danno base, bonus passivo, potere attivo e modificatori personali»; «prezzi e reperibilità non
+//     definiti, senza convertirli in prezzo zero»), e il «Raccordo sanitario» dello stesso giorno (Cartuccia
+//     Stabilizzante: peso «Da definire»).
+//
+// Uso:  node tools/lotti/lotto_219_lunari.mjs [--scrivi]     (senza --scrivi dice solo che cosa scriverebbe)
+//
+// **Niente prezzo a caso.** Il manuale dice, per tutti e sei i manufatti senza prezzo, «Prezzo e reperibilità commerciale
+// non fissati: manufatti di campagna». Nei dati `costo: null` e `non_in_vendita: true`, **mai 0**. Lo stesso per ogni
+// valore che il manuale dichiara «da definire» (il peso della Cartuccia Stabilizzante): campo assente + `da_definire`.
+import { readFileSync, writeFileSync } from 'node:fs';
+import { join, dirname } from 'node:path';
+import { fileURLToPath } from 'node:url';
+import { fermaSeSconosciuti, ARGOMENTI } from '../argomenti.mjs';
+
+fermaSeSconosciuti(process.argv.slice(2), ARGOMENTI['lotto_219_lunari.mjs'], 'lotto_219_lunari.mjs');
+const RADICE = join(dirname(fileURLToPath(import.meta.url)), '..', '..');
+const scrivi = process.argv.includes('--scrivi');
+const D = (f) => join(RADICE, 'data', 'equipaggiamento', f);
+const leggi = (f) => JSON.parse(readFileSync(D(f), 'utf8'));
+
+const ED_ARM = 'Armamenti 0.86';
+const ED_EQ = 'Equipaggiamento 0.42';
+const ED_MAG = 'Magia 1.19';
+const SOLO_PASSIVE = { tipologia: 'Armi', potenza: 'Comune', sintonizzazione: 0, sintonizzabile: false, proprieta_attive: false, grado: 'I' };
+const NON_IN_VENDITA = 'Prezzo e reperibilità commerciale non fissati: manufatto di campagna, ottenibile attraverso i rapporti con i Mutanti (non convertiti in prezzo zero).';
+
+const comuni = { catalogo: 'Artefatti di campagna', nomi_alternativi: [], costo: null, reperibilita: null, non_in_vendita: true, proprieta: [], qualita: 'Comune', ps_int: 10 };
+
+export const OGGETTI = [
+  {
+    id: 'pugnale-lunare-d-osso', nome: 'Pugnale lunare d’osso', tipo: 'arma_ravvicinata', famiglia: 'Coltelli e pugnali', ...comuni,
+    note_manuale: `Pugnale ricavato nell’osso delle grandi creature del deserto; una scheggia trasparente di Pietra di Luna sostituisce il pomello. Arma e Artefatto Mistico passivo, Grado I, Comune. La proprietà passiva concede +1 VA alle Prove per colpire e rende Magico il danno dell’arma, senza aumentarne il valore (il +1 di 1d6+1 è del profilo). Funziona anche senza sintonizzazione e non consuma PM o CM. ${NON_IN_VENDITA}`,
+    paragrafo: '§7.27.1', versione_manuale: ED_ARM, abilita: 'Armi da mischia', specializzazione: 'specializzazione-coltelli-e-pugnali',
+    mani: 1, danno: { una_mano: '1d6+1', due_mani: null }, portata_q: 1, gittata_q: null, for_richiesta: 3, inc: null, pi: 4, peso: 0.4,
+    manovre: ['Affondo'], modificatore_va: 1, natura_danno: 'Magico', artefatto: { ...SOLO_PASSIVE },
+  },
+  {
+    id: 'spada-lunare-d-osso', nome: 'Spada lunare d’osso', tipo: 'arma_ravvicinata', famiglia: 'Spade', ...comuni,
+    note_manuale: `Spada lunga ricavata nell’osso delle grandi creature del deserto; il pomello è una sola scheggia trasparente di Pietra di Luna. Arma e Artefatto Mistico passivo, Grado I, Comune. +1 VA alle Prove per colpire e danno Magico senza incremento numerico; il +1 di 1d8+1 appartiene al profilo della Spada lunga. SnT 0, nessuna attivazione, nessun consumo di PM o CM. ${NON_IN_VENDITA}`,
+    paragrafo: '§7.27.4', versione_manuale: ED_ARM, abilita: 'Armi da guerra', specializzazione: 'specializzazione-spade',
+    mani: 1, danno: { una_mano: '1d8+1', due_mani: null }, portata_q: 1, gittata_q: null, for_richiesta: 4, inc: null, pi: 5, peso: 1.3,
+    manovre: ['Affondo', 'Spazzata'], modificatore_va: 1, natura_danno: 'Magico', artefatto: { ...SOLO_PASSIVE },
+  },
+  {
+    id: 'spada-dei-tre-riflessi', nome: 'Spada dei Tre Riflessi', tipo: 'arma_ravvicinata', famiglia: 'Spade', ...comuni,
+    note_manuale: `Spada lunga d’osso con tre piccole Pietre di Luna a filo nell’impugnatura (aloni interni rosso, blu e verde) e una quarta scheggia neutra come pomello. Arma e Artefatto Mistico, **Grado V, Epica, SnT 5** per tutti i poteri attivi, un unico vincolo. Profilo passivo 1d8+1 Magico, +1 VA, portata 1 Q, utilizzabile anche senza sintonizzazione e a riserva scarica. Riserva: **una sola, condivisa, di 3 CM Bianche**; le tre pietre colorate selezionano i poteri e non sono tre Batterie autonome. Il possessore sintonizzato che impugna la spada spende 1 AzP e 1 CM per attivare un colore (automatico, senza Prova di Potere, 5 round senza Concentrazione); un solo colore alla volta; cambiare, rinnovare o riattivare costa di nuovo 1 AzP e 1 CM e riparte dalla durata completa; lasciare la spada o spegnere il potere termina l’effetto senza restituire la carica; l’ultima CM consente comunque l’intera durata. Proprietà Esclusive: usano soltanto questa riserva, che non alimenta Incantesimi né PM personali. Ricarica Bianca: 4 PM personali per ogni CM ripristinata, fino a 12 da vuota; il recupero dei PM del possessore non ricarica la spada. La ricetta è specifica dei Mutanti e non trasferisce questi poteri a un’altra scheggia. ${NON_IN_VENDITA}`,
+    paragrafo: '§§7.27.2–7.27.3', versione_manuale: `${ED_ARM}; ${ED_MAG} §28.5`, abilita: 'Armi da guerra', specializzazione: 'specializzazione-spade',
+    mani: 1, danno: { una_mano: '1d8+1', due_mani: null }, portata_q: 1, gittata_q: null, for_richiesta: 4, inc: null, pi: 5, peso: 1.3,
+    manovre: ['Affondo', 'Spazzata'], modificatore_va: 1, natura_danno: 'Magico',
+    artefatto: {
+      tipologia: 'Armi', potenza: 'Epica', sintonizzazione: 5, sintonizzabile: true, proprieta_attive: true, grado: 'V',
+      // una sola riserva, condivisa dai tre poteri (§7.27.3): CM intere, Bianche, integrate, Esclusive
+      contenitore: { energia: 'Bianco', integrato: true, riserva: 'cariche', alimentazione: 'esclusiva', capacita_cm: 3 },
+    },
+    // Lotto 219: i tre poteri cromatici. `cm` si paga intero (mai frazioni, A.252), una volta per attivazione.
+    poteri_arma: {
+      nome: 'Tre Riflessi', azione: '1 AzP', round: 5, cm: 1, un_solo_colore: true, richiede: 'sintonizzato e arma impugnata',
+      fonte: `${ED_ARM} §7.27.3; ${ED_MAG} §28.5; Doc E&L del 13/11/2026 («Istruzioni per l’app»)`,
+      opzioni: [
+        { id: 'rosso', colore: 'Rosso', nome: 'Plasma', dadi_extra: '1d4', danno_fisso: 0, va: 0, parata_va: 0,
+          testo: 'Danno 1d8+1+1d4 Magico. Dopo almeno 1 danno oltre l’Armatura e il superamento dell’eventuale Dissipante, PS Tempra 0: con fallimento, −2 VA per 1+1d3 round.' },
+        { id: 'blu', colore: 'Blu', nome: 'Elettricità', dadi_extra: '1d4', danno_fisso: 0, va: 0, parata_va: 0,
+          testo: 'Danno 1d8+1+1d4 Magico. Dopo almeno 1 danno oltre l’Armatura e il superamento dell’eventuale Isolante, PS Tempra 0: con fallimento, per 1+1d3 round non può spendere Azioni fuori dalla propria Iniziativa.' },
+        { id: 'verde', colore: 'Verde', nome: 'Armonia', dadi_extra: '1d4', danno_fisso: 1, va: 1, parata_va: 1,
+          testo: 'Danno 1d8+2+1d4 Magico; +2 VA complessivi per colpire (compreso il +1 passivo) e +1 VA alle Parate con la spada.' },
+      ],
+      note: 'Plasma ed Elettricità non aggiungono altri dadi oltre al +1d4. Una sola PS per bersaglio e attacco; contromisure, cumuli e durate del Giocatore §5.24. Si aggiungono i normali modificatori personali.',
+    },
+  },
+  {
+    id: 'collana-di-papiro-dei-mutanti', nome: 'Collana di papiro dei Mutanti', tipo: 'artefatto', famiglia: 'Artefatti', ...comuni,
+    note_manuale: `Fili di papiro intrecciati a mano e chiusura a nodo sostengono tre piccole schegge di Pietra di Luna (aloni interni rosso, blu e verde). Artefatto Mistico passivo, Grado III, Rara (la potenza deriva dalle tre proprietà e non modifica la Qualità fisica Comune). SnT 0. Chi la indossa beneficia contemporaneamente di +1 alla PS Tempra (Rosso), +1 alla PS Volontà (Blu), +1 alla PS Magia (Verde); nessun bonus a Riflessi. Le schegge non immagazzinano PM; nessuna riserva o consumo. Un solo oggetto: peso e Integrità si registrano una volta. ${NON_IN_VENDITA}`,
+    paragrafo: '§10.14', versione_manuale: `${ED_EQ}; ${ED_MAG} §26.8 e §28.5`, indossabile: true, pi: 3, peso: 0.1,
+    artefatto: { tipologia: 'Accessori', potenza: 'Rara', sintonizzazione: 0, sintonizzabile: false, proprieta_attive: false, grado: 'III' },
+    effetti: [
+      { tipo: 'salvezza', salvezza: 'tempra', valore: 1, ambito: 'generale', condizione: 'Rosso dà +1 alla PS Tempra', fonte: `${ED_MAG} §26.8 e ${ED_EQ} §10.14 (scheggia Rossa)` },
+      { tipo: 'salvezza', salvezza: 'volonta', valore: 1, ambito: 'generale', condizione: 'Blu +1 alla PS Volontà', fonte: `${ED_MAG} §26.8 e ${ED_EQ} §10.14 (scheggia Blu)` },
+      { tipo: 'salvezza', salvezza: 'magia', valore: 1, ambito: 'generale', condizione: 'Verde +1 alla PS Magia', fonte: `${ED_MAG} §26.8 e ${ED_EQ} §10.14 (scheggia Verde)` },
+    ],
+  },
+  {
+    id: 'balestra-d-osso', nome: 'Balestra d’osso', tipo: 'arma_distanza', catalogo: 'Artefatti di campagna', famiglia: 'Archi e balestre', nomi_alternativi: [],
+    note_manuale: 'Balestra da caccia a due mani costruita dai Mutanti con ossa di viverna, tendini e legature naturali; profilo meccanico della Balestra grande. Impiega quadrelli compatibili con la Balestra grande: arma e munizioni sono oggetti distinti. Con quadrelli lunari il colpo infligge 1d6+3 Magico e beneficia di +1 VA; il potere proviene dalla punta infusa del quadrello e il danno incontra normalmente l’AR pertinente. Valore 700 crediti; normalmente tramite baratto con i Mutanti (il manuale non scrive una sigla di Reperibilità).',
+    'TODO(Davide)': 'A.290: Reperibilità della Balestra d’osso. Il manuale scrive «normalmente tramite baratto con i Mutanti» e non una sigla (CO, NC, RA…); finché non c’è, nessuna sigla inventata.',
+    paragrafo: '§7.27.5', versione_manuale: ED_ARM, abilita: 'Armi da lancio', specializzazione: 'specializzazione-archi-e-balestre',
+    mani: 2, danno: { una_mano: '1d6+3', due_mani: '1d6+3' }, ac: 1, modificatore_va: 0, portata_q: null, gittata_q: 120, peso: 3,
+    munizioni: { capacita: 1, ricarica: '1 AzM', consumo: null, riferimento: null }, inc: 8, mov: 0, modalita: ['S'], for_richiesta: 5, pi: 6,
+    qualita: 'Comune', ps_int: 10, reperibilita: null, costo: 700, proprieta: [{ nome: 'Perforazione', testo: 'Perforazione descrive il mezzo del colpo (quadrello), non attribuisce Perforante.' }],
+  },
+  {
+    id: 'quadrelli-lunari-d-osso', nome: 'Quadrelli lunari d’osso', tipo: 'munizioni', catalogo: 'Artefatti di campagna', famiglia: 'Munizioni ordinarie', nomi_alternativi: [],
+    note_manuale: 'Quadrelli con asta d’osso e impennaggio di papiro; ogni punta è una piccola Pietra di Luna infusa. Munizione e Artefatto Mistico passivo, Grado I, Comune; compatibili con la Balestra d’osso e la Balestra grande. +1 VA per colpire e il danno dell’arma diventa Magico, senza incremento numerico (con la Balestra d’osso: 1d6+3 Magico); non attribuiscono Perforante. SnT 0, proprietà sempre attiva, nessun consumo di PM o CM. 40 cm, 80 g ciascuno (dieci pesano 0,8 kg). Valore 50 crediti ciascuno, 500 per dieci; manufatto dei Mutanti, normalmente ottenibile tramite baratto.',
+    paragrafo: '§7.27.6', versione_manuale: ED_ARM, reperibilita: null, 'TODO(Davide)': 'A.290: Reperibilità dei Quadrelli lunari. Il manuale scrive «manufatto dei Mutanti, normalmente ottenibile tramite baratto» e non una sigla; nessuna sigla inventata.', costo: 50, peso: 0.08,
+    munizione: { famiglia: 'dardi_balestra_grande', confezione: { quantita: 10, costo: 500 } },
+    artefatto: { ...SOLO_PASSIVE, tipologia: 'Munizioni' },
+    effetti: [{ tipo: 'attacco', attacchi: 'distanza', valore: 1, ambito: 'situazionale', se: 'con i quadrelli lunari', condizione: 'Con la Balestra d’osso: 1d6+3 Magico e +1 VA per colpire.', fonte: `${ED_ARM} §7.27.6` }],
+    proprieta: [],
+  },
+];
+
+const FILE = {
+  versione_manuale: `${ED_ARM} §7.27 / ${ED_EQ} §10.14 / ${ED_MAG} §26.8 e §28.5`,
+  fonte: 'Lotto 219: manufatti lunari dei Mutanti (Armamenti §7.27, Equipaggiamento §10.14, Magia §26.8 e §28.5; blocco del 13/11/2026 del Doc E&L). Generatore tools/lotti/lotto_219_lunari.mjs.',
+  _nota: 'Sei manufatti dei Mutanti del Deserto Cangiante. Prezzo e reperibilità non fissati dal manuale dove `costo` è null e `non_in_vendita` è true: non si convertono in zero. Non incluse (dichiarato): le Pietre di Luna intere (Magia §26.8: colore scelto alla sintonizzazione, perdita del vincolo dopo 7 giorni) e l’Esausto lunare (Equipaggiamento §5.4.12): servono meccaniche che l’app non ha, e nessun personaggio le possiede (domanda A.291).',
+  modalita: { S: 'Colpo Singolo' },
+  oggetti: OGGETTI,
+};
+
+if (!scrivi) {
+  console.log(`Scriverebbe ${OGGETTI.length} voci in data/equipaggiamento/manufatti_lunari.json: ${OGGETTI.map((o) => o.nome).join(', ')}.`);
+  console.log('(niente scritto: --scrivi per applicare)');
+  process.exit(0);
+}
+writeFileSync(D('manufatti_lunari.json'), `${JSON.stringify(FILE, null, 2)}\n`);
+const ind = leggi('index.json');
+if (!ind.file.some((f) => f.id === 'manufatti_lunari')) {
+  ind.file.push({ id: 'manufatti_lunari', file: 'manufatti_lunari.json', descrizione: 'Manufatti lunari dei Mutanti: Pugnale e Spada lunare d’osso, Spada dei Tre Riflessi, Balestra e Quadrelli d’osso, Collana di papiro (Armamenti 0.86 §7.27, Equipaggiamento 0.42 §10.14, Magia 1.19 §26.8 e §28.5)' });
+  writeFileSync(D('index.json'), `${JSON.stringify(ind, null, 2)}\n`);
+}
+// la famiglia di munizioni della Balestra d'osso (§7.27.5: quadrelli compatibili con la Balestra grande)
+const mun = leggi('munizioni.json');
+if (!mun.munizioni_armi.some((x) => x.rif === 'manufatti_lunari:balestra-d-osso')) {
+  mun.munizioni_armi.push({ rif: 'manufatti_lunari:balestra-d-osso', famiglia: 'dardi_balestra_grande' });
+  writeFileSync(D('munizioni.json'), `${JSON.stringify(mun, null, 2)}\n`);
+}
+console.log(`Scritte ${OGGETTI.length} voci.`);

@@ -2502,7 +2502,9 @@ function validaDotazioni(dati, err) {
 const INNESTI = ['interfaccia_neurale', 'processore'];
 const AMBITI_EFFETTO = ['generale', 'situazionale', 'uso_specifico'];
 const TIPI_EFFETTO = {
-  va: null, attacco: null, danno: null, iniziativa: 'generale', salvezza: 'uso_specifico',
+  // lotto 219: la Collana di papiro dà +1 alle PS Tempra, Volontà e Magia **sempre** (Equipaggiamento §10.14): per gli oggetti
+  // la Salvezza può essere anche generale, purché dica quale Prova (controllo più sotto), non solo d'uso specifico
+  va: null, attacco: null, danno: null, iniziativa: 'generale', salvezza: null,
   caratteristica: 'uso_specifico', contromisura: 'generale', ar_contro: 'generale', ar: null, movimento: 'generale',
 };
 // «senz_armi»: solo i pugni («Senz'armi» in «Attacca!»); «contatto_incantesimi»: Prove per colpire in corpo a

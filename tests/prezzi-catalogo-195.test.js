@@ -69,8 +69,11 @@ test('A.261: dove la cifra scritta non torna con la formula, resta la cifra scri
 test('A.261 e A.262: l’«Epica» ha il suo coefficiente, e i quattro Artefatti di Grado V hanno un prezzo', () => {
   assert.equal(dati.regole.prezzi_artefatti.coefficienti.Epica, 4);
   assert.deepEqual(Object.keys(dati.regole.prezzi_artefatti.coefficienti), ['Comune', 'Non Comune', 'Rara', 'Molto Rara', 'Epica', 'Leggendaria']);
-  const epica = cat.oggetti.filter((o) => o.artefatto?.potenza === 'Epica');
+  // lotto 219: la Spada dei Tre Riflessi è Epica ma il manuale non fissa il prezzo («manufatto di campagna»): non in vendita,
+  // senza costo di costruzione, quindi niente prezzo da calcolare — mai 0
+  const epica = cat.oggetti.filter((o) => o.artefatto?.potenza === 'Epica' && o.non_in_vendita !== true);
   assert.ok(epica.length >= 4);
+  assert.equal(cat.oggetti.filter((o) => o.artefatto?.potenza === 'Epica' && o.non_in_vendita === true).map((o) => o.id).join(), 'spada-dei-tre-riflessi');
   for (const o of epica) {
     const p = prezzoArtefatto(o, dati);
     assert.equal(p.coefficiente, 4, o.id);

@@ -36,6 +36,7 @@ import { rigaScelte } from './pannello-passi.js';
 import { colore, riempimento, condizioniAttiveAbilita } from '../interfaccia.js';
 import { statoMorente } from '../morente.js';
 import { testoAttivazione } from '../attivazione-arma.js';
+import { statoPoteri } from '../poteri-arma.js';
 import { testoManifestazione } from '../manifestazione.js';
 import { descriviFerite } from '../sessione.js';
 import { elencoTrasformatori, statoTrasformatore, bersagliRicaricabili, fontiCec, pianoRicarica } from '../trasformatori.js';
@@ -2185,7 +2186,27 @@ function attivazioneArmaUi(ctx, a) {
   return regioneVivaSe(['pmAttuali', `chroma:${a.uid}`], () => attivazioneArmaUiCorpo(ctx, a), { tag: 'span' });
 }
 
+/**
+ * Lotto 219: i poteri cromatici di un'arma-Artefatto (Spada dei Tre Riflessi): un pulsante per colore, 1 CM intera dalla
+ * riserva condivisa, `Termina` se uno è attivo. Il sintonizzato e l'impugnatura li giudica il tavolo: l'avviso lo dice.
+ */
+function poteriArmaUiCorpo(ctx, a) {
+  const riserva = ctx.sessione.chroma?.[a.uid]?.pmAttuali;
+  const st = statoPoteri(a, ctx.sessione, Number.isFinite(riserva) ? Math.floor(riserva) : null);
+  const motivo = st.riserva !== null && st.riserva < st.cm ? `la riserva ha ${numeroRiserva(st.riserva)} CM, ne serve ${st.cm}` : null;
+  return h('span', { class: `attivazione-arma poteri-arma${st.attivo ? ' attiva' : ''}` },
+    h('small', { class: 'nota' }, ` · ${st.sintesi}${st.riserva !== null ? ` · riserva ${numeroRiserva(st.riserva)} CM` : ''}`),
+    ...st.opzioni.map((o) => h('button', {
+      type: 'button', class: `btn btn-piccolo${motivo ? ' con-avviso' : ''}${o.attiva ? ' scelta' : ''}`, 'data-potere-arma': o.id, 'aria-pressed': String(o.attiva),
+      title: motivo ?? `${st.azione} e ${st.cm} CM: ${o.testo} (${st.richiede})`,
+      onclick: () => conAvviso(ctx.azioni.storico, { azione: `attivare ${o.nome} (${a.nome})`, motivo, fai: (forza) => ctx.azioni.attivaArma(a.uid, { cm: st.cm, round: st.round, opzione: o.id }, forza) }),
+    }, `${o.attiva ? '● ' : ''}${o.nome} (${o.colore})`)),
+    st.attivo ? h('button', { type: 'button', class: 'btn btn-piccolo', title: 'Spegne il potere (la CM spesa non torna)', onclick: () => ctx.azioni.terminaArma(a.uid) }, 'Termina') : null,
+    infoValore('?', { titolo: `${a.nome}: poteri`, sezioni: [{ testo: `Riserva condivisa dai tre colori. Un colore alla volta; cambiare o rinnovare costa di nuovo ${st.cm} CM. Il +1d4 è già nel danno.` }, ...st.opzioni.map((o) => ({ etichetta: `${o.nome} (${o.colore})`, testo: o.testo }))] }, { classe: 'info-gradi' }));
+}
+
 function attivazioneArmaUiCorpo(ctx, a) {
+  if (a.poteriArma) return poteriArmaUiCorpo(ctx, a);
   if (!a.usoPerClasse) return null;
   const u = testoAttivazione({ uso_per_classe: a.usoPerClasse }, ctx.tab.scheda, ctx.sessione, a.uid);
   if (!u) return null;

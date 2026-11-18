@@ -84,6 +84,7 @@ export const ARGOMENTI = {
   'lotto_193_morente.mjs': ['scrivi'],
   'adegua-abilita.mjs': ['cartella', 'salvataggi', 'applica', 'annulla', 'stato'],
   'lotto_206_armi.mjs': ['scrivi', 'sette', 'voce'],
+  'lotto_219_lunari.mjs': ['scrivi'],
   'lotto_206_a260.mjs': ['scrivi'],
   'lotto_209_cyberarma.mjs': ['scrivi'],
   'lotto_210_focalizzatori.mjs': ['scrivi'],

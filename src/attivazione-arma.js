@@ -57,7 +57,8 @@ export function allineaAttivazioniArmi(valore, uidNoti, round) {
     if (!isOggetto(x) || !Number.isInteger(x.round) || x.round < 1) continue;
     const dal = Number.isInteger(x.dal) && x.dal >= 1 ? x.dal : 1;
     if (dal + x.round - r <= 0) continue; // finita
-    out[uid] = { dal, round: x.round };
+    // lotto 219: il colore attivo di un'arma a poteri (Spada dei Tre Riflessi) non si perde nell'allineamento
+    out[uid] = { dal, round: x.round, ...(typeof x.opzione === 'string' && x.opzione ? { opzione: x.opzione } : {}) };
   }
   return out;
 }

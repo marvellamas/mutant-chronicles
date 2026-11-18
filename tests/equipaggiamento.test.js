@@ -18,7 +18,7 @@ const voce = (uid, rif, stato, extra = {}) => ({ uid, rif, stato, quantita: 1, n
 const scheda = (creazione, equipaggiamento, livelli = []) => calcolaScheda({ creazione: { ...creazione, equipaggiamento }, livelli }, dati);
 
 test('catalogo: caricato dall’indice, un lotto = un file e una riga; riferimenti "file:id"', () => {
-  assert.deepEqual(dati.equipaggiamento.indice.file.map((f) => f.id), ['armi', 'armi_corporative', 'armi_distanza', 'armi_distanza_corporative', 'accessori_armi', 'munizioni', 'nec', 'sanitario', 'artefatti', 'unita_robotiche', 'armature', 'armature_corporative', 'elmetti', 'rinforzi', 'scudi', 'corredi_dispositivi', 'dotazioni_personali', 'esplorazione', 'comunicazione', 'strumenti_professionali', 'impianti']);
+  assert.deepEqual(dati.equipaggiamento.indice.file.map((f) => f.id), ['armi', 'armi_corporative', 'armi_distanza', 'armi_distanza_corporative', 'accessori_armi', 'munizioni', 'nec', 'sanitario', 'artefatti', 'unita_robotiche', 'armature', 'armature_corporative', 'elmetti', 'rinforzi', 'scudi', 'corredi_dispositivi', 'dotazioni_personali', 'esplorazione', 'comunicazione', 'strumenti_professionali', 'impianti', 'manufatti_lunari']);
   const cat = catalogo(dati);
   assert.equal(cat.oggetti.filter((o) => o.tipo === 'arma_ravvicinata' && o.catalogo === 'Commerciale').length, 28); // §7.1.1: 28 profili
   assert.equal(cat.oggetti.filter((o) => o.tipo === 'armatura' && o.catalogo === 'Commerciale').length, 3); // §7.11.3
@@ -826,7 +826,7 @@ test('lotto 10: munizioni, celle, pacchi NEC dei lanciafiamme e compatibilità b
   // granate standard, Fumogena ed Elettroshock sono già nel catalogo: niente doppioni
   assert.ok(!tutti.some((o) => /fumogena|elettroshock|frammentazione standard/i.test(o.nome)));
   const tab = dati.equipaggiamento.file.munizioni.munizioni_armi;
-  assert.equal(tab.length, 72 + 14); // 72 armi corporative del §7.20.9 (con la Colt Hammershot, 0.54) e 14 commerciali (§7.20.1, collaudo)
+  assert.equal(tab.length, 72 + 14 + 1); // + la Balestra d’osso (lotto 219, §7.27.5: stessa famiglia di quadrelli della Balestra grande); // 72 armi corporative del §7.20.9 (con la Colt Hammershot, 0.54) e 14 commerciali (§7.20.1, collaudo)
   const fam = (rif) => tab.find((x) => x.rif === rif)?.famiglia;
   assert.equal(fam('armi_distanza_corporative:mg40'), 'fucile'); // «La loro funzione di mitragliatrice leggera non li sposta nei pesanti»
   assert.equal(fam('corredi_dispositivi:rainy-dayer'), 'pistola');

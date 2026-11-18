@@ -11,6 +11,7 @@
 // Il risultato porta la `provenienza` (src/provenienza.js): le righe della base come nella SD (con la
 // scomposizione dell'Abilità in dettaglio) e, sotto, una riga per voce della dichiarazione.
 import { aggiungiDanno } from './equipaggiamento.js';
+import { armaConPotere } from './poteri-arma.js';
 import { bonusDannoCaratteristica } from './calc.js';
 import { avvisiStati, limitiStati } from './condizioni.js';
 import { riga, provenienza, righeDaScomposizione, righeBase, rigaConDettaglio, rigaBonusCaratteristica } from './provenienza.js';
@@ -1080,7 +1081,9 @@ export { moltiplicatoreMagistrale };
  *   prova: {tipo, testo}, danno: { base, bonus, formula, moltiplicatore, moltiplicatore_magistrale, testo, testo_magistrale }|null,
  *   dopo_armatura: [{etichetta, testo}], effetti, impossibile: {motivo}|null, promemoria, avvisi }}
  */
-export function calcolaAttaccoRavvicinato(personaggio, arma, dichiarazione, dati) {
+export function calcolaAttaccoRavvicinato(personaggio, armaDiBase, dichiarazione, dati) {
+  // lotto 219: con un colore attivo (Spada dei Tre Riflessi) il danno ha il +1d4 e il VA il bonus del colore, in righe distinte
+  const arma = armaConPotere(armaDiBase, personaggio.sessione);
   const R = dati.regole.attacco_ravvicinato;
   const d = dichiarazioneRavvicinato(dichiarazione);
   const T = talentiAttacco(personaggio.scheda, dati, 'attacco_ravvicinato');
@@ -1089,6 +1092,8 @@ export function calcolaAttaccoRavvicinato(personaggio, arma, dichiarazione, dati
   const vincoli = vincoliRavvicinato(personaggio, arma, d, dati);
   const promemoria = [];
   const avvisi = [];
+  // lotto 219: che cosa fa il potere attivo (Plasma, Elettricità, Armonia), e che le PS dei bersagli si decidono al tavolo
+  if (arma.potereAttivo) promemoria.push(`${arma.nome}: ${arma.potereAttivo.nome} (${arma.potereAttivo.colore}) attivo, ${arma.potereAttivo.rimasti} Round. ${arma.potereAttivo.testo}`);
   let impossibile = null;
   const blocca = (motivo) => { impossibile ??= { motivo }; };
   const aggiungi = (lista, etichetta, valore, fonte, paragrafo) => { if (valore) lista.push(voce(etichetta, valore, fonte, paragrafo)); };
@@ -1117,6 +1122,8 @@ export function calcolaAttaccoRavvicinato(personaggio, arma, dichiarazione, dati
   // (Sbilanciare, Disarmare: E&L 7–8, A.41): senz'armi Corpo a corpo, con un'arma la sua Abilità
   let base = (arma.scomposizione?.length ? arma.scomposizione : [voce(`VA ${arma.abilita}`, arma.va ?? 0, 'regole')]).map((x) => ({ paragrafo: null, ...x }));
   let baseRighe = righeBase(arma, base);
+  // lotto 219: il bonus VA del colore attivo (Armonia) è una riga a sé: danno base, bonus passivo e potere attivo restano distinti
+  if (arma.potereAttivo?.va) baseRighe = [...baseRighe, riga(`Potere attivo: ${arma.potereAttivo.nome} (${arma.potereAttivo.colore})`, arma.potereAttivo.va, 'Armamenti §7.27.3')];
   const corpo = (personaggio.scheda?.abilita ?? []).find((x) => x.nome === R.senz_armi.abilita);
   const delMezzo = (m.prova?.abilita ?? []).includes('mezzo');
   if (m.prova?.tipo === 'contrapposta' && corpo && !arma.senzArmi && !delMezzo) {

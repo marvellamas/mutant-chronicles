@@ -21,6 +21,19 @@ export function specDaFormula(formula) {
 }
 
 /**
+ * Lotto 219: «1d8+1d4+3» (la Spada dei Tre Riflessi con un colore attivo, il Scudo delle Guardie Sacre con la lama): più
+ * gruppi di dadi e un fisso. Torna una funzione che tira il totale con src/tiri.js, o null se la formula non è questa.
+ * Prima «Tira con l'app» rifiutava ogni formula con due gruppi di dadi.
+ */
+export function tiratoreDiFormula(formula) {
+  const m = /^\s*((?:\d+d\d+\s*\+\s*)*\d+d\d+)\s*([+-]\s*\d+)?\s*$/.exec(String(formula ?? ''));
+  if (!m) return null;
+  const gruppi = m[1].split('+').map((x) => /(\d+)d(\d+)/.exec(x)).map((g) => specTiro({ dadi: Number(g[1]), facce: Number(g[2]), fisso: 0 }));
+  const fisso = m[2] ? Number(m[2].replace(/\s+/g, '')) : 0;
+  return () => gruppi.reduce((s, spec) => s + tira(spec).tiro.valore, 0) + fisso;
+}
+
+/**
  * Apre la finestra.
  * @param bersaglio { nome, pv: { attuali, massimo }, ferite (null per i nemici), ar: { totale, magica, valori? }, statiAttivi? }
  * @param applica async (risultato, colpo, statiScelti: string[], periodici: []) → true se scritto
@@ -106,11 +119,12 @@ export function apriColpo(ctx, bersaglio, { applica, proposta = {}, fonti = [] }
           // A.199: «12d10×5» → dadi 12d10 e moltiplicatore ×5 (il più alto); la formula resta quella dei dadi
           const letto = leggiDannoMoltiplicato(st.formula);
           const s = specDaFormula(letto.formula);
-          if (s && letto.moltiplicatore > 1) { st.formula = letto.formula; st.moltiplicatore = Math.max(st.moltiplicatore, letto.moltiplicatore); }
-          if (!s) { st.errore = 'Formula non riconosciuta: scrivi per esempio «1d8+2», oppure i danni dal vivo.'; disegna(); return; }
+          const tiratore = s ? null : tiratoreDiFormula(letto.formula);
+          if ((s || tiratore) && letto.moltiplicatore > 1) { st.formula = letto.formula; st.moltiplicatore = Math.max(st.moltiplicatore, letto.moltiplicatore); }
+          if (!s && !tiratore) { st.errore = 'Formula non riconosciuta: scrivi per esempio «1d8+2» o «1d8+1d4+2», oppure i danni dal vivo.'; disegna(); return; }
           st.errore = null;
           // solo i dadi con i bonus: moltiplicatore e Magistrale li applica applicaColpo (§5.13, passo 3)
-          st.danni = Array.from({ length: st.ac }, () => tira(s).tiro.valore); disegna();
+          st.danni = Array.from({ length: st.ac }, () => (s ? tira(s).tiro.valore : tiratore())); disegna();
         } }, 'Tira con l’app')),
       h('div', { class: 'danni-colpo' }, Array.from({ length: st.ac }, (_, i) => h('label', {}, `Danno ${i + 1} `,
         h('input', { type: 'number', min: 0, step: 1, class: 'input-d10', value: st.danni[i] ?? '', 'aria-label': `Danno dell’applicazione ${i + 1}: dadi e bonus ordinari, dal vivo`,

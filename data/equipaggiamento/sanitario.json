@@ -188,7 +188,11 @@
         "morente": "stabilizza",
         "fonte": "§5.14 (A.159)"
       },
-      "_nota_a159": "Monouso, occupa un alloggiamento per cartucce. Compatibile con UMC, iniettori sanitari, pistole sanitarie, iniettori impiantati e postazioni medicochirurgiche. UMC Passiva: 1 AzP e Prova di Medicina o Tecnologia–Strumentazione; UMC Attiva: 1 AzP senza Prova; UMC Automatica con protocollo Morente: da sé alla fine dell’intero attacco, senza Azioni né Prova e con la priorità fra i protocolli. Resta il limite di una sola somministrazione rapida per paziente per Round. Non agisce dopo la morte. Peso, PS Integrità e PI non sono indicati dalla risposta: restano da completare."
+      "_nota_a159": "Monouso, occupa un alloggiamento per cartucce. Compatibile con UMC, iniettori sanitari, pistole sanitarie, iniettori impiantati e postazioni medicochirurgiche. UMC Passiva: 1 AzP e Prova di Medicina o Tecnologia–Strumentazione; UMC Attiva: 1 AzP senza Prova; UMC Automatica con protocollo Morente: da sé alla fine dell’intero attacco, senza Azioni né Prova e con la priorità fra i protocolli. Resta il limite di una sola somministrazione rapida per paziente per Round. Non agisce dopo la morte. Peso, PS Integrità e PI non sono indicati dalla risposta: restano da completare.",
+      "da_definire": [
+        "peso"
+      ],
+      "_nota_peso": "Lotto 219: il peso non è scritto nell’Equipaggiamento 0.42 e il raccordo sanitario del 13/11/2026 (Doc E&L) lo dice espressamente «Da definire», «senza ricavarlo dalle altre cartucce». Il campo `peso` è assente, non 0 e non il peso di un’altra cartuccia: l’app non conta niente per questa voce nel carico finché Davide non lo fissa (domanda A.292)."
     },
     {
       "id": "cartuccia-curativa",

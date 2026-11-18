@@ -42,7 +42,9 @@ export function nemiciBersaglio(partecipanti) {
 export function propostaDaPg(a, r, e, fonte) {
   const distanza = a.tipo === 'arma_distanza';
   const attacco = {
-    tipo: distanza ? 'distanza' : 'ravvicinato', natura: r.danno?.natura ?? a.natura ?? 'Naturale', danno: null, ac: a.ac ?? 1,
+    tipo: distanza ? 'distanza' : 'ravvicinato', // lotto 219: la natura del danno dell'arma sta in `naturaDanno` (Spada lunare, Pugnale lunare: Magico); senza, il danno Magico
+    // arrivava a «Colpito» come Naturale e contro l'AR sbagliata
+    natura: r.danno?.natura ?? a.naturaDanno ?? a.natura ?? 'Naturale', danno: null, ac: a.ac ?? 1,
     proprieta: (a.proprieta ?? []).map((x) => x?.nome ?? x).filter(Boolean), fonte: fonte.id, fonteNome: fonte.nome,
   };
   return propostaColpo(attacco, r, { magistrale: e.magistrale, colpiASegno: e.riusciti * (distanza ? Math.max(1, r.colpi_a_segno ?? 1) : 1) });

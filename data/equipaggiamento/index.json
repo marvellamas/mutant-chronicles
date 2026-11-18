@@ -1,268 +1,273 @@
 {
- "versione_manuale": "Armamenti 0.74",
- "_nota": "Elenco dei file del catalogo dell’equipaggiamento. Aggiungere un lotto = aggiungere un file in questa cartella e una riga qui. «id» è il prefisso dei riferimenti nei personaggi (es. \"armi:spada-leggera\").",
- "reperibilita": {
-  "CO": {
-   "nome": "Comune",
-   "ricerca": "Disponibile presso un venditore appropriato; nessuna Prova."
+  "versione_manuale": "Armamenti 0.74",
+  "_nota": "Elenco dei file del catalogo dell’equipaggiamento. Aggiungere un lotto = aggiungere un file in questa cartella e una riga qui. «id» è il prefisso dei riferimenti nei personaggi (es. \"armi:spada-leggera\").",
+  "reperibilita": {
+    "CO": {
+      "nome": "Comune",
+      "ricerca": "Disponibile presso un venditore appropriato; nessuna Prova."
+    },
+    "NC": {
+      "nome": "Non comune",
+      "ricerca": "Oratoria senza penalità."
+    },
+    "RA": {
+      "nome": "Rara",
+      "ricerca": "Oratoria −2 VA."
+    },
+    "MR": {
+      "nome": "Molto rara",
+      "ricerca": "Oratoria −4 VA."
+    },
+    "EP": {
+      "nome": "Epica",
+      "ricerca": "Oratoria −6 VA, se il Direttore di Gioco stabilisce che esiste una possibilità concreta di reperimento (per gli Artefatti un’offerta o una commissione, per esempio un raro tecnomistico indipendente). Un successo non obbliga a vendere e non toglie prezzo, autorizzazioni o tempi di produzione.",
+      "fonte": "Le Batterie colorate passano da REP Molto Rara a Epica. A.83 (E&L del 03/10/2026): EP fra Molto Rara e Leggendaria, ricerca con Oratoria −6 VA. Dall’Equipaggiamento 0.41 §10.3 le Batterie Matrice Bianche non sono più Leggendarie ma «Eccezionali» (EC), che non è una fascia commerciale (Equipaggiamento §1.8, §10.1, §10.3; Armamenti §7.1.8; Magia §26.4)."
+    },
+    "LE": {
+      "nome": "Leggendaria",
+      "ricerca": "Nessuna Prova la rende disponibile: riservata a disponibilità eccezionali introdotte dal Direttore di Gioco."
+    },
+    "EC": {
+      "nome": "Eccezionale",
+      "commerciale": false,
+      "ricerca": "Nessuna Prova la rende disponibile: è un accesso di campagna che il Direttore di Gioco concede o nega.",
+      "fonte": "Equipaggiamento 0.41 §10.1: «REP eccezionale indica un accesso di campagna, non una nuova fascia della normale tabella commerciale». Le Batterie Matrice Bianche e le configurazioni oltre il Grado VI del §10.3 la portano: non sono una sesta fascia sopra la Leggendaria, sono fuori dal listino."
+    }
   },
-  "NC": {
-   "nome": "Non comune",
-   "ricerca": "Oratoria senza penalità."
-  },
-  "RA": {
-   "nome": "Rara",
-   "ricerca": "Oratoria −2 VA."
-  },
-  "MR": {
-   "nome": "Molto rara",
-   "ricerca": "Oratoria −4 VA."
-  },
-  "EP": {
-   "nome": "Epica",
-   "ricerca": "Oratoria −6 VA, se il Direttore di Gioco stabilisce che esiste una possibilità concreta di reperimento (per gli Artefatti un’offerta o una commissione, per esempio un raro tecnomistico indipendente). Un successo non obbliga a vendere e non toglie prezzo, autorizzazioni o tempi di produzione.",
-   "fonte": "Le Batterie colorate passano da REP Molto Rara a Epica. A.83 (E&L del 03/10/2026): EP fra Molto Rara e Leggendaria, ricerca con Oratoria −6 VA. Dall’Equipaggiamento 0.41 §10.3 le Batterie Matrice Bianche non sono più Leggendarie ma «Eccezionali» (EC), che non è una fascia commerciale (Equipaggiamento §1.8, §10.1, §10.3; Armamenti §7.1.8; Magia §26.4)."
-  },
-  "LE": {
-   "nome": "Leggendaria",
-   "ricerca": "Nessuna Prova la rende disponibile: riservata a disponibilità eccezionali introdotte dal Direttore di Gioco."
-  },
-  "EC": {
-   "nome": "Eccezionale",
-   "commerciale": false,
-   "ricerca": "Nessuna Prova la rende disponibile: è un accesso di campagna che il Direttore di Gioco concede o nega.",
-   "fonte": "Equipaggiamento 0.41 §10.1: «REP eccezionale indica un accesso di campagna, non una nuova fascia della normale tabella commerciale». Le Batterie Matrice Bianche e le configurazioni oltre il Grado VI del §10.3 la portano: non sono una sesta fascia sopra la Leggendaria, sono fuori dal listino."
-  }
- },
- "file": [
-  {
-   "id": "armi",
-   "file": "armi.json",
-   "descrizione": "Armi ravvicinate del catalogo Commerciale (§7.1.1)"
-  },
-  {
-   "id": "armi_corporative",
-   "file": "armi_corporative.json",
-   "descrizione": "Armi ravvicinate dei cataloghi corporativi (§7.1.9)"
-  },
-  {
-   "id": "armi_distanza",
-   "file": "armi_distanza.json",
-   "descrizione": "Armi a distanza del catalogo Commerciale (§7.7)"
-  },
-  {
-   "id": "armi_distanza_corporative",
-   "file": "armi_distanza_corporative.json",
-   "descrizione": "Armi a distanza dei cataloghi corporativi, con i moduli integrati (§7.8)"
-  },
-  {
-   "id": "accessori_armi",
-   "file": "accessori_armi.json",
-   "descrizione": "Mirini, riduzione del rumore, supporti di tiro, illuminazione e visione (§7.3)"
-  },
-  {
-   "id": "munizioni",
-   "file": "munizioni.json",
-   "descrizione": "Munizioni ordinarie e speciali, granate, razzi, celle e pacchi NEC dei lanciafiamme, dardi chimici; compatibilità balistiche (§7.20)"
-  },
-  {
-   "id": "nec",
-   "file": "nec.json",
-   "descrizione": "Nuclei Energetici Cromatici: celle, moduli, banchi e stazioni di ricarica (Equipaggiamento 0.5, §5.4)"
-  },
-  {
-   "id": "sanitario",
-   "file": "sanitario.json",
-   "descrizione": "Kit di pronto soccorso, cartucce, UMC, dispositivi portatili, diagnostica e chirurgia (§7.19)"
-  },
-  {
-   "id": "artefatti",
-   "file": "artefatti.json",
-   "descrizione": "Regole di sintonizzazione, Artefatti con riserva mistica, batterie (§7.5, §7.10)"
-  },
-  {
-   "id": "unita_robotiche",
-   "file": "unita_robotiche.json",
-   "descrizione": "Cuirassier Attila e Generatore di risonanza RF366 (§7.18)"
-  },
-  {
-   "id": "armature",
-   "file": "armature.json",
-   "descrizione": "Armature commerciali civili (§7.11.3)"
-  },
-  {
-   "id": "armature_corporative",
-   "file": "armature_corporative.json",
-   "descrizione": "Armature dei cataloghi corporativi (§7.11.5–7.17.5)"
-  },
-  {
-   "id": "elmetti",
-   "file": "elmetti.json",
-   "descrizione": "Elmetti e modifiche: standard di ricambio, modifiche commerciali, elmetti corporativi (Armamenti v0.52 §7.21)"
-  },
-  {
-   "id": "rinforzi",
-   "file": "rinforzi.json",
-   "descrizione": "Catalogo dei rinforzi delle armature: commerciali, soprabiti di base e specialistici (§7.11.2, §7.23)"
-  },
-  {
-   "id": "scudi",
-   "file": "scudi.json",
-   "descrizione": "Scudi commerciali e corporativi (§7.4)"
-  },
-  {
-   "id": "corredi_dispositivi",
-   "file": "corredi_dispositivi.json",
-   "descrizione": "Corredi e dispositivi corporativi, esoscheletro APE, armi e granate Imperial, SIN Cybertronic (§7.12–7.17)"
-  },
-  {
-   "id": "dotazioni_personali",
-   "file": "dotazioni_personali.json",
-   "descrizione": "Dotazioni personali: contenitori, illuminazione, abbigliamento, oggetti quotidiani (Equipaggiamento 0.5, cap. 2)"
-  },
-  {
-   "id": "esplorazione",
-   "file": "esplorazione.json",
-   "descrizione": "Esplorazione e sopravvivenza: accampamento, viveri, orientamento, protezioni ambientali, mobilità (Equipaggiamento 0.5, cap. 3)"
-  },
-  {
-   "id": "comunicazione",
-   "file": "comunicazione.json",
-   "descrizione": "Comunicazione e rilevamento: comunicatori, ottiche e visori, sorveglianza (Equipaggiamento 0.5, cap. 4)"
-  },
-  {
-   "id": "strumenti_professionali",
-   "file": "strumenti_professionali.json",
-   "descrizione": "Strumenti professionali: tecnici, scientifici, agricoli, accesso, camuffamento, elettronica, culturali e rituali (Equipaggiamento 0.5, cap. 5)"
-  },
-  {
-   "id": "impianti",
-   "file": "impianti.json",
-   "descrizione": "Impianti cibernetici e chip del Processore neurale (Equipaggiamento 0.5, cap. 7)"
-  }
- ],
- "_nota_reperibilita": "Scala: Comune, Non comune, Rara, Molto rara, Leggendaria (risposta di Davide A.14, 28/09/2026). Leggendaria è superiore a Molto rara. I valori economici degli oggetti rari sono riferimenti per eventuali scambi, non un listino che garantisce l’acquisto: deve prima esistere un produttore o possessore disposto a cedere l’oggetto; una Prova di Oratoria, da sola, non crea questa disponibilità. La reperibilità resta distinta dalla potenza mistica e dalla Qualità costruttiva.",
- "rif_sostituiti": {
-  "corredi_dispositivi:interfaccia-neurale-cybertronic": {
-   "rif": "impianti:interfaccia-neurale-cybertronic",
-   "stati": {
-    "in_uso": "installato",
-    "zaino": "zaino"
-   }
-  },
-  "accessori_armi:batteria-di-servizio": {
-   "rif": "nec:verde-compatto"
-  },
-  "accessori_armi:nec-verde-standard-di-ricambio": {
-   "rif": "nec:verde-standard"
-  },
-  "esplorazione:cartuccia-di-combustibile": {
-   "rif": "nec:rosso-standard"
-  },
-  "munizioni:serbatoio-vuoto-nemesis-214": {
-   "rif": "munizioni:pacco-nec-nemesis-214"
-  },
-  "munizioni:serbatoio-vuoto-del-lanciafiamme-commerciale": {
-   "rif": "munizioni:pacco-nec-lanciafiamme-commerciale"
-  },
-  "munizioni:serbatoio-vuoto-eruptor": {
-   "rif": "munizioni:pacco-nec-eruptor"
-  },
-  "munizioni:serbatoio-vuoto-purifier": {
-   "rif": "munizioni:pacco-nec-purifier"
-  },
-  "munizioni:serbatoio-vuoto-gehemmapuker": {
-   "rif": "munizioni:pacco-nec-gehemmapuker"
-  },
-  "sanitario:set-chirurgico-di-ricambio": {
-   "rif": "sanitario:cartuccia-chirurgica"
-  },
-  "sanitario:confezione-da-cinque-set-chirurgici": {
-   "rif": "sanitario:cartuccia-chirurgica",
-   "quantita_per": 5
-  },
-  "nec:modulo-rosso": {
-   "rif": "nec:cec-rosso",
-   "precedente": {
-    "lx": 5000,
-    "ue": 10,
-    "incerto": "A.217"
-   }
-  },
-  "nec:banco-rosso": {
-   "rif": "nec:cec-rosso",
-   "precedente": {
-    "lx": 50000,
-    "ue": 100
-   }
-  },
-  "nec:modulo-blu": {
-   "rif": "munizioni:pacco-nec-gehemmapuker",
-   "precedente": {
-    "lx": 2500,
-    "incerto": "A.217"
-   }
-  },
-  "nec:banco-blu": {
-   "rif": "nec:cec-blu",
-   "precedente": {
-    "lx": 25000,
-    "ue": 100
-   }
-  },
-  "nec:modulo-verde": {
-   "rif": "nec:cec-verde",
-   "precedente": {
-    "lx": 10000,
-    "ue": 10,
-    "incerto": "A.217"
-   }
-  },
-  "nec:banco-verde": {
-   "rif": "nec:cec-verde",
-   "precedente": {
-    "lx": 100000,
-    "ue": 100
-   }
-  },
-  "munizioni:caricatore-da-campo": {
-   "rif": "nec:trasformatore-portatile-monocromatico"
-  },
-  "nec:stazione-per-moduli": {
-   "rif": "nec:stazione-industriale-multicromatica"
-  },
-  "nec:stazione-per-banchi": {
-   "rif": "nec:stazione-industriale-multicromatica"
-  }
- },
- "_nota_rif_sostituiti": "Voci di catalogo uscite perché sostituite da un’altra scheda: al caricamento di un personaggio (src/character.js → normalizza) la voce passa al rif nuovo, con lo stato tradotto se indicato.",
- "catalogo_armi": {
-  "edizione": "Armamenti 0.86",
   "file": [
-   "armi.json",
-   "armi_corporative.json",
-   "armi_distanza.json",
-   "armi_distanza_corporative.json"
+    {
+      "id": "armi",
+      "file": "armi.json",
+      "descrizione": "Armi ravvicinate del catalogo Commerciale (§7.1.1)"
+    },
+    {
+      "id": "armi_corporative",
+      "file": "armi_corporative.json",
+      "descrizione": "Armi ravvicinate dei cataloghi corporativi (§7.1.9)"
+    },
+    {
+      "id": "armi_distanza",
+      "file": "armi_distanza.json",
+      "descrizione": "Armi a distanza del catalogo Commerciale (§7.7)"
+    },
+    {
+      "id": "armi_distanza_corporative",
+      "file": "armi_distanza_corporative.json",
+      "descrizione": "Armi a distanza dei cataloghi corporativi, con i moduli integrati (§7.8)"
+    },
+    {
+      "id": "accessori_armi",
+      "file": "accessori_armi.json",
+      "descrizione": "Mirini, riduzione del rumore, supporti di tiro, illuminazione e visione (§7.3)"
+    },
+    {
+      "id": "munizioni",
+      "file": "munizioni.json",
+      "descrizione": "Munizioni ordinarie e speciali, granate, razzi, celle e pacchi NEC dei lanciafiamme, dardi chimici; compatibilità balistiche (§7.20)"
+    },
+    {
+      "id": "nec",
+      "file": "nec.json",
+      "descrizione": "Nuclei Energetici Cromatici: celle, moduli, banchi e stazioni di ricarica (Equipaggiamento 0.5, §5.4)"
+    },
+    {
+      "id": "sanitario",
+      "file": "sanitario.json",
+      "descrizione": "Kit di pronto soccorso, cartucce, UMC, dispositivi portatili, diagnostica e chirurgia (§7.19)"
+    },
+    {
+      "id": "artefatti",
+      "file": "artefatti.json",
+      "descrizione": "Regole di sintonizzazione, Artefatti con riserva mistica, batterie (§7.5, §7.10)"
+    },
+    {
+      "id": "unita_robotiche",
+      "file": "unita_robotiche.json",
+      "descrizione": "Cuirassier Attila e Generatore di risonanza RF366 (§7.18)"
+    },
+    {
+      "id": "armature",
+      "file": "armature.json",
+      "descrizione": "Armature commerciali civili (§7.11.3)"
+    },
+    {
+      "id": "armature_corporative",
+      "file": "armature_corporative.json",
+      "descrizione": "Armature dei cataloghi corporativi (§7.11.5–7.17.5)"
+    },
+    {
+      "id": "elmetti",
+      "file": "elmetti.json",
+      "descrizione": "Elmetti e modifiche: standard di ricambio, modifiche commerciali, elmetti corporativi (Armamenti v0.52 §7.21)"
+    },
+    {
+      "id": "rinforzi",
+      "file": "rinforzi.json",
+      "descrizione": "Catalogo dei rinforzi delle armature: commerciali, soprabiti di base e specialistici (§7.11.2, §7.23)"
+    },
+    {
+      "id": "scudi",
+      "file": "scudi.json",
+      "descrizione": "Scudi commerciali e corporativi (§7.4)"
+    },
+    {
+      "id": "corredi_dispositivi",
+      "file": "corredi_dispositivi.json",
+      "descrizione": "Corredi e dispositivi corporativi, esoscheletro APE, armi e granate Imperial, SIN Cybertronic (§7.12–7.17)"
+    },
+    {
+      "id": "dotazioni_personali",
+      "file": "dotazioni_personali.json",
+      "descrizione": "Dotazioni personali: contenitori, illuminazione, abbigliamento, oggetti quotidiani (Equipaggiamento 0.5, cap. 2)"
+    },
+    {
+      "id": "esplorazione",
+      "file": "esplorazione.json",
+      "descrizione": "Esplorazione e sopravvivenza: accampamento, viveri, orientamento, protezioni ambientali, mobilità (Equipaggiamento 0.5, cap. 3)"
+    },
+    {
+      "id": "comunicazione",
+      "file": "comunicazione.json",
+      "descrizione": "Comunicazione e rilevamento: comunicatori, ottiche e visori, sorveglianza (Equipaggiamento 0.5, cap. 4)"
+    },
+    {
+      "id": "strumenti_professionali",
+      "file": "strumenti_professionali.json",
+      "descrizione": "Strumenti professionali: tecnici, scientifici, agricoli, accesso, camuffamento, elettronica, culturali e rituali (Equipaggiamento 0.5, cap. 5)"
+    },
+    {
+      "id": "impianti",
+      "file": "impianti.json",
+      "descrizione": "Impianti cibernetici e chip del Processore neurale (Equipaggiamento 0.5, cap. 7)"
+    },
+    {
+      "id": "manufatti_lunari",
+      "file": "manufatti_lunari.json",
+      "descrizione": "Manufatti lunari dei Mutanti: Pugnale e Spada lunare d’osso, Spada dei Tre Riflessi, Balestra e Quadrelli d’osso, Collana di papiro (Armamenti 0.86 §7.27, Equipaggiamento 0.42 §10.14, Magia 1.19 §26.8 e §28.5)"
+    }
   ],
-  "voci": 221,
-  "dalla_edizione": 139,
-  "miste": 77,
-  "non_nel_manuale": 5,
-  "campi": {
-   "letti": 3299,
-   "ereditati": 117,
-   "senza_provenienza": 66,
-   "per_campo": {
-    "munizioni": 24,
-    "famiglia": 70,
-    "modalita": 23
-   }
+  "_nota_reperibilita": "Scala: Comune, Non comune, Rara, Molto rara, Leggendaria (risposta di Davide A.14, 28/09/2026). Leggendaria è superiore a Molto rara. I valori economici degli oggetti rari sono riferimenti per eventuali scambi, non un listino che garantisce l’acquisto: deve prima esistere un produttore o possessore disposto a cedere l’oggetto; una Prova di Oratoria, da sola, non crea questa disponibilità. La reperibilità resta distinta dalla potenza mistica e dalla Qualità costruttiva.",
+  "rif_sostituiti": {
+    "corredi_dispositivi:interfaccia-neurale-cybertronic": {
+      "rif": "impianti:interfaccia-neurale-cybertronic",
+      "stati": {
+        "in_uso": "installato",
+        "zaino": "zaino"
+      }
+    },
+    "accessori_armi:batteria-di-servizio": {
+      "rif": "nec:verde-compatto"
+    },
+    "accessori_armi:nec-verde-standard-di-ricambio": {
+      "rif": "nec:verde-standard"
+    },
+    "esplorazione:cartuccia-di-combustibile": {
+      "rif": "nec:rosso-standard"
+    },
+    "munizioni:serbatoio-vuoto-nemesis-214": {
+      "rif": "munizioni:pacco-nec-nemesis-214"
+    },
+    "munizioni:serbatoio-vuoto-del-lanciafiamme-commerciale": {
+      "rif": "munizioni:pacco-nec-lanciafiamme-commerciale"
+    },
+    "munizioni:serbatoio-vuoto-eruptor": {
+      "rif": "munizioni:pacco-nec-eruptor"
+    },
+    "munizioni:serbatoio-vuoto-purifier": {
+      "rif": "munizioni:pacco-nec-purifier"
+    },
+    "munizioni:serbatoio-vuoto-gehemmapuker": {
+      "rif": "munizioni:pacco-nec-gehemmapuker"
+    },
+    "sanitario:set-chirurgico-di-ricambio": {
+      "rif": "sanitario:cartuccia-chirurgica"
+    },
+    "sanitario:confezione-da-cinque-set-chirurgici": {
+      "rif": "sanitario:cartuccia-chirurgica",
+      "quantita_per": 5
+    },
+    "nec:modulo-rosso": {
+      "rif": "nec:cec-rosso",
+      "precedente": {
+        "lx": 5000,
+        "ue": 10,
+        "incerto": "A.217"
+      }
+    },
+    "nec:banco-rosso": {
+      "rif": "nec:cec-rosso",
+      "precedente": {
+        "lx": 50000,
+        "ue": 100
+      }
+    },
+    "nec:modulo-blu": {
+      "rif": "munizioni:pacco-nec-gehemmapuker",
+      "precedente": {
+        "lx": 2500,
+        "incerto": "A.217"
+      }
+    },
+    "nec:banco-blu": {
+      "rif": "nec:cec-blu",
+      "precedente": {
+        "lx": 25000,
+        "ue": 100
+      }
+    },
+    "nec:modulo-verde": {
+      "rif": "nec:cec-verde",
+      "precedente": {
+        "lx": 10000,
+        "ue": 10,
+        "incerto": "A.217"
+      }
+    },
+    "nec:banco-verde": {
+      "rif": "nec:cec-verde",
+      "precedente": {
+        "lx": 100000,
+        "ue": 100
+      }
+    },
+    "munizioni:caricatore-da-campo": {
+      "rif": "nec:trasformatore-portatile-monocromatico"
+    },
+    "nec:stazione-per-moduli": {
+      "rif": "nec:stazione-industriale-multicromatica"
+    },
+    "nec:stazione-per-banchi": {
+      "rif": "nec:stazione-industriale-multicromatica"
+    }
   },
-  "motivi": {
-   "munizioni": "il manuale corrente non lo dà in una forma leggibile",
-   "famiglia": "il manuale non lo scrive in tabella e fra i titoli di sezione («7.1.9 Cataloghi delle Corporazioni › Bauhaus») non compare «Armi inastate»",
-   "modalita": "il manuale corrente non lo dà in una forma leggibile"
-  },
-  "_nota": "Lotto 206: ogni voce d’arma porta in `_edizione.campi` l’edizione da cui viene ciascun suo campo (`src/provenienza-catalogo.js`). «miste» sono le voci che tengono almeno un campo di un’edizione precedente e lo dicono nella scheda; «non_nel_manuale» le voci che col loro nome non si trovano nel manuale corrente, e il cui rimando lo decide una persona. Specializzazione, Manovre e i testi delle proprietà non vengono dalle tabelle del manuale e non portano una provenienza per voce (`CAMPI_NOSTRI`): si confrontano col manuale e si dichiarano. Il validatore pretende che i conti tornino coi file."
- }
+  "_nota_rif_sostituiti": "Voci di catalogo uscite perché sostituite da un’altra scheda: al caricamento di un personaggio (src/character.js → normalizza) la voce passa al rif nuovo, con lo stato tradotto se indicato.",
+  "catalogo_armi": {
+    "edizione": "Armamenti 0.86",
+    "file": [
+      "armi.json",
+      "armi_corporative.json",
+      "armi_distanza.json",
+      "armi_distanza_corporative.json"
+    ],
+    "voci": 221,
+    "dalla_edizione": 139,
+    "miste": 77,
+    "non_nel_manuale": 5,
+    "campi": {
+      "letti": 3299,
+      "ereditati": 117,
+      "senza_provenienza": 66,
+      "per_campo": {
+        "munizioni": 24,
+        "famiglia": 70,
+        "modalita": 23
+      }
+    },
+    "motivi": {
+      "munizioni": "il manuale corrente non lo dà in una forma leggibile",
+      "famiglia": "il manuale non lo scrive in tabella e fra i titoli di sezione («7.1.9 Cataloghi delle Corporazioni › Bauhaus») non compare «Armi inastate»",
+      "modalita": "il manuale corrente non lo dà in una forma leggibile"
+    },
+    "_nota": "Lotto 206: ogni voce d’arma porta in `_edizione.campi` l’edizione da cui viene ciascun suo campo (`src/provenienza-catalogo.js`). «miste» sono le voci che tengono almeno un campo di un’edizione precedente e lo dicono nella scheda; «non_nel_manuale» le voci che col loro nome non si trovano nel manuale corrente, e il cui rimando lo decide una persona. Specializzazione, Manovre e i testi delle proprietà non vengono dalle tabelle del manuale e non portano una provenienza per voce (`CAMPI_NOSTRI`): si confrontano col manuale e si dichiarano. Il validatore pretende che i conti tornino coi file."
+  }
 }

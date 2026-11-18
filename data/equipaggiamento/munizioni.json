@@ -346,6 +346,10 @@
     {
       "rif": "armi_distanza:balestra-piccola",
       "famiglia": "dardi_balestra_piccola"
+    },
+    {
+      "rif": "manufatti_lunari:balestra-d-osso",
+      "famiglia": "dardi_balestra_grande"
     }
   ],
   "ricarica": {

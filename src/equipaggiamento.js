@@ -1395,6 +1395,8 @@ export function calcolaEquipaggiamento(base, voci, dati) {
       attivazione: d?.attivazione ?? null, manovre: d?.manovre ?? [], naturaDanno: d?.natura_danno ?? null,
       // A.158: costo, durata e malus dell'attivazione per Classe (CyberArma, src/attivazione-arma.js)
       usoPerClasse: d?.uso_per_classe ?? null,
+      // lotto 219: i poteri cromatici di un'arma-Artefatto (Spada dei Tre Riflessi, src/poteri-arma.js)
+      poteriArma: d?.poteri_arma ?? null,
       proprieta: d?.proprieta ?? [], parata, personalizzato: o.personalizzato,
       // §7.5.1: riserva di Chroma integrata (Bordone Templare…), mostrata accanto all'arma
       contenitore: extra.moduloDi ? null : (infoArtefatto(d, dati)?.contenitore ?? null),
