@@ -117,6 +117,8 @@ a { color: var(--accento); }
   background: var(--accento-tenue); color: var(--accento);
   font-weight: 800; font-size: 1.15rem; line-height: 1.2; text-decoration: none; white-space: nowrap;
 }
+/* lotto 221: nella barra della scheda, su un tablet, un po' più piccolo: la barra sta su una riga anche con il ritratto e il Round dello scontro */
+@media (max-width: 1000px) { .barra-scheda .marchio-in-linea { font-size: 0.95rem; padding: 0.3rem 0.35rem; } .barra-scheda .riga-titolo { gap: 0.4rem; } }
 .marchio:hover, .marchio:focus-visible { background: var(--accento); color: var(--accento-testo); }
 body:has(.marchio-in-linea) > .testata { display: none; }
 .riga-titolo { display: flex; align-items: center; gap: 0.6rem; flex-wrap: wrap; min-width: 0; }
@@ -694,14 +696,15 @@ dl.voci.in-linea dt::after { content: ":"; }
 .scheda-tab { display: grid; grid-template-columns: minmax(0, 1fr); grid-template-areas: "barra" "nav" "pannello"; gap: 0 1.5rem; }
 .barra-scheda {
   grid-area: barra;
-  display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 0.5rem 1rem;
+  display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 0.5rem 0.75rem;
   padding: 0.75rem 0; border-bottom: 1px solid var(--bordo); margin-bottom: 0.5rem;
   background: var(--sfondo);
 }
-.barra-titolo { min-width: 0; }
+.barra-titolo { min-width: 0; flex: 1 1 10rem; } /* lotto 221: si stringe (la riga sotto il nome va a capo) invece di mandare le azioni a una seconda riga: +39 px a 820 px */
 .barra-titolo h1 { font-size: 1.4rem; margin: 0; }
 .barra-titolo p { margin: 0.15rem 0 0; color: var(--tenue); font-size: 0.9rem; }
 .barra-azioni { display: flex; flex-wrap: wrap; gap: 0.5rem; align-items: center; }
+.barra-scheda > .barra-azioni { flex: 0 0 auto; gap: 0.35rem; }
 .barra-azioni .btn, .menu-azioni > summary { min-height: 44px; }
 .menu-azioni { position: relative; }
 .menu-azioni > summary { list-style: none; cursor: pointer; display: inline-flex; align-items: center; }
@@ -713,6 +716,9 @@ dl.voci.in-linea dt::after { content: ":"; }
   box-shadow: 0 8px 24px rgb(0 0 0 / 0.18);
 }
 .menu-voci .btn { width: 100%; justify-content: flex-start; text-align: left; min-height: 44px; }
+.menu-voci .btn.tondo.btn-schermo-intero { width: 100%; height: auto; min-height: 44px; padding: 0 0.8rem; font-size: 1rem; justify-content: flex-start; border-radius: var(--raggio); }
+.menu-voci .btn.btn-schermo-intero::after { content: ' Schermo intero'; margin-left: 0.4rem; }
+.menu-voci .btn.btn-schermo-intero[hidden] { display: none; }
 .menu-voci hr { border: 0; border-top: 1px solid var(--bordo); margin: 0.2rem 0; }
 .menu-voci fieldset { border: 0; padding: 0; margin: 0; }
 .menu-voci legend { font-weight: 700; margin-bottom: 0.3rem; }
@@ -1746,6 +1752,8 @@ body.con-sfondo::before {
 /* Tavolo del Master, pezzo 6: scheda del giocatore collegata al server */
 .indicatore-collegamento { align-self: center; font-size: 0.8rem; padding: 0.1rem 0.55rem; border-radius: 999px; border: 1px solid var(--bordo); white-space: nowrap; }
 .indicatore-collegamento::before { content: "●"; margin-right: 0.3rem; }
+/* lotto 221: sotto i 1000 px del «collegato» resta la pallina verde (la parola «tavolo» è nel suggerimento): 40 px per tenere la barra su una riga */
+@media (max-width: 1000px) { .indicatore-collegamento.collegato .testo-collegato { display: none; } .indicatore-collegamento.collegato::before { margin-right: 0; } }
 .indicatore-collegamento.collegato { color: var(--ok); border-color: var(--ok); background: var(--ok-tenue); }
 .indicatore-collegamento.non_collegato { color: var(--tenue); }
 .avviso-master .riga-azioni { margin: 0.4rem 0; }

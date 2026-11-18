@@ -186,13 +186,15 @@ export function renderTab(ctx) {
       // verifica del 06/10/2026: «Salvato sul PC del master alle hh:mm» (solo con il server)
       // 29/10 (lotto 140): in barra solo il testo breve (✓, «Non salvato»); quello intero è nel suggerimento e per gli screen reader
       ctx.salvataggioMaster ? h('span', { class: `indicatore-salvataggio ${ctx.salvataggioMaster.stato}`, role: 'status', 'aria-label': ctx.salvataggioMaster.testo, title: titoloSalvataggio(ctx.salvataggioMaster) }, ctx.salvataggioMaster.breve ?? ctx.salvataggioMaster.testo) : null,
-      ctx.collegamento ? h('span', { class: `indicatore-collegamento ${ctx.collegamento.stato}`, role: 'status', title: ctx.collegamento.titolo },
-        ctx.collegamento.testo) : null,
+      // lotto 221: in barra «tavolo» (con la pallina verde) e non «collegato al tavolo»: 80 px in meno, la barra sta su una riga; «non collegato»
+      // resta per intero (è un avviso), e il testo lungo è nel suggerimento e per gli screen reader
+      ctx.collegamento ? h('span', { class: `indicatore-collegamento ${ctx.collegamento.stato}`, role: 'status', 'aria-label': ctx.collegamento.testo, title: `${ctx.collegamento.testo}: ${ctx.collegamento.titolo}` },
+        ctx.collegamento.stato === 'collegato' ? h('span', { class: 'testo-collegato' }, 'tavolo') : ctx.collegamento.testo) : null,
       // Round collegato allo scontro (src/round-scontro.js): in ogni tab
       ctx.roundScontro ? h('span', { class: 'etichetta round-scontro-testa', role: 'status', title: `Round ${ctx.roundScontro.round} dallo scontro «${ctx.roundScontro.nome}»: il Round lo fa avanzare il master dalla plancia; le durate di Tecniche e Stati scadono con quel Round.` },
         `Round ${ctx.roundScontro.round}`) : null,
-      // lotto 166: schermo intero, accanto agli indicatori (src/ui/schermo-intero.js); dove il browser non lo permette non c'è
-      pulsanteSchermoIntero(),
+      // lotto 221: schermo intero, ricerca e Galleria non sono più in barra (la facevano passare a due righe, +39 px a 820 px): stanno nel
+      // menu «Azioni ▾», un tocco più in là (menuAzioni). La ricerca, aperta, compare qui come prima.
       (() => {
         // sempre nel DOM e nascosto se non c'è niente da annullare: una modifica di valore non deve ridisegnare la scheda
         const annulla = h('button', { type: 'button', class: 'btn', hidden: !ctx.puoAnnullareSessione || undefined, onclick: azioni.annullaSessione, title: 'Annulla l’ultima modifica ai valori di sessione o al calendario' }, '↶ Annulla');
@@ -203,12 +205,10 @@ export function renderTab(ctx) {
         // N2: punti in eccesso (A.108) e riassegnazioni in sospeso (A.107) sono un avviso con «Procedi comunque»
         ? h('button', { type: 'button', class: `btn primario${ctx.avvisoSalita ? ' con-avviso' : ''}`, disabled: !!ctx.motivoNoSalita, title: ctx.motivoNoSalita ?? ctx.avvisoSalita, onclick: azioni.sali }, `Sali al livello ${id.livello + 1}`)
         : null,
-      // 13/10: «Cerca nella scheda» (🔍): un campo e l'elenco di tutto ciò che contiene quella parola
-      cercaNellaScheda(ctx),
+      // 13/10: «Cerca nella scheda»: un campo e l'elenco di tutto ciò che contiene quella parola (aperta dal menu Azioni dal lotto 221)
+      ctx.ui?.cerca?.aperta ? cercaNellaScheda(ctx) : null,
       menuAzioni(ctx),
-      menuImpostazioni(ctx),
-      // N1: ultimo pulsante della barra, solo con il server (le immagini stanno sul PC del master)
-      ctx.server ? h('button', { type: 'button', class: 'btn btn-galleria', title: 'Le immagini che il master ha mostrato in questa campagna: un tocco le apre grandi', onclick: () => apriGalleriaGiocatore(ctx.dati) }, '🖼 Galleria') : null));
+      menuImpostazioni(ctx)));
 
   // riga in alto (predefinita) o colonna: con i tab in alto la colonna di sinistra con Punti Eroe, PV
   // e PM è un elemento a sé (colonna-risorse), visibile in ogni tab (docs/layout-sd.md, pezzo 1)
@@ -355,6 +355,12 @@ function menuAzioni(ctx) {
   return h('details', { class: 'menu-azioni' },
     h('summary', { class: 'btn' }, 'Azioni ▾'),
     h('div', { class: 'menu-voci' },
+      // lotto 221: le tre cose tolte dalla barra, in cima al menu (un tocco in più, 39 px in meno a ogni schermata)
+      voce('🔍 Cerca nella scheda', () => { const st = (ctx.ui.cerca ??= { aperta: false, testo: '' }); st.aperta = true; azioni.ridisegna(); }, { titolo: 'Abilità, Prove Salvezza, Talenti, oggetti, incantesimi, Stati…' }),
+      ctx.server ? voce('🖼 Galleria', () => apriGalleriaGiocatore(ctx.dati), { titolo: 'Le immagini che il master ha mostrato in questa campagna: un tocco le apre grandi' }) : null,
+      // dove il browser non lo permette il pulsante nasce nascosto (src/ui/schermo-intero.js)
+      pulsanteSchermoIntero({ classe: 'voce-menu' }),
+      h('hr', {}),
       voce('Stampa', azioni.stampa),
       voce('SALVA PG (Esporta JSON)', azioni.esporta),
       // il solo calendario: anche su un personaggio senza calendario (lo crea e attiva la sezione)
