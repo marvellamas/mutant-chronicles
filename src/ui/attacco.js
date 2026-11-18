@@ -34,7 +34,8 @@ const numero = (n) => (n < 0 ? `−${-n}` : String(n));
 function caselleOggetti(ctx, a, tipo, d, imposta) {
   return effettiSituazionaliAttacco(ctx.tab.scheda, tipo, { senzArmi: !!a.senzArmi }).map((x) => {
     const acceso = d.oggetti.includes(x.uid);
-    const effetto = [x.attacco ? `${segno(x.attacco)} VA` : null, x.danno ? `${segno(x.danno)} danno` : null].filter(Boolean).join(', ');
+    // lotto 220: se l'oggetto cambia la natura del danno (Quadrelli lunari) la casella lo dice, perché cambia contro quale AR si applica
+    const effetto = [x.attacco ? `${segno(x.attacco)} VA` : null, x.danno ? `${segno(x.danno)} danno` : null, x.natura ? `danno ${x.natura}` : null].filter(Boolean).join(', ');
     return interruttore(x.oggetto, acceso, (on) => imposta({ oggetti: on ? [...d.oggetti, x.uid] : d.oggetti.filter((u) => u !== x.uid) }),
       { mod: `${effetto}${x.se ? ` se ${x.se}` : ''}`, info: x.condizione ? { titolo: x.oggetto, sezioni: [{ testo: x.condizione }] } : null });
   });

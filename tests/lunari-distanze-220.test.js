@@ -10,7 +10,7 @@ import { datiReali } from './helpers.js';
 import { calcolaScheda } from '../src/calc.js';
 import { deserializzaPersonaggio, normalizza } from '../src/character.js';
 import { massimiSessione, inizializzaSessione, allineaSessione, attivaArmaSessione } from '../src/sessione.js';
-import { calcolaAttaccoRavvicinato, calcolaAttaccoDistanza } from '../src/attacco.js';
+import { calcolaAttaccoRavvicinato, calcolaAttaccoDistanza, effettiSituazionaliAttacco } from '../src/attacco.js';
 import { propostaDaPg } from '../src/ui/attacco-pg.js';
 import { validaDati } from '../src/validate.js';
 import { catalogo } from '../src/equipaggiamento.js';
@@ -98,6 +98,9 @@ test('QUADRELLI: con la casella accesa il danno diventa Magico senza cambiare il
   const scheda = pg.scheda();
   const arma = armaDi(scheda, 'bal1');
   assert.ok(arma, 'la Balestra d’osso è un’arma impugnata');
+  // la casella di «Attacca!» deve poter dire che cambia anche la natura (src/ui/attacco.js → caselleOggetti legge `natura`)
+  const caselle = effettiSituazionaliAttacco(scheda, 'distanza', {});
+  assert.deepEqual(caselle.filter((x) => x.uid === 'quad1').map((x) => [x.attacco, x.danno, x.natura]), [[1, 0, 'Magico']]);
   const spento = calcolaAttaccoDistanza({ scheda, sessione: pg.sessione }, arma, { distanza: 10 }, dati);
   const acceso = calcolaAttaccoDistanza({ scheda, sessione: pg.sessione }, arma, { distanza: 10, oggetti: ['quad1'] }, dati);
   assert.equal(spento.natura_danno, null, 'senza quadrelli lunari accesi: la natura è quella dell’arma');
