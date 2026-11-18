@@ -55,7 +55,8 @@ test('Mephit: Soffio come capacità con PM e cadenza R + 3, poteri innati una vo
 });
 
 test('danni misti: prima componente in `danno`, seconda nella nota; Fuoco/Gelo immuni come Stato solo dove c’è Incendiato', () => {
-  assert.equal(leggi('mephit-del-ghiaccio').attacchi[0].danno, '1d4+1');
+  // lotto 218, A.276: «componente unica» (tutto Naturale): un danno solo con tutti i dadi, una sola mitigazione
+  assert.equal(leggi('mephit-del-ghiaccio').attacchi[0].danno, '1d4+1d4+1');
   assert.match(leggi('mephit-del-ghiaccio').attacchi[0].note, /1d4 Gelo Naturale/);
   assert.match(leggi('mephit-del-magma').attacchi[0].note, /1d4 Fuoco Naturale/);
   assert.match(leggi('salamandra').attacchi[0].note, /1d4 Fuoco Naturale/);
@@ -66,7 +67,7 @@ test('danni misti: prima componente in `danno`, seconda nella nota; Fuoco/Gelo i
 
 test('Salamandra: Lancia 2 Q e Coda a 2 Q, presa con Stringere come capacità; Serpente di fuoco con Morso e Coda', () => {
   const s = leggi('salamandra');
-  assert.deepEqual(s.attacchi.map((a) => [a.nome, a.portata_q]), [['Lancia due mani', 2], ['Coda', 2]]);
+  assert.deepEqual(s.attacchi.map((a) => [a.nome, a.portata_q]), [['Lancia due mani', 2], ['Coda', 2], ['Stringere', 1]], 'lotto 218: la presa con Stringere è ora un attacco (componente unica)');
   // lotto 205: la 0.69 riscrive il testo e il nome della capacità; si controlla l’informazione, non la frase.
   assert.match(JSON.stringify(leggi('salamandra')), /Riflessi −2/);
   assert.equal(s.azioni.principali, 2);

@@ -4,7 +4,6 @@
   "id": "beholder",
   "nome": "Beholder",
   "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Beholder",
-  "taglia": "grande",
   "pv": 156,
   "pm": 60,
   "caratteristiche": {

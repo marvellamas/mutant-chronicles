@@ -47,13 +47,14 @@
       "nome": "Artigli gelidi",
       "tipo": "ravvicinato",
       "va": 9,
-      "danno": "1d4+1",
+      "danno": "1d4+1d4+1",
       "natura": "Naturale",
+      "proprieta": [
+        "Taglio",
+        "Gelo"
+      ],
       "portata_q": 1,
       "ac": 1,
-      "proprieta": [
-        "Taglio"
-      ],
       "note": "Aggiunge 1d4 Gelo Naturale (una Difesa, una AC): le componenti restano distinte per AR e Stati."
     }
   ],
@@ -139,7 +140,7 @@
       "movimento": "Mostri 0.69",
       "spazio": "Mostri 0.69",
       "abilita": "Mostri 0.69",
-      "attacchi": "Mostri 0.47",
+      "attacchi": "Mostri 0.69",
       "capacita": "Mostri 0.47",
       "note": "Mostri 0.69",
       "gs_px": "Mostri 0.69"

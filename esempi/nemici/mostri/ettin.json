@@ -85,14 +85,6 @@
   ],
   "capacita": [
     {
-      "nome": "Ascia leggera",
-      "effetto": "VA 12. Danno: 1d6+3. Portata/costo: 1 Q; "
-    },
-    {
-      "nome": "Mazza ferrata",
-      "effetto": "VA 12. Danno: 1d6+3. Portata/costo: 1 Q; "
-    },
-    {
       "nome": "Braccia poderose",
       "effetto": "I due danni includono +2 innato, oltre al bonus ordinario pertinente. È ambidestro: non applica il −4 per un attacco singolo con la mano secondaria. Può risolvere al massimo due attacchi offensivi nelle proprie AzP di un Round; la manovra con due armi li consuma entrambi, con il normale −4 VA, e lascia l’eventuale AzP restante per altre attività. L’Attacco di Opportunità ordinario resta distinto, al massimo uno per Round."
     },
@@ -141,7 +133,7 @@
       "movimento": "Mostri 0.69",
       "spazio": "Mostri 0.69",
       "abilita": "Mostri 0.47",
-      "attacchi": "Mostri 0.47",
+      "attacchi": "Mostri 0.69",
       "capacita": "Mostri 0.69",
       "note": "Mostri 0.69",
       "gs_px": "Mostri 0.69"

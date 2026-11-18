@@ -4,7 +4,6 @@
   "id": "tarrasque",
   "nome": "Tarrasque",
   "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Tarrasque",
-  "taglia": "grande",
   "pv": 624,
   "pm": 48,
   "caratteristiche": {

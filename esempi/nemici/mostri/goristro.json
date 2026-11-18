@@ -4,7 +4,6 @@
   "id": "goristro",
   "nome": "Goristro",
   "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Goristro",
-  "taglia": "grande",
   "pv": 271,
   "pm": 24,
   "caratteristiche": {

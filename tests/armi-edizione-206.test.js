@@ -252,7 +252,10 @@ test('le voci che il manuale non ha col loro nome restano come stavano, e nessun
   // scriverebbe i valori di un modello su un altro, con la provenienza dell'edizione corrente addosso
   const p = piano(RADICE);
   const non = p.esiti.filter((e) => !e.trovata);
-  assert.equal(non.length, 9);
+  // Lotto 218 (A.278): le quattro voci che Davide ha indicato con nome nuovo sono state rinominate in luogo e ora si
+  // trovano; restano le tre CyberArma (il §7.25 non è una tabella d'arma) e i due profili superati, archiviati
+  assert.equal(non.length, 5);
+  assert.deepEqual(non.map((e) => e.id).sort(), ['bolter-09', 'cyberarma', 'cyberarma-batteria-verde', 'cyberarma-nec', 'lanciagranate-bolter-20']);
   for (const e of non) {
     const v = voce(e.id);
     assert.equal(provenienzaVoce(v).danno, undefined, `${e.nome}: nessuna provenienza inventata`);

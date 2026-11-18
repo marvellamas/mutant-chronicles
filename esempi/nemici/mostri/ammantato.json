@@ -4,7 +4,6 @@
   "id": "ammantato",
   "nome": "Ammantato",
   "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Ammantato",
-  "taglia": "grande",
   "pv": 76,
   "pm": 22,
   "caratteristiche": {
@@ -160,5 +159,17 @@
     },
     "edizione": "Mostri 0.69",
     "sistema_salute": "solo_PV"
-  }
+  },
+  "configurazioni": [
+    {
+      "id": "aperto",
+      "nome": "Aperto",
+      "spazio": "2 × 2 Q"
+    },
+    {
+      "id": "raccolto",
+      "nome": "Raccolto a terra",
+      "spazio": "1 Q"
+    }
+  ]
 }

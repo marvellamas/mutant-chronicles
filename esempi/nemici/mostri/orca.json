@@ -4,7 +4,6 @@
   "id": "orca",
   "nome": "Orca",
   "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Orca",
-  "taglia": "grande",
   "pv": 104,
   "pm": 10,
   "caratteristiche": {

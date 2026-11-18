@@ -83,13 +83,30 @@
       ],
       "portata_q": 2,
       "ac": 1
+    },
+    {
+      "nome": "Aculeo incendiario",
+      "tipo": "distanza",
+      "va": 12,
+      "danno": "1d4+1",
+      "natura": "Naturale",
+      "seguenti": [
+        {
+          "danno": "1d6",
+          "natura": "Magico",
+          "proprieta": [
+            "Fuoco"
+          ]
+        }
+      ],
+      "gittata_q": 16,
+      "modalita": [
+        "S"
+      ],
+      "ac": 2
     }
   ],
   "capacita": [
-    {
-      "nome": "Aculeo incendiario",
-      "effetto": "VA 12. Danno: AC 2: 1d4+1 Naturale, poi 1d6 Magico, Fuoco. Portata/costo: Massimo 16 Q; 1 AzP; un aculeo; "
-    },
     {
       "nome": "Corpo e sensi",
       "effetto": "Protezioni elementali comuni, resistenza alle armi non argentate, Vista infernale 24 Q e Resistenza alla magia +2 non inclusa nelle PS. Telepatia entro 24 Q. Nessuna Parata naturale; può Parare con il Tridente pronto ai costi normali."

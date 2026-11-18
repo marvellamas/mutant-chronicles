@@ -2002,23 +2002,92 @@
    "ps_int": 10,
    "reperibilita": "CO",
    "costo": 1450,
-   "proprieta": []
+   "proprieta": [],
+   "archiviata": {
+    "da": "A.278",
+    "quando": "2026-11-17",
+    "motivo": "Profilo superato: tolto dal catalogo acquistabile e archiviato, non cancellato (risposta di Davide del 17/11/2026). La Bolter 20 corrente non possiede un lanciagranate integrato."
+   }
   },
   {
    "id": "enforcer",
-   "nome": "Enforcer",
+   "nome": "Colt Enforcer",
    "tipo": "arma_distanza",
    "catalogo": "Capitol",
    "famiglia": "Revolver",
    "nomi_alternativi": [],
    "note_manuale": "",
    "paragrafo": "§7.8",
-   "versione_manuale": "Armamenti 0.50",
+   "versione_manuale": "Armamenti 0.86",
    "abilita": "Armi leggere",
    "specializzazione": "specializzazione-pistole",
    "mani": 1,
    "danno": {
-    "una_mano": "1d6+1",
+    "una_mano": "1d6",
+    "due_mani": null
+   },
+   "ac": 1,
+   "modificatore_va": 0,
+   "portata_q": null,
+   "gittata_q": 10,
+   "munizioni": {
+    "capacita": 4,
+    "unita": "colpi",
+    "ricarica": null,
+    "consumo": null,
+    "riferimento": null
+   },
+   "inc": 6,
+   "mov": 0,
+   "modalita": [
+    "S",
+    "TR"
+   ],
+   "for_richiesta": 2,
+   "pi": 4,
+   "qualita": "Comune",
+   "ps_int": 10,
+   "reperibilita": "CO",
+   "costo": 1200,
+   "proprieta": [],
+   "_edizione": {
+    "campi": {
+     "abilita": "Armamenti 0.86",
+     "famiglia": "Armamenti 0.86",
+     "catalogo": "Armamenti 0.86",
+     "mani": "Armamenti 0.86",
+     "danno": "Armamenti 0.86",
+     "ac": "Armamenti 0.86",
+     "modificatore_va": "Armamenti 0.86",
+     "gittata_q": "Armamenti 0.86",
+     "munizioni": "Armamenti 0.86",
+     "inc": "Armamenti 0.86",
+     "mov": "Armamenti 0.86",
+     "modalita": "Armamenti 0.86",
+     "for_richiesta": "Armamenti 0.86",
+     "pi": "Armamenti 0.86",
+     "qualita": "Armamenti 0.86",
+     "ps_int": "Armamenti 0.86",
+     "reperibilita": "Armamenti 0.86",
+     "costo": "Armamenti 0.86"
+    }
+   }
+  },
+  {
+   "id": "colt-trooper",
+   "nome": "Colt Trooper",
+   "tipo": "arma_distanza",
+   "catalogo": "Capitol",
+   "famiglia": "Revolver",
+   "nomi_alternativi": [],
+   "note_manuale": "",
+   "paragrafo": "§7.8",
+   "versione_manuale": "Armamenti 0.86",
+   "abilita": "Armi leggere",
+   "specializzazione": "specializzazione-pistole",
+   "mani": 1,
+   "danno": {
+    "una_mano": "1d6",
     "due_mani": null
    },
    "ac": 1,
@@ -2043,19 +2112,175 @@
    "qualita": "Comune",
    "ps_int": 10,
    "reperibilita": "CO",
-   "costo": 1200,
-   "proprieta": []
+   "costo": 1000,
+   "proprieta": [],
+   "_edizione": {
+    "campi": {
+     "abilita": "Armamenti 0.86",
+     "famiglia": "Armamenti 0.86",
+     "catalogo": "Armamenti 0.86",
+     "mani": "Armamenti 0.86",
+     "danno": "Armamenti 0.86",
+     "ac": "Armamenti 0.86",
+     "modificatore_va": "Armamenti 0.86",
+     "gittata_q": "Armamenti 0.86",
+     "munizioni": "Armamenti 0.86",
+     "inc": "Armamenti 0.86",
+     "mov": "Armamenti 0.86",
+     "modalita": "Armamenti 0.86",
+     "for_richiesta": "Armamenti 0.86",
+     "pi": "Armamenti 0.86",
+     "qualita": "Armamenti 0.86",
+     "ps_int": "Armamenti 0.86",
+     "reperibilita": "Armamenti 0.86",
+     "costo": "Armamenti 0.86"
+    }
+   }
   },
   {
-   "id": "jemson-45",
-   "nome": "Jemson 45",
+   "id": "colt-frontier",
+   "nome": "Colt Frontier",
    "tipo": "arma_distanza",
    "catalogo": "Capitol",
    "famiglia": "Revolver",
    "nomi_alternativi": [],
    "note_manuale": "",
    "paragrafo": "§7.8",
-   "versione_manuale": "Armamenti 0.50",
+   "versione_manuale": "Armamenti 0.86",
+   "abilita": "Armi leggere",
+   "specializzazione": "specializzazione-pistole",
+   "mani": 1,
+   "danno": {
+    "una_mano": "1d6+1",
+    "due_mani": null
+   },
+   "ac": 1,
+   "modificatore_va": 0,
+   "portata_q": null,
+   "gittata_q": 20,
+   "munizioni": {
+    "capacita": 6,
+    "unita": "colpi",
+    "ricarica": null,
+    "consumo": null,
+    "riferimento": null
+   },
+   "inc": 6,
+   "mov": 0,
+   "modalita": [
+    "S",
+    "TR"
+   ],
+   "for_richiesta": 3,
+   "pi": 4,
+   "qualita": "Comune",
+   "ps_int": 10,
+   "reperibilita": "CO",
+   "costo": 1500,
+   "proprieta": [],
+   "_edizione": {
+    "campi": {
+     "abilita": "Armamenti 0.86",
+     "famiglia": "Armamenti 0.86",
+     "catalogo": "Armamenti 0.86",
+     "mani": "Armamenti 0.86",
+     "danno": "Armamenti 0.86",
+     "ac": "Armamenti 0.86",
+     "modificatore_va": "Armamenti 0.86",
+     "gittata_q": "Armamenti 0.86",
+     "munizioni": "Armamenti 0.86",
+     "inc": "Armamenti 0.86",
+     "mov": "Armamenti 0.86",
+     "modalita": "Armamenti 0.86",
+     "for_richiesta": "Armamenti 0.86",
+     "pi": "Armamenti 0.86",
+     "qualita": "Armamenti 0.86",
+     "ps_int": "Armamenti 0.86",
+     "reperibilita": "Armamenti 0.86",
+     "costo": "Armamenti 0.86"
+    }
+   }
+  },
+  {
+   "id": "modulo-al-plasma-banshee",
+   "nome": "Modulo al plasma Banshee",
+   "tipo": "arma_distanza",
+   "catalogo": "Capitol",
+   "famiglia": "Moduli",
+   "nomi_alternativi": [],
+   "note_manuale": "Arma tecnologica di campagna completata e modificata da Pablo Zaion con Petra per il suo Banshee. Si aggancia all’avambraccio sinistro e riceve energia dall’alimentatore dorsale mediante un cavo corazzato. Non è un Artefatto Mistico: non utilizza PM e non richiede Sintonizzazione. Il danno è Naturale; ogni colpo a segno applica AC 1 a un solo bersaglio, senza Area. Dispone soltanto di Colpo Singolo: ogni attacco richiede 1 AzP e consuma una carica anche se manca o viene difeso. La mano sinistra deve essere libera da altre armi o scudi per azionare il comando palmare. Plasma: se almeno 1 danno supera l’Armatura e l’eventuale Dissipante, il bersaglio effettua una PS Tempra con modificatore della fonte 0; in caso di fallimento subisce −2 VA per 1+1d3 Round (§5.24 del Giocatore). Alimentazione: NEC Rosso da 10 cariche, separato dal volo, 1 carica per colpo sparato; 400 cr pieno, 100 cr per ricaricarlo. A 0 PI del modulo cessa soltanto il tiro.",
+   "paragrafo": "§7.8",
+   "versione_manuale": "Armamenti 0.86",
+   "abilita": "Armi leggere",
+   "specializzazione": "specializzazione-armi-al-plasma",
+   "mani": 1,
+   "danno": {
+    "una_mano": "1d6+1",
+    "due_mani": null
+   },
+   "ac": 1,
+   "modificatore_va": 0,
+   "portata_q": null,
+   "gittata_q": 20,
+   "munizioni": {
+    "capacita": 10,
+    "unita": "colpi",
+    "ricarica": null,
+    "consumo": null,
+    "riferimento": null
+   },
+   "inc": 6,
+   "mov": 0,
+   "modalita": [
+    "S"
+   ],
+   "for_richiesta": 3,
+   "pi": 4,
+   "qualita": "Non comune",
+   "ps_int": 12,
+   "reperibilita": null,
+   "costo": null,
+   "proprieta": [
+    {
+     "nome": "Plasma",
+     "testo": "Se almeno 1 danno supera l’Armatura e l’eventuale Dissipante, PS Tempra (modificatore della fonte 0): se fallisce, −2 VA per 1+1d3 Round (§5.24). Non causa automaticamente Incendiato e non dimezza l’Armatura."
+    }
+   ],
+   "montabile_su": [
+    "corredi_dispositivi:propulsore-d-assalto-banshee"
+   ],
+   "_edizione": {
+    "campi": {
+     "abilita": "Armamenti 0.86",
+     "famiglia": "Armamenti 0.86",
+     "catalogo": "Armamenti 0.86",
+     "mani": "Armamenti 0.86",
+     "danno": "Armamenti 0.86",
+     "ac": "Armamenti 0.86",
+     "modificatore_va": "Armamenti 0.86",
+     "gittata_q": "Armamenti 0.86",
+     "munizioni": "Armamenti 0.86",
+     "inc": "Armamenti 0.86",
+     "mov": "Armamenti 0.86",
+     "modalita": "Armamenti 0.86",
+     "for_richiesta": "Armamenti 0.86",
+     "pi": "Armamenti 0.86",
+     "qualita": "Armamenti 0.86",
+     "ps_int": "Armamenti 0.86"
+    }
+   },
+   "non_in_vendita": true
+  },
+  {
+   "id": "jemson-45",
+   "nome": "Colt Jemson 45",
+   "tipo": "arma_distanza",
+   "catalogo": "Capitol",
+   "famiglia": "Revolver",
+   "nomi_alternativi": [],
+   "note_manuale": "",
+   "paragrafo": "§7.8",
+   "versione_manuale": "Armamenti 0.86",
    "abilita": "Armi leggere",
    "specializzazione": "specializzazione-pistole",
    "mani": 1,
@@ -2086,7 +2311,29 @@
    "ps_int": 10,
    "reperibilita": "CO",
    "costo": 1600,
-   "proprieta": []
+   "proprieta": [],
+   "_edizione": {
+    "campi": {
+     "abilita": "Armamenti 0.86",
+     "famiglia": "Armamenti 0.86",
+     "catalogo": "Armamenti 0.86",
+     "mani": "Armamenti 0.86",
+     "danno": "Armamenti 0.86",
+     "ac": "Armamenti 0.86",
+     "modificatore_va": "Armamenti 0.86",
+     "gittata_q": "Armamenti 0.86",
+     "munizioni": "Armamenti 0.86",
+     "inc": "Armamenti 0.86",
+     "mov": "Armamenti 0.86",
+     "modalita": "Armamenti 0.86",
+     "for_richiesta": "Armamenti 0.86",
+     "pi": "Armamenti 0.86",
+     "qualita": "Armamenti 0.86",
+     "ps_int": "Armamenti 0.86",
+     "reperibilita": "Armamenti 0.86",
+     "costo": "Armamenti 0.86"
+    }
+   }
   },
   {
    "id": "colt-hammershot",
@@ -2349,14 +2596,14 @@
   },
   {
    "id": "ironfist-15",
-   "nome": "Ironfist 15",
+   "nome": "Bolter 15 Ironfist",
    "tipo": "arma_distanza",
    "catalogo": "Capitol",
    "famiglia": "Pistole semiautomatiche e automatiche",
    "nomi_alternativi": [],
    "note_manuale": "",
    "paragrafo": "§7.8",
-   "versione_manuale": "Armamenti 0.50",
+   "versione_manuale": "Armamenti 0.86",
    "abilita": "Armi leggere",
    "specializzazione": "specializzazione-pistole",
    "mani": 1,
@@ -2367,9 +2614,9 @@
    "ac": 1,
    "modificatore_va": 0,
    "portata_q": null,
-   "gittata_q": 25,
+   "gittata_q": 20,
    "munizioni": {
-    "capacita": 30,
+    "capacita": 20,
     "unita": "colpi",
     "ricarica": null,
     "consumo": null,
@@ -2388,7 +2635,29 @@
    "ps_int": 10,
    "reperibilita": "CO",
    "costo": 5100,
-   "proprieta": []
+   "proprieta": [],
+   "_edizione": {
+    "campi": {
+     "abilita": "Armamenti 0.86",
+     "famiglia": "Armamenti 0.86",
+     "catalogo": "Armamenti 0.86",
+     "mani": "Armamenti 0.86",
+     "danno": "Armamenti 0.86",
+     "ac": "Armamenti 0.86",
+     "modificatore_va": "Armamenti 0.86",
+     "gittata_q": "Armamenti 0.86",
+     "munizioni": "Armamenti 0.86",
+     "inc": "Armamenti 0.86",
+     "mov": "Armamenti 0.86",
+     "modalita": "Armamenti 0.86",
+     "for_richiesta": "Armamenti 0.86",
+     "pi": "Armamenti 0.86",
+     "qualita": "Armamenti 0.86",
+     "ps_int": "Armamenti 0.86",
+     "reperibilita": "Armamenti 0.86",
+     "costo": "Armamenti 0.86"
+    }
+   }
   },
   {
    "id": "lanciagranate-bolter-20",
@@ -2428,18 +2697,23 @@
    "reperibilita": null,
    "costo": null,
    "proprieta": [],
-   "modulo_di": "armi_distanza_corporative:bolter-20"
+   "modulo_di": "armi_distanza_corporative:bolter-20",
+   "archiviata": {
+    "da": "A.278",
+    "quando": "2026-11-17",
+    "motivo": "Profilo superato: tolto dal catalogo acquistabile e archiviato, non cancellato (risposta di Davide del 17/11/2026). La Bolter 20 corrente non possiede un lanciagranate integrato."
+   }
   },
   {
    "id": "lanciagranate-ironfist-15",
-   "nome": "Lanciagranate Ironfist 15",
+   "nome": "Lanciagranate Ironfist",
    "tipo": "arma_distanza",
    "catalogo": "Capitol",
    "famiglia": "Lanciagranate integrato",
    "nomi_alternativi": [],
    "note_manuale": "Lanciagranate Ironfist 15. Munizione di riferimento: Granata standard a frammentazione.",
    "paragrafo": "§7.8",
-   "versione_manuale": "Armamenti 0.50",
+   "versione_manuale": "Armamenti 0.86",
    "abilita": "Armi medie",
    "specializzazione": "specializzazione-lanciagranate",
    "mani": 2,
@@ -2468,7 +2742,25 @@
    "reperibilita": null,
    "costo": null,
    "proprieta": [],
-   "modulo_di": "armi_distanza_corporative:ironfist-15"
+   "modulo_di": "armi_distanza_corporative:ironfist-15",
+   "_edizione": {
+    "campi": {
+     "abilita": "Armamenti 0.86",
+     "famiglia": "Armamenti 0.86",
+     "catalogo": "Armamenti 0.86",
+     "mani": "Armamenti 0.86",
+     "ac": "Armamenti 0.86",
+     "modificatore_va": "Armamenti 0.86",
+     "gittata_q": "Armamenti 0.86",
+     "munizioni": "Armamenti 0.86",
+     "inc": "Armamenti 0.86",
+     "mov": "Armamenti 0.86",
+     "modalita": "Armamenti 0.86",
+     "for_richiesta": "Armamenti 0.86",
+     "qualita": "Armamenti 0.86",
+     "ps_int": "Armamenti 0.86"
+    }
+   }
   },
   {
    "id": "lanciagranate-car24",

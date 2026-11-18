@@ -130,6 +130,23 @@ const NON_CREATURE = { 'Bozzoli di cristallo': 'ambientazione dell’incontro a 
 
 // ---------- lettura del testo ----------
 /**
+ * A.273 (risposta di Davide del 17/11/2026): le creature con due forme — licantropi e Ammantato — sono una creatura sola,
+ * con una scheda e una pedina; il cambio di forma aggiorna ingombro e movimento mantenendo identità, Iniziativa, PV, Stati
+ * ed effetti, come per la Madre delle Murene (A.203). Il manuale le scrive in una cella («lupo: 8 / 16 / 24 Q, 1 × 2 Q»): il
+ * lettore legge la forma di base e le altre forme stanno qui, per id, con i valori che il manuale dà. Gli attacchi e i
+ * valori specifici di ogni forma non sono strutturati nel manuale: restano com'erano (domanda A.288).
+ */
+const P = (passo) => ({ passo, corsa: passo * 2, scatto: passo * 3 });
+export const CONFIGURAZIONI_A273 = {
+  'lupo-mannaro': [['umanoide', 'Umanoide', '1 Q', P(6)], ['lupo', 'Lupo', '1 × 2 Q', P(8)]],
+  'orso-mannaro': [['umanoide', 'Umanoide', '1 Q', P(6)], ['orso', 'Orso e ibrido', '2 × 2 Q', P(8), 'Arrampicata 6 Q al Passo']],
+  'cinghiale-mannaro': [['umanoide', 'Umanoide', '1 Q', P(6)], ['cinghiale', 'Cinghiale', '1 × 2 Q', P(8)]],
+  'ratto-mannaro': [['umanoide', 'Umanoide', '1 Q', P(6)], ['ratto', 'Ratto gigante', '1 Q', P(8), '1 Q condivisibile senza bloccare il passaggio']],
+  'tigre-mannara': [['umanoide', 'Umanoide', '1 Q', P(6)], ['ibrida', 'Ibrida', '2 × 2 Q', P(6)], ['tigre', 'Tigre', '1 × 2 Q', P(8)]],
+  'ammantato': [['aperto', 'Aperto', '2 × 2 Q'], ['raccolto', 'Raccolto a terra', '1 Q']],
+};
+
+/**
  * A.202 (risposta di Davide del 30/10/2026): il 6 / 12 / 18 Q Base della Murena della Roccia cucciolo è Passo, Corsa e Scatto
  * **in forma eterea**, attraversamento della roccia compreso; nessun movimento terrestre. Durante l'overdose è corporea: il movimento
  * si interrompe, non può muoversi volontariamente, attaccare, attraversare la roccia né Schivare, fino alla fine del Round successivo
@@ -370,16 +387,68 @@ function parteAbilita(testo, nonCapito, grezze) {
   return ab;
 }
 
+// Lotto 218, A.274: «Non esiste un valore Naturale predefinito universale. Morso, artigli, pugno, coda, corna, armi e
+// proiettili comuni sono Naturali quando la natura fisica è inequivocabile. Soffi, raggi, esplosioni, poteri e attacchi
+// elementali, mistici, consacrati o dell'Oscura Simmetria devono dichiarare espressamente la Natura.» Qui si riconoscono
+// i soli attacchi fisici: per nome (la parte del corpo o l'arma comune) e solo se il danno è scritto come dadi nudi.
+// Tutto il resto resta com'è, segnalato, finché il manuale non viene corretto.
+export const ATTACCO_FISICO = /^(morso|morsi|artigl|pugno|pugni|coda|corn|zocc|calcio|schianto|pugnale|ascia|mazza|maglio|giavellott|spada|lancia|martello|randello|clava|bastone|arco|balestra|frusta|tentacol)/i;
+const DADI = String.raw`\d+d\d+(?:\s*[+−-]\s*\d+)?`;
+/** Una componente «1d6+3 Naturale, Perforazione» o «1d4 Naturale da acido» → { danno, natura, proprieta } o null. */
+export function leggiComponente(testo) {
+  const m = String(testo).trim().match(new RegExp(String.raw`^(${DADI})\s+(Naturale|Magico|Etereo)(?:\s*,?\s+(?:da\s+)?([A-Za-zÀ-ù]+(?:,\s*[A-Za-zÀ-ù]+)*))?$`));
+  if (!m) return null;
+  const maius = (s) => s.charAt(0).toUpperCase() + s.slice(1);
+  return { danno: m[1].replace(/\s+/g, '').replace('−', '-'), natura: m[2], ...(m[3] ? { proprieta: m[3].split(/,\s*/).map(maius) } : {}) };
+}
+/**
+ * A.274 e A.276 sulla cella del danno. Torna { dannoT, seguenti, acDichiarata }: `dannoT` è il testo che il lettore di
+ * sempre sa leggere (la prima componente, o il danno con la Natura aggiunta), `seguenti` le altre componenti.
+ *  - «AC 2: 1d8+7 Magico, Taglio, poi 3d6 Magico, Fulmine»: due componenti, ciascuna con la propria Natura e la propria Armatura (A.276);
+ *  - «1d10+3 Perforazione + 1d4 Fuoco; tutto Naturale» e «… e 1d4 Fuoco; Naturali»: la scheda converte l'intero danno alla stessa
+ *    Natura, quindi una componente sola e una sola mitigazione (A.276), con i due tipi fra le proprietà;
+ *  - «1d4+2» di un attacco fisico inequivocabile: Naturale (A.274).
+ */
+export function preparaDanno(grezzo, nomeAtt, nonCapito = []) {
+  const t = String(grezzo).trim();
+  // A.276 — due fasi
+  const due = t.match(/^AC\s*(\d+)\s*:\s*(.+?),?\s+poi\s+(.+)$/);
+  if (due) {
+    const a = leggiComponente(due[2]); const b = leggiComponente(due[3]);
+    if (a && b) {
+      nonCapito.push(`Attacco «${nomeAtt}»: due componenti di danno (A.276), ciascuna con la propria Natura e la propria Armatura: ${b.danno} ${b.natura}${b.proprieta ? `, ${b.proprieta.join(', ')}` : ''} dopo la prima`);
+      return { dannoT: `${a.danno} ${a.natura}${a.proprieta ? `, ${a.proprieta.join(', ')}` : ''}`, seguenti: [b], acDichiarata: +due[1] };
+    }
+    return { dannoT: t, seguenti: null, acDichiarata: null };
+  }
+  // A.276 — componente unica: l'intero danno è dichiarato della stessa Natura
+  const unica = t.match(new RegExp(String.raw`^(${DADI})\s+([A-Za-zÀ-ù]+)\s*(?:\+|e)\s*(\d+d\d+)\s+([A-Za-zÀ-ù]+)\s*;\s*(?:tutto\s+Naturale|Naturali)$`));
+  if (unica) {
+    const fisso = unica[1].match(/^(\d+d\d+)\s*([+−-]\s*\d+)?$/);
+    const somma = `${fisso[1]}+${unica[3]}${fisso[2] ? fisso[2].replace(/\s+/g, '').replace('−', '-') : ''}`;
+    nonCapito.push(`Attacco «${nomeAtt}»: «${t}» è una componente unica Naturale (A.276), con ${unica[2]} e ${unica[4]} fra le proprietà e una sola mitigazione`);
+    return { dannoT: `${somma} Naturale, ${unica[2]}, ${unica[4]}`, seguenti: null, acDichiarata: null };
+  }
+  // A.274 — dadi nudi di un attacco fisico inequivocabile
+  if (new RegExp(`^${DADI}$`).test(t) && ATTACCO_FISICO.test(nomeAtt.trim())) {
+    nonCapito.push(`Attacco «${nomeAtt}»: Natura non scritta nel manuale, Naturale perché attacco fisico inequivocabile (A.274)`);
+    return { dannoT: `${t} Naturale`, seguenti: null, acDichiarata: null };
+  }
+  return { dannoT: t, seguenti: null, acDichiarata: null };
+}
+
 function leggiAttacco(intest, c, nonCapito, acComune) {
   const ix = (re) => intest.findIndex((x) => re.test(x));
   let dueMani = null; // lotto 205: due impugnature in una cella, si legge la prima e si dichiara
   const vaT = c[ix(/^VA$/)] ?? '';
-  const dannoT = c[ix(/^(Danno|Effetto)/)] ?? '';
+  const dannoGrezzo = c[ix(/^(Danno|Effetto)/)] ?? '';
   const portT = c[ix(/^Portata/)] ?? '';
   const costoT = ix(/^Costo$/) >= 0 ? c[ix(/^Costo$/)] : '';
   const sede = `${portT}; ${costoT}`;
   const nomeAtt = c[0];
   const va = /^\d+/.test(vaT) ? parseInt(vaT, 10) : null;
+  // Lotto 218 (A.274, A.276): il danno si prepara prima di essere letto
+  const { dannoT, seguenti, acDichiarata } = preparaDanno(dannoGrezzo, nomeAtt, nonCapito);
   // Lotto 204: la 0.46 scriveva «1d8+2 • Naturale Perforante», la 0.69 «1d8+2 Naturale, Perforazione; AC 1» — il tipo
   // di danno è separato da una virgola invece che da uno spazio. È la stessa informazione, scritta in un altro modo:
   // senza questa virgola 395 attacchi di 200 schede finivano fra le capacità, cioè non si potevano tirare.
@@ -407,10 +476,11 @@ function leggiAttacco(intest, c, nonCapito, acComune) {
   let danno = dm[1].replace(/\s+/g, '').replace('−', '-');
   if (dm[2]) danno += `×${dm[2]}`;
   const att = { nome: nomeAtt, tipo: 'ravvicinato', va, danno, natura: dm[3] };
+  if (seguenti) att.seguenti = seguenti;
   const props = [dm[4], dm[5]].filter(Boolean).join('; ');
   // Lotto 204: la 0.69 scrive l'AC **dentro** la cella del danno («2d6+3 Naturale; AC 1»). È l'AC dell'attacco, non
   // una sua proprietà: lasciandola fra le proprietà la plancia scriveva «AC 1 · AC 1».
-  let acDalDanno = null;
+  let acDalDanno = acDichiarata;
   if (props) {
     const voci = props.split(/\s*[;,]\s*/).map((s) => s.trim()).filter(Boolean);
     const restanti = voci.filter((v) => { const m = /^AC\s*(\d+)$/i.exec(v); if (m) { acDalDanno = +m[1]; return false; } return true; });
@@ -742,13 +812,22 @@ export function leggiScheda(sch, comuni = [], colonna = null, blocco = null) {
     else nonCapito.push('Due ingombri nel manuale (parziale e completo): configurazioni non lette (A.203)');
   }
   if (sp.spazio) o.spazio = sp.spazio;
+  // A.273: le forme dei licantropi e dell'Ammantato (la forma di base è la prima: umanoide, o aperto)
+  if (CONFIGURAZIONI_A273[o.id]) {
+    o.configurazioni = CONFIGURAZIONI_A273[o.id].map(([id, nome, spazio, movimento, nota]) => ({ id, nome, spazio, ...(movimento ? { movimento } : {}), ...(nota ? { nota } : {}) }));
+    o.spazio = o.spazio ?? CONFIGURAZIONI_A273[o.id][0][2];
+    nonCapito.push('Due forme (A.273): configurazioni per ingombro e movimento; gli attacchi di ogni forma restano come nel profilo di base');
+  }
   // A.202 (30/10/2026): le forme della Murena della Roccia cucciolo
   if (FORME_A202[o.id]) o.forme = FORME_A202[o.id];
   // A.203: «portata 1 Q dalla testa» = gli attacchi e i soffi partono dalla testa, non dal quadretto più favorevole
   if (R.some((r) => /portata[^.|]{0,30}dalla testa/i.test(r.t))) o.origine_testa = true;
   if (sp.oltre) nonCapito.push(`Ingombro ${sp.oltre}: oltre ${LATO_MAX} Q per lato (A.167, domanda A.198): fuori dal campo spazio, nella capacità «Dimensioni e scale»`);
   if (!sp.spazio && !sp.oltre) nonCapito.push('Ingombro non letto: campo spazio assente (vale la Taglia)');
-  if (sp.grande) o.taglia = 'grande';
+  // Lotto 218, A.275 (risposta del 17/11/2026): la Taglia e l'ingombro sulla mappa sono dati distinti. La Taglia è una
+  // caratteristica regolamentare che il profilo dichiara; **non si deduce «Grande» da 2 × 2 o più**. Il manuale non
+  // scrive la Taglia in nessuna scheda: l'importatore non la attribuisce mai, e l'app mostra «Taglia non specificata».
+  if (sp.grande) nonCapito.push('Ingombro da 2 × 2 Q in su: nessuna Taglia attribuita (A.275: la Taglia non si deduce dall\'ingombro)');
 
   // Abilità
   const abGrezze = [...k.abilCond];
@@ -967,7 +1046,12 @@ export function controlloIncrociato(testo, esistenti) {
       for (let i = 0; i < t.length && !ok; i += 1) {
         if (!norm(t[i]).startsWith(primo)) continue;
         const vicino = t.slice(i, i + 4);
-        if (vicino.slice(1).some((x) => x === String(a.va) || new RegExp('(^|\\D)' + a.va + '(\\D|$)').test(x)) && senzaSpazi(vicino.join('|')).includes(senzaSpazi(a.danno))) ok = true;
+        const compare = senzaSpazi(vicino.join('|'));
+        // Lotto 218 (A.276): una componente unica («1d10+3 Perforazione + 1d4 Fuoco; tutto Naturale») è in scheda come
+        // un danno solo con tutti i dadi («1d10+1d4+3»): si controlla che ogni addendo si trovi accanto al nome.
+        const addendi = senzaSpazi(a.danno).split(/(?=[+-])/).map((x) => x.replace(/^\+/, ''));
+        const tuttiGliAddendi = (a.danno.match(/\d+d\d+/g) ?? []).length > 1 && addendi.every((x) => compare.includes(x));
+        if (vicino.slice(1).some((x) => x === String(a.va) || new RegExp('(^|\\D)' + a.va + '(\\D|$)').test(x)) && (compare.includes(senzaSpazi(a.danno)) || tuttiGliAddendi)) ok = true;
       }
       if (!ok) problemi.push({ id: n.id, campo: 'attacco ' + a.nome, detto: 'VA ' + a.va + ', ' + a.danno, perche: 'VA e danno non si trovano accanto al nome nel manuale' });
     }

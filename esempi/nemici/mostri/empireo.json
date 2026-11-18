@@ -4,7 +4,6 @@
   "id": "empireo",
   "nome": "Empireo",
   "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Empireo",
-  "taglia": "grande",
   "pv": 364,
   "pm": 100,
   "caratteristiche": {

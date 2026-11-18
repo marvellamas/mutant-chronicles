@@ -4,7 +4,6 @@
   "id": "cacciatore-invisibile",
   "nome": "Cacciatore invisibile",
   "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Cacciatore invisibile",
-  "taglia": "grande",
   "pv": 86,
   "pm": 16,
   "caratteristiche": {

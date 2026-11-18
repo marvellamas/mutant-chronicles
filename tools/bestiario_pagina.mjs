@@ -152,7 +152,7 @@ const nomeStato = (id, d) => d.regole.stati.elenco.find((s) => s.id === id)?.nom
 /** «Lama nefaria — ravvicinato, VA 13, 1d10+3 Magico, portata 1 Q, AC 1, Perforante 1». */
 export function testoAttacco(a) {
   const parti = [a.tipo === 'distanza' ? 'a distanza' : 'ravvicinato', `VA ${a.va}`,
-    [a.danno, a.natura].filter(Boolean).join(' ')];
+    [[a.danno, a.natura].filter(Boolean).join(' '), ...(a.seguenti ?? []).map((s) => `poi ${[s.danno, s.natura].filter(Boolean).join(' ')}`)].join(', ')];
   if (a.portata_q != null) parti.push(`portata ${a.portata_q} Q`);
   if (a.gittata_q != null) parti.push(`gittata ${a.gittata_q} Q`);
   if (a.ac != null) parti.push(`AC ${a.ac}`);

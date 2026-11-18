@@ -98,7 +98,8 @@ test('A.198 e A.204: i dieci draghi antichi (16 × 10 Q Base) entrano nel campo 
     assert.equal(n.spazio, '10 × 16 Q', n.id);
     assert.equal(n.pedina_tattica, '2 × 2 Q', n.id);
     assert.ok(!n.capacita.some((c) => c.nome === 'Dimensioni e scale'), n.id + ': la nota di ripiego se n’è andata');
-    assert.equal(n.taglia, 'grande');
+    // Lotto 218, A.275: la Taglia non si deduce dall'ingombro: 10 × 16 Q di spazio, e nessuna Taglia dichiarata
+    assert.equal(n.taglia, undefined, `${n.id}: nessuna Taglia dedotta`);
   }
   const molt = tutteLeSchede.filter(([, n]) => (n.attacchi ?? []).some((a) => /×/.test(a.danno)));
   assert.equal(molt.length, 38, 'draghi cromatici, metallici e d’ombra, Dracolich (36) e i due Dragomedusa');

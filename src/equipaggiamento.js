@@ -611,7 +611,8 @@ export function catalogo(dati) {
 
 /** Voci per la cascata Tipo → Catalogo → Famiglia → Profilo: ogni livello solo ciò che esiste. */
 export function opzioniCascata(dati, { tipo = null, catalogo: cat = null, famiglia = null, cataloghiRif = null } = {}) {
-  const tutti = catalogo(dati).oggetti.filter((o) => !o.modulo_di); // §7.8: il modulo integrato è compreso nell'arma
+  // §7.8: il modulo integrato è compreso nell'arma; A.278: un profilo archiviato non si offre più (resta nel catalogo per chi lo ha)
+  const tutti = catalogo(dati).oggetti.filter((o) => !o.modulo_di && !o.archiviata);
   const unici = (lista) => [...new Set(lista)];
   // «Aggiungi» di una categoria dell'Inventario (S32): solo gli oggetti dei suoi capitoli (prefisso del riferimento)
   const delCapitolo = (o) => !Array.isArray(cataloghiRif) || cataloghiRif.includes(String(o.rif).split(':')[0]);
@@ -631,7 +632,7 @@ export function cercaNelCatalogo(dati, testoCercato, massimo = 12) {
   const q = normalizzaTesto(testoCercato.trim());
   if (q.length < 2) return [];
   return catalogo(dati).oggetti
-    .filter((o) => !o.modulo_di)
+    .filter((o) => !o.modulo_di && !o.archiviata)
     .filter((o) => [o.nome, ...(o.nomi_alternativi ?? [])].some((n) => normalizzaTesto(n).includes(q)))
     .slice(0, massimo);
 }
@@ -1408,6 +1409,13 @@ export function calcolaEquipaggiamento(base, voci, dati) {
   };
   for (const o of oggetti.filter((x) => x.attivo && (x.tipo === 'arma_ravvicinata' || x.tipo === 'arma_distanza'))) {
     profiloArma(o, o.def);
+    // A.279: un modulo che si impiega solo montato su un oggetto compatibile (il Modulo al plasma Banshee) non è un'arma
+    // autonoma: se l'inventario non ha l'oggetto su cui si monta, la scheda lo dice (avvisa, non blocca)
+    const ospiti = o.def?.montabile_su ?? [];
+    if (ospiti.length && !oggetti.some((x) => x.attivo !== false && ospiti.includes(x.def?.rif))) {
+      const nomi = ospiti.map((r) => catalogo(dati).perRif.get(r)?.nome ?? r).join(' o ');
+      avvisi.push(`${o.nome}: si impiega solo montato su un Banshee compatibile (${nomi}), e nell'inventario non c'è (A.279).`);
+    }
     applicaMunizione(armi.at(-1), armi.at(-1).munizioneRiferimento);
     // §7.7: le penalità MOV delle armi impugnate si sottraggono una sola volta al budget di movimento
     if (o.def?.mov) movimentoQ += o.def.mov;

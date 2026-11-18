@@ -35,7 +35,8 @@ test('Spazio e portata dai dati, GS/PX informativo', () => {
   // la coda della Regina Comandante ha portata 2 Q (dal manuale)
   const regina = leggi('covata-regina-comandante.json');
   assert.equal(regina.attacchi.find((a) => a.nome === 'Coda').portata_q, 2);
-  assert.equal(regina.taglia, 'grande', 'massa paragonabile a un veicolo (Sbalzante)');
+  // lotto 218, A.275: la Taglia non si deduce dall'ingombro; il manuale non la dichiara
+  assert.equal(regina.taglia, undefined, 'nessuna Taglia dedotta');
   assert.deepEqual(regina.gs_px, { gs: 'Eroe', px: 70, per_pg: 4 });
   // A.167: gli ingombri rettangolari e oltre 3 × 3 sono nel campo spazio
   assert.equal(regina.spazio, '2 × 3 Q');

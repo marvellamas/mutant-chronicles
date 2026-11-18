@@ -666,6 +666,11 @@ export function renderTavolo(radice, ctx) {
           return t;
         });
         await aggiorna(true);
+        // A.276: la componente successiva dello stesso attacco, sul PG com'è adesso (PV e Ferite dal file appena scritto)
+        if (ok && proposta.seguenti?.length) {
+          const [prossima, ...resto] = proposta.seguenti;
+          setTimeout(() => colpitoPg(stato.viste.get(r.file) ?? v, r, { ...prossima, seguenti: resto }), 0);
+        }
         return ok;
       },
     });
@@ -681,7 +686,15 @@ export function renderTavolo(radice, ctx) {
       proposta,
       fonti: fontiPeriodiche(),
       // la stessa procedura del pannello «Attacca!» dei PG (src/colpo-nemico.js)
-      applica: async (ris, colpo, stati, periodici = []) => modifica((x) => colpoSuNemico(x, p, ris, colpo, stati, periodici, ctx.dati)),
+      applica: async (ris, colpo, stati, periodici = []) => {
+        const ok = await modifica((x) => colpoSuNemico(x, p, ris, colpo, stati, periodici, ctx.dati));
+        // A.276: la componente successiva dello stesso attacco, sul nemico com'è adesso (PV e Ferite dopo la prima)
+        if (ok && proposta.seguenti?.length) {
+          const [prossima, ...resto] = proposta.seguenti;
+          setTimeout(() => { const ora = nemiciInScontro().find((q) => q.id === p.id); if (ora) colpitoNemico(ora, { ...prossima, seguenti: resto }); }, 0);
+        }
+        return ok;
+      },
     });
   };
   // Pezzo 5: «Attacca» di un nemico o di un partecipante manuale con un attacco (src/ui/attacco-nemico.js).

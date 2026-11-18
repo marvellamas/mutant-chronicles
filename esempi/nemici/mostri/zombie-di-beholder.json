@@ -4,7 +4,6 @@
   "id": "zombie-di-beholder",
   "nome": "Zombie di Beholder",
   "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Zombie di Beholder",
-  "taglia": "grande",
   "pv": 104,
   "pm": 24,
   "caratteristiche": {

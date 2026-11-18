@@ -35,7 +35,7 @@ test('Spazio: quadrato nel campo; Aboleth 2×3, Basilisco 2×1, Grick 1×2 nel c
     assert.ok(!n.note.includes('A.167'), `${id} nessuna nota di ripiego`);
   }
   // Taglia Grande: l'Aboleth perché il manuale lo dice (massa pari a un veicolo); Basilisco e Grick no (ingombro piccolo)
-  assert.equal(leggi('aboleth').taglia, 'grande');
+  assert.equal(leggi('aboleth').taglia, undefined, 'lotto 218, A.275: nessuna Taglia dedotta dall’ingombro');
   assert.equal(leggi('basilisco').taglia, undefined);
   assert.equal(leggi('grick').taglia, undefined);
 });

@@ -4,7 +4,6 @@
   "id": "lamia",
   "nome": "Lamia",
   "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Lamia",
-  "taglia": "grande",
   "pv": 73,
   "pm": 35,
   "caratteristiche": {

@@ -343,9 +343,18 @@ export function eTabellaDArma(t) {
 }
 
 /** Il nome di un modello, confrontabile: senza maiuscole, punteggiatura e spazi doppi. */
-export const chiaveNome = (n) =>
-  String(n ?? '').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+export const chiaveNome = (n) => {
+  const k = String(n ?? '').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '')
     .replace(/[^a-z0-9]+/g, ' ').trim();
+  return GRAFIE_DA_CORREGGERE[k] ?? k;
+};
+
+/**
+ * Grafie del manuale che la risposta di Davide dichiara sbagliate (A.278, 17/11/2026): \u00abColt Jamson 45\u00bb nel manuale va
+ * corretto in \u00abColt Jemson 45\u00bb, la grafia canonica. Finch\u00e9 il manuale non \u00e8 corretto, la voce del catalogo si riconosce
+ * anche con la grafia vecchia \u2014 dichiarata qui, con il motivo, e non per somiglianza.
+ */
+export const GRAFIE_DA_CORREGGERE = { 'colt jamson 45': 'colt jemson 45' };
 
 /**
  * Il «ramo» di una tabella: che genere di profilo porta. Serve a **non fondere due profili dello stesso nome**.

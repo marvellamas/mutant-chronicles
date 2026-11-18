@@ -48,6 +48,9 @@
       "va": 12,
       "danno": "1d8+1",
       "natura": "Naturale",
+      "proprieta": [
+        "adesione in forma oggetto"
+      ],
       "portata_q": 1,
       "ac": 1,
       "note": "Adesione in forma oggetto: vedi la capacità «Adesione»."
@@ -58,6 +61,15 @@
       "va": 12,
       "danno": "1d8+1",
       "natura": "Naturale",
+      "seguenti": [
+        {
+          "danno": "1d4",
+          "natura": "Naturale",
+          "proprieta": [
+            "Acido"
+          ]
+        }
+      ],
       "portata_q": 1,
       "ac": 2,
       "note": "AC 2: prima 1d8+1 Naturale, poi 1d4 Naturale da acido (senza Corrosivo). Una sola Difesa; l’esito e l’AR si applicano a ciascun danno, risolvendo PV e Ferite prima del successivo; un Magistrale raddoppia solo il primo. +2 al VA (14) contro la vittima che trattiene."
@@ -82,10 +94,6 @@
     }
   ],
   "capacita": [
-    {
-      "nome": "Morso",
-      "effetto": "VA 12. Danno: AC 2: 1d8+1 Naturale, poi 1d4 Naturale da acido. Portata/costo: 1 Q; "
-    },
     {
       "nome": "Corpo e sensi",
       "effetto": "Scurovisione 12 Q; immunità ad Acido di qualunque Natura e ad A terra. Ha una mente e non è immune agli effetti mentali. Testa indica la regione bocca e sensi, Torace la massa centrale, Braccia gli pseudopodi e Gambe la base locomotrice; mutare forma non guarisce le Menomazioni."
@@ -154,7 +162,7 @@
       "movimento": "Mostri 0.69",
       "spazio": "Mostri 0.69",
       "abilita": "Mostri 0.47",
-      "attacchi": "Mostri 0.47",
+      "attacchi": "Mostri 0.69",
       "capacita": "Mostri 0.69",
       "note": "Mostri 0.69",
       "gs_px": "Mostri 0.69"

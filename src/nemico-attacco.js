@@ -148,15 +148,25 @@ export function leggiDanno(testo) {
 export function propostaColpo(attacco, risultato, { magistrale = false, colpiASegno = 1 } = {}) {
   const dist = attacco.tipo === 'distanza';
   const base = dist ? leggiDanno(risultato.danno_per_colpo) : { formula: risultato.danno?.formula ?? attacco.danno, moltiplicatore: risultato.danno?.moltiplicatore ?? 1 };
+  const comune = attacco.fonte ? { fonte: attacco.fonte, fonteNome: attacco.fonteNome } : {};
+  // A.276 (17/11/2026): un attacco con più componenti di danno ha un solo tiro per colpire, e ogni componente si risolve
+  // separatamente — la propria Natura, la propria Armatura, le proprie proprietà. Ogni componente è una proposta di
+  // «Colpito» con una sola applicazione; le seguenti arrivano nel campo `seguenti`, una dopo l'altra. Il Successo
+  // Magistrale raddoppia soltanto la prima componente (ipotesi dichiarata: il §1.6 parla di «il danno» di un colpo).
+  const seguenti = (attacco.seguenti ?? []).map((s, i, tutte) => ({
+    formula: s.danno, moltiplicatore: 1, magistrale: false, natura: s.natura, tipo: dist ? 'distanza' : 'ravvicinato',
+    ac: 1, proprieta: [...(s.proprieta ?? [])], componente: { indice: i + 1, totale: tutte.length + 1 }, ...comune,
+  }));
   return {
     formula: base.formula,
     moltiplicatore: base.moltiplicatore,
     magistrale: !!magistrale,
     natura: attacco.natura,
     tipo: dist ? 'distanza' : 'ravvicinato',
-    ac: Math.max(1, (risultato.applicazioni ?? attacco.ac ?? 1) * Math.max(1, colpiASegno)),
+    ac: seguenti.length ? 1 : Math.max(1, (risultato.applicazioni ?? attacco.ac ?? 1) * Math.max(1, colpiASegno)),
     proprieta: [...(attacco.proprieta ?? [])],
+    ...(seguenti.length ? { componente: { indice: 0, totale: seguenti.length + 1 }, seguenti } : {}),
     // fonte degli Stati periodici che il colpo può applicare (Sanguinante X: §5.15, all'Iniziativa della fonte)
-    ...(attacco.fonte ? { fonte: attacco.fonte, fonteNome: attacco.fonteNome } : {}),
+    ...comune,
   };
 }

@@ -151,5 +151,28 @@
     },
     "edizione": "Mostri 0.69",
     "sistema_salute": "solo_PV"
-  }
+  },
+  "spazio": "1 Q",
+  "configurazioni": [
+    {
+      "id": "umanoide",
+      "nome": "Umanoide",
+      "spazio": "1 Q",
+      "movimento": {
+        "passo": 6,
+        "corsa": 12,
+        "scatto": 18
+      }
+    },
+    {
+      "id": "cinghiale",
+      "nome": "Cinghiale",
+      "spazio": "1 × 2 Q",
+      "movimento": {
+        "passo": 8,
+        "corsa": 16,
+        "scatto": 24
+      }
+    }
+  ]
 }

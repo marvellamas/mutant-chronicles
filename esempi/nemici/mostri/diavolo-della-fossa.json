@@ -4,7 +4,6 @@
   "id": "diavolo-della-fossa",
   "nome": "Diavolo della fossa",
   "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Diavolo della fossa",
-  "taglia": "grande",
   "pv": 292,
   "pm": 80,
   "caratteristiche": {
@@ -91,6 +90,27 @@
       "ac": 1
     },
     {
+      "nome": "Mazza infuocata",
+      "tipo": "ravvicinato",
+      "va": 19,
+      "danno": "1d6+6",
+      "natura": "Magico",
+      "seguenti": [
+        {
+          "danno": "3d6",
+          "natura": "Magico",
+          "proprieta": [
+            "Fuoco"
+          ]
+        }
+      ],
+      "proprieta": [
+        "Contusione"
+      ],
+      "portata_q": 2,
+      "ac": 2
+    },
+    {
       "nome": "Coda",
       "tipo": "ravvicinato",
       "va": 19,
@@ -104,10 +124,6 @@
     }
   ],
   "capacita": [
-    {
-      "nome": "Mazza infuocata",
-      "effetto": "VA 19. Danno: AC 2: 1d6+6 Magico, Contusione, poi 3d6 Magico, Fuoco. Portata/costo: 2 Q personali; una mano; 1 AzP; "
-    },
     {
       "nome": "Corpo e sensi",
       "effetto": "Protezioni elementali dei diavoli, resistenza alle armi non argentate e Resistenza alla magia +2, non inclusa nelle PS. Vista rivelatrice 9 entro 24 Q, inoltre vede il buio magico con Vista infernale; telepatia 24 Q. Para con Mazza pronta ai costi normali; nessuna Parata naturale. Da Svenuto in volo cade."

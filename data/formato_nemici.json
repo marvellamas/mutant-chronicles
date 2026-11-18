@@ -226,7 +226,7 @@
         "grande"
       ],
       "obbligatorio": false,
-      "descrizione": "Normale se manca. Grande: occupa 2 × 2 Q o più, Sbalzante non lo sposta (Bestiario §3.1.1); nessun bonus generico per chi lo attacca (A.95, E&L del 05/10/2026)."
+      "descrizione": "Se manca: «Taglia non specificata», senza modificatori di Taglia (A.275, 17/11/2026: la Taglia e l'ingombro sulla mappa sono dati distinti, e «Grande» non si deduce da 2 × 2 Q o più). Grande: Sbalzante non lo sposta (Bestiario §3.1.1); nessun bonus generico per chi lo attacca (A.95, E&L del 05/10/2026)."
     },
     "spazio": {
       "tipo": "testo",
@@ -261,6 +261,28 @@
             "modello": "^1 Q$|^[1-9][0-9]? × [1-9][0-9]? Q$",
             "obbligatorio": true,
             "descrizione": "Spazio in Q Base di questa configurazione, larghezza × lunghezza."
+          },
+          "movimento": {
+            "tipo": "oggetto",
+            "obbligatorio": false,
+            "descrizione": "A.273 (17/11/2026): le creature con due forme (licantropi, Ammantato) sono una creatura sola, con una scheda e una pedina; il cambio di forma aggiorna ingombro e movimento mantenendo identità, Iniziativa, PV attuali, Stati ed effetti. Passo, Corsa e Scatto di questa forma, in Q Base; senza il campo vale il movimento del profilo. Gli attacchi e i valori specifici di ogni forma non sono ancora strutturati (domanda A.288).",
+            "campi": {
+              "passo": {
+                "tipo": "intero",
+                "min": 0,
+                "obbligatorio": true
+              },
+              "corsa": {
+                "tipo": "intero",
+                "min": 0,
+                "obbligatorio": true
+              },
+              "scatto": {
+                "tipo": "intero",
+                "min": 0,
+                "obbligatorio": true
+              }
+            }
           },
           "nota": {
             "tipo": "testo",
@@ -473,6 +495,33 @@
             "min": 1,
             "obbligatorio": false,
             "descrizione": "Applicazioni del colpo, come nel catalogo delle armi a distanza."
+          },
+          "seguenti": {
+            "tipo": "lista",
+            "min": 1,
+            "obbligatorio": false,
+            "descrizione": "A.276 (17/11/2026): le altre componenti di un attacco che dichiara più danni in sequenza («AC 2: 1d8+7 Magico, Taglio, poi 3d6 Magico, Fulmine»). Un solo tiro per colpire; ogni componente si risolve separatamente, con la propria Natura e la propria Armatura (`danno`, `natura` e `proprieta` dell'attacco sono la prima). Una scheda che dichiara «componente unica» non usa questo campo: ha un solo `danno` con tutti i dadi.",
+            "voce": {
+              "tipo": "oggetto",
+              "campi": {
+                "danno": {
+                  "tipo": "dadi",
+                  "obbligatorio": true
+                },
+                "natura": {
+                  "tipo": "scelta",
+                  "valori_da": "nature_danno",
+                  "obbligatorio": true
+                },
+                "proprieta": {
+                  "tipo": "lista",
+                  "voce": {
+                    "tipo": "testo"
+                  },
+                  "obbligatorio": false
+                }
+              }
+            }
           },
           "rif": {
             "tipo": "testo",
@@ -852,13 +901,13 @@
     "non_leggibili": 0,
     "campi": {
       "_nota": "Il conto per campo, non per scheda (lotto 204): «mezzo e mezzo» dev’essere un’informazione, non una sorpresa. Un campo o si legge per intero dall’edizione corrente, o si dichiara non letto e si tiene quello di prima, con scritto da dove viene.",
-      "letti": 6454,
-      "ereditati": 385,
-      "senza_provenienza": 415,
-      "miste": 206,
+      "letti": 6475,
+      "ereditati": 370,
+      "senza_provenienza": 420,
+      "miste": 203,
       "ereditati_per_campo": {
         "capacita": 158,
-        "attacchi": 74,
+        "attacchi": 59,
         "abilita": 68,
         "note": 55,
         "azioni": 8,
@@ -873,12 +922,12 @@
         "gs_px": 2
       },
       "dettaglio": {
-        "letti": "5.910 campi letti per intero dal Manuale dei Mostri 0.69, sulle 461 schede che ne vengono",
-        "ereditati": "383 campi che la 0.69 non dà in una forma leggibile e che restano quelli della 0.47, ciascuno con la propria provenienza scritta nel file",
+        "letti": "6.475 campi letti per intero dal Manuale dei Mostri 0.69, sulle 461 schede che ne vengono",
+        "ereditati": "370 campi che la 0.69 non dà in una forma leggibile e che restano quelli della 0.47, ciascuno con la propria provenienza scritta nel file",
         "senza_provenienza": "I campi delle 32 schede provvisorie: non vengono da un’edizione del manuale, quindi non ne dichiarano una (A.258)",
-        "miste": "206 schede portano valori di due edizioni e lo dicono nella mini-scheda; sulle altre 255 il segno ⚑ è spento (erano 212 dopo il lotto 204). Il lotto 205 ha agganciato le pagine di blocco per posizione a tutte le 436 schede del catalogo.",
+        "miste": "203 schede portano valori di due edizioni e lo dicono nella mini-scheda; sulle altre 258 il segno ⚑ è spento (erano 212 dopo il lotto 204 e 206 dopo il 205; il lotto 218 ne ha chiuse altre 3: Solar, Planetar e il Mimic leggono gli attacchi per intero). Il lotto 205 ha agganciato le pagine di blocco per posizione a tutte le 436 schede del catalogo.",
         "capacita": "Restano indietro per tre motivi, tutti dichiarati: 53 schede perdono i sottocampi strutturati (risorsa, usi, azione: i costi in PM e Azioni che la plancia conta, scritti a mano dai lotti precedenti e che il manuale non dà in quella forma); altre perdono un numero o il testo di una capacità omonima, perché la 0.69 rimanda a una «pagina finale» del blocco che segue le schede invece di precederle, e la regola di posizione guarda indietro.",
-        "attacchi": "Attacchi che il manuale scrive senza la Natura del danno (A.274), con due fasi di danno in una cella (A.276), o la cui lettura produrrebbe un elenco più corto di quello che abbiamo: l’elenco di prima resta. Le condizioni scritte accanto agli attacchi, che la 0.69 sposta nella prosa, si portano dietro.",
+        "attacchi": "Lotto 218: A.274 e A.276 sono applicate (Naturale per i fisici inequivocabili; più componenti di danno con `seguenti`), quindi restano soltanto gli attacchi la cui lettura darebbe un elenco più corto di quello che abbiamo, o i non fisici senza Natura. Prima: attacchi che il manuale scrive senza la Natura del danno (A.274), con due fasi di danno in una cella (A.276), o la cui lettura produrrebbe un elenco più corto di quello che abbiamo: l’elenco di prima resta. Le condizioni scritte accanto agli attacchi, che la 0.69 sposta nella prosa, si portano dietro.",
         "abilita": "Abilità scritte con una condizione o una forma («Furtività 14 solo nelle Terre del Fuoco»), che il formato tiene come numero secco: restano quelle di prima e la condizione resta nelle capacità",
         "note": "La nota di una scheda contiene due cose: la prosa del manuale, che la lettura nuova sostituisce com’è giusto, e le annotazioni che i lotti precedenti ci hanno aggiunto (l’AR senza scudo, le Difese alternative, il GS informativo) e che il manuale non scrive in quella forma. Si tengono solo le seconde: 55 schede."
       }

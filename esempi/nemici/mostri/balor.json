@@ -4,7 +4,6 @@
   "id": "balor",
   "nome": "Balor",
   "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Balor",
-  "taglia": "grande",
   "pv": 260,
   "pm": 64,
   "caratteristiche": {
@@ -61,14 +60,6 @@
     }
   ],
   "capacita": [
-    {
-      "nome": "Spada elettrica",
-      "effetto": "VA 19. Danno: AC 2: 1d8+7 Magico, Taglio, poi 3d6 Magico, Fulmine. Portata/costo: 2 Q personali; una mano; 1 AzP; "
-    },
-    {
-      "nome": "Frusta incendiaria",
-      "effetto": "VA 18. Danno: AC 2: 1d4+6 Magico, Taglio, poi 2d6 Magico, Fuoco. Portata/costo: 6 Q personali; una mano; 1 AzP; "
-    },
     {
       "nome": "Aura ardente",
       "effetto": "VA —. Danno: 2d6 Magico, Fuoco; AC 1. Portata/costo: Entro 1 Q dal corpo; passiva; "
@@ -145,13 +136,56 @@
       "movimento": "Mostri 0.69",
       "spazio": "Mostri 0.69",
       "abilita": "Mostri 0.69",
+      "attacchi": "Mostri 0.69",
       "capacita": "Mostri 0.69",
       "note": "Mostri 0.69",
-      "gs_px": "Mostri 0.69",
-      "attacchi": "Mostri 0.69"
+      "gs_px": "Mostri 0.69"
     },
     "edizione": "Mostri 0.69",
     "sistema_salute": "solo_PV"
   },
-  "attacchi": []
+  "attacchi": [
+    {
+      "nome": "Spada elettrica",
+      "tipo": "ravvicinato",
+      "va": 19,
+      "danno": "1d8+7",
+      "natura": "Magico",
+      "seguenti": [
+        {
+          "danno": "3d6",
+          "natura": "Magico",
+          "proprieta": [
+            "Fulmine"
+          ]
+        }
+      ],
+      "proprieta": [
+        "Taglio"
+      ],
+      "portata_q": 2,
+      "ac": 2
+    },
+    {
+      "nome": "Frusta incendiaria",
+      "tipo": "ravvicinato",
+      "va": 18,
+      "danno": "1d4+6",
+      "natura": "Magico",
+      "seguenti": [
+        {
+          "danno": "2d6",
+          "natura": "Magico",
+          "proprieta": [
+            "Fuoco"
+          ]
+        }
+      ],
+      "proprieta": [
+        "Taglio"
+      ],
+      "portata_q": 6,
+      "ac": 2
+    }
+  ]
 }

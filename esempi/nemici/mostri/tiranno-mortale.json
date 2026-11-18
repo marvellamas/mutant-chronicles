@@ -4,7 +4,6 @@
   "id": "tiranno-mortale",
   "nome": "Tiranno mortale",
   "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Tiranno mortale",
-  "taglia": "grande",
   "pv": 169,
   "pm": 65,
   "caratteristiche": {

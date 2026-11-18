@@ -85,14 +85,6 @@
   ],
   "capacita": [
     {
-      "nome": "Ascia bipenne",
-      "effetto": "VA 13. Danno: 2d6+3. Portata/costo: 1 Q; "
-    },
-    {
-      "nome": "Corna",
-      "effetto": "VA 13. Danno: 1d8+2. Portata/costo: 1 Q; "
-    },
-    {
       "nome": "Carica cornuta",
       "effetto": "Esegue la Carica ordinaria con Corna: 1 AzP e 1 AzM, almeno 3 Q sufficientemente rettilinei entro 16 Q; VA −2 per 3–6 Q o −4 da 7 Q, danno ×2. Se il colpo infligge almeno 1 danno finale a un bersaglio di massa non superiore, questi effettua una Prova di FOR o DES a scelta: fallimento lo rende A Terra. Questo effetto specifico non richiede due colpi e non sposta il bersaglio. Rialzarsi segue le regole comuni. L’eventuale secondo attacco non riceve i benefici della Carica."
     },
@@ -137,7 +129,7 @@
       "movimento": "Mostri 0.69",
       "spazio": "Mostri 0.69",
       "abilita": "Mostri 0.69",
-      "attacchi": "Mostri 0.47",
+      "attacchi": "Mostri 0.69",
       "capacita": "Mostri 0.69",
       "note": "Mostri 0.69",
       "gs_px": "Mostri 0.69"

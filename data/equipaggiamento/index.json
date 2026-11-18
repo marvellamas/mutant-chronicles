@@ -244,14 +244,14 @@
    "armi_distanza.json",
    "armi_distanza_corporative.json"
   ],
-  "voci": 218,
-  "dalla_edizione": 132,
+  "voci": 221,
+  "dalla_edizione": 139,
   "miste": 77,
-  "non_nel_manuale": 9,
+  "non_nel_manuale": 5,
   "campi": {
-   "letti": 3179,
+   "letti": 3299,
    "ereditati": 117,
-   "senza_provenienza": 134,
+   "senza_provenienza": 66,
    "per_campo": {
     "munizioni": 24,
     "famiglia": 70,

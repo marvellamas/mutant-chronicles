@@ -1731,6 +1731,13 @@ function validaEquipaggiamento(eq, nomiAbilita, idSpec, err, coloriChroma = [], 
           if (a.tipo === 'chip' && o.innesto !== 'processore') err(F, `${k}.attivabile`, 'il tipo "chip" è del Processore neurale (innesto "processore")');
         }
       }
+      // A.279 (17/11/2026): un modulo che non è un'arma autonoma — si acquista e si impiega solo montato su un oggetto compatibile
+      if (o.montabile_su !== undefined) {
+        if (!Array.isArray(o.montabile_su) || !o.montabile_su.length) err(F, `${k}.montabile_su`, 'elenco di riferimenti "file:id" degli oggetti su cui si monta');
+        else o.montabile_su.forEach((r, j) => rimandiCompatibili.push([F, `${k}.montabile_su[${j}]`, r, ['accessorio', 'armatura']]));
+      }
+      // A.278 (17/11/2026): un profilo superato si archivia, non si cancella
+      if (o.archiviata !== undefined && (!isOggetto(o.archiviata) || !isTesto(o.archiviata.da) || !isTesto(o.archiviata.motivo))) err(F, `${k}.archiviata`, 'serve { da, quando, motivo }');
       if (o.compatibile_con !== undefined) {
         if (!Array.isArray(o.compatibile_con) || !o.compatibile_con.length) err(F, `${k}.compatibile_con`, 'elenco di riferimenti "file:id"');
         else o.compatibile_con.forEach((r, j) => rimandiCompatibili.push([F, `${k}.compatibile_con[${j}]`, r, o.tipo === 'munizioni' || o.cella || o.esplosivo ? ['arma_ravvicinata', 'arma_distanza'] : ['armatura']]));
@@ -1743,7 +1750,7 @@ function validaEquipaggiamento(eq, nomiAbilita, idSpec, err, coloriChroma = [], 
           if (o.compatibile_con && !o.compatibile_con.includes(r)) err(F, `${k}.abbinamento_ottimizzato[${j}]`, `"${r}" non è fra le armature compatibili del rinforzo`);
         });
       }
-      if (o.reperibilita !== undefined && !(o.reperibilita === null && (modulo || isTesto(o['TODO(Davide)']))) && !rep.includes(o.reperibilita)) err(F, `${k}.reperibilita`, `sigla "${o.reperibilita}" non in index.json (${rep.join(', ')})`);
+      if (o.reperibilita !== undefined && !(o.reperibilita === null && (modulo || o.non_in_vendita === true || isTesto(o['TODO(Davide)']))) && !rep.includes(o.reperibilita)) err(F, `${k}.reperibilita`, `sigla "${o.reperibilita}" non in index.json (${rep.join(', ')})`);
       if (o.proprieta !== undefined) {
         if (!Array.isArray(o.proprieta)) err(F, `${k}.proprieta`, 'deve essere un elenco');
         else o.proprieta.forEach((p, j) => {

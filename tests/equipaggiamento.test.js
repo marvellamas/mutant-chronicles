@@ -474,7 +474,8 @@ test('validatore delle armi corporative: effetti, attivazione, unità delle cari
 
 test('lotto 5: 83 armi a distanza corporative (KEP 808 e Colt Hammershot dalla 0.54) e 19 moduli integrati in 7 cataloghi, con i valori del §7.8', () => {
   const tutte = catalogo(dati).oggetti.filter((o) => o.file === 'armi_distanza_corporative' && !o.paragrafo.startsWith('§7.22'));
-  assert.equal(tutte.length, 102);
+  // Lotto 218 (A.279): + Colt Trooper, Colt Frontier e il Modulo al plasma Banshee (102 → 105); i due profili superati (A.278) restano archiviati nel catalogo
+  assert.equal(tutte.length, 105);
   assert.equal(tutte.filter((o) => o.modulo_di).length, 19);
   assert.deepEqual([...new Set(tutte.map((o) => o.catalogo))], ['Alleanza', 'Bauhaus', 'Capitol', 'Cybertronic', 'Fratellanza', 'Imperial', 'Mishima']);
   const r = (id) => catalogo(dati).perRif.get(`armi_distanza_corporative:${id}`);

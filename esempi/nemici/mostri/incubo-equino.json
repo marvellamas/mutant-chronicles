@@ -53,10 +53,6 @@
   ],
   "capacita": [
     {
-      "nome": "Zoccoli ardenti",
-      "effetto": "VA 13. Danno: AC 2: 2d6+2 Naturale, Contusione, poi 1d6 Magico, Fuoco. Portata/costo: 1 Q; 1 AzP; "
-    },
-    {
       "nome": "Corpo e luce",
       "effetto": "Vivente biologico, immune al Fuoco e ai suoi Stati diretti; fumo e mancanza d’aria restano pericolosi. Non possiede altre immunità di famiglia o Parata naturale. Massimo un attacco di Zoccoli per Round, Opportunità compresa. Produce luce ordinaria di raggio due Q e penombra per altri due, senza Fuoco ad area o danni gratuiti agli adiacenti. La luce non rivela invisibilità e non è Luce Mistica. Da Svenuto in volo cade."
     },
@@ -120,13 +116,35 @@
       "movimento": "Mostri 0.69",
       "spazio": "Mostri 0.69",
       "abilita": "Mostri 0.69",
+      "attacchi": "Mostri 0.69",
       "capacita": "Mostri 0.69",
       "note": "Mostri 0.69",
-      "gs_px": "Mostri 0.69",
-      "attacchi": "Mostri 0.69"
+      "gs_px": "Mostri 0.69"
     },
     "edizione": "Mostri 0.69",
     "sistema_salute": "solo_PV"
   },
-  "attacchi": []
+  "attacchi": [
+    {
+      "nome": "Zoccoli ardenti",
+      "tipo": "ravvicinato",
+      "va": 13,
+      "danno": "2d6+2",
+      "natura": "Naturale",
+      "seguenti": [
+        {
+          "danno": "1d6",
+          "natura": "Magico",
+          "proprieta": [
+            "Fuoco"
+          ]
+        }
+      ],
+      "proprieta": [
+        "Contusione"
+      ],
+      "portata_q": 1,
+      "ac": 2
+    }
+  ]
 }

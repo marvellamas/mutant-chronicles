@@ -7,7 +7,7 @@
 //   - le schede dei PG (src/tavolo.js → vistaPlancia): ritratto, PV e Stati;
 //   - il registro dei veicoli (A.91, A.105): i mezzi del gruppo e quelli di proprietà o guidati da un PG presente.
 // Funzioni pure.
-import { formaAttuale, diTurno } from '../scontro.js';
+import { formaAttuale, configurazioneAttuale, diTurno } from '../scontro.js';
 import { stessaChiave, partecipanteConducente } from '../veicoli-registro.js';
 import { profiloVeicolo, movimentoMassimo } from '../veicoli.js';
 import { ingombroCreatura, ingombroVeicolo, iniziali, chiaveRif } from './token.js';
@@ -42,6 +42,12 @@ export function movimentoNemico(scheda, stati, dati, forma = null) {
     if (Number.isInteger(e.passo_q)) r.passo = Math.min(r.passo, e.passo_q);
   }
   return r;
+}
+
+/** La scheda del nemico col movimento della configurazione attuale, se la configurazione ne dichiara uno (A.273). */
+export function conMovimentoDellaForma(p) {
+  const mov = configurazioneAttuale(p)?.movimento;
+  return mov ? { ...p.scheda, movimento: { ...(p.scheda?.movimento ?? {}), ...mov } } : p.scheda;
 }
 
 const nomeStato = (dati) => {
@@ -82,7 +88,8 @@ function pezzoNemico(p, dati, scala = 'base', scena = null) {
     nome: p.nome, lato: p.lato === 'alleato' ? 'alleato' : 'avversario', ingombro: ingombroCreatura(p.scheda ?? null, dati, scala, p.configurazione ?? null),
     iniziali: iniziali(p.scheda?.nome ?? p.nome, p.numero ?? null), ritratto: urlImmagineNemico(p.scheda?.immagine), pv: p.pv ?? null,
     aZero: (p.pv?.attuali ?? 1) <= 0, stati: (p.stati ?? []).map(stato), ferite: null,
-    movimento: movimentoInScala(movimentoNemico(p.scheda, p.stati, dati, formaAttuale(p)), unita, scena ?? { scala }, dati),
+    // A.273: la forma (configurazione) di una creatura a due forme può avere un movimento suo; senza, quello del profilo
+    movimento: movimentoInScala(movimentoNemico(conMovimentoDellaForma(p), p.stati, dati, formaAttuale(p)), unita, scena ?? { scala }, dati),
     // A.202 e A.203: la forma (può attraversare la roccia?) e la testa come origine degli attacchi
     forma: formaAttuale(p)?.id ?? null, attraversaRoccia: formaAttuale(p)?.attraversa_roccia === true, testaOrigine: p.scheda?.origine_testa === true,
     // 08/10: Passo in volo del profilo (data/formato_nemici.json → movimento.volo), per «In volo» (src/mappa/volo.js)

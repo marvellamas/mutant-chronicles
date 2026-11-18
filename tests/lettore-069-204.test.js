@@ -83,6 +83,7 @@ test('le creature a due forme: letta quella di base, e l’altra dichiarata (A.2
   const testo = JSON.stringify(lupo.capacita ?? []);
   assert.match(testo, /lupo: 8 \/ 16 \/ 24 Q/, 'l’andatura della forma animale resta nelle capacità');
   assert.match(testo, /1 × 2 Q/, 'e il suo ingombro');
-  // l’ingombro della scheda resta dichiaratamente non letto: due misure, e il formato ne tiene una (A.273)
-  assert.equal(lupo.spazio, undefined, 'meglio nessun ingombro che quello sbagliato per la forma in cui si presenta');
+  // lotto 218, A.273: le due forme sono due configurazioni di una creatura sola; lo Spazio di base è quello della forma di base
+  assert.equal(lupo.spazio, '1 Q', 'umanoide');
+  assert.deepEqual(lupo.configurazioni.map((c) => c.spazio), ['1 Q', '1 × 2 Q']);
 });

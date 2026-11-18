@@ -4,7 +4,6 @@
   "id": "planetar",
   "nome": "Planetar",
   "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Planetar",
-  "taglia": "grande",
   "pv": 229,
   "pm": 72,
   "caratteristiche": {
@@ -70,12 +69,8 @@
   ],
   "capacita": [
     {
-      "nome": "Spadone luminoso",
-      "effetto": "VA 18. Danno: AC 2: 2d6+6 Magico, Taglio, poi 3d8 Magico, Luce. Portata/costo: 1 Q; due mani; 1 AzP; "
-    },
-    {
       "nome": "Colonna ardente",
-      "effetto": "VA —. Danno: AC 2: 2d6+3 Magico, Fuoco, poi 2d6 Magico, Luce. Portata/costo: Origine entro 20 Q; raggio 2 Q; 2 AzP e 6 PM; "
+      "effetto": "VA —. Danno: 2d6+3 Magico, Fuoco. Portata/costo: Origine entro 20 Q; raggio 2 Q; 2 AzP e 6 PM; "
     },
     {
       "nome": "Corpo e sensi",
@@ -145,13 +140,35 @@
       "movimento": "Mostri 0.69",
       "spazio": "Mostri 0.69",
       "abilita": "Mostri 0.69",
+      "attacchi": "Mostri 0.69",
       "capacita": "Mostri 0.69",
       "note": "Mostri 0.69",
-      "gs_px": "Mostri 0.69",
-      "attacchi": "Mostri 0.69"
+      "gs_px": "Mostri 0.69"
     },
     "edizione": "Mostri 0.69",
     "sistema_salute": "solo_PV"
   },
-  "attacchi": []
+  "attacchi": [
+    {
+      "nome": "Spadone luminoso",
+      "tipo": "ravvicinato",
+      "va": 18,
+      "danno": "2d6+6",
+      "natura": "Magico",
+      "seguenti": [
+        {
+          "danno": "3d8",
+          "natura": "Magico",
+          "proprieta": [
+            "Luce"
+          ]
+        }
+      ],
+      "proprieta": [
+        "Taglio"
+      ],
+      "portata_q": 1,
+      "ac": 2
+    }
+  ]
 }

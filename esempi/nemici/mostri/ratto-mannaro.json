@@ -155,5 +155,29 @@
     },
     "edizione": "Mostri 0.69",
     "sistema_salute": "solo_PV"
-  }
+  },
+  "spazio": "1 Q",
+  "configurazioni": [
+    {
+      "id": "umanoide",
+      "nome": "Umanoide",
+      "spazio": "1 Q",
+      "movimento": {
+        "passo": 6,
+        "corsa": 12,
+        "scatto": 18
+      }
+    },
+    {
+      "id": "ratto",
+      "nome": "Ratto gigante",
+      "spazio": "1 Q",
+      "movimento": {
+        "passo": 8,
+        "corsa": 16,
+        "scatto": 24
+      },
+      "nota": "1 Q condivisibile senza bloccare il passaggio"
+    }
+  ]
 }

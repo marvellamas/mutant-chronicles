@@ -4,7 +4,6 @@
   "id": "anomalia-acquatica",
   "nome": "Anomalia acquatica",
   "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Anomalia acquatica",
-  "taglia": "grande",
   "pv": 55,
   "caratteristiche": {
     "FOR": 8,

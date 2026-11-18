@@ -4,7 +4,6 @@
   "id": "djinni",
   "nome": "Djinni",
   "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Djinni",
-  "taglia": "grande",
   "pv": 125,
   "pm": 60,
   "caratteristiche": {

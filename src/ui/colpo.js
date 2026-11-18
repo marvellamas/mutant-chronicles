@@ -87,6 +87,7 @@ export function apriColpo(ctx, bersaglio, { applica, proposta = {}, fonti = [] }
       h('header', { class: 'pannello-testa' },
         h('h2', { id: 'colpo-titolo' }, `Colpito: ${bersaglio.nome}`),
         h('button', { type: 'button', class: 'btn tondo chiudi', 'aria-label': 'Chiudi', onclick: () => chiudi() }, '×')),
+      proposta.componente ? h('p', { class: 'nota componente-colpo' }, `Componente ${proposta.componente.indice + 1} di ${proposta.componente.totale} dello stesso attacco (A.276): un solo tiro per colpire, ogni componente con la sua Natura e la sua Armatura.${proposta.componente.indice === 0 ? ' Il Successo Magistrale vale per questa prima componente.' : ''}`) : null,
       h('p', { class: 'nota' }, `PV ${bersaglio.pv.attuali} / ${bersaglio.pv.massimo}${bersaglio.ferite !== null ? ` · Ferite ${bersaglio.ferite}` : ''} · AR ${bersaglio.ar?.totale ?? 0}${bersaglio.ar?.magica ? `, di cui ${bersaglio.ar.magica} magica` : ''}. Scrivi i dadi con i bonus ordinari (§5.13, passi 1–2): moltiplicatori e Successo Magistrale li applica l’app, prima della Difesa e dell’Armatura.`),
       scelta('Applicazioni (AC, §5.10)', [1, 2, 3, 4, 5, 6].map((n) => ({ valore: n, etichetta: String(n) })), st.ac, (v) => { st.ac = v; }),
       // §1.6: il Magistrale raddoppia il danno (×2 → ×3) sulla sola prima applicazione, prima di Parata e Armatura

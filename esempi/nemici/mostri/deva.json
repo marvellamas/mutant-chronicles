@@ -69,6 +69,27 @@
   ],
   "attacchi": [
     {
+      "nome": "Mazza luminosa",
+      "tipo": "ravvicinato",
+      "va": 16,
+      "danno": "1d6+3",
+      "natura": "Magico",
+      "seguenti": [
+        {
+          "danno": "2d8",
+          "natura": "Magico",
+          "proprieta": [
+            "Luce"
+          ]
+        }
+      ],
+      "proprieta": [
+        "Contusione"
+      ],
+      "portata_q": 1,
+      "ac": 2
+    },
+    {
       "nome": "Pugno",
       "tipo": "ravvicinato",
       "va": 14,
@@ -82,10 +103,6 @@
     }
   ],
   "capacita": [
-    {
-      "nome": "Mazza luminosa",
-      "effetto": "VA 16. Danno: AC 2: 1d6+3 Magico, Contusione, poi 2d8 Magico, Luce. Portata/costo: 1 Q; una mano; 1 AzP; "
-    },
     {
       "nome": "Corpo e sensi",
       "effetto": "Corpo vivente sovrannaturale: non necessita di cibo, acqua o sonno e non accumula Affaticamento, ma mantiene Ferite e Menomazioni e può essere reso Svenuto. Immune a fascinazione e Terrorizzato. Dimezza Luce e danni Naturali di armi da Contusione, Taglio e Perforazione, incluse armi naturali. Resistenza alla magia +2 non inclusa nelle PS. Scurovisione e telepatia 24 Q; comprensione delle lingue secondo le regole del blocco. Para con Mazza pronta; da Svenuto in volo cade."

@@ -15,7 +15,7 @@ const D20 = specTiro({ dadi: 1, facce: 20, fisso: 0 });
 
 /** Riga di un attacco del formato, come nella carta del nemico. */
 export function descriviAttacco(a) {
-  return `${a.nome}: VA ${numero(a.va)}, danno ${a.danno} ${a.natura}${a.tipo === 'distanza' ? `, gittata ${a.gittata_q} Q${a.modalita?.length ? `, ${a.modalita.join(' ')}` : ''}` : `, portata ${a.portata_q ?? 1} Q`}${a.ac > 1 ? `, AC ${a.ac}` : ''}${a.proprieta?.length ? `, ${a.proprieta.join(', ')}` : ''}`;
+  return `${a.nome}: VA ${numero(a.va)}, danno ${a.danno} ${a.natura}${(a.seguenti ?? []).map((s) => ` + ${s.danno} ${s.natura}`).join('')}${a.tipo === 'distanza' ? `, gittata ${a.gittata_q} Q${a.modalita?.length ? `, ${a.modalita.join(' ')}` : ''}` : `, portata ${a.portata_q ?? 1} Q`}${a.ac > 1 ? `, AC ${a.ac}` : ''}${a.proprieta?.length ? `, ${a.proprieta.join(', ')}` : ''}`;
 }
 
 /**

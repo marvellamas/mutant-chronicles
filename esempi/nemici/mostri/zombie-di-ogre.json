@@ -4,7 +4,6 @@
   "id": "zombie-di-ogre",
   "nome": "Zombie di Ogre",
   "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Zombie di Ogre",
-  "taglia": "grande",
   "pv": 84,
   "pm": 6,
   "caratteristiche": {

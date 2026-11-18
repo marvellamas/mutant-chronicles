@@ -4,7 +4,6 @@
   "id": "kraken",
   "nome": "Kraken",
   "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Kraken",
-  "taglia": "grande",
   "pv": 468,
   "pm": 100,
   "caratteristiche": {

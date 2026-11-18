@@ -4,7 +4,6 @@
   "id": "dao",
   "nome": "Dao",
   "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Dao",
-  "taglia": "grande",
   "pv": 156,
   "pm": 55,
   "caratteristiche": {

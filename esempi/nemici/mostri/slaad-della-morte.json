@@ -68,6 +68,60 @@
   ],
   "attacchi": [
     {
+      "nome": "Morso",
+      "tipo": "ravvicinato",
+      "va": 16,
+      "danno": "1d8+3",
+      "natura": "Magico",
+      "seguenti": [
+        {
+          "danno": "1d6+2",
+          "natura": "Etereo"
+        }
+      ],
+      "proprieta": [
+        "Perforazione"
+      ],
+      "portata_q": 1,
+      "ac": 2
+    },
+    {
+      "nome": "Artiglio",
+      "tipo": "ravvicinato",
+      "va": 16,
+      "danno": "1d10+3",
+      "natura": "Magico",
+      "seguenti": [
+        {
+          "danno": "1d6+2",
+          "natura": "Etereo"
+        }
+      ],
+      "proprieta": [
+        "Taglio"
+      ],
+      "portata_q": 1,
+      "ac": 2
+    },
+    {
+      "nome": "Spadone",
+      "tipo": "ravvicinato",
+      "va": 17,
+      "danno": "2d6+4",
+      "natura": "Magico",
+      "seguenti": [
+        {
+          "danno": "1d6+2",
+          "natura": "Etereo"
+        }
+      ],
+      "proprieta": [
+        "Taglio"
+      ],
+      "portata_q": 1,
+      "ac": 2
+    },
+    {
       "nome": "Globo di fuoco",
       "tipo": "ravvicinato",
       "va": 14,
@@ -82,18 +136,6 @@
     }
   ],
   "capacita": [
-    {
-      "nome": "Morso",
-      "effetto": "VA 16. Danno: AC 2: 1d8+3 Magico, Perforazione, poi 1d6+2 Etereo. Portata/costo: 1 Q; vera forma; 1 AzP; "
-    },
-    {
-      "nome": "Artiglio",
-      "effetto": "VA 16. Danno: AC 2: 1d10+3 Magico, Taglio, poi 1d6+2 Etereo. Portata/costo: 1 Q; vera forma; 1 AzP; "
-    },
-    {
-      "nome": "Spadone",
-      "effetto": "VA 17. Danno: AC 2: 2d6+4 Magico, Taglio, poi 1d6+2 Etereo. Portata/costo: 1 Q; due mani; 1 AzP; "
-    },
     {
       "nome": "Corpo e sensi",
       "effetto": "Vivente biologico con Protezioni Slaad, Resistenza alla magia +2 e Rigenerazione quattro. Scurovisione, percezione cieca e telepatia dodici Q; i solidi fermano la percezione cieca. Para con Spadone pronto, senza Parata naturale. Non è un non morto, non ha immunità al veleno o agli attacchi spirituali e non risucchia PM per il solo fatto di causare danno Etereo."

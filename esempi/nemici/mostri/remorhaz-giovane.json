@@ -46,13 +46,14 @@
       "nome": "Morso ardente",
       "tipo": "ravvicinato",
       "va": 14,
-      "danno": "1d10+3",
+      "danno": "1d10+1d4+3",
       "natura": "Naturale",
+      "proprieta": [
+        "Perforazione",
+        "Fuoco"
+      ],
       "portata_q": 1,
       "ac": 1,
-      "proprieta": [
-        "Perforazione"
-      ],
       "note": "Aggiunge 1d4 Fuoco Naturale (una AC, componenti miste): solo il residuo di Fuoco può innescare Incendiato. Nessuna presa automatica né inghiottimento."
     }
   ],
@@ -75,10 +76,6 @@
     }
   ],
   "capacita": [
-    {
-      "nome": "Morso ardente",
-      "effetto": "VA 14. Danno: 1d10+3 Perforazione + 1d4 Fuoco; tutto Naturale. Portata/costo: 1 Q; una AC; "
-    },
     {
       "nome": "Calore e immunità",
       "effetto": "Corpo incandescente infligge 1d6 Naturale da Fuoco nelle condizioni della pagina comune dei Remorhaz, al massimo una volta per creatura e Round. Immune a Fuoco, Incendiato e Gelo di qualunque Natura, senza guarigione per assorbimento. Il Morso usa le componenti miste e può innescare Incendiato soltanto attraverso il residuo di Fuoco."
@@ -127,7 +124,7 @@
       "movimento": "Mostri 0.69",
       "spazio": "Mostri 0.69",
       "abilita": "Mostri 0.69",
-      "attacchi": "Mostri 0.47",
+      "attacchi": "Mostri 0.69",
       "capacita": "Mostri 0.69",
       "note": "Mostri 0.69",
       "gs_px": "Mostri 0.69"

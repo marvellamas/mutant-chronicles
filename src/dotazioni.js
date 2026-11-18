@@ -134,7 +134,7 @@ export function armamentiCedibili(dotazione, classe, corporazione, dati, cat = c
  */
 export function acquistabili(corporazione, dati, cat = catalogo(dati)) {
   const suo = catalogoCorporazione(corporazione, dati);
-  return cat.oggetti.filter((o) => !o.modulo_di && Number.isFinite(o.costo) && o.costo > 0 && (o.catalogo === suo || o.catalogo === 'Commerciale'));
+  return cat.oggetti.filter((o) => !o.modulo_di && !o.archiviata && Number.isFinite(o.costo) && o.costo > 0 && (o.catalogo === suo || o.catalogo === 'Commerciale'));
 }
 
 /**

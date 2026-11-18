@@ -4,7 +4,6 @@
   "id": "diavolo-del-ghiaccio",
   "nome": "Diavolo del ghiaccio",
   "fonte": "dal Manuale dei Mostri v0.69, cap. 8 «Catalogo delle creature» — Diavolo del ghiaccio",
-  "taglia": "grande",
   "pv": 188,
   "pm": 52,
   "caratteristiche": {
@@ -60,18 +59,6 @@
     }
   ],
   "capacita": [
-    {
-      "nome": "Morso",
-      "effetto": "VA 17. Danno: AC 2: 2d6+3 Naturale, poi 2d6 Magico, Gelo. Portata/costo: 1 Q; 1 AzP; "
-    },
-    {
-      "nome": "Artigli",
-      "effetto": "VA 17. Danno: AC 2: 2d4+3 Naturale, poi 2d6 Magico, Gelo. Portata/costo: 1 Q; 1 AzP; "
-    },
-    {
-      "nome": "Coda",
-      "effetto": "VA 17. Danno: AC 2: 2d6+3 Naturale, poi 2d6 Magico, Gelo. Portata/costo: 2 Q; 1 AzP; "
-    },
     {
       "nome": "Muro di ghiaccio",
       "effetto": "VA —. Danno: Barriera; aria gelida nelle brecce. Portata/costo: Entro 12 Q; 2 AzP e 8 PM; "
@@ -144,13 +131,68 @@
       "movimento": "Mostri 0.69",
       "spazio": "Mostri 0.69",
       "abilita": "Mostri 0.69",
+      "attacchi": "Mostri 0.69",
       "capacita": "Mostri 0.69",
       "note": "Mostri 0.69",
-      "gs_px": "Mostri 0.69",
-      "attacchi": "Mostri 0.69"
+      "gs_px": "Mostri 0.69"
     },
     "edizione": "Mostri 0.69",
     "sistema_salute": "solo_PV"
   },
-  "attacchi": []
+  "attacchi": [
+    {
+      "nome": "Morso",
+      "tipo": "ravvicinato",
+      "va": 17,
+      "danno": "2d6+3",
+      "natura": "Naturale",
+      "seguenti": [
+        {
+          "danno": "2d6",
+          "natura": "Magico",
+          "proprieta": [
+            "Gelo"
+          ]
+        }
+      ],
+      "portata_q": 1,
+      "ac": 2
+    },
+    {
+      "nome": "Artigli",
+      "tipo": "ravvicinato",
+      "va": 17,
+      "danno": "2d4+3",
+      "natura": "Naturale",
+      "seguenti": [
+        {
+          "danno": "2d6",
+          "natura": "Magico",
+          "proprieta": [
+            "Gelo"
+          ]
+        }
+      ],
+      "portata_q": 1,
+      "ac": 2
+    },
+    {
+      "nome": "Coda",
+      "tipo": "ravvicinato",
+      "va": 17,
+      "danno": "2d6+3",
+      "natura": "Naturale",
+      "seguenti": [
+        {
+          "danno": "2d6",
+          "natura": "Magico",
+          "proprieta": [
+            "Gelo"
+          ]
+        }
+      ],
+      "portata_q": 2,
+      "ac": 2
+    }
+  ]
 }

@@ -46,27 +46,42 @@
       "nome": "Lancia due mani",
       "tipo": "ravvicinato",
       "va": 13,
-      "danno": "1d6+5",
+      "danno": "1d6+1d4+5",
       "natura": "Naturale",
+      "proprieta": [
+        "Perforazione",
+        "Fuoco"
+      ],
       "portata_q": 2,
       "ac": 1,
-      "proprieta": [
-        "Perforazione"
-      ],
       "note": "Aggiunge 1d4 Fuoco Naturale (una Difesa, una AC): le componenti restano distinte per AR e Stati. Con una mano il fisico diventa 1d6+3 complessivo. Non è compreso un profilo a lancio."
     },
     {
       "nome": "Coda",
       "tipo": "ravvicinato",
       "va": 13,
-      "danno": "1d8+2",
+      "danno": "1d8+1d6+2",
       "natura": "Naturale",
+      "proprieta": [
+        "Contusione",
+        "Fuoco"
+      ],
       "portata_q": 2,
       "ac": 1,
-      "proprieta": [
-        "Contusione"
-      ],
       "note": "Aggiunge 1d6 Fuoco Naturale (una Difesa, una AC). Con almeno 1 danno finale contro una creatura non maggiore di 1 × 1 Q: vedi «Afferrare e Stringere»."
+    },
+    {
+      "nome": "Stringere",
+      "tipo": "ravvicinato",
+      "va": 13,
+      "danno": "1d8+1d6+2",
+      "natura": "Naturale",
+      "proprieta": [
+        "Contusione",
+        "Fuoco"
+      ],
+      "portata_q": 1,
+      "ac": 1
     }
   ],
   "abilita": [
@@ -92,18 +107,6 @@
     }
   ],
   "capacita": [
-    {
-      "nome": "Lancia due mani",
-      "effetto": "VA 13. Danno: 1d6+5 Perforazione e 1d4 Fuoco; Naturali. Portata/costo: 2 Q; "
-    },
-    {
-      "nome": "Coda",
-      "effetto": "VA 13. Danno: 1d8+2 Contusione e 1d6 Fuoco; Naturali. Portata/costo: 2 Q; "
-    },
-    {
-      "nome": "Stringere",
-      "effetto": "VA 13. Danno: 1d8+2 Contusione e 1d6 Fuoco; Naturali. Portata/costo: vittima trattenuta; "
-    },
     {
       "nome": "Sequenza",
       "effetto": "Al massimo una Lancia e una Coda oppure Stringere per Round, ciascuno con 1 AzP; le Opportunità usano Lancia o Coda normali nei rispettivi limiti. Le procedure della presa sono nella pagina seguente. Non colpisce automaticamente chi è trattenuto e non assegna altre Azioni per la lunghezza del corpo."
@@ -184,7 +187,7 @@
       "movimento": "Mostri 0.69",
       "spazio": "Mostri 0.69",
       "abilita": "Mostri 0.47",
-      "attacchi": "Mostri 0.47",
+      "attacchi": "Mostri 0.69",
       "capacita": "Mostri 0.69",
       "note": "Mostri 0.69",
       "gs_px": "Mostri 0.69"

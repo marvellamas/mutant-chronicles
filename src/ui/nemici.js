@@ -290,6 +290,8 @@ export function cartaNemico(ctx, p, { modifica, durate = [], diTurnoOra = false,
   const attacco = (a) => h('li', {},
     h('span', {}, a.nome),
     h('span', {}, ' VA ', h('strong', {}, numero(a.va)), ' · danno ', h('strong', {}, a.danno), ` ${a.natura}`,
+      // A.276: le altre componenti dello stesso attacco, ciascuna con la propria Natura
+      ...(a.seguenti ?? []).map((s) => [' + ', h('strong', {}, s.danno), ` ${s.natura}${s.proprieta?.length ? ` (${s.proprieta.join(', ')})` : ''}`]),
       a.tipo === 'ravvicinato' ? ` · portata ${a.portata_q} Q` : ` · gittata ${a.gittata_q} Q`,
       a.modalita?.length ? ` · ${a.modalita.join(', ')}` : '', a.ac ? ` · AC ${a.ac}` : '',
       a.proprieta?.length ? h('small', { class: 'nota' }, ` · ${a.proprieta.join(', ')}`) : null,
@@ -348,7 +350,11 @@ export function cartaNemico(ctx, p, { modifica, durate = [], diTurnoOra = false,
     // Bestiario §3.1.1: volo e taglia Grande, con la regola nel suggerimento (data/formato_nemici.json)
     h('p', { class: 'plancia-condizioni tratti-nemico' },
       n.movimento?.volo ? h('span', { class: 'etichetta tratto-nemico', title: dati.formato_nemici.campi.movimento.campi.volo?.descrizione ?? null }, `Vola · Passo in volo ${n.movimento.volo} Q`) : null,
-      n.taglia === 'grande' ? [' ', h('span', { class: 'etichetta tratto-nemico', title: dati.formato_nemici.campi.taglia?.descrizione ?? null }, 'Taglia Grande')] : null,
+      // A.275: la Taglia è un dato del profilo; se manca si dice, e nessun modificatore di Taglia si applica
+      n.taglia === 'grande'
+        ? [' ', h('span', { class: 'etichetta tratto-nemico', title: dati.formato_nemici.campi.taglia?.descrizione ?? null }, 'Taglia Grande')]
+        : n.taglia === 'normale' ? null
+          : [' ', h('span', { class: 'etichetta tratto-nemico', title: 'La Taglia non è dichiarata nel profilo: nessun modificatore di Taglia si applica (A.275). L’ingombro sulla mappa è un dato a parte e non la fa dedurre.' }, 'Taglia non specificata')],
       // A.126 (16/10): lo Spazio che la pedina occupa davvero, sempre, con la provenienza (profilo o Taglia)
       (() => { const sp = spazioEffettivo(n, dati); return [' ', h('span', { class: 'etichetta tratto-nemico', title: dati.formato_nemici.campi.spazio?.descrizione ?? null },
         `Spazio ${sp.testo}${sp.dalProfilo ? '' : ' (dalla Taglia)'}${sp.ripiego ? ` · pedina ${sp.lato} × ${sp.lato}` : ''}`)]; })(),

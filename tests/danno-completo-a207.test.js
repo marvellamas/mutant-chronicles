@@ -60,13 +60,14 @@ test('A.207: danni Naturali e AC 1 per colpo salvo indicazione del profilo; Magi
   for (const n of tuttiINemici()) for (const a of n.attacchi ?? []) {
     const natura = a.natura ?? 'Naturale';
     if (natura !== 'Naturale') eccezioni.nonNaturali.add(`${n.id}:${a.nome}:${natura}`);
-    if ((a.ac ?? 1) !== 1) eccezioni.acDiverso.add(`${n.id}:${a.nome}:AC${a.ac}`);
+    // lotto 218 (A.276): AC 2 con `seguenti` = due componenti di danno, una per applicazione: non è un'eccezione di AC
+    if ((a.ac ?? 1) !== 1 && !a.seguenti) eccezioni.acDiverso.add(`${n.id}:${a.nome}:AC${a.ac}`);
     if (natura === 'Naturale' && (a.ac ?? 1) === 1) ordinari += 1;
   }
   assert.ok(ordinari > 500, `${ordinari} attacchi ordinari: Naturali, AC 1`);
   // le sole eccezioni sono quelle dei profili che le dichiarano (Magico: Lama nefaria, elementali, Randello incantato, Dragomedusa; Etereo: non morti incorporei)
   for (const x of eccezioni.nonNaturali) assert.match(x, /:(Magico|Etereo)$/, x);
-  assert.deepEqual([...eccezioni.acDiverso], ['mimic:Morso:AC2']);
+  assert.deepEqual([...eccezioni.acDiverso], [], 'il Morso del Mimic ora dichiara le sue due componenti (A.276)');
   // AC 1 non limita gli attacchi del Round: il numero lo dicono Azioni e limiti del profilo; due attacchi dello stesso nemico si calcolano entrambi
   const scheda = tuttiINemici().find((n) => (n.attacchi ?? []).length >= 2 && (n.azioni?.principali ?? 1) >= 2);
   const p = { id: 'x', tipo: 'nemico', scheda, stati: [], intensita: {} };
