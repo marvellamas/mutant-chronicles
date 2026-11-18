@@ -3376,3 +3376,19 @@ Solo documenti. Doc «per-davide» ed E&L scaricati da Drive il 18/11 (entrambi 
 - **Mappa — PG e PNG a bordo di veicoli e cavalcature** (blocco senza numero). Salire e scendere per PG e PNG; posti dalla scheda del mezzo (equipaggio e passeggeri se distinti); a posti esauriti nessuno sale; spostando la pedina si spostano da sole tutte e sole quelle a bordo; chi scende non segue più. Requisito per l'app, implementazione da verificare. **Applicata in parte:** per i **veicoli** c'è già (salire dal clic destro, «A bordo» → «Scendi…», posti del profilo, chi è a bordo si muove con il mezzo); mancano le cavalcature e i PNG che non sono partecipanti di uno scontro.
 
 **Due cose trovate leggendo l'E&L, non risposte:** l'Armamenti **0.87** su Drive (18/11 12:48 UTC; cinque punti, tutti sulla dotazione ASA, nessun numero di combattimento) non è recepita; e il Doc su Drive ha la data «17 novembre» e non è cambiato di contenuto.
+
+## Lotto 223 — 18/11/2026 — recepite le risposte del 18/11 e gli Armamenti 0.87
+
+Stato di applicazione dei dieci blocchi dell'E&L del 18/11 (testo in `docs/risposte-master-2026-09-26.md`, righe 3407–3458):
+
+- **A.287** — già applicata (lotto 216). **A.285** — niente da applicare nel codice: il pulsante «Cancella dal registro…» c'è dal 218; la scelta del record da conservare (`veimvzoj07y0`) è di Davide.
+- **A.280 — applicata ora:** la M606 del FIAT LUX (`asa-scout-mk4`) ha `arco { gradi: 180, orientamento: 'frontale' }`, il 120° resta come `precedente`; il manuale Veicoli 0.19 §10 dice ancora 120° (vale la risposta). Il settore resta un dato che si legge, non un controllo.
+- **A.286 — applicata ora:** «Concedi il passaggio al livello N» propone il motivo precompilato (nome, 7° → 8°, A.286, «i PX non cambiano»), da confermare una per una; non cambia PX, livello né Titolo.
+- **A.284 + integrazione — applicata per metà:** nel catalogo le quattro voci portano i nomi del manuale 0.87 (Divisa di servizio ASA, Divisa Operativa ASA, Soprabito di ordinanza ASA, Elmetto Recon ASA; i vecchi nomi restano come alternativi); per i sei PG col «Soprabito ASA riservato» c'è `tools/dotazione-asa.mjs` (sola lettura finché non si dà `--scrivi`; verifica che nessun valore cambi). **Non toccate**: le funzioni dell'Elmetto Recon (A.294), le voci SIA nel catalogo e la sigla del «Soprabito ASA riservato» (A.295).
+- **A.281 — non applicata:** annullare in automatico le quattro correzioni di Dimitri toccherebbe valori della serata; resta il modo a mano (sezione 3 del Doc), insieme alla A.293.
+- **A.282, A.283 — non applicate:** «scarico» a 0 PM c'è già e nessun codice assegna «Esausto neutro»; manca il comando del Direttore che lo registra (A.282); il bonus di Armatura Mistica non è un oggetto del modello (A.283), a 0 PI l'armatura rotta è già esclusa dall'AR.
+- **Mappa — PG e PNG a bordo:** per i veicoli esiste (salire e scendere, capienze conducente/passeggeri, le pedine a bordo si muovono col mezzo, `src/mappa/veicoli-mappa.js`); mancano le **cavalcature** (le schede del Mostri 0.69 non hanno i posti: **A.296**) e i **PNG fuori scontro** (i segnaposto non salgono). Non si tocca la plancia prima di lunedì.
+
+**Domande nuove:** **A.294** (l'Elmetto Recon ASA conserva visione notturna, sensori, filtro e +1 Iniziativa?), **A.295** (voci SIA nel catalogo; il «Soprabito ASA riservato» del catalogo è nel manuale SIA), **A.296** (posti delle cavalcature e PNG fuori scontro a bordo). Primo numero libero: **A.297**.
+
+**Armamenti 0.87 recepita** (registro `tools/manuali.json`, testo `docs/manuali-txt/armamenti-0.87.md`, la 0.86 in `archivio/`): cinque punti, tutti sulla dotazione ASA (§7.26) e due richiami; le armi rilette sulla 0.87 danno 0 differenze, quindi solo l'etichetta.
