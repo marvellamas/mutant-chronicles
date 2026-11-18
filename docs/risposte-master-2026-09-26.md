@@ -3404,3 +3404,56 @@ Quattro voci dell’app sono gli stessi modelli del manuale corrente e vanno rin
 Colt Trooper e Colt Frontier devono entrare tra le armi leggere Capitol acquistabili. Il Modulo al plasma Banshee deve entrare fra i moduli Bauhaus, ma non come arma autonoma: può essere acquistato e installato soltanto su un Banshee compatibile, utilizza il proprio profilo e la propria alimentazione e non può essere impugnato o gestito come oggetto indipendente. Prezzo e reperibilità seguono il manuale; disponibilità concreta e valore reale in gioco restano stabiliti dal Direttore.  
 Stato di implementazione: queste decisioni sono approvate come regole, nomenclature e criteri editoriali. Il loro inserimento nei manuali, nel catalogo, nei JSON e nel codice dell’app viene registrato e verificato separatamente.
 
+# A.287 — Incantesimi liberi di Dimitri: risposta approvata da Davide (18/11/2026)
+
+Confermo che il −2 a Intelligenza di Dimitri vale anche per il calcolo degli incantesimi liberi: la sua quota è 6, non 8\.  
+Al 7° livello, i due incantesimi già registrati oltre quota restano nello storico, senza effetti e senza essere cancellati. Al passaggio all’8° rientrano nella quota: Dimitri conserva così i 18 incantesimi già registrati e ne sceglie 2 nuovi, per un totale di 20\.
+
+# A.281 — Redistribuzione dei punti liberi e correzioni di Dimitri: risposta approvata da Davide (18/11/2026)
+
+Lunedì 23 novembre ciascuno dei sette PG effettua prima il normale avanzamento dal 7° all’8° livello. Poi l’app adegua le categorie e le basi delle Abilità al nuovo profilo, mantenendo gli aumenti fissi previsti dall’avanzamento. Azzera soltanto la precedente distribuzione dei punti liberi, compresi gli spostamenti registrati a mano: ogni giocatore riparte con 0 punti liberi assegnati e 21 da distribuire (7 \+ 7 \+ 7), nel rispetto dei limiti. Sono 21 complessivi, non 21 in aggiunta ai precedenti.  
+Per Dimitri, dopo l’adeguamento, i due \+1 ad Armi da mischia e i −1 a Percezione e Scienza del 2 novembre restano nello storico, ma non incidono più sui valori. Il \+1 al VA d’attacco del focalizzatore Verde si applica una sola volta, solo con la CyberArma: non è un punto dell’Abilità.  
+Resta invece valida la modifica alle Caratteristiche: Saggezza \+2 e Intelligenza −2. Non fa parte dei punti liberi delle Abilità e mantiene i suoi effetti sugli incantesimi, come stabilito nella A.287.
+
+# A.286 — Concessione individuale del livello 8 e Titolo per i PX: risposta approvata da Davide (18/11/2026)
+
+Per lunedì 23 novembre 2026, l’app deve proporre una concessione precompilata per ciascuno dei sette PG, indicando il nome del personaggio, il passaggio dal 7° all’8° livello e il motivo. Il Direttore conferma ogni concessione singolarmente, senza assegnare i PX mancanti. La concessione autorizza il passaggio, ma non fa salire il PG: è il giocatore a effettuare l’avanzamento dal proprio tablet.  
+Il Titolo Esperto (×3) si applica ai PX delle partite non ancora assegnate solo dopo il passaggio effettivo del PG all’8° livello, non al momento della concessione. Le partite con PX già assegnati mantengono il Titolo originario e non si ricalcolano.
+
+# A.282 — Cristallo scarico ed Esausto neutro: risposta approvata da Davide (18/11/2026)
+
+A 0 PM l’app può indicare automaticamente che il cristallo è «scarico»: conserva il colore e la capacità di accumulare PM e può essere ricaricato.  
+L’app non assegna automaticamente lo stato «Esausto neutro». Lo stato si registra solo quando il Direttore conferma che un evento di gioco ha distrutto definitivamente la capacità del cristallo di accumulare PM. Né l’uso ordinario né la sola frattura sono sufficienti. Un cristallo Esausto neutro non si ricarica e resta utilizzabile soltanto come materia prima.
+
+# A.283 — Armatura Mistica: ricalcolo automatico dell’AR a 0 PI. Risposta approvata da Davide (18/11/2026)
+
+Quando l’armatura incantata arriva a 0 PI, l’app deve ricalcolare automaticamente l’AR del personaggio: non si conteggiano più né l’AR dell’armatura inutilizzabile né il bonus di Armatura Mistica che dipende da essa (§22.2 del Manuale della Magia). Le altre protezioni valide continuano a contare secondo le normali regole di cumulo.  
+Esempio: se l’armatura forniva AR 5 e Armatura Mistica aggiungeva \+1, a 0 PI viene meno quel contributo di 6 punti di AR Magica. Non si azzera l’intera AR del personaggio.
+
+# A.284 — Distinzione tra equipaggiamenti ASA e SIA: risposta approvata da Davide (18/11/2026)
+
+Gli equipaggiamenti dell’Alleanza del 504 PE possono portare la sigla SIA. Le dotazioni dei PG portano la sigla ASA. Le due sigle non sono intercambiabili: ASA non è una vecchia grafia da sostituire con SIA.  
+Nel Manuale dei Veicoli, «FIAT LUX \- SCOUT MK4 ASA» è il veicolo dei PG; «SIA \- SCOUT MK4» è il veicolo dell’Alleanza. Sono simili, ma hanno piccole differenze: ciascuno mantiene il proprio nome, la propria scheda e le caratteristiche previste dal manuale.  
+Lo stesso criterio vale per armature, rinforzi ed elmetti. Nel catalogo e nell’app le corrispondenti voci ASA e SIA devono restare distinte: non si rinomina una voce nell’altra, non si fondono le schede e non si sovrascrivono i valori dell’equipaggiamento dei PG con quelli del modello SIA.
+
+# A.280 — FIAT LUX ASA: arco frontale sulla mappa. Risposta approvata da Davide (18/11/2026)
+
+Sulla mappa, la postazione M606 del FIAT LUX \- SCOUT MK4 ASA copre il semicerchio frontale di 180°: 90° a sinistra e 90° a destra rispetto al muso del veicolo. Questo arco sostituisce quello di 120° e vale solo per il FIAT LUX dei PG; non modifica il profilo del SIA \- SCOUT MK4.
+
+# Integrazione alla A.284 — Dotazione ASA dei sette PG (18/11/2026)
+
+Dotazione comune: Divisa di servizio ASA; Divisa Operativa ASA; Soprabito di ordinanza ASA; Elmetto Recon ASA. Entrambe le divise sono in dotazione, ma si indossano in alternativa. Il solo soprabito ammesso per i sette è quello di ordinanza, compatibile con entrambe. I modelli SIA dell’Alleanza, compresi SIA Recon e Soprabito SIA riservato, restano separati e invariati.  
+Corrispondenze per Marcello — App (da applicare e verificare, non già eseguito):  
+armature\_corporative:divisa-d-ordinanza-asa → Divisa di servizio ASA; armature\_corporative:divisa-operativa-asa → Divisa Operativa ASA. Conservare le istanze dei PG; le due divise non si sommano.  
+rinforzi:soprabito-asa e rinforzi:soprabito-asa-riservato → Soprabito di ordinanza ASA. Per i sei soprabiti riservati dei PG cambiare anche il profilo, non solo l’etichetta: AR \+1, FOR \+1, 6 PI propri, Qualità Comune, PS Integrità 10, senza Discreta propria. Lucas ha già il soprabito base. Conservare l’Integrità corrente e il collegamento alla divisa, senza riparare né duplicare l’oggetto. Non cambiare il Soprabito SIA riservato.  
+elmetti:elmetto-asa-recon → Elmetto Recon ASA. È lo stesso oggetto già assegnato a ciascuno dei sette: non crearne un secondo e non azzerare l’Integrità. Per la dotazione indossata, nell’istantanea del 17/11 solo Duncan lo teneva ancora nello zaino. Non copiare automaticamente sul modello storico le funzioni del SIA Recon. Verifica finale su tutte e sette le schede: riferimenti validi, nessun doppione e nessuna modifica ai modelli SIA.
+
+# A.285 — Neverlost: identificazione del record canonico (18/11/2026)
+
+La Neverlost da conservare è quella del gruppo (veimvzoj07y0), con riserve 100/10/30, circuito e munizioni. La scheda intestata a Pablo (veimvzojvax1) è il doppione vuoto: non va fusa con quella del gruppo. La sua rimozione è un intervento tecnico separato e non risulta verificata.
+
+# Mappa di gioco: PG e PNG a bordo di veicoli e cavalcature (18/11/2026)
+
+Quando un veicolo o una cavalcatura è sulla mappa, l’app deve permettere di far salire e scendere i PG e i PNG. I posti disponibili sono quelli indicati nella scheda del mezzo o della cavalcatura; se la scheda distingue equipaggio e passeggeri, si rispettano le due capienze. A posti esauriti non si può far salire un altro occupante.  
+Spostando la pedina del veicolo o della cavalcatura, si spostano automaticamente tutte e sole le pedine a bordo, senza doverle muovere una per una. Chi scende libera il posto e non segue più il mezzo. Requisito per l’app; implementazione da verificare.
+
