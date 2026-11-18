@@ -2799,7 +2799,8 @@ function pannelloMunizioni(ctx, a, { riserveModificabili = true } = {}) {
       capacita !== null ? h('button', { type: 'button', class: 'btn', onclick: () => ctx.azioni.ricarica(a.uid), disabled: !stato.possibile, title: stato.motivo ?? `${cella ? 'Cambio' : 'Ricarica'} (${azioneRicarica})` },
         info?.singolo ? `Ricarica +${Math.min(info.perOperazione ?? 1, capacita - m.colpi) || info.perOperazione || 1}` : cella ? (m.senzaCella ? `Inserisci ${nomeCella === 'pacco' ? 'il più carico' : 'la più carica'}` : `Cambia ${nomeCella}`) : caricatore && m.senzaCaricatore ? 'Inserisci il più carico' : 'Ricarica') : pulsante('colpi', 1, 'colpi')),
     stato.motivo && capacita !== null && m.colpi < capacita ? h('small', { class: 'motivo', role: 'status' }, `Ricarica: ${stato.motivo}.`) : null,
-    stato.avviso ? h('small', { class: 'motivo' }, stato.avviso) : null,
+    // lotto 221: senza compatibilità nei dati l'avviso e la nota in fondo dicevano la stessa cosa: resta la nota, una volta sola
+    stato.avviso && info?.modo !== null ? h('small', { class: 'motivo' }, stato.avviso) : null,
     !info || info.modo === null ? h('div', { class: 'riga-munizioni' },
       h('span', {}, 'Riserve ', h('strong', {}, String(m.riserve))),
       riserveModificabili ? [pulsante('riserve', -1, 'riserve'), pulsante('riserve', 1, 'riserve')] : h('small', { class: 'sigla' }, ' (si cambiano nell’Inventario)')) : null,
@@ -2831,7 +2832,7 @@ function pannelloMunizioni(ctx, a, { riserveModificabili = true } = {}) {
       a.munizioni?.riferimento ? `Munizione di riferimento: ${a.munizioni.riferimento}.` : null,
       a.munizioni?.unita === 'PM' ? 'Le riserve si contano a mano.'
         : SANITARI.includes(a.munizioni?.unita) ? 'Si consuma all’inizio di ogni tentativo, anche se fallisce. Le ricariche di scorta si contano a mano.'
-          : info?.modo ? null : 'Le riserve (caricatori o celle di scorta) si contano a mano: «Ricarica» non le scala.',
+          : info?.modo ? null : 'Compatibilità delle munizioni non nei dati: «Ricarica» non scala le riserve (caricatori o celle di scorta), che si contano a mano.',
     ].filter(Boolean).join(' ')));
 }
 
