@@ -360,6 +360,12 @@ function menuAzioni(ctx) {
       // il solo calendario: anche su un personaggio senza calendario (lo crea e attiva la sezione)
       pulsanteImportaCalendario(ctx),
       voce('Modifica creazione', () => azioni.modificaCreazione()),
+      // lotto 221: il riquadro «Talenti: tutti scelti» non c'è più; cambiare un Talento si fa da qui (solo se ce n'è uno da poter cambiare)
+      ...(() => {
+        const T = ctx.talenti;
+        const cambiabili = T?.posti?.regime === 'nuovo' && !T.bloccato && T.posti.posti.some((x) => x.scelta && !x.chiuso);
+        return cambiabili ? [voce('Cambia un Talento', () => { T.ui.aperto = true; T.azioni.ridisegna(); }, { titolo: 'Apre le scelte dei Talenti: puoi cambiarne uno finché il Direttore non chiude' })] : [];
+      })(),
       ctx.livelli.length ? voce('Annulla l’ultimo livello', azioni.annullaLivello, { pericolo: true }) : null,
       h('hr', {}),
       voce('Nuova sessione', azioni.nuovaSessione, { titolo: 'PV e PM ai massimi, Stati, Ferite e Affaticamento a zero, usi «per sessione» di nuovo disponibili' }),

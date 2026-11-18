@@ -75,8 +75,14 @@ export function riquadroTalenti(t) {
   const mancanti = P.posti.filter((x) => !x.scelta);
   const daFare = mancanti.length + succ.length;
   const daCambiare = P.posti.filter((x) => x.scelta && (!x.chiuso || t.master));
+  // A.229, A.230: le Specializzazioni tolte dal manuale, ancora da decidere dal Direttore
+  const daDecidere = P.posti.filter(daDecidereDalDirettore);
   // giocatore, tutto scelto e chiuso dal Direttore: niente riquadro
   if (!daFare && !daCambiare.length && !t.master) return null;
+  // lotto 221: tutto scelto, niente da decidere e nessuno l'ha aperto: niente riquadro (139 px in ogni tab per dire «non c'è niente da fare»).
+  // Il modo di cambiare un Talento resta: «Cambia un Talento» nel menu Azioni (menuAzioni in tab.js) lo apre. Un Talento da scegliere, o un
+  // posto da decidere dal Direttore, lo mostrano sempre.
+  if (!daFare && !daDecidere.length && !t.master && !ui.aperto) return null;
   const testa = daFare
     ? [h('p', {}, h('strong', {}, `Da scegliere: ${testoDaScegliere(P.categorie, succ)}`)),
       h('p', { class: 'nota' }, mancanti.length
@@ -89,8 +95,6 @@ export function riquadroTalenti(t) {
     t.master ? (P.posti.some((x) => x.chiuso)
       ? h('button', { type: 'button', class: 'btn', title: 'Il giocatore potrà di nuovo cambiare le scelte', onclick: t.azioni.riapri }, 'Riapri le scelte')
       : h('button', { type: 'button', class: 'btn', title: 'Da qui in poi le scelte fatte le cambia solo il Direttore', onclick: t.azioni.chiudi }, 'Chiudi le scelte')) : null);
-  // A.229, A.230: le Specializzazioni tolte dal manuale, ancora da decidere dal Direttore
-  const daDecidere = P.posti.filter(daDecidereDalDirettore);
   const regole = [...new Set(daDecidere.map((x) => x.problemi.find((e) => e.tipo === 'tolta').regola))].sort().join(', ');
   return h('section', { class: `riquadro ${daFare || daDecidere.length ? 'attenzione' : 'ok'} riquadro-talenti`, 'aria-label': 'Talenti da scegliere' },
     ...testa,
