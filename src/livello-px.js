@@ -87,3 +87,14 @@ export function scelteDelLivello(voce) {
   return Object.entries(voce ?? {}).filter(([k]) => k !== 'livello' && k !== 'puntiDirettore')
     .map(([k, v]) => [ETICHETTE_VOCE[k] ?? k, testoValore(v)]).filter(([, t]) => t).map(([e, t]) => `${e}: ${t}`);
 }
+
+/**
+ * A.286 (Davide, E&L 18/11/2026): «l'app deve proporre una concessione precompilata per ciascuno dei sette PG, indicando il
+ * nome del personaggio, il passaggio dal 7° all'8° livello e il motivo. Il Direttore conferma ogni concessione singolarmente».
+ * Il testo del motivo che la finestrella propone: il Direttore lo legge, lo può cambiare e lo conferma; i PX non cambiano
+ * (la concessione autorizza il passaggio ma non fa salire il PG: sale il giocatore, dal proprio tablet).
+ */
+export function propostaConcessione({ nome, da, a }) {
+  const chi = String(nome ?? '').trim() || 'il personaggio';
+  return `Concessione individuale del Direttore (Direttore §9.8.3, A.286): ${chi} passa dal ${da}° all'${a}° livello senza i PX richiesti; i PX non cambiano.`;
+}

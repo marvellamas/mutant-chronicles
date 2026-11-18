@@ -71,6 +71,9 @@ const prima = (await caricaDati(daGit)).dati;
 for (const c of CORREZIONI) prima.equipaggiamento.file[c.file].oggetti.find((x) => x.id === c.id)[c.campo] = c.a;
 
 /** I valori che contano al tavolo, senza i contatori dell'energia. */
+/** Lotto 223 (A.284): le quattro voci della dotazione ASA hanno cambiato **solo il nome**; i due lati si confrontano con i nomi riportati allo stesso segno, e un valore diverso fallisce comunque. */
+const nomiASA223 = (s) => s.replace(/Divisa d’ordinanza ASA|Divisa di servizio ASA/g, 'DIV-SERV').replace(/Divisa [Oo]perativa ASA/g, 'DIV-OP').replace(/Soprabito ASA(?! riservato)|Soprabito di ordinanza ASA/g, 'SOPR-ORD').replace(/Elmetto ASA Recon|Elmetto Recon ASA/g, 'ELM-RECON');
+
 function valori(o, d) {
   const p = { creazione: o.scelte, livelli: o.livelli, sessione: o.sessione };
   const s = calcolaSchedaPersonaggio(p, d);
@@ -80,7 +83,7 @@ function valori(o, d) {
   // lotto 171: le riserve passate alle Cariche Mistiche cambiano unità apposta (tests/cariche-mistiche.test.js le prova)
   const inCm = new Set(contenitori(o.scelte.equipaggiamento, dati).filter((c) => c.unita === 'CM').map((c) => c.uid));
   sessioneSenzaNec.chroma = Object.fromEntries(Object.entries(sessioneSenzaNec.chroma ?? {}).filter(([k]) => !inCm.has(k)));
-  return JSON.stringify({
+  return nomiASA223(JSON.stringify({
     pv: s.pv, pm: s.pm, iniziativa: s.iniziativa, movimento: s.movimento, salvezze: s.salvezze,
     abilita: s.abilita?.map((a) => [a.nome, a.totale, a.effettivo, a.vaEquip]),
     ar: s.equipaggiamento?.arEffettiva ?? s.equipaggiamento?.ar, carico: s.carico && { peso: s.carico.peso, livello: s.carico.livello?.id ?? s.carico.livello },
@@ -91,7 +94,7 @@ function valori(o, d) {
     // Matrice da 10 PM di Dimitri passa da 3.000 a 13.500 cr senza che il suo file cambi di un carattere).
     costi: (o.scelte.equipaggiamento ?? []).map((v) => catalogo(dati).perRif.get(v.rif)?.costo ?? null),
     sessione: sessioneSenzaNec,
-  });
+  }));
 }
 
 test('i sette PG: PV, PM, VA, Salvezze, AR, carico, armi, costi e sessione identici prima e dopo (contatori dell’energia a parte)', () => {

@@ -15,7 +15,7 @@ const sessione = (extra = {}) => ({ ...inizializzaSessione({ pv: 10, pm: 5, punt
 const scheda = (equipaggiamento, s = sessione()) => calcolaScheda({ creazione: { ...MISHIMA_AGENTE, equipaggiamento }, livelli: [], sessione: s }, dati);
 const furt = (s) => s.abilita.find((a) => a.nome === 'Furtività');
 
-test('Divisa operativa ASA: Imbottita 1 generale (Contromisura) e Mimetismo 1 situazionale (interruttore al tavolo)', () => {
+test('Divisa Operativa ASA: Imbottita 1 generale (Contromisura) e Mimetismo 1 situazionale (interruttore al tavolo)', () => {
   const ASA = voce('a', 'armature_corporative:divisa-operativa-asa', 'indossata');
   const spenta = scheda([ASA]);
   const eff = spenta.equipaggiamento.effettiOggetti.filter((e) => e.uid === 'a' && e.proprieta); // senza il −1 al lancio della categoria
@@ -23,7 +23,7 @@ test('Divisa operativa ASA: Imbottita 1 generale (Contromisura) e Mimetismo 1 si
   const imb = eff.find((e) => e.tipo === 'contromisura');
   assert.deepEqual([imb.effetto, imb.valore], ['Concussivo', 1]);
   // Mimetismo: spento resta «disponibile», acceso entra nel VA effettivo di Furtività
-  assert.ok(furt(spenta).disponibili.some((e) => e.oggetto === 'Divisa operativa ASA'));
+  assert.ok(furt(spenta).disponibili.some((e) => e.oggetto === 'Divisa Operativa ASA'));
   const accesa = scheda([ASA], sessione({ condizioniOggetti: ['a'] }));
   assert.equal(furt(accesa).effettivo, furt(spenta).effettivo + 1);
   // nella scheda delle protezioni: effetti tradotti, nessun promemoria

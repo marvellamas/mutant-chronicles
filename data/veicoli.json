@@ -1241,7 +1241,7 @@
           "prezzo_cr": 19000,
           "operatore": "artigliere, uno degli occupanti",
           "postazione": "Postazione manuale ravvicinata alla botola",
-          "arco_di_tiro": "Settore di rotazione orizzontale di 120° (l’intera struttura: arma e schermo), limitato dagli ostacoli reali",
+          "arco_di_tiro": "Semicerchio frontale di 180° (90° a sinistra e 90° a destra rispetto al muso del veicolo; l’intera struttura: arma e schermo), limitato dagli ostacoli reali",
           "abilita": "Armi pesanti",
           "danno": "1d8+3",
           "ac": 1,
@@ -1266,10 +1266,14 @@
           "ps_integrita_arma": 10,
           "imbracciata_dal_supporto": true,
           "arco": {
-            "gradi": 120,
-            "orientamento": null,
-            "da_definire": "A.280",
-            "fonte": "Veicoli 0.19 §10 e tavola del FIAT LUX; E&L 11/11/2026 (raccordo Armamenti e Veicoli)"
+            "gradi": 180,
+            "orientamento": "frontale",
+            "fonte": "E&L 18/11/2026, A.280 (vale solo per il FIAT LUX dei PG): semicerchio frontale, 90° a sinistra e 90° a destra del muso",
+            "precedente": {
+              "gradi": 120,
+              "orientamento": null,
+              "fonte": "Veicoli 0.19 §10 e tavola del FIAT LUX; E&L 11/11/2026 (raccordo Armamenti e Veicoli): il manuale dice ancora 120°, e la risposta del 18/11 lo sostituisce"
+            }
           },
           "smontabile": true,
           "schermo": {

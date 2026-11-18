@@ -1030,11 +1030,13 @@
     },
     {
       "id": "divisa-d-ordinanza-asa",
-      "nome": "Divisa d’ordinanza ASA",
+      "nome": "Divisa di servizio ASA",
       "tipo": "armatura",
       "catalogo": "Alleanza",
       "famiglia": "Armature",
-      "nomi_alternativi": [],
+      "nomi_alternativi": [
+        "Divisa d’ordinanza ASA"
+      ],
       "note_manuale": "Proprietà: Discreta e Imbottita 1. Protezione da indagine e servizio, categoria Leggera. Può aggiungere il Soprabito ASA come unico Rinforzo Leggero.",
       "paragrafo": "§7.11.7",
       "versione_manuale": "Armamenti 0.50",
@@ -1084,11 +1086,13 @@
     },
     {
       "id": "divisa-operativa-asa",
-      "nome": "Divisa operativa ASA",
+      "nome": "Divisa Operativa ASA",
       "tipo": "armatura",
       "catalogo": "Alleanza",
       "famiglia": "Armature",
-      "nomi_alternativi": [],
+      "nomi_alternativi": [
+        "Divisa operativa ASA"
+      ],
       "note_manuale": "Proprietà: Mimetismo 1 e Imbottita 1. AR 3 è nativa: la divisa conserva categoria Leggera, FOR 4 e penalità di lancio −1. Può aggiungere il Soprabito ASA come unico Rinforzo Leggero.",
       "paragrafo": "§7.11.7",
       "versione_manuale": "Armamenti 0.50",

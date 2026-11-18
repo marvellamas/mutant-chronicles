@@ -6,6 +6,7 @@ import { h, segno } from './dom.js';
 import { apri } from './finestrella.js';
 
 import { applicaCorrezioni, correzioniDi } from '../correzioni-master.js';
+import { propostaConcessione } from '../livello-px.js';
 
 /** Fascia ben visibile in alto: «Modalità master — ogni modifica viene registrata» e «Esci». */
 export function fasciaMaster(ctx) {
@@ -173,10 +174,10 @@ export async function conMotivoMaster(ctx, { titolo, testo, conferma = 'Conferma
 }
 
 /** Il motivo, obbligatorio: la finestrella non conferma a campo vuoto. @returns Promise<string | null> */
-function chiediMotivoObbligatorio({ titolo, testo, conferma }) {
+function chiediMotivoObbligatorio({ titolo, testo, conferma, proposta = '' }) {
   return apri('finestrella-master', titolo, (fine) => {
-    const campo = h('input', { type: 'text', maxlength: 200, placeholder: 'es. recupero di una partita, deciso al tavolo…', 'aria-label': 'Motivo' });
-    const vai = h('button', { type: 'button', class: 'btn primario', disabled: true, onclick: () => fine(campo.value.trim()) }, conferma);
+    const campo = h('input', { type: 'text', maxlength: 200, placeholder: 'es. recupero di una partita, deciso al tavolo…', 'aria-label': 'Motivo', value: proposta });
+    const vai = h('button', { type: 'button', class: 'btn primario', disabled: !proposta.trim(), onclick: () => fine(campo.value.trim()) }, conferma);
     campo.addEventListener('input', () => { vai.disabled = !campo.value.trim(); });
     return [
       h('p', {}, testo),
@@ -219,7 +220,7 @@ export function bloccoLivelloMaster(ctx, livello) {
       const nome = String(ctx.scelte?.nome ?? '').trim() || 'questo personaggio';
       const dopoDestinazione = permesso.prossimo > 8;
       const testo = `${nome} è al livello ${livello}: stai concedendo il passaggio al livello ${permesso.prossimo} senza i PX richiesti.${dopoDestinazione ? ` Attenzione: se ${nome} è già salito all'8° per il §9.8.3, questo è un secondo passaggio, non quello autorizzato.` : ''} I PX non cambiano; il motivo va nel registro e il giocatore non lo vede.`;
-      const motivo = await chiediMotivoObbligatorio({ titolo: `Concedi a ${nome}: livello ${livello} → ${permesso.prossimo}`, testo, conferma: `Concedi il livello ${permesso.prossimo} a ${nome}` });
+      const motivo = await chiediMotivoObbligatorio({ titolo: `Concedi a ${nome}: livello ${livello} → ${permesso.prossimo}`, testo, conferma: `Concedi il livello ${permesso.prossimo} a ${nome}`, proposta: propostaConcessione({ nome, da: livello, a: permesso.prossimo }) });
       if (motivo) ctx.master.concediLivello({ livello: permesso.prossimo, motivo });
     } }, `Concedi il passaggio al livello ${permesso.prossimo}`));
   }

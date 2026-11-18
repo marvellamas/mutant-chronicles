@@ -20,20 +20,21 @@ const norm = (t) => t.replace(/\\/g, '').replace(/\*\*/g, '');
 const VEICOLI = norm(testoEdizione('veicoli', '0.19'));
 const NEVERLOST = norm(testoManuale('neverlost'));
 
-test('la M606 dello Scout ha un settore di rotazione di 120°, come dicono Veicoli 0.19 e l’E&L (e non più 360°)', () => {
+test('la M606 dello Scout: il manuale dice ancora 120°, ma vale la A.280 del 18/11 (semicerchio frontale di 180°, FIAT LUX dei PG) e non più 360°', () => {
   assert.match(VEICOLI, /l’intera struttura ha un settore di rotazione orizzontale di 120°/);
   assert.match(VEICOLI, /Arma e protezione bassa sono smontabili per l’allestimento civile/);
   assert.match(VEICOLI, /non aumenta l’AR del veicolo o dell’occupante/);
   const m606 = dati.veicoli.profili.find((p) => p.id === 'asa-scout-mk4').armi.find((a) => /M606/.test(a.nome));
-  assert.equal(m606.arco.gradi, 120);
-  assert.equal(m606.arco.orientamento, null, 'il centro non è nel manuale: non si inventa');
-  assert.equal(m606.arco.da_definire, 'A.280');
-  assert.match(m606.arco_di_tiro, /120°/);
+  assert.equal(m606.arco.gradi, 180, 'A.280, 18/11/2026: vale la risposta, non la frase del manuale');
+  assert.equal(m606.arco.orientamento, 'frontale', 'A.280: 90° a sinistra e 90° a destra del muso');
+  assert.equal(m606.arco.da_definire, undefined, 'la A.280 è risolta');
+  assert.equal(m606.arco.precedente.gradi, 120, 'il 120° di prima resta scritto come storia');
+  assert.match(m606.arco_di_tiro, /180°/);
   assert.doesNotMatch(m606.arco_di_tiro, /^360°/);
   assert.equal(m606.smontabile, true);
   assert.equal(m606.schermo.aggiunge_ar, false);
   assert.match(m606.schermo.testo, /Copertura soltanto nelle direzioni in cui scherma/);
-  assert.match(testoArco(m606), /120°.*centro non indicato dal manuale.*A\.280/, 'la tabella dice che il centro non c’è');
+  assert.equal(testoArco(m606), 'arco frontale 180°');
   // la 360° vecchia resta scritta come storia, con la sua fonte superata
   assert.match(m606.arco_di_tiro_precedente.testo, /360°/);
 });
@@ -65,6 +66,7 @@ test('ogni arma di bordo del catalogo con un arco di tiro lo ha strutturato (nes
 test('il validatore rifiuta un settore sotto i 360° senza centro e senza la domanda che lo definisce', () => {
   const copia = JSON.parse(JSON.stringify(dati));
   const m606 = copia.veicoli.profili.find((p) => p.id === 'asa-scout-mk4').armi[0];
+  m606.arco.gradi = 120; m606.arco.orientamento = null; // un settore sotto i 360° senza centro (com'era prima della A.280)
   delete m606.arco.da_definire;
   const errori = validaDati(copia).map((e) => JSON.stringify(e)).join('\n');
   assert.match(errori, /arco\.da_definire/, 'un settore senza centro deve dire quale domanda lo definisce');

@@ -1,9 +1,10 @@
 import '../tools/guardia-subito.mjs'; // la guardia sulle cartelle vere, comunque si lanci il test
 // Lotto 221, parte 1 — «Lancia!» sintetico come «Attacca!» (docs/diff-lotto221-2026-11-18.md). Il pannello era alto 1618 px su una
-// finestra da 1180 (820 × 1180, un tablet): «Lancia (−3 PM)» stava sotto il bordo e per lanciare si scorreva. Adesso l'essenziale è a
-// vista e il resto sta dietro «Altro ▾». Il DOM finto non ha un motore di impaginazione: il metro del test è il NUMERO DI RIGHE DI TESTO
+// finestra da 1180 (820 × 1180, un tablet): «Lancia (−3 PM)» stava a 1025 px, cioè VISIBILE (correzione del lotto 222: non era sotto il
+// bordo); il difetto erano le 97 righe da attraversare per decidere. Adesso l'essenziale è a vista e il resto sta dietro «Altro ▾». Il DOM finto non ha un motore di impaginazione: il metro del test è il NUMERO DI RIGHE DI TESTO
 // che precedono il pulsante, tarato sulla misura nel browser (27 righe totali ↔ 803 px, pulsante a 672 px: circa 30 px per riga). Chi
-// riporta il pulsante sotto il bordo fa salire quel numero oltre il limite e il test cade; la misura vera in px sta nel documento del lotto.
+// riporta il pulsante in fondo a molte righe fa salire quel numero oltre il limite e il test cade; **la soglia in pixel veri** (il pulsante dentro
+// la finestra) la misura `tests/pixel-lancio-223.test.js` in un browser vero: questo resta il proxy per i PC senza browser.
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { contesto, resa, clic, dati, ESEMPI } from './scheda-aiuti.js';
@@ -35,7 +36,7 @@ function righeFinoA(pannello, fino) {
   return n;
 }
 const bottoneLancia = (pannello) => pannello.tutti().find((x) => x.tagName === 'BUTTON' && /^Lancia( comunque)? \(/.test(x.textContent));
-const LIMITE_RIGHE_PRIMA_DEL_PULSANTE = 34; // ≈ 1000 px a ~30 px per riga: il pulsante entra in una finestra da 1180; il pannello di prima ne aveva ~85
+const LIMITE_RIGHE_PRIMA_DEL_PULSANTE = 34; // ≈ 1000 px a ~30 px per riga: il pulsante entra in una finestra da 1180; il pannello di prima ne aveva ~85 (il suo pulsante stava a 1025 px: visibile ma in fondo a una lettura lunga)
 
 test('«Lancia!» è sintetico: A vista il livello e il lancio, «Altro ▾» chiuso', () => {
   const { pannello } = lancio();
@@ -46,13 +47,13 @@ test('«Lancia!» è sintetico: A vista il livello e il lancio, «Altro ▾» ch
   assert.equal(altro.querySelectorAll('.attacco-passo').length, 0, 'chiuso: niente del resto in vista');
 });
 
-test('IL PULSANTE DEL LANCIO NON FINISCE SOTTO IL BORDO a 820 × 1180: poche righe lo precedono (era il difetto che nessun test vedeva)', () => {
+test('IL PULSANTE DEL LANCIO NON STA IN FONDO A TANTE RIGHE (proxy): poche righe lo precedono; i pixel veri li misura pixel-lancio-223', () => {
   for (const nome of ['Colpo Elementale', 'Armatura di Forza', 'Agilità Mutata']) {
     const { pannello } = lancio(nome);
     const b = bottoneLancia(pannello);
     assert.ok(b, `${nome}: «Lancia (−N PM)» c’è`);
     const prima = righeFinoA(pannello, b);
-    assert.ok(prima <= LIMITE_RIGHE_PRIMA_DEL_PULSANTE, `${nome}: ${prima} righe prima del pulsante (limite ${LIMITE_RIGHE_PRIMA_DEL_PULSANTE}): sarebbe sotto il bordo di una finestra da 1180 px`);
+    assert.ok(prima <= LIMITE_RIGHE_PRIMA_DEL_PULSANTE, `${nome}: ${prima} righe prima del pulsante (limite ${LIMITE_RIGHE_PRIMA_DEL_PULSANTE}): sarebbe in fondo a troppe righe da leggere`);
   }
 });
 

@@ -1366,12 +1366,13 @@
     },
     {
       "id": "elmetto-asa-recon",
-      "nome": "Elmetto ASA Recon",
+      "nome": "Elmetto Recon ASA",
       "tipo": "elmetto",
       "catalogo": "Alleanza",
       "famiglia": "Elmetti",
       "nomi_alternativi": [
-        "ASA Recon"
+        "ASA Recon",
+        "Elmetto ASA Recon"
       ],
       "note_manuale": "Elmetto specialistico (§7.21.5): Visione notturna; Sensori 1 a vista e udito; Filtro respiratorio 2; Allerta tattica 1. Non fornisce AR; sostituisce l’elmetto standard e si acquista per intero. Può ricevere modifiche aggiuntive compatibili. L’ASA Recon non richiede più ore di batteria da annotare per le sue funzioni elettroniche ordinarie; il Filtro respiratorio resta passivo.",
       "paragrafo": "§7.21.5",

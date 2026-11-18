@@ -58,6 +58,7 @@ import { gradiTaumaturgici } from '../incantesimi.js';
 import {
   statoRicarica, disponibili, carichiniDi, celleTolte, riempiCaricatori, caricatoriDiScorta,
   costoOperazione, eProntoColpi, minutiRiempimento, testoMinuti, celleDettaglio, piMassimiCella, motivoRiempimento,
+  riservaNonScalata, notaCaricatoriInMano,
 } from '../ricarica.js';
 import { leggiImpostazioni, salvaImpostazioni } from './storage.js';
 import { pannelloAttacco, presetInAttesa } from './attacco.js';
@@ -2004,7 +2005,7 @@ function tabCombattimento(ctx, d) {
           h('div', { class: `riquadri-mani${mani.slot.due ? ' una' : ''}` }, mani.riquadri),
           senzArmiDisponibile(ctx.tab.scheda, ctx.dati) ? h('div', { class: 'armi-tab' }, schedaSenzArmi(ctx)) : null,
           schedaOnda(ctx),
-          h('p', { class: 'nota' }, 'Caricatori di riserva e condizione delle armi qui si vedono soltanto: si cambiano nella tab Inventario. «Ricarica» consuma dalle riserve.')),
+          h('p', { class: 'nota' }, notaCaricatoriInMano([mani.slot.due, mani.slot.destra, mani.slot.sinistra, ...(mani.oltre ?? [])].filter(Boolean).map((o) => o.arma).filter(Boolean), ctx.massimi.ricarica))),
 
         // §7.10: sintonizzazione e riserve stanno nella tab Artefatti (docs/layout-sd.md, pezzo 4)
         ctx.tab.scheda.equipaggiamento?.sintonizzazione ? h('p', { class: 'nota' }, 'Artefatti: sintonizzazione, attivazioni e riserve di Chroma nella tab Artefatti; qui le armi e le protezioni Artefatto mostrano già i loro effetti nei valori.') : null,
@@ -2832,7 +2833,7 @@ function pannelloMunizioni(ctx, a, { riserveModificabili = true } = {}) {
       a.munizioni?.riferimento ? `Munizione di riferimento: ${a.munizioni.riferimento}.` : null,
       a.munizioni?.unita === 'PM' ? 'Le riserve si contano a mano.'
         : SANITARI.includes(a.munizioni?.unita) ? 'Si consuma all’inizio di ogni tentativo, anche se fallisce. Le ricariche di scorta si contano a mano.'
-          : info?.modo ? null : 'Compatibilità delle munizioni non nei dati: «Ricarica» non scala le riserve (caricatori o celle di scorta), che si contano a mano.',
+          : !riservaNonScalata(a, info) ? null : 'Compatibilità delle munizioni non nei dati: «Ricarica» non scala le riserve (caricatori o celle di scorta), che si contano a mano.',
     ].filter(Boolean).join(' ')));
 }
 

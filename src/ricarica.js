@@ -689,3 +689,30 @@ export function riempiCarichino(info, carichini = {}, consumi = {}, uid = null) 
   }
   return null;
 }
+
+// ---------------------------------------------------------------------------------------------------------------------
+// Lotto 223 (parte C): una sola nota sulla ricarica, quella del caso in corso.
+//
+// Sotto la stessa arma la scheda poteva dire «Ricarica non scala le riserve» (munizioni senza compatibilità nei dati) e,
+// una riga dopo, «Ricarica consuma dalle riserve» (la frase fissa in fondo ai riquadri delle mani): due note vere per due
+// casi diversi, che sulla stessa arma si leggevano insieme e si contraddicevano (lotto 221, parte 4, lasciata aperta).
+// Il caso lo decide **una funzione sola**: la riga dell'arma e la frase in fondo la chiamano entrambe.
+
+/** Le unità che non sono munizioni di un'arma da ricaricare (PM, applicazioni sanitarie): la loro nota è un'altra. */
+export const UNITA_NON_MUNIZIONI = ['PM', 'applicazioni', 'dosi', 'set'];
+
+/** Vero se «Ricarica» **non** scala le riserve di quest'arma: le sue munizioni non hanno la compatibilità nei dati. */
+export function riservaNonScalata(arma, info) {
+  return !UNITA_NON_MUNIZIONI.includes(arma?.munizioni?.unita) && !info?.modo;
+}
+
+/**
+ * La frase fissa sotto i riquadri delle mani: «Ricarica consuma dalle riserve» solo se è vero per **tutte** le armi in mano
+ * che hanno munizioni; se anche una sola ha la nota «non scala», quella è la nota in corso e la frase fissa non la contraddice.
+ */
+export function notaCaricatoriInMano(armi, ricarica) {
+  const base = 'Caricatori di riserva e condizione delle armi qui si vedono soltanto: si cambiano nella tab Inventario.';
+  const conMunizioni = (armi ?? []).filter((a) => a?.munizioni);
+  const nonScala = conMunizioni.some((a) => riservaNonScalata(a, ricarica?.[a.uid]));
+  return nonScala ? base : `${base} «Ricarica» consuma dalle riserve.`;
+}

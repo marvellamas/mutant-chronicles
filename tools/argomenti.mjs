@@ -99,6 +99,7 @@ export const ARGOMENTI = {
   'importa-incantesimi.mjs': ['file', 'testo'],
   'lotto_209_veicoli_civili.mjs': ['scrivi'],
   'correggi-cyberarma-dimitri.mjs': ['cartella', 'nome', 'scrivi'],
+  'dotazione-asa.mjs': ['cartella', 'scrivi'],
   'importa-armi.mjs': ['modello', 'specializzazioni'],
   'armi-prima-dopo.mjs': ['da', 'cartella'],
 };

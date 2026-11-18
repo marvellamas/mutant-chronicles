@@ -26,7 +26,8 @@ const FONTE_SCOUT = 'Veicoli 0.19 §10 e tavola del FIAT LUX; E&L 11/11/2026 (ra
 
 /** L'arco strutturato di ogni testo oggi nei dati, letto dal testo (stessa fonte, una volta sola). */
 export function arcoDaTesto(testo, { scout = false } = {}) {
-  if (scout) return { gradi: 120, orientamento: null, da_definire: 'A.280', fonte: FONTE_SCOUT };
+  // lotto 223: la A.280 (E&L 18/11/2026) ha risposto: semicerchio frontale di 180° per il FIAT LUX dei PG (prima 120° con il centro da definire)
+  if (scout) return { gradi: 180, orientamento: 'frontale', fonte: 'E&L 18/11/2026, A.280 (vale solo per il FIAT LUX dei PG): semicerchio frontale, 90° a sinistra e 90° a destra del muso', precedente: { gradi: 120, orientamento: null, fonte: FONTE_SCOUT } };
   const t = String(testo ?? '');
   if (/^360°/.test(t)) return { gradi: 360, orientamento: 'libero', fonte: 'Neverlost 1.6, Settori' };
   const m = t.match(/arco frontale (\d+)°/);

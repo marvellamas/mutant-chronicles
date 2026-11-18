@@ -201,11 +201,13 @@
     },
     {
       "id": "soprabito-asa",
-      "nome": "Soprabito ASA",
+      "nome": "Soprabito di ordinanza ASA",
       "tipo": "rinforzo",
       "catalogo": "Alleanza",
       "famiglia": "Rinforzi",
-      "nomi_alternativi": [],
+      "nomi_alternativi": [
+        "Soprabito ASA"
+      ],
       "note_manuale": "Entrambi concedono AR +1 e aumentano di 1 la FOR richiesta; hanno PI 6, Qualità Comune, PS Integrità 10 e Reperibilità Non comune. La forma di soprabito non aggiunge automaticamente Discreta, Mimetismo o altri vantaggi.",
       "paragrafo": "§7.23.3",
       "versione_manuale": "Armamenti 0.53",

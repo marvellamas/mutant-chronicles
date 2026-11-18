@@ -745,7 +745,7 @@ test('lotto 9: rinforzi commerciali e soprabiti; la tabella del §7.11.2 è il t
   const tutti = catalogo(dati).oggetti.filter((o) => o.file === 'rinforzi');
   // Armamenti 0.53: il catalogo completo del §7.23 è in tests/rinforzi.test.js; qui i profili e i soprabiti del lotto 9
   assert.deepEqual(tutti.filter((o) => ['rinforzo-leggero', 'rinforzo-pesante', 'soprabito-blu-di-ordinanza', 'soprabito-asa'].includes(o.id)).map((o) => o.nome),
-    ['Rinforzo Leggero', 'Rinforzo Pesante', 'Soprabito blu d’ordinanza BLEU', 'Soprabito ASA']);
+    ['Rinforzo Leggero', 'Rinforzo Pesante', 'Soprabito blu d’ordinanza BLEU', 'Soprabito di ordinanza ASA']);
   // «Configurazione commerciale | AR finale | FOR finale | Penalità» (p. 62)
   for (const [armatura, kit, ar, forR, cat] of [
     ['armature:armatura-civile-leggera', 'rinforzo-leggero', 2, 4, 'Leggera'],
@@ -770,7 +770,7 @@ test('rinforzi sulle armature corporative: proprietà native con le penalità de
   assert.deepEqual(p.penalita, { attacchi_distanza: -1, attacchi_ravvicinati: -1, agilita: -1, movimento_q: -1, lancio_potere: -2 });
   // Armamenti 0.55, §7.11.7 e §7.23.10: «Con la Divisa operativa: AR 4, FOR 5, penalità Leggera» (Abbinamento ottimizzato)
   ({ p } = rinforzata('armature_corporative:divisa-operativa-asa', 'soprabito-asa'));
-  assert.deepEqual([p.ar.totale, p.forRichiesta, p.categoria, p.rinforzo.nome], [4, 5, 'Leggera', 'Soprabito ASA']);
+  assert.deepEqual([p.ar.totale, p.forRichiesta, p.categoria, p.rinforzo.nome], [4, 5, 'Leggera', 'Soprabito di ordinanza ASA']);
   // §7.23.10: Rinforzo flessibile Mortificator, la combinazione resta Leggera, penalità 0 anche al lancio
   ({ p } = rinforzata('armature_corporative:tuta-del-mortificator', 'rinforzo-flessibile-mortificator'));
   assert.deepEqual([p.ar, p.forRichiesta, p.categoria, p.penalita.lancio_potere ?? 0, p.penalita.agilita ?? 0], [{ totale: 4, magica: 1 }, 5, 'Leggera', 0, 0]);
@@ -783,7 +783,7 @@ test('rinforzi sulle armature corporative: proprietà native con le penalità de
   // kit non ammessi: nessun effetto e un avviso
   let r = rinforzata('armature_corporative:armatura-d-ordinanza-bleu', 'soprabito-asa');
   assert.equal(r.p.ar.totale, 2);
-  assert.ok(r.eq.avvisi.some((a) => /Soprabito ASA non è ammesso su Armatura d’ordinanza BLEU/.test(a)));
+  assert.ok(r.eq.avvisi.some((a) => /Soprabito di ordinanza ASA non è ammesso su Armatura d’ordinanza BLEU/.test(a)));
   r = rinforzata('armature:armatura-civile-media', 'rinforzo-pesante');
   assert.equal(r.p.ar.totale, 3);
   assert.ok(r.eq.avvisi.some((a) => /Rinforzo Pesante non è ammesso/.test(a)));
