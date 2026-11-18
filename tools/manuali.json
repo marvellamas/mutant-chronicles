@@ -38,10 +38,16 @@
    "nome": "Manuale degli Armamenti",
    "drive": "1eDZJHfgBIYPvzKg78tEGwiLtrI_6gzpQOIfJA9aYiYg",
    "formato": "doc",
-   "versione": "0.86",
-   "testo": "armamenti-0.86.md",
-   "modificato": "2026-11-15T17:37:58Z",
-   "confronto": "alla cieca"
+   "versione": "0.87",
+   "testo": "armamenti-0.87.md",
+   "modificato": "2026-11-18T12:48:14Z",
+   "recepita": {
+    "versione": "0.87",
+    "quando": "2026-11-18",
+    "lotto": 223,
+    "cosa": "Confronto NON alla cieca: in sezione 7 del Doc c’è la riga di registro della 0.87 (18/11). 0.86 → 0.87: cinque punti, tutti sulla dotazione storica ASA dei PG (§7.26) e due richiami (§7.11.7, §7.21.5), esattamente quelli dichiarati da Davide nella riga di registro; nessuna tabella di armi, nessun numero di combattimento. Le armi del catalogo sono rilette sulla 0.87: 0 differenze, quindi solo l’etichetta.",
+    "documento": "docs/diff-lotto223-2026-11-18.md"
+   }
   },
   {
    "id": "equipaggiamento",
@@ -324,49 +330,49 @@
   },
   "data/equipaggiamento/accessori_armi.json": {
    "armamenti": {
-    "motivo": "Armamenti 0.86: il lotto 206 ha portato all’edizione corrente le 218 voci d’arma (`armi.json`, `armi_corporative.json`, `armi_distanza.json`, `armi_distanza_corporative.json`), con la provenienza per campo. Questo file contiene protezioni, munizioni, accessori o dispositivi, che il lotto 206 non ha toccato: resta all’edizione da cui i suoi dati vengono davvero, e la distanza si dichiara qui. Da fare in un lotto a sé, insieme ai prezzi della A.261 e al gradino di Reperibilità «Epica 4» che `regole.json` non ha.",
+    "motivo": "Armamenti 0.87: il lotto 206 (0.86) e il lotto 223 (0.87, solo l’etichetta: l’importatore rilegge le armi sulla 0.87 e trova 0 differenze) hanno portato all’edizione corrente le 218 voci d’arma (`armi.json`, `armi_corporative.json`, `armi_distanza.json`, `armi_distanza_corporative.json`), con la provenienza per campo. Questo file contiene protezioni, munizioni, accessori o dispositivi, che il lotto 206 non ha toccato: resta all’edizione da cui i suoi dati vengono davvero, e la distanza si dichiara qui. Da fare in un lotto a sé, insieme ai prezzi della A.261 e al gradino di Reperibilità «Epica 4» che `regole.json` non ha.",
     "lotto": "dopo il 206",
     "documento": "docs/diff-lotto206-2026-11-16.md"
    }
   },
   "data/equipaggiamento/armature.json": {
    "armamenti": {
-    "motivo": "Armamenti 0.86: il lotto 206 ha portato all’edizione corrente le 218 voci d’arma (`armi.json`, `armi_corporative.json`, `armi_distanza.json`, `armi_distanza_corporative.json`), con la provenienza per campo. Questo file contiene protezioni, munizioni, accessori o dispositivi, che il lotto 206 non ha toccato: resta all’edizione da cui i suoi dati vengono davvero, e la distanza si dichiara qui. Da fare in un lotto a sé, insieme ai prezzi della A.261 e al gradino di Reperibilità «Epica 4» che `regole.json` non ha.",
+    "motivo": "Armamenti 0.87: il lotto 206 (0.86) e il lotto 223 (0.87, solo l’etichetta: l’importatore rilegge le armi sulla 0.87 e trova 0 differenze) hanno portato all’edizione corrente le 218 voci d’arma (`armi.json`, `armi_corporative.json`, `armi_distanza.json`, `armi_distanza_corporative.json`), con la provenienza per campo. Questo file contiene protezioni, munizioni, accessori o dispositivi, che il lotto 206 non ha toccato: resta all’edizione da cui i suoi dati vengono davvero, e la distanza si dichiara qui. Da fare in un lotto a sé, insieme ai prezzi della A.261 e al gradino di Reperibilità «Epica 4» che `regole.json` non ha.",
     "lotto": "dopo il 206",
     "documento": "docs/diff-lotto206-2026-11-16.md"
    }
   },
   "data/equipaggiamento/armature_corporative.json": {
    "armamenti": {
-    "motivo": "Armamenti 0.86: il lotto 206 ha portato all’edizione corrente le 218 voci d’arma (`armi.json`, `armi_corporative.json`, `armi_distanza.json`, `armi_distanza_corporative.json`), con la provenienza per campo. Questo file contiene protezioni, munizioni, accessori o dispositivi, che il lotto 206 non ha toccato: resta all’edizione da cui i suoi dati vengono davvero, e la distanza si dichiara qui. Da fare in un lotto a sé, insieme ai prezzi della A.261 e al gradino di Reperibilità «Epica 4» che `regole.json` non ha.",
+    "motivo": "Armamenti 0.87: il lotto 206 (0.86) e il lotto 223 (0.87, solo l’etichetta: l’importatore rilegge le armi sulla 0.87 e trova 0 differenze) hanno portato all’edizione corrente le 218 voci d’arma (`armi.json`, `armi_corporative.json`, `armi_distanza.json`, `armi_distanza_corporative.json`), con la provenienza per campo. Questo file contiene protezioni, munizioni, accessori o dispositivi, che il lotto 206 non ha toccato: resta all’edizione da cui i suoi dati vengono davvero, e la distanza si dichiara qui. Da fare in un lotto a sé, insieme ai prezzi della A.261 e al gradino di Reperibilità «Epica 4» che `regole.json` non ha.",
     "lotto": "dopo il 206",
     "documento": "docs/diff-lotto206-2026-11-16.md"
    }
   },
   "data/equipaggiamento/corredi_dispositivi.json": {
    "armamenti": {
-    "motivo": "Armamenti 0.86: il lotto 206 ha portato all’edizione corrente le 218 voci d’arma (`armi.json`, `armi_corporative.json`, `armi_distanza.json`, `armi_distanza_corporative.json`), con la provenienza per campo. Questo file contiene protezioni, munizioni, accessori o dispositivi, che il lotto 206 non ha toccato: resta all’edizione da cui i suoi dati vengono davvero, e la distanza si dichiara qui. Da fare in un lotto a sé, insieme ai prezzi della A.261 e al gradino di Reperibilità «Epica 4» che `regole.json` non ha.",
+    "motivo": "Armamenti 0.87: il lotto 206 (0.86) e il lotto 223 (0.87, solo l’etichetta: l’importatore rilegge le armi sulla 0.87 e trova 0 differenze) hanno portato all’edizione corrente le 218 voci d’arma (`armi.json`, `armi_corporative.json`, `armi_distanza.json`, `armi_distanza_corporative.json`), con la provenienza per campo. Questo file contiene protezioni, munizioni, accessori o dispositivi, che il lotto 206 non ha toccato: resta all’edizione da cui i suoi dati vengono davvero, e la distanza si dichiara qui. Da fare in un lotto a sé, insieme ai prezzi della A.261 e al gradino di Reperibilità «Epica 4» che `regole.json` non ha.",
     "lotto": "dopo il 206",
     "documento": "docs/diff-lotto206-2026-11-16.md"
    }
   },
   "data/equipaggiamento/elmetti.json": {
    "armamenti": {
-    "motivo": "Armamenti 0.86: il lotto 206 ha portato all’edizione corrente le 218 voci d’arma (`armi.json`, `armi_corporative.json`, `armi_distanza.json`, `armi_distanza_corporative.json`), con la provenienza per campo. Questo file contiene protezioni, munizioni, accessori o dispositivi, che il lotto 206 non ha toccato: resta all’edizione da cui i suoi dati vengono davvero, e la distanza si dichiara qui. Da fare in un lotto a sé, insieme ai prezzi della A.261 e al gradino di Reperibilità «Epica 4» che `regole.json` non ha.",
+    "motivo": "Armamenti 0.87: il lotto 206 (0.86) e il lotto 223 (0.87, solo l’etichetta: l’importatore rilegge le armi sulla 0.87 e trova 0 differenze) hanno portato all’edizione corrente le 218 voci d’arma (`armi.json`, `armi_corporative.json`, `armi_distanza.json`, `armi_distanza_corporative.json`), con la provenienza per campo. Questo file contiene protezioni, munizioni, accessori o dispositivi, che il lotto 206 non ha toccato: resta all’edizione da cui i suoi dati vengono davvero, e la distanza si dichiara qui. Da fare in un lotto a sé, insieme ai prezzi della A.261 e al gradino di Reperibilità «Epica 4» che `regole.json` non ha.",
     "lotto": "dopo il 206",
     "documento": "docs/diff-lotto206-2026-11-16.md"
    }
   },
   "data/equipaggiamento/index.json": {
    "armamenti": {
-    "motivo": "Armamenti 0.86: il lotto 206 ha portato all’edizione corrente le 218 voci d’arma (`armi.json`, `armi_corporative.json`, `armi_distanza.json`, `armi_distanza_corporative.json`), con la provenienza per campo. Questo file contiene protezioni, munizioni, accessori o dispositivi, che il lotto 206 non ha toccato: resta all’edizione da cui i suoi dati vengono davvero, e la distanza si dichiara qui. Da fare in un lotto a sé, insieme ai prezzi della A.261 e al gradino di Reperibilità «Epica 4» che `regole.json` non ha.",
+    "motivo": "Armamenti 0.87: il lotto 206 (0.86) e il lotto 223 (0.87, solo l’etichetta: l’importatore rilegge le armi sulla 0.87 e trova 0 differenze) hanno portato all’edizione corrente le 218 voci d’arma (`armi.json`, `armi_corporative.json`, `armi_distanza.json`, `armi_distanza_corporative.json`), con la provenienza per campo. Questo file contiene protezioni, munizioni, accessori o dispositivi, che il lotto 206 non ha toccato: resta all’edizione da cui i suoi dati vengono davvero, e la distanza si dichiara qui. Da fare in un lotto a sé, insieme ai prezzi della A.261 e al gradino di Reperibilità «Epica 4» che `regole.json` non ha.",
     "lotto": "dopo il 206",
     "documento": "docs/diff-lotto206-2026-11-16.md"
    }
   },
   "data/equipaggiamento/munizioni.json": {
    "armamenti": {
-    "motivo": "Armamenti 0.86: il lotto 206 ha portato all’edizione corrente le 218 voci d’arma (`armi.json`, `armi_corporative.json`, `armi_distanza.json`, `armi_distanza_corporative.json`), con la provenienza per campo. Questo file contiene protezioni, munizioni, accessori o dispositivi, che il lotto 206 non ha toccato: resta all’edizione da cui i suoi dati vengono davvero, e la distanza si dichiara qui. Da fare in un lotto a sé, insieme ai prezzi della A.261 e al gradino di Reperibilità «Epica 4» che `regole.json` non ha.",
+    "motivo": "Armamenti 0.87: il lotto 206 (0.86) e il lotto 223 (0.87, solo l’etichetta: l’importatore rilegge le armi sulla 0.87 e trova 0 differenze) hanno portato all’edizione corrente le 218 voci d’arma (`armi.json`, `armi_corporative.json`, `armi_distanza.json`, `armi_distanza_corporative.json`), con la provenienza per campo. Questo file contiene protezioni, munizioni, accessori o dispositivi, che il lotto 206 non ha toccato: resta all’edizione da cui i suoi dati vengono davvero, e la distanza si dichiara qui. Da fare in un lotto a sé, insieme ai prezzi della A.261 e al gradino di Reperibilità «Epica 4» che `regole.json` non ha.",
     "lotto": "dopo il 206",
     "documento": "docs/diff-lotto206-2026-11-16.md"
    }
@@ -380,21 +386,21 @@
   },
   "data/equipaggiamento/rinforzi.json": {
    "armamenti": {
-    "motivo": "Armamenti 0.86: il lotto 206 ha portato all’edizione corrente le 218 voci d’arma (`armi.json`, `armi_corporative.json`, `armi_distanza.json`, `armi_distanza_corporative.json`), con la provenienza per campo. Questo file contiene protezioni, munizioni, accessori o dispositivi, che il lotto 206 non ha toccato: resta all’edizione da cui i suoi dati vengono davvero, e la distanza si dichiara qui. Da fare in un lotto a sé, insieme ai prezzi della A.261 e al gradino di Reperibilità «Epica 4» che `regole.json` non ha.",
+    "motivo": "Armamenti 0.87: il lotto 206 (0.86) e il lotto 223 (0.87, solo l’etichetta: l’importatore rilegge le armi sulla 0.87 e trova 0 differenze) hanno portato all’edizione corrente le 218 voci d’arma (`armi.json`, `armi_corporative.json`, `armi_distanza.json`, `armi_distanza_corporative.json`), con la provenienza per campo. Questo file contiene protezioni, munizioni, accessori o dispositivi, che il lotto 206 non ha toccato: resta all’edizione da cui i suoi dati vengono davvero, e la distanza si dichiara qui. Da fare in un lotto a sé, insieme ai prezzi della A.261 e al gradino di Reperibilità «Epica 4» che `regole.json` non ha.",
     "lotto": "dopo il 206",
     "documento": "docs/diff-lotto206-2026-11-16.md"
    }
   },
   "data/equipaggiamento/scudi.json": {
    "armamenti": {
-    "motivo": "Armamenti 0.86: il lotto 206 ha portato all’edizione corrente le 218 voci d’arma (`armi.json`, `armi_corporative.json`, `armi_distanza.json`, `armi_distanza_corporative.json`), con la provenienza per campo. Questo file contiene protezioni, munizioni, accessori o dispositivi, che il lotto 206 non ha toccato: resta all’edizione da cui i suoi dati vengono davvero, e la distanza si dichiara qui. Da fare in un lotto a sé, insieme ai prezzi della A.261 e al gradino di Reperibilità «Epica 4» che `regole.json` non ha.",
+    "motivo": "Armamenti 0.87: il lotto 206 (0.86) e il lotto 223 (0.87, solo l’etichetta: l’importatore rilegge le armi sulla 0.87 e trova 0 differenze) hanno portato all’edizione corrente le 218 voci d’arma (`armi.json`, `armi_corporative.json`, `armi_distanza.json`, `armi_distanza_corporative.json`), con la provenienza per campo. Questo file contiene protezioni, munizioni, accessori o dispositivi, che il lotto 206 non ha toccato: resta all’edizione da cui i suoi dati vengono davvero, e la distanza si dichiara qui. Da fare in un lotto a sé, insieme ai prezzi della A.261 e al gradino di Reperibilità «Epica 4» che `regole.json` non ha.",
     "lotto": "dopo il 206",
     "documento": "docs/diff-lotto206-2026-11-16.md"
    }
   },
   "data/equipaggiamento/unita_robotiche.json": {
    "armamenti": {
-    "motivo": "Armamenti 0.86: il lotto 206 ha portato all’edizione corrente le 218 voci d’arma (`armi.json`, `armi_corporative.json`, `armi_distanza.json`, `armi_distanza_corporative.json`), con la provenienza per campo. Questo file contiene protezioni, munizioni, accessori o dispositivi, che il lotto 206 non ha toccato: resta all’edizione da cui i suoi dati vengono davvero, e la distanza si dichiara qui. Da fare in un lotto a sé, insieme ai prezzi della A.261 e al gradino di Reperibilità «Epica 4» che `regole.json` non ha.",
+    "motivo": "Armamenti 0.87: il lotto 206 (0.86) e il lotto 223 (0.87, solo l’etichetta: l’importatore rilegge le armi sulla 0.87 e trova 0 differenze) hanno portato all’edizione corrente le 218 voci d’arma (`armi.json`, `armi_corporative.json`, `armi_distanza.json`, `armi_distanza_corporative.json`), con la provenienza per campo. Questo file contiene protezioni, munizioni, accessori o dispositivi, che il lotto 206 non ha toccato: resta all’edizione da cui i suoi dati vengono davvero, e la distanza si dichiara qui. Da fare in un lotto a sé, insieme ai prezzi della A.261 e al gradino di Reperibilità «Epica 4» che `regole.json` non ha.",
     "lotto": "dopo il 206",
     "documento": "docs/diff-lotto206-2026-11-16.md"
    }
@@ -423,6 +429,7 @@
  },
  "_testi_archiviati": "Lotto 191: le edizioni superate che nessun dato e nessuno strumento cita più, spostate in `docs/manuali-txt/archivio/` e non cancellate. Un archiviato non è un doppione (regola 5 del protocollo, applicata qui alla cartella del repo come su Drive).",
  "testi_archiviati": [
+  {"testo":"archivio/armamenti-0.86.md","archiviato":"2026-11-18","motivo":"Nessun dato la cita più dal lotto 223: le armi sono passate alla 0.87 (stesse tabelle)."},
   {
    "testo": "archivio/magia-1.7.md",
    "archiviato": "2026-11-12",

@@ -1,5 +1,5 @@
 {
-  "versione_manuale": "Armamenti 0.86 §7.27 / Equipaggiamento 0.42 §10.14 / Magia 1.19 §26.8 e §28.5",
+  "versione_manuale": "Armamenti 0.87 §7.27 / Equipaggiamento 0.42 §10.14 / Magia 1.19 §26.8 e §28.5",
   "fonte": "Lotto 219: manufatti lunari dei Mutanti (Armamenti §7.27, Equipaggiamento §10.14, Magia §26.8 e §28.5; blocco del 13/11/2026 del Doc E&L). Generatore tools/lotti/lotto_219_lunari.mjs.",
   "_nota": "Sei manufatti dei Mutanti del Deserto Cangiante. Prezzo e reperibilità non fissati dal manuale dove `costo` è null e `non_in_vendita` è true: non si convertono in zero. Non incluse (dichiarato): le Pietre di Luna intere (Magia §26.8: colore scelto alla sintonizzazione, perdita del vincolo dopo 7 giorni) e l’Esausto lunare (Equipaggiamento §5.4.12): servono meccaniche che l’app non ha, e nessun personaggio le possiede (domanda A.291).",
   "modalita": {
@@ -21,7 +21,7 @@
       "ps_int": 10,
       "note_manuale": "Pugnale ricavato nell’osso delle grandi creature del deserto; una scheggia trasparente di Pietra di Luna sostituisce il pomello. Arma e Artefatto Mistico passivo, Grado I, Comune. La proprietà passiva concede +1 VA alle Prove per colpire e rende Magico il danno dell’arma, senza aumentarne il valore (il +1 di 1d6+1 è del profilo). Funziona anche senza sintonizzazione e non consuma PM o CM. Prezzo e reperibilità commerciale non fissati: manufatto di campagna, ottenibile attraverso i rapporti con i Mutanti (non convertiti in prezzo zero).",
       "paragrafo": "§7.27.1",
-      "versione_manuale": "Armamenti 0.86",
+      "versione_manuale": "Armamenti 0.87",
       "abilita": "Armi da mischia",
       "specializzazione": "specializzazione-coltelli-e-pugnali",
       "mani": 1,
@@ -64,7 +64,7 @@
       "ps_int": 10,
       "note_manuale": "Spada lunga ricavata nell’osso delle grandi creature del deserto; il pomello è una sola scheggia trasparente di Pietra di Luna. Arma e Artefatto Mistico passivo, Grado I, Comune. +1 VA alle Prove per colpire e danno Magico senza incremento numerico; il +1 di 1d8+1 appartiene al profilo della Spada lunga. SnT 0, nessuna attivazione, nessun consumo di PM o CM. Prezzo e reperibilità commerciale non fissati: manufatto di campagna, ottenibile attraverso i rapporti con i Mutanti (non convertiti in prezzo zero).",
       "paragrafo": "§7.27.4",
-      "versione_manuale": "Armamenti 0.86",
+      "versione_manuale": "Armamenti 0.87",
       "abilita": "Armi da guerra",
       "specializzazione": "specializzazione-spade",
       "mani": 1,
@@ -108,7 +108,7 @@
       "ps_int": 10,
       "note_manuale": "Spada lunga d’osso con tre piccole Pietre di Luna a filo nell’impugnatura (aloni interni rosso, blu e verde) e una quarta scheggia neutra come pomello. Arma e Artefatto Mistico, **Grado V, Epica, SnT 5** per tutti i poteri attivi, un unico vincolo. Profilo passivo 1d8+1 Magico, +1 VA, portata 1 Q, utilizzabile anche senza sintonizzazione e a riserva scarica. Riserva: **una sola, condivisa, di 3 CM Bianche**; le tre pietre colorate selezionano i poteri e non sono tre Batterie autonome. Il possessore sintonizzato che impugna la spada spende 1 AzP e 1 CM per attivare un colore (automatico, senza Prova di Potere, 5 round senza Concentrazione); un solo colore alla volta; cambiare, rinnovare o riattivare costa di nuovo 1 AzP e 1 CM e riparte dalla durata completa; lasciare la spada o spegnere il potere termina l’effetto senza restituire la carica; l’ultima CM consente comunque l’intera durata. Proprietà Esclusive: usano soltanto questa riserva, che non alimenta Incantesimi né PM personali. Ricarica Bianca: 4 PM personali per ogni CM ripristinata, fino a 12 da vuota; il recupero dei PM del possessore non ricarica la spada. La ricetta è specifica dei Mutanti e non trasferisce questi poteri a un’altra scheggia. Prezzo e reperibilità commerciale non fissati: manufatto di campagna, ottenibile attraverso i rapporti con i Mutanti (non convertiti in prezzo zero).",
       "paragrafo": "§§7.27.2–7.27.3",
-      "versione_manuale": "Armamenti 0.86; Magia 1.19 §28.5",
+      "versione_manuale": "Armamenti 0.87; Magia 1.19 §28.5",
       "abilita": "Armi da guerra",
       "specializzazione": "specializzazione-spade",
       "mani": 1,
@@ -150,7 +150,7 @@
         "cm": 1,
         "un_solo_colore": true,
         "richiede": "sintonizzato e arma impugnata",
-        "fonte": "Armamenti 0.86 §7.27.3; Magia 1.19 §28.5; Doc E&L del 13/11/2026 («Istruzioni per l’app»)",
+        "fonte": "Armamenti 0.87 §7.27.3; Magia 1.19 §28.5; Doc E&L del 13/11/2026 («Istruzioni per l’app»)",
         "opzioni": [
           {
             "id": "rosso",
@@ -250,7 +250,7 @@
       "note_manuale": "Balestra da caccia a due mani costruita dai Mutanti con ossa di viverna, tendini e legature naturali; profilo meccanico della Balestra grande. Impiega quadrelli compatibili con la Balestra grande: arma e munizioni sono oggetti distinti. Con quadrelli lunari il colpo infligge 1d6+3 Magico e beneficia di +1 VA; il potere proviene dalla punta infusa del quadrello e il danno incontra normalmente l’AR pertinente. Valore 700 crediti; normalmente tramite baratto con i Mutanti (il manuale non scrive una sigla di Reperibilità).",
       "TODO(Davide)": "A.290: Reperibilità della Balestra d’osso. Il manuale scrive «normalmente tramite baratto con i Mutanti» e non una sigla (CO, NC, RA…); finché non c’è, nessuna sigla inventata.",
       "paragrafo": "§7.27.5",
-      "versione_manuale": "Armamenti 0.86",
+      "versione_manuale": "Armamenti 0.87",
       "abilita": "Armi da lancio",
       "specializzazione": "specializzazione-archi-e-balestre",
       "mani": 2,
@@ -296,7 +296,7 @@
       "nomi_alternativi": [],
       "note_manuale": "Quadrelli con asta d’osso e impennaggio di papiro; ogni punta è una piccola Pietra di Luna infusa. Munizione e Artefatto Mistico passivo, Grado I, Comune; compatibili con la Balestra d’osso e la Balestra grande. +1 VA per colpire e il danno dell’arma diventa Magico, senza incremento numerico (con la Balestra d’osso: 1d6+3 Magico); non attribuiscono Perforante. SnT 0, proprietà sempre attiva, nessun consumo di PM o CM. 40 cm, 80 g ciascuno (dieci pesano 0,8 kg). Valore 50 crediti ciascuno, 500 per dieci; manufatto dei Mutanti, normalmente ottenibile tramite baratto.",
       "paragrafo": "§7.27.6",
-      "versione_manuale": "Armamenti 0.86",
+      "versione_manuale": "Armamenti 0.87",
       "reperibilita": null,
       "TODO(Davide)": "A.290: Reperibilità dei Quadrelli lunari. Il manuale scrive «manufatto dei Mutanti, normalmente ottenibile tramite baratto» e non una sigla; nessuna sigla inventata.",
       "costo": 50,
@@ -325,7 +325,7 @@
           "se": "con i quadrelli lunari",
           "natura_danno": "Magico",
           "condizione": "Con la Balestra d’osso: 1d6+3 Magico e +1 VA per colpire.",
-          "fonte": "Armamenti 0.86 §7.27.6"
+          "fonte": "Armamenti 0.87 §7.27.6"
         }
       ],
       "proprieta": []
