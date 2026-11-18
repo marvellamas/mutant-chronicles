@@ -200,7 +200,7 @@ test('«ATTACCA!»: danno e VA con il colore attivo, in righe distinte (base, pa
   assert.equal(verde.danno.formula, '1d8+1d4+2', 'Armonia: 1d8+2+1d4');
   assert.equal(verde.va_finale, vaBase + 1, 'Armonia: +2 VA complessivi, cioè +1 oltre al passivo');
   assert.ok(verde.provenienza.righe.some((r) => /Potere attivo: Armonia/.test(r.fonte ?? JSON.stringify(r))), 'una riga a sé per il potere attivo');
-  assert.ok(verde.promemoria.some((t) => /Armonia.*Parate/.test(t)), 'il +1 alle Parate è detto, non sommato');
+  assert.ok(verde.promemoria.some((t) => /Armonia.*Parate/.test(t)), 'il testo del potere resta come promemoria; la Parata +1 è sommata (lotto 220, sotto)');
   // Plasma ed Elettricità non aggiungono altri dadi: la formula ha un solo 1d4
   assert.equal((rosso.danno.formula.match(/d4/g) ?? []).length, 1);
   assert.equal(formulaConPotere('1d8+1', '1d4', 1), '1d8+1d4+2');

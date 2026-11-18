@@ -2539,6 +2539,8 @@ function validaEffettiOggetto(effetti, F, K, nomiAbilita, err, ctx = {}) {
     // il danno e l'attacco degli oggetti: generali, o situazionali con la casella in «Attacca!» (Braccio potenziato, §7.5)
     if ((tipo === 'danno' || tipo === 'attacco') && e.incantesimi === undefined && e.ambito === 'uso_specifico') err(F, `${KE}.ambito`, 'danno e attacco: generale o situazionale (casella in «Attacca!»)');
     if (ctx.talento && tipo === 'danno' && e.incantesimi === undefined && e.ambito !== 'generale') err(F, `${KE}.ambito`, 'il danno dei Talenti è generale');
+    // lotto 220: la natura del danno che cambia quando la casella è accesa (Quadrelli lunari: il danno dell'arma diventa Magico)
+    if (e.natura_danno !== undefined && !(tipo === 'attacco' && e.ambito === 'situazionale' && ['Naturale', 'Magico', 'Etereo'].includes(e.natura_danno))) err(F, `${KE}.natura_danno`, 'Naturale, Magico o Etereo, per un attacco situazionale (casella in «Attacca!»)');
     if (e.se !== undefined && !(['situazionale', 'uso_specifico'].includes(e.ambito) && isTesto(e.se) && e.se.length <= 40)) err(F, `${KE}.se`, 'forma breve della condizione (al più 40 caratteri), per gli effetti situazionali o d’uso specifico');
     // effetto legato a una Manovra ravvicinata dell'arma stessa (Martello Spaccateste, «Stordire +1», Armamenti §7.1.9)
     if (e.manovra !== undefined && !(tipo === 'attacco' && e.ambito === 'situazionale' && (ctx.manovre ?? new Set()).has(e.manovra))) err(F, `${KE}.manovra`, 'id di una Manovra di regole.json → attacco_ravvicinato.manovre, per un attacco situazionale');

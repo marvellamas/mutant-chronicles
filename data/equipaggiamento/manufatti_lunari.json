@@ -323,6 +323,7 @@
           "valore": 1,
           "ambito": "situazionale",
           "se": "con i quadrelli lunari",
+          "natura_danno": "Magico",
           "condizione": "Con la Balestra d’osso: 1d6+3 Magico e +1 VA per colpire.",
           "fonte": "Armamenti 0.86 §7.27.6"
         }

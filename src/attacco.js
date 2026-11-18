@@ -174,8 +174,11 @@ export function effettiSituazionaliAttacco(scheda, tipo, { senzArmi = false } = 
   const perUid = new Map();
   for (const e of scheda?.equipaggiamento?.effettiOggetti ?? []) {
     if (e.ambito !== 'situazionale' || !['attacco', 'danno'].includes(e.tipo) || !vale(e.attacchi) || e.manovra) continue;
-    const x = perUid.get(e.uid) ?? perUid.set(e.uid, { uid: e.uid, oggetto: e.oggetto, se: e.se ?? null, condizione: e.condizione ?? null, attacco: 0, danno: 0 }).get(e.uid);
+    const x = perUid.get(e.uid) ?? perUid.set(e.uid, { uid: e.uid, oggetto: e.oggetto, se: e.se ?? null, condizione: e.condizione ?? null, attacco: 0, danno: 0, natura: null }).get(e.uid);
     x[e.tipo] += e.valore;
+    // lotto 220: un effetto può cambiare anche la natura del danno (Quadrelli lunari, Armamenti §7.27.6: «il danno dell'arma
+    // diventa Magico, senza incremento numerico»)
+    if (e.natura_danno) x.natura = e.natura_danno;
   }
   return [...perUid.values()];
 }
@@ -187,7 +190,12 @@ function situazionaliAccesi(personaggio, tipo, d, arma) {
   return {
     voci: accesi.filter((x) => x.attacco).map((x) => voce(etichetta(x), x.attacco, 'oggetto')),
     danno: accesi.reduce((t, x) => t + x.danno, 0),
-    promemoria: accesi.filter((x) => x.danno).map((x) => `${etichetta(x)}: ${numeroTesto(x.danno)} al danno, già nella formula.`),
+    // la natura del danno cambiata da un oggetto acceso (la prima dichiarata): i danni Magici incontrano l'AR pertinente (§5.24)
+    natura: accesi.find((x) => x.natura)?.natura ?? null,
+    promemoria: [
+      ...accesi.filter((x) => x.danno).map((x) => `${etichetta(x)}: ${numeroTesto(x.danno)} al danno, già nella formula.`),
+      ...accesi.filter((x) => x.natura).map((x) => `${etichetta(x)}: il danno dell’arma è ${x.natura} (senza incremento numerico).`),
+    ],
   };
 }
 
@@ -704,6 +712,8 @@ export function calcolaAttaccoDistanza(personaggio, arma, dichiarazione, dati) {
     colpi_a_segno: A.modalita.colpi_a_segno[m] ?? 1,
     tiri: A.modalita.tiri[m] ?? 1,
     danno_per_colpo: testoDanno(formula, moltiplicatore),
+    // lotto 220: la natura del danno se un oggetto acceso la cambia (Quadrelli lunari: Magico); null = quella dell'arma
+    natura_danno: sit.natura ?? null,
     // §5.13: con il Successo Magistrale il moltiplicatore sale (come nel corpo a corpo)
     danno_magistrale: formula ? testoDanno(formula, moltiplicatoreMagistrale(moltiplicatore, dati)) : null,
     dopo_armatura: dopo,
@@ -1319,7 +1329,7 @@ export function calcolaAttaccoRavvicinato(personaggio, armaDiBase, dichiarazione
     const conDopo = (t) => (t && dopoMolt ? `${t} +${dopoMolt}` : t);
     if (rana) promemoria.push(`${rana.nome}: ${rana.e.carica.frase}`);
     // natura del danno: Colpo Interiore lo rende Etereo, Onda Interiore è Magico (§8.9.2, §8.9.4)
-    const natura = tecVale.find((c) => c.e.natura)?.e.natura ?? mezzoDanno.natura ?? null;
+    const natura = tecVale.find((c) => c.e.natura)?.e.natura ?? mezzoDanno.natura ?? sit.natura ?? null;
     danno = {
       base: baseDanno, bonus: dannoBonus, formula, moltiplicatore, moltiplicatore_magistrale: mm,
       testo: formula ? conDopo(testoDanno(formula, moltiplicatore)) : null, testo_magistrale: formula ? conDopo(testoDanno(formula, mm)) : null,

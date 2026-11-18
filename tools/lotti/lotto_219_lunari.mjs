@@ -100,7 +100,7 @@ export const OGGETTI = [
     paragrafo: '§7.27.6', versione_manuale: ED_ARM, reperibilita: null, 'TODO(Davide)': 'A.290: Reperibilità dei Quadrelli lunari. Il manuale scrive «manufatto dei Mutanti, normalmente ottenibile tramite baratto» e non una sigla; nessuna sigla inventata.', costo: 50, peso: 0.08,
     munizione: { famiglia: 'dardi_balestra_grande', confezione: { quantita: 10, costo: 500 } },
     artefatto: { ...SOLO_PASSIVE, tipologia: 'Munizioni' },
-    effetti: [{ tipo: 'attacco', attacchi: 'distanza', valore: 1, ambito: 'situazionale', se: 'con i quadrelli lunari', condizione: 'Con la Balestra d’osso: 1d6+3 Magico e +1 VA per colpire.', fonte: `${ED_ARM} §7.27.6` }],
+    effetti: [{ tipo: 'attacco', attacchi: 'distanza', valore: 1, ambito: 'situazionale', se: 'con i quadrelli lunari', natura_danno: 'Magico', condizione: 'Con la Balestra d’osso: 1d6+3 Magico e +1 VA per colpire.', fonte: `${ED_ARM} §7.27.6` }],
     proprieta: [],
   },
 ];

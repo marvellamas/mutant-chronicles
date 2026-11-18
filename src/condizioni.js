@@ -11,6 +11,7 @@ import { effettiTalenti, bonusTalentiAccesi } from './talenti.js';
 import { calcolaAR, oggettiRotti } from './protezione.js';
 import { chiaviTecnicheAttive, effettiTecniche } from './tecniche.js';
 import { arIncantesimiInCorso } from './durate-incantesimi.js';
+import { potereAttivo } from './poteri-arma.js';
 import { riga, provenienza, righeDaScomposizione, righeRegoleAbilita, righeRegoleSalvezza } from './provenienza.js';
 
 const isOggetto = (v) => v !== null && typeof v === 'object' && !Array.isArray(v);
@@ -511,10 +512,18 @@ export function applicaCondizioni(scheda, sessione, dati) {
         w.provenienzaDanno = provenienza(righe, w.danno?.una_mano ?? w.danno?.due_mani ?? '—');
       }
       if (w.parata) {
-        w.parata.scomposizione = [...w.parata.componenti.map((c) => voce(c.nome, c.valore, c.fonte ?? 'equipaggiamento')), ...condDifese];
-        w.parata.vaEffettivo = w.parata.va + somma(condDifese);
+        // lotto 220: il potere di colore attivo di un'arma (Spada dei Tre Riflessi, Verde: Parata +1, Armamenti §7.27.3) è un
+        // bonus alla Parata **con quell'arma**, come una proprietà difensiva: il lotto 219 lo dichiarava senza sommarlo. Sta qui e
+        // non in `armaConPotere` perché la Parata della scheda e quella di «Attacca!» partono da questo stesso valore: sommarlo in
+        // due posti lo conterebbe due volte. Senza potere attivo (o senza `parata_va`) non cambia niente.
+        const pot = potereAttivo(w.poteriArma, sessione, w.uid);
+        const parPot = Number.isInteger(pot?.parata_va) ? pot.parata_va : 0;
+        const vocePot = parPot ? [voce(`Potere attivo: ${pot.nome} (${pot.colore})`, parPot, 'equipaggiamento')] : [];
+        if (parPot) w.parata.proprieta = [...(w.parata.proprieta ?? []), { nome: `Potere attivo: ${pot.nome} (${pot.colore})`, valore: parPot }];
+        w.parata.scomposizione = [...w.parata.componenti.map((c) => voce(c.nome, c.valore, c.fonte ?? 'equipaggiamento')), ...vocePot, ...condDifese];
+        w.parata.vaEffettivo = w.parata.va + parPot + somma(condDifese);
         w.parata.vaDaRegole = daRegole(w.parata.scomposizione);
-        w.parata.distanzaEffettiva = w.parata.distanza === null || w.parata.distanza === undefined ? null : w.parata.distanza + somma(condDifese);
+        w.parata.distanzaEffettiva = w.parata.distanza === null || w.parata.distanza === undefined ? null : w.parata.distanza + parPot + somma(condDifese);
         w.parata.provenienza = provenienza(righeDaScomposizione(w.parata.scomposizione, { regole: conDettaglio }), w.parata.vaEffettivo);
       }
     }
