@@ -26,6 +26,12 @@ const reg = registro();
 const EL = reg.scambio.find((v) => v.id === 'e-l');
 const PD = reg.scambio.find((v) => v.id === 'per-davide');
 
+// Lotto 218: nessuna data è scritta a mano. La data dell'E&L e del Doc cambia ogni volta che Davide scrive e che noi
+// riscarichiamo il testo (lo ha cambiato il 17/11 e il test è diventato rosso): il registro dice com'è oggi, il test
+// ne ricava «un secondo dopo», «un giorno dopo» e «uguale tranne i millisecondi». Il senso è la differenza, non il giorno.
+const unSecondoDopo = (iso) => new Date(Date.parse(iso) + 1000).toISOString();
+const unGiornoDopo = (iso) => new Date(Date.parse(iso) + 86400000).toISOString();
+
 /** L'elenco di Drive come lo darebbe la ricerca nella cartella: tutto uguale al registro, salvo `cambia`. */
 function drive(cambia = {}) {
   return [...reg.manuali, ...reg.schede, ...reg.scambio].map((v) => ({
@@ -53,7 +59,7 @@ test('con tutto uguale al registro, l\'E&L e il Doc non risultano da leggere', (
 });
 
 test('se l\'E&L cambia su Drive, la ricognizione lo dice: va letto per intero, blocchi non numerati compresi', () => {
-  const r = referto(drive({ 'e-l': '2026-11-20T09:15:00.000Z' }));
+  const r = referto(drive({ 'e-l': unGiornoDopo(EL.modificato) }));
   assert.deepEqual(r.daLeggere.map((x) => x.id), ['e-l'], 'solo l\'E&L');
   const riga = r.righe.find((x) => x.id === 'e-l');
   assert.equal(riga.coincidono, false, 'prima della correzione diceva «coincidono» purché l\'ID rispondesse');
@@ -62,11 +68,11 @@ test('se l\'E&L cambia su Drive, la ricognizione lo dice: va letto per intero, b
   assert.match(testo, /DA LEGGERE PER INTERO — E&L/);
   assert.match(testo, /Blocchi non numerati compresi/);
   // un cambio d'ora di un solo secondo vale: un blocco aggiunto in coda cambia la data e non il titolo di niente
-  assert.equal(referto(drive({ 'e-l': '2026-11-15T13:28:39.000Z' })).daLeggere.length, 1);
+  assert.equal(referto(drive({ 'e-l': unSecondoDopo(EL.modificato) })).daLeggere.length, 1);
   // i millisecondi no: Drive li dà e il registro no
-  assert.equal(referto(drive({ 'e-l': '2026-11-15T13:28:38.177Z' })).daLeggere.length, 0);
+  assert.equal(referto(drive({ 'e-l': EL.modificato.replace('Z', '.177Z') })).daLeggere.length, 0);
   // vale anche per il Doc «per-davide»: è il secondo documento di scambio
-  assert.deepEqual(referto(drive({ 'per-davide': '2026-11-21T10:00:00.000Z' })).daLeggere.map((x) => x.id), ['per-davide']);
+  assert.deepEqual(referto(drive({ 'per-davide': unGiornoDopo(PD.modificato) })).daLeggere.map((x) => x.id), ['per-davide']);
 });
 
 test('con la stessa data ma il testo diverso, l\'impronta se ne accorge e nomina i blocchi nuovi (anche quelli senza numero)', () => {
@@ -103,7 +109,7 @@ test('dalla riga di comando, il controllo di inizio sessione dice che l\'E&L è 
   const uguale = lancia({});
   assert.doesNotMatch(uguale.stdout, /DA LEGGERE PER INTERO/);
   assert.notEqual(uguale.status, 3);
-  const cambiato = lancia({ 'e-l': '2026-11-20T09:15:00.000Z' });
+  const cambiato = lancia({ 'e-l': unGiornoDopo(EL.modificato) });
   assert.equal(cambiato.status, 3, `uscita 3 = documento di scambio da leggere. ${cambiato.stdout.slice(-400)}`);
   assert.match(cambiato.stdout, /DA LEGGERE PER INTERO — E&L/);
   assert.match(cambiato.stdout, /Blocchi non numerati compresi/);

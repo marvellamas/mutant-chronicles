@@ -18,6 +18,7 @@ import { modiDiMovimento } from '../tools/importa-mostri.mjs';
 
 const RADICE = fileURLToPath(new URL('..', import.meta.url));
 const leggi = (id) => JSON.parse(readFileSync(join(RADICE, 'esempi', 'nemici', 'mostri', `${id}.json`), 'utf8'));
+// Lotto 218: valore fisso di proposito: il test non legge il manuale, passa questa etichetta alle funzioni sotto prova.
 const ED = 'Mostri 0.69';
 
 test('una delle schede che il lettore non leggeva: attacchi e Abilità completi, e la provenienza di ogni campo', () => {

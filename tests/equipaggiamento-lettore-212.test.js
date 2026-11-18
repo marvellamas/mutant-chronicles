@@ -16,10 +16,11 @@ const dati = oggettiDati(leggi);
 const tab = (testo) => leggiTabelle(testo);
 const sulla = (testo) => confronta(righeOggetto(tab(testo)).righe, dati);
 
-test('l’Equipaggiamento recepito è la 0.42, e i sei file di dati lo dichiarano', () => {
-  assert.equal(versioneManuale('equipaggiamento'), '0.42');
+// Lotto 218: il numero lo dà il registro; il test dice che i sei file lo dichiarano.
+test('l’Equipaggiamento recepito è quello che i sei file di dati dichiarano', () => {
+  const v = versioneManuale('equipaggiamento').replace('.', '\\.');
   for (const f of ['comunicazione', 'dotazioni_personali', 'esplorazione', 'impianti', 'sanitario', 'strumenti_professionali']) {
-    assert.match(leggi(f).versione_manuale, /Equipaggiamento 0\.42/, f);
+    assert.match(leggi(f).versione_manuale, new RegExp(`Equipaggiamento ${v}`), f);
   }
 });
 

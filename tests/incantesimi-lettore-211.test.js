@@ -21,10 +21,11 @@ const corrente = versioneManuale('magia');
 const schede = leggiSchedeMagia(testoManuale('magia'));
 
 // ——— l'edizione ———
-test('la Magia recepita è la 1.19 e il testo salvato porta lo stesso numero nel nome e nella prima pagina', () => {
-  assert.equal(corrente, '1.19');
-  assert.match(testoManuale('magia').slice(0, 400), /EDIZIONE 1\.19/);
-  assert.equal(registro().manuali.find((m) => m.id === 'magia').recepimento_in_attesa, undefined, 'la 1.19 è recepita, non in attesa');
+// Lotto 218: il numero lo dà il registro, non una scritta a mano che resterebbe vecchia alla prossima pubblicazione.
+test('la Magia recepita porta lo stesso numero nel nome e nella prima pagina del testo salvato', () => {
+  assert.match(corrente, /^\d+\.\d+$/);
+  assert.match(testoManuale('magia').slice(0, 400), new RegExp(`EDIZIONE ${corrente.replace('.', '\\.')}`));
+  assert.equal(registro().manuali.find((m) => m.id === 'magia').recepimento_in_attesa, undefined, 'l’edizione corrente è recepita, non in attesa');
 });
 
 // ——— 1. la rete ———

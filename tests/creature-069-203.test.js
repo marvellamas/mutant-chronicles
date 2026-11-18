@@ -77,7 +77,8 @@ test('nessuna creatura del corpus porta i PV di un doppio aumento rispetto alla 
 test('il conto del corpus torna, e ogni scheda dichiara l’edizione da cui viene', () => {
   const dichiarato = JSON.parse(readFileSync(join(RADICE, 'data', 'formato_nemici.json'), 'utf8')).corpus;
   const edizione = `Mostri ${registro().manuali.find((m) => m.id === 'mostri').versione}`;
-  assert.equal(edizione, 'Mostri 0.69', 'il registro deve essere alla 0.69: il corpus viene da lì');
+  // Lotto 218: nessun numero scritto a mano. Il corpus dichiara da quale edizione viene e il registro deve dire la stessa.
+  assert.equal(edizione, dichiarato.edizione, 'registro e corpus dichiarano edizioni diverse: o il corpus è indietro e va dichiarato, o il registro è sbagliato');
   // lotto 204: 342 + le 151 schede che il lettore ora legge per intero sulla 0.69
   assert.equal(C.size, 493, 'le 342 del lotto 203 più le 151 che il lettore non leggeva');
 

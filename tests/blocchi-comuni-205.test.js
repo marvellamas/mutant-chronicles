@@ -14,12 +14,13 @@ import { readFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { blocchiDelTesto, bloccoDiRiga, dividi, leggiRighe, importa } from '../tools/importa-mostri.mjs';
-import { testoManuale } from '../tools/manuali.mjs';
+import { testoManuale, versioneManuale } from '../tools/manuali.mjs';
 import { schedaMista, provenienza, rigaProvenienza } from '../src/provenienza-bestiario.js';
 
 const RADICE = fileURLToPath(new URL('..', import.meta.url));
 const leggi = (id) => JSON.parse(readFileSync(join(RADICE, 'esempi', 'nemici', 'mostri', `${id}.json`), 'utf8'));
-const ED = 'Mostri 0.69';
+// Lotto 218: il test legge il testo corrente (testoManuale), quindi l'edizione la dice il registro.
+const ED = `Mostri ${versioneManuale('mostri')}`;
 const testo = testoManuale('mostri');
 const { schede, pagine } = dividi(leggiRighe(testo));
 const blocchi = blocchiDelTesto(pagine, schede);

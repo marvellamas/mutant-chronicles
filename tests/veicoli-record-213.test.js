@@ -30,10 +30,11 @@ const record = readdirSync(FIX).filter((f) => f.endsWith('.json')).map((f) => JS
 const daGit = (nome) => Promise.resolve(execFileSync('git', ['-C', RADICE, 'show', `bba7ba07:data/${nome}.json`], { encoding: 'utf8', maxBuffer: 1e8 }));
 const prima = (await caricaDati(daGit)).dati;
 
-test('l\'edizione recepita è la 0.19 e il testo salvato porta lo stesso numero', () => {
-  assert.equal(versioneManuale('veicoli'), '0.19');
-  assert.match(testoManuale('veicoli').slice(0, 600), /EDIZIONE 0\.19/);
-  assert.match(dati.veicoli.versione_manuale, /Veicoli 0\.19/);
+// Lotto 218: il numero lo dà il registro. Il senso è che nome, prima pagina e dati dichiarano la stessa edizione.
+test('l\'edizione recepita, il testo salvato e i dati dichiarano lo stesso numero', () => {
+  const v = versioneManuale('veicoli').replace('.', '\\.');
+  assert.match(testoManuale('veicoli').slice(0, 600), new RegExp(`EDIZIONE ${v}`));
+  assert.match(dati.veicoli.versione_manuale, new RegExp(`Veicoli ${v}`));
 });
 
 // ——— 1. il record ———
