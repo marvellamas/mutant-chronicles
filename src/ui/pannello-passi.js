@@ -123,7 +123,7 @@ export function pulsanteCommuta(etichetta, attivo, scegli, { motivo = null, riga
  * le voci attive di «Altro» (ognuna con ✕) e «Altro ▾», chiuso di base, con tutto il resto. Un attacco normale si fa
  * senza aprirlo. `altro`: [{ titolo, contenuto }] (i passi di prima); `stato.altro` ricorda se è aperto.
  */
-export function pannelloSintetico({ etichetta, titolo, classe = '', chiudi, arma = null, modalita = null, distanza = null, risultato, attive = null, altro = [], stato, ridisegna }) {
+export function pannelloSintetico({ etichetta, titolo, classe = '', chiudi, arma = null, modalita = null, distanza = null, risultato, attive = null, altro = [], altroNota = 'movimento, bersaglio, Copertura, luce, Manovre, Talenti…', stato, ridisegna }) {
   const chiudiPannello = () => { nascondiTooltip(); chiudi(); };
   const sezione = (nome, nodo, cl = '') => (nodo ? h('section', { class: `sintesi-sezione ${cl}`.trim(), 'aria-label': nome }, nodo) : null);
   return h('div', { class: 'attacco-sfondo', onclick: (e) => { if (e.target === e.currentTarget) chiudiPannello(); } },
@@ -138,6 +138,6 @@ export function pannelloSintetico({ etichetta, titolo, classe = '', chiudi, arma
         sezione('Risultato', risultato, 'sintesi-risultato passo-risultato'),
         attive,
         h('details', { class: 'attacco-altro', open: !!stato.altro || null, ontoggle: (e) => { if (e.target.open !== !!stato.altro) { stato.altro = e.target.open; ridisegna(); } } },
-          h('summary', { class: 'btn btn-altro' }, 'Altro ▾', h('small', { class: 'nota' }, ' movimento, bersaglio, Copertura, luce, Manovre, Talenti…')),
+          h('summary', { class: 'btn btn-altro' }, 'Altro ▾', h('small', { class: 'nota' }, ` ${altroNota}`)),
           stato.altro ? altro.filter((p) => p && [p.contenuto].flat(Infinity).some(Boolean)).map((p) => h('section', { class: 'attacco-passo' }, h('h3', {}, p.titolo), disponi(p.contenuto))) : null))));
 }

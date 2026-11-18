@@ -6,7 +6,7 @@ import { conAvviso } from './procedi.js';
 import { h } from './dom.js';
 import { pillola } from './attacco.js';
 import { listaProvenienza } from './tooltip.js';
-import { riquadroDanno, rigaScelte, interruttore, pannelloPassi } from './pannello-passi.js';
+import { riquadroDanno, rigaScelte, interruttore, pannelloPassi, pannelloSintetico, disponi } from './pannello-passi.js';
 import { rigaProvenienzaIncantesimo, edizioneCorrenteIncantesimi, motivoIndietro } from '../provenienza-incantesimi.js';
 import { calcolaLancio, dichiarazioneLancio, versioniLancio, contenitoriLancio, livelloVersione } from '../lancio.js';
 import { incantesimiDaOggetti, trovaIncantesimoOggetto, attivazioneOggetto } from '../incantesimi-artefatti.js';
@@ -149,7 +149,62 @@ function corpo(ctx, inc, intestazione) {
     Risultato: r.rituale ? risultatoRituale(ctx, inc, r, d, imposta) : risultato(ctx, inc, r),
   };
 
-  return pannelloPassi({ ...intestazione, passi: titoli.map((t) => ({ titolo: t, contenuto: passi[t] })), stato, ridisegna: ctx.azioni.ridisegna });
+  // Rituale (sez. 25): ha i suoi Canali e il suo risultato, resta il pannello a passi di prima
+  if (r.rituale) return pannelloPassi({ ...intestazione, passi: titoli.map((t) => ({ titolo: t, contenuto: passi[t] })), stato, ridisegna: ctx.azioni.ridisegna });
+
+  // lotto 221: «Lancia!» sintetico come «Attacca!» (docs/diff-lotto221-2026-11-18.md). A vista: il livello (con i livelli oltre il
+  // massimo raggruppati in una riga ⚠ che resta scritta), da dove si pagano i PM se c'è una scelta, il danno, il costo in PM, la
+  // Prova di Potere, la durata e il pulsante. Dietro «Altro ▾»: Anticipazione, Condizioni, la scheda della versione, i bersagli e le
+  // regole del lancio. Le scelte fatte lì e diverse dal normale restano a vista come «Attive: … ✕».
+  const sint = {};
+  const risultatoSint = risultato(ctx, inc, r, sint);
+  const motivoOltre = versioni.find((v) => v.motivo)?.motivo ?? null;
+  const bottoneVersione = (v) => h('button', {
+    type: 'button', class: `btn scelta-btn${v.livello === d.versione ? ' scelta' : ''}`, 'aria-pressed': String(v.livello === d.versione),
+    title: v.motivo ?? null, onclick: () => imposta({ versione: v.livello }),
+  }, `Livello ${v.livello} · ${v.pm} PM${v.motivo ? ' ⚠' : ''}`);
+  const oltre = versioni.filter((v) => v.motivo);
+  const sceltaOltre = oltre.some((v) => v.livello === d.versione);
+  const livelli = h('div', { class: 'scelta-attacco scelta-gruppo' },
+    h('p', { class: 'scelta-titolo' }, 'Livello'),
+    h('div', { class: 'scelta-pulsanti versioni-lancio', role: 'group', 'aria-label': 'Versione' }, versioni.filter((v) => !v.motivo).map(bottoneVersione)),
+    // N2: «oltre il livello massimo» avvisa, non blocca: i livelli sconsigliati sono raggruppati, ma la riga ⚠ resta scritta e, se uno è
+    // scelto, il gruppo è aperto e l'avviso è a vista
+    oltre.length ? h('details', { class: 'livelli-oltre', open: (sceltaOltre || stato.oltre) || null, ontoggle: (e) => { if (e.target.open !== !!stato.oltre) { stato.oltre = e.target.open; ctx.azioni.ridisegna(); } } },
+      h('summary', {}, `⚠ Oltre il tuo livello massimo: ${oltre.map((v) => v.livello).join(', ')}`),
+      h('div', { class: 'scelta-pulsanti' }, oltre.map(bottoneVersione))) : null,
+    sceltaOltre ? h('p', { class: 'motivo', role: 'status' }, `⚠ Livello ${d.versione}: ${motivoOltre}; si può scegliere comunque.`) : null,
+    // lotto 211: il segno compare solo se un campo della scheda non è della Magia corrente, e si spegne da sé
+    (() => {
+      const riga = rigaProvenienzaIncantesimo(inc, edizioneCorrenteIncantesimi(ctx.dati.incantesimi), motivoIndietro(ctx.dati.incantesimi, inc));
+      return riga ? h('p', { class: 'nota edizione-indietro', role: 'note' }, '⚑ ', riga) : null;
+    })());
+  // da dove si pagano i PM: a vista solo se c'è davvero una scelta (un contenitore di Chroma); altrimenti il costo e «personali» sono nel risultato
+  const sceltaFonte = contenitori.length ? passi.PM : null;
+  const tutteAttive = [
+    d.focalizzazione ? { testo: 'Focalizzazione', togli: { focalizzazione: false } } : null,
+    d.ingaggio ? { testo: 'Ingaggio', togli: { ingaggio: false } } : null,
+    d.componentiMancanti.length ? { testo: `Componenti mancanti: ${d.componentiMancanti.map((c) => L.componenti.nomi[c] ?? c).join(', ')}`, togli: { componentiMancanti: [] } } : null,
+    d.circostanza ? { testo: `Circostanza ${segno(d.circostanza)}`, togli: { circostanza: 0 } } : null,
+    ...d.effettiMagici.map((e, i) => ({ testo: `${e.nome} ${segno(e.valore)}`, togli: { effettiMagici: d.effettiMagici.filter((_, j) => j !== i) } })),
+    d.riservaTecnica ? { testo: 'Riserva Tecnica', togli: { riservaTecnica: false } } : null,
+    ...(r.talenti_lancio ?? []).filter((t) => t.acceso).map((t) => ({ testo: t.nome, togli: { talentiLancio: d.talentiLancio.filter((k) => k !== t.chiave) } })),
+    d.anticipazione !== null && conAnticipazione ? { testo: `Anticipazione: ${m.anticipazione.aspetti[d.anticipazione]?.nome ?? m.anticipazione.aspetti[d.anticipazione]?.etichetta ?? ''}`, togli: { anticipazione: null } } : null,
+  ].filter(Boolean);
+  const attive = tutteAttive.length ? h('p', { class: 'voci-attive', role: 'group', 'aria-label': 'Opzioni attive' }, h('strong', {}, 'Attive: '),
+    tutteAttive.map((v) => h('button', { type: 'button', class: 'etichetta voce-attiva', title: 'Tocca per toglierla', 'aria-label': `Togli: ${v.testo}`, onclick: () => imposta(v.togli) }, `${v.testo} ✕`))) : null;
+  const riga = passi.Versione[2]; // la scheda della versione (dl): dietro «Altro ▾»
+  const altro = [
+    { titolo: 'Anticipazione', contenuto: passi.Anticipazione },
+    { titolo: 'Condizioni', contenuto: passi.Condizioni },
+    { titolo: 'La versione', contenuto: riga },
+    { titolo: 'Bersagli', contenuto: sint.durata.soloBersagli },
+    { titolo: 'Regole di questo lancio', contenuto: sint.dettagli },
+  ];
+  return pannelloSintetico({
+    ...intestazione, modalita: h('div', { class: 'lancio-sintesi-scelte' }, livelli, sceltaFonte ? disponi(sceltaFonte) : null),
+    risultato: risultatoSint, attive, altro, altroNota: 'Anticipazione, Condizioni, bersagli, regole del lancio…', stato, ridisegna: ctx.azioni.ridisegna,
+  });
 }
 
 /**
@@ -171,7 +226,12 @@ function valoreAnticipatoUi(v) {
     v.conseguenze?.length ? h('ul', { class: 'nota' }, v.conseguenze.map((c) => h('li', {}, c))) : null);
 }
 
-function risultato(ctx, inc, r) {
+/**
+ * @param sint lotto 221 (pannello sintetico): `{ dettagli: [] }` — con questo, la Salvezza del bersaglio, le note del danno e i promemoria
+ *   non stanno nel risultato ma vengono raccolti in `sint.dettagli` (dietro «Altro ▾»), la durata è senza i bersagli e i dettagli
+ *   dell'Anticipazione restano solo se un aspetto è scelto (cambiano un numero). Senza `sint` il risultato è quello di sempre.
+ */
+function risultato(ctx, inc, r, sint = null) {
   // numeri di regola dai dati (regole.json → lancio): qui serve la penalità del Contatto (Magia sez. 2)
   const L = ctx.dati.regole.lancio;
   // E&L 18: procedura rituale non ancora definita (Rigenerazione): nessun costo né Prova
@@ -183,6 +243,16 @@ function risultato(ctx, inc, r) {
   const doveSpesa = [f.personali ? `${f.personali} personali` : null, f.contenitore ? `${f.contenitore.pm} da ${f.contenitore.nome}` : null].filter(Boolean).join(' + ');
   const azioni = r.azioni.azioni_principali ? `${r.azioni.azioni_principali} ${r.azioni.azioni_principali === 1 ? 'Azione Principale' : 'Azioni Principali'}` : r.azioni.tempo;
   const durataEBersagli = bloccoDurata(ctx, inc, r);
+  if (sint) {
+    sint.durata = durataEBersagli;
+    sint.dettagli = [
+      r.salvezza_bersaglio ? h('dl', { class: 'voci griglia-voci' }, h('div', {}, h('dt', {}, 'Salvezza del bersaglio'), h('dd', {}, r.salvezza_bersaglio.testo,
+        r.salvezza_bersaglio.mod_ps ? ` · Mod. PS ${r.salvezza_bersaglio.mod_ps}` : '',
+        r.salvezza_bersaglio.talento ? ` · ${r.salvezza_bersaglio.talento.nome} ${segno(r.salvezza_bersaglio.talento.valore)}` : ''))) : null,
+      r.danno?.note?.length ? h('ul', { class: 'note-danno nota' }, r.danno.note.map((n) => h('li', {}, n))) : null,
+      r.promemoria.length ? h('ul', { class: 'promemoria-attacco' }, r.promemoria.map((p) => h('li', {}, p))) : null,
+    ];
+  }
   return [
     r.impossibile ? h('div', { class: 'riquadro attenzione', role: 'alert' }, h('p', {}, h('strong', {}, 'Avviso: per le regole il lancio non è possibile. '), r.impossibile.motivo, ' Il master può procedere comunque.')) : null,
     r.avvisi?.length ? h('div', { class: 'riquadro attenzione' }, r.avvisi.map((x) => h('p', {}, x))) : null,
@@ -194,7 +264,8 @@ function risultato(ctx, inc, r) {
         r.costo.length > 1 ? h('small', { class: 'nota' }, ` (${r.costo.map((c, i) => (i ? `${segno(c.valore)} ${c.etichetta}` : `${c.valore} ${c.etichetta}`)).join(', ')})`) : null),
       r.prova_richiesta
         ? [h('p', { class: 'va-attacco' }, 'Prova di Potere ', pillola(inc.nome, r.va_potere_finale, r.provenienza), h('small', { class: 'nota' }, ` · ${r.motivi_prova.join('; ')}`)),
-          h('div', { class: 'provenienza-attacco' }, listaProvenienza(r.provenienza, 'VA di Potere'))]
+          sint ? h('details', { class: 'calcolo-lancio' }, h('summary', {}, 'Calcolo'), h('div', { class: 'provenienza-attacco' }, listaProvenienza(r.provenienza, 'VA di Potere')))
+            : h('div', { class: 'provenienza-attacco' }, listaProvenienza(r.provenienza, 'VA di Potere'))]
         : h('p', { class: 'va-attacco' }, h('strong', {}, 'Prova di Potere: non richiesta'), h('small', { class: 'nota' }, ' (livelli 1–3 del Taumaturgo, senza obblighi)')),
       h('dl', { class: 'voci griglia-voci' },
         // Anticipazione (sez. 12.3): il valore nuovo dell'aspetto, dalla scala della scheda
@@ -209,16 +280,16 @@ function risultato(ctx, inc, r) {
         // Magia sez. 7, Giocatore §5.13: danno della versione con il bonus di SAG e i Talenti di lancio
         // (provenienza in una riga: «1d6 +1 SAG +1 Incantesimi Aggressivi (Grado I)»)
         // danno e cura: in evidenza in cima (riquadroDanno)
-        r.salvezza_bersaglio ? h('div', {}, h('dt', {}, 'Salvezza del bersaglio'), h('dd', {}, r.salvezza_bersaglio.testo,
+        r.salvezza_bersaglio && !sint ? h('div', {}, h('dt', {}, 'Salvezza del bersaglio'), h('dd', {}, r.salvezza_bersaglio.testo,
           r.salvezza_bersaglio.mod_ps ? ` · Mod. PS ${r.salvezza_bersaglio.mod_ps}` : '',
           r.salvezza_bersaglio.talento ? ` · ${r.salvezza_bersaglio.talento.nome} ${segno(r.salvezza_bersaglio.talento.valore)}` : '')) : null),
       // Anticipazione: le conseguenze che la scheda lega all'aspetto e le regole che valgono con i Talenti
       r.anticipazione?.valore?.conseguenze?.length ? h('ul', { class: 'promemoria-attacco' }, r.anticipazione.valore.conseguenze.map((c) => h('li', {}, c))) : null,
       r.aspetto ? riquadroAnticipazione(r.anticipazione) : null,
       // note del manuale dei Talenti sotto il danno («una sola volta per bersaglio, al primo colpo»)
-      r.danno?.note?.length ? h('ul', { class: 'note-danno nota' }, r.danno.note.map((n) => h('li', {}, n))) : null,
-      r.promemoria.length ? h('ul', { class: 'promemoria-attacco' }, r.promemoria.map((p) => h('li', {}, p))) : null,
-      durataEBersagli.elemento,
+      !sint && r.danno?.note?.length ? h('ul', { class: 'note-danno nota' }, r.danno.note.map((n) => h('li', {}, n))) : null,
+      !sint && r.promemoria.length ? h('ul', { class: 'promemoria-attacco' }, r.promemoria.map((p) => h('li', {}, p))) : null,
+      sint ? durataEBersagli.soloDurata : durataEBersagli.elemento,
       h('div', { class: 'attacco-azioni' },
         h('button', {
           type: 'button', class: `btn primario btn-grande${r.impossibile ? ' con-avviso' : ''}`, title: r.impossibile?.motivo ?? null,
@@ -250,20 +321,28 @@ function bloccoDurata(ctx, inc, r) {
   const conDurata = ['round', 'tempo', 'condizione'].includes(durata.tipo);
   const testo = durata.tipo === 'round' ? `${durata.round} RND, fino alla fine del Round R + ${durata.round} (il Round del lancio non conta)`
     : durata.tipo === 'tempo' ? `${durata.testo}, promemoria senza contatore` : durata.testo;
-  const elemento = h('div', { class: 'riquadro durata-lancio' },
+  // lotto 221: la durata (con modalità e Concentrazione) e i bersagli si possono dare separati: il pannello sintetico tiene a vista
+  // la durata e mette i bersagli dietro «Altro ▾»; chi li vuole insieme (l'incantesimo da oggetto) usa `elemento`
+  const partiDurata = () => [
     h('p', {}, h('strong', {}, 'Durata: '), testo, durata.anticipata ? h('small', { class: 'nota' }, ' (anticipata)') : null,
       durata.concentrazione ? h('small', { class: 'nota' }, ' · a Concentrazione: si mantiene un solo incantesimo') : null),
     op.modalita.length ? rigaScelte('Modalità', op.modalita.map((m) => ({ valore: m.id, etichetta: m.nome })), durata.modalita ?? op.modalita[0].id, (v) => { u.modalita = v; ridisegna(); }) : null,
     op.concentrazioneAScelta ? interruttore('Con Concentrazione', u.concentrazione, (v) => { u.concentrazione = v; ridisegna(); }, { mod: 'durata massima' }) : null,
     durata.anticipazioneAltraDurata ? h('p', { class: 'nota attenzione' }, 'L’Anticipazione riguarda la durata dell’altra modalità: sale di un gradino soltanto la durata scelta (E&L A.88). Scegli l’aspetto della durata che usi.') : null,
     op.todo ? h('p', { class: 'nota' }, `Da chiarire con Davide: ${op.todo.replace(/\s*\((A\.\d+, )?docs.*$/, '')}`) : null,
+  ];
+  const partiBersagli = () => [
     conDurata ? [
       h('p', { class: 'scelta-titolo' }, 'Bersagli'),
       h('div', { class: 'caselle-nemico' },
         ctx.calcola ? null : h('label', {}, h('input', { type: 'checkbox', checked: !!u.se, onchange: (e) => { u.se = e.target.checked; } }), ' su di me'),
         partecipanti.map((p) => h('label', {}, h('input', { type: 'checkbox', checked: u.ids.includes(p.id), onchange: (e) => { u.ids = e.target.checked ? [...u.ids, p.id] : u.ids.filter((x) => x !== p.id); } }), ` ${p.nome}`))),
       h('label', { class: 'campo-nemico' }, h('span', {}, 'Altri bersagli (a parole)'), h('input', { type: 'text', maxlength: 80, value: u.altri, placeholder: 'es. la porta, un alleato fuori scena', oninput: (e) => { u.altri = e.target.value; } })),
-    ] : null);
+    ] : null,
+  ];
+  const elemento = h('div', { class: 'riquadro durata-lancio' }, ...partiDurata(), ...partiBersagli());
+  const soloDurata = h('div', { class: 'riquadro durata-lancio' }, ...partiDurata());
+  const soloBersagli = conDurata ? h('div', { class: 'durata-lancio' }, ...partiBersagli()) : null;
   const registrazione = () => {
     if (!conDurata) return null;
     const bersagli = [
@@ -274,7 +353,7 @@ function bloccoDurata(ctx, inc, r) {
     const ar = u.se ? arIncantesimo(inc, r.livello, ctx.dati, r.anticipazione?.valore) : null;
     return { nome: inc.nome, livello: r.livello, durata, bersagli, ...(ar ? { ar } : {}) };
   };
-  return { elemento, registrazione };
+  return { elemento, soloDurata, soloBersagli, registrazione };
 }
 
 /**
