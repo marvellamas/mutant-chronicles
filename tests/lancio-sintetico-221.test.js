@@ -106,3 +106,38 @@ test('«Lancia» scala i PM come prima: il pulsante chiama lancia con il costo g
   assert.ok(l, 'chiama lancia');
   assert.equal(l[1].personali, 3, 'tre PM personali');
 });
+
+// ——— lo stesso pannello serve i nemici del Tavolo del Master (src/ui/lancio-nemico.js): il «finto» contesto non deve rompersi ———
+import { readFileSync } from 'node:fs';
+import { nuovoScontro, aggiungiNemici } from '../src/scontro.js';
+import { calcolaLancioNemico } from '../src/nemico-lancio.js';
+import { copia } from './helpers.js';
+const { pannelloLancio } = await import('../src/ui/lancio.js');
+
+test('il pannello sintetico serve anche i nemici della plancia: il lancio di un nemico si apre, con il suo costo e «Altro ▾» chiuso', () => {
+  const legionario = JSON.parse(readFileSync(new URL('./nemici/legionario-non-morto.json', import.meta.url), 'utf8'));
+  const n = { ...copia(legionario), id: 'inquisitore-prova', nome: 'Inquisitore di prova', pm: 12,
+    incantesimi: [{ nome: 'Dardo Psichico', livello: 8, va: 14, costo_pm: 8, regime: 'taumaturgo', bonus_danno_magico: 2 }] };
+  const T0 = new Date(2026, 9, 2, 21, 0, 0);
+  const s = aggiungiNemici(nuovoScontro({ id: 'prova221', adesso: T0, pg: [] }), n, 1, {}, T0);
+  const p = s.partecipanti.find((x) => x.tipo === 'nemico');
+  const st = { dichiarazione: {}, ui: {} };
+  const x = calcolaLancioNemico(p, 0, st.dichiarazione, dati);
+  const chiamate = [];
+  const finto = {
+    dati, tab: { scheda: x.chi.scheda }, sessione: { ...x.chi.sessione, lanci: { [x.inc.nome]: st.dichiarazione } }, massimi: { pm: p.pm?.massimo ?? 0 },
+    calcola: (d) => calcolaLancioNemico(p, 0, d, dati).risultato, ui: st.ui,
+    partecipanti: [{ id: p.id, nome: `${p.nome} (sé)` }],
+    azioni: { ridisegna() {}, ricordaLancio: (nome, d) => { st.dichiarazione = d; }, lancia: async (...a) => { chiamate.push(a); } },
+  };
+  const radice = document.createElement('div');
+  radice.append(pannelloLancio(finto, x.inc));
+  const pan = radice.querySelector('.lancio-pannello');
+  assert.ok(pan && pan.className.includes('attacco-sintetico'), 'il pannello sintetico c’è');
+  assert.ok(!pan.querySelector('.attacco-altro').open);
+  const b = bottoneLancia(pan);
+  assert.match(b.textContent, /Lancia \(−8 PM\)/, 'il costo del nemico: 8 PM');
+  assert.ok(righeFinoA(pan, b) <= LIMITE_RIGHE_PRIMA_DEL_PULSANTE);
+  clic(b);
+  assert.equal(chiamate.length, 1, 'il pulsante chiama lancia del nemico');
+});

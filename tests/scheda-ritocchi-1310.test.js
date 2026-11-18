@@ -139,11 +139,11 @@ test('la ricerca copre Abilità, Talenti, oggetti, Stati e il resto della scheda
   }
 });
 
-test('il campo si apre dall’icona 🔍 della testata e si chiude con ✕', () => {
+test('il campo si apre dalla voce «🔍 Cerca nella scheda» del menu Azioni (lotto 221) e si chiude con ✕', () => {
   const ctx = contesto(TORVALD, { attiva: 'identita' });
   const chiuso = resa(ctx);
-  const icona = chiuso.classe('btn-cerca')[0];
-  assert.ok(icona, 'l’icona c’è nella testata');
+  const icona = chiuso.tutti.find((n) => n.tagName === 'BUTTON' && /Cerca nella scheda/.test(n.textContent));
+  assert.ok(icona, 'la voce c’è nel menu Azioni');
   assert.equal(chiuso.classe('campo-cerca').length, 0, 'il campo si apre solo al tocco');
   clic(icona);
   const aperto = resa(ctx);
@@ -165,7 +165,7 @@ test('fuori dalla scheda la ricerca non cambia nessun valore calcolato', () => {
   const a = contesto(TORVALD, { attiva: 'combattimento' });
   const prima = JSON.stringify(a.tab.scheda);
   const r = resa(a);
-  clic(r.classe('btn-cerca')[0]);
+  clic(r.tutti.find((n) => n.tagName === 'BUTTON' && /Cerca nella scheda/.test(n.textContent)));
   a.ui.cerca.testo = 'tempra';
   resa(a);
   assert.equal(JSON.stringify(a.tab.scheda), prima);

@@ -78,9 +78,10 @@ test('all’apertura della pagina si riprende l’immagine già mostrata', async
   g.chiudi();
 });
 
-test('la scheda ha «Galleria» come ultimo pulsante della barra, solo con il server', () => {
+test('la scheda ha «Galleria» nel menu Azioni (dal lotto 221, non più in barra), solo con il server', () => {
   const t = readFileSync(new URL('../src/ui/tab.js', import.meta.url), 'utf8');
-  assert.match(t, /menuImpostazioni\(ctx\),\s*\n\s*\/\/ N1[^\n]*\n\s*ctx\.server \? h\('button', \{ type: 'button', class: 'btn btn-galleria'/);
+  assert.match(t, /ctx\.server \? voce\('🖼 Galleria', \(\) => apriGalleriaGiocatore\(ctx\.dati\)/);
+  assert.doesNotMatch(t, /class: 'btn btn-galleria'/, 'e non è più un pulsante della barra');
   assert.match(t, /apriGalleriaGiocatore\(ctx\.dati\)/);
   // il flusso di eventi della scheda resta aperto anche fuori da uno scontro (punto 5)
   const a = readFileSync(new URL('../src/ui/app.js', import.meta.url), 'utf8');
