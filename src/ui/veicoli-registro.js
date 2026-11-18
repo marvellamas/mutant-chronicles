@@ -48,3 +48,36 @@ export async function migraNelRegistro(veicoli, chi) {
   for (const rec of m.nuovi) await scriviVeicolo(rec); // un 409 vuol dire che c'è già: resta quello
   return m;
 }
+
+// --- lotto 218: cancellare un record dal registro, con la copia di sicurezza (solo il PC del Direttore) -----------
+
+/** Chi cita il veicolo, e la frase della conferma che lo nomina. */
+export async function citazioniDelVeicolo(id) {
+  const r = await fetch(`api/veicoli/${encodeURIComponent(id)}/citazioni`, { cache: 'no-store' });
+  const corpo = await r.json().catch(() => ({}));
+  if (!r.ok) throw new Error(corpo.errore ?? `citazioni non lette (${r.status})`);
+  return corpo;
+}
+
+/** Cancella il record: il server scrive prima la copia di sicurezza e solo dopo toglie il file. */
+export async function cancellaVeicolo(id, revisione) {
+  const r = await fetch(`api/veicoli/${encodeURIComponent(id)}?conferma=${encodeURIComponent(id)}&revisione=${encodeURIComponent(revisione)}`, { method: 'DELETE' });
+  const corpo = await r.json().catch(() => ({}));
+  if (!r.ok) throw new Error(corpo.errore ?? `veicolo non cancellato (${r.status})`);
+  return corpo;
+}
+
+/** Le copie dei record cancellati, le più recenti per prime. */
+export async function copieCancellate() {
+  const r = await fetch('api/veicoli/cancellati', { cache: 'no-store' });
+  if (!r.ok) return [];
+  return r.json();
+}
+
+/** Rimette nel registro un record cancellato. */
+export async function ripristinaCopia(file) {
+  const r = await fetch(`api/veicoli/cancellati/${encodeURIComponent(file)}/ripristina`, { method: 'POST' });
+  const corpo = await r.json().catch(() => ({}));
+  if (!r.ok) throw new Error(corpo.errore ?? `veicolo non rimesso (${r.status})`);
+  return corpo;
+}

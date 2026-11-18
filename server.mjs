@@ -169,7 +169,8 @@ import { NOME_MARCATORE, statoInstallazione, statoDaRuolo } from './src/copia-di
 import { leggiRuolo } from './tools/ruolo-pc.mjs';
 import { cartellaDati, migraSeServe } from './tools/dati-pc.mjs';
 import { validaRecord, ID_VEICOLO, migraVeicoli, eRiferimento, stessaChiave } from './src/veicoli-registro.js';
-import { normalizzaVeicoli, erroreEsemplareUnico, erroreDoppioneVeicolo } from './src/veicoli.js';
+import { normalizzaVeicoli, erroreEsemplareUnico, erroreDoppioneVeicolo, quandoNato } from './src/veicoli.js';
+import { CARTELLA_CANCELLATI, citazioniVeicolo, fraseDiConferma, nomeCopia, copiaDiSicurezza, copiaValida, ripristinaDaCopia, rigaCopia } from './src/veicoli-cancella.js';
 import { caricaDati } from './src/rules.js';
 import { validaNemico, formattaErrore } from './src/validate.js';
 import { validaScena, riassuntoScena, ID_SCENA, FILE_MAPPA } from './src/mappa/scena.js';
@@ -530,8 +531,105 @@ async function apiScontri(req, res, percorso, scontri, dopoScrittura = null) {
 }
 
 /** Registro dei veicoli (A.91, A.105): un file per veicolo, revisione come gli scontri. */
-async function apiVeicoli(req, res, percorso, veicoli) {
+/**
+ * Lotto 218, parte C: la cancellazione di un record del registro, con le cautele (src/veicoli-cancella.js). Solo dal PC
+ * del Direttore. Il record **non sparisce mai senza una copia**: prima si scrive la copia in veicoli/cancellati/, e solo
+ * se è stata scritta e riletta si toglie il file. Se qualcosa non va, il record resta dov'è.
+ */
+async function citazioniDelVeicolo(id, cartella, scene) {
+  let nomi = [];
+  try { nomi = (await readdir(cartella)).filter((f) => NOME_FILE.test(f)); } catch { /* cartella assente: nessuno lo cita */ }
+  const elenco = await Promise.all(nomi.map(async (file) => {
+    const m = NOME_FILE.exec(file);
+    return { file, nome: m[1], livello: Number(m[2]), data: m[3], mtime: (await stat(join(cartella, file))).mtimeMs };
+  }));
+  const personaggi = [];
+  for (const [k, r] of ultimiPerPersonaggio(elenco)) {
+    try {
+      const o = JSON.parse(await readFile(join(cartella, r.file), 'utf8'));
+      personaggi.push({ nome: String(o?.scelte?.nome ?? k), file: r.file, scelte: o?.scelte ?? {} });
+    } catch { /* file rovinato: non lo conto */ }
+  }
+  const sc = [];
+  try {
+    for (const f of (await readdir(scene)).filter((x) => x.endsWith('.json'))) {
+      try { const s = await leggiJson(join(scene, f)); sc.push({ id: s?.id ?? f.slice(0, -5), nome: s?.nome ?? f.slice(0, -5), token: s?.token ?? [] }); } catch { /* rovinata */ }
+    }
+  } catch { /* nessuna scena */ }
+  return citazioniVeicolo(id, personaggi, sc);
+}
+async function apiVeicoliCancella(req, res, percorso, veicoli, { cartella, scene }) {
+  if (!req.mutantMaster) return json(res, 403, { errore: 'Cancellare, o rimettere, un veicolo dal registro lo fa solo il PC del Direttore.' });
+  const cop = join(veicoli, CARTELLA_CANCELLATI);
+  // l'elenco delle copie
+  if (percorso === '/api/veicoli/cancellati' && req.method === 'GET') {
+    const out = [];
+    try {
+      for (const f of (await readdir(cop)).filter((x) => x.endsWith('.json'))) {
+        try { const c = await leggiJson(join(cop, f)); if (copiaValida(c)) out.push(rigaCopia(f, c)); } catch { /* rovinata */ }
+      }
+    } catch { /* nessuna copia */ }
+    return json(res, 200, out.sort((a, b) => String(b.quando).localeCompare(String(a.quando))));
+  }
+  // rimettere nel registro una copia
+  const r = /^\/api\/veicoli\/cancellati\/([A-Za-z0-9._-]+\.json)\/ripristina$/.exec(percorso);
+  if (r && req.method === 'POST') {
+    let c;
+    try { c = await leggiJson(join(cop, r[1])); } catch { return json(res, 404, { errore: 'copia non trovata' }); }
+    if (!copiaValida(c)) return json(res, 400, { errore: 'la copia non è un record cancellato valido' });
+    const dove = join(veicoli, `${c.record.id}.json`);
+    return inCoda(dove, async () => {
+      const attuali = [];
+      try { attuali.push(await leggiJson(dove)); } catch { /* non c'è: è il caso normale */ }
+      const e = ripristinaDaCopia(c, attuali);
+      if (e.errore) return json(res, 409, { errore: e.errore });
+      await scriviJson(dove, e.record);
+      return json(res, 200, e.record);
+    });
+  }
+  // le citazioni, prima di decidere
+  const cit = /^\/api\/veicoli\/([^/]+)\/citazioni$/.exec(percorso);
+  if (cit && req.method === 'GET') {
+    if (!ID_VEICOLO.test(cit[1])) return json(res, 400, { errore: 'id di veicolo non valido' });
+    let rec;
+    try { rec = await leggiJson(join(veicoli, `${cit[1]}.json`)); } catch { return json(res, 404, { errore: 'veicolo non trovato' }); }
+    const citato = await citazioniDelVeicolo(rec.id, cartella, scene);
+    return json(res, 200, { id: rec.id, nome: rec.mezzo?.nome ?? rec.id, revisione: rec.revisione ?? 0, citato, frase: fraseDiConferma(rec, citato, quandoNato(rec.id)) });
+  }
+  // la cancellazione
+  const m = /^\/api\/veicoli\/([^/]+)$/.exec(percorso);
+  if (m && req.method === 'DELETE') {
+    if (!ID_VEICOLO.test(m[1])) return json(res, 400, { errore: 'id di veicolo non valido' });
+    const url = new URL(req.url, 'http://x');
+    // la conferma nomina il mezzo: l'identificativo scritto deve essere quello del record, e la revisione quella che si è vista
+    if (url.searchParams.get('conferma') !== m[1]) return json(res, 400, { errore: 'manca la conferma: va scritto l’identificativo del veicolo da cancellare' });
+    const dove = join(veicoli, `${m[1]}.json`);
+    return inCoda(dove, async () => {
+      let rec;
+      try { rec = await leggiJson(dove); } catch { return json(res, 404, { errore: 'veicolo non trovato' }); }
+      if (String(rec.revisione ?? 0) !== url.searchParams.get('revisione')) return json(res, 409, { errore: 'il veicolo è stato cambiato altrove: ricarica', attuale: rec });
+      const citato = await citazioniDelVeicolo(rec.id, cartella, scene);
+      const quando = new Date().toISOString();
+      const file = join(cop, nomeCopia(rec.id, quando));
+      // 1. la copia, riletta; 2. solo dopo, il record si toglie
+      await mkdir(cop, { recursive: true });
+      await scriviJson(file, copiaDiSicurezza(rec, { quando, da: 'master' }));
+      let riletta;
+      try { riletta = await leggiJson(file); } catch { riletta = null; }
+      if (!copiaValida(riletta) || JSON.stringify(riletta.record) !== JSON.stringify(rec)) return json(res, 500, { errore: 'la copia di sicurezza non è stata scritta bene: il veicolo resta nel registro' });
+      await unlink(dove);
+      return json(res, 200, { cancellato: rec.id, nome: rec.mezzo?.nome ?? rec.id, copia: nomeCopia(rec.id, quando), citato });
+    });
+  }
+  return json(res, 405, { errore: 'metodo non ammesso' });
+}
+
+async function apiVeicoli(req, res, percorso, veicoli, ctx = {}) {
   await mkdir(veicoli, { recursive: true });
+  // lotto 218: cancellare, rimettere, e le citazioni prima di cancellare
+  if (percorso === '/api/veicoli/cancellati' || percorso.startsWith('/api/veicoli/cancellati/') || /\/citazioni$/.test(percorso) || req.method === 'DELETE') {
+    return apiVeicoliCancella(req, res, percorso, veicoli, { cartella: ctx.cartella, scene: ctx.scene });
+  }
   if (percorso === '/api/veicoli' && req.method === 'GET') {
     const lista = [];
     for (const f of (await readdir(veicoli)).filter((x) => x.endsWith('.json') && ID_VEICOLO.test(x.slice(0, -5)))) {
@@ -1852,7 +1950,7 @@ async function api(req, res, percorso, cartella, tavolo, scontri, nemici, radice
   if (percorso === '/api/musica' || percorso.startsWith('/api/musica/')) return apiMusica(req, res, percorso, musica, radice);
   if (percorso === '/api/galleria' || percorso.startsWith('/api/galleria/')) return apiGalleria(req, res, percorso, galleria, radice, canale);
   if (percorso === '/api/px') return apiPx(req, res, px, req.mutantMaster);
-  if (percorso === '/api/veicoli' || percorso.startsWith('/api/veicoli/')) return apiVeicoli(req, res, percorso, veicoli);
+  if (percorso === '/api/veicoli' || percorso.startsWith('/api/veicoli/')) return apiVeicoli(req, res, percorso, veicoli, { cartella, scene });
   if (percorso === '/api/rete') {
     const porta = req.socket.localPort;
     return json(res, 200, { porta, soloLocale, ...(soloLocale ? { indirizzi: [], altri: [], tuttiPerDubbio: false } : indirizziRete(networkInterfaces(), porta)) });

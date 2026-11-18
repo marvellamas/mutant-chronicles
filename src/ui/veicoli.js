@@ -17,7 +17,8 @@ import {
   sollecitazioneFallita, eseguiCambioAndatura, movimentoMassimo, profiloVeicolo as profiloDelCatalogo, testoArco,
 } from '../veicoli.js';
 import { migraVeicoli, nuovoRecord, riferimento, vede, eRiferimento, statoMovimento, muoviVeicolo, cambiaConducente, movimentoResiduo, stessaChiave, scegliAndatura, conCopie, mezzoDallaCopia } from '../veicoli-registro.js';
-import { elencoVeicoli, scriviVeicolo, aggiornaVeicolo } from './veicoli-registro.js';
+import { elencoVeicoli, scriviVeicolo, aggiornaVeicolo, citazioniDelVeicolo, cancellaVeicolo, copieCancellate, ripristinaCopia } from './veicoli-registro.js';
+import { chiedi } from './finestrella.js';
 import { veicoliRotti, statoRiferimentoRotto, ricollegaVeicolo, togliRiferimentoRotto } from '../riferimenti-rotti.js';
 import {
   vistaNeverlost, registraValori, registraVolo, registraStazionario, impostaApprodo, entraTraiettoria, esciTraiettoria, traversata,
@@ -57,6 +58,57 @@ function rigaRiferimentoRotto(ctx, rotto, record) {
         onclick: () => applica(togliRiferimentoRotto(ctx.scelte.veicoli ?? [], rotto.rif, { master: true })),
       }, 'Togli dalla scheda')) : null,
     statoUi(ctx).erroreRicollega ? h('span', { class: 'errore' }, ` ${statoUi(ctx).erroreRicollega}`) : null);
+}
+
+/**
+ * Lotto 218: «Cancella dal registro…», solo in modalità master (e il server la ammette solo dal PC del Direttore).
+ * La conferma nomina il mezzo e il suo identificativo, dice con i nomi chi lo cita, e dice che una copia resta e si rimette.
+ */
+function pulsanteCancella(ctx, rec) {
+  const R = statoRegistro(ctx);
+  return h('button', {
+    type: 'button', class: 'btn', 'data-cancella-veicolo': rec.id,
+    title: 'Toglie il record dal registro; una copia con tutto il suo contenuto resta in veicoli/cancellati/ e si rimette da qui',
+    onclick: async () => {
+      try {
+        const c = await citazioniDelVeicolo(rec.id);
+        const si = await chiedi({ titolo: `Cancellare «${c.nome}» (${rec.id})?`, testo: c.frase, si: `Cancella «${c.nome}» (${rec.id})`, no: 'Non cancellare', pericolo: true });
+        if (!si) return;
+        const esito = await cancellaVeicolo(rec.id, c.revisione);
+        R.record = R.record.filter((x) => x.id !== rec.id);
+        R.copie = null;
+        R.errore = null;
+        R.stato = 'da-leggere';
+        ctx.azioni.ridisegna();
+        statoUi(ctx).avvisoCancellato = `«${esito.nome}» (${esito.cancellato}) cancellato dal registro. La copia è in veicoli/cancellati/: si rimette dall'elenco qui sotto.`;
+        ctx.azioni.ridisegna();
+      } catch (e) { R.errore = e.message; ctx.azioni.ridisegna(); }
+    },
+  }, 'Cancella dal registro…');
+}
+
+/** L'elenco dei record cancellati, con «Rimetti nel registro» (solo in modalità master). */
+function elencoCancellati(ctx) {
+  const R = statoRegistro(ctx);
+  if (R.copie === undefined || R.copie === null) {
+    R.copie = [];
+    void copieCancellate().then((c) => { R.copie = c; ctx.azioni.ridisegna(); }).catch(() => { R.copie = []; });
+  }
+  if (!R.copie.length && !statoUi(ctx).avvisoCancellato) return null;
+  return h('section', { class: 'riquadro veicoli-cancellati' },
+    h('h3', {}, 'Veicoli cancellati dal registro'),
+    statoUi(ctx).avvisoCancellato ? h('p', { class: 'riquadro attenzione', role: 'status' }, statoUi(ctx).avvisoCancellato) : null,
+    h('ul', {}, R.copie.map((c) => h('li', {}, c.testo, ' ', h('button', {
+      type: 'button', class: 'btn btn-piccolo', 'data-rimetti-veicolo': c.id,
+      onclick: async () => {
+        try {
+          const rec = await ripristinaCopia(c.file);
+          statoUi(ctx).avvisoCancellato = `«${rec.mezzo?.nome ?? rec.id}» (${rec.id}) è di nuovo nel registro.`;
+          R.copie = null; R.stato = 'da-leggere';
+        } catch (e) { R.errore = e.message; }
+        ctx.azioni.ridisegna();
+      },
+    }, 'Rimetti nel registro')))));
 }
 
 const num = (x, d) => (Number.isFinite(Number.parseFloat(String(x).replace(',', '.'))) ? Number.parseFloat(String(x).replace(',', '.')) : d);
@@ -164,7 +216,7 @@ function tabVeicoliRegistro(ctx) {
       gruppo: (si) => scrivi(rec, { ...rec, proprietario: si ? { tipo: 'gruppo' } : { tipo: 'pg', ...(ctx.chi?.pg ? { pg: ctx.chi.pg } : {}), chiave: ctx.chi?.chiave, nome: ctx.chi?.nome } }, si ? 'Veicolo del gruppo.' : 'Veicolo di questo personaggio.'),
       guida: (si) => scrivi(rec, { ...rec, conducente: si ? { ...(ctx.chi?.pg ? { pg: ctx.chi.pg } : {}), chiave: ctx.chi?.chiave, nome: ctx.chi?.nome } : (mio ? null : rec.conducente) }, si ? 'Alla guida.' : null),
       rimuovi: rif.has(rec.id) ? h('button', { type: 'button', class: 'btn', title: 'Toglie il riferimento da questa scheda; il record resta nel registro (veicoli/)', onclick: () => ctx.azioni.veicoli((ctx.scelte.veicoli ?? []).filter((x) => x.rif !== rec.id), `${rec.mezzo.nome}: riferimento tolto dalla scheda.`) }, 'Togli dalla scheda') : null,
-      righe: h('p', { class: 'nota' }, `Registro unico (veicoli/${rec.id}.json, revisione ${rec.revisione}) · proprietario: ${rec.proprietario?.tipo === 'gruppo' ? 'il gruppo' : rec.proprietario?.nome ?? '—'} · conducente: ${rec.conducente?.nome ?? 'nessuno'}${rec.mitragliere ? ` · mitragliere: ${rec.mitragliere.nome}` : ''}`),
+      righe: h('p', { class: 'nota' }, ctx.master ? [pulsanteCancella(ctx, rec), ' '] : null, `Registro unico (veicoli/${rec.id}.json, revisione ${rec.revisione}) · proprietario: ${rec.proprietario?.tipo === 'gruppo' ? 'il gruppo' : rec.proprietario?.nome ?? '—'} · conducente: ${rec.conducente?.nome ?? 'nessuno'}${rec.mitragliere ? ` · mitragliere: ${rec.mitragliere.nome}` : ''}`),
     });
   };
   return [
@@ -175,6 +227,7 @@ function tabVeicoliRegistro(ctx) {
     R.stato === 'errore' ? h('p', { class: 'riquadro errore' }, `Registro dei veicoli non leggibile: ${R.errore}`) : R.errore ? h('p', { class: 'riquadro attenzione' }, R.errore) : null,
     R.avvisi.map((x) => h('p', { class: 'riquadro attenzione' }, x)),
     rotti.map((rotto) => rigaRiferimentoRotto(ctx, rotto, R.record)),
+    ctx.master ? elencoCancellati(ctx) : null,
     statoUi(ctx).aggiungi ? pannelloAggiungi(ctx, async (mezzo) => {
       const r = await scriviVeicolo(nuovoRecord(mezzo, ctx.chi, { gruppo: false, guida: false }));
       if (r.record) { R.record = [...R.record, r.record]; ctx.azioni.veicoli([...(ctx.scelte.veicoli ?? []), riferimento(r.record)], `Aggiunto il veicolo «${mezzo.nome}» al registro.`); }
