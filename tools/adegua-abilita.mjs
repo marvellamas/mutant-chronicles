@@ -87,6 +87,8 @@ export function righeRapporto({ piani }) {
     }
     for (const c of p.casi) out.push(`    da guardare: ${c}`);
     if (p.nota) out.push(`    nota di prima: ${p.nota.abilita.length} Abilità, ${p.nota.eventi.length} eventi, ${p.nota.monteDiPrima} punti liberi di adesso`);
+    // lotto 225 (A.293): le correzioni alle Abilità che `--applica` annullerà, e quelle alle Caratteristiche che restano (dette, perché è il punto in cui si teme il doppio conteggio)
+    if (p.annullate?.length) out.push(`    A.293: con --applica si annullano ${p.annullate.length} correzioni alle Abilità (restano nello storico): ${p.annullate.map((x) => `${x.etichetta}${x.numero !== null ? ` ${x.numero > 0 ? '+' : ''}${x.numero}` : ''}`).join('; ')}. Le correzioni alle Caratteristiche restano attive e non si riapplicano.`);
   }
   // lotto 215, dalla prova generale: con un personaggio ancora al livello 7 `--applica` gli dà il monte di adesso (14) e non quello della destinazione (21).
   // Si dice in fondo al rapporto, dove si guarda prima di decidere, e non solo dentro la sua riga.

@@ -4638,6 +4638,15 @@
     },
     "_nota": "Numeri per il pulsante «Medita» (src/medita.js): il recupero naturale per ora e per fase, il Talento Recupero Mistico; i rapporti di conversione e la Prova per gruppi sono già in chroma.conversione. La Meditazione (PM per ora, ore al giorno) è calcolata dalla scheda (scheda.magia.meditazione, regole.json → meditazione). 20/10/2026."
   },
+  "adeguamento_abilita": {
+    "_nota": "Lotto 225 (A.293, Davide 19/11/2026). Dopo l'adeguamento delle Abilità al profilo 4/7/9/4 (§8.3.1) si annullano, e restano nello storico, le sole correzioni manuali **alle Abilità** (righe del registro del master con chiave «abilita:<nome>») registrate nel giorno indicato: i due +1 ad Armi da mischia, il −1 a Percezione e il −1 a Scienza di Dimitri del 2 novembre 2026. Le correzioni alle **Caratteristiche** dello stesso giorno (DES +2, FOR −1, CAR −1) e quelle già confermate (SAG +2, INT −2) restano attive e **non si applicano una seconda volta**: sono già dentro la Caratteristica, e non consumano né aumentano i 21 punti liberi.",
+    "annulla_correzioni_abilita": {
+      "prefisso_chiave": "abilita:",
+      "giorno": "2026-11-02",
+      "risposta": "A.293",
+      "motivo": "A.293 (Davide, 19/11/2026): dopo l'adeguamento le correzioni manuali alle Abilità del 2 novembre non incidono più sui valori; restano nello storico."
+    }
+  },
   "frequenze": {
     "fonte": "Giocatore 0.54 §3.2 (tabella delle frequenze); A.233 (Davide, 02/11/2026): il capitolo è distinto dall’Atto dei PX; scena e capitolo li comincia il Direttore dalla plancia; gli usi per sessione si rinnovano all’inizio della partita; giorno e settimana seguono il calendario della campagna; i comandi non ripristinano PM, munizioni o altre risorse.",
     "_nota": "Le frequenze degli «usi» dei Talenti (src/usi-talenti.js). «torna»: quando torna disponibile un uso consumato, come lo legge il giocatore (nel titolo); «breve»: lo stesso sul pulsante dell’uso consumato, per non allungare la riga; «a_mano»: quando l’app non ha il momento (Calendario spento, nessun server) e il contatore si rimette con «↺».",

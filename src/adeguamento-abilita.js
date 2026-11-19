@@ -46,10 +46,36 @@ const isOggetto = (x) => x !== null && typeof x === 'object' && !Array.isArray(x
 const somma = (o) => Object.values(o ?? {}).reduce((a, b) => a + (Number.isInteger(b) ? b : 0), 0);
 const pulisci = (o) => Object.fromEntries(Object.entries(o ?? {}).filter(([, n]) => Number.isInteger(n) && n > 0));
 
+/**
+ * A.293 (Davide, 19/11/2026): dopo l'adeguamento si annullano le sole correzioni manuali **alle Abilità** del giorno dichiarato in
+ * `regole.json → adeguamento_abilita.annulla_correzioni_abilita` (per Dimitri: i due +1 ad Armi da mischia, il −1 a Percezione e il −1 a
+ * Scienza del 2 novembre). Restano attive — e **non si riapplicano** — quelle alle Caratteristiche. La riga della nota di prima
+ * (chiave «abilita», senza i due punti) non è una correzione di VA e non si tocca.
+ * @returns le righe (attive) da annullare
+ */
+export function correzioniAbilitaDaAnnullare(correzioni, dati) {
+  const R = dati?.regole?.adeguamento_abilita?.annulla_correzioni_abilita;
+  if (!R) return [];
+  return normalizzaCorrezioni(correzioni).filter((x) => x.stato === 'attiva' && !x?.[MARCA]
+    && typeof x.chiave === 'string' && x.chiave.startsWith(R.prefisso_chiave) && String(x.quando ?? '').slice(0, 10) === R.giorno);
+}
+
 /** Marca della riga di registro che porta la nota: la cerca `notaPerScheda`, e un tablet non la toglie. */
 export const MARCA = 'adeguamentoAbilita';
 
-const personaggio = (o) => ({ creazione: o?.scelte ?? {}, livelli: Array.isArray(o?.livelli) ? o.livelli : [] });
+/**
+ * Il personaggio come lo calcola l'app. **Lotto 225 (A.293):** nel file le correzioni del master stanno in cima (`correzioni_master`),
+ * mentre il calcolo le legge dentro le scelte (`scelte.correzioniMaster`, lo fa `deserializzaPersonaggio`). Questa funzione leggeva
+ * `o.scelte` così com'era sul disco, quindi la procedura calcolava i VA **senza** le correzioni di Caratteristica: per Dimitri
+ * (DES +2, FOR −1, CAR −1, SAG +2, INT −2) **24 Abilità su 24** avevano un VA diverso da quello della sua scheda — la nota di prima,
+ * la colonna «Adesso», il limite e il massimo dei punti. Le correzioni di Caratteristica entrano **una volta** (`carCorrette` impedisce
+ * di riapplicarle più avanti); se le scelte le portano già (il file passato dall'app in memoria) non si sommano ancora.
+ */
+const personaggio = (o) => {
+  const scelte = o?.scelte ?? {};
+  const delle = Array.isArray(scelte.correzioniMaster) && scelte.correzioniMaster.length ? scelte.correzioniMaster : normalizzaCorrezioni(o?.correzioni_master);
+  return { creazione: delle.length ? { ...scelte, correzioniMaster: delle } : scelte, livelli: Array.isArray(o?.livelli) ? o.livelli : [] };
+};
 const livelloDi = (o) => 1 + (Array.isArray(o?.livelli) ? o.livelli.length : 0);
 
 /** Gli eventi che danno Punti Abilità Liberi fino al livello attuale: [{ livello, previsti, punti }]. */
@@ -295,7 +321,7 @@ export function cambiDelProfilo(o, dati) {
 export function pianoAdeguamento(o, dati, { quando = new Date() } = {}) {
   const nome = String(o?.scelte?.nome ?? '').trim() || 'Senza nome';
   const livello = livelloDi(o);
-  const vuoto = { nome, livello, giaFatto: false, bloccato: false, motivo: null, nota: null, monte: null, casi: [], scendono: [], cambi: null, px: null, nuovo: null };
+  const vuoto = { nome, livello, giaFatto: false, bloccato: false, motivo: null, nota: null, monte: null, casi: [], scendono: [], cambi: null, px: null, nuovo: null, annullate: [] };
   if (o?.scelte?.regimeAbilita === PROFILO_NUOVO) return { ...vuoto, giaFatto: true, motivo: 'è già adeguato al profilo 4/7/9/4' };
 
   // A: la nota di prima, prima di qualunque altra cosa. Senza, non si parte.
@@ -319,6 +345,13 @@ export function pianoAdeguamento(o, dati, { quando = new Date() } = {}) {
   }
 
   const riga = rigaNotaDiPrima(nota, { quando });
+  // A.293: le correzioni alle Abilità del giorno dichiarato smettono di contare (restano nel registro, «annullata»)
+  const daAnnullare = correzioniAbilitaDaAnnullare(o.correzioni_master, dati);
+  const idAnnullate = new Set(daAnnullare.map((x) => x.id));
+  const motivoA293 = dati?.regole?.adeguamento_abilita?.annulla_correzioni_abilita?.motivo ?? null;
+  const registroPrima = idAnnullate.size
+    ? normalizzaCorrezioni(o.correzioni_master).map((x) => (idAnnullate.has(x.id) ? { ...x, stato: 'annullata', annullataIl: quando.toISOString(), ...(motivoA293 ? { annullataPer: motivoA293 } : {}) } : x))
+    : o.correzioni_master;
   const svuota = (x, totale) => ({ ...x, puntiDirettore: { quando: quando.toISOString(), motivo: 'Adeguamento straordinario delle Abilità (§8.3.1)', totale, adeguamento: true } });
   const ultimo = nota.eventi.at(-1)?.livello ?? 1;
   // i punti liberi si azzerano tutti; il monte intero va sull'ultimo evento, dove lo stato e i limiti sono quelli
@@ -332,9 +365,10 @@ export function pianoAdeguamento(o, dati, { quando = new Date() } = {}) {
       if (!nota.eventi.some((e) => e.livello === n)) return v;
       return { ...svuota({ ...v, puntiAbilita: {} }, 0) };
     }),
-    correzioni_master: aggiungiCorrezione(o.correzioni_master, {
+    correzioni_master: aggiungiCorrezione(registroPrima, {
       ...riga,
       primaDelAdeguamento: primaDelAdeguamento(o),
+      ...(daAnnullare.length ? { correzioniAnnullate: daAnnullare.map((x) => x.id) } : {}),
       monte: m.monte,
       eventoAssegnazione: ultimo,
       // A.267: le Abilità che perdono VA restano scritte nel file, con i due numeri. Un VA che scende senza
@@ -342,7 +376,8 @@ export function pianoAdeguamento(o, dati, { quando = new Date() } = {}) {
       ...(scendono.length ? { scendonoA267: scendono.map((x) => ({ nome: x.nome, da: x.da, a: x.a, vaPrima: x.vaPrima, vaDopo: x.vaDopo })) } : {}),
     }),
   };
-  return { ...vuoto, nota, monte: m, casi, scendono, cambi, px, nuovo };
+  const annullate = daAnnullare.map((x) => ({ id: x.id, chiave: x.chiave, etichetta: x.etichetta, numero: x.numero ?? null, quando: x.quando }));
+  return { ...vuoto, nota, monte: m, casi, scendono, cambi, px, nuovo, annullate };
 }
 
 /** Il personaggio ha un adeguamento aperto (contrassegno messo, punti ancora da assegnare)? */
@@ -483,7 +518,13 @@ export function annullaAdeguamento(o) {
   const r = righeNota(o?.correzioni_master)[0];
   const prima = r?.primaDelAdeguamento;
   if (!isOggetto(prima)) return { ok: false, motivo: 'questo personaggio non ha una nota di prima da cui tornare indietro', file: null };
-  const correzioni = normalizzaCorrezioni(o.correzioni_master).filter((x) => x.id !== r.id);
+  // A.293: le correzioni alle Abilità che la procedura aveva annullato tornano attive, com'erano (senza i segni dell'annullo)
+  const riattiva = new Set(Array.isArray(r.correzioniAnnullate) ? r.correzioniAnnullate : []);
+  const correzioni = normalizzaCorrezioni(o.correzioni_master).filter((x) => x.id !== r.id).map((x) => {
+    if (!riattiva.has(x.id)) return x;
+    const { annullataIl: _a, annullataPer: _p, ...resto } = x;
+    return { ...resto, stato: 'attiva' };
+  });
   const file = {
     ...o,
     scelte: rimetti(o.scelte, prima.scelte, CHIAVI_SCELTE),

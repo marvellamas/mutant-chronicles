@@ -59,6 +59,16 @@ export function validaDati(dati) {
     return errori;
   }
 
+  // Lotto 225 (A.293): la regola che annulla le correzioni alle Abilità dopo l'adeguamento sta nei dati, e deve essere completa
+  const AA = dati.regole?.adeguamento_abilita?.annulla_correzioni_abilita;
+  if (!isOggetto(AA)) err('regole', 'adeguamento_abilita.annulla_correzioni_abilita', 'manca la regola della A.293 (prefisso, giorno, risposta, motivo)');
+  else {
+    if (!isTesto(AA.prefisso_chiave) || !AA.prefisso_chiave.endsWith(':')) err('regole', 'adeguamento_abilita.annulla_correzioni_abilita.prefisso_chiave', 'serve un prefisso che finisce con «:» (es. «abilita:»): senza i due punti prenderebbe anche la riga della nota di prima («abilita»)');
+    if (!isTesto(AA.giorno) || !/^\d{4}-\d{2}-\d{2}$/.test(AA.giorno)) err('regole', 'adeguamento_abilita.annulla_correzioni_abilita.giorno', 'serve un giorno AAAA-MM-GG');
+    if (!isTesto(AA.risposta) || !/^A\.\d+$/.test(AA.risposta)) err('regole', 'adeguamento_abilita.annulla_correzioni_abilita.risposta', 'serve il numero della risposta (A.nnn): un’eccezione senza motivo è una dimenticanza');
+    if (!isTesto(AA.motivo)) err('regole', 'adeguamento_abilita.annulla_correzioni_abilita.motivo', 'serve il motivo scritto');
+  }
+
   for (const file of FILE_VALIDATI) {
     if (!isOggetto(dati[file])) err(file, '', 'file mancante o non è un oggetto JSON');
     else if (!isTesto(dati[file].versione_manuale)) err(file, 'versione_manuale', 'campo mancante o vuoto');
