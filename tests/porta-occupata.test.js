@@ -59,7 +59,15 @@ function avvia(porta, ...altri) {
 // (prima aspettava comunque otto secondi e poi il rosso diceva solo «false»). Il limite vero è il `timeout` del test.
 const attendi = (cond, avviato = null) => attendiCondizione(cond, { figlio: avviato?.f ?? null, ms: 25000, cosa: 'il server di prova' });
 
-test('un Mutant già acceso: il ping lo dice; senza finestra non si ferma; con --sostituisci si ferma e si riparte', { timeout: 30000 }, async () => {
+// Lotto 226 — il test che scadeva a caso. Un solo test avviava TRE server di prova (circa 4 s ciascuno prima di ascoltare: il
+// server carica e valida tutti i dati) con un tetto di 30 s: da solo ne usava 21–23, cioè il 75% del budget, e con qualunque altra
+// cosa accesa sul PC (un browser di prova, quattro file di test in parallelo) il tetto scadeva senza dire perché. Non dipendeva da
+// una porta: la porta è presa libera a caso a ogni prova. Adesso sono due prove da due server ciascuna (≈ 9–11 s l'una, un terzo del
+// budget), e il tetto di ogni prova è un **tetto contro i blocchi** (90 s), non un budget di prestazioni: ogni attesa dentro è già
+// limitata da sola (25 s, e quando si arrende dice che cosa aspettava e perché il processo è uscito).
+const TETTO_BLOCCHI = 90000;
+
+test('un Mutant già acceso: il ping lo dice; senza finestra non si ferma', { timeout: TETTO_BLOCCHI }, async () => {
   const porta = await portaLibera();
   assert.notEqual(porta, 3000);
   const primo = avvia(porta);
@@ -73,14 +81,23 @@ test('un Mutant già acceso: il ping lo dice; senza finestra non si ferma; con -
   assert.equal(await secondo.fine, 1);
   assert.match(secondo.testo(), /C'è già un Mutant acceso \(versione .+, avviato alle \d\d:\d\d\)\./);
   assert.equal((await chiOccupa(porta)).pid, primo.f.pid);
-  // --sostituisci: il primo si ferma, il terzo prende la porta
+});
+
+test('con --sostituisci il Mutant già acceso si ferma e si riparte', { timeout: TETTO_BLOCCHI }, async () => {
+  const porta = await portaLibera();
+  assert.notEqual(porta, 3000);
+  const primo = avvia(porta);
+  await attendi(async () => (await chiOccupa(porta)).tipo === 'mutant', primo);
+  const pidPrimo = (await chiOccupa(porta)).pid;
+  assert.equal(pidPrimo, primo.f.pid);
+  // --sostituisci: il primo si ferma, il secondo prende la porta
   const terzo = avvia(porta, '--sostituisci');
   await attendi(async () => (await chiOccupa(porta)).pid === terzo.f.pid, terzo);
   await primo.fine;
   assert.match(terzo.testo(), /Fermato\. Riparto/);
 });
 
-test('la porta occupata da un altro programma: lo si dice e non si tocca', { timeout: 20000 }, async () => {
+test('la porta occupata da un altro programma: lo si dice e non si tocca', { timeout: TETTO_BLOCCHI }, async () => {
   const altro = createServer((req, res) => { res.writeHead(404); res.end('niente'); });
   await new Promise((ok) => altro.listen(0, '127.0.0.1', ok));
   const porta = altro.address().port;
