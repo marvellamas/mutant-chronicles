@@ -3457,3 +3457,27 @@ La Neverlost da conservare è quella del gruppo (veimvzoj07y0), con riserve 100/
 Quando un veicolo o una cavalcatura è sulla mappa, l’app deve permettere di far salire e scendere i PG e i PNG. I posti disponibili sono quelli indicati nella scheda del mezzo o della cavalcatura; se la scheda distingue equipaggio e passeggeri, si rispettano le due capienze. A posti esauriti non si può far salire un altro occupante.  
 Spostando la pedina del veicolo o della cavalcatura, si spostano automaticamente tutte e sole le pedine a bordo, senza doverle muovere una per una. Chi scende libera il posto e non segue più il mezzo. Requisito per l’app; implementazione da verificare.
 
+# A.293 — Dimitri: correzioni di Caratteristica del 2 novembre. Risposta approvata da Davide (19/11/2026)
+
+Sì. Dopo il passaggio all’8° livello, Dimitri conserva DES \+2, FOR −1 e CAR −1 del 2 novembre, oltre a SAG \+2 e INT −2 già confermate. Sono modifiche già attive: l’app deve mantenerle, senza applicarle una seconda volta. Non consumano né aumentano i 21 punti liberi da ridistribuire. Delle correzioni manuali del 2 novembre, si annullano soltanto quelle alle Abilità: i due \+1 ad Armi da mischia, il −1 a Percezione e il −1 a Scienza.
+
+# A.289 — Modulo al plasma Banshee: rettifica alla A.279. Risposta approvata da Davide (19/11/2026)
+
+Il Modulo al plasma Banshee appartiene al catalogo Capitol. Nella A.279, «fra i moduli Bauhaus» va letto «fra i moduli Capitol». Il modulo non è in vendita separatamente e si monta soltanto su un Banshee compatibile.
+
+# A.290 — Balestre d’osso e quadrelli dei Mutanti: disponibilità e cessione (19/11/2026)
+
+Balestre d’osso: attualmente ne esistono 16\. I Mutanti le costruiscono per necessità e uso personale, non per venderle. Hanno un valore elevato e i Mutanti difficilmente ne cederebbero più di 3–4 al gruppo. Le 3–4 si riferiscono soltanto alle balestre: non sono una quota garantita né un limite assoluto.  
+Quadrelli normali: attualmente ne esistono 100\. I Mutanti li usano spesso per la caccia e perciò li producono più frequentemente. Valgono più dei quadrelli comuni. La quantità di 3–4 non si applica a questi quadrelli.  
+Quadrelli lunari: attualmente ne esistono 30 e solo lo sciamano dei Mutanti sa costruirli. Sono molto difficili da ottenere e hanno un valore elevato, ma non sono in vendita e non sono ceduti per alcun baratto. I PG possono riceverli soltanto in dono, dopo essersi guadagnati la fiducia dei Mutanti. Nell’app la voce deve indicare questa condizione: il valore monetario non è un prezzo di acquisto.  
+Le quantità descrivono la disponibilità attuale nella campagna, non un limite alla produzione futura. Questa risposta non fissa nuovi importi in crediti né nuove sigle di Reperibilità.
+
+# A.291 — Pietre di Luna intere: sintonizzazione e scadenza del vincolo. Risposta approvata da Davide (19/11/2026)
+
+Inserire nell’app tre voci distinte per le Pietre di Luna intere: 5 PM, 10 PM e 15 PM. Alla sintonizzazione si registra il colore scelto per quella pietra.  
+La scheda mostra un promemoria: il vincolo scade dopo 7 giorni di gioco consecutivi senza contatto. Il Direttore tiene il conto e conferma la scadenza. Solo a quella conferma, per perdita di contatto, la pietra si svuota e torna neutra; l’app non applica la scadenza da sola.
+
+# A.292 — Peso della Cartuccia Stabilizzante. Risposta approvata da Davide (19/11/2026)
+
+Una Cartuccia Stabilizzante pesa 0,10 kg (100 g). Per il calcolo del carico, l’app deve moltiplicare 0,10 kg per il numero di cartucce: 10 cartucce pesano 1 kg. Il valore riguarda soltanto la Cartuccia Stabilizzante.
+
