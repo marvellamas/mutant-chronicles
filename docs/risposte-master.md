@@ -3392,3 +3392,13 @@ Stato di applicazione dei dieci blocchi dell'E&L del 18/11 (testo in `docs/rispo
 **Domande nuove:** **A.294** (l'Elmetto Recon ASA conserva visione notturna, sensori, filtro e +1 Iniziativa?), **A.295** (voci SIA nel catalogo; il «Soprabito ASA riservato» del catalogo è nel manuale SIA), **A.296** (posti delle cavalcature e PNG fuori scontro a bordo). Primo numero libero: **A.297**.
 
 **Armamenti 0.87 recepita** (registro `tools/manuali.json`, testo `docs/manuali-txt/armamenti-0.87.md`, la 0.86 in `archivio/`): cinque punti, tutti sulla dotazione ASA (§7.26) e due richiami; le armi rilette sulla 0.87 danno 0 differenze, quindi solo l'etichetta.
+
+## Lotto 224 — 19/11/2026 — la prova generale della serata, rifatta sull'app di oggi
+
+Nessuna risposta nuova di Davide (l'E&L è invariato dal 18/11). La serata del 23 è stata rifatta per intero su una copia dell'istantanea del 17/11 con i sette PG veri, dal PC del Direttore e da un tablet (`docs/diff-lotto224-2026-11-19.md`): **funziona dall'inizio alla fine e i PX non si muovono**. Due difetti trovati e corretti — la creazione data per «incompleta» dopo l'adeguamento (il pulsante «Sali al livello» sarebbe rimasto spento al livello dopo) e la ricerca nella scheda che non trovava più gli oggetti con il nome di prima (A.278, A.284).
+
+- **A.281 — il modo a mano, coi numeri.** Le quattro correzioni del 2/11 di Dimitri sono nel registro «Modifiche del master» come `VA di Percezione −1`, `VA di Armi da mischia +1`, `VA di Scienza −1`, `VA di Armi da mischia +1` (2/11, 19:32–19:34): annullate dà **Percezione +1, Armi da mischia −2, Scienza +1**. Restano valide `Intelligenza −2` e `Saggezza +2` del 26/10. Procedura in `docs/procedura-serata-adeguamento.md`.
+- **A.280 — errata del manuale.** Veicoli 0.19 §10 scrive ancora 120° per la M606 del FIAT LUX; vale la risposta (180° frontali) e l'app la applica. Nel pacchetto come errata, non come domanda.
+- **A.294** (Elmetto Recon ASA) resta la sola domanda aperta che muove un numero: +1 Iniziativa, +1 Percezione, +2 Tempra contro i veleni inalati, a sei PG su sette.
+
+**Domanda nuova: A.297** — il tiro dei PV e dei PM alla salita di livello si può ripetere finché non si conferma (serve a correggere un tiro inserito male, ma permette di tirare finché non piace il numero): l'app deve bloccarlo dopo il primo? Primo numero libero: **A.298**.
