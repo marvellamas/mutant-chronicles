@@ -3402,3 +3402,10 @@ Nessuna risposta nuova di Davide (l'E&L è invariato dal 18/11). La serata del 2
 - **A.294** (Elmetto Recon ASA) resta la sola domanda aperta che muove un numero: +1 Iniziativa, +1 Percezione, +2 Tempra contro i veleni inalati, a sei PG su sette.
 
 **Domanda nuova: A.297** — il tiro dei PV e dei PM alla salita di livello si può ripetere finché non si conferma (serve a correggere un tiro inserito male, ma permette di tirare finché non piace il numero): l'app deve bloccarlo dopo il primo? Primo numero libero: **A.298**.
+
+## 19/11/2026 — le cinque risposte (lotto 225, `docs/diff-lotto225-2026-11-19.md`)
+- **A.293 — applicata.** Dopo l'8° livello Dimitri conserva DES +2, FOR −1, CAR −1 (2/11) oltre a SAG +2 e INT −2: attive, **una volta sola**, senza toccare i 21 punti; si annullano **solo** le quattro correzioni alle Abilità del 2/11 — e adesso le annulla `--applica`, non più una persona. Trovato e corretto che la procedura ignorava le correzioni di Caratteristica.
+- **A.289 — rettifica alla A.279**: Modulo al plasma Banshee è Capitol, non in vendita da solo, si monta solo su un Banshee compatibile (già nei dati dal 218; test nuovo).
+- **A.292 — applicata**: Cartuccia Stabilizzante 0,10 kg, carico = 0,10 × cartucce.
+- **A.290 — applicata**: balestre d'osso 16, quadrelli normali 100, lunari 30 = disponibilità della campagna, non scorte dell'app; quadrelli lunari non in vendita né baratto, solo in dono dopo la fiducia; il valore non è un prezzo; nessuna sigla di Reperibilità nuova.
+- **A.291 — applicata**: tre Pietre di Luna (5/10/15 PM), colore alla sintonizzazione, promemoria dei 7 giorni; scadenza solo su conferma del Direttore, l'app non la applica da sola. Domanda nuova **A.298** (ultimo contatto). La **A.294** resta aperta (l'integrazione alla A.284 non dice che funzioni abbia l'Elmetto Recon ASA). Primo numero libero: **A.299**.
