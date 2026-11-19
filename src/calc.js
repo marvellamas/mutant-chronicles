@@ -241,9 +241,15 @@ export function validaScelte(scelte, dati) {
     else if (!Number.isInteger(p) || p < 0) err(`puntiAbilitaLiberi.${n}`, 'i punti devono essere interi ≥ 0');
   }
   const spesiAb = somma(pa);
+  // Lotto 165, e lotto 224 anche qui: quando il Direttore ha deciso lui il totale dei punti liberi della creazione
+  // (`scelte.puntiDirettore.totale`) quello è il numero previsto, e la creazione non è «incompleta». Dopo
+  // l'adeguamento delle Abilità (§8.3.1) il totale della creazione è 0, perché i punti si riassegnano tutti
+  // sull'ultimo evento: senza questa riga tutti e sette i PG della serata restavano con «Completa la creazione
+  // prima di salire di livello» e il pulsante «Sali al livello» spento (trovato dalla prova generale del 224).
+  const previstiAb = Number.isInteger(scelte?.puntiDirettore?.totale) ? scelte.puntiDirettore.totale : cr.punti_abilita_liberi;
   // punti in più rispetto alle regole correnti (se un domani i punti calano): si segnalano, non si tolgono
-  if (spesiAb > cr.punti_abilita_liberi) err('puntiAbilitaLiberi', `${spesiAb - cr.punti_abilita_liberi} punti in eccesso rispetto alle regole correnti (${cr.punti_abilita_liberi})`, 'eccesso');
-  if (spesiAb < cr.punti_abilita_liberi) err('puntiAbilitaLiberi', `assegnati ${spesiAb} punti su ${cr.punti_abilita_liberi}`, 'incompleto');
+  if (spesiAb > previstiAb) err('puntiAbilitaLiberi', `${spesiAb - previstiAb} punti in eccesso rispetto alle regole correnti (${previstiAb})`, 'eccesso');
+  if (spesiAb < previstiAb) err('puntiAbilitaLiberi', `assegnati ${spesiAb} punti su ${previstiAb}`, 'incompleto');
 
   const strutturaOk = corp && addestr && classe && errori.every((e) => !e.campo.startsWith('puntiCaratteristica.'));
   if (strutturaOk) {

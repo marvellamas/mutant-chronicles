@@ -6,6 +6,8 @@
 //   gruppo  la famiglia da mostrare («Prova Salvezza», «Abilità», «Talento», «Oggetto»…)
 //   valore  quello che si legge accanto al nome («VA 9», «+2 Percezione»…), o null
 //   tab     la tab da aprire; `cerca` il testo da evidenziare nella pagina
+//   anche   gli altri nomi con cui la voce si trova (nomi_alternativi del catalogo): chi cerca «Elmetto ASA Recon»
+//           deve trovare l'«Elmetto Recon ASA» che il manuale 0.87 ha rinominato (lotto 224, dalla prova della serata)
 //   tiro    se il valore si può tirare (prompt 78): { genere, nome, va } per src/tiri-scheda.js
 
 const senzaAccenti = (s) => String(s ?? '').normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase();
@@ -18,6 +20,8 @@ import { vociProgetti } from './progetti.js';
 export function vociScheda(scheda, sessione = {}, dati = null, { progetti = null, equipaggiamento = null } = {}) {
   const v = [];
   const agg = (gruppo, nome, valore, tab, extra = {}) => { if (nome) v.push({ gruppo, nome: String(nome), valore: valore ?? null, tab, cerca: String(nome), ...extra }); };
+  /** Gli altri nomi di una voce di catalogo: i nomi di prima di una voce rinominata (A.278, A.284) e le varianti. */
+  const altriNomi = (x) => (Array.isArray(x?.def?.nomi_alternativi) ? x.def.nomi_alternativi.filter((n) => typeof n === 'string' && n.trim()) : []);
 
   // Caratteristiche e Prove Salvezza (Identità)
   for (const [sigla, c] of Object.entries(scheda.caratteristiche ?? {})) {
@@ -65,7 +69,7 @@ export function vociScheda(scheda, sessione = {}, dati = null, { progetti = null
   const conPm = new Set((scheda.equipaggiamento?.contenitori ?? []).map((c) => c.uid));
   for (const o of scheda.equipaggiamento?.oggetti ?? []) {
     if (conPm.has(o.uid)) continue;
-    agg('Oggetto', o.nome, o.voce?.quantita > 1 ? `×${o.voce.quantita}` : null, 'inventario');
+    agg('Oggetto', o.nome, o.voce?.quantita > 1 ? `×${o.voce.quantita}` : null, 'inventario', { anche: altriNomi(o) });
   }
   // Stati attivi e note di sessione
   const stati = dati?.regole?.stati?.elenco ?? [];
@@ -94,6 +98,9 @@ export function cercaVoci(voci, testo, { massimo = 40 } = {}) {
     const n = senzaAccenti(x.nome);
     if (n.startsWith(q)) return 0;
     if (n.includes(q)) return 1;
+    // i nomi di prima valgono quanto il nome (dopo di lui): un oggetto rinominato si trova anche col nome che il
+    // giocatore ha in testa — «Elmetto ASA Recon» trova l'«Elmetto Recon ASA» (lotto 224)
+    if ((x.anche ?? []).some((a) => senzaAccenti(a).includes(q))) return 1.5;
     if (senzaAccenti(x.gruppo).includes(q)) return 2;
     if (senzaAccenti(x.valore ?? '').includes(q) || senzaAccenti(x.testo ?? '').includes(q)) return 3;
     return null;
