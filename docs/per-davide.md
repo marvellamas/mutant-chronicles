@@ -2973,6 +2973,22 @@ La scheda mostra un promemoria: il vincolo scade dopo 7 giorni di gioco consecut
 
 Una Cartuccia Stabilizzante pesa 0,10 kg (100 g). Per il calcolo del carico, l’app deve moltiplicare 0,10 kg per il numero di cartucce: 10 cartucce pesano 1 kg. Il valore riguarda soltanto la Cartuccia Stabilizzante.
 
+#### A.288 — Attacchi per forma dei licantropi e bersagli dell’Ammantato. Risposta approvata da Davide (19/11/2026)
+
+Per i cinque licantropi il [Manuale dei Mostri 0.69](https://docs.google.com/document/d/1qScWOJpDjNSw7j5rNUlHGTKPbsUiEgvG/edit) distingue tre forme: umanoide, animale e ibrida. L’app deve mostrare soltanto gli attacchi della forma attiva, come indicato nella colonna «Portata e costo» delle schede.
+
+| Creatura | Umanoide | Animale | Ibrida |
+| :---- | :---- | :---- | :---- |
+| Lupo mannaro | Colpo disarmato | Morso | Artigli, Morso, Colpo disarmato |
+| Orso mannaro | Pugno | Artiglio, Morso | Artiglio, Morso, Pugno |
+| Cinghiale mannaro | Pugno | Zanne | Zanne, Pugno |
+| Ratto mannaro | Colpo disarmato | Morso | Morso, Colpo disarmato |
+| Tigre mannara | Colpo disarmato | Artiglio, Morso | Artiglio, Morso, Colpo disarmato |
+
+Lupo mannaro: in forma animale può usare solo il Morso, al massimo una volta per Round comprese le Opportunità. La seconda AzP resta disponibile per attività o Difese compatibili, non per un secondo Morso.
+
+Ammantato: aperto occupa 2 × 2 Q; raccolto a terra occupa 1 × 1 Q. La postura cambia l’ingombro, non l’elenco degli attacchi. La presa va gestita separatamente: mentre avvolge una vittima può mordere soltanto quella vittima e usare la Coda contro altri bersagli. Ogni attacco costa 1 AzP.
+
 > > ## **8\. Prove da fare**
 
 **Da oggi questa sezione contiene soltanto le cose che puoi fare tu, da solo, dal tuo PC**, sui tuoi file e sui tuoi manuali. Le prove dal tablet e quelle sulle copie le facciamo noi e restano nel nostro progetto: le abbiamo tolte da qui (l’ultima è la serata dell’adeguamento, provata dall’inizio alla fine dal lato dei tablet).
