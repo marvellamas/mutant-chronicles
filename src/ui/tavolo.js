@@ -36,7 +36,7 @@ import { pannelloGalleria, fasciaGalleria, leggiGalleria, nascondiATutti } from 
 import { pannelloPx, leggiPx, salvaPx, patchPgAssegnazione, dbIniziale } from './px-partita.js';
 import { creaArchivioPx, testoSalvataggio } from '../px-archivio.js';
 import { deltaAssegnazione, passaggiDiLivello, frasePassaggio, partitaAssegnata, migraGiocatoriAPgStabile, fileDelGiocatore } from '../px-partita.js';
-import { chiudi as chiudiScontro, cambiaMusica, diTurno, ordineIniziativa, registraIniziative, senzaIniziativaNuovi, avanti, indietro, anteprimaIndietro, reimpostaIniziativa, reimpostaIniziativaDi, dadoIniziativa, registraColpo, annullaUltimoColpo, registraAttacco, registraLancioNemico, righeNuove, riduciNemico, confermaRegimeNemico, aggiungiNemici, registraRiga, cambiaStatoNemico } from '../scontro.js';
+import { chiudi as chiudiScontro, cambiaMusica, diTurno, ordineIniziativa, registraIniziative, senzaIniziativaNuovi, avanti, indietro, anteprimaIndietro, reimpostaIniziativa, reimpostaIniziativaDi, dadoIniziativa, registraColpo, annullaUltimoColpo, registraAttacco, avvisoLimiteAttacco, registraLancioNemico, righeNuove, riduciNemico, confermaRegimeNemico, aggiungiNemici, registraRiga, cambiaStatoNemico } from '../scontro.js';
 import { vociBestiario } from '../nemici.js';
 import { creaCustode } from './ridisegno.js';
 import { avviso, avvisoErrore } from './avvisi.js';
@@ -711,7 +711,7 @@ export function renderTavolo(radice, ctx) {
   };
   const attacca = (p, alTavolo) => {
     if (!stato.scontro) return;
-    apriAttaccoNemico(ctx, p, { bersagli: bersagliPer(p, alTavolo), registra: (a) => modifica((x) => registraAttacco(x, a)), movimentoMappa: () => leggiMovimentoRound(stato.scontro.id, p.id) });
+    apriAttaccoNemico(ctx, p, { bersagli: bersagliPer(p, alTavolo), registra: (a) => modifica((x) => registraAttacco(x, a)), avviso: (att) => avvisoLimiteAttacco(stato.scontro, p, att), movimentoMappa: () => leggiMovimentoRound(stato.scontro.id, p.id) });
   };
   // Lotto 8 (A.73, decisione 8): «Lancia!» di un nemico con un incantesimo completo; i PM si scalano nello scontro
   // dopo il lancio di un incantesimo con danno si sceglie il bersaglio e si apre «Colpito», come per «Attacca»
@@ -1335,7 +1335,7 @@ export function renderTavolo(radice, ctx) {
     const alTavolo = stato.selezione.map((k) => ultimi.get(k) ?? { mancante: k });
     const bersagli = bersagliPer(p, alTavolo);
     bersagli.sort((a, b) => (b.id === idContro) - (a.id === idContro));
-    apriAttaccoNemico(ctx, p, { bersagli, registra: (a) => modifica((x) => registraAttacco(x, a)), dichiarazione, movimentoMappa: () => leggiMovimentoRound(stato.scontro.id, p.id) });
+    apriAttaccoNemico(ctx, p, { bersagli, registra: (a) => modifica((x) => registraAttacco(x, a)), avviso: (att) => avvisoLimiteAttacco(stato.scontro, p, att), dichiarazione, movimentoMappa: () => leggiMovimentoRound(stato.scontro.id, p.id) });
     return true;
   };
   ferma.puoAttaccare = (idDa) => { const p = (stato.scontro?.partecipanti ?? []).find((x) => x.id === idDa); return !!p && p.tipo !== 'pg' && attacchiDi(p).length > 0; };

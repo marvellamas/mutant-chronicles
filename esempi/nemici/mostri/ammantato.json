@@ -63,7 +63,8 @@
       "danno": "2d6+3",
       "natura": "Naturale",
       "portata_q": 1,
-      "ac": 1
+      "ac": 1,
+      "note": "Mentre avvolge una vittima può mordere soltanto quella vittima (A.288)."
     },
     {
       "nome": "Coda",
@@ -72,7 +73,8 @@
       "danno": "1d8+3",
       "natura": "Naturale",
       "portata_q": 2,
-      "ac": 1
+      "ac": 1,
+      "note": "Mentre avvolge una vittima usa la Coda contro gli altri bersagli (A.288)."
     }
   ],
   "capacita": [

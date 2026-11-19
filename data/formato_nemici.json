@@ -243,7 +243,7 @@
     "configurazioni": {
       "tipo": "lista",
       "obbligatorio": false,
-      "descrizione": "Configurazioni di ingombro che il Direttore sceglie durante lo scontro (A.203, 30/10/2026: la Madre delle Murene parzialmente o completamente emersa). Cambiare configurazione cambia lo spazio sulla mappa e nient’altro: PV, PM, Ferite, Stati e Azioni già spese restano. Lo Spazio del profilo è quello della configurazione di partenza.",
+      "descrizione": "Configurazioni di ingombro che il Direttore sceglie durante lo scontro (A.203, 30/10/2026: la Madre delle Murene parzialmente o completamente emersa). Cambiare configurazione cambia lo spazio sulla mappa e nient’altro: PV, PM, Ferite, Stati e Azioni già spese restano. Lo Spazio del profilo è quello della configurazione di partenza. A.288 (19/11/2026): una configurazione può dichiarare `attacchi`, i nomi degli attacchi della scheda che la forma offre (colonna «Portata e costo» del manuale: i licantropi in forma umanoide, animale o ibrida; n forme, non due); senza `attacchi` la forma li offre tutti (l'Ammantato: la postura cambia l'ingombro, non l'elenco). L'app non sceglie la forma: la sceglie il Direttore.",
       "voce": {
         "tipo": "oggetto",
         "campi": {
@@ -287,6 +287,42 @@
           "nota": {
             "tipo": "testo",
             "obbligatorio": false
+          },
+          "attacchi": {
+            "tipo": "lista",
+            "obbligatorio": false,
+            "descrizione": "Nomi degli attacchi della scheda che questa forma offre (A.288). Ogni nome deve esistere fra gli attacchi, e ogni attacco deve stare in almeno una forma.",
+            "voce": {
+              "tipo": "testo"
+            }
+          }
+        }
+      }
+    },
+    "limiti_attacco": {
+      "tipo": "lista",
+      "obbligatorio": false,
+      "descrizione": "Limiti per Round di un attacco, scritti dal manuale (A.288: «massimo un Morso per Round, comprese le Opportunità»). L'app avvisa quando il limite è già raggiunto nel Round, non blocca: l'ultima parola è del Direttore.",
+      "voce": {
+        "tipo": "oggetto",
+        "campi": {
+          "attacco": {
+            "tipo": "testo",
+            "obbligatorio": true
+          },
+          "per_round": {
+            "tipo": "intero",
+            "min": 1,
+            "obbligatorio": true
+          },
+          "comprese_opportunita": {
+            "tipo": "vero_falso",
+            "obbligatorio": true
+          },
+          "fonte": {
+            "tipo": "testo",
+            "obbligatorio": true,
+            "descrizione": "Da dove viene: la risposta e la frase del manuale. Senza fonte il limite non si scrive."
           }
         }
       }

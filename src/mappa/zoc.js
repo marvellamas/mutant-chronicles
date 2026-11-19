@@ -9,6 +9,7 @@
 // esce da quella fascia (anche dopo esserci entrato: attraversare) provoca; entrare o fermarsi dentro no. La ZoC non
 // blocca: segnala. Parametri in data/mappa.json → zoc. Funzioni pure.
 import { converti } from './distanze.js';
+import { attacchiAttuali } from '../scontro.js';
 import { scalaDi } from './scala.js';
 import { dimensioni, chiaveRif, celleToken } from './token.js';
 import { stessaParte } from './area.js';
@@ -17,7 +18,8 @@ import { quotaDi } from './volo.js';
 /** Portata ravvicinata del pezzo in Q: il massimo fra i suoi attacchi ravvicinati (nemici), altrimenti la predefinita. */
 export function portataDi(p, dati) {
   const Z = dati.mappa.zoc;
-  const portate = (p?.scheda?.attacchi ?? []).filter((a) => a.tipo === 'ravvicinato').map((a) => (Number.isInteger(a.portata_q) ? a.portata_q : Z.portata_predefinita));
+  // A.288: la zona di controllo segue gli attacchi della forma in cui la creatura sta adesso
+  const portate = (p?.tipo === 'nemico' ? attacchiAttuali(p) : (p?.scheda?.attacchi ?? [])).filter((a) => a.tipo === 'ravvicinato').map((a) => (Number.isInteger(a.portata_q) ? a.portata_q : Z.portata_predefinita));
   return portate.length ? Math.max(...portate) : Z.portata_predefinita;
 }
 

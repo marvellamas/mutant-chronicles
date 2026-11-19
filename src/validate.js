@@ -3148,6 +3148,16 @@ export function validaNemico(nemico, dati, file = 'nemico') {
     }
   };
   controlla('', { tipo: 'oggetto', campi: formato.campi }, nemico);
+  // A.288 (19/11/2026): gli attacchi per forma. Un nome che la scheda non ha, o un attacco che nessuna forma offre (irraggiungibile
+  // al tavolo), è un dato sbagliato; i limiti per Round vanno su un attacco che esiste e dicono da dove vengono.
+  const nomiAtt = new Set((nemico?.attacchi ?? []).map((a) => a?.nome));
+  const conElenco = (nemico?.configurazioni ?? []).filter((c) => Array.isArray(c?.attacchi));
+  conElenco.forEach((c) => (c.attacchi ?? []).forEach((n) => { if (!nomiAtt.has(n)) err(`configurazioni.${c.id}.attacchi`, `l’attacco «${n}» non è fra gli attacchi della scheda (A.288)`); }));
+  if (conElenco.length) {
+    const offerti = new Set((nemico.configurazioni ?? []).flatMap((c) => (Array.isArray(c.attacchi) ? c.attacchi : [...nomiAtt])));
+    for (const n of nomiAtt) if (!offerti.has(n)) err('attacchi', `«${n}» non è offerto da nessuna forma: al tavolo non si potrebbe mai usare (A.288)`);
+  }
+  (nemico?.limiti_attacco ?? []).forEach((l, i) => { if (!nomiAtt.has(l?.attacco)) err(`limiti_attacco[${i}].attacco`, `«${l?.attacco}» non è fra gli attacchi della scheda (A.288)`); });
   return errori;
 }
 

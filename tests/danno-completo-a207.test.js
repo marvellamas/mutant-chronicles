@@ -8,7 +8,7 @@ import assert from 'node:assert/strict';
 import { readFileSync, readdirSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import { datiReali } from './helpers.js';
-import { calcolaAttaccoNemico } from '../src/nemico-attacco.js';
+import { calcolaAttaccoNemico, attacchiDi } from '../src/nemico-attacco.js';
 import { leggiDannoMoltiplicato } from '../src/danno.js';
 import { scelteCreatura, profiloNemico } from '../src/crea-nemico.js';
 import { profiloPng, classiPng, sommaEqDanno } from '../src/png-generici.js';
@@ -31,8 +31,13 @@ function tuttiINemici() {
 /** Per ogni attacco del nemico: il danno calcolato è quello della scheda, con il solo moltiplicatore in più, senza bonus aggiunti. */
 function controlla(nemico, nome) {
   const p = { id: 'x', tipo: 'nemico', scheda: nemico, stati: [], intensita: {} };
-  (nemico.attacchi ?? []).forEach((a, i) => {
-    const r = calcolaAttaccoNemico(p, i, {}, dati);
+  (nemico.attacchi ?? []).forEach((a) => {
+    // lotto 227 (A.288): un attacco si calcola nella forma che lo offre (senza forme dichiarate, nella scheda così com'è)
+    const forma = (nemico.configurazioni ?? []).find((c) => Array.isArray(c.attacchi) && c.attacchi.includes(a.nome));
+    const q = forma ? { ...p, configurazione: forma.id } : p;
+    const i = attacchiDi(q).findIndex((x) => x.nome === a.nome);
+    assert.ok(i >= 0, `${nome}: ${a.nome}: nessuna forma lo offre`);
+    const r = calcolaAttaccoNemico(q, i, {}, dati);
     const letto = leggiDannoMoltiplicato(a.danno);
     const d = r.risultato.danno ?? null;
     if (d) {

@@ -162,7 +162,24 @@
         "passo": 6,
         "corsa": 12,
         "scatto": 18
-      }
+      },
+      "attacchi": [
+        "Pugno"
+      ]
+    },
+    {
+      "id": "ibrida",
+      "nome": "Ibrida",
+      "spazio": "1 Q",
+      "movimento": {
+        "passo": 6,
+        "corsa": 12,
+        "scatto": 18
+      },
+      "attacchi": [
+        "Zanne",
+        "Pugno"
+      ]
     },
     {
       "id": "cinghiale",
@@ -172,7 +189,18 @@
         "passo": 8,
         "corsa": 16,
         "scatto": 24
-      }
+      },
+      "attacchi": [
+        "Zanne"
+      ]
+    }
+  ],
+  "limiti_attacco": [
+    {
+      "attacco": "Zanne",
+      "per_round": 1,
+      "comprese_opportunita": true,
+      "fonte": "Mostri 0.69, scheda della creatura: «Una sola carica e un solo attacco di Zanne nel Round, comprese le Opportunità»"
     }
   ]
 }

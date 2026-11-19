@@ -89,9 +89,10 @@ export const tiriPerRegistro = (tiri, st, e) => tiri.map((t, i) => ({ valore: st
  * Apre la scelta dell'attacco e del bersaglio, poi il pannello.
  * @param p partecipante che attacca (nemico o manuale con attacco)
  * @param bersagli [{ id, nome, descrizione, colpito: (proposta) → apre «Colpito» }] (l'attaccante escluso)
+ * @param avviso (attacco) → testo o null: un avviso che non blocca, per esempio il limite «un Morso per Round» (A.288)
  * @param registra async ({ attaccante, bersaglio, arma, va, tiri, esito }) → true se scritto nel registro
  */
-export function apriAttaccoNemico(ctx, p, { bersagli, registra, dichiarazione = {}, movimentoMappa = null }) {
+export function apriAttaccoNemico(ctx, p, { bersagli, registra, dichiarazione = {}, movimentoMappa = null, avviso = null }) {
   const attacchi = attacchiDi(p);
   const contenitore = h('div', { class: 'attacco-nemico' });
   document.body.append(contenitore);
@@ -108,7 +109,11 @@ export function apriAttaccoNemico(ctx, p, { bersagli, registra, dichiarazione = 
       h('div', { class: 'scelta-attacco' }, h('p', { class: 'scelta-titolo' }, 'Attacco'),
         h('div', { class: 'scelta-pulsanti scelta-colonna' }, attacchi.map((a, i) => h('button', {
           type: 'button', class: `btn scelta-btn${i === st.indice ? ' scelta' : ''}`, 'aria-pressed': String(i === st.indice), onclick: () => { st.indice = i; disegna(); },
-        }, descriviAttacco(a))))),
+        }, descriviAttacco(a))),
+        // A.288: un limite per Round già raggiunto si dice, non si impone (l'ultima parola è del Direttore)
+        (() => { const t = avviso?.(attacchi[st.indice]); return t ? h('p', { class: 'nota avviso-limite-attacco', role: 'note' }, t) : null; })(),
+        // la nota dell'attacco (A.288: i bersagli dell'Ammantato mentre avvolge una vittima) si legge già qui, prima di scegliere
+        attacchi[st.indice]?.note ? h('p', { class: 'nota nota-attacco' }, attacchi[st.indice].note) : null)),
       h('div', { class: 'scelta-attacco' }, h('p', { class: 'scelta-titolo' }, 'Bersaglio'),
         bersagli.length ? h('div', { class: 'scelta-pulsanti scelta-colonna' }, bersagli.map((b) => h('button', {
           type: 'button', class: `btn scelta-btn${b.id === st.bersaglio ? ' scelta' : ''}`, 'aria-pressed': String(b.id === st.bersaglio), onclick: () => { st.bersaglio = b.id; disegna(); },

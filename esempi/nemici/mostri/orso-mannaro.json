@@ -171,18 +171,49 @@
         "passo": 6,
         "corsa": 12,
         "scatto": 18
-      }
+      },
+      "attacchi": [
+        "Pugno"
+      ]
     },
     {
-      "id": "orso",
-      "nome": "Orso e ibrido",
+      "id": "ibrida",
+      "nome": "Ibrida",
       "spazio": "2 × 2 Q",
       "movimento": {
         "passo": 8,
         "corsa": 16,
         "scatto": 24
       },
-      "nota": "Arrampicata 6 Q al Passo"
+      "nota": "Arrampicata 6 Q al Passo. Il manuale scrive «orso e ibrido» con gli stessi valori",
+      "attacchi": [
+        "Artiglio",
+        "Morso",
+        "Pugno"
+      ]
+    },
+    {
+      "id": "orso",
+      "nome": "Orso",
+      "spazio": "2 × 2 Q",
+      "movimento": {
+        "passo": 8,
+        "corsa": 16,
+        "scatto": 24
+      },
+      "nota": "Arrampicata 6 Q al Passo. Il manuale scrive «orso e ibrido» con gli stessi valori",
+      "attacchi": [
+        "Artiglio",
+        "Morso"
+      ]
+    }
+  ],
+  "limiti_attacco": [
+    {
+      "attacco": "Morso",
+      "per_round": 1,
+      "comprese_opportunita": true,
+      "fonte": "Mostri 0.69, scheda della creatura: «Massimo un Morso per Round, comprese le Opportunità»"
     }
   ]
 }

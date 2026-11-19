@@ -85,5 +85,6 @@ test('le creature a due forme: letta quella di base, e l’altra dichiarata (A.2
   assert.match(testo, /1 × 2 Q/, 'e il suo ingombro');
   // lotto 218, A.273: le due forme sono due configurazioni di una creatura sola; lo Spazio di base è quello della forma di base
   assert.equal(lupo.spazio, '1 Q', 'umanoide');
-  assert.deepEqual(lupo.configurazioni.map((c) => c.spazio), ['1 Q', '1 × 2 Q']);
+  // lotto 227 (A.288): sono n forme, le tre del manuale (umanoide, ibrida, animale); umanoide e ibrida hanno lo stesso spazio, scritto dal manuale
+  assert.deepEqual(lupo.configurazioni.map((c) => c.spazio), ['1 Q', '1 Q', '1 × 2 Q']);
 });

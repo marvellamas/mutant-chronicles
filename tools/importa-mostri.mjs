@@ -133,17 +133,41 @@ const NON_CREATURE = { 'Bozzoli di cristallo': 'ambientazione dell’incontro a 
  * A.273 (risposta di Davide del 17/11/2026): le creature con due forme — licantropi e Ammantato — sono una creatura sola,
  * con una scheda e una pedina; il cambio di forma aggiorna ingombro e movimento mantenendo identità, Iniziativa, PV, Stati
  * ed effetti, come per la Madre delle Murene (A.203). Il manuale le scrive in una cella («lupo: 8 / 16 / 24 Q, 1 × 2 Q»): il
- * lettore legge la forma di base e le altre forme stanno qui, per id, con i valori che il manuale dà. Gli attacchi e i
- * valori specifici di ogni forma non sono strutturati nel manuale: restano com'erano (domanda A.288).
+ * lettore legge la forma di base e le altre forme stanno qui, per id, con i valori che il manuale dà. Gli attacchi di
+ * ogni forma (A.288, risposta del 19/11/2026) stanno nella stessa tabella: sono quelli della colonna «Portata e costo».
  */
 const P = (passo) => ({ passo, corsa: passo * 2, scatto: passo * 3 });
 export const CONFIGURAZIONI_A273 = {
-  'lupo-mannaro': [['umanoide', 'Umanoide', '1 Q', P(6)], ['lupo', 'Lupo', '1 × 2 Q', P(8)]],
-  'orso-mannaro': [['umanoide', 'Umanoide', '1 Q', P(6)], ['orso', 'Orso e ibrido', '2 × 2 Q', P(8), 'Arrampicata 6 Q al Passo']],
-  'cinghiale-mannaro': [['umanoide', 'Umanoide', '1 Q', P(6)], ['cinghiale', 'Cinghiale', '1 × 2 Q', P(8)]],
-  'ratto-mannaro': [['umanoide', 'Umanoide', '1 Q', P(6)], ['ratto', 'Ratto gigante', '1 Q', P(8), '1 Q condivisibile senza bloccare il passaggio']],
-  'tigre-mannara': [['umanoide', 'Umanoide', '1 Q', P(6)], ['ibrida', 'Ibrida', '2 × 2 Q', P(6)], ['tigre', 'Tigre', '1 × 2 Q', P(8)]],
+  // [id, nome, spazio, movimento, nota, attacchi della forma]. A.288 (19/11/2026): gli attacchi di ogni forma sono quelli della colonna
+  // «Portata e costo» del manuale ("soltanto ibrido", "animale o ibrido", "umanoide o ibrido"), uguali alla tabella di Davide; i valori di
+  // ibrido (spazio e movimento) sono quelli che il manuale scrive nella riga «Movimento e spazio», mai dedotti (tests/forme-a288-227.test.js
+  // li rilegge dal manuale). Ordine: la forma di base (umanoide, o aperto) per prima, poi ibrida, poi animale; n forme, non due.
+  'lupo-mannaro': [['umanoide', 'Umanoide', '1 Q', P(6), null, ['Colpo disarmato']], ['ibrida', 'Ibrida', '1 Q', P(6), null, ['Artigli', 'Morso', 'Colpo disarmato']], ['lupo', 'Lupo', '1 × 2 Q', P(8), null, ['Morso']]],
+  'orso-mannaro': [['umanoide', 'Umanoide', '1 Q', P(6), null, ['Pugno']], ['ibrida', 'Ibrida', '2 × 2 Q', P(8), 'Arrampicata 6 Q al Passo. Il manuale scrive «orso e ibrido» con gli stessi valori', ['Artiglio', 'Morso', 'Pugno']], ['orso', 'Orso', '2 × 2 Q', P(8), 'Arrampicata 6 Q al Passo. Il manuale scrive «orso e ibrido» con gli stessi valori', ['Artiglio', 'Morso']]],
+  'cinghiale-mannaro': [['umanoide', 'Umanoide', '1 Q', P(6), null, ['Pugno']], ['ibrida', 'Ibrida', '1 Q', P(6), null, ['Zanne', 'Pugno']], ['cinghiale', 'Cinghiale', '1 × 2 Q', P(8), null, ['Zanne']]],
+  'ratto-mannaro': [['umanoide', 'Umanoide', '1 Q', P(6), null, ['Colpo disarmato']], ['ibrida', 'Ibrida', '1 Q', P(6), null, ['Morso', 'Colpo disarmato']], ['ratto', 'Ratto gigante', '1 Q', P(8), '1 Q condivisibile senza bloccare il passaggio', ['Morso']]],
+  'tigre-mannara': [['umanoide', 'Umanoide', '1 Q', P(6), null, ['Colpo disarmato']], ['ibrida', 'Ibrida', '2 × 2 Q', P(6), null, ['Artiglio', 'Morso', 'Colpo disarmato']], ['tigre', 'Tigre', '1 × 2 Q', P(8), null, ['Artiglio', 'Morso']]],
+  // la postura dell'Ammantato cambia l'ingombro, non l'elenco degli attacchi (A.288): nessun elenco per forma
   'ammantato': [['aperto', 'Aperto', '2 × 2 Q'], ['raccolto', 'Raccolto a terra', '1 Q']],
+};
+
+/**
+ * A.288 — i limiti per Round, scritti dal manuale e non dedotti: «Massimo un Morso per Round comprese le Opportunità» (lupo mannaro:
+ * lo conferma la risposta di Davide del 19/11; orso, tigre e ratto: la loro scheda dice la stessa frase), «un solo attacco di Zanne
+ * nel Round, comprese le Opportunità» (cinghiale). L'app avvisa, non blocca.
+ */
+const LIMITE = (attacco, frase) => [{ attacco, per_round: 1, comprese_opportunita: true, fonte: `Mostri 0.69, scheda della creatura: «${frase}»` }];
+export const LIMITI_A288 = {
+  'lupo-mannaro': [{ ...LIMITE('Morso', 'Massimo un Morso per Round comprese le Opportunità')[0], fonte: 'A.288 (Davide, 19/11/2026); Mostri 0.69, Lupo mannaro: «Massimo un Morso per Round comprese le Opportunità»' }],
+  'orso-mannaro': LIMITE('Morso', 'Massimo un Morso per Round, comprese le Opportunità'),
+  'tigre-mannara': LIMITE('Morso', 'Massimo un Morso per Round, comprese le Opportunità'),
+  'ratto-mannaro': LIMITE('Morso', 'Massimo un Morso per Round comprese le Opportunità'),
+  'cinghiale-mannaro': LIMITE('Zanne', 'Una sola carica e un solo attacco di Zanne nel Round, comprese le Opportunità'),
+};
+
+/** A.288 — l'Ammantato: i bersagli cambiano mentre avvolge una vittima; è una nota dell'attacco, non un blocco (la presa si gestisce a parte). */
+export const NOTE_ATTACCHI_A288 = {
+  ammantato: { Morso: 'Mentre avvolge una vittima può mordere soltanto quella vittima (A.288).', Coda: 'Mentre avvolge una vittima usa la Coda contro gli altri bersagli (A.288).' },
 };
 
 /**
@@ -814,9 +838,10 @@ export function leggiScheda(sch, comuni = [], colonna = null, blocco = null) {
   if (sp.spazio) o.spazio = sp.spazio;
   // A.273: le forme dei licantropi e dell'Ammantato (la forma di base è la prima: umanoide, o aperto)
   if (CONFIGURAZIONI_A273[o.id]) {
-    o.configurazioni = CONFIGURAZIONI_A273[o.id].map(([id, nome, spazio, movimento, nota]) => ({ id, nome, spazio, ...(movimento ? { movimento } : {}), ...(nota ? { nota } : {}) }));
+    o.configurazioni = CONFIGURAZIONI_A273[o.id].map(([id, nome, spazio, movimento, nota, attacchi]) => ({ id, nome, spazio, ...(movimento ? { movimento } : {}), ...(nota ? { nota } : {}), ...(attacchi ? { attacchi } : {}) }));
+    if (LIMITI_A288[o.id]) o.limiti_attacco = LIMITI_A288[o.id];
     o.spazio = o.spazio ?? CONFIGURAZIONI_A273[o.id][0][2];
-    nonCapito.push('Due forme (A.273): configurazioni per ingombro e movimento; gli attacchi di ogni forma restano come nel profilo di base');
+    nonCapito.push('Forme (A.273, A.288): configurazioni per ingombro, movimento e attacchi di ogni forma (dalla colonna «Portata e costo»)');
   }
   // A.202 (30/10/2026): le forme della Murena della Roccia cucciolo
   if (FORME_A202[o.id]) o.forme = FORME_A202[o.id];

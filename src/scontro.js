@@ -909,7 +909,7 @@ export function registraAttacco(s, a, adesso) {
   const t = conRiga(s, testoAttacco(a), adesso);
   // A.254 (06/11/2026): la riga porta chi ha attaccato e in che Round, per sapere se la testa di una creatura si può
   // ancora spostare (non fra un attacco e l'altro per cercare una linea più favorevole)
-  if (a?.attaccante) t.registro[t.registro.length - 1].attacco = { da: a.attaccante };
+  if (a?.attaccante) t.registro[t.registro.length - 1].attacco = { da: a.attaccante, ...(a.arma ? { arma: a.arma } : {}) };
   return t;
 }
 
@@ -1040,7 +1040,58 @@ export function cambiaConfigurazione(s, id, idConfig, adesso) {
   if (!c) throw new Error(`${p.nome}: configurazione «${idConfig}» non prevista dal profilo`);
   if (configurazioneAttuale(p)?.id === c.id && (p.configurazione ?? c.id) === c.id) return s;
   const t = { ...s, partecipanti: s.partecipanti.map((x) => (x.id === id ? { ...x, configurazione: c.id } : x)) };
-  return conRiga(t, `${p.nome}: ${c.nome} (${c.spazio}). PV, PM, Ferite, Stati e Azioni già spese restano.`, adesso);
+  const att = attacchiAttuali({ ...p, configurazione: c.id }).map((a) => a.nome);
+  const conAtt = Array.isArray(c.attacchi) ? ` Attacchi di questa forma: ${att.join(', ') || 'nessuno'}.` : '';
+  // la frase di prima (A.203) resta identica dove la forma non dichiara attacchi; con gli attacchi (A.288) dice anche che gli effetti restano
+  return conRiga(t, `${p.nome}: ${c.nome} (${c.spazio}).${conAtt} ${conAtt ? 'PV, PM, effetti, Ferite, Stati e Azioni già spese restano.' : 'PV, PM, Ferite, Stati e Azioni già spese restano.'}`, adesso);
+}
+
+/**
+ * A.288 (risposta di Davide del 19/11/2026) — gli attacchi della forma attuale. Una creatura a più forme (i licantropi: umanoide,
+ * animale, ibrida; n forme, non due: la tigre mannara ne ha tre) è una creatura sola con una scheda sola; ogni configurazione che
+ * dichiara `attacchi` (i nomi, come nella scheda) offre **solo** quegli attacchi, come dice la colonna «Portata e costo» del
+ * manuale. Una configurazione senza `attacchi` (l'Ammantato aperto o raccolto: la postura cambia l'ingombro, non l'elenco; la
+ * Madre delle Murene) li offre tutti, com'è sempre stato. L'app non sceglie la forma: la sceglie il Direttore.
+ */
+export function attacchiAttuali(p) {
+  const tutti = p?.scheda?.attacchi ?? [];
+  const conf = configurazioneAttuale(p);
+  if (!Array.isArray(conf?.attacchi)) return tutti;
+  return tutti.filter((a) => conf.attacchi.includes(a.nome));
+}
+
+/** Gli attacchi della scheda che la forma attuale non offre (per dirlo al Direttore, senza nasconderli in silenzio). */
+export function attacchiNonInForma(p) {
+  const offerti = new Set(attacchiAttuali(p).map((a) => a.nome));
+  return (p?.scheda?.attacchi ?? []).filter((a) => !offerti.has(a.nome));
+}
+
+/**
+ * A.288 — «massimo un Morso per Round, comprese le Opportunità» (lupo mannaro; per gli altri licantropi lo scrive la loro scheda
+ * del Manuale dei Mostri 0.69): quante volte `nomeAttacco` è già stato usato da `p` in questo Round. Si leggono gli attacchi
+ * registrati con quel nome e, solo se la forma attuale non ha altro attacco (il lupo in forma animale ha il solo Morso), gli
+ * Attacchi di Opportunità segnalati dalla mappa: una riga di Opportunità non dice con quale attacco è stata fatta.
+ */
+export function usiAttaccoNelRound(s, p, nomeAttacco) {
+  const reg = s?.registro ?? [];
+  const diQuestoRound = reg.filter((r) => r.round === s?.round);
+  let n = diQuestoRound.filter((r) => r.attacco?.da === p.nome && r.attacco?.arma === nomeAttacco).length;
+  const sole = attacchiAttuali(p);
+  if (sole.length === 1 && sole[0].nome === nomeAttacco) n += diQuestoRound.filter((r) => r.opportunita?.da === p.id).length;
+  return n;
+}
+
+/**
+ * A.288 — l'avviso (mai un blocco: l'ultima parola è del Direttore) se `attacco` ha un limite per Round (`limiti_attacco` della
+ * scheda) e il limite è già raggiunto. null se non c'è un limite o non è raggiunto.
+ */
+export function avvisoLimiteAttacco(s, p, attacco) {
+  const nome = typeof attacco === 'string' ? attacco : attacco?.nome;
+  const lim = (p?.scheda?.limiti_attacco ?? []).find((l) => l.attacco === nome);
+  if (!lim) return null;
+  const usi = usiAttaccoNelRound(s, p, nome);
+  if (usi < lim.per_round) return null;
+  return `${nome}: massimo ${lim.per_round} per Round${lim.comprese_opportunita ? ', comprese le Opportunità' : ''}; in questo Round ${p.nome} l’ha già usato (${usi}). Decidi tu se vale ancora (A.288).`;
 }
 
 /**

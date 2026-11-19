@@ -8,11 +8,14 @@ import { calcolaAttaccoDistanza, calcolaAttaccoRavvicinato, dichiarazioneDistanz
 import { catalogo } from './equipaggiamento.js';
 import { penalitaStatiAbilita } from './condizioni.js';
 import { leggiDannoMoltiplicato } from './danno.js';
-import { formaAttuale } from './scontro.js';
+import { formaAttuale, attacchiAttuali } from './scontro.js';
 
-/** Attacchi di un partecipante dello scontro: quelli del tipo di nemico, o quello scritto a mano. */
+/**
+ * Attacchi di un partecipante dello scontro: quelli del tipo di nemico **nella forma in cui sta adesso** (A.288: l'umanoide non
+ * morde, il lupo non usa gli Artigli), o quello scritto a mano.
+ */
 export function attacchiDi(p) {
-  if (p?.tipo === 'nemico') return p.scheda?.attacchi ?? [];
+  if (p?.tipo === 'nemico') return attacchiAttuali(p);
   if (p?.tipo === 'manuale' && p.attacco) return [p.attacco];
   return [];
 }

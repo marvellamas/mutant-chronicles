@@ -40,7 +40,7 @@ export async function salvaNemico(n) {
 
 import { capacitaDi, avvisoUsi, testoUsi } from '../capacita-nemico.js';
 import { apriTiro } from './tira-valore.js';
-import { configurazioneAttuale, cambiaConfigurazione, formaAttuale, cambiaForma } from '../scontro.js';
+import { configurazioneAttuale, cambiaConfigurazione, formaAttuale, cambiaForma, attacchiAttuali, attacchiNonInForma } from '../scontro.js';
 import { leggiDannoMoltiplicato } from '../danno.js';
 import { spazioEffettivo } from '../mappa/token.js';
 
@@ -466,7 +466,9 @@ export function cartaNemico(ctx, p, { modifica, durate = [], diTurnoOra = false,
       } }, h('option', { value: '' }, '+ Stato'), aggiungibili.map((s) => h('option', { value: s.id }, s.nome))) : null),
     resistenze.length ? h('p', { class: 'nota resistenze-nemico' }, resistenze.join(' · ')) : null,
     n.abilita?.length ? h('p', { class: 'nota abilita-nemico' }, 'Abilità: ', n.abilita.map((a) => `${a.nome} ${numero(a.va)}`).join(' · ')) : null,
-    n.attacchi.length ? h('ul', { class: 'plancia-armi' }, n.attacchi.map(attacco)) : h('p', { class: 'nota' }, 'Nessun attacco.'),
+    // A.288: gli attacchi della forma attuale; quelli che la forma non offre si dicono, non spariscono in silenzio
+    attacchiAttuali(p).length ? h('ul', { class: 'plancia-armi' }, attacchiAttuali(p).map(attacco)) : h('p', { class: 'nota' }, 'Nessun attacco.'),
+    attacchiNonInForma(p).length ? h('p', { class: 'nota attacchi-fuori-forma' }, `In questa forma non usa: ${attacchiNonInForma(p).map((a) => a.nome).join(', ')} (A.288).`) : null,
     n.incantesimi?.length ? h('ul', { class: 'plancia-armi incantesimi-nemico', 'aria-label': 'Incantesimi' }, n.incantesimi.map(incantesimo)) : null,
     // A.115: descrizione completa e i soli parametri che il profilo dà; con un limite d'uso, il contatore
     n.capacita?.length ? h('details', { class: 'capacita-nemico' }, h('summary', {}, `Capacità speciali (${n.capacita.length})`),

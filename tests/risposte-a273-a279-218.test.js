@@ -129,8 +129,9 @@ test('A.273: licantropi e Ammantato sono una creatura sola con più configurazio
     assert.deepEqual(validaNemico(schede[id], dati, id), [], id);
   }
   const lupo = schede['lupo-mannaro'];
-  assert.deepEqual(lupo.configurazioni.map((c) => [c.id, c.spazio]), [['umanoide', '1 Q'], ['lupo', '1 × 2 Q']]);
-  assert.deepEqual(lupo.configurazioni[1].movimento, { passo: 8, corsa: 16, scatto: 24 });
+  // lotto 227 (A.288): sono n forme, non due — le tre del manuale (umanoide, ibrida, animale), con i valori che il manuale scrive
+  assert.deepEqual(lupo.configurazioni.map((c) => [c.id, c.spazio]), [['umanoide', '1 Q'], ['ibrida', '1 Q'], ['lupo', '1 × 2 Q']]);
+  assert.deepEqual(lupo.configurazioni[2].movimento, { passo: 8, corsa: 16, scatto: 24 });
   assert.deepEqual(schede.ammantato.configurazioni.map((c) => c.spazio), ['2 × 2 Q', '1 Q']);
 });
 

@@ -252,7 +252,11 @@ export function adattaToken(token, pezzo, griglia) {
   const centro = prima ? [token.q[0] + prima.centro[0], token.q[1] + prima.centro[1]] : [token.q[0] + w / 2, token.q[1] + h / 2];
   // A.223: con la misura nuova la testa torna automatica (il muso è altrove)
   const { angolo, base, perno, testa: _testa, ...resto } = token;
-  const dentro = (x, y, ww, hh) => [Math.max(0, Math.min(griglia.colonne - ww, Math.round(x))), Math.max(0, Math.min(griglia.righe - hh, Math.round(y)))];
+  // Lotto 227 (A.288, la prova nel browser): il centro del token resta, ma una misura di parità diversa (1 × 1 ↔ 2 × 2) cade a metà
+  // quadretto: a parità si sceglie il lato dell'origine di prima (`q`), così «grande poi piccolo» riporta la pedina dov'era invece di
+  // spostarla di un quadretto in diagonale a ogni andata e ritorno di forma.
+  const verso = (v, da) => { const f = Math.floor(v); return v - f === 0.5 ? (da <= f ? f : f + 1) : Math.round(v); };
+  const dentro = (x, y, ww, hh) => [Math.max(0, Math.min(griglia.colonne - ww, verso(x, token.q[0]))), Math.max(0, Math.min(griglia.righe - hh, verso(y, token.q[1])))];
   if (nuovaBase[0] === nuovaBase[1]) {
     const [x, y] = dentro(centro[0] - nuovaBase[0] / 2, centro[1] - nuovaBase[0] / 2, nuovaBase[0], nuovaBase[0]);
     return { ...resto, q: [x, y], ingombro: nuovaBase[0] };

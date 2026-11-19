@@ -175,7 +175,25 @@
         "passo": 6,
         "corsa": 12,
         "scatto": 18
-      }
+      },
+      "attacchi": [
+        "Colpo disarmato"
+      ]
+    },
+    {
+      "id": "ibrida",
+      "nome": "Ibrida",
+      "spazio": "1 Q",
+      "movimento": {
+        "passo": 6,
+        "corsa": 12,
+        "scatto": 18
+      },
+      "attacchi": [
+        "Artigli",
+        "Morso",
+        "Colpo disarmato"
+      ]
     },
     {
       "id": "lupo",
@@ -185,7 +203,18 @@
         "passo": 8,
         "corsa": 16,
         "scatto": 24
-      }
+      },
+      "attacchi": [
+        "Morso"
+      ]
+    }
+  ],
+  "limiti_attacco": [
+    {
+      "attacco": "Morso",
+      "per_round": 1,
+      "comprese_opportunita": true,
+      "fonte": "A.288 (Davide, 19/11/2026); Mostri 0.69, Lupo mannaro: «Massimo un Morso per Round comprese le Opportunità»"
     }
   ]
 }

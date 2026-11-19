@@ -166,7 +166,24 @@
         "passo": 6,
         "corsa": 12,
         "scatto": 18
-      }
+      },
+      "attacchi": [
+        "Colpo disarmato"
+      ]
+    },
+    {
+      "id": "ibrida",
+      "nome": "Ibrida",
+      "spazio": "1 Q",
+      "movimento": {
+        "passo": 6,
+        "corsa": 12,
+        "scatto": 18
+      },
+      "attacchi": [
+        "Morso",
+        "Colpo disarmato"
+      ]
     },
     {
       "id": "ratto",
@@ -177,7 +194,18 @@
         "corsa": 16,
         "scatto": 24
       },
-      "nota": "1 Q condivisibile senza bloccare il passaggio"
+      "nota": "1 Q condivisibile senza bloccare il passaggio",
+      "attacchi": [
+        "Morso"
+      ]
+    }
+  ],
+  "limiti_attacco": [
+    {
+      "attacco": "Morso",
+      "per_round": 1,
+      "comprese_opportunita": true,
+      "fonte": "Mostri 0.69, scheda della creatura: «Massimo un Morso per Round comprese le Opportunità»"
     }
   ]
 }
