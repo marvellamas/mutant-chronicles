@@ -23,6 +23,7 @@ import { conManifestazione, manifestazioniDi, sceltaLibera } from './manifestazi
 import { tipoRiserva, alimentazione as alimentazioneRiserva, fontePerPg } from './fonti.js';
 import { rigaProvenienzaVoce } from './provenienza-catalogo.js';
 import { bonusFocalizzatore } from './cyberarma.js';
+import { infoPietra, COLORI_PIETRA } from './pietre-di-luna.js';
 
 export const TIPI = ['arma_ravvicinata', 'arma_distanza', 'scudo', 'armatura', 'rinforzo', 'elmetto', 'accessorio', 'munizioni', 'sanitario', 'artefatto', 'impianto', 'altro'];
 
@@ -240,6 +241,8 @@ export function infoArtefatto(def, dati) {
  * sintonizzazione si ricava dalla potenza (§7.10); energia e capacita_pm ne fanno un contenitore.
  */
 export function infoArtefattoVoce(r, dati) {
+  // A.291 (lotto 225): una Pietra di Luna intera è neutra finché non ha un colore, poi funziona come una Batteria di quel colore
+  if (r.def?.pietra_di_luna) return infoPietra(r.def, r.voce, dati);
   if (r.def) return infoArtefatto(r.def, dati);
   const p = r.voce?.personalizzato;
   // Magia §27: Consumabile creato dal giocatore («Crea consumabile», src/consumabili-mistici.js)
@@ -718,6 +721,8 @@ export function normalizzaEquipaggiamento(valore) {
     // A.60 (E&L del 05/10/2026): mano registrata per un'arma impugnata o uno scudo imbracciato; senza, l'ordine
     if (['destra', 'sinistra'].includes(v.mano)) out.mano = v.mano;
     if (v.sintonizzato === true) out.sintonizzato = true; // §7.10: scelta del giocatore
+    // A.291: il colore scelto alla sintonizzazione di una Pietra di Luna intera (Rosso, Blu, Verde, Bianco); senza, la pietra è neutra
+    if (isOggetto(v.pietra) && COLORI_PIETRA.includes(v.pietra.colore)) out.pietra = { colore: v.pietra.colore };
     // A.166: forma manifestata della CyberArma (id dell'elenco del catalogo): resta nella voce
     if (typeof v.manifestazione === 'string' && v.manifestazione) out.manifestazione = v.manifestazione;
     // CyberArma (Armamenti 0.74 §§7.25.2–7.25.4): esemplare con il modulatore neurale; spada donatrice senza SIN;
@@ -1671,4 +1676,23 @@ export function cambioProtezione(r, verso, { inRound = false, armaturaIndossata 
   if (t.unita === 'AzP') return { ammesso: true, motivo: null, azp: inRound ? n : 0, testo: inRound ? `${n} AzP del tuo turno per ${verbo} (A.110).` : null };
   if (inRound) return no(`per ${verbo} ${n === 1 ? 'serve' : 'servono'} ${minuti(n)}: non si fa durante il Round (A.110)`);
   return { ammesso: true, motivo: null, azp: 0, testo: `${verbo[0].toUpperCase()}${verbo.slice(1)} richiede ${minuti(n)}${t.condizione ? ` (${t.condizione})` : ''}; i benefici valgono a protezione interamente indossata.` };
+}
+
+/**
+ * Lotto 225 (A.290, Davide 19/11/2026): la condizione con cui un oggetto «non in vendita» si ottiene. Per i quadrelli lunari dei
+ * Mutanti: «non sono in vendita e non sono ceduti per alcun baratto. I PG possono riceverli soltanto in dono, dopo essersi guadagnati
+ * la fiducia dei Mutanti. Nell'app la voce deve indicare questa condizione: il valore monetario non è un prezzo di acquisto.»
+ * Una voce `non_in_vendita` non si compra mai col prezzo, e se ha un `costo` quello è un **valore**, non un prezzo.
+ * @returns { testo, valoreNonPrezzo, disponibilita } oppure null se l'oggetto è in vendita
+ */
+export function condizioneCessione(def) {
+  if (!def) return null;
+  const c = def.cessione;
+  if (def.non_in_vendita !== true && !(c && c.modo === 'solo_dono')) return null;
+  return {
+    testo: c?.testo ?? 'Non è in vendita: lo cede il Direttore («Aggiungi», oppure «gratis (dato dal DdG)» in modalità master).',
+    valoreNonPrezzo: def.non_in_vendita === true && Number.isFinite(def.costo),
+    disponibilita: Number.isInteger(c?.disponibilita_campagna) ? c.disponibilita_campagna : null,
+    modo: c?.modo ?? null,
+  };
 }

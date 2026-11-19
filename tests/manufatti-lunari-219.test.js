@@ -113,16 +113,16 @@ test('UN VALORE «DA DEFINIRE» NON DIVENTA UN NUMERO: ogni campo dichiarato da 
     }
   }
   assert.deepEqual(guai, []);
-  // la Cartuccia Stabilizzante: «Da definire» nel raccordo sanitario del 13/11, nessun peso nel manuale 0.42
+  // la Cartuccia Stabilizzante: era «da definire»; la A.292 (19/11) dà 0,10 kg e non è più da definire
   const cartuccia = cat.perRif.get('sanitario:cartuccia-stabilizzante');
-  assert.deepEqual(cartuccia.da_definire, ['peso']);
-  assert.equal(cartuccia.peso, undefined, 'il peso non si ricava dalle altre cartucce');
-  assert.notEqual(cartuccia.peso, 0);
+  assert.equal(cartuccia.da_definire, undefined);
+  assert.equal(cartuccia.peso, 0.1, 'A.292: 0,10 kg per cartuccia');
 });
 
 test('LA PROVA IN ROSSO del «da definire»: un peso scritto sulla Cartuccia, o un prezzo 0, verrebbe preso', () => {
   const copia = structuredClone(cat.perRif.get('sanitario:cartuccia-stabilizzante'));
   copia.peso = 0.05;
+  copia.da_definire = ['peso'];
   assert.equal(typeof copia.peso === 'number' && copia.da_definire.includes('peso'), true, 'il controllo guarda proprio questa combinazione');
 });
 
@@ -254,7 +254,7 @@ test('BALESTRA d’osso e quadrelli lunari: profilo della Balestra grande, 1d6+3
   assert.equal(q.peso, 0.08);
   // la Reperibilità non è nel manuale: dichiarata, non inventata
   assert.equal(b.reperibilita, null);
-  assert.match(b['TODO(Davide)'], /A\.290/);
+  assert.equal(b['TODO(Davide)'], undefined, 'A.290 risposta il 19/11: nessun TODO, nessuna sigla nuova');
 });
 
 // ——— i sette ——————————————————————————————————————————————————————————————————————————————

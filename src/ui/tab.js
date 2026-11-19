@@ -16,6 +16,7 @@ import { aggiungiIncantesimoAMano, incantesimoPerId, cercaIncantesimi, togliInca
 import { fasciaMaster, toccoMaster, notaCorrezione, sezioneRegistro, conMotivoMaster, bloccoLivelloMaster } from './master.js';
 import { pulsanteSpostaPunti } from './sposta-punti.js';
 import { pulsanteSchermoIntero } from './schermo-intero.js';
+import { eUnaPietra, colorePietra, COLORI_PIETRA, PROMEMORIA_VINCOLO } from '../pietre-di-luna.js';
 import { apriTiro, sezioneTiri } from './tira-valore.js';
 import { pianoGetto } from '../getti-artefatto.js';
 import { costoRiserva, numeroRiserva, testoCosto, interoRiserva } from '../cariche-mistiche.js';
@@ -3521,6 +3522,8 @@ function tabArtefatti(ctx) {
         : h('label', { class: `stato-tavolo${x.sintonizzato ? ' attivo' : ''}`, title: x.deposito ? 'Nel deposito comune la Sintonizzazione resta e occupa la capacità; togli la spunta per interromperla (A.59). Una batteria depositata non alimenta.' : null },
           h('input', { type: 'checkbox', checked: x.sintonizzato, onchange: (e) => sintonizza(x.uid, e.target.checked) }),
           h('span', {}, h('strong', {}, 'Sintonizzato'), h('small', {}, ` · SnT ${x.costo}${x.deposito ? ' · nel deposito comune: occupa la capacità, non alimenta' : ''}`))),
+      // A.291 (lotto 225): Pietra di Luna intera — colore scelto alla sintonizzazione, promemoria dei 7 giorni, conferma del Direttore
+      def && eUnaPietra(def) ? pietraDiLunaUi(ctx, x, r) : null,
       // effetti con la provenienza, dove entrano: l'arma in mano, la protezione indossata
       arma ? h('p', { class: 'valore-tavolo' }, h('span', {}, 'VA per colpire '),
         valoreEffettivo(`VA per colpire (${arma.nome})`, arma.vaEffettivo ?? arma.va, arma.vaDaRegole ?? arma.va, arma.scomposizione, { pillola: true, provenienza: arma.provenienza }),
@@ -3562,6 +3565,37 @@ function tabArtefatti(ctx) {
     sezioneConsumabili(ctx, cons),
     sezioneProgetti(ctx),
   ];
+}
+
+/**
+ * Pietra di Luna intera (Magia §26.8, A.291). Il colore si sceglie alla sintonizzazione e si registra sulla voce (`pietra.colore`): da
+ * lì la pietra funziona come una Batteria Mistica di quel colore. Il promemoria dei 7 giorni è sempre scritto; la scadenza la conferma
+ * soltanto il Direttore (in modalità master) e solo allora la pietra si svuota e torna neutra: l'app non la applica da sola.
+ */
+function pietraDiLunaUi(ctx, x, r) {
+  const voce = r?.voce;
+  if (!voce) return null;
+  const colore = colorePietra(voce);
+  const imposta = (nuovo) => ctx.azioni.equipaggiamento((ctx.scelte.equipaggiamento ?? []).map((v) => {
+    if (v.uid !== voce.uid) return v;
+    const { pietra: _p, ...resto } = v;
+    return nuovo ? { ...resto, pietra: { colore: nuovo } } : resto;
+  }));
+  const bloccato = x.sintonizzato === true && !!colore;
+  return h('div', { class: 'pietra-di-luna' },
+    h('label', { class: 'campo-inline', title: 'Alla sintonizzazione il possessore sceglie il colore: la scelta prevale su quello dell’oasi (Magia §26.8). Il Viola non rientra in questa procedura.' },
+      h('strong', {}, 'Colore: '),
+      h('select', { 'aria-label': `Colore di ${x.nome}`, disabled: bloccato, onchange: (e) => imposta(e.target.value || null) },
+        h('option', { value: '', selected: !colore }, 'neutra (nessun colore)'),
+        COLORI_PIETRA.map((c) => h('option', { value: c, selected: colore === c }, c === 'Bianco' ? 'Bianco Universale' : c))),
+      bloccato ? h('small', { class: 'nota' }, ' · scelto alla sintonizzazione: cambia solo se il vincolo scade') : null),
+    h('p', { class: 'nota' }, colore ? `Funziona come una Batteria Mistica ${colore === 'Bianco' ? 'Bianca (Universale)' : colore}${x.sintonizzato ? '' : ' quando è sintonizzata'}.` : 'Neutra e attiva: senza colore non ha una riserva. Scegli il colore alla sintonizzazione.'),
+    h('p', { class: 'nota promemoria-vincolo', role: 'note' }, h('strong', {}, 'Promemoria: '), PROMEMORIA_VINCOLO),
+    ctx.master && colore ? h('button', { type: 'button', class: 'btn btn-piccolo', title: 'Solo il Direttore: dopo 7 giorni di gioco consecutivi senza contatto la pietra si svuota e torna neutra',
+      onclick: async () => {
+        const ok = await chiedi({ titolo: 'Conferma la scadenza del vincolo', testo: `La Pietra «${x.nome}» (${colore}) si svuota e torna neutra: i PM residui si disperdono e la sintonizzazione si interrompe. Lo confermi solo se sono passati 7 giorni di gioco consecutivi senza contatto con il possessore.`, si: 'Confermo: il vincolo è scaduto', no: 'Annulla', pericolo: true });
+        if (ok) ctx.master.scadenzaPietra(voce.uid);
+      } }, 'Conferma la scadenza del vincolo…') : null);
 }
 
 /**

@@ -248,7 +248,6 @@
       "famiglia": "Archi e balestre",
       "nomi_alternativi": [],
       "note_manuale": "Balestra da caccia a due mani costruita dai Mutanti con ossa di viverna, tendini e legature naturali; profilo meccanico della Balestra grande. Impiega quadrelli compatibili con la Balestra grande: arma e munizioni sono oggetti distinti. Con quadrelli lunari il colpo infligge 1d6+3 Magico e beneficia di +1 VA; il potere proviene dalla punta infusa del quadrello e il danno incontra normalmente l’AR pertinente. Valore 700 crediti; normalmente tramite baratto con i Mutanti (il manuale non scrive una sigla di Reperibilità).",
-      "TODO(Davide)": "A.290: Reperibilità della Balestra d’osso. Il manuale scrive «normalmente tramite baratto con i Mutanti» e non una sigla (CO, NC, RA…); finché non c’è, nessuna sigla inventata.",
       "paragrafo": "§7.27.5",
       "versione_manuale": "Armamenti 0.87",
       "abilita": "Armi da lancio",
@@ -285,7 +284,13 @@
           "nome": "Perforazione",
           "testo": "Perforazione descrive il mezzo del colpo (quadrello), non attribuisce Perforante."
         }
-      ]
+      ],
+      "cessione": {
+        "modo": "baratto_rado",
+        "testo": "I Mutanti le costruiscono per necessità e uso personale, non per venderle. Hanno un valore elevato e difficilmente ne cederebbero più di 3–4 al gruppo; le 3–4 valgono solo per le balestre e non sono una quota garantita né un limite assoluto (A.290). Valore 700 crediti: normalmente tramite baratto con i Mutanti.",
+        "disponibilita_campagna": 16,
+        "disponibilita_nota": "Esistenti nella campagna al 19/11/2026: la disponibilità di oggi, non un limite alla produzione futura e non una scorta dell’app."
+      }
     },
     {
       "id": "quadrelli-lunari-d-osso",
@@ -298,7 +303,6 @@
       "paragrafo": "§7.27.6",
       "versione_manuale": "Armamenti 0.87",
       "reperibilita": null,
-      "TODO(Davide)": "A.290: Reperibilità dei Quadrelli lunari. Il manuale scrive «manufatto dei Mutanti, normalmente ottenibile tramite baratto» e non una sigla; nessuna sigla inventata.",
       "costo": 50,
       "peso": 0.08,
       "munizione": {
@@ -328,7 +332,159 @@
           "fonte": "Armamenti 0.87 §7.27.6"
         }
       ],
-      "proprieta": []
+      "proprieta": [],
+      "non_in_vendita": true,
+      "cessione": {
+        "modo": "solo_dono",
+        "testo": "Non sono in vendita e non si cedono per baratto: i PG li ricevono soltanto in dono, dopo essersi guadagnati la fiducia dei Mutanti (A.290). Il valore di 50 crediti non è un prezzo d’acquisto.",
+        "valore_non_e_prezzo": true,
+        "disponibilita_campagna": 30,
+        "disponibilita_nota": "Esistenti nella campagna al 19/11/2026 e solo lo sciamano dei Mutanti sa costruirli: la disponibilità di oggi, non un limite alla produzione futura e non una scorta dell’app."
+      }
+    },
+    {
+      "id": "pietra-di-luna-5-pm",
+      "nome": "Pietra di Luna da 5 PM",
+      "tipo": "artefatto",
+      "famiglia": "Batterie e contenitori",
+      "catalogo": "Artefatti di campagna",
+      "nomi_alternativi": [
+        "Pietra di Luna 5 PM"
+      ],
+      "costo": null,
+      "reperibilita": null,
+      "non_in_vendita": true,
+      "da_definire": [
+        "costo",
+        "peso"
+      ],
+      "proprieta": [],
+      "note_manuale": "Pietra di Luna intera (Magia §26.8): capacità di 5 PM. Una Pietra attiva non sintonizzata prende il colore dell’oasi in cui si trova; con la normale procedura di Sintonizzazione il possessore sceglie il colore e la scelta prevale. La Pietra funziona come una Batteria Mistica del colore scelto (SnT 1 per Rosso, Blu o Verde, 2 per Bianco Universale; il Viola non rientra in questa procedura). Il vincolo si perde dopo 7 giorni di gioco consecutivi senza contatto: il Direttore tiene il conto e conferma la scadenza, e solo allora la pietra si svuota e torna neutra, attiva, con la stessa capacità (A.291). Se il possessore rinuncia volontariamente la pietra si svuota subito e diventa Esausta.",
+      "paragrafo": "§26.8",
+      "versione_manuale": "Magia 1.19 §26.8",
+      "pietra_di_luna": {
+        "capacita_pm": 5,
+        "colori": [
+          "Rosso",
+          "Blu",
+          "Verde",
+          "Bianco"
+        ],
+        "snt_per_colore": {
+          "Rosso": 1,
+          "Blu": 1,
+          "Verde": 1,
+          "Bianco": 2
+        }
+      },
+      "artefatto": {
+        "tipologia": "Batterie e contenitori",
+        "potenza": "Comune",
+        "sintonizzazione": 1,
+        "sintonizzabile": true,
+        "proprieta_attive": true,
+        "grado": "I"
+      },
+      "_nota_a291": "A.291 (Davide, 19/11/2026): tre voci distinte (5, 10 e 15 PM); alla sintonizzazione si registra il colore scelto (voce.pietra.colore); la scheda mostra il promemoria dei 7 giorni; la scadenza la conferma il Direttore e l’app non la applica da sola (src/pietre-di-luna.js). Il manuale non dà prezzo né peso: «da definire», nessun numero inventato. L’artefatto qui sotto è quello della pietra col colore di SnT più bassa; il colore scelto lo sostituisce (infoPietra)."
+    },
+    {
+      "id": "pietra-di-luna-10-pm",
+      "nome": "Pietra di Luna da 10 PM",
+      "tipo": "artefatto",
+      "famiglia": "Batterie e contenitori",
+      "catalogo": "Artefatti di campagna",
+      "nomi_alternativi": [
+        "Pietra di Luna 10 PM"
+      ],
+      "costo": null,
+      "reperibilita": null,
+      "non_in_vendita": true,
+      "da_definire": [
+        "costo",
+        "peso"
+      ],
+      "proprieta": [],
+      "note_manuale": "Pietra di Luna intera (Magia §26.8): capacità di 10 PM. Una Pietra attiva non sintonizzata prende il colore dell’oasi in cui si trova; con la normale procedura di Sintonizzazione il possessore sceglie il colore e la scelta prevale. La Pietra funziona come una Batteria Mistica del colore scelto (SnT 2 per Rosso, Blu o Verde, 3 per Bianco Universale; il Viola non rientra in questa procedura). Il vincolo si perde dopo 7 giorni di gioco consecutivi senza contatto: il Direttore tiene il conto e conferma la scadenza, e solo allora la pietra si svuota e torna neutra, attiva, con la stessa capacità (A.291). Se il possessore rinuncia volontariamente la pietra si svuota subito e diventa Esausta.",
+      "paragrafo": "§26.8",
+      "versione_manuale": "Magia 1.19 §26.8",
+      "pietra_di_luna": {
+        "capacita_pm": 10,
+        "colori": [
+          "Rosso",
+          "Blu",
+          "Verde",
+          "Bianco"
+        ],
+        "snt_per_colore": {
+          "Rosso": 2,
+          "Blu": 2,
+          "Verde": 2,
+          "Bianco": 3
+        }
+      },
+      "artefatto": {
+        "tipologia": "Batterie e contenitori",
+        "potenza": "Non Comune",
+        "sintonizzazione": 2,
+        "sintonizzabile": true,
+        "proprieta_attive": true,
+        "grado": "II"
+      },
+      "_nota_a291": "A.291 (Davide, 19/11/2026): tre voci distinte (5, 10 e 15 PM); alla sintonizzazione si registra il colore scelto (voce.pietra.colore); la scheda mostra il promemoria dei 7 giorni; la scadenza la conferma il Direttore e l’app non la applica da sola (src/pietre-di-luna.js). Il manuale non dà prezzo né peso: «da definire», nessun numero inventato. L’artefatto qui sotto è quello della pietra col colore di SnT più bassa; il colore scelto lo sostituisce (infoPietra)."
+    },
+    {
+      "id": "pietra-di-luna-15-pm",
+      "nome": "Pietra di Luna da 15 PM",
+      "tipo": "artefatto",
+      "famiglia": "Batterie e contenitori",
+      "catalogo": "Artefatti di campagna",
+      "nomi_alternativi": [
+        "Pietra di Luna 15 PM"
+      ],
+      "costo": null,
+      "reperibilita": null,
+      "non_in_vendita": true,
+      "da_definire": [
+        "costo",
+        "peso"
+      ],
+      "proprieta": [],
+      "note_manuale": "Pietra di Luna intera (Magia §26.8): capacità di 15 PM. Una Pietra attiva non sintonizzata prende il colore dell’oasi in cui si trova; con la normale procedura di Sintonizzazione il possessore sceglie il colore e la scelta prevale. La Pietra funziona come una Batteria Mistica del colore scelto (SnT 3 per Rosso, Blu o Verde, 4 per Bianco Universale; il Viola non rientra in questa procedura). Il vincolo si perde dopo 7 giorni di gioco consecutivi senza contatto: il Direttore tiene il conto e conferma la scadenza, e solo allora la pietra si svuota e torna neutra, attiva, con la stessa capacità (A.291). Se il possessore rinuncia volontariamente la pietra si svuota subito e diventa Esausta.",
+      "paragrafo": "§26.8",
+      "versione_manuale": "Magia 1.19 §26.8",
+      "pietra_di_luna": {
+        "capacita_pm": 15,
+        "colori": [
+          "Rosso",
+          "Blu",
+          "Verde",
+          "Bianco"
+        ],
+        "snt_per_colore": {
+          "Rosso": 3,
+          "Blu": 3,
+          "Verde": 3,
+          "Bianco": 4
+        }
+      },
+      "artefatto": {
+        "tipologia": "Batterie e contenitori",
+        "potenza": "Rara",
+        "sintonizzazione": 3,
+        "sintonizzabile": true,
+        "proprieta_attive": true,
+        "grado": "III"
+      },
+      "_nota_a291": "A.291 (Davide, 19/11/2026): tre voci distinte (5, 10 e 15 PM); alla sintonizzazione si registra il colore scelto (voce.pietra.colore); la scheda mostra il promemoria dei 7 giorni; la scadenza la conferma il Direttore e l’app non la applica da sola (src/pietre-di-luna.js). Il manuale non dà prezzo né peso: «da definire», nessun numero inventato. L’artefatto qui sotto è quello della pietra col colore di SnT più bassa; il colore scelto lo sostituisce (infoPietra)."
     }
-  ]
+  ],
+  "disponibilita_campagna": {
+    "_nota": "A.290 (Davide, 19/11/2026): la disponibilità attuale della campagna, non un limite alla produzione e non una scorta dell’app. Nessun importo nuovo e nessuna sigla nuova di Reperibilità.",
+    "balestre_d_osso": 16,
+    "quadrelli_normali": {
+      "quantita": 100,
+      "testo": "I Mutanti li usano spesso per la caccia e perciò li producono più frequentemente: valgono più dei quadrelli comuni. La quantità di 3–4 delle balestre non si applica a questi quadrelli. Non sono una voce del catalogo: il manuale non ne dà il profilo."
+    },
+    "quadrelli_lunari": 30
+  }
 }

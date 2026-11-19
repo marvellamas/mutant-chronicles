@@ -29,6 +29,7 @@ import { eventiConPunti, applicaSpostamento, descriviSpostamento, descriviEccezi
 import { apriSpostaPunti } from './sposta-punti.js';
 import { comunicaAvanzamento, togliAvanzamento, leggiMomento, attoCampagna, serverCartella, elencoCartella, leggiCartella, leggiCartellaConRevisione, scriviCartella, contestoMasterQui, pingMasterQui, salvaBackupMaster, leggiBackupMaster } from './cartella.js';
 import { bozzaDi, impostaBozza, leggiBozzaSalvata, salvaBozza } from '../bozza-adeguamento.js';
+import { confermaScadenzaVincolo } from '../pietre-di-luna.js';
 import { confermaAssegnazione, assegna as assegnaAdeguamento, adeguamentoAperto, puntiDellEvento, conPunti } from '../adeguamento-abilita.js';
 import { modalitaMaster, mostraMarchio, statoContestoMaster, registro as registroMaster, nuovaCorrezione, aggiungiCorrezione, annullaCorrezione, avvisoAnnulla, registraDiretta, differenzeDirette, differenzeOggetti, ripristinoDiretta, descriviScelte, soloScelte, ripristinaScelte, masterDiverso, normalizzaCircostanzeMaster } from '../correzioni-master.js';
 import { descriviVoce, postiTalenti, applicaSceltaTalento, eccezioneSpecializzazione, scelteSuccessive, applicaSceltaSuccessiva, adattaScelteSuccessive } from '../avanzamento.js';
@@ -2070,6 +2071,18 @@ function azioniMaster() {
       ridisegna();
     },
     // A.187: passaggio di livello anticipato. Il motivo è obbligatorio, i PX non cambiano, il giocatore non lo vede come PX
+    // A.291 (lotto 225): la scadenza del vincolo di una Pietra di Luna, confermata dal Direttore (src/pietre-di-luna.js): l'unico punto in cui una pietra si svuota
+    scadenzaPietra: (uid) => {
+      const r = confermaScadenzaVincolo(stato.scelte.equipaggiamento, stato.sessione, uid, { dalDirettore: true });
+      if (!r.ok) { stato.messaggioScheda = { tipo: 'attenzione', testo: r.motivo }; ridisegna(); return false; }
+      const { scelte } = applicaModifica(stato.scelte, { equipaggiamento: r.voci }, dati);
+      stato.scelte = scelte;
+      stato.sessione = rigaStorico(r.sessione, r.riga);
+      stato.messaggioScheda = { tipo: 'ok', testo: r.riga };
+      persisti();
+      ridisegna();
+      return true;
+    },
     concediLivello: ({ livello, motivo }) => {
       const m = String(motivo ?? '').trim();
       if (!m) return false;

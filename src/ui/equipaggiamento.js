@@ -11,7 +11,7 @@ import { info } from './tooltip.js';
 import { prezzoArtefatto } from '../prezzi-artefatti.js';
 import {
   TIPI, NOMI_TIPI, STATI, NOMI_STATI, catalogo, risolvi, opzioniCascata, cercaNelCatalogo, statoIniziale, puoMontare, rinforzoCompatibile, infoArtefattoVoce,
-  regoleSintonizzazione, coloriChroma, testoEffettoOggetto, regolaCapolavoro, AMBITI_EFFETTO, NOMI_AMBITI, statiInventario, testoCura,
+  regoleSintonizzazione, coloriChroma, testoEffettoOggetto, regolaCapolavoro, AMBITI_EFFETTO, NOMI_AMBITI, statiInventario, testoCura, condizioneCessione,
 } from '../equipaggiamento.js';
 import { pesoVoce } from '../carico.js';
 
@@ -294,7 +294,7 @@ function datiOggetto(ctx, r) {
   // unico o una reliquia non ha prezzo di catalogo. Rarità e reperibilità restano separate.
   const pz = d.artefatto || d.unico || Number.isFinite(d.creazione_cr) ? prezzoArtefatto(d, ctx.dati, { numero: (n) => n.toLocaleString('it-IT') }) : null;
   const parti = [
-    Number.isFinite(d.costo) ? `costo ${d.costo.toLocaleString('it-IT')}` : null,
+    Number.isFinite(d.costo) ? (condizioneCessione(d)?.valoreNonPrezzo ? h('span', { title: 'Non è un prezzo d’acquisto: l’oggetto non è in vendita (A.290).' }, `valore ${d.costo.toLocaleString('it-IT')} cr (non è un prezzo)`) : `costo ${d.costo.toLocaleString('it-IT')}`) : null,
     pz?.unico ? h('span', { title: d._nota_unico ?? pz.nota ?? null }, 'senza prezzo di catalogo (A.256)')
       : pz && pz.vendita !== null && pz.vendita !== pz.catalogo ? h('span', { title: `A.256: ${pz.conto}${pz.nota ? ` — ${pz.nota}` : ''}` }, `vendita ${pz.vendita.toLocaleString('it-IT')}${pz.catalogo === null ? ' (A.256)' : ' calcolata (A.256)'}`)
         : pz && pz.vendita === null && pz.catalogo === null && pz.motivo ? h('span', { class: 'da-definire' }, pz.motivo) : null,
@@ -307,7 +307,11 @@ function datiOggetto(ctx, r) {
       : peso !== null ? `${String(peso).replace('.', ',')} kg${r.voce.quantita > 1 ? ' l’uno' : ''}` : r.fuoriCatalogo ? null : 'peso da definire',
   ].filter(Boolean);
   if (!parti.length) return null;
-  return h('p', { class: 'dati-oggetto' }, parti.flatMap((x, i) => (i ? [' · ', x] : [x])));
+  const riga = h('p', { class: 'dati-oggetto' }, parti.flatMap((x, i) => (i ? [' · ', x] : [x])));
+  // A.290: la condizione di cessione si legge sempre accanto ai dati, non solo nel tooltip
+  const cessione = condizioneCessione(d);
+  return cessione?.modo ? h('div', {}, riga, h('p', { class: 'nota cessione-oggetto' }, h('strong', {}, 'Come si ottiene: '), cessione.testo,
+    cessione.disponibilita !== null ? ` (disponibilità attuale nella campagna: ${cessione.disponibilita}; non è una scorta dell’app)` : '')) : riga;
 }
 
 /**
@@ -405,6 +409,7 @@ function pannelloAggiungi(ctx) {
     scelto ? h('div', { class: 'riquadro ok profilo-scelto' },
       h('p', {}, h('strong', {}, info('oggetto', scelto.rif, scelto.nome)), h('small', { class: 'sigla' }, ` · ${scelto.paragrafo}`)),
       h('p', { class: 'nota' }, riassuntoProfilo(scelto)),
+      condizioneCessione(scelto)?.modo ? h('p', { class: 'nota cessione-oggetto' }, h('strong', {}, 'Come si ottiene: '), condizioneCessione(scelto).testo) : null,
       h('div', { class: 'barra-azioni' },
         h('button', {
           type: 'button', class: 'btn primario',
@@ -510,7 +515,7 @@ function pannelloAggiungi(ctx) {
 }
 
 /** «Compra (−N crediti)»: disabilitato, con il motivo, se il prezzo manca o i crediti non bastano. */
-function bottoneCompra(ctx, scelto, nuovaVoce, etichetta = 'Compra') {
+export function bottoneCompra(ctx, scelto, nuovaVoce, etichetta = 'Compra') {
   // S33 (12/10): in modalità master, con «gratis (dato dal DdG)» l'oggetto entra senza scalare i crediti e va nel registro
   if (ctx.gratis && ctx.ui?.equip?.gratis) {
     return h('button', { type: 'button', class: 'btn primario btn-gratis', title: 'Dato dal DdG: nessun credito scalato; la riga va nel registro «Modifiche del master»',
@@ -522,7 +527,9 @@ function bottoneCompra(ctx, scelto, nuovaVoce, etichetta = 'Compra') {
   // A.265: un pezzo unico può avere un valore indicativo scritto nel manuale (la CyberArma, 7.500 cr) e non essere
   // per questo in vendita: «Ogni esemplare rimane un pezzo unico, molto difficile da collocare sul mercato comune».
   // Il bottone resta spento e dice il valore, invece di far finta che il prezzo non esista.
-  const motivo = pz?.unico ? `Esemplare unico o reliquia: non si compra dal catalogo${costo === null ? ' e non ha un prezzo di listino' : `; il manuale ne dà un valore indicativo di ${costo.toLocaleString('it-IT')} cr`} (A.256). Lo assegna il Direttore.`
+  const cessione = condizioneCessione(scelto);
+  const motivo = cessione ? `Non in vendita. ${cessione.testo}`
+    : pz?.unico ? `Esemplare unico o reliquia: non si compra dal catalogo${costo === null ? ' e non ha un prezzo di listino' : `; il manuale ne dà un valore indicativo di ${costo.toLocaleString('it-IT')} cr`} (A.256). Lo assegna il Direttore.`
     : costo === null ? 'Prezzo di catalogo assente: aggiungi l’oggetto e scala i crediti a mano.'
     : !Number.isInteger(ctx.crediti) ? 'Crediti non tracciati: applica prima la dotazione iniziale, oppure aggiungi l’oggetto e annota la spesa a mano.'
       : null;

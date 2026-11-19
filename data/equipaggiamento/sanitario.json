@@ -188,11 +188,9 @@
         "morente": "stabilizza",
         "fonte": "§5.14 (A.159)"
       },
-      "_nota_a159": "Monouso, occupa un alloggiamento per cartucce. Compatibile con UMC, iniettori sanitari, pistole sanitarie, iniettori impiantati e postazioni medicochirurgiche. UMC Passiva: 1 AzP e Prova di Medicina o Tecnologia–Strumentazione; UMC Attiva: 1 AzP senza Prova; UMC Automatica con protocollo Morente: da sé alla fine dell’intero attacco, senza Azioni né Prova e con la priorità fra i protocolli. Resta il limite di una sola somministrazione rapida per paziente per Round. Non agisce dopo la morte. Peso, PS Integrità e PI non sono indicati dalla risposta: restano da completare.",
-      "da_definire": [
-        "peso"
-      ],
-      "_nota_peso": "Lotto 219: il peso non è scritto nell’Equipaggiamento 0.42 e il raccordo sanitario del 13/11/2026 (Doc E&L) lo dice espressamente «Da definire», «senza ricavarlo dalle altre cartucce». Il campo `peso` è assente, non 0 e non il peso di un’altra cartuccia: l’app non conta niente per questa voce nel carico finché Davide non lo fissa (domanda A.292)."
+      "_nota_a159": "Monouso, occupa un alloggiamento per cartucce. Compatibile con UMC, iniettori sanitari, pistole sanitarie, iniettori impiantati e postazioni medicochirurgiche. UMC Passiva: 1 AzP e Prova di Medicina o Tecnologia–Strumentazione; UMC Attiva: 1 AzP senza Prova; UMC Automatica con protocollo Morente: da sé alla fine dell’intero attacco, senza Azioni né Prova e con la priorità fra i protocolli. Resta il limite di una sola somministrazione rapida per paziente per Round. Non agisce dopo la morte. PS Integrità e PI non sono indicati dalla risposta: restano da completare.",
+      "peso": 0.1,
+      "_nota_peso": "Lotto 225 (A.292, Davide 19/11/2026): una Cartuccia Stabilizzante pesa 0,10 kg (100 g); il carico moltiplica 0,10 kg per il numero di cartucce (10 cartucce = 1 kg). Il valore riguarda soltanto questa cartuccia. Nel lotto 219 il peso era «da definire» e non si ricavava dalle altre cartucce: era giusto."
     },
     {
       "id": "cartuccia-curativa",

@@ -69,6 +69,24 @@ export function validaDati(dati) {
     if (!isTesto(AA.motivo)) err('regole', 'adeguamento_abilita.annulla_correzioni_abilita.motivo', 'serve il motivo scritto');
   }
 
+  // Lotto 225 (A.291): le Pietre di Luna intere sono tre voci distinte (5, 10, 15 PM), con la SnT per colore del §26.8; il conto si pretende
+  // (un controllo verde su zero voci ci ha già ingannato)
+  {
+    const pietre = (dati.equipaggiamento?.file?.manufatti_lunari?.oggetti ?? []).filter((o) => isOggetto(o?.pietra_di_luna));
+    const F = 'equipaggiamento/manufatti_lunari';
+    if (dati.equipaggiamento?.file?.manufatti_lunari && pietre.length !== 3) err(F, 'oggetti', `le Pietre di Luna intere sono tre voci distinte (5, 10, 15 PM): ne ho trovate ${pietre.length} (A.291)`);
+    const potenze = dati.equipaggiamento?.file?.artefatti?.sintonizzazione?.potenze ?? {};
+    for (const o of pietre) {
+      const P = o.pietra_di_luna;
+      const attese = { 5: 1, 10: 2, 15: 3 }[P.capacita_pm];
+      if (!attese) { err(F, `${o.id}.pietra_di_luna.capacita_pm`, 'la capacità è 5, 10 o 15 PM (Magia §26.8)'); continue; }
+      for (const c of ['Rosso', 'Blu', 'Verde']) if (P.snt_per_colore?.[c] !== attese) err(F, `${o.id}.pietra_di_luna.snt_per_colore.${c}`, `SnT ${attese} per ${P.capacita_pm} PM (§26.8)`);
+      if (P.snt_per_colore?.Bianco !== attese + 1) err(F, `${o.id}.pietra_di_luna.snt_per_colore.Bianco`, `il Bianco Universale costa ${attese + 1} (§26.8)`);
+      if (P.snt_per_colore?.Viola !== undefined || (P.colori ?? []).includes('Viola')) err(F, `${o.id}.pietra_di_luna`, 'il Viola non rientra in questa procedura (§26.8)');
+      if (o.artefatto?.sintonizzazione !== attese || potenze[o.artefatto?.potenza] !== attese) err(F, `${o.id}.artefatto`, 'l’artefatto di base è quello del colore di SnT più bassa, e la potenza deve dare la stessa SnT (§7.10)');
+      if (o.costo !== null && o.costo !== undefined) err(F, `${o.id}.costo`, 'il manuale non dà un prezzo alle Pietre di Luna: «da definire», non un numero inventato (A.291)');
+    }
+  }
   for (const file of FILE_VALIDATI) {
     if (!isOggetto(dati[file])) err(file, '', 'file mancante o non è un oggetto JSON');
     else if (!isTesto(dati[file].versione_manuale)) err(file, 'versione_manuale', 'campo mancante o vuoto');
@@ -1760,7 +1778,7 @@ function validaEquipaggiamento(eq, nomiAbilita, idSpec, err, coloriChroma = [], 
           if (o.compatibile_con && !o.compatibile_con.includes(r)) err(F, `${k}.abbinamento_ottimizzato[${j}]`, `"${r}" non è fra le armature compatibili del rinforzo`);
         });
       }
-      if (o.reperibilita !== undefined && !(o.reperibilita === null && (modulo || o.non_in_vendita === true || isTesto(o['TODO(Davide)']))) && !rep.includes(o.reperibilita)) err(F, `${k}.reperibilita`, `sigla "${o.reperibilita}" non in index.json (${rep.join(', ')})`);
+      if (o.reperibilita !== undefined && !(o.reperibilita === null && (modulo || o.non_in_vendita === true || isOggetto(o.cessione) || isTesto(o['TODO(Davide)']))) && !rep.includes(o.reperibilita)) err(F, `${k}.reperibilita`, `sigla "${o.reperibilita}" non in index.json (${rep.join(', ')})`);
       if (o.proprieta !== undefined) {
         if (!Array.isArray(o.proprieta)) err(F, `${k}.proprieta`, 'deve essere un elenco');
         else o.proprieta.forEach((p, j) => {
