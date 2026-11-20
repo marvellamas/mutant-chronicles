@@ -236,6 +236,43 @@
       "indossabile_da_solo": true
     },
     {
+      "id": "soprabito-sia",
+      "nome": "Soprabito SIA",
+      "tipo": "rinforzo",
+      "catalogo": "Alleanza",
+      "famiglia": "Rinforzi",
+      "nomi_alternativi": [
+        "Soprabito SIA di base"
+      ],
+      "note_manuale": "Entrambi concedono AR +1 e aumentano di 1 la FOR richiesta; hanno PI 6, Qualità Comune, PS Integrità 10 e Reperibilità Non comune. La forma di soprabito non aggiunge automaticamente Discreta, Mimetismo o altri vantaggi.",
+      "paragrafo": "§7.23.3",
+      "versione_manuale": "Armamenti 0.87",
+      "pi": 6,
+      "qualita": "Comune",
+      "ps_int": 10,
+      "reperibilita": "NC",
+      "costo": 1000,
+      "si_monta_su": [
+        "armatura"
+      ],
+      "rinforzo": {
+        "kit": "Leggero",
+        "ar": 1,
+        "for": 1
+      },
+      "proprieta": [],
+      "compatibile_con": [
+        "armature_corporative:divisa-d-ordinanza-sia",
+        "armature_corporative:divisa-operativa-sia"
+      ],
+      "abbinamento_ottimizzato": [
+        "armature_corporative:divisa-d-ordinanza-sia",
+        "armature_corporative:divisa-operativa-sia"
+      ],
+      "indossabile_da_solo": true,
+      "nota_sigla": "Soprabito di base dell’Alleanza (504 PE): voce distinta dal Soprabito di ordinanza ASA dei PG (§7.26)."
+    },
+    {
       "id": "soprabito-feldmantel",
       "nome": "Soprabito Feldmantel",
       "tipo": "rinforzo",
@@ -772,14 +809,16 @@
     },
     {
       "id": "soprabito-asa-riservato",
-      "nome": "Soprabito ASA riservato",
+      "nome": "Soprabito SIA riservato",
       "tipo": "rinforzo",
       "catalogo": "Alleanza",
       "famiglia": "Rinforzi",
-      "nomi_alternativi": [],
-      "note_manuale": "Il Soprabito ASA riservato è una variante distinta dal soprabito base: la protezione è celata nella fattura del capo. Le Piastre Missione combinano contromisure contro fuoco ed elettricità.",
+      "nomi_alternativi": [
+        "Soprabito ASA riservato"
+      ],
+      "note_manuale": "Il Soprabito SIA riservato è una variante distinta dal soprabito base: la protezione è celata nella fattura del capo. Le Piastre Missione combinano contromisure contro fuoco ed elettricità.",
       "paragrafo": "§7.23.6",
-      "versione_manuale": "Armamenti 0.53",
+      "versione_manuale": "Armamenti 0.87",
       "pi": 6,
       "qualita": "Non comune",
       "ps_int": 12,
@@ -796,18 +835,23 @@
       "proprieta": [
         {
           "nome": "Discreta",
-          "testo": "La protezione del Soprabito ASA riservato non è evidente a un’osservazione casuale; un esame ravvicinato o una perquisizione possono rivelarla. La proprietà permette di conservare Discreta quando anche l’armatura sottostante la possiede e nessun componente corazzato resta visibile. Non rende discreta un’armatura apertamente riconoscibile, non nasconde automaticamente armi o altri oggetti e non concede bonus a Furtività."
+          "testo": "La protezione del Soprabito SIA riservato non è evidente a un’osservazione casuale; un esame ravvicinato o una perquisizione possono rivelarla. La proprietà permette di conservare Discreta quando anche l’armatura sottostante la possiede e nessun componente corazzato resta visibile. Non rende discreta un’armatura apertamente riconoscibile, non nasconde automaticamente armi o altri oggetti e non concede bonus a Furtività."
         }
       ],
       "compatibile_con": [
+        "armature_corporative:divisa-d-ordinanza-sia",
+        "armature_corporative:divisa-operativa-sia",
         "armature_corporative:divisa-d-ordinanza-asa",
         "armature_corporative:divisa-operativa-asa"
       ],
       "abbinamento_ottimizzato": [
+        "armature_corporative:divisa-d-ordinanza-sia",
+        "armature_corporative:divisa-operativa-sia",
         "armature_corporative:divisa-d-ordinanza-asa",
         "armature_corporative:divisa-operativa-asa"
       ],
-      "indossabile_da_solo": true
+      "indossabile_da_solo": true,
+      "compatibilita_transitoria": "A.295: la voce era «Soprabito ASA riservato» e i PG la montavano sulle divise ASA. Le divise ASA restano ammesse finché i file dei PG non sono passati al Soprabito di ordinanza ASA (tools/dotazione-asa.mjs); poi si tolgono."
     },
     {
       "id": "piastre-missione",

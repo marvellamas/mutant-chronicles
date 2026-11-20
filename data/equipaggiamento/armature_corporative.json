@@ -1085,6 +1085,63 @@
       ]
     },
     {
+      "id": "divisa-d-ordinanza-sia",
+      "nome": "Divisa d’ordinanza SIA",
+      "tipo": "armatura",
+      "catalogo": "Alleanza",
+      "famiglia": "Armature",
+      "nomi_alternativi": [
+        "Divisa SIA d’ordinanza"
+      ],
+      "note_manuale": "Proprietà: Discreta e Imbottita 1. Protezione da indagine e servizio, categoria Leggera. Può aggiungere il Soprabito SIA come unico Rinforzo Leggero.",
+      "paragrafo": "§7.11.7",
+      "versione_manuale": "Armamenti 0.87",
+      "categoria": "Leggera",
+      "ar": {
+        "totale": 2,
+        "magica": 0
+      },
+      "for_richiesta": 3,
+      "pi": 6,
+      "qualita": "Non comune",
+      "ps_int": 12,
+      "reperibilita": "RA",
+      "costo": 4000,
+      "rinforzi_ammessi": [
+        "Leggero"
+      ],
+      "penalita": {
+        "attacchi_distanza": 0,
+        "attacchi_ravvicinati": 0,
+        "agilita": 0,
+        "movimento_q": 0,
+        "lancio_potere": -1
+      },
+      "proprieta": [
+        {
+          "nome": "Discreta",
+          "testo": "La protezione è integrata nell’abito o nella divisa e non risulta evidente a una semplice osservazione casuale. Un esame ravvicinato o una perquisizione possono rivelarla. Componenti corazzati visibili non vengono nascosti da questa proprietà (§7.11.4)."
+        },
+        {
+          "nome": "Imbottita 1",
+          "testo": "Contromisura del §5.24 contro Concussivo: il valore è una soglia contro l’effetto aggiuntivo pertinente dopo l’Armatura, non un’ulteriore riduzione dei danni (§7.11.4)."
+        }
+      ],
+      "effetti": [
+        {
+          "tipo": "contromisura",
+          "effetto": "Concussivo",
+          "valore": 1,
+          "ambito": "generale",
+          "beneficio": "contromisura_concussivo",
+          "condizione": "Applicano le Contromisure del §5.24: il valore è una soglia contro l’effetto aggiuntivo pertinente dopo l’Armatura, non un’ulteriore riduzione dei danni.",
+          "fonte": "Armamenti §7.11.7",
+          "proprieta": "Imbottita 1"
+        }
+      ],
+      "nota_sigla": "Dotazione dell’agenzia SIA dell’Alleanza (504 PE): voce distinta dalla dotazione storica ASA dei PG della Neverlost (§7.26), con cui condivide le regole di protezione."
+    },
+    {
       "id": "divisa-operativa-asa",
       "nome": "Divisa Operativa ASA",
       "tipo": "armatura",
@@ -1148,6 +1205,72 @@
           "proprieta": "Imbottita 1"
         }
       ]
+    },
+    {
+      "id": "divisa-operativa-sia",
+      "nome": "Divisa operativa SIA",
+      "tipo": "armatura",
+      "catalogo": "Alleanza",
+      "famiglia": "Armature",
+      "nomi_alternativi": [
+        "Divisa Operativa SIA"
+      ],
+      "note_manuale": "Proprietà: Mimetismo 1 e Imbottita 1. AR 3 è nativa: la divisa conserva categoria Leggera, FOR 4 e penalità di lancio −1. Può aggiungere il Soprabito SIA come unico Rinforzo Leggero.",
+      "paragrafo": "§7.11.7",
+      "versione_manuale": "Armamenti 0.87",
+      "categoria": "Leggera",
+      "ar": {
+        "totale": 3,
+        "magica": 0
+      },
+      "for_richiesta": 4,
+      "pi": 8,
+      "qualita": "Non comune",
+      "ps_int": 12,
+      "reperibilita": "RA",
+      "costo": 7000,
+      "rinforzi_ammessi": [
+        "Leggero"
+      ],
+      "penalita": {
+        "attacchi_distanza": 0,
+        "attacchi_ravvicinati": 0,
+        "agilita": 0,
+        "movimento_q": 0,
+        "lancio_potere": -1
+      },
+      "proprieta": [
+        {
+          "nome": "Mimetismo 1",
+          "testo": "Concede +1 VA alla Prova unica di Furtività per nascondersi o muoversi senza essere individuati, quando esistono condizioni concrete per farlo. Il bonus si applica una sola volta: non si effettuano Prove separate per vista e udito (§7.11.4)."
+        },
+        {
+          "nome": "Imbottita 1",
+          "testo": "Contromisura del §5.24 contro Concussivo: il valore è una soglia contro l’effetto aggiuntivo pertinente dopo l’Armatura, non un’ulteriore riduzione dei danni (§7.11.4)."
+        }
+      ],
+      "effetti": [
+        {
+          "abilita": "Furtività",
+          "valore": 1,
+          "ambito": "situazionale",
+          "beneficio": "mimetismo",
+          "condizione": "Il bonus si applica una sola volta: non si effettuano Prove separate per vista e udito.",
+          "fonte": "Armamenti §7.11.7",
+          "proprieta": "Mimetismo 1"
+        },
+        {
+          "tipo": "contromisura",
+          "effetto": "Concussivo",
+          "valore": 1,
+          "ambito": "generale",
+          "beneficio": "contromisura_concussivo",
+          "condizione": "Applicano le Contromisure del §5.24: il valore è una soglia contro l’effetto aggiuntivo pertinente dopo l’Armatura, non un’ulteriore riduzione dei danni.",
+          "fonte": "Armamenti §7.11.7",
+          "proprieta": "Imbottita 1"
+        }
+      ],
+      "nota_sigla": "Dotazione dell’agenzia SIA dell’Alleanza (504 PE): voce distinta dalla dotazione storica ASA dei PG della Neverlost (§7.26), con cui condivide le regole di protezione."
     },
     {
       "id": "armatura-marte",

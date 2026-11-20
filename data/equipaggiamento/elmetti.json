@@ -1374,7 +1374,7 @@
         "ASA Recon",
         "Elmetto ASA Recon"
       ],
-      "note_manuale": "Elmetto specialistico (§7.21.5): Visione notturna; Sensori 1 a vista e udito; Filtro respiratorio 2; Allerta tattica 1. Non fornisce AR; sostituisce l’elmetto standard e si acquista per intero. Può ricevere modifiche aggiuntive compatibili. L’ASA Recon non richiede più ore di batteria da annotare per le sue funzioni elettroniche ordinarie; il Filtro respiratorio resta passivo.",
+      "note_manuale": "Dotazione storica dei PG della Neverlost (Armamenti 0.87 §7.26; A.294, E&L 19/11/2026). Indossato offre visione notturna, sensori (+1 VA alle Prove di Percezione basate su vista o udito) e allerta tattica (+1 Iniziativa); il filtro respiratorio concede +2 alle PS di Tempra contro veleni e agenti patogeni inalati soltanto con la maschera in uso. Nello zaino non concede alcun beneficio. Sono proprietà del modello storico ASA, distinte da quelle del SIA Recon del 504 PE; i bonus si applicano una sola volta.",
       "paragrafo": "§7.21.5",
       "versione_manuale": "Armamenti 0.65",
       "ar": {
@@ -1440,6 +1440,84 @@
         "ordinaria": true,
         "paragrafo": "§5.4.3"
       }
+    },
+    {
+      "id": "elmetto-sia-recon",
+      "nome": "SIA Recon",
+      "tipo": "elmetto",
+      "catalogo": "Alleanza",
+      "famiglia": "Elmetti",
+      "nomi_alternativi": [
+        "Elmetto SIA Recon",
+        "Elmetto Recon SIA"
+      ],
+      "note_manuale": "Elmetto specialistico dell’Alleanza (504 PE; §7.21.5): Visione notturna; Sensori 1 a vista e udito; Filtro respiratorio 2; Allerta tattica 1. Non fornisce AR; sostituisce l’elmetto standard e si acquista per intero. È il modello SIA, distinto dall’Elmetto Recon ASA dei PG (§7.26).",
+      "paragrafo": "§7.21.5",
+      "versione_manuale": "Armamenti 0.87",
+      "ar": {
+        "totale": 0,
+        "magica": 0
+      },
+      "pi": 4,
+      "qualita": "Non comune",
+      "ps_int": 12,
+      "reperibilita": "RA",
+      "costo": 7500,
+      "proprieta": [
+        {
+          "nome": "Visione notturna",
+          "testo": "Entro 80 Q ignora le penalità per scarsa illuminazione. Richiede luce ambientale residua e non funziona nel buio completo. Fumo, nebbia e ostacoli mantengono i loro effetti."
+        },
+        {
+          "nome": "Sensori 1 a vista e udito",
+          "testo": "+X VA a Percezione per vista e/o udito, come indicato nella scheda. Non concede Prove o osservazioni gratuite, non individua automaticamente creature nascoste e non supera ostacoli che impediscono al sensore di rilevare il bersaglio."
+        },
+        {
+          "nome": "Filtro respiratorio 2",
+          "testo": "+2 alla PS Tempra contro veleni e agenti patogeni inalati, con maschera indossata. Richiede aria respirabile; non fornisce ossigeno né tenuta per immersione o vuoto."
+        },
+        {
+          "nome": "Allerta tattica 1",
+          "testo": "+1 Iniziativa. Il bonus si applica quando si determina l’Iniziativa; attivare o cambiare elmetto dopo non permette di ritirarla o riordinare i turni già stabiliti. Non impedisce automaticamente la Sorpresa."
+        }
+      ],
+      "effetti": [
+        {
+          "abilita": "Percezione",
+          "valore": 1,
+          "ambito": "situazionale",
+          "beneficio": "sensori_vista_udito",
+          "condizione": "+X VA a Percezione per vista e/o udito, come indicato nella scheda.",
+          "proprieta": "Sensori 1 a vista e udito",
+          "fonte": "Armamenti §7.21.2"
+        },
+        {
+          "tipo": "salvezza",
+          "salvezza": "tempra",
+          "valore": 2,
+          "ambito": "uso_specifico",
+          "uso": "contro veleni e agenti patogeni inalati",
+          "beneficio": "filtro_respiratorio",
+          "condizione": "+2 alla PS Tempra contro veleni e agenti patogeni inalati, con maschera indossata.",
+          "proprieta": "Filtro respiratorio 2",
+          "fonte": "Armamenti §7.21.2"
+        },
+        {
+          "tipo": "iniziativa",
+          "valore": 1,
+          "ambito": "generale",
+          "beneficio": "allerta_tattica",
+          "condizione": "+1 Iniziativa.",
+          "proprieta": "Allerta tattica 1",
+          "fonte": "Armamenti §7.21.2"
+        }
+      ],
+      "alimentazione": {
+        "nec": "nec:verde-standard",
+        "ordinaria": true,
+        "paragrafo": "§5.4.3"
+      },
+      "nota_sigla": "Voce distinta dall’Elmetto Recon ASA: l’esemplare ASA ha le proprie funzioni (A.294), il SIA Recon le sue."
     },
     {
       "id": "elmetto-doomtrooper-assault",

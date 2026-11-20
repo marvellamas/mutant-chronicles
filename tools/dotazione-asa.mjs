@@ -15,8 +15,10 @@
 //   - salva accanto una copia `<file>.prima-a284` (senza `.json`) e scrive una riga nello storico;
 //   - è idempotente.
 //
-// **Che cosa non fa, di proposito:** non tocca l'Elmetto Recon (A.294: se le funzioni del modello SIA restano all'esemplare ASA
-// lo decide Davide; da qui il +1 all'Iniziativa non si toglie), non crea voci SIA, non cambia il Soprabito SIA riservato.
+// **Che cosa non fa, di proposito:** non tocca l'Elmetto Recon (A.294, E&L 19/11: le funzioni sono dell'esemplare ASA, indossato; nessuna
+// sostituzione) e non cambia il Soprabito SIA riservato. Le voci SIA nel catalogo (A.295, lotto 228) sono distinte dalle ASA:
+// **questo strumento va eseguito prima di correggere il nome nel catalogo** sui file veri (l'identificativo non cambia, quindi nulla si rompe
+// se l'ordine si inverte, ma i PG sul vecchio «riservato» non hanno diritto alla Discreta SIA).
 //
 //   node tools/dotazione-asa.mjs --cartella=<cartella personaggi>            che cosa farebbe
 //   node tools/dotazione-asa.mjs --cartella=<cartella personaggi> --scrivi   applica

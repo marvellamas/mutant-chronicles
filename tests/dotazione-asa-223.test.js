@@ -28,7 +28,9 @@ test('i quattro nomi della dotazione ASA sono quelli del manuale 0.87, e nel cat
     assert.equal(cat.perRif.get(rif)?.nome, nome, `${rif} si chiama «${nome}»`);
   }
   // le sigle non sono intercambiabili: il catalogo non ha nessuna voce SIA con un nome ASA, e il riservato (nel manuale: SIA) non è rinominato
-  assert.equal(cat.perRif.get(DA)?.nome, 'Soprabito ASA riservato', 'il «riservato» non è toccato: la sigla resta da decidere (A.295)');
+  // A.295 (lotto 228): la sigla è decisa — nel manuale il «riservato» è SIA; l'identificativo resta (nessun file perde il riferimento)
+  assert.equal(cat.perRif.get(DA)?.nome, 'Soprabito SIA riservato', 'il «riservato» è SIA (A.295); l’id non cambia');
+  assert.ok(cat.perRif.get(DA).nomi_alternativi.includes('Soprabito ASA riservato'), 'il vecchio nome resta per la ricerca');
   assert.ok(cat.perRif.get('armature_corporative:divisa-d-ordinanza-asa').nomi_alternativi.includes('Divisa d’ordinanza ASA'));
 });
 
@@ -64,7 +66,7 @@ test('mutante: se il Soprabito di ordinanza desse AR 2 invece di 1, lo strumento
   assert.ok(r.diff.length > 0, 'con un valore diverso il rapporto lo segnala');
 });
 
-test('l’Elmetto Recon ASA conserva le sue funzioni (A.294 aperta): +1 Iniziativa, sensori, filtro; non si copia né si toglie niente', () => {
+test('l’Elmetto Recon ASA conserva le sue funzioni (A.294, risolta nel lotto 228): +1 Iniziativa, sensori, filtro; non si copia né si toglie niente', () => {
   const e = cat.perRif.get('elmetti:elmetto-asa-recon');
   assert.deepEqual(e.proprieta.map((x) => x.nome), ['Visione notturna', 'Sensori 1 a vista e udito', 'Filtro respiratorio 2', 'Allerta tattica 1']);
 });
