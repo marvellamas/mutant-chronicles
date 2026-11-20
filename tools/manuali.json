@@ -38,19 +38,15 @@
    "nome": "Manuale degli Armamenti",
    "drive": "1eDZJHfgBIYPvzKg78tEGwiLtrI_6gzpQOIfJA9aYiYg",
    "formato": "doc",
-   "versione": "0.87",
-   "testo": "armamenti-0.87.md",
-   "modificato": "2026-11-18T12:48:14Z",
+   "versione": "0.89",
+   "testo": "armamenti-0.89.md",
+   "modificato": "2026-11-20T10:38:32Z",
    "recepita": {
-    "versione": "0.87",
-    "quando": "2026-11-18",
-    "lotto": 223,
-    "cosa": "Confronto NON alla cieca: in sezione 7 del Doc c’è la riga di registro della 0.87 (18/11). 0.86 → 0.87: cinque punti, tutti sulla dotazione storica ASA dei PG (§7.26) e due richiami (§7.11.7, §7.21.5), esattamente quelli dichiarati da Davide nella riga di registro; nessuna tabella di armi, nessun numero di combattimento. Le armi del catalogo sono rilette sulla 0.87: 0 differenze, quindi solo l’etichetta.",
-    "documento": "docs/diff-lotto223-2026-11-18.md"
-   },
-   "recepimento_in_attesa": {
     "versione": "0.89",
-    "motivo": "Lotto 228: la 0.88 e la 0.89 (19/11) non sono recepite in questo lotto; la riga di Davide dice che la 0.89 precisa al §7.26 le funzioni dell’Elmetto Recon ASA (A.294, già applicata dalla risposta). Modello SIA invariato."
+    "quando": "2026-11-20",
+    "lotto": 229,
+    "cosa": "Confronto NON del tutto alla cieca: la riga di Davide in sezione 7 copre solo la 0.88 → 0.89 (§7.26, le quattro funzioni dell’Elmetto Recon ASA: già applicate dal lotto 228, A.294); per la 0.87 → 0.88 non c’è riga, e il testo ha il nuovo §7.28 «Armamenti veicolari dell’Alleanza» (Mitragliatore Leggero Punisher, quattro cannoni e il lanciamissili, raccordo con lo Scout T4). Tutto il resto è identico alla 0.87 (92 righe diverse in tutto). Le armi del catalogo sono rilette sulla 0.89: 216 voci su 221 invariate, 0 differenze, 5 non trovate nel manuale col loro nome (le tre CyberArma e due Bolter, come dal 206); entra il solo Mitragliatore Leggero Punisher (§7.28.1, arma nuova distinta dalla pistola Punisher), 222 voci. I cannoni e il lanciamissili montati restano fuori: il manuale stesso dice che le specifiche autonome sono «da definire».",
+    "documento": "docs/diff-lotto229-2026-11-20.md"
    }
   },
   {
@@ -446,6 +442,11 @@
  },
  "_testi_archiviati": "Lotto 191: le edizioni superate che nessun dato e nessuno strumento cita più, spostate in `docs/manuali-txt/archivio/` e non cancellate. Un archiviato non è un doppione (regola 5 del protocollo, applicata qui alla cartella del repo come su Drive).",
  "testi_archiviati": [
+ {
+  "testo": "archivio/armamenti-0.87.md",
+  "archiviato": "2026-11-20",
+  "motivo": "Nessun dato la cita più dal lotto 229: le armi e i file ASA/SIA sono passati alla 0.89 (stesse tabelle; in più il §7.28)."
+ },
  {
   "testo": "archivio/giocatore-0.64.md",
   "archiviato": "2026-11-20",

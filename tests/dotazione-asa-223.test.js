@@ -9,7 +9,7 @@ import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync, readdirSync } from 'node:fs';
 import { datiReali } from './helpers.js';
-import { testoManuale } from '../tools/manuali.mjs';
+import { testoManuale, versioneManuale } from '../tools/manuali.mjs';
 import { catalogo } from '../src/equipaggiamento.js';
 import { rapporto, migra, vociDaMigrare, DOTAZIONE_ASA, DA, A } from '../tools/dotazione-asa.mjs';
 import { normalizza } from '../src/character.js';
@@ -20,9 +20,9 @@ const FIX = new URL('./fixtures/talenti-vecchi/', import.meta.url);
 const sette = readdirSync(FIX).filter((f) => f.endsWith('.json') && f !== 'attese.json').map((f) => JSON.parse(readFileSync(new URL(f, FIX), 'utf8')));
 const personaggio = (o) => ({ creazione: normalizza(o.scelte, dati).scelte, livelli: o.livelli ?? [], sessione: o.sessione });
 
-test('i quattro nomi della dotazione ASA sono quelli del manuale 0.87, e nel catalogo restano le voci separate dalle SIA', () => {
+test('i quattro nomi della dotazione ASA sono quelli del manuale corrente, e nel catalogo restano le voci separate dalle SIA', () => {
   const man = testoManuale('armamenti');
-  assert.match(man, /EDIZIONE 0\.87/, 'il manuale corrente è la 0.87');
+  assert.ok(man.includes(`EDIZIONE ${versioneManuale('armamenti')}`), 'il manuale corrente è quello del registro (lotto 229: l’edizione non si scrive nel test)');
   for (const [rif, nome] of Object.entries(DOTAZIONE_ASA)) {
     assert.ok(man.includes(nome), `«${nome}» è nel manuale`);
     assert.equal(cat.perRif.get(rif)?.nome, nome, `${rif} si chiama «${nome}»`);

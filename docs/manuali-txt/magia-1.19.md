@@ -5890,3 +5890,71 @@ La Spada conserva la proprietà passiva anche senza sintonizzazione. La variante
 
 La riserva e i poteri aggiuntivi appartengono alla ricetta della Spada dei Tre Riflessi. Le schegge ordinarie del §26.8 mantengono i propri limiti e non acquistano automaticamente CM, Plasma, Elettricità o Armonia.
 
+28.6 Dotazioni rimovibili del Warden TC
+
+Le seguenti ricette specifiche appartengono alla dotazione dell’Alleanza. I moduli sono rimovibili e autonomi; non rendono il veicolo ospitante tecnomistico. Sintonia e riserve riguardano i singoli moduli. Per la scheda del mezzo si veda il Manuale dei Veicoli, §17.10.
+
+Moduli mistici rimovibili
+
+Il Warden è un veicolo tecnologico equipaggiato con due moduli tecnomistici rimovibili. La sintonia riguarda ciascun modulo. Rimuovendolo, il mezzo conserva le funzioni tecniche ordinarie; il modulo smontato richiede un’installazione compatibile.
+
+Le due ricette specifiche hanno riserve autonome di 6 CM Verdi e proprietà Esclusive. Le CM non sono PM prelevabili, non alimentano l’altro modulo e restano separate dalle riserve tecnologiche. Un operatore sintonizzato a entrambi impegna SnT 6; due operatori possono gestirli separatamente.
+
+Localizzazione tecnomistica — Individuare 6
+
+| Dato | Valore |
+| :---- | :---- |
+| Grado / SnT | II, Non Comune / 2 |
+| Riserva e costo | 6 CM Verdi; 1 CM per scansione; sei utilizzi a piena riserva |
+| Attivazione e durata | 1 AzP automatica dopo sintonia; Concentrazione fino a dieci minuti oppure cinque rnd fissi |
+| Portata | 10 Q Base, 15 m; analisi di un’area totale di 1 Q |
+
+Collegato alla console dei sensori, permette percezione di presenza e direzione oppure analisi di una fonte e categoria per rnd. Riconosce l’impronta OS, ma non diagnostica la Corruzione personale. Visualizzazione e registrazione non estendono la portata mistica. Restano informazioni e limiti della versione completa di Individuare 6\.
+
+Decontaminazione mistica — Esorcizzare Corruzione 12
+
+| Dato | Valore |
+| :---- | :---- |
+| Grado / SnT | IV, Molto Rara / 4 |
+| Riserva e costo | 6 CM Verdi; 3 CM per trattamento; due trattamenti a piena riserva |
+| Procedura | Dieci minuti fuori dal combattimento, con Concentrazione dell’operatore; CM spese all’inizio |
+| Beneficiari | Fino a due creature viventi consenzienti oppure incoscienti soccorse |
+| Portata | 6 Q Base, 9 m; visibili e concatenati entro 2 Q |
+| Effetto | Riduce due Stati CROS per beneficiario; massimo Stato iniziale Caotico |
+
+I beneficiari occupano normalmente la camera. Esempi: Caotico diventa Corrotto; Corrotto diventa Contagiato. Una sola applicazione efficace ogni 24 ore per beneficiario, considerando insieme tutte le fonti. Non cura Oscuro, non rimuove mutazioni permanenti o possessioni. Un’interruzione impedisce l’effetto e consuma le CM impegnate.
+
+Ciclo combinato: dieci minuti, una carica MEC Blu, una dose di consumabili e 3 CM. La Concentrazione rimane a carico dell’operatore. Le altre condizioni seguono la versione completa dell’Incantesimo.
+
+Cofanetto del Silenzio corazzato
+
+| Dato | Valore |
+| :---- | :---- |
+| Dimensioni esterne / utili | 50 × 50 × 50 cm / 40 × 40 × 40 cm |
+| Massa a vuoto / carico del contenuto | 50 kg / massimo 100 kg |
+| Qualità fisica / Integrità | Rara; PS 14; 10 PI; AR 4 |
+| Grado / SnT / riserva | IV, Molto Rara / 0 / nessuna CM |
+| Capacità mistica | Tre punti complessivi di Corruzione degli oggetti |
+
+Terzo contenitore, aggiuntivo ai due tecnici, in alloggiamento sganciabile. Proprietà specifica di Isolamento corruttivo passivo: contenuto interamente riposto, cofanetto chiuso e integro. Esempi di capacità: un oggetto con Corruzione 3 oppure tre con Corruzione 1\.
+
+Contiene le emanazioni oscure e corruttive del contenuto, anche a veicolo spento e senza operatore. Aprire o compromettere chiusura o rivestimento interrompe l’isolamento; richiuderlo integro lo ripristina. Non purifica gli oggetti e non rimuove conseguenze già applicate. Fonti oltre la capacità richiedono un contenimento superiore.
+
+Ricarica e prezzi delle ricette specifiche
+
+| Artefatto | Creazione con progetto disponibile | Vendita indicativa |
+| :---- | :---- | :---- |
+| Modulo Individuare 6 | 2.200 cr | 9.900 cr |
+| Modulo Esorcizzare Corruzione 12 | 4.200 cr | 37.800 cr |
+| Cofanetto corazzato | 3.000 cr | 27.000 cr |
+
+Ogni modulo vuoto richiede 36 PM personali per ripristinare 6 CM al rapporto ordinario 3:1. Ripristinare una scansione richiede 6 PM; un trattamento 18 PM. Con rapporto 2:1 si spendono 4 PM per CM; con 1:1, 2 PM per CM. Restano requisiti, Azioni e Prove della ricarica mistica.
+
+Moduli: supporto e adattamento rispettivamente 500 e 1.000 cr, nucleo da 6 CM a 1.200 cr, reagenti rispettivamente 500 e 2.000 cr. Cofanetto: supporto 1.000 cr e infusione passiva 2.000 cr. Dotazione mistica complessiva 74.700 cr, compresa nel prezzo arrotondato del veicolo.
+
+Le ricette dei moduli sono specifiche e calibrate sui Guanti da Combattimento Mistico; non introducono una conversione generale automatica tra PM degli Incantesimi e CM. I Guanti conservano integralmente il loro profilo.
+
+Registro delle modifiche dalla versione 1.19 alla 1.20
+
+Aggiunte le tre dotazioni del Warden TC al §28.6: Individuare 6, Esorcizzare Corruzione 12 e Cofanetto del Silenzio corazzato. Le nuove ricette hanno consumi calibrati sui Guanti da Combattimento Mistico, senza modificarne il profilo né introdurre una conversione generale PM–CM.
+

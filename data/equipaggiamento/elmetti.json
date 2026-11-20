@@ -1374,7 +1374,7 @@
         "ASA Recon",
         "Elmetto ASA Recon"
       ],
-      "note_manuale": "Dotazione storica dei PG della Neverlost (Armamenti 0.87 §7.26; A.294, E&L 19/11/2026). Indossato offre visione notturna, sensori (+1 VA alle Prove di Percezione basate su vista o udito) e allerta tattica (+1 Iniziativa); il filtro respiratorio concede +2 alle PS di Tempra contro veleni e agenti patogeni inalati soltanto con la maschera in uso. Nello zaino non concede alcun beneficio. Sono proprietà del modello storico ASA, distinte da quelle del SIA Recon del 504 PE; i bonus si applicano una sola volta.",
+      "note_manuale": "Dotazione storica dei PG della Neverlost (Armamenti 0.89 §7.26; A.294, E&L 19/11/2026). Indossato offre visione notturna, sensori (+1 VA alle Prove di Percezione basate su vista o udito) e allerta tattica (+1 Iniziativa); il filtro respiratorio concede +2 alle PS di Tempra contro veleni e agenti patogeni inalati soltanto con la maschera in uso. Nello zaino non concede alcun beneficio. Sono proprietà del modello storico ASA, distinte da quelle del SIA Recon del 504 PE; i bonus si applicano una sola volta.",
       "paragrafo": "§7.21.5",
       "versione_manuale": "Armamenti 0.65",
       "ar": {
@@ -1453,7 +1453,7 @@
       ],
       "note_manuale": "Elmetto specialistico dell’Alleanza (504 PE; §7.21.5): Visione notturna; Sensori 1 a vista e udito; Filtro respiratorio 2; Allerta tattica 1. Non fornisce AR; sostituisce l’elmetto standard e si acquista per intero. È il modello SIA, distinto dall’Elmetto Recon ASA dei PG (§7.26).",
       "paragrafo": "§7.21.5",
-      "versione_manuale": "Armamenti 0.87",
+      "versione_manuale": "Armamenti 0.89",
       "ar": {
         "totale": 0,
         "magica": 0

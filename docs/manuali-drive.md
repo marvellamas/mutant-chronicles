@@ -192,3 +192,6 @@ Il 28/10 mattina la ricerca restituì 5 file e un `nextPageToken`: non fu seguit
 - Mai modificare i Doc di Davide. Le proposte di modifica seguono `docs/protocollo-davide.md`.
 - Il registro e `docs/manuali-txt/` si committano insieme alle modifiche ai dati che ne derivano, così ogni commit dice "questa versione dei dati corrisponde a questa versione dei manuali".
 - Se un Doc non è leggibile (permessi, link cambiato), segnalarlo subito senza inventare: l'ultimo testo valido è in `docs/manuali-txt/`.
+
+## Registro delle ricognizioni, aggiunta del 20/11/2026 (lotto 229)
+- Giocatore 0.65 (Drive 19/11 13:12:43 UTC), Armamenti 0.89 (**20/11 10:38:32 UTC**), Veicoli 0.21 (19/11 13:13:03 UTC, poi **20/11 10:39:10 UTC**) e Magia 1.19 (**20/11 10:36:00 UTC**): i tre Doc sono cambiati **sotto lo stesso numero** dopo il primo scarico; la regola 4 («se è cambiato lo dice la data al secondo e l'impronta, non il numero») ha funzionato solo perché la data è stata guardata di nuovo. Il Doc dei Veicoli, a 40,45 MB, **non si esporta più in Markdown** («File too large for export»): resta l'esportazione in testo semplice, che i lettori non usano. Vedi `docs/diff-lotto229-2026-11-20.md`.

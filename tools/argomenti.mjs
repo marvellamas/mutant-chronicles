@@ -102,6 +102,8 @@ export const ARGOMENTI = {
   'lotto_209_veicoli_civili.mjs': ['scrivi'],
   'correggi-cyberarma-dimitri.mjs': ['cartella', 'nome', 'scrivi'],
   'dotazione-asa.mjs': ['cartella', 'scrivi'],
+  'pg-valori.mjs': ['cartella'],
+  'pg-prima-dopo.mjs': ['cartella', 'base'],
   'importa-armi.mjs': ['modello', 'specializzazioni'],
   'armi-prima-dopo.mjs': ['da', 'cartella'],
 };

@@ -9,6 +9,7 @@ import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync, readdirSync } from 'node:fs';
 import { datiReali } from './helpers.js';
+import { testoManuale } from '../tools/manuali.mjs';
 import { catalogo } from '../src/equipaggiamento.js';
 import { rapporto, migra, vociDaMigrare, DA, A } from '../tools/dotazione-asa.mjs';
 import { normalizza } from '../src/character.js';
@@ -28,11 +29,11 @@ const SIA = {
   'elmetti:elmetto-sia-recon': 'SIA Recon',
 };
 
-test('le cinque voci SIA ci sono, coi nomi del manuale 0.87, e non sono le ASA', () => {
-  const man = readFileSync(new URL('../docs/manuali-txt/armamenti-0.87.md', import.meta.url), 'utf8');
+test('le cinque voci SIA ci sono, coi nomi del manuale corrente, e non sono le ASA', () => {
+  const man = testoManuale('armamenti');
   for (const [rif, nome] of Object.entries(SIA)) {
     assert.equal(cat.perRif.get(rif)?.nome, nome, rif);
-    assert.ok(man.includes(nome), `«${nome}» è nel manuale 0.87`);
+    assert.ok(man.includes(nome), `«${nome}» è nel manuale corrente`);
     assert.equal(cat.perRif.get(rif).catalogo, 'Alleanza');
   }
   for (const rif of ['armature_corporative:divisa-d-ordinanza-asa', 'armature_corporative:divisa-operativa-asa', A, 'elmetti:elmetto-asa-recon']) {
