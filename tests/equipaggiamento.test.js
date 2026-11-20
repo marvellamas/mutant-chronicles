@@ -553,9 +553,9 @@ test('validatore dei moduli integrati e delle munizioni di riferimento', () => {
 
 // --- Lotto 6: armature corporative (§7.11.5–7.17.5) ---------------------------------------
 
-test('lotto 6: 83 armature corporative in 7 cataloghi, penalità effettive e rinforzi dal manuale', () => {
+test('lotto 6: 85 armature corporative (83 + le due divise SIA, A.295) in 7 cataloghi, penalità effettive e rinforzi dal manuale', () => {
   const tutte = catalogo(dati).oggetti.filter((o) => o.file === 'armature_corporative' && !o.paragrafo.startsWith('§7.22'));
-  assert.equal(tutte.length, 83);
+  assert.equal(tutte.length, 85);
   assert.deepEqual([...new Set(tutte.map((o) => o.catalogo))], ['Bauhaus', 'Alleanza', 'Capitol', 'Imperial', 'Cybertronic', 'Mishima', 'Fratellanza']);
   const r = (id) => catalogo(dati).perRif.get(`armature_corporative:${id}`);
   // §7.11.5: Blitzer, Media con Articolazione d'assalto e Assetto da incursione

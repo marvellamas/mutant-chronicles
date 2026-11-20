@@ -72,7 +72,7 @@ for (const c of CORREZIONI) prima.equipaggiamento.file[c.file].oggetti.find((x) 
 
 /** I valori che contano al tavolo, senza i contatori dell'energia. */
 /** Lotto 223 (A.284): le quattro voci della dotazione ASA hanno cambiato **solo il nome**; i due lati si confrontano con i nomi riportati allo stesso segno, e un valore diverso fallisce comunque. */
-const nomiASA223 = (s) => s.replace(/Divisa d’ordinanza ASA|Divisa di servizio ASA/g, 'DIV-SERV').replace(/Divisa [Oo]perativa ASA/g, 'DIV-OP').replace(/Soprabito ASA(?! riservato)|Soprabito di ordinanza ASA/g, 'SOPR-ORD').replace(/Elmetto ASA Recon|Elmetto Recon ASA/g, 'ELM-RECON');
+const nomiASA223 = (s) => s.replace(/Divisa d’ordinanza ASA|Divisa di servizio ASA/g, 'DIV-SERV').replace(/Divisa [Oo]perativa ASA/g, 'DIV-OP').replace(/Soprabito ASA(?! riservato)|Soprabito di ordinanza ASA/g, 'SOPR-ORD').replace(/Elmetto ASA Recon|Elmetto Recon ASA/g, 'ELM-RECON').replace(/Soprabito (?:ASA|SIA) riservato/g, 'SOPR-RIS'); // A.295 (lotto 228): il «riservato» è SIA nel manuale, stesso id
 
 function valori(o, d) {
   const p = { creazione: o.scelte, livelli: o.livelli, sessione: o.sessione };

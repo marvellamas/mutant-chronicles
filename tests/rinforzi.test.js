@@ -18,7 +18,7 @@ const effetti = (eq, filtro) => eq.effettiOggetti.filter(filtro).map((e) => [e.o
 
 test('§7.23: 2 profili di categoria, 4 modelli commerciali, 2 soprabiti di base, 14 specialistici, 9 dedicati e il Mantello Venusiano (0.55)', () => {
   const r = catalogo(dati).oggetti.filter((o) => o.file === 'rinforzi');
-  assert.equal(r.length, 32);
+  assert.equal(r.length, 33);
   // §7.23.10: nove rinforzi dedicati da 1.500, Rari, PS 12; ognuno ottimizzato solo sulla propria armatura
   const dedicati = r.filter((o) => o.paragrafo === '§7.23.10');
   assert.equal(dedicati.length, 9);
@@ -82,7 +82,7 @@ test('§7.23.4, §7.23.9: le proprietà del rinforzo valgono solo se è montato 
   ({ p } = rinforzata('armature:armatura-civile-leggera', 'soprabito-asa-riservato'));
   assert.equal(p.rinforzo, null);
   ({ p } = rinforzata('armature_corporative:divisa-d-ordinanza-asa', 'soprabito-asa-riservato'));
-  assert.equal(p.rinforzo.nome, 'Soprabito ASA riservato');
+  assert.equal(p.rinforzo.nome, 'Soprabito SIA riservato');
   assert.ok(p.promemoria.includes('Discreta')); // proprietà testuale del rinforzo, nella riga della protezione
   // un Kasumi non montato non dà Mimetismo
   const s = calcolaScheda({ creazione: { ...MISHIMA_AGENTE, equipaggiamento: [voce('k', 'rinforzi:mantello-kasumi', 'in_uso')] }, livelli: [] }, dati);

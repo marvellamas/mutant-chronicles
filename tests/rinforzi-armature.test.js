@@ -18,13 +18,13 @@ const CIVILE = 'armature:armatura-civile-leggera'; // AR 1, ammette Rinforzi Leg
 const SOPRABITO = 'rinforzi:soprabito-balistico'; // Leggero, indossabile da solo
 const PIASTRE = 'rinforzi:kit-di-piastre-supplementari-leggere'; // Leggero, solo montato
 
-test('dati: 32 rinforzi di tipo «rinforzo»; soprabiti, mantelli, Tabardo e Sottogiacca indossabili da soli (A.80)', () => {
+test('dati: 33 rinforzi di tipo «rinforzo» (32 + Soprabito SIA, A.295); soprabiti, mantelli, Tabardo e Sottogiacca indossabili da soli (A.80)', () => {
   const r = catalogo(dati).oggetti.filter((o) => o.rinforzo);
-  assert.equal(r.length, 32);
+  assert.equal(r.length, 33);
   assert.ok(r.every((o) => o.tipo === 'rinforzo'));
   assert.ok(TIPI.includes('rinforzo'));
   assert.deepEqual(r.filter((o) => o.indossabile_da_solo).every((o) => /^(Soprabito|Mantello|Tabardo consacrato|Sottogiacca protettiva IES)/.test(o.nome)), true);
-  assert.equal(r.filter((o) => o.indossabile_da_solo).length, 16);
+  assert.equal(r.filter((o) => o.indossabile_da_solo).length, 17); // 16 + il Soprabito SIA (A.295)
   // A.80 (E&L del 03/10/2026): profilo autonomo di Rinforzo Leggero; nessun TODO
   assert.deepEqual(dati.regole.rinforzi.da_solo.profilo_autonomo, { ar: 1, magica: 0, categoria: 'Leggera', for_richiesta: 3 });
   assert.equal(dati.regole.rinforzi['TODO(Davide)'], undefined);

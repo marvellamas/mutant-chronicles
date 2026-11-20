@@ -17,9 +17,9 @@ const sessione = { ...inizializzaSessione({ pv: 10, pm: 5, puntiEroe: 10, ferite
 const scheda = (equipaggiamento) => calcolaScheda({ creazione: { ...MISHIMA_AGENTE, equipaggiamento }, livelli: [], sessione }, dati);
 const PISTOLA = voce('p', 'armi_distanza:pistola-semiautomatica', 'impugnata');
 
-test('catalogo: 16 elmetti (standard e 15 corporativi) e 15 modifiche commerciali, senza AR e senza peso', () => {
+test('catalogo: 17 elmetti (standard, 15 corporativi e il SIA Recon, A.295) e 15 modifiche commerciali, senza AR e senza peso', () => {
   const el = cat.oggetti.filter((o) => o.file === 'elmetti');
-  assert.equal(el.filter((o) => o.tipo === 'elmetto').length, 16);
+  assert.equal(el.filter((o) => o.tipo === 'elmetto').length, 17);
   assert.equal(el.filter((o) => o.tipo === 'accessorio').length, 15);
   assert.ok(el.every((o) => o.peso === undefined)); // il manuale non lo dà (A.30)
   assert.ok(el.filter((o) => o.tipo === 'elmetto').every((o) => o.ar.totale === 0 && o.pi === 4));
