@@ -3,7 +3,7 @@
  "_protocollo": "docs/manuali-drive.md e la sezione «Protocollo dei manuali» di CLAUDE.md",
  "cartella_lavoro": "1p4jh2tKIN9kRimD4ifzth_YjWUZTH6-6",
  "cartella_archivio": "1tVAzASERKxCEZPCrAf-LFHiYLqhey9Rc",
- "controllato": "2026-11-17",
+ "controllato": "2026-11-20",
  "manuali": [
   {
    "id": "giocatore",
@@ -20,6 +20,10 @@
     "lotto": 212,
     "cosa": "Una frase in più rispetto alla 0.63 (e il numero di edizione), nel §8.3.1: «L’adeguamento ricalcola prima categoria e base di ogni Abilità. Se il nuovo profilo riduce il VA personale, la diminuzione è accettata e non genera compensazioni automatiche né conservazione del valore precedente. Il giocatore può recuperare il divario soltanto assegnando normalmente parte del monte di punti liberi, nel rispetto dei limiti. Qualunque eccezione concessa dal Direttore è separata, esplicita e registrata.» È la A.267 (risposta del 15/11) scritta nel manuale, e l’adeguamento del lotto 207 fa già così. Verificato col diff: nient’altro cambia.",
     "documento": "docs/diff-lotto212-2026-11-17.md"
+   },
+   "recepimento_in_attesa": {
+    "versione": "0.65",
+    "motivo": "Lotto 228: letto contro la 0.64, non recepito (ordine del lotto). Cambia solo il nuovo §5.2.7 «Cavalcature e combattimento in sella» (la regola della A.296 e del blocco dell’E&L del 19/11), un commento di Drive al §3.5.2 senza cambio di testo e un’intestazione di tabella cosmetica. Nel cap. 8, nei PX, nei dadi PV/PM e nel profilo 4/7/9/4 non cambia niente: né il passaggio di livello né l’adeguamento delle Abilità. Va al prossimo lotto dei manuali."
    }
   },
   {
@@ -47,6 +51,10 @@
     "lotto": 223,
     "cosa": "Confronto NON alla cieca: in sezione 7 del Doc c’è la riga di registro della 0.87 (18/11). 0.86 → 0.87: cinque punti, tutti sulla dotazione storica ASA dei PG (§7.26) e due richiami (§7.11.7, §7.21.5), esattamente quelli dichiarati da Davide nella riga di registro; nessuna tabella di armi, nessun numero di combattimento. Le armi del catalogo sono rilette sulla 0.87: 0 differenze, quindi solo l’etichetta.",
     "documento": "docs/diff-lotto223-2026-11-18.md"
+   },
+   "recepimento_in_attesa": {
+    "versione": "0.89",
+    "motivo": "Lotto 228: la 0.88 e la 0.89 (19/11) non sono recepite in questo lotto; la riga di Davide dice che la 0.89 precisa al §7.26 le funzioni dell’Elmetto Recon ASA (A.294, già applicata dalla risposta). Modello SIA invariato."
    }
   },
   {
@@ -80,6 +88,10 @@
     "lotto": 213,
     "cosa": "0.10 → 0.19: i capitoli 1–11 hanno le stesse tabelle (letto con tools/importa-veicoli.mjs: 0 scarti sui campi letti, sulla 0.10 e sulla 0.19); cambiano il testo del capitolo 10 (Scout «SIA», FIAT LUX «Scout MK4 ASA» esemplare storico, settore di 120° della M606, schermo senza AR) e l’introduzione del capitolo 11 (la Neverlost è un esemplare, non un modello). Entrati il cap. 12 (moto) e 13 (furgone) nel 209; i cap. 14 e 15 (quattro astronavi) sono dichiarati fuori catalogo in data/veicoli.json con il motivo e ciò che servirebbe. Quattro schede del Doc (Tab 1, Neverlost, Astronavi commerciali, Navi passeggeri), 7 immagini (3,3 MB): tavole e illustrazioni, nessuna tabella fotografata.",
     "documento": "docs/diff-lotto213-2026-11-17.md"
+   },
+   "recepimento_in_attesa": {
+    "versione": "0.21",
+    "motivo": "Lotto 228: letto contro la 0.19, non recepito. La 0.21 porta con sé la 0.20 mai recepita (cap. 10 «Scout T4» con il Punisher al posto del M606, prezzo standard 132.510 cr, nuovo cap. 16 «Mezzi terrestri militari dell’Alleanza») più il solo rimando del §1.3 alle cavalcature. NON corregge l’errata dei 120° del FIAT LUX: il manuale dice ancora «limitata a 120°», mentre la A.280 di Davide dice arco 180° frontale."
    }
   },
   {
@@ -429,7 +441,11 @@
  },
  "_testi_archiviati": "Lotto 191: le edizioni superate che nessun dato e nessuno strumento cita più, spostate in `docs/manuali-txt/archivio/` e non cancellate. Un archiviato non è un doppione (regola 5 del protocollo, applicata qui alla cartella del repo come su Drive).",
  "testi_archiviati": [
-  {"testo":"archivio/armamenti-0.86.md","archiviato":"2026-11-18","motivo":"Nessun dato la cita più dal lotto 223: le armi sono passate alla 0.87 (stesse tabelle)."},
+  {
+   "testo": "archivio/armamenti-0.86.md",
+   "archiviato": "2026-11-18",
+   "motivo": "Nessun dato la cita più dal lotto 223: le armi sono passate alla 0.87 (stesse tabelle)."
+  },
   {
    "testo": "archivio/magia-1.7.md",
    "archiviato": "2026-11-12",
