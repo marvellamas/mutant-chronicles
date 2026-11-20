@@ -202,7 +202,7 @@ export function testoAttivazioneArtefatto(def) {
   const at = def.attivazione_artefatto;
   const effetto = [at.va ? `+${at.va} VA ai pugni` : null, at.natura ? `danno ${at.natura}` : null, at.danno ? `+${at.danno} al danno` : null].filter(Boolean).join(', ');
   const getti = (def.getti_artefatto ?? []).map((g) => `${g.nome}: ${testoCosto(costoRiserva(g))}, ${g.azione}${g.prova_potere ? `, Prova di ${g.prova_potere.abilita} ${g.prova_potere.modificatore < 0 ? '−' : '+'}${Math.abs(g.prova_potere.modificatore)}` : ''}, ${g.getti === 2 ? 'due linee' : 'linea'} ${g.area.lunghezza_q} × ${g.area.larghezza_q} Q, ${g.danno} ${g.natura}${(g.proprieta_danno ?? []).length ? ` (${g.proprieta_danno.join(', ')})` : ''}${g.getti === 2 ? ' per getto' : ''}`);
-  return [`${at.nome ? `${at.nome}: ` : ''}${testoCosto(costoRiserva(at))} dalla riserva interna, ${at.azione}, ${at.durata}: ${effetto}`, ...getti].join(' · ');
+  return [`${at.nome ? `${at.nome}: ` : ''}${testoCosto(costoRiserva(at))} dalla riserva interna, ${at.azione}, ${at.durata}${effetto ? `: ${effetto}` : ''}`, ...getti].join(' · ');
 }
 
 export function preparaStampa(personaggio, dati, { versioniDati = '', completo = false, sessione = null, registroVeicoli = null, temporanei = false, modificatori = null } = {}) {

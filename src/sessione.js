@@ -871,6 +871,8 @@ export function attivaArtefatto(sessione, uid, pm, m, { forza = false } = {}) {
   const c = s.chroma[uid];
   // N2: con `forza` («Procedi comunque») si attiva lo stesso; la riserva scende a 0, non sotto
   if (!c || (c.pmAttuali < pm && !forza)) return null;
+  // A.252 (lotto 231): una Carica Mistica si spende intera, anche con «Procedi comunque» — un costo in CM non intero non si scala mai
+  if (c.unita === 'CM' && !(Number.isInteger(pm) && pm >= 1)) return null;
   const chiave = `attivazione:${uid}`;
   return modificaSessione(s, { chroma: { ...s.chroma, [uid]: { ...c, pmAttuali: Math.max(0, arrotonda6(c.pmAttuali - pm)) } }, condizioniOggetti: [...new Set([...s.condizioniOggetti, chiave])] }, m);
 }
@@ -884,6 +886,8 @@ export function usaArtefatto(sessione, uid, pm, m, { forza = false } = {}) {
   const s = allineaSessione(sessione, m);
   const c = s.chroma[uid];
   if (!c || (c.pmAttuali < pm && !forza)) return null;
+  // A.252 (lotto 231): una Carica Mistica si spende intera, anche con «Procedi comunque»
+  if (c.unita === 'CM' && !(Number.isInteger(pm) && pm >= 1)) return null;
   return modificaSessione(s, { chroma: { ...s.chroma, [uid]: { ...c, pmAttuali: Math.max(0, arrotonda6(c.pmAttuali - pm)) } } }, m);
 }
 

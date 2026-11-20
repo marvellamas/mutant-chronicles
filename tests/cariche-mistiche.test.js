@@ -57,6 +57,9 @@ test('dati: quali riserve passano alle CM, quali restano in PM; il validatore lo
     'armi:cyberarma-batteria-verde': [5, 'Verde', 10],
     // lotto 173: l'Anello con Rigenerazione 9 nasce in CM (configurazione del 02/11/2026), senza una capacità di prima
     'artefatti:anello-di-rigenerazione-9': [5, 'Verde', undefined],
+    // lotto 231: i due moduli del Warden TC (Magia 1.20 §28.6): 6 CM Verdi ciascuno, senza capacità di prima
+    'artefatti:modulo-individuare-6-warden-tc': [6, 'Verde', undefined],
+    'artefatti:modulo-esorcizzare-corruzione-12-warden-tc': [6, 'Verde', undefined],
   });
   // le Batterie Mistiche (anche la Pietra della Vigilanza, Batteria Universale), le Matrice e le Schegge restano in PM
   const pietra = art.oggetti.find((o) => o.id === 'pietra-della-vigilanza').artefatto.contenitore;

@@ -27,11 +27,17 @@
    "nome": "Manuale della Magia",
    "drive": "1F5npdIujLUEVcHVX6CvF5jOHNMG5LS7dx0tgklDpzAY",
    "formato": "doc",
-   "versione": "1.19",
-   "testo": "magia-1.19.md",
-   "modificato": "2026-11-20T10:36:00Z",
-   "confronto": "alla cieca",
-   "nota_recepimento": "Lotto 211 (17/11/2026): recepita la 1.19 (Drive, modificata il 13/11 12:38 UTC, invariata da allora). Rispetto alla 1.17 cambia solo la frase delle Pietre di Luna del §26.8 e il §28.5 nuovo (manufatti lunari dei Mutanti); rispetto alla 1.11, da cui vengono i dati, le 90 schede cambiano in sei punti di solo testo (Morente) e nessuna tabella (docs/diff-lotto211-2026-11-17.md). **Lotto 229 (20/11/2026): stessa 1.19, testo cambiato** — Drive la ha modificata il 20/11 alle 10:36:00 UTC senza cambiare numero (aggiunto il §28.6 «Dotazioni rimovibili del Warden TC»: due ricette con 6 CM Verdi, che rimanda al Manuale dei Veicoli §17.10); il testo salvato è stato riscaricato e aggiornato; il resto è identico byte per byte (68 righe aggiunte, nessuna tolta). Il §28.6 non è applicato ai dati."
+   "versione": "1.20",
+   "testo": "magia-1.20.md",
+   "modificato": "2026-11-20T10:52:26Z",
+   "confronto": "alla cieca (in sezione 7 del Doc non c’è la riga della 1.20)",
+   "recepita": {
+    "versione": "1.20",
+    "quando": "2026-11-20",
+    "lotto": 231,
+    "cosa": "Impronta riscaricata 4e926448e3ae = quella del registro delle 11:22 UTC (nessun cambio a numero fermo). Il testo è lo stesso delle 10:36 già salvato come 1.19 dal lotto 229: cambiano il numero di edizione, il «Registro delle modifiche 1.19 → 1.20» e la forma di sei titoli; nessun numero. Il §28.6 «Dotazioni rimovibili del Warden TC» (Modulo Individuare 6, Modulo Esorcizzare Corruzione 12, Cofanetto del Silenzio corazzato) è applicato ai dati: tre voci, riserve e costi interi in CM, prezzi 9.900/37.800/27.000 = costo × 3 × coefficiente (A.256). Le 90 schede d’incantesimo rilette sulla 1.20: 90 invariate. Il Veicoli §17.10 (scheda del mezzo) non è leggibile.",
+    "documento": "docs/diff-lotto231-2026-11-20.md"
+   }
   },
   {
    "id": "armamenti",
@@ -442,6 +448,11 @@
  },
  "_testi_archiviati": "Lotto 191: le edizioni superate che nessun dato e nessuno strumento cita più, spostate in `docs/manuali-txt/archivio/` e non cancellate. Un archiviato non è un doppione (regola 5 del protocollo, applicata qui alla cartella del repo come su Drive).",
  "testi_archiviati": [
+ {
+  "testo": "archivio/magia-1.19.md",
+  "archiviato": "2026-11-20",
+  "motivo": "Nessun dato la cita più dal lotto 231: il testo è lo stesso della 1.20, a parte il numero e il registro delle modifiche; le 90 schede e le etichette di edizione sono passate alla 1.20."
+ },
  {
   "testo": "archivio/armamenti-0.87.md",
   "archiviato": "2026-11-20",

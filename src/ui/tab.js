@@ -3015,9 +3015,9 @@ function attivazioneArtefattoUiCorpo(ctx, x, r, riserva) {
   // scheda di Lucas 1.0: il Pugno mistico è l'unico +1 VA dei Guanti; nessun bonus sempre attivo
   const effetto = [at.va ? `+${at.va} VA ai pugni` : null, at.natura ? `danno ${at.natura}` : null, at.danno ? `+${at.danno} al danno` : null].filter(Boolean).join(', ');
   return h('div', { class: 'attivazione-infusa' },
-    h('p', {}, h('strong', {}, `${at.nome ?? 'Attivazione'}: `), `${testoCosto(costo)} dalla riserva interna, ${at.azione}, ${at.durata}: ${effetto}.`),
+    h('p', {}, h('strong', {}, `${at.nome ?? 'Attivazione'}: `), `${testoCosto(costo)} dalla riserva interna, ${at.azione}, ${at.durata}${effetto ? `: ${effetto}` : ''}.`),
     at.condizione ? h('p', { class: 'nota' }, at.condizione) : null,
-    accesa ? h('p', { class: 'nota' }, h('strong', {}, 'Attiva'), ` · vale in «Attacca!» senz’armi; dura ${at.durata}. `,
+    accesa ? h('p', { class: 'nota' }, h('strong', {}, 'Attiva'), ` · ${at.attacchi === 'senz_armi' ? 'vale in «Attacca!» senz’armi; ' : ''}dura ${at.durata}. `,
       h('button', { type: 'button', class: 'btn btn-piccolo', onclick: () => ctx.azioni.condizioneOggetto(chiave) }, 'Termina')) : null,
     motivo && !accesa ? h('p', { class: 'nota motivo' }, `Avviso: ${motivo}. Si può attivare comunque.`) : null,
     h('button', { type: 'button', class: `btn${motivo ? ' con-avviso' : ''}`, title: motivo ?? `Scala ${testoCosto(costo)} dalla riserva e accende l’effetto; una nuova attivazione rinnova la durata`,
