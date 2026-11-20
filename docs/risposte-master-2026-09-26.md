@@ -3496,3 +3496,37 @@ Per i cinque licantropi il [Manuale dei Mostri 0.69](https://docs.google.com/doc
 Lupo mannaro: in forma animale può usare solo il Morso, al massimo una volta per Round comprese le Opportunità. La seconda AzP resta disponibile per attività o Difese compatibili, non per un secondo Morso.  
 Ammantato: aperto occupa 2 × 2 Q; raccolto a terra occupa 1 × 1 Q. La postura cambia l’ingombro, non l’elenco degli attacchi. La presa va gestita separatamente: mentre avvolge una vittima può mordere soltanto quella vittima e usare la Coda contro altri bersagli. Ogni attacco costa 1 AzP.
 
+### Cavalcature e combattimento in sella — 19/11/2026
+
+Regola approvata e pubblicata nel [Manuale del Giocatore, §5.2.7](https://docs.google.com/document/d/110LNyYLZFWRGYuym836EqKYOUvoQRYvqBzm_2bJqybc) (v0.65); rimando nel [Manuale dei Veicoli, §1.3](https://docs.google.com/document/d/1lo_c3KLK7kntJwv195v5aD2ieuMfRuaThsDhPJCX3T4) (v0.21). Si condivide lo spostamento, non il turno. Le schede delle creature restano la fonte di posti, carico, andature e condotta; il conducente è incluso nel numero di posti.  
+Montare da un Q adiacente su una cavalcatura ferma e disponibile, o smontare volontariamente in un Q libero adiacente, costa 1 AzM di chi sale o scende. Nessuna Prova in condizioni ordinarie. Un solo conducente dà un ordine semplice senza spendere Azioni alla propria Iniziativa. La cavalcatura lo esegue alla propria Iniziativa con le sue Azioni; se ha già agito, il nuovo ordine vale dalla prossima. Cambiare conducente non raddoppia il Movimento. Per persuadere un animale spaventato o esitante: 1 AzP e Sopravvivenza; con fallimento prevale la condotta della scheda. Nessuna nuova Abilità Cavalcare, addestramento implicito o obbedienza forzata delle creature intelligenti.  
+Ogni occupante conserva Iniziativa, Azioni, Difese e condizioni proprie. Un attacco singolo ha un bersaglio dichiarato; ogni soggetto compreso in un’Area risolve l’effetto una sola volta. Nessuna AR o Copertura automatica, né attacchi gratuiti. Il solo danno non disarciona. Se uno scossone può sbalzare qualcuno, ogni occupante coinvolto effettua una PS di Riflessi: successo resta in sella; fallimento cade A Terra nel Q libero adiacente più vicino. Se cade la cavalcatura tutti lasciano la sella: sul piano, successo in piedi, fallimento A Terra. I danni dipendono dal dislivello reale (§5.22).  
+App: resta valido il requisito di mappa del 18/11. Una sola scheda per la cavalcatura, movimento con gli occupanti a bordo e soggetti distinti in combattimento. Implementazione nell’app non verificata.
+
+# A.294 — Funzioni dell’Elmetto Recon ASA della Neverlost (19/11/2026)
+
+Quando è indossato, l’Elmetto Recon ASA offre visione notturna, sensori (+1 VA alle Prove di Percezione basate su vista o udito) e allerta tattica (+1 all’Iniziativa). Il filtro respiratorio concede \+2 alle PS di Tempra contro veleni e agenti patogeni inalati soltanto con la maschera in uso. Nello zaino non concede alcun beneficio.  
+Sono proprietà del modello storico ASA, distinte da quelle del SIA Recon del 504 PE. I bonus si applicano una sola volta. Si conserva l’elmetto già assegnato a ciascun PG, con i suoi PI attuali: nessuna sostituzione, duplicazione o modifica del modello SIA.
+
+# A.295 — Voci SIA nel catalogo dell’app e soprabiti dei PG (19/11/2026)
+
+Nel catalogo dell’app, le dotazioni SIA dell’Alleanza del 504 PE vanno inserite come voci distinte dalle dotazioni storiche ASA dei PG. Usare i nomi del Manuale degli Armamenti: Divisa d’ordinanza SIA, Divisa operativa SIA, Soprabito SIA, Soprabito SIA riservato e SIA Recon.  
+La vecchia voce «Soprabito ASA riservato» corrisponde al Soprabito SIA riservato. Prima di correggere il nome nel catalogo, associare al Soprabito di ordinanza ASA soltanto gli esemplari dei PG che fanno ancora riferimento alla vecchia voce, conservando i PI attuali e il collegamento alla divisa. Se il PG ha già il soprabito corretto, non modificarlo. Il Soprabito di ordinanza ASA non acquisisce la proprietà Discreta della variante SIA riservata.
+
+# A.296 — Cavalcature e PNG a bordo: posti del Turk (19/11/2026)
+
+La prima cavalcatura da gestire nell’app è il Turk del Deserto Cangiante: tre posti totali, conducente compreso. Con il solo conducente o con conducente e un passeggero: Passo 6 Q, Corsa 12 Q, Scatto 18 Q. Con conducente e due passeggeri: Passo 4 Q, Corsa 8 Q, niente Scatto. Un quarto occupante non può salire ([Manuale del Giocatore §5.2.7](https://docs.google.com/document/d/110LNyYLZFWRGYuym836EqKYOUvoQRYvqBzm_2bJqybc); Manuale dei Mostri §7.16).  
+Anche i PNG fuori dallo scontro possono salire e scendere da un veicolo o da una cavalcatura senza entrare automaticamente nell’Iniziativa. Ogni occupante usa un posto e si sposta con la pedina del mezzo o della cavalcatura. Chi scende libera il posto e non segue più la pedina.  
+Per le altre cavalcature vale la capienza indicata nella rispettiva scheda. Se non è indicata, la capienza resta da definire: non si ricava dalla taglia. Questa risposta stabilisce il comportamento richiesto all’app, non ne attesta l’implementazione.
+
+# A.297 — Tiro unico dei PV e dei PM all’avanzamento di livello (19/11/2026)
+
+Dopo la creazione del PG, per ogni dado previsto dalla Classe all’avanzamento vale il primo risultato. Il giocatore sceglie se tirare nell’app o tirare al tavolo e inserire il risultato. Se la Classe prevede un dado per i PV e uno per i PM, si tira una volta per ciascuno; i contributi fissi si applicano senza tiro. Alla creazione del PG, al 1° livello, i dadi della prima Classe restano massimizzati ([Manuale del Giocatore §3.3](https://docs.google.com/document/d/110LNyYLZFWRGYuym836EqKYOUvoQRYvqBzm_2bJqybc)).  
+Nell’app il primo risultato registrato, anche se inserito a mano, deve restare bloccato per quell’avanzamento anche chiudendo e riaprendo la schermata prima della conferma. Solo il Direttore può correggere un errore materiale: se il dado mostra 6 ma è stato trascritto 3, può correggere il valore in 6; se il dado mostra 3, il risultato resta 3\. Il blocco è un requisito approvato, non una modifica già verificata nell’app.
+
+# A.298 — Pietre di Luna intere: data dell’ultimo contatto e avviso al Direttore (19/11/2026)
+
+Per ogni Pietra di Luna intera si può registrare la data dell’ultimo contatto con il possessore. Il campo è facoltativo. Si contano sette giorni consecutivi del calendario della campagna, non giorni reali, sessioni o capitoli. Un nuovo contatto fa ripartire il conteggio dalla sua data.  
+Con il calendario attivo e una data nota, dopo sette giorni senza contatto l’app deve mostrare al Direttore «Verifica il vincolo». Esempio: se l’ultimo contatto è il 10 e non ce ne sono altri, l’avviso compare il 17\. Se manca la data o il calendario non è attivo, resta il promemoria manuale della A.291. Per le pietre già in gioco non si assegnano date presunte.  
+L’avviso non modifica la pietra. Come stabilito nella A.291, solo quando il Direttore conferma la scadenza la pietra si svuota e torna neutra. L’avviso basato sulla data è un requisito per l’app, non una funzione già verificata.
+
