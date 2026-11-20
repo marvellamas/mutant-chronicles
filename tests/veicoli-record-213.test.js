@@ -17,7 +17,7 @@ import { datiReali } from './helpers.js';
 import { caricaDati } from '../src/rules.js';
 import { vistaVeicolo, normalizzaVeicoli } from '../src/veicoli.js';
 import { validaDati } from '../src/validate.js';
-import { testoManuale, testoEdizione, versioneManuale } from '../tools/manuali.mjs';
+import { testoManuale, testoEdizione, versioneManuale, registro } from '../tools/manuali.mjs';
 import { leggiSchede, confronta, CAPITOLO_PROFILO } from '../tools/importa-veicoli.mjs';
 import { unisciProfilo, CAMPO_DATO } from '../tools/lotti/lotto_213_veicoli.mjs';
 import { campiIndietroProfilo, rigaProvenienzaProfilo, edizioneCorrenteVeicoli } from '../src/provenienza-veicoli.js';
@@ -34,7 +34,10 @@ const prima = (await caricaDati(daGit)).dati;
 test('l\'edizione recepita, il testo salvato e i dati dichiarano lo stesso numero', () => {
   const v = versioneManuale('veicoli').replace('.', '\\.');
   assert.match(testoManuale('veicoli').slice(0, 600), new RegExp(`EDIZIONE ${v}`));
-  assert.match(dati.veicoli.versione_manuale, new RegExp(`Veicoli ${v}`));
+  // Lotto 229: i dati o dichiarano l'edizione corrente, o sono una eccezione dichiarata col suo motivo (edizioni_in_attesa)
+  const attesa = registro().edizioni_in_attesa?.['data/veicoli.json']?.veicoli;
+  if (attesa) assert.ok(attesa.motivo && attesa.motivo.length > 40, 'un file in attesa dichiara il motivo');
+  else assert.match(dati.veicoli.versione_manuale, new RegExp(`Veicoli ${v}`));
 });
 
 // ——— 1. il record ———
@@ -115,7 +118,7 @@ test('un campo letto per intero e diverso si scrive, con la provenienza; uno ugu
 // ——— 3. il segno e il conto ———
 test('IL SEGNO SI SPEGNE DA SÉ: oggi nessun profilo ne ha; con un campo indietro compare, col motivo', () => {
   const ed = edizioneCorrenteVeicoli(dati.veicoli);
-  assert.equal(ed, '0.19');
+  assert.equal(ed, versioneManuale('veicoli'), 'l’edizione corrente dei campi è quella del registro (lotto 229: non scritta nel test)');
   assert.deepEqual(dati.veicoli.profili.filter((p) => campiIndietroProfilo(p, ed).length), []);
   const vecchio = structuredClone(profilo); vecchio._edizione.campi.mov_q = '0.10';
   assert.match(rigaProvenienzaProfilo(vecchio, ed, 'Aspetta Davide.'), /movimento da 0\.10.*Aspetta Davide/);

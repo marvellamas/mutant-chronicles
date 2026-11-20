@@ -75,19 +75,19 @@
    "nome": "Manuale dei Veicoli",
    "drive": "1lo_c3KLK7kntJwv195v5aD2ieuMfRuaThsDhPJCX3T4",
    "formato": "doc",
-   "versione": "0.19",
-   "testo": "veicoli-0.19.md",
-   "modificato": "2026-11-12T19:49:20Z",
+   "versione": "0.21",
+   "testo": "veicoli-0.21.md",
+   "modificato": "2026-11-19T13:13:03Z",
    "recepita": {
-    "versione": "0.19",
-    "quando": "2026-11-17",
-    "lotto": 213,
-    "cosa": "0.10 → 0.19: i capitoli 1–11 hanno le stesse tabelle (letto con tools/importa-veicoli.mjs: 0 scarti sui campi letti, sulla 0.10 e sulla 0.19); cambiano il testo del capitolo 10 (Scout «SIA», FIAT LUX «Scout MK4 ASA» esemplare storico, settore di 120° della M606, schermo senza AR) e l’introduzione del capitolo 11 (la Neverlost è un esemplare, non un modello). Entrati il cap. 12 (moto) e 13 (furgone) nel 209; i cap. 14 e 15 (quattro astronavi) sono dichiarati fuori catalogo in data/veicoli.json con il motivo e ciò che servirebbe. Quattro schede del Doc (Tab 1, Neverlost, Astronavi commerciali, Navi passeggeri), 7 immagini (3,3 MB): tavole e illustrazioni, nessuna tabella fotografata.",
-    "documento": "docs/diff-lotto213-2026-11-17.md"
+    "versione": "0.21",
+    "quando": "2026-11-20",
+    "lotto": 229,
+    "cosa": "Confronto alla cieca, e con un pezzo mancante: la 0.20 non è mai stata recepita e non è più recuperabile (il Doc ha una sola revisione, nessun file 0.20 in Drive né in archivio), quindi si è confrontato 0.19 → 0.21 dichiarando che l’intermedia non è stata vista; il suo contenuto si legge nella 0.21 (scheda del cap. 10 «Edizione 0.20, 19 novembre»). Cambiano: il cap. 10 (da «SIA Scout MK4» a «Scout T4», Punisher al posto del Capitol M606, prezzo standard 132.510 cr al posto di 126.510, Punisher Non comune/12 PS e +1 VA), il rimando alle cavalcature nel §1.3, e il nuovo cap. 16 «Mezzi terrestri militari dell’Alleanza» (dieci mezzi: Recon T6, Vigilant T4, Inspector T6, Carrier T6, T8 e TC, Vanguard TC, Lancer TC, Guardian TC, Bastion TC). Il FIAT LUX resta lo Scout MK4 ASA col M606 e «settore di 120°»: la A.280 (180° frontale) non è nel manuale (A.302). I cap. 14 e 15 (astronavi) non sono toccati. Letto con tools/importa-veicoli.mjs: 0 scarti sui 40 campi dei cinque profili del catalogo, quindi nessun numero del catalogo cambia; il profilo dello Scout e il cap. 16 aspettano un lotto a sé (edizioni_in_attesa).",
+    "documento": "docs/diff-lotto229-2026-11-20.md"
    },
    "recepimento_in_attesa": {
-    "versione": "0.21",
-    "motivo": "Lotto 228: letto contro la 0.19, non recepito. La 0.21 porta con sé la 0.20 mai recepita (cap. 10 «Scout T4» con il Punisher al posto del M606, prezzo standard 132.510 cr, nuovo cap. 16 «Mezzi terrestri militari dell’Alleanza») più il solo rimando del §1.3 alle cavalcature. NON corregge l’errata dei 120° del FIAT LUX: il manuale dice ancora «limitata a 120°», mentre la A.280 di Davide dice arco 180° frontale."
+    "versione": "0.21 (testo del 20/11/2026, 10:39:10 UTC)",
+    "motivo": "Lotto 229: stesso numero, testo cambiato. Dopo che il testo era stato scaricato e confrontato (Drive: modificato il 19/11 alle 13:13 UTC), Davide ha riscritto il Doc il 20/11 alle 10:39:10 UTC senza cambiare numero: è comparso un capitolo 17 «Mezzi di supporto terrestri dell’Alleanza» con dieci mezzi (Thunder TC, Storm T8, Sentinel TC, Overwatch T8, Pioneer TC, Atlas T8, Forge T8, Titan TC, Lifeline T6, Warden TC) e l’introduzione dice ancora «fino al capitolo 16». L’esportazione in Markdown ora è rifiutata da Drive («File too large for export», il Doc pesa 40,45 MB), quindi il testo recepito resta quello letto in precedenza; la nuova forma si è potuta scaricare solo in testo semplice (195 KB), non nella forma che i lettori si aspettano, e non si salva accanto per non avere due file della stessa versione. Da fare: richiedere a Davide la versione nuova con un numero nuovo, o un’esportazione più leggera."
    }
   },
   {
@@ -249,6 +249,14 @@
  ],
  "_edizioni_in_attesa": "Lotto 189: i file di `data/` che restano a un'edizione precedente perché il manuale nuovo cambia una regola ancora da decidere. Si scrive { \"data/x.json\": { \"<manuale>\": { \"motivo\": \"…\", \"domanda\": \"A.n\" } } }, e `tools/edizioni-dati.mjs` non li segnala più. Un'eccezione senza motivo non è un'eccezione: è un file dimenticato. Oggi è vuoto — tutti e 40 i file dichiarano l'edizione corrente.",
  "edizioni_in_attesa": {
+  "data/veicoli.json": {
+   "veicoli": {
+    "edizione": "0.19",
+    "motivo": "Lotto 229: la 0.21 porta con sé la 0.20, che nessuno aveva visto (Scout T4 con il Punisher al posto del M606 e prezzo standard 132.510 cr al posto di 126.510; nuovo cap. 16 con dieci mezzi terrestri dell’Alleanza). I numeri dei cinque profili del catalogo sono riletti sulla 0.21 e non cambiano (0 scarti, 40 campi: l’edizione per campo sta in _edizione.campi), ma il profilo «asa-scout-mk4» è anche lo Scout del FIAT LUX, il mezzo del gruppo: cambiargli prezzo e arma sposterebbe il valore di un mezzo dei sette (126.510 → 132.510) contro il manuale stesso, che tiene il FIAT LUX col M606. Serve un profilo nuovo («Scout T4») e un lotto che lo tratti; i dieci mezzi del cap. 16 non hanno un modello. Le astronavi dei cap. 14 e 15 restano fuori catalogo come dal 213.",
+    "lotto": "Scout T4 e cap. 16",
+    "documento": "docs/diff-lotto229-2026-11-20.md"
+   }
+  },
   "data/abilita.json": {
    "giocatore": {
     "motivo": "Giocatore 0.62: riscrive il profilo delle Abilità (da 2/6/12/4 a 4/7/9/4), i punti base (122 → 127), i limiti del VA e i 25 profili di Classe, e aggiunge le regole del Morente (§§5.14.2–3). I dati non sono ancora stati rigenerati: l’etichetta si aggiorna nel lotto che li rigenera (lotto B, poi D per il Morente e G per i testi dei Talenti). Scriverla adesso direbbe che i dati vengono dalla 0.62, e non è vero.",
@@ -424,6 +432,7 @@
  },
  "_edizioni_citate": "Le edizioni superate che restano in `docs/manuali-txt/` perché un dato o uno strumento le cita ancora, con chi le cita. Quando nessuno le cita più si archiviano in `docs/manuali-txt/archivio/`: l'elenco serve a saperlo senza cercarlo a mano. Lotto 191: le sei edizioni recepite fino al lotto 189 restano in cartella perché sono quelle da cui i dati vengono davvero, ed è il confronto che `edizioni_in_attesa` dichiara.",
  "edizioni_citate": {
+  "veicoli-0.19.md": "l’edizione da cui vengono i dati di data/veicoli.json (`edizioni_in_attesa`: il profilo dello Scout e il cap. 16 aspettano un lotto a sé, lotto 229)",
   "giocatore-0.50.md": "data/talenti_liberi.json (`fonte_edizione` delle 15 voci superate dalla 0.54) e tools/lotti/lotto_testi_completi_talenti.mjs",
   "giocatore-0.54.md": "l'edizione da cui vengono i dati di 11 file di `data/` (`edizioni_in_attesa`, lotto B)",
   "magia-1.11.md": "l'edizione da cui vengono i dati di `regole.json`, `incantesimi.json` e `talenti_liberi.json` (`edizioni_in_attesa`, lotto F)",

@@ -1080,18 +1080,18 @@
         "rosso_lx": 50000
       },
       "_edizione": {
-        "corrente": "0.19",
+        "corrente": "0.21",
         "campi": {
-          "mov_q": "0.19",
-          "man": "0.19",
-          "pi": "0.19",
-          "ar": "0.19",
-          "corazzato": "0.19",
-          "qualita": "0.19",
-          "ps_integrita": "0.19",
-          "carico_kg": "0.19",
-          "prezzo_cr": "0.19",
-          "ricambi_cr_per_pi": "0.19"
+          "mov_q": "0.21",
+          "man": "0.21",
+          "pi": "0.21",
+          "ar": "0.21",
+          "corazzato": "0.21",
+          "qualita": "0.21",
+          "ps_integrita": "0.21",
+          "carico_kg": "0.21",
+          "prezzo_cr": "0.21",
+          "ricambi_cr_per_pi": "0.21"
         }
       }
     },
@@ -1272,7 +1272,7 @@
             "precedente": {
               "gradi": 120,
               "orientamento": null,
-              "fonte": "Veicoli 0.19 §10 e tavola del FIAT LUX; E&L 11/11/2026 (raccordo Armamenti e Veicoli): il manuale dice ancora 120°, e la risposta del 18/11 lo sostituisce"
+              "fonte": "Veicoli 0.19 e 0.21 §10 e tavola del FIAT LUX; E&L 11/11/2026 (raccordo Armamenti e Veicoli): il manuale dice ancora 120° (anche nella 0.21, lotto 229: A.302 aperta), e la risposta del 18/11 (A.280) lo sostituisce"
             }
           },
           "smontabile": true,
@@ -1450,16 +1450,16 @@
         "nota": "L’esemplare dei PG si chiama FIAT LUX (A.226, risposte del 02 e 03/11/2026); «ASA Scout MK4» è il modello di riferimento. Il nome è dell’esemplare: il modello nei dati non cambia."
       },
       "_edizione": {
-        "corrente": "0.19",
+        "corrente": "0.21",
         "campi": {
-          "mov_q": "0.19",
-          "man": "0.19",
-          "ar": "0.19",
-          "corazzato": "0.19",
-          "qualita": "0.19",
-          "ps_integrita": "0.19",
-          "carico_kg": "0.19",
-          "ricambi_cr_per_pi": "0.19"
+          "mov_q": "0.21",
+          "man": "0.21",
+          "ar": "0.21",
+          "corazzato": "0.21",
+          "qualita": "0.21",
+          "ps_integrita": "0.21",
+          "carico_kg": "0.21",
+          "ricambi_cr_per_pi": "0.21"
         }
       }
     },
@@ -1855,10 +1855,10 @@
         "_nota": "I movimenti della scala tattica, 8 / 16 / 24 Q Tattici per Round. Non si convertono in Q Base (A.253): su una mappa terrestre si passa alla scala tattica o si esce dalla mappa."
       },
       "_edizione": {
-        "corrente": "0.19",
+        "corrente": "0.21",
         "campi": {
-          "pi": "0.19",
-          "carico_kg": "0.19"
+          "pi": "0.21",
+          "carico_kg": "0.21"
         }
       }
     },
@@ -1932,18 +1932,18 @@
       ],
       "senza_energia_precedente": true,
       "_edizione": {
-        "corrente": "0.19",
+        "corrente": "0.21",
         "campi": {
-          "mov_q": "0.19",
-          "man": "0.19",
-          "pi": "0.19",
-          "ar": "0.19",
-          "corazzato": "0.19",
-          "qualita": "0.19",
-          "ps_integrita": "0.19",
-          "carico_kg": "0.19",
-          "prezzo_cr": "0.19",
-          "ricambi_cr_per_pi": "0.19"
+          "mov_q": "0.21",
+          "man": "0.21",
+          "pi": "0.21",
+          "ar": "0.21",
+          "corazzato": "0.21",
+          "qualita": "0.21",
+          "ps_integrita": "0.21",
+          "carico_kg": "0.21",
+          "prezzo_cr": "0.21",
+          "ricambi_cr_per_pi": "0.21"
         }
       }
     },
@@ -2019,18 +2019,18 @@
       ],
       "senza_energia_precedente": true,
       "_edizione": {
-        "corrente": "0.19",
+        "corrente": "0.21",
         "campi": {
-          "mov_q": "0.19",
-          "man": "0.19",
-          "pi": "0.19",
-          "ar": "0.19",
-          "corazzato": "0.19",
-          "qualita": "0.19",
-          "ps_integrita": "0.19",
-          "carico_kg": "0.19",
-          "prezzo_cr": "0.19",
-          "ricambi_cr_per_pi": "0.19"
+          "mov_q": "0.21",
+          "man": "0.21",
+          "pi": "0.21",
+          "ar": "0.21",
+          "corazzato": "0.21",
+          "qualita": "0.21",
+          "ps_integrita": "0.21",
+          "carico_kg": "0.21",
+          "prezzo_cr": "0.21",
+          "ricambi_cr_per_pi": "0.21"
         }
       }
     }
@@ -2240,7 +2240,7 @@
     ]
   },
   "corpus": {
-    "edizione": "0.19",
+    "edizione": "0.21",
     "mezzi_nel_manuale": 9,
     "profili": 5,
     "fuori_catalogo": 4,
