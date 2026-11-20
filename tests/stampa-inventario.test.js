@@ -8,6 +8,7 @@ import { versioniPersonaggio } from '../src/rules.js';
 import { validaDati } from '../src/validate.js';
 import { datiReali, copia } from './helpers.js';
 import { MISHIMA_AGENTE } from './personaggi.js';
+import { versioneManuale } from '../tools/manuali.mjs';
 
 const { dati } = await datiReali();
 
@@ -20,7 +21,8 @@ test('piè di pagina: ogni manuale una volta, con la versione più recente (nume
   ]), 'Giocatore 0.45 (03/10/2026), Magia 1.3 (01/10/2026), Equipaggiamento 0.1, E&L del 03/10/2026, Armamenti 0.52');
   const reali = versioniCompatte(Object.values(versioniPersonaggio(dati)));
   for (const m of ['Giocatore', 'Magia', 'E&L']) assert.equal(reali.split(', ').filter((x) => x.startsWith(m)).length, 1, m);
-  assert.match(testoPiede({ nome: 'Ada', livello: 3, versioni: reali }, { foglio: 4, pagina: 6, totale: 10 }), /^Ada · 3° livello · foglio 4 · pagina 6 di 10 · Dati: Giocatore 0.64/); // lotto 212: il Giocatore recepito è la 0.64 (classi.json dichiara la corrente)
+  // lotto 229: il numero lo dà il registro (era scritto qui, e si rompeva a ogni Giocatore nuovo): i dati recepiti dichiarano l'edizione corrente
+  assert.ok(testoPiede({ nome: 'Ada', livello: 3, versioni: reali }, { foglio: 4, pagina: 6, totale: 10 }).startsWith(`Ada · 3° livello · foglio 4 · pagina 6 di 10 · Dati: Giocatore ${versioneManuale('giocatore')}`));
 });
 
 test('foglio 4: Qualità in sigla con la legenda dai dati, Costo e Peso senza unità', () => {
