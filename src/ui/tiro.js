@@ -4,6 +4,7 @@
 // compare: lo useranno anche i tiri dell'avanzamento di livello.
 import { h } from './dom.js';
 import { tira, tiroManuale, valoreTiro } from '../tiri.js';
+import { tiroBloccato } from './tiro-bloccato.js';
 
 const casuale = (facce) => {
   const buf = new Uint32Array(1);
@@ -18,9 +19,12 @@ const casuale = (facce) => {
  * @param {{valore: number, origine: 'app'|'manuale'}|null} o.tiro valore attuale
  * @param {(tiro: object|null) => void} o.imposta salva il nuovo valore
  * @param {object} [o.memoria] oggetto che sopravvive ai ridisegni (per mostrare i singoli dadi)
+ * @param {boolean} [o.bloccato] A.297: il primo risultato è già registrato: niente «Tira», niente campo, niente secondo tiro
+ * @param {object} [o.registrato] con il blocco: { corretto?, correggi? } (la correzione si offre solo al Direttore)
  */
-export function componenteTiro({ id, spec, tiro, imposta, memoria = {} }) {
+export function componenteTiro({ id, spec, tiro, imposta, memoria = {}, bloccato = false, registrato = null }) {
   const valore = valoreTiro(tiro);
+  if (bloccato) return tiroBloccato({ id, spec, tiro, valore, registrato });
   const errore = h('p', { class: 'motivo', role: 'alert', id: `${id}-errore` });
   const input = h('input', {
     id: `${id}-valore`, type: 'number', inputmode: 'numeric', step: 1, min: spec.minimo, max: spec.massimo,

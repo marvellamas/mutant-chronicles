@@ -9,6 +9,7 @@ import {
 } from './calc.js';
 import { statoIncantesimi } from './incantesimi.js';
 import { specTiro, migraTiro, motivoFuoriIntervallo } from './tiri.js';
+import { normalizzaTiriAvanzamento } from './tiri-avanzamento.js';
 import { normalizzaEquipaggiamento, catalogo, risolvi, STATI, NOMI_TIPI, infoArtefattoVoce, migraVociDotazione } from './equipaggiamento.js';
 import { ritrattoValido } from './ritratto.js';
 import { normalizzaDotazione } from './dotazioni.js';
@@ -112,6 +113,9 @@ export function nuoveScelte() {
     // Lotto 165 (02/11/2026, src/sposta-punti.js): Punti Abilità Liberi della creazione spostati dal Direttore, con le sue
     // eccezioni ({ quando, motivo?, spostati?, totale?, forzati? }); nel file solo se c'è
     puntiDirettore: null,
+    // Lotto 228 (A.297, src/tiri-avanzamento.js): il PRIMO tiro dei PV e dei PM di ogni avanzamento, per livello di destinazione
+    // ({ "2": { classe, PV: { valore, origine, facce, quando, corretto? }, PM } }); nel file solo se c'è
+    tiriAvanzamento: null,
   };
 }
 
@@ -268,6 +272,7 @@ export function normalizza(scelteIn, dati) {
   }
   for (const k of ['puntiCaratteristica', 'puntiAbilitaLiberi', 'parametriTalenti']) if (!isOggetto(s[k])) s[k] = {};
   if (!isOggetto(s.puntiDirettore)) s.puntiDirettore = null;
+  s.tiriAvanzamento = normalizzaTiriAvanzamento(s.tiriAvanzamento);
   for (const [k, v] of Object.entries(s.parametriTalenti)) if (typeof v !== 'string' || !v) delete s.parametriTalenti[k];
   // Talenti v1.0: regime e Specializzazione iniziale (i file di prima non li hanno: restano Talenti vecchi)
   if (s.regimeTalenti !== 2) s.regimeTalenti = null;
@@ -505,6 +510,7 @@ export function serializza(scelte, { versioniDati, livelli, sessione, calendario
   if (pulite.dotazione === null) delete pulite.dotazione;
   if (pulite.umanita === null) delete pulite.umanita;
   if (!isOggetto(pulite.puntiDirettore)) delete pulite.puntiDirettore;
+  if (!pulite.tiriAvanzamento) delete pulite.tiriAvanzamento;
   if (!Array.isArray(pulite.veicoli) || !pulite.veicoli.length) delete pulite.veicoli;
   if (!Array.isArray(pulite.incantesimiAMano) || !pulite.incantesimiAMano.length) delete pulite.incantesimiAMano;
   // i blocchi del master stanno a parte, fuori dalle scelte (e solo se non vuoti: i file di prima restano identici)

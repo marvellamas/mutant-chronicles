@@ -11,6 +11,7 @@ import { passiDelLivello, descriviVoce } from '../avanzamento.js';
 import { info, etichettaMacro, pallini } from './tooltip.js';
 import { classeMacrofamiglia } from '../palette.js';
 import { componenteTiro } from './tiro.js';
+import { tiroRegistrato, classeBloccata, tiriDelLivello, tiriPerVoce } from '../tiri-avanzamento.js';
 import { dettagli, bottoneScelta, contatore, stepper, sceltaParametroTalento, competenzeClasse } from './passi.js';
 import { conOrdinale, delNome } from '../lingua.js';
 import { etichettaIndirizzo } from '../talenti-testi.js';
@@ -252,6 +253,10 @@ function pannelloTalentoScelto(c, scelto, campo = 'talentoLibero') {
 
 function passoGrado(c) {
   const { dati, voce, prossimo, ui } = c;
+  // A.297 (lotto 228): il primo tiro dei PV e dei PM di questo livello sta nel file del personaggio e non si rifà; con il primo tiro si fissa anche la Classe
+  const livello = c.struttura.livello;
+  const registro = c.personaggio.creazione;
+  const classeFissata = classeBloccata(registro, livello);
   const scelta = prossimo.classi.find((x) => x.nome === voce.grado?.classe);
   const possedute = prossimo.classi.filter((x) => x.gradoAttuale > 0);
   const nuove = prossimo.classi.filter((x) => x.gradoAttuale === 0);
@@ -260,8 +265,10 @@ function passoGrado(c) {
       h('strong', {}, x.nome),
       h('small', { class: 'sigla' }, x.gradoAttuale ? ` · Grado ${GRADI_ROMANI[x.gradoAttuale]} → ${GRADI_ROMANI[x.prossimoGrado]}` : ` · ${x.addestramento}, I Grado`),
       !x.ammessa ? h('small', { class: 'motivo' }, x.motivo) : null),
-    x.ammessa ? bottoneScelta(scelta?.nome === x.nome, () => c.aggiornaVoce({
+    x.ammessa && classeFissata && classeFissata !== x.nome ? h('small', { class: 'motivo' }, ' La Classe è fissata dal primo tiro di questo livello (' + classeFissata + '): cambiarla sarebbe un secondo tiro. Solo il Direttore libera i tiri.') : null,
+    x.ammessa && !(classeFissata && classeFissata !== x.nome) ? bottoneScelta(scelta?.nome === x.nome, () => c.aggiornaVoce({
       grado: { classe: x.nome }, tiroPV: undefined, tiroPM: undefined, talentoClasse: undefined, parametriTalenti: undefined, incantesimi: undefined, tecniche: undefined, scuolaMishima: undefined,
+      ...tiriPerVoce(registro, livello, x.nome),
     })) : null);
   const def = scelta ? trova(dati.classi.classi, scelta.nome) : null;
   return [
@@ -280,9 +287,10 @@ function passoGrado(c) {
       dettagli(c, `comp-sali:${def.nome}`, scelta.gradoAttuale ? 'Competenze della Classe (limiti del VA personale)' : 'Competenze della nuova Classe: alzano i limiti del VA personale, non le basi (§8.7)',
         competenzeClasse(c, def, { primaClasse: false })),
       h('h4', {}, `Punti Vita: ${dadi(def.pv_per_grado)}`),
-      componenteTiro({ id: 'tiro-pv', spec: scelta.tiroPV, tiro: voce.tiroPV ?? null, memoria: ui, imposta: (t) => c.aggiornaVoce({ tiroPV: t ?? undefined }) }),
+      tiroDi(c, { dado: 'PV', id: 'tiro-pv', spec: scelta.tiroPV, voceTiro: voce.tiroPV, classe: scelta.nome, livello, registro, ui }),
       scelta.tiroPM ? h('h4', {}, `Punti Magia: ${dadi(def.pm_per_grado)}`) : h('p', {}, `Punti Magia: +${def.pm_per_grado.fisso}`),
-      scelta.tiroPM ? componenteTiro({ id: 'tiro-pm', spec: scelta.tiroPM, tiro: voce.tiroPM ?? null, memoria: ui, imposta: (t) => c.aggiornaVoce({ tiroPM: t ?? undefined }) }) : null,
+      scelta.tiroPM ? tiroDi(c, { dado: 'PM', id: 'tiro-pm', spec: scelta.tiroPM, voceTiro: voce.tiroPM, classe: scelta.nome, livello, registro, ui }) : null,
+      c.master && tiriDelLivello(registro, livello) && c.liberaTiri ? h('p', {}, h('button', { type: 'button', class: 'btn btn-piccolo', title: 'Solo il Direttore: toglie i tiri registrati di questo livello (per esempio dopo aver annullato il livello)', onclick: () => c.liberaTiri() }, 'Libera i tiri di questo livello (Direttore)')) : null,
       h('h4', {}, 'Talento di Classe'),
       scelta.talentoFisso
         ? h('div', {},
@@ -519,4 +527,20 @@ function conseguenze(lista) {
   return h('div', { class: 'riquadro attenzione' },
     h('p', {}, h('strong', {}, 'Dopo la correzione: '), 'questi punti liberi non aumentano più il VA. Restano nel loro livello e vanno riassegnati con «Assegna», nello stesso livello e con i limiti di allora; finché non lo fai non puoi salire di livello.'),
     h('ul', {}, da.map((e) => h('li', {}, `${e.evento}: ${elenco(e.abilita)}`))), notaTornano);
+}
+
+/**
+ * A.297 (lotto 228): il tiro di un dado. Registrato → bloccato (il primo risultato vale); in correzione di un livello già confermato il giocatore
+ * non lo rifà (il Direttore sì: è una sua correzione); altrimenti il componente di sempre, ma ogni risultato va subito nel file.
+ */
+function tiroDi(c, { dado, id, spec, voceTiro, classe, livello, registro, ui }) {
+  const reg = tiroRegistrato(registro, livello, dado);
+  const corretto = tiriDelLivello(registro, livello)?.[dado]?.corretto;
+  if (reg) {
+    return componenteTiro({ id, spec, tiro: reg, memoria: ui, bloccato: true,
+      registrato: { corretto, ...(c.master && c.correggiTiro ? { correggi: (v, m) => c.correggiTiro(dado, v, m) } : {}) } });
+  }
+  if (c.correzione && voceTiro && !c.master) return componenteTiro({ id, spec, tiro: voceTiro, memoria: ui, bloccato: true, registrato: {} });
+  return componenteTiro({ id, spec, tiro: voceTiro ?? null, memoria: ui,
+    imposta: (t) => { if (t && c.registraTiro) c.registraTiro(dado, t, classe, spec.facce); else c.aggiornaVoce({ ['tiro' + dado]: t ?? undefined }); } });
 }

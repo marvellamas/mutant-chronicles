@@ -138,6 +138,7 @@ import { proteggiBlocchiMaster } from './src/correzioni-master.js';
 import { controllaTalentiDaTablet } from './src/talenti-tablet.js';
 import { controllaLivelloDaTablet } from './src/livello-px.js';
 import { controllaPuntiDaTablet } from './src/sposta-punti.js';
+import { controllaTiriDaTablet } from './src/tiri-avanzamento.js';
 import { normalizzaAvanzamento } from './src/avanzamento-tablet.js';
 import { confermaAdeguamentoLegittima } from './src/adeguamento-abilita.js';
 // lotto 215: chiave del PG → { riga, assegnati, monte, quando }, solo in memoria
@@ -2112,6 +2113,9 @@ async function api(req, res, percorso, cartella, tavolo, scontri, nemici, radice
         // passa solo se è esattamente la conferma legittima di un adeguamento aperto (src/adeguamento-abilita.js → confermaAdeguamentoLegittima)
         const pa = confermaAdeguamentoLegittima(o, disco, dati) ? { ok: true } : controllaPuntiDaTablet(o, disco, dati);
         if (!pa.ok) return json(res, pa.stato, { errore: pa.errore, puntiAbilita: true });
+        // lotto 228 (A.297): il primo tiro dei PV e dei PM di un avanzamento non si cambia da un tablet: lo corregge solo il Direttore
+        const ti = controllaTiriDaTablet(o, disco);
+        if (!ti.ok) return json(res, ti.stato, { errore: ti.errore, tiriLivello: true });
       }
       await mkdir(cartella, { recursive: true });
       // «Modifica master» (12/10): un salvataggio che non arriva dal PC del master (il tablet di un giocatore) non cambia

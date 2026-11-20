@@ -34,6 +34,7 @@ import { confermaAssegnazione, assegna as assegnaAdeguamento, adeguamentoAperto,
 import { modalitaMaster, mostraMarchio, statoContestoMaster, registro as registroMaster, nuovaCorrezione, aggiungiCorrezione, annullaCorrezione, avvisoAnnulla, registraDiretta, differenzeDirette, differenzeOggetti, ripristinoDiretta, descriviScelte, soloScelte, ripristinaScelte, masterDiverso, normalizzaCircostanzeMaster } from '../correzioni-master.js';
 import { descriviVoce, postiTalenti, applicaSceltaTalento, eccezioneSpecializzazione, scelteSuccessive, applicaSceltaSuccessiva, adattaScelteSuccessive } from '../avanzamento.js';
 import { riquadroTalenti } from './talenti-scelta.js';
+import { registraTiro as registraTiroAvanzamento, correggiTiro as correggiTiroAvanzamento, liberaTiri as liberaTiriAvanzamento, registraDaEvento as tiriDaEvento, classeBloccata, tiriPerVoce } from '../tiri-avanzamento.js';
 import { segnaModalitaMaster, modalitaMasterDi, esciModalitaMaster } from './ritorno.js';
 import { statoSalvataggioMaster, controllaRemoto, revisioneDaScrivere, differenzeSessione, testoScelta, indicatoreCollegamento, impronta } from '../collegamento.js';
 import { messaggioConflittoVersione } from '../stato-tablet.js';
@@ -279,7 +280,7 @@ function vai(indirizzo) {
   else location.hash = indirizzo;
 }
 
-const bozzaModificata = () => !!stato.sali && (stato.sali.correzione ? JSON.stringify(stato.sali.voce) !== stato.sali.iniziale : Object.keys(stato.sali.voce).length > 0);
+const bozzaModificata = () => !!stato.sali && (stato.sali.iniziale !== undefined ? JSON.stringify(stato.sali.voce) !== stato.sali.iniziale : Object.keys(stato.sali.voce).length > 0);
 const MSG_USCITA = 'Uscire da «Sali di livello»? Le scelte di questo livello non sono salvate e andranno perse.';
 let hashDaIgnorare = null;
 
@@ -1378,13 +1379,22 @@ function registraStorico(testo) {
  * «Sali al livello N». N2: con punti in eccesso (A.108) o riassegnazioni in sospeso (A.107) l'app avvisa e chiede;
  * con «Procedi comunque» la salita si apre lo stesso e nello storico resta la riga.
  */
+/** La bozza di una salita nuova. A.297: se il primo tiro di questo livello è già registrato, riparte da lì (Classe e dadi), anche dopo aver chiuso la schermata. */
+function bozzaSalita(extra = {}) {
+  const liv = 2 + stato.livelli.length;
+  const classe = classeBloccata(stato.scelte, liv);
+  const voce = classe ? { grado: { classe }, ...tiriPerVoce(stato.scelte, liv, classe) } : {};
+  // la parte che viene dal registro non è una modifica dell'utente: uscire dalla schermata non chiede conferma per quella
+  return { voce, passo: 0, ui: { aperti: new Set(), filtroTalenti: null }, ...(classe ? { iniziale: JSON.stringify(voce) } : {}), ...extra };
+}
+
 async function saliDiLivello() {
   const g = permessoPx();
   if (g && !g.ok) { stato.messaggioScheda = { tipo: 'attenzione', testo: g.motivo }; return renderScheda({ mantieniScorrimento: true }); }
   const sp = calcolaScheda({ creazione: stato.scelte, livelli: stato.livelli }, stato.dati);
   const motivo = sp.eccessi?.length ? motivoEccesso(sp.eccessi) : sp.completamenti?.length ? motivoCompletamento(sp.completamenti) : null;
   await conAvviso(registraStorico, { azione: `Sali al livello ${2 + stato.livelli.length}`, motivo, fai: (forza) => {
-    stato.sali = { voce: {}, passo: 0, ui: { aperti: new Set(), filtroTalenti: null }, ...(forza ? { procedi: true } : {}) };
+    stato.sali = bozzaSalita(forza ? { procedi: true } : {});
     vai(`#/p/${stato.id}/sali/0`);
   } });
 }
@@ -1445,10 +1455,19 @@ function cambiaLivelli(livelli) {
   if (prima && dopo && stato.sessione) stato.sessione = sessioneDopoLivello(stato.sessione, prima, dopo);
 }
 
+const inMasterOra = () => modalitaMaster({ server: stato.cartella, daQuestoPc: stato.master, aperta: modalitaMasterDi(sessionStorage), id: stato.id });
+
 function annullaLivello({ conferma = true } = {}) {
   const n = 1 + stato.livelli.length;
   if (!stato.livelli.length || (conferma && !confirm(`Annullare ${conOrdinale('il', n)} livello? Le sue scelte andranno perse (si torna ${conOrdinale('al', n - 1)} livello).`))) return;
   const prima = personaggio();
+  // A.297 (lotto 228): i tiri di quel livello restano nel file: rifarlo restituisce gli stessi dadi. Solo il Direttore, annullando, li libera.
+  const ev = stato.livelli.at(-1);
+  if (inMasterOra()) stato.scelte = liberaTiriAvanzamento(stato.scelte, n, { master: true }).scelte;
+  else {
+    const def = ev?.grado?.classe ? stato.dati.classi.classi.find((x) => x.nome === ev.grado.classe) : null;
+    stato.scelte = tiriDaEvento(stato.scelte, n, ev, { PV: def?.pv_per_grado?.dado || undefined, PM: def?.pm_per_grado?.dado || undefined });
+  }
   cambiaLivelli(annullaUltimoLivello(personaggio()).livelli);
   storicoVariazione(prima, personaggio(), `annullato il ${n}° livello`);
   persisti();
@@ -1565,7 +1584,7 @@ function apriSali(passo) {
   // A.187: l'indirizzo scritto a mano non aggira il blocco dei PX (la correzione di un livello passato non è una salita)
   const g = !stato.sali ? permessoPx() : null;
   if (g && !g.ok) { stato.messaggioScheda = { tipo: 'attenzione', testo: g.motivo }; return vai(`#/p/${stato.id}`); }
-  if (!stato.sali) stato.sali = { voce: {}, passo: 0, ui: { aperti: new Set(), filtroTalenti: null } };
+  if (!stato.sali) stato.sali = bozzaSalita();
   stato.sali.passo = passo;
   renderSaliPagina();
   window.scrollTo(0, 0);
@@ -1591,6 +1610,37 @@ function renderSaliPagina() {
     master: modalitaMaster({ server: stato.cartella, daQuestoPc: stato.master, aperta: modalitaMasterDi(sessionStorage), id: stato.id }),
     passo: bozza.passo,
     ui: bozza.ui,
+    // A.297: il primo risultato dei dadi si scrive subito nel file e non si cambia; solo il Direttore lo corregge o lo libera
+    registraTiro(dado, tiro, classe, facce) {
+      const livelloTiri = L ?? (2 + stato.livelli.length);
+      const r = registraTiroAvanzamento(stato.scelte, livelloTiri, dado, tiro, { classe, facce });
+      if (!r.ok) { informa({ titolo: 'Tiro dei dadi', contenuto: h('p', {}, r.motivo) }); return renderSaliPagina(); }
+      stato.scelte = r.scelte;
+      bozza.voce = { ...bozza.voce, ['tiro' + dado]: { valore: tiro.valore, origine: tiro.origine } };
+      persisti();
+      renderSaliPagina();
+    },
+    correggiTiro(dado, valore, motivo) {
+      const livelloTiri = L ?? (2 + stato.livelli.length);
+      const r = correggiTiroAvanzamento(stato.scelte, livelloTiri, dado, valore, { master: inMasterOra(), motivo });
+      if (!r.ok) return { errore: r.motivo };
+      stato.scelte = r.scelte;
+      bozza.voce = { ...bozza.voce, ['tiro' + dado]: { valore, origine: stato.scelte.tiriAvanzamento[String(livelloTiri)][dado].origine } };
+      registraStorico('Correzione del Direttore: tiro dei ' + dado + ' del ' + livelloTiri + '° livello da ' + r.da + ' a ' + valore + ' (' + String(motivo).trim() + ').');
+      persisti();
+      renderSaliPagina();
+      return undefined;
+    },
+    liberaTiri() {
+      const livelloTiri = L ?? (2 + stato.livelli.length);
+      const r = liberaTiriAvanzamento(stato.scelte, livelloTiri, { master: inMasterOra() });
+      if (!r.ok) return;
+      stato.scelte = r.scelte;
+      bozza.voce = { ...bozza.voce, tiroPV: undefined, tiroPM: undefined };
+      registraStorico('Il Direttore ha liberato i tiri dei dadi del ' + livelloTiri + '° livello.');
+      persisti();
+      renderSaliPagina();
+    },
     aggiornaVoce(modifica) {
       const voce = { ...bozza.voce, ...modifica };
       // le chiavi vuote si tolgono: il motore rifiuta le scelte non previste dal livello
