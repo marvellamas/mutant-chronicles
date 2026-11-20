@@ -143,7 +143,7 @@
     {
       "id": "manufatti_lunari",
       "file": "manufatti_lunari.json",
-      "descrizione": "Manufatti lunari dei Mutanti: Pugnale e Spada lunare d’osso, Spada dei Tre Riflessi, Balestra e Quadrelli d’osso, Collana di papiro (Armamenti 0.89 §7.27, Equipaggiamento 0.42 §10.14, Magia 1.20 §26.8 e §28.5)"
+      "descrizione": "Manufatti lunari dei Mutanti: Pugnale e Spada lunare d’osso, Spada dei Tre Riflessi, Balestra e Quadrelli d’osso, Collana di papiro (Armamenti 0.90 §7.27, Equipaggiamento 0.42 §10.14, Magia 1.20 §26.8 e §28.5)"
     }
   ],
   "_nota_reperibilita": "Scala: Comune, Non comune, Rara, Molto rara, Leggendaria (risposta di Davide A.14, 28/09/2026). Leggendaria è superiore a Molto rara. I valori economici degli oggetti rari sono riferimenti per eventuali scambi, non un listino che garantisce l’acquisto: deve prima esistere un produttore o possessore disposto a cedere l’oggetto; una Prova di Oratoria, da sola, non crea questa disponibilità. La reperibilità resta distinta dalla potenza mistica e dalla Qualità costruttiva.",
@@ -242,7 +242,7 @@
   },
   "_nota_rif_sostituiti": "Voci di catalogo uscite perché sostituite da un’altra scheda: al caricamento di un personaggio (src/character.js → normalizza) la voce passa al rif nuovo, con lo stato tradotto se indicato.",
   "catalogo_armi": {
-    "edizione": "Armamenti 0.89",
+    "edizione": "Armamenti 0.90",
     "file": [
       "armi.json",
       "armi_corporative.json",

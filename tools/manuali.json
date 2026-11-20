@@ -44,16 +44,17 @@
    "nome": "Manuale degli Armamenti",
    "drive": "1eDZJHfgBIYPvzKg78tEGwiLtrI_6gzpQOIfJA9aYiYg",
    "formato": "doc",
-   "versione": "0.89",
-   "testo": "armamenti-0.89.md",
-   "modificato": "2026-11-20T10:38:32Z",
+   "versione": "0.90",
+   "testo": "armamenti-0.90.md",
+   "modificato": "2026-11-20T11:03:17Z",
    "recepita": {
-    "versione": "0.89",
+    "versione": "0.90",
     "quando": "2026-11-20",
-    "lotto": 229,
-    "cosa": "Confronto NON del tutto alla cieca: la riga di Davide in sezione 7 copre solo la 0.88 → 0.89 (§7.26, le quattro funzioni dell’Elmetto Recon ASA: già applicate dal lotto 228, A.294); per la 0.87 → 0.88 non c’è riga, e il testo ha il nuovo §7.28 «Armamenti veicolari dell’Alleanza» (Mitragliatore Leggero Punisher, quattro cannoni e il lanciamissili, raccordo con lo Scout T4). Tutto il resto è identico alla 0.87 (92 righe diverse in tutto). Le armi del catalogo sono rilette sulla 0.89: 216 voci su 221 invariate, 0 differenze, 5 non trovate nel manuale col loro nome (le tre CyberArma e due Bolter, come dal 206); entra il solo Mitragliatore Leggero Punisher (§7.28.1, arma nuova distinta dalla pistola Punisher), 222 voci. I cannoni e il lanciamissili montati restano fuori: il manuale stesso dice che le specifiche autonome sono «da definire».",
-    "documento": "docs/diff-lotto229-2026-11-20.md"
-   }
+    "lotto": 231,
+    "cosa": "Impronta riscaricata 69efdd855282 = quella del registro delle 11:22 UTC. Il testo è lo stesso delle 10:38 già salvato come 0.89 dal lotto 229 (compreso tutto il §7.28.3: Thunder TC, Storm T8, Sentinel TC): cambiano il numero, il «Registro delle modifiche 0.89 → 0.90» e la forma dei titoli e delle tabelle del §7.28.3. Le armi del catalogo rilette sulla 0.90: 222 voci su 222 identiche al lotto 230. Cannoni, lanciamissili e artiglieria (§§7.28.2–7.28.3) hanno profilo di combattimento, ma «specifiche autonome di acquisto, massa, Integrità e FOR restano da definire» e i mezzi che li montano (Veicoli cap. 16–17) non sono leggibili: nessuna voce nel catalogo (A.305).",
+    "documento": "docs/diff-lotto231-2026-11-20.md"
+   },
+   "confronto": "alla cieca (in sezione 7 del Doc non c’è la riga della 0.90; l’ultima è la 0.89)"
   },
   {
    "id": "equipaggiamento",
@@ -452,6 +453,11 @@
   "testo": "archivio/magia-1.19.md",
   "archiviato": "2026-11-20",
   "motivo": "Nessun dato la cita più dal lotto 231: il testo è lo stesso della 1.20, a parte il numero e il registro delle modifiche; le 90 schede e le etichette di edizione sono passate alla 1.20."
+ },
+ {
+  "testo": "archivio/armamenti-0.89.md",
+  "archiviato": "2026-11-20",
+  "motivo": "Nessun dato la cita più dal lotto 231: il testo è lo stesso della 0.90, a parte il numero, il registro delle modifiche e la forma dei titoli del §7.28.3; le armi e i file ASA/SIA sono passati alla 0.90 (222 voci su 222 identiche)."
  },
  {
   "testo": "archivio/armamenti-0.87.md",

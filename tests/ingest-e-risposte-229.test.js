@@ -117,6 +117,20 @@ const RISPOSTE = [
   ['A.294', 'Elmetto Recon ASA: +1 Iniziativa e +1 Percezione solo da indossato (qui: il testo del manuale corrente lo dice ancora)', () => {
     assert.match(testoManuale('armamenti'), /Nello zaino non concede alcun beneficio/);
   }],
+  // lotto 231: le CM si consumano intere e la sigla delle voci ASA/SIA resta quella decisa
+  ['A.252', 'Cariche Mistiche: solo quantità intere — ogni riserva in CM e ogni costo in CM del catalogo è un intero ≥ 1 (compresi i moduli del Warden TC)', () => {
+    for (const o of dati.equipaggiamento.file.artefatti.oggetti) {
+      const cm = o.artefatto?.contenitore?.capacita_cm;
+      if (cm !== undefined) assert.ok(Number.isInteger(cm) && cm >= 1, `${o.id}: riserva ${cm}`);
+      const uso = o.attivazione_artefatto?.cm;
+      if (uso !== undefined) assert.ok(Number.isInteger(uso) && uso >= 1, `${o.id}: costo ${uso}`);
+    }
+  }],
+  ['A.295', 'ASA e SIA sono due sigle: il «riservato» è SIA, le divise e l’elmetto di servizio restano ASA', () => {
+    const rif = (r) => dati.equipaggiamento.file.rinforzi.oggetti.find((o) => o.id === r);
+    assert.equal(rif('soprabito-asa-riservato').nome, 'Soprabito SIA riservato');
+    assert.equal(rif('soprabito-asa').nome, 'Soprabito di ordinanza ASA');
+  }],
 ];
 
 for (const [numero, cosa, verifica] of RISPOSTE) {

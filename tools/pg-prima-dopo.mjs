@@ -1,4 +1,4 @@
-// Lotto 229 — gli stessi personaggi, due basi di dati: i valori che cambiano (sola lettura).
+// Lotto 229 (sigle aggiornate dal 231) — gli stessi personaggi, due basi di dati: i valori che cambiano (sola lettura).
 //   node tools/pg-prima-dopo.mjs --cartella=<personaggi> --base=<cartella di un'altra copia del repo, p. es. un worktree di un commit di prima>
 // Per ogni personaggio (il file attuale, `personaggiDellaCartella`) confronta scheda ricalcolata e valori di tavolo della base e di questa copia.
 // Le righe che DEVONO cambiare quando cambia un manuale — le etichette di edizione — si elencano a parte; ogni altra differenza è un valore.
@@ -15,7 +15,7 @@ if (!cartella || !base) { console.error('servono --cartella= e --base='); proces
 const qui = join(fileURLToPath(import.meta.url), '..', '..');
 const esegui = (radice) => JSON.parse(execFileSync(process.execPath, [join(radice, 'tools', 'pg-valori.mjs'), `--cartella=${cartella}`], { cwd: radice, maxBuffer: 1 << 28 }).toString());
 // le sole cose che DEVONO cambiare sono le sigle delle edizioni dentro i testi: si riportano alla corrente e si confronta il resto
-const RIPORTA = [[/Armamenti 0.87/g, 'Armamenti 0.89'], [/Giocatore 0.64/g, 'Giocatore 0.65']];
+const RIPORTA = [[/Armamenti 0.87/g, 'Armamenti 0.90'], [/Armamenti 0.89/g, 'Armamenti 0.90'], [/Giocatore 0.64/g, 'Giocatore 0.65'], [/Magia 1.19/g, 'Magia 1.20'], [/"1.19"/g, '"1.20"']];
 const prima = JSON.parse(RIPORTA.reduce((s, [re, a]) => s.replace(re, a), JSON.stringify(esegui(base)))); const dopo = esegui(qui);
 const ETICHETTA = /^$^/;
 let valori = 0; let etichette = 0;
