@@ -16,7 +16,7 @@ import { aggiungiIncantesimoAMano, incantesimoPerId, cercaIncantesimi, togliInca
 import { fasciaMaster, toccoMaster, notaCorrezione, sezioneRegistro, conMotivoMaster, bloccoLivelloMaster } from './master.js';
 import { pulsanteSpostaPunti } from './sposta-punti.js';
 import { pulsanteSchermoIntero } from './schermo-intero.js';
-import { eUnaPietra, colorePietra, COLORI_PIETRA, PROMEMORIA_VINCOLO } from '../pietre-di-luna.js';
+import { eUnaPietra, colorePietra, COLORI_PIETRA, PROMEMORIA_VINCOLO, statoVincolo, registraContatto, toglieContatto, GIORNI_VINCOLO } from '../pietre-di-luna.js';
 import { apriTiro, sezioneTiri } from './tira-valore.js';
 import { pianoGetto } from '../getti-artefatto.js';
 import { costoRiserva, numeroRiserva, testoCosto, interoRiserva } from '../cariche-mistiche.js';
@@ -3579,8 +3579,10 @@ function pietraDiLunaUi(ctx, x, r) {
   const imposta = (nuovo) => ctx.azioni.equipaggiamento((ctx.scelte.equipaggiamento ?? []).map((v) => {
     if (v.uid !== voce.uid) return v;
     const { pietra: _p, ...resto } = v;
-    return nuovo ? { ...resto, pietra: { colore: nuovo } } : resto;
+    return nuovo ? { ...resto, pietra: { ...(_p?.ultimoContatto ? { ultimoContatto: _p.ultimoContatto } : {}), colore: nuovo } } : resto;
   }));
+  const sostituisciVoce = (nuova) => ctx.azioni.equipaggiamento((ctx.scelte.equipaggiamento ?? []).map((v) => (v.uid === voce.uid ? nuova : v)));
+  const vincolo = statoVincolo(voce, ctx.calendario);
   const bloccato = x.sintonizzato === true && !!colore;
   return h('div', { class: 'pietra-di-luna' },
     h('label', { class: 'campo-inline', title: 'Alla sintonizzazione il possessore sceglie il colore: la scelta prevale su quello dell’oasi (Magia §26.8). Il Viola non rientra in questa procedura.' },
@@ -3591,11 +3593,31 @@ function pietraDiLunaUi(ctx, x, r) {
       bloccato ? h('small', { class: 'nota' }, ' · scelto alla sintonizzazione: cambia solo se il vincolo scade') : null),
     h('p', { class: 'nota' }, colore ? `Funziona come una Batteria Mistica ${colore === 'Bianco' ? 'Bianca (Universale)' : colore}${x.sintonizzato ? '' : ' quando è sintonizzata'}.` : 'Neutra e attiva: senza colore non ha una riserva. Scegli il colore alla sintonizzazione.'),
     h('p', { class: 'nota promemoria-vincolo', role: 'note' }, h('strong', {}, 'Promemoria: '), PROMEMORIA_VINCOLO),
+    // A.298 (lotto 228): data dell'ultimo contatto (facoltativa) e avviso «Verifica il vincolo» — l'avviso non tocca la pietra
+    colore ? contattoPietra(ctx, voce, vincolo, sostituisciVoce) : null,
     ctx.master && colore ? h('button', { type: 'button', class: 'btn btn-piccolo', title: 'Solo il Direttore: dopo 7 giorni di gioco consecutivi senza contatto la pietra si svuota e torna neutra',
       onclick: async () => {
         const ok = await chiedi({ titolo: 'Conferma la scadenza del vincolo', testo: `La Pietra «${x.nome}» (${colore}) si svuota e torna neutra: i PM residui si disperdono e la sintonizzazione si interrompe. Lo confermi solo se sono passati 7 giorni di gioco consecutivi senza contatto con il possessore.`, si: 'Confermo: il vincolo è scaduto', no: 'Annulla', pericolo: true });
         if (ok) ctx.master.scadenzaPietra(voce.uid);
       } }, 'Conferma la scadenza del vincolo…') : null);
+}
+
+/** A.298: «Ultimo contatto» della pietra. Il Direttore lo registra; tutti lo leggono; l'avviso è solo per il Direttore e non modifica la pietra. */
+function contattoPietra(ctx, voce, vincolo, sostituisciVoce) {
+  const it = (iso) => (iso ? iso.split('-').reverse().join('/') : '');
+  const errore = h('small', { class: 'motivo', role: 'alert' });
+  const campo = ctx.master ? h('input', { type: 'date', 'aria-label': 'Data dell’ultimo contatto', value: voce.pietra?.ultimoContatto ?? '', class: 'campo-data' }) : null;
+  const registra = ctx.master ? h('button', { type: 'button', class: 'btn btn-piccolo', title: 'Un nuovo contatto fa ripartire il conto dei 7 giorni dalla sua data',
+    onclick: () => { const r = registraContatto(voce, campo.value); if (!r.ok) { errore.textContent = r.motivo; return; } errore.textContent = ''; sostituisciVoce(r.voce); } }, 'Registra contatto') : null;
+  const togli = ctx.master && voce.pietra?.ultimoContatto ? h('button', { type: 'button', class: 'btn btn-piccolo', onclick: () => sostituisciVoce(toglieContatto(voce)) }, 'Togli la data') : null;
+  const riga = voce.pietra?.ultimoContatto
+    ? `Ultimo contatto: ${it(voce.pietra.ultimoContatto)} · ${GIORNI_VINCOLO} giorni di calendario → ${it(vincolo.scadeIl)}${vincolo.stato === 'calendario_spento' ? ' (calendario non attivo: resta il promemoria)' : ''}`
+    : 'Ultimo contatto: non registrato (resta il promemoria).';
+  return h('div', { class: 'contatto-pietra' },
+    h('p', { class: 'nota' }, riga),
+    ctx.master ? h('div', { class: 'riga-azioni' }, campo, ' ', registra, ' ', togli, ' ', errore) : null,
+    ctx.master && vincolo.avviso ? h('p', { class: 'avviso-vincolo', role: 'status', title: 'L’avviso non modifica la pietra: la svuota solo la conferma del Direttore' },
+      h('strong', {}, `⚑ ${vincolo.avviso}`), `: sono passati ${GIORNI_VINCOLO} giorni di calendario dall’ultimo contatto (${it(vincolo.ultimoContatto)}). Decide il Direttore.`) : null);
 }
 
 /**

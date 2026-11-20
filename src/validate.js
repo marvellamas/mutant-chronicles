@@ -3158,6 +3158,18 @@ export function validaNemico(nemico, dati, file = 'nemico') {
     for (const n of nomiAtt) if (!offerti.has(n)) err('attacchi', `«${n}» non è offerto da nessuna forma: al tavolo non si potrebbe mai usare (A.288)`);
   }
   (nemico?.limiti_attacco ?? []).forEach((l, i) => { if (!nomiAtt.has(l?.attacco)) err(`limiti_attacco[${i}].attacco`, `«${l?.attacco}» non è fra gli attacchi della scheda (A.288)`); });
+  // A.296: i posti di una cavalcatura. Le fasce coprono da 1 al totale senza buchi né sovrapposizioni: un numero di occupanti senza
+  // movimento dichiarato sarebbe una capienza inventata.
+  if (isOggetto(nemico?.posti) && Number.isInteger(nemico.posti.totale) && Array.isArray(nemico.posti.fasce)) {
+    const { totale, fasce } = nemico.posti;
+    const ord = fasce.filter((x) => Number.isInteger(x?.occupanti_da) && Number.isInteger(x?.occupanti_a)).sort((a, b) => a.occupanti_da - b.occupanti_da);
+    let atteso = 1;
+    for (const x of ord) {
+      if (x.occupanti_da !== atteso || x.occupanti_a < x.occupanti_da) { err('posti.fasce', `le fasce devono coprire da 1 a ${totale} occupanti senza buchi né sovrapposizioni (A.296)`); break; }
+      atteso = x.occupanti_a + 1;
+    }
+    if (atteso !== totale + 1 && !errori.some((e) => e.chiave === 'posti.fasce')) err('posti.fasce', `le fasce arrivano a ${atteso - 1} occupanti ma i posti sono ${totale} (A.296)`);
+  }
   return errori;
 }
 

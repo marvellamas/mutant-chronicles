@@ -813,6 +813,72 @@
       "tipo": "immagine",
       "obbligatorio": false,
       "descrizione": "Immagine del token sulla mappa di battaglia (non è una regola: decisione di Marcello del 06/10/2026, A.131). File in mappe/ sul server, caricato da «Crea nemico», dall'editor del bestiario, dalla carta nella plancia o dal pannello del token, con la copia ridotta per il token. Senza immagine il token mostra le iniziali."
+    },
+    "posti": {
+      "tipo": "oggetto",
+      "obbligatorio": false,
+      "descrizione": "Posti di una cavalcatura (A.296): la capienza la dice la scheda, mai la taglia. Il conducente è compreso nel totale. Le fasce dicono il movimento per numero di occupanti; fuori dalle fasce (e oltre il totale) non si sale. Senza questo campo la capienza è «da definire».",
+      "campi": {
+        "totale": {
+          "tipo": "intero",
+          "min": 1,
+          "obbligatorio": true
+        },
+        "conducente_compreso": {
+          "tipo": "vero_falso",
+          "obbligatorio": true
+        },
+        "fasce": {
+          "tipo": "lista",
+          "obbligatorio": true,
+          "voce": {
+            "tipo": "oggetto",
+            "campi": {
+              "occupanti_da": {
+                "tipo": "intero",
+                "min": 1,
+                "obbligatorio": true
+              },
+              "occupanti_a": {
+                "tipo": "intero",
+                "min": 1,
+                "obbligatorio": true
+              },
+              "movimento": {
+                "tipo": "oggetto",
+                "obbligatorio": true,
+                "campi": {
+                  "passo": {
+                    "tipo": "intero",
+                    "min": 0,
+                    "obbligatorio": true
+                  },
+                  "corsa": {
+                    "tipo": "intero",
+                    "min": 0,
+                    "oppure": [
+                      "non_consentito"
+                    ],
+                    "obbligatorio": true
+                  },
+                  "scatto": {
+                    "tipo": "intero",
+                    "min": 0,
+                    "oppure": [
+                      "non_consentito"
+                    ],
+                    "obbligatorio": true
+                  }
+                }
+              }
+            }
+          }
+        },
+        "fonte": {
+          "tipo": "testo",
+          "obbligatorio": true
+        }
+      }
     }
   },
   "_nota_sistema_salute": "Lotto 197 (14/11/2026). Il Direttore 0.51 §9.9 («Mostri senza Ferite», dal §9.9 della 0.49) dà alle creature del Bestiario un sistema di salute ridotto: solo PV, niente tracciato delle Ferite, niente Menomazioni automatiche né contatore Morente, e a 0 PV sono fuori combattimento. I PG, i PNG nominativi e **i venticinque modelli generici Classe/Grado/EQ** tengono invece il sistema completo, PV e Ferite ordinari (§9.6.2). Qui si dichiara **quale sistema usa un profilo e quale conversione dei PV ha già ricevuto**: i nomi dei campi sono una scelta del codice, ma l’indicazione deve essere inequivocabile, perché «una importazione o un ricalcolo ripetuti della stessa fonte non devono aumentare di nuovo i PV» (blocco E&L del 12/11/2026). Il comportamento al tavolo del sistema ridotto — Ferita diretta −5 PV senza AR, cura di uno stato +5 PV, 0 PV fuori combattimento senza contatore, ritorno all’attività — è un lotto a sé: qui c’è solo la dichiarazione, perché senza di essa una seconda importazione gonfierebbe il bestiario.",

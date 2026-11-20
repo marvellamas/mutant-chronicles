@@ -137,6 +137,17 @@ const NON_CREATURE = { 'Bozzoli di cristallo': 'ambientazione dell’incontro a 
  * ogni forma (A.288, risposta del 19/11/2026) stanno nella stessa tabella: sono quelli della colonna «Portata e costo».
  */
 const P = (passo) => ({ passo, corsa: passo * 2, scatto: passo * 3 });
+/**
+ * A.296 (risposta di Davide del 19/11/2026): i posti di una cavalcatura, **scritti dalla scheda** — la capienza non si ricava mai
+ * dalla taglia. Il Turk ha tre posti, conducente compreso; con uno o due occupanti vale il movimento della scheda, con tre
+ * quello ridotto (Passo 4 · Corsa 8 · niente Scatto). Le altre cavalcature non hanno `posti` finché la loro scheda non li dice:
+ * la capienza resta «da definire».
+ */
+export const POSTI_A296 = {
+  turk: { totale: 3, conducente_compreso: true,
+    fasce: [{ occupanti_da: 1, occupanti_a: 2, movimento: { passo: 6, corsa: 12, scatto: 18 } }, { occupanti_da: 3, occupanti_a: 3, movimento: { passo: 4, corsa: 8, scatto: 'non_consentito' } }],
+    fonte: 'A.296 (Davide, 19/11/2026); Mostri 0.69 §7.16; Giocatore §5.2.7' },
+};
 export const CONFIGURAZIONI_A273 = {
   // [id, nome, spazio, movimento, nota, attacchi della forma]. A.288 (19/11/2026): gli attacchi di ogni forma sono quelli della colonna
   // «Portata e costo» del manuale ("soltanto ibrido", "animale o ibrido", "umanoide o ibrido"), uguali alla tabella di Davide; i valori di
@@ -843,6 +854,7 @@ export function leggiScheda(sch, comuni = [], colonna = null, blocco = null) {
     o.spazio = o.spazio ?? CONFIGURAZIONI_A273[o.id][0][2];
     nonCapito.push('Forme (A.273, A.288): configurazioni per ingombro, movimento e attacchi di ogni forma (dalla colonna «Portata e costo»)');
   }
+  if (POSTI_A296[o.id]) o.posti = POSTI_A296[o.id];
   // A.202 (30/10/2026): le forme della Murena della Roccia cucciolo
   if (FORME_A202[o.id]) o.forme = FORME_A202[o.id];
   // A.203: «portata 1 Q dalla testa» = gli attacchi e i soffi partono dalla testa, non dal quadretto più favorevole

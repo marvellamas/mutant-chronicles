@@ -114,5 +114,30 @@
       "note": "Mostri 0.69",
       "gs_px": "Mostri 0.69"
     }
+  },
+  "posti": {
+    "totale": 3,
+    "conducente_compreso": true,
+    "fasce": [
+      {
+        "occupanti_da": 1,
+        "occupanti_a": 2,
+        "movimento": {
+          "passo": 6,
+          "corsa": 12,
+          "scatto": 18
+        }
+      },
+      {
+        "occupanti_da": 3,
+        "occupanti_a": 3,
+        "movimento": {
+          "passo": 4,
+          "corsa": 8,
+          "scatto": "non_consentito"
+        }
+      }
+    ],
+    "fonte": "A.296 (Davide, 19/11/2026); Mostri 0.69 §7.16; Giocatore §5.2.7"
   }
 }

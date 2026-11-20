@@ -17,6 +17,7 @@
 // peso: kg per unità (Equipaggiamento §1.6, §1.10), per il carico (src/carico.js).
 
 import { bonusDannoCaratteristica, caratteristicaDanno } from './calc.js';
+import { dataValida } from './calendario.js';
 import { riga, provenienza, rigaBonusCaratteristica as rigaBonus } from './provenienza.js';
 import { calcolaAR, oggettiConPi, oggettiSenzaPi, oggettiIndistruttibili, oggettiIntegritaDaDefinire } from './protezione.js';
 import { conManifestazione, manifestazioniDi, sceltaLibera } from './manifestazione.js';
@@ -722,7 +723,8 @@ export function normalizzaEquipaggiamento(valore) {
     if (['destra', 'sinistra'].includes(v.mano)) out.mano = v.mano;
     if (v.sintonizzato === true) out.sintonizzato = true; // §7.10: scelta del giocatore
     // A.291: il colore scelto alla sintonizzazione di una Pietra di Luna intera (Rosso, Blu, Verde, Bianco); senza, la pietra è neutra
-    if (isOggetto(v.pietra) && COLORI_PIETRA.includes(v.pietra.colore)) out.pietra = { colore: v.pietra.colore };
+    // A.298 (lotto 228): la data dell'ultimo contatto è facoltativa e non si presume mai (nessuna data per le pietre già in gioco)
+    if (isOggetto(v.pietra) && COLORI_PIETRA.includes(v.pietra.colore)) out.pietra = { colore: v.pietra.colore, ...(dataValida(v.pietra.ultimoContatto) ? { ultimoContatto: v.pietra.ultimoContatto } : {}) };
     // A.166: forma manifestata della CyberArma (id dell'elenco del catalogo): resta nella voce
     if (typeof v.manifestazione === 'string' && v.manifestazione) out.manifestazione = v.manifestazione;
     // CyberArma (Armamenti 0.74 §§7.25.2–7.25.4): esemplare con il modulatore neurale; spada donatrice senza SIN;
