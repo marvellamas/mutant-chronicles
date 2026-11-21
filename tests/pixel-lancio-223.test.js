@@ -72,7 +72,12 @@ test(BROWSER ? 'a 820 × 1180 il pulsante «Lancia» sta DENTRO la finestra: mis
   let sessione = null;
   try {
     const pagine = await attendiServer(async () => { try { const r = await fetch(`http://127.0.0.1:${porta}/json`); const j = await r.json(); return j.find((x) => x.type === 'page') ?? null; } catch { return null; } },
-      { figlio, ms: 30000, cosa: 'il browser' });
+      // `figlio` non si passa più: da Edge 157 (21/11/2026, lotto 233) il processo che si avvia **esce con 0 dopo
+      // mezzo secondo** e lascia dietro di sé il browser vero, che risponde sulla porta di debug poco dopo. Con il
+      // processo sotto controllo l'attesa si arrendeva subito («il browser è uscito prima di rispondere, codice 0»)
+      // e il test diventava rosso su ogni PC con Edge aggiornato. La rete di sicurezza resta il tempo massimo qui
+      // sotto: se il browser non parte davvero, il test fallisce in 30 s invece che in uno.
+      { ms: 30000, cosa: 'il browser' });
     sessione = cdp(pagine.webSocketDebuggerUrl);
     await sessione.pronto;
     await sessione.manda('Emulation.setDeviceMetricsOverride', { width: LARGHEZZA, height: ALTEZZA, deviceScaleFactor: 1, mobile: false });
