@@ -1,6 +1,6 @@
 > > # **Per Davide — domande aperte ed errata dei manuali**
 
-*Aggiornato al 20 novembre 2026, ore 11:22 UTC (Doc ed E&L scaricati in quel momento: entrambi invariati dalle 22:50 UTC del 19/11, stessa impronta del testo).*
+*Aggiornato al 21 novembre 2026. **Il testo integrale delle risposte approvate non è più qui: è nel tuo Doc «E\&L – Risposte e correzioni approvate».** La sezione 6 è diventata un indice — numero, oggetto, data della risposta, se e quando l’app l’ha applicata.*
 
 **Istruzioni per Davide (e per l’AI che usi per rispondere)**
 
@@ -18,7 +18,7 @@
 
 • **Se hai poco tempo, leggi solo la sezione 1\.** Sono tre richieste che non sono domande di regole ma il modo di lavorare (la prima è una riga: un numero di versione nuovo a ogni pubblicazione), poi le sei domande aperte con una riga ciascuna, e lunedì 23: non devi decidere niente.
 
-**Sezioni:** 1\. Domande che bloccano un lavoro in corso · 2\. Domande aperte · 3\. Risposte ricevute, in implementazione · 4\. Da correggere nei manuali (e le regole che l’app non conta) · 5\. Manuali che l’app aspetta · 6\. Risolte · 7\. Risposte di Davide · 8\. Prove da fare (solo le tue).
+**Sezioni:** 1\. Domande che bloccano un lavoro in corso · 2\. Domande aperte · 3\. Risposte ricevute, in implementazione · 4\. Da correggere nei manuali (e le regole che l’app non conta) · 5\. Manuali che l’app aspetta · 6\. Risolte (indice) · 7\. Risposte di Davide · 8\. Prove da fare (solo le tue).
 
 > > ---
 
@@ -86,7 +86,7 @@ Cose che hai già deciso e che l’app non ha ancora, con il perché e quando.
 
 • **A.285 — Neverlost: il record da tenere** (18/11). *Che cosa hai deciso:* quella da conservare è **quella del gruppo (veimvzoj07y0)**, con riserve 100/10/30, circuito e munizioni; la scheda intestata a Pablo (**veimvzojvax1**) è il doppione vuoto e non va fusa con l’altra; la rimozione è un intervento tecnico separato e non risulta verificata. *Nel frattempo:* l’app mostra tutti e due i record e non tocca niente. **La rimozione la fai tu, dal tuo PC, con il pulsante «Cancella dal registro…»** (sezione 8, prova 1), che c’è dal 18/11: una copia resta e si rimette.
 
-• **Mappa: PG e PNG a bordo di veicoli e cavalcature** (18/11, requisito per l’app; la tua A.296 del 19/11 dà i posti del Turk). *Che cosa hai deciso:* con un veicolo o una cavalcatura sulla mappa si devono poter far salire e scendere PG e PNG; i posti sono quelli della scheda del mezzo (equipaggio e passeggeri, se distinti); a posti esauriti non sale nessuno; spostando la pedina si spostano da sole tutte e sole quelle a bordo; chi scende libera il posto e non segue più. *Nel frattempo:* **per i veicoli c’è già**: clic destro su un PG o un nemico accanto al veicolo → «Sali su … come conducente» o «come passeggero»; dal pannello del veicolo, «A bordo» → «Scendi…» (un clic su un quadretto libero accanto); i posti sono quelli del profilo, a posti esauriti l’app lo dice, e chi è a bordo si muove con il mezzo. **Per le cavalcature, dal 20/11 c’è il dato e non la plancia:** il **Turk** ha nei dati i suoi 3 posti (conducente compreso; Passo 6 · Corsa 12 · Scatto 18 con uno o due a bordo, Passo 4 · Corsa 8 · niente Scatto con tre; il quarto non sale) e ci sono le funzioni per salire e scendere, anche per i PNG fuori scontro (senza Iniziativa); la mini-scheda del Turk mostra il movimento e «con tre persone…», ma **non c’è nessun «Sali/Scendi» sulla pedina** e gli occupanti non seguono la pedina: è un lavoro a parte, che non si tocca prima di lunedì. Le altre cavalcature restano «da definire»: il Giocatore 0.65 §5.2.7 non scrive capienze (dice che un animale non è cavalcabile per la sola taglia e che i posti stanno nella sua scheda), e la capienza non si ricava dalla taglia. «Implementazione da verificare», scrivi: la verifica al tavolo la facciamo noi.
+• **Mappa: PG e PNG a bordo di veicoli e cavalcature** (18/11, requisito per l’app; la tua A.296 del 19/11 dà i posti del Turk). *Che cosa hai deciso:* con un veicolo o una cavalcatura sulla mappa si devono poter far salire e scendere PG e PNG; i posti sono quelli della scheda del mezzo (equipaggio e passeggeri, se distinti); a posti esauriti non sale nessuno; spostando la pedina si spostano da sole tutte e sole quelle a bordo; chi scende libera il posto e non segue più. *Nel frattempo:* **per i veicoli c’è già**: clic destro su un PG o un nemico accanto al veicolo → «Sali su … come conducente» o «come passeggero»; dal pannello del veicolo, «A bordo» → «Scendi…» (un clic su un quadretto libero accanto); i posti sono quelli del profilo, a posti esauriti l’app lo dice, e chi è a bordo si muove con il mezzo. **Per le cavalcature, dal 20/11 c’è il dato e non la plancia:** il **Turk** ha nei dati i suoi 3 posti (conducente compreso; Passo 6 · Corsa 12 · Scatto 18 con uno o due a bordo, Passo 4 · Corsa 8 · niente Scatto con tre; il quarto non sale) e ci sono le funzioni per salire e scendere, anche per i PNG fuori scontro (senza Iniziativa); la mini-scheda del Turk mostra il movimento e «con tre persone…», ma **non c’è nessun «Sali/Scendi» sulla pedina** e gli occupanti non seguono la pedina: è un lavoro a parte, che non si tocca prima di lunedì. Le altre cavalcature restano «da definire»: il Giocatore 0.65 §5.2.7 non scrive capienze (dice che un animale non è cavalcabile per la sola taglia e che i posti stanno nella sua scheda), e la capienza non si ricava dalla taglia. «Implementazione da verificare», scrivi: la verifica al tavolo la facciamo noi. **A.296: fatta per metà il 20/11, lotto 228** — il dato c’è, la plancia no.
 
 **Il lavoro che resta** (il ricalcolo del bonus di Armatura Mistica, il registro dello stato «Esausto neutro», la plancia delle cavalcature, l’AR per forma dei licantropi dopo la tua risposta alla A.299) è nostro e **nessuna di queste cose serve alla serata di lunedì**.
 
@@ -112,87 +112,7 @@ Cose che hai già deciso e che l’app non ha ancora, con il perché e quando.
 
 • **Scheda «Guanti mistici di Lucas» 1.0** (regole del 31/10/2026, con la revisione «Cariche Mistiche» del 02/11). L’app ha i Guanti nuovi: Rari, Grado III, Sintonizzazione 3; riserva Rossa da 6 CM; nessun bonus sempre attivo; Pugno mistico 1 CM con \+1 VA, Getto di fuoco 3 CM, Doppio getto 6 CM. **Nell’istantanea del 14 novembre i Guanti risultano indossati e la riserva è a 6 CM su 6**, con il valore in PM di prima conservato nello storico: la conversione è avvenuta una volta sola e il conto torna. Passa fra le Risolte quando la scheda di Lucas l’ha confermato al tavolo.
 
-**Novità nell’app dal 13/11** (le scriviamo qui perché il documento non ha una sezione apposta). Sono tutte tue regole o tue risposte applicate: il dettaglio di ciascuna è fra le Risolte.
-
-• **Il Morente, per intero** (13/11). I §§5.14.2–5.14.3 del Giocatore e la tua registrazione completa della A.159 sono nell’app: contatore dalla COS, cali per Round e per Ferita, e soprattutto **chi soccorre vede prima di spendere l’azione se quello che sta per fare stabilizza** — tre vie che stabilizzano, sette cose che non stabilizzano con il perché. Un contatore **spento da una stabilizzazione** e uno **arrivato a zero** sono due cose diverse e lo dicono con due frasi diverse: a chi è stato salvato la scheda non dice mai «morto». Una scelta nostra che ti chiediamo di confermare quando ci pensi è nella A.159, fra le Risolte: **la morte la registra il Direttore**, con un pulsante che si annulla, invece di scattare da sola.
-
-• **Il profilo delle Abilità 4/7/9/4** (13/11). Il Giocatore 0.62 cambia categorie, basi (127 punti) e limiti, e riscrive tutti e venticinque i profili di Classe: nell’app ci sono tutti, e i tre esempi multiclasse del §8.7 tornano parola per parola. **Nessun personaggio salvato è cambiato**: il profilo nuovo vale solo per chi lo dichiara, e lo dichiara l’adeguamento, al tavolo, uno per volta (sezione 1).
-
-• **L’adeguamento delle Abilità** (13/11, completato il 16/11 con la tua A.267). È pronto, e si fa al tavolo. Prima di toccare qualcosa fotografa **tutte e ventiquattro le Abilità com’erano** — categoria, VA, base, modificatore, punti di Classe e liberi, limiti, eccezioni — e la mette nel registro, dove **la legge anche il giocatore dal suo tablet**: senza quella fotografia la procedura non parte. Si annulla per persona, e il file torna esattamente com’era. È stata provata dall’inizio alla fine, dal lato dei tablet (sezione 1).
-
-• **Il Bestiario alla 0.69** (15–16/11). Le 310 schede del catalogo portano i PV del tuo manuale, con una creatura nuova (Viverna della Sabbia), e **l’aumento del 30% non viene riapplicato**: il Lorath del §4.2.1 è 52, non 68\. I **mostri non hanno Ferite** (§4.2): niente tracciato, niente Menomazioni automatiche, a 0 PV fuori combattimento senza contatore di Morente; una Ferita inflitta direttamente vale −5 PV ignorando l’AR e una cura \+5, con due pulsanti sulla carta. Le schede del tuo manuale che l’app non riusciva a leggere per intero sono passate da **152 a una sola**, e ogni campo che non è ancora della 0.69 lo dice con un **⚑** che si spegne da sé quando la scheda è completa.
-
-• **Le armi alla 0.86** (16/11; dal 18/11, riviste sull’Armamenti 0.87, hanno 0 differenze e l’etichetta è «0.87»). Le 218 voci d’arma del catalogo vengono dal tuo manuale corrente; per i sette cambia una cosa sola, il tamburo della Colt Hammershot di Michele, da 6 a 4 colpi. Il resto del catalogo (protezioni, munizioni, accessori) è ancora alla 0.74, e l’app lo scrive.
-
-• **I venticinque PNG generici** (14/11). Erano dieci; con il Manuale dei Mostri 0.67 e il tuo file di dati sono venticinque, in cinque categorie, ciascuno con le sue sei Specializzazioni, cinque Maestrie e nove Talenti Liberi per Grado. I valori pronti comprendono già i benefici fissi **una volta sola** e l’app non ne somma nessuno in più.
-
-• **I prezzi degli Artefatti, dal manuale** (14/11). Le tue correzioni dell’11 novembre sono applicate: coefficiente **Epica 4**, Anello con Rigenerazione 9 a **Grado IV / Molto Rara / SnT 4**, prezzi di catalogo presi come li scrivi tu con il calcolo accanto a verifica.
-
-• **I riferimenti che non puntano a niente** (15/11). Un mezzo o una pedina attaccati a un record che non esiste più adesso si vedono, si ricollegano o si buttano, e **l’app non ricollega da sé nemmeno quando il candidato è uno solo**. È quello che rimette in piedi lo Scout di Lucas (quello di Pablo è già a posto; sezione 8).
-
-**Novità nell’app dal 17/11** (le scriviamo qui perché il documento non ha una sezione apposta). Anche queste sono tue regole o tue risposte applicate; il dettaglio di quelle chiuse è fra le Risolte.
-
-• **I manuali nuovi sono recepiti, tutti, Armamenti 0.87 compreso** (18/11): Giocatore 0.64, Magia 1.19, Armamenti 0.87, Equipaggiamento 0.42, Veicoli 0.19, Mostri 0.69, Direttore 0.51; ricontrollati contro Drive il 19/11, nessuno è cambiato dopo. Che cosa resta fuori e perché è nella sezione 5; le regole che l’app non conta e che il tavolo applica a mano sono nella sezione 4\.
-
-• **Giocatore 0.64.** Rispetto alla 0.63 è una frase in più nel §8.3.1: la tua A.267, che l’app applicava già. Non cambia niente per la serata.
-
-• **Magia 1.19, le 90 schede degli incantesimi.** **Per i sette non cambia niente** (stato del 17/11): nessun costo in PM, nessuna gittata, nessun bersaglio, nessuna durata, nessuna difficoltà di nessuna delle 623 righe delle tabelle. Cambiano dieci testi (sei per il Morente, quattro che erano già indietro). Un cristallo a 0 PM si chiama ora **«scarico»**, come nella 1.19 §6 (prima «Trasparente»): cambia la parola, non un numero.
-
-• **Equipaggiamento 0.42.** I pesi e i costi che la 0.42 ha e i nostri dati no sono applicati: **Corredo da assalto verticale 4 → 5 kg** (Duncan e Oshi: \+1 kg di carico, stato del 17/11), Corredo di sopravvivenza ambientale 4 → 5 kg, **Corredo da cucina da campo 150 → 500 cr** (Oshi lo ha: cambia solo il prezzo), Comunicatore personale 0,1 → 0,2 kg.
-
-• **Veicoli 0.19: letto per intero, e la svista di prima è chiusa.** Il documento ha **quattro** schede (cap. 1–10, Neverlost, Astronavi commerciali, Navi passeggeri): le abbiamo lette tutte. **Motocicletta e furgone sono nell’app** (capitoli 12 e 13, numeri dalle tabelle). I cinque mezzi del catalogo — autovettura, Scout, Neverlost, moto, furgone — hanno gli **stessi numeri nella 0.10 e nella 0.19**, e i record del gruppo non cambiano di un valore. **Le quattro astronavi dei capitoli 14 e 15 sono fuori**, dichiarate: manca un modello (riserve per colore con consumi per attività, movimento per regime, Traiettoria in giorni e sostentamento, postazioni, cabine, stiva, tariffe), non un campo; se il gruppo ne compra una è un lotto suo. Il testo nuovo dei capitoli 10 e 11 è applicato: **settore di 120° della M606** (era 360°), schermo che concede Copertura senza AR. **I nomi ASA/SIA non sono cambiati**: il modello si chiama ancora «ASA Scout MK4» finché non rispondi alla A.284. Provato con una tratta: 150 km col FIAT LUX e «Chiudi la giornata» tolgono 2 cariche Rosse (75 km a carica), una volta sola.
-
-• **Direttore 0.51, controllato campo per campo.** I numeri del capitolo 9 che l’app usa (scala dei GS, Titoli, correttivo dei PG, PX base ed EQ dei PNG generici) sono **gli stessi nella 0.46, nella 0.49 e nella 0.51: 0 differenze**. Cambiano due cose nel calcolatore dei PX, nessuna nei tuoi numeri: l’arrotondamento a mezzo ora **sale sempre** (il tuo «Due Grifoni»: 31,5 → 32; su 3.300 casi provati ne cambiano 5, tutti di un PX in su) e, per il §9.8.2, **il Titolo segue il livello raggiunto**: dopo la concessione una partita non ancora assegnata conta i voti ×3, una già assegnata non si ricalcola.
-
-• **I focalizzatori della CyberArma** (17/11). Il bonus di ogni colore è nei calcoli, con la riga «Focalizzatore Verde (CyberArma, §7.25) \+1» nel «Calcolo»: **Bianco \+3 al danno** (il ×2 contro l’Oscura Simmetria è una condizione, non un numero); **Verde \+1 VA d’attacco, \+1 Parata, \+1 danno**; **Rosso, Blu e Viola non hanno un numero nel manuale** e l’app non ne inventa uno. Il Custode non riceve il bonus dall’app, perché la sua tabella per Grado ce l’ha già dentro. Per Dimitri, dopo il comando che sistema la sua voce (sezione 8): VA con la CyberArma **9 → 10**, Parata **8 → 9**, danno **1d8+1 → 1d8+2**; vedi la A.281 (sono i numeri di oggi, con le sue quattro correzioni del 2 novembre ancora attive: dopo l’adeguamento di lunedì e l’annullo delle quattro il VA è quello del profilo nuovo, con il Verde una volta sola). Per gli altri sei non cambia niente: nessuno ha una CyberArma.
-
-• **I settori di tiro delle armi di bordo** (17/11): strutturati nei dati — torrette della Neverlost 360°, cannone arco frontale 90°, lanciamissili arco frontale 180°, M606 dello Scout 120° e, **dal 18/11, 180° frontali per la M606 del FIAT LUX** come hai risposto (A.280, applicato), con la colonna «Arco di tiro» — ma **sono un dato che si legge, non un controllo**: la mappa non sa niente di settori (sezione 4, e A.280).
-
-• **Il valore del FIAT LUX** (188.510 cr oggi, non i 189.110 che avevamo scritto l’8/11). Nessun errore: il valore dell’esemplare segue l’inventario, e il record nel tuo registro ha **due** copriruote di Petra, non sei (150 cr l’uno: i 600 di differenza).
-
-• **Gli strumenti da riga di comando non rovinano più i metadati di un personaggio.** Cinque strumenti riscrivevano il file senza far salire il numero di versione di salvataggio: ora passano da un punto solo. Conseguenza: l’annullamento dell’adeguamento riporta tutto com’era **tranne** il numero di versione e l’ora, che salgono sempre.
-
-• **La serata dell’adeguamento, provata dall’inizio alla fine** (15–17/11), dal lato dei tablet. Trovato e chiuso: la «Conferma» dal tablet veniva rifiutata dal server (la conferma scrive due cose che un tablet non può toccare: ora passa **solo** la conferma esatta di un adeguamento aperto); la plancia segnava 0/21 fino alla conferma (ora legge i punti messi sul tablet, solo in memoria, senza scrivere niente nel file); «Ripristina» non elencava la copia fatta dalla procedura; dopo la concessione lo strumento continuava a proporla (ora dice che manca la salita vera). **Sul tablet un avviso «puoi procedere comunque» non faceva niente** nella salita normale: ora compare la finestrella «Procedi comunque», con la riga nello storico. La finestrella «Concedi il passaggio al livello N» nomina personaggio e livelli. **Due tablet sullo stesso personaggio**: il secondo a scrivere, se aveva letto prima, ha un avviso di conflitto e non sovrascrive niente; se scrivono insieme ne passa una sola. Le prove automatiche sono verdi: 3.370 su 423 file, con un comando solo.
-
-• **Il lanciatore delle prove automatiche ora non muore in silenzio.** Su Windows una riga di comando oltre 32.767 caratteri non parte e il programma diceva «rossa» senza aver provato niente: ora divide i file in gruppi e, se non riesce a partire, lo dice. È una cosa nostra; la scriviamo perché per un attimo ci siamo fidati di un verde parziale.
-
-**Novità nell’app dal 18/11** (le scriviamo qui perché il documento non ha una sezione apposta). Sono le tue risposte del 17/11 applicate, un pulsante che mancava e due cose nostre sullo spazio; il dettaglio di quelle chiuse è fra le Risolte.
-
-• **Le sette risposte del 17/11 (A.273–A.279) sono applicate** (18/11; la A.277 è una correzione al tuo manuale, non all’app). Creature a due forme, Natura degli attacchi, Taglia, più componenti di danno, le sei armi e i tre profili nuovi: il dettaglio è fra le Risolte. Restava aperto solo quello che il manuale non dice: gli attacchi per forma (A.288, risposta del 19/11, applicata lo stesso giorno: fra le Risolte) e «Bauhaus o Capitol» (A.289: Capitol, risolta).
-
-• **Un veicolo si cancella dal registro dall’app** (18/11): «Cancella dal registro…», solo dal tuo PC, solo in «Modifica master», con la conferma che nomina il mezzo e una copia che si rimette (sezione 8, prova 1). Per quattro pacchetti ti avevamo scritto che si poteva fare e non era vero; adesso lo è.
-
-• **I manufatti lunari dei Mutanti** (18/11): Pugnale e Spada lunare d’osso, **Spada dei Tre Riflessi** (la prima ricetta di Grado V, Epica, SnT 5, con una riserva di 3 CM Bianche condivisa dai tre poteri), Balestra d’osso, Quadrelli lunari e Collana di papiro. Il dettaglio è fra le Risolte; nessuno dei sette li possiede (stato del 17/11). Restano fuori le Pietre di Luna intere (A.291).
-
-• **Le due distanze dei lunari sono chiuse** (18/11): la Parata \+1 del Verde (Armonia) della Spada entra nella Parata con la spada e si spegne con i cinque Round; il danno dei Quadrelli lunari è Magico quando la casella è accesa, e «Colpito» arriva già con Magico scelto.
-
-• **L’app al tavolo: una cosa misurata, non un’impressione** (18/11). Nelle azioni frequenti l’app **non è peggiorata**: «Attacca\!» legge metà delle righe di ottobre (da 100 a 48), ricaricare e cambiare i PV restano un tocco, la latenza sta sotto i 200 ms. Col 221 il pannello del lancio è passato da **97 righe a 27** e si sono recuperati **205 px di spazio permanente** su una scheda con i Talenti a posto: la barra della scheda sta su una riga (Cerca, Galleria e Schermo intero sono nel menu «Azioni ▾»), il riquadro «Talenti: tutti scelti» non c’è più (compare solo se c’è un Talento da scegliere; per cambiarne uno: «Azioni ▾ → Cambia un Talento») e le due note uguali della ricarica sono una. A «Lancia\!» il livello, i PM che si pagano, il danno e la Prova di Potere restano a vista; Anticipazione e Condizioni sono dietro «Altro ▾», e la riga «⚠ oltre il tuo livello massimo» è raggruppata ma resta scritta. Sono **misure, non impressioni**, fatte con lo stesso PG sull’app di oggi e su quella del 3 ottobre: i tocchi sono gli stessi (attacco 2, ricarica 1, lancio 2, PV dopo un colpo 1\) e dal 19/11 la soglia del lancio è controllata in pixel veri a ogni giro di test. È l’unica parte di cui rispondiamo noi, ed è per questo che la scriviamo: i secondi di una persona al tavolo non si misurano da un programma, e il cronometro lo faremo con un tablet vero.
-
-**Novità nell’app dal 19/11** (le scriviamo qui perché il documento non ha una sezione apposta). Sono le tue risposte del 18 e del 19/11 applicate e la prova della serata; il dettaglio di quelle chiuse è fra le Risolte.
-
-• **La serata del 23 è stata rifatta per intero sull’app di oggi** (19/11), su una copia dei sette (stato del 17/11 alle 09:09), con il PC del Direttore e un tablet: sette concessioni, sette salite al livello 8, i 21 punti di ciascuno e la conferma. **Funziona dall’inizio alla fine** e in nessun passo i PX si muovono. Trovati e corretti due difetti: dopo l’adeguamento tutti e sette dicevano «Completa la creazione prima di salire di livello» (il pulsante «Sali al livello» sarebbe rimasto spento la volta dopo), e la ricerca nella scheda non trovava più gli oggetti col nome di prima («Elmetto ASA Recon» non trovava niente). **Aggiorna l’app prima di lunedì** (voce 2 di Mutant.bat).
-
-• **L’adeguamento annulla da solo le quattro correzioni alle Abilità di Dimitri** (19/11, A.281 e A.293), e le correzioni di Caratteristica restano e contano una volta sola. Il passo a mano che ti avevamo scritto non esiste più.
-
-• **Le risposte del 19/11 applicate** (A.289–A.293): la Cartuccia Stabilizzante pesa 0,10 kg; i quadrelli lunari si ricevono solo in dono e «Compra» è spento; le Pietre di Luna intere (5, 10 e 15 PM) esistono, con il colore scelto alla sintonizzazione e la scadenza del vincolo confermata solo da te. La A.288 (attacchi per forma) è applicata dal 19/11 (lotto 227, fra le Risolte).
-
-• **Dal 18/11 sera:** il motivo della concessione del livello 8 è già scritto (A.286); la M606 del FIAT LUX ha l’arco frontale di 180° (A.280); le quattro voci della dotazione ASA hanno i nomi dell’Armamenti 0.87, recepito; la scheda di Combattimento dice **una sola cosa** sulla ricarica («non scala le riserve» **oppure** «consuma dalle riserve», quella del caso in corso).
-
-• **La soglia del «Lancia\!» è misurata in pixel veri a ogni giro di test** (19/11): il pulsante sta a 624–672 px su una finestra alta 1180, e nel caso peggiore dopo il passaggio di livello (Lucas, pannello più lungo) a 1049 px, comunque dentro. Se il computer che fa i test non ha un browser, il controllo salta e lo dice.
-
-**Novità nell'app dal 20/11** (le scriviamo qui perché il documento non ha una sezione apposta). Sono le tue risposte del 19 sera applicate e i tre manuali del 19/11 recepiti; il dettaglio di quelle chiuse è fra le Risolte.
-
-• **Il tiro dei PV e dei PM alla salita non si rifà** (A.297, 20/11): vale il primo risultato, anche chiudendo e riaprendo la schermata; dal tablet un giocatore non può cambiarlo; il Direttore corregge un errore materiale con il motivo, o libera i tiri del livello.
-
-• **L'Elmetto Recon ASA e le voci SIA** (A.294, A.295, 20/11): le funzioni dell'elmetto erano già quelle che hai scritto, quindi **per i sette non cambia nessun numero** (stato del 17/11: sei lo portano indossato e hanno già il +1 Iniziativa; Duncan lo ha nello zaino e non ha nessun beneficio). Il +2 alla Tempra contro gli inalati compare come valore «solo contro gli inalati»: l'app non sa se la maschera è in uso, lo applichi tu.
-
-• **Le Pietre di Luna: ultimo contatto e «Verifica il vincolo»** (A.298, 20/11). In «Modifica master», tab Artefatti, sulla scheda della pietra c'è la data dell'**ultimo contatto** e **«Registra contatto»**; con il Calendario del personaggio attivo e la data nota, dopo 7 giorni compare «Verifica il vincolo» **solo per te**. L'avviso non tocca la pietra: la svuota solo il tuo «Conferma la scadenza del vincolo…». Le pietre già in gioco non hanno nessuna data presunta.
-
-• **Il Turk e i licantropi** (A.296, A.288): i 3 posti del Turk sono nei dati (la plancia no); i licantropi mostrano gli attacchi della forma attiva, come hai deciso. Il dettaglio è in A.296 qui sopra e fra le Risolte.
-
-• **I tre manuali del 19/11 sono recepiti, con una cosa da dire.** **Giocatore 0.65** (cambia solo il §5.2.7, cavalcature), **Armamenti 0.89** (il §7.28 nuovo: Mitragliatore Leggero Punisher, cannoni, lanciamissili; le armi del catalogo: 216 voci su 222 invariate, **0 differenze**; entra il solo Mitragliatore, distinto dalla pistola «Punisher») e **Veicoli 0.21** (primo testo; la **0.20 non è mai stata recepita e non si può più recuperare**: il Doc ha una sola revisione, e abbiamo confrontato 0.19 → 0.21 dichiarandolo). Le «218 armi» del tuo foglio sono le **voci** di allora: gli id erano 216, perché Pugnale e Ascia leggera hanno due profili (mischia e lancio), poi +3 (Colt Trooper, Colt Frontier, Modulo al plasma Banshee, A.279) = 221, e il Mitragliatore fa **222**. Il resto è in sezione 5.
-
-• **Un test nuovo: un dato non può contraddire una tua risposta approvata** (20/11). Finora ce ne accorgevamo leggendo; adesso una tabella di risposte (A.280, A.296, A.298, A.256, A.290, A.294) fa fallire i test se un dato dell'app le contraddice. Esiste anche la prova inversa: un catalogo rigenerato da un manuale non può cambiare le voci che i personaggi hanno già in inventario.
+**Quello che è già applicato non sta più qui:** dal 21/11 le voci applicate stanno nell’indice della sezione 6, con la data e il lotto.
 
 > > ---
 
@@ -308,601 +228,347 @@ Le schede e i documenti tecnici — Talenti, Specializzazioni e Maestrie 1.1, Re
 
 > > ---
 
-> > ## **6\. Risolte**
-
-Voci con risposta recepita e funzione implementata nell’app (o chiuse). La data è quella dell’implementazione.
-
-• **A.298 — Pietre di Luna: l'ultimo contatto e l'avviso «Verifica il vincolo»** (risposta del 19/11; applicata il 20/11, lotto 228). *Che cosa hai deciso:* per ogni Pietra di Luna intera si può registrare la **data dell'ultimo contatto** (facoltativa), si contano sette giorni consecutivi **del calendario della campagna**, un nuovo contatto fa ripartire il conto; con il calendario attivo e una data nota, dopo sette giorni il Direttore vede «Verifica il vincolo» (ultimo contatto il 10 → l'avviso il 17); senza data o a calendario spento resta il promemoria manuale della A.291; per le pietre già in gioco nessuna data presunta; l'avviso non modifica la pietra. *Che cosa fa l'app:* **esattamente questo**: in «Modifica master», tab Artefatti, la data e «Registra contatto»; l'avviso compare solo per te; la pietra resta com'è (colore, sintonizzazione, PM) finché non premi «Conferma la scadenza del vincolo…»; un test fallisce se un avviso la svuota da solo. *Una cosa che non c'è:* nell'app **non esiste un calendario condiviso della campagna**, solo quello facoltativo di ciascun personaggio: l'avviso guarda quello di chi porta la pietra (domanda A.301).
-
-• **A.297 — Il tiro dei PV e dei PM alla salita di livello** (risposta del 19/11; applicata il 20/11, lotto 228). *Che cosa hai deciso:* vale il **primo risultato**, tirato nell'app o al tavolo e inserito a mano; bloccato anche chiudendo e riaprendo la schermata prima della conferma; alla creazione i dadi della prima Classe restano massimizzati; solo il Direttore corregge un errore materiale (il dado mostra 6 ma è stato scritto 3 → 6; se mostra 3 resta 3). *Che cosa fa l'app:* esattamente questo. Il giocatore non ha più «Tira» né il campo dopo il primo; la scheda dice «registrato»; dal tablet nessuna modifica di un tiro registrato passa (il server la rifiuta); il Direttore, in «Modifica master», corregge con il motivo scritto (il valore deve stare nell'intervallo del dado) o libera i tiri del livello. Prima il tiro si poteva rifare fino alla conferma. *Provato anche nel browser:* tiro registrato che resta dopo il ricaricamento della pagina; correzione con motivo; «Libera i tiri».
-
-• **A.295 — Le voci SIA nel catalogo, e i soprabiti dei PG** (risposta del 19/11; applicata il 20/11, lotto 228). *Che cosa hai deciso:* le voci SIA nel catalogo, **distinte** dalle ASA; il «Soprabito ASA riservato» del catalogo corrisponde al Soprabito SIA riservato; i sei soprabiti dei PG passano al Soprabito di ordinanza ASA conservando l'Integrità. *Che cosa fa l'app:* cinque voci SIA distinte dalle ASA (divisa di ordinanza, divisa operativa, soprabito, elmetto Recon, più il riservato), il «riservato» si chiama «Soprabito SIA riservato» (stesso identificativo); il soprabito di ordinanza ASA non ha la Discreta. La migrazione dei sei è lo strumento della sezione 8 (prova 5): **provata il 20/11 su una copia dell'istantanea del 17/11**, sei migrati con PI 6, stato e collegamento alla divisa conservati e **nessun valore che cambia**, Lucas non si tocca; si rifiuta di scrivere se anche solo un valore cambiasse. Finché non la lanci, il «riservato» resta usabile anche con le divise ASA.
-
-• **A.294 — Le funzioni dell'Elmetto Recon ASA** (risposta del 19/11; applicata il 20/11, lotto 228). *Che cosa hai deciso:* visione notturna, sensori (+1 VA alle Prove di Percezione basate su vista o udito), allerta tattica (+1 all'Iniziativa) e filtro respiratorio (+2 alle PS di Tempra contro veleni e agenti patogeni inalati, con la maschera in uso); solo da indossato; nello zaino nessun beneficio; non si sommano alle funzioni del SIA Recon. *Che cosa fa l'app:* **le funzioni che il catalogo già dava coincidevano con la risposta: per i sette non cambia nessun numero** (stato del 17/11: Botha, Dimitri, Lucas, Michele, Oshi e Pablo lo portano indossato e hanno già il +1 Iniziativa; Duncan lo ha nello zaino e non ha nessun beneficio). Contano una volta sola; un test fallisce se i bonus si applicano con l'elmetto nello zaino. *Una cosa che l'app non sa:* se la maschera è in uso. Il +2 alla Tempra compare come valore «solo contro gli inalati», non nel valore generale: lo applichi tu.
-
-• **A.288 — Gli attacchi di ogni forma dei licantropi, e i bersagli dell'Ammantato** (risposta del 19/11; applicata il 19/11, lotto 227). *Che cosa hai deciso:* per i cinque licantropi si mostrano **solo gli attacchi della forma attiva**, come dice la colonna «Portata e costo» del manuale (tabella: lupo, orso, cinghiale, ratto, tigre; umanoide / animale / ibrida); il lupo mannaro in forma animale ha il solo Morso, al massimo uno per Round comprese le Opportunità; l'Ammantato aperto occupa 2 × 2 Q e raccolto 1 × 1 Q, la postura non cambia l'elenco, e mentre avvolge una vittima può mordere soltanto quella e usare la Coda contro altri. *Che cosa fa l'app:* **esattamente questo.** Una creatura a più forme è una sola scheda e una sola pedina; **il Direttore sceglie la forma** dal menu «Configurazione» della carta e l'app non la cambia da sola; cambiare forma cambia **ingombro, movimento e attacchi offerti** e lascia identità, Iniziativa, PV attuali, Stati ed effetti. Il modello è **a n forme**: la tigre ne ha tre da sempre e i licantropi adesso tre ciascuno (umanoide, ibrida, animale). «Attacca!», la carta e la zona di controllo usano gli attacchi della forma; quelli che la forma non offre si dicono in una riga («In questa forma non usa: Artigli, Morso»), non spariscono. **Il limite per Round avvisa e non blocca.** *Le forme ibride che mancavano* (lupo, cinghiale e ratto: due forme nei dati; orso: una forma unica «Orso e ibrido») **le scrive il tuo manuale** nella riga «Movimento e spazio» di ciascuna scheda: niente è stato dedotto. *Ammantato:* «mentre avvolge una vittima…» è una **nota scritta sui due attacchi**; l'app non ha uno stato «avvolge» e non controlla i bersagli. *Numeri:* nessun attacco già tirabile è cambiato (867 attacchi nell'elenco, prima e dopo); delle 39 combinazioni forma × attacco che l'app offriva, **14 erano sbagliate** (il lupo umanoide che morde…), adesso sono 25, tutte del manuale, 0 sbagliate. *Una scelta nostra da confermare:* il «un Morso per Round» è scritto per il lupo; orso, tigre, ratto e cinghiale hanno una frase uguale nella loro scheda e li abbiamo dichiarati tutti, solo come avviso. *Corretto dalla prova, sulla mappa:* passando da una misura all'altra (1 × 1 ↔ 2 × 2: orso, Ammantato) la pedina tornava un quadretto in diagonale più in là; ora torna nel quadretto di prima. Restano le domande **A.299** (l'AR per forma) e **A.300** (lo Sciacallo mannaro).
-
-• **A.293 — Dimitri: le correzioni di Caratteristica del 2 novembre** (risposta del 19/11; applicata il 19/11, lotto 225). *Che cosa hai deciso:* dopo il passaggio all’8° livello Dimitri conserva Destrezza \+2, Forza −1 e Carisma −1 del 2 novembre, oltre a Saggezza \+2 e Intelligenza −2 già confermate; sono modifiche già attive, da mantenere **senza applicarle una seconda volta**, e non consumano né aumentano i 21 punti. Delle correzioni manuali del 2 novembre si annullano soltanto quelle alle Abilità. *Che cosa fa l’app:* esattamente questo, provato su una copia di Dimitri dell’istantanea del 17/11. Le cinque correzioni di Caratteristica restano attive e contano **una volta sola** (valore \= calcolato \+ correzione, per tutte e cinque); dopo \--applica e dopo la conferma dei 21 punti Destrezza, Forza, Carisma, Intelligenza e Saggezza sono quelle di prima. Cercando il «doppio conteggio» abbiamo trovato il difetto opposto, e l’abbiamo corretto: la procedura calcolava Dimitri dal file e **ignorava le correzioni di Caratteristica** (24 Abilità su 24 con un VA diverso da quello della sua scheda); ora procedura e scheda coincidono su 24 Abilità su 24\.
-
-• **A.292 — Il peso della Cartuccia Stabilizzante** (risposta del 19/11; applicata il 19/11, lotto 225). 0,10 kg l’una (100 g): nel carico il peso si moltiplica per il numero di cartucce, 10 cartucce \= 1 kg. Il valore riguarda solo la Cartuccia Stabilizzante; le altre cartucce non cambiano. Non è più «da definire».
-
-• **A.291 — Le Pietre di Luna intere** (risposta del 19/11; applicata il 19/11, lotto 225). Tre voci distinte da **5, 10 e 15 PM**; la pietra è **neutra** finché non ha un colore e alla sintonizzazione si sceglie il colore (Rosso, Blu, Verde o Bianco; il Viola non rientra, §26.8); con il colore funziona come una Batteria Mistica di quel colore (Sintonizzazione 1, 2 e 3; il Bianco \+1). La scheda mostra il promemoria dei 7 giorni di gioco senza contatto. **L’app non applica la scadenza da sola**, come hai scritto: il Direttore tiene il conto e, **solo** quando lo conferma (in modalità master, «Conferma la scadenza del vincolo…»), la pietra si svuota e torna neutra; nessuna funzione dell’app la chiama da sola (provato anche con trenta «Nuova sessione» di fila). Costo e peso non li abbiamo inventati: nel catalogo sono «da definire». L’Esausto lunare resta un ingrediente delle ricette di fabbricazione, che non sono nell’app. Per un conto automatico servirebbe l’ultimo contatto di ogni pietra: **A.298**.
-
-• **A.290 — Balestre d’osso e quadrelli dei Mutanti** (risposta del 19/11; applicata il 19/11, lotto 225). I numeri (16 balestre d’osso, 100 quadrelli normali, 30 quadrelli lunari) sono la **disponibilità attuale della campagna, non scorte dell’app** e non un limite alla produzione: nel catalogo sono scritti come tali e le voci non hanno un campo quantità. Balestra: «3–4 al massimo, non una quota». **I quadrelli lunari non sono in vendita né in baratto: si ricevono solo in dono dopo la fiducia dei Mutanti**; la voce dice la condizione, il valore di 50 cr «non è un prezzo d’acquisto» e il pulsante «Compra» è spento con il motivo. Nessuna sigla di Reperibilità nuova e nessun importo nuovo.
-
-• **A.289 — Il Modulo al plasma Banshee: Capitol, non Bauhaus** (risposta del 19/11; lotto 225). *Che cosa hai deciso:* rettifica la A.279: il Modulo al plasma Banshee è nel catalogo **Capitol** (§7.8), non fra i moduli Bauhaus, e non si vende da solo. *Che cosa fa l’app:* era già così dal 18/11 (voce nel catalogo Capitol, non in vendita, montabile solo su un Banshee compatibile); abbiamo aggiunto il controllo che lo prova. **La A.279 qui sotto è già corretta: «Capitol» e basta.** (Nessuno dei sette ha un Banshee nell’inventario, stato del 17/11.)
-
-• **A.286 — Concessione individuale del livello 8, e Titolo per i PX** (risposta del 18/11; applicata il 18/11, lotto 223). La finestrella «Concedi il passaggio al livello 8» ha il **motivo già scritto** per ciascuno dei sette (nome, 7° → 8°, il rimando alla tua risposta, «i PX non cambiano»): lo leggi, lo cambi se vuoi, e confermi una per una; la concessione autorizza il passaggio ma non fa salire il PG (sale il giocatore dal suo tablet) e non assegna PX. Il Titolo Esperto (×3) si applica alle partite non ancora assegnate dopo il passaggio effettivo all’8°; una partita già assegnata tiene il suo.
-
-• **A.281 — Redistribuzione dei punti liberi e correzioni di Dimitri** (risposta del 18/11; applicata il 19/11, lotto 225). Ciascuno dei sette fa prima il normale avanzamento dal 7° all’8°; poi l’app adegua categorie e basi al nuovo profilo, mantiene gli aumenti fissi e azzera **soltanto** la distribuzione dei punti liberi, spostamenti a mano compresi: ognuno riparte con 0 assegnati e **21 da distribuire (7 \+ 7 \+ 7\)**. **Per Dimitri la procedura annulla da sola le quattro correzioni alle Abilità del 2/11** (due \+1 ad Armi da mischia, −1 a Percezione, −1 a Scienza: restano nello storico e non incidono più); il \+1 del focalizzatore Verde conta **una volta sola, solo con la CyberArma**; le correzioni di Caratteristica restano (A.293). **Non c’è più nessun passo a mano.** Il controllo che puoi fare: dopo \--applica, Percezione \+1, Armi da mischia −2, Scienza \+1 sulla tab Abilità.
-
-• **A.280 — FIAT LUX ASA: l’arco frontale sulla mappa** (risposta del 18/11; applicata il 18/11, lotto 223). La postazione M606 del FIAT LUX — SCOUT MK4 ASA copre il semicerchio frontale di **180°** (90° a sinistra e 90° a destra del muso); il 120° resta nei dati solo come «precedente»; il profilo del SIA — SCOUT MK4 non cambia. La mappa **non controlla nessun settore di tiro**: se il bersaglio sta dentro o fuori lo giudichi tu (sezione 4). Il Manuale dei Veicoli 0.19 §10 dice ancora 120°: è un’errata, sezione 5\.
-
-• **A.287 — Gli incantesimi liberi di Dimitri** (risposta del 18/11; app già così dal 17/11, lotto 216). *Che cosa hai deciso:* l’Intelligenza −2 vale anche per gli incantesimi liberi, la sua quota è **6**, non 8; al 7° i due incantesimi registrati oltre quota restano nello storico, senza effetti e senza essere cancellati, e all’8° rientrano nella quota: conserva i **18** e ne sceglie **2** nuovi, **20** in tutto. *Che cosa fa l’app:* è **esattamente questo** (provato sullo stato del 17/11 con lo strumento di controllo): un conto solo, 6 liberi; al 7° la scheda ne conta 16 e due sono «storico»; all’8° totale 20, 18 conosciuti, 2 da scegliere. Nessuna modifica nostra.
-
-• **A.273 — Creature con due forme** (risposta del 17/11; applicata il 18/11, lotto 218). Sei creature (lupo mannaro, orso mannaro, cinghiale mannaro, ratto mannaro, tigre mannara, Ammantato aperto e raccolto) con le loro forme: il cambio di forma si fa dalla carta della plancia, la pedina si ridimensiona nello stesso punto, PV, Stati, Iniziativa e Azioni restano. Gli attacchi per forma sono applicati con la A.288 (19/11).
-
-• **A.274 — Attacchi senza Natura del danno** (risposta del 17/11; applicata il 18/11, lotto 218). Naturale solo per gli attacchi fisici inequivocabili (morso, artigli, pugno, coda, corna, armi comuni); gli altri restano segnalati. I fisici erano **già tirabili** — li avevamo letti come Naturali senza che nessuno lo avesse deciso — e ora lo sono per una regola tua: nessun attacco nuovo è diventato tirabile per questa risposta; cambia che quei campi dicono «Mostri 0.69».
-
-• **A.275 — Taglia e ingombro** (risposta del 17/11; applicata il 18/11, lotto 218). Le **93 Taglie** ricavate dall’ingombro sono tolte tutte (nessuna scheda le conferma) e la carta dice «Taglia non specificata»; nessun modificatore di Taglia si applica. Lo Spazio sulla mappa non cambia. Zero Taglie attribuite per deduzione.
-
-• **A.276 — Attacchi con più componenti di danno** (risposta del 17/11; applicata il 18/11, lotto 218). Un tiro per colpire, ogni componente risolta da sola con la sua Natura e la sua Armatura: in «Colpito» si apre una finestra per componente («1 di 2», poi «2 di 2»). **19 attacchi** a due fasi sono tirabili; **9** dichiarano «componente unica» e hanno una sola mitigazione. *Una scelta nostra da confermare:* il Successo Magistrale raddoppia la **sola prima componente** (il §1.6 parla di «il danno» di un colpo); se vuoi che le raddoppi tutte, è una riga.
-
-• **A.277 — Collocazione delle regole comuni nel Bestiario** (risposta del 17/11; **correzione al tuo manuale**, niente da applicare nell’app). L’app legge già le regole di blocco dalla posizione, prima delle schede. Le **206** schede ancora «miste» aspettano la tua correzione (sezione 4); quando la fai le leggiamo da sole.
-
-• **A.278 — Denominazioni delle sei armi** (risposta del 17/11; applicata il 18/11, lotto 218). Colt Enforcer, Colt Jemson 45, Bolter 15 Ironfist e Lanciagranate Ironfist rinominati in luogo (stesso identificativo) con i valori della 0.86; **Bolter 09** e **Lanciagranate Bolter 20** archiviati (non si comprano più, restano nel catalogo e nei personaggi che li hanno). La Colt Enforcer cambia davvero (da 1d6+1, 15 Q, 6 colpi a 1d6, 10 Q, 4 colpi) e la Bolter 15 Ironfist scende a gittata 20 e 20 colpi: nessuno dei sette li ha (stato del 17/11).
-
-• **A.279 — Profili del manuale che l’app non offre** (risposta del 17/11; applicata il 18/11, lotto 218). Colt Trooper e Colt Frontier fra le armi leggere Capitol acquistabili; il Modulo al plasma Banshee nel catalogo **non in vendita**, con una riga di avviso nella scheda se non c’è un Banshee compatibile (è nel catalogo Capitol, §7.8: la tua A.289 del 19/11 corregge «moduli Bauhaus» della A.279).
-
-• **I manufatti lunari dei Mutanti** (blocco del tuo E\&L del 13/11 e manuali; applicati il 18/11, lotto 219). **Spada dei Tre Riflessi**: Grado V, Epica, **SnT 5**; profilo passivo 1d8+1 Magico, \+1 VA, anche senza sintonizzazione e a riserva scarica; **una sola riserva di 3 CM Bianche, condivisa dai tre colori** (un contenitore e tre opzioni, non tre Batterie); nella tab Combattimento un pulsante per colore, 1 AzP e 1 CM intera, cinque Round, un colore alla volta; cambiare, rinnovare o riattivare costa di nuovo, «Termina» non rende la carica. Plasma ed Elettricità aggiungono 1d4, Armonia (Verde) \+1 VA, \+1 danno e 1d4 e **\+1 alla Parata con la spada**. Una CM non si spende mai non intera. **Pugnale e Spada lunare d’osso** (+1 VA, danno Magico), **Balestra d’osso** e **Quadrelli lunari** (+1 VA con la casella «con i quadrelli lunari» accesa, e danno Magico), **Collana di papiro** (+1 alle PS Tempra, Volontà e Magia da indossata, nessun bonus a Riflessi): è la prima volta che un oggetto dà un bonus sempre attivo a una Prova Salvezza. Dove il manuale dice «prezzo e reperibilità non fissati» i dati non hanno un prezzo (non zero): niente si inventa. Nessuno dei sette possiede niente di lunare (stato del 17/11). *Trovati e corretti provandoli:* «Tira con l’app» di «Colpito» non accettava un danno con due gruppi di dadi, e un’arma con danno Magico entrava in «Colpito» come Naturale.
-
-• **La Parata \+1 del Verde e il danno Magico dei Quadrelli** (applicate il 18/11, lotto 220). Erano le due distanze dichiarate dal 219: la Parata \+1 del colore Verde della Spada entra nella Parata con la spada (da 10 a 11 con la freccia, e si spegne quando i cinque Round finiscono); il danno dei Quadrelli lunari è Magico con la casella accesa, la formula non cambia e «Colpito» si apre già con Magico scelto. **Il Verde della Spada e il Verde del focalizzatore della CyberArma non sono la stessa cosa** nei dati (un potere di cinque Round contro una proprietà sempre attiva), ma sommano \+1 alla Parata con quell’arma nello stesso modo.
-
-• **Cancellare un record dal registro dei veicoli** (applicata il 18/11, lotto 218). Il pulsante che nei pacchetti 214–217 avevamo detto che esisteva e non c’era: «Cancella dal registro…», solo dal tuo PC e solo in «Modifica master», con la conferma che nomina il mezzo, i nomi di chi lo cita, e una copia in veicoli/cancellati/ che si rimette con «Rimetti nel registro». Come si fa, in sezione 8, prova 1\.
-
-• **A.271 — Che CyberArma ha Dimitri** (risposta nel tuo E\&L, blocco «Raccordo Armamenti e Veicoli — 11 novembre 2026», non in una risposta numerata; app aggiornata il 17/11/2026; **il file di Dimitri lo sistemi tu con un comando, sezione 8**). *In parole semplici:* hai scritto che la CyberArma di Dimitri **ha un focalizzatore Verde e non ha SIN, riserva di CM o NeC**. Nel suo file c’è invece la voce *«CyberArma con Batteria Verde»* con **5 CM**: il modello sbagliato, che l’arma non ha. *Che cosa abbiamo corretto nell’app:* il catalogo — la CyberArma con riserva interna non offre più «oppure 2 PM personali» (era la regola del 2/11, superata dalla tua A.251 del 6/11: la riserva è l’unica alimentazione); la **consegna del progetto di Paradise** si ferma, con il motivo scritto, se lascerebbe insieme una riserva interna e i PM personali, e il progetto dice **prima** di confermare quale configurazione sta applicando e che cosa si perde. *Che cosa fa il comando* (lo lanci tu dal PC del Direttore, node tools/correggi-cyberarma-dimitri.mjs: è uno **strumento nostro**, non un pulsante dell’app): sola lettura finché non gli dici \--scrivi; poi la voce diventa l’**originale** («CyberArma Dimitri», focalizzatore Verde, PM personali), la riserva da 5 CM che non esiste sparisce, e resta una riga nello storico. Si può rilanciare senza danni; **non tocca** le due schegge Verdi né crea il frammento Viola. *Autonomia, con la tua A.260* (10 Round per attivazione): con i PM personali 2 PM → **10 attivazioni \= 100 Round**; con i 5 CM che la voce sbagliata prometteva sarebbero stati 50\. *Una scelta nostra da confermare:* il comando scrive il nome «CyberArma Dimitri» (il §7.25 la chiama già così), perché senza nome il pulsante «Riconduci a CyberArma Park» rimetterebbe Viola e Corruzione 1 su un’arma che ha già il Verde. *Stato del suo file al 17/11 (09:09):* la voce è ancora «con Batteria Verde».
-
-• **A.267 — Adeguamento straordinario e diminuzione del VA** (risposta del 15/11; app aggiornata il 16/11/2026). *In parole semplici:* **è la risposta che fa partire la serata.** Avevamo chiesto che cosa fare quando, passando al profilo nuovo, un’Abilità scende di categoria e perde la sua base: il VA scende. Hai risposto che **la diminuzione è accettata** — non si conserva automaticamente il valore di prima e non si assegna nessuna compensazione — e che **ogni eccezione è separata, esplicita e registrata**. Nell’app la procedura di adeguamento, che si **fermava** quando trovava quel caso, adesso **parte**: il VA scende davvero e non si compensa niente. La discesa però non resta muta, perché un VA che scende senza spiegazione, al tavolo, è una discussione: si legge in tre posti — nel piano prima di confermare, nella riga che resta nel registro con i due VA, e nel pannello del giocatore col tuo numero di risposta accanto. **L’eccezione la fai tu, a parte:** «Modifica master» → ✎ sul VA, con il motivo, e resta registrata — metterla dentro la procedura sarebbe stato il contrario di «separata ed esplicita». Fra i sette, con lo stato del 14 novembre, **a nessuno scende un’Abilità**: la subisce il Custode d’esempio del nostro repo (Artefatti da Professionale a Generica, Intrattenere da Generica a Non competente), che è il profilo del Custode che hai approvato l’11 novembre. **Resta un solo motivo per cui la procedura si rifiuta di partire, e deve restare: la nota di prima non scritta.**
-
-• **A.272 — Da che livello si fa l’adeguamento** (risolta dal blocco **«Adeguamento approvato delle Abilità e passaggio al livello 8»** dell’11/11 e dalla A.268 del 15/11; app aggiornata il 16/11/2026). *In parole semplici:* la domanda era se adeguare adesso, al livello 7 con 14 punti, oppure dopo, al livello 8 con 21\. La risposta non è una riga numerata: è nel blocco dell’11 novembre, e dice **livello 8 con 21 punti**, con **due strade** per arrivarci — i PX veri o l’autorizzazione espressa del passaggio 7 → 8 — e che **i nomi dei destinatari non devono essere dedotti o inventati**. Nell’app la destinazione non è un numero scritto nel codice: la legge dal terzo Grado dei dati, e i PX dal file del personaggio. Quindi lo strumento **dice da sé a chi lo usa** che al livello 8 non ci si arriva con i PX attuali e quali sono le due strade, invece di presumere. **Adeguare adesso al livello 7 non è la strada approvata**, e l’app non lo fa credere. Quello che resta è la scelta della strada, che è tua: è la sezione 1\.
-
-• **A.269 — «Armi da Guerra», «Spada» e «Spade»** (risposta del 15/11; app aggiornata il 16/11/2026). *In parole semplici:* nella tabella degli armamenti astratti dei venticinque modelli PNG la riga si chiama **«Spada»**, 1d8, una mano, ravvicinata. L’alias «Arma da guerra» che l’app aveva dovuto dichiarare in attesa della tua risposta **non c’è più**: una riga aggiunta, otto togliate. Resta da ritoccare la prosa del §9.6 del manuale, che è testo tuo (sezione 4).
-
-• **A.270 — Parata a mani nude del Lottatore** (risposta del 15/11; già applicata il 14/11/2026). *In parole semplici:* le due cose stanno insieme, e la tua risposta lo conferma. Il **personaggio giocante** Lottatore para a mani nude **dal I Grado**, come avevi deciso con la A.206; il **modello PNG** generico di Lottatore para **dal II**, e al I Grado usa Schivare 13\. L’app seguiva già il più recente dei due testi sul solo modello PNG, dichiarandolo come ipotesi: adesso non è più un’ipotesi. Niente da cambiare.
-
-• **A.260 — Quanto dura una carica della CyberArma convertita** (risposta del 15/11; app aggiornata il 16/11/2026). *In parole semplici:* **10 Round**, e la carica alimenta la manifestazione **indipendentemente da attacchi, colpi o Azioni**; l’arma convertita è ravvicinata e non fa Raffiche. **Questa risposta supera una tua risposta precedente:** la A.251 diceva «1 AzP ogni 10 colpi», e il manuale corrente dice i Round. Nell’app il «per colpi» non esiste più in nessun posto — era in sette punti dei dati e in uno del codice — e il «10 colpi» resta scritto soltanto nella nota che dice che è superato. Per **Dimitri**, che è Tecnomante e tira una volta per Round, le due letture coincidevano; con due attacchi per Round la carica adesso dura il doppio.
-
-• **A.268 — Lo stato dei sette personaggi** (domanda **ritirata da noi** il 15/11; tua risposta del 15/11, che dice la stessa cosa). *In parole semplici:* ti avevamo chiesto a che livello fossero i sette, perché il tuo blocco dell’11 novembre partiva dal livello 7 e la copia dei personaggi che avevamo diceva livello 6 per sei di loro. **Era una domanda sbagliata, e l’abbiamo ritirata appena è arrivata l’istantanea del 14 novembre**, che ha chiuso la questione da sé: sono **tutti e sette al livello 7**. La tua risposta conferma. Non c’è niente da applicare, e la nostra regola di scrivere sempre la data della copia su cui ci basiamo nasce proprio da qui.
-
-• **A.261 — La formula del prezzo contro i prezzi già scritti nei manuali** (risposta nella riga di registro della **Magia 1.16**, 11/11; app aggiornata il 14/11/2026). *In parole semplici:* ti avevamo scritto che in nessuno dei 37 Artefatti con prezzo la formula tornava. Hai ricalcolato il catalogo: adesso **i prezzi scritti nei manuali sono quelli giusti**, e la formula li conferma. L’app fa così — prende la cifra **scritta** e mette il calcolo accanto a verifica, mai il contrario — e abbiamo ricontrollato tutte e quarantacinque le voci del catalogo che hanno prezzo, costo di costruzione e potenza: tornano tutte tranne due, che sono in sezione 4 (Pietra della Vigilanza 4.000 contro 12.600, Guanti da Combattimento Mistico 3.000 contro 13.800). Via il «prezzo per PM» delle Batterie e il «Vendita \= Creazione × 2» dei Consumabili, che erano due regole diverse per la stessa cosa.
-
-• **A.262 — Il coefficiente dell’«Epica»** (risposta nella riga di registro della **Magia 1.16**, 11/11; app aggiornata il 14/11/2026). *In parole semplici:* è **4**, fra Molto raro 3 e Leggendario 5, come immaginavamo ma non volevamo inventare. Gli otto Artefatti Epici del catalogo adesso hanno il loro prezzo di vendita calcolato, e le Batterie colorate sono passate da Molto Rara a **Epica**.
-
-• **A.263 — Grado e SnT dell’Anello con Rigenerazione 9** (risposta nella riga di registro della **Magia 1.16**, 11/11; app aggiornata il 14/11/2026). *In parole semplici:* **Grado IV, potenza Molto Rara, SnT 4**. I tre valori adesso stanno insieme nelle tabelle del §10.1 e del §7.10, e l’eccezione che l’app aveva dovuto dichiarare per non far scattare il controllo automatico **è stata tolta**. Il prezzo resta 13.500 cr. Cambia anche la capacità di Sintonizzazione che l’Anello occupa addosso a chi lo porta: 4 invece di 3\.
-
-• **A.264 — Quanto vale un accumulatore di ricambio scarico** (risposta nella riga di registro dell’**Equipaggiamento 0.40**, 11/11; verificata nell’app il 14/11/2026). *In parole semplici:* «valore degli accumulatori parzialmente carichi stimato dal prezzo pieno meno il costo delle cariche mancanti, con valore effettivo stabilito dal Direttore». È esattamente quello che l’app faceva già, con le tariffe di ricarica che sono nei dati: un MEC Rosso di ricambio a 4 cariche su 10 vale **2.820 cr** invece di 3.000. Non abbiamo cambiato niente; l’ultima parola sul valore resta tua, come scrivi.
-
-• **A.265 — La potenza della CyberArma** (risposta negli **Armamenti 0.83 §7.25** e nella **Magia 1.17**; app aggiornata il 14/11/2026). *In parole semplici:* la CyberArma è **Rara**, Grado III, **SnT base 3**, e le riduzioni a 2 (Tecnomante), 1 (Custode) e 0 (il Custode che l’ha costruita e la usa come arma personale) **dipendono dall’utilizzatore**, non cambiano la potenza. Applicato a tutte e tre le configurazioni, perché il manuale dice che la riserva e il modulatore non spostano la scala. Nel progetto di Paradise la scheda scrive **quale delle quattro** si sta applicando, con la scala intera accanto: non è una cosa da far indovinare al tavolo. Preso anche il valore indicativo dell’originale, 7.500 cr, che resta un valore e non un prezzo di listino, perché ogni originale è un pezzo unico.
-
-• **A.266 — I NEC in cariche o in Unità Energetiche** (risposta nella riga di registro del **Giocatore 0.63**, 12/11; app aggiornata il 14/11/2026). *In parole semplici:* il §2.16.1 contava ancora i NEC in UE mentre tutto il resto, dall’Equipaggiamento al registro NEC, contava le cariche. Adesso dice «una carica CEC contiene 10 UE; mediante il trasformatore dedicato viene trasferita integralmente in un tampone da 100 cariche NEC da 0,1 UE ciascuna»: è esattamente il modello che l’app ha dal 30 ottobre, scritto in cariche come tutto il resto. Nessuna modifica al codice.
-
-• **A.159 — Morente, contatore di sopravvivenza e cure specifiche** (registrazione completa nel Doc E\&L; app aggiornata il 13/11/2026). *In parole semplici:* l’app adesso fa tutto quello che la tua registrazione chiedeva, e una cosa in più che ti segnaliamo perché è una scelta nostra. Il contatore parte dalla COS intera, resta pieno al colpo che fa entrare in Morente, cala di 1 per ogni Round compiuto — alla stessa posizione d’Iniziativa dell’ingresso, come avevi precisato — e di 1 per ogni Ferita dei colpi successivi, anche dello stesso attacco. Chi soccorre vede, **prima di spendere l’azione**, se quello che sta per fare stabilizza: tre vie che stabilizzano (Medicina con il kit, Guarigione dal livello 3, Cartuccia Stabilizzante) con costo, Prova ed esiti, e accanto sette cose che **non** stabilizzano, con il perché — recuperare PV e arrestare il Sanguinamento per primi, che sono i due errori facili. L’UMC Automatica è segnata come «solo a fine attacco, e non resuscita». Un contatore **disattivato** da una stabilizzazione e un contatore **esaurito** finiscono tutti e due su 0 e nell’app sono due cose diverse, con due testi diversi: a chi è stato salvato la scheda non dice mai «morto».
-
-*La scelta nostra, che ti chiediamo di confermare quando ci pensi:* la tua registrazione, al punto 9, dice che al raggiungimento di 0 con contatore attivo «il personaggio passa a Morto». L’app si ferma un passo prima: scrive «il contatore attivo è arrivato a 0», lo mostra in evidenza, e mette accanto il pulsante **«Registra la morte»**, che è del Direttore e si **annulla**. Lo stato Morto esiste ed è distinto, come chiedevi — non è un avviso generico «Oltre Grave» — ma ci arriva il Direttore, non l’app. Lo abbiamo fatto per il principio che hai approvato con Marcello: l’app propone, non impone, e l’ultima parola è del master. Se stasera qualcuno va a terra e un tocco va storto, si annulla. Se preferisci che l’app ci arrivi da sola, si cambia in dieci minuti.
-
-• **A.259 — L’uso dei Capolavori** (risposta del 06/11; app aggiornata l’08/11/2026). *In parole semplici:* ogni Capolavoro ha **il suo** uso, una volta per sessione: un personaggio con tre Capolavori ha tre usi, uno per oggetto. Il punto che ha deciso tutto il resto è l’ultimo della tua risposta — «se l’oggetto viene trasferito, resta già usato» —: vuol dire che il contatore è **dell’oggetto**, non della scheda, e l’app lo tiene lì. Se passi un Capolavoro già usato a un compagno, sulla sua scheda risulta già usato e torna disponibile solo con la sessione nuova. Nella finestrella del tiro, dopo aver tirato, compare «Ripeti con \<nome del Capolavoro\>»: se ne usa **uno solo per prova**, il tiro si ripete **una volta sola**, e **vale il secondo risultato anche se è peggiore del primo** — l’app non propone mai di scegliere il migliore. Accanto al pulsante c’è scritto quello che l’app non giudica e decidi tu: se la prova è pertinente, se il Capolavoro ne è lo strumento principale, se non è offensiva. «Nuova sessione» rinnova gli usi e ti dice quanti sono. **Il Capolavoro esce dall’elenco dei «Da applicare al tavolo» della A.233**: prima c’era perché il suo limite non si riduceva a un numero, adesso si riduce e l’app lo conta.
-
-• **A.258 — Gli Eretici e il vecchio catalogo dei nemici** (chiarimento **provvisorio** del 06/11; app aggiornata l’08/11/2026). *In parole semplici:* **nessun profilo è stato toccato.** Abbiamo verificato uno per uno che l’app faccia già quello che confermi: l’Eretico corrotto **Minore** ha il modulo «Toccato» (Sussurro continuo, Esposizione alla Corruzione), il **Boss** ha «Consacrato» (+2 AR magica, Sguardo del vuoto, Grido dell’Oscura Simmetria, Presenza terrificante), e i gradi **Semplice** e **Medio** non ricevono nessun Dono (A.117). *Poiché il tuo è un chiarimento provvisorio*, l’app adesso **lo dice**: dove si vede una creatura che non viene da un tuo manuale compare una sigla tenue, «provvisoria», e passandoci sopra: «Creatura provvisoria: non è canonica del bestiario e verrà sostituita da quelle create per il Manuale (A.258).» Si vede nell’elenco del bestiario quando aggiungi un nemico, nella pagina online, in «Crea nemico» e nella mini-scheda. Non è un allarme: è un’indicazione. **Niente è stato cancellato e niente disattivato**: finché non arrivano le creature nuove queste servono al tavolo e funzionano come prima. L’app riconosce una creatura provvisoria dalla sua fonte e non da un elenco scritto a mano, così quando arriveranno le creature nuove il segno sparirà da sé. *Il conto di quello che è a scadenza, aggiornato al Manuale dei Mostri 0.69:* delle **493** schede di nemici, **461 vengono dal tuo manuale** e **32 erano state inserite da Marcello** — 30 umani costruiti come PG (10 tipi fra cui l’Eretico, in Recluta, Veterano ed Élite) e 2 esempi del Tavolo del Master. A questi si aggiunge il **Bestiario proposto** per intero (8 basi, 22 creature pronte e i moduli), che è una proposta di Marcello e non un tuo manuale. **Gli Eretici come creature dell’Oscura Simmetria restano da completare**, come scrivi.
-
-• **A.255 — La Murena eterea dentro la roccia** (risposta del 06/11; app aggiornata l’08/11/2026). *In parole semplici:* può **finire il movimento dentro la parete** e restarci. Finché è **completamente immersa** — cioè finché ogni suo quadretto è roccia: ne basta uno fuori e vale tutto il normale — non ha linea di vista né d’effetto verso l’esterno, **non può attaccare né essere bersagliata** e non percepisce oltre la parete. Sulla mappa «Attacca\!» è spento, e il motivo dice anche come se ne esce: deve emergere quanto basta spendendo il normale movimento, e se non lo esaurisce rientra con il residuo nello stesso Round (questo funzionava già: è il movimento di sempre, che la forma eterea spende per attraversare la roccia). Se la rendi **corporea dentro la roccia**, nel menu del token compare «Resa corporea: proponi l’uscita…»: l’app ti **propone** le caselle libere più vicine alla superficie come pulsanti, e scegli tu, perché a parità di distanza decidi tu. Lo spostamento non provoca attacchi di opportunità e lo Stato **Prona** si segna nella plancia.
-
-• **A.254 — Dove si può mettere la testa della Madre delle Murene** (risposta del 06/11; app aggiornata l’08/11/2026). *In parole semplici:* **conferma quello che l’app già faceva** (A.223): qualunque quadretto della sagoma corrente, anche uno centrale, e mai uno fuori — l’app lo rifiuta e lo dice. La **novità** è quando la posizione può cambiare: quando la creatura si muove, ruota, cambia configurazione o assume una posa nuova, **non fra un attacco e l’altro** per cercare una linea più favorevole. L’app adesso se ne accorge: se la creatura ha già attaccato in questo Round, spostando la testa compare l’avviso che te lo ricorda, con l’elenco dei motivi legittimi. **Avvisa, non blocca:** una posa nuova e una linea cercata l’app non le sa distinguere, e la plausibilità anatomica la giudichi tu; se procedi, la testa si sposta e Ctrl+Z annulla. Il segnalino continua a spostare soltanto l’origine di attacchi, soffio, aura ed effetti centrati sulla testa: movimento, spazio occupato e portata non cambiano.
-
-• **A.253 — Decollo e atterraggio della Neverlost** (risposta del 06/11; app aggiornata l’08/11/2026). *In parole semplici:* **a terra la nave non rulla: movimento 0**, e l’app non la lascia più spostare di un quadretto stando a terra. Il **decollo verticale** è nel menu del token sulla mappa, «Decolla…»: manovra complessa, **1 AzM \+ 1 AzP del pilota**, normalmente senza prova; la conferma ti ricorda i tre casi in cui la prova serve (spazio ristretto, attacco in corso, danni), così la tiri al tavolo prima di confermare. Nel Round del decollo la nave **sale in stazionamento e non si sposta di lato**; dal Round successivo è in volo da sola, senza che tu debba segnare niente. **I movimenti in volo non si convertono:** su una mappa terrestre l’app non mostra più un numero di quadretti — scrive che non si convertono e ti dà le due strade, passare alla scala tattica oppure uscire dalla mappa. «Atterra» è l’altra voce: manovra complessa, e conclude il movimento del Round. **Questo supera la parte della A.238** in cui l’andatura della nave si convertiva (8 Q Tattici \= 80 Q Base): quella conversione era un difetto e non c’è più. Tutto il resto della A.238 resta: 34 × 20 Q Base, la rotazione a 45°, lo scafo che fa da ostacolo, il combattimento aereo in Q Tattici.
-
-• **A.257 — Quanto vale il FIAT LUX** (risposta del 06/11; app aggiornata l’08/11/2026). *In parole semplici:* il prezzo di catalogo dello Scout standard resta 126.510 cr, e il valore dell’esemplare adesso si calcola. Nella scheda del mezzo ci sono **tre righe separate**, non un numero solo: **Modello base 126.510 cr**, **Dotazione extra 62.600 cr**, **Valore totale dell’esemplare 189.110 cr**. La dotazione extra è voce per voce: kit trauma 3.000, pistola sanitaria 3.500, dieci cartucce di naniti 50.000, copriruote di Petra 150 l’uno (sei: 900), i 400 colpi in più della M606 1.200, il MEC Rosso di ricambio 3.000 e il CEC Verde di ricambio 1.000. **Non è un numero scritto una volta: segue l’inventario.** Quello che si conta da munizioni, pezzi dei rinforzi e riserve cambia da solo quando sparate, perdete un copriruota o trasferite un ricambio; le altre voci hanno − e \+ nella riga. Ogni cartuccia di naniti consumata fa scendere il totale di 5.000 cr. Un accumulatore di ricambio conta anche il suo stato (vedi la A.264). Il **valore stimato** che puoi scrivere tu prende il posto della riga del modello base, perché il FIAT LUX è antico e può valere meno. **Questo supera la parte della A.226** in cui il valore stimato restava vuoto perché non c’era modo di calcolarlo: il modo adesso c’è, e il tuo valore stimato resta il tuo. **Aggiornamento del 17/11:** sul tuo registro i copriruote sono **due**, non sei, quindi la dotazione extra è **62.000 cr** e il totale **188.510 cr**: i 600 di differenza sono quattro copriruote da 150, non un errore di conto.
-
-• **A.256 — Il prezzo di vendita degli artefatti** (risposta del 06/11; app aggiornata l’08/11 e il **14/11/2026**). *In parole semplici:* prezzo di vendita \= costo completo di costruzione × 3 × coefficiente di rarità, arrotondato per eccesso ai 50 cr successivi; un pezzo unico o una reliquia non ha prezzo di catalogo. La scala dei coefficienti è completa dall’11/11 con l’**Epica 4** (A.262). **I prezzi di catalogo si prendono come li scrivi tu nel manuale**, e la formula serve a verificarli: dopo le tue correzioni dell’11 novembre tornano tutti, tranne due voci che sono in sezione 4 (Pietra della Vigilanza e Guanti da Combattimento Mistico). L’**Anello con Rigenerazione 9** è Grado IV, Molto Rara, SnT 4 e **13.500 cr** (A.263). Scrigno del Primo Giuramento, Tomo dei Guardiani e le tre voci della CyberArma sono segnati «Unico o reliquia»: la scheda scrive «senza prezzo di catalogo» invece di un numero. **Rarità e reperibilità restano separate:** la Reperibilità è sempre accanto al prezzo, e comprare qualcosa che non ha una Reperibilità indicata avvisa — «il prezzo non garantisce un venditore» — senza impedirlo, perché decidi tu se l’oggetto si trova.
-
-• **A.251 — Come si alimenta la CyberArma modificata** (risposta del 06/11; app aggiornata l’08/11/2026). *In parole semplici:* due famiglie di modifiche che non si comportano allo stesso modo. **Cristallo sostituito** e **modulo SIN inserito** non toccano l’alimentazione: l’arma continua a potersi alimentare con i PM personali, conserva le proprietà da Custode, e le due cose stanno insieme. **Riserva interna di CM** e **conversione a NeC** sono conversioni energetiche: impediscono l’uso dei PM personali, fanno perdere le proprietà da Custode e non si cumulano fra loro; consumano 1 CM, o 1 carica NeC Rossa, più 1 AzP — **e la durata è di 10 Round, non «ogni 10 colpi»: su questo punto la tua A.260 del 15 novembre supera questa risposta**, ed è applicata (la voce è qui sotto). Nel progetto della CyberArma c’è ora la scelta dell’**Alimentazione**, accanto a quella della forma: ogni opzione dice che cosa fa e **che cosa si perde, prima di confermare**, e la conferma di una conversione lo ripete per esteso. Le due conversioni le autorizzi soltanto tu dal tuo PC: dal tablet di un giocatore il server non le lascia scrivere. Se scegli una conversione, l’arma che consegni prende il profilo giusto (riserva di CM, o NeC) e «Consegna l’arma» ti avvisa della perdita. Senza scelta l’arma resta a PM personali, come il progetto base di Dimitri.
-
-• **A.245 — Le celle danneggiate** (risposta del 06/11; app aggiornata l’08/11/2026). *In parole semplici:* ogni singola cella ha **2 PI** suoi, non più quelli della voce dell’Inventario. Una cella danneggiata **si separa dalla pila** e si segue da sola, con le sue cariche e i suoi PI («Danneggia una cella» nella scheda). A **0 PI** è distrutta e inutilizzabile: resta scritta — non sparisce in silenzio — ma esce dalle scorte utilizzabili, non si inserisce e non si ricarica con il trasformatore, e nello storico del personaggio resta la riga «Cella distrutta (0 PI, A.245): … — fuori dalle scorte utilizzabili, normalmente non riparabile.» Il «normalmente» è rispettato: il pulsante dei PI resta, perché tu possa decidere altrimenti, ma l’app non lo propone come cosa ordinaria. I personaggi salvati non cambiano forma: una cella intera resta il numero delle sue cariche.
-
-• **A.244 — Quanto tempo per riempire i caricatori** (risposta del 06/11; app aggiornata l’08/11/2026). *In parole semplici:* fuori dal combattimento ci vuole **1 minuto ogni 50 colpi trasferiti, o frazione, contati sul totale dell’operazione**: 120 colpi in un colpo solo sono 3 minuti, non tre operazioni da 1 minuto. Il tempo si legge **prima di confermare**, insieme a quanti colpi si spostano («Riempi i caricatori (+120 colpi · 3 minuti)»). Le due condizioni si controllano entrambe: i caricatori devono essere **estratti** (quello nell’arma va tolto prima, e l’app lo dice) e le munizioni devono essere **davvero nell’inventario** (altrimenti non trasferisce niente e dice perché). **Questo cambia l’esempio dell’Axis della A.215**, dove il caricatore si riempiva mentre era nell’arma: adesso si toglie, si riempie, si rimette; i colpi finali sono gli stessi.
-
-• **A.250 — Il caricatore parziale è pronto** (risposta del 06/11; app aggiornata l’08/11/2026). *In parole semplici:* un caricatore (o una cella) compatibile, accessibile e con **almeno un colpo** è pronto anche se non è pieno: stesso costo d’azione di uno pieno e stesso beneficio di Ricarica Rapida o Ricarica Esperta, con i colpi residui conservati. L’app faceva già così dal 3 novembre, in attesa della tua risposta: adesso la regola è scritta nei dati e il promemoria della Ricarica Rapida lo dice. La cosa che mancava: **un caricatore vuoto non è pronto** — non entra più da solo e il pulsante lo spiega.
-
-• **A.243 e A.249 — Quanto costa togliere e mettere** (risposte del 06/11; app aggiornata l’08/11/2026). *In parole semplici:* celle, pacchi e caricatori hanno le stesse tre regole. Estrarre soltanto costa 1 AzP; inserirne uno pronto in un’arma vuota costa 1 AzP; la sostituzione diretta — fuori il vecchio, dentro il nuovo — resta **un’unica operazione da 1 AzP complessivo**, non la somma delle altre due. Quello che esce conserva esattamente la carica o i colpi che aveva. Nella scheda i tre costi si leggono sotto le celle e nei titolini dei pulsanti dei caricatori. Prima l’app mostrava solo il costo del cambio e diceva che per gli altri due il manuale non dava un numero.
-
-• **A.248 — Chi riassegna i punti divenuti inefficaci** (risposta del 06/11; app aggiornata il 07/11/2026). *In parole semplici:* li rimette **il giocatore**, dalla sua scheda, nello stesso livello in cui erano stati spesi e con i limiti di allora — non serve il Direttore, e si può fare anche da un tablet. L’app faceva già così dalla A.107: quello che mancava era la registrazione, che adesso c’è. Nello storico del personaggio resta una riga come «Riassegnati 1 Punto Abilità del 4° livello: Atletica 1 (PC, 07/11 19:37)»: dice quanti punti, in quale livello, dove sono andati e quando.
-
-• **A.247 — Il punto forzato oltre il limite** (risposta del 06/11; app aggiornata il 07/11/2026). *In parole semplici:* quando il Direttore, dopo l’avviso, forza un punto oltre il limite della categoria, adesso il VA dell’Abilità **sale davvero**. Il limite della categoria non cambia: l’eccezione vale per quell’Abilità di quel personaggio, e un punto non forzato di un altro livello continua a fermarsi al limite. **Questo supera il comportamento di prima** (02/11), quando il punto restava registrato ma il VA si fermava al limite. Prima di forzare, l’app chiede una conferma che dice per esteso che cosa cambierà e quale riga resterà scritta — il pulsante è «Forza l’eccezione», non un «Procedi comunque» qualunque. Nel registro «Modifiche del master» resta una riga a sé: «Eccezione al limite (A.247): Difese nel 4° livello da VA 11 a VA 12, oltre il limite 11 (Professionali) — forzata dal Direttore (PC, 07/11 19:33)». Nella scheda e nel foglio stampato quel VA ha accanto un **✦**, e il «Calcolo» dice quanti punti sono stati forzati e qual era il limite.
-
-• **A.252 — Niente frazioni nelle riserve** (risposta del 06/11; app aggiornata il 07/11/2026). *In parole semplici:* CM e NEC si contano solo a unità intere. Le frazioni nate dalle conversioni delle regole di prima salgono all’intero superiore **una volta sola** (4,2 / 6 → 5 / 6\) e il valore di prima resta scritto nello storico, dove dice da dove si viene. Ricaricare 1 CM costa 6 PM a 3:1, 4 a 2:1, 2 a 1:1, come l’app faceva già. Sui file di oggi non è cambiato nessun valore: le riserve dei personaggi e del FIAT LUX erano tutte piene. **Questa decisione supera la A.228 e le parti della A.193 che tenevano la frazione nella riserva** (le due voci qui sotto lo dicono).
-
-• **A.246 — La Corruzione del frammento Viola** (risposta del 06/11; verificata nell’app l’08/11/2026). *In parole semplici:* la Corruzione segue il frammento Viola rimosso: la CyberArma perde «Corruzione 1» e il frammento estratto la conserva, con lo stato precedente consultabile nello storico. È esattamente quello che l’app faceva già, quindi non è stato necessario cambiare niente: quando premerai «Consegna l’arma» per la CyberArma di Dimitri, il frammento esce come oggetto a parte con la sua Corruzione e l’arma resta senza, e la riga di prima resta nello storico dell’esemplare. **Per Dimitri vedi la A.271:** il Verde è già installato e non c’è nessun frammento Viola da estrarre.
-
-• **A.233 — Capitolo, scena e rinnovo degli usi** (risposta del 02/11; app aggiornata il 05/11/2026). *In parole semplici:* il capitolo è distinto dall’Atto dei PX. «Nuova scena» e «Nuovo capitolo» li dai tu dalla plancia, con una conferma che dice quanti usi tornano e di chi, e un «Annulla». Rinnovano sui tablet solo gli usi per scena o per capitolo e non toccano PM, munizioni né altre risorse. Gli usi per combattimento tornano da soli a uno scontro nuovo, quelli per sessione con «Nuova sessione», quelli al giorno e alla settimana con il Calendario. Hacker conta ogni sistema a parte. **Aggiornata l’08/11/2026:** il **Capolavoro** era fra le cose «da applicare al tavolo» perché il suo limite non si riduceva a un numero; con la A.259 si riduce, e adesso l’app lo conta (un uso per ciascun Capolavoro, per sessione).
-
-• **A.117 — L’Eretico corrotto** (risposta del 03/11; app aggiornata il 05/11/2026). Ai gradi Semplice e Medio il profilo umano senza Doni automatici, con l’eccezione «più fragile del grado»; nome e corruzione non danno poteri, danni Magici o altre capacità; i Doni li assegni tu nel singolo profilo. L’app dava ancora i Doni a quei due gradi: corretto. Per il Minore e il Boss la A.258 del 06/11 ha confermato quello che l’app fa: Minore con «Toccato», Boss con «Consacrato».
-
-• **A.226 — Lo Scout della campagna, FIAT LUX** (risposte del 02/11 e del 03/11; app aggiornata il 05/11/2026). FIAT LUX e «Scout dei PG» sono lo stesso veicolo: nell’app era già uno solo (si chiamava ancora «ASA Scout MK4»; il nome si scrive dalla tab Veicoli). Lo standard della scheda 0.6 è il catalogo: 126.510 cr, riparazioni Corpo 300, Propulsione 100, Motore 300 cr per PI. Il FIAT LUX conserva munizioni (i 400 colpi in più), danni, consumi e la dotazione che ha. Prezzo di catalogo e valore stimato sono distinti: il valore lo stimi tu, finché non c’è l’app scrive «da stimare». **Superata in un punto dalla A.257 l’08/11/2026:** il valore corrente dell’esemplare adesso si calcola e si mostra in tre righe (modello base, dotazione extra, totale); il valore stimato che scrivi tu resta e prende il posto della riga del modello base.
-
-• **A.227 — I ricambi del FIAT LUX** (risposta del 02/11; app aggiornata il 05/11/2026). Il Banco Rosso di ricambio è un MEC Rosso, il Modulo Verde una CEC Verde, con la loro frazione (sul FIAT LUX: 10 cariche ciascuno), una volta sola, con i valori di prima nello storico; senza frazione certa li verifichi tu.
-
-• **A.228 — Le frazioni** (risposta del 02/11; app aggiornata il 05/11, **superata dalla A.252 il 07/11/2026**). La frazione **non resta più nella riserva**: con la A.252 le riserve sono numeri interi e ciò che restava di una conversione sale all’intero superiore, una volta sola («4 e 0,2 / 6 CM» è diventato «5 / 6 CM»). **Resta valido** che ogni uso costa pieno e che la conversione non si ripete; il conto esatto si legge nello storico.
-
-• **A.239 — Le munizioni della Neverlost** (risposta del 02/11; app aggiornata il 05/11/2026). Dotazione standard 600 proiettili per mitragliatore e 6 missili, solo come riferimento; le quantità della nave le confermi tu, finché mancano l’app scrive «da verificare dal Direttore».
-
-• **A.240 — La Neverlost non è a listino** (precisazione del 03/11; app aggiornata il 05/11/2026). Esemplare unico: nessun prezzo di catalogo, prezzo e fascia da definire, e dal suo profilo non si crea un’altra nave.
-
-• **A.118 — La stampa dei veicoli del gruppo** (risposta del 03/11; app aggiornata il 05/11/2026). Nella stampa del gruppo (nuovo pulsante «Stampa del gruppo» nel Tavolo) ogni veicolo del gruppo compare una volta sola; nella stampa di un PG è facoltativo e preselezionato solo per chi lo guida; stampare non duplica niente.
-
-• **Anello con Rigenerazione 9** (configurazione del 02/11; app aggiornata il 05/11/2026). Riserva Verde da 5 CM, 5 CM per uso al termine di 3 ore continue (se si interrompe non consuma e non fa effetto), poi 5 giorni; ricarica 30, 20 o 10 PM a 3:1, 2:1 o 1:1; Grado III, SnT 3, Esclusiva. È nel catalogo degli Artefatti, non assegnato a nessuno. Il prezzo è la A.256.
-
-• **A.222 — Il Dragomedusa** (risposta del 03/11; app aggiornata il 04/11/2026). Manuale lunghezza × larghezza, app larghezza × lunghezza: giovane 6 × 4 Q Base (9 × 6 m) → 4 × 6 nell’app; adulto 14 × 10 → 10 × 14; pedine in Q Tattici 1 × 1 e 2 × 1; ingombro e portata dei filamenti distinti.
-
-• **A.223 — La testa della Madre delle Murene** (risposta del 03/11; app aggiornata il 04/11/2026). Sul muso, segue spostamenti e rotazioni; il Direttore sposta il segno a mano sulla sagoma («Sposta la testa…», «Testa automatica»); distanze e linee di tiro partono dalla testa confermata, senza movimento né portata in più. Dove si può mettere: A.254.
-
-• **A.224 — La roccia** (risposta del 03/11; app aggiornata il 04/11/2026). Materiale Roccia per i muri a quadretti e per quelli disegnati; la attraversa solo chi ha la capacità (la Murena eterea), non le porte né i muri di altro materiale; per gli altri è un muro e ferma la vista. Se può fermarsi dentro: A.255.
-
-• **A.225 — Le distanze nella scala della scena** (risposta del 03/11; app aggiornata il 04/11/2026). Ogni distanza tiene la sua unità e si converte una volta sola (1 Q Tattico \= 10 Q Base): movimento, volo, zone di controllo, linea di tiro, template (un soffio 12 × 1 Q Tattici è 120 × 10 in Q Base); frazioni esatte; le pedine no.
-
-• **A.238 — La Neverlost in una scena in Q Base** (risposta del 03/11; app aggiornata il 04/11/2026). 34 × 20 Q (51 × 30 m), girabile di 45°, lo scafo ostacolo secondo la sagoma vera; limite dei veicoli portato a 34; combattimento aereo in Q Tattici. Se a terra si muove: A.253.
-
-• **A.242 — Il documento Talenti, Specializzazioni e Maestrie v1.1** (condiviso il 03/11, confrontato il 04/11/2026). Elenchi delle 25 Classi, Talenti Liberi, Maestrie, progressione e bonus uguali all’app; nulla da cambiare.
-
-• **A.232 — Specializzazioni ai pugni con i Guanti** (risposta del 02/11; app aggiornata il 04/11/2026). Combattimento Senz’Armi oppure Armi da Pugno; con tutte e due un solo \+1 VA e \+1 danno.
-
-• **A.234 — Prova di Potere del Doppio getto** (risposta del 02/11; app aggiornata il 04/11/2026). Potere −2, senza i benefici del lancio degli Incantesimi; il costo è quello della revisione «Cariche Mistiche» (6 CM).
-
-• **A.236 — Batteria interna della CyberArma** (risposta del 02/11; app aggiornata il 04/11/2026). Solo per la CyberArma, con l’alternativa dei PM personali, non compresa nel progetto dei tre giorni; con la revisione è di 5 CM, 1 CM per 10 Round. Per il Custode: A.251.
-
-• **A.237 — NEC della CyberArma convertita** (risposta del 02/11; app aggiornata il 04/11/2026). NEC Rosso da 10 cariche, una carica per attivazione, il residuo resta al NEC.
-
-• **Revisione «Cariche Mistiche»** (approvata il 02/11; app aggiornata il 04/11/2026). Guanti 6 CM, CyberArma 5 CM, armi della Fratellanza e Scudo delle Guardie Sacre 5 CM; le Batterie restano in PM; salvataggi convertiti una volta con la frazione. Per le riserve rimaste a frazione: A.252.
-
-• **A.220 — Le Ferite abbassano l’Iniziativa anche dei personaggi** (risposta del 02/11; app aggiornata il 02/11/2026). *In parole semplici:* con una Ferita Profonda l’Iniziativa scende di 4 anche per i PG, come per i nemici: con \+2 si tira 1d10 −2. Conta solo lo stato raggiunto, non la somma di quelli prima. Per i nemici prima si porta il bonus a 0 se è negativo, poi si toglie la Ferita. Abbiamo controllato che la penalità non entri due volte.
-
-• **A.221 — Il Magistrale su un ×5** (risposta del 02/11). *In parole semplici:* l’app faceva già così e non è cambiato niente: ×1 diventa ×2, ×2 diventa ×3, ×3 resta ×3, ×4 e oltre restano come sono. Il Magistrale vale solo per il primo colpo di un attacco multiplo. Il Soffio, che si tira senza Prova, non ha Magistrale. Ora un controllo automatico lo verifica a ogni aggiornamento.
-
-• **A.230 — Armi Inastate e Archi e Balestre** (risposta del 02/11; app aggiornata il 02/11/2026). *In parole semplici:* anche per queste due il Direttore ha «Tienila come eccezione» e «Sostituiscila gratis», come per quelle di Potere. Prima c’è la copia della scheda e la decisione va nel registro. Nessuno dei sette personaggi le ha.
-
-• **A.231 — La CyberArma di Dimitri** (risposta del 02/11; app aggiornata il 02/11/2026). *In parole semplici:* la CyberArma che Dimitri ha già è l’originale di Park. Il Direttore la segna così con un tocco («Riconduci a CyberArma Park»: Viola, Corruzione 1, nessuna modifica fatta). Il progetto ha i tre giorni degli appunti v1.2 e la forma scelta dal giocatore. «Consegna l’arma» aggiorna **la stessa** CyberArma: diventa «CyberArma Dimitri», con lo storico che ricorda il profilo di Park. **Non ne nasce una seconda** (se ce ne fossero due, l’app chiede quale). Il modulo SIN esce dalla spada. Il frammento Viola diventa un oggetto a parte, con il suo avviso di Corruzione (A.246, qui sotto fra le Risolte). **Aggiornamento (A.271, 11/11):** l’arma di Dimitri ha già il focalizzatore **Verde**, non il Viola: finché la sua voce non è quella giusta (comando in sezione 8\) non premere «Riconduci a CyberArma Park» per lei, perché rimetterebbe Viola e Corruzione 1\.
-
-• **A.235 — La CyberArma degli Armamenti aggiornati** (risposta del 02/11; app aggiornata il 02/11/2026). *In parole semplici:* famiglia e Specializzazione seguono la forma (lama → Spade, ascia → Asce, lancia → Armi Inastate, frusta → Armi Flessibili), una sola. Danno e requisiti restano quelli della CyberArma. La frusta non dà Immobilizzare a distanza. Peso e Integrità sono quelli dell’esemplare di Park. Costruiscono solo i Custodi, con la procedura che hai confermato: 17 ore, 1.250 cr, 3 PM, più 4 ore e 100 cr se il progetto va sviluppato.
-
-• **A.215 — Le celle e i caricatori si tolgono, si riempiono e si rimettono** (risposta del 30/10; app aggiornata il 02/11 e il 03/11/2026). *In parole semplici:* una cella adesso è una cosa che si sposta. «Togli la cella» la toglie con le cariche che ha; una cella vuota resta, non sparisce. «Inserisci» rimette la stessa o un’altra; «Cambia cella» toglie quella dentro e mette la più carica che hai. Il trasformatore ricarica solo le celle tolte: se scegli quella inserita, rifiuta e dice perché. I pacchi dei lanciafiamme funzionano allo stesso modo e si cambiano con 1 AzP e due mani; le celle con 1 AzP. Anche le armi elettrificate da mischia hanno le loro celle: senza una cella pronta non si «ricaricano» più gratis (Dimitri, spada 4 cariche su 5, e Oshi, katana 5 su 5, non ne hanno di scorta). I caricatori si riempiono fuori dal combattimento, tutti insieme o uno solo, e dal 03/11 mostrano i loro colpi. I personaggi salvati non cambiano: chi aveva una cella nell’arma la ritrova con le stesse cariche. Restano A.243–A.245 e A.249–A.250.
-
-• **A.229 — Specializzazioni di Potere per Classe** (risposta del 01/11; app aggiornata il 02/11/2026). *In parole semplici:* ogni Classe sceglie le Specializzazioni dal suo elenco del Giocatore 0.54. Custode, Invocatore, Mistico e Tecnomante non hanno più tutte e nove quelle di Potere (l’Arcanista sì); con Usufruitore di Magia si aprono di nuovo. Chi ne ha già una non più nel suo elenco la tiene, con i suoi effetti e un avviso, finché tu decidi da «Modifica master»: ◦ «Tienila come eccezione», con il motivo; ◦ oppure «Sostituiscila gratis», tenendo il posto. Prima di cambiare l’app salva una copia della scheda, e la decisione va nel registro. Il giocatore non può decidere al posto tuo. Dei sette personaggi nessuno è toccato: Lucas ha Elementi e Manifestazione, che restano nell’elenco dell’Invocatore.
-
-• **A.211 — «Appreso» lo conferma il Direttore** (risposta del 30/10; app aggiornata il 02/11/2026). *In parole semplici:* quando un giocatore aggiunge un incantesimo a mano, entra come «annotato». Se dice che l’ha appreso, l’app scrive «appreso da confermare» e te lo chiede; finché non confermi non si lancia e non conta come conosciuto. Tu lo confermi dalla scheda dell’incantesimo con «Segna come appreso».
-
-• **A.213 — Incantesimi aggiunti prima della distinzione** (risposta del 30/10). L’app faceva già così: restano «da classificare», si lanciano come prima e li classifichi tu, con la riga nello storico.
-
-• **A.217 — Vecchi Banchi e Moduli** (risposta del 30/10). L’app faceva già così: un Banco diventa una CEC dello stesso colore con la stessa frazione, un Modulo senza corrispondenza resta «da convertire», una volta sola. (I ricambi di prima dei mezzi sono ancora la A.227.)
-
-• **A.218 — Il Bestiario v0.64** (risposta del 30/10). Grazie del chiarimento: per il Soffio del Dragomedusa l’app usa già 8d10 × 5 e 12d10 × 5 Magici, dal Mostri 0.46.
-
-• **A.219 — «Chiudi la giornata»** (risposta del 30/10). L’app faceva già così: è un tuo tocco, anche senza Calendario, arrotonda una volta e non addebita due volte; il supporto vitale una volta al giorno. La proposta di chiusura dal Calendario, che hai detto facoltativa, non c’è.
-
-• **A.196 — La Neverlost nella scheda dei veicoli e nella plancia** (risposta del 30/10; app aggiornata il 01/11/2026). *In parole semplici:* la Neverlost si aggiunge dalla tab Veicoli come lo Scout. Ha le tre Integrità (Corpo 300, Propulsione 180, Motore 120), AR 8, Corazzato 2, MOV 8 / 16 / 24 Q Tattici e le sue armi con le munizioni. Inoltre: ◦ **Le riserve non si riempiono da sole.** Rossa 100, Blu 10 e Verde 30 cariche partono «da registrare»: le scrivi tu, e salgono solo con «Ricarica all’approdo». ◦ **Rosso e Verde.** Il Rosso si conta a tempo di volo, arrotondato una volta a fine giornata; il Verde ogni giorno, anche in sosta. ◦ **Traiettoria a giorni.** Entrata e uscita costano 1 Blu ciascuna; ogni giorno 1 Rossa e 1 Verde. Si segna giorno per giorno o con «Registra la traversata di N giorni». ◦ **Scudo e circuito.** Lo scudo (200 ScE, 1 Blu l’ora) assorbe prima dell’AR. Il circuito Bianco (120 PM) è a parte, con le funzioni delle tre postazioni. ◦ **Sulla mappa.** In Q Tattici la nave è una pedina 3 × 2\. Le misure vere (51 × 30 m) e la planimetria interna restano dati separati. Dove la tua scheda 1.6 e il capitolo del Manuale dei Veicoli differivano ho seguito la scheda (MAN tecnologica −1; «Distacco da un aggancio esterno», con pareggio o fallimento che conservano l’aggancio). Per il circuito Bianco ho seguito il manuale, perché la scheda è la sola Parte I.
-
-• **A.190 — Il pacco del Gehemmapuker** (risposta del 30/10; app aggiornata il 01/11/2026). *In parole semplici:* il pacco è Rosso, cinque NEC Rossi da 10 cariche in successione con un solo contatore da 50 attacchi; **2.000 cr**, 750 g, ricarica completa 500 cr (50 ore con il trasformatore personale, 8 ore e 20 con quello industriale), si cambia con 1 AzP ed entrambe le mani. Anche il pacco del Purifier ha ora peso e formato: NEC 10 \+ NEC 5, 250 g.
-
-• **A.191 — I moduli IAS** (risposta del 30/10; app aggiornata il 01/11/2026). *In parole semplici:* ogni modulo IAS (e lo Smorzatore Silent e il generatore RF366 dell’Attila) usa un pacco da due NEC Blu 10, 20 cariche, 300 g; il ricambio carico è il «Pacco Blu 20 cariche» del catalogo a **800 cr** (prima l’app diceva 1.000); ricarica 10 cr per carica.
-
-• **A.195 — Lo scudo Punisher Wächter** (risposta del 30/10; app aggiornata il 01/11/2026). *In parole semplici:* la Taglia è scritta «Medio, detto anche Grande»: è una sola categoria e una sola voce acquistabile, non due varianti. Prezzo 12.000 cr, Molto rara, conversione 6.000 cr, come già nell’app.
-
-• **A.192 — L’energia dei mezzi: Autovettura e Scout** (risposta del 30/10; app aggiornata il 31/10/2026). *In parole semplici:* l’Autovettura ha una CEC Rossa da 10 cariche e fa 1.000 km (100 km a carica); lo Scout ha un MEC Rosso da 10 cariche (75 km a carica, 750 km nominali) e una CEC Verde da 10 cariche per i servizi, una carica per ogni giorno in cui si usa il supporto vitale. I chilometri delle tratte brevi si sommano e le cariche si tolgono **una volta sola**, con il tocco «Chiudi la giornata», arrotondando per eccesso (3 tratte da 30 km su un’Autovettura \= 90 km \= 1 carica, non 3); le accensioni del supporto vitale nello stesso giorno contano una carica Verde, un giorno senza uso nessuna. L’aria è a parte: tre bombole da 8 ore (24 ore effettive, anche non consecutive) e la ricarica dell’energia non le ripristina («Ricarica le bombole»: 100 cr e 20 minuti ciascuna). Ricarica completa dello Scout 400 cr in due ore (tre in successione). L’elettronica ordinaria non consuma. La chiusura della giornata a tocco del Direttore l’hai confermata con la A.219. Il numero e il formato delle bombole sono quelli della scheda 0.6.
-
-• **A.193 — Le riserve salvate in Lx, UE o ore** (risposta del 30/10; app aggiornata il 31/10/2026). *In parole semplici:* una riserva salvata nei modelli di prima passa alle cariche conservando la **frazione** residua: una cella a metà vale metà della capacità del profilo nuovo (uno Scout al 50% ha il MEC Rosso a 5 cariche su 10). Il valore di prima resta nel file, il risultato si registra, non si arrotonda per eccesso e la conversione non si ripete alle aperture successive. Se il profilo nuovo non è certo la riserva resta «da convertire» fino alla tua verifica (i Moduli, A.217; i ricambi di prima dei mezzi, A.227). Vale per i mezzi (Autovettura e Scout) e per i personaggi (NEC standard, Banchi, tuta, riparo, verricello, utensile laser). **Corretta in un punto dalla A.252 il 07/11/2026:** il conto per frazione resta il modo di convertire e non si ripete mai, ma il risultato **non lascia una frazione nella riserva** — sale all’intero superiore, una volta sola. Il valore di prima e il conto esatto restano nel file.
-
-• **A.198 — Le sagome più grandi e la scala della mappa** (risposta del 30/10; app aggiornata il 30/10/2026). *In parole semplici:* le creature possono occupare fino a 20 quadretti per lato: i draghi antichi (10 × 16\) e il Dragomedusa adulto (10 × 14\) hanno finalmente il loro spazio sulla mappa. In Q Base la sagoma è quella del profilo, rettangolare, e si gira di 45°; in Q Tattici si usano le pedine del manuale (Dragomedusa 1 × 1 il giovane, 2 × 1 l’adulto; drago 1 × 1, 2 × 1, 2 × 2). La mappa dichiara la sua scala — «Q Base · 1 Q \= 1,5 m» o «Q Tattici · 1 Q \= 15 m» — con un’etichetta sempre visibile, e la si sceglie finché non ci sono creature. Le regole dei muri e delle collisioni non cambiano: un angolo della sagoma non attraversa mai un muro, ricontrollato su tutte le sagome fino a 20 × 20 in tutti gli orientamenti.
-
-• **A.202 — La Murena della Roccia cucciolo** (risposta del 30/10; app aggiornata il 30/10/2026). *In parole semplici:* il 6 / 12 / 18 è il movimento della forma eterea (attraversa la roccia); non ha un movimento terrestre. In overdose è corporea: ferma, non attacca, non attraversa la roccia, non Schiva, fino alla fine del Round successivo; poi torna eterea da sola. Nella carta della creatura c’è il pulsante «Corporea (overdose)»; da corporea il movimento è zero e «Attacca\!» avvisa che non attacca.
-
-• **A.203 — La Madre delle Murene** (risposta del 30/10; app aggiornata il 30/10/2026). *In parole semplici:* la scegli tu: parzialmente emersa (2 × 2\) o completamente emersa (6 × 2); nella parziale resta la nota dei 4 Q di estensione nella roccia. Cambiando configurazione cambia solo la misura sulla mappa, nello stesso punto: PV, PM, Ferite, Stati e Azioni già spese restano tutti, è la stessa creatura. La testa dà l’origine degli attacchi e del soffio (domanda A.223).
-
-• **A.204 — L’ordine delle misure dei draghi** (risposta del 30/10; app aggiornata il 30/10/2026). *In parole semplici:* il corpo disteso è «lunghezza × larghezza» nel manuale e l’app lo mostra «larghezza × lunghezza»: giovane 4 × 6, adulto 6 × 10, antico 10 × 16, cucciolo 1 × 2\. Trentasei draghi (15 giovani, 10 adulti, 10 cuccioli e il Dracolich) avevano le misure al contrario e sono stati corretti: sulla mappa erano stesi di traverso.
-
-• **A.206 — Parata a Mani Nude del Lottatore** (risposta del 30/10, **modifica di regola**; app aggiornata il 30/10/2026). *In parole semplici:* la Parata a Mani Nude fa parte dell’Addestramento al Combattimento Senz’Armi del I Grado: ogni Lottatore, qualunque Disciplina, con almeno una mano libera para gli attacchi ravvicinati, con 1 AzP anche fuori Iniziativa; se riesce, il danno si dimezza per eccesso prima dell’Armatura; il Magistrale lo annulla; non vale contro attacchi a distanza, Aree o attacchi imparabili; con Parata Istintiva vale anche a mani nude; nessun PM. Il vecchio Talento a scelta ora si chiama «Parata a Mani Nude Migliorata» e dà \+2 VA alle Difese per parare a mani nude (si somma alla Guardia, non vale con il bastone, non tocca Schivata, Elusione o Parate con armi). *Nell’app:* le scelte già fatte del vecchio Talento si leggono come il Talento nuovo, senza toccare i file dei personaggi (**nell’istantanea del 14 novembre** nessuno dei sette è Lottatore e nessuno ha il vecchio Talento: non c’è niente da riscrivere). **Aggiornamento del 14/11:** questa voce resta risolta e vale per intero per i personaggi giocanti, ma sul **modello PNG** del Lottatore il blocco approvato del 12/11 e il Mostri 0.67 dicono che para a mani nude **dal II Grado**, non dal I. L’app segue il più recente sul solo modello PNG, e la **A.270 del 15 novembre ha confermato che le due cose stanno insieme**: il PG para dal I Grado, il modello PNG dal II. Non è più un’ipotesi.
-
-• **A.197 — Il premio di fine Atto non si duplica** (risposta del 30/10; app aggiornata il 30/10/2026). *In parole semplici:* la seconda assegnazione dello stesso premio allo stesso personaggio, nello stesso Atto, è bloccata, anche se la si tenta da un’altra partita; il premio spetta anche agli assenti. Per correggere un’assegnazione sbagliata c’è la rettifica con il motivo, che resta nel registro; un premio in più si scrive nel «Bonus», senza toccare quello di fine Atto. È l’unica eccezione al principio «l’app avvisa, non blocca».
-
-• **A.199 — I danni con moltiplicatore** (risposta del 30/10; app aggiornata il 30/10/2026). *In parole semplici:* un danno come «8d10×5» si tira dall’app: tira gli otto d10, li somma e moltiplica per cinque, e mostra i dadi, la somma e il totale; Difese e Armatura si applicano dopo. Vale per tutte le creature (97 voci) e per il Soffio del Dragomedusa: 8d10×5 il giovane, 12d10×5 l’adulto, Magici. Le armi navali della Neverlost useranno lo stesso calcolo quando entrerà.
-
-• **A.200 — L’Iniziativa dei PNG umani** (risposta del 30/10; app aggiornata il 30/10/2026). *In parole semplici:* il minimo 0 è solo del bonus base di Iniziativa, anche per i tre Inquisitori; le penalità di Ferite e condizioni si sommano dopo, e il totale può essere negativo (un nemico con Iniziativa 0 e una Ferita Profonda fa −4 \+ d10). Prima l’app non applicava nessuna penalità all’Iniziativa dei nemici. Per i personaggi: domanda A.220.
-
-• **A.201 — I nomi dei draghi metallici** (risposta del 30/10; app aggiornata il 30/10/2026). *In parole semplici:* tutti gli stadi si chiamano Drago d’ottone, di rame, di bronzo, d’argento, d’oro. Le forme di prima («Drago di ottone adulto») restano come alias nella ricerca, senza duplicare le creature.
-
-• **A.205 — Diplomazia e Oratoria** (risposta del 30/10; app aggiornata il 30/10/2026). *In parole semplici:* «Diplomazia» è Oratoria, con gli stessi valori (Driade 13, Marinide 10), anche nell’importazione delle schede dal manuale.
-
-• **A.207 — Natura del danno e AC delle armi** (risposta del 30/10; verificata il 30/10/2026). *In parole semplici:* le armi ordinarie di umani e umanoidi fanno danni Naturali e AC 1 per colpo, salvo indicazione del profilo; il «Danno completo» comprende già i bonus ordinari, quindi non si aggiunge nulla (resta l’EQ dei modelli PNG); AC 1 non limita il numero di attacchi. Controllati tutti i 341 nemici prestabiliti, le creature del Bestiario proposto, i 120 profili dei modelli PNG e la conversione da personaggio: nessuno somma due volte i bonus.
-
-• **A.241 — Le Specializzazioni tolte che non sono di Potere** *(ritirata il 02/11: confluita nella A.230).* Era la stessa domanda della A.230, riscritta dopo la tua A.229: per non fartela leggere due volte resta solo la A.230, nella sezione 2\.
-
-• **Numeri senza una domanda in questo documento.** Per chi controlla la numerazione: **A.4** e **A.15** chiuse a settembre, con le prime risposte (prima che ci fosse questa sezione); **A.89** era una correzione proposta per i 5 punti liberi, superata dalla A.90 (7 punti); **A.100** non usato, era un doppione della A.91 (di chi è il veicolo); **A.130** tolta il 06/10, era una scelta tecnica di Marcello e non una domanda per te; **A.186** non usato (il 25/10 non è servito). Le A.92, A.96, A.97 e A.144 sono qui sopra, insieme ad altri numeri. Il numero più alto usato è **A.304**; il primo libero è **A.305**. Le ritirate sono la A.214, la A.216, la A.241 e la A.268. **Aperte, oggi:** A.299, A.300, A.301, A.302, A.303 e A.304 (le A.294–A.298 sono risolte dal 20/11; la A.296 resta per metà in sezione 3).
-
-• **A.176 — Incantesimi aggiunti a mano.** *In parole semplici:* quando un incantesimo viene aggiunto a mano, l’app chiede se il personaggio lo ha **appreso** davvero o se è **solo annotato** (una pergamena trovata, un testo, un Artefatto). L’appreso conta come conosciuto per tutto (prerequisiti, creazione di Consumabili, insegnamento), restando valide le altre condizioni; l’annotato no, non dà accesso alla magia, né Abilità, né PM, e non si lancia. Senza accesso alla magia anche un appreso resta annotato e non lanciabile. Se il Direttore concede una cosa speciale, scrive come si lancia, con quale Abilità, con quali PM e con quali limiti. Gli aggiunti a mano non occupano le quote di Classe. Quelli aggiunti prima restano «da classificare» finché il Direttore non sceglie, con un tocco, dalla scheda dell’incantesimo. *Applicata il 29/10/2026.* (Domande che ne derivano: A.211, A.212, A.213.)
-
-• **A.189 — Il trasformatore e la regola del «niente travaso»** (risposta del 30/10). *In parole semplici:* un trasformatore dedicato ricarica i NEC. Prende una carica da una CEC dello stesso colore (10 UE) e la tiene in un tampone da 100 cariche NEC; poi trasferisce solo le cariche che servono e conserva il resto, anche dopo averlo scollegato. Il prelievo si fa solo se nel tampone c’è posto per l’intera carica. Il portatile ricarica una carica all’ora, la stazione industriale una ogni dieci minuti; più apparecchi collegati non moltiplicano la velocità. Un caricatore qualunque, i PM personali e la vicinanza a una Matrice non bastano. Tre modelli: portatile monocromatico (3.000 cr), multicromatico (6.000, un tampone per colore), stazione industriale (20.000). Nell’app: sull’Inventario il trasformatore mostra il tampone e «Ricarica» dice quanto si trasferisce, quanto resta nel tampone e quanto tempo ci vuole. *Applicata il 30/10/2026.*
-
-• **A.214 — Pacchi da 15 e 50 getti, IAS: peso e formato** *(ritirata: la risolvono i tuoi manuali del 30/10).* Il registro 2.9, gli Armamenti 0.70 e l’Equipaggiamento 0.24 fissano i pacchi dei lanciafiamme (Purifier NEC 10 \+ NEC 5, 250 g; Gehemmapuker cinque NEC 10, 750 g) e il pacco IAS (due NEC Blu 10, 300 g). Resta da riportare nell’app (sezione 3, A.190 e A.191).
-
-• **A.216 — Le riserve salvate in ore** *(ritirata: la risolve la A.193).* Tuta, riparo, verricello e utensile laser salvati in ore si portano alle cariche conservando la frazione, senza arrotondare per eccesso (A.193).
-
-• **A.187 — Si sale di livello solo con i PX** (risposta 28/10, app aggiornata il 28/10). Il pulsante «Sali al livello N» si abilita solo quando i PX che **hai assegnato tu** arrivano alla soglia del livello (A.170) e l’Atto lo consente: con 600 PX al 6° livello non si va al 7° (ne servono 720). Un totale solo suggerito non conta. Il blocco c’è anche nel server: una richiesta da un tablet che porta un personaggio oltre il livello dei suoi PX viene rifiutata, e nemmeno scrivendo l’indirizzo a mano si entra. Tu, in «Modifica master», hai «Concedi il passaggio al livello N»: chiede il motivo (obbligatorio), lo scrive nel registro del personaggio, non cambia i PX, e il giocatore non vede il motivo. Se un personaggio ha già un livello in più dei PX, la scheda lo segnala come prima e non cambia niente; in modalità master, accanto alla segnalazione, trovi «Annulla l’ultimo livello» (ti mostra prima le scelte che si perderebbero) e «Tieni come concessione» (con il motivo). I PX continuano a cambiarli solo tu.
-
-• **A.188 — Incantesimi: il giocatore cambia, ma le regole valgono** (risposta 28/10, app aggiornata il 28/10). Il giocatore cambia da sé anche gli incantesimi conservati, senza chiedere a te, **ma quote, famiglie accessibili, livello massimo e requisiti valgono di nuovo**: un incantesimo fuori regola resta in grigio con il motivo e non si può prendere né mettere al posto di un altro (il server lo rifiuta anche se arriva da un tablet). Tu puoi sempre forzare, con conferma e motivo, e resta scritto. Ogni aggiunta, rimozione e sostituzione va nello storico del personaggio con data, ora e da dove è stata fatta (per esempio «Sostituito Colpo Elementale con Dardo Mistico (tablet, 28/10 21:40)»). Gli incantesimi aggiunti a mano e quelli degli artefatti restano fuori dalle quote (l’A.176 è un lavoro a parte). Per cambiare le Tecniche Interiori conservate resta la procedura già approvata. Questa regola sostituisce il requisito di approvazione della A.184 per gli incantesimi; vale al posto della libertà totale applicata il 26–27/10.
-
-• **A.194 — Il Dragomedusa: PX e GS** (risposta nel Manuale dei Mostri 0.46 §7.12, app aggiornata il 29/10). Il Dragomedusa **giovane** è di GS **Mito, 200 PX**; l’**adulto** di GS **Semidio, 400 PX**, per un esemplare senza dotazione e quattro PG. Nel Bestiario ci sono tutti e due con i valori del manuale: i valori secondari del giovane completi, il Soffio di Fulmine, la Cattura con i filamenti e l’assorbimento da un banco Rosso (15/25 UER), Blu (1/2 UEB), Verde (3/5 UEV) o da una batteria mistica (3/5 PM). Con loro la scala del Grado di Sfida arriva fino a Entità Suprema (Mito 200, Semidio 400, Divinità 800, Divinità Maggiore 1.600, Entità Suprema 3.200), e la pagina del bestiario online ha il filtro per GS. Dalla stessa versione: l’Iniziativa delle creature non è mai negativa (si tira il solo d10 più il bonus), quindi 66 creature che avevano Iniziativa da −1 a −4 ora hanno 0\.
-
-• **A.174 — «Ricarica e medita»** (risposta 23/10, app aggiornata il 28/10). Con un cristallo, il pulsante «Medita» diventa «Ricarica e medita» e fa i due passaggi nell’ordine giusto: **prima** ricarica il cristallo con i PM che il personaggio ha adesso (3 PM per 1, 2 con Ricarica Efficiente o Conversione Migliorata, 1 con entrambi, il Bianco sempre 2; entro la capacità; con l’Azione, il contatto, l’Addestramento e la Prova di Potere della ricarica normale), **poi** calcola la Meditazione, completata o interrotta. Se la Meditazione si interrompe, la ricarica resta. I PM che si recupereranno non si possono spendere prima: se si chiede di più, l’app si ferma e lo dice. In fondo, una riga: «Spesi 9 PM → cristallo \+3 cariche · Meditazione: recuperati 6 PM». Senza cristallo «Medita» è quella di sempre. Prima di oggi la strada breve convertiva anche i PM che la Meditazione avrebbe recuperato: non succede più.
-
-• **A.175 — Guanti da Combattimento Mistico** (risposta 23/10, app già così). I Guanti sono un oggetto con una proprietà attiva e il pulsante «Attiva», senza bisogno di un Incantesimo: 3 PM dalle cariche interne, 1 AzP, 5 Round; i pugni diventano Magici con \+1 al danno. Non si paga con PM personali né con Batterie esterne.
-
-• **A.177 — Modifiche dal tablet dopo la partita** (risposta 23/10, ora completa). Le modifiche si possono mandare anche a sessione finita e valgono solo dopo la tua approvazione; se il dato è cambiato nel frattempo, l’app ti mostra il conflitto prima di applicare; una disconnessione non fa perdere niente. Accanto a ogni modifica vedi **quando è stata fatta e quando è stata ricevuta**.
-
-• **A.178 — Manuale del Giocatore 0.49** (risposta 23/10, app già così dal 22/10). Imposizione della Mano Curativa 1/2/2/4 PM (1/1/1/3 con l’Hachimaki); Aura di Resistenza \+2; Meditazione Profonda distinta dalla Meditazione ordinaria; tempi, durate e limiti delle schede recepiti, non solo i numeri.
-
-• **A.179 — AR di Aura e Pelle** (risposta 25/10, app già così). Vale la 0.49: Aura di Resistenza \+2 AR magica per 5 Round; Pelle di Rinoceronte \+1 AR non magica contro attacchi Ravvicinati Naturali o Magici per 5 Round. Insieme: \+3 contro il Ravvicinato, \+2 contro gli altri danni Naturali o Magici, \+2 contro l’Etereo; con Corazza Potenziata \+4, \+3, \+3 (comprendono tutte e tre le protezioni). I numeri della A.48 (+1 per 3 Round) restano nello storico, sostituiti.
-
-• **A.180 — Scheda del tablet e modifiche in attesa** (risposta 25/10, app aggiornata). La scheda del tablet mostra i valori approvati. Le modifiche non ancora approvate stanno nella coda, ognuna con il valore di prima, il valore proposto e la scritta «In attesa di approvazione». Il giocatore può **ritirare** una richiesta finché è pendente, anche se è già arrivata a te: tu la vedi come «Ritirata dal giocatore» (con «Visto» per toglierla dall’elenco) e la scheda non cambia. Dopo l’approvazione un ripensamento è una richiesta nuova.
-
-• **A.181 — Nuova progressione di Talenti, Maestrie e Specializzazioni** (risposta 25/10, app già così, in uso dalla partita del 26/10). Talenti Liberi ai livelli 3, 5, 7, 9, 11, 13, 15, 17, 19; Maestrie ai livelli 2, 6, 10, 14, 18; Specializzazioni ai livelli 1, 4, 8, 12, 16, 20\. I Talenti di Classe hanno la loro progressione separata.
-
-• **A.182 — Ricarica Esperta** (risposta 25/10, app già così). Senza Maestria 2 cartucce per azione; con Ricarica Esperta fino a 4 per operazione, anche nell’operazione gratuita del Round. Restano i limiti di capacità dell’arma e non vale per sostituire un caricatore amovibile. Il testo dei Talenti nell’app ora dice «fino a quattro».
-
-• **A.183 — Conversione dei personaggi esistenti** (risposta 25/10, app già così). Le scelte seguono l’ordine dei livelli e i prerequisiti posseduti in quel momento (Dimitri: Ritualista Minore al 3°, Ritualista Maggiore come Maestria del 6°); la Specializzazione iniziale viene dalla prima Classe, quella del 4° dalla Classe aumentata al Grado II; la conversione sostituisce le vecchie scelte (copia e riepilogo restano nel registro).
-
-• **A.184 — Incantesimi e Tecniche legati ai Talenti** (risposta 25/10, app **cambiata**). Se si riprende lo stesso Talento, le scelte già fatte restano, entro le quote. Se il Talento non si riprende, le Tecniche e gli incantesimi che dipendevano solo da lui non funzionano più: nella tab Poteri compaiono in «Scelte in storico», senza effetti (niente AR dell’Aura, niente «Lancia\!»), e non c’è più l’avviso di quota. Riprendendo il Talento tornano attive. Le Tecniche che vengono da altre fonti (Lottatore, Scuola Mishima) restano.
-
-• **A.185 — Specializzazione del primo livello** (risposta 25/10, app già così). Si sceglie dopo la Classe iniziale, prima dei valori finali e della dotazione; un Taumaturgo ha una sola scelta iniziale tra le nove Specializzazioni di Potere; gli ampliamenti di Usufruitore di Magia e di Ritualista si aprono solo con il requisito posseduto.
-
-• **Esiti dei tuoi test del 24/10** (corretti il 25/10 e il 27/10). Avvisi NTFY: la configurazione sta fuori dalla cartella dell’app e non si perde con gli aggiornamenti. Test 4: conflitto con la coda a due scelte vere («Vedi la scheda del Direttore» o «Scarta le mie modifiche»). Test 6: una modifica \= una voce (le note «NO», «NOT», «NOTE» sono una richiesta sola) e il pulsante «Rientro dei tablet» c’è su ogni pagina. Test 7 (PX): salvataggio affidabile, voto base 3 per le tre categorie, PX di ogni incontro, premio di fine Atto per Atto anche a chi era assente, avviso di passaggio di livello, PX modificabili solo dal Direttore (anche dalla coda del tablet).
-
-• **Incantesimi: scelta affidabile** (27/10, nessuna domanda). Ogni incantesimo si riconosce dal catalogo, non dal nome; si aggiunge a mano in tre passi; le quote (di Classe e dei Talenti) hanno un solo conto e sono sempre un avviso, mai un blocco; gli incantesimi presi con un Talento si vedono, si tolgono e si sostituiscono dalla tab Poteri.
-
-• **I personaggi non si perdono con un aggiornamento** (26–27/10, nessuna domanda). I dati stanno in una cartella scritta nel profilo di Windows; una sola installazione di Mutant; se all’avvio i personaggi non ci sono, Mutant cerca da solo l’altra copia e con un SI si sistema (voci «P Cerca i personaggi» e «C Controlla lo stato» del menu).
-
-• **Esploratore, Specializzazioni dei Talenti a scelta; «minimo 1» ai 2 \+ Mod INT incantesimi; quote di Classe per macrofamiglia; incantesimi liberi di qualunque famiglia; tabella del livello massimo degli incantesimi; dadi dei PV e dei PM massimizzati al 1° livello** — risolte e implementate prima del 26/09.
-
-• **A.5 — Durata di tre Tecniche Interiori** (Vipera dal Cappuccio, Presa dell’Anima, Contraccolpo Interiore) — implementata il 26/09.
-
-• **A.6 — Equipaggiamento iniziale** (E\&L A.5–A.5.31): dotazioni delle 25 Classi, armamenti corporativi di base (Armamenti §7.22), crediti iniziali 1.000 \+ 2d6 × 100, acquisti con cessione, veicoli esclusi — implementato il 27/09.
-
-• **PV e PM attuali al passaggio di livello** (§8.1.2, E\&L A.6) — implementata il 27/09.
-
-• **18 Talenti magici e mistici nuovi del 27/09** — recepiti nell’app il 27/09; la conferma è chiesta in A.32.
-
-• **Manuale degli Armamenti v0.52 e v0.53** (elmetti §7.21, modelli corporativi di base §7.22, catalogo dei rinforzi §7.23) — recepito il 28/09.
-
-• **Manuale del Giocatore del 27/09** (Addestramenti a 76 punti, 10 Punti Abilità Liberi) — recepito il 28/09; confermato in A.52.
-
-• **A.1 — Descrizioni delle Caratteristiche; Prova Salvezza Volontà su CAR** — implementata il 26/09.
-
-• **A.2 — Schede dei 14 Talenti di magia** (compreso Potenziale Mistico Migliorato solo per gli Usufruitori di Magia) — implementata il 26/09.
-
-• **A.3 — Tipo di tre Talenti Liberi** (Attivazione Tempestiva, Risorse Interiori, Tecniche Interiori Supplementari: passivi) — implementata il 26/09.
-
-• **A.7 — Pistola mitragliatrice compatta**: Specializzazione Pistole anche in Raffica Breve e Media — implementata il 28/09.
-
-• **A.8 — Pugnale e Ascia leggera**: Coltelli e Pugnali / Asce in mischia, Armi da Lancio al lancio, mai cumulate — implementata il 28/09.
-
-• **A.9 — Famiglie delle 12 armi ravvicinate corporative** e nuova Specializzazione Armi a Sega (Elettrosega CSB600, Chainreaper, Sbudellatrice) — implementata il 28/09.
-
-• **A.10 — Scudo delle Guardie Sacre**: 1d6+1 con la lama ritratta, 1d6+1+1d4 con la lama estratta; nell’app la lama si estrae e ritrae al tavolo — implementata il 28/09.
-
-• **A.11 — Specializzazioni delle 16 armi a distanza corporative** (Panzerknacker nei Fucili d’Assalto) — implementata il 28/09.
-
-• **A.12 — Specializzazioni delle altre armi corporative per analogia**; SA30 a dardi con solo \+1 VA (Danno calibrato) — implementata il 28/09.
-
-• **A.13 — Rainy Dayer** nelle Carabine, solo per il profilo di tiro — implementata il 28/09.
-
-• **A.14 — Batterie da 5 PM** (Rosso, Blu, Verde Molto rara; Bianco Leggendaria), scala di reperibilità fino a Leggendaria, disponibilità degli Artefatti Mistici — implementata il 28/09. Prezzi aggiornati il 02/10 a 1.000 crediti (Rosso, Blu, Verde) e 5.000 (Bianco), come nell’Armamenti §7.5, nella Magia §24.7 e nell’E\&L del 01/10.
-
-• **A.16 — Prove fisiche**: lista confermata; le penalità fisiche non toccano Potere né le Salvezze — implementata il 29/09.
-
-• **A.17 — Terrorizzato anche alle Prove Salvezza** durante lo Stato: risposta nel Manuale del Giocatore del 28/09 (§5.18); l’app già così — chiusa il 29/09.
-
-• **A.18 — Riserve integrate nelle armi**: alimentano soltanto le funzioni del proprio Artefatto, non pagano Incantesimi e non si prelevano (Magia §24.2 e §24.7, Doc del 01/10); «Lancia\!» non le offre più come fonte di PM — implementata il 02/10.
-
-• **A.19 — Contenitori Chroma**: acquistato pieno; trovato con i PM impostati dal giocatore — implementata il 29/09.
-
-• **A.20** — Prelievo dal Chroma Bianco: il prelievo di PM da un contenitore Bianco sintonizzato (con contatto, 2:1, nella riserva personale) è riservato a chi ha accesso alla magia (Addestramento Taumaturgo, Gradi taumaturgici o Talenti come Usufruitore di Magia); non basta essere coscienti. Ricaricare il contenitore richiede sempre l’Addestramento Taumaturgo. *Verificata il 09/10: la scheda lo indica a chi ha l’accesso senza essere Taumaturgo.*
-
-• **A.21 — Chroma Viola come fonte di Corruzione passiva**: fasce, frequenza ed esiti nell’app; il frammento si registra nell’inventario senza PM; il conteggio dell’esposizione arriverà insieme a Corruzione e Umanità — implementata il 28/09.
-
-• **A.22 — Senz’armi 1d4 più il bonus di FOR**; Arti Marziali 1d6; Lottatore il suo dado — implementata il 29/09.
-
-• **A.23 — Mano non dominante −4** salvo Ambidestro; con due armi solo la penalità della manovra — implementata il 29/09.
-
-• **A.24 — Incalzare**: Prova per colpire a −4 contro le Difese, spinta 2 Q, nessun danno — implementata il 29/09.
-
-• **A.25 — Copertura anche nel ravvicinato**: −2 / −4, Copertura Migliorata −4 / −6, Totale impedisce l’attacco — implementata il 29/09.
-
-• **A.26 — Superiorità numerica**: \+1 / \+2 / \+3 con 3–5 / 6–7 / 8+ attaccanti; campo nel pannello — implementata il 29/09.
-
-• **A.27 — Spazzata**: bersagli adiacenti fra loro e tutti entro la portata — implementata il 29/09.
-
-• **A.28 — Sbilanciare e Disarmare**: l’opposizione la sceglie il bersaglio prima del tiro — implementata il 29/09.
-
-• **A.29 — Magistrale**: bonus ordinari prima del moltiplicatore, quelli dopo l’Armatura no, solo la prima applicazione — implementata il 29/09.
-
-• **A.30 — Pesi mancanti «da definire»**, totale del carico parziale — implementata il 29/09.
-
-• **A.31 — Oltre il carico massimo**: Movimento 0 Q e −2 alle Prove fisiche — implementata il 29/09.
-
-• **A.32** — Confermati i 18 Talenti magici; Potere Mistico \+5 PM per acquisizione fino a tre; Potere e Recupero Mistico richiedono una riserva personale; Concentrazione: PS Volontà su CAR, \+3 di Concentrazione Migliorata solo per mantenerla; Concentrazione Operativa senza altri lanci, salvo Contromagia e Convertire Potere. *App: già conforme.*
-
-• **A.33 — Pistole corporative**: HG10, Bolter 10, P500, Nemesis 100, Belliger, Ronin 25 AP; Revolver commerciale — implementata il 29/09.
-
-• **A.34 — Oggetti della dotazione con scheda** (in tre passi). Il 29/09 Binocolo e Registratore audiovisivo con peso e prezzo (Equipaggiamento 0.3 §§4.2–4.3), e 28 delle 44 voci della dotazione (dotazione comune, abiti, luci, corredi di orientamento, arrampicata e sopravvivenza, tenda, maschera, comunicatori, ottiche, sorveglianza, ricarica del Kit trauma) con peso, prezzo, Qualità, PI ed effetti presi dalla scheda, anche nei personaggi già salvati. Il 05/10 le altre: oggetti delle dotazioni collegati alle schede del catalogo, NEC contati una volta; Qualità, PS e PI approvati per cassetta, attrezzi e corredi; scambio al 100% solo per gli armamenti ammessi. *App: applicata il 05/10.*
-
-• **A.35** — Acquisti iniziali: valore ceduto maggiore del prezzo (§2.16.29). L’eccedenza del valore degli armamenti ceduti sul prezzo di ciò che si prende torna in crediti: la procedura di acquisto mostra «Eccedenza restituita: \+N cr» e il saldo iniziale la comprende, anche quando gli acquisti si rifanno con «Modifica creazione». Esempio: cedendo un’armatura da 1.800 crediti per un coltello da 80 si ricevono 1.720 crediti. *Implementata il 09/10.*
-
-• **A.36** — Bonus degli oggetti solo quando si usano; per la stessa Prova vale il maggiore degli strumenti; valori di binocolo, corredi, abiti eleganti e kit trauma approvati. *App: già conforme.*
-
-• **A.37 — Ricarica**: doppiette e pompa una cartuccia per operazione (3 con Ricarica Migliorata); M310 e SA SG2001 a caricatore — implementata il 29/09.
-
-• **A.38** — Sette chiarimenti sull’attacco a distanza (Movimento Tattico e Fluido si sommano, Copertura, seconda Prova a −4, Mira Selettiva, Imbracciare, Bruciapelo Migliorato, Movimento Evasivo). *App: da applicare.*
-
-• **A.39, punti 1–3** — Anticipazione senza Addestramento (colonna «altri» −2), Colpo Elementale (PS solo per gli effetti secondari, per elemento) — implementata il 29/09. Punto 3, Rigenerazione: procedura completa (Magia sez. 25, E\&L del 01/10) — implementata il 02/10.
-
-• **A.40** — Carica fino alla Corsa massima: 3–6 Q −2/−4, da 7 Q −4/−6, danno ×2; tolto il limite di 12 Q. *App: da applicare.*
-
-• **A.41 — Sbilanciare e Disarmare con l’Abilità del mezzo dichiarato**, non il VA maggiore — implementata il 29/09.
-
-• **A.42 — Spazzata anche senz’armi**, con Corpo a corpo — implementata il 29/09.
-
-• **A.43 — AR complessiva** («AR totale, di cui magica»), non per zona del corpo: l’app già così; Magia sez. 7 già corretta nel Google Doc — implementata il 28/09.
-
-• **A.44 — Armatura, scudo ed elmetto a 0 PI**: niente AR né benefici; lo scudo Rotto non attacca né para; la rottura vale dal colpo successivo — implementata il 28/09.
-
-• **A.45 — Kit di rinforzo a 0 PI**: perde AR e proprietà, l’armatura sottostante resta com’è, PI separati — implementata il 28/09.
-
-• **A.46 — Riparazione strutturale** di armi, armature, scudi, elmetti e rinforzi: pulsante «Ripara», 1 ora, Prova di Tecnologia (−2 con strumenti improvvisati), esito scelto dopo il tiro, materiali al 5% del prezzo per PI recuperato tolti dai crediti — implementata il 28/09.
-
-• **A.47 — Oggetti senza PI**: nessun valore predefinito; campo facoltativo «PI definiti dal Direttore»; sanitari tracciati; esemplari identici raggruppati con «Danneggia uno» — implementata il 28/09.
-
-• **A.48 — Corazza Potenziata, Aura di Resistenza e Pelle di Rinoceronte si sommano**; Corazza Potenziata solo con una protezione Artefatto; le due Tecniche come interruttori al tavolo — implementata il 28/09. Resta la domanda A.53 sulle armature con AR magica propria.
-
-• **A.49 — Condizioni delle armi (§5.17)** come stato al tavolo, distinto dai PI: penalità al VA e blocco di «Attacca\!» quando l’arma non è utilizzabile — implementata il 28/09.
-
-• **A.50 — Ordine delle riduzioni dell’AR** (Perforante, Laser, Incendiato): nei dati dell’app e come promemoria in «Attacca\!» — implementata il 28/09.
-
-• **A.51 — Categorie di Prove degli Stati**: Percezione tolta da «vista», Assordato come valore a parte, nei promemoria la frase sull’azione esclusivamente visiva o uditiva che fallisce — implementata il 28/09.
-
-• **A.52 — Addestramenti a 76 punti e 10 Punti Abilità Liberi**: confermati da Davide; nessun cambio alle regole dell’app, l’avviso ai personaggi esistenti lo cita — implementata il 28/09.
-
-• **A.53** — Corazza Potenziata solo con armatura o scudo classificati come Artefatto e con almeno 1 PI; \+1 all’AR una sola volta. *App: già conforme.*
-
-• **A.54** — Revolver: 1 AzP riempie il tamburo, anche in parte; Ricarica Rapida gratuita una volta per Round. *App: già conforme.*
-
-• **A.55** — Caratteristica del bonus al danno per Abilità (pesanti: attacco con FOR, danno con INT), tetto \+1/+2/+3, prima dei moltiplicatori; granate e razzi esclusi. *App: già conforme.*
-
-• **A.56** — Basi dalla prima Classe (7/6/5/3, 122 punti), limiti al I Grado 12/9/7/5, 7 punti liberi per Grado. *App: già conforme.*
-
-• **A.57** — Punti liberi ricostruiti evento per evento, con i limiti del momento; i punti legali non si rimborsano; avanzamento bloccato finché la ricostruzione non è completa. *App: applicata il 09/10 con A.107 e A.108 (ricostruzione evento per evento con i limiti del momento, punti legali non rimborsati, salita bloccata finché manca qualcosa).*
-
-• **A.58** — Il \+1 di Corporazione resta nel calcolo e torna utile quando il limite sale; i modificatori circostanziali vengono dopo il limite. *App: già conforme.*
-
-• **A.59** — Depositare un Artefatto non interrompe la Sintonizzazione; una batteria depositata non alimenta. *App: da applicare.*
-
-• **A.60** — Otto schede; mani registrate; vista rapida delle protezioni; condizioni modificabili anche nella tab Abilità. *App: applicata; la vista rapida delle protezioni ha i tempi dal 09/10 (A.110).*
-
-• **A.61 — Capolavoro del Corazzaio**: \+1 a una sola Contromisura numerica scelta alla costruzione (Ignifugo, Termico, Isolante, Dissipante, Imbottita, Anticorrosivo); assente vale 1, con valore X diventa X \+ 1; non aumenta l’AR; Riflettente esclusa. Risposta del 02/10 (E\&L, decisione 4\) — implementata il 02/10.
-
-• **A.62 — Katana Ryūjin**: natura Naturale; attiva 1d8 \+ 1 \+ 1d6 con la proprietà Plasma, un solo colpo. Risposta del 02/10 (decisione 15\) — implementata il 02/10.
-
-• **A.63 — Esoscheletri**: NEC Rossi di formato dedicato al modello, con autonomia, ricarica e ricambio della scheda; sostituzione 1 minuto. Risposta del 02/10 (decisione 18\) — implementata il 02/10.
-
-• **A.64 — Moduli IAS**: NEC Blu IAS da 1.000 Lx \= 20 cariche da 50 Lx (Power Blink 2); ricambio 1.000 cr, ricarica 50 cr in 1 ora. Risposta del 02/10 (decisione 20\) — implementata il 02/10.
-
-• **A.65 — Dotazioni con più schede**: nuova scheda «Corredo agricolo Standard — Allevamento» (2 kg, 200 cr, CO, \+0); strumento musicale acustico o elettronico a scelta, senza sovrapprezzo. Risposta del 02/10 (decisioni 10 e 11\) — implementata il 02/10.
-
-• **A.66 — Corredo da cucina**: 30 minuti per fino a quattro persone, NEC Rosso da 500 Lx, 50 Lx a preparazione. Risposta del 02/10 (decisione 19\) — implementata il 02/10.
-
-• **A.67 — Modulo Blu del Gehemmapuker**: è il Modulo Blu del catalogo NEC, una voce sola; regola generale: niente travaso di energia fra NEC. Risposta del 02/10 (decisione 14\) — implementata il 02/10.
-
-• **A.68 — Interfaccia neurale standard**: 3.500 cr \+ 2.000 di installazione, 2 UMN, acquistabile. Risposta del 02/10 (decisione 21\) — implementata il 02/10.
-
-• **A.69** — Installazione, rimozione e reinstallazione degli impianti: clinica sicura, tempi, Prova, postazioni, tariffe, legame impianto–perdita–recuperi. *App: da applicare.*
-
-• **A.70 e A.92** — L’Umanità si recupera solo con una procedura: Riabilitazione a cicli di 7 giorni dopo una rimozione (500 cr e Prova, oppure clinica 1.000 cr per \+1), massimo 20\. *App: da applicare.*
-
-• **A.71 — Cartuccia chirurgica**: un solo consumabile, «Cartuccia chirurgica — set sterile monouso», 500 cr o 2.500 per cinque. Risposta del 02/10 (decisione 17\) — implementata il 02/10.
-
-• **A.72** — Anticipazione senza scala leggibile: confluita nella A.109. *Chiusa il 07/10.*
-
-• **A.73 — Formato dei nemici per il Tavolo del Master** (E\&L del 02/10, decisioni 5–9). Formato con valori già calcolati, comune all’app e al futuro bestiario. Campi nuovi: azioni per Round, Contromisure, Abilità rilevanti con VA, talenti e capacità speciali. Sei Caratteristiche nel bestiario, facoltative nell’app; un valore mancante non vale 0\. Parità d’Iniziativa DES → INT → 1d10. I nemici seguono la procedura dei PG per PV, Ferite e Menomazioni, senza Affaticamento. Incantesimi completi con «Lancia\!» e PM scalati; incompleti come promemoria. Passo obbligatorio; Corsa e Scatto 2× e 3× se mancano; «non consentito» è diverso da «mancante». Formato implementato il 02/10 su main; plancia del Tavolo del Master implementata il 02/10 sul branch.
-
-• **A.74 — Rituale di Rigenerazione**: VA del Canale \= Rituali; dopo il Magistrale ripartizione libera entro i limiti; Rituale diretto solo PM personali; versioni per Ritualista. Risposta del 02/10 (decisioni 1, 2, 12, 13\) — implementata il 02/10.
-
-• **A.75 — Batterie oltre i 5 PM**: supporto base per tutte (0,2 kg, Comune, PS 10, 3 PI), anche Matrice. Risposta del 02/10 (decisione 16; Equipaggiamento §10.1) — implementata il 02/10. Poi confermate, insieme alla A.74, le risposte su Canali, Rituali, Ritualista e batterie con supporto base: l’app era già conforme.
-
-• **A.76** — Sanguinante: perdita iniziale una volta per attacco se almeno 1 danno supera l’AR; poi all’INI della fonte; fra più sanguinamenti vale il maggiore. *App: quasi conforme.*
-
-• **A.77** — Perforante riduce l’AR non magica totale a ogni applicazione di danno, senza erosione. *App: già conforme.*
-
-• **A.78 — Attacco con VA finale 20 o più**: gli attacchi e le Difese attive si tirano anche con VA finale 20 o più (salvo le eccezioni esplicite, come Colpo Elementale); Magistrale con 1 a VA 20 e con 1–2 da VA 21; con Successo Magistrale Migliorato 1–2 a VA 20 e 1–3 da VA 21; il 20 resta Maldestro. Le altre Prove seguono il §1.7. Risposta del 02/10 (E\&L, decisione 3\) — implementata il 02/10.
-
-• **A.79** — Umani costruiti come PG (livelli 2/5/8, media del dado arrotondata per eccesso, 7 punti); le etichette non danno PV, danni o Azioni; Eretico senza poteri oscuri. *App: da applicare.*
-
-• **A.80** — Si indossano da soli soprabiti, mantelli, Tabardo consacrato e Sottogiacca IES, con il profilo autonomo AR 1, Leggera, FOR 3 e le proprietà della scheda; su un’armatura compatibile valgono come rinforzo; togliendo l’armatura un rinforzo strutturale resta montato senza effetto. *Implementata il 03/10.*
-
-• **A.81** — Pelle di Rinoceronte: \+3 solo nelle Prove di Immobilizzare, Sbilanciare, Disarmare e Incalzare, e ad Atletica per uno sforzo di forza; mai a Difese o all’Abilità dell’arma. *Implementata il 03/10.*
-
-• **A.82** — Onda Interiore: dado della Disciplina e del Grado più il bonus di SAG (tetti \+1/+2/+3), non FOR; il \+2 Ravvicinato di Pelle di Rinoceronte non si applica. *Implementata il 03/10.*
-
-• **A.83** — REP Epica: ricerca con Oratoria −6, se il Direttore ammette una possibilità concreta; Batterie Matrice colorate Epiche, Bianche Leggendarie. *Implementata il 03/10.*
-
-• **A.84** — Regime di lancio dei nemici (Taumaturgo, altro utilizzatore, capacità specifica) con le due colonne di modificatori. *App: da applicare.*
-
-• **A.85** — Bonus di SAG al danno magico: calcolato per gli umani, dichiarato nel profilo per le creature, mai due volte. *App: da applicare.*
-
-• **A.86** — Granate e razzi: danno completo della munizione, senza bonus di Caratteristica. *Implementata il 03/10.*
-
-• **A.87** — Artefatti del gruppo già assegnati nei file dei PG, niente deposito comune: Lucas ha Guanti, Pietra, una Batteria Matrice e due Schegge; Dimitri Orlav una Batteria Matrice e due Schegge. *(Ricontrollato il 16/11 sull’istantanea del 14 novembre: è ancora così — Lucas ha Guanti indossati, Pietra, una Batteria Matrice e due Schegge; Dimitri una Batteria Matrice e due Schegge.)* *App: nessuna modifica (residui: A.112).*
-
-• **A.88** — Individuare a Concentrazione: 10 min / 30 min / 1 h / 2 h / 4 h per le versioni 6–8 / 9–11 / 12–14 / 15–17 / 18\. *Implementata il 03/10.*
-
-• **A.90 — Punti Abilità liberi**: vale il Manuale del Giocatore del 03/10 sera, 7 punti alla creazione e a ogni Grado (livelli 4, 8, 12, 16, 20); l’E\&L con 5 è superato. Chi ne ha assegnati 5 per Grado ha 2 punti da assegnare per evento («Assegna»); chi ne ha 10 ne ha 3 in eccesso per evento («Togli»). Nessun punto cambia da solo — implementata il 04/10.
-
-• **A.91** — Scheda unica del veicolo condivisa fra PG e Tavolo, proprietario distinto dal conducente. *App: da applicare (registro sul server).*
-
-• **A.93** — Corpi cyborg completi non disponibili ai PG. *App: già conforme.*
-
-• **A.94** — Interfaccia SIN: standard 5.500 cr e 2 UMN, CYBERTRONIC 7.000 cr e 1 UMN. *App: già conforme.*
-
-• **A.95, A.96 e A.97** — Via il −2 per il volo e il \+2 per la taglia; Boss solo come etichetta; calibrazione solo come «Stima sperimentale, da verificare al tavolo», senza costo universale dei moduli. *App: da applicare.*
-
-• **A.98** — Rune e Tatuaggi: sviluppo futuro, nessuna sezione nell’app. *App: da togliere la sezione vuota.*
-
-• **A.99** — Prevale la decisione approvata più recente; il Prontuario è solo un riassunto. *App: nessun codice.*
-
-• **A.101** — ASA Scout MK4 approvato (valore 202.520 cr, M606, copriruote, energia, aria, riparazioni, dotazione sanitaria). *App: applicata il 05/10.*
-
-• **A.102** — Autovettura civile: REP Comune. *App: applicata il 05/10.*
-
-• **A.103** — Esempio del §4.3 generico; lo Scout resta Corazzato 1\. *App: applicata il 05/10.*
-
-• **A.104** — Per le collisioni conta l’andatura attuale, distinta da quella scelta per dopo. *App: applicata il 05/10.*
-
-• **A.105** — Veicolo nel Tavolo del Master: si muove all’INI del conducente, senza INI propria. *App: da applicare, dopo A.91.*
-
-• **A.106** — Penombra −2, luce molto scarsa −4, buio come Accecato; Visione notturna e Visione Perfetta con i loro limiti. *App: da applicare.*
-
-• **A.107** — Correzioni retroattive dell’avanzamento: un livello passato si corregge con «Correggi» accanto al livello nella Progressione (stessa procedura di «Sali di livello», con le scelte di allora e le regole di quel livello). I livelli successivi si ricalcolano in ordine: i punti liberi che non aumentano più il VA al momento della loro assegnazione si riassegnano nello stesso livello con «Assegna», con i limiti di allora; gli altri restano. Prima di confermare l’app dice quali punti andranno riassegnati e quali tornano validi; se un livello successivo diventerebbe irregolare (per esempio le quote degli incantesimi) la correzione non si conferma. La salita di livello resta bloccata finché le riassegnazioni non sono finite. Un punto legittimo quando assegnato non si restituisce per un aumento automatico successivo. *Implementata il 09/10.*
-
-• **A.108** — Punti Abilità liberi in eccesso: 7 a ogni Grado, compreso il primo. Un personaggio con più punti (la vecchia regola dei 10\) non può salire di livello finché non li toglie: l’avviso in cima alla scheda dice quanti e dove, e «Togli» (anche «Togli da qui» per ogni evento) fa scegliere al giocatore le assegnazioni da togliere; l’app non sceglie da sola e indica soltanto quali punti già non aumentano il VA. I punti tolti non si riassegnano; poi la cronologia si ricalcola come A.107. I punti mai assegnati della vecchia regola non sono nel file: non c’è nulla da togliere. I PG del gruppo sono già tutti a 7 \+ 7\. *Implementata il 09/10.*
-
-• **A.109** — Anticipazione, regola comune e 32 aspetti: per ogni lancio si anticipa un solo aspetto, di un solo gradino; i PM base raddoppiano e la Prova di Potere è obbligatoria, di una categoria più difficile, salvo i Talenti; il resto resta invariato. I 32 aspetti hanno il gradino della tua risposta dell’08/10. In «Lancia\!» il riquadro dell’Anticipazione mostra il valore anticipato con le condizioni; nessun aspetto resta «da definire al tavolo». *Implementata il 09/10.*
-
-• **A.110** — Indossare e togliere protezioni: nella tab Combattimento ogni protezione mostra i suoi tempi — scudo 1 AzP per impugnarlo e 1 per riporlo, elmetto 1 / 1 AzP, armatura Leggera 1 / 1 minuto, Media 5 / 1, Pesante 10 / 5, soprabiti, mantelli e Tabardo consacrato 1 / 1 AzP, Sottogiacca IES 1 / 1 AzP (prima si toglie l’armatura che la copre), rinforzi strutturali leggeri 1 / 1 minuto e pesanti 5 / 5 sull’armatura tolta. Esoscheletri e servoassistite seguono la procedura della scheda. Con «Indossa» e «Togli», durante il Round di uno scontro si cambiano solo le protezioni in AzP (l’app ricorda l’AzP spesa); per armature e rinforzi avvisa che servono minuti. I benefici valgono solo a protezione indossata; restano il limite di un rinforzo, le compatibilità e la A.80. *Implementata il 09/10.*
-
-• **A.112** — Artefatti del gruppo, residui: confermati i valori dei file di Lucas e Dimitri (Guanti 10, Pietra della Vigilanza 10, due Batterie Matrice da 10, quattro Schegge da 5), artefatti carichi. *Nessuna correzione; chiusa il 09/10.*
-
-• **A.113** — Veicoli: il Direttore modifica tutti i veicoli della campagna, anche quelli personali dei PG (la proprietà resta al PG); senza server il veicolo condiviso si consulta in sola lettura nell’ultima copia, con data, revisione, proprietario e conducente. Nomi Corpo principale, Propulsione, Motore verificati. *Approvata il 15/10, implementata il 16/10.*
-
-• **A.114** — Chip del Processore e strumenti: il bonus del chip attivo si somma al miglior modificatore degli strumenti (resta un solo modificatore degli strumenti, §1.4.1); con altri benefici tecnologici equivalenti sulla stessa Prova (impianti, elmetti, esoscheletri, Equipaggiamento §7.1) vale il maggiore. Esempio: Medicina 10, chip \+2 e Kit trauma \+2 → 14\. Restano un chip attivo, 30 minuti, un’attivazione ogni 24 ore e nessun beneficio ad attacchi, Difese, manovre e magia. Superata l’ipotesi del maggiore fra chip e strumenti. *Implementata il 09/10.*
-
-• **A.115** — Capacità dei nemici: la mini-scheda mostra la descrizione completa e, solo se il profilo li dà, Prova, costo in Azioni, risorsa, limiti d’uso e «passiva»; con usi limitati c’è il contatore con «Usa» (a zero avvisa e lascia decidere il Direttore); dove mancano i dati resta il solo testo. *Approvata il 15/10, implementata il 16/10.*
-
-• **A.116** — Luce e attività pratiche visive: con luce non sufficiente la tab Abilità mostra «Richiede la vista» per ogni Abilità; accese di base Pilotare, Tecnologia, Medicina, Scienza, Sopravvivenza e Atletica (gli esempi della risposta), spente le altre; il Direttore le corregge. Con la casella valgono −2 in penombra, −4 con luce molto scarsa e −8 nel buio (impossibili le attività solo visive), una volta sola: niente doppioni con attacchi e Difese, che la ricevono sempre, né con Accecato; una visione che copre il bersaglio elimina −2/−4. Mai su Potere e Prove Salvezza; Percezione mantiene il suo valore visivo a parte. La luce viene dalla mappa se c’è, altrimenti si sceglie a mano. *Implementata il 09/10.*
-
-• **A.119** — Ammalato: sei intensità selezionabili, con penalità −1, −2, −4, −6, −8 e −10 a tutte le Prove di Abilità, attacchi e Difese compresi, mai alle Prove Salvezza. L’app mostra «Ammalato 3 — penalità −4»; cambiare intensità sostituisce la penalità, non la somma. Niente durata generica di 1+1d3 Round, niente contagio, progressione o cure automatiche (Manuale del Direttore). Vale per i PG (scheda) e per i nemici (plancia, anche nei loro attacchi e nelle loro Difese). *Implementata il 09/10.*
-
-• **A.120** — Bonus e malus temporanei di COS e SAG non cambiano i PV e i PM massimi né quelli attuali; valgono per le Prove e i bonus pertinenti. *App: era già così; confermata il 07/10.*
-
-• **A.121** — Riuso del codice della tua app per la mappa: domanda ritirata, la mappa è scritta da zero. *Ritirata il 06/10.*
-
-• **A.122** — Aiuto-master: nella lista «Tablet collegati» del Direttore, accanto a ogni tablet, «Rendi Aiuto-master» e «Revoca»: uno solo alla volta (darlo a un altro lo toglie al precedente), per lo scontro in corso; si perde alla fine dello scontro o al riavvio del server. Il tablet scelto vede «Sei Aiuto-master» e il pulsante per muovere il PG del turno attivo, con gli stessi limiti del giocatore (movimento, quadretti, muri, porte, quadretti occupati, nebbia); vede la mappa come i giocatori, senza pedine nascoste né note del Direttore. Il server rifiuta ogni altra modifica (schede, risorse, Iniziativa, scena, nebbia, luci, nemici) con un messaggio chiaro; gli spostamenti eccezionali restano al Direttore. Ogni movimento compare nel registro dello scontro come «mosso da Aiuto-master (tablet di …)». Il giocatore di turno continua a muovere il proprio PG dal suo tablet. *Implementata il 09/10.*
-
-• **A.123 — Iniziativa sulla mappa**: vale il Manuale del Giocatore (Mod DES \+ Mod INT \+ 1d10; parità per DES, poi INT, poi scelta fra alleati o 1d10 fra avversari); il d12 della tua app è del sistema precedente — deciso il 06/10.
-
-• **A.125** — Porte e illuminazione: applicate alla mappa il 07/10. Veicoli: si muovono all’Iniziativa del conducente (A.105) — *risposta di Marcello del 07/10*. Vecchie etichette numeriche delle luci: superate dal sistema semplice — *decisione di Marcello del 07/10*.
-
-• **A.126** — Ingombro e campo Spazio (1 Q, 2 × 2, 3 × 3\) nel profilo dei nemici, non dedotto dalla Taglia: la pedina usa quello; i nemici già scritti non cambiano. Con l’integrativa A.126–A.138: il cono di una creatura grande parte da un quadretto periferico del lato d’emissione, scelto con un tocco, e i suoi quadretti restano fuori. *Approvata il 15/10, implementata il 16/10.*
-
-• **A.129** — Movimento diviso: il Passo si divide; Corsa e Scatto sono un blocco unico. *Applicata alla mappa il 07/10*; aggiornata dalla A.136.
-
-• **A.131** — Immagine dei nemici sulle pedine: campo facoltativo nella scheda del nemico; senza immagine la pedina mostra le iniziali. *Implementata il 06/10.*
-
-• **A.132** — Uno Stordito non fa Attacchi di Opportunità. *Risposta di Marcello del 07/10 (decisione del gruppo, puoi rivederla); applicata alla mappa il 07/10.*
-
-• **A.133** — Portata delle creature grandi: misurata dal bordo dell’ingombro, non dal centro; 2 × 2 o 3 × 3 non danno portata 2 o 3 da soli. Zone di controllo e AdO solo con la «Mappa semplice» spenta. *Era già così nell’app; confermata il 16/10.*
-
-• **A.134** — Diagonale rasente allo spigolo di un muro: sì, se uno dei due quadretti ai lati è libero; se sono murati entrambi resta vietata. *Risposta di Marcello del 07/10 (decisione del gruppo, puoi rivederla); applicata alla mappa il 07/10.*
-
-• **A.135** — Ricarica e carichini: le armi caricate direttamente (revolver, doppiette, fucili a pompa e a pallini a serbatoio, archi e balestre) inseriscono fino a 2 cartucce per AzP, 4 con Ricarica Migliorata; niente più tamburo pieno in 1 AzP. Carichini nel catalogo: Ricarica per Tamburo (6 colpi, 100 cr) e per Serbatoio (6 colpi, 150 cr); nella scheda «Prepara» (fuori combattimento, 1 minuto ogni 50 colpi) e «Usa carichino» (fino a 6 colpi in 1 AzP). Ricarica Rapida: una sola ricarica gratuita per Round. *Implementata il 09/10.* Peso, Qualità, Integrità e Reperibilità dei carichini: vedi la A.151.
-
-• **A.136** — Corsa o Scatto dopo un Passo già cominciato e Prova facoltativa di Atletica: sulla mappa il Passo cominciato diventa Corsa o Scatto, con i quadretti fatti contati. In «Attacca\!» (PG e nemici, anche per il bersaglio che ha corso o scattato), senza Prova valgono Corsa −2/−2 e Scatto −6/−4; con la Prova l’esito sostituisce le penalità: Successo Magistrale 0/−6 e −2/−8; Successo 0/−4 e −4/−6; Fallimento −4/0 e −8/−2; Maldestro −6/0 e −10/0. Se il movimento è stato fatto sulla mappa, «Attacca\!» propone la Prova da solo. Le penalità valgono anche in mischia, salvo la Carica che ha le sue; il Movimento Evasivo è escluso. *Implementata il 09/10.*
-
-• **A.137** — Raggio di un’Area sulla griglia: a quadretti, con la diagonale a 1 Q (raggio 1 \= 3 × 3 Q, 2 \= 5 × 5, 3 \= 7 × 7). *Era già così nell’app; confermato il 09/10.*
-
-• **A.138** — Forma del Cono: parte dal centro del quadretto di chi lo usa e si allarga da zero fino all’ampiezza finale; un quadretto è colpito se è coperto per almeno metà; il quadretto d’origine è escluso. *Implementata il 09/10.* Origine per le creature grandi: vedi A.126 (16/10).
-
-• **A.139** — Porta «adiacente» in diagonale: sì, se la porta è raggiungibile dal proprio lato, 1 AzP e una mano libera, mai attraverso una parete. *Era già così nell’app; confermato il 09/10.*
-
-• **A.140** — Copertura sulla mappa: cinque linee dal centro del quadretto di chi attacca al centro e ai quattro angoli del bersaglio; 0 bloccate nessuna, 1–2 Leggera, 3–4 Media, 5 Totale; il solo contatto con un angolo non blocca; il Direttore corregge per altezza e postura. *Era già così nell’app; confermato il 09/10.* La tabella automatica per tipo e altezza dell’ostacolo resta rinviata.
-
-• **A.141 e A.144** — Creature in mezzo alla linea di tiro: una creatura interposta dà solo −2, una volta sola qualunque sia il numero, senza seconda Prova; il bersaglio ingaggiato resta al §5.10 (−4 e seconda Prova) e la stessa creatura non conta due volte. *Implementata il 09/10: la linea di tiro propone «Creatura interposta» in «Attacca\!».*
-
-• **A.142** — Fin dove vedono i PG: in piena luce nessun limite fisso, in Penombra 10 Q, con Luce scarsa 5 Q, al buio completo nulla oltre la propria pedina; conta la luce della zona osservata. *Implementata il 09/10 nella nebbia automatica.*
-
-• **A.143** — Sensi speciali e nebbia: Visione notturna 80 Q in penombra e luce scarsa, Visione termica 40 Q anche al buio, Vista Felina 20 Q nel buio naturale; aprono la nebbia entro la loro portata, pareti e porte chiuse li fermano. *Implementata il 09/10: il Direttore li accende sulla pedina («Sensi speciali…»).*
-
-• **A.145** — Azioni sui veicoli: tabella da consultare nella scheda del veicolo e nella plancia, con le righe generali e le categorie della risposta; l’app non conta le Azioni. *Approvata il 15/10, implementata il 16/10.*
-
-• **A.146** — Veicoli e AdO: regola registrata e richiamata nella tabella delle azioni; la mappa non propone da sola l’AdO dei mezzi (lo decide il tavolo). *Approvata il 15/10, implementata il 16/10.*
-
-• **A.147** — Veicoli a 45°: sulla mappa si girano di 45° (otto orientamenti, con Maiusc un passo fine); l’ingombro si controlla nell’orientamento effettivo; girare non consuma quadretti; Sterzata stretta, Inversione rapida e rotazione sul posto come promemoria. *Approvata il 15/10, implementata il 16/10.*
-
-• **A.148** — Copertura verso e da un token in volo: Copertura e creature interposte valgono anche in volo quando proteggono davvero dalla traiettoria; finché non ci sono le altezze l’app le propone come a terra e il Direttore le corregge. *Implementata il 09/10.*
-
-• **A.149** — La quota conta per la portata: la distanza è la maggiore fra quella orizzontale e la differenza di quota (diagonale 1 Q); salire da dentro a fuori portata può provocare un Attacco di Opportunità. *Era già così nell’app; confermato il 09/10.*
-
-• **A.150** — Un token in volo si vede da lontano: no, valgono le regole dei bersagli a terra (luce, sensi, ostacoli); il Direttore può rivelarlo a mano. *Implementata il 09/10.*
-
-• **A.151** — Carichini: Ricarica per Tamburo 0,1 kg e per Serbatoio 0,2 kg a vuoto, Qualità Comune, PS Integrità 10, 2 PI, Reperibilità Comune; pesano nel carico, le cartucce si contano una volta sola; a 0 PI avviso di «Rotto». *Approvata il 09/10, implementata il 13/10.*
-
-• **A.152** — Colt Hammershot: proiettili da pistola, il catalogo era già corretto; tolta dalla scheda la vecchia riga «tamburo pieno in 1 AzP» (vale la A.135). Il file di Michele Giorgetti lo corregge Marcello con «Modifica master». *Approvata il 09/10, implementata il 13/10.*
-
-• **A.153** — A Terra e Copertura a distanza: si sommano (−2 senza Copertura, −4 Leggera, −6 Media); il «Calcolo» mostra le due righe. *Era già così nell’app; confermata il 13/10.*
-
-• **A.154** — Cartuccia del decontaminante: 0,5 kg, fissi finché è nell’inventario, nel carico. *Approvata il 10/10, implementata il 13/10.*
-
-• **A.155** — Pergamene standard: 0,1 kg, Qualità Comune, PS Integrità 10, 1 PI per esemplare, per tutti i Gradi e anche per quelle create con «Crea consumabile»; a 0 PI non si attivano (avviso), la distruzione non libera l’incantesimo. *Approvata il 10/10, implementata il 13/10.*
-
-• **A.156** — Infusione fallita: si perdono tutti i PM (lavoro 3 × Grado più quelli da sigillare) e i reagenti. *Era già così nell’app; confermata il 13/10.*
-
-• **A.157** — «Rituale: non consentito» vieta solo il lancio come Rituale: l’infusione è permessa e in «Crea consumabile» c’è una nota con la spiegazione al posto dell’avviso di dubbio. *Approvata il 10/10, implementata il 13/10.*
-
-• **A.158** — CyberArma: due configurazioni nel catalogo con una sola voce d’inventario (fra Armi e Artefatti): modello originale (Grado I, SnT 1, Non comune, PS Integrità 12, 4 PI, 0,5 kg, Epica, senza prezzo) e con Batteria Verde da 5 cariche (Grado II, SnT 2 contata una volta, 0,7 kg, una carica per attivazione). Uso per Classe nei dati: Custode 1 PM per 15 Round e \+1 danno; Tecnomante 2 PM per 10 Round, 1d8 Magico; altre Classi solo con la batteria e a −2 (avviso, non blocco). «Attiva» scala il costo; scheda e «Attacca\!» mostrano i Round che restano. Costruzione come testo. Nel catalogo anche la Custodia del Silenzio (§7.25.1). *Approvata il 13/10, implementata il 15/10.* Vedi la A.166.
-
-*La prima parte era nell’app dal 15 ottobre* (approvata il 14/10): oltre Grave il PG restava a −8, sveniva e aveva il contatore di Round pari alla COS, che calava a ogni Round e per ogni nuova Ferita; «Stabilizza» riportava a Grave e le vie approvate erano un promemoria di solo testo; Cartuccia Stabilizzante nel catalogo (2.000 cr, MR). Quella decisione superava la provvisoria di Marcello del 13/10; i nemici restavano invariati in attesa della A.164. **La voce completa è in testa a questa sezione, con la data del 13 novembre.**
-
-• **A.161** — PX della partita: tab «PX della partita» nel Tavolo del Direttore, solo sul PC del master. Voti, bonus, incontri (principale al 100%, gli altri al 50%, con il correttivo per il numero di PG) e premio di fine Atto; componenti separate, totale suggerito e totale finale modificabile; «Assegna PX della partita» aggiorna i PG presenti e scrive la Modifica master. L’app non assegna mai da sola: salvare o ricalcolare non assegna, e correggere una partita applica solo la differenza. Ci sono archivio delle partite, riepilogo con esportazione CSV e impostazioni di campagna (Atto, PX iniziali, abbinamenti giocatore–PG). I fattori stanno in un file modificabile. *Approvata e implementata il 16/10.* Vedi la A.168.
-
-• **A.168 — Fasce dei Titoli per i PX.** Ricevuta (18/10): Principiante 1–3 ×1, Inesperto 4–7 ×2, Esperto 8–11 ×3, Veterano 12–15 ×4, Eroe 16–19 ×5, Leggenda 20+ ×6. Nel calcolatore il Titolo di una partita dipende dai PX che il PG aveva **prima** di quell’assegnazione, così il premio della partita stessa non lo sposta di fascia nelle correzioni; il Direttore può cambiarlo a mano. *Implementata il 18/10.* Vedi la A.170.
-
-• **A.160** — Avversari costruiti come PG: 7 punti Abilità liberi alla creazione e a ogni Grado; il «5» del §5.2 era un refuso, corretto dalla 0.4 in poi. *Era già così nell’app; verificata il 16/10.*
-
-• **A.162** — Integrità degli oggetti in tre stati: ordinaria (PS Integrità e PI), **Indistruttibile** (dicitura visibile, il danno non toglie PI e non rompe) e «da definire» (dato mancante, segnalato). Scrigno del Primo Giuramento indistruttibile, con la regola che il danneggiamento non lo apre; non si estende a Sigilli, contenuto o altri Artefatti. *Approvata e implementata il 16/10.*
-
-• **A.163** — Contenitori del Silenzio (Custodia, Zaino, Cofanetto) nel catalogo, con «Schermatura attiva / inattiva» e le due caselle «chiuso» e «contenuto riposto»: vale per qualunque contenuto, senza elenchi di oggetti; l’app non calcola la Corruzione e ricorda che la schermatura non la elimina. *Approvata e implementata il 16/10.*
-
-• **A.164** — Morente anche per i nemici: oltre Grave Svenuto, −8 e contatore pari alla COS intera all’ingresso (0 PV da soli non bastano). Il primo calo arriva dopo un Round completo, alla stessa Iniziativa dell’ingresso (vale anche per i PG); le Ferite in eccesso del colpo d’ingresso non tolgono Round, ogni Ferita successiva ne toglie 1; a 0 l’app avvisa senza bloccare. «Stabilizza» riporta a Grave. Senza COS l’app la chiede, non la deduce e non dichiara morto. *Approvata e implementata il 16/10.*
-
-• **A.166** — CyberArma: Abilità sempre Armi da mischia; la manifestazione è un campo a parte e da essa dipendono famiglia, Specializzazione e Manovre (lama lunga → Spade, frusta → Armi flessibili, ascia → Asce, lancia → Armi inastate). Il Custode sceglie la forma; gli altri usano quella del progetto (lama lunga), modificabile solo come modifica del manufatto. Una sola Specializzazione. *Approvata e implementata il 16/10.*
-
-• **Manuale dei Mostri 0.23 — catalogo completo.** Le regole comuni (cap. 4\) e le «Regole operative del catalogo» (cap. 8\) coincidono con le decisioni già approvate (Morente A.159 e A.164, spazio A.126 e A.133, Abilità non riportate A.116, 7 punti A.160, dato assente ≠ 0): nessuna automazione nuova. Le schede mostrano GS e PX del manuale come dato informativo (A.161). Nel bestiario sono pronte da usare **tutte le 215 creature del cap. 8**, più la Covata (nove caste) e il Lorath del cap. 7: 225 profili dal manuale, con Spazio, portata per attacco e capacità con i parametri del manuale. Le creature senza mente, con «Volontà —», hanno la Salvezza assente in modo esplicito, mai uno 0\. In tutto il bestiario dell’app ha **367 schede**: 142 nostre e 225 dal manuale, riconoscibili dalla riga «Fonte: dal Manuale dei Mostri v0.23» nella mini-scheda della plancia e nella pagina online, che ha anche i filtri per categoria e per grado. *Implementato fra il 16 e il 18/10.* Vedi A.167, A.169 e A.171.
-
-• **A.165** — A.109 nel Doc E\&L: rettifica editoriale, la A.109 è risolta e le note di sospensione sono state aggiornate; l’app mantiene i 32 gradini dell’08/10. *Chiusa il 16/10.*
-
-• **Stati 1/11–11/11** — Sintesi operative approvate il 05/10: il testo di ogni sintesi è nell’app (tooltip degli Stati), con i modificatori allineati. Cambiati: A Terra (striscia 3 Q; a distanza −2 a chi lo attacca), Svenuto (cade A Terra anche nei valori), Accecato (la penalità di luce non si somma; il −8 vale anche per le attività che richiedono la vista). Già uguali nei numeri: Assordato, Avvelenato, Immobilizzato, Incendiato, Rallentato, Sanguinamento, Stordito, Terrorizzato. Gli Stati dei nemici pesano ora sui loro attacchi e sulle loro Difese. *Implementate il 09/10.* Vedi anche la A.153.
-
-• **Manuale dell’Equipaggiamento 0.6** — 18 voci nuove nel catalogo (navigatore inerziale, decontaminante ed erogatore, estintori, nastro tecnico, toppe pressurizzate, applicatore di schiuma, tuta extraveicolare, riparo pressurizzato, calzature magnetiche, modulo di cifratura, rilevatore di sorveglianza, utensile laser, analizzatore alimentare) con i valori del manuale; righe nuove della tabella NEC; dosi, toppe, test e aria come risorse a consumo; la cifratura dei comunicatori richiede il modulo (§4.1). *Implementato il 09/10.* Vedi la A.154.
-
-• **Magia §27 — Artefatti consumabili** (Doc dell’08/10) — le sei pergamene del campionario si comprano dal catalogo (Artefatti, sottocategoria Consumabili) al prezzo di vendita della tabella, con SnT 0, senza sintonizzazione e con i PM sigillati, che non diventano una riserva del personaggio. Nella scheda si vedono gli esemplari posseduti e «Usa»: l’oggetto si consuma solo ad attivazione completata, l’attivazione interrotta non consuma nulla, e un effetto a durata (Arma Mistica, Armatura Mistica, Individuare) va fra gli incantesimi in corso. In combattimento si usano le pergamene da 1 AzP; Esorcizzare Corruzione (10 minuti) e Rigenerazione (3 ore) fuori dal combattimento. «Crea consumabile» segue le tre fasi del §24 richiamate dal §27.2: Incantesimo e versione conosciuti (o conosciuti da chi è presente), Officiante con Ritualista Minore o Maggiore, pergamena standard o altro supporto con costo e complessità della ricetta, progetto già disponibile o Prova di Artefatti, supporto con Tecnologia, infusione con Rituali e Canali; reagenti e PM del §27.2 (3 × Grado più i PM sigillati, Magistrale che dimezza lavoro e reagenti), esiti e nuovi tentativi del §24. Il giocatore indica gli esiti; l’app scala crediti e PM e mette il Consumabile nell’Inventario (per esempio Arma Mistica 3 con infusione Magistrale: 50 crediti e 5 PM). La scheda stampata elenca i Consumabili nel foglio Inventario con Incantesimo, versione, attivazione ed esemplari. *Implementato il 09/10.* Vedi A.155, A.156 e A.157.
-
-• **Manuali del 12/10 (Giocatore 0.48, Armamenti 0.61)** — Guanti da Combattimento Mistico: oggetto insieme Arma e Artefatto, si indossano senza occupare le mani. *Implementati il 13/10.* La CyberArma (§7.25) aspetta la A.158.
-
-• **A.167 — Ingombri rettangolari e orientamento delle creature.** Risposta del 18/10, implementata il 18/10. Il campo Spazio delle schede ora porta larghezza × lunghezza, anche oltre il 3 × 3 Q e fino a 12 per lato: la mappa disegna la sagoma vera (una 3 × 10 Q occupa 30 Q, non 100\) e la gira anche di 45° con le frecce, i pulsanti ↺ ↻ o la voce «Ruota». Ingombro, Zone di Controllo, luce, selezione a riquadro e posizione iniziale seguono i quadretti veri, non il rettangolo che li contiene. Se la posizione non è valida l’app avvisa e lascia «Procedi comunque». La Taglia si legge dalla scheda e non si deduce più dall’ingombro. Restano fuori solo le pedine quadrate molto grandi (4 × 4, 6 × 6 Q), che non ruotano: un rombo non è una sagoma del manuale. Vedi la A.172.
-
-• **A.169 — Abilità del bestiario, VA degli attacchi e Prove di Caratteristica.** Risposta del 18/10, implementata il 18/10. Le Abilità delle creature usano i nomi del catalogo (Diplomazia → Oratoria; «Mischia», «Lancio» e «Guerra» → Armi da mischia, da lancio e da guerra). «Tiro naturale», «Attacco a distanza» e «Prove di FOR» non sono Abilità: il VA resta nel rispettivo attacco (Aghi 10, Roccia 13, Dardo d’acqua 14, Dardo d’aria 16\) e l’Elementale della Terra ha «Prova di Forza: 15» come dato a parte, senza sommare il modificatore due volte.
-
-• **A.170 — Soglie, Atti e fattori di calcolo dei PX.** Risposta del 18/10, verificata il 18/10. Il calcolatore già faceva tutto come confermato: soglie cumulative dei livelli 1–20, limiti e premi degli Atti, correttivo max(0,5; 1 \+ 0,1 × (4 − n)), voti × Titolo con il raddoppio dei soli voti nelle partite lunghe, bonus eccezionale × Titolo senza raddoppio, incontri e premi degli Atti senza Titolo, Titolo posseduto all’inizio della partita, nessun fattore per l’equipaggiamento. L’unica aggiunta: se i presenti hanno già ricevuto il premio dello stesso Atto in un’altra partita, l’app **avvisa** (non blocca).
-
-• **Manuale dell’Equipaggiamento 0.8, §§10.8–10.11** — Pergamene, CyberArma, Hachimaki della Disciplina Interiore e Tomo dei Guardiani nel catalogo degli Artefatti, con i valori del manuale. Nessun personaggio, nemico o scontro salvato possedeva l’Hachimaki o il Tomo: sono in catalogo come oggetti acquistabili, senza assegnarli a nessuno. L’Hachimaki abbassa di 1 PM il costo delle Tecniche Interiori quando è indossato **e** sintonizzato, e la scheda mostra sempre la base e la riduzione («4 PM della scheda − 1 per Hachimaki»); indossato ma non sintonizzato, l’app avvisa e il costo non cambia. Il Tomo ha peso, SnT e Integrità «da definire», come scrive il manuale, e il carico risulta parziale. *Implementato il 19/10.* Una domanda aperta: A.173.
-
-• **A.171 — Portata degli attacchi degli Sciami.** Risposta del 21/10, implementata il 22/10. Il formato accetta ora la portata **0 Q**: un attacco a portata 0 colpisce soltanto un bersaglio con cui l’attaccante condivide almeno un quadretto occupato, e un bersaglio soltanto adiacente non è valido. I sei Sciami del bestiario sono a 0 Q e la nota di ripiego è tolta. Se il bersaglio è troppo lontano l’app lo scrive in chiaro invece di proporre un attacco impossibile.
-
-• **A.172 — Sagome ruotate, quadretti occupati e portata.** Risposta del 21/10, implementata il 22/10. Due criteri distinti, come hai chiesto: **occupazione e portata** contano un quadretto quando la sagoma ne copre almeno metà (una 3 × 10 Q ruotata ne occupa 28, e va bene); le **collisioni** con muri, ostacoli e altre pedine usano invece la sagoma geometrica piena, comprese le parti che coprono meno di metà quadretto, così la rotazione non permette a un angolo di attraversare un muro. La portata si misura dal quadretto occupato più favorevole, mai dal centro, restando valide linea di visuale e coperture. Il bordo della mappa resta sull’occupazione: non è un ostacolo fisico e una pedina ruotata deve potercisi appoggiare.
-
-• **A.173 — Hachimaki, costi delle Tecniche e sintonizzazione.** Risposta del 21/10, verificata il 22/10. L’app faceva già esattamente così: la riduzione di 1 PM si applica al costo dell’**uso scelto** (i quattro usi della Mano Curativa sono alternative), minimo 1 PM sui costi positivi, una Tecnica gratuita resta gratuita, nessun cumulo, e la scheda mostra sempre costo base e costo finale. SnT 1 confermata. **Attenzione:** con il Manuale 0.49 del 21/10 i costi di quella tabella cambiano — vedi A.178.
+> > ## **6\. Risolte — indice**
+
+**Il testo integrale di ogni risposta approvata è nel tuo Doc [«E\&L – Risposte e correzioni approvate»](https://docs.google.com/document/d/1VaqZaAe4NK5P8A956Eahua_ZT60eh3ohnR2xSqh-tVs/edit).** Qui non lo ricopiamo più: questa tabella tiene la sola cosa che lì non c’è, cioè **se e quando l’app l’ha applicata**, e in quale nostro lotto di lavoro. Una riga per numero, in ordine. «Già così» vuol dire che l’app faceva già come hai deciso; «⚠ da applicare» che la tua risposta è registrata ma l’app non la segue ancora.
+
+| N. | Oggetto | Risposta del | Applicata | Lotto |
+| :---- | :---- | :---- | :---- | :---- |
+| A.1 | Descrizioni delle Caratteristiche; Prova Salvezza Volontà su CAR | — | 26/09 | — |
+| A.2 | Schede dei 14 Talenti di magia | — | 26/09 | — |
+| A.3 | Tipo di tre Talenti Liberi | — | 26/09 | — |
+| A.4 | Chiusa a settembre, con le prime risposte | — | chiusa | — |
+| A.5 | Durata di tre Tecniche Interiori | — | 26/09 | — |
+| A.6 | Equipaggiamento iniziale | — | 27/09 | — |
+| A.7 | Pistola mitragliatrice compatta | — | 28/09 | — |
+| A.8 | Pugnale e Ascia leggera | — | 28/09 | — |
+| A.9 | Famiglie delle 12 armi ravvicinate corporative | — | 28/09 | — |
+| A.10 | Scudo delle Guardie Sacre | — | 28/09 | — |
+| A.11 | Specializzazioni delle 16 armi a distanza corporative | — | 28/09 | — |
+| A.12 | Specializzazioni delle altre armi corporative per analogia | — | 28/09 | — |
+| A.13 | Rainy Dayer | — | 28/09 | — |
+| A.14 | Batterie da 5 PM | — | 28/09 | — |
+| A.15 | Chiusa a settembre, con le prime risposte | — | chiusa | — |
+| A.16 | Prove fisiche | — | 29/09 | — |
+| A.17 | Terrorizzato anche alle Prove Salvezza | — | 29/09 | — |
+| A.18 | Riserve integrate nelle armi | — | 02/10 | — |
+| A.19 | Contenitori Chroma | — | 29/09 | — |
+| A.20 | Prelievo dal Chroma Bianco | — | 09/10 | — |
+| A.21 | Chroma Viola come fonte di Corruzione passiva | — | 28/09 | — |
+| A.22 | Senz’armi 1d4 più il bonus di FOR | — | 29/09 | — |
+| A.23 | Mano non dominante −4 | — | 29/09 | — |
+| A.24 | Incalzare | — | 29/09 | — |
+| A.25 | Copertura anche nel ravvicinato | — | 29/09 | — |
+| A.26 | Superiorità numerica | — | 29/09 | — |
+| A.27 | Spazzata | — | 29/09 | — |
+| A.28 | Sbilanciare e Disarmare | — | 29/09 | — |
+| A.29 | Magistrale | — | 29/09 | — |
+| A.30 | Pesi mancanti «da definire» | — | 29/09 | — |
+| A.31 | Oltre il carico massimo | — | 29/09 | — |
+| A.32 | Confermati i 18 Talenti magici | — | già così | — |
+| A.33 | Pistole corporative | — | 29/09 | — |
+| A.34 | Oggetti della dotazione con scheda | — | 05/10 | — |
+| A.35 | Acquisti iniziali | — | 09/10 | — |
+| A.36 | Bonus degli oggetti solo quando si usano | — | già così | — |
+| A.37 | Ricarica | — | 29/09 | — |
+| A.38 | Sette chiarimenti sull’attacco a distanza | — | **⚠ da applicare** | — |
+| A.39 | Anticipazione senza Addestramento, Colpo Elementale, Rigenerazione (punti 1–3) | — | 29/09 | — |
+| A.40 | Carica fino alla Corsa massima | — | **⚠ da applicare** | — |
+| A.41 | Sbilanciare e Disarmare con l’Abilità del mezzo dichiarato | — | 29/09 | — |
+| A.42 | Spazzata anche senz’armi | — | 29/09 | — |
+| A.43 | AR complessiva | — | 28/09 | — |
+| A.44 | Armatura, scudo ed elmetto a 0 PI | — | 28/09 | — |
+| A.45 | Kit di rinforzo a 0 PI | — | 28/09 | — |
+| A.46 | Riparazione strutturale | — | 28/09 | — |
+| A.47 | Oggetti senza PI | — | 28/09 | — |
+| A.48 | Corazza Potenziata, Aura di Resistenza e Pelle di Rinoceronte si sommano | — | 28/09 | — |
+| A.49 | Condizioni delle armi (§5.17) | — | 28/09 | — |
+| A.50 | Ordine delle riduzioni dell’AR | — | 28/09 | — |
+| A.51 | Categorie di Prove degli Stati | — | 28/09 | — |
+| A.52 | Addestramenti a 76 punti e 10 Punti Abilità Liberi | — | 28/09 | — |
+| A.53 | Corazza Potenziata solo con armatura o scudo classificati come Artefatto e con almeno… | — | già così | — |
+| A.54 | Revolver: 1 AzP riempie il tamburo, anche in parte | — | già così | — |
+| A.55 | Caratteristica del bonus al danno per Abilità | — | già così | — |
+| A.56 | Basi dalla prima Classe | — | già così | — |
+| A.57 | Punti liberi ricostruiti evento per evento, con i limiti del momento | — | 09/10 | — |
+| A.58 | Il \+1 di Corporazione resta nel calcolo e torna utile quando il limite sale | — | già così | — |
+| A.59 | Depositare un Artefatto non interrompe la Sintonizzazione | — | 05/10 (tab Artefatti) | — |
+| A.60 | Otto schede | — | — | — |
+| A.61 | Capolavoro del Corazzaio | 02/10 | 02/10 | — |
+| A.62 | Katana Ryūjin | 02/10 | 02/10 | — |
+| A.63 | Esoscheletri | 02/10 | 02/10 | — |
+| A.64 | Moduli IAS | 02/10 | 02/10 | — |
+| A.65 | Dotazioni con più schede | 02/10 | 02/10 | — |
+| A.66 | Corredo da cucina | 02/10 | 02/10 | — |
+| A.67 | Modulo Blu del Gehemmapuker | 02/10 | 02/10 | — |
+| A.68 | Interfaccia neurale standard | 02/10 | 02/10 | — |
+| A.69 | Installazione, rimozione e reinstallazione degli impianti | — | **⚠ da applicare** | — |
+| A.70 | Recuperi di Umanità, procedura di Riabilitazione (con A.92) | — | **⚠ da applicare** | — |
+| A.71 | Cartuccia chirurgica | 02/10 | 02/10 | — |
+| A.72 | Anticipazione senza scala leggibile | — | 07/10 | — |
+| A.73 | Formato dei nemici per il Tavolo del Master | — | 02/10 | — |
+| A.74 | Rituale di Rigenerazione | 02/10 | 02/10 | — |
+| A.75 | Batterie oltre i 5 PM | 02/10 | 02/10 | — |
+| A.76 | Sanguinante | — | quasi conforme — quasi conforme | — |
+| A.77 | Perforante riduce l’AR non magica totale a ogni applicazione di danno, senza erosione | — | già così | — |
+| A.78 | Attacco con VA finale 20 o più | 02/10 | 02/10 | — |
+| A.79 | Umani costruiti come PG | — | **⚠ da applicare** | — |
+| A.80 | Si indossano da soli soprabiti, mantelli, Tabardo consacrato e Sottogiacca IES, con… | — | 03/10 | — |
+| A.81 | Pelle di Rinoceronte | — | 03/10 | — |
+| A.82 | Onda Interiore | — | 03/10 | — |
+| A.83 | REP Epica | — | 03/10 | — |
+| A.84 | Regime di lancio dei nemici | — | **⚠ da applicare** | — |
+| A.85 | Bonus di SAG al danno magico | — | **⚠ da applicare** | — |
+| A.86 | Granate e razzi | — | 03/10 | — |
+| A.87 | Artefatti del gruppo già assegnati nei file dei PG, niente deposito comune | — | — — residui in A.112 | — |
+| A.88 | Individuare a Concentrazione | — | 03/10 | — |
+| A.89 | Correzione proposta per i 5 punti liberi | — | superata dalla A.90 | — |
+| A.90 | Punti Abilità liberi | — | 04/10 — supera l’E&L con 5 punti | — |
+| A.91 | Scheda unica del veicolo condivisa fra PG e Tavolo, proprietario distinto dal… | — | 04/10 (registro dei veicoli) | — |
+| A.92 | Recuperi di Umanità — **vedi A.70** | — | vedi A.70 | — |
+| A.93 | Corpi cyborg completi non disponibili ai PG | — | già così | — |
+| A.94 | Interfaccia SIN | — | già così | — |
+| A.95 | Volo, taglia, Boss come etichetta, calibrazione dei moduli (con A.96 e A.97) | — | **⚠ da applicare** | — |
+| A.96 | Boss come etichetta — **vedi A.95** | — | vedi A.95 | — |
+| A.97 | Calibrazione dei moduli — **vedi A.95** | — | vedi A.95 | — |
+| A.98 | Rune e Tatuaggi | — | **⚠ da applicare** — da togliere la sezione vuota | — |
+| A.99 | Prevale la decisione approvata più recente | — | nessun codice — nessun codice | — |
+| A.100 | Di chi è il veicolo | — | non usato: doppione della A.91 | — |
+| A.101 | ASA Scout MK4 approvato | — | 05/10 | — |
+| A.102 | Autovettura civile | — | 05/10 | — |
+| A.103 | Esempio del §4.3 generico | — | 05/10 | — |
+| A.104 | Per le collisioni conta l’andatura attuale, distinta da quella scelta per dopo | — | 05/10 | — |
+| A.105 | Veicolo nel Tavolo del Master | — | 04/10 (plancia) | — |
+| A.106 | Penombra −2, luce molto scarsa −4, buio come Accecato | — | **⚠ da applicare** | — |
+| A.107 | Correzioni retroattive dell’avanzamento | — | 09/10 | — |
+| A.108 | Punti Abilità liberi in eccesso | — | 09/10 | — |
+| A.109 | Anticipazione, regola comune e 32 aspetti | 08/10 | 09/10 | — |
+| A.110 | Indossare e togliere protezioni | — | 09/10 | — |
+| A.112 | Artefatti del gruppo, residui | — | 09/10 | — |
+| A.113 | Veicoli: il Direttore modifica tutti i veicoli della campagna, anche quelli personali… | 15/10 | 16/10 | — |
+| A.114 | Chip del Processore e strumenti | — | 09/10 — supera l’ipotesi chip/strumenti | — |
+| A.115 | Capacità dei nemici | 15/10 | 16/10 | — |
+| A.116 | Luce e attività pratiche visive | — | 09/10 | — |
+| A.117 | L’Eretico corrotto | 03/11 | 05/11 | — |
+| A.118 | La stampa dei veicoli del gruppo | 03/11 | 05/11 | — |
+| A.119 | Ammalato: sei intensità selezionabili, con penalità −1, −2, −4, −6, −8 e −10 a tutte… | — | 09/10 | — |
+| A.120 | Bonus e malus temporanei di COS e SAG non cambiano i PV e i PM massimi né quelli… | — | già così | — |
+| A.121 | Riuso del codice della tua app per la mappa | — | — — ritirata | — |
+| A.122 | Aiuto-master | — | 09/10 | — |
+| A.123 | Iniziativa sulla mappa | — | 06/10 () | — |
+| A.125 | Porte e illuminazione | — | — — decisione di Marcello | — |
+| A.126 | Ingombro e campo Spazio | 15/10 | 16/10 | — |
+| A.129 | Movimento diviso | — | — | — |
+| A.130 | Scelta tecnica di Marcello, non una domanda per te | — | ritirata il 06/10 | — |
+| A.131 | Immagine dei nemici sulle pedine | — | 06/10 | — |
+| A.132 | Uno Stordito non fa Attacchi di Opportunità | — | — | — |
+| A.133 | Portata delle creature grandi | — | già così | — |
+| A.134 | Diagonale rasente allo spigolo di un muro | — | 07/10 (mappa) | — |
+| A.135 | Ricarica e carichini | — | 09/10 | — |
+| A.136 | Corsa o Scatto dopo un Passo già cominciato e Prova facoltativa di Atletica | — | 09/10 | — |
+| A.137 | Raggio di un’Area sulla griglia | — | già così | — |
+| A.138 | Forma del Cono | — | 09/10 | — |
+| A.139 | Porta «adiacente» in diagonale | — | già così | — |
+| A.140 | Copertura sulla mappa | — | già così | — |
+| A.141 | Creature in mezzo alla linea di tiro (con A.144) | — | 09/10 | — |
+| A.142 | Fin dove vedono i PG | — | 09/10 | — |
+| A.143 | Sensi speciali e nebbia | — | 09/10 | — |
+| A.144 | Creature in mezzo alla linea di tiro — **vedi A.141** | — | vedi A.141 | — |
+| A.145 | Azioni sui veicoli | 15/10 | 16/10 | — |
+| A.146 | Veicoli e AdO | 15/10 | 16/10 | — |
+| A.147 | Veicoli a 45° | 15/10 | 16/10 | — |
+| A.148 | Copertura verso e da un token in volo | — | 09/10 | — |
+| A.149 | La quota conta per la portata | — | già così | — |
+| A.150 | Un token in volo si vede da lontano | — | 09/10 | — |
+| A.151 | Carichini | 09/10 | 13/10 | — |
+| A.152 | Colt Hammershot | 09/10 | 13/10 | — |
+| A.153 | A Terra e Copertura a distanza | — | già così | — |
+| A.154 | Cartuccia del decontaminante | 10/10 | 13/10 | — |
+| A.155 | Pergamene standard | 10/10 | 13/10 | — |
+| A.156 | Infusione fallita | — | già così | — |
+| A.157 | «Rituale: non consentito» vieta solo il lancio come Rituale: l’infusione è permessa e… | 10/10 | 13/10 | — |
+| A.158 | CyberArma | 13/10 | 15/10 | — |
+| A.159 | Morente, contatore di sopravvivenza e cure specifiche | — | 13/11 | — |
+| A.160 | Avversari costruiti come PG | — | 16/10 | — |
+| A.161 | PX della partita | — | 16/10 | — |
+| A.162 | Integrità degli oggetti in tre stati | — | 16/10 | — |
+| A.163 | Contenitori del Silenzio | — | 16/10 | — |
+| A.164 | Morente anche per i nemici | — | 16/10 | — |
+| A.165 | A.109 nel Doc E\&L | — | 16/10 — chiusa | — |
+| A.166 | CyberArma | — | 16/10 | — |
+| A.167 | Ingombri rettangolari e orientamento delle creature | 18/10 | 18/10 | — |
+| A.168 | Fasce dei Titoli per i PX | — | 18/10 | — |
+| A.169 | Abilità del bestiario, VA degli attacchi e Prove di Caratteristica | 18/10 | 18/10 | — |
+| A.170 | Soglie, Atti e fattori di calcolo dei PX | 18/10 | 18/10 | — |
+| A.171 | Portata degli attacchi degli Sciami | 21/10 | 22/10 | — |
+| A.172 | Sagome ruotate, quadretti occupati e portata | 21/10 | 22/10 | — |
+| A.173 | Hachimaki, costi delle Tecniche e sintonizzazione | 21/10 | 22/10 | — |
+| A.174 | «Ricarica e medita» | 23/10 | 28/10 | — |
+| A.175 | Guanti da Combattimento Mistico | 23/10 | già così | — |
+| A.176 | Incantesimi aggiunti a mano | — | 29/10 | — |
+| A.177 | Modifiche dal tablet dopo la partita | 23/10 | 27/10 () | — |
+| A.178 | Manuale del Giocatore 0.49 | 23/10 | già così | — |
+| A.179 | AR di Aura e Pelle | 25/10 | già così | — |
+| A.180 | Scheda del tablet e modifiche in attesa | 25/10 | — — app aggiornata | — |
+| A.181 | Nuova progressione di Talenti, Maestrie e Specializzazioni | 25/10 | già così | — |
+| A.182 | Ricarica Esperta | 25/10 | già così | — |
+| A.183 | Conversione dei personaggi esistenti | 25/10 | già così | — |
+| A.184 | Incantesimi e Tecniche legati ai Talenti | 25/10 | 27/10 () | — |
+| A.185 | Specializzazione del primo livello | 25/10 | già così | — |
+| A.186 | Numero non usato (il 25/10 non è servito) | — | mai usato | — |
+| A.187 | Si sale di livello solo con i PX | 28/10 | 28/10 | — |
+| A.188 | Incantesimi: il giocatore cambia, ma le regole valgono | 28/10 | 28/10 | — |
+| A.189 | Il trasformatore e la regola del «niente travaso» | 30/10 | 30/10 | — |
+| A.190 | Il pacco del Gehemmapuker | 30/10 | 01/11 | — |
+| A.191 | I moduli IAS | 30/10 | 01/11 | — |
+| A.192 | L’energia dei mezzi: Autovettura e Scout | 30/10 | 31/10 | — |
+| A.193 | Le riserve salvate in Lx, UE o ore | 30/10 | 31/10 | — |
+| A.194 | Il Dragomedusa: PX e GS | — | 29/10 | — |
+| A.195 | Lo scudo Punisher Wächter | 30/10 | 01/11 | — |
+| A.196 | La Neverlost nella scheda dei veicoli e nella plancia | 30/10 | 01/11 | — |
+| A.197 | Il premio di fine Atto non si duplica | 30/10 | 30/10 | — |
+| A.198 | Le sagome più grandi e la scala della mappa | 30/10 | 30/10 | — |
+| A.199 | I danni con moltiplicatore | 30/10 | 30/10 | — |
+| A.200 | L’Iniziativa dei PNG umani | 30/10 | 30/10 | — |
+| A.201 | I nomi dei draghi metallici | 30/10 | 30/10 | — |
+| A.202 | La Murena della Roccia cucciolo | 30/10 | 30/10 | — |
+| A.203 | La Madre delle Murene | 30/10 | 30/10 | — |
+| A.204 | L’ordine delle misure dei draghi | 30/10 | 30/10 | — |
+| A.205 | Diplomazia e Oratoria | 30/10 | 30/10 | — |
+| A.206 | Parata a Mani Nude del Lottatore | 30/10 | 30/10 | — |
+| A.207 | Natura del danno e AC delle armi | 30/10 | 30/10 | — |
+| A.211 | «Appreso» lo conferma il Direttore | 30/10 | 02/11 | — |
+| A.213 | Incantesimi aggiunti prima della distinzione | 30/10 | — | — |
+| A.214 | Pacchi da 15 e 50 getti, IAS: peso e formato | — | — — ritirata: la risolvono i manuali del 30/10 | — |
+| A.215 | Le celle e i caricatori si tolgono, si riempiono e si rimettono | 30/10 | 02/11 | — |
+| A.216 | Le riserve salvate in ore | — | — — ritirata: la risolve la A.193 | — |
+| A.217 | Vecchi Banchi e Moduli | 30/10 | — | — |
+| A.218 | Il Bestiario v0.64 | 30/10 | — | — |
+| A.219 | «Chiudi la giornata» | 30/10 | — | — |
+| A.220 | Le Ferite abbassano l’Iniziativa anche dei personaggi | 02/11 | 02/11 | — |
+| A.221 | Il Magistrale su un ×5 | 02/11 | — | — |
+| A.222 | Il Dragomedusa | 03/11 | 04/11 | — |
+| A.223 | La testa della Madre delle Murene | 03/11 | 04/11 | — |
+| A.224 | La roccia | 03/11 | 04/11 | — |
+| A.225 | Le distanze nella scala della scena | 03/11 | 04/11 | — |
+| A.226 | Lo Scout della campagna, FIAT LUX | — | 05/11 — superata in un punto dalla A.257 (08/11) | — |
+| A.227 | I ricambi del FIAT LUX | 02/11 | 05/11 | — |
+| A.228 | Le frazioni | 02/11 | 05/11 — superata dalla A.252 (07/11) | — |
+| A.229 | Specializzazioni di Potere per Classe | 01/11 | 02/11 | — |
+| A.230 | Armi Inastate e Archi e Balestre | 02/11 | 02/11 | — |
+| A.231 | La CyberArma di Dimitri | 02/11 | 02/11 — il comando è in sezione 8 | — |
+| A.232 | Specializzazioni ai pugni con i Guanti | 02/11 | 04/11 | — |
+| A.233 | Capitolo, scena e rinnovo degli usi | 02/11 | 05/11 | — |
+| A.234 | Prova di Potere del Doppio getto | 02/11 | 04/11 | — |
+| A.235 | La CyberArma degli Armamenti aggiornati | 02/11 | 02/11 | — |
+| A.236 | Batteria interna della CyberArma | 02/11 | 04/11 | — |
+| A.237 | NEC della CyberArma convertita | 02/11 | 04/11 | — |
+| A.238 | La Neverlost in una scena in Q Base | 03/11 | 04/11 | — |
+| A.239 | Le munizioni della Neverlost | 02/11 | 05/11 | — |
+| A.240 | La Neverlost non è a listino | — | 05/11 | — |
+| A.241 | Le Specializzazioni tolte che non sono di Potere | — | — — ritirata: confluita nella A.230 | — |
+| A.242 | Il documento Talenti, Specializzazioni e Maestrie v1.1 | — | — | — |
+| A.243 | Quanto costa togliere e mettere una cella (con A.249) | — | 08/11 | — |
+| A.244 | Quanto tempo per riempire i caricatori | 06/11 | 08/11 | — |
+| A.245 | Le celle danneggiate | 06/11 | 08/11 | — |
+| A.246 | La Corruzione del frammento Viola | 06/11 | 08/11 | — |
+| A.247 | Il punto forzato oltre il limite | 06/11 | 07/11 | — |
+| A.248 | Chi riassegna i punti divenuti inefficaci | 06/11 | 07/11 | — |
+| A.249 | Quanto costa togliere e mettere un caricatore — **vedi A.243** | 06/11 | vedi A.243 | 180 |
+| A.250 | Il caricatore parziale è pronto | 06/11 | 08/11 | — |
+| A.251 | Come si alimenta la CyberArma modificata | 06/11 | 08/11 | — |
+| A.252 | Niente frazioni nelle riserve | 06/11 | 07/11 | — |
+| A.253 | Decollo e atterraggio della Neverlost | 06/11 | 08/11 | — |
+| A.254 | Dove si può mettere la testa della Madre delle Murene | 06/11 | 08/11 | — |
+| A.255 | La Murena eterea dentro la roccia | 06/11 | 08/11 | — |
+| A.256 | Il prezzo di vendita degli artefatti | 06/11 | 08/11 — due voci non tornano: sezione 4 | — |
+| A.257 | Quanto vale il FIAT LUX | 06/11 | 08/11 | — |
+| A.258 | Gli Eretici e il vecchio catalogo dei nemici | 06/11 | 08/11 | — |
+| A.259 | L’uso dei Capolavori | 06/11 | 08/11 | — |
+| A.260 | Quanto dura una carica della CyberArma convertita | 15/11 | 16/11 — supera la A.251 | — |
+| A.261 | La formula del prezzo contro i prezzi già scritti nei manuali | — | 14/11 — due voci non tornano: sezione 4 | — |
+| A.262 | Il coefficiente dell’«Epica» | — | 14/11 | — |
+| A.263 | Grado e SnT dell’Anello con Rigenerazione 9 | — | 14/11 | — |
+| A.264 | Quanto vale un accumulatore di ricambio scarico | — | 14/11 | — |
+| A.265 | La potenza della CyberArma | — | 14/11 | — |
+| A.266 | I NEC in cariche o in Unità Energetiche | — | 14/11 | — |
+| A.267 | Adeguamento straordinario e diminuzione del VA | 15/11 | 16/11 | — |
+| A.268 | Lo stato dei sette personaggi | 15/11 | — — ritirata da noi | — |
+| A.269 | «Armi da Guerra», «Spada» e «Spade» | 15/11 | 16/11 — resta la prosa del §9.6: sezione 4 | — |
+| A.270 | Parata a mani nude del Lottatore | 15/11 | 14/11 | — |
+| A.271 | Che CyberArma ha Dimitri | — | 17/11 — il file di Dimitri: sezione 8 | — |
+| A.272 | Da che livello si fa l’adeguamento | — | 16/11 — la scelta della strada è tua | — |
+| A.273 | Creature con due forme | 17/11 | 18/11 | 218 |
+| A.274 | Attacchi senza Natura del danno | 17/11 | 18/11 | 218 |
+| A.275 | Taglia e ingombro | 17/11 | 18/11 | 218 |
+| A.276 | Attacchi con più componenti di danno | 17/11 | 18/11 | 218 |
+| A.277 | Collocazione delle regole comuni nel Bestiario | 17/11 | — — correzione al tuo manuale; le schede miste: sezione 4 | — |
+| A.278 | Denominazioni delle sei armi | 17/11 | 18/11 | 218 |
+| A.279 | Profili del manuale che l’app non offre | 17/11 | 18/11 | 218 |
+| A.280 | FIAT LUX ASA: l’arco frontale sulla mappa | 18/11 | 18/11 — la mappa non controlla i settori (sez. 4); il manuale dice ancora 120° (sez. 5) | 223 |
+| A.281 | Redistribuzione dei punti liberi e correzioni di Dimitri | 18/11 | 19/11 | 225 |
+| A.286 | Concessione individuale del livello 8, e Titolo per i PX | 18/11 | 18/11 | 223 |
+| A.287 | Gli incantesimi liberi di Dimitri | 18/11 | già così | 216 |
+| A.288 | Gli attacchi di ogni forma dei licantropi, e i bersagli dell'Ammantato | 19/11 | 19/11 | 227 |
+| A.289 | Il Modulo al plasma Banshee: Capitol, non Bauhaus | 19/11 | già così | 225 |
+| A.290 | Balestre d’osso e quadrelli dei Mutanti | 19/11 | 19/11 | 225 |
+| A.291 | Le Pietre di Luna intere | 19/11 | 19/11 | 225 |
+| A.292 | Il peso della Cartuccia Stabilizzante | 19/11 | 19/11 | 225 |
+| A.293 | Dimitri: le correzioni di Caratteristica del 2 novembre | 19/11 | 19/11 | 225 |
+| A.294 | Le funzioni dell'Elmetto Recon ASA | 19/11 | 20/11 | 228 |
+| A.295 | Le voci SIA nel catalogo, e i soprabiti dei PG | 19/11 | 20/11 — la migrazione dei sei: sezione 8 | 228 |
+| A.296 | Posti del Turk e cavalcature sulla plancia | 19/11 | **per metà** il 20/11 — **sezione 3** | 228 |
+| A.297 | Il tiro dei PV e dei PM alla salita di livello | 19/11 | 20/11 | 228 |
+| A.298 | Pietre di Luna: l'ultimo contatto e l'avviso «Verifica il vincolo» | 19/11 | 20/11 | 228 |
+| A.305 | *Primo numero libero.* | — | — | — |
+
+**Altre voci risolte, senza numero** (manuali recepiti, schede, lavori nostri già fatti).
+
+| Oggetto | Applicata | Lotto |
+| :---- | :---- | :---- |
+| I manufatti lunari dei Mutanti | 18/11 | 219 |
+| La Parata \+1 del Verde e il danno Magico dei Quadrelli | 18/11 | 220 |
+| Cancellare un record dal registro dei veicoli | 18/11 | 218 |
+| Anello con Rigenerazione 9 | 05/11 | — |
+| Revisione «Cariche Mistiche» | 04/11 | — |
+| Esiti dei tuoi test del 24/10 | 25/10 | — |
+| Incantesimi: scelta affidabile | 27/10 | — |
+| I personaggi non si perdono con un aggiornamento | 26–27/10 | — |
+| Esploratore, Specializzazioni dei Talenti a scelta; «minimo 1» ai 2 \+ Mod INT… | — | — |
+| PV e PM attuali al passaggio di livello | 27/09 | — |
+| 18 Talenti magici e mistici nuovi del 27/09 | 27/09 | — |
+| Manuale degli Armamenti v0.52 e v0.53 | 28/09 | — |
+| Manuale del Giocatore del 27/09 | 28/09 | — |
+| Manuale dei Mostri 0.23 — catalogo completo | 16–18/10 | — |
+| Stati 1/11–11/11 | 09/10 | — |
+| Manuale dell’Equipaggiamento 0.6 | 09/10 | — |
+| Magia §27 — Artefatti consumabili | 09/10 | — |
+| Manuali del 12/10 (Giocatore 0.48, Armamenti 0.61) | 13/10 | — |
+| Manuale dell’Equipaggiamento 0.8, §§10.8–10.11 | 19/10 | — |
+| Le due distanze dei manufatti lunari (Parata +1 del Verde, danno Magico dei Quadrelli) | 18/11 | 220 |
+| Il Morente, per intero (§§5.14.2–5.14.3 e la tua A.159 completa) | 13/11 | 193 |
+| Il profilo delle Abilità 4/7/9/4 del Giocatore 0.62 | 13/11 | 192 |
+| L’adeguamento delle Abilità, pronto e da fare al tavolo | 13/11 e 16/11 | 194, 207 |
+| Il Bestiario alla 0.69, campo per campo | 15–16/11 | 203–205 |
+| Le armi del catalogo alla 0.86, poi 0.87 | 16/11 e 18/11 | 206, 223 |
+| I venticinque modelli PNG generici (Mostri 0.67) | 14/11 | 197 |
+| I prezzi degli Artefatti, letti dal manuale | 14/11 | 195 |
+| I riferimenti che non puntano a niente (mezzi e pedine) | 15/11 | 201, 202 |
+| I manuali nuovi recepiti: Giocatore 0.64, Magia 1.19, Armamenti 0.87, Equipaggiamento 0.42, Veicoli 0.19, Mostri 0.69, Direttore 0.51 | 17–18/11 | 209–214, 223 |
+| I focalizzatori della CyberArma nei calcoli | 17/11 | 216 |
+| I settori di tiro delle armi di bordo, nei dati | 17/11 | 213 |
+| Il valore del FIAT LUX: 188.510 cr, non 189.110 | 17/11 | 214 |
+| Gli strumenti da riga di comando non rovinano più i metadati di un personaggio | 17/11 | 210 |
+| La serata dell’adeguamento, provata dal lato dei tablet | 15–17/11 | 215 |
+| Il lanciatore delle prove non muore più in silenzio | 17/11 | 215 |
+| L’app al tavolo, misurata: «Attacca!» legge metà delle righe di ottobre | 18/11 | 220, 221 |
+| La serata del 23 rifatta per intero sull’app di oggi | 19/11 | 224 |
+| La soglia del «Lancia!» misurata in pixel veri a ogni giro di test | 19/11 | 223, 224 |
+| I tre manuali del 19/11 recepiti: Giocatore 0.65, Armamenti 0.89, Veicoli 0.21 | 20/11 | 229 |
+| Magia 1.20 e Armamenti 0.90: il Warden TC nel catalogo, l’artiglieria no | 20/11 | 231 |
+| Un test nuovo: un dato non può contraddire una tua risposta approvata | 20/11 | 229 |
+
+**Per chi controlla la numerazione.** Il numero più alto usato in questo documento è **A.304**; il primo libero è **A.305**. Le ritirate sono la A.214, la A.216, la A.241 e la A.268. **Aperte, oggi:** A.299, A.300, A.301, A.302, A.303 e A.304 (le A.294–A.298 sono risolte dal 20/11; la A.296 resta per metà, in sezione 3).
 
 > > ---
 
@@ -2063,81 +1729,80 @@ Il nome e la corruzione non attribuiscono automaticamente poteri, danni Magici o
 
 > > #### **A.243 — Sostituzione della cella: risposta approvata da Davide (06/11/2026)**
 
-> > ## **Estrarre soltanto la cella costa 1 AzP; inserire una cella pronta in un’arma vuota costa 1 AzP; la sostituzione diretta di una cella con un’altra resta un’unica operazione da 1 AzP complessivo. La cella estratta conserva esattamente la carica residua.**
+Estrarre soltanto la cella costa 1 AzP; inserire una cella pronta in un’arma vuota costa 1 AzP; la sostituzione diretta di una cella con un’altra resta un’unica operazione da 1 AzP complessivo. La cella estratta conserva esattamente la carica residua.
 
 > > #### **A.244 — Riempimento dei caricatori fuori dal combattimento: risposta approvata da Davide (06/11/2026)**
 
-> > ## **Fuori dal combattimento, riempire i caricatori richiede 1 minuto ogni 50 colpi trasferiti, o frazione, calcolato sul totale dell’operazione. I caricatori devono essere estratti e le munizioni devono essere realmente disponibili.**
+Fuori dal combattimento, riempire i caricatori richiede 1 minuto ogni 50 colpi trasferiti, o frazione, calcolato sul totale dell’operazione. I caricatori devono essere estratti e le munizioni devono essere realmente disponibili.
 
 > > #### **A.245 — Punti Integrità delle celle: risposta approvata da Davide (06/11/2026)**
 
-> > ## **Ogni singola cella possiede 2 PI. Una cella danneggiata deve essere separata dalla pila. A 0 PI è distrutta e inutilizzabile, normalmente non riparabile: l’evento va registrato e la cella va rimossa dalle scorte utilizzabili.**
+Ogni singola cella possiede 2 PI. Una cella danneggiata deve essere separata dalla pila. A 0 PI è distrutta e inutilizzabile, normalmente non riparabile: l’evento va registrato e la cella va rimossa dalle scorte utilizzabili.
 
 > > #### **A.246 — Corruzione del frammento viola: risposta approvata da Davide (06/11/2026)**
 
-> > ## **La Corruzione segue il frammento viola rimosso: la CyberArma perde Corruzione 1, mentre il frammento estratto la conserva. Lo stato precedente resta consultabile nello storico.**
+La Corruzione segue il frammento viola rimosso: la CyberArma perde Corruzione 1, mentre il frammento estratto la conserva. Lo stato precedente resta consultabile nello storico.
 
 > > #### **A.247 — Aumento oltre il limite di un’Abilità: risposta approvata da Davide (06/11/2026)**
 
-> > ## **Se il Direttore, dopo l’avviso del sistema, forza deliberatamente l’assegnazione di un punto oltre il limite, il VA dell’Abilità aumenta realmente oltre il limite. L’operazione deve essere registrata come eccezione esplicita.**
+Se il Direttore, dopo l’avviso del sistema, forza deliberatamente l’assegnazione di un punto oltre il limite, il VA dell’Abilità aumenta realmente oltre il limite. L’operazione deve essere registrata come eccezione esplicita.
 
 > > #### **A.248 — Riassegnazione dei punti divenuti inefficaci: risposta approvata da Davide (06/11/2026)**
 
-> > ## **I punti che diventano inefficaci in seguito a una modifica forzata del Direttore possono essere riassegnati dal giocatore nello stesso livello originario, rispettando le normali regole di assegnazione. La riassegnazione va registrata.**
+I punti che diventano inefficaci in seguito a una modifica forzata del Direttore possono essere riassegnati dal giocatore nello stesso livello originario, rispettando le normali regole di assegnazione. La riassegnazione va registrata.
 
 > > #### **A.249 — Sostituzione del caricatore: risposta approvata da Davide (06/11/2026)**
 
-> > ## **Estrarre soltanto il caricatore costa 1 AzP; inserirne uno in un’arma vuota costa 1 AzP; la sostituzione diretta resta un’unica operazione da 1 AzP complessivo. Il caricatore estratto conserva esattamente i colpi residui.**
+Estrarre soltanto il caricatore costa 1 AzP; inserirne uno in un’arma vuota costa 1 AzP; la sostituzione diretta resta un’unica operazione da 1 AzP complessivo. Il caricatore estratto conserva esattamente i colpi residui.
 
 > > #### **A.250 — Caricatore parzialmente pieno come caricatore pronto: risposta approvata da Davide (06/11/2026)**
 
-> > ## **Un caricatore compatibile, accessibile e con almeno un colpo è considerato pronto anche se non è pieno. Ha lo stesso costo d’azione e beneficia normalmente di Ricarica Rapida o Ricarica Esperta; il numero esatto di colpi residui deve essere conservato.**
+Un caricatore compatibile, accessibile e con almeno un colpo è considerato pronto anche se non è pieno. Ha lo stesso costo d’azione e beneficia normalmente di Ricarica Rapida o Ricarica Esperta; il numero esatto di colpi residui deve essere conservato.
 
 > > #### **A.251 — CyberArma modificata e PM personali: risposta approvata da Davide (06/11/2026)**
 
-> > ## **La sola sostituzione del cristallo e l’inserimento di una SIN consentono ancora di alimentare la CyberArma con i PM personali. L’inserimento di una riserva interna di CM oppure la conversione a NeC impediscono invece l’uso dei PM personali e fanno perdere le proprietà da Custode. Configurazione CM: 1 CM \+ 1 AzP ogni 10 colpi; conversione NeC rossa: 1 carica \+ 1 AzP ogni 10 colpi. Cristallo e SIN possono coesistere con l’alimentazione a PM personali; CM e NeC sono conversioni energetiche alternative.**
+La sola sostituzione del cristallo e l’inserimento di una SIN consentono ancora di alimentare la CyberArma con i PM personali. L’inserimento di una riserva interna di CM oppure la conversione a NeC impediscono invece l’uso dei PM personali e fanno perdere le proprietà da Custode. Configurazione CM: 1 CM \+ 1 AzP ogni 10 colpi; conversione NeC rossa: 1 carica \+ 1 AzP ogni 10 colpi. Cristallo e SIN possono coesistere con l’alimentazione a PM personali; CM e NeC sono conversioni energetiche alternative.
 
 > > #### **A.252 — Frazioni di CM e NeC: risposta approvata da Davide (06/11/2026)**
 
-> > ## **CM e NeC si consumano solo in quantità intere. Le eventuali frazioni prodotte dalla conversione di regole pregresse vanno arrotondate una sola volta all’intero superiore: per esempio 4,2/6 diventa 5/6. Ricaricare 1 CM costa rispettivamente 6, 4 o 2 PM con conversione 3:1, 2:1 o 1:1. Questa decisione supera la A.228 e le parti della A.193 che mantenevano frazioni nelle riserve effettive; il valore precedente resta soltanto nello storico.**
+CM e NeC si consumano solo in quantità intere. Le eventuali frazioni prodotte dalla conversione di regole pregresse vanno arrotondate una sola volta all’intero superiore: per esempio 4,2/6 diventa 5/6. Ricaricare 1 CM costa rispettivamente 6, 4 o 2 PM con conversione 3:1, 2:1 o 1:1. Questa decisione supera la A.228 e le parti della A.193 che mantenevano frazioni nelle riserve effettive; il valore precedente resta soltanto nello storico.
 
 > > #### **A.253 — Decollo e atterraggio della Neverlost: risposta approvata da Davide (06/11/2026)**
 
-> > ## **A terra la Neverlost non rulla e ha movimento 0\. Il decollo verticale è una manovra complessa: 1 AzM \+ 1 AzP del pilota; normalmente non richiede prova, salvo spazio ristretto, attacco in corso o danni. Nel round di decollo sale in stazionamento senza spostamento orizzontale; dal round successivo usa i movimenti della scala tattica 8/16/24, senza convertirli in 80/160/240 sulla mappa terrestre: si passa alla scala tattica o si esce dalla mappa. L’atterraggio è una manovra complessa e conclude il movimento.**
+A terra la Neverlost non rulla e ha movimento 0\. Il decollo verticale è una manovra complessa: 1 AzM \+ 1 AzP del pilota; normalmente non richiede prova, salvo spazio ristretto, attacco in corso o danni. Nel round di decollo sale in stazionamento senza spostamento orizzontale; dal round successivo usa i movimenti della scala tattica 8/16/24, senza convertirli in 80/160/240 sulla mappa terrestre: si passa alla scala tattica o si esce dalla mappa. L’atterraggio è una manovra complessa e conclude il movimento.
 
 > > #### **A.254 — Posizione della testa della Madre delle Murene: risposta approvata da Davide (06/11/2026)**
 
-> > ## **Il Direttore può collocare la testa in qualunque casella occupata dalla sagoma corrente, anche centrale, purché la posizione sia anatomicamente plausibile rispetto alla posa o all’emersione parziale; mai fuori dalla sagoma. La posizione può cambiare quando la creatura si muove, ruota, cambia configurazione o assume una nuova posa, non fra un attacco e l’altro per ottenere una linea più favorevole. Il segnalino modifica soltanto l’origine di attacchi, soffio, aura ed effetti centrati sulla testa, non movimento, spazio occupato o portata.**
+Il Direttore può collocare la testa in qualunque casella occupata dalla sagoma corrente, anche centrale, purché la posizione sia anatomicamente plausibile rispetto alla posa o all’emersione parziale; mai fuori dalla sagoma. La posizione può cambiare quando la creatura si muove, ruota, cambia configurazione o assume una nuova posa, non fra un attacco e l’altro per ottenere una linea più favorevole. Il segnalino modifica soltanto l’origine di attacchi, soffio, aura ed effetti centrati sulla testa, non movimento, spazio occupato o portata.
 
 > > #### **A.255 — Murena eterea all’interno della roccia: risposta approvata da Davide (06/11/2026)**
 
-> > ## **La Murena eterea può terminare il movimento dentro la roccia. Finché è completamente immersa non ha linea di vista o d’effetto verso l’esterno, non può attaccare né essere normalmente bersagliata e non percepisce automaticamente oltre la parete. Per attaccare deve emergere quanto basta e spendere il normale movimento; se non lo esaurisce può rientrare con il movimento residuo. Se viene eccezionalmente resa corporea nella roccia, viene spostata nella casella libera più vicina alla superficie, diventa corporea e Prona, senza attacchi di opportunità; a parità di distanza decide il Direttore.**
+La Murena eterea può terminare il movimento dentro la roccia. Finché è completamente immersa non ha linea di vista o d’effetto verso l’esterno, non può attaccare né essere normalmente bersagliata e non percepisce automaticamente oltre la parete. Per attaccare deve emergere quanto basta e spendere il normale movimento; se non lo esaurisce può rientrare con il movimento residuo. Se viene eccezionalmente resa corporea nella roccia, viene spostata nella casella libera più vicina alla superficie, diventa corporea e Prona, senza attacchi di opportunità; a parità di distanza decide il Direttore.
 
 > > #### **A.256 — Prezzo di vendita degli artefatti: risposta approvata da Davide (06/11/2026)**
 
-> > ## **Il prezzo di vendita si calcola come costo completo di costruzione × 3 × coefficiente di rarità. Coefficienti: Comune 1; Non comune 1,5; Raro 2; Molto raro 3; Leggendario 5; Unico o reliquia senza prezzo di catalogo. Il risultato si arrotonda per eccesso ai 50 cr successivi. L’Anello della Rigenerazione 9, con costo di costruzione di 1.500 cr e rarità Molto rara, vale quindi 13.500 cr. Rarità e reperibilità restano separate: disporre del denaro non garantisce che l’oggetto sia disponibile.**
+Il prezzo di vendita si calcola come costo completo di costruzione × 3 × coefficiente di rarità. Coefficienti: Comune 1; Non comune 1,5; Raro 2; Molto raro 3; Leggendario 5; Unico o reliquia senza prezzo di catalogo. Il risultato si arrotonda per eccesso ai 50 cr successivi. L’Anello della Rigenerazione 9, con costo di costruzione di 1.500 cr e rarità Molto rara, vale quindi 13.500 cr. Rarità e reperibilità restano separate: disporre del denaro non garantisce che l’oggetto sia disponibile.
 
 > > #### **A.257 — Valore complessivo della FIAT LUX: risposta approvata da Davide (06/11/2026)**
 
-> > ## **Il prezzo di catalogo dello Scout standard resta 126.510 cr. Il valore corrente della FIAT LUX comprende base, equipaggiamento installato o assegnato, dotazione portatile a bordo, munizioni e consumabili residui, accumulatori di ricambio e loro stato o carica. Vanno mostrati separatamente modello base, dotazione extra e valore totale dell’esemplare. Kit trauma, pistola medica, cartucce di naniti, 400 colpi aggiuntivi e ricambi rossi o verdi restano inventario del gruppo, ma concorrono al totale finché sono a bordo o assegnati; il valore cambia quando vengono consumati, rimossi o trasferiti.**
+Il prezzo di catalogo dello Scout standard resta 126.510 cr. Il valore corrente della FIAT LUX comprende base, equipaggiamento installato o assegnato, dotazione portatile a bordo, munizioni e consumabili residui, accumulatori di ricambio e loro stato o carica. Vanno mostrati separatamente modello base, dotazione extra e valore totale dell’esemplare. Kit trauma, pistola medica, cartucce di naniti, 400 colpi aggiuntivi e ricambi rossi o verdi restano inventario del gruppo, ma concorrono al totale finché sono a bordo o assegnati; il valore cambia quando vengono consumati, rimossi o trasferiti.
 
 > > #### **A.258 — Eretici e vecchio catalogo dei nemici: chiarimento provvisorio approvato da Davide (06/11/2026)**
 
-> > ## **Gli Eretici generici presenti nei dati precedenti non sono creature canoniche del nostro bestiario. Come chiarimento provvisorio dei soli dati attualmente visibili nell’app, finché non saranno sostituiti, gli Eretici Minori mantengono Toccato e i Boss mantengono Consacrato, mentre i profili ordinari Semplici o Medi non ricevono doni automatici. Questa indicazione non approva né canonizza quei profili: gli Eretici e tutte le altre creature nemiche inserite in precedenza da Marcello devono essere superati dalle creature create da noi per il Manuale. Gli Eretici come creature dell’Oscura Simmetria devono ancora essere completati. La A.258 non va quindi interpretata come convalida del catalogo esistente.**
+Gli Eretici generici presenti nei dati precedenti non sono creature canoniche del nostro bestiario. Come chiarimento provvisorio dei soli dati attualmente visibili nell’app, finché non saranno sostituiti, gli Eretici Minori mantengono Toccato e i Boss mantengono Consacrato, mentre i profili ordinari Semplici o Medi non ricevono doni automatici. Questa indicazione non approva né canonizza quei profili: gli Eretici e tutte le altre creature nemiche inserite in precedenza da Marcello devono essere superati dalle creature create da noi per il Manuale. Gli Eretici come creature dell’Oscura Simmetria devono ancora essere completati. La A.258 non va quindi interpretata come convalida del catalogo esistente.
 
 > > #### **A.259 — Uso dei Capolavori: risposta approvata da Davide (06/11/2026)**
 
-> > ## **Ogni singolo Capolavoro concede un proprio uso una volta per sessione, non una volta per personaggio. Deve essere lo strumento principale di una prova pertinente e non offensiva. Nella stessa prova si può usare un solo Capolavoro e ripetere il tiro una sola volta, accettando il secondo risultato. Se l’oggetto viene trasferito, resta già usato fino alla sessione successiva.**
+Ogni singolo Capolavoro concede un proprio uso una volta per sessione, non una volta per personaggio. Deve essere lo strumento principale di una prova pertinente e non offensiva. Nella stessa prova si può usare un solo Capolavoro e ripetere il tiro una sola volta, accettando il secondo risultato. Se l’oggetto viene trasferito, resta già usato fino alla sessione successiva.
 
 Magia 1.16 — 11/11/2026. Correzione di pubblicazione: ripristinate A.261–A.263 — formula di vendita degli Artefatti con coefficiente Epica 4; Batterie finite calcolate dalla formula; Anello con Rigenerazione 9 riportato a Grado IV, potenza Molto Rara e SnT 4\. Mantenute le nuove regole su Cristalli, Pietre di Luna e lavorazioni industriali.
 
 Equipaggiamento 0.40 — 11/11/2026. Correzione di pubblicazione: ripristinate A.261 e A.264 — prezzi delle Batterie finite calcolati dalla formula generale; valore degli accumulatori parzialmente carichi stimato dal prezzo pieno meno il costo delle cariche mancanti, con valore effettivo stabilito dal Direttore. Mantenute le nuove regole industriali e il profilo della CyberArma di Dimitri.
 
-> > ## **Giocatore 0.63 — 12/11/2026. Cambiato: §2.16.1 uniformata la conversione energetica — 1 carica CEC da 10 UE alimenta integralmente un tampone da 100 cariche NEC da 0,1 UE; il trasformatore ripristina le cariche personali mancanti e conserva il residuo.**
+Giocatore 0.63 — 12/11/2026. Cambiato: §2.16.1 uniformata la conversione energetica — 1 carica CEC da 10 UE alimenta integralmente un tampone da 100 cariche NEC da 0,1 UE; il trasformatore ripristina le cariche personali mancanti e conserva il residuo.
 
-> > ## **Direttore 0.50 — 12/11/2026. Cambiato: §9.8.3 tutti e sette i Guardiani passano straordinariamente dal livello 7 all’8 senza assegnazione dei PX mancanti; PX effettivi invariati; 21 punti liberi complessivi da ridistribuire; per Oshi mantenuto il cambio di Classe già registrato nell’app, con solo avanzamento da Assaltatore II a III.**
+Direttore 0.50 — 12/11/2026. Cambiato: §9.8.3 tutti e sette i Guardiani passano straordinariamente dal livello 7 all’8 senza assegnazione dei PX mancanti; PX effettivi invariati; 21 punti liberi complessivi da ridistribuire; per Oshi mantenuto il cambio di Classe già registrato nell’app, con solo avanzamento da Assaltatore II a III.
 
-> > ##  
 
 > > #### **A.267 — Adeguamento straordinario e possibile diminuzione del VA: risposta approvata da Davide (15/11/2026)**
 
