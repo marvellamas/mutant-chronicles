@@ -1,6 +1,6 @@
 > > # **Per Davide — domande aperte ed errata dei manuali**
 
-*Aggiornato al 21 novembre 2026. **Il testo integrale delle risposte approvate non è più qui: è nel tuo Doc «E\&L – Risposte e correzioni approvate».** La sezione 6 è diventata un indice — numero, oggetto, data della risposta, se e quando l’app l’ha applicata.*
+*Aggiornato al 21 novembre 2026. **Le risposte già risolte non sono più in questo documento:** il loro testo è nel tuo Doc «E\&L – Risposte e correzioni approvate», e il conto per numero lo tiene l’app con un controllo automatico. Qui resta solo quello che devi decidere, correggere, aspettare o fare.*
 
 **Istruzioni per Davide (e per l’AI che usi per rispondere)**
 
@@ -10,21 +10,21 @@
 
 • **Se approvi qualcosa nell’E\&L, lasciaci una riga anche qui.** Lo chiediamo per esperienza, non per forma: nel tuo Doc abbiamo già trovato quattro volte la specifica completa di un lavoro — l’adeguamento delle Abilità, i venticinque PNG, il raccordo sanitario e, il 18 novembre, otto risposte (A.280–A.287) più due richieste per la mappa e per la dotazione ASA — e una di quelle volte l’abbiamo letta con un mese di ritardo, perché guardavamo la data del documento sbagliato. Una riga qui, anche di tre parole con il rimando al blocco, ci fa trovare subito quello che hai già deciso. (Le sette risposte del 17 novembre, A.273–A.279, le hai lasciate nei due posti: è esattamente così, grazie. Le dieci del 18 sono solo nell’E\&L: le abbiamo trovate lo stesso, perché a ogni sessione scarichiamo tutti e due i documenti e ne confrontiamo la data esatta e l’impronta del testo. Le sei del 19 novembre, A.288–A.293, le hai lasciate di nuovo in tutti e due, e anche le cinque della sera, A.294–A.298: grazie.)
 
-• Non modificare, spostare o cancellare le domande: lo facciamo noi. Quando una risposta è recepita e la funzione è implementata nell’app, la voce passa nella sezione **6\. Risolte**, con la data.
+• Non modificare, spostare o cancellare le domande: lo facciamo noi. Quando una risposta è recepita e la funzione è implementata nell’app, la voce esce dalle domande aperte: il testo resta nel tuo E\&L e noi teniamo il conto per numero nel nostro registro (sezione 6).
 
 • Le correzioni ai manuali le fai nei Doc dei manuali, come sempre.
 
 • Ogni domanda dice cosa fa l’app *nel frattempo*: **da parte nostra oggi non c’è niente che impedisca la serata di lunedì 23** (tutte le risposte che aspettavamo sono arrivate e sono applicate; la serata è stata riprovata dall’inizio alla fine). Le domande ancora aperte sono sei, **A.299–A.304**: nessuna cambia quello che si gioca lunedì, e per ciascuna c’è scritto che cosa cambia al tavolo se resta senza risposta.
 
-• **Se hai poco tempo, leggi solo la sezione 1\.** Sono tre richieste che non sono domande di regole ma il modo di lavorare (la prima è una riga: un numero di versione nuovo a ogni pubblicazione), poi le sei domande aperte con una riga ciascuna, e lunedì 23: non devi decidere niente.
+• **Se hai poco tempo, leggi solo la sezione 1\.** Sono quattro richieste che non sono domande di regole ma il modo di lavorare (la prima è una riga: un numero di versione nuovo a ogni pubblicazione; la quarta è una proposta sulla tua sezione 7), poi le otto domande aperte con una riga ciascuna, e lunedì 23: non devi decidere niente.
 
-**Sezioni:** 1\. Domande che bloccano un lavoro in corso · 2\. Domande aperte · 3\. Risposte ricevute, in implementazione · 4\. Da correggere nei manuali (e le regole che l’app non conta) · 5\. Manuali che l’app aspetta · 6\. Risolte (indice) · 7\. Risposte di Davide · 8\. Prove da fare (solo le tue).
+**Sezioni:** 1\. Domande che bloccano un lavoro in corso · 2\. Domande aperte · 3\. Risposte ricevute, in implementazione · 4\. Da correggere nei manuali (e le regole che l’app non conta) · 5\. Manuali che l’app aspetta · 6\. Risolte (dove sono) · 7\. Risposte di Davide · 8\. Prove da fare (solo le tue).
 
 > > ---
 
 > > ## **1\. Domande che bloccano un lavoro in corso**
 
-**Tre richieste che non sono domande di regole: sono il modo di lavorare.** Le mettiamo in testa perché sono quelle che ci fanno perdere più tempo in due.
+**Quattro richieste che non sono domande di regole: sono il modo di lavorare.** Le mettiamo in testa perché sono quelle che ci fanno perdere più tempo in due.
 
 **1\. Un numero di versione nuovo a ogni pubblicazione (A.303).** Stamattina, fra le **10:36 e le 10:39 UTC**, tre manuali sono cambiati **restando allo stesso numero**: la **Magia 1.19** (aggiunto il §28.6, Warden TC), gli **Armamenti 0.89** (aggiunto il §7.28.3, artiglieria) e i **Veicoli 0.21** (un capitolo 17 intero, con dieci mezzi). Fra le 10:52 e le 11:03 hai rinumerato — Magia 1.20, Veicoli 0.22, Armamenti 0.90 — ed è proprio quello che chiediamo; ma per mezz'ora tre Doc dicevano un numero e contenevano un altro testo. Il protocollo che abbiamo concordato il 10/11 dice che **comanda la versione, non la data**: con il numero fermo nessuno dei nostri controlli può accorgersi di niente (stamattina ce ne siamo accorti perché abbiamo guardato la data al secondo, e non lo facciamo a mano per ogni manuale a ogni minuto). Quello che ci serve è facile: **0.21 → 0.22, anche per un paragrafo**, e la prima riga del file che lo dice («EDIZIONE 0.22»). Non chiediamo avvisi né messaggi: con il numero nuovo ce ne accorgiamo da soli in un secondo. È il guasto del 9/11 (il Lorath col Getto acido) che si ripete, e questa è la riga che lo chiude per sempre. *Se resta senza risposta:* continuiamo a confrontare le date, ma una modifica fra due nostri controlli, a numero fermo, non la vediamo.
 
@@ -36,13 +36,17 @@
 
 **3\. I 120° del FIAT LUX, per la terza volta (A.302).** La tua A.280 del 18/11 dice **arco frontale di 180°** (90° a sinistra e 90° a destra del muso) per la M606 del FIAT LUX; l'app applica la risposta. Il Manuale dei Veicoli — 0.19, 0.21 e 0.22 — scrive ancora **120°**, **in due punti**: (1) nel capitolo 10, alla fine del paragrafo «Mitragliatore leggero Punisher»: «…il proprio supporto con settore di 120°»; (2) nella sezione «Tavole della Neverlost e del FIAT LUX», nella didascalia della tavola del FIAT LUX: «…la rotazione della struttura è limitata a 120°». Basta cambiare i due numeri in 180°: due minuti. Dal nostro lato è chiuso: c'è un test che **fallisce se un dato dell'app contraddice una risposta approvata**, quindi la prossima volta che qualcuno rigenera i dati dal manuale lo vediamo subito; resta da correggere il manuale. *Se resta così:* l'app tiene 180° e chi legge il manuale vede 120°.
 
-**Le sei domande aperte** (il testo completo è nella sezione 2; qui, una riga ciascuna su che cosa cambia al tavolo se restano senza risposta):
+**4\. Una proposta sulla sezione 7, che è tua.** Questo documento è a 127 pagine, e la sezione 7 — le risposte che ci hai già dato — è **il 69%** di quello che resta. Il suo stesso titolo dice che viene dal tuo Doc E\&L («Fonte delle decisioni: E\&L – Risposte e correzioni approvate»), quindi è una copia di un testo che hai già, e che è canonico lì. *La proposta, e sei tu a decidere:* **(a)** che la sezione 7 tenga **solo le risposte degli ultimi giorni** più lo spazio in coda dove la tua AI scrive, e che per tutte le precedenti valga il rimando all’E\&L — esattamente quello che abbiamo appena fatto noi con la sezione 6, che era la stessa copia dalla nostra parte; **(b)** che il titolo «7. Risposte di Davide» diventi un **titolo vero** e non una cella di tabella: oggi l’indice di Google Docs mostra le sezioni 1–6 e 8 e **salta la tua**, che è l’unica in cui scrivi. *Perché lo chiediamo, senza giri:* un documento da 127 pagine non lo rilegge nessuno — né noi né la tua AI — e quello che non si rilegge è il posto dove le contraddizioni restano per settimane. Ne abbiamo appena trovate tre: voci che da sei settimane dicevano «da applicare» ed erano applicate. *Se accetti,* con un lotto il documento scende sotto le 30 pagine. *Se preferisci di no,* resta com’è e non cambia niente: la sezione 7 non la tocchiamo mai.
+
+**Le otto domande aperte** (il testo completo è nella sezione 2; qui, una riga ciascuna su che cosa cambia al tavolo se restano senza risposta):
 • **A.299 — l'AR cambia con la forma dei licantropi?** Senza risposta l'AR resta quello della scheda in tutte le forme: un lupo mannaro umanoide mostra AR 2 invece di 0 e un colpo contro di lui perde 2 punti in più; lo correggi tu al tavolo.
 • **A.300 — lo Sciacallo mannaro ha forme e attacchi per forma?** Senza risposta ha tutti i suoi attacchi in ogni caso, come oggi.
 • **A.301 — il calendario della campagna:** quello del personaggio o uno solo per il gruppo? Senza risposta l'avviso delle Pietre di Luna guarda il Calendario facoltativo di chi porta la pietra; senza Calendario attivo non avvisa e il conto dei 7 giorni resta tuo.
 • **A.302 — i 120° del manuale** (richiesta 3): senza correzione l'app tiene 180° e il manuale dice 120°.
 • **A.303 — un numero nuovo a ogni pubblicazione** (richiesta 1): senza risposta non vediamo una modifica a numero fermo fra due nostri controlli.
 • **A.304 — dei venti mezzi terrestri dei capitoli 16 e 17, quanti servono davvero al tavolo?** Modellarli tutti è un lavoro grosso e forse ne usi tre. Senza risposta nessuno dei venti entra; si parte dallo Scout T4 (distinto dal FIAT LUX) e dal Recon T6.
+• **A.305 — i cannoni e l’artiglieria del §7.28.2–3: armi del catalogo o solo dotazione dei mezzi?** Senza risposta non entrano: il manuale lascia «da definire» acquisto, massa, Integrità e FOR, e i mezzi che le montano non li leggiamo.
+• **A.306 — peso, Qualità, PS, PI e Reperibilità dei due moduli del Warden TC** (Magia §28.6). Senza risposta restano «da definire» nei dati, mai a zero: le CM e i prezzi funzionano lo stesso.
 
 **Per lunedì 23 non devi decidere niente.** Tutte le risposte che aspettavamo sono arrivate e sono applicate: le dieci del **18 novembre**, le sei del **19** (A.288–A.293) e le cinque del **19 sera** (A.294–A.298, scritte nell'E&L e qui in sezione 7). Il Doc e l'E&L, scaricati adesso, sono ancora quelli delle **22:50 UTC del 19/11**: non c'è niente di nuovo da leggere. Grazie.
 
@@ -58,7 +62,7 @@
 
 > > ## **2\. Domande aperte (l'app ha già un'ipotesi ragionevole)**
 
-Sei domande aperte, **A.299–A.304**. Due di loro, la A.302 (i 120°) e la A.303 (il numero di versione), sono scritte per esteso in testa alla sezione 1 perché sono richieste di lavoro e non di regole; le altre quattro sono qui. (Sono le stesse sei della sezione 1: lì una riga ciascuna, qui il testo.) **Nessuna ferma niente**: per ciascuna l'app fa già una cosa ragionevole, scritta nel «Nel frattempo». (Le cinque che erano aperte fino a ieri sera, A.294–A.298, hanno la tua risposta del 19/11: sono applicate e fra le Risolte, tranne le cavalcature della plancia, che sono in sezione 3.)
+Otto domande aperte, **A.299–A.306**. Due di loro, la A.302 (i 120°) e la A.303 (il numero di versione), sono scritte per esteso in testa alla sezione 1 perché sono richieste di lavoro e non di regole; le altre sei sono qui. (Sono le stesse sei della sezione 1: lì una riga ciascuna, qui il testo.) **Nessuna ferma niente**: per ciascuna l'app fa già una cosa ragionevole, scritta nel «Nel frattempo». (Le cinque che erano aperte fino a ieri sera, A.294–A.298, hanno la tua risposta del 19/11: sono applicate e fra le Risolte, tranne le cavalcature della plancia, che sono in sezione 3.)
 
 **A.299 — L'AR cambia con la forma: vuoi che lo segua?** (19/11/2026, nata dall'applicazione della A.288). *In parole semplici:* nelle schede dei licantropi scrivi «AR 2 biologica in forma animale o ibrida; **0 umanoide**» (ratto e tigre 1 / 0). Nell'app l'AR è **un valore solo**, quello della forma animale: il lupo mannaro in forma umanoide mostra AR 2 invece di 0, e un colpo contro di lui perde 2 punti che non dovrebbe perdere. La A.273 elenca ingombro, movimento e (con la A.288) attacchi: l'AR non c'è, e cambiarlo cambia i danni subiti, quindi **non l'abbiamo toccato**. *Che cosa ci serve da te:* un sì (l'AR segue la forma, con il valore che scrive il manuale per ciascuna) o un no. *Nel frattempo:* l'AR resta quello della scheda in tutte le forme; se contro un licantropo umanoide serve AR 0, lo correggi tu al tavolo. *Se resta senza risposta:* niente di diverso da oggi.
 
@@ -68,7 +72,11 @@ Sei domande aperte, **A.299–A.304**. Due di loro, la A.302 (i 120°) e la A.30
 
 **A.304 — Dei venti mezzi terrestri dei capitoli 16 e 17, quanti servono davvero al tavolo?** (20/11/2026). *In parole semplici:* i Veicoli 0.22 hanno, oltre allo Scout T4, **dieci mezzi nel capitolo 16** (Recon T6, Vigilant T4, Inspector T6, Carrier T6, Carrier T8, Carrier TC, Vanguard TC, Lancer TC, Guardian TC, Bastion TC) e **dieci nel capitolo 17** (Thunder TC, Storm T8, Sentinel TC, Overwatch T8, Pioneer TC, Atlas T8, Forge T8, Titan TC, Lifeline T6, Warden TC), ciascuno con armi di bordo, scudi, compartimento truppe ed energia in cariche. Per ognuno servono un modello e un lavoro: modellarli tutti è grosso, e forse al tavolo ne usi tre. *Che cosa ci serve da te:* quali, e in che ordine (anche solo i nomi). *Nel frattempo:* nessuno dei venti c'è nell'app, e l'app non ha un modo di creare un veicolo fuori catalogo: chi serve lo gestisci a mano dal manuale (PI, armi, energia), come oggi. *Se resta senza risposta:* nessuno dei venti entra; si parte dallo Scout T4, distinto dal FIAT LUX (sezione 5), e dal Recon T6.
 
-Primo numero libero: **A.305**.
+**A.305 — I cannoni, il lanciamissili e l’artiglieria degli Armamenti §7.28.2–7.28.3: armi del catalogo, o solo dotazione dei mezzi?** (20/11/2026). *In parole semplici:* per ognuno dei dieci sistemi — quattro cannoni, il lanciamissili anticarro, l’obice del Thunder TC, le due batterie dello Storm T8, gli autocannoni binati e i missili contraerei del Sentinel TC — il manuale dà danno, gittata, consumo e ciclo di tiro, ma scrive che «specifiche autonome di acquisto, massa, Integrità e FOR restano da definire». Se li mettiamo nel catalogo come armi, quei quattro campi restano vuoti e nessuno può comprarle o impugnarle: servono solo se un mezzo le porta, e i mezzi dei capitoli 16 e 17 non li leggiamo (richiesta 2, A.304). *Che cosa chiedo:* vanno nel catalogo come armi «non in vendita» con quei campi da definire, **oppure** restano dentro i mezzi che le montano, e le facciamo quando entrano i mezzi? *Nel frattempo:* l’app non ne ha nessuna; il Mitragliatore Leggero Punisher del §7.28.1, che ha la scheda completa, c’è dal 20/11.
+
+**A.306 — Peso, Qualità, PS, PI e Reperibilità dei due moduli del Warden TC** (Magia §28.6). (20/11/2026). *In parole semplici:* il §28.6 dà prezzi, riserve (6 CM Verdi) e costi d’uso (1 CM per scansione, 3 CM per trattamento) del Modulo Individuare 6 e del Modulo Esorcizzare Corruzione 12, ma non quanto pesano, che Qualità hanno, quanti PS e PI, e quanto sono reperibili; del Cofanetto corazzato dà tutto tranne la Reperibilità. *Che cosa chiedo:* i cinque valori dei moduli e la Reperibilità del Cofanetto, oppure «sono quelli dei Guanti da Combattimento Mistico» se vuoi che li prendiamo da lì. *Nel frattempo:* nei dati sono dichiarati «da definire», mai zero; riserve, costi in CM e prezzi funzionano.
+
+Primo numero libero: **A.307**.
 
 > > ---
 
@@ -86,7 +94,7 @@ Cose che hai già deciso e che l’app non ha ancora, con il perché e quando.
 
 • **A.285 — Neverlost: il record da tenere** (18/11). *Che cosa hai deciso:* quella da conservare è **quella del gruppo (veimvzoj07y0)**, con riserve 100/10/30, circuito e munizioni; la scheda intestata a Pablo (**veimvzojvax1**) è il doppione vuoto e non va fusa con l’altra; la rimozione è un intervento tecnico separato e non risulta verificata. *Nel frattempo:* l’app mostra tutti e due i record e non tocca niente. **La rimozione la fai tu, dal tuo PC, con il pulsante «Cancella dal registro…»** (sezione 8, prova 1), che c’è dal 18/11: una copia resta e si rimette.
 
-• **Mappa: PG e PNG a bordo di veicoli e cavalcature** (18/11, requisito per l’app; la tua A.296 del 19/11 dà i posti del Turk). *Che cosa hai deciso:* con un veicolo o una cavalcatura sulla mappa si devono poter far salire e scendere PG e PNG; i posti sono quelli della scheda del mezzo (equipaggio e passeggeri, se distinti); a posti esauriti non sale nessuno; spostando la pedina si spostano da sole tutte e sole quelle a bordo; chi scende libera il posto e non segue più. *Nel frattempo:* **per i veicoli c’è già**: clic destro su un PG o un nemico accanto al veicolo → «Sali su … come conducente» o «come passeggero»; dal pannello del veicolo, «A bordo» → «Scendi…» (un clic su un quadretto libero accanto); i posti sono quelli del profilo, a posti esauriti l’app lo dice, e chi è a bordo si muove con il mezzo. **Per le cavalcature, dal 20/11 c’è il dato e non la plancia:** il **Turk** ha nei dati i suoi 3 posti (conducente compreso; Passo 6 · Corsa 12 · Scatto 18 con uno o due a bordo, Passo 4 · Corsa 8 · niente Scatto con tre; il quarto non sale) e ci sono le funzioni per salire e scendere, anche per i PNG fuori scontro (senza Iniziativa); la mini-scheda del Turk mostra il movimento e «con tre persone…», ma **non c’è nessun «Sali/Scendi» sulla pedina** e gli occupanti non seguono la pedina: è un lavoro a parte, che non si tocca prima di lunedì. Le altre cavalcature restano «da definire»: il Giocatore 0.65 §5.2.7 non scrive capienze (dice che un animale non è cavalcabile per la sola taglia e che i posti stanno nella sua scheda), e la capienza non si ricava dalla taglia. «Implementazione da verificare», scrivi: la verifica al tavolo la facciamo noi. **A.296: fatta per metà il 20/11, lotto 228** — il dato c’è, la plancia no.
+• **A.296 — Mappa: PG e PNG a bordo di veicoli e cavalcature** (requisito del 18/11; la tua risposta del 19/11 dà i posti del Turk). *Che cosa hai deciso:* con un veicolo o una cavalcatura sulla mappa si devono poter far salire e scendere PG e PNG; i posti sono quelli della scheda del mezzo (equipaggio e passeggeri, se distinti); a posti esauriti non sale nessuno; spostando la pedina si spostano da sole tutte e sole quelle a bordo; chi scende libera il posto e non segue più. *Nel frattempo:* **per i veicoli c’è già**: clic destro su un PG o un nemico accanto al veicolo → «Sali su … come conducente» o «come passeggero»; dal pannello del veicolo, «A bordo» → «Scendi…» (un clic su un quadretto libero accanto); i posti sono quelli del profilo, a posti esauriti l’app lo dice, e chi è a bordo si muove con il mezzo. **Per le cavalcature, dal 20/11 c’è il dato e non la plancia:** il **Turk** ha nei dati i suoi 3 posti (conducente compreso; Passo 6 · Corsa 12 · Scatto 18 con uno o due a bordo, Passo 4 · Corsa 8 · niente Scatto con tre; il quarto non sale) e ci sono le funzioni per salire e scendere, anche per i PNG fuori scontro (senza Iniziativa); la mini-scheda del Turk mostra il movimento e «con tre persone…», ma **non c’è nessun «Sali/Scendi» sulla pedina** e gli occupanti non seguono la pedina: è un lavoro a parte, che non si tocca prima di lunedì. Le altre cavalcature restano «da definire»: il Giocatore 0.65 §5.2.7 non scrive capienze (dice che un animale non è cavalcabile per la sola taglia e che i posti stanno nella sua scheda), e la capienza non si ricava dalla taglia. «Implementazione da verificare», scrivi: la verifica al tavolo la facciamo noi. **A.296: fatta per metà il 20/11, lotto 228** — il dato c’è, la plancia no.
 
 **Il lavoro che resta** (il ricalcolo del bonus di Armatura Mistica, il registro dello stato «Esausto neutro», la plancia delle cavalcature, l’AR per forma dei licantropi dopo la tua risposta alla A.299) è nostro e **nessuna di queste cose serve alla serata di lunedì**.
 
@@ -118,7 +126,20 @@ Cose che hai già deciso e che l’app non ha ancora, con il perché e quando.
 
 > > ## **4\. Da correggere nella prossima edizione dei manuali**
 
-**Le regole che l’app NON conta, e che al tavolo si applicano a mano.** Una cosa che da un manuale non si vede: quanto lavoro sta facendo il tavolo al posto dell’app. Non è una lamentela: è il conto, fatto il 17 novembre sui lavori dal 133 al 216 e aggiornato il 18 novembre con i lavori dal 218 al 221 e il 19 con quelli dal 223 al 225, con il perché di ciascuna. Una regola ricade qui in uno di quattro modi: **il manuale non dà il numero** (e noi non lo inventiamo), **il manuale lo dà ma dipende da una tua risposta**, **è una procedura tua** che deve restare tua (l’ultima parola è del Direttore), oppure **non l’abbiamo ancora costruita**. Quando una voce è «una scheda mista» o «un attacco non tirabile» significa che il testo c’è, si legge per intero, e non si tira né si calcola con un tocco.
+**Otto correzioni, una riga ciascuna.** Niente di urgente: sono cose da sistemare quando metti mano al testo. Dove una tua risposta approvata dice il contrario del manuale, il numero è scritto: è quello che rende la correzione indiscutibile.
+
+| Manuale e paragrafo | Cosa dice ora | Cosa dovrebbe dire |
+| :---- | :---- | :---- |
+| **Veicoli 0.19, 0.21 e 0.22** — cap. 10, fine del paragrafo «Mitragliatore leggero Punisher», e didascalia della tavola del FIAT LUX | «…il proprio supporto con settore di **120°**» e «…la rotazione della struttura è limitata a **120°**» | **180° frontali** (90° a sinistra e 90° a destra del muso), solo per il FIAT LUX; lo Scout T4 di serie ha il Punisher a 360°. **È la tua A.280 del 18/11**, che l’app applica: finché il manuale dice 120°, il testo e l’app dicono due cose diverse (**A.302**, richiesta 3) |
+| **Mostri §9.6** — modello PNG dell’Assaltatore | «Assaltatore con **arma da guerra** e scudo» | «con la **spada** e lo scudo» (**A.269**). Nei dati l’abbiamo già rinominata, ma questa è prosa che l’app rilegge dal Word a ogni importazione: se la cambiamo noi torna come prima alla pubblicazione dopo |
+| **Mostri** — schede delle creature | soffi, raggi, esplosioni, poteri e attacchi elementali, mistici o dell’Oscura Simmetria non dichiarano la **Natura** del danno | dichiararla sempre (**A.274**). Sono gli ultimi **11** attacchi che l’app lascia segnati e non tira con un tocco |
+| **Mostri** — regole comuni dei blocchi | alcune regole di cui le schede hanno bisogno stanno in una **pagina finale**, dopo le creature | prima delle schede (**A.277**); nelle pagine finali riepiloghi, esempi e note narrative. Sblocca la lettura di **158** schede «miste» su 203 |
+| **Armamenti §7.8** — catalogo Colt | «Colt **Jamson** 45» | «Colt **Jemson** 45» (**A.278**): la grafia canonica è con la E. È una parola |
+| **Magia §24 / Equipaggiamento §10** — due prezzi | **Pietra della Vigilanza 4.000 cr**, **Guanti da Combattimento Mistico 3.000 cr** | con la tua formula (**A.256**: costo × 3 × coefficiente, ai 50 cr) verrebbero **12.600** e **13.800**. L’app mostra la cifra scritta e il calcolo accanto, come hai deciso con la **A.261**: dicci se vale la cifra o la formula. Sono i due Artefatti di Lucas, e la differenza si vedrebbe se vendesse o assicurasse qualcosa |
+| **Doc «Per Davide», sezione 7** — riga di registro dell’Equipaggiamento | c’è la riga della **0.40**, non della **0.41** | una riga per pubblicazione: senza, quel manuale resta fra i «confrontati alla cieca» anche se la 0.40 ce l’ha |
+| **File `SIMPLY_RPG_PNG_Abilita_v0.67.json`** (cartella condivisa) | dichiara dentro di sé l’impronta del **Mostri 0.67**; su Drive il manuale è **0.69** | il file **rigenerato dall’edizione corrente**, con l’impronta del Word 0.69: è un’esportazione del foglio, non un lavoro di scrittura. Finché le due fonti non sono della stessa edizione i venticinque modelli PNG restano dichiarati alla 0.67 |
+
+**Le regole che l’app NON conta, e che al tavolo applichi a mano.** È il conto di quello che abbiamo dichiarato «non applicato», con il perché: il manuale non dà il numero (e non lo inventiamo), oppure lo dà ma dipende da una tua risposta, oppure è una procedura tua che deve restare tua, oppure non l’abbiamo ancora costruita.
 
 | Che cosa | Quante | Perché non è contata | Al tavolo |
 | :---- | :---- | :---- | :---- |
@@ -142,53 +163,23 @@ Cose che hai già deciso e che l’app non ha ancora, con il perché e quando.
 | **Cavalcature: ordini, montare/smontare, scossone** | **1** | il Giocatore 0.65 §5.2.7: un ordine semplice senza Azioni, montare e smontare in 1 AzM, persuadere l’animale (1 AzP e Sopravvivenza), scossone con una PS di Riflessi, caduta; l’app ha solo i posti e il movimento del Turk | lo gestisci tu |
 | **Armi di bordo dei mezzi dell’Alleanza** | **1** | Armamenti §7.28.2–3: la raffica del cannone automatico con un tiro solo, il riarmo dell’autocaricatore, il dispiegamento e il tiro indiretto dell’obice, le due batterie lanciamissili indipendenti, l’intercettazione del Sentinel; il manuale stesso le dice «da definire» per la parte autonoma, e i mezzi non ci sono (A.304). Solo il Mitragliatore Leggero Punisher è un’arma del catalogo | a mano |
 
-**Il conto.** Regole o voci singole elencate sopra: **39** dei Talenti, **11** attacchi, **1** cono, **8** procedure del Direttore, **6** settori e armi di bordo, **9** dei veicoli, **2** proprietà del danno, **4** focalizzatori, **1** scadenza delle Pietre di Luna, **5** costi di creazione e fabbricazione, **2** stati, **6** del raccordo sanitario, **6** risposte applicate per metà: **100**; più **1** risposta del 18 e 19 novembre non ancora applicata (le cavalcature sulla plancia), **2** per le forme (AR per forma e presa dell’Ammantato), **1** per le cavalcature (§5.2.7) e **1** per le armi di bordo dell’Alleanza: **105** in tutto. Il numero con cui si confronta il 142 del 17 novembre è questo: **142 → 106** col lotto 218 (−36: i mostri, con la tua A.274 e la A.276), **→ 102** col 219 (−6: le armi lunari e la Collana sono nell’app; \+2: la Parata \+1 del Verde e il danno Magico dei Quadrelli, dichiarati e non ancora sommati), **→ 100** col 220 (le due distanze chiuse), **→ 104** col 222 (le quattro risposte del 18/11 non ancora applicate), **→ 103** col 223 (la concessione precompilata e la dotazione ASA per metà), **→ 102** col 225 (−1 la Cartuccia, A.292; −1 la A.281; \+1 la A.288 registrata), **→ 103** col 227 (−1 la A.288 applicata; \+1 l’AR per forma, A.299; \+1 i bersagli dell’Ammantato), **→ 104** col 228 (\+1 i comandi del combattimento in sella: le A.294, A.295, A.297 e A.298 sono applicate e non cambiano il conto; la A.296 è per metà e resta nella riga delle cavalcature), **→ 105** oggi (\+1 le armi di bordo dei mezzi dell’Alleanza, §7.28). **Il gruppo che cresce è sempre lo stesso: i mezzi dell’Alleanza** — ogni mezzo nuovo che entra nei manuali porta con sé armi di bordo, scudi e compartimenti che l’app non ha (A.304). Più **203 schede del Bestiario** che contengono capacità non ancora lette del tutto (le **86 Taglie non attribuite** non sono più un gruppo: la A.275 le ha tolte e la carta dice «Taglia non specificata»). Lo abbiamo contato a mano, lotto per lotto, e per i dettagli minori (una frase di un Talento, un valore «da definire» in una scheda) non pretende di essere esaustivo: è il conto di quello che abbiamo dichiarato «non applicato» con il suo motivo. Quello che **non** vediamo — una regola che l’app calcola male senza che nessuno se ne accorga — non è qui: per quello valgono le prove al tavolo.
+**Il conto: 105 voci** (erano 142 il 17 novembre). Le tue risposte del 17–19 novembre hanno svuotato la riga più grossa — gli attacchi dei mostri, da 47 a 11 — e il gruppo che cresce è sempre lo stesso, i **mezzi dell’Alleanza**: ogni mezzo nuovo porta armi di bordo, scudi e compartimenti che l’app non ha (A.304, A.305). Più le **203 schede** del Bestiario con capacità non ancora lette del tutto. Quello che **non** vediamo — una regola che l’app calcola male senza che nessuno se ne accorga — non è in questo conto: per quello valgono le prove al tavolo.
 
-**Che cosa serve da te per svuotare la tabella, in ordine di resa.** Le risposte che ci hai dato fra il 17 e il 19 novembre hanno già svuotato la riga più grossa (gli attacchi dei mostri: da 47 a 11\) e tolto tre voci (la Cartuccia, le Pietre di Luna intere, la correzione di Dimitri). Restano due cose tue: **(1)** le due correzioni al manuale dei Mostri che hai già deciso — la **Natura dichiarata** negli attacchi non fisici (A.274: è l’ultimo attacco non tirabile con una Natura da scrivere) e le **regole comuni prima delle schede** (A.277): permettono di leggere le 158 schede per capacità; **(2)** le risposte alle domande aperte di sezione 1 e 2, che non fermano niente: **A.299** (AR per forma) e **A.300** (Sciacallo mannaro) tolgono due voci dalla tabella, **A.304** dice quanti mezzi dell’Alleanza servono davvero. Il resto è lavoro nostro — il controllo dei settori sulla mappa, il ricalcolo del bonus di Armatura Mistica a 0 PI, la plancia per le cavalcature e i PNG a bordo — oppure è una tua scelta già scritta nella riga della tabella (le procedure del cap. 9): se vuoi che una diventi un pulsante, dimmelo.
-
-**Le correzioni ai manuali.** Niente di urgente: sono cose da sistemare quando metti mano al testo, più tre richieste nostre in fondo.
-
-• **Una riga di registro a ogni pubblicazione, anche quando pubblichi di corsa.** Fra il 9 e il 15 novembre le pubblicazioni sono state **ventotto**; in sezione 7 le righe «Cambiato rispetto a…» sono **sette**. Quelle sette ci hanno chiuso **sei domande** da sole — A.261, A.262, A.263, A.264, A.266 e la A.265 dal §7.25 — cioè domande che senza la riga sarebbero ancora qui e che ti avremmo rifatto. Per le altre ventuno recepiamo confrontando i testi, e dove due letture sono possibili scegliamo noi, al buio. *Nel frattempo:* il nostro archivio segna manuale per manuale quali edizioni sono state confrontate alla cieca, e per quelle una differenza ambigua la trattiamo come ipotesi dichiarata, mai come certezza. Oggi sono **sei manuali su sette**. **Il 18 novembre è uscito anche l’Armamenti 0.87** (Drive, 12:48 UTC): nemmeno quello ha la riga in sezione 7, quindi lo confrontiamo alla cieca (e la differenza che abbiamo trovato — sezione 5 — è tutta scritta in chiaro nel testo). **Il 20 novembre** la stessa cosa è tornata più forte: per Giocatore 0.65, Armamenti 0.88–0.89–0.90, Veicoli 0.20–0.22 e Magia 1.20 la sezione 7 ha **una sola riga** (quella della 0.89 per il §7.26): il resto lo confrontiamo alla cieca; e tre manuali sono cambiati sotto lo stesso numero. La richiesta è in testa alla sezione 1 (A.303).
-
-• **Quando approvi qualcosa nell’E\&L, una riga anche qui.** È la richiesta nuova di questo giro, e la facciamo con il cappello in mano perché il problema è nostro, non tuo. Nel tuo Doc delle risposte approvate abbiamo trovato **tre volte** la specifica completa di un lavoro: l’«Adeguamento approvato delle Abilità e passaggio al livello 8» dell’11 novembre (che conteneva già la risposta a una domanda che ti avevamo appena fatto), le acquisizioni dei venticinque PNG del 12–13 novembre, e il raccordo sanitario del 13\. E una volta l’abbiamo letta **con un mese di ritardo**, perché la nostra copia dell’E\&L era ferma al 15 ottobre mentre il tuo Doc era stato aggiornato. Adesso li scarichiamo entrambi a ogni sessione e non ricapita; ma una riga qui — anche solo «ho approvato X nell’E\&L» — ci farebbe trovare subito quello che hai già deciso, invece di cercarlo.
-
-• **Il file delle Abilità dei PNG è rimasto a un’edizione indietro.** Il SIMPLY\_RPG\_PNG\_Abilita\_v0.67.json dichiara dentro di sé l’impronta del Manuale dei Mostri **0.67**; su Drive il manuale è **0.69** e l’impronta non coincide più. Finché le due fonti non sono della stessa edizione i venticinque modelli PNG restano dichiarati alla 0.67, perché mescolare i numeri del file vecchio con la prosa del manuale nuovo darebbe profili incoerenti senza che nessun valore diventi assurdo. **Ci serve il file rigenerato dall’edizione corrente**, con l’impronta del Word 0.69 dentro: è un’esportazione del foglio, non un lavoro di scrittura.
-
-• **Due prezzi non tornano con la tua formula, e sono entrambi di Lucas.** Con la regola della A.256 — costo di costruzione × 3 × coefficiente di rarità, arrotondato ai 50 cr — la **Pietra della Vigilanza** verrebbe **12.600 cr** e nel catalogo è **4.000**; i **Guanti da Combattimento Mistico** verrebbero **13.800** e sono **3.000**. L’Anello con Rigenerazione 9 invece quadra: Grado IV, Molto Rara, 13.500 cr. *Nel frattempo:* l’app mostra il prezzo che il manuale scrive e il calcolo accanto, senza correggere niente — come hai deciso con la A.261. Lo segnaliamo perché sono i due oggetti di un personaggio vero, e se un giorno vendesse o assicurasse qualcosa la differenza si vedrebbe al tavolo. (Stato del 17/11: Lucas li ha tutti e due.)
-
-• **Mostri §9.6: «Assaltatore con arma da guerra e scudo».** Con la A.269 la voce si chiama **Spada**, e nei dati l’abbiamo rinominata. Quella frase è prosa del manuale, che l’app rilegge dal Word a ogni importazione: se la cambiassimo noi tornerebbe come prima alla pubblicazione successiva. Quando ritocchi il §9.6 diventa «con la spada e lo scudo». (È la prova 4 della sezione 8.)
-
-• **Nel registro dei veicoli la Neverlost è doppia, e hai già detto quale tenere** (A.285, sezione 3). Nel tuo stato del 17 novembre ci sono due record della nave, creati a quaranta secondi uno dall’altro il 2 novembre: uno **del gruppo** con tutto a posto (riserve 100/10/30, scudo, munizioni; **veimvzoj07y0**) e uno **di Pablo** vuoto, con le riserve da registrare e nessuna munizione (**veimvzojvax1**). Il 18 novembre hai scritto che quella da tenere è la prima. **Non l’abbiamo toccato noi, il registro è tuo.** Dalla parte nostra il buco è chiuso: la regola «la Neverlost è un esemplare unico» era applicata solo nell’elenco dei mezzi che si possono creare, non nel momento in cui il record viene scritto. **Una correzione a una cosa che avevamo scritto, due volte:** per quattro pacchetti ti abbiamo detto che il record vuoto «si cancella dalla tab Veicoli», e **non era vero** (nessun pulsante); poi, nel Doc del 17, che non c’era e andava tolto a mano dalla cartella dei veicoli. **Dal 18 novembre il pulsante c’è**: «Cancella dal registro…», con la conferma che nomina il mezzo e una copia che si rimette. Come si fa è in sezione 8, prova 1\.
-
-• **Lucas non riesce ad aprire il mezzo, e con un comando si rimette a posto.** Nel suo file lo Scout è attaccato a un veicolo che nel tuo registro non esiste più: **veimv15h6e40**. Il FIAT LUX vero è **veimvozx57q0**. Per l’app quel mezzo non esiste, quindi la scheda non lo apre. *Che cos’è successo:* è **sempre lo stesso Scout**, registrato tre volte (4 ottobre, 9 ottobre, 26 ottobre), verificato numero per numero — stesso modello, stessi PI 60/36/24, stessi 400 colpi e 800 di riserva, stesso proprietario, Pablo alla guida. Nasceva un record nuovo ogni volta che una scheda che aveva lo Scout «in casa propria» lo passava al registro, perché il controllo dei doppioni guardava solo i mezzi marcati «del gruppo»; il buco è chiuso. **Non hai sbagliato niente tu.** *Stato:* **il riferimento di Pablo non c’è più** (il suo file del 17 novembre non ne ha), resta **solo quello di Lucas** (stato del 17/11, 09:09). *Che cosa si fa:* un comando, in sezione 8, oppure dalla tab Veicoli in «Modifica master» la riga che dice quale mezzo manca e, accanto, la tendina dei veicoli che esistono con «Ricollega»: l’app **non ricollega da sé**, nemmeno quando il candidato giusto è l’unico, perché attaccare il mezzo sbagliato è peggio che lasciarlo staccato.
-
-• **Il doppione dei mezzi, e quello che l’app non farà.** Abbiamo chiuso il buco: il controllo vale per tutti i mezzi e scatta nel momento in cui il record si scrive. Ma **non uniamo e non cancelliamo niente di tuo**: un record di veicolo porta Integrità, munizioni e la storia di una campagna, e fonderne due tirando a indovinare sarebbe peggio. Se risultano due record dello stesso mezzo l’app ti dice quale c’è già, con il suo identificativo e da quando esiste, e decidi tu; se è davvero un **secondo mezzo** basta dichiararlo e lo scrive senza discutere. Abbiamo guardato tutto il tuo registro in sola lettura: **altri doppioni non ce ne sono.**
-
-• **I token sulla mappa: adesso lo sappiamo.** La stessa cosa dei mezzi staccati poteva capitare alle pedine: una pedina attaccata a un mezzo o a uno scontro che non c’è più. La mappa ora lo dice e con un tocco si rimette a posto o si toglie la pedina. Nello stato del 17 novembre, che porta anche le scene, **nelle tue due scene non ci sono pedine appese.** (Nelle nostre scene di prova ne avevamo trovate 11, tutte in una sola, attaccate a una bozza di scontro che non esiste più.)
-
-• **Lo Scout ha un altro identificativo sul tuo PC.** Da te il FIAT LUX è veimvozx57q0; nella nostra copia locale, che è di ottobre, era veimuu14mqa0. Non è uno sdoppiamento — da te ce n’è uno solo — sono due registri diversi. Lo scriviamo solo perché nei nostri appunti quell’identificativo era citato come se fosse il tuo.
-
-• **In sezione 7 la riga dell’Equipaggiamento è della 0.40, non della 0.41.** Piccola cosa: la pubblicazione della 0.41 non ha la sua riga, quindi quel manuale resta fra i «confrontati alla cieca» anche se la 0.40 ce l’ha.
-
-• **Armamenti: «Colt Jamson 45» va scritto «Jemson»** (A.278, tua risposta del 17/11). La grafia canonica è con la E; nel manuale compare «Jamson». Quando ritocchi il §7.8 è una parola.
-
-• **Mostri: dichiarare la Natura degli attacchi non fisici** (A.274). Soffi, raggi, esplosioni, poteri e attacchi elementali, mistici, consacrati o dell’Oscura Simmetria devono scriverla; finché non c’è, l’app li lascia segnalati fra le capacità e non li rende tirabili.
-
-• **Mostri: le regole comuni prima delle schede, mai in una «pagina finale»** (A.277). Le pagine finali di un blocco possono avere riepiloghi, esempi, note narrative; le regole di cui le schede hanno bisogno — per esempio «resistenza fisica, immunità collettive e localizzazioni funzionali» degli Sciami — vanno prima delle creature. Quando lo sistemi, il nostro lettore le trova da solo e le **158 schede** per capacità possono tornare complete.
+**Che cosa serve da te per svuotare la tabella, in ordine di resa.** **(1)** Le due correzioni al Manuale dei Mostri che hai già deciso, qui sopra: la **Natura dichiarata** (A.274) chiude gli ultimi 11 attacchi non tirabili, e le **regole comuni prima delle schede** (A.277) permettono di leggere 158 schede. **(2)** Le risposte alle domande aperte: **A.299** e **A.300** tolgono due voci, **A.304** e **A.305** dicono quanto dei mezzi dell’Alleanza serve davvero. Il resto è lavoro nostro, oppure è una tua scelta già scritta nella riga della tabella (le procedure del cap. 9): se vuoi che una diventi un pulsante, dimmelo.
 
 > > ---
 
 > > ## **5\. Manuali che l'app aspetta**
 
-**Siamo in pari sui manuali che abbiamo letto, ma i manuali si muovono ancora.** Ricontrollato **oggi, 20 novembre, 11:22 UTC**, uno per uno contro Drive (le ore sono quelle di Drive, UTC) — non fidandoci di stamattina, perché fra le 10:36 e le 10:39 ne erano cambiati tre sotto lo stesso numero. Fra il nostro ultimo scarico e adesso **sono cambiati altri tre numeri**: Magia 1.20 (10:52), Veicoli 0.22 (11:02) e Armamenti 0.90 (11:03). Recepire vuol dire: il testo è nel nostro archivio con la versione nel nome, ogni differenza rispetto all'edizione di prima è stata guardata, e il registro dice da quando. **Non** vuol dire che ogni dato dell'app sia già rigenerato: quella distinzione è la parte che segue, ed è la risposta alla domanda «con che edizione mi ha risposto l'app?», la prima da fare quando al tavolo un numero non torna. In fondo all'app, nella pagina iniziale, la riga «Dati delle regole» dice sempre la verità su questo.
+**Siamo in pari sui manuali che abbiamo letto, ma i manuali si muovono ancora.** Ricontrollato uno per uno contro Drive il **20 novembre alle 12:49 UTC** (le ore sono quelle di Drive, UTC) — non fidandoci di stamattina, perché fra le 10:36 e le 10:39 ne erano cambiati tre sotto lo stesso numero. Fra il nostro ultimo scarico e adesso **sono cambiati altri tre numeri**: Magia 1.20 (10:52), Veicoli 0.22 (11:02) e Armamenti 0.90 (11:03). Recepire vuol dire: il testo è nel nostro archivio con la versione nel nome, ogni differenza rispetto all'edizione di prima è stata guardata, e il registro dice da quando. **Non** vuol dire che ogni dato dell'app sia già rigenerato: quella distinzione è la parte che segue, ed è la risposta alla domanda «con che edizione mi ha risposto l'app?», la prima da fare quando al tavolo un numero non torna. In fondo all'app, nella pagina iniziale, la riga «Dati delle regole» dice sempre la verità su questo.
 
 **Le sette edizioni: Drive oggi, recepito, e da quale edizione vengono i dati.** L'impronta è quella del testo (le prime dodici cifre di una somma di controllo): per Giocatore, Equipaggiamento, Mostri e Direttore è quella della nostra copia, perché la data di Drive è identica a quella che avevamo (non li abbiamo riscaricati); per Magia e Armamenti è quella del testo scaricato oggi.
 
 | Manuale | Su Drive oggi (UTC) · impronta | Recepito da noi | Dati dell'app |
 | :---- | :---- | :---- | :---- |
 | **Giocatore** | **0.65** · 19/11 13:12:43 · `07ea62daff22` | **0.65** (20/11): cambia solo il §5.2.7 | le **Classi** e il profilo delle Abilità 4/7/9/4 sono alla 0.65; undici file (Abilità, Addestramenti, Caratteristiche, Corporazioni, Dotazioni, Nemici, Mappa, Regole, Specializzazioni, Talenti Liberi, Tecniche Interiori) rispondono ancora con la **0.54** |
-| **Magia** | **1.20** · 20/11 10:52:26 · `4e926448e3ae` | **1.19**, con il testo delle 10:36 del 20/11 (la 1.20 mette in forma il §28.6 e aggiunge la sua riga di registro: la leggiamo, non l'abbiamo ancora recepita) | le **90 schede** degli incantesimi sono alla 1.19; le regole di Poteri, Chroma e Cariche Mistiche (un solo file) alla **1.11** |
-| **Armamenti** | **0.90** · 20/11 11:03:17 · `69efdd855282` | **0.89**, con il testo delle 10:38:32 del 20/11 (la 0.90 completa il §7.28.3: autocannoni binati e missili contraerei del Sentinel TC, radar e intercettazione; non recepita) | le **222 voci d'arma** (le 221 di prima più il Mitragliatore Leggero Punisher) e le sei voci dei manufatti lunari alla **0.89**; **dieci file** (accessori, armature, armature corporative, corredi e dispositivi, elmetti, indice, munizioni, rinforzi, scudi, unità robotiche) alla **0.74** |
+| **Magia** | **1.20** · 20/11 10:52:26 · `4e926448e3ae` | **1.20** (20/11): rispetto al testo delle 10:36 cambiano il numero, la riga di registro e la forma di sei titoli; il §28.6 è applicato | le **90 schede** degli incantesimi sono alla **1.20** (rilette: 90 invariate); le regole di Poteri, Chroma e Cariche Mistiche (un solo file) alla **1.11** |
+| **Armamenti** | **0.90** · 20/11 11:03:17 · `69efdd855282` | **0.90** (20/11): rispetto al testo delle 10:38 cambiano **solo** il numero, la riga di registro e la forma dei titoli del §7.28.3 — **nel Doc del 20 novembre ti avevamo scritto che la 0.90 «completa» il §7.28.3 col Sentinel TC: non è vero, era già tutto nel testo precedente** | le **222 voci d'arma** (le 221 di prima più il Mitragliatore Leggero Punisher) e le sei voci dei manufatti lunari alla **0.89**; **dieci file** (accessori, armature, armature corporative, corredi e dispositivi, elmetti, indice, munizioni, rinforzi, scudi, unità robotiche) alla **0.74** |
 | **Equipaggiamento** | **0.42** · 13/11 12:38:21 · `a4d827a31e1e` | **0.42** | Artefatti, comunicazione, dotazioni personali, esplorazione, impianti, sanitario e strumenti professionali alla 0.42; **NEC e regole dell'energia alla 0.30** |
 | **Veicoli** | **0.22** · 20/11 11:02:06 · il Doc è a **63,57 MB** e non si esporta in Markdown; l'impronta del testo semplice è `742758c2f92f` | **0.21**, **primo testo** (19/11 13:13): il cap. 17 non c'è e non si può leggere | alla **0.19**; i numeri dei cinque profili sono riletti sulla 0.21 (0 scarti, 40 campi) |
 | **Mostri** | **0.69** · 15/11 13:25:23 · `5f3dbae625c2` | **0.69** | le creature del catalogo alla 0.69; i **venticinque modelli PNG alla 0.67** |
@@ -196,7 +187,7 @@ Cose che hai già deciso e che l’app non ha ancora, con il perché e quando.
 
 Le schede e i documenti tecnici — Talenti, Specializzazioni e Maestrie 1.1, Revisione NEC 2.11, Energia 1.0, ASA Scout MK4 0.6, Neverlost 1.6, Scudo Punisher Wächter 1.2, Guanti mistici di Lucas 1.0, CyberArma Opzioni per Dimitri 1.0 — sono tutti recepiti, e su Drive non risultano cambiati (controllo di stamattina, 20/11, dopo le 10:40 UTC: nessun documento modificato dopo il 19/11 oltre a quelli qui sopra). Il Doc e l'E&L sono invariati dalle 22:50 UTC del 19/11 (impronte `e9d7062e017b` e `70c0efb1b934`).
 
-**Che cosa è cambiato dal 19/11, in una riga per manuale.** **Giocatore 0.64 → 0.65:** il §5.2.7 «Cavalcature e combattimento in sella» (montare e smontare in 1 AzM, un solo conducente, ordini senza Azioni, persuadere l'animale, scossone con una PS di Riflessi; l'esempio del Turk); il cap. 8 è identico byte per byte. **Armamenti 0.87 → 0.89:** il §7.26 (le quattro funzioni dell'Elmetto Recon ASA, già applicate dalla A.294) e il §7.28 nuovo (Mitragliatore Leggero Punisher: 1d8+3 Naturale, +1 VA, 25.000 cr; i cannoni, il lanciamissili e l'artiglieria «da definire» per la parte autonoma); le armi del catalogo: **216 voci su 222 invariate, 0 differenze**. **Veicoli 0.19 → 0.21:** la 0.20, **mai vista e non più recuperabile**, ha rinominato lo Scout MK4 in **Scout T4**, sostituito il M606 col **Punisher** (prezzo standard 132.510 cr invece di 126.510), tenuto il FIAT LUX col M606 e aggiunto il capitolo 16 con dieci mezzi; la 0.21 aggiunge il rimando alle cavalcature nel §1.3, e (testo delle 10:39) il capitolo 17 con altri dieci. **Magia 1.19 → 1.20:** il §28.6 «Dotazioni rimovibili del Warden TC» (due ricette da 6 CM Verdi).
+**Che cosa è cambiato dal 19/11, in una riga per manuale.** **Giocatore 0.64 → 0.65:** il §5.2.7 «Cavalcature e combattimento in sella» (montare e smontare in 1 AzM, un solo conducente, ordini senza Azioni, persuadere l'animale, scossone con una PS di Riflessi; l'esempio del Turk); il cap. 8 è identico byte per byte. **Armamenti 0.87 → 0.89:** il §7.26 (le quattro funzioni dell'Elmetto Recon ASA, già applicate dalla A.294) e il §7.28 nuovo (Mitragliatore Leggero Punisher: 1d8+3 Naturale, +1 VA, 25.000 cr; i cannoni, il lanciamissili e l'artiglieria «da definire» per la parte autonoma); le armi del catalogo: **216 voci su 222 invariate, 0 differenze**. **Veicoli 0.19 → 0.21:** la 0.20, **mai vista e non più recuperabile**, ha rinominato lo Scout MK4 in **Scout T4**, sostituito il M606 col **Punisher** (prezzo standard 132.510 cr invece di 126.510), tenuto il FIAT LUX col M606 e aggiunto il capitolo 16 con dieci mezzi; la 0.21 aggiunge il rimando alle cavalcature nel §1.3, e (testo delle 10:39) il capitolo 17 con altri dieci. **Magia 1.19 → 1.20:** il §28.6 «Dotazioni rimovibili del Warden TC» (due ricette da 6 CM Verdi). **Armamenti 0.89 → 0.90 e Magia 1.19 → 1.20 (recepite il 20/11):** solo il numero e la riga di registro, nient’altro; nessun numero cambia, e le armi rilette sulla 0.90 danno 222 voci su 222 identiche.
 
 **Che cosa resta fuori, e perché.** Scritto per esteso, ricontrollato oggi contro i dati e il registro, non ricopiato dall'elenco di prima.
 
@@ -208,8 +199,8 @@ Le schede e i documenti tecnici — Talenti, Specializzazioni e Maestrie 1.1, Re
 | **Il file dei venticinque PNG alla 0.67** | il tuo file di dati dichiara dentro di sé l'impronta del Word 0.67; il Manuale dei Mostri è alla 0.69: mescolare i numeri del file vecchio con la prosa del manuale nuovo darebbe profili incoerenti | **il file rigenerato dall'edizione corrente** (sezione 4) |
 | **Il Bestiario: 203 schede miste e 32 provvisorie** | le 203 hanno capacità, Abilità o note non ancora lette del tutto (158 per le capacità: la A.277 è una correzione al tuo manuale); le 32 sono quelle che non vengono da un manuale tuo (A.258) | la tua correzione al manuale (A.274, A.277) e il nostro lotto |
 | **L'AR per forma dei licantropi e lo Sciacallo mannaro fuori tabella** | la A.299 e la A.300 sono domande aperte; non abbiamo dedotto niente per analogia | le tue risposte |
-| **Magia §28.6 (Warden TC) e i costi di creazione dei §§24.4–24.7** | il §28.6 è nuovo, due ricette con 6 CM Verdi che rimandano ai Veicoli §17.10 (mezzo che non c'è); i costi di creazione nuovi (supporto 100 cr, corredo 1.200, dotazione rituale 300, Chroma grezzo 200/800 per PM) chiedono una procedura di creazione che non è nel motore | un lotto a sé |
-| **I settori di tiro** (il controllo sulla mappa) e un'**arma di bordo che spara da una pedina** | la A.280 ha dato il centro del settore della M606 (180° frontali) e il dato è aggiornato, ma il controllo sulla mappa non esiste e l'arma da pedina è interfaccia nuova | un lotto a sé |
+| **I costi di creazione della Magia §§24.4–24.7** (supporto 100 cr, corredo 1.200, dotazione rituale 300, Chroma grezzo 200/800 per PM) e la **fabbricazione industriale** (Equipaggiamento §5.4.12) | chiedono una procedura di creazione che non è nel motore. Il **§28.6 (Warden TC) è applicato dal 20/11**: i due moduli e il Cofanetto corazzato sono nel catalogo, con le riserve in CM e i prezzi del manuale; restano «da definire» i cinque valori dei moduli (**A.306**) | un lotto a sé |
+| **I settori di tiro** (il controllo sulla mappa) e un'**arma di bordo che spara da una pedina** | la A.280 ha dato il centro del settore della M606 (180° frontali) e il dato è aggiornato, ma il controllo sulla mappa non esiste e l'arma da pedina è interfaccia nuova; i dieci sistemi d'artiglieria del §7.28.2–3 non sono nel catalogo perché il manuale lascia «da definire» acquisto, massa, Integrità e FOR (**A.305**) | un lotto a sé |
 | **L'Esausto lunare e la fabbricazione** (Equipaggiamento §5.4.12) | le Pietre di Luna intere ci sono dal 19/11 (A.291) e così le armi lunari, la Spada dei Tre Riflessi e la Collana; l'Esausto lunare è un ingrediente delle ricette di fabbricazione, e la procedura di fabbricazione non è nel motore | un lotto a sé |
 | **Le regole del cap. 9 che sono tue** (campo attrezzato, autonomia di una città, tana, creature evocate, caste non combattenti, «Verifica al tavolo») | sono procedure del Direttore e restano tue | nessuno, salvo che tu voglia un pulsante |
 | **Ventiquattro file di dati a un'edizione più vecchia del loro manuale** (elenco sotto) | ciascuno ha il suo motivo scritto nel registro; nessuno cambia un numero dei sette | i lotti indicati |
@@ -222,355 +213,21 @@ Le schede e i documenti tecnici — Talenti, Specializzazioni e Maestrie 1.1, Re
 • **Mostri 0.67 — `png_generici.json`:** vedi sopra (il file dei PNG).
 • **Veicoli 0.19 — `veicoli.json`:** vedi sopra (Scout T4, capitoli 16 e 17).
 
-**Errata, Manuale dei Veicoli 0.19, 0.21 e 0.22 — la M606 del FIAT LUX (A.302).** Il manuale scrive ancora «settore di 120°», **in due punti**: nel capitolo 10, alla fine del paragrafo «Mitragliatore leggero Punisher» («…il proprio supporto con settore di 120°»), e nella didascalia della tavola del FIAT LUX in «Tavole della Neverlost e del FIAT LUX» («…la rotazione della struttura è limitata a 120°»). La tua risposta **A.280** del 18 novembre dice **180° frontali** (90° a sinistra e 90° a destra del muso, solo per il FIAT LUX; lo Scout T4 di serie ha il Punisher a 360°). **L'app applica la risposta**; resta da correggere il manuale (sezione 1, richiesta 3).
 
 **Una cosa che abbiamo imparato e che ci teniamo:** fra il recepire un manuale e rigenerare i dati passa un lotto, e in quel mezzo ogni tabella dell'app dice da quale edizione viene. Così, quando un valore non torna, la prima cosa da guardare è quella riga — e non c'è bisogno di chiedersi se l'app «sa» della pubblicazione di ieri. Dal 20/11 ne abbiamo imparata un'altra: **il numero di versione è l'unica cosa che ci dice che un manuale è cambiato senza che ce lo ricordiamo noi** (A.303).
 
 > > ---
 
-> > ## **6\. Risolte — indice**
+> > ## **6\. Risolte — dove sono**
 
-**Il testo integrale di ogni risposta approvata è nel tuo Doc [«E\&L – Risposte e correzioni approvate»](https://docs.google.com/document/d/1VaqZaAe4NK5P8A956Eahua_ZT60eh3ohnR2xSqh-tVs/edit).** Qui non lo ricopiamo più: questa tabella tiene la sola cosa che lì non c’è, cioè **se e quando l’app l’ha applicata**, e in quale nostro lotto di lavoro. Una riga per numero, in ordine. «Già così» vuol dire che l’app faceva già come hai deciso; «⚠ da applicare» che la tua risposta è registrata ma l’app non la segue ancora.
+**Il testo integrale di ogni risposta che ci hai dato è nel tuo Doc [«E\&L – Risposte e correzioni approvate»](https://docs.google.com/document/d/1VaqZaAe4NK5P8A956Eahua_ZT60eh3ohnR2xSqh-tVs/edit).** Da oggi non lo ricopiamo più qui: ricopiarlo serviva a noi, non a te.
 
-| N. | Oggetto | Risposta del | Applicata | Lotto |
-| :---- | :---- | :---- | :---- | :---- |
-| A.1 | Descrizioni delle Caratteristiche; Prova Salvezza Volontà su CAR | — | 26/09 | — |
-| A.2 | Schede dei 14 Talenti di magia | — | 26/09 | — |
-| A.3 | Tipo di tre Talenti Liberi | — | 26/09 | — |
-| A.4 | Chiusa a settembre, con le prime risposte | — | chiusa | — |
-| A.5 | Durata di tre Tecniche Interiori | — | 26/09 | — |
-| A.6 | Equipaggiamento iniziale | — | 27/09 | — |
-| A.7 | Pistola mitragliatrice compatta | — | 28/09 | — |
-| A.8 | Pugnale e Ascia leggera | — | 28/09 | — |
-| A.9 | Famiglie delle 12 armi ravvicinate corporative | — | 28/09 | — |
-| A.10 | Scudo delle Guardie Sacre | — | 28/09 | — |
-| A.11 | Specializzazioni delle 16 armi a distanza corporative | — | 28/09 | — |
-| A.12 | Specializzazioni delle altre armi corporative per analogia | — | 28/09 | — |
-| A.13 | Rainy Dayer | — | 28/09 | — |
-| A.14 | Batterie da 5 PM | — | 28/09 | — |
-| A.15 | Chiusa a settembre, con le prime risposte | — | chiusa | — |
-| A.16 | Prove fisiche | — | 29/09 | — |
-| A.17 | Terrorizzato anche alle Prove Salvezza | — | 29/09 | — |
-| A.18 | Riserve integrate nelle armi | — | 02/10 | — |
-| A.19 | Contenitori Chroma | — | 29/09 | — |
-| A.20 | Prelievo dal Chroma Bianco | — | 09/10 | — |
-| A.21 | Chroma Viola come fonte di Corruzione passiva | — | 28/09 | — |
-| A.22 | Senz’armi 1d4 più il bonus di FOR | — | 29/09 | — |
-| A.23 | Mano non dominante −4 | — | 29/09 | — |
-| A.24 | Incalzare | — | 29/09 | — |
-| A.25 | Copertura anche nel ravvicinato | — | 29/09 | — |
-| A.26 | Superiorità numerica | — | 29/09 | — |
-| A.27 | Spazzata | — | 29/09 | — |
-| A.28 | Sbilanciare e Disarmare | — | 29/09 | — |
-| A.29 | Magistrale | — | 29/09 | — |
-| A.30 | Pesi mancanti «da definire» | — | 29/09 | — |
-| A.31 | Oltre il carico massimo | — | 29/09 | — |
-| A.32 | Confermati i 18 Talenti magici | — | già così | — |
-| A.33 | Pistole corporative | — | 29/09 | — |
-| A.34 | Oggetti della dotazione con scheda | — | 05/10 | — |
-| A.35 | Acquisti iniziali | — | 09/10 | — |
-| A.36 | Bonus degli oggetti solo quando si usano | — | già così | — |
-| A.37 | Ricarica | — | 29/09 | — |
-| A.38 | Sette chiarimenti sull’attacco a distanza | — | **⚠ da applicare** | — |
-| A.39 | Anticipazione senza Addestramento, Colpo Elementale, Rigenerazione (punti 1–3) | — | 29/09 | — |
-| A.40 | Carica fino alla Corsa massima | — | **⚠ da applicare** | — |
-| A.41 | Sbilanciare e Disarmare con l’Abilità del mezzo dichiarato | — | 29/09 | — |
-| A.42 | Spazzata anche senz’armi | — | 29/09 | — |
-| A.43 | AR complessiva | — | 28/09 | — |
-| A.44 | Armatura, scudo ed elmetto a 0 PI | — | 28/09 | — |
-| A.45 | Kit di rinforzo a 0 PI | — | 28/09 | — |
-| A.46 | Riparazione strutturale | — | 28/09 | — |
-| A.47 | Oggetti senza PI | — | 28/09 | — |
-| A.48 | Corazza Potenziata, Aura di Resistenza e Pelle di Rinoceronte si sommano | — | 28/09 | — |
-| A.49 | Condizioni delle armi (§5.17) | — | 28/09 | — |
-| A.50 | Ordine delle riduzioni dell’AR | — | 28/09 | — |
-| A.51 | Categorie di Prove degli Stati | — | 28/09 | — |
-| A.52 | Addestramenti a 76 punti e 10 Punti Abilità Liberi | — | 28/09 | — |
-| A.53 | Corazza Potenziata solo con armatura o scudo classificati come Artefatto e con almeno… | — | già così | — |
-| A.54 | Revolver: 1 AzP riempie il tamburo, anche in parte | — | già così | — |
-| A.55 | Caratteristica del bonus al danno per Abilità | — | già così | — |
-| A.56 | Basi dalla prima Classe | — | già così | — |
-| A.57 | Punti liberi ricostruiti evento per evento, con i limiti del momento | — | 09/10 | — |
-| A.58 | Il \+1 di Corporazione resta nel calcolo e torna utile quando il limite sale | — | già così | — |
-| A.59 | Depositare un Artefatto non interrompe la Sintonizzazione | — | 05/10 (tab Artefatti) | — |
-| A.60 | Otto schede | — | — | — |
-| A.61 | Capolavoro del Corazzaio | 02/10 | 02/10 | — |
-| A.62 | Katana Ryūjin | 02/10 | 02/10 | — |
-| A.63 | Esoscheletri | 02/10 | 02/10 | — |
-| A.64 | Moduli IAS | 02/10 | 02/10 | — |
-| A.65 | Dotazioni con più schede | 02/10 | 02/10 | — |
-| A.66 | Corredo da cucina | 02/10 | 02/10 | — |
-| A.67 | Modulo Blu del Gehemmapuker | 02/10 | 02/10 | — |
-| A.68 | Interfaccia neurale standard | 02/10 | 02/10 | — |
-| A.69 | Installazione, rimozione e reinstallazione degli impianti | — | **⚠ da applicare** | — |
-| A.70 | Recuperi di Umanità, procedura di Riabilitazione (con A.92) | — | **⚠ da applicare** | — |
-| A.71 | Cartuccia chirurgica | 02/10 | 02/10 | — |
-| A.72 | Anticipazione senza scala leggibile | — | 07/10 | — |
-| A.73 | Formato dei nemici per il Tavolo del Master | — | 02/10 | — |
-| A.74 | Rituale di Rigenerazione | 02/10 | 02/10 | — |
-| A.75 | Batterie oltre i 5 PM | 02/10 | 02/10 | — |
-| A.76 | Sanguinante | — | quasi conforme — quasi conforme | — |
-| A.77 | Perforante riduce l’AR non magica totale a ogni applicazione di danno, senza erosione | — | già così | — |
-| A.78 | Attacco con VA finale 20 o più | 02/10 | 02/10 | — |
-| A.79 | Umani costruiti come PG | — | **⚠ da applicare** | — |
-| A.80 | Si indossano da soli soprabiti, mantelli, Tabardo consacrato e Sottogiacca IES, con… | — | 03/10 | — |
-| A.81 | Pelle di Rinoceronte | — | 03/10 | — |
-| A.82 | Onda Interiore | — | 03/10 | — |
-| A.83 | REP Epica | — | 03/10 | — |
-| A.84 | Regime di lancio dei nemici | — | **⚠ da applicare** | — |
-| A.85 | Bonus di SAG al danno magico | — | **⚠ da applicare** | — |
-| A.86 | Granate e razzi | — | 03/10 | — |
-| A.87 | Artefatti del gruppo già assegnati nei file dei PG, niente deposito comune | — | — — residui in A.112 | — |
-| A.88 | Individuare a Concentrazione | — | 03/10 | — |
-| A.89 | Correzione proposta per i 5 punti liberi | — | superata dalla A.90 | — |
-| A.90 | Punti Abilità liberi | — | 04/10 — supera l’E&L con 5 punti | — |
-| A.91 | Scheda unica del veicolo condivisa fra PG e Tavolo, proprietario distinto dal… | — | 04/10 (registro dei veicoli) | — |
-| A.92 | Recuperi di Umanità — **vedi A.70** | — | vedi A.70 | — |
-| A.93 | Corpi cyborg completi non disponibili ai PG | — | già così | — |
-| A.94 | Interfaccia SIN | — | già così | — |
-| A.95 | Volo, taglia, Boss come etichetta, calibrazione dei moduli (con A.96 e A.97) | — | **⚠ da applicare** | — |
-| A.96 | Boss come etichetta — **vedi A.95** | — | vedi A.95 | — |
-| A.97 | Calibrazione dei moduli — **vedi A.95** | — | vedi A.95 | — |
-| A.98 | Rune e Tatuaggi | — | **⚠ da applicare** — da togliere la sezione vuota | — |
-| A.99 | Prevale la decisione approvata più recente | — | nessun codice — nessun codice | — |
-| A.100 | Di chi è il veicolo | — | non usato: doppione della A.91 | — |
-| A.101 | ASA Scout MK4 approvato | — | 05/10 | — |
-| A.102 | Autovettura civile | — | 05/10 | — |
-| A.103 | Esempio del §4.3 generico | — | 05/10 | — |
-| A.104 | Per le collisioni conta l’andatura attuale, distinta da quella scelta per dopo | — | 05/10 | — |
-| A.105 | Veicolo nel Tavolo del Master | — | 04/10 (plancia) | — |
-| A.106 | Penombra −2, luce molto scarsa −4, buio come Accecato | — | **⚠ da applicare** | — |
-| A.107 | Correzioni retroattive dell’avanzamento | — | 09/10 | — |
-| A.108 | Punti Abilità liberi in eccesso | — | 09/10 | — |
-| A.109 | Anticipazione, regola comune e 32 aspetti | 08/10 | 09/10 | — |
-| A.110 | Indossare e togliere protezioni | — | 09/10 | — |
-| A.112 | Artefatti del gruppo, residui | — | 09/10 | — |
-| A.113 | Veicoli: il Direttore modifica tutti i veicoli della campagna, anche quelli personali… | 15/10 | 16/10 | — |
-| A.114 | Chip del Processore e strumenti | — | 09/10 — supera l’ipotesi chip/strumenti | — |
-| A.115 | Capacità dei nemici | 15/10 | 16/10 | — |
-| A.116 | Luce e attività pratiche visive | — | 09/10 | — |
-| A.117 | L’Eretico corrotto | 03/11 | 05/11 | — |
-| A.118 | La stampa dei veicoli del gruppo | 03/11 | 05/11 | — |
-| A.119 | Ammalato: sei intensità selezionabili, con penalità −1, −2, −4, −6, −8 e −10 a tutte… | — | 09/10 | — |
-| A.120 | Bonus e malus temporanei di COS e SAG non cambiano i PV e i PM massimi né quelli… | — | già così | — |
-| A.121 | Riuso del codice della tua app per la mappa | — | — — ritirata | — |
-| A.122 | Aiuto-master | — | 09/10 | — |
-| A.123 | Iniziativa sulla mappa | — | 06/10 () | — |
-| A.125 | Porte e illuminazione | — | — — decisione di Marcello | — |
-| A.126 | Ingombro e campo Spazio | 15/10 | 16/10 | — |
-| A.129 | Movimento diviso | — | — | — |
-| A.130 | Scelta tecnica di Marcello, non una domanda per te | — | ritirata il 06/10 | — |
-| A.131 | Immagine dei nemici sulle pedine | — | 06/10 | — |
-| A.132 | Uno Stordito non fa Attacchi di Opportunità | — | — | — |
-| A.133 | Portata delle creature grandi | — | già così | — |
-| A.134 | Diagonale rasente allo spigolo di un muro | — | 07/10 (mappa) | — |
-| A.135 | Ricarica e carichini | — | 09/10 | — |
-| A.136 | Corsa o Scatto dopo un Passo già cominciato e Prova facoltativa di Atletica | — | 09/10 | — |
-| A.137 | Raggio di un’Area sulla griglia | — | già così | — |
-| A.138 | Forma del Cono | — | 09/10 | — |
-| A.139 | Porta «adiacente» in diagonale | — | già così | — |
-| A.140 | Copertura sulla mappa | — | già così | — |
-| A.141 | Creature in mezzo alla linea di tiro (con A.144) | — | 09/10 | — |
-| A.142 | Fin dove vedono i PG | — | 09/10 | — |
-| A.143 | Sensi speciali e nebbia | — | 09/10 | — |
-| A.144 | Creature in mezzo alla linea di tiro — **vedi A.141** | — | vedi A.141 | — |
-| A.145 | Azioni sui veicoli | 15/10 | 16/10 | — |
-| A.146 | Veicoli e AdO | 15/10 | 16/10 | — |
-| A.147 | Veicoli a 45° | 15/10 | 16/10 | — |
-| A.148 | Copertura verso e da un token in volo | — | 09/10 | — |
-| A.149 | La quota conta per la portata | — | già così | — |
-| A.150 | Un token in volo si vede da lontano | — | 09/10 | — |
-| A.151 | Carichini | 09/10 | 13/10 | — |
-| A.152 | Colt Hammershot | 09/10 | 13/10 | — |
-| A.153 | A Terra e Copertura a distanza | — | già così | — |
-| A.154 | Cartuccia del decontaminante | 10/10 | 13/10 | — |
-| A.155 | Pergamene standard | 10/10 | 13/10 | — |
-| A.156 | Infusione fallita | — | già così | — |
-| A.157 | «Rituale: non consentito» vieta solo il lancio come Rituale: l’infusione è permessa e… | 10/10 | 13/10 | — |
-| A.158 | CyberArma | 13/10 | 15/10 | — |
-| A.159 | Morente, contatore di sopravvivenza e cure specifiche | — | 13/11 | — |
-| A.160 | Avversari costruiti come PG | — | 16/10 | — |
-| A.161 | PX della partita | — | 16/10 | — |
-| A.162 | Integrità degli oggetti in tre stati | — | 16/10 | — |
-| A.163 | Contenitori del Silenzio | — | 16/10 | — |
-| A.164 | Morente anche per i nemici | — | 16/10 | — |
-| A.165 | A.109 nel Doc E\&L | — | 16/10 — chiusa | — |
-| A.166 | CyberArma | — | 16/10 | — |
-| A.167 | Ingombri rettangolari e orientamento delle creature | 18/10 | 18/10 | — |
-| A.168 | Fasce dei Titoli per i PX | — | 18/10 | — |
-| A.169 | Abilità del bestiario, VA degli attacchi e Prove di Caratteristica | 18/10 | 18/10 | — |
-| A.170 | Soglie, Atti e fattori di calcolo dei PX | 18/10 | 18/10 | — |
-| A.171 | Portata degli attacchi degli Sciami | 21/10 | 22/10 | — |
-| A.172 | Sagome ruotate, quadretti occupati e portata | 21/10 | 22/10 | — |
-| A.173 | Hachimaki, costi delle Tecniche e sintonizzazione | 21/10 | 22/10 | — |
-| A.174 | «Ricarica e medita» | 23/10 | 28/10 | — |
-| A.175 | Guanti da Combattimento Mistico | 23/10 | già così | — |
-| A.176 | Incantesimi aggiunti a mano | — | 29/10 | — |
-| A.177 | Modifiche dal tablet dopo la partita | 23/10 | 27/10 () | — |
-| A.178 | Manuale del Giocatore 0.49 | 23/10 | già così | — |
-| A.179 | AR di Aura e Pelle | 25/10 | già così | — |
-| A.180 | Scheda del tablet e modifiche in attesa | 25/10 | — — app aggiornata | — |
-| A.181 | Nuova progressione di Talenti, Maestrie e Specializzazioni | 25/10 | già così | — |
-| A.182 | Ricarica Esperta | 25/10 | già così | — |
-| A.183 | Conversione dei personaggi esistenti | 25/10 | già così | — |
-| A.184 | Incantesimi e Tecniche legati ai Talenti | 25/10 | 27/10 () | — |
-| A.185 | Specializzazione del primo livello | 25/10 | già così | — |
-| A.186 | Numero non usato (il 25/10 non è servito) | — | mai usato | — |
-| A.187 | Si sale di livello solo con i PX | 28/10 | 28/10 | — |
-| A.188 | Incantesimi: il giocatore cambia, ma le regole valgono | 28/10 | 28/10 | — |
-| A.189 | Il trasformatore e la regola del «niente travaso» | 30/10 | 30/10 | — |
-| A.190 | Il pacco del Gehemmapuker | 30/10 | 01/11 | — |
-| A.191 | I moduli IAS | 30/10 | 01/11 | — |
-| A.192 | L’energia dei mezzi: Autovettura e Scout | 30/10 | 31/10 | — |
-| A.193 | Le riserve salvate in Lx, UE o ore | 30/10 | 31/10 | — |
-| A.194 | Il Dragomedusa: PX e GS | — | 29/10 | — |
-| A.195 | Lo scudo Punisher Wächter | 30/10 | 01/11 | — |
-| A.196 | La Neverlost nella scheda dei veicoli e nella plancia | 30/10 | 01/11 | — |
-| A.197 | Il premio di fine Atto non si duplica | 30/10 | 30/10 | — |
-| A.198 | Le sagome più grandi e la scala della mappa | 30/10 | 30/10 | — |
-| A.199 | I danni con moltiplicatore | 30/10 | 30/10 | — |
-| A.200 | L’Iniziativa dei PNG umani | 30/10 | 30/10 | — |
-| A.201 | I nomi dei draghi metallici | 30/10 | 30/10 | — |
-| A.202 | La Murena della Roccia cucciolo | 30/10 | 30/10 | — |
-| A.203 | La Madre delle Murene | 30/10 | 30/10 | — |
-| A.204 | L’ordine delle misure dei draghi | 30/10 | 30/10 | — |
-| A.205 | Diplomazia e Oratoria | 30/10 | 30/10 | — |
-| A.206 | Parata a Mani Nude del Lottatore | 30/10 | 30/10 | — |
-| A.207 | Natura del danno e AC delle armi | 30/10 | 30/10 | — |
-| A.211 | «Appreso» lo conferma il Direttore | 30/10 | 02/11 | — |
-| A.213 | Incantesimi aggiunti prima della distinzione | 30/10 | — | — |
-| A.214 | Pacchi da 15 e 50 getti, IAS: peso e formato | — | — — ritirata: la risolvono i manuali del 30/10 | — |
-| A.215 | Le celle e i caricatori si tolgono, si riempiono e si rimettono | 30/10 | 02/11 | — |
-| A.216 | Le riserve salvate in ore | — | — — ritirata: la risolve la A.193 | — |
-| A.217 | Vecchi Banchi e Moduli | 30/10 | — | — |
-| A.218 | Il Bestiario v0.64 | 30/10 | — | — |
-| A.219 | «Chiudi la giornata» | 30/10 | — | — |
-| A.220 | Le Ferite abbassano l’Iniziativa anche dei personaggi | 02/11 | 02/11 | — |
-| A.221 | Il Magistrale su un ×5 | 02/11 | — | — |
-| A.222 | Il Dragomedusa | 03/11 | 04/11 | — |
-| A.223 | La testa della Madre delle Murene | 03/11 | 04/11 | — |
-| A.224 | La roccia | 03/11 | 04/11 | — |
-| A.225 | Le distanze nella scala della scena | 03/11 | 04/11 | — |
-| A.226 | Lo Scout della campagna, FIAT LUX | — | 05/11 — superata in un punto dalla A.257 (08/11) | — |
-| A.227 | I ricambi del FIAT LUX | 02/11 | 05/11 | — |
-| A.228 | Le frazioni | 02/11 | 05/11 — superata dalla A.252 (07/11) | — |
-| A.229 | Specializzazioni di Potere per Classe | 01/11 | 02/11 | — |
-| A.230 | Armi Inastate e Archi e Balestre | 02/11 | 02/11 | — |
-| A.231 | La CyberArma di Dimitri | 02/11 | 02/11 — il comando è in sezione 8 | — |
-| A.232 | Specializzazioni ai pugni con i Guanti | 02/11 | 04/11 | — |
-| A.233 | Capitolo, scena e rinnovo degli usi | 02/11 | 05/11 | — |
-| A.234 | Prova di Potere del Doppio getto | 02/11 | 04/11 | — |
-| A.235 | La CyberArma degli Armamenti aggiornati | 02/11 | 02/11 | — |
-| A.236 | Batteria interna della CyberArma | 02/11 | 04/11 | — |
-| A.237 | NEC della CyberArma convertita | 02/11 | 04/11 | — |
-| A.238 | La Neverlost in una scena in Q Base | 03/11 | 04/11 | — |
-| A.239 | Le munizioni della Neverlost | 02/11 | 05/11 | — |
-| A.240 | La Neverlost non è a listino | — | 05/11 | — |
-| A.241 | Le Specializzazioni tolte che non sono di Potere | — | — — ritirata: confluita nella A.230 | — |
-| A.242 | Il documento Talenti, Specializzazioni e Maestrie v1.1 | — | — | — |
-| A.243 | Quanto costa togliere e mettere una cella (con A.249) | — | 08/11 | — |
-| A.244 | Quanto tempo per riempire i caricatori | 06/11 | 08/11 | — |
-| A.245 | Le celle danneggiate | 06/11 | 08/11 | — |
-| A.246 | La Corruzione del frammento Viola | 06/11 | 08/11 | — |
-| A.247 | Il punto forzato oltre il limite | 06/11 | 07/11 | — |
-| A.248 | Chi riassegna i punti divenuti inefficaci | 06/11 | 07/11 | — |
-| A.249 | Quanto costa togliere e mettere un caricatore — **vedi A.243** | 06/11 | vedi A.243 | 180 |
-| A.250 | Il caricatore parziale è pronto | 06/11 | 08/11 | — |
-| A.251 | Come si alimenta la CyberArma modificata | 06/11 | 08/11 | — |
-| A.252 | Niente frazioni nelle riserve | 06/11 | 07/11 | — |
-| A.253 | Decollo e atterraggio della Neverlost | 06/11 | 08/11 | — |
-| A.254 | Dove si può mettere la testa della Madre delle Murene | 06/11 | 08/11 | — |
-| A.255 | La Murena eterea dentro la roccia | 06/11 | 08/11 | — |
-| A.256 | Il prezzo di vendita degli artefatti | 06/11 | 08/11 — due voci non tornano: sezione 4 | — |
-| A.257 | Quanto vale il FIAT LUX | 06/11 | 08/11 | — |
-| A.258 | Gli Eretici e il vecchio catalogo dei nemici | 06/11 | 08/11 | — |
-| A.259 | L’uso dei Capolavori | 06/11 | 08/11 | — |
-| A.260 | Quanto dura una carica della CyberArma convertita | 15/11 | 16/11 — supera la A.251 | — |
-| A.261 | La formula del prezzo contro i prezzi già scritti nei manuali | — | 14/11 — due voci non tornano: sezione 4 | — |
-| A.262 | Il coefficiente dell’«Epica» | — | 14/11 | — |
-| A.263 | Grado e SnT dell’Anello con Rigenerazione 9 | — | 14/11 | — |
-| A.264 | Quanto vale un accumulatore di ricambio scarico | — | 14/11 | — |
-| A.265 | La potenza della CyberArma | — | 14/11 | — |
-| A.266 | I NEC in cariche o in Unità Energetiche | — | 14/11 | — |
-| A.267 | Adeguamento straordinario e diminuzione del VA | 15/11 | 16/11 | — |
-| A.268 | Lo stato dei sette personaggi | 15/11 | — — ritirata da noi | — |
-| A.269 | «Armi da Guerra», «Spada» e «Spade» | 15/11 | 16/11 — resta la prosa del §9.6: sezione 4 | — |
-| A.270 | Parata a mani nude del Lottatore | 15/11 | 14/11 | — |
-| A.271 | Che CyberArma ha Dimitri | — | 17/11 — il file di Dimitri: sezione 8 | — |
-| A.272 | Da che livello si fa l’adeguamento | — | 16/11 — la scelta della strada è tua | — |
-| A.273 | Creature con due forme | 17/11 | 18/11 | 218 |
-| A.274 | Attacchi senza Natura del danno | 17/11 | 18/11 | 218 |
-| A.275 | Taglia e ingombro | 17/11 | 18/11 | 218 |
-| A.276 | Attacchi con più componenti di danno | 17/11 | 18/11 | 218 |
-| A.277 | Collocazione delle regole comuni nel Bestiario | 17/11 | — — correzione al tuo manuale; le schede miste: sezione 4 | — |
-| A.278 | Denominazioni delle sei armi | 17/11 | 18/11 | 218 |
-| A.279 | Profili del manuale che l’app non offre | 17/11 | 18/11 | 218 |
-| A.280 | FIAT LUX ASA: l’arco frontale sulla mappa | 18/11 | 18/11 — la mappa non controlla i settori (sez. 4); il manuale dice ancora 120° (sez. 5) | 223 |
-| A.281 | Redistribuzione dei punti liberi e correzioni di Dimitri | 18/11 | 19/11 | 225 |
-| A.286 | Concessione individuale del livello 8, e Titolo per i PX | 18/11 | 18/11 | 223 |
-| A.287 | Gli incantesimi liberi di Dimitri | 18/11 | già così | 216 |
-| A.288 | Gli attacchi di ogni forma dei licantropi, e i bersagli dell'Ammantato | 19/11 | 19/11 | 227 |
-| A.289 | Il Modulo al plasma Banshee: Capitol, non Bauhaus | 19/11 | già così | 225 |
-| A.290 | Balestre d’osso e quadrelli dei Mutanti | 19/11 | 19/11 | 225 |
-| A.291 | Le Pietre di Luna intere | 19/11 | 19/11 | 225 |
-| A.292 | Il peso della Cartuccia Stabilizzante | 19/11 | 19/11 | 225 |
-| A.293 | Dimitri: le correzioni di Caratteristica del 2 novembre | 19/11 | 19/11 | 225 |
-| A.294 | Le funzioni dell'Elmetto Recon ASA | 19/11 | 20/11 | 228 |
-| A.295 | Le voci SIA nel catalogo, e i soprabiti dei PG | 19/11 | 20/11 — la migrazione dei sei: sezione 8 | 228 |
-| A.296 | Posti del Turk e cavalcature sulla plancia | 19/11 | **per metà** il 20/11 — **sezione 3** | 228 |
-| A.297 | Il tiro dei PV e dei PM alla salita di livello | 19/11 | 20/11 | 228 |
-| A.298 | Pietre di Luna: l'ultimo contatto e l'avviso «Verifica il vincolo» | 19/11 | 20/11 | 228 |
-| A.305 | *Primo numero libero.* | — | — | — |
+**Sono 285 risposte risolte** (da A.1 in poi), più 41 voci senza numero fra manuali recepiti, schede e lavori nostri. **Restano in corso 13 numeri**, e sono nella sezione 3: A.111, A.124, A.127, A.128, A.208, A.209, A.210, A.212, A.282, A.283, A.284, A.285 e la A.296, applicata per metà.
 
-**Altre voci risolte, senza numero** (manuali recepiti, schede, lavori nostri già fatti).
-
-| Oggetto | Applicata | Lotto |
-| :---- | :---- | :---- |
-| I manufatti lunari dei Mutanti | 18/11 | 219 |
-| La Parata \+1 del Verde e il danno Magico dei Quadrelli | 18/11 | 220 |
-| Cancellare un record dal registro dei veicoli | 18/11 | 218 |
-| Anello con Rigenerazione 9 | 05/11 | — |
-| Revisione «Cariche Mistiche» | 04/11 | — |
-| Esiti dei tuoi test del 24/10 | 25/10 | — |
-| Incantesimi: scelta affidabile | 27/10 | — |
-| I personaggi non si perdono con un aggiornamento | 26–27/10 | — |
-| Esploratore, Specializzazioni dei Talenti a scelta; «minimo 1» ai 2 \+ Mod INT… | — | — |
-| PV e PM attuali al passaggio di livello | 27/09 | — |
-| 18 Talenti magici e mistici nuovi del 27/09 | 27/09 | — |
-| Manuale degli Armamenti v0.52 e v0.53 | 28/09 | — |
-| Manuale del Giocatore del 27/09 | 28/09 | — |
-| Manuale dei Mostri 0.23 — catalogo completo | 16–18/10 | — |
-| Stati 1/11–11/11 | 09/10 | — |
-| Manuale dell’Equipaggiamento 0.6 | 09/10 | — |
-| Magia §27 — Artefatti consumabili | 09/10 | — |
-| Manuali del 12/10 (Giocatore 0.48, Armamenti 0.61) | 13/10 | — |
-| Manuale dell’Equipaggiamento 0.8, §§10.8–10.11 | 19/10 | — |
-| Le due distanze dei manufatti lunari (Parata +1 del Verde, danno Magico dei Quadrelli) | 18/11 | 220 |
-| Il Morente, per intero (§§5.14.2–5.14.3 e la tua A.159 completa) | 13/11 | 193 |
-| Il profilo delle Abilità 4/7/9/4 del Giocatore 0.62 | 13/11 | 192 |
-| L’adeguamento delle Abilità, pronto e da fare al tavolo | 13/11 e 16/11 | 194, 207 |
-| Il Bestiario alla 0.69, campo per campo | 15–16/11 | 203–205 |
-| Le armi del catalogo alla 0.86, poi 0.87 | 16/11 e 18/11 | 206, 223 |
-| I venticinque modelli PNG generici (Mostri 0.67) | 14/11 | 197 |
-| I prezzi degli Artefatti, letti dal manuale | 14/11 | 195 |
-| I riferimenti che non puntano a niente (mezzi e pedine) | 15/11 | 201, 202 |
-| I manuali nuovi recepiti: Giocatore 0.64, Magia 1.19, Armamenti 0.87, Equipaggiamento 0.42, Veicoli 0.19, Mostri 0.69, Direttore 0.51 | 17–18/11 | 209–214, 223 |
-| I focalizzatori della CyberArma nei calcoli | 17/11 | 216 |
-| I settori di tiro delle armi di bordo, nei dati | 17/11 | 213 |
-| Il valore del FIAT LUX: 188.510 cr, non 189.110 | 17/11 | 214 |
-| Gli strumenti da riga di comando non rovinano più i metadati di un personaggio | 17/11 | 210 |
-| La serata dell’adeguamento, provata dal lato dei tablet | 15–17/11 | 215 |
-| Il lanciatore delle prove non muore più in silenzio | 17/11 | 215 |
-| L’app al tavolo, misurata: «Attacca!» legge metà delle righe di ottobre | 18/11 | 220, 221 |
-| La serata del 23 rifatta per intero sull’app di oggi | 19/11 | 224 |
-| La soglia del «Lancia!» misurata in pixel veri a ogni giro di test | 19/11 | 223, 224 |
-| I tre manuali del 19/11 recepiti: Giocatore 0.65, Armamenti 0.89, Veicoli 0.21 | 20/11 | 229 |
-| Magia 1.20 e Armamenti 0.90: il Warden TC nel catalogo, l’artiglieria no | 20/11 | 231 |
-| Un test nuovo: un dato non può contraddire una tua risposta approvata | 20/11 | 229 |
-
-**Per chi controlla la numerazione.** Il numero più alto usato in questo documento è **A.304**; il primo libero è **A.305**. Le ritirate sono la A.214, la A.216, la A.241 e la A.268. **Aperte, oggi:** A.299, A.300, A.301, A.302, A.303 e A.304 (le A.294–A.298 sono risolte dal 20/11; la A.296 resta per metà, in sezione 3).
+**Il conto per numero lo tiene l’app, non una rilettura.** Ogni numero da A.1 all’ultimo ha la sua riga nel nostro registro (`docs/registro-domande.md`, con l’oggetto, la data della tua risposta, se e quando l’app l’ha applicata e in quale lotto) oppure è una voce viva di questo documento, in sezione 1, 2 o 3; un controllo automatico fallisce se un numero manca da tutti e due i posti, o se sta in tutti e due. Prima lo faceva chi rileggeva 169 pagine, e tre voci sono rimaste a dire «da applicare» per sei settimane mentre erano applicate.
 
 > > ---
+
 
 | \#\# 7\. Risposte di Davide |
 | :---- |
