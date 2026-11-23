@@ -2520,7 +2520,7 @@ function renderSchedaInterna({ mantieniScorrimento = false } = {}) {
       lancia: async (fonte, registrazione = null, forza = false, nome = null) => {
         if (stato.scontroPg && registrazione) { await aggiornaRoundScontro(); stato.sessione = sessioneVista(); }
         let nuova = spendiPmLancio(stato.sessione, fonte, massimi, { forza });
-        // lotto 242: Focalizzazione e livello dichiarato tornano a zero, nella stessa modifica (un «Annulla» rimette tutto)
+        // lotto 242: la Focalizzazione torna a zero (il livello resta: src/lancio.js → azzeraDopoIlLancio), nella stessa modifica (un «Annulla» rimette tutto)
         if (nuova && nome) nuova = azzeraDopoIlLancio(nuova, nome);
         if (nuova && registrazione) {
           const quando = calendarioAttivo(stato.calendario) ? momentoCalendario(stato.calendario, dati) : null;

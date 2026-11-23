@@ -19,13 +19,16 @@ function indice() {
   return { r, sez, voci, schede };
 }
 
-test('L’INDICE C’È, IN TESTA AGLI INCANTESIMI, E HA L’ORDINE DELLA PAGINA SOTTO', () => {
+test('L’INDICE C’È, NEL RIQUADRO «Incantesimi» IN CIMA ALLA TAB, PRIMA DEI GRUPPI, E HA L’ORDINE DELLA PAGINA SOTTO', () => {
   const { r, sez, voci, schede } = indice();
   assert.ok(sez, 'l’indice c’è');
-  const titoli = r.tutti.filter((x) => x.tagName === 'H2').map((x) => x.textContent.trim());
-  const iIndice = titoli.findIndex((t) => /^Incantesimi conosciuti/.test(t));
-  const iPrimoGruppo = titoli.findIndex((t) => /^(Fisica|Mentale|Spirituale)$/.test(t));
-  assert.ok(iIndice >= 0 && iIndice < iPrimoGruppo, `l’indice prima dei gruppi: ${titoli.join(' | ')}`);
+  // nel riquadro del conteggio dei conosciuti (lo spazio che c’è già: è alto quanto i Punti Magia accanto)
+  const riquadro = r.classe('contatore-tavolo').find((x) => x.children[0]?.textContent === 'Incantesimi');
+  assert.ok(riquadro && riquadro.tutti().includes(sez), 'dentro il riquadro «Incantesimi»');
+  // prima del primo gruppo della pagina, in ordine di documento
+  const ordine = r.tutti;
+  const primoGruppo = ordine.find((x) => x.tagName === 'H2' && /^(Fisica|Mentale|Spirituale)$/.test(x.textContent.trim()));
+  assert.ok(ordine.indexOf(sez) < ordine.indexOf(primoGruppo), 'l’indice viene prima dei gruppi');
   const nomiIndice = voci.map(nomeDi);
   const idSchede = schede.map((x) => x.getAttribute?.('id') ?? x.id);
   assert.ok(nomiIndice.length >= 2, `${nomiIndice.length} voci`);

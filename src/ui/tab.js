@@ -3343,7 +3343,8 @@ function sezioneIncantesimiAMano(ctx) {
  * @param d dati del foglio Poteri (con le macrofamiglie dei conosciuti e degli aggiunti), o null senza la magia propria
  * @param vuoto se mostrare «Nessun incantesimo scelto» quando non c'è nulla
  */
-function elencoUnificato(ctx, d, { vuoto = true } = {}) {
+/** Gli incantesimi della pagina, per macrofamiglia e specializzazione, nell'ordine in cui si leggono (elenco e indice). */
+function gruppiIncantesimi(ctx, d) {
   const oggetti = incantesimiDaOggetti({ voci: ctx.scelte.equipaggiamento ?? [], scheda: ctx.tab.scheda }, ctx.dati).filter((e) => e.origine !== 'proprieta');
   const noti = d?.macrofamiglie ?? [];
   const gruppi = ctx.dati.incantesimi.macrofamiglie.map((m) => ({
@@ -3354,12 +3355,17 @@ function elencoUnificato(ctx, d, { vuoto = true } = {}) {
       oggetti: oggetti.filter((e) => { const inc = incantesimoDiOggetto(e, ctx.dati); return inc?.macrofamiglia === m.nome && inc?.specializzazione === sp; }),
     })).filter((s) => s.noti.length || s.oggetti.length),
   })).filter((m) => m.specializzazioni.length);
+  return gruppi;
+}
+
+function elencoUnificato(ctx, d, { vuoto = true } = {}) {
+  const gruppi = gruppiIncantesimi(ctx, d);
   if (!gruppi.length) return vuoto ? [sezione('Incantesimi', h('p', { class: 'vuoto' }, 'Nessun incantesimo scelto.'))] : [];
-  return [indiceIncantesimi(ctx, gruppi), ...gruppi.map((mf) => sezione(mf.nome,
+  return gruppi.map((mf) => sezione(mf.nome,
     mf.specializzazioni.map((sp) => h('div', { class: 'incantesimi-griglia' },
       h('h3', { class: 'spec' }, sp.nome),
       sp.noti.map((i) => articoloIncantesimo(ctx, i, mf.nome)),
-      sp.oggetti.map((e) => regioneVivaSe(['pmAttuali', `chroma:${e.riserva?.uid ?? e.uid}`], () => schedaDaOggetto(ctx, e)))))))];
+      sp.oggetti.map((e) => regioneVivaSe(['pmAttuali', `chroma:${e.riserva?.uid ?? e.uid}`], () => schedaDaOggetto(ctx, e)))))));
 }
 
 /** L'identificativo della scheda di un incantesimo nella pagina, per il salto dall'indice (lotto 242). */
@@ -3374,8 +3380,9 @@ export function pmLivelloBase(inc) {
 }
 
 /**
- * Lotto 242 (ritocco 2, visto al tavolo da Marcello): in testa agli incantesimi conosciuti, un indice con nome e PM del livello
- * base, nell'ordine della pagina sotto; un tocco sul nome porta la scheda di quell'incantesimo in cima a quello che si vede,
+ * Lotto 242 (ritocco 2, visto al tavolo da Marcello): nel riquadro «Incantesimi» in cima alla tab (quello del conteggio dei
+ * conosciuti), un indice con nome e PM del livello base, nell'ordine della pagina sotto; sta nello spazio che il riquadro ha già
+ * (è alto quanto i Punti Magia accanto), così si vede appena si apre la tab e non aggiunge altezza; un tocco sul nome porta la scheda di quell'incantesimo in cima a quello che si vede,
  * sotto le fasce ferme in alto (`scroll-margin-top` in css/style.css). Lucas e Dimitri ne hanno 21 e 20: si scorreva per trovarli.
  * È un indice, non una seconda scheda: più nomi per riga. Con un incantesimo solo non serve.
  */
@@ -3386,8 +3393,7 @@ function indiceIncantesimi(ctx, gruppi) {
     const el = globalThis.document?.getElementById?.(idIncantesimo(nome));
     el?.scrollIntoView?.({ block: 'start', behavior: 'smooth' });
   };
-  return h('section', { class: 'sezione-tab indice-incantesimi', 'aria-label': 'Indice degli incantesimi conosciuti' },
-    h('h2', {}, `Incantesimi conosciuti (${voci.length})`),
+  return h('nav', { class: 'indice-incantesimi', 'aria-label': `Indice degli incantesimi conosciuti (${voci.length})` },
     h('ul', { class: 'indice-voci' }, voci.map((v) => {
       const pm = pmLivelloBase(ctx.dati.incantesimi.incantesimi.find((x) => x.nome === v.nome));
       return h('li', { class: classeMacrofamiglia(v.macro) },
@@ -4139,6 +4145,8 @@ function tabMagia(ctx, d) {
       riquadroPM(ctx),
       h('div', { class: 'contatore-tavolo' }, h('h3', {}, 'Incantesimi'),
         h('p', { class: 'valore-tavolo' }, h('strong', {}, String(d.conosciuti)), h('span', {}, ` / ${d.quota}`)),
+        // lotto 242: l'indice degli incantesimi conosciuti, con il salto alla scheda
+        indiceIncantesimi(ctx, gruppiIncantesimi(ctx, d)),
         h('p', { class: 'nota' }, `Livello massimo di lancio: ${d.livelloMassimo}`),
         // Magia sez. 2 e 3, con i Talenti di magia (regole.json → lancio)
         (() => {

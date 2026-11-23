@@ -77,17 +77,18 @@ export function regoleAnticipazione(m, aspetto, versione, con, dati, righe = [])
 }
 
 /**
- * Lotto 242 (ritocco 3, visto al tavolo da Marcello): dopo il lancio la Focalizzazione torna a zero, e con lei il livello
- * dichiarato, che il pannello ricordava nella sessione (`sessione.lanci[nome]`): una metà rimasta addosso al lancio dopo è peggio
- * di niente (nel lotto 235 un livello rimasto a 4 aveva falsato una misura). Tocca solo quelle due scelte di quell'incantesimo:
- * PM, riserve, storico, incantesimi in corso e le altre scelte del pannello restano come sono.
- * @returns la sessione con la dichiarazione di `nome` pulita (la stessa, se non c'era niente da pulire)
+ * Lotto 242 (ritocco 3, visto al tavolo da Marcello): dopo il lancio la Focalizzazione torna a zero. **Il livello dichiarato
+ * resta**, e il motivo va scritto perché la richiesta era di azzerare anche quello: azzerato, il pannello torna al suo
+ * predefinito, che è il livello più alto lanciabile (src/ui/lancio.js: «[...versioni].reverse().find(...)»), quindi dopo un lancio
+ * al livello 2 il successivo proponeva il livello 8 — 8 PM invece di 2 per chi rilancia di fretta. Tenere il livello scelto è il
+ * male minore; se un giorno il predefinito diventa il livello più basso, il livello si può azzerare qui insieme alla Focalizzazione.
+ * Tocca solo la Focalizzazione di quell'incantesimo: PM, riserve, storico, incantesimi in corso e le altre scelte restano.
+ * @returns la sessione con la Focalizzazione di `nome` spenta (la stessa, se non c'era niente da spegnere)
  */
 export function azzeraDopoIlLancio(sessione, nome) {
   const scelte = sessione?.lanci?.[nome];
-  if (!scelte || typeof scelte !== 'object') return sessione;
-  const { focalizzazione: _f, versione: _v, ...resto } = scelte;
-  return { ...sessione, lanci: { ...sessione.lanci, [nome]: resto } };
+  if (!scelte || typeof scelte !== 'object' || !scelte.focalizzazione) return sessione;
+  return { ...sessione, lanci: { ...sessione.lanci, [nome]: { ...scelte, focalizzazione: false } } };
 }
 
 /** Dichiarazione completa, con i valori predefiniti. */
