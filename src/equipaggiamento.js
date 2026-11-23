@@ -1700,8 +1700,14 @@ export function condizioneCessione(def) {
   if (!def) return null;
   const c = def.cessione;
   if (def.non_in_vendita !== true && !(c && c.modo === 'solo_dono')) return null;
+  const testo = c?.testo ?? 'Non è in vendita: lo cede il Direttore («Aggiungi», oppure «gratis (dato dal DdG)» in modalità master).';
   return {
-    testo: c?.testo ?? 'Non è in vendita: lo cede il Direttore («Aggiungi», oppure «gratis (dato dal DdG)» in modalità master).',
+    testo,
+    // lotto 236: il motivo da scrivere sul pulsante «Compra». Il «Non in vendita.» davanti si mette solo se il testo
+    // non lo dice già: dal lotto 225 si leggeva «Non in vendita. Non è in vendita: lo cede il Direttore…», e col 235
+    // su otto voci in più. Per la balestra lunare, il cui testo comincia «I Mutanti le costruiscono… non per
+    // venderle», il davanti serve e resta.
+    motivoCompra: /^non\s+(è|sono)?\s*in vendita/i.test(testo) ? testo : `Non in vendita. ${testo}`,
     valoreNonPrezzo: def.non_in_vendita === true && Number.isFinite(def.costo),
     disponibilita: Number.isInteger(c?.disponibilita_campagna) ? c.disponibilita_campagna : null,
     modo: c?.modo ?? null,

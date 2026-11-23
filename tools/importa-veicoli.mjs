@@ -14,6 +14,7 @@ import { readFileSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import { testoManuale } from './manuali.mjs';
 import { leggiTabelle as leggiTabelleGrezze, censimentoIntestazioni, numeroDi, chiave } from './importa-equipaggiamento.mjs';
+import { eTestoSemplice, tabelleTesto, capitoloTesto, righeTesto, censiteNonViste } from './tabelle-testo.mjs';
 
 export { censimentoIntestazioni };
 
@@ -23,8 +24,20 @@ export { censimentoIntestazioni };
  * prima riga di dati è l'intestazione.
  */
 export function leggiTabelle(testo) {
+  // Lotto 236: **due forme, due strade.** Un Doc esportato in Markdown ha le tabelle con le barre; uno esportato in
+  // testo semplice ha una cella per riga, con la tabulazione, e nessuna barra. Il Manuale dei Veicoli si legge solo
+  // in testo semplice, perché l'esportazione in Markdown impacchetta le immagini e Drive la rifiuta (67 MB).
+  // Per il resto il lettore non cambia: le tabelle gli arrivano nella stessa forma `{ colonne, righe, riga }`.
+  if (eTestoSemplice(testo)) return tabelleTesto(testo).tabelle;
   return leggiTabelleGrezze(testo).map((t) => (t.colonne.every((c) => c === '') && t.righe.length
     ? { ...t, colonne: t.righe[0], righe: t.righe.slice(1) } : t));
+}
+
+/** Il referto di quello che NON si è letto: le coppie spaiate e le intestazioni non censite (vuoto nel Markdown). */
+export function refertoForma(testo) {
+  if (!eTestoSemplice(testo)) return { forma: 'Markdown', spaiate: [], nonRiconosciute: [], censiteNonViste: [] };
+  const r = tabelleTesto(testo);
+  return { forma: 'testo semplice', spaiate: r.spaiate, nonRiconosciute: r.nonRiconosciute, censiteNonViste: censiteNonViste(testo) };
 }
 
 /** Il capitolo → il profilo del catalogo. I capitoli 14 e 15 (astronavi) non hanno un profilo: sono dichiarati in `veicoli.json → fuori_catalogo`. */
@@ -38,7 +51,8 @@ function capitoloDi(righe, riga) {
     // la 0.10 non numera la Neverlost: il suo titolo è «# **Neverlost…» (capitolo 11 dalla 0.19)
     if (/^# \*\*Neverlost/.test(righe[i])) return 11;
   }
-  return null;
+  // nel testo semplice non ci sono i cancelletti né il grassetto: il titolo si riconosce dalla sua **numerazione**
+  return capitoloTesto(righe, riga);
 }
 
 /** «30 Q / 0» → { mov: 30, man: 0 }; «40 Q; MAN 0» idem; «MAN −1» col segno vero. */
@@ -54,7 +68,7 @@ const tre = (v) => { const m = /(\d+)\s*\/\s*(\d+)\s*\/\s*(\d+)/.exec(v); return
  * di riga nota; le altre etichette (equipaggio, dimensioni, autonomia…) finiscono in `nonLette` per capitolo.
  */
 export function leggiSchede(testo) {
-  const righe = String(testo).split(/\r?\n/);
+  const righe = righeTesto(testo);
   const out = {};
   const scheda = (c) => (out[c] ??= { campi: {}, nonLette: new Set() });
   for (const t of leggiTabelle(testo)) {
@@ -144,7 +158,13 @@ if (DIRETTO) {
   const dati = JSON.parse(readFileSync(new URL('../data/veicoli.json', import.meta.url), 'utf8'));
   const sch = leggiSchede(testo);
   const c = confronta(sch, dati.profili);
+  const rf = refertoForma(testo);
+  console.log(`forma: ${rf.forma}`);
   console.log(`tabelle ${tab.length}, intestazioni distinte ${Object.keys(censimentoIntestazioni(tab)).length}, schede lette ${Object.keys(sch).join(',')}`);
+  if (rf.forma === 'testo semplice') {
+    console.log(`  coppie spaiate: ${rf.spaiate.length}${rf.spaiate.length ? ' (dichiarate, non riempite per deduzione)' : ''} · intestazioni non censite: ${rf.nonRiconosciute.length} · censite che non si vedono: ${rf.censiteNonViste.length}`);
+    for (const x of rf.spaiate) console.log(`    spaiata alla riga ${x.riga} (${x.colonne} colonne): ${JSON.stringify(x.celle).slice(0, 120)}`);
+  }
   console.log('campi letti per profilo:', JSON.stringify(c.letti), '| scarti:', c.scarti.length);
   for (const s of c.scarti) console.log(`  ${s.id}.${s.campo}: manuale ${JSON.stringify(s.manuale)} · dato ${JSON.stringify(s.dato)}`);
   for (const [cap, s] of Object.entries(sch)) console.log(`  non lette cap ${cap}: ${s.nonLette.join('; ').slice(0, 200)}`);

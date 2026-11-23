@@ -528,7 +528,9 @@ export function bottoneCompra(ctx, scelto, nuovaVoce, etichetta = 'Compra') {
   // per questo in vendita: «Ogni esemplare rimane un pezzo unico, molto difficile da collocare sul mercato comune».
   // Il bottone resta spento e dice il valore, invece di far finta che il prezzo non esista.
   const cessione = condizioneCessione(scelto);
-  const motivo = cessione ? `Non in vendita. ${cessione.testo}`
+  // lotto 236: la frase la decide `condizioneCessione` (`motivoCompra`), non il pulsante: il «Non in vendita.»
+  // davanti si scrive solo se il testo non lo dice già, e dove si decide si può anche provare.
+  const motivo = cessione ? cessione.motivoCompra
     : pz?.unico ? `Esemplare unico o reliquia: non si compra dal catalogo${costo === null ? ' e non ha un prezzo di listino' : `; il manuale ne dà un valore indicativo di ${costo.toLocaleString('it-IT')} cr`} (A.256). Lo assegna il Direttore.`
     : costo === null ? 'Prezzo di catalogo assente: aggiungi l’oggetto e scala i crediti a mano.'
     : !Number.isInteger(ctx.crediti) ? 'Crediti non tracciati: applica prima la dotazione iniziale, oppure aggiungi l’oggetto e annota la spesa a mano.'

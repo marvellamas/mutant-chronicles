@@ -74,6 +74,7 @@ export const ARGOMENTI = {
   'descrizioni-bestiario.mjs': ['profili'],
   'riserve-intere.mjs': ['scrivi'],
   'riferimenti-rotti.mjs': ['scrivi'],
+  'veicoli-nuovi.mjs': ['file', 'mezzo'],
   'prezzi-prima-dopo.mjs': ['da'],
   'istantanea.mjs': ['cartella', 'dove', 'tieni', 'stato', 'elenco'],
   'prove.mjs': ['concorrenza', 'solo'],

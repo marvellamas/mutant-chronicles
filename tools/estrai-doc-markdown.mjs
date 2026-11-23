@@ -18,6 +18,7 @@
 // Il file in ingresso può essere l'esportazione vera oppure il JSON che lo strumento di Drive salva quando il
 // contenuto supera il limite ({ content: <testo o base64>, title, id }): in quel caso si decodifica da sé.
 import { readFileSync, writeFileSync } from 'node:fs';
+import { eTestoSemplice } from './tabelle-testo.mjs';
 
 /** Una definizione di immagine incollata dall'esportazione: `[image3]: <data:image/png;base64,…>`. */
 const DEFINIZIONE = /^\[image\d+\]: <data:image\//;
@@ -39,6 +40,12 @@ export function leggiEsportazione(percorso) {
  * se sono diversi, un'immagine è definita e non usata, o usata e non definita — vale saperlo).
  */
 export function senzaImmagini(testo) {
+  // Un'esportazione in **testo semplice** non ha definizioni di immagine da togliere: si normalizza (BOM, CRLF) e si
+  // dichiara la forma, così chi la salva sa che le immagini, il grassetto e i livelli dei titoli non ci sono
+  if (eTestoSemplice(testo)) {
+    const pulito = String(testo).replace(/^\uFEFF/, '').replace(/\r/g, '').replace(/\n{3,}/g, '\n\n');
+    return { testo: pulito, immagini: 0, richiami: [], byteImmagini: 0, forma: 'testo semplice' };
+  }
   const righe = String(testo).replace(/\r/g, '').split('\n');
   const definizioni = righe.filter((r) => DEFINIZIONE.test(r));
   const pulito = righe.filter((r) => !DEFINIZIONE.test(r)).join('\n').replace(/\n{3,}/g, '\n\n');
@@ -47,6 +54,7 @@ export function senzaImmagini(testo) {
     immagini: definizioni.length,
     richiami: [...pulito.matchAll(/!\[\]\[(image\d+)\]/g)].map((m) => m[1]),
     byteImmagini: Buffer.byteLength(definizioni.join('\n')),
+    forma: 'Markdown',
   };
 }
 
@@ -63,6 +71,8 @@ if (process.argv[1] && import.meta.url.endsWith(process.argv[1].replace(/\\/g, '
   writeFileSync(fuori, e.testo.endsWith('\n') ? e.testo : `${e.testo}\n`);
   const kb = (n) => `${(n / 1024).toFixed(0)} KB`;
   console.log(`${fuori}: ${e.testo.split('\n').length} righe, ${kb(Buffer.byteLength(e.testo))}.`);
-  console.log(`  immagini tolte: ${e.immagini} (${kb(e.byteImmagini)}) · richiami rimasti nel testo: ${e.richiami.length}`);
-  if (e.immagini !== e.richiami.length) console.log('  ⚠ definizioni e richiami non coincidono: un\'immagine è definita e non usata, o usata e non definita.');
+  console.log(`  forma: ${e.forma}`);
+  if (e.forma === 'testo semplice') console.log('  nel testo semplice non ci sono immagini, grassetto né livelli dei titoli: un titolo si riconosce dalla sua numerazione.');
+  else console.log(`  immagini tolte: ${e.immagini} (${kb(e.byteImmagini)}) · richiami rimasti nel testo: ${e.richiami.length}`);
+  if (e.forma === 'Markdown' && e.immagini !== e.richiami.length) console.log('  ⚠ definizioni e richiami non coincidono: un\'immagine è definita e non usata, o usata e non definita.');
 }
