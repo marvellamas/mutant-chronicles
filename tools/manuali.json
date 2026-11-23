@@ -90,7 +90,13 @@
    },
    "recepimento_in_attesa": {
     "versione": "0.21 (testo del 20/11/2026, 10:39:10 UTC)",
-    "motivo": "Lotto 229: stesso numero, testo cambiato. Dopo che il testo era stato scaricato e confrontato (Drive: modificato il 19/11 alle 13:13 UTC), Davide ha riscritto il Doc il 20/11 alle 10:39:10 UTC senza cambiare numero: è comparso un capitolo 17 «Mezzi di supporto terrestri dell’Alleanza» con dieci mezzi (Thunder TC, Storm T8, Sentinel TC, Overwatch T8, Pioneer TC, Atlas T8, Forge T8, Titan TC, Lifeline T6, Warden TC) e l’introduzione dice ancora «fino al capitolo 16». L’esportazione in Markdown ora è rifiutata da Drive («File too large for export», il Doc pesa 40,45 MB), quindi il testo recepito resta quello letto in precedenza; la nuova forma si è potuta scaricare solo in testo semplice (195 KB), non nella forma che i lettori si aspettano, e non si salva accanto per non avere due file della stessa versione. Da fare: richiedere a Davide la versione nuova con un numero nuovo, o un’esportazione più leggera."
+    "motivo": "Lotto 229: stesso numero, testo cambiato. Dopo che il testo era stato scaricato e confrontato (Drive: modificato il 19/11 alle 13:13 UTC), Davide ha riscritto il Doc il 20/11 alle 10:39:10 UTC senza cambiare numero: è comparso un capitolo 17 «Mezzi di supporto terrestri dell’Alleanza» con dieci mezzi (Thunder TC, Storm T8, Sentinel TC, Overwatch T8, Pioneer TC, Atlas T8, Forge T8, Titan TC, Lifeline T6, Warden TC) e l’introduzione dice ancora «fino al capitolo 16». L’esportazione in Markdown ora è rifiutata da Drive («File too large for export», il Doc pesa 40,45 MB), quindi il testo recepito resta quello letto in precedenza; la nuova forma si è potuta scaricare solo in testo semplice (195 KB), non nella forma che i lettori si aspettano, e non si salva accanto per non avere due file della stessa versione. Da fare: richiedere a Davide la versione nuova con un numero nuovo, o un’esportazione più leggera.",
+   "visto_dopo": {
+    "versione": "0.23",
+    "quando": "2026-11-23",
+    "lotto": 235,
+    "cosa": "Su Drive il titolo è ora «Manuale dei Veicoli v0.23», modificato il 21/11/2026 alle 21:11:44 UTC, 67,3 MB (erano 40,45 MB il 20/11). Il numero è cambiato, quindi non è un cambio a numero fermo: la 0.22 non si è vista. In questo lotto NON si è riprovato l’export, per ordine del lotto: la serata è stasera e i Veicoli sono un lotto a sé. La 0.23 resta recepimento_in_attesa e il testo recepito resta la 0.21. Quello che serve a Davide è già nel Doc: A.303 (un numero nuovo a ogni pubblicazione) e A.304 (quanti dei venti mezzi servono)."
+   }
    }
   },
   {
@@ -167,7 +173,9 @@
    "formato": "doc",
    "versione": "0.6",
    "testo": "asa-scout-mk4-0.6.md",
-   "modificato": "2026-10-30T17:38:33Z"
+   "modificato": "2026-11-21T21:11:57Z",
+   "impronta": "04f6d39e26f5",
+   "_nota_0_6_cambiata": "Lotto 235 (23/11/2026): la scheda è cambiata su Drive il 21/11 alle 21:11 UTC SENZA cambiare numero (resta 0.6) — il caso della regola 4 del protocollo, visto con la data e confermato con l’impronta. Le sole differenze di contenuto: le dimensioni in trasporto passano da «6 × 2,6 m» a «6 × 2,6 × 2,7 m» e un paragrafo nuovo dà i pesi (4.500 kg a vuoto, 1.500 kg di carico utile, 6.000 kg a pieno carico). NESSUN valore del FIAT LUX che l’app tiene cambia: altezza e pesi non esistono in data/veicoli.json (ci sono lunghezza_m, larghezza_m, ingombro_q e carico_kg 1500, che la scheda conferma). Non applicati oggi perché la serata è stasera: entrano con il lotto dei Veicoli."
   },
   {
    "id": "neverlost",
@@ -213,8 +221,8 @@
    "drive": "1Jg5rqbBtcHGE1E10xYElO_qCDCwh8K87LAInovtpF6A",
    "formato": "doc",
    "testo": "../per-davide.md",
-   "modificato": "2026-11-19T22:50:08Z",
-   "impronta": "e9d7062e017b",
+   "modificato": "2026-11-21T09:04:34Z",
+   "impronta": "32ed36b90084",
    "nota": "Fonte unica delle domande; lo scrive solo Davide (e Cowork per il pacchetto). docs/protocollo-davide.md."
   },
   {
