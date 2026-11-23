@@ -3480,7 +3480,7 @@ function classificaDalMaster(ctx, nome, agg) {
 function articoloIncantesimo(ctx, i, nomeMacro) {
   const agg = i.aggiunto ?? null;
   const dalLivello = agg ? null : originiIncantesimiLivelli(ctx)[i.nome] ?? null;
-  return h('article', { class: `incantesimo-scheda ${classeMacrofamiglia(nomeMacro)}${agg ? ' incantesimo-a-mano' : ''}`, id: agg ? null : idIncantesimo(i.nome) },
+  return h('article', { class: `incantesimo-scheda ${classeMacrofamiglia(nomeMacro)}${agg ? ' incantesimo-a-mano' : ''}`, id: idIncantesimo(i.nome) },
     h('div', { class: 'arma-testa' },
       h('h4', {}, info('incantesimo', i.nome),
         agg ? h('small', { class: `etichetta-origine tipo-${agg.tipo ?? 'da_classificare'}`, title: `${agg.etichetta ?? 'Aggiunto'} · ${agg.origine} il ${dataLeggibile(agg.quando)}${agg.nota ? ` · ${agg.nota}` : ''} · fuori dalle quote di Classe` }, ` ${agg.segno ?? '(Aggiunto)'}`) : null,

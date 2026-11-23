@@ -57,3 +57,12 @@ test('IL TOCCO PORTA LA SCHEDA IN CIMA (block: start), per il primo, uno in mezz
   assert.ok(chiamate.every((c) => c.block === 'start'), 'in cima a quello che si vede, non a metà schermo');
   assert.deepEqual(chiamate.map((c) => c.id), [voci[0], voci[Math.floor(voci.length / 2)], voci.at(-1)].map((b) => idIncantesimo(nomeDi(b))));
 });
+
+test('OGNI VOCE DELL’INDICE HA LA SUA SCHEDA, anche un incantesimo aggiunto a mano (Lucas, copia di ottobre: «Esorcizzare Oscurità»)', () => {
+  // trovato nella prova del lotto: la scheda di un incantesimo aggiunto a mano non aveva l'identificativo e il tocco non portava da nessuna parte
+  const r = resa(contesto('../tests/fixtures/talenti-vecchi/LUCAS_liv6_2026-10-20.json', { attiva: 'poteri' }));
+  const voci = r.classe('indice-incantesimi')[0].querySelectorAll('.link-indice').map(nomeDi);
+  const id = new Set(r.classe('incantesimo-scheda').map((x) => x.getAttribute?.('id') ?? x.id).filter(Boolean));
+  assert.ok(voci.includes('Esorcizzare Oscurità'), 'l’aggiunto a mano è nell’indice');
+  for (const v of voci) assert.ok(id.has(idIncantesimo(v)), `${v}: la sua scheda ha l’identificativo del salto`);
+});
