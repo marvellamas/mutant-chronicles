@@ -275,7 +275,7 @@ test('registro «Modifiche del master» in Identità: i giocatori lo leggono sol
   assert.equal(ctx.chiamate.at(-1)[0], 'master.annulla');
   assert.ok(master.classe('btn-tocco-master').length >= 6 + 4 + 2, 'Caratteristiche, Prove Salvezza, PV, AR…');
   // la riga «Correzione del master +10 (motivo)» sotto i PV, per tutti
-  assert.match(giocatore.classe('riquadro-pv')[0].textContent, /Correzione del master \+10 \(dono del patrono\)/);
+  assert.match(giocatore.classe('riquadro-pv')[0].textContent, /Correzione del master: \+10 \(dono del patrono\)/); // lotto 242: la fonte una volta, poi i valori
   // una riga annullata resta, barrata, senza «Annulla»
   const annullata = { ...p, creazione: { ...p.creazione, correzioniMaster: annullaCorrezione(p.creazione.correzioniMaster, p.creazione.correzioniMaster[0].id) } };
   const r = resa(contesto(annullata, { master: true }));

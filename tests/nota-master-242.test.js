@@ -23,7 +23,7 @@ test('LA NOTA DEL MASTER C’È, CON IL SUO TESTO, E NON È NASCONDIBILE (Dimitr
   const note = r.classe('nota-correzione-master');
   assert.ok(note.length >= 3, `${note.length} note`);
   for (const n of note) {
-    assert.match(n.textContent, /Correzione del master [+−-]\d/, `si legge da sola: «${n.textContent}»`);
+    assert.match(n.textContent, /Correzione del master: [+−-]\d/, `si legge da sola: «${n.textContent}»`);
     assert.ok(!n.hidden && !n.getAttribute?.('hidden'), 'non nascosta');
     const su = antenati(r.radice, n);
     assert.ok(!su.some((x) => x.tagName === 'DETAILS'), 'non dentro qualcosa che si apre');
@@ -31,6 +31,13 @@ test('LA NOTA DEL MASTER C’È, CON IL SUO TESTO, E NON È NASCONDIBILE (Dimitr
     assert.notEqual(n.tagName, 'BUTTON', 'non è un pulsante da toccare per leggerla');
     assert.ok(!(n.ascolti?.click ?? []).length, 'non si apre con un tocco');
   }
+});
+
+test('LA FONTE UNA VOLTA SOLA, I VALORI DI SEGUITO: Forza di Dimitri «Correzione del master: +1, −1, −1»', () => {
+  const r = resa(contesto(DIMITRI, { attiva: 'identita' }));
+  const testi = r.classe('nota-correzione-master').map((n) => n.textContent);
+  assert.ok(testi.some((t) => /^Correzione del master: [+−]1, [+−]1, [+−]1$/.test(t)), testi.join(' | '));
+  assert.ok(testi.every((t) => (t.match(/Correzione del master/g) ?? []).length === 1), 'la fonte non si ripete');
 });
 
 test('LO STILE LA TIENE PICCOLA E VISIBILE: molto più piccola del numero, mai nascosta', () => {

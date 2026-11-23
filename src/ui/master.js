@@ -90,8 +90,15 @@ export function apriCorrezione(ctx, voci) {
 /** «Correzione del master +10 (motivo)» sotto un valore che non ha un suo «Calcolo» (PV e PM massimi, Caratteristiche). */
 export function notaCorrezione(blocco) {
   if (!blocco?.righe?.length) return null;
+  // lotto 242 (ritocco 5): la fonte una volta sola, i valori di seguito («Correzione del master: +1, −1, −1»), ciascuno col suo
+  // motivo. Nella colonna stretta di una tabella la fonte ripetuta andava a capo parola per parola e la nota pesava più del numero
+  const perFonte = new Map();
+  for (const x of blocco.righe) {
+    const voce = `${segno(x.valore)}${x.nota && x.nota !== 'senza motivo' ? ` (${x.nota})` : ''}`;
+    perFonte.set(x.fonte, [...(perFonte.get(x.fonte) ?? []), voce]);
+  }
   return h('small', { class: 'nota nota-correzione-master', title: `Calcolato dalle regole: ${blocco.calcolato}` },
-    blocco.righe.map((x) => `${x.fonte} ${segno(x.valore)}${x.nota && x.nota !== 'senza motivo' ? ` (${x.nota})` : ''}`).join('; '));
+    [...perFonte].map(([fonte, voci]) => `${fonte}: ${voci.join(', ')}`).join('; '));
 }
 
 const quando = (iso) => { const d = new Date(iso); return Number.isNaN(d.getTime()) ? '' : d.toLocaleString('it-IT', { day: '2-digit', month: '2-digit', year: '2-digit', hour: '2-digit', minute: '2-digit' }); };
