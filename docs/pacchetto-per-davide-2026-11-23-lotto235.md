@@ -1,5 +1,7 @@
 # Pacchetto per il Doc «Per Davide» — 23/11/2026, lotto 235
 
+> **Applicato al Doc nel lotto 239 (23/11/2026)**, in `docs/per-davide-nuovo.md`. Dove due pacchetti toccavano la stessa voce ha vinto il più recente; le correzioni sono nel documento del lotto 239 (`docs/diff-lotto239-2026-11-23.md`).
+
 Da applicare al Doc «per-davide.md» su Drive (lo incolla Cowork o Marcello; Claude Code non scrive nei Doc).
 Vale la regola del lotto 233: **nel Doc solo ciò che Davide deve decidere, correggere, aspettare o fare.** La
 contabilità per numero sta in `docs/registro-domande.md` e la tiene `tests/registro-domande-233.test.js`.

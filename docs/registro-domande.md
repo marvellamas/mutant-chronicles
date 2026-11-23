@@ -6,7 +6,7 @@
 
 **Come si legge la colonna «Applicata».** Una data vuol dire che l’app fa quello che Davide ha deciso; «già così» che lo faceva già prima della risposta; «vedi A.n» che il numero è trattato dentro un’altra voce; «chiusa», «ritirata» o «mai usato» che non c’è niente da applicare. Dove la risposta ne supera un’altra, o dove resta una riserva, è scritto nella stessa riga.
 
-**I numeri che non sono qui sono nel Doc**, perché riguardano Davide: A.296, A.305.
+**I numeri che non sono qui sono nel Doc**, perché riguardano Davide o sono lavoro in corso: A.296, da A.299 a A.310 e A.312. (La A.311 è qui: l’abbiamo ritirata.)
 
 ## Le domande, una riga per numero
 
@@ -294,9 +294,10 @@
 | A.292 | Il peso della Cartuccia Stabilizzante | 19/11 | 19/11 | 225 |
 | A.293 | Dimitri: le correzioni di Caratteristica del 2 novembre | 19/11 | 19/11 | 225 |
 | A.294 | Le funzioni dell'Elmetto Recon ASA | 19/11 | 20/11 | 228 |
-| A.295 | Le voci SIA nel catalogo, e i soprabiti dei PG | 19/11 | 20/11 — la migrazione dei sei: sezione 8 | 228 |
+| A.295 | Le voci SIA nel catalogo, e i soprabiti dei PG | 19/11 | 20/11 — la migrazione dei cinque rimasti (Botha, Duncan, Michele, Oshi, Pablo; Dimitri e Lucas sono già a posto): sezione 8 | 228 |
 | A.297 | Il tiro dei PV e dei PM alla salita di livello | 19/11 | 20/11 | 228 |
 | A.298 | Pietre di Luna: l'ultimo contatto e l'avviso «Verifica il vincolo» | 19/11 | 20/11 | 228 |
+| A.311 | L’arco di tiro del Mitragliatore Leggero Punisher sullo Scout T4 di serie (domanda del lotto 237) | — | ritirata il 23/11: **errore nostro**, il manuale lo dà (Veicoli 0.23 §10, «rotazione orizzontale di 360° nei limiti degli ostacoli reali»); nei dati l’arco manca ancora e lo scriviamo noi | 239 |
 
 ## Voci senza numero (manuali recepiti, schede, lavori nostri)
 
@@ -343,4 +344,8 @@
 | I tre manuali del 19/11 recepiti: Giocatore 0.65, Armamenti 0.89, Veicoli 0.21 | 20/11 | 229 |
 | Magia 1.20 e Armamenti 0.90: il Warden TC nel catalogo, l’artiglieria no | 20/11 | 231 |
 | Un test nuovo: un dato non può contraddire una tua risposta approvata | 20/11 | 229 |
-
+| I cinque cristalli focalizzatori della CyberArma (A.246, A.251, A.260 e §7.25.5) | 23/11 | 235 |
+| Il Manuale dei Veicoli si legge in testo semplice: la richiesta di dividerlo è ritirata, ed è merito di Davide | 23/11 | 236 |
+| Lo Scout T4 di serie e il FIAT LUX: due profili distinti (Veicoli §16.1, A.284) | 23/11 | 237 |
+| Il trasporto a bordo di una nave (ingombro, altezza, piazzola) e il recupero dello scudo solo dentro uno scontro aperto | 23/11 | 238 |
+| Giocatore 0.66, Equipaggiamento 0.43 e Direttore 0.52 (veleni e malattie a fasi, playtest a matita): letti, non recepiti | 23/11 | 239 |

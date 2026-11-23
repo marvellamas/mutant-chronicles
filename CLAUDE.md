@@ -409,7 +409,7 @@ La v1 (creazione al 1° livello) è chiusa. Oggi il progetto comprende:
   il record quanto ha adesso, `Math.min` col massimo): **mancava la guardia dello scontro** — il pulsante «Round senza
   colpi» chiamava la funzione direttamente, e un Round fuori da un combattimento non esiste. `recuperaScudo` è l’unica
   strada e senza uno scontro aperto torna il record **intatto** col motivo («se vuoi il recupero fra due scontri, scrivi
-  tu gli ScE», A.309). I **quattro da mostrare** (i tre volumi del bagagliaio e il passaggio libero) stanno nei dati
+  tu gli ScE»: nessuna domanda per Davide). I **quattro da mostrare** (i tre volumi del bagagliaio e il passaggio libero) stanno nei dati
   (`trasporto.da_mostrare`) e non nel codice, così che i valori dei mezzi dei capitoli 16 e 18 compaiano senza toccare
   l’app quando la **A.304** dirà quali servono. I **tre «non nuovi» combaciano** per unità e significato (massa a pieno
   carico = `massa_kg` + `carico_kg`, la somma la scrive il manuale; vano materiali = `volume_utile_m3`; capacità dello
@@ -424,6 +424,25 @@ La v1 (creazione al 1° livello) è chiusa. Oggi il progetto comprende:
   ha», ma «la riga nomina i campi e l’edizione»). Test `tests/trasporto-scudo-238.test.js` (14 controlli, sei mutanti
   provati in rosso) e tre righe in `tests/ingest-e-risposte-229.test.js` (A.296, A.104, A.226). Regole non contate:
   **104**. Primo numero libero: **A.312**.
+- **Il Doc «Per Davide» al 23/11: tre manuali nuovi, un blocco nell’E&L, quattro pacchetti applicati** (23/11/2026, lotto 239, `docs/diff-lotto239-2026-11-23.md`):
+  solo documenti. Il controllo di inizio sessione ha trovato che **Davide ha pubblicato alle 13:16–13:18 UTC Giocatore 0.66, Equipaggiamento 0.43 e
+  Direttore 0.52** (ognuno con il numero nuovo: la A.303 funziona) e **un blocco non numerato nell’E&L**, «Veleni e malattie: regole approvate per il
+  playtest al tavolo», con la frase «l’app non è stata modificata». I tre manuali sono **letti e confrontati, non recepiti** (`recepimento_in_attesa`,
+  come nel lotto 228): cambiano solo il §5.18 del Giocatore (Stati dodici, Avvelenamento in cinque gravità, Malattie in sei, penalità −1…−5, Terminale
+  senza −VA generale), il §6.6 dell’Equipaggiamento (supporto, sospensivo, risolutivo) e il prontuario del Direttore; **il capitolo 8 del Giocatore è
+  identico**. L’app ha ancora le regole di prima per Ammalato (−1/−2/−4/−6/−8/−10, A.119) e Avvelenato: **A.312**, domanda dopo il playtest. Magia 1.20,
+  Armamenti 0.90, Veicoli 0.23 e Mostri 0.69 riscaricati: contenuto identico (Mostri: sha256 del .docx). Il Doc su Drive è invariato dal 21/11, nessuna
+  risposta in sezione 7. **Errori nostri trovati controllando, e detti nel Doc:** la **A.311** (l’arco del Punisher dello Scout T4) era una domanda
+  sbagliata — il manuale dà 360° — ed è ritirata (nei dati l’arco manca ancora); l’**A.310** (i due Elmetti Recon) è stata riscritta sui fatti: il SIA
+  Recon l’abbiamo davvero creato noi copiando l’ASA (lotto 228), ma il manuale ha una riga «SIA Recon» sua e i valori tornano, e quello che manca sono
+  i valori dell’**ASA storico**; il pacchetto del 238 aveva riscritto A.307 e A.309 senza rileggere i pacchetti 235–237 (corretto); due «Nel frattempo»
+  attribuivano all’app più di quello che fa (A.283: il bonus di Armatura Mistica l’app non lo calcola; A.296: nessuna schermata usa le fasce di movimento
+  del Turk). La richiesta di dividere il Manuale dei Veicoli è **ritirata in chiaro, come merito di Davide**. Nel Doc la sezione 3 è solo ciò che è in
+  mano nostra (i ventidue mezzi dei capitoli 16–18 aspettano la **A.304**: stanno in sezione 1 e 5, non fra i lavori in corso). **Regola per chi
+  scrive un pacchetto o il Doc: ogni numero A.n si prende dal pacchetto che lo ha aperto, mai dalla memoria o dall’elenco di un prompt; e prima di
+  scrivere «abbiamo inventato» o «il manuale non lo dà» si cerca nel testo del manuale** (due volte su due, in questo lotto, il manuale lo dava). Nostra
+  parte del Doc: 11.042 parole contro 10.821 (+2 %), sezione 7 intatta (impronta `69adf62bf2f4`). Regole non contate: **105** (i focalizzatori scendono
+  a 3, i veleni e le malattie salgono di 1). Primo numero libero: **A.313**.
 Fuori perimetro per ora: tiri automatici fuori dalla plancia; manovre, inseguimenti e collisioni dei veicoli al tavolo.
 
 ## Riferimenti

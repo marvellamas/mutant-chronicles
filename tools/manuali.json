@@ -3,7 +3,7 @@
  "_protocollo": "docs/manuali-drive.md e la sezione «Protocollo dei manuali» di CLAUDE.md",
  "cartella_lavoro": "1p4jh2tKIN9kRimD4ifzth_YjWUZTH6-6",
  "cartella_archivio": "1tVAzASERKxCEZPCrAf-LFHiYLqhey9Rc",
- "controllato": "2026-11-20",
+ "controllato": "2026-11-23",
  "manuali": [
   {
    "id": "giocatore",
@@ -20,6 +20,11 @@
     "lotto": 229,
     "cosa": "Confronto alla cieca (in sezione 7 del Doc non c’è la riga della 0.65). 0.64 → 0.65: due righe sole nel testo salvato — il numero di edizione e il nuovo §5.2.7 «Cavalcature e combattimento in sella» (la regola della A.296 e del blocco E&L del 19/11). Il cap. 8 (passaggio di livello, PX, soglie, dadi PV/PM), il profilo delle Abilità 4/7/9/4, i 127 punti, i limiti del VA e il §8.3.1 sono identici byte per byte; verificato anche coi valori: i sette personaggi dell’istantanea del 17/11 ricalcolati prima e dopo sono identici (tools/pg-prima-dopo.mjs). Il §5.2.7 non dà capienze o andature per altre cavalcature: solo l’esempio del Turk (3 posti, Passo 6/Corsa 12/Scatto 18 con uno o due a bordo, 4/8/niente Scatto con tre), già nei dati dal lotto 228; le altre restano «da definire». Il commento di Drive al §3.5.2 non è testo.",
     "documento": "docs/diff-lotto229-2026-11-20.md"
+   },
+   "recepimento_in_attesa": {
+    "versione": "0.66",
+    "motivo": "Lotto 239 (solo documenti: l’app non si tocca): letto contro la 0.65, non recepito. Cambia soltanto il §5.18 «Stati» — gli Stati passano da undici a dodici, Avvelenato e Ammalato seguono le fasi della fonte — con l’Avvelenamento in cinque gravità (danno per fase se la PS è fallita o riuscita: 2/1, 4/2, 6/3, 8/4, 10/5; una sola PS di Tempra; il veleno ignora l’AR) e le Malattie in sei gravità (penalità −1, −2, −3, −4, −5, Terminale senza un −VA generale; successi ordinari e aggravati; PV bloccati per fase; Magistrale con +4 monouso), più una nota (non una regola) sulla ripartizione dei cinque Talenti a scelta fra Terrestre, Spaziale e Comune. Il capitolo 8 è identico alla 0.65. Blocco dell’E&L del 23/11: «regole approvate per il playtest al tavolo… l’app non è stata modificata». I dati dell’app (Ammalato −1/−2/−4/−6/−8/−10 dalla A.119; Avvelenato) non sono allineati: A.312.",
+    "documento": "docs/diff-lotto239-2026-11-23.md"
    }
   },
   {
@@ -71,6 +76,11 @@
     "lotto": 212,
     "cosa": "0.41 → 0.42: solo il §10.14 nuovo (Collana di papiro dei Mutanti, manufatto di campagna: lotto lunare, non applicato). Rispetto alla 0.30, da cui vengono i dati: 363 righe, esaminate una per una in docs/diff-lotto212-2026-11-17.md.",
     "documento": "docs/diff-lotto212-2026-11-17.md"
+   },
+   "recepimento_in_attesa": {
+    "versione": "0.43",
+    "motivo": "Lotto 239 (solo documenti): letto contro la 0.42, non recepito. Cambia soltanto il §6.6: trattamenti delle malattie a fasi — supporto (+2 alle PS previste per 24 ore), sospensivo, risolutivo (+1 successo, al massimo uno per fase e per malattia, nessun effetto sui Terminali); nessuno dei trattamenti stabilizza Morente. Il resto è forma (le celle del carico «Oltre FOR × 10 kg» e «fino a FOR × 20 kg», unite in una nella 0.42, e una riga di sottolineatura). Blocco dell’E&L del 23/11.",
+    "documento": "docs/diff-lotto239-2026-11-23.md"
    }
   },
   {
@@ -138,6 +148,11 @@
     "lotto": 197,
     "cosa": "Nuovo §9.6.2 «Acquisizioni e valori pronti»: le tre progressioni dei PNG generici, la lettura dei bonus (i VA personali delle 24 Abilità escludono Talenti, Specializzazioni, EQ, strumenti e condizioni; le tabelle pronte li comprendono già), EQ una volta sola, e i modelli generici che mantengono PV e Ferite senza il +30% dei mostri. GS e PX invariati: valore unitario = PX base del Grado × (1 + 0,50 × EQ). Il §9.9 «Mostri senza Ferite» non cambia dalla 0.49.",
     "documento": "docs/diff-lotto197-2026-11-14.md"
+   },
+   "recepimento_in_attesa": {
+    "versione": "0.52",
+    "motivo": "Lotto 239 (solo documenti): letto contro la 0.51, non recepito. Aggiunge il prontuario per il playtest — dieci veleni, dodici malattie (due Terminali), la scheda rapida e la procedura «a matita» —; la scheda rapida torna con le tabelle del Giocatore §5.18 riga per riga. I dati che citano il Direttore (px_partita.json, formato_nemici.json) restano alla 0.51: niente nel prontuario li tocca. Blocco dell’E&L del 23/11.",
+    "documento": "docs/diff-lotto239-2026-11-23.md"
    }
   },
   {
@@ -235,8 +250,8 @@
    "drive": "1VaqZaAe4NK5P8A956Eahua_ZT60eh3ohnR2xSqh-tVs",
    "formato": "doc",
    "testo": "../risposte-master-2026-09-26.md",
-   "modificato": "2026-11-19T22:50:13Z",
-   "impronta": "70c0efb1b934"
+   "modificato": "2026-11-23T13:18:06Z",
+   "impronta": "4608cfd1057b"
   }
  ],
  "archiviati": [
