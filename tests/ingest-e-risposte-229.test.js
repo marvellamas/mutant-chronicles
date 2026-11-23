@@ -85,6 +85,13 @@ const nemico = (id) => JSON.parse(readFileSync(new URL(`../esempi/nemici/mostri/
 const lunare = (id) => dati.equipaggiamento.file.manufatti_lunari.oggetti.find((v) => v.id === id);
 
 /** Una riga = una risposta approvata. `verifica` lancia se il dato la contraddice. */
+/** Una voce del catalogo delle armi, per id (lotto 235). */
+const armi = (id) => {
+  const v = dati.equipaggiamento.file.armi.oggetti.find((o) => o.id === id);
+  assert.ok(v, `manca la voce d’arma «${id}»`);
+  return v;
+};
+
 const RISPOSTE = [
   ['A.280', 'FIAT LUX: il Capitol M606 spara in un semicerchio frontale di 180° (il manuale scrive ancora 120°: errata A.302 aperta)', () => {
     const arma = (profilo('asa-scout-mk4').armi ?? []).find((a) => a.arco);
@@ -124,6 +131,29 @@ const RISPOSTE = [
       if (cm !== undefined) assert.ok(Number.isInteger(cm) && cm >= 1, `${o.id}: riserva ${cm}`);
       const uso = o.attivazione_artefatto?.cm;
       if (uso !== undefined) assert.ok(Number.isInteger(uso) && uso >= 1, `${o.id}: costo ${uso}`);
+    }
+  }],
+  // lotto 235: i cinque cristalli focalizzatori della CyberArma, dal §7.25 e dal §7.25.5 degli Armamenti 0.90 e dal
+  // §5.24 del Giocatore 0.65. Qui non si rilegge il manuale riga per riga (lo fa tests/cristalli-235.test.js): si
+  // controlla che i dati non contraddicano una risposta già approvata, come fa il resto di questa tabella.
+  ['A.246', 'la Corruzione è del singolo frammento Viola: nessun valore predefinito nei dati', () => {
+    const f = armi('cyberarma').focalizzatori.elenco.find((x) => x.id === 'viola');
+    assert.equal(f.corruzione_dal_frammento.senza_predefinito, true);
+    assert.equal(f.corruzione_dal_frammento.valore, undefined);
+    assert.equal(armi('cyberarma-viola').corruzione, undefined, 'nemmeno nella voce di catalogo');
+  }],
+  ['A.251', 'il cristallo sostituito lascia l’arma alimentabile con i PM personali: cambiare colore non è una conversione', () => {
+    const m = armi('cyberarma').alimentazione_modifiche;
+    const c = m.famiglie.find((x) => x.id === 'cristallo');
+    assert.equal(c.conversione, false, 'il cristallo non è una conversione energetica');
+    assert.equal(c.pm_personali, true);
+  }],
+  ['A.260', 'la CyberArma è ravvicinata e non fa Raffiche: nemmeno le cinque voci per colore', () => {
+    for (const v of dati.equipaggiamento.file.armi.oggetti.filter((o) => (o.id ?? '').startsWith('cyberarma'))) {
+      // nessuna voce della famiglia ha modalità di fuoco, e nessuna può dire il contrario della A.260
+      assert.equal((v.modalita ?? []).length, 0, `${v.id}: nessuna modalità di fuoco`);
+      assert.notEqual(v.ravvicinata_senza_raffiche, false, `${v.id}: non può dire il contrario della A.260`);
+      assert.equal(v.tipo, 'arma_ravvicinata', `${v.id}: è un'arma ravvicinata`);
     }
   }],
   ['A.295', 'ASA e SIA sono due sigle: il «riservato» è SIA, le divise e l’elmetto di servizio restano ASA', () => {
