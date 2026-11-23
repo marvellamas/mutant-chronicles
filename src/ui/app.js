@@ -4,6 +4,7 @@
 // disegno con calcolaScheda / anteprima.
 import { conScorrimentoFisso, montaTornaSopra } from './scorrimento.js';
 import { consegnaArma, riconduciEsemplare } from '../progetti.js';
+import { azzeraDopoIlLancio } from '../lancio.js';
 import { aggiornaVivi } from './vivi.js';
 import { leggiStatoInstallazione, montaFasciaCopia } from './copia-di-lavoro.js';
 import { seguiAltezzaFasce } from './altezza-fasce.js';
@@ -2516,9 +2517,11 @@ function renderSchedaInterna({ mantieniScorrimento = false } = {}) {
       },
       // «Lancia!»: PM spesi e, se l'incantesimo ha una durata, fra gli incantesimi in corso (src/durate-incantesimi.js); in
       // uno scontro il Round è quello del server al momento del lancio
-      lancia: async (fonte, registrazione = null, forza = false) => {
+      lancia: async (fonte, registrazione = null, forza = false, nome = null) => {
         if (stato.scontroPg && registrazione) { await aggiornaRoundScontro(); stato.sessione = sessioneVista(); }
         let nuova = spendiPmLancio(stato.sessione, fonte, massimi, { forza });
+        // lotto 242: Focalizzazione e livello dichiarato tornano a zero, nella stessa modifica (un «Annulla» rimette tutto)
+        if (nuova && nome) nuova = azzeraDopoIlLancio(nuova, nome);
         if (nuova && registrazione) {
           const quando = calendarioAttivo(stato.calendario) ? momentoCalendario(stato.calendario, dati) : null;
           const con = registraIncantesimo(nuova, { ...registrazione, ...(quando ? { quando } : {}) }, dati);

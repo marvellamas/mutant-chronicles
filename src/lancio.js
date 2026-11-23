@@ -76,6 +76,20 @@ export function regoleAnticipazione(m, aspetto, versione, con, dati, righe = [])
   return { regole, consentiti, talentiNonUsabili, valore };
 }
 
+/**
+ * Lotto 242 (ritocco 3, visto al tavolo da Marcello): dopo il lancio la Focalizzazione torna a zero, e con lei il livello
+ * dichiarato, che il pannello ricordava nella sessione (`sessione.lanci[nome]`): una metà rimasta addosso al lancio dopo è peggio
+ * di niente (nel lotto 235 un livello rimasto a 4 aveva falsato una misura). Tocca solo quelle due scelte di quell'incantesimo:
+ * PM, riserve, storico, incantesimi in corso e le altre scelte del pannello restano come sono.
+ * @returns la sessione con la dichiarazione di `nome` pulita (la stessa, se non c'era niente da pulire)
+ */
+export function azzeraDopoIlLancio(sessione, nome) {
+  const scelte = sessione?.lanci?.[nome];
+  if (!scelte || typeof scelte !== 'object') return sessione;
+  const { focalizzazione: _f, versione: _v, ...resto } = scelte;
+  return { ...sessione, lanci: { ...sessione.lanci, [nome]: resto } };
+}
+
 /** Dichiarazione completa, con i valori predefiniti. */
 export function dichiarazioneLancio(d = {}) {
   return {

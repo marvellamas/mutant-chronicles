@@ -17,7 +17,8 @@ import { durataLancio, opzioniDurata, arIncantesimo } from '../durate-incantesim
 // conferma visibile del lancio (src/ui/avvisi.js); i nemici (ctx.calcola) la hanno dal registro dello scontro
 function lanciaConAvviso(ctx, nome, fonte, registrazione = null, forza = false) {
   const prima = ctx.sessione.pmAttuali;
-  ctx.azioni.lancia(fonte, registrazione, forza);
+  // lotto 242: il nome serve a pulire Focalizzazione e livello dichiarato di questo incantesimo dopo il lancio
+  ctx.azioni.lancia(fonte, registrazione, forza, nome);
   if (ctx.calcola || !Number.isInteger(prima)) return;
   const dove = fonte.contenitore ? `; ${fonte.contenitore.pm} PM da ${fonte.contenitore.nome}` : '';
   avviso(`Incantesimo lanciato: ${nome} (PM ${prima} → ${Math.max(0, prima - (fonte.personali ?? 0))}${dove}).`);
