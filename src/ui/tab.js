@@ -3205,6 +3205,8 @@ function tabPoteri(ctx, d) {
     // senza la magia propria (nessuna tab Magia) gli incantesimi lanciati da un oggetto hanno comunque i loro «in corso»
     !d && incantesimiInCorso(ctx.sessione).length ? riquadroIncantesimiInCorso(ctx) : null,
     sezioneDaArtefatti(ctx),
+    // lotto 242: le riserve esterne in fondo, dopo i poteri (solo con la magia propria, come prima)
+    d ? sezioneRiserveEsterne(ctx) : null,
     // 19/10: tabella di consultazione del recupero dei PM, richiudibile e chiusa (sola lettura), per chi ha una riserva di PM
     ctx.massimi.pm ? tabellaRecuperoPm(ctx) : null,
     ...(p.in_arrivo ?? []).map((x) => dettagliRicordati(`in-arrivo:${x.nome}`, { class: 'sezione-tab in-arrivo' },
@@ -4072,9 +4074,6 @@ function rigaGradiTaumaturgici(ctx) {
 }
 
 function tabMagia(ctx, d) {
-  const s = ctx.sessione;
-  const contenitori = ctx.tab.scheda.equipaggiamento?.contenitori ?? [];
-  const perLancio = ctx.dati.regole.chroma?.contenitori_per_lancio ?? 1;
   return [
     h('div', { class: 'magia-testa' },
     h('div', { class: 'griglia-tavolo' },
@@ -4104,11 +4103,21 @@ function tabMagia(ctx, d) {
       h('div', { class: 'tabella-scorre' }, h('table', { class: 'tabella compatta' },
         h('thead', {}, h('tr', {}, h('th', {}, 'Livello'), h('th', {}, 'Prova'))),
         h('tbody', {}, d.scala.map((r) => h('tr', {}, h('th', { scope: 'row' }, r.livelli), h('td', {}, r.prova)))))))),
-    contenitori.length ? sezione('Riserve esterne',
-      h('p', { class: 'nota' }, `Magia sez. 6: il costo di un lancio si paga con i PM personali, con ${perLancio === 1 ? 'un solo contenitore' : `al massimo ${perLancio} contenitori`} trasportato, sintonizzato e compatibile, o con entrambi. Possedere PM in un contenitore non evita lo svenimento a 0 PM personali. I PM dei cristalli si modificano nel riquadro Punti Magia, qui sopra.`),
-      h('div', { class: 'armi-tab' }, contenitori.map((c) => schedaContenitore(ctx, c)))) : null,
     ...elencoUnificato(ctx, d),
   ];
+}
+
+/**
+ * Lotto 242 (ritocco 1, visto al tavolo da Marcello): le riserve esterne stanno in fondo alla tab Poteri, dopo i poteri. Prima
+ * stavano fra il riquadro dei PM e gli incantesimi e spingevano giù quello che si usa a ogni turno.
+ */
+function sezioneRiserveEsterne(ctx) {
+  const contenitori = ctx.tab.scheda.equipaggiamento?.contenitori ?? [];
+  if (!contenitori.length) return null;
+  const perLancio = ctx.dati.regole.chroma?.contenitori_per_lancio ?? 1;
+  return sezione('Riserve esterne',
+    h('p', { class: 'nota' }, `Magia sez. 6: il costo di un lancio si paga con i PM personali, con ${perLancio === 1 ? 'un solo contenitore' : `al massimo ${perLancio} contenitori`} trasportato, sintonizzato e compatibile, o con entrambi. Possedere PM in un contenitore non evita lo svenimento a 0 PM personali. I PM dei cristalli si modificano nel riquadro Punti Magia, in cima alla tab.`),
+    h('div', { class: 'armi-tab' }, contenitori.map((c) => schedaContenitore(ctx, c))));
 }
 
 /**
