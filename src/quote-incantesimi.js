@@ -45,5 +45,6 @@ export function motivoBloccoIncantesimi(conto, catalogo, { noti, nuovi, master =
   if (!(mancano > 0) || master) return null;
   const liberi = catalogo.filter((i) => !noti.has(i.nome) && !nuovi.includes(i.nome) && !avvisoIncantesimo(i, conto));
   if (liberi.length) return null;
-  return `Ti mancano ${mancano} incantesimi, ma tutti i posti che restano sono fuori dalle quote: non puoi sceglierli da solo. Chiedi al Direttore: da «Modifica master» può forzarli.`;
+  // lotto 241: fuori quota si sceglie lo stesso, con un avviso; la salita si chiude anche senza
+  return `Ti mancano ${mancano} incantesimi e i posti che restano sono tutti fuori dalle quote: puoi sceglierli lo stesso (resta un avviso) o lasciarli da scegliere, e la salita si chiude comunque. Decide il Direttore.`;
 }

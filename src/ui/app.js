@@ -1233,12 +1233,9 @@ function contesto() {
     schedaPersonaggio,
     livelli: stato.livelli,
     // N2: eccessi e riassegnazioni in sospeso avvisano («Procedi comunque»); creazione incompleta ed errori dei livelli fermano
-    avvisoSalita: schedaPersonaggio.eccessi?.length ? motivoEccesso(schedaPersonaggio.eccessi)
-      : schedaPersonaggio.completamenti?.length ? motivoCompletamento(schedaPersonaggio.completamenti) : null,
-    motivoNoSalita: !scheda.completa ? 'Completa la creazione (passi precedenti) prima di salire di livello.'
-        : restaDaScegliere(schedaPersonaggio.errori) ? 'Scegli prima i Talenti nel riquadro «Da scegliere» della scheda.'
-        : schedaPersonaggio.errori.filter((e) => !eSceltaTalento(e) && !eSceltaSuccessivaVuota(e) && !eIncantesimoFuoriRegola(e)).length ? 'Correggi gli errori dei livelli (o annulla l’ultimo) prima di salire ancora.'
-          : (permessoPx()?.motivo ?? null),
+    // lotto 241: punti, Talenti da scegliere ed errori dei livelli avvisano («Procedi comunque»); fermano creazione incompleta e PX
+    avvisoSalita: avvisoPrimaDiSalire(schedaPersonaggio),
+    motivoNoSalita: !scheda.completa ? 'Completa la creazione (passi precedenti) prima di salire di livello.' : (permessoPx()?.motivo ?? null),
     saliDiLivello,
     stampa: () => vai(`#/p/${stato.id}/stampa`),
     annullaUltimoLivello: annullaLivello,
@@ -1388,11 +1385,33 @@ function bozzaSalita(extra = {}) {
   return { voce, passo: 0, ui: { aperti: new Set(), filtroTalenti: null }, ...(classe ? { iniziale: JSON.stringify(voce) } : {}), ...extra };
 }
 
+/**
+ * Lotto 241 (regola di Marcello, 23/11/2026): che cosa dire prima di aprire «Sali di livello». Prima il pulsante si spegneva con
+ * «Correggi gli errori dei livelli» o «Scegli prima i Talenti»: la sera del 22/11 è il primo dei blocchi che hanno fermato il tavolo.
+ * Ora è un avviso, con i numeri, e la salita si apre lo stesso («Procedi comunque», riga nello storico).
+ * @param sp la scheda calcolata (eccessi, completamenti, errori dei livelli)
+ * @returns il testo dell'avviso, o null
+ */
+function avvisoPrimaDiSalire(sp, { talentiDaScegliere = null } = {}) {
+  const errori = sp?.errori ?? [];
+  const daScegliere = talentiDaScegliere ?? restaDaScegliere(errori);
+  const altri = errori.filter((e) => !eSceltaTalento(e) && !eSceltaSuccessivaVuota(e) && !eIncantesimoFuoriRegola(e));
+  const parti = [];
+  if (sp?.eccessi?.length) parti.push(motivoEccesso(sp.eccessi));
+  if (sp?.completamenti?.length) parti.push(motivoCompletamento(sp.completamenti));
+  if (daScegliere) parti.push('nel riquadro «Da scegliere» della scheda c’è ancora un Talento da scegliere: lo puoi scegliere anche dopo');
+  if (altri.length) {
+    const ev = (e) => (Number.isInteger(e.livello) ? (e.livello === 1 ? 'creazione' : `${e.livello}° livello`) : '');
+    parti.push(`nei livelli già acquisiti ${altri.length === 1 ? 'c’è una scelta fuori dalle regole di oggi' : `ci sono ${altri.length} scelte fuori dalle regole di oggi`} (${altri.slice(0, 2).map((e) => [ev(e), e.problema].filter(Boolean).join(': ')).join('; ')}${altri.length > 2 ? '; …' : ''}): restano com’erano`);
+  }
+  return parti.length ? parti.join('; ') : null;
+}
+
 async function saliDiLivello() {
   const g = permessoPx();
   if (g && !g.ok) { stato.messaggioScheda = { tipo: 'attenzione', testo: g.motivo }; return renderScheda({ mantieniScorrimento: true }); }
   const sp = calcolaScheda({ creazione: stato.scelte, livelli: stato.livelli }, stato.dati);
-  const motivo = sp.eccessi?.length ? motivoEccesso(sp.eccessi) : sp.completamenti?.length ? motivoCompletamento(sp.completamenti) : null;
+  const motivo = avvisoPrimaDiSalire(sp);
   await conAvviso(registraStorico, { azione: `Sali al livello ${2 + stato.livelli.length}`, motivo, fai: (forza) => {
     stato.sali = bozzaSalita(forza ? { procedi: true } : {});
     vai(`#/p/${stato.id}/sali/0`);
@@ -1678,25 +1697,21 @@ function renderSaliPagina() {
         if (!stato.salvataggioOk) alert(`Correzione fatta, ma non salvata nel browser. ${testoSalvataggioFallito()}`);
         return vai(`#/p/${stato.id}`);
       }
-      const inMaster = modalitaMaster({ server: stato.cartella, daQuestoPc: stato.master, aperta: modalitaMasterDi(sessionStorage), id: stato.id });
-      // A.188: un incantesimo fuori dalle regole lo forza solo il Direttore, e resta nello storico
-      let errLivello = validaLivello(personaggio(), bozza.voce, dati, { procedi: !!bozza.procedi });
-      let forzati = inMaster ? errLivello.filter((e) => e.campo === 'incantesimi' && e.tipo === 'violazione') : [];
-      // lotto 216 (A.287, C): il wizard dice «alla conferma puoi procedere comunque», ma per la salita normale la finestrella non c'era: un avviso
-      // procedibile fermava il tablet in silenzio (Conferma che non fa niente). Ora chiede, come la correzione di un livello, e lascia la riga nello storico.
-      if (errLivello.length > forzati.length) {
-        const altri = errLivello.filter((e) => !forzati.includes(e));
-        if (!bozza.procedi && altri.length && altri.every((e) => e.procedibile)) {
-          const ok = await chiedi({ titolo: `Avviso: salita al ${2 + stato.livelli.length}° livello`, testo: `${altri.map((e) => e.problema).join('; ')}. L’app avvisa e non blocca: se il master è d’accordo puoi procedere; resta una riga nello storico del personaggio.`, si: 'Procedi comunque' });
-          if (!ok) return undefined;
-          bozza.procedi = true;
-          registraStorico(testoProcedi(`salita al ${2 + stato.livelli.length}° livello`, altri.map((e) => e.problema).join('; ')));
-          errLivello = validaLivello(personaggio(), bozza.voce, dati, { procedi: true });
-          forzati = inMaster ? errLivello.filter((e) => e.campo === 'incantesimi' && e.tipo === 'violazione') : [];
-        }
-        if (errLivello.length > forzati.length) return renderSaliPagina();
+      // Lotto 241 (regola di Marcello, 23/11/2026): nell'avanzamento nessun controllo sulla distribuzione impedisce di concludere.
+      // Gli avvisi (procedibile) si leggono in una finestrella sola, con i numeri, e si procede; resta una riga nello storico.
+      // Fermano solo le scritture sbagliate (src/avanzamento.js → scritturaSbagliata): la pagina le mostra al loro passo.
+      const errLivello = validaLivello(personaggio(), bozza.voce, dati, { procedi: !!bozza.procedi });
+      if (errLivello.some((e) => !e.procedibile)) return renderSaliPagina();
+      const avvisiSalita = errLivello.filter((e) => e.procedibile);
+      const forzati = avvisiSalita.filter((e) => e.campo === 'incantesimi' && e.tipo === 'violazione');
+      if (avvisiSalita.length && !bozza.procedi) {
+        const livelloNuovo = 2 + stato.livelli.length;
+        const ok = await chiedi({ titolo: `Avvisi: salita ${conOrdinale('al', livelloNuovo)} livello`, testo: `${avvisiSalita.map((e) => e.problema).join('; ')}. L’app avvisa e non blocca: puoi procedere comunque, e resta una riga nello storico del personaggio.`, si: 'Procedi comunque' });
+        if (!ok) return undefined;
+        bozza.procedi = true;
+        registraStorico(testoProcedi(`salita ${conOrdinale('al', livelloNuovo)} livello`, avvisiSalita.map((e) => e.problema).join('; ')));
       }
-      if (forzati.length) storicoIncantesimi(`Aggiunti ${(bozza.voce.incantesimi ?? []).join(', ')} (${2 + stato.livelli.length}° livello), forzato dal Direttore: ${forzati[0].problema}`);
+      if (forzati.length) storicoIncantesimi(`Aggiunti ${(bozza.voce.incantesimi ?? []).join(', ')} (${2 + stato.livelli.length}° livello) oltre le regole, con l’avviso: ${forzati[0].problema}`);
       const primaSalita = personaggio();
       cambiaLivelli(applicaLivello(personaggio(), bozza.voce).livelli);
       // gli incantesimi forzati hanno già la loro riga (sopra); gli altri, scelti nelle regole, una riga qui
@@ -1971,8 +1986,10 @@ function contestoTalenti(inMaster) {
     posti, successive, dati: stato.dati, ui: stato.uiTalenti, master: !!inMaster, bloccato: talentiBloccati(),
     azioni: {
       ridisegna,
-      scegli: (posto, scelta, { forzata = null } = {}) => {
+      scegli: (posto, scelta, { forzata = null, avviso = null } = {}) => {
         if (talentiBloccati()) { ridisegna(); return; }
+        // lotto 241: dal tablet una scelta fuori dalle regole si fa con l'avviso, che resta nello storico
+        if (avviso && !forzata) registraStorico(`Scelto ${nome(scelta.id)} al ${posto.livello}° livello con un avviso: ${avviso}`);
         // la forzatura (solo in «Modifica master») finisce nel registro del master con il motivo
         if (forzata) stato.masterMotivo = `Talento forzato dal Direttore: ${nome(scelta.id)} al ${posto.livello}° livello (${forzata})`;
         applica(posto, scelta);
@@ -1987,9 +2004,10 @@ function contestoTalenti(inMaster) {
         ridisegna();
       },
       // 25/10 sera: un Incantesimo o una Tecnica aperti da un Talento, nella voce del livello (come in «Sali di livello»)
-      scegliSuccessiva: (s, id, { forzata = null } = {}) => {
+      scegliSuccessiva: (s, id, { forzata = null, avviso = null } = {}) => {
         if (talentiBloccati()) { ridisegna(); return; }
         const nomeScelta = s.tipo === 'tecniche' ? stato.dati.tecniche_interiori.tecniche.find((x) => x.id === id)?.nome ?? id : id;
+        if (avviso && !forzata) registraStorico(`Scelto ${nomeScelta} al ${s.livello}° livello con un avviso: ${avviso}`);
         if (forzata) stato.masterMotivo = `Scelta forzata dal Direttore: ${nomeScelta} al ${s.livello}° livello (${forzata})`;
         const p = applicaSceltaSuccessiva(personaggio(), s, id);
         cambiaLivelli(p.livelli);
@@ -2307,12 +2325,10 @@ function renderSchedaInterna({ mantieniScorrimento = false } = {}) {
     spazioQuasiEsaurito: archivio.spazioQuasiEsaurito(),
     // A.108: i punti in eccesso bloccano la salita prima di tutto (si tolgono, poi si riassegna)
     // N2: avviso con «Procedi comunque» (riga nello storico); restano fermi creazione incompleta ed errori dei livelli
-    avvisoSalita: tab.scheda.eccessi?.length ? motivoEccesso(tab.scheda.eccessi)
-      : tab.scheda.completamenti?.length ? motivoCompletamento(tab.scheda.completamenti) : null,
-    motivoNoSalita: !schedaCreazione.completa ? 'Completa la creazione prima di salire di livello.'
-        : talentiDaScegliere ? 'Scegli prima i Talenti nel riquadro «Da scegliere».'
-        : tab.errori.length ? 'Correggi gli errori dei livelli (o annulla l’ultimo) prima di salire ancora.'
-          : (permessoPx()?.motivo ?? null),
+    // lotto 241: nell'avanzamento nessun controllo sulla distribuzione impedisce di salire: punti, Talenti da scegliere ed errori dei
+    // livelli già acquisiti sono un avviso, con i numeri, e «Procedi comunque». Fermano solo la creazione incompleta e i PX (A.187)
+    avvisoSalita: avvisoPrimaDiSalire({ ...tab.scheda, errori: tab.errori ?? [] }, { talentiDaScegliere }),
+    motivoNoSalita: !schedaCreazione.completa ? 'Completa la creazione prima di salire di livello.' : (permessoPx()?.motivo ?? null),
     // regole aggiornate (regole.json → regole_aggiornate): punti da completare e in eccesso
     avvisoRegole: dati.regole.regole_aggiornate?.punti_abilita ?? 'Regole aggiornate',
     avvisoMancanti: dati.regole.regole_aggiornate?.mancanti ?? null,

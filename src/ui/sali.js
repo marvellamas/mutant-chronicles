@@ -56,8 +56,8 @@ export function renderSali(ctx) {
   const corr = ctx.correzione ?? null;
   // N2: con «Procedi comunque» (ctx.procedi) punti in eccesso e riassegnazioni in sospeso non fermano la salita
   const errori = corr ? corr.valida(voce) : validaLivello(personaggio, voce, dati, { procedi: !!ctx.procedi });
-  // A.188: un incantesimo fuori dalle regole lo può forzare solo il Direttore (ctx.master); per gli altri blocca
-  const bloccanti = errori.filter((e) => !e.procedibile && !(ctx.master && e.campo === 'incantesimi' && e.tipo === 'violazione'));
+  // Lotto 241: fermano la conferma solo le scritture sbagliate; tutto il resto è un avviso (src/avanzamento.js → scritturaSbagliata)
+  const bloccanti = errori.filter((e) => !e.procedibile);
   const c = {
     ...ctx, struttura, errori,
     prossimo: prossimoLivello(personaggio, dati),
@@ -114,10 +114,22 @@ export function renderSali(ctx) {
         h('p', {}, h('strong', {}, `${conOrdinale('Al', struttura.livello)} livello, automaticamente:`)),
         h('ul', {}, struttura.informazioni.map((x) => h('li', {}, x)))) : null,
       corpo,
-      passo.id !== 'riepilogo' && erroriPasso.length ? h('div', { class: 'riquadro attenzione' },
-        h('ul', {}, erroriPasso.map((e) => h('li', { class: e.tipo === 'violazione' ? 'motivo' : null }, e.problema)))) : null,
+      passo.id !== 'riepilogo' && erroriPasso.length ? riquadroAvvisi(erroriPasso) : null,
       barra('fondo'))),
   ];
+}
+
+/**
+ * Lotto 241: gli avvisi di un passo. Prima gli avvisi (si può procedere comunque), poi, a parte, quello che non si può scrivere.
+ */
+export function riquadroAvvisi(errori) {
+  const avvisi = errori.filter((e) => e.procedibile);
+  const fermi = errori.filter((e) => !e.procedibile);
+  return h('div', { class: 'riquadro attenzione' },
+    avvisi.length ? h('p', {}, h('strong', {}, avvisi.length === 1 ? 'Un avviso' : `${avvisi.length} avvisi`), ': puoi procedere comunque.') : null,
+    avvisi.length ? h('ul', {}, avvisi.map((e) => h('li', {}, e.problema))) : null,
+    fermi.length ? h('p', {}, h('strong', {}, 'Da sistemare prima di confermare'), ' (un dato che non si può scrivere così):') : null,
+    fermi.length ? h('ul', {}, fermi.map((e) => h('li', { class: 'motivo' }, e.problema))) : null);
 }
 
 // ---------------------------------------------------------------------------
@@ -138,19 +150,20 @@ function passoCaratteristiche(c, passo) {
   return [
     h('p', { class: 'guida' }, `Distribuisci ${k} Punti Caratteristica, anche sulla stessa Caratteristica. ${conOrdinale('Al', prossimo.livello)} livello il massimo è ${max}.`),
     contatore(rimasti, k, 'Punti Caratteristica'),
-    alMassimo.length ? h('p', { class: 'nota' }, `${alMassimo.join(', ')} ${alMassimo.length > 1 ? 'sono' : 'è'} già a ${max}: il punto che lo supererebbe va su un’altra Caratteristica (§8.2).`) : null,
+    alMassimo.length ? h('p', { class: 'nota' }, `${alMassimo.join(', ')} ${alMassimo.length > 1 ? 'sono' : 'è'} già a ${max}: il punto che lo supererebbe andrebbe su un’altra Caratteristica (§8.2): puoi metterlo lo stesso, con un avviso.`) : null,
     h('div', { class: 'tabella-scorre' }, h('table', { class: 'tabella' },
       h('thead', {}, h('tr', {}, h('th', {}, 'Caratteristica'), h('th', {}, 'Attuale'), h('th', {}, 'Punti'), h('th', {}, 'Valore'), h('th', {}, 'Mod'))),
       h('tbody', {}, dati.caratteristiche.caratteristiche.map(({ sigla, nome }) => {
         const attuale = prossimo.caratteristiche[sigla].valore;
         const punti = pc[sigla] ?? 0;
         const valore = attuale + punti;
-        // stesse regole di validaLivello: somma dei punti e massimo del livello
-        const motivoPiu = rimasti <= 0 ? 'Nessun Punto Caratteristica rimasto da spendere.'
-          : valore + 1 > max ? `${sigla} arriverebbe a ${valore + 1}: ${conOrdinale('al', prossimo.livello)} livello il massimo è ${max} (§8.2).` : null;
+        // stesse regole di validaLivello: somma dei punti e massimo del livello. Lotto 241: oltre il massimo il «+» resta
+        // attivo e la riga lo dice; si ferma solo quando i punti del livello sono finiti
+        const motivoPiu = rimasti <= 0 ? 'Nessun Punto Caratteristica rimasto da spendere.' : null;
+        const avviso = rimasti > 0 && valore + 1 > max ? `${sigla} arriverebbe a ${valore + 1}: ${conOrdinale('al', prossimo.livello)} livello il massimo è ${max} (§8.2). Puoi metterlo lo stesso.` : null;
         return h('tr', {},
           h('th', { scope: 'row' }, info('caratteristica', sigla, nome), h('span', { class: 'sigla' }, ` ${sigla}`),
-            motivoPiu && rimasti > 0 ? h('small', { class: 'motivo' }, motivoPiu) : null),
+            avviso ? h('small', { class: 'motivo' }, avviso) : null),
           h('td', {}, String(attuale)),
           h('td', {}, stepper(punti, {
             etichetta: nome, motivoPiu,
@@ -205,10 +218,10 @@ function passoTalento(c, { campo = 'talentoLibero', candidati: daMostrare = null
           t.provvisorio ? h('span', { class: 'etichetta' }, 'provvisorio') : null,
           f.gruppo === 'tutti' ? h('small', { class: 'sigla' }, ` · ${titoloGruppo[gruppoDi(t.id, dati)] ?? ''}`) : null,
           !t.ammesso ? h('small', { class: 'motivo' }, t.motivo) : null),
-        t.ammesso || sel ? bottoneScelta(sel, () => c.aggiornaVoce({
+        bottoneScelta(sel, () => c.aggiornaVoce({
           [campo]: { id: t.id, ...(t.parametri?.length === 1 ? { parametro: t.parametri[0] } : {}) },
           tecniche: undefined, scuolaMishima: undefined,
-        })) : null);
+        })));
     }) : [h('li', { class: 'vuoto' }, 'Nessun Talento corrisponde alla ricerca.')]));
   };
   disegnaElenco();
@@ -337,7 +350,8 @@ function passoTecniche(c) {
       : scuolaT && scuolaT !== scuola ? `serve l’iniziazione alla Scuola ${scuolaT}`
         : !presa && nuove.length >= daScegliere ? 'nessuna Tecnica rimasta da scegliere' : null;
     return h('label', { class: `incantesimo${motivo && !presa ? ' bloccato' : ''}` },
-      h('input', { type: 'checkbox', checked: presa, disabled: giaNota || (!!motivo && !presa), onchange: (e) => cambia(t.id, e.target.checked) }),
+      // lotto 241: una Tecnica fuori dalle regole si sceglie lo stesso, con il motivo come avviso
+      h('input', { type: 'checkbox', checked: presa, disabled: giaNota, onchange: (e) => cambia(t.id, e.target.checked) }),
       h('span', {}, h('strong', {}, info('tecnica', t.id, t.nome)), h('small', {}, ` ${t.costo} · ${t.azione}`),
         motivo && !giaNota ? h('small', { class: 'motivo' }, motivo) : null));
   };
@@ -380,7 +394,7 @@ function passoIncantesimi(c) {
   // A.188 (28/10): il conto è quello unico di src/quote-incantesimi.js; quote, famiglie e livello massimo valgono di nuovo:
   // l'incantesimo fuori regola è in grigio con il motivo, e lo può forzare solo il Direttore
   return [
-    h('p', { class: 'guida' }, `Quote di Classe per macrofamiglia (qualunque specializzazione) più ${q.quote.liberi} incantesimi liberi di qualunque famiglia (comprese quelle dei Talenti). Livello massimo degli incantesimi conosciuti: ${q.livelloMassimo}. Quelli fuori dalle quote, dalle famiglie o dal livello massimo sono in grigio con il motivo${c.master ? ' (come Direttore puoi forzarli)' : ''}.`),
+    h('p', { class: 'guida' }, `Quote di Classe per macrofamiglia (qualunque specializzazione) più ${q.quote.liberi} incantesimi liberi di qualunque famiglia (comprese quelle dei Talenti). Livello massimo degli incantesimi conosciuti: ${q.livelloMassimo}. Quelli fuori dalle quote, dalle famiglie o dal livello massimo sono in grigio con il motivo: si possono scegliere lo stesso, con un avviso.`),
     // lotto 216 (A.287, C): chi non può procedere deve sapere cosa manca e chi lo sblocca — una riga, non un riquadro
     (() => { const m = motivoBloccoIncantesimi(conto, catalogo, { noti, nuovi, master: c.master }); return m ? h('p', { class: 'nota attenzione', role: 'status' }, m) : null; })(),
     h('div', { class: 'contatori' },
@@ -396,7 +410,8 @@ function passoIncantesimi(c) {
           const preso = giaNoto || nuovi.includes(i.nome);
           const motivo = preso ? null : avvisoIncantesimo(i, conto);
           return h('label', { class: `incantesimo ${classeMacrofamiglia(m.nome)}${motivo ? ' bloccato' : ''}` },
-            h('input', { type: 'checkbox', checked: preso, disabled: giaNoto || (!!motivo && !c.master), onchange: (e) => cambia(i.nome, e.target.checked) }),
+            // lotto 241: fuori dalle quote si sceglie lo stesso, con il motivo come avviso (prima solo il Direttore)
+            h('input', { type: 'checkbox', checked: preso, disabled: giaNoto, onchange: (e) => cambia(i.nome, e.target.checked) }),
             h('span', {}, h('strong', {}, info('incantesimo', i.nome)), ' ', pallini(i.livello_base), ' ', etichettaMacro(m.nome), h('small', {}, ` liv. base ${i.livello_base}${giaNoto ? ' · già conosciuto' : apprendiAMano.has(i.nome) ? ' · già appreso a mano' : ''}`),
               motivo ? h('small', { class: 'motivo' }, ` ${motivo}.`) : null));
         }))))),
@@ -419,13 +434,15 @@ function passoAbilita(c, passo) {
     if (v <= 0) delete nuovo[n];
     c.aggiornaVoce({ puntiAbilita: nuovo });
   };
-  // stesse regole di validaLivello: ogni punto aumenta il VA personale (§8.3) e VA ≥ 1 prima dei liberi
+  // stesse regole di validaLivello: ogni punto aumenta il VA personale (§8.3) e VA ≥ 1 prima dei liberi.
+  // Lotto 241: al limite, o sotto il VA minimo, il «+» resta attivo e la riga lo dice (un avviso, non un blocco);
+  // si ferma solo quando i punti del livello sono finiti
   const abilita = base.map((a) => {
     const punti = pa[a.nome] ?? 0;
-    const motivoPiu = rimasti <= 0 ? 'Nessun Punto Abilità Libero rimasto da spendere.'
-      : a.grezzo + punti + 1 > a.limite ? motivoAlLimite(a, punti, dati)
-        : a.totale < minimo ? `VA ${a.totale} prima dei punti liberi: serve almeno ${minimo} (§2.13).` : null;
-    return { ...a, punti, motivoPiu };
+    const motivoPiu = rimasti <= 0 ? 'Nessun Punto Abilità Libero rimasto da spendere.' : null;
+    const avviso = a.grezzo + punti + 1 > a.limite ? `${motivoAlLimite(a, punti, dati)} Puoi metterlo lo stesso.`
+      : a.totale < minimo ? `VA ${a.totale} prima dei punti liberi: servirebbe almeno ${minimo} (§2.13). Puoi metterlo lo stesso.` : null;
+    return { ...a, punti, motivoPiu, avviso };
   });
   return [
     h('p', { class: 'guida' }, `Distribuisci ${k} Punti Abilità Liberi. Ogni punto deve aumentare il VA personale: ${conOrdinale('al', prossimo.livello)} livello il VA non supera il limite della categoria di competenza (colonna «Lim», §8.3; con più Classi la categoria migliore, §8.7), compresi i +1 di Classe già applicati. L’Abilità deve avere VA almeno ${minimo} prima dei punti liberi.`),
@@ -457,7 +474,7 @@ export function tabellaPuntiAbilita({ dati, abilita, rimasti, imposta }) {
     // §1.2.1: VA personale = min(grezzo, limite)
     const va = a.limite === null || a.limite === undefined ? a.grezzo + punti : Math.min(a.grezzo + punti, a.limite);
     const inattivi = a.inattivi ? `${a.inattivi === 1 ? '1 punto' : `${a.inattivi} punti`} di questo evento non ${a.inattivi === 1 ? 'aumentava' : 'aumentavano'} il VA: ${a.inattivi === 1 ? 'va riassegnato' : 'vanno riassegnati'}.` : null;
-    const inRiga = [inattivi, motivoPiu && rimasti > 0 ? motivoPiu : null].filter(Boolean).join(' ') || null;
+    const inRiga = [inattivi, motivoPiu && rimasti > 0 ? motivoPiu : null, a.avviso && rimasti > 0 ? a.avviso : null].filter(Boolean).join(' ') || null;
     const comp = a.competenza ? C[a.competenza] : null;
     return h('tr', { class: a.daClasse ? 'di-classe' : null },
       h('th', { scope: 'row' }, info('abilita', a.nome), h('span', { class: 'sigla' }, ` ${a.caratteristica}`),
@@ -508,8 +525,7 @@ function passoRiepilogo(c) {
       h('tbody', {}, confronto.map(([n, a, b]) => h('tr', { class: String(a) !== String(b) ? 'evidenziata' : null },
         h('th', { scope: 'row' }, n), h('td', {}, String(a ?? '—')), h('td', { class: 'forte' }, String(b ?? '—')))))),
     errori.length
-      ? h('div', { class: 'riquadro attenzione' }, h('p', {}, h('strong', {}, 'Prima di confermare:')),
-        h('ul', {}, errori.map((e) => h('li', {}, e.problema))))
+      ? riquadroAvvisi(errori)
       : h('p', { class: 'riquadro ok' }, c.correzione
         ? 'Tutto a posto: con «Conferma» il livello viene corretto e i livelli successivi si ricalcolano in ordine (A.107).'
         : 'Tutto a posto: con «Conferma» il livello viene aggiunto al personaggio e salvato. Si potrà annullare solo l’ultimo livello.'),

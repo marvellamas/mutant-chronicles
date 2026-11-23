@@ -56,7 +56,8 @@ test('«Sali di livello» con punti in eccesso (A.108) o riassegnazioni in sospe
   const eccesso = pg({ 'Tecnologia': 3, 'Medicina': 3, 'Sopravvivenza': 2 });
   assert.equal(calcolaScheda(eccesso, dati).eccessi.length, 1);
   const e = validaLivello(eccesso, SETTIMO, dati);
-  assert.deepEqual([e.length, e[0].procedibile, /Punti Abilità in eccesso \(A\.108\)/.test(e[0].problema)], [1, true, true]);
+  // lotto 241: l'avviso sui livelli acquisiti viene prima; il controllo della voce del livello nuovo segue (non è più saltato)
+  assert.deepEqual([e.filter((x) => x.campo === 'livelli').length, e[0].procedibile, /Punti Abilità in eccesso \(A\.108\)/.test(e[0].problema)], [1, true, true]);
   assert.deepEqual(validaLivello(eccesso, SETTIMO, dati, { procedi: true }).filter((x) => x.campo === 'livelli'), []);
   // riassegnazione in sospeso: corretto il 2° livello, un punto del 4° non aumenta più il VA
   const sospeso = { ...pg(), livelli: pg().livelli.map((l) => (l.livello === 2 ? { livello: 2, caratteristiche: { INT: 2 } } : l)) };

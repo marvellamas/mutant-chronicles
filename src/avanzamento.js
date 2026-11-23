@@ -589,7 +589,7 @@ function applicaVoce(prima, voce, dati) {
       x.liberi += p;
       continue;
     }
-    const { utili, inattivi } = puntiUtili(grezzoPrima, limEff, p);
+    const { utili, inattivi } = puntiUtiliDueConti(stato, a, x.daClasse + x.liberi, limEff, p, dati);
     x.liberi += utili;
     if (inattivi) stato.inattivi.push({ livello: n, abilita: a, punti: inattivi });
   }
@@ -683,7 +683,7 @@ export function controllaTalentoLibero(stato, scelta, dati) {
  * Errori delle scelte del livello successivo: regola violata o scelta incompleta, nello
  * stesso formato di validaScelte.
  */
-function controllaVoce(prima, voce, dati) {
+function controllaVoce(prima, voce, dati, { corrette = false } = {}) {
   const errori = [];
   const err = (campo, problema, tipo = 'violazione') => errori.push({ campo, problema, tipo });
   const n = prima.livello + 1;
@@ -794,20 +794,21 @@ function controllaVoce(prima, voce, dati) {
       if (!x) { err(`puntiAbilita.${a}`, `"${a}" non è un'Abilità`); continue; }
       if (!Number.isInteger(p) || p < 0) { err(`puntiAbilita.${a}`, 'i punti devono essere interi ≥ 0'); continue; }
       if (p === 0) continue;
-      const va = grezzoDi(conGradoApplicato, a, x.daClasse + x.liberi, dati);
+      // lotto 241: il VA che il giocatore vede (con le correzioni del Direttore) nel testo; i punti inattivi con i due conti del ricalcolo
+      const va = grezzoDi(conGradoApplicato, a, x.daClasse + x.liberi, dati, { corrette });
       const lim = limiteDi(conGradoApplicato, a, dati);
-      const { inattivi } = puntiUtili(va, lim.valore, p);
+      const { inattivi } = puntiUtiliDueConti(conGradoApplicato, a, x.daClasse + x.liberi, lim.valore, p, dati);
       if (inattivi) {
         errori.push({
           campo: `puntiAbilita.${a}`, tipo: 'violazione', inattivi,
-          problema: `${inattivi === 1 ? '1 punto non aumenta' : `${inattivi} punti non aumentano`} il VA personale: VA ${Math.min(va, lim.valore)}, limite ${lim.valore} (${conGradoApplicato.profilo.categorie[lim.categoria].nome}, §8.3)`,
+          problema: testoAlLimite(conGradoApplicato, a, va, lim, p, inattivi),
         });
       }
       if (va < minimo) err(`puntiAbilita.${a}`, `VA ${va} prima dei punti liberi: serve almeno ${minimo} (§2.13)`);
     }
     const spesi = somma(pa);
     if (spesi > kAbil) err('puntiAbilita', `${spesi - kAbil} punti in eccesso rispetto alle regole correnti (${conOrdinale('al', n)} livello se ne ricevono ${kAbil})`, 'eccesso');
-    if (spesi < kAbil) err('puntiAbilita', `assegnati ${spesi} Punti Abilità Liberi su ${kAbil}`, 'incompleto');
+    if (spesi < kAbil) err('puntiAbilita', `assegnati ${spesi} Punti Abilità Liberi su ${kAbil}: ${kAbil - spesi === 1 ? 'uno resta' : `${kAbil - spesi} restano`} da assegnare`, 'incompleto');
   }
 
   // stato completo del nuovo livello, per quote e tetti
@@ -825,11 +826,41 @@ function controllaVoce(prima, voce, dati) {
   return errori;
 }
 
+/**
+ * Lotto 241: l'avviso dei punti che non aumentano il VA personale, con i numeri: categoria, VA, limite, punti. Il conto è sul VA
+ * delle regole (Mod + Base + Corp + Avanzamento), **senza le correzioni a mano del Direttore**: quelle non sono punti liberi
+ * (A.281, A.293) e non entrano nel conto del limite. Se l'Abilità ne ha, lo si dice, perché la scheda mostra il VA corretto.
+ */
+function testoAlLimite(stato, nome, va, lim, punti, inattivi) {
+  const cat = stato.profilo.categorie[lim.categoria]?.nome ?? lim.categoria;
+  const corr = (stato.correzioniMaster ?? []).filter((x) => x?.stato !== 'annullata' && x?.chiave === `abilita:${nome}` && x?.tipo === 'aggiungi' && Number.isInteger(x.numero));
+  const netto = corr.reduce((t, x) => t + x.numero, 0);
+  const notaCorr = corr.length ? `; in scheda vedi ${Math.min(va, lim.valore) + netto} per ${corr.length === 1 ? 'una correzione' : `${corr.length} correzioni`} del Direttore (${netto >= 0 ? '+' : '−'}${Math.abs(netto)}), che non ${corr.length === 1 ? 'conta' : 'contano'} come punti liberi` : '';
+  return `${cat}: ${nome} ${punti === 1 ? '1 punto' : `${punti} punti`} su VA ${Math.min(va, lim.valore)}, il limite della categoria è ${lim.valore} — ${inattivi === 1 ? '1 punto non aumenta' : `${inattivi} punti non aumentano`} il VA (§8.3)${notaCorr}`;
+}
+
+/**
+ * Lotto 241: quanti punti liberi aumentano il VA personale, con **due conti**: le Caratteristiche come sono nei livelli (senza le
+ * correzioni del Direttore) e come le vede la scheda (con le correzioni, `caratteristicheEffettive`). Un punto non conta solo se
+ * non conta in **tutti e due**. Perché: la scheda e la pagina di «Sali di livello» mostrano il VA con le correzioni; il ricalcolo lo
+ * contava senza. Con FOR corretta in meno (Dimitri, 2/11) la pagina prometteva Atletica 11 e il file salvato dava 10, con un
+ * «punto da riassegnare» che non esisteva; contare tutto con le correzioni avrebbe invece reso inattivi, a posteriori, punti scelti
+ * quando erano giusti (Dimitri, 4 al 4° livello) e abbassato VA di oggi. Così nessun valore esistente scende e nessun avviso è falso.
+ * Se le correzioni di Caratteristica debbano cambiare anche i punti dei livelli passati lo decide Davide (A.313).
+ */
+function puntiUtiliDueConti(stato, nome, avanzamento, limite, punti, dati) {
+  const senza = puntiUtili(grezzoDi(stato, nome, avanzamento, dati), limite, punti);
+  if (!(stato.correzioniMaster ?? []).length) return senza;
+  const con = puntiUtili(grezzoDi(stato, nome, avanzamento, dati, { corrette: true }), limite, punti);
+  return con.utili > senza.utili ? con : senza;
+}
+
 /** §1.2.1: VA grezzo personale di un'Abilità nello stato, con l'Avanzamento dato. */
-function grezzoDi(stato, nomeAbilita, avanzamento, dati) {
+function grezzoDi(stato, nomeAbilita, avanzamento, dati, { corrette = false } = {}) {
   const a = trova(dati.abilita.abilita, nomeAbilita);
   return valoreAbilita({
-    mod: modDi(stato, a.caratteristica, dati),
+    // lotto 241: per il livello che si aggiunge, la Caratteristica corretta dal Direttore, come nella scheda e nella pagina
+    mod: corrette ? modOrdinario(caratteristicheEffettive(stato, dati)[a.caratteristica], dati.caratteristiche.modificatore_ordinario) : modDi(stato, a.caratteristica, dati),
     base: baseIniziale(primaClasseDef(stato, dati), nomeAbilita, stato.profilo),
     corporazione: stato.corp.abilita_bonus.includes(nomeAbilita) ? 1 : 0,
     avanzamento,
@@ -851,12 +882,30 @@ function controllaIncantesimi(prima, dopo, v, dati) {
     if (i.livello_base > q.livelloMassimo) err(`${nome}: livello base ${i.livello_base} oltre il livello massimo ${q.livelloMassimo} (tabella dei Gradi taumaturgici)`);
   }
   if (nuovi.length && !q.accesso) err('il personaggio non ha accesso alla magia');
-  if (q.liberiUsati > q.liberi || q.noti.length > q.totale) {
-    err(`incantesimi conosciuti ${q.noti.length}, quote ${q.totale} (di Classe per macrofamiglia + ${q.liberi} liberi)`);
-  } else if (q.noti.length < q.totale && (nuovi.length || q.totale > statoQuote(prima, dati).totale)) {
-    err(`restano ${q.totale - q.noti.length} incantesimi da scegliere`, 'incompleto');
+  if (q.liberiUsati > q.liberi || q.noti.length > q.totale) err(testoOltreQuota(q, dopo, dati));
+  else if (q.noti.length < q.totale && (nuovi.length || q.totale > statoQuote(prima, dati).totale)) {
+    err(`incantesimi: ${q.noti.length} conosciuti su ${q.totale} di quota, ${q.totale - q.noti.length === 1 ? 'uno ancora da scegliere' : `${q.totale - q.noti.length} ancora da scegliere`}`, 'incompleto');
   }
   return errori;
+}
+
+/**
+ * Lotto 241: l'avviso «oltre quota» con i numeri, famiglia per famiglia. Prima diceva «incantesimi conosciuti 20, quote 20» anche
+ * quando il totale tornava e a sforare era una famiglia: un avviso che non si capisce fa riaprire il manuale. Le quote di Classe
+ * valgono per macrofamiglia; quello che le supera usa gli incantesimi liberi.
+ */
+function testoOltreQuota(q, stato, dati) {
+  const perFam = Object.entries(q.perMacro).map(([m, quota]) => [m, quota, q.noti.filter((i) => i.macrofamiglia === m).length]);
+  const sopra = perFam.filter(([, quota, n]) => n > quota).map(([m, quota, n]) => `${m} ${n} su ${quota} (+${n - quota})`);
+  const posti = perFam.filter(([, quota, n]) => n < quota).map(([m, quota, n]) => `${m} ${quota - n}`);
+  const oltre = Math.max(q.noti.length - q.totale, q.liberiUsati - q.liberi);
+  const sigla = dati.regole.taumaturgo?.incantesimi_liberi?.caratteristica;
+  // A.287: la correzione del Direttore che abbassa la Caratteristica dei liberi è la causa se, senza, i liberi basterebbero di più
+  const abbassata = sigla && caratteristicheEffettive(stato, dati)[sigla] < stato.car[sigla]
+    && quoteIncantesimi({ ...stato, correzioniMaster: [] }, dati).liberi > q.liberi;
+  return `incantesimi: ${q.noti.length} conosciuti su ${q.totale} di quota; oltre le quote di Classe ${sopra.join(', ') || 'nessuna famiglia'}, che usano ${q.liberiUsati} incantesimi liberi su ${q.liberi}`
+    + `${posti.length ? ` (posti di Classe ancora liberi: ${posti.join(', ')})` : ''}: ${oltre === 1 ? 'uno resta' : `${oltre} restano`} nello storico, senza effetto`
+    + (abbassata ? `, perché il Direttore ha corretto ${sigla === 'INT' ? 'l’Intelligenza' : sigla} e i liberi vengono da lì (A.287): non è un tuo errore` : '');
 }
 
 function controllaTecniche(prima, dopo, v, dati) {
@@ -1112,7 +1161,8 @@ export function motivoCompletamento(completamenti) {
   const n = completamenti.reduce((s, c) => s + c.mancanti, 0);
   const dove = completamenti.map((c) => `${c.mancanti} ${c.livello === 1 ? 'della creazione' : `${conOrdinale('del', c.livello)} livello`}`).join(', ');
   const verbo = completamenti.some((c) => c.riassegna) ? 'assegna o riassegna' : 'assegna';
-  return `Regole aggiornate: prima di salire di livello ${verbo} ${n} Punti Abilità (${dove}) con «Assegna» in cima alla scheda.`;
+  // lotto 241: un avviso, non una condizione per salire
+  return `Regole aggiornate: ${n} Punti Abilità da ${verbo === 'assegna' ? 'assegnare' : 'assegnare o riassegnare'} (${dove}), con «Assegna» in cima alla scheda: si può fare anche dopo la salita`;
 }
 
 /**
@@ -1123,7 +1173,8 @@ export function motivoEccesso(eccessi) {
   const lista = (eccessi ?? []).filter((e) => e.eccesso > 0);
   const n = lista.reduce((s, e) => s + e.eccesso, 0);
   const dove = lista.map((e) => `${e.eccesso} ${e.livello === 1 ? 'della creazione' : conOrdinale('del', e.livello) + ' livello'}`).join(', ');
-  return `Punti Abilità in eccesso (A.108): prima di salire di livello togli ${n} ${n === 1 ? 'punto' : 'punti'} (${dove}) con «Togli» in cima alla scheda, scegliendo tu da quali Abilità.`;
+  // lotto 241: un avviso, non una condizione per salire
+  return `Punti Abilità in eccesso (A.108): ${n} ${n === 1 ? 'punto' : 'punti'} in più del previsto (${dove}), da togliere con «Togli» in cima alla scheda scegliendo tu da quali Abilità: si può fare anche dopo la salita`;
 }
 
 // ---------------------------------------------------------------------------
@@ -1287,38 +1338,61 @@ export function validaCorrezione(personaggio, livello, voce, dati, { procedi = f
 }
 
 /**
+ * Lotto 241 (23/11/2026, regola di Marcello dopo la serata del 22/11): **nell'avanzamento di livello nessun controllo sulla
+ * distribuzione impedisce di concludere.** Quello che giudica come il giocatore ha distribuito punti, Abilità, Talenti,
+ * incantesimi o qualunque altra scelta è un avviso (`procedibile: true`): dice cosa ha visto con i numeri, e si procede.
+ * Fermano soltanto i dati che non si possono scrivere (`scritturaSbagliata`): un identificativo che non esiste, un numero che
+ * non è un intero, una chiave che il livello non prevede, e la Classe e i dadi dei PV e dei PM del Grado, senza i quali il
+ * livello non si calcola (e il tiro già registrato della A.297, che sta in src/tiri-avanzamento.js).
+ * Il motivo: la sera del 22/11 tre blocchi di questo tipo hanno fermato sette giocatori e Dimitri non ha chiuso il passaggio
+ * all'8° (docs/diff-lotto241-2026-11-23.md). L'app propone e avvisa, non blocca: l'ultima parola è del Direttore.
+ */
+export function scritturaSbagliata(e) {
+  const campo = String(e?.campo ?? '');
+  const problema = String(e?.problema ?? '');
+  if (campo === 'creazione' || campo === 'livello') return true;
+  // Classe del Grado e dadi di PV e PM: senza, il livello non si calcola (lasciati come prima: vedi il documento del lotto)
+  if (/^(grado|tiroPV|tiroPM)$/.test(campo)) return true;
+  if (/ non si sceglie «/.test(problema)) return true; // una chiave che il livello non prevede
+  if (/devono essere interi|deve essere una lista/.test(problema)) return true;
+  if (/^"[^"]*" non è |inesistente/.test(problema) || /: "[^"]*" non è (una|un) /.test(problema)) return true; // un id che non esiste
+  return false;
+}
+
+/** Gli errori di un livello con la classe giusta: tutti avvisi (procedibile), salvo le scritture sbagliate. */
+const comeAvvisi = (errori) => errori.map((e) => (scritturaSbagliata(e) ? e : { ...e, procedibile: true }));
+
+/**
+ * Lotto 241 (A.287): la quota degli incantesimi di un livello passato non conta alla salita. La decide **una volta sola** il
+ * livello che si sta aggiungendo (controllaIncantesimi sullo stato nuovo): così chi è sopra quota per una correzione
+ * dell'Intelligenza (Dimitri al 7°, due nello storico) e rientra al livello dopo (20 all'8°) non riceve più un avviso.
+ */
+const quotaPassata = (e) => /(^|\.)incantesimi$/.test(e.campo ?? '') && /^incantesimi(:| conosciuti)/.test(e.problema ?? '');
+
+/**
  * Valida le scelte del prossimo livello del personaggio.
- * @returns {{campo, problema, tipo: 'violazione'|'incompleto'}[]}
+ * @returns {{campo, problema, tipo: 'violazione'|'incompleto', procedibile?: true}[]} — con `procedibile` è un avviso
+ * («Procedi comunque»); senza, la scrittura sarebbe sbagliata e non si fa. Con `procedi` gli avvisi sui livelli già
+ * acquisiti non si ripetono (li ha già visti chi ha detto «Procedi comunque»).
  */
 export function validaLivello(personaggio, scelte, dati, { procedi = false } = {}) {
-  const { stato, errori } = ricalcola(personaggio, dati);
+  const { stato, errori, completamenti, eccessi } = ricalcola(personaggio, dati);
   if (!stato) return [{ campo: 'creazione', problema: 'la creazione non si può calcolare: correggila prima di salire di livello', tipo: 'violazione' }];
-  const { completamenti, eccessi } = ricalcola(personaggio, dati);
-  // A.108 (E&L del 05/10/2026): i punti in eccesso bloccano la salita finché la scheda non è riconciliata
-  // N2 (l'app avvisa, non blocca): con `procedi` il master ha deciso di salire lo stesso («Procedi comunque», riga nello storico)
-  if (eccessi.length && !procedi) return [{ campo: 'livelli', problema: motivoEccesso(eccessi), tipo: 'violazione', procedibile: true }];
-  if (completamenti.length && !procedi) return [{ campo: 'livelli', problema: motivoCompletamento(completamenti), tipo: 'violazione', procedibile: true }];
-  // Talenti v1.0: una scelta non ammessa c'è solo se l'ha forzata il Direttore; avvisa con «Procedi comunque», non blocca
-  // A.188 (28/10): un incantesimo fuori da quote, famiglie o livello massimo c'è solo se l'ha forzato il Direttore (o è di prima
-  // della regola): avvisa con «Procedi comunque», non blocca la salita
-  const sceltaTalento = (e) => (stato.regime === 'nuovo' && /(^|\.)(talentoLibero|maestria|specializzazione|specializzazioneIniziale)$/.test(e.campo ?? '')) || /(^|\.)incantesimi$/.test(e.campo ?? '');
-  const forzate = errori.filter((e) => e.tipo === 'violazione' && sceltaTalento(e));
-  const bloccanti = errori.filter((e) => e.tipo === 'violazione' && !sceltaTalento(e));
-  // lotto 216 (A.287): se il conto degli incantesimi non torna perché il Direttore ha corretto in meno l'Intelligenza, non è una scelta forzata e non è colpa
-  // del giocatore: lo si dice, perché «forzata dal Direttore» su una scheda che nessuno ha forzato fa fermare il tavolo
-  const sigla = dati.regole.taumaturgo?.incantesimi_liberi?.caratteristica;
-  const abbassata = sigla && caratteristicheEffettive(stato, dati)[sigla] < stato.car[sigla];
-  const soloIncantesimi = forzate.length && forzate.every((e) => /(^|.)incantesimi$/.test(e.campo ?? ''));
-  if (forzate.length && !bloccanti.length && !procedi) {
-    const motivo = soloIncantesimi && abbassata
-      ? `i tuoi incantesimi superano le quote di oggi perché il Direttore ha corretto l'Intelligenza (${forzate[0].problema}): non è un tuo errore, i livelli già acquisiti restano com'erano e puoi procedere`
-      : `una scelta dei Talenti o degli incantesimi non è ammessa dalle regole (forzata dal Direttore: ${forzate[0].problema})`;
-    return [{ campo: 'livelli', problema: motivo, tipo: 'violazione', procedibile: true }];
+  const avvisi = [];
+  if (!procedi) {
+    // A.108 e A.52: punti in eccesso o da completare nei livelli già acquisiti. Si dicono, non fermano (N2, lotto 241)
+    if (eccessi.length) avvisi.push({ campo: 'livelli', problema: motivoEccesso(eccessi), tipo: 'violazione', procedibile: true });
+    if (completamenti.length) avvisi.push({ campo: 'livelli', problema: motivoCompletamento(completamenti), tipo: 'violazione', procedibile: true });
+    const passati = errori.filter((e) => e.tipo === 'violazione' && !quotaPassata(e));
+    if (passati.length) {
+      const primi = passati.slice(0, 3).map((e) => `${nomeEvento(e.livello)}: ${e.problema}`).join('; ');
+      avvisi.push({ campo: 'livelli', problema: `nei livelli già acquisiti ${passati.length === 1 ? 'c’è una scelta fuori dalle regole di oggi' : `ci sono ${passati.length} scelte fuori dalle regole di oggi`} (${primi}${passati.length > 3 ? '; …' : ''}): restano com’erano, e la salita si fa`, tipo: 'violazione', procedibile: true });
+    }
   }
-  if (bloccanti.length) {
-    return [{ campo: 'livelli', problema: `i livelli già acquisiti contengono errori (${bloccanti[0].problema}): annulla l’ultimo livello e correggilo`, tipo: 'violazione' }];
-  }
-  return controllaVoce(stato, scelte, dati);
+  // lotto 241: il livello nuovo si giudica sui valori che il giocatore vede (Caratteristiche con le correzioni del Direttore, come
+  // nella pagina e nella scheda). I livelli già acquisiti restano contati com’erano quando sono stati scelti: cambiarli ora
+  // renderebbe «da riassegnare» punti che allora erano giusti (Dimitri: 4 al 4° livello)
+  return [...avvisi, ...comeAvvisi(controllaVoce(stato, scelte, dati, { corrette: true }))];
 }
 
 /**

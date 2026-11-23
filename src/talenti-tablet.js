@@ -15,6 +15,16 @@ const chiusi = (o) => (Number.isInteger(o?.scelte?.talentiChiusiFino) ? o.scelte
 const personaggio = (o) => ({ creazione: o?.scelte ?? {}, livelli: Array.isArray(o?.livelli) ? o.livelli : [] });
 
 /**
+ * Lotto 241 (regola di Marcello, 23/11/2026): nell'avanzamento di livello nessun controllo sulla distribuzione impedisce di
+ * concludere, nemmeno qui. Una scelta «non ammessa» del livello che il tablet sta aggiungendo, o di un posto che completa
+ * nell'ultimo livello (il riquadro «Da scegliere» subito dopo la salita), non è più un 403: la scheda l'ha già detta come
+ * avviso e il giocatore ha risposto «Procedi comunque» (o «Scegli comunque»). Restano i rifiuti che proteggono una scrittura:
+ * il posto chiuso dal Direttore, le sue eccezioni (A.229, A.230), il ritorno ai Talenti di prima.
+ */
+const ultimoLivello = (o) => 1 + (Array.isArray(o?.livelli) ? o.livelli.length : 0);
+export const inAvanzamento = (livello, disco, vuotoSuDisco) => livello > ultimoLivello(disco) || (livello === ultimoLivello(disco) && vuotoSuDisco);
+
+/**
  * @param nuovo il file che il tablet vuole scrivere @param disco quello che c'è (null se il file è nuovo)
  * @returns {{ ok: true } | { ok: false, stato: 403 | 409, errore: string }}
  */
@@ -54,6 +64,8 @@ export function controllaTalentiDaTablet(nuovo, disco, dati) {
     if (JSON.stringify(v?.scelta?.eccezione ?? null) !== JSON.stringify(x.scelta?.eccezione ?? null) && x.scelta?.id === v?.scelta?.id) {
       return { ok: false, stato: 403, errore: `L’eccezione sulla Specializzazione del ${x.livello}° livello la decide il Direttore (A.229, A.230).` };
     }
+    // lotto 241: nel livello che si aggiunge (o nel posto vuoto dell'ultimo) una scelta fuori dalle regole è un avviso
+    if (inAvanzamento(x.livello, disco, !v?.scelta)) continue;
     // una voce tolta dal manuale non si sceglie di nuovo da un tablet (chi l'aveva la tiene: lì la scelta non cambia)
     const tolta = x.scelta && x.problemi.find((e) => e.tipo === 'tolta');
     if (tolta) return { ok: false, stato: 403, errore: `${tolta.problema}. Una scelta non ammessa la può fare solo il Direttore.` };
@@ -77,7 +89,10 @@ export function controllaIncantesimiDaTablet(nuovo, disco, dati) {
   const campi = ['incantesimi', 'tecniche', 'scuolaMishima'];
   const livelliNuovi = Array.isArray(nuovo?.livelli) ? nuovo.livelli : [];
   const livelliDisco = Array.isArray(disco?.livelli) ? disco.livelli : [];
-  const cambiati = livelliNuovi.flatMap((v, i) => campi.filter((c) => JSON.stringify(v?.[c] ?? null) !== JSON.stringify(livelliDisco[i]?.[c] ?? null)).map((c) => `livelli[${i}].${c}`));
+  // lotto 241: il livello che il tablet aggiunge, e le sole aggiunte all'ultimo livello («Da scegliere»), non si giudicano qui
+  const soloAggiunte = (a, b) => Array.isArray(a) && (b === undefined || b === null || (Array.isArray(b) && b.every((x) => a.includes(x))));
+  const daGiudicare = (v, i, c) => !(i >= livelliDisco.length || (i === livelliDisco.length - 1 && soloAggiunte(v?.[c], livelliDisco[i]?.[c])));
+  const cambiati = livelliNuovi.flatMap((v, i) => campi.filter((c) => JSON.stringify(v?.[c] ?? null) !== JSON.stringify(livelliDisco[i]?.[c] ?? null) && daGiudicare(v, i, c)).map((c) => `livelli[${i}].${c}`));
   if (!cambiati.length) return { ok: true };
   let errori = [];
   let giaSuDisco = [];

@@ -79,13 +79,24 @@ test('aperto, mostra il primo posto vuoto; scelto un Talento passa al successivo
   assert.match(testo(b.el), /Da scegliere: 2 Talenti Liberi, 2 Maestrie, 1 Specializzazione/);
 });
 
-test('un’opzione non ammessa: il giocatore non la può prendere, il Direttore la forza con una conferma', async () => {
+test('un’opzione non ammessa: il giocatore la sceglie con un avviso (lotto 241), il Direttore la forza con una conferma', async () => {
   const g = banco();
   g.apri('maestria:2');
   const rm = g.el.querySelectorAll('.opzione-talento').find((x) => /Ritualista Maggiore/.test(testo(x)));
   assert.ok(rm.className.includes('bloccato'));
   assert.match(testo(rm), /richiede Ritualista Minore/);
-  assert.equal(tutti(rm).filter((x) => x.tagName === 'BUTTON' && x.className !== 'nome-talento').length, 0, 'il giocatore non ha un pulsante per sceglierla (il nome si tocca solo per leggere)');
+  // lotto 241 (regola di Marcello): nell'avanzamento il giocatore sceglie anche fuori dalle regole, dopo un avviso che resta nello storico
+  const comunque = tutti(rm).find((x) => x.tagName === 'BUTTON' && x.textContent === 'Scegli comunque…');
+  assert.ok(comunque, 'il giocatore ha «Scegli comunque…»');
+  clic(comunque);
+  await new Promise((r) => setTimeout(r, 0));
+  const si = tutti(document.body).find((x) => x.tagName === 'BUTTON' && x.textContent === 'Scegli comunque');
+  assert.ok(si, 'prima l’avviso, con il motivo');
+  clic(si);
+  await new Promise((r) => setTimeout(r, 0));
+  assert.equal(g.scelte.at(-1).scelta.id, 'ritualista-maggiore');
+  assert.match(g.scelte.at(-1).avviso, /richiede Ritualista Minore/);
+  assert.equal(g.scelte.at(-1).forzata, undefined, 'il giocatore non «forza»: avvisa');
   // il Direttore: «Forza…» chiede conferma (finestrella) e poi sceglie, con il motivo
   const m = banco({ master: true });
   m.apri('maestria:2');

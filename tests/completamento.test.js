@@ -56,10 +56,11 @@ test('formato precedente al 5° livello: basi nuove da sole, punti di Classe inv
   assert.deepEqual([va(s, 'Furtività').liberi, va(s, 'Medicina').liberi], [0, 2]);
   assert.deepEqual(s.errori, []); // non sono errori: modalità tavolo, utility e stampa funzionano
   assert.ok(preparaStampa(p, dati).fogli.length >= 3);
-  // l'avanzamento è bloccato, con il motivo
+  // lotto 241: l'avanzamento avvisa, con il motivo, e non blocca
   const e = validaLivello(p, { caratteristiche: { FOR: 2 } }, dati);
   assert.equal(e.length, 1);
-  assert.match(e[0].problema, /Regole aggiornate: prima di salire di livello assegna o riassegna 14 Punti Abilità \(8 della creazione, 6 del 4° livello\)/);
+  assert.match(e[0].problema, /Regole aggiornate: 14 Punti Abilità da assegnare o riassegnare \(8 della creazione, 6 del 4° livello\)/);
+  assert.equal(e[0].procedibile, true);
 });
 
 test('completamento: un evento alla volta dal più vecchio, con i limiti di quell’evento', () => {
@@ -163,8 +164,8 @@ test('PG salvato con 5 punti per Grado: 2 punti da assegnare per evento, con «A
   assert.equal(s.avvisoPunti, null);
   // testo dell'avviso dai dati, con il numero dei punti (src/ui/tab.js)
   assert.equal(reali.regole.regole_aggiornate.mancanti.replaceAll('{n}', '4'), 'Con la regola aggiornata di Davide hai 4 punti Abilità liberi ancora da assegnare');
-  // finché mancano, l'avanzamento è bloccato con il rimando ad «Assegna»
-  assert.ok(validaLivello(p, { caratteristiche: { FOR: 1, COS: 1 } }, reali).some((e) => /assegna 4 Punti Abilità/.test(e.problema)));
+  // lotto 241: finché mancano, l'avanzamento avvisa con il rimando ad «Assegna» (e si fa lo stesso)
+  assert.ok(validaLivello(p, { caratteristiche: { FOR: 1, COS: 1 } }, reali).some((e) => /4 Punti Abilità da assegnare/.test(e.problema) && e.procedibile));
   // «Assegna»: la creazione, poi il 4° livello
   assert.deepEqual(validaCompletamento(p, 1, { 'Tecnologia': 1, 'Cultura': 1 }, reali), []);
   const dopo = applicaCompletamento(applicaCompletamento(p, 1, { 'Tecnologia': 1, 'Cultura': 1 }), 4, { 'Tecnologia': 2 });
@@ -189,7 +190,8 @@ test('PG salvato con la regola vecchia (10 per Grado): avviso con il numero esat
   assert.deepEqual([s.errori, s.completamenti], [[], []]);
   const blocco = validaLivello(p, { caratteristiche: { FOR: 1, COS: 1 } }, reali);
   assert.equal(blocco.length, 1);
-  assert.match(blocco[0].problema, /Punti Abilità in eccesso \(A\.108\): prima di salire di livello togli 6 punti \(3 della creazione, 3 del 4° livello\)/);
+  assert.match(blocco[0].problema, /Punti Abilità in eccesso \(A\.108\): 6 punti in più del previsto \(3 della creazione, 3 del 4° livello\)/);
+  assert.equal(blocco[0].procedibile, true);
   const st = preparaStampa(p, reali);
   assert.equal(st.avvisoPunti.totale, 6);
   assert.equal(st.fogli.find((f) => f.id === 'abilita').dati.avvisoPunti.testo, a.testo);

@@ -49,8 +49,10 @@ test('A.107: si corregge un livello passato; il punto successivo che non aumenta
   const da = puntiDaCompletare(c, dati);
   assert.deepEqual(da.map((x) => [x.livello, x.mancanti, x.inattivi]), [[4, 1, { 'Tecnologia': 1 }]]);
   assert.deepEqual(c.livelli[2].puntiAbilita, QUARTO);
-  // salita bloccata finché non si riassegna
-  assert.match(validaLivello(c, { talentoLibero: { id: 'riflessi-fulminei' } }, dati)[0].problema, /riassegna 1 Punti Abilità \(1 del 4° livello\)/);
+  // lotto 241: un avviso, e la salita si fa lo stesso («Procedi comunque»)
+  const avvRiassegna = validaLivello(c, { talentoLibero: { id: 'riflessi-fulminei' } }, dati)[0];
+  assert.match(avvRiassegna.problema, /1 Punti Abilità da assegnare o riassegnare \(1 del 4° livello\)/);
+  assert.equal(avvRiassegna.procedibile, true);
   // riassegnazione nello stesso evento, con i limiti di allora: non di nuovo su Tecnologia
   assert.ok(validaCompletamento(c, 4, { 'Tecnologia': 1 }, dati).some((e) => e.tipo === 'violazione'));
   assert.equal(statoCompletamento(c, {}, dati).abilita.find((a) => a.nome === 'Tecnologia').inattivi, 1);
@@ -96,9 +98,10 @@ test('A.108: eccesso speso → salita bloccata, il giocatore sceglie le assegnaz
   const p = dieci();
   const s = calcolaScheda(p, dati);
   assert.deepEqual(s.eccessi.map((e) => [e.livello, e.eccesso]), [[1, 3]]);
-  // blocco con il motivo
+  // lotto 241: avviso con il motivo, non blocco
   const e = validaLivello(p, { talentoLibero: { id: 'riflessi-fulminei' } }, dati);
-  assert.match(e[0].problema, /Punti Abilità in eccesso \(A\.108\): prima di salire di livello togli 3 punti \(3 della creazione\)/);
+  assert.match(e[0].problema, /Punti Abilità in eccesso \(A\.108\): 3 punti in più del previsto \(3 della creazione\)/);
+  assert.equal(e[0].procedibile, true);
   // nessuna scelta automatica: senza scelta del giocatore non si toglie nulla e il pannello parte vuoto
   assert.deepEqual(validaRimozione(p, 1, {}, dati).map((x) => x.tipo), ['incompleto']);
   const st = statoRimozione(p, {}, dati);

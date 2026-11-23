@@ -240,8 +240,10 @@ test('una scelta forzata dal Direttore avvisa e non blocca la salita di livello 
   const { validaLivello } = await import('../src/avanzamento.js');
   const p = dimitriNuovo({ m2: { id: 'ritualista-maggiore' }, m6: { id: 'parata-istintiva' } }); // forzata al 2°
   const senza = validaLivello(p, {}, dati);
-  assert.equal(senza.length, 1);
-  assert.equal(senza[0].procedibile, true);
-  assert.match(senza[0].problema, /forzata dal Direttore/);
-  assert.ok(!validaLivello(p, {}, dati, { procedi: true }).some((e) => /forzata dal Direttore/.test(e.problema)));
+  // lotto 241: un solo avviso sui livelli acquisiti, con la scelta e il motivo; poi gli avvisi della voce nuova (tutti procedibili)
+  const livelli = senza.filter((e) => e.campo === 'livelli');
+  assert.equal(livelli.length, 1);
+  assert.ok(senza.every((e) => e.procedibile), JSON.stringify(senza));
+  assert.match(livelli[0].problema, /fuori dalle regole di oggi \(2° livello: Ritualista Maggiore richiede Ritualista Minore\)/);
+  assert.ok(!validaLivello(p, {}, dati, { procedi: true }).some((e) => /Ritualista Maggiore/.test(e.problema)));
 });

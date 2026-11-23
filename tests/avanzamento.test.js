@@ -107,7 +107,7 @@ test('4° livello: Grado II con Talento a scelta e limiti del VA personale del G
   // Furtività (P): DES 9 (+4) + 6 + 0 + 2 di Classe = 12, già oltre il limite P del Grado II (11)
   const troppo = validaLivello(p3, { ...base, puntiAbilita: { ...base.puntiAbilita, 'Furtività': 1, 'Tecnologia': 1 } }, dati);
   const furtErr = troppo.find((x) => x.campo === 'puntiAbilita.Furtività');
-  assert.ok(furtErr && furtErr.inattivi === 1 && /limite 11/.test(furtErr.problema), JSON.stringify(troppo));
+  assert.ok(furtErr && furtErr.inattivi === 1 && /limite della categoria è 11/.test(furtErr.problema) && furtErr.procedibile, JSON.stringify(troppo));
   const senzaTalento = validaLivello(p3, { ...base, talentoClasse: undefined }, dati);
   assert.ok(senzaTalento.some((x) => x.campo === 'talentoClasse' && x.tipo === 'incompleto'));
   const nonDellaClasse = validaLivello(p3, { ...base, talentoClasse: 'Predatore' }, dati);
@@ -352,7 +352,7 @@ test('Classe taumaturgica senza Addestramento: niente 2 + Mod INT, scala «altri
   const livello4 = { grado: { classe: 'Arcanista' }, tiroPV: tiro(2), tiroPM: tiro(4), puntiAbilita: PUNTI_4_ARCANISTA };
   const p3 = agente(3);
   const incompleto = validaLivello(p3, livello4, dati);
-  assert.ok(incompleto.some((x) => x.campo === 'incantesimi' && x.tipo === 'incompleto' && /restano 9/.test(x.problema)), JSON.stringify(incompleto));
+  assert.ok(incompleto.some((x) => x.campo === 'incantesimi' && x.tipo === 'incompleto' && /9 ancora da scegliere/.test(x.problema) && x.procedibile), JSON.stringify(incompleto));
   const alto = validaLivello(p3, { ...livello4, incantesimi: [...noveIncantesimi.slice(0, 8), 'Evoca Elementale'] }, dati);
   assert.ok(problemi(alto).some((x) => /Evoca Elementale: livello base 6 oltre il livello massimo 3/.test(x)));
   assert.deepEqual(validaLivello(p3, { ...livello4, incantesimi: noveIncantesimi }, dati), []);

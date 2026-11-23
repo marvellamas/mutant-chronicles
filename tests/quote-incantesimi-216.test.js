@@ -107,7 +107,9 @@ test('VICOLO CIECO: mancano incantesimi e ogni riga è fuori quota → una riga 
   assert.ok(m, 'il giocatore bloccato deve avere una spiegazione');
   assert.match(m, /Ti mancano 2 incantesimi/);
   assert.match(m, /Direttore/);
-  assert.match(m, /Modifica master/);
+  // lotto 241: si sceglie lo stesso, con un avviso, e la salita si chiude
+  assert.match(m, /puoi sceglierli lo stesso/);
+  assert.match(m, /si chiude comunque/);
   assert.ok(!m.includes('\n'), 'una riga, non un riquadro');
 });
 
@@ -126,8 +128,10 @@ test('IL TABLET NON RESTA BLOCCATO IN SILENZIO: ogni avviso procedibile ha la fi
   assert.ok(i > 0);
   const corpo = app.slice(i, i + 7000);
   // la salita normale (non la correzione) deve chiedere conferma per gli avvisi procedibili invece di ridisegnare e basta
-  const salita = corpo.slice(corpo.indexOf('const inMaster'));
-  assert.match(salita, /every\(\(e\) => e\.procedibile\)/, 'la salita normale deve riconoscere gli avvisi procedibili');
+  // lotto 241: fermano solo le scritture sbagliate (!procedibile); tutti gli avvisi si leggono nella finestrella
+  const salita = corpo.slice(corpo.indexOf('Lotto 241 (regola'));
+  assert.match(salita, /some\(\(e\) => !e\.procedibile\)/, 'la salita normale deve riconoscere gli avvisi procedibili');
+  assert.match(salita, /filter\(\(e\) => e\.procedibile\)/);
   assert.match(salita, /Procedi comunque/, 'e chiedere «Procedi comunque»');
   assert.match(salita, /bozza\.procedi = true/);
   assert.match(salita, /registraStorico\(testoProcedi/, 'lasciando la riga nello storico');

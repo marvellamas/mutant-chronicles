@@ -183,7 +183,7 @@ function postoAttivo(t, x, succ) {
   return h('div', { class: 'posto-attivo' }, titolo, cercaCampo(t),
     h('ul', { class: 'opzioni-talento' }, ammesse.map((o) => opzione(t, x, o, true))),
     altre.length ? h('details', { class: 'opzioni-non-ammesse' },
-      h('summary', {}, `${altre.length} non ${altre.length === 1 ? 'ammessa' : 'ammesse'} adesso${t.master ? ' (il Direttore può forzarle)' : ''}`),
+      h('summary', {}, `${altre.length} non ${altre.length === 1 ? 'ammessa' : 'ammesse'} adesso${t.master ? ' (il Direttore può forzarle)' : ' (si possono scegliere lo stesso, con un avviso)'}`),
       h('ul', { class: 'opzioni-talento' }, altre.map((o) => opzione(t, x, o, false)))) : null);
 }
 
@@ -203,7 +203,12 @@ function opzione(t, posto, o, ammessa) {
   const vai = async () => {
     if (annot && !annot.value.trim()) { annot.focus(); annot.reportValidity?.(); return; }
     if (ammessa) { t.azioni.scegli(posto, scelta()); return; }
-    if (!t.master) return;
+    // lotto 241: nell'avanzamento una scelta fuori dalle regole si fa anche dal tablet, con l'avviso (resta nello storico)
+    if (!t.master) {
+      const ok = await chiedi({ titolo: `Scegliere ${o.nome} lo stesso?`, testo: `Le regole non la ammettono adesso: ${o.motivo}. L’app avvisa e non blocca: puoi sceglierla comunque, e resta una riga nello storico del personaggio per il Direttore.`, si: 'Scegli comunque' });
+      if (ok) t.azioni.scegli(posto, scelta(), { avviso: o.motivo });
+      return;
+    }
     const ok = await chiedi({
       titolo: `Forzare ${o.nome}?`,
       testo: `Le regole non la ammettono adesso: ${o.motivo}. L’app avvisa e non blocca: se la vuoi lo stesso, la scelta resta nel registro del master come forzata.`,
@@ -222,7 +227,7 @@ function opzione(t, posto, o, ammessa) {
       n.scheda),
     h('div', { class: 'opzione-azioni' }, selPar, annot,
       ammessa ? h('button', { type: 'button', class: 'btn primario', onclick: vai }, 'Scegli')
-        : t.master ? h('button', { type: 'button', class: 'btn', onclick: vai }, 'Forza…') : null));
+        : h('button', { type: 'button', class: 'btn', onclick: vai }, t.master ? 'Forza…' : 'Scegli comunque…')));
 }
 
 /** Il passo di una scelta aperta da un Talento: gli Incantesimi o le Tecniche, uno alla volta, già filtrati. */
@@ -237,7 +242,11 @@ function passoSuccessivo(t, s) {
     const tx = testi(o);
     const vai = async () => {
       if (ammessa) { t.azioni.scegliSuccessiva(s, o.id); return; }
-      if (!t.master) return;
+      if (!t.master) {
+        const ok = await chiedi({ titolo: `Scegliere ${o.nome} lo stesso?`, testo: `Le regole non lo ammettono adesso: ${o.motivo}. L’app avvisa e non blocca: puoi sceglierlo comunque, e resta una riga nello storico del personaggio per il Direttore.`, si: 'Scegli comunque' });
+        if (ok) t.azioni.scegliSuccessiva(s, o.id, { avviso: o.motivo });
+        return;
+      }
       const ok = await chiedi({
         titolo: `Forzare ${o.nome}?`,
         testo: `Le regole non lo ammettono adesso: ${o.motivo}. L’app avvisa e non blocca: se lo vuoi lo stesso, la scelta resta nel registro del master come forzata.`,
@@ -255,7 +264,7 @@ function passoSuccessivo(t, s) {
         n.scheda),
       h('div', { class: 'opzione-azioni' },
         ammessa ? h('button', { type: 'button', class: 'btn primario', onclick: vai }, 'Scegli')
-          : t.master ? h('button', { type: 'button', class: 'btn', onclick: vai }, 'Forza…') : null));
+          : h('button', { type: 'button', class: 'btn', onclick: vai }, t.master ? 'Forza…' : 'Scegli comunque…')));
   };
   const restano = s.quanti === 1 ? 'ne resta 1' : `ne restano ${s.quanti}`;
   const guida = s.tipo === 'incantesimi'
