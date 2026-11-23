@@ -1924,10 +1924,10 @@ function rigaCircostanzeEUsi(ctx) {
 }
 
 /** Riga compatta di un riquadro della colonna destra: titolo, stato attuale e gradi cliccabili. */
-function gradiCompatti(ctx, { titolo, campo, attuale, gradi, nota, avviso = null }) {
+function gradiCompatti(ctx, { titolo, campo, attuale, gradi, nota, avviso = null, titoloBreve = null, accanto = null }) {
   const g = gradi[attuale];
   return h('section', { class: 'riquadro riquadro-gradi', 'aria-label': titolo },
-    h('header', { class: 'testa-gradi' }, h('h3', {}, titolo),
+    h('header', { class: 'testa-gradi' }, h('h3', {}, titoloBreve ?? titolo), accanto,
       h('span', { class: `grado-attuale${g?.penalita ? ' con-penalita' : ''}` }, g ? `${g.nome}${g.penalita ? ` ${segno(g.penalita)}` : ''}` : '—'),
       nota ? infoValore('?', { titolo, sezioni: [{ testo: nota }] }, { classe: 'info-gradi' }) : null),
     h('div', { class: 'gradi-compatti', role: 'radiogroup', 'aria-label': titolo }, gradi.map((x, n) => h('button', {
@@ -2297,10 +2297,35 @@ function riquadroFerite(ctx) {
   // A.159 (risposta di Davide del 14/10/2026): oltre Grave si entra in Morente, con il contatore qui sotto
   const oltre = ctx.sessione.ferite > ctx.dati.regole.ferite.stati.length ? descriviFerite(ctx.sessione.ferite, ctx.dati).avviso : null;
   return [
-    gradiCompatti(ctx, { titolo: 'Ferite (§5.14)', campo: 'ferite', attuale: ctx.sessione.ferite, gradi: ferite, avviso: oltre,
-      nota: 'Ogni nuova Ferita fa avanzare di un gradino. La penalità è cumulativa a VA e Prove Salvezza. Oltre Grave il personaggio è Morente (A.159).' }),
+    // lotto 242: nel titolo, accanto a «Ferite», Affaticamento e Corruzione (il «§5.14» passa nel «?»): visibili in ogni tab
+    gradiCompatti(ctx, { titolo: 'Ferite (§5.14)', titoloBreve: 'Ferite', accanto: affaticamentoCorruzioneInBreve(ctx), campo: 'ferite', attuale: ctx.sessione.ferite, gradi: ferite, avviso: oltre,
+      nota: 'Ferite (§5.14). Ogni nuova Ferita fa avanzare di un gradino. La penalità è cumulativa a VA e Prove Salvezza. Oltre Grave il personaggio è Morente (A.159).' }),
     riquadroMorente(ctx),
   ];
+}
+
+/**
+ * Lotto 242 (ritocco 4, visto al tavolo da Marcello): Affaticamento (§5.19) e Corruzione (§5.20) si guardano di continuo e si
+ * vedevano solo nel Combattimento. Adesso stanno nella colonna di sinistra di tutti i tab, come PV e PM, **sulla riga del titolo
+ * delle Ferite** e non in una riga nuova (il lotto 221 ha recuperato 205 px in alto e non si buttano): due valori corti, con la
+ * penalità quando c'è. Un tocco porta al Combattimento, dove si impostano.
+ */
+function affaticamentoCorruzioneInBreve(ctx) {
+  const dc = ctx.tab.tab.find((x) => x.id === 'combattimento')?.dati ?? null;
+  if (!dc) return null;
+  const s = ctx.sessione;
+  // la penalità, che è quello che pesa al tavolo; per la Corruzione un grado oltre il primo senza penalità (Esposto) o senza numero
+  // (Oscuro) si dice con il nome abbreviato, perché «0» farebbe credere a un personaggio non toccato
+  const voce = (sigla, nome, attuale, gradi, { nomeSenzaPenalita = false } = {}) => {
+    const g = gradi?.[attuale] ?? null;
+    const p = g?.penalita ?? 0;
+    const valore = p ? segno(p) : nomeSenzaPenalita && attuale > 0 && g ? `${g.nome.slice(0, 3)}.` : '0';
+    return h('span', { class: `valore-breve${p || valore !== '0' ? ' con-penalita' : ''}`, 'data-valore': nome.toLowerCase(), title: `${nome}: ${g?.nome ?? 'nessuno'}${p ? ` ${segno(p)} a tutte le Prove` : ''}. Si imposta nella tab Combattimento.` },
+      `${sigla} ${valore}`);
+  };
+  return h('button', { type: 'button', class: 'affaticamento-corruzione-breve', 'aria-label': 'Affaticamento e Corruzione: si impostano nella tab Combattimento', onclick: () => ctx.azioni.vaiTab('combattimento') },
+    voce('Aff.', 'Affaticamento', s.affaticamento ?? 0, dc.affaticamento),
+    voce('Corr.', 'Corruzione', s.corruzione ?? 0, dc.corruzione, { nomeSenzaPenalita: true }));
 }
 
 /**
