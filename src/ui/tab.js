@@ -3330,11 +3330,45 @@ function elencoUnificato(ctx, d, { vuoto = true } = {}) {
     })).filter((s) => s.noti.length || s.oggetti.length),
   })).filter((m) => m.specializzazioni.length);
   if (!gruppi.length) return vuoto ? [sezione('Incantesimi', h('p', { class: 'vuoto' }, 'Nessun incantesimo scelto.'))] : [];
-  return gruppi.map((mf) => sezione(mf.nome,
+  return [indiceIncantesimi(ctx, gruppi), ...gruppi.map((mf) => sezione(mf.nome,
     mf.specializzazioni.map((sp) => h('div', { class: 'incantesimi-griglia' },
       h('h3', { class: 'spec' }, sp.nome),
       sp.noti.map((i) => articoloIncantesimo(ctx, i, mf.nome)),
-      sp.oggetti.map((e) => regioneVivaSe(['pmAttuali', `chroma:${e.riserva?.uid ?? e.uid}`], () => schedaDaOggetto(ctx, e)))))));
+      sp.oggetti.map((e) => regioneVivaSe(['pmAttuali', `chroma:${e.riserva?.uid ?? e.uid}`], () => schedaDaOggetto(ctx, e)))))))];
+}
+
+/** L'identificativo della scheda di un incantesimo nella pagina, per il salto dall'indice (lotto 242). */
+export const idIncantesimo = (nome) => `incantesimo-${String(nome).normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '')}`;
+
+/** I PM del livello base di un incantesimo del catalogo (la prima riga della sua tabella), o null se la scheda non li dà. */
+export function pmLivelloBase(inc) {
+  const v = inc?.versioni ?? [];
+  const riga = v.find((x) => Number(x.Livello) === inc.livello_base) ?? v[0];
+  const n = Number.parseInt(String(riga?.PM ?? ''), 10);
+  return Number.isFinite(n) ? n : null;
+}
+
+/**
+ * Lotto 242 (ritocco 2, visto al tavolo da Marcello): in testa agli incantesimi conosciuti, un indice con nome e PM del livello
+ * base, nell'ordine della pagina sotto; un tocco sul nome porta la scheda di quell'incantesimo in cima a quello che si vede,
+ * sotto le fasce ferme in alto (`scroll-margin-top` in css/style.css). Lucas e Dimitri ne hanno 21 e 20: si scorreva per trovarli.
+ * È un indice, non una seconda scheda: più nomi per riga. Con un incantesimo solo non serve.
+ */
+function indiceIncantesimi(ctx, gruppi) {
+  const voci = gruppi.flatMap((mf) => mf.specializzazioni.flatMap((sp) => sp.noti.map((i) => ({ nome: i.nome, macro: mf.nome }))));
+  if (voci.length < 2) return null;
+  const salta = (nome) => {
+    const el = globalThis.document?.getElementById?.(idIncantesimo(nome));
+    el?.scrollIntoView?.({ block: 'start', behavior: 'smooth' });
+  };
+  return h('section', { class: 'sezione-tab indice-incantesimi', 'aria-label': 'Indice degli incantesimi conosciuti' },
+    h('h2', {}, `Incantesimi conosciuti (${voci.length})`),
+    h('ul', { class: 'indice-voci' }, voci.map((v) => {
+      const pm = pmLivelloBase(ctx.dati.incantesimi.incantesimi.find((x) => x.nome === v.nome));
+      return h('li', { class: classeMacrofamiglia(v.macro) },
+        h('button', { type: 'button', class: 'link-indice', title: `Vai a ${v.nome}`, onclick: () => salta(v.nome) },
+          v.nome, pm !== null ? h('span', { class: 'sigla' }, ` ${pm} PM`) : null));
+    })));
 }
 
 /**
@@ -3415,7 +3449,7 @@ function classificaDalMaster(ctx, nome, agg) {
 function articoloIncantesimo(ctx, i, nomeMacro) {
   const agg = i.aggiunto ?? null;
   const dalLivello = agg ? null : originiIncantesimiLivelli(ctx)[i.nome] ?? null;
-  return h('article', { class: `incantesimo-scheda ${classeMacrofamiglia(nomeMacro)}${agg ? ' incantesimo-a-mano' : ''}` },
+  return h('article', { class: `incantesimo-scheda ${classeMacrofamiglia(nomeMacro)}${agg ? ' incantesimo-a-mano' : ''}`, id: agg ? null : idIncantesimo(i.nome) },
     h('div', { class: 'arma-testa' },
       h('h4', {}, info('incantesimo', i.nome),
         agg ? h('small', { class: `etichetta-origine tipo-${agg.tipo ?? 'da_classificare'}`, title: `${agg.etichetta ?? 'Aggiunto'} · ${agg.origine} il ${dataLeggibile(agg.quando)}${agg.nota ? ` · ${agg.nota}` : ''} · fuori dalle quote di Classe` }, ` ${agg.segno ?? '(Aggiunto)'}`) : null,
