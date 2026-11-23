@@ -156,6 +156,26 @@ const RISPOSTE = [
       assert.equal(v.tipo, 'arma_ravvicinata', `${v.id}: è un'arma ravvicinata`);
     }
   }],
+  // lotto 237: lo Scout T4 di serie e il FIAT LUX dei PG sono due profili, come dicono il §16.1 e il §10 della 0.23.
+  // Qui si controlla che i dati non contraddicano le risposte già approvate che li riguardano.
+  ['A.280', 'l’arco frontale di 180° è del Capitol M606 del FIAT LUX: il Punisher del modello di serie non lo prende per analogia', () => {
+    const p = (id) => dati.veicoli.profili.find((x) => x.id === id);
+    assert.equal(p('asa-scout-mk4').armi[0].arco.gradi, 180);
+    assert.equal(p('asa-scout-t4').armi[0].arco, undefined, 'il manuale non dà un arco per il Punisher di serie');
+  }],
+  ['A.226', 'il FIAT LUX resta lo Scout MK4 ASA dei PG col suo prezzo di catalogo, e il valore effettivo lo stima il Direttore', () => {
+    const mk4 = dati.veicoli.profili.find((x) => x.id === 'asa-scout-mk4');
+    assert.equal(mk4.prezzo_cr, 126510);
+    assert.match(mk4.armi[0].nome, /Capitol M606/);
+    // il valore stimato è un campo dell’esemplare e lo scrive solo il Direttore: nei dati del profilo non c’è un importo
+    assert.equal(mk4.valore_stimato_cr, undefined);
+    assert.equal(mk4.valutazione_direttore.senza_importo_prestabilito, true);
+  }],
+  ['A.304', 'i mezzi dei capitoli 16, 17 e 18 restano fuori dal catalogo finché non si sa quali servono al tavolo', () => {
+    const nomi = new Set(dati.veicoli.profili.map((p) => p.nome));
+    for (const m of ['Recon T6', 'Bastion TC', 'Warden TC', 'Pursuit T4']) assert.equal(nomi.has(m), false, m);
+    assert.equal(dati.veicoli.corpus.profili, dati.veicoli.profili.length, 'il conto dei profili è dichiarato e torna');
+  }],
   ['A.295', 'ASA e SIA sono due sigle: il «riservato» è SIA, le divise e l’elmetto di servizio restano ASA', () => {
     const rif = (r) => dati.equipaggiamento.file.rinforzi.oggetti.find((o) => o.id === r);
     assert.equal(rif('soprabito-asa-riservato').nome, 'Soprabito SIA riservato');

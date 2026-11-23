@@ -6,7 +6,8 @@ import '../tools/guardia-subito.mjs'; // la guardia sulle cartelle vere, comunqu
 //     del lotto (commit bba7ba07) e con quello di adesso. Il test **fallisce** se il recepimento cambia un valore che un record esistente ha già:
 //     se un PI massimo cambiasse, «PI attuali» o le soglie cambierebbero con lui. Provato col mutante (un PI massimo ritoccato).
 //  2. Una lettura parziale non si scrive mai sopra un valore buono (`unisciProfilo`), provato anche con l'unione sbagliata apposta.
-//  3. Il segno «⚑» del profilo si spegne da sé; il conto dei mezzi (9 = 5 profili + 4 fuori catalogo) deve tornare coi dati.
+//  3. Il segno «⚑» del profilo dice i campi di un'edizione diversa e ognuno ha il motivo scritto; il conto dei mezzi
+//     (dal lotto 237: 10 = 6 profili + 4 fuori catalogo) deve tornare coi dati, misurato e non scritto a mano.
 //  4. Le quattro astronavi sono **dichiarate**, con il motivo e ciò che servirebbe: nessuna resta fuori in silenzio.
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
@@ -128,25 +129,43 @@ test('IL SEGNO SI SPEGNE DA SÉ: oggi nessun profilo ne ha; con un campo indietr
   const attesa = registro().edizioni_in_attesa['data/veicoli.json']?.veicoli;
   assert.ok(ed === corrente || attesa, 'i campi non sono alla corrente: la distanza va dichiarata in edizioni_in_attesa');
   if (ed !== corrente) assert.ok(String(attesa.motivo ?? '').length > 40, 'un’eccezione senza motivo è un file dimenticato');
-  assert.deepEqual(dati.veicoli.profili.filter((p) => campiIndietroProfilo(p, ed).length), []);
+  // Lotto 237: lo Scout T4 di serie HA tre campi di un'edizione diversa da quella del corpus — prezzo, armi e
+  // valore_voci vengono dalla 0.23, letti nel capitolo 10 — e sono **avanti**, non indietro. Il segno non è più
+  // «nessun profilo ne ha»: è «ogni profilo che ne ha dichiara il motivo», che è il senso della regola.
+  const motivi = new Map((dati.veicoli.corpus.motivi_indietro ?? []).map((m) => [`${m.profilo}.${m.campo}`, m.motivo]));
+  for (const p of dati.veicoli.profili) {
+    for (const c of campiIndietroProfilo(p, ed)) {
+      const k = `${p.id}.${c.campo ?? c}`;
+      assert.ok(typeof motivi.get(k) === 'string' && motivi.get(k).length > 20, `${k}: un campo fuori dall’edizione del corpus vuole il motivo scritto`);
+    }
+  }
+  // e il motivo si LEGGE sulla carta del mezzo: niente enfasi del Markdown, che finirebbe sullo schermo (lotto 203)
+  for (const m of dati.veicoli.corpus.motivi_indietro ?? []) assert.equal(/\*\*/.test(m.motivo), false, `${m.profilo}.${m.campo}: asterischi nel motivo`);
   const vecchio = structuredClone(profilo); vecchio._edizione.campi.mov_q = '0.10';
   assert.match(rigaProvenienzaProfilo(vecchio, ed, 'Aspetta Davide.'), /movimento da 0\.10.*Aspetta Davide/);
   assert.equal(rigaProvenienzaProfilo(structuredClone(profilo), ed), null);
 });
 
-test('IL CONTO DEI MEZZI deve tornare: 9 = 5 profili + 4 fuori catalogo, e un campo indietro vuole il motivo', () => {
+test('IL CONTO DEI MEZZI deve tornare: 10 = 6 profili + 4 fuori catalogo (lotto 237: lo Scout T4 di serie), e un campo indietro vuole il motivo', () => {
   const problemi = (muta) => { const d = structuredClone(dati); muta(d); return validaDati(d).filter((e) => e.file === 'veicoli.json').map((e) => `${e.chiave}: ${e.problema}`); };
   assert.deepEqual(problemi(() => {}), []);
-  assert.equal(dati.veicoli.corpus.mezzi_nel_manuale, 9);
-  assert.ok(problemi((d) => { d.veicoli.corpus.profili = 6; }).length, 'profili dichiarati ≠ profili nei dati');
+  // Lotto 237: 10 = 6 profili (lo Scout T4 di serie si aggiunge) + 4 fuori catalogo. Il numero non è scritto a mano
+  // né qui né nei dati: il generatore lo misura sui profili, e il validatore pretende che torni.
+  assert.equal(dati.veicoli.corpus.mezzi_nel_manuale, dati.veicoli.profili.length + dati.veicoli.fuori_catalogo.mezzi.length);
+  assert.equal(dati.veicoli.corpus.profili, dati.veicoli.profili.length);
+  assert.ok(problemi((d) => { d.veicoli.corpus.profili = 99; }).length, 'profili dichiarati ≠ profili nei dati');
   assert.ok(problemi((d) => { d.veicoli.fuori_catalogo.mezzi.pop(); }).length, 'un\'astronave sparita dalla dichiarazione');
   assert.ok(problemi((d) => { delete d.veicoli.fuori_catalogo.motivo; }).length, 'fuori catalogo senza il motivo');
   assert.ok(problemi((d) => { d.veicoli.fuori_catalogo.servirebbe = ['uno']; }).length, 'senza ciò che servirebbe');
   assert.ok(problemi((d) => { d.veicoli.profili[1]._edizione.campi.mov_q = '0.10'; }).length, 'campo indietro senza motivo e senza conto');
   assert.ok(problemi((d) => { d.veicoli.corpus.campi_letti = {}; }).length, 'un conto su zero campi non prova niente');
+  // un campo fuori edizione CON il suo motivo e il conto giusto non è un problema. Lotto 237: le dichiarazioni che
+  // ci sono già (i tre campi 0.23 dello Scout T4) si AGGIUNGONO, non si sostituiscono — sostituirle faceva fallire
+  // il controllo per il motivo sbagliato, cioè perché i tre del T4 restavano senza motivo.
   assert.deepEqual(problemi((d) => {
-    d.veicoli.profili[1]._edizione.campi.mov_q = '0.10'; d.veicoli.corpus.campi_indietro = 1;
-    d.veicoli.corpus.motivi_indietro = [{ profilo: d.veicoli.profili[1].id, campo: 'mov_q', motivo: 'prova' }];
+    d.veicoli.profili[1]._edizione.campi.mov_q = '0.10';
+    d.veicoli.corpus.campi_indietro += 1;
+    d.veicoli.corpus.motivi_indietro = [...d.veicoli.corpus.motivi_indietro, { profilo: d.veicoli.profili[1].id, campo: 'mov_q', motivo: 'prova' }];
   }), []);
 });
 
