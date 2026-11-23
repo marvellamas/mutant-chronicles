@@ -2648,7 +2648,10 @@ main:has(> .plancia:not(.plancia-in-mappa)) { max-width: 1912px; }
 .scheda-tab.in-master { outline: 3px solid var(--attenzione); outline-offset: 4px; border-radius: var(--raggio); }
 .btn-tocco-master { font: inherit; font-size: 0.85rem; line-height: 1; min-width: 28px; min-height: 28px; margin-left: 0.3rem; padding: 0.1rem 0.35rem; cursor: pointer; color: #1a1205; background: var(--attenzione); border: 1px solid var(--attenzione); border-radius: 6px; vertical-align: middle; }
 .btn-tocco-master:hover, .btn-tocco-master:focus-visible { filter: brightness(1.15); }
-.nota-correzione-master { display: block; color: var(--attenzione); font-weight: 600; }
+/* Lotto 242 (ritocco 5, visto al tavolo da Marcello): la nota resta lì e si legge da sola — serve a sapere perché un numero è
+   quello che è — ma in un carattere molto più piccolo del numero, così non pesa come lui. Mai dietro un tocco: un numero
+   corretto a mano senza la sua nota sembra un errore dell'app (tests/nota-master-242.test.js) */
+.nota-correzione-master { display: block; color: var(--attenzione); font-weight: 400; font-size: 0.68rem; line-height: 1.25; }
 .finestrella.finestrella-master { max-width: min(30rem, calc(100vw - 2rem)); }
 /* lotto 165: «Sposta i punti» del Direttore (src/ui/sposta-punti.js) */
 .finestrella.finestrella-sposta { max-width: min(36rem, calc(100vw - 2rem)); max-height: calc(100vh - 2rem); overflow-y: auto; }
