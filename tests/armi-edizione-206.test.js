@@ -256,8 +256,12 @@ test('le voci che il manuale non ha col loro nome restano come stavano, e nessun
   // trovano; restano le tre CyberArma (il §7.25 non è una tabella d'arma) e i due profili superati, archiviati
   // Lotto 229: il Mitragliatore Leggero Punisher (§7.28.1) è scritto come tabella «Dato | Valore», non come tabella d'arma: per il lettore è
   // «non trovato col suo nome» (come le CyberArma) e non porta provenienza per campo. Lo verifica tests/ingest-e-risposte-229.test.js.
-  assert.equal(non.length, 6);
-  assert.deepEqual(non.map((e) => e.id).sort(), ['bolter-09', 'cyberarma', 'cyberarma-batteria-verde', 'cyberarma-nec', 'lanciagranate-bolter-20', 'mitragliatore-leggero-punisher']);
+  // Lotto 235: si aggiungono le cinque voci per colore del cristallo (CyberArma Bianca, Rossa, Blu, Verde, Viola). Stesso
+  // motivo delle altre tre: il §7.25 non è una tabella d'arma — i profili stanno nella tabella per Grado del Custode e
+  // nel «Riferimento rapido» del §7.25.5 — e il lettore non le trova col loro nome. I valori vengono da quei due
+  // paragrafi, riletti nel lotto 235, e la voce lo dichiara nel suo versione_manuale.
+  assert.equal(non.length, 11);
+  assert.deepEqual(non.map((e) => e.id).sort(), ['bolter-09', 'cyberarma', 'cyberarma-batteria-verde', 'cyberarma-bianca', 'cyberarma-blu', 'cyberarma-nec', 'cyberarma-rossa', 'cyberarma-verde', 'cyberarma-viola', 'lanciagranate-bolter-20', 'mitragliatore-leggero-punisher']);
   for (const e of non) {
     const v = voce(e.id);
     assert.equal(provenienzaVoce(v).danno, undefined, `${e.nome}: nessuna provenienza inventata`);

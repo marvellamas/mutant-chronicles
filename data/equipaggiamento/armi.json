@@ -1904,7 +1904,7 @@
    "ravvicinata_senza_raffiche": true,
    "_nota_ravvicinata": "A.260 (15/11/2026): la CyberArma è un’arma ravvicinata e non effettua Raffiche, in nessuna configurazione. Oggi nessuna delle tre voci ha modalità di fuoco e «Attacca!» non le offrirebbe, ma la regola è scritta perché un domani non torni per sbaglio: tests/a260-cyberarma-round.test.js fallisce se una modalità di Raffica compare su una CyberArma.",
    "focalizzatori": {
-    "fonte": "Armamenti 0.90 §7.25 (Cristallo focalizzatore; tabella dei profili) e §7.25.5 (Riferimento rapido); Equipaggiamento 0.41 §10.9 (esemplare di Dimitri)",
+    "fonte": "Armamenti 0.90 §7.25 (Cristallo focalizzatore; «Profili delle CyberArmi originali dei Custodi») e §7.25.5 (Riferimento rapido); Giocatore 0.65 §5.24 (Plasma ed Elettricità); Equipaggiamento 0.41 §10.9 (esemplare di Dimitri)",
     "_nota": "Lotto 210: un bonus per colore, calcolato dove si calcola il VA (src/cyberarma.js → bonusFocalizzatore, src/equipaggiamento.js). Vale per il Tecnomante e per le conversioni a CM e NeC; il Custode usa la sua tabella per Grado, che il cristallo ce l'ha già dentro (sommarlo lo conterebbe due volte). Un colore senza numero qui sotto non ha numero nel manuale: non si inventa.",
     "si_applica_a": "non_custode",
     "elenco": [
@@ -1919,7 +1919,15 @@
        "moltiplicatore_danno": 2,
        "contro": "Oscura Simmetria"
       },
-      "paragrafo": "§7.25, §7.25.5"
+      "paragrafo": "§7.25, §7.25.5",
+      "danno_base_tecnomante": "1d8+3",
+      "per_grado_custode": {
+       "III": "1d10+4",
+       "IV": "1d10+5",
+       "V": "1d10+6",
+       "VI": "1d10+7"
+      },
+      "voce": "armi:cyberarma-bianca"
      },
      {
       "id": "rosso",
@@ -1929,7 +1937,31 @@
       "danno": 0,
       "proprieta_danno": "Plasma",
       "senza_numero": "Plasma (§5.24): è un effetto sul bersaglio (PS Tempra, −2 VA), non un bonus al VA o al danno. «Nessun dado aggiuntivo»: lo applica il Direttore.",
-      "paragrafo": "§7.25, §7.25.5"
+      "paragrafo": "§7.25, §7.25.5",
+      "danno_base_tecnomante": "1d8",
+      "per_grado_custode": {
+       "III": "1d10+1",
+       "IV": "1d10+2",
+       "V": "1d10+3",
+       "VI": "1d10+4"
+      },
+      "nessun_dado_aggiuntivo": true,
+      "effetto_sul_bersaglio": {
+       "proprieta": "Plasma",
+       "paragrafo": "Giocatore §5.24",
+       "contromisura": "Dissipante X",
+       "condizioni": [
+        "almeno 1 danno è passato oltre l’Armatura applicabile",
+        "la Contromisura Dissipante X del bersaglio, se c’è, è stata superata dal danno residuo"
+       ],
+       "prova": "PS Tempra",
+       "se_fallisce": "−2 VA",
+       "durata": "1+1d3 Round",
+       "durata_paragrafo": "Giocatore §5.24, §5.18",
+       "la_applica": "il Direttore",
+       "app_non_calcola": "L’app scrive la condizione e non fa altro: non tira la PS Tempra, non applica l’effetto del fallimento, non conta i Round. Una sola PS per tipo di effetto, per bersaglio e per attacco (§5.24)."
+      },
+      "voce": "armi:cyberarma-rossa"
      },
      {
       "id": "blu",
@@ -1939,7 +1971,31 @@
       "danno": 0,
       "proprieta_danno": "Elettricità",
       "senza_numero": "Elettricità (§5.24): è un effetto sul bersaglio (PS Tempra, niente Azioni fuori Iniziativa), non un bonus al VA o al danno. «Nessun dado aggiuntivo»: lo applica il Direttore.",
-      "paragrafo": "§7.25, §7.25.5"
+      "paragrafo": "§7.25, §7.25.5",
+      "danno_base_tecnomante": "1d8",
+      "per_grado_custode": {
+       "III": "1d10+1",
+       "IV": "1d10+2",
+       "V": "1d10+3",
+       "VI": "1d10+4"
+      },
+      "nessun_dado_aggiuntivo": true,
+      "effetto_sul_bersaglio": {
+       "proprieta": "Elettricità",
+       "paragrafo": "Giocatore §5.24",
+       "contromisura": "Isolante X",
+       "condizioni": [
+        "almeno 1 danno è passato oltre l’Armatura applicabile",
+        "la Contromisura Isolante X del bersaglio, se c’è, è stata superata dal danno residuo"
+       ],
+       "prova": "PS Tempra",
+       "se_fallisce": "non spende Azioni fuori dalla propria Iniziativa",
+       "durata": "1+1d3 Round",
+       "durata_paragrafo": "Giocatore §5.24, §5.18",
+       "la_applica": "il Direttore",
+       "app_non_calcola": "L’app scrive la condizione e non fa altro: non tira la PS Tempra, non applica l’effetto del fallimento, non conta i Round. Una sola PS per tipo di effetto, per bersaglio e per attacco (§5.24)."
+      },
+      "voce": "armi:cyberarma-blu"
      },
      {
       "id": "verde",
@@ -1947,7 +2003,15 @@
       "va_attacco": 1,
       "va_parata": 1,
       "danno": 1,
-      "paragrafo": "§7.25, §7.25.4, §7.25.5"
+      "paragrafo": "§7.25, §7.25.4, §7.25.5",
+      "danno_base_tecnomante": "1d8+1",
+      "per_grado_custode": {
+       "III": "1d10+2",
+       "IV": "1d10+3",
+       "V": "1d10+4",
+       "VI": "1d10+5"
+      },
+      "voce": "armi:cyberarma-verde"
      },
      {
       "id": "viola",
@@ -1957,10 +2021,31 @@
       "danno": 0,
       "corruzione": true,
       "senza_numero": "Eccezionale: porta Corruzione, «annotare il valore del singolo frammento» (§7.25). Il manuale non dà un bonus numerico né il valore della Corruzione: sta nell’esemplare (A.246).",
-      "paragrafo": "§7.25"
+      "paragrafo": "§7.25",
+      "danno_base_tecnomante": "1d8",
+      "per_grado_custode": {
+       "III": "1d10+1",
+       "IV": "1d10+2",
+       "V": "1d10+3",
+       "VI": "1d10+4"
+      },
+      "eccezionale": true,
+      "_eccezionale": "§7.25: «I quattro focalizzatori di riferimento e il Viola eccezionale». «Eccezionale» è una parola sul cristallo, non una Qualità, non una rarità e non una Reperibilità: non cambia il prezzo e non entra nella formula della A.256.",
+      "corruzione_dal_frammento": {
+       "testo": "Corruzione: indicare il valore del frammento",
+       "paragrafo": "§7.25, A.246",
+       "dove": "esemplare.corruzione",
+       "senza_predefinito": true,
+       "_senza_predefinito": "Il manuale dice «annotare il valore del singolo frammento»: il valore è del frammento, non del colore, e un valore predefinito sarebbe inventato. Finché non c’è, la scheda scrive il posto vuoto e lo dice."
+      },
+      "voce": "armi:cyberarma-viola"
      }
-    ]
-   }
+    ],
+    "_lotto_235": "Rosso, Blu e Viola non hanno un bonus numerico nel manuale, e non averlo non vuol dire non avere effetto: Plasma, Elettricità e Corruzione sono effetti sul bersaglio, scritti qui con le condizioni del §5.24. L’app li scrive e non li applica: non tira la PS Tempra, non applica il −2 VA, non blocca le Azioni e non conta i Round. Stanno nell’elenco delle regole che l’app non conta."
+   },
+   "famiglia_cyberarma": "CyberArma",
+   "non_in_vendita": true,
+   "_nota_non_in_vendita": "Lotto 235: «CyberArma» è il nome della famiglia e queste tre voci sono configurazioni dell’originale o delle sue conversioni, non articoli di listino: §7.25, «ogni esemplare rimane tuttavia un pezzo unico… Il valore indicativo non garantisce una vendita: il Direttore stabilisce compratore, disponibilità e prezzo effettivo in gioco». Dove c’è un costo, resta scritto come valore e non come prezzo (valoreNonPrezzo). Non cambia nessun valore di combattimento: la voce di Dimitri è «armi:cyberarma» e il suo VA, il suo danno e la sua Parata non si muovono."
   },
   {
    "tipo": "arma_ravvicinata",
@@ -2170,7 +2255,10 @@
     "fonte": "A.251 (Davide, 06/11/2026); Armamenti 0.74 §§7.25–7.25.4"
    },
    "unico": true,
-   "_nota_unico": "Armamenti 0.74 §7.25: «Ogni originale è un pezzo unico». Rarità «Unico o reliquia» della A.256: senza prezzo di catalogo. Il valore dipende da fattura, unicità, proprietà e provenienza, e lo decide il Direttore."
+   "_nota_unico": "Armamenti 0.74 §7.25: «Ogni originale è un pezzo unico». Rarità «Unico o reliquia» della A.256: senza prezzo di catalogo. Il valore dipende da fattura, unicità, proprietà e provenienza, e lo decide il Direttore.",
+   "famiglia_cyberarma": "CyberArma",
+   "non_in_vendita": true,
+   "_nota_non_in_vendita": "Lotto 235: «CyberArma» è il nome della famiglia e queste tre voci sono configurazioni dell’originale o delle sue conversioni, non articoli di listino: §7.25, «ogni esemplare rimane tuttavia un pezzo unico… Il valore indicativo non garantisce una vendita: il Direttore stabilisce compratore, disponibilità e prezzo effettivo in gioco». Dove c’è un costo, resta scritto come valore e non come prezzo (valoreNonPrezzo). Non cambia nessun valore di combattimento: la voce di Dimitri è «armi:cyberarma» e il suo VA, il suo danno e la sua Parata non si muovono."
   },
   {
    "tipo": "arma_ravvicinata",
@@ -2363,7 +2451,212 @@
     "fonte": "A.251 (Davide, 06/11/2026); Armamenti 0.74 §§7.25–7.25.4"
    },
    "unico": true,
-   "_nota_unico": "Armamenti 0.74 §7.25: «Ogni originale è un pezzo unico». Rarità «Unico o reliquia» della A.256: senza prezzo di catalogo. Il valore dipende da fattura, unicità, proprietà e provenienza, e lo decide il Direttore."
+   "_nota_unico": "Armamenti 0.74 §7.25: «Ogni originale è un pezzo unico». Rarità «Unico o reliquia» della A.256: senza prezzo di catalogo. Il valore dipende da fattura, unicità, proprietà e provenienza, e lo decide il Direttore.",
+   "famiglia_cyberarma": "CyberArma",
+   "non_in_vendita": true,
+   "_nota_non_in_vendita": "Lotto 235: «CyberArma» è il nome della famiglia e queste tre voci sono configurazioni dell’originale o delle sue conversioni, non articoli di listino: §7.25, «ogni esemplare rimane tuttavia un pezzo unico… Il valore indicativo non garantisce una vendita: il Direttore stabilisce compratore, disponibilità e prezzo effettivo in gioco». Dove c’è un costo, resta scritto come valore e non come prezzo (valoreNonPrezzo). Non cambia nessun valore di combattimento: la voce di Dimitri è «armi:cyberarma» e il suo VA, il suo danno e la sua Parata non si muovono."
+  },
+  {
+   "id": "cyberarma-bianca",
+   "nome": "CyberArma Bianca",
+   "nomi_alternativi": [
+    "CyberArma Bianco",
+    "CyberArma con cristallo Bianco"
+   ],
+   "tipo": "arma_ravvicinata",
+   "catalogo": "Artefatti di campagna",
+   "famiglia": "Spade",
+   "famiglia_cyberarma": "CyberArma",
+   "paragrafo": "§7.25, §7.25.5",
+   "versione_manuale": "Armamenti 0.90 (§7.25, §7.25.5) / Giocatore 0.65 §5.24 / A.246, A.251, A.271",
+   "abilita": "Armi da mischia",
+   "specializzazione": "specializzazione-spade",
+   "manovre": [
+    "Affondo",
+    "Spazzata"
+   ],
+   "mani": 1,
+   "natura_danno": "Magico",
+   "portata_q": 1,
+   "gittata_q": null,
+   "for_richiesta": 3,
+   "inc": null,
+   "pi": 4,
+   "qualita": "Non comune",
+   "ps_int": 12,
+   "reperibilita": "EP",
+   "costo": 7500,
+   "unico": true,
+   "non_in_vendita": true,
+   "ravvicinata_senza_raffiche": true,
+   "proprieta": [],
+   "danno": {
+    "una_mano": "1d8",
+    "due_mani": null
+   },
+   "focalizzatore_fisso": "bianco",
+   "_nota": "Lotto 235: uno dei cinque profili del §7.25 per colore del cristallo focalizzatore. Il danno base 1d8 e il bonus fisso del cristallo stanno nel profilo (§7.25.5); i modificatori personali li aggiunge la scheda. `focalizzatore_fisso` dice il colore senza bisogno che l’esemplare lo dichiari: un esemplare che lo dichiara comunque vince (src/cyberarma.js → bonusFocalizzatore). Prezzo: i 7.500 cr sono il valore indicativo dell’originale (§7.25, A.256) e `non_in_vendita` li tiene come valore e non come listino, perché «ogni esemplare rimane un pezzo unico» e «il valore indicativo non garantisce una vendita: il Direttore stabilisce compratore, disponibilità e prezzo effettivo»."
+  },
+  {
+   "id": "cyberarma-rossa",
+   "nome": "CyberArma Rossa",
+   "nomi_alternativi": [
+    "CyberArma Rosso",
+    "CyberArma con cristallo Rosso"
+   ],
+   "tipo": "arma_ravvicinata",
+   "catalogo": "Artefatti di campagna",
+   "famiglia": "Spade",
+   "famiglia_cyberarma": "CyberArma",
+   "paragrafo": "§7.25, §7.25.5",
+   "versione_manuale": "Armamenti 0.90 (§7.25, §7.25.5) / Giocatore 0.65 §5.24 / A.246, A.251, A.271",
+   "abilita": "Armi da mischia",
+   "specializzazione": "specializzazione-spade",
+   "manovre": [
+    "Affondo",
+    "Spazzata"
+   ],
+   "mani": 1,
+   "natura_danno": "Magico",
+   "portata_q": 1,
+   "gittata_q": null,
+   "for_richiesta": 3,
+   "inc": null,
+   "pi": 4,
+   "qualita": "Non comune",
+   "ps_int": 12,
+   "reperibilita": "EP",
+   "costo": 7500,
+   "unico": true,
+   "non_in_vendita": true,
+   "ravvicinata_senza_raffiche": true,
+   "proprieta": [],
+   "danno": {
+    "una_mano": "1d8",
+    "due_mani": null
+   },
+   "focalizzatore_fisso": "rosso",
+   "_nota": "Lotto 235: uno dei cinque profili del §7.25 per colore del cristallo focalizzatore. Il danno base 1d8 e il bonus fisso del cristallo stanno nel profilo (§7.25.5); i modificatori personali li aggiunge la scheda. `focalizzatore_fisso` dice il colore senza bisogno che l’esemplare lo dichiari: un esemplare che lo dichiara comunque vince (src/cyberarma.js → bonusFocalizzatore). Prezzo: i 7.500 cr sono il valore indicativo dell’originale (§7.25, A.256) e `non_in_vendita` li tiene come valore e non come listino, perché «ogni esemplare rimane un pezzo unico» e «il valore indicativo non garantisce una vendita: il Direttore stabilisce compratore, disponibilità e prezzo effettivo»."
+  },
+  {
+   "id": "cyberarma-blu",
+   "nome": "CyberArma Blu",
+   "nomi_alternativi": [
+    "CyberArma con cristallo Blu"
+   ],
+   "tipo": "arma_ravvicinata",
+   "catalogo": "Artefatti di campagna",
+   "famiglia": "Spade",
+   "famiglia_cyberarma": "CyberArma",
+   "paragrafo": "§7.25, §7.25.5",
+   "versione_manuale": "Armamenti 0.90 (§7.25, §7.25.5) / Giocatore 0.65 §5.24 / A.246, A.251, A.271",
+   "abilita": "Armi da mischia",
+   "specializzazione": "specializzazione-spade",
+   "manovre": [
+    "Affondo",
+    "Spazzata"
+   ],
+   "mani": 1,
+   "natura_danno": "Magico",
+   "portata_q": 1,
+   "gittata_q": null,
+   "for_richiesta": 3,
+   "inc": null,
+   "pi": 4,
+   "qualita": "Non comune",
+   "ps_int": 12,
+   "reperibilita": "EP",
+   "costo": 7500,
+   "unico": true,
+   "non_in_vendita": true,
+   "ravvicinata_senza_raffiche": true,
+   "proprieta": [],
+   "danno": {
+    "una_mano": "1d8",
+    "due_mani": null
+   },
+   "focalizzatore_fisso": "blu",
+   "_nota": "Lotto 235: uno dei cinque profili del §7.25 per colore del cristallo focalizzatore. Il danno base 1d8 e il bonus fisso del cristallo stanno nel profilo (§7.25.5); i modificatori personali li aggiunge la scheda. `focalizzatore_fisso` dice il colore senza bisogno che l’esemplare lo dichiari: un esemplare che lo dichiara comunque vince (src/cyberarma.js → bonusFocalizzatore). Prezzo: i 7.500 cr sono il valore indicativo dell’originale (§7.25, A.256) e `non_in_vendita` li tiene come valore e non come listino, perché «ogni esemplare rimane un pezzo unico» e «il valore indicativo non garantisce una vendita: il Direttore stabilisce compratore, disponibilità e prezzo effettivo»."
+  },
+  {
+   "id": "cyberarma-verde",
+   "nome": "CyberArma Verde",
+   "nomi_alternativi": [
+    "CyberArma con cristallo Verde"
+   ],
+   "tipo": "arma_ravvicinata",
+   "catalogo": "Artefatti di campagna",
+   "famiglia": "Spade",
+   "famiglia_cyberarma": "CyberArma",
+   "paragrafo": "§7.25, §7.25.5",
+   "versione_manuale": "Armamenti 0.90 (§7.25, §7.25.5) / Giocatore 0.65 §5.24 / A.246, A.251, A.271",
+   "abilita": "Armi da mischia",
+   "specializzazione": "specializzazione-spade",
+   "manovre": [
+    "Affondo",
+    "Spazzata"
+   ],
+   "mani": 1,
+   "natura_danno": "Magico",
+   "portata_q": 1,
+   "gittata_q": null,
+   "for_richiesta": 3,
+   "inc": null,
+   "pi": 4,
+   "qualita": "Non comune",
+   "ps_int": 12,
+   "reperibilita": "EP",
+   "costo": 7500,
+   "unico": true,
+   "non_in_vendita": true,
+   "ravvicinata_senza_raffiche": true,
+   "proprieta": [],
+   "danno": {
+    "una_mano": "1d8",
+    "due_mani": null
+   },
+   "focalizzatore_fisso": "verde",
+   "_nota": "Lotto 235: uno dei cinque profili del §7.25 per colore del cristallo focalizzatore. Il danno base 1d8 e il bonus fisso del cristallo stanno nel profilo (§7.25.5); i modificatori personali li aggiunge la scheda. `focalizzatore_fisso` dice il colore senza bisogno che l’esemplare lo dichiari: un esemplare che lo dichiara comunque vince (src/cyberarma.js → bonusFocalizzatore). Prezzo: i 7.500 cr sono il valore indicativo dell’originale (§7.25, A.256) e `non_in_vendita` li tiene come valore e non come listino, perché «ogni esemplare rimane un pezzo unico» e «il valore indicativo non garantisce una vendita: il Direttore stabilisce compratore, disponibilità e prezzo effettivo»."
+  },
+  {
+   "id": "cyberarma-viola",
+   "nome": "CyberArma Viola",
+   "nomi_alternativi": [
+    "CyberArma con cristallo Viola"
+   ],
+   "tipo": "arma_ravvicinata",
+   "catalogo": "Artefatti di campagna",
+   "famiglia": "Spade",
+   "famiglia_cyberarma": "CyberArma",
+   "paragrafo": "§7.25, §7.25.5",
+   "versione_manuale": "Armamenti 0.90 (§7.25, §7.25.5) / Giocatore 0.65 §5.24 / A.246, A.251, A.271",
+   "abilita": "Armi da mischia",
+   "specializzazione": "specializzazione-spade",
+   "manovre": [
+    "Affondo",
+    "Spazzata"
+   ],
+   "mani": 1,
+   "natura_danno": "Magico",
+   "portata_q": 1,
+   "gittata_q": null,
+   "for_richiesta": 3,
+   "inc": null,
+   "pi": 4,
+   "qualita": "Non comune",
+   "ps_int": 12,
+   "reperibilita": "EP",
+   "costo": 7500,
+   "unico": true,
+   "non_in_vendita": true,
+   "ravvicinata_senza_raffiche": true,
+   "proprieta": [],
+   "danno": {
+    "una_mano": "1d8",
+    "due_mani": null
+   },
+   "focalizzatore_fisso": "viola",
+   "_nota": "Lotto 235: uno dei cinque profili del §7.25 per colore del cristallo focalizzatore. Il danno base 1d8 e il bonus fisso del cristallo stanno nel profilo (§7.25.5); i modificatori personali li aggiunge la scheda. `focalizzatore_fisso` dice il colore senza bisogno che l’esemplare lo dichiari: un esemplare che lo dichiara comunque vince (src/cyberarma.js → bonusFocalizzatore). Prezzo: i 7.500 cr sono il valore indicativo dell’originale (§7.25, A.256) e `non_in_vendita` li tiene come valore e non come listino, perché «ogni esemplare rimane un pezzo unico» e «il valore indicativo non garantisce una vendita: il Direttore stabilisce compratore, disponibilità e prezzo effettivo»."
   }
  ]
 }

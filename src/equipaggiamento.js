@@ -23,7 +23,7 @@ import { calcolaAR, oggettiConPi, oggettiSenzaPi, oggettiIndistruttibili, oggett
 import { conManifestazione, manifestazioniDi, sceltaLibera } from './manifestazione.js';
 import { tipoRiserva, alimentazione as alimentazioneRiserva, fontePerPg } from './fonti.js';
 import { rigaProvenienzaVoce } from './provenienza-catalogo.js';
-import { bonusFocalizzatore } from './cyberarma.js';
+import { bonusFocalizzatore, dannoCondizionaleCristallo, condizioneSulBersaglio } from './cyberarma.js';
 import { infoPietra, COLORI_PIETRA } from './pietre-di-luna.js';
 
 export const TIPI = ['arma_ravvicinata', 'arma_distanza', 'scudo', 'armatura', 'rinforzo', 'elmetto', 'accessorio', 'munizioni', 'sanitario', 'artefatto', 'impianto', 'altro'];
@@ -1381,7 +1381,16 @@ export function calcolaEquipaggiamento(base, voci, dati) {
       danno: dannoBase ? { una_mano: aggiungiDanno(dannoBase.una_mano, bonusDanno + dannoAccessori + dannoCar + (foc?.danno ?? 0)), due_mani: aggiungiDanno(dannoBase.due_mani, bonusDanno + dannoAccessori + dannoCar + (foc?.danno ?? 0)) } : null,
       dannoAccessori, bonusCaratteristica,
       // lotto 210: il focalizzatore, perché la scheda e «Attacca!» possano dirlo e i test provarlo
-      focalizzatore: foc && !foc.sconosciuto ? { colore: foc.colore, va: foc.va, parata: foc.parata, danno: foc.danno, custode: foc.custode, senzaNumero: foc.senzaNumero, condizionale: foc.condizionale, proprietaDanno: foc.proprietaDanno } : null,
+      // lotto 235 (A.246): la Corruzione e del singolo frammento Viola, quindi del record e non del profilo
+      corruzioneFrammento: o.voce.esemplare?.corruzione ?? null,
+      focalizzatore: foc && !foc.sconosciuto ? { colore: foc.colore, va: foc.va, parata: foc.parata, danno: foc.danno, custode: foc.custode, senzaNumero: foc.senzaNumero, condizionale: foc.condizionale, proprietaDanno: foc.proprietaDanno,
+        // lotto 235: il ×2 del Bianco contro l'Oscura Simmetria, scritto nella forma della A.199 sul danno **completo**
+        // — «(1d8+4)×2», cioè (danno+3)×2 e mai danno×2+3 — e la condizione del Plasma o dell'Elettricità, che l'app
+        // scrive e non applica (§5.24: la PS Tempra, il −2 VA, il blocco delle Azioni e i Round sono del Direttore).
+        dannoCondizionale: dannoCondizionaleCristallo(aggiungiDanno(dannoBase?.una_mano ?? dannoBase?.due_mani, bonusDanno + dannoAccessori + dannoCar + (foc?.danno ?? 0)), foc.condizionale),
+        effettoSulBersaglio: condizioneSulBersaglio(foc.effettoSulBersaglio),
+        corruzioneDalFrammento: foc.corruzioneDalFrammento ?? null, eccezionale: foc.eccezionale === true,
+      } : null,
       ...(d?.rif ? (({ famiglia, scorte }) => ({ famigliaMunizioni: famiglia, scorte }))(scorteDi(d.rif)) : { famigliaMunizioni: null, scorte: [] }),
       accessori: acc.map((x) => ({ uid: x.uid, nome: x.nome, rif: x.def?.rif ?? null })),
       // §7.3: il mirino riduce la sola penalità di distanza, entro il proprio limite

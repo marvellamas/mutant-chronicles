@@ -24,6 +24,7 @@ import { prezzoArtefatto } from '../prezzi-artefatti.js';
 import { alimentazioneSceglibile } from '../cyberarma.js';
 import { modelliProgetto, apriProgetto, scegliForma, scegliAlimentazione, registraTentativo, togliUltimoTentativo, chiudiProgetto, riapriProgetto, riepilogoProgetto, formaSceglibile, avvisiConsegna, avvisoNonConsegnata, esemplariDi, storicoDi, configurazioneConsegna, ESITI_TENTATIVO, NOMI_ESITO, ESITI_FINALI, NOMI_FINALE } from '../progetti.js';
 import { circostanzeMasterAttive } from '../correzioni-master.js';
+import { cristalliCyberArma, cambiaCristallo, coloreCristallo } from '../cyberarma.js';
 import { conAvviso } from './procedi.js';
 import { h, segno, svuota } from './dom.js';
 import { avviso } from './avvisi.js';
@@ -2191,6 +2192,48 @@ function manifestazioneUi(ctx, a) {
 }
 
 /**
+ * Lotto 235 — cambio del cristallo focalizzatore di una CyberArma (Armamenti §7.25, §7.25.3).
+ *
+ * Solo in «Modifica master»: montare un frammento è una modifica del manufatto, come la forma e l'alimentazione.
+ *
+ * **Aggiorna lo stesso esemplare e non ne crea un secondo.** La distinzione è quella del lotto 185 e della A.295: il
+ * `rif` è il **profilo** (il modello del catalogo: danno base, proprietà, colore), mentre uid, nome, i PI in
+ * `sessione.integrita` e lo `storico` sono il **record**, cioè l’arma che il personaggio ha in mano. Qui cambia il
+ * profilo; il record resta intero e si allunga di una riga. Il motore e `cambiaCristallo` (src/cyberarma.js): se il
+ * colore non è fra i cinque del manuale si ferma e lo dice, invece di scegliere.
+ */
+function cristalloUi(ctx, a) {
+  if (!ctx.master || typeof a.rif !== 'string' || !a.rif.startsWith('armi:cyberarma')) return null;
+  const cristalli = cristalliCyberArma(ctx.dati);
+  if (!cristalli.length) return null;
+  const voce = (ctx.scelte.equipaggiamento ?? []).find((v) => v.uid === a.uid);
+  if (!voce) return null;
+  const ora = coloreCristallo(voce, ctx.dati);
+  const u = (ctx.ui.cristallo ??= {});
+  const scelto = u[a.uid] ?? '';
+  const cambia = async () => {
+    const c = cristalli.find((x) => x.id === scelto);
+    if (!c) return;
+    const esito = cambiaCristallo(voce, c.id, ctx.dati, { quando: new Date().toISOString(), da: 'Modifica master', motivo: null });
+    if (esito.errore) { await informa({ titolo: 'Cristallo focalizzatore', testo: esito.errore }); return; }
+    const ok = await chiedi({
+      titolo: `Cambia il cristallo di ${a.nome}`,
+      testo: `Il cristallo passa ${ora ? `da ${ora} ` : ''}a ${c.nome}. È lo stesso esemplare: restano il nome, l’Integrità e lo storico, e non nasce una seconda arma. ${c.dannoBase ? `Danno letto dal manuale: ${c.dannoBase}. ` : ''}${c.effettoSulBersaglio ? `Porta ${c.effettoSulBersaglio.proprieta}, che l’app scrive e non applica. ` : ''}${c.corruzione ? 'Porta Corruzione: il valore è del singolo frammento e lo scrivi tu. ' : ''}La riga resta nello storico dell’esemplare.`,
+      si: `Monta il cristallo ${c.nome}`, no: 'Lascia',
+    });
+    if (!ok) return;
+    ctx.azioni.equipaggiamento((ctx.scelte.equipaggiamento ?? []).map((v) => (v.uid === a.uid ? esito.voce : v)));
+  };
+  return h('p', { class: 'nota cristallo-master' },
+    h('strong', {}, 'Cristallo focalizzatore: '), ora ?? 'nessuno dichiarato', ' · ',
+    h('select', { class: 'scelta-cristallo', 'aria-label': `Cristallo focalizzatore di ${a.nome}`, onchange: (e) => { u[a.uid] = e.target.value; ctx.azioni.ridisegna(); } },
+      h('option', { value: '', selected: !scelto }, 'Scegli il cristallo…'),
+      cristalli.map((c) => h('option', { value: c.id, selected: c.id === scelto }, c.nome))),
+    ' ',
+    h('button', { type: 'button', class: 'btn btn-piccolo', disabled: !scelto, title: scelto ? 'Cambia il cristallo di questo esemplare' : 'Prima scegli un cristallo', onclick: cambia }, 'Cambia cristallo'),
+    h('br'), h('small', { class: 'sigla' }, 'Aggiorna questo esemplare: nome, Integrità e storico restano, e non nasce una seconda arma (§7.25.3).'));
+}
+/**
  * A.158: attivazione a Round di un'arma (CyberArma, Armamenti §7.25). Costo e durata sono quelli della Classe
  * del personaggio, presi dai dati (uso_per_classe); «Attiva» li scala e segna i Round, «Termina» la spegne.
  * Per le Classi che non la possono usare è un avviso, non un blocco: decide il tavolo.
@@ -2566,6 +2609,29 @@ function schedaArma(ctx, a) {
         : [a.focalizzatore.va ? `VA ${segno(a.focalizzatore.va)}` : null, a.focalizzatore.parata ? `Parata ${segno(a.focalizzatore.parata)}` : null, a.focalizzatore.danno ? `danno ${segno(a.focalizzatore.danno)}` : null].filter(Boolean).join(' · ')
           || (a.focalizzatore.proprietaDanno ? `${a.focalizzatore.proprietaDanno} (§5.24), nessun numero nel manuale: la applica il Direttore` : 'nessun numero nel manuale'),
       a.focalizzatore.condizionale ? ` · ${a.focalizzatore.condizionale.testo}` : null) : null,
+    // lotto 235: il ×2 del Bianco contro l'Oscura Simmetria, scritto per esteso sul danno **completo** del colpo
+    // (§7.25: «×2 al danno complessivo del colpo, incluso il +3»), cioè (danno+3)×2 e mai danno×2+3. La forma
+    // «(1d8+4)×2» è quella della A.199: il moltiplicatore lo applica leggiDannoMoltiplicato, sul totale.
+    a.focalizzatore?.dannoCondizionale ? h('p', { class: 'nota focalizzatore-condizionale' },
+      h('strong', {}, `Contro ${a.focalizzatore.dannoCondizionale.contro}: `),
+      h('strong', {}, a.focalizzatore.dannoCondizionale.formula),
+      ` — si tira il danno, si somma tutto (il ${segno(a.focalizzatore.danno)} del cristallo compreso) e poi si moltiplica per ${a.focalizzatore.dannoCondizionale.moltiplicatore}: mai il dado da solo.`) : null,
+    // lotto 235: Plasma ed Elettricità (§5.24). L'app **scrive la condizione e non fa altro**: non tira la PS
+    // Tempra, non applica il −2 VA, non blocca le Azioni, non conta i Round. Le due condizioni dipendono dal
+    // bersaglio e dal colpo (danno passato oltre l'Armatura, Contromisura superata) e le giudica il Direttore.
+    a.focalizzatore?.effettoSulBersaglio ? h('p', { class: 'nota focalizzatore-bersaglio' },
+      h('strong', {}, `${a.focalizzatore.effettoSulBersaglio.proprieta}: `),
+      a.focalizzatore.effettoSulBersaglio.dettaglio,
+      a.focalizzatore.effettoSulBersaglio.quando ? ' ' + a.focalizzatore.effettoSulBersaglio.quando : null,
+      h('br'), h('small', { class: 'sigla' }, `Da applicare al tavolo: lo tira e lo applica ${a.focalizzatore.effettoSulBersaglio.laApplica}; l’app non lo conta.`)) : null,
+    // lotto 235 (A.246): il Viola è «il Viola eccezionale» del §7.25 e porta Corruzione, il cui valore è del singolo
+    // frammento. Nessun valore predefinito: se l'esemplare non lo dichiara, la scheda scrive il posto e lo dice.
+    a.focalizzatore?.corruzioneDalFrammento ? h('p', { class: 'nota focalizzatore-corruzione' },
+      h('strong', {}, 'Focalizzatore eccezionale. '),
+      a.corruzioneFrammento !== null && a.corruzioneFrammento !== undefined
+        ? `Corruzione ${numero(a.corruzioneFrammento)} (valore di questo frammento, ${a.focalizzatore.corruzioneDalFrammento.paragrafo}).`
+        : `Corruzione: indicare il valore del frammento (${a.focalizzatore.corruzioneDalFrammento.paragrafo}). Il manuale non ne dà uno: lo scrive il Direttore sull’esemplare.`) : null,
+    cristalloUi(ctx, a),
     a.accessori?.length ? h('p', { class: 'nota' }, h('strong', {}, 'Accessori: '), a.accessori.map((x) => x.nome).join(', '),
       a.dannoAccessori ? ` · danno ${segno(a.dannoAccessori)}` : null) : null,
     a.mirino ? h('p', { class: 'nota', title: a.mirino.testo }, `${a.mirino.nome}: −${a.mirino.riduzione} alla penalità di distanza (fino a 0), ${a.mirino.distanza_max_q ? `fino a ${a.mirino.distanza_max_q} Q` : 'entro la gittata'}${a.mirino.azp_minime ? `, almeno ${a.mirino.azp_minime} AzP` : ''} (§7.3)`) : null,

@@ -249,10 +249,10 @@
       "armi_distanza.json",
       "armi_distanza_corporative.json"
     ],
-    "voci": 222,
+    "voci": 227,
     "dalla_edizione": 139,
     "miste": 77,
-    "non_nel_manuale": 6,
+    "non_nel_manuale": 11,
     "campi": {
       "letti": 3299,
       "ereditati": 117,
@@ -268,6 +268,7 @@
       "famiglia": "il manuale non lo scrive in tabella e fra i titoli di sezione («7.1.9 Cataloghi delle Corporazioni › Bauhaus») non compare «Armi inastate»",
       "modalita": "il manuale corrente non lo dà in una forma leggibile"
     },
+    "_nota_235": "Lotto 235: le cinque voci nuove (CyberArma Bianca, Rossa, Blu, Verde, Viola: un profilo per colore del cristallo focalizzatore) portano «non_nel_manuale» da 6 a 11 e le voci da 222 a 227. Non è un difetto del lettore e non è una lettura mancata: il §7.25 non è una tabella d’arma — i cinque profili stanno nella tabella per Grado del Custode e nel «Riferimento rapido» del §7.25.5 — quindi tools/importa-armi.mjs non le trova col loro nome, come già per le tre configurazioni della CyberArma. I valori vengono dal §7.25 e dal §7.25.5 della 0.90, riletti in questo lotto; non portano provenienza per campo e lo dichiarano nel versione_manuale della voce.",
     "_nota": "Lotto 206: ogni voce d’arma porta in `_edizione.campi` l’edizione da cui viene ciascun suo campo (`src/provenienza-catalogo.js`). «miste» sono le voci che tengono almeno un campo di un’edizione precedente e lo dicono nella scheda; «non_nel_manuale» le voci che col loro nome non si trovano nel manuale corrente, e il cui rimando lo decide una persona. Specializzazione, Manovre e i testi delle proprietà non vengono dalle tabelle del manuale e non portano una provenienza per voce (`CAMPI_NOSTRI`): si confrontano col manuale e si dichiarano. Il validatore pretende che i conti tornino coi file."
   }
 }

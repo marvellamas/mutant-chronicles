@@ -41,8 +41,12 @@ test('il Mitragliatore Leggero Punisher e la pistola Punisher sono due voci; le 
 
 test('le armi del catalogo portano l’edizione corrente (Armamenti 0.90) dove prima portavano la 0.89, e nessuna differenza di valore', () => {
   const armi = ['armi', 'armi_corporative', 'armi_distanza', 'armi_distanza_corporative'].flatMap((f) => dati.equipaggiamento.file[f].oggetti);
-  assert.equal(armi.length, 222, 'le voci d’arma sono 222: nessuna entra e nessuna esce con la 0.90');
-  assert.equal(new Set(armi.map((o) => o.id)).size, 220, 'sono 220 id (Pugnale e Ascia leggera hanno due profili)');
+  // Lotto 235: 222 + 5 = 227. Le cinque voci nuove sono i profili della CyberArma per colore del cristallo
+  // focalizzatore (§7.25, §7.25.5), e non vengono dalla 0.90 né da un'altra edizione degli Armamenti: il §7.25 non
+  // è una tabella d'arma, quindi non entrano in questo confronto. Il senso del controllo resta: con la 0.90 non
+  // è entrata e non è uscita nessuna voce dalle tabelle d'arma.
+  assert.equal(armi.length, 227, 'le voci d’arma sono 227: le 222 di prima più le cinque CyberArma per colore del lotto 235');
+  assert.equal(new Set(armi.map((o) => o.id)).size, 225, 'sono 225 id (Pugnale e Ascia leggera hanno due profili)');
   const man = versioneManuale('armamenti');
   for (const f of ['armi', 'armi_corporative', 'armi_distanza', 'armi_distanza_corporative']) assert.equal(dati.equipaggiamento.file[f].versione_manuale, `Armamenti ${man}`, f);
 });
