@@ -6,7 +6,7 @@
 
 **Come si legge la colonna «Applicata».** Una data vuol dire che l’app fa quello che Davide ha deciso; «già così» che lo faceva già prima della risposta; «vedi A.n» che il numero è trattato dentro un’altra voce; «chiusa», «ritirata» o «mai usato» che non c’è niente da applicare. Dove la risposta ne supera un’altra, o dove resta una riserva, è scritto nella stessa riga.
 
-**I numeri che non sono qui sono nel Doc**, perché riguardano Davide o sono lavoro in corso: A.296, da A.299 a A.310 e A.312. (La A.311 è qui: l’abbiamo ritirata.)
+**I numeri che non sono qui sono nel Doc**, perché riguardano Davide o sono lavoro in corso: A.296, da A.299 a A.307, A.309, A.310 e A.312. (La A.311 è qui: l’abbiamo ritirata.)
 
 ## Le domande, una riga per numero
 
@@ -297,6 +297,7 @@
 | A.295 | Le voci SIA nel catalogo, e i soprabiti dei PG | 19/11 | 20/11 — la migrazione dei cinque rimasti (Botha, Duncan, Michele, Oshi, Pablo; Dimitri e Lucas sono già a posto): sezione 8 | 228 |
 | A.297 | Il tiro dei PV e dei PM alla salita di livello | 19/11 | 20/11 | 228 |
 | A.298 | Pietre di Luna: l'ultimo contatto e l'avviso «Verifica il vincolo» | 19/11 | 20/11 | 228 |
+| A.308 | Il focalizzatore Verde sulla CyberArma di Dimitri | 21/11 | 23/11 — sì, installato (riferito da Marcello; non ancora scritto nell’E&L né nel Doc). Applicata: VA 10, danno 1d8+2, Parata 9 solo con l’arma manifestata, dichiarato nei dati per quell’esemplare | 240 |
 | A.311 | L’arco di tiro del Mitragliatore Leggero Punisher sullo Scout T4 di serie (domanda del lotto 237) | — | ritirata il 23/11: **errore nostro**, il manuale lo dà (Veicoli 0.23 §10, «rotazione orizzontale di 360° nei limiti degli ostacoli reali»); nei dati l’arco manca ancora e lo scriviamo noi | 239 |
 
 ## Voci senza numero (manuali recepiti, schede, lavori nostri)

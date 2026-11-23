@@ -14,9 +14,9 @@
 
 • Le correzioni ai manuali le fai nei Doc dei manuali, come sempre.
 
-• Ogni domanda dice cosa fa l’app *nel frattempo*. **Le domande aperte sono tredici, A.299–A.310 e A.312, e nessuna ferma la serata di stasera.** Una sola può cambiare dei numeri, la A.308 (Dimitri, se usa la CyberArma): senza risposta non cambia niente.
+• Ogni domanda dice cosa fa l’app *nel frattempo*. **Le domande aperte sono dodici, A.299–A.307, A.309, A.310 e A.312, e nessuna ferma la serata di stasera.** La A.308 è risolta e **cambia tre numeri di Dimitri** (vedi l’avviso qui sotto): le altre non cambiano niente senza una tua risposta.
 
-• **Se hai poco tempo, leggi solo la sezione 1\.** Sono le sei domande che contano, una richiesta che ritiriamo, due richieste sul modo di lavorare e quello che fai tu stasera.
+• **Se hai poco tempo, leggi solo la sezione 1\.** Sono le cinque domande che contano, un avviso sulla CyberArma di Dimitri, una richiesta che ritiriamo, due richieste sul modo di lavorare e quello che fai tu stasera.
 
 **Sezioni:** 1\. Domande che bloccano un lavoro in corso · 2\. Domande aperte · 3\. Risposte ricevute, in implementazione · 4\. Da correggere nei manuali (e le regole che l’app non conta) · 5\. Manuali che l’app aspetta · 6\. Risolte (dove sono) · 7\. Risposte di Davide · 8\. Prove da fare (solo le tue).
 
@@ -24,17 +24,17 @@
 
 > > ## **1\. Domande che bloccano un lavoro in corso**
 
-**Sei domande contano adesso**, ciascuna con quello che cambia al tavolo se resta senza risposta; poi una richiesta che ritiriamo, due richieste sul modo di lavorare, e che cosa fai tu stasera.
+**Cinque domande contano adesso**, ciascuna con quello che cambia al tavolo se resta senza risposta; poi una richiesta che ritiriamo, due richieste sul modo di lavorare, e che cosa fai tu stasera.
 
-**A.308 — La CyberArma di Dimitri: il focalizzatore Verde va dichiarato?** *(la sola che può cambiare dei numeri stasera)*. Nel file di Dimitri (istantanea del 21/11, 23:53) la CyberArma non dichiara nessun focalizzatore, e il `+1` al danno che si legge viene da **DES 7** (§5.13), non dal cristallo. Ma il §7.25.4 degli Armamenti dice «È installato soltanto il focalizzatore Verde». Due righe per decidere:
+**Risolta il 23/11, e cambia tre numeri di Dimitri (A.308).** Hai confermato che il focalizzatore Verde è installato sulla CyberArma di Dimitri, come dice il §7.25.4 degli Armamenti. Quando aggiorni l’app (Mutant.bat, voce 2) **i suoi tre valori salgono di 1, ma solo con la CyberArma manifestata**: se la CyberArma è in uso a metà sessione, **dillo al giocatore**. A arma non manifestata i numeri restano quelli di prima.
 
-| | adesso | se dichiariamo il Verde |
+| | arma non manifestata | CyberArma manifestata |
 | :---- | :---- | :---- |
 | VA della CyberArma | **9** | **10** |
 | Danno | **1d8+1** | **1d8+2** |
 | Parata | **8** | **9** |
 
-*Nel frattempo:* l’app lascia i valori di adesso: non l’abbiamo scritto da noi perché sposta tre valori di un personaggio vero. Se dici sì, si fa in un tocco: «Modifica master», tab Combattimento, nel riquadro della mano che impugna la CyberArma (l’arma deve essere in mano), riga «Cristallo focalizzatore» → «Verde» → «Cambia cristallo» → conferma «Monta il cristallo Verde»; resta lo stesso esemplare (nome, Integrità, storico). *Se resta senza risposta:* Dimitri gioca con VA 9, 1d8+1 e Parata 8.
+*Che cosa abbiamo fatto:* il Verde è dichiarato nei dati dell’app per quella sola CyberArma (un esemplare, nessuna seconda arma, nome, Integrità e storico invariati), **senza scrivere nel file di Dimitri**: il valore si calcola e arriva da solo con l’aggiornamento. Il +1 al danno del Verde e il +1 di Destrezza (§5.13) sono due righe distinte: 1d8+2, non 1d8+3. *Una cosa da dirci:* la tua conferma ci è arrivata da Marcello e non è ancora scritta nell’E&L né in questo Doc; se vuoi, scrivila in coda alla sezione 7 così resta agli atti.
 
 **A.310 — L’Elmetto Recon: i valori dell’esemplare ASA, e un oggetto che abbiamo creato noi.** Nel catalogo ci sono «Elmetto Recon ASA» (quello dei sette) e «SIA Recon» (quello dell’Alleanza). **Il secondo l’abbiamo creato noi il 20/11 (lotto 228) copiando la voce del primo**, per applicare la tua A.295: per questo i due hanno gli stessi numeri fino alla virgola, e non perché lo dica il manuale. Confrontato con i tuoi manuali, **il SIA torna**: Armamenti §7.21.5 ha la riga «SIA Recon» con le stesse quattro funzioni, REP RA e 7.500 cr, e Veicoli §18.2 dice che gli elmetti della squadra «non sono gli elmetti ASA storici dei PG». Quello che il manuale non dà è l’esemplare **ASA**: il §7.26 ne scrive le funzioni (A.294) e dice che «ha una scheda distinta», ma non prezzo, Qualità, PS Integrità né Reperibilità; nel catalogo ha quelli della vecchia riga «ASA Recon» (Armamenti fino alla 0.74), che dalla 0.83 il manuale chiama «SIA Recon».
 
@@ -91,7 +91,7 @@
 
 **Una proposta sulla sezione 7, che è tua.** La sezione 7 — le risposte che ci hai già dato — è oggi il 77% delle parole di questo documento, e il suo titolo dice che viene dal tuo E\&L: è una copia di un testo che hai già, e che è canonico lì. *La proposta, e sei tu a decidere:* **(a)** che tenga **solo le risposte degli ultimi giorni** più lo spazio in coda dove scrive la tua AI, con il rimando all’E\&L per le precedenti — come abbiamo fatto noi con la sezione 6; **(b)** che il titolo «7. Risposte di Davide» diventi un **titolo vero** e non una cella di tabella: oggi l’indice di Google Docs **salta la tua**, che è l’unica sezione in cui scrivi. Un documento così lungo non lo rilegge nessuno, e quello che non si rilegge è il posto dove le contraddizioni restano per settimane. *Se preferisci di no,* resta com’è: la sezione 7 non la tocchiamo mai.
 
-**Per stasera, tre cose.** **(1)** Una sola può cambiare dei numeri: la **A.308**, e solo se Dimitri usa la CyberArma. **(2)** **Veleni e malattie si giocano a matita**, come hai scritto; vedi la tabella della A.312. **(3)** Il **capitolo 8 del Giocatore** (passaggio di livello, PX, dadi, profilo 4/7/9/4, §8.3.1) è **identico nella 0.66**, confrontato riga per riga con la 0.65: la serata dell’adeguamento non cambia.
+**Per stasera, tre cose.** **(1)** **Tre numeri di Dimitri salgono di 1** (A.308, risolta): con la CyberArma manifestata, VA 10, danno 1d8+2, Parata 9; se la sta usando a metà sessione, dillo al giocatore. **(2)** **Veleni e malattie si giocano a matita**, come hai scritto; vedi la tabella della A.312. **(3)** Il **capitolo 8 del Giocatore** (passaggio di livello, PX, dadi, profilo 4/7/9/4, §8.3.1) è **identico nella 0.66**, confrontato riga per riga con la 0.65: la serata dell’adeguamento non cambia.
 
 **La serata dell’adeguamento è stata riprovata dall’inizio alla fine, e gira** (19/11, su una copia dei sette del 17/11 alle 09:09, con il PC del Direttore e un tablet veri: i PX non si muovono mai). Lo stato più recente è l’istantanea del **21 novembre alle 23:53**: **tutti al livello 7, nessuno ancora adeguato (0 su 7)**. **Una cosa è tua, A.297:** il tiro dei PV e dei PM alla salita **non si rifà**: vale il primo risultato, anche se si chiude e si riapre la schermata; il Direttore corregge un errore materiale con il motivo («Libera i tiri»). Se non l’hai già fatto, **aggiorna l’app** (Mutant.bat, voce 2).
 
@@ -103,7 +103,7 @@
 
 > > ## **2\. Domande aperte (l’app ha già un’ipotesi ragionevole)**
 
-Cinque domande qui, **A.299, A.300, A.301, A.305 e A.306**; le altre aperte sono in testa alla sezione 1 (le sei che contano, A.304 e A.307–A.312, e le due richieste, A.302 e A.303). **Nessuna ferma niente**: per ciascuna l’app fa già una cosa ragionevole, scritta nel «Nel frattempo».
+Cinque domande qui, **A.299, A.300, A.301, A.305 e A.306**; le altre aperte sono in testa alla sezione 1 (le cinque che contano, A.304, A.307 e A.309–A.312, e le due richieste, A.302 e A.303). **Nessuna ferma niente**: per ciascuna l’app fa già una cosa ragionevole, scritta nel «Nel frattempo».
 
 **A.299 — L’AR cambia con la forma: vuoi che lo segua?** (19/11/2026, nata dall’applicazione della A.288). *In parole semplici:* nelle schede dei licantropi scrivi «AR 2 biologica in forma animale o ibrida; **0 umanoide**» (ratto e tigre 1 / 0). Nell’app l’AR è **un valore solo**, quello della forma animale: il lupo mannaro in forma umanoide mostra AR 2 invece di 0, e un colpo contro di lui perde 2 punti che non dovrebbe perdere. La A.273 elenca ingombro, movimento e (con la A.288) attacchi: l’AR non c’è, e cambiarlo cambia i danni subiti, quindi **non l’abbiamo toccato**. *Che cosa ci serve da te:* un sì (l’AR segue la forma, con il valore che scrive il manuale per ciascuna) o un no. *Nel frattempo:* l’AR resta quello della scheda in tutte le forme; se contro un licantropo umanoide serve AR 0, lo correggi tu al tavolo. *Se resta senza risposta:* niente di diverso da oggi.
 
@@ -1680,7 +1680,7 @@ Solo se qualcuno ha una Pietra di Luna (nell’istantanea del 21/11 nessuno dei 
 
 **Il collaudo.** Marcello ci ha detto che hai preparato un **foglio di test con 76 prove** e che ti metti a provare: **è una cosa bellissima, grazie**. Ti manca una colonna: **la build provata**. È la riga in fondo all’app, «Versione del … ·», e il numero che trovi nel menu di Mutant.bat: scrivila accanto a ogni prova. Una prova fatta su una versione più vecchia della funzione dà un KO che **non è un difetto**, e dal nostro lato diventa la caccia a un guasto che non esiste.
 
-**Cosa serve da te:** le sei domande in testa alla sezione 1, **la A.308 per prima** (stasera, se Dimitri usa la CyberArma); poi **un sì sul numero di versione** (A.303) e **i due 120° da portare a 180°** (A.302); quando puoi, **A.299**, **A.300** e **A.301**, e dopo il playtest la **A.312**. Stasera: aggiorna l’app (Mutant.bat, voce 2\) se non l’hai già fatto, e le sei righe della sezione 1; le prove di questa sezione, ciascuna dopo un «Salva sessione».
+**Cosa serve da te:** le cinque domande in testa alla sezione 1 (**la A.308 è risolta: avvisa solo il giocatore di Dimitri**); poi **un sì sul numero di versione** (A.303) e **i due 120° da portare a 180°** (A.302); quando puoi, **A.299**, **A.300** e **A.301**, e dopo il playtest la **A.312**. Stasera: aggiorna l’app (Mutant.bat, voce 2\) se non l’hai già fatto, e le sei righe della sezione 1; le prove di questa sezione, ciascuna dopo un «Salva sessione».
 
 **Non blocca niente:** le domande aperte, le richieste della sezione 1, la prova 3, la prova 4 e l’errata del Manuale dei Veicoli (120°, due punti).
 

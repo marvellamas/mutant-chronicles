@@ -2608,7 +2608,10 @@ function schedaArma(ctx, a) {
       a.focalizzatore.custode ? 'il Custode usa la sua tabella per Grado, che lo comprende già'
         : [a.focalizzatore.va ? `VA ${segno(a.focalizzatore.va)}` : null, a.focalizzatore.parata ? `Parata ${segno(a.focalizzatore.parata)}` : null, a.focalizzatore.danno ? `danno ${segno(a.focalizzatore.danno)}` : null].filter(Boolean).join(' · ')
           || (a.focalizzatore.proprietaDanno ? `${a.focalizzatore.proprietaDanno} (§5.24), nessun numero nel manuale: la applica il Direttore` : 'nessun numero nel manuale'),
-      a.focalizzatore.condizionale ? ` · ${a.focalizzatore.condizionale.testo}` : null) : null,
+      a.focalizzatore.condizionale ? ` · ${a.focalizzatore.condizionale.testo}` : null,
+      // lotto 240 (A.308): i bonus contano solo con l'arma manifestata (§7.25.5); un colore dichiarato dai dati lo dice
+      !a.focalizzatore.custode && (a.focalizzatore.va || a.focalizzatore.parata || a.focalizzatore.danno) ? ' · solo con l’arma manifestata (Attiva)' : null,
+      a.focalizzatore.dichiarato ? ' · installato secondo il manuale e confermato da Davide (A.308)' : null) : null,
     // lotto 235: il ×2 del Bianco contro l'Oscura Simmetria, scritto per esteso sul danno **completo** del colpo
     // (§7.25: «×2 al danno complessivo del colpo, incluso il +3»), cioè (danno+3)×2 e mai danno×2+3. La forma
     // «(1d8+4)×2» è quella della A.199: il moltiplicatore lo applica leggiDannoMoltiplicato, sul totale.

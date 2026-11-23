@@ -156,6 +156,15 @@ const RISPOSTE = [
       assert.equal(v.tipo, 'arma_ravvicinata', `${v.id}: è un'arma ravvicinata`);
     }
   }],
+  // lotto 240: Davide ha confermato che il focalizzatore Verde è installato sulla CyberArma di Dimitri (§7.25.4)
+  ['A.308', 'il focalizzatore Verde è dichiarato per la CyberArma di Dimitri (uid della sua voce), una volta sola, con la risposta scritta', () => {
+    const dich = armi('cyberarma').focalizzatori.dichiarati;
+    assert.equal(dich.length, 1, 'una sola dichiarazione: un solo esemplare');
+    assert.equal(dich[0].colore, 'Verde');
+    assert.equal(dich[0].uid, 'emwqzcjim4d0k');
+    assert.equal(dich[0].risposta, 'A.308');
+    assert.match(testoManuale('armamenti'), /È installato soltanto il focalizzatore Verde/);
+  }],
   // lotto 237: lo Scout T4 di serie e il FIAT LUX dei PG sono due profili, come dicono il §16.1 e il §10 della 0.23.
   // Qui si controlla che i dati non contraddicano le risposte già approvate che li riguardano.
   ['A.280', 'l’arco frontale di 180° è del Capitol M606 del FIAT LUX: il Punisher del modello di serie non lo prende per analogia', () => {

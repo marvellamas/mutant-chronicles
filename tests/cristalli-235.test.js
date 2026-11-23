@@ -82,20 +82,23 @@ test('i tre bonus del Verde si contano una volta sola: VA, Parata e danno', () =
   // su una scheda vera: la CyberArma Verde dà +1 e +1 e +1, e non +2
   const base = JSON.parse(readFileSync(new URL('../esempi/' + esempioNonCustode(), import.meta.url), 'utf8'));
   const { scheda, armaVerde, armaBase } = schedeCol(base);
-  const dva = armaVerde.va - armaBase.va;
-  const dparata = armaVerde.parata.va - armaBase.parata.va;
-  assert.equal(dva, 1, `VA: ${armaBase.va} → ${armaVerde.va}`);
-  assert.equal(dparata, 1, `Parata: ${armaBase.parata.va} → ${armaVerde.parata.va}`);
+  // lotto 240 (A.308): i bonus valgono «con l'arma manifestata» (§7.25.5) e stanno nel valore EFFETTIVO, non in quello a riposo.
+  // Qui l'arma è accesa (schedeCol): VA, Parata e danno cambiano di 1, 1 e 1.
+  const dva = armaVerde.vaEffettivo - armaBase.vaEffettivo;
+  const dparata = armaVerde.parata.vaEffettivo - armaBase.parata.vaEffettivo;
+  assert.equal(dva, 1, `VA: ${armaBase.vaEffettivo} → ${armaVerde.vaEffettivo}`);
+  assert.equal(dparata, 1, `Parata: ${armaBase.parata.vaEffettivo} → ${armaVerde.parata.vaEffettivo}`);
   assert.equal(fisso(armaVerde.danno.una_mano) - fisso(armaBase.danno.una_mano), 1, `danno: ${armaBase.danno.una_mano} → ${armaVerde.danno.una_mano}`);
-  // e una volta sola anche nelle righe: una riga del focalizzatore nel danno, una nella Parata
+  // e una volta sola anche nelle righe: una riga del focalizzatore nel danno, una nella Parata, una nel VA
   assert.equal((armaVerde.righeDanno ?? []).filter((r) => /Focalizzatore/.test(r.fonte)).length, 1);
-  assert.equal((armaVerde.parata.componenti ?? []).filter((c) => /Focalizzatore/.test(c.nome)).length, 1);
-  // la Parata tiene il focalizzatore in due posti con due scopi: `componenti`, che e la somma, e `proprieta`, che e
-  // la provenienza mostrata nelle Difese. Il controllo che conta e che la somma torni: se il bonus finisse due volte
-  // dentro `componenti`, qui il totale non corrisponderebbe piu alla somma delle sue righe.
-  assert.equal(armaVerde.parata.va, (armaVerde.parata.componenti ?? []).reduce((t, c) => t + (c.valore ?? 0), 0));
-  assert.equal(armaVerde.va, (armaVerde.componenti ?? []).reduce((t, c) => t + (c.valore ?? 0), 0));
-  assert.equal((armaVerde.componenti ?? []).filter((c) => /Focalizzatore/.test(c.nome)).length, 1);
+  assert.equal((armaVerde.parata.scomposizione ?? []).filter((c) => /Focalizzatore/.test(c.etichetta)).length, 1);
+  assert.equal((armaVerde.scomposizione ?? []).filter((c) => /Focalizzatore/.test(c.etichetta)).length, 1);
+  // la somma delle righe è il totale: se il bonus finisse due volte fra le righe, qui il conto non tornerebbe
+  assert.equal(armaVerde.parata.vaEffettivo, (armaVerde.parata.scomposizione ?? []).reduce((t, c) => t + (c.valore ?? 0), 0));
+  assert.equal(armaVerde.vaEffettivo, (armaVerde.scomposizione ?? []).reduce((t, c) => t + (c.valore ?? 0), 0));
+  // il valore a riposo (senza la sessione) non contiene il bonus: sta solo nell'effettivo
+  assert.equal(armaVerde.va, armaBase.va, 'a riposo il VA è quello dell’arma senza cristallo');
+  assert.equal(armaVerde.parata.va, armaBase.parata.va, 'a riposo la Parata è quella dell’arma senza cristallo');
   assert.ok(scheda);
 });
 
@@ -186,29 +189,27 @@ test('il cristallo Viola non ha una Corruzione predefinita: il valore è del fra
   assert.notEqual(cat.reperibilita, 'Eccezionale');
 });
 
-test('la CyberArma di Dimitri non si muove: il lotto non cambia nessuno dei suoi numeri', () => {
+test('la CyberArma di Dimitri, a arma spenta, ha i numeri di prima: il Verde (A.308, lotto 240) conta solo manifestata', () => {
   // l'istantanea è in sola lettura e può non esserci su un altro PC: senza, il controllo salta e lo dice
   const file = 'F:/REPOS/mutant/istantanee/stato_2026-11-21_2353/personaggi/Dimitri-Orlav_liv7_2026-11-21.json';
   let testo = null;
   try { testo = readFileSync(file, 'utf8'); } catch { /* niente istantanea su questo PC */ }
-  if (testo === null) return; // vedi la riga «da provare» del lotto: senza l'istantanea non si misura
+  if (testo === null) return;
   const p = deserializzaPersonaggio(testo);
   const creazione = normalizza(p.creazione, dati).scelte;
   const s = calcolaScheda({ creazione, livelli: p.livelli, sessione: p.sessione }, dati);
   const a = (s.equipaggiamento?.armi ?? []).find((x) => (x.rif ?? '').startsWith('armi:cyberarma'));
   assert.ok(a, 'Dimitri ha una CyberArma nell’istantanea del 21/11');
-  // i numeri misurati prima del lotto, sull'istantanea del 21/11/2026: VA 9, danno 1d8+1, Parata 8.
-  // Non è un valore del manuale che possa cambiare: è lo stato di un file in sola lettura a una data.
-  assert.equal(a.va, 9);
+  // il lotto 235 dichiarava che il Verde non c'era; il 240 (A.308: «sì, è installato») lo dichiara nei dati. Ma i bonus valgono
+  // con l'arma manifestata: nell'istantanea è spenta, e i numeri misurati il 21/11 (VA 9, danno 1d8+1, Parata 8) restano questi.
+  assert.equal(a.vaEffettivo, 9);
   assert.equal(a.danno.una_mano, '1d8+1');
-  assert.equal(a.parata.va, 8);
-  // e il perché: la sua voce è «armi:cyberarma» e non dichiara un focalizzatore, quindi nessun bonus di colore.
-  // Il §7.25.4 dice che il Verde è installato: dichiararlo porterebbe a VA 10, danno 1d8+2, Parata 9, cioè
-  // sposterebbe tre valori di un personaggio vero. Non lo fa questo lotto: lo decide il tavolo (A.307).
+  assert.equal(a.parata.vaEffettivo, 8);
   assert.equal(a.rif, 'armi:cyberarma');
-  assert.equal(a.focalizzatore, null);
+  assert.equal(a.focalizzatore?.colore, 'Verde');
+  assert.equal(a.focalizzatore?.dichiarato, true);
   const voceSua = (p.creazione.equipaggiamento ?? []).find((v) => (v.rif ?? '').startsWith('armi:cyberarma'));
-  assert.equal(bonusFocalizzatore(voceSua, ['Tecnomante'], dati), null);
+  assert.equal(voceSua.esemplare, undefined, 'il file di Dimitri non si scrive: il colore arriva dai dati');
 });
 
 // ─── aiuti ────────────────────────────────────────────────────────────────────────────────────────────────────
@@ -229,13 +230,14 @@ function esempioNonCustode() {
 }
 
 /** La stessa scheda con una CyberArma senza cristallo e con la CyberArma Verde: la differenza è il cristallo. */
-function schedeCol(base) {
+function schedeCol(base, accesa = true) {
   const conArma = (rif) => {
     const copia = JSON.parse(JSON.stringify(base));
     const scelte = copia.scelte ?? copia;
     scelte.equipaggiamento = [...(scelte.equipaggiamento ?? []), { uid: 'prova-cyber', rif, stato: 'impugnata', quantita: 1, sintonizzato: true }];
     const creazione = normalizza(scelte, dati).scelte;
-    const s = calcolaScheda({ creazione, livelli: copia.livelli ?? [], sessione: copia.sessione ?? {} }, dati);
+    const sessione = { ...(copia.sessione ?? {}), round: 1, ...(accesa ? { attivazioniArmi: { 'prova-cyber': { dal: 1, round: 10 } } } : {}) };
+    const s = calcolaScheda({ creazione, livelli: copia.livelli ?? [], sessione }, dati);
     const a = (s.equipaggiamento?.armi ?? []).find((x) => x.uid === 'prova-cyber');
     assert.ok(a, `l’arma ${rif} non è nella scheda`);
     return { s, a };

@@ -1907,6 +1907,16 @@
     "fonte": "Armamenti 0.90 §7.25 (Cristallo focalizzatore; «Profili delle CyberArmi originali dei Custodi») e §7.25.5 (Riferimento rapido); Giocatore 0.65 §5.24 (Plasma ed Elettricità); Equipaggiamento 0.41 §10.9 (esemplare di Dimitri)",
     "_nota": "Lotto 210: un bonus per colore, calcolato dove si calcola il VA (src/cyberarma.js → bonusFocalizzatore, src/equipaggiamento.js). Vale per il Tecnomante e per le conversioni a CM e NeC; il Custode usa la sua tabella per Grado, che il cristallo ce l'ha già dentro (sommarlo lo conterebbe due volte). Un colore senza numero qui sotto non ha numero nel manuale: non si inventa.",
     "si_applica_a": "non_custode",
+    "dichiarati": [
+     {
+      "uid": "emwqzcjim4d0k",
+      "colore": "Verde",
+      "di": "la CyberArma di Dimitri Orlav (voce `armi:cyberarma`, impugnata e sintonizzata nell’istantanea del 21/11/2026, 23:53)",
+      "perche": "Armamenti 0.90 §7.25.4, «Stato delle modifiche»: «È installato soltanto il focalizzatore Verde» (Dimitri ha sostituito il frammento Viola dell’esemplare di Park con la propria scheggia Verde stabilizzata). Confermato da Davide il 23/11/2026 (A.308), riferito da Marcello.",
+      "risposta": "A.308"
+     }
+    ],
+    "_lotto_240": "Lotto 240: gli esemplari di cui il manuale dice quale cristallo hanno installato e il cui file non lo dichiara. Un esemplare dichiarato non è un secondo oggetto e non cambia Integrità, nome o storico: è un colore calcolato, non scritto nel file del personaggio. I tre bonus (VA di Attacco, Parata, danno) valgono **solo con l’arma manifestata** (§7.25.5: «+1 VA di Attacco e Parata con l’arma manifestata; +1 al danno già incluso») e si contano una volta sola: il +1 al danno del Verde e il bonus di Destrezza del §5.13 sono due contributi distinti. Se l’esemplare dichiara un colore suo (Modifica master), vince quello.",
     "elenco": [
      {
       "id": "bianco",

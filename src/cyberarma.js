@@ -347,10 +347,23 @@ function voceArmi(rif, dati) {
 /**
  * Il colore del cristallo di una voce dell'inventario: quello dichiarato dall'esemplare, altrimenti quello del
  * profilo di catalogo (le cinque voci per colore del lotto 235). L'esemplare vince sempre, perché è il record e il
- * profilo è il modello: la CyberArma di Dimitri è «armi:cyberarma» e il suo colore sta nel suo esemplare.
+ * profilo è il modello (in mezzo, dal lotto 240, la dichiarazione dei dati per uid): la CyberArma di Dimitri è «armi:cyberarma» e il suo colore sta nel suo esemplare.
  */
+/**
+ * Lotto 240 (A.308): il colore che i **dati** dichiarano per un esemplare di cui il manuale dice che cosa ha installato e il cui
+ * file non lo scrive (`focalizzatori.dichiarati`, per `uid` della voce). Non si scrive nel file del personaggio: il colore resta
+ * un valore calcolato e arriva a chi aggiorna l'app. Solo per una CyberArma, e solo per quel `uid`.
+ * @returns {null | { colore, perche, risposta }}
+ */
+export function dichiarazioneDeiDati(voce, dati) {
+  if (typeof voce?.rif !== 'string' || !voce.rif.startsWith('armi:cyberarma') || typeof voce?.uid !== 'string' || !voce.uid) return null;
+  const d = lista(focalizzatoriCyberArma(dati)?.dichiarati).find((x) => x?.uid === voce.uid);
+  return d ? { colore: d.colore, perche: d.perche ?? null, risposta: d.risposta ?? null } : null;
+}
+
 export function coloreCristallo(voce, dati) {
-  return voce?.esemplare?.focalizzatore ?? voceArmi(voce?.rif, dati)?.focalizzatore_fisso ?? null;
+  // l'esemplare vince (è il record: «Cambia cristallo» lo scrive lì), poi la dichiarazione dei dati (A.308), poi il profilo
+  return voce?.esemplare?.focalizzatore ?? dichiarazioneDeiDati(voce, dati)?.colore ?? voceArmi(voce?.rif, dati)?.focalizzatore_fisso ?? null;
 }
 
 /**

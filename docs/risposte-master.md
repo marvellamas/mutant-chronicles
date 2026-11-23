@@ -3439,3 +3439,8 @@ Nessuna risposta nuova di Davide (l'E&L è invariato dal 18/11). La serata del 2
 - **Dove l’app dice cose diverse** (nessun dato è stato toccato): Ammalato con sei intensità −1/−2/−4/−6/−8/−10 (A.119) contro le cinque gravità −1/−2/−3/−4/−5 del §5.18; Avvelenato con la PS che dimezza il danno periodico contro il danno per fase 2/1, 4/2, 6/3, 8/4, 10/5. **Domanda nuova: A.312.**
 - **Nessuna risposta alle domande aperte** (A.299–A.310): cercate una per una nel blocco e nell’E&L.
 - **A.311 ritirata** (errore nostro, lotto 237): il manuale dà l’arco del Punisher dello Scout T4, «rotazione orizzontale di 360° nei limiti degli ostacoli reali» (Veicoli 0.23 §10); nei dati l’arco manca ancora e lo scriviamo noi.
+
+## 23/11/2026 — A.308: il focalizzatore Verde è installato sulla CyberArma di Dimitri (lotto 240, `docs/diff-lotto240-2026-11-23.md`)
+- **Sì, il focalizzatore Verde è installato** (Armamenti §7.25.4: «È installato soltanto il focalizzatore Verde»). **Riferita da Marcello**: la risposta non è ancora nell’E&L né nel Doc «Per Davide» (controllati il 23/11).
+- **Applicata**: dichiarazione nei dati per l’uid della voce di Dimitri (`armi.json` → `focalizzatori.dichiarati`), senza scrivere nel suo file. VA 9 → 10, danno 1d8+1 → 1d8+2, Parata 8 → 9, **solo con la CyberArma manifestata** (§7.25.5). Un solo esemplare: niente seconda arma, nome, Integrità e storico invariati.
+- **Cambio di regola dell’app**: i bonus del cristallo (tutti i colori) stanno nel valore **effettivo** e contano solo da manifestata; prima entravano anche nel valore a riposo.

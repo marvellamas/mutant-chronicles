@@ -23,7 +23,7 @@ import { calcolaAR, oggettiConPi, oggettiSenzaPi, oggettiIndistruttibili, oggett
 import { conManifestazione, manifestazioniDi, sceltaLibera } from './manifestazione.js';
 import { tipoRiserva, alimentazione as alimentazioneRiserva, fontePerPg } from './fonti.js';
 import { rigaProvenienzaVoce } from './provenienza-catalogo.js';
-import { bonusFocalizzatore, dannoCondizionaleCristallo, condizioneSulBersaglio } from './cyberarma.js';
+import { bonusFocalizzatore, dannoCondizionaleCristallo, condizioneSulBersaglio, dichiarazioneDeiDati } from './cyberarma.js';
 import { infoPietra, COLORI_PIETRA } from './pietre-di-luna.js';
 
 export const TIPI = ['arma_ravvicinata', 'arma_distanza', 'scudo', 'armatura', 'rinforzo', 'elmetto', 'accessorio', 'munizioni', 'sanitario', 'artefatto', 'impianto', 'altro'];
@@ -1307,7 +1307,10 @@ export function calcolaEquipaggiamento(base, voci, dati) {
     const armatura = o.tipo === 'arma_ravvicinata' ? attacchiRavv : attacchiDist;
     const acc = accessoriArma(o);
     // lotto 210 (A.271): il focalizzatore della CyberArma (+1 VA d'attacco, +1 Parata e +1 danno per il Verde, +3 danno per il
-    // Bianco…): un bonus per colore, dai dati, calcolato qui e non scritto nella voce. Il Custode usa la tabella per Grado.
+    // Bianco…): un bonus per colore, dai dati, calcolato e non scritto nella voce. Il Custode usa la tabella per Grado.
+    // **Lotto 240 (A.308): qui il bonus NON si somma.** Vale «con l'arma manifestata» (§7.25.5) e lo stato di manifestazione sta
+    // nella sessione, che questo calcolo non vede: l'oggetto `focalizzatore` porta i tre numeri e `src/condizioni.js` li aggiunge,
+    // una volta, solo se l'arma è attivata. A riposo VA, Parata e danno sono quelli dell'arma spenta.
     const foc = bonusFocalizzatore(o.voce, base.classi ?? [], dati);
     if (foc?.sconosciuto) avvisi.push(`${o.nome}: il focalizzatore «${foc.sconosciuto}» non è fra quelli del manuale (Bianco, Rosso, Blu, Verde, Viola): nessun bonus.`);
     const nomeFoc = foc && !foc.sconosciuto ? `Focalizzatore ${foc.colore} (CyberArma, §7.25)` : null;
@@ -1317,7 +1320,6 @@ export function calcolaEquipaggiamento(base, voci, dati) {
       // §7.1.3: Precisa X concede +X VA alle Prove per colpire con l'arma
       ...(d?.proprieta ?? []).filter((p) => p.effetto?.va).map((p) => ({ nome: `${nomeProprieta(p)} (${o.nome})`, valore: p.effetto.va })),
       d?.modificatore_va ? { nome: 'Modificatore VA dell’arma', valore: d.modificatore_va } : null,
-      foc?.va ? { nome: nomeFoc, valore: foc.va } : null,
       // §7.15.1: un solo SIN per Prova. La spada donatrice del modulo (CyberArma, Armamenti 0.74 §7.25.4) perde il suo
       // SIN (`sin_rimosso` sulla voce, lo scrive la consegna del Direttore); il modulatore neurale della CyberArma dà SIN 1
       // al solo Tecnomante con l'interfaccia collegata (§7.25.2, `modulatore_neurale` sulla voce dell'esemplare)
@@ -1344,7 +1346,7 @@ export function calcolaEquipaggiamento(base, voci, dati) {
     const bonusCaratteristica = bonusCar0 && esplosiva ? { ...bonusCar0, bonus: 0, esclusoDa: 'Munizione esplosiva (danno della tabella, A.86)' } : bonusCar0;
     const dannoCar = bonusCaratteristica?.bonus ?? 0;
     const proprietaParata = (d?.proprieta ?? []).filter((p) => p.effetto?.parata_va);
-    const parataVa = proprietaParata.reduce((s, p) => s + p.effetto.parata_va, 0) + (foc?.parata ?? 0);
+    const parataVa = proprietaParata.reduce((s, p) => s + p.effetto.parata_va, 0);
     const difese = difeseVa;
     // Parata con l'arma: Difese + proprietà difensive − penalità FOR dell'arma (§7.1.3, §7.1.6);
     // a distanza si aggiunge la penalità del Giocatore §5.9 (−8 VA con un'arma)
@@ -1352,12 +1354,11 @@ export function calcolaEquipaggiamento(base, voci, dati) {
       va: difese + parataVa - forPen,
       distanza: parataDistanzaArma === null ? null : difese + parataVa - forPen + parataDistanzaArma,
       // proprietà difensive dell'arma: la provenienza delle Difese le mostra (valgono solo nella Parata)
-      proprieta: [...proprietaParata.map((p) => ({ nome: `${nomeProprieta(p)} (${o.nome})`, valore: p.effetto.parata_va })), ...(foc?.parata ? [{ nome: nomeFoc, valore: foc.parata }] : [])],
+      proprieta: proprietaParata.map((p) => ({ nome: `${nomeProprieta(p)} (${o.nome})`, valore: p.effetto.parata_va })),
       componenti: [
         { nome: `VA ${difeseAbilita}`, valore: abilitaPer(difeseAbilita).totale, fonte: 'regole' },
         ...(componentiEquip[difeseAbilita] ?? []).map((c) => ({ nome: c.etichetta, valore: c.valore })),
         ...proprietaParata.map((p) => ({ nome: `${nomeProprieta(p)} (${o.nome})`, valore: p.effetto.parata_va })),
-        foc?.parata ? { nome: nomeFoc, valore: foc.parata } : null,
         forPen ? { nome: `FOR insufficiente (${o.nome})`, valore: -forPen } : null,
       ].filter(Boolean),
     } : null;
@@ -1369,7 +1370,6 @@ export function calcolaEquipaggiamento(base, voci, dati) {
       ...(bonusCaratteristica ? [rigaBonusCaratteristica(bonusCaratteristica)] : []),
       ...(spec ? [riga(`Specializzazione in ${spec.nome}`, bonusDanno, d.specializzazione_danno === false ? 'esclusa dalla scheda dell’arma (A.12)' : '§8.8.1')] : []),
       ...acc.filter((x) => x.def?.effetto_arma?.danno !== undefined).map((x) => riga(x.nome, x.def.effetto_arma.danno, 'accessorio (§7.3)')),
-      ...(foc?.danno ? [riga(`Focalizzatore ${foc.colore}`, foc.danno, `${foc.paragrafo ?? '§7.25'}, CyberArma`)] : []),
       ...dannoEquip.filter((b) => valePer(b, o.tipo)).map((b) => riga(b.nome, b.valore, 'effetto dell’oggetto')),
     ] : null;
     armi.push({
@@ -1378,12 +1378,13 @@ export function calcolaEquipaggiamento(base, voci, dati) {
       // manuale, e **null** quando è tutta corrente — il segno si spegne da sé (come il ⚑ del Bestiario, 204)
       rigaEdizione: rigaProvenienzaVoce(d, edizioneDelFile(d?.rif, dati)),
       righeDanno,
-      danno: dannoBase ? { una_mano: aggiungiDanno(dannoBase.una_mano, bonusDanno + dannoAccessori + dannoCar + (foc?.danno ?? 0)), due_mani: aggiungiDanno(dannoBase.due_mani, bonusDanno + dannoAccessori + dannoCar + (foc?.danno ?? 0)) } : null,
+      danno: dannoBase ? { una_mano: aggiungiDanno(dannoBase.una_mano, bonusDanno + dannoAccessori + dannoCar), due_mani: aggiungiDanno(dannoBase.due_mani, bonusDanno + dannoAccessori + dannoCar) } : null,
       dannoAccessori, bonusCaratteristica,
       // lotto 210: il focalizzatore, perché la scheda e «Attacca!» possano dirlo e i test provarlo
       // lotto 235 (A.246): la Corruzione e del singolo frammento Viola, quindi del record e non del profilo
       corruzioneFrammento: o.voce.esemplare?.corruzione ?? null,
-      focalizzatore: foc && !foc.sconosciuto ? { colore: foc.colore, va: foc.va, parata: foc.parata, danno: foc.danno, custode: foc.custode, senzaNumero: foc.senzaNumero, condizionale: foc.condizionale, proprietaDanno: foc.proprietaDanno,
+      focalizzatore: foc && !foc.sconosciuto ? { colore: foc.colore, va: foc.va, parata: foc.parata, danno: foc.danno, custode: foc.custode, nomeRiga: nomeFoc, paragrafo: foc.paragrafo ?? null,
+        dichiarato: !o.voce.esemplare?.focalizzatore && !!dichiarazioneDeiDati(o.voce, dati), senzaNumero: foc.senzaNumero, condizionale: foc.condizionale, proprietaDanno: foc.proprietaDanno,
         // lotto 235: il ×2 del Bianco contro l'Oscura Simmetria, scritto nella forma della A.199 sul danno **completo**
         // — «(1d8+4)×2», cioè (danno+3)×2 e mai danno×2+3 — e la condizione del Plasma o dell'Elettricità, che l'app
         // scrive e non applica (§5.24: la PS Tempra, il −2 VA, il blocco delle Azioni e i Round sono del Direttore).

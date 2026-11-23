@@ -443,6 +443,18 @@ La v1 (creazione al 1° livello) è chiusa. Oggi il progetto comprende:
   scrivere «abbiamo inventato» o «il manuale non lo dà» si cerca nel testo del manuale** (due volte su due, in questo lotto, il manuale lo dava). Nostra
   parte del Doc: 11.042 parole contro 10.821 (+2 %), sezione 7 intatta (impronta `69adf62bf2f4`). Regole non contate: **105** (i focalizzatori scendono
   a 3, i veleni e le malattie salgono di 1). Primo numero libero: **A.313**.
+- **Il Verde di Dimitri, e i bonus del cristallo solo da manifestata** (23/11/2026, lotto 240, `docs/diff-lotto240-2026-11-23.md`; generatore `tools/lotti/lotto_240_verde_dimitri.mjs`):
+  Davide ha risposto sì alla A.308 (riferita da Marcello, non ancora nell’E&L né nel Doc): il focalizzatore Verde è installato sulla CyberArma di Dimitri. Si dichiara **nei dati**,
+  per l’`uid` della voce (`armi.json` → `focalizzatori.dichiarati`, letta da `dichiarazioneDeiDati`/`coloreCristallo` di `src/cyberarma.js`: l’esemplare vince, poi la dichiarazione, poi il profilo),
+  e **il file di Dimitri non si scrive**: il valore è calcolato (principio 3) e arriva quando aggiorna l’app. **Le istantanee e i personaggi veri restano intatti.** VA 9 → 10, danno 1d8+1 → 1d8+2,
+  Parata 8 → 9; il +1 del Verde e quello di DES §5.13 sono due righe distinte (mai 1d8+3). **Cambio di regola per tutti i colori:** i bonus del cristallo valevano anche a arma spenta,
+  ma il §7.25.5 dice «con l’arma manifestata», quindi `profiloArma` non li somma più (il valore a riposo è quello dell’arma senza cristallo; l’oggetto `focalizzatore` porta i tre numeri) e
+  `src/condizioni.js` li aggiunge **una volta ciascuno** nel valore effettivo solo se `statoAttivazioneArma(sessione, uid).attiva` (sessione.attivazioniArmi, come il Verde della Spada dei Tre Riflessi);
+  scaduta la durata, niente bonus. Il Custode usa la sua tabella per Grado e non riceve il bonus. Prova sul browser a 820 px, su una copia dell’istantanea del 21/11: i sette ricalcolati prima e dopo
+  sono identici tranne Dimitri, e di Dimitri si muovono solo i tre valori (più le righe che li spiegano; la Parata a distanza dell’arma sale di 1 con la stessa Parata). Test `tests/verde-dimitri-240.test.js`
+  (8 controlli, due mutanti provati in rosso: senza il filtro «manifestata» e con il VA contato due volte), riga A.308 in `tests/ingest-e-risposte-229.test.js`, e adeguati con il motivo
+  `tests/focalizzatori-210.test.js` e `tests/cristalli-235.test.js` (leggono ora i valori effettivi con l’arma accesa). **Per Davide:** quando aggiorna l’app, i tre valori di Dimitri salgono di 1
+  con la CyberArma manifestata: avvisare il giocatore se è a metà sessione. Regole non contate: **105**, invariato. Primo numero libero: **A.313**.
 Fuori perimetro per ora: tiri automatici fuori dalla plancia; manovre, inseguimenti e collisioni dei veicoli al tavolo.
 
 ## Riferimenti

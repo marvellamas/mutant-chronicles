@@ -12,6 +12,7 @@ import { calcolaAR, oggettiRotti } from './protezione.js';
 import { chiaviTecnicheAttive, effettiTecniche } from './tecniche.js';
 import { arIncantesimiInCorso } from './durate-incantesimi.js';
 import { potereAttivo } from './poteri-arma.js';
+import { statoAttivazioneArma } from './attivazione-arma.js';
 import { riga, provenienza, righeDaScomposizione, righeRegoleAbilita, righeRegoleSalvezza } from './provenienza.js';
 
 const isOggetto = (v) => v !== null && typeof v === 'object' && !Array.isArray(v);
@@ -491,6 +492,18 @@ export function applicaCondizioni(scheda, sessione, dati) {
           w.nome = w.nome.replace(w.statoAlternativo.nomeOpposto, w.statoAlternativo.nome);
         }
       }
+      // lotto 240 (A.308): il focalizzatore della CyberArma vale «con l'arma manifestata» (Armamenti §7.25.5): +1 VA di Attacco,
+      // +1 Parata e il danno del colore, **una volta ciascuno**, solo se l'arma è accesa (sessione.attivazioniArmi). Il bonus di
+      // Caratteristica del danno (§5.13) è un'altra riga e resta com'era: Verde + Destrezza 7 = 1d8+2, mai +3. Il Custode usa la
+      // tabella per Grado, che lo comprende già (`custode`). Spenta, l'arma ha i numeri a riposo.
+      const foc = w.focalizzatore && !w.focalizzatore.custode && statoAttivazioneArma(sessione, w.uid)?.attiva === true ? w.focalizzatore : null;
+      const focVa = Number.isInteger(foc?.va) ? foc.va : 0;
+      const focPar = Number.isInteger(foc?.parata) ? foc.parata : 0;
+      const focDan = Number.isInteger(foc?.danno) ? foc.danno : 0;
+      if (focDan && w.danno) {
+        w.danno = { una_mano: aggiungiDanno(w.danno.una_mano, focDan), due_mani: aggiungiDanno(w.danno.due_mani, focDan) };
+        if (w.righeDanno) w.righeDanno = [...w.righeDanno, riga(`Focalizzatore ${foc.colore}`, focDan, `${foc.paragrafo ?? '§7.25'}, CyberArma manifestata`)];
+      }
       // Talenti: danno (Meccanica Potenziata, solo armi Artefatto) e VA per colpire, al tavolo
       const def = (eq.oggetti ?? []).find((o) => o.uid === String(w.uid).split(':')[0])?.def ?? null;
       const valeT = (e) => (e.attacchi === 'tutti' || (e.attacchi === 'ravvicinati') === (w.tipo === 'arma_ravvicinata'))
@@ -502,7 +515,7 @@ export function applicaCondizioni(scheda, sessione, dati) {
         if (w.righeDanno) w.righeDanno = [...w.righeDanno, ...dannoT.map((e) => (vale(e) ? riga(e.talento, e.valore, e.tecnica ? 'Tecnica Interiore (§8.9)' : 'Talento') : spento(e)))];
       }
       const attaccoT = effV.filter((e) => e.tipo === 'attacco' && e.ambito === 'generale' && valeT(e));
-      const cond = [...condDi(w.abilita), ...attaccoT.filter(vale).map((e) => voce(e.talento, e.valore, fonteEffetto(e))), ...(w.condizioneArma?.va ? [voce(w.condizioneArma.nome, w.condizioneArma.va, 'condizione')] : [])];
+      const cond = [...condDi(w.abilita), ...(focVa ? [voce(foc.nomeRiga ?? `Focalizzatore ${foc.colore}`, focVa, 'equipaggiamento')] : []), ...attaccoT.filter(vale).map((e) => voce(e.talento, e.valore, fonteEffetto(e))), ...(w.condizioneArma?.va ? [voce(w.condizioneArma.nome, w.condizioneArma.va, 'condizione')] : [])];
       w.scomposizione = [...(w.componenti ?? []).map((c) => voce(c.nome, c.valore, c.fonte ?? 'equipaggiamento')), ...cond];
       w.vaEffettivo = w.va === null ? null : w.va + somma(cond);
       w.vaDaRegole = w.va === null ? null : daRegole(w.scomposizione);
@@ -520,10 +533,12 @@ export function applicaCondizioni(scheda, sessione, dati) {
         const parPot = Number.isInteger(pot?.parata_va) ? pot.parata_va : 0;
         const vocePot = parPot ? [voce(`Potere attivo: ${pot.nome} (${pot.colore})`, parPot, 'equipaggiamento')] : [];
         if (parPot) w.parata.proprieta = [...(w.parata.proprieta ?? []), { nome: `Potere attivo: ${pot.nome} (${pot.colore})`, valore: parPot }];
-        w.parata.scomposizione = [...w.parata.componenti.map((c) => voce(c.nome, c.valore, c.fonte ?? 'equipaggiamento')), ...vocePot, ...condDifese];
-        w.parata.vaEffettivo = w.parata.va + parPot + somma(condDifese);
+        const vocePar = focPar ? [voce(foc.nomeRiga ?? `Focalizzatore ${foc.colore}`, focPar, 'equipaggiamento')] : [];
+        if (focPar) w.parata.proprieta = [...(w.parata.proprieta ?? []), { nome: foc.nomeRiga ?? `Focalizzatore ${foc.colore}`, valore: focPar }];
+        w.parata.scomposizione = [...w.parata.componenti.map((c) => voce(c.nome, c.valore, c.fonte ?? 'equipaggiamento')), ...vocePot, ...vocePar, ...condDifese];
+        w.parata.vaEffettivo = w.parata.va + parPot + focPar + somma(condDifese);
         w.parata.vaDaRegole = daRegole(w.parata.scomposizione);
-        w.parata.distanzaEffettiva = w.parata.distanza === null || w.parata.distanza === undefined ? null : w.parata.distanza + parPot + somma(condDifese);
+        w.parata.distanzaEffettiva = w.parata.distanza === null || w.parata.distanza === undefined ? null : w.parata.distanza + parPot + focPar + somma(condDifese);
         w.parata.provenienza = provenienza(righeDaScomposizione(w.parata.scomposizione, { regole: conDettaglio }), w.parata.vaEffettivo);
       }
     }

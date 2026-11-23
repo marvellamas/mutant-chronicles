@@ -26,14 +26,17 @@ const FILE = new URL('./fixtures/talenti-vecchi/Dimitri-Orlav_liv6_2026-10-04.js
 const COLORI = ['Bianco', 'Rosso', 'Blu', 'Verde', 'Viola'];
 
 /** Dimitri (fixture del 04/10, Tecnomante) con una CyberArma col focalizzatore indicato; `classe` la cambia (Custode). */
-function dimitri({ rif = 'armi:cyberarma', focalizzatore = null, classi = null } = {}) {
+// lotto 240 (A.308): i bonus del cristallo valgono «con l'arma manifestata» (§7.25.5): `accesa` mette l'arma fra le attivazioni della
+// sessione, e VA, Parata e danno si leggono dai valori EFFETTIVI (`vaEffettivo`, `parata.vaEffettivo`); a arma spenta sono quelli a riposo.
+const sessioneCy = (accesa) => ({ round: 1, ...(accesa ? { attivazioniArmi: { cy1: { dal: 1, round: 10 } } } : {}) });
+function dimitri({ rif = 'armi:cyberarma', focalizzatore = null, classi = null, accesa = true } = {}) {
   const p = deserializzaPersonaggio(readFileSync(FILE, 'utf8'));
   const c = normalizza(p.creazione, dati).scelte;
   const voce = { uid: 'cy1', rif, stato: 'impugnata', quantita: 1, note: '', sintonizzato: true, ...(focalizzatore ? { esemplare: { nome: 'CyberArma Dimitri', focalizzatore } } : {}) };
   const creazione = { ...c, equipaggiamento: [...c.equipaggiamento, voce] };
-  const scheda = calcolaScheda({ creazione, livelli: p.livelli }, dati);
+  const scheda = calcolaScheda({ creazione, livelli: p.livelli, sessione: sessioneCy(accesa) }, dati);
   if (classi) scheda.classi = classi.map((nome) => ({ nome, grado: 1 }));
-  return { creazione, livelli: p.livelli, scheda, arma: scheda.equipaggiamento.armi.find((a) => a.uid === 'cy1') };
+  return { creazione, livelli: p.livelli, sessione: sessioneCy(accesa), scheda, arma: scheda.equipaggiamento.armi.find((a) => a.uid === 'cy1') };
 }
 
 // ───────────── 1. i dati sono quelli del manuale ─────────────
@@ -85,20 +88,20 @@ test('focalizzatori: per ognuno dei cinque colori il VA, la Parata e il danno de
   for (const f of F.elenco) {
     const x = dimitri({ focalizzatore: f.nome });
     assert.ok(x.arma, `${f.nome}: l’arma c’è`);
-    assert.equal(x.arma.va, base.arma.va + f.va_attacco, `${f.nome}: VA d’attacco`);
-    assert.equal(x.arma.parata.va, base.arma.parata.va + f.va_parata, `${f.nome}: Parata`);
+    assert.equal(x.arma.vaEffettivo, base.arma.vaEffettivo + f.va_attacco, `${f.nome}: VA d’attacco`);
+    assert.equal(x.arma.parata.vaEffettivo, base.arma.parata.vaEffettivo + f.va_parata, `${f.nome}: Parata`);
     assert.equal(x.arma.danno.una_mano, aggiungiDanno(dannoBase, f.danno), `${f.nome}: danno`);
     assert.equal(x.arma.focalizzatore.colore, f.nome);
     // una riga del «Calcolo» dice da dove viene, solo se c’è un numero
-    const righe = x.arma.componenti.filter((c) => /^Focalizzatore /.test(c.nome));
+    const righe = x.arma.scomposizione.filter((c) => /^Focalizzatore /.test(c.etichetta));
     assert.equal(righe.length, f.va_attacco ? 1 : 0, `${f.nome}: la riga del VA c’è solo se c’è un bonus`);
-    if (f.va_attacco) assert.match(righe[0].nome, new RegExp(`Focalizzatore ${f.nome}`));
+    if (f.va_attacco) assert.match(righe[0].etichetta, new RegExp(`Focalizzatore ${f.nome}`));
     verificati += 1;
   }
   assert.equal(verificati, 5);
   // la prova che conta: Dimitri, Verde — VA 9 → 10, Parata +1, danno +1
   const v = dimitri({ focalizzatore: 'Verde' });
-  assert.deepEqual([base.arma.va, v.arma.va], [base.arma.va, base.arma.va + 1]);
+  assert.deepEqual([base.arma.vaEffettivo, v.arma.vaEffettivo], [base.arma.vaEffettivo, base.arma.vaEffettivo + 1]);
   assert.equal(base.arma.focalizzatore, null, 'senza focalizzatore dichiarato non c’è bonus (non si indovina il colore)');
 });
 
@@ -106,14 +109,14 @@ test('focalizzatori: valgono anche per le conversioni a CM e a NeC (§7.25: «un
   for (const rif of ['armi:cyberarma-batteria-verde', 'armi:cyberarma-nec']) {
     const senza = dimitri({ rif });
     const con = dimitri({ rif, focalizzatore: 'Verde' });
-    assert.equal(con.arma.va, senza.arma.va + 1, `${rif}: VA`);
-    assert.equal(con.arma.parata.va, senza.arma.parata.va + 1, `${rif}: Parata`);
+    assert.equal(con.arma.vaEffettivo, senza.arma.vaEffettivo + 1, `${rif}: VA`);
+    assert.equal(con.arma.parata.vaEffettivo, senza.arma.parata.vaEffettivo + 1, `${rif}: Parata`);
   }
 });
 
 test('focalizzatori: la provenienza della Parata e le righe del danno dicono da dove viene il bonus', () => {
   const v = dimitri({ focalizzatore: 'Verde' });
-  assert.ok(v.arma.parata.componenti.some((c) => /Focalizzatore Verde/.test(c.nome) && c.valore === 1), 'riga nella Parata');
+  assert.ok(v.arma.parata.scomposizione.some((c) => /Focalizzatore Verde/.test(c.etichetta) && c.valore === 1), 'riga nella Parata');
   assert.ok(v.arma.parata.proprieta.some((c) => /Focalizzatore Verde/.test(c.nome) && c.valore === 1), 'riga fra le proprietà della Parata con l’arma');
   assert.ok(v.arma.righeDanno.some((r) => JSON.stringify(r).includes('Focalizzatore Verde')), 'riga nel danno');
 });
@@ -124,12 +127,12 @@ test('focalizzatori: «Attacca!» usa il VA e il danno col bonus dentro, e il «
   const { creazione, livelli } = dimitri({ focalizzatore: 'Verde' });
   const senza = dimitri();
   // la scheda come la legge il tavolo: preparaTab(...).scheda, con le condizioni applicate
-  const tavolo = preparaTab({ creazione, livelli }, dati);
-  const tavoloSenza = preparaTab({ creazione: senza.creazione, livelli: senza.livelli }, dati);
+  const tavolo = preparaTab({ creazione, livelli }, dati, { sessione: sessioneCy(true) });
+  const tavoloSenza = preparaTab({ creazione: senza.creazione, livelli: senza.livelli }, dati, { sessione: sessioneCy(true) });
   const a1 = tavolo.scheda.equipaggiamento.armi.find((a) => a.uid === 'cy1');
   const a0 = tavoloSenza.scheda.equipaggiamento.armi.find((a) => a.uid === 'cy1');
-  const r1 = calcolaAttaccoRavvicinato({ scheda: tavolo.scheda, sessione: null }, a1, dichiarazioneRavvicinato({}), dati);
-  const r0 = calcolaAttaccoRavvicinato({ scheda: tavoloSenza.scheda, sessione: null }, a0, dichiarazioneRavvicinato({}), dati);
+  const r1 = calcolaAttaccoRavvicinato({ scheda: tavolo.scheda, sessione: sessioneCy(true) }, a1, dichiarazioneRavvicinato({}), dati);
+  const r0 = calcolaAttaccoRavvicinato({ scheda: tavoloSenza.scheda, sessione: sessioneCy(true) }, a0, dichiarazioneRavvicinato({}), dati);
   assert.equal(r1.va_finale, r0.va_finale + 1, '«Attacca!»: VA finale +1 dal focalizzatore');
   assert.ok(r1.provenienza.righe.some((x) => /Focalizzatore Verde/.test(JSON.stringify(x))), 'il «Calcolo» ha la riga «Focalizzatore Verde»');
   assert.equal(r1.danno.testo, aggiungiDanno(r0.danno.testo, 1), 'il danno per colpo ha il +1 del Verde dentro');
@@ -169,7 +172,7 @@ test('focalizzatori: la plancia del master mostra le armi di Dimitri col bonus d
   const { vistaPlancia } = await import('../src/tavolo.js');
   const vista = (focalizzatore) => {
     const x = dimitri({ focalizzatore });
-    return vistaPlancia(serializza(x.creazione, { livelli: x.livelli }), dati, 'Dimitri.json').armi.find((a) => a.uid === 'cy1');
+    return vistaPlancia(serializza(x.creazione, { livelli: x.livelli, sessione: x.sessione }), dati, 'Dimitri.json').armi.find((a) => a.uid === 'cy1');
   };
   const senza = vista(null);
   const verde = vista('Verde');
