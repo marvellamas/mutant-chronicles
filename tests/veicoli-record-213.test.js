@@ -118,7 +118,7 @@ test('un campo letto per intero e diverso si scrive, con la provenienza; uno ugu
 });
 
 // ——— 3. il segno e il conto ———
-test('IL SEGNO SI SPEGNE DA SÉ: oggi nessun profilo ne ha; con un campo indietro compare, col motivo', () => {
+test('IL SEGNO SI SPEGNE DA SÉ quando non c’è più niente da dichiarare; con un campo di un’altra edizione compare, col motivo e coi nomi', () => {
   const ed = edizioneCorrenteVeicoli(dati.veicoli);
   // Lotto 236: il manuale è passato alla 0.23 e i dati NON sono stati rigenerati, perché i mezzi dei capitoli 16, 17
   // e 18 sono un lotto a parte (nona regola del protocollo). Quindi il confronto non è più «uguale alla corrente» —
@@ -143,7 +143,21 @@ test('IL SEGNO SI SPEGNE DA SÉ: oggi nessun profilo ne ha; con un campo indietr
   for (const m of dati.veicoli.corpus.motivi_indietro ?? []) assert.equal(/\*\*/.test(m.motivo), false, `${m.profilo}.${m.campo}: asterischi nel motivo`);
   const vecchio = structuredClone(profilo); vecchio._edizione.campi.mov_q = '0.10';
   assert.match(rigaProvenienzaProfilo(vecchio, ed, 'Aspetta Davide.'), /movimento da 0\.10.*Aspetta Davide/);
-  assert.equal(rigaProvenienzaProfilo(structuredClone(profilo), ed), null);
+  // Lotto 238: il FIAT LUX HA tre campi di un'edizione diversa da quella del corpus — altezza, ingombro di
+  // trasporto e massa a vuoto, letti dalla 0.23 e dalla scheda ASA Scout MK4 0.6 — quindi il suo segno è ACCESO,
+  // ed è giusto che lo sia: scrivere «tutto viene dalla 0.21» sarebbe falso. Il senso del controllo non cambia —
+  // il segno si spegne da sé quando non c'è più niente da dichiarare — e si prova su un profilo i cui campi sono
+  // tutti all'edizione del corpus, invece di pretendere che oggi nessun profilo ne abbia.
+  const allineato = structuredClone(profilo);
+  for (const c of Object.keys(allineato._edizione.campi)) allineato._edizione.campi[c] = ed;
+  assert.equal(rigaProvenienzaProfilo(allineato, ed), null, 'con tutti i campi all’edizione del corpus il segno si spegne');
+  // …e sul profilo vero la riga NOMINA i campi e l'edizione da cui vengono: un segno che non dice che cosa
+  // dichiara non serve a niente al tavolo.
+  const riga = rigaProvenienzaProfilo(structuredClone(profilo), ed);
+  assert.ok(riga, 'il FIAT LUX ha campi di un’altra edizione: la riga c’è');
+  for (const atteso of ['altezza', 'ingombro_trasporto', 'massa_kg', '0.23']) {
+    assert.ok(riga.includes(atteso), `la riga del FIAT LUX non nomina ${atteso}: ${riga}`);
+  }
 });
 
 test('IL CONTO DEI MEZZI deve tornare: 10 = 6 profili + 4 fuori catalogo (lotto 237: lo Scout T4 di serie), e un campo indietro vuole il motivo', () => {

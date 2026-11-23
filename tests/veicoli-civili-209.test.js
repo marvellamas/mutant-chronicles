@@ -158,8 +158,21 @@ test('la Neverlost, lo Scout e l\'autovettura non sono cambiati dal lotto', () =
   // questo controllo — PI, MOV, AR, prezzi, munizioni e riparazioni sono quelli di prima — non cambia. Il profilo del
   // FIAT LUX non è stato toccato in nessun valore, e tests/scout-t4-237.test.js lo prova uno per uno.
   const ETICHETTE = ['_edizione', 'versione_manuale', 'paragrafo', 'valutazione_direttore', 'modello_di_serie'];
-  const pulito = (p) => ({ ...Object.fromEntries(Object.entries(p).filter(([k]) => !ETICHETTE.includes(k))), armi: (p.armi ?? []).map((a) => { const x = { ...a }; for (const k of CHIAVI) delete x[k]; return x; }) });
-  const imp = (id) => createHash('sha1').update(JSON.stringify(pulito(profiloVeicolo(id, dati)))).digest('hex').slice(0, 10);
+  // lotto 238: questo lotto non ha CAMBIATO nessun valore di questi profili: ne ha AGGIUNTI, letti dal manuale e dalla
+  // scheda (la stiva della Neverlost dal §11; altezza, ingombro di trasporto e massa a vuoto dello Scout dalla scheda
+  // ASA Scout MK4 0.6). Non li chiamiamo «etichette», perché sono numeri: si dichiarano per profilo come chiavi nuove,
+  // e il modo in cui sono dichiarate si protegge da sé — se qualcuno mettesse qui il nome di una chiave che il profilo
+  // aveva già, toglierla dall'impronta la farebbe cambiare e questo controllo diventerebbe rosso (è il caso di
+  // `massa_kg`, che l’autovettura ha dal 209 e lo Scout no). Due di questi percorsi sono annotazioni nostre — il testo
+  // della regola del recupero e la fonte della massa — e stanno nell’elenco con gli altri, non in una scorciatoia che
+  // tolga ogni chiave con il trattino basso: quella nasconderebbe anche le annotazioni che c’erano prima.
+  const AGGIUNTI_238 = {
+    neverlost: ['stiva', 'scudo.recupero._regola'],
+    'asa-scout-mk4': ['altezza', 'ingombro_trasporto', 'massa_kg', '_fonte_massa'],
+  };
+  const senza = (o, percorsi) => { const c = structuredClone(o); for (const p of percorsi) { const parti = p.split('.'); let n = c; for (const k of parti.slice(0, -1)) n = n?.[k]; if (n) delete n[parti.at(-1)]; } return c; };
+  const pulito = (p0, id) => { const p = senza(p0, AGGIUNTI_238[id] ?? []); return { ...Object.fromEntries(Object.entries(p).filter(([k]) => !ETICHETTE.includes(k))), armi: (p.armi ?? []).map((a) => { const x = { ...a }; for (const k of CHIAVI) delete x[k]; return x; }) }; };
+  const imp = (id) => createHash('sha1').update(JSON.stringify(pulito(profiloVeicolo(id, dati), id))).digest('hex').slice(0, 10);
   const git = JSON.parse(readFileSync(new URL('./fixtures/veicoli-profili-209.json', import.meta.url), 'utf8'));
   for (const id of ['neverlost', 'asa-scout-mk4', 'autovettura-civile']) assert.equal(imp(id), git[id], `${id}: il profilo è cambiato`);
 });

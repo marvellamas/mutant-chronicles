@@ -176,6 +176,30 @@ const RISPOSTE = [
     for (const m of ['Recon T6', 'Bastion TC', 'Warden TC', 'Pursuit T4']) assert.equal(nomi.has(m), false, m);
     assert.equal(dati.veicoli.corpus.profili, dati.veicoli.profili.length, 'il conto dei profili è dichiarato e torna');
   }],
+  // lotto 238: il trasporto a bordo di una nave e il recupero dello scudo. Qui non si rilegge il manuale riga per
+  // riga (lo fa tests/trasporto-scudo-238.test.js): si controlla che i dati non contraddicano una risposta approvata.
+  ['A.296', 'una misura che il manuale non dà MANCA: non si ricava da massa, posti o taglia', () => {
+    const T = dati.veicoli.trasporto;
+    assert.match(T.manca, /non si ricava da massa, posti o taglia/);
+    // il furgone ha massa, posti e volume, e nessuna altezza: l'altezza resta assente
+    const f = dati.veicoli.profili.find((p) => p.id === 'furgone-civile');
+    assert.equal(f.altezza, undefined);
+    assert.equal(f.ingombro_trasporto, undefined);
+  }],
+  ['A.104', 'lo scudo recupera per Round, e i Round li conta uno scontro aperto', () => {
+    const nev = dati.veicoli.profili.find((p) => p.id === 'neverlost');
+    assert.equal(nev.scudo.recupero.round_senza_colpi, 3);
+    assert.equal(nev.scudo.recupero.sce_per_round, 20);
+    assert.ok(nev.scudo.sce_max >= nev.scudo.recupero.sce_per_round, 'il massimo è almeno quanto si recupera in un Round');
+    assert.match(nev.scudo.recupero._regola, /fino al massimo/);
+  }],
+  ['A.226', 'il FIAT LUX entra nella stiva della Neverlost, e i suoi numeri sono quelli della scheda 0.6', () => {
+    const p = (id) => dati.veicoli.profili.find((x) => x.id === id);
+    assert.equal(p('asa-scout-mk4').massa_kg, 4500);
+    assert.equal(p('asa-scout-mk4').carico_kg, 1500);
+    assert.deepEqual(p('asa-scout-mk4').ingombro_trasporto.altezza_m, 2.7);
+    assert.equal(p('neverlost').stiva.apertura.altezza_m, 3.5);
+  }],
   ['A.295', 'ASA e SIA sono due sigle: il «riservato» è SIA, le divise e l’elmetto di servizio restano ASA', () => {
     const rif = (r) => dati.equipaggiamento.file.rinforzi.oggetti.find((o) => o.id === r);
     assert.equal(rif('soprabito-asa-riservato').nome, 'Soprabito SIA riservato');
