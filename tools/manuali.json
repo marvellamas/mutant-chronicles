@@ -78,26 +78,25 @@
    "nome": "Manuale dei Veicoli",
    "drive": "1lo_c3KLK7kntJwv195v5aD2ieuMfRuaThsDhPJCX3T4",
    "formato": "doc",
-   "versione": "0.21",
-   "testo": "veicoli-0.21.md",
-   "modificato": "2026-11-19T13:13:03Z",
+   "versione": "0.23",
+   "testo": "veicoli-0.23.md",
+   "modificato": "2026-11-21T21:11:44Z",
    "recepita": {
-    "versione": "0.21",
-    "quando": "2026-11-20",
-    "lotto": 229,
-    "cosa": "Confronto alla cieca, e con un pezzo mancante: la 0.20 non è mai stata recepita e non è più recuperabile (il Doc ha una sola revisione, nessun file 0.20 in Drive né in archivio), quindi si è confrontato 0.19 → 0.21 dichiarando che l’intermedia non è stata vista; il suo contenuto si legge nella 0.21 (scheda del cap. 10 «Edizione 0.20, 19 novembre»). Cambiano: il cap. 10 (da «SIA Scout MK4» a «Scout T4», Punisher al posto del Capitol M606, prezzo standard 132.510 cr al posto di 126.510, Punisher Non comune/12 PS e +1 VA), il rimando alle cavalcature nel §1.3, e il nuovo cap. 16 «Mezzi terrestri militari dell’Alleanza» (dieci mezzi: Recon T6, Vigilant T4, Inspector T6, Carrier T6, T8 e TC, Vanguard TC, Lancer TC, Guardian TC, Bastion TC). Il FIAT LUX resta lo Scout MK4 ASA col M606 e «settore di 120°»: la A.280 (180° frontale) non è nel manuale (A.302). I cap. 14 e 15 (astronavi) non sono toccati. Letto con tools/importa-veicoli.mjs: 0 scarti sui 40 campi dei cinque profili del catalogo, quindi nessun numero del catalogo cambia; il profilo dello Scout e il cap. 16 aspettano un lotto a sé (edizioni_in_attesa).",
-    "documento": "docs/diff-lotto229-2026-11-20.md"
-   },
-   "recepimento_in_attesa": {
-    "versione": "0.21 (testo del 20/11/2026, 10:39:10 UTC)",
-    "motivo": "Lotto 229: stesso numero, testo cambiato. Dopo che il testo era stato scaricato e confrontato (Drive: modificato il 19/11 alle 13:13 UTC), Davide ha riscritto il Doc il 20/11 alle 10:39:10 UTC senza cambiare numero: è comparso un capitolo 17 «Mezzi di supporto terrestri dell’Alleanza» con dieci mezzi (Thunder TC, Storm T8, Sentinel TC, Overwatch T8, Pioneer TC, Atlas T8, Forge T8, Titan TC, Lifeline T6, Warden TC) e l’introduzione dice ancora «fino al capitolo 16». L’esportazione in Markdown ora è rifiutata da Drive («File too large for export», il Doc pesa 40,45 MB), quindi il testo recepito resta quello letto in precedenza; la nuova forma si è potuta scaricare solo in testo semplice (195 KB), non nella forma che i lettori si aspettano, e non si salva accanto per non avere due file della stessa versione. Da fare: richiedere a Davide la versione nuova con un numero nuovo, o un’esportazione più leggera.",
-   "visto_dopo": {
     "versione": "0.23",
     "quando": "2026-11-23",
-    "lotto": 235,
-    "cosa": "Su Drive il titolo è ora «Manuale dei Veicoli v0.23», modificato il 21/11/2026 alle 21:11:44 UTC, 67,3 MB (erano 40,45 MB il 20/11). Il numero è cambiato, quindi non è un cambio a numero fermo: la 0.22 non si è vista. In questo lotto NON si è riprovato l’export, per ordine del lotto: la serata è stasera e i Veicoli sono un lotto a sé. La 0.23 resta recepimento_in_attesa e il testo recepito resta la 0.21. Quello che serve a Davide è già nel Doc: A.303 (un numero nuovo a ogni pubblicazione) e A.304 (quanti dei venti mezzi servono)."
-   }
-   }
+    "lotto": 236,
+    "cosa": "Il manuale si legge, e non andava diviso. Per due lotti lo avevamo creduto illeggibile — il Doc è passato da 40 a 67 MB in tre giorni e l’esportazione in Markdown viene rifiutata con «File too large for export» — e il lotto 229 era arrivato a chiedere a Davide di dividerlo. Davide ha proposto una verifica invece di accettare la richiesta, e la verifica era giusta: l’esportazione in **testo semplice** riesce (199 KB, 5.089 righe) e porta tutto, capitoli 16, 17 e 18 compresi. Non era il documento a essere troppo grande: era la nostra richiesta a chiedere il formato sbagliato, perché l’esportazione in Markdown impacchetta le immagini nel testo e quei 67 MB sono quasi tutti immagini. Il testo salvato è l’esportazione in testo semplice (tools/estrai-doc-markdown.mjs la riconosce e la normalizza); le tabelle si leggono con tools/tabelle-testo.mjs, che nei capitoli 16, 17 e 18 legge 41 tabelle su 41. **Recepita l’edizione, non i dati:** i ventuno mezzi terrestri dei capitoli 16 e 17 e i due del 18 non entrano in data/veicoli.json, che resta dichiarato alla 0.19 in edizioni_in_attesa — applicarli è un lotto suo, e tocca il profilo asa-scout-mk4, che è anche il FIAT LUX dei sette. Quello che il manuale dice si legge in docs/diff-lotto236-2026-11-23.md.",
+    "documento": "docs/diff-lotto236-2026-11-23.md",
+    "forma": "testo semplice (text/plain): nel testo non ci sono le immagini, il grassetto né i livelli dei titoli; un titolo si riconosce dalla sua numerazione"
+   },
+   "versioni_mai_viste": {
+    "quali": [
+     "0.20",
+     "0.22"
+    ],
+    "perché": "Il Doc ha una sola revisione (list_file_revisions ne torna una, e il connettore non sa scaricare una revisione: «Attempting to download a file at a given revision is not yet supported»), quindi le edizioni intermedie non sono recuperabili. Quello che contenevano lo dice il manuale stesso nei suoi registri delle modifiche: la **0.20** ha aggiunto il capitolo 16 con le dodici categorie d’impiego e i profili dei mezzi terrestri militari, ha uniformato il modello corrente in «Scout T4» e ne ha aggiornato l’armamento standard col Mitragliatore Leggero Punisher; la **0.22** aveva già il capitolo 17, e la 0.23 del 20/11 ha aggiunto il capitolo 18 (Pursuit T4 e allestimento SIA, dotazione di squadra, prezzi 218.000 e 258.000 cr) e sostituito la tavola del FIAT LUX con la livrea antracite. È una ricostruzione dichiarata, letta nei §18.5 e nei registri che li precedono, non una nostra ipotesi: fra la 0.21 e la 0.23 resta una versione che non abbiamo mai letto."
+   },
+   "confronto": "non alla cieca, ma non dal Doc: il Manuale dei Veicoli porta dentro di sé un «Registro delle modifiche» per ogni versione (§18.5 per la 0.22 → 0.23, e i precedenti per la 0.19 → 0.20 e la 0.20 → 0.21), quindi si sa che cosa è cambiato anche senza la riga in sezione 7. Resta fuori la 0.22, il cui registro non è nel testo corrente (vedi versioni_mai_viste)."
   },
   {
    "id": "mostri",
@@ -457,26 +456,26 @@
  },
  "_testi_archiviati": "Lotto 191: le edizioni superate che nessun dato e nessuno strumento cita più, spostate in `docs/manuali-txt/archivio/` e non cancellate. Un archiviato non è un doppione (regola 5 del protocollo, applicata qui alla cartella del repo come su Drive).",
  "testi_archiviati": [
- {
-  "testo": "archivio/magia-1.19.md",
-  "archiviato": "2026-11-20",
-  "motivo": "Nessun dato la cita più dal lotto 231: il testo è lo stesso della 1.20, a parte il numero e il registro delle modifiche; le 90 schede e le etichette di edizione sono passate alla 1.20."
- },
- {
-  "testo": "archivio/armamenti-0.89.md",
-  "archiviato": "2026-11-20",
-  "motivo": "Nessun dato la cita più dal lotto 231: il testo è lo stesso della 0.90, a parte il numero, il registro delle modifiche e la forma dei titoli del §7.28.3; le armi e i file ASA/SIA sono passati alla 0.90 (222 voci su 222 identiche)."
- },
- {
-  "testo": "archivio/armamenti-0.87.md",
-  "archiviato": "2026-11-20",
-  "motivo": "Nessun dato la cita più dal lotto 229: le armi e i file ASA/SIA sono passati alla 0.89 (stesse tabelle; in più il §7.28)."
- },
- {
-  "testo": "archivio/giocatore-0.64.md",
-  "archiviato": "2026-11-20",
-  "motivo": "Nessun dato la cita più dal lotto 229: classi.json è passato alla 0.65 (cambia solo il §5.2.7)."
- },
+  {
+   "testo": "archivio/magia-1.19.md",
+   "archiviato": "2026-11-20",
+   "motivo": "Nessun dato la cita più dal lotto 231: il testo è lo stesso della 1.20, a parte il numero e il registro delle modifiche; le 90 schede e le etichette di edizione sono passate alla 1.20."
+  },
+  {
+   "testo": "archivio/armamenti-0.89.md",
+   "archiviato": "2026-11-20",
+   "motivo": "Nessun dato la cita più dal lotto 231: il testo è lo stesso della 0.90, a parte il numero, il registro delle modifiche e la forma dei titoli del §7.28.3; le armi e i file ASA/SIA sono passati alla 0.90 (222 voci su 222 identiche)."
+  },
+  {
+   "testo": "archivio/armamenti-0.87.md",
+   "archiviato": "2026-11-20",
+   "motivo": "Nessun dato la cita più dal lotto 229: le armi e i file ASA/SIA sono passati alla 0.89 (stesse tabelle; in più il §7.28)."
+  },
+  {
+   "testo": "archivio/giocatore-0.64.md",
+   "archiviato": "2026-11-20",
+   "motivo": "Nessun dato la cita più dal lotto 229: classi.json è passato alla 0.65 (cambia solo il §5.2.7)."
+  },
   {
    "testo": "archivio/armamenti-0.86.md",
    "archiviato": "2026-11-18",
@@ -556,6 +555,11 @@
    "testo": "archivio/direttore-0.49.md",
    "archiviato": "2026-11-14",
    "motivo": "Edizione superata dal recepimento del lotto 197, nessun dato la cita."
+  },
+  {
+   "testo": "archivio/veicoli-0.21.md",
+   "archiviato": "2026-11-23",
+   "motivo": "Superata dalla 0.23 col lotto 236, e nessun dato la cita: data/veicoli.json dichiara la 0.19 (edizioni_in_attesa) e la 0.10 resta come rete del lettore. Un archiviato non è un doppione: resta leggibile, fuori dalla cartella di lavoro (regola 5 del protocollo)."
   }
  ],
  "_confronto": "Lotto 191: il campo `confronto` di una voce dice come si è arrivati a conoscere che cosa è cambiato in quell'edizione. «alla cieca» vuol dire che in sezione 7 del Doc «Per Davide» non c'è la riga di registro di quella pubblicazione, e la differenza è stata ricavata dal solo diff dei testi: per quei manuali una differenza ambigua è un'ipotesi, non una certezza, e chi lavora al lotto B o C deve saperlo. La ricognizione del 190 ha trovato 3 righe su 27 pubblicazioni (Magia 1.16, Equipaggiamento 0.40, Mostri 0.47).",

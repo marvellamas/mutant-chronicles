@@ -18,6 +18,7 @@ import { caricaDati } from '../src/rules.js';
 import { vistaVeicolo, normalizzaVeicoli } from '../src/veicoli.js';
 import { validaDati } from '../src/validate.js';
 import { testoManuale, testoEdizione, versioneManuale, registro } from '../tools/manuali.mjs';
+import { righeTesto, titoloNumerato } from '../tools/tabelle-testo.mjs';
 import { leggiSchede, confronta, CAPITOLO_PROFILO } from '../tools/importa-veicoli.mjs';
 import { unisciProfilo, CAMPO_DATO } from '../tools/lotti/lotto_213_veicoli.mjs';
 import { campiIndietroProfilo, rigaProvenienzaProfilo, edizioneCorrenteVeicoli } from '../src/provenienza-veicoli.js';
@@ -118,7 +119,15 @@ test('un campo letto per intero e diverso si scrive, con la provenienza; uno ugu
 // ——— 3. il segno e il conto ———
 test('IL SEGNO SI SPEGNE DA SÉ: oggi nessun profilo ne ha; con un campo indietro compare, col motivo', () => {
   const ed = edizioneCorrenteVeicoli(dati.veicoli);
-  assert.equal(ed, versioneManuale('veicoli'), 'l’edizione corrente dei campi è quella del registro (lotto 229: non scritta nel test)');
+  // Lotto 236: il manuale è passato alla 0.23 e i dati NON sono stati rigenerati, perché i mezzi dei capitoli 16, 17
+  // e 18 sono un lotto a parte (nona regola del protocollo). Quindi il confronto non è più «uguale alla corrente» —
+  // che diventerebbe rosso solo perché Davide ha pubblicato, e l'unico modo di farlo tornare verde sarebbe spegnerlo —
+  // ma: l'edizione dei campi è quella che il file dichiara, e **la distanza dalla corrente è dichiarata** in
+  // `edizioni_in_attesa` col suo motivo. L'edizione non è scritta nel test: la danno i dati e il registro.
+  const corrente = versioneManuale('veicoli');
+  const attesa = registro().edizioni_in_attesa['data/veicoli.json']?.veicoli;
+  assert.ok(ed === corrente || attesa, 'i campi non sono alla corrente: la distanza va dichiarata in edizioni_in_attesa');
+  if (ed !== corrente) assert.ok(String(attesa.motivo ?? '').length > 40, 'un’eccezione senza motivo è un file dimenticato');
   assert.deepEqual(dati.veicoli.profili.filter((p) => campiIndietroProfilo(p, ed).length), []);
   const vecchio = structuredClone(profilo); vecchio._edizione.campi.mov_q = '0.10';
   assert.match(rigaProvenienzaProfilo(vecchio, ed, 'Aspetta Davide.'), /movimento da 0\.10.*Aspetta Davide/);
@@ -144,7 +153,15 @@ test('IL CONTO DEI MEZZI deve tornare: 9 = 5 profili + 4 fuori catalogo, e un ca
 // ——— 4. le astronavi ———
 test('LE ASTRONAVI SONO DICHIARATE, non lasciate fuori in silenzio: tutte e quattro, col motivo e ciò che servirebbe', () => {
   const testo = testoManuale('veicoli');
-  const nelManuale = [...testo.matchAll(/^## \*\*(14\.\d|15\.5|15\.6) ([^*]+)\*\*/gm)].map((m) => m[1]);
+  // Lotto 236: il manuale corrente è salvato in testo semplice (l'esportazione in Markdown non ce la fa: 67 MB di
+  // immagini), quindi i titoli non hanno i cancelletti né il grassetto. Si leggono dalla **numerazione**, in
+  // entrambe le forme: senza questa riga il controllo trovava zero mezzi e diceva verde su zero voci.
+  const numeri = new Set();
+  for (const r of righeTesto(testo)) {
+    const t = titoloNumerato([r], 1);
+    if (t && /^(14\.\d|15\.5|15\.6)$/.test(t.numero)) numeri.add(t.numero);
+  }
+  const nelManuale = [...numeri];
   assert.deepEqual(nelManuale.sort(), ['14.1', '14.2', '15.5', '15.6'], 'il manuale ha quattro mezzi nei capitoli 14 e 15');
   const FC = dati.veicoli.fuori_catalogo;
   assert.equal(FC.mezzi.length, 4);
