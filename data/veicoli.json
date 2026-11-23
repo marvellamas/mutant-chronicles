@@ -1459,7 +1459,10 @@
      "qualita": "0.21",
      "ps_integrita": "0.21",
      "carico_kg": "0.21",
-     "ricambi_cr_per_pi": "0.21"
+     "ricambi_cr_per_pi": "0.21",
+     "altezza": "0.23",
+     "ingombro_trasporto": "0.23",
+     "massa_kg": "0.23"
     }
    },
    "valutazione_direttore": {
@@ -1473,7 +1476,20 @@
     "id": "asa-scout-t4",
     "nome": "Scout T4",
     "fonte": "Veicoli 0.23 §16.1: «Lo Scout T4 di serie e il FIAT LUX dell’ASA storica mantengono schede distinte.»"
-   }
+   },
+   "altezza": {
+    "m": 2.7,
+    "_fonte": "scheda ASA Scout MK4 0.6, «Dimensioni in trasporto (L × l × h) | 6 × 2,6 × 2,7 m»; Veicoli 0.23 §11, «Il FIAT LUX è alto 2,7 m in assetto di trasporto»",
+    "assetto": "di trasporto"
+   },
+   "ingombro_trasporto": {
+    "lunghezza_m": 6,
+    "larghezza_m": 2.6,
+    "altezza_m": 2.7,
+    "_fonte": "scheda ASA Scout MK4 0.6, «Dimensioni in trasporto (L × l × h)»"
+   },
+   "massa_kg": 4500,
+   "_fonte_massa": "scheda ASA Scout MK4 0.6, «Il FIAT LUX pesa 4.500 kg a vuoto, con le dotazioni fisse di bordo… A pieno carico il veicolo pesa 6.000 kg» (4.500 + 1.500 di carico utile: la somma la scrive il manuale)"
   },
   {
    "id": "asa-scout-t4",
@@ -1706,7 +1722,10 @@
      "proprieta": "0.21",
      "sistemi": "0.21",
      "dotazione": "0.21",
-     "ambiente": "0.21"
+     "ambiente": "0.21",
+     "altezza": "0.23",
+     "ingombro_trasporto": "0.23",
+     "massa_kg": "0.23"
     }
    },
    "mappa": {
@@ -1714,7 +1733,20 @@
     "muso_immagine": "s"
    },
    "senza_energia_precedente": true,
-   "_nota_senza_energia": "Lotto 237: profilo nuovo, nessun esemplare registrato, quindi nessuna riserva salvata col modello in Lx da convertire (A.193). Il giorno in cui un PG comprasse uno Scout T4 nascerebbe già col modello a cariche."
+   "_nota_senza_energia": "Lotto 237: profilo nuovo, nessun esemplare registrato, quindi nessuna riserva salvata col modello in Lx da convertire (A.193). Il giorno in cui un PG comprasse uno Scout T4 nascerebbe già col modello a cariche.",
+   "altezza": {
+    "m": 2.7,
+    "_fonte": "scheda ASA Scout MK4 0.6, «Dimensioni in trasporto (L × l × h) | 6 × 2,6 × 2,7 m»; Veicoli 0.23 §11, «Il FIAT LUX è alto 2,7 m in assetto di trasporto»",
+    "assetto": "di trasporto"
+   },
+   "ingombro_trasporto": {
+    "lunghezza_m": 6,
+    "larghezza_m": 2.6,
+    "altezza_m": 2.7,
+    "_fonte": "scheda ASA Scout MK4 0.6, «Dimensioni in trasporto (L × l × h)»"
+   },
+   "massa_kg": 4500,
+   "_fonte_massa": "scheda ASA Scout MK4 0.6, «Il FIAT LUX pesa 4.500 kg a vuoto, con le dotazioni fisse di bordo… A pieno carico il veicolo pesa 6.000 kg» (4.500 + 1.500 di carico utile: la somma la scrive il manuale)"
   },
   {
    "id": "neverlost",
@@ -1974,7 +2006,8 @@
     },
     "recupero": {
      "round_senza_colpi": 3,
-     "sce_per_round": 20
+     "sce_per_round": 20,
+     "_regola": "Veicoli 0.23 §16, «Scudi dei carri»: «Dopo tre rnd consecutivi senza essere colpito, lo scudo recupera gli ScE indicati nella propria scheda, fino al massimo. Il recupero è compreso nell’ora pagata.» Il profilo dice quanto recupera, il record quanto ha adesso (sessione del mezzo): il contatore sta nel record e si muove solo dentro uno scontro aperto (src/scudo-veicolo.js)."
     },
     "assorbe": [
      "Naturale"
@@ -2111,8 +2144,24 @@
     "corrente": "0.21",
     "campi": {
      "pi": "0.21",
-     "carico_kg": "0.21"
+     "carico_kg": "0.21",
+     "stiva": "0.23"
     }
+   },
+   "stiva": {
+    "nome": "Stiva laterale",
+    "quante": 2,
+    "apertura": {
+     "larghezza_m": 4.5,
+     "larghezza_q": 3,
+     "altezza_m": 3.5
+    },
+    "rampa": {
+     "larghezza_m": 4.5,
+     "portata_kg": 10000
+    },
+    "paragrafo": "§11",
+    "nota": "Ogni stiva laterale ha un portellone anteriore con l’apertura utile indicata; ogni rampa è larga 4,5 m e porta 10 t. Il manuale non dà la profondità della stiva, quindi la lunghezza del mezzo non si confronta: la giudica il Direttore."
    }
   },
   {
@@ -2499,14 +2548,35 @@
   "fuori_catalogo": 4,
   "campi_letti": {
    "autovettura-civile": 10,
-   "asa-scout-mk4": 8,
-   "asa-scout-t4": 25,
-   "neverlost": 2,
+   "asa-scout-mk4": 11,
+   "asa-scout-t4": 28,
+   "neverlost": 3,
    "motocicletta-civile": 10,
    "furgone-civile": 10
   },
-  "campi_indietro": 3,
+  "campi_indietro": 10,
   "motivi_indietro": [
+   {
+    "profilo": "asa-scout-mk4",
+    "campo": "altezza",
+    "edizione": "0.23",
+    "motivo": "letto dalla 0.23 nel lotto 238 (trasporto e scudo): è avanti rispetto al resto del catalogo, non indietro",
+    "_perché": "Lotto 238: il campo viene dal §11 o dalla nota «Trasporto» del §16 della 0.23, o dalla scheda ASA Scout MK4 0.6. Non è un campo rimasto indietro: è avanti rispetto all’edizione del corpus, che resta la 0.21 perché i ventuno mezzi dei capitoli 16 e 17 non sono recepiti (A.304)."
+   },
+   {
+    "profilo": "asa-scout-mk4",
+    "campo": "ingombro_trasporto",
+    "edizione": "0.23",
+    "motivo": "letto dalla 0.23 nel lotto 238 (trasporto e scudo): è avanti rispetto al resto del catalogo, non indietro",
+    "_perché": "Lotto 238: il campo viene dal §11 o dalla nota «Trasporto» del §16 della 0.23, o dalla scheda ASA Scout MK4 0.6. Non è un campo rimasto indietro: è avanti rispetto all’edizione del corpus, che resta la 0.21 perché i ventuno mezzi dei capitoli 16 e 17 non sono recepiti (A.304)."
+   },
+   {
+    "profilo": "asa-scout-mk4",
+    "campo": "massa_kg",
+    "edizione": "0.23",
+    "motivo": "letto dalla 0.23 nel lotto 238 (trasporto e scudo): è avanti rispetto al resto del catalogo, non indietro",
+    "_perché": "Lotto 238: il campo viene dal §11 o dalla nota «Trasporto» del §16 della 0.23, o dalla scheda ASA Scout MK4 0.6. Non è un campo rimasto indietro: è avanti rispetto all’edizione del corpus, che resta la 0.21 perché i ventuno mezzi dei capitoli 16 e 17 non sono recepiti (A.304)."
+   },
    {
     "profilo": "asa-scout-t4",
     "campo": "prezzo_cr",
@@ -2527,6 +2597,34 @@
     "edizione": "0.23",
     "motivo": "letto dalla 0.23 in questo lotto (capitolo 10): è avanti rispetto al resto del catalogo, non indietro",
     "_perché": "Lotto 237: nome, Mitragliatore Leggero Punisher e prezzo standard completo di 132.510 cr vengono dal capitolo 10 della 0.23. Non è un campo rimasto indietro: è avanti rispetto all’edizione del corpus, che resta la 0.21 perché gli altri profili non sono stati rigenerati. Il validatore chiama «indietro» ogni campo di un’edizione diversa dalla corrente, e il senso della regola — nessuna distanza in silenzio — vale in tutte e due le direzioni."
+   },
+   {
+    "profilo": "asa-scout-t4",
+    "campo": "altezza",
+    "edizione": "0.23",
+    "motivo": "letto dalla 0.23 nel lotto 238 (trasporto e scudo): è avanti rispetto al resto del catalogo, non indietro",
+    "_perché": "Lotto 238: il campo viene dal §11 o dalla nota «Trasporto» del §16 della 0.23, o dalla scheda ASA Scout MK4 0.6. Non è un campo rimasto indietro: è avanti rispetto all’edizione del corpus, che resta la 0.21 perché i ventuno mezzi dei capitoli 16 e 17 non sono recepiti (A.304)."
+   },
+   {
+    "profilo": "asa-scout-t4",
+    "campo": "ingombro_trasporto",
+    "edizione": "0.23",
+    "motivo": "letto dalla 0.23 nel lotto 238 (trasporto e scudo): è avanti rispetto al resto del catalogo, non indietro",
+    "_perché": "Lotto 238: il campo viene dal §11 o dalla nota «Trasporto» del §16 della 0.23, o dalla scheda ASA Scout MK4 0.6. Non è un campo rimasto indietro: è avanti rispetto all’edizione del corpus, che resta la 0.21 perché i ventuno mezzi dei capitoli 16 e 17 non sono recepiti (A.304)."
+   },
+   {
+    "profilo": "asa-scout-t4",
+    "campo": "massa_kg",
+    "edizione": "0.23",
+    "motivo": "letto dalla 0.23 nel lotto 238 (trasporto e scudo): è avanti rispetto al resto del catalogo, non indietro",
+    "_perché": "Lotto 238: il campo viene dal §11 o dalla nota «Trasporto» del §16 della 0.23, o dalla scheda ASA Scout MK4 0.6. Non è un campo rimasto indietro: è avanti rispetto all’edizione del corpus, che resta la 0.21 perché i ventuno mezzi dei capitoli 16 e 17 non sono recepiti (A.304)."
+   },
+   {
+    "profilo": "neverlost",
+    "campo": "stiva",
+    "edizione": "0.23",
+    "motivo": "letto dalla 0.23 nel lotto 238 (trasporto e scudo): è avanti rispetto al resto del catalogo, non indietro",
+    "_perché": "Lotto 238: il campo viene dal §11 o dalla nota «Trasporto» del §16 della 0.23, o dalla scheda ASA Scout MK4 0.6. Non è un campo rimasto indietro: è avanti rispetto all’edizione del corpus, che resta la 0.21 perché i ventuno mezzi dei capitoli 16 e 17 non sono recepiti (A.304)."
    }
   ],
   "non_letti": "Equipaggio, posti, dimensioni, massa, autonomia, armi e dotazioni, scudo, riserve e tabelle di regole (capitoli 1–8) non vengono dal lettore delle schede: si confrontano con le tabelle identiche della 0.10 (lotto 209: tutte le tabelle dei capitoli 1–11 sono uguali fra le due edizioni). Il lettore le dichiara «non lette» per capitolo.",
@@ -2538,5 +2636,64 @@
    "nuovi_campi_con_provenienza": 40
   },
   "_nota_avanti": "Lotto 237: da qui in avanti il conto campi_indietro conta i campi di un edizione DIVERSA da quella del corpus, in tutte e due le direzioni. I tre campi dello Scout T4 vengono dalla 0.23 e sono avanti; tutti gli altri profili sono alla 0.21 o alla 0.19 e sono indietro. Il senso della regola non cambia: nessuna distanza resta in silenzio, e ognuna ha il suo motivo scritto."
+ },
+ "trasporto": {
+  "paragrafo": "§11 (le stive della Neverlost); §16, nota «Trasporto»",
+  "versione_manuale": "Veicoli 0.23; scheda ASA Scout MK4 0.6",
+  "testo": "Gli ingombri di trasporto si riferiscono all’assetto specificato nella scheda, con antenne ed eventuali parti mobili ripiegate. Le piazzole consigliate escludono i corridoi comuni. La massa a pieno carico indicata serve al dimensionamento della stiva e delle rampe.",
+  "confronti": [
+   {
+    "misura": "larghezza",
+    "contro": "l’apertura del portellone"
+   },
+   {
+    "misura": "altezza",
+    "contro": "l’apertura del portellone"
+   },
+   {
+    "misura": "massa a pieno carico",
+    "contro": "la portata della rampa"
+   }
+  ],
+  "_nota_lunghezza": "La lunghezza non si confronta con l’apertura: una stiva è più lunga del suo portellone, e il manuale non dà la profondità della stiva. Resta scritta nell’ingombro e la giudica il Direttore.",
+  "segnala": "È un avviso, non un divieto: decide il Direttore.",
+  "manca": "Il dato manca e non si ricava da massa, posti o taglia: lo giudica il Direttore.",
+  "_nota_manca": "A.296, lo stesso principio delle capienze: una misura che il manuale non dà **manca**. Dedurla dalla massa, dai posti o dall’ingombro sulla mappa darebbe un numero inventato che sembra un dato.",
+  "da_mostrare": [
+   {
+    "campo": "bagagliaio_litri",
+    "nome": "Bagagliaio complessivo",
+    "unita": "litri",
+    "_fonte": "Veicoli 0.23 §18.1 e §18.3"
+   },
+   {
+    "campo": "vano_sicurezza_litri",
+    "nome": "Vano di sicurezza",
+    "unita": "litri",
+    "_fonte": "Veicoli 0.23 §18.1 e §18.3"
+   },
+   {
+    "campo": "bagagliaio_libero_litri",
+    "nome": "Bagagliaio libero oltre al vano di sicurezza",
+    "unita": "litri",
+    "_fonte": "Veicoli 0.23 §18.1 e §18.3"
+   },
+   {
+    "campo": "passaggio_libero",
+    "nome": "Passaggio libero consigliato",
+    "unita": "m",
+    "_fonte": "Veicoli 0.23 §16 (le rampe pedonali dei Carrier) e la nota «Trasporto»"
+   }
+  ],
+  "_nota_da_mostrare": "Lotto 238, punto C: questi quattro si LEGGONO e non calcolano niente. Il bagagliaio è un volume in litri che il manuale dà per sé (e il «libero» è una sottrazione che il manuale fa già); il passaggio libero consigliato è una condizione che giudica il Direttore, non un confronto. Oggi nessun profilo del catalogo li ha, perché sono dei mezzi dei capitoli 18 e 16 che aspettano la A.304: l’elenco sta qui così che i loro valori compaiano senza toccare il codice (src/trasporto-veicolo.js → datiDaMostrare).",
+  "fuori_dal_modello": [
+   {
+    "campo": "lunghezza con cannone rivolto in avanti",
+    "esempio": "Bastion TC: 12 × 6 m di scafo, 13,5 m col cannone in avanti",
+    "perche": "È un ingombro che dipende da come è girata la torretta, e sulla mappa l’arma non ha un orientamento proprio: l’arco di tiro è un dato del profilo e la mappa non lo controlla. Modellarlo vuol dire un orientamento della torretta separato da quello dello scafo, una sagoma che cambia col suo valore, ingombri e zone di controllo ricalcolati a ogni rotazione, e la rete geometrica del lotto 182 da rifare.",
+    "a_che_cosa_servirebbe": "A un carro con la torretta in avanti che deve passare in un varco misurato: un portellone, un ponte, una galleria. Finché quella scena non si presenta, il valore si legge sulla scheda e lo giudica il Direttore."
+   }
+  ],
+  "_nota_altezze": "Dove il manuale dà due altezze — il Bastion TC ha «3,3 m allo scafo; 4,5 m alla postazione più alta» — si tengono entrambe e quale conta per il trasporto lo dichiara il manuale, non noi: l’ingombro di trasporto dello stesso mezzo è «12 × 6 × 4,5 m», cioè la più alta. Se un profilo avesse due altezze e nessun ingombro di trasporto, l’app lo direbbe invece di scegliere la più comoda (src/trasporto-veicolo.js → altezzaDiTrasporto)."
  }
 }

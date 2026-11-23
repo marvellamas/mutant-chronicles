@@ -7,6 +7,8 @@ import { conAvviso } from './procedi.js';
 import { dettagliRicordati } from './apribili.js';
 import { partiRiserva } from '../cariche-mistiche.js';
 import { cambiaDotazioneExtra } from '../valore-veicolo.js';
+import { recuperaScudo, statoScudo } from '../scudo-veicolo.js';
+import { quadroTrasporto, datiDaMostrare } from '../trasporto-veicolo.js';
 import { h, segno } from './dom.js';
 import { rigaProvenienzaProfilo, edizioneCorrenteVeicoli, motivoIndietroProfilo } from '../provenienza-veicoli.js';
 import { infoValore } from './tooltip.js';
@@ -22,7 +24,7 @@ import { chiedi } from './finestrella.js';
 import { veicoliRotti, statoRiferimentoRotto, ricollegaVeicolo, togliRiferimentoRotto } from '../riferimenti-rotti.js';
 import {
   vistaNeverlost, registraValori, registraVolo, registraStazionario, impostaApprodo, entraTraiettoria, esciTraiettoria, traversata,
-  sparaCannone, attivaScudo, oraScudo, spegniScudo, roundSenzaColpi, usaFunzione, variaCircuito, colpoAlloScudo,
+  sparaCannone, attivaScudo, oraScudo, spegniScudo, usaFunzione, variaCircuito, colpoAlloScudo,
 } from '../neverlost.js';
 
 /**
@@ -365,7 +367,7 @@ function schedaVeicolo(ctx, mezzo, pilotare, registro = null) {
     v.vista.fuoriUso ? h('p', { class: 'riquadro errore' }, 'Fuori uso: Corpo principale o Motore a 0 PI. Il mezzo non funziona, non esplode e il movimento residuo prosegue (§5.5).') : null,
     v.gruppo && !registro ? h('p', { class: 'nota' }, 'Veicolo del gruppo: senza il server le modifiche restano in questa scheda (A.91).') : null,
     h('div', { class: 'veicolo-colonne' },
-      h('div', {}, profiloVeicolo(v, d, { ctx, mezzo, aggiorna }), pilotareVeicolo(v, d), andatureVeicolo(ctx, mezzo, v, aggiorna), dotazioneVeicolo(v), valoreEsemplareUi(v, d, { ctx, mezzo, aggiorna })),
+      h('div', {}, profiloVeicolo(v, d, { ctx, mezzo, aggiorna }), pilotareVeicolo(v, d), andatureVeicolo(ctx, mezzo, v, aggiorna), dotazioneVeicolo(v), valoreEsemplareUi(v, d, { ctx, mezzo, aggiorna }), trasportoUi(v, d)),
       h('div', {}, struttureVeicoloUi(ctx, mezzo, v, aggiorna), rinforziVeicolo(mezzo, v, aggiorna, ctx), necVeicolo(ctx, mezzo, v, aggiorna), munizioniVeicolo(ctx, mezzo, v, aggiorna))),
     v.risorse?.neverlost ? neverlostUi(ctx, mezzo, v, aggiorna) : null,
     armiEProprieta(v),
@@ -878,7 +880,20 @@ function neverlostUi(ctx, mezzo, v, aggiorna) {
     h('div', { class: 'consumi-veicolo' },
       n.scudo.attivo
         ? [h('button', { type: 'button', class: 'btn btn-piccolo', onclick: () => dopo(oraScudo(mezzo, p)) }, 'Un’altra ora (−1 Blu)'),
-          h('button', { type: 'button', class: 'btn btn-piccolo', title: 'Dal terzo Round consecutivo senza colpi: +20 ScE per Round', onclick: () => dopo(roundSenzaColpi(mezzo, p)) }, 'Round senza colpi'),
+          // lotto 238: il recupero passa da `recuperaScudo`, che lo fa SOLO dentro uno scontro aperto. Un Round
+          // fuori da un combattimento non esiste, e senza la guardia un tocco distratto fra due scontri rimetteva
+          // ScE che il manuale non da. Senza scontro il pulsante resta, spento, col motivo scritto accanto.
+          ...(() => {
+            const sc = statoScudo(mezzo, p, ctx.roundScontro);
+            return [
+              h('button', {
+                type: 'button', class: `btn btn-piccolo${sc && !sc.puo ? ' con-avviso' : ''}`, disabled: !!(sc && !sc.puo),
+                title: sc?.motivo ?? sc?.testo ?? 'Round senza colpi',
+                onclick: () => dopo(recuperaScudo(mezzo, p, ctx.roundScontro)),
+              }, 'Round senza colpi'),
+              sc && !sc.puo ? h('small', { class: 'nota' }, ` ${sc.motivo}`) : null,
+            ];
+          })(),
           h('button', { type: 'button', class: 'btn btn-piccolo', title: 'Spegnere non ripristina gli ScE; riaccendere costa un’altra carica Blu', onclick: () => aggiorna(spegniScudo(mezzo, p), `${v.nome}: scudo spento.`) }, 'Spegni')]
         : h('button', { type: 'button', class: 'btn btn-piccolo', onclick: () => dopo(attivaScudo(mezzo, p)) }, 'Attiva lo scudo (−1 Blu, 1 ora)')),
     h('p', { class: 'nota' }, p.scudo.testo, ' ', p.scudo.nota_magico),
@@ -912,4 +927,46 @@ function neverlostUi(ctx, mezzo, v, aggiorna) {
 /** Per «Colpito» della Neverlost: il danno passa prima dallo scudo; torna { mezzo, residuo, riga } o null se non c'è scudo. */
 export function scudoNelColpo(mezzo, profilo, danni, natura) {
   return profilo?.scudo ? colpoAlloScudo(mezzo, profilo, danni, natura) : null;
+}
+
+/**
+ * Lotto 238 — il trasporto a bordo di una nave: le misure come la scheda le scrive, e la risposta a «ci sta?».
+ *
+ * Quando non ci sta **dice quale misura sfora**, perché «non ci sta» da solo fa riaprire il manuale. E avvisa,
+ * non blocca: qui non c'è nessun pulsante da spegnere, c'è una frase — la parola finale è del Direttore.
+ * Dove il manuale non dà una misura, si legge «non dato» e si dice che non si ricava (A.296).
+ */
+function trasportoUi(v, d) {
+  const q = quadroTrasporto(v.profilo, d);
+  if (!q) return null;
+  const n = (x) => String(x).replace('.', ',');
+  const m = (x) => (x === null || x === undefined ? h('em', { class: 'da-definire' }, 'non dato') : `${n(x)} m`);
+  const kg = (x) => (x === null ? h('em', { class: 'da-definire' }, 'non data') : `${x.toLocaleString('it-IT')} kg`);
+  const a = q.altezza;
+  return h('details', { class: 'trasporto-veicolo' },
+    h('summary', {}, 'Trasporto a bordo di una nave'),
+    h('dl', { class: 'righe-valore' },
+      h('div', { class: 'voce-profilo' }, h('dt', {}, 'Ingombro di trasporto'),
+        h('dd', {}, m(q.ingombro.lunghezza_m), ' × ', m(q.ingombro.larghezza_m), ' × ', m(q.ingombro.altezza_m))),
+      a && (a.scafo !== null || a.massima !== null) ? h('div', { class: 'voce-profilo' }, h('dt', {}, 'Altezza'),
+        h('dd', {},
+          a.scafo !== null ? `${n(a.scafo)} m allo scafo` : null,
+          a.scafo !== null && a.massima !== null ? ' · ' : null,
+          a.massima !== null ? `${n(a.massima)} m alla postazione più alta` : null,
+          h('br'),
+          h('small', { class: 'sigla' }, a.dichiarata
+            ? `Per il trasporto conta ${n(a.m)} m: ${a.da}.`
+            : 'Il manuale dà due altezze e non dice quale conta per il trasporto: lo giudica il Direttore.'))) : null,
+      q.piazzola ? h('div', { class: 'voce-profilo' }, h('dt', {}, 'Piazzola di parcheggio'),
+        h('dd', {}, m(q.piazzola.lunghezza_m), ' × ', m(q.piazzola.larghezza_m),
+          q.piazzola.nota ? h('small', { class: 'nota' }, ` · ${q.piazzola.nota}`) : null)) : null,
+      h('div', { class: 'voce-profilo' }, h('dt', {}, 'Massa a pieno carico'),
+        h('dd', {}, kg(q.massa.kg),
+          q.massa.kg === null ? h('small', { class: 'nota' }, ` · manca ${q.massa.mancanti.join(' e ')}: non si ricava da posti, taglia o ingombro sulla mappa`) : null))),
+    // lotto 238, punto C: i quattro che si LEGGONO e non calcolano niente. Quali siano lo dicono i dati
+    // (trasporto.da_mostrare): quando i mezzi dei capitoli 16, 17 e 18 entreranno, compariranno da sé.
+    ...datiDaMostrare(v.profilo, d).map((x) => h('p', { class: 'nota dato-mostrato' },
+      h('strong', {}, `${x.nome}: `), `${x.valore}${x.unita ? ` ${x.unita}` : ''}`)),
+    ...q.navi.map((x) => h('p', { class: `nota esito-trasporto esito-${x.esito.esito.replace(/ /g, '-')}` },
+      h('strong', {}, `${x.nome}: `), x.esito.frase)));
 }
