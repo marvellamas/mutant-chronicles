@@ -6,7 +6,7 @@
 
 **Come si legge la colonna «Applicata».** Una data vuol dire che l’app fa quello che Davide ha deciso; «già così» che lo faceva già prima della risposta; «vedi A.n» che il numero è trattato dentro un’altra voce; «chiusa», «ritirata» o «mai usato» che non c’è niente da applicare. Dove la risposta ne supera un’altra, o dove resta una riserva, è scritto nella stessa riga.
 
-**I numeri che non sono qui sono nel Doc**, perché riguardano Davide o sono lavoro in corso: A.296, da A.299 a A.307, A.309, A.310 e A.312. (La A.311 è qui: l’abbiamo ritirata.)
+**I numeri che non sono qui sono nel Doc**, perché riguardano Davide o sono lavoro in corso: A.296, da A.299 a A.307, A.309, A.310, A.312 e A.313. (La A.311 è qui: l’abbiamo ritirata.)
 
 ## Le domande, una riga per numero
 

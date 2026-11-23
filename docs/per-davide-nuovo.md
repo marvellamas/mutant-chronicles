@@ -14,7 +14,7 @@
 
 • Le correzioni ai manuali le fai nei Doc dei manuali, come sempre.
 
-• Ogni domanda dice cosa fa l’app *nel frattempo*. **Le domande aperte sono dodici, A.299–A.307, A.309, A.310 e A.312, e nessuna ferma la serata di stasera.** La A.308 è risolta e **cambia tre numeri di Dimitri** (vedi l’avviso qui sotto): le altre non cambiano niente senza una tua risposta.
+• Ogni domanda dice cosa fa l’app *nel frattempo*. **Le domande aperte sono tredici, A.299–A.307, A.309, A.310, A.312 e A.313, e nessuna ferma il tavolo.** La A.308 è risolta e **cambia tre numeri di Dimitri** (vedi l’avviso qui sotto): le altre non cambiano niente senza una tua risposta.
 
 • **Se hai poco tempo, leggi solo la sezione 1\.** Sono le cinque domande che contano, un avviso sulla CyberArma di Dimitri, una richiesta che ritiriamo, due richieste sul modo di lavorare e quello che fai tu stasera.
 
@@ -103,7 +103,7 @@
 
 > > ## **2\. Domande aperte (l’app ha già un’ipotesi ragionevole)**
 
-Cinque domande qui, **A.299, A.300, A.301, A.305 e A.306**; le altre aperte sono in testa alla sezione 1 (le cinque che contano, A.304, A.307 e A.309–A.312, e le due richieste, A.302 e A.303). **Nessuna ferma niente**: per ciascuna l’app fa già una cosa ragionevole, scritta nel «Nel frattempo».
+Sei domande qui, **A.299, A.300, A.301, A.305, A.306 e A.313**; le altre aperte sono in testa alla sezione 1 (le cinque che contano, A.304, A.307 e A.309–A.312, e le due richieste, A.302 e A.303). **Nessuna ferma niente**: per ciascuna l’app fa già una cosa ragionevole, scritta nel «Nel frattempo».
 
 **A.299 — L’AR cambia con la forma: vuoi che lo segua?** (19/11/2026, nata dall’applicazione della A.288). *In parole semplici:* nelle schede dei licantropi scrivi «AR 2 biologica in forma animale o ibrida; **0 umanoide**» (ratto e tigre 1 / 0). Nell’app l’AR è **un valore solo**, quello della forma animale: il lupo mannaro in forma umanoide mostra AR 2 invece di 0, e un colpo contro di lui perde 2 punti che non dovrebbe perdere. La A.273 elenca ingombro, movimento e (con la A.288) attacchi: l’AR non c’è, e cambiarlo cambia i danni subiti, quindi **non l’abbiamo toccato**. *Che cosa ci serve da te:* un sì (l’AR segue la forma, con il valore che scrive il manuale per ciascuna) o un no. *Nel frattempo:* l’AR resta quello della scheda in tutte le forme; se contro un licantropo umanoide serve AR 0, lo correggi tu al tavolo. *Se resta senza risposta:* niente di diverso da oggi.
 
@@ -115,7 +115,9 @@ Cinque domande qui, **A.299, A.300, A.301, A.305 e A.306**; le altre aperte sono
 
 **A.306 — Peso, Qualità, PS, PI e Reperibilità dei due moduli del Warden TC** (Magia §28.6). (20/11/2026). *In parole semplici:* il §28.6 dà prezzi, riserve (6 CM Verdi) e costi d’uso (1 CM per scansione, 3 CM per trattamento) del Modulo Individuare 6 e del Modulo Esorcizzare Corruzione 12, ma non quanto pesano, che Qualità hanno, quanti PS e PI, e quanto sono reperibili; del Cofanetto corazzato dà tutto tranne la Reperibilità. *Che cosa chiedo:* i cinque valori dei moduli e la Reperibilità del Cofanetto, oppure «sono quelli dei Guanti da Combattimento Mistico» se vuoi che li prendiamo da lì. *Nel frattempo:* nei dati sono dichiarati «da definire», mai zero; riserve, costi in CM e prezzi funzionano.
 
-Primo numero libero: **A.313**.
+**A.313 — Le correzioni di Caratteristica e i punti Abilità dei livelli passati** (23/11/2026, nata dal lotto 241). *In parole semplici:* quando correggi una Caratteristica in «Modifica master» (Dimitri, 2/11: FOR, DES, CAR; 26/10: SAG +2, INT −2), la scheda mostra i VA con la correzione. I punti Abilità liberi dei livelli passati, invece, l’app li contava senza: per questo la sera del 22/11 diceva «1 punto non aumenta il VA» su punti che in scheda lo aumentavano. *La domanda:* una correzione di Caratteristica deve cambiare anche quali punti dei livelli passati «contano»? Con la correzione, a Dimitri 4 punti del 4° livello (Percezione, Potere, Artefatti, Armi da lancio) oggi non farebbero salire il VA: diventerebbero da riassegnare, e — siccome un punto che non contava non si recupera quando il limite sale (§2.13) — quattro VA di oggi scenderebbero. *Nel frattempo:* un punto conta se conta **con o senza** la correzione; nessun valore di oggi cambia, e un punto nuovo si giudica sul VA che il giocatore vede in scheda. Dopo l’adeguamento delle Abilità (A.281) per Dimitri la domanda non pesa più: i punti si ridistribuiscono da zero.
+
+Primo numero libero: **A.314**.
 
 > > ---
 
