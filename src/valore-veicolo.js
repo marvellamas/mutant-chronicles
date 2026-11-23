@@ -133,6 +133,11 @@ export function valoreEsemplare(mezzo, profilo, dati) {
     },
     extra: { cr: extra, righe, nome: nomi.extra ?? 'Dotazione extra' },
     totale: { cr: baseCr === null ? null : baseCr + extra, nome: nomi.totale ?? 'Valore totale dell’esemplare' },
+    // Lotto 237 (Veicoli 0.23 §10): la frase del manuale sulla valutazione, quando il profilo la dichiara.
+    // Il manuale dice che la valutazione «spetta al Direttore, senza sconto percentuale o nuovo importo
+    // prestabilito»: qui c’è la frase e **nessun numero**. L’app non applica una percentuale e non inventa una
+    // cifra; mostra le tre righe e il campo `valore_stimato_cr`, che scrive solo il Direttore (A.257).
+    valutazione: isOggetto(profilo?.valutazione_direttore) ? { testo: profilo.valutazione_direttore.testo, delDirettore: true } : null,
     esemplareUnico: unico,
     mancante: baseCr === null,
   };

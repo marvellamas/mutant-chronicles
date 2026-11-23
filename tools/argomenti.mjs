@@ -90,6 +90,7 @@ export const ARGOMENTI = {
   'lotto_228_posti.mjs': ['scrivi'],
   'lotto_206_a260.mjs': ['scrivi'],
   'lotto_235_cristalli.mjs': ['scrivi'],
+  'lotto_237_scout_t4.mjs': ['scrivi'],
   'lotto_209_cyberarma.mjs': ['scrivi'],
   'lotto_210_focalizzatori.mjs': ['scrivi'],
   'lotto_210_settori.mjs': ['scrivi'],

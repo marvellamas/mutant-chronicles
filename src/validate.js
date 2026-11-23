@@ -3531,7 +3531,10 @@ function validaVeicoli(dati, err) {
       if (!isIntero(sv?.verde?.cariche) || !isIntero(sv?.verde?.carica_per_giorno) || sv.verde.carica_per_giorno < 1) err(F, `${k}.supporto_vitale.verde`, 'cariche e carica_per_giorno interi attesi (una carica per giorno di utilizzo)');
       const ar = sv?.aria;
       if (!isIntero(ar?.bombole) || !isIntero(ar?.ore_per_bombola) || ar.ore_massime !== ar.bombole * ar.ore_per_bombola) err(F, `${k}.supporto_vitale.aria`, 'ore_massime = bombole × ore_per_bombola attese (Scout 0.6: tre bombole da 8 ore = 24)');
-      if (!isIntero(p.energia_precedente?.verde_lx)) err(F, `${k}.energia_precedente.verde_lx`, 'capacità di prima del Verde in Lx attesa (A.193)');
+      // lotto 237: come per il Rosso qui sopra, un profilo nato dopo la conversione in cariche non ha mai avuto
+      // Lx salvati, quindi non c'è nulla da convertire (A.193). Senza questa riga lo Scout T4 — profilo nuovo, di cui
+      // non esiste nessun esemplare — avrebbe dovuto dichiarare una capacità di prima inventata.
+      if (p.senza_energia_precedente !== true && !isIntero(p.energia_precedente?.verde_lx)) err(F, `${k}.energia_precedente.verde_lx`, 'capacità di prima del Verde in Lx attesa (A.193)');
     }
     if (!isIntero(p?.mov_q) || p.mov_q < 1) err(F, `${k}.mov_q`, 'MOV intero ≥ 1 atteso');
     if (!isIntero(p?.man) || p.man < -2 || p.man > 2) err(F, `${k}.man`, 'MAN intero fra −2 e +2');

@@ -448,6 +448,8 @@ function valoreEsemplareUi(v, d, { ctx = null, mezzo = null, aggiorna = null } =
       h('div', { class: 'voce-profilo' }, h('dt', {}, e.extra.nome), h('dd', {}, cr(e.extra.cr))),
       h('div', { class: 'voce-profilo totale-valore' }, h('dt', {}, e.totale.nome), h('dd', {}, cr(e.totale.cr)))),
     e.base.nota ? h('p', { class: 'nota motivo' }, e.base.nota) : null,
+    // lotto 237: la valutazione del Direttore, come la chiede il manuale: una frase, senza percentuali né cifre
+    e.valutazione ? h('p', { class: 'nota valutazione-direttore' }, h('strong', {}, 'Valutazione: '), e.valutazione.testo) : null,
     righe.length ? h('ul', { class: 'elenco-valore' }, righe) : null,
     h('p', { class: 'nota' }, d.valore?._nota ?? ''));
 }
