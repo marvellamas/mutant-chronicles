@@ -57,6 +57,7 @@ import { schedaTalento } from '../talenti-testi.js';
 import { nomeCheSiApre } from './talento-leggibile.js';
 import { riquadroAdeguamento, riquadroNotaDiPrima } from './adeguamento.js';
 import { dettagliRicordati } from './apribili.js';
+import { rigaProvenienzaIncantesimo, edizioneCorrenteIncantesimi, motivoIndietro } from '../provenienza-incantesimi.js';
 import { gradiTaumaturgici } from '../incantesimi.js';
 import {
   statoRicarica, disponibili, carichiniDi, celleTolte, riempiCaricatori, caricatoriDiScorta,
@@ -3474,12 +3475,19 @@ function classificaDalMaster(ctx, nome, agg) {
 /** La scheda di un incantesimo nell'elenco: conosciuto, oppure aggiunto a mano (`i.aggiunto`: origine, data, nota, avviso). */
 function articoloIncantesimo(ctx, i, nomeMacro) {
   const agg = i.aggiunto ?? null;
+  // lotto 244: chiusa, la scheda dice tre cose — come si chiama, quanto costa (PM del livello base), che cosa fa (l'effetto del 243). Il resto
+  // (da dove viene, Rituale e PM utilizzabili, regole di lancio, tabella dei livelli) sta in una parte che si apre, con una chiave
+  // (lotto 186). Restano sempre visibili le note che dicono che una regola la applica il tavolo o che qualcosa non torna: il segno ⚑
+  // dell'edizione, gli avvisi e lo stato degli incantesimi aggiunti a mano. Nasconderle fa cercare un guasto che non c'è.
+  const incCatalogo = ctx.dati.incantesimi.incantesimi.find((x) => x.nome === i.nome);
+  const costoBase = pmLivelloBase(incCatalogo);
+  const rigaEdizione = incCatalogo ? rigaProvenienzaIncantesimo(incCatalogo, edizioneCorrenteIncantesimi(ctx.dati.incantesimi), motivoIndietro(ctx.dati.incantesimi, incCatalogo)) : null;
   const dalLivello = agg ? null : originiIncantesimiLivelli(ctx)[i.nome] ?? null;
   return h('article', { class: `incantesimo-scheda ${classeMacrofamiglia(nomeMacro)}${agg ? ' incantesimo-a-mano' : ''}`, id: idIncantesimo(i.nome) },
     h('div', { class: 'arma-testa' },
       h('h4', {}, info('incantesimo', i.nome),
         agg ? h('small', { class: `etichetta-origine tipo-${agg.tipo ?? 'da_classificare'}`, title: `${agg.etichetta ?? 'Aggiunto'} · ${agg.origine} il ${dataLeggibile(agg.quando)}${agg.nota ? ` · ${agg.nota}` : ''} · fuori dalle quote di Classe` }, ` ${agg.segno ?? '(Aggiunto)'}`) : null,
-        ' ', pallini(i.livelloBase), ' ', etichettaMacro(nomeMacro), h('span', { class: 'sigla' }, ` · livello base ${i.livelloBase} · scheda ${i.scheda}`)),
+        ' ', pallini(i.livelloBase), ' ', etichettaMacro(nomeMacro), costoBase === null ? null : h('span', { class: 'sigla costo-incantesimo' }, ` · ${costoBase} PM`)),
       (() => {
         // senza versioni accessibili il pulsante resta, disabilitato con il motivo (mai un pulsante muto)
         const inc = ctx.dati.incantesimi.incantesimi.find((x) => x.nome === i.nome);
@@ -3497,7 +3505,8 @@ function articoloIncantesimo(ctx, i, nomeMacro) {
     // lotto 243: l'effetto per primo e in evidenza (il campo `descrizione` intero, mai una frase scelta per posizione); senza un effetto
     // affidabile nei dati niente evidenza. Le regole di lancio (intestazione e Lancio) vengono dopo.
     effettoIncantesimo(i) ? h('div', { class: 'effetto-incantesimo', role: 'note' }, h('strong', { class: 'etichetta-effetto' }, 'Effetto'), h('p', {}, effettoIncantesimo(i))) : null,
-    dalLivello ? h('p', { class: 'piccolo origine-aggiunto' }, h('strong', {}, dalLivello.da ? `Da ${dalLivello.da}` : 'Imparato'), ` al ${dalLivello.livello}° livello.`) : null,
+    // sempre visibili, a scheda chiusa: ⚑ dell'edizione, stato e avvisi degli aggiunti a mano
+    rigaEdizione ? h('p', { class: 'nota edizione-indietro', role: 'note' }, '⚑ ', rigaEdizione) : null,
     agg ? h('p', { class: 'piccolo origine-aggiunto' }, h('strong', {}, agg.etichetta ?? agg.origine), ` · ${agg.origine} il ${dataLeggibile(agg.quando)}`, agg.nota ? ` · ${agg.nota}` : '', ' · fuori dalle quote di Classe.') : null,
     agg?.frase ? h('p', { class: 'piccolo' }, agg.frase) : null,
     agg?.concessione ? h('p', { class: 'piccolo concessione-speciale' }, h('strong', {}, 'Concessione speciale del Direttore: '), agg.concessione) : null,
@@ -3505,12 +3514,15 @@ function articoloIncantesimo(ctx, i, nomeMacro) {
     agg && ctx.master ? classificaDalMaster(ctx, i.nome, agg) : null,
     agg && !ctx.master && tipoAMano(agg) === 'annotato' ? richiestaDalGiocatore(ctx, i.nome, agg) : null,
     agg?.avviso ? h('p', { class: 'nota motivo' }, `Avviso: ${agg.avviso}`) : null,
-    i.intestazione ? h('p', { class: 'piccolo' }, i.intestazione) : null,
-    i.lancio ? h('p', { class: 'piccolo' }, i.lancio) : null,
-    i.righe.length ? h('div', { class: 'tabella-scorre' }, h('table', { class: 'tabella compatta' },
-      h('thead', {}, h('tr', {}, i.colonne.map((c) => h('th', {}, c)))),
-      h('tbody', {}, i.righe.map((r) => h('tr', {}, r.map((v) => h('td', {}, v)))))))
-      : h('p', { class: 'nota' }, `Tabella non disponibile: Manuale della Magia, scheda ${i.scheda}.`));
+    dettagliRicordati(`incantesimo:${i.nome}`, { class: 'incantesimo-regole' },
+      h('summary', {}, `Regole di lancio e livelli · livello base ${i.livelloBase} · scheda ${i.scheda}`),
+      dalLivello ? h('p', { class: 'piccolo origine-aggiunto' }, h('strong', {}, dalLivello.da ? `Da ${dalLivello.da}` : 'Imparato'), ` al ${dalLivello.livello}° livello.`) : null,
+      i.intestazione ? h('p', { class: 'piccolo' }, i.intestazione) : null,
+      i.lancio ? h('p', { class: 'piccolo' }, i.lancio) : null,
+      i.righe.length ? h('div', { class: 'tabella-scorre' }, h('table', { class: 'tabella compatta' },
+        h('thead', {}, h('tr', {}, i.colonne.map((c) => h('th', {}, c)))),
+        h('tbody', {}, i.righe.map((r) => h('tr', {}, r.map((v) => h('td', {}, v)))))))
+        : h('p', { class: 'nota' }, `Tabella non disponibile: Manuale della Magia, scheda ${i.scheda}.`)));
 }
 
 /**

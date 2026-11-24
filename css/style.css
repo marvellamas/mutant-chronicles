@@ -3193,3 +3193,8 @@ p.da-applicare { margin: 0.2rem 0 0.5rem; }
    anche nelle barre che rimpiccioliscono i pulsanti tondi */
 .btn.tondo.btn-schermo-intero, .mappa-barra .btn.tondo.btn-schermo-intero { width: 2.5rem; min-width: 2.5rem; min-height: 2.5rem; height: 2.5rem; padding: 0; font-size: 1.15rem; line-height: 1; flex: none; }
 .btn-schermo-intero[hidden] { display: none; }
+
+/* lotto 244: la scheda dell'incantesimo chiusa dice nome, costo ed effetto; il resto sta in una parte che si apre */
+.incantesimo-regole { margin: 0.25rem 0 0; }
+.incantesimo-regole > summary { cursor: pointer; font-size: 0.85rem; color: var(--tenue); padding: 0.2rem 0; list-style-position: inside; }
+.costo-incantesimo { font-weight: 600; color: var(--testo); }
