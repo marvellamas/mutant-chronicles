@@ -84,7 +84,10 @@ export function renderDotazione(ctx) {
         ? 'La dotazione iniziale è nell’inventario.'
         : 'La dotazione nell’inventario non corrisponde più alle scelte: aggiornala.') : null,
       h('button', {
-        type: 'button', class: 'btn primario', disabled: mancanze.length > 0 || allineata,
+        // lotto 246: le mancanze si leggono qui sopra e la dotazione si mette lo stesso (un personaggio nuovo con
+        // venti crediti di troppo non può restare senza equipaggiamento). Spento solo se non cambierebbe niente.
+        type: 'button', class: `btn primario${mancanze.length ? ' con-avviso' : ''}`, disabled: allineata,
+        title: mancanze.length ? `${mancanze.join('; ')}. Puoi metterla lo stesso: la decisione è del Direttore.` : null,
         onclick: () => {
           if (applicata && !confirm('Le voci della dotazione iniziale nell’inventario vengono sostituite (stato e note compresi). Gli altri oggetti restano. Procedere?')) return;
           ctx.aggiorna({ equipaggiamento: applicaDotazione(scelte.equipaggiamento, voci) });
@@ -198,7 +201,9 @@ function acquisti(ctx, d, imposta, conti, cat) {
       scelto ? h('p', { class: 'nota' }, `Conguaglio ${crediti(conguaglio)}`, eccedenza ? h('strong', {}, ` · Eccedenza restituita: +${crediti(eccedenza)}`) : null, saldoDopo !== null ? ` · saldo dopo l’acquisto ${crediti(saldoDopo)}` : '') : null,
       motivo && scelto ? h('p', { class: 'motivo', role: 'alert' }, motivo) : null,
       h('button', {
-        type: 'button', class: 'btn', disabled: !!motivo,
+        // lotto 246: il motivo (crediti insufficienti, oggetto non cedibile) è scritto qui sopra e l'acquisto si fa lo stesso
+        type: 'button', class: `btn${motivo ? ' con-avviso' : ''}`, disabled: !bozza.rif,
+        title: motivo ?? null,
         onclick: () => {
           ctx.ui.acquistoDotazione = { rif: '', cede: [] };
           imposta({ acquisti: [...(d.acquisti ?? []), { rif: bozza.rif, cede: cedeBozza }] });

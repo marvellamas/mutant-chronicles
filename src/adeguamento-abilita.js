@@ -414,13 +414,16 @@ export function statoAssegnazione(o, bozza = null, dati) {
     const prima = perNome.get(a.nome) ?? null;
     const punti = pa[a.nome] ?? 0;
     const massimo = Math.max(0, (a.limite ?? Infinity) - (base.grezzo ?? 0));
-    const motivoPiu = rimasti <= 0 ? 'Nessun punto rimasto da assegnare.'
-      : punti >= massimo ? `VA ${base.grezzo + punti} già al limite ${a.limite} (${a.competenza}): un punto in più non aumenta il VA personale.`
-        : (base.grezzo ?? 0) + punti < 1 ? 'Serve VA almeno 1 prima dei punti liberi.' : null;
+    // lotto 246: «motivoPiu» ferma solo quando i punti del monte sono finiti (blocco approvato l'11/11: residui 0).
+    // Il limite della categoria e il «VA almeno 1» sono regole: si leggono accanto alla riga e il punto si mette lo
+    // stesso — la sera del 22/11 un controllo di questo tipo ha tenuto fermi sette giocatori.
+    const motivoPiu = rimasti <= 0 ? 'Nessun punto rimasto da assegnare.' : null;
+    const avvisoPiu = punti >= massimo ? `VA ${base.grezzo + punti} già al limite ${a.limite} (${a.competenza}): un punto in più non aumenta il VA personale.`
+      : (base.grezzo ?? 0) + punti < 1 ? 'Serve VA almeno 1 prima dei punti liberi.' : null;
     return {
       nome: a.nome, caratteristica: a.caratteristica, competenza: a.competenza, base: a.base, mod: a.mod,
       corporazione: a.corporazione, daClasse: a.daClasse, limite: a.limite, limiteCategoria: a.limiteCategoria,
-      punti, massimo, motivoPiu,
+      punti, massimo, motivoPiu, avvisoPiu,
       // com'era e come diventa: le due cose che il giocatore deve vedere
       prima: prima ? { competenza: prima.competenza, base: prima.base, va: prima.va, limite: prima.limite } : null,
       dopo: { va: a.totale, grezzo: a.grezzo },
@@ -450,7 +453,7 @@ export function assegna(o, bozza, abilita, delta, dati) {
   const ora = pa[abilita] ?? 0;
   const n = ora + delta;
   if (n < 0) return pa;
-  if (delta > 0 && (s.rimasti <= 0 || a.motivoPiu)) return pa;
+  if (delta > 0 && (s.rimasti <= 0 || a.motivoPiu)) return pa; // solo il monte ferma: il limite della categoria avvisa (lotto 246)
   return pulisci({ ...pa, [abilita]: n });
 }
 
@@ -463,8 +466,10 @@ export function confermaAssegnazione(o, bozza, dati, { quando = new Date().toISO
   const s = statoAssegnazione(o, bozza, dati);
   if (!s) return { ok: false, motivo: 'non c’è un adeguamento aperto su questo personaggio', file: null };
   if (s.rimasti !== 0) return { ok: false, motivo: `restano ${s.rimasti} punti da assegnare: la conferma richiede residui 0`, file: null };
+  // lotto 246: i punti oltre il limite della categoria non fermano più la conferma. Restano scritti nella riga del
+  // registro e si vedono nel pannello: l'eccezione formale resta quella del ✎ di «Modifica master» (A.247).
   const irregolari = s.abilita.filter((a) => a.punti > a.massimo);
-  if (irregolari.length) return { ok: false, motivo: `punti oltre il limite su ${irregolari.map((a) => a.nome).join(', ')}`, file: null };
+  const avvisi = irregolari.length ? [`punti oltre il limite su ${irregolari.map((x) => x.nome).join(', ')} (§8.3): il VA si ferma al limite finché il Direttore non registra l'eccezione (A.247)`] : [];
   const conp = conPunti(o, bozza, s.livello);
   // il totale dell'evento diventa il monte: da qui in poi la scheda sa che quei punti sono quelli previsti e non
   // chiede più di assegnarne altri (finché l'adeguamento è aperto il totale è 0, così non si vedono due avvisi)
@@ -474,7 +479,7 @@ export function confermaAssegnazione(o, bozza, dati, { quando = new Date().toISO
     : { ...conp, livelli: conp.livelli.map((v, i) => (i + 2 === s.livello ? conTotale(v) : v)) };
   const correzioni = normalizzaCorrezioni(file.correzioni_master).map((r) => (r?.[MARCA] === true && !r.confermato
     ? { ...r, confermato: quando, puntiAssegnati: pulisci(bozza) } : r));
-  return { ok: true, motivo: null, file: { ...file, correzioni_master: correzioni } };
+  return { ok: true, avvisi, motivo: null, file: { ...file, correzioni_master: correzioni } };
 }
 
 /**

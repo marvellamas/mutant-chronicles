@@ -30,8 +30,8 @@ function riga(ctx, a, s) {
     h('td', { class: 'punti-adeguamento' },
       h('button', { type: 'button', class: 'btn btn-piccolo', disabled: !a.punti, title: 'Togli un punto da questa Abilità', onclick: () => ctx.azioni.adeguamento.punto(a.nome, -1) }, '−'),
       h('span', { class: 'numero-punti' }, String(a.punti)),
-      h('button', { type: 'button', class: 'btn btn-piccolo', disabled: !!a.motivoPiu, title: a.motivoPiu ?? `Assegna un punto: il massimo su questa Abilità è ${a.massimo}`, onclick: () => ctx.azioni.adeguamento.punto(a.nome, 1) }, '+')),
-    h('td', { class: 'dettaglio nota' }, a.motivoPiu && !a.punti ? a.motivoPiu : ''));
+      h('button', { type: 'button', class: `btn btn-piccolo${a.avvisoPiu ? ' con-avviso' : ''}`, disabled: !!a.motivoPiu, title: a.motivoPiu ?? a.avvisoPiu ?? `Assegna un punto: il massimo su questa Abilità è ${a.massimo}`, onclick: () => ctx.azioni.adeguamento.punto(a.nome, 1) }, '+')),
+    h('td', { class: 'dettaglio nota' }, a.avvisoPiu ?? (a.motivoPiu && !a.punti ? a.motivoPiu : '')));
 }
 
 /**

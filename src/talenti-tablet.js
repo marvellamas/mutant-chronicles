@@ -66,13 +66,9 @@ export function controllaTalentiDaTablet(nuovo, disco, dati) {
     }
     // lotto 241: nel livello che si aggiunge (o nel posto vuoto dell'ultimo) una scelta fuori dalle regole è un avviso
     if (inAvanzamento(x.livello, disco, !v?.scelta)) continue;
-    // una voce tolta dal manuale non si sceglie di nuovo da un tablet (chi l'aveva la tiene: lì la scelta non cambia)
-    const tolta = x.scelta && x.problemi.find((e) => e.tipo === 'tolta');
-    if (tolta) return { ok: false, stato: 403, errore: `${tolta.problema}. Una scelta non ammessa la può fare solo il Direttore.` };
-    if (x.scelta && !x.valida) {
-      const motivo = x.problemi.find((e) => e.tipo === 'violazione')?.problema ?? 'scelta non ammessa';
-      return { ok: false, stato: 403, errore: `${motivo}. Una scelta non ammessa la può fare solo il Direttore.` };
-    }
+    // lotto 246: una scelta che le regole non ammettono non si rifiuta più nemmeno in un livello passato. Il lotto 241
+    // l'aveva già fatto per il livello che si aggiunge; il giocatore che correggeva una scelta vecchia si vedeva
+    // rifiutare il salvataggio e doveva chiamare il Direttore. La scheda lo segnala, e la decisione resta sua.
   }
   return controllaIncantesimiDaTablet(nuovo, disco, dati);
 }

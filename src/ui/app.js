@@ -1243,8 +1243,10 @@ function contesto() {
     livelli: stato.livelli,
     // N2: eccessi e riassegnazioni in sospeso avvisano («Procedi comunque»); creazione incompleta ed errori dei livelli fermano
     // lotto 241: punti, Talenti da scegliere ed errori dei livelli avvisano («Procedi comunque»); fermano creazione incompleta e PX
-    avvisoSalita: avvisoPrimaDiSalire(schedaPersonaggio),
-    motivoNoSalita: !scheda.completa ? 'Completa la creazione (passi precedenti) prima di salire di livello.' : (permessoPx()?.motivo ?? null),
+    // lotto 246: la creazione incompleta è un avviso, non più un pulsante spento (il 23/11 un nostro difetto di conto
+    // l'ha spento a tutti e sette insieme). Resta spento solo per i PX e l'Atto (A.187), che decide il Direttore.
+    avvisoSalita: [scheda.completa ? null : 'La creazione non risulta completa (passi precedenti): controlla, o sali lo stesso.', avvisoPrimaDiSalire(schedaPersonaggio)].filter(Boolean).join('; ') || null,
+    motivoNoSalita: permessoPx()?.motivo ?? null,
     saliDiLivello,
     stampa: () => vai(`#/p/${stato.id}/stampa`),
     annullaUltimoLivello: annullaLivello,
@@ -1420,7 +1422,8 @@ async function saliDiLivello() {
   const g = permessoPx();
   if (g && !g.ok) { stato.messaggioScheda = { tipo: 'attenzione', testo: g.motivo }; return renderScheda({ mantieniScorrimento: true }); }
   const sp = calcolaScheda({ creazione: stato.scelte, livelli: stato.livelli }, stato.dati);
-  const motivo = avvisoPrimaDiSalire(sp);
+  // lotto 246: anche la creazione incompleta passa di qui, come avviso con «Procedi comunque» e riga nello storico
+  const motivo = [sp.completa === false ? 'la creazione non risulta completa' : null, avvisoPrimaDiSalire(sp)].filter(Boolean).join('; ') || null;
   await conAvviso(registraStorico, { azione: `Sali al livello ${2 + stato.livelli.length}`, motivo, fai: (forza) => {
     stato.sali = bozzaSalita(forza ? { procedi: true } : {});
     vai(`#/p/${stato.id}/sali/0`);
@@ -2359,7 +2362,7 @@ function renderSchedaInterna({ mantieniScorrimento = false } = {}) {
     // lotto 241: nell'avanzamento nessun controllo sulla distribuzione impedisce di salire: punti, Talenti da scegliere ed errori dei
     // livelli già acquisiti sono un avviso, con i numeri, e «Procedi comunque». Fermano solo la creazione incompleta e i PX (A.187)
     avvisoSalita: avvisoPrimaDiSalire({ ...tab.scheda, errori: tab.errori ?? [] }, { talentiDaScegliere }),
-    motivoNoSalita: !schedaCreazione.completa ? 'Completa la creazione prima di salire di livello.' : (permessoPx()?.motivo ?? null),
+    motivoNoSalita: permessoPx()?.motivo ?? null, // lotto 246: la creazione incompleta avvisa (sopra), non spegne
     // regole aggiornate (regole.json → regole_aggiornate): punti da completare e in eccesso
     avvisoRegole: dati.regole.regole_aggiornate?.punti_abilita ?? 'Regole aggiornate',
     avvisoMancanti: dati.regole.regole_aggiornate?.mancanti ?? null,

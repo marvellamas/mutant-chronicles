@@ -145,11 +145,21 @@ export function contatore(rimasti, totale, etichetta) {
     h('strong', {}, String(rimasti)), ` ${etichetta} da spendere su ${totale}`);
 }
 
-export function stepper(valore, { meno, piu, motivoMeno, motivoPiu, etichetta }) {
+/**
+ * Lotto 246: il «+» e il «−» dicono che cosa non torna e lasciano fare. Prima si spegnevano, e con loro si spegneva
+ * la distribuzione dei punti: è la famiglia di blocchi che la sera del 22/11 ha tenuto fermo il tavolo. Quello che il
+ * giocatore distribuisce lo controlla la conferma del passo, che avvisa («Procedi comunque») e non ferma (lotto 241).
+ * Un motivo che non è una regola ma un'impossibilità vera si passa come «fermo: true» (oggi nessuno lo fa).
+ */
+export function stepper(valore, { meno, piu, motivoMeno, motivoPiu, etichetta, fermo = false }) {
+  const bottone = (segno, onclick, motivo, testo) => h('button', {
+    type: 'button', class: `btn tondo${motivo ? ' con-avviso' : ''}`, onclick, disabled: fermo && !!motivo,
+    title: motivo ?? `${testo} un punto a ${etichetta}`, 'aria-label': `${testo} un punto a ${etichetta}${motivo ? `: ${motivo}` : ''}`,
+  }, segno);
   return h('span', { class: 'stepper' },
-    h('button', { type: 'button', class: 'btn tondo', onclick: meno, disabled: !!motivoMeno, title: motivoMeno ?? `Togli un punto a ${etichetta}`, 'aria-label': `Togli un punto a ${etichetta}` }, '−'),
+    bottone('−', meno, motivoMeno, 'Togli'),
     h('output', { class: 'valore-stepper' }, String(valore)),
-    h('button', { type: 'button', class: 'btn tondo', onclick: piu, disabled: !!motivoPiu, title: motivoPiu ?? `Aggiungi un punto a ${etichetta}`, 'aria-label': `Aggiungi un punto a ${etichetta}` }, '+'),
+    bottone('+', piu, motivoPiu, 'Aggiungi'),
   );
 }
 
