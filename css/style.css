@@ -3198,3 +3198,11 @@ p.da-applicare { margin: 0.2rem 0 0.5rem; }
 .incantesimo-regole { margin: 0.25rem 0 0; }
 .incantesimo-regole > summary { cursor: pointer; font-size: 0.85rem; color: var(--tenue); padding: 0.2rem 0; list-style-position: inside; }
 .costo-incantesimo { font-weight: 600; color: var(--testo); }
+
+/* lotto 244: «Annulla» in barra, grande e onesto: il titolo e, sotto, che cosa annullerà o perché non si può (una riga, il resto nel suggerimento) */
+.btn-annulla { display: inline-flex; flex-direction: column; align-items: flex-start; justify-content: center; min-height: 2.75rem; max-width: 11rem; padding: 0.25rem 0.55rem; text-align: left; line-height: 1.15; }
+.btn-annulla .annulla-titolo { font-size: 1.05rem; font-weight: 700; white-space: nowrap; }
+.btn-annulla .annulla-dettaglio { display: block; max-width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 0.72rem; opacity: 0.85; }
+.btn-annulla[data-stato="attivo"] { border-color: var(--accento, currentColor); }
+.btn-annulla[data-stato="non-annullabile"] .annulla-dettaglio { color: var(--attenzione); opacity: 1; }
+.btn-annulla:disabled, .btn-annulla[aria-disabled="true"] { cursor: not-allowed; opacity: 0.75; }

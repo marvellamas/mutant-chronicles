@@ -201,9 +201,26 @@ export function renderTab(ctx) {
       // lotto 221: schermo intero, ricerca e Galleria non sono più in barra (la facevano passare a due righe, +39 px a 820 px): stanno nel
       // menu «Azioni ▾», un tocco più in là (menuAzioni). La ricerca, aperta, compare qui come prima.
       (() => {
-        // sempre nel DOM e nascosto se non c'è niente da annullare: una modifica di valore non deve ridisegnare la scheda
-        const annulla = h('button', { type: 'button', class: 'btn', hidden: !ctx.puoAnnullareSessione || undefined, onclick: azioni.annullaSessione, title: 'Annulla l’ultima modifica ai valori di sessione o al calendario' }, '↶ Annulla');
-        registraVivo('annullabile', () => { annulla.hidden = !ctx.puoAnnullareSessione; });
+        // lotto 244: «Annulla» sempre presente, grande, e onesto (src/annulla-azione.js). Attivo solo se l'ULTIMA azione è una che sa
+        // rimettere com'era, e allora dice che cosa annullerà («PV 34 → 40»); altrimenti spento, con il motivo accanto («L'ultima azione non
+        // si annulla: …»), mai inerte in silenzio. Sempre nel DOM: una modifica di valore non deve ridisegnare la scheda.
+        const titoloAnnulla = h('span', { class: 'annulla-titolo' }, '↶ Annulla');
+        const dettaglioAnnulla = h('small', { class: 'annulla-dettaglio' });
+        const annulla = h('button', { type: 'button', class: 'btn btn-annulla', onclick: azioni.annullaSessione }, titoloAnnulla, dettaglioAnnulla);
+        const aggiornaAnnulla = () => {
+          const a = ctx.leggiAnnulla ? ctx.leggiAnnulla()
+            : { attivo: !!ctx.puoAnnullareSessione, vuoto: !ctx.puoAnnullareSessione, etichetta: 'ultima modifica', motivo: 'Niente da annullare: non hai ancora fatto nessuna azione.' };
+          // vuoto: niente da dire, davvero spento. Non annullabile: resta toccabile (aria-disabled) perché il tocco mostri il MOTIVO per intero,
+          // che sul tablet non c'è un suggerimento da leggere (src/ui/app.js → annullaSessione)
+          annulla.disabled = !!a.vuoto;
+          annulla.setAttribute('aria-disabled', String(!a.attivo));
+          annulla.setAttribute('data-stato', a.attivo ? 'attivo' : a.vuoto ? 'vuoto' : 'non-annullabile');
+          dettaglioAnnulla.textContent = a.attivo ? a.etichetta : a.vuoto ? 'niente da annullare' : a.motivo.replace(/ Questo pulsante rimette solo.*$/, '');
+          annulla.title = a.attivo ? `Annulla l’ultima azione: ${a.etichetta}` : a.motivo;
+          annulla.setAttribute('aria-label', a.attivo ? `Annulla: ${a.etichetta}` : `Annulla non disponibile. ${a.motivo}`);
+        };
+        aggiornaAnnulla();
+        registraVivo('annullabile', aggiornaAnnulla);
         return annulla;
       })(),
       id.livello < livelloMax
@@ -380,7 +397,11 @@ function menuAzioni(ctx) {
       ctx.livelli.length ? voce('Annulla l’ultimo livello', azioni.annullaLivello, { pericolo: true }) : null,
       h('hr', {}),
       voce('Nuova sessione', azioni.nuovaSessione, { titolo: 'PV e PM ai massimi, Stati, Ferite e Affaticamento a zero, usi «per sessione» di nuovo disponibili' }),
-      voce('Annulla ultima modifica', azioni.annullaSessione, { disabilitato: !ctx.puoAnnullareSessione, titolo: 'Valori di sessione o calendario' }),
+      (() => {
+        // lotto 244: la stessa voce dice che cosa annullerà, o perché non si può
+        const a = ctx.leggiAnnulla ? ctx.leggiAnnulla() : { attivo: !!ctx.puoAnnullareSessione, etichetta: 'ultima modifica', motivo: 'Niente da annullare.' };
+        return voce(a.attivo ? `Annulla: ${a.etichetta}` : 'Annulla ultima modifica', azioni.annullaSessione, { disabilitato: !a.attivo, titolo: a.attivo ? 'Valori di sessione o calendario' : a.motivo });
+      })(),
       ctx.motivoNoSalita ?? ctx.avvisoSalita ? h('p', { class: 'nota' }, ctx.motivoNoSalita ?? ctx.avvisoSalita) : null));
 }
 

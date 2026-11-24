@@ -163,12 +163,12 @@ test('«Annulla» è sempre nel documento e compare senza ridisegnare', () => {
   const c = ctxCon();
   c.puoAnnullareSessione = false;
   const r = resa(c);
-  const annulla = nodi(r, (n) => n.tagName === 'BUTTON' && n.textContent === '↶ Annulla')[0];
+  const annulla = nodi(r, (n) => n.tagName === 'BUTTON' && n.textContent.startsWith('↶ Annulla'))[0];
   assert.ok(annulla, 'il pulsante c’è anche senza modifiche da annullare');
-  assert.equal(annulla.getAttribute('hidden'), '', 'nascosto');
+  assert.equal(annulla.disabled, true, 'lotto 244: senza niente da annullare il pulsante c’è, spento, e lo dice');
   const prima = r.radice.tutti();
   cambia(c, (s) => ({ pmAttuali: s.pmAttuali - 1 }), ['pmAttuali']);
-  assert.equal(annulla.hidden, false, 'dopo la modifica si vede');
+  assert.equal(annulla.disabled, false, 'dopo la modifica si attiva');
   assert.ok(prima.every((x) => new Set(r.radice.tutti()).has(x)));
 });
 

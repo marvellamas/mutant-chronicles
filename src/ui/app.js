@@ -37,6 +37,7 @@ import { descriviVoce, postiTalenti, applicaSceltaTalento, eccezioneSpecializzaz
 import { riquadroTalenti } from './talenti-scelta.js';
 import { registraTiro as registraTiroAvanzamento, correggiTiro as correggiTiroAvanzamento, liberaTiri as liberaTiriAvanzamento, registraDaEvento as tiriDaEvento, classeBloccata, tiriPerVoce } from '../tiri-avanzamento.js';
 import { segnaModalitaMaster, modalitaMasterDi, esciModalitaMaster } from './ritorno.js';
+import { fotografia, nuovoPrecedente, chiudiPrecedente, segnaNonAnnullabile, sincronizzaRiferimento, statoAnnulla } from '../annulla-azione.js';
 import { statoSalvataggioMaster, controllaRemoto, revisioneDaScrivere, differenzeSessione, testoScelta, indicatoreCollegamento, impronta } from '../collegamento.js';
 import { messaggioConflittoVersione } from '../stato-tablet.js';
 import { montaStatoTablet, impostaPgAperto, eOffline, impostaRicaricaScheda } from './stato-tablet.js';
@@ -111,8 +112,11 @@ const stato = {
   completa: null, // bozza dei Punti Abilità da completare (regole aggiornate): { punti }. Come «sali».
   sessione: null, // valori attuali della modalità tavolo (src/sessione.js); null finché non si apre la scheda
   calendario: null, // calendario di gioco (src/calendario.js); null = mai attivato
-  // per «Annulla ultima modifica» (una sola, in memoria): { sessione, calendario } di prima
+  // per «Annulla» (src/annulla-azione.js, una sola, in memoria): { prima: { sessione, calendario }, dopo: fotografia, tipo, nonAnnullabile }
   precedenteTavolo: null,
+  // lotto 244: lo stato di riferimento quando non c'è una fotografia (all'apertura o dopo un aggiornamento da fuori): serve a dire che
+  // l'ultima azione non si annulla, invece di tacere
+  annullaBase: null,
   tab: 'identita',
   messaggioScheda: null,
   passo: 0,
@@ -413,6 +417,7 @@ function daIndirizzo() {
     if (stato.cartella && !stato.master) fissaBase(chiaveCoda(salvato, id), stato.scelte, stato.sessione, stato.calendario);
     stato.opzioniStampa = normalizzaOpzioniStampa(salvato.stampa);
     stato.precedenteTavolo = null;
+    stato.annullaBase = fotoStatoApp();
     stato.collegamento.conflitto = null;
     stato.ui.calendario = null;
     stato.ui.attivaCalendario = null;
@@ -650,6 +655,8 @@ async function scriviInCartella(id, { revisione = false, mtime = null } = {}) {
 const INTERVALLO_COLLEGAMENTO_MS = 3000;
 // la scheda a tab del personaggio aperto (non il wizard, «Sali», «Assegna» o la stampa)
 const inScheda = () => !!stato.id && new RegExp(`^#/p/${stato.id}(?:/t/\\w+)?$`).test(location.hash);
+/** Lotto 244: lo stato che conta per l'annullo (src/annulla-azione.js), letto dal modulo e non dalla chiusura della scheda. */
+const fotoStatoApp = () => fotografia({ sessione: stato.sessione, calendario: stato.calendario, scelte: stato.scelte, livelli: stato.livelli });
 const nomeStato = (id) => stato.dati.regole.stati?.elenco?.find((s) => s.id === id)?.nome ?? id;
 
 /** Indicatore in testa alla scheda: si aggiorna sul posto, senza ridisegnare. */
@@ -891,6 +898,7 @@ async function ricaricaDaCartella(v = null) {
   if (stato.cartella && !stato.master) fissaBase(chiaveCoda(ora, id), stato.scelte, stato.sessione, stato.calendario);
   // «Annulla» riporterebbe i valori di prima del master
   stato.precedenteTavolo = null;
+  stato.annullaBase = fotoStatoApp();
   // modalità master: ciò che arriva dalla cartella non è una modifica del master da registrare
   stato.masterVisto = null;
   stato.collegamento.conflitto = null;
@@ -2087,8 +2095,9 @@ function azioniMaster() {
     // valore «a mano» della sessione (Punti Eroe…) impostato dal master, con il motivo
     diretta: ({ campo, valore, motivo }) => {
       stato.masterMotivo = motivo || null;
-      stato.precedenteTavolo = { sessione: stato.sessione, calendario: stato.calendario };
+      stato.precedenteTavolo = nuovoPrecedente({ sessione: stato.sessione, calendario: stato.calendario }, 'master');
       stato.sessione = modificaSessione(stato.sessione, { [campo]: valore }, massimi());
+      { const snap = stato.precedenteTavolo; queueMicrotask(() => { if (stato.precedenteTavolo === snap) chiudiPrecedente(snap, { sessione: stato.sessione, calendario: stato.calendario, scelte: stato.scelte, livelli: stato.livelli }); }); }
       persisti();
       ridisegna();
     },
@@ -2143,6 +2152,7 @@ function azioniMaster() {
       // ciò che l'annullamento rimette non è una nuova modifica da registrare
       stato.masterVisto = istantaneaMaster();
       stato.precedenteTavolo = null;
+      stato.annullaBase = fotoStatoApp();
       persisti();
       ridisegna();
     },
@@ -2260,7 +2270,19 @@ function renderSchedaInterna({ mantieniScorrimento = false } = {}) {
   stato.messaggioScheda = null;
 
   // Ogni modifica di sessione salva subito e tiene da parte lo stato precedente per «Annulla».
-  const ricordaPrecedente = () => { stato.precedenteTavolo = { sessione: stato.sessione, calendario: stato.calendario }; };
+  // lotto 244: la fotografia «di prima» e, appena l'azione sincrona ha finito (microtask), quella «di dopo»: se prima di premere «Annulla»
+  // lo stato è diverso da quella di dopo, è successa un'altra cosa che il pulsante non sa annullare, e non annulla «quella di prima».
+  const fotoStato = () => fotografia({ sessione: stato.sessione, calendario: stato.calendario, scelte: stato.scelte, livelli: stato.livelli });
+  const ricordaPrecedente = (tipo = 'sessione') => {
+    const snap = nuovoPrecedente({ sessione: stato.sessione, calendario: stato.calendario }, tipo);
+    stato.precedenteTavolo = snap;
+    queueMicrotask(() => { if (stato.precedenteTavolo === snap) chiudiPrecedente(snap, fotoStato()); });
+    return snap;
+  };
+  /** Lo stato del pulsante, riletto adesso (la scheda lo chiede a ogni disegno e ai valori vivi). */
+  const leggiAnnulla = () => statoAnnulla(stato.precedenteTavolo, stato.annullaBase, fotoStato(), { differenze: differenzeSessione, nomeStato });
+  /** Un cambiamento che non è un'azione (memoria delle scelte di «Attacca!» e «Lancia!»): il riferimento lo segue. */
+  const senzaAzione = () => { stato.annullaBase = sincronizzaRiferimento(stato.precedenteTavolo, stato.annullaBase, fotoStato()); };
   // Valori vivi (src/ui/vivi.js): PV e PM del personaggio e PM di un cristallo cambiano SENZA ridisegnare la scheda: si
   // aggiornano i soli nodi che li mostrano, così la pagina, il fuoco e la tastiera restano dove sono (tablet vero, 20/10/2026)
   const cambiaVivo = (nuova, chiavi) => {
@@ -2295,7 +2317,8 @@ function renderSchedaInterna({ mantieniScorrimento = false } = {}) {
     sfondo: impostazioni.sfondo,
     ritrattoIntestazione: impostazioni.ritrattoIntestazione,
     filigrana: impostazioni.filigranaCorporazione,
-    puoAnnullareSessione: !!stato.precedenteTavolo,
+    puoAnnullareSessione: leggiAnnulla().attivo,
+    leggiAnnulla,
     // scheda aperta dalla plancia del Tavolo del Master: il pulsante per tornarci (src/ui/ritorno.js)
     tornaAlTavolo: arrivoDalTavolo(sessionStorage, stato.id) ? () => { tornaAlTavolo(sessionStorage); vai('#/tavolo'); } : null,
     // scheda aperta dalla mappa di battaglia: il pulsante grande per tornarci (src/ui/ritorno.js)
@@ -2407,6 +2430,8 @@ function renderSchedaInterna({ mantieniScorrimento = false } = {}) {
         if (!confirm(`Nuova sessione: PV e PM tornano ai massimi, Stati, Ferite e Affaticamento si azzerano, il Round torna a 1 senza Tecniche attive, gli usi «per sessione» tornano disponibili (A.233)${capolavori ? `, compres${capolavori === 1 ? 'o 1 Capolavoro' : `i ${capolavori} Capolavori`} (A.259)` : ''}. Note, Punti Eroe, Distintivi e gli altri usi restano. Procedere?`)) return;
         if (capolavori) stato.scelte = applicaModifica(stato.scelte, { equipaggiamento: rinnovaCapolavori(stato.scelte.equipaggiamento) }, stato.dati).scelte;
         cambiaSessione(nuovaSessione(stato.sessione, massimi));
+        // lotto 244: i Capolavori rinnovati stanno nelle scelte (sulle voci degli oggetti): «Annulla» non li rimetterebbe com'erano
+        if (capolavori) segnaNonAnnullabile(stato.precedenteTavolo, 'ha rinnovato l\u2019uso dei Capolavori degli oggetti, che questo pulsante non rimette');
         // lotto 196: «Nuova sessione» è il momento in cui la serata finisce, quindi è il momento dell'istantanea
         // dello stato per Marcello (src/ui/salvataggio.js). Non blocca e non avvisa: se la cartella non è impostata
         // lo dice il server nella sua finestra, una volta.
@@ -2427,9 +2452,17 @@ function renderSchedaInterna({ mantieniScorrimento = false } = {}) {
         return { prova: r.prova };
       },
       annullaSessione: () => {
-        if (!stato.precedenteTavolo) return;
-        ({ sessione: stato.sessione, calendario: stato.calendario } = stato.precedenteTavolo);
+        // lotto 244: si ricontrolla al momento di premere. Solo l'ultima azione, solo se il pulsante sa rimetterla com'era; mai più indietro.
+        const ora = leggiAnnulla();
+        if (!ora.attivo) {
+          // spento: non fa niente, ma dice perché (mai inerte in silenzio)
+          if (!ora.vuoto) stato.messaggioScheda = { tipo: 'attenzione', testo: ora.motivo };
+          renderScheda({ mantieniScorrimento: true });
+          return;
+        }
+        ({ sessione: stato.sessione, calendario: stato.calendario } = stato.precedenteTavolo.prima);
         stato.precedenteTavolo = null;
+        stato.annullaBase = fotoStato();
         persisti();
         renderScheda({ mantieniScorrimento: true });
       },
@@ -2504,6 +2537,7 @@ function renderSchedaInterna({ mantieniScorrimento = false } = {}) {
       // «Spara» sì, così «Annulla» lo copre
       ricordaAttacco: (uid, scelte) => {
         stato.sessione = modificaSessione(stato.sessione, { attacchi: { ...(stato.sessione?.attacchi ?? {}), [uid]: scelte } }, massimi);
+        senzaAzione(); // la memoria delle scelte non è un'azione: non toglie l'annullo a quella di prima
         persisti();
         renderScheda({ mantieniScorrimento: true });
       },
@@ -2519,6 +2553,7 @@ function renderSchedaInterna({ mantieniScorrimento = false } = {}) {
       // pannello «Lancia!»: come per l'attacco, le scelte si ricordano senza diventare l'ultima modifica
       ricordaLancio: (nome, scelte) => {
         stato.sessione = modificaSessione(stato.sessione, { lanci: { ...(stato.sessione?.lanci ?? {}), [nome]: scelte } }, massimi);
+        senzaAzione();
         persisti();
         renderScheda({ mantieniScorrimento: true });
       },
@@ -2617,7 +2652,7 @@ function renderSchedaInterna({ mantieniScorrimento = false } = {}) {
       azzeraUsoTalento: (chiave) => cambiaSessione(azzeraUsoSessione(stato.sessione, chiave, massimi)),
       convertiDistintivi: () => cambiaSessione(convertiDistintivi(stato.sessione, massimi)),
       // le note si salvano a ogni tasto; l'annullamento riporta al testo di prima della modifica
-      inizioNote: ricordaPrecedente,
+      inizioNote: () => ricordaPrecedente('note'),
       // calendario: ogni modifica (note, «Avanza», attivazione) salva ed è annullabile
       cambiaCalendario: (nuovo, { tab: vaiA = null } = {}) => {
         if (!nuovo) return;
@@ -2666,6 +2701,8 @@ function renderSchedaInterna({ mantieniScorrimento = false } = {}) {
       },
       note: (testo) => {
         stato.sessione = modificaSessione(stato.sessione, { note: testo }, massimi);
+        // la digitazione è un'unica azione: la fotografia l'ha scattata inizioNote, e il riferimento «di dopo» segue le battute
+        if (stato.precedenteTavolo?.tipo === 'note' && stato.precedenteTavolo.dopo) stato.precedenteTavolo.dopo.sessione = stato.sessione;
         persisti();
       },
       // equipaggiamento: modificabile anche con livelli acquisiti (campo descrittivo della creazione)
@@ -2807,6 +2844,7 @@ function renderSchedaInterna({ mantieniScorrimento = false } = {}) {
       // A.245: i PI di una cella; a 0 PI è distrutta, esce dalle scorte utilizzabili e l'evento va nello storico
       variaPiCella: (uid, quale, delta, nome) => {
         const r = variaPiCellaArma(stato.sessione, uid, quale, delta, massimi);
+        ricordaPrecedente(); // lotto 244: i PI di una cella sono un valore di sessione: si annullano come gli altri
         stato.sessione = r.sessione;
         if (r.distrutta) stato.sessione = rigaStorico(stato.sessione, `Cella distrutta (0 PI, A.245): ${nome ?? 'una cella'} — fuori dalle scorte utilizzabili, normalmente non riparabile.`);
         persisti();
@@ -2814,6 +2852,7 @@ function renderSchedaInterna({ mantieniScorrimento = false } = {}) {
       },
       separaCella: (uid, scortaUid, nome) => {
         const r = separaCellaArma(stato.sessione, uid, scortaUid, 1, massimi);
+        ricordaPrecedente();
         stato.sessione = r.sessione;
         if (r.cella) stato.sessione = rigaStorico(stato.sessione, `Cella danneggiata (A.245): ${nome ?? 'una cella'} separata dalla pila, ${r.cella.pi} PI.`);
         persisti();
