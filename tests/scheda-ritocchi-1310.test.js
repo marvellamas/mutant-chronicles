@@ -90,10 +90,13 @@ test('nel riquadro laterale «Punti Magia» ci sono anche gli Artefatti con PM, 
   // PM attuali su massimi e i tasti per spendere o ricaricare, come nella tab Artefatti
   assert.match(blocco.textContent, /\d+ \/ \d+/);
   const tasti = righe[0].tutti().filter((n) => n.tagName === 'BUTTON');
-  assert.deepEqual(tasti.map((b) => b.textContent), ['−1', '+1', 'Applica']); // 19/10: più il campo ±N con «Applica»
-  // non si sommano ai PM del personaggio
+  // lotto 244: nella colonna solo l'essenziale — nome, barra, simbolo del tipo e i tastini; niente inserimento manuale (resta nel tab Artefatti)
+  assert.deepEqual(tasti.map((b) => b.textContent), ['−1', '+1']);
+  assert.ok(!righe[0].tutti().some((n) => n.className?.includes('campo-variazione-pm')), 'niente campo ±N nella colonna');
+  assert.doesNotMatch(righe[0].textContent, /sintonizz| · Chroma |Scarico/i, 'né la sintonizzazione né il tipo a parole');
+  // non si sommano ai PM del personaggio: il titolo del gruppo li tiene distinti, la nota lunga sta nel tab Poteri e Artefatti
   const pm = r.classe('riquadro-pm')[0];
-  assert.match(pm.textContent, /non si sommano ai PM personali/);
+  assert.match(pm.textContent, /Artefatti con PM/);
   assert.match(pm.tutti().find((n) => n.className === 'valore-tavolo').textContent, new RegExp(`^${conArtefatti.sessione.pmAttuali} / ${conArtefatti.massimi.pm}$`));
 });
 

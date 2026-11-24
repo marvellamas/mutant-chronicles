@@ -1038,12 +1038,13 @@ function cristalliCompatti(ctx) {
   const pm = tutti.filter((x) => x.unita !== 'CM');
   const cm = tutti.filter((x) => x.unita === 'CM');
   return h('div', { class: 'cristalli cristalli-compatti' },
+    // lotto 244: nella colonna solo l'essenziale — nome, simbolo colorato del tipo, barra della carica e i tastini − e + col valore
+    // attuale / totale. Sintonizzazione, tipo a parole, note e inserimento manuale si leggono nel tab Artefatti. I titoli dei due
+    // gruppi restano (distinguono i PM dalle Cariche Mistiche, che non sono PM); le note lunghe sotto i titoli no.
     pm.length ? [h('h4', {}, 'Artefatti con PM'),
-      h('p', { class: 'nota' }, 'Riserve separate: non si sommano ai PM personali.'),
-      h('ul', { class: 'elenco-cristalli' }, pm.map((x) => h('li', {}, rigaCristallo(ctx, x))))] : null,
+      h('ul', { class: 'elenco-cristalli' }, pm.map((x) => h('li', {}, rigaCristallo(ctx, x, { compatto: true }))))] : null,
     cm.length ? [h('h4', {}, 'Cariche Mistiche (CM) degli oggetti'),
-      h('p', { class: 'nota' }, 'Solo per gli effetti del loro oggetto: non sono PM, non pagano Incantesimi e non sono cariche NEC.'),
-      h('ul', { class: 'elenco-cristalli' }, cm.map((x) => h('li', {}, rigaCristallo(ctx, x))))] : null);
+      h('ul', { class: 'elenco-cristalli' }, cm.map((x) => h('li', {}, rigaCristallo(ctx, x, { compatto: true }))))] : null);
 }
 
 /**
@@ -1072,7 +1073,7 @@ function riquadroPM(ctx) {
       h('h4', {}, 'Cristalli e riserve di Chroma'),
       h('p', { class: 'nota' }, 'Riserve separate: non si sommano ai PM personali.'),
       notaConversione,
-      h('ul', { class: 'elenco-cristalli' }, contenitori.map((c) => h('li', {}, rigaCristallo(ctx, c))))) : notaConversione,
+      h('ul', { class: 'elenco-cristalli' }, contenitori.map((c) => h('li', {}, rigaCristallo(ctx, c, { manuale: false })))) /* lotto 244: nel tab Poteri si usano i tastini; l'inserimento manuale resta nel tab Artefatti */) : notaConversione,
   });
 }
 
@@ -2934,7 +2935,7 @@ function testoAlimenta(c) {
  * A 0 PM il cristallo è «scarico» e conserva colore e capacità (Magia 1.19 §6; la 1.11 lo chiamava «Trasparente»). L'«Esausto neutro» è un altro stato: non si ricarica più. I contenitori non trasportati o non
  * sintonizzati sono in grigio.
  */
-function rigaCristallo(ctx, c) {
+function rigaCristallo(ctx, c, { compatto = false, manuale = true } = {}) {
   const chiave = `chroma:${c.uid}`;
   const leggi = () => ctx.sessione.chroma?.[c.uid]?.pmAttuali ?? 0;
   const pm = leggi();
@@ -2955,7 +2956,7 @@ function rigaCristallo(ctx, c) {
   const da = ctx.sessione.chroma?.[c.uid]?.daConvertire;
   const stato = (x) => (x === 0 ? `Scarico (colore ${c.energia})` : `Chroma ${c.energia}`) + (c.unita === 'CM' ? ' · Cariche Mistiche (CM)' : '') + (da ? ' · riserva da convertire (A.193)' : '') + (pronto ? '' : c.sintonizzato ? ' · non trasportato' : ' · non sintonizzato');
   const punto = h('span', { class: `chroma-punto chroma-${c.energia.toLowerCase()}${esausto ? ' esausto' : ''}`, 'aria-hidden': 'true' });
-  const sigla = h('small', { class: 'sigla' }, ` · ${stato(pm)}`);
+  const sigla = h('small', { class: 'sigla' }, ` · ${stato(pm)}`); // nella riga compatta non si disegna: serve solo al valore vivo
   const bm = pulsante(-1);
   const bp = pulsante(1);
   // valore vivo (src/ui/vivi.js): numero, barra, alone e tasti di QUESTA riga si aggiornano; nient'altro si tocca
@@ -2968,11 +2969,11 @@ function rigaCristallo(ctx, c) {
   // 27/10 (lotto 129, parte D): «Ricarica dalla Matrice» anche da qui, non solo dalla tab Artefatti — stesso
   // pannello (ricaricaMatriceUi), un solo calcolo; un tocco lo apre o lo richiude, per non allungare la riga.
   const apertaRicarica = c.matrice && (ctx.ui.ricaricaSidebar ??= {})[c.uid];
-  return h('div', { class: `riga-cristallo${pronto ? '' : ' inattivo'}` },
+  return h('div', { class: `riga-cristallo${pronto || compatto ? '' : ' inattivo'}${compatto ? ' compatta' : ''}` },
     h('div', { class: 'cristallo-testa' },
       punto,
-      h('span', { class: 'cristallo-nome' }, c.nome, sigla),
-      c.matrice ? h('button', {
+      h('span', { class: 'cristallo-nome' }, c.nome, compatto ? null : sigla),
+      c.matrice && !compatto ? h('button', {
         type: 'button', class: 'btn btn-piccolo btn-ricarica-matrice', title: 'Ricarica dalla Matrice',
         onclick: () => { ctx.ui.ricaricaSidebar[c.uid] = !apertaRicarica; ctx.azioni.ridisegna(); },
       }, '⚡') : null),
@@ -2980,8 +2981,8 @@ function rigaCristallo(ctx, c) {
       barraRisorsa(ctx, '', pm, c.capacita, { viva: { chiave, leggi }, unita: c.unita === 'CM' ? 'CM' : '' }),
       bm, bp),
     // 19/10: più PM in un colpo solo: «5» o «+5» aggiungono, «-3» tolgono (il tocco da ±1 resta)
-    campoVariazionePm(ctx, c),
-    apertaRicarica ? ricaricaMatriceUi(ctx, c) : null);
+    manuale && !compatto ? campoVariazionePm(ctx, c) : null,
+    apertaRicarica && !compatto ? ricaricaMatriceUi(ctx, c) : null);
 }
 /**
  * Campo «±N» accanto ai tocchi da ±1: recuperare 12 PM a tocchi da 1 è una pena. Invio o «Applica»; il valore finale
@@ -3160,8 +3161,10 @@ function schedaContenitore(ctx, c) {
       c.scheggia ? 'Scheggia instabile: SnT 0, non si sintonizza; ogni prelievo richiede una Prova di Potere di estrazione (Magia §26.5)'
         : c.sintonizzato ? `✔ Sintonizzato (SnT ${c.costo}, §7.10)` : `○ Non sintonizzato (SnT ${c.costo}): senza sintonizzazione non alimenta lanci`,
       ' · ', c.trasportato ? 'trasportato' : c.integrato ? `oggetto ${NOMI_STATI[c.stato]?.toLowerCase() ?? 'non trasportato'}` : 'nello zaino'),
-    // vista estesa, in sola lettura: i PM si modificano nel riquadro Punti Magia
+    // vista estesa: la carica viva e, **qui e solo qui**, l'inserimento manuale (lotto 244: nella colonna di sinistra e nel tab Poteri
+    // si usano i tastini − e +; chi deve mettere o togliere più PM in un colpo solo viene a questa scheda)
     pannelloChroma(ctx, c, { conPulsanti: false }),
+    campoVariazionePm(ctx, c),
     ricaricaMatriceUi(ctx, c));
 }
 

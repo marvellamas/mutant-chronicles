@@ -109,15 +109,19 @@ test('«torna in cima»: pulsante fisso fuori dal flusso, nascosto in stampa, so
 
 test('PM di un cristallo: il campo ±N chiama l’azione con la variazione scritta, e il tocco ±1 resta', async () => {
   const { contesto, resa, clic, ESEMPI } = await import('./scheda-aiuti.js');
-  const c = ESEMPI.map((f) => contesto(f, { attiva: 'combattimento' })).find((x) => (x.tab.scheda.equipaggiamento?.contenitori ?? []).length);
+  // lotto 244: l'inserimento manuale sta solo nel tab Artefatti (nella colonna e nel tab Poteri si usano i tastini)
+  const c = ESEMPI.map((f) => contesto(f, { attiva: 'artefatti' })).find((x) => (x.tab.scheda.equipaggiamento?.contenitori ?? []).length);
   assert.ok(c, 'serve un PG d’esempio con un contenitore di Chroma');
   const r = resa(c);
-  const riga = r.classe('riga-cristallo')[0];
+  const nomeCont = c.tab.scheda.equipaggiamento.contenitori[0].nome;
+  const riga = r.classe('contenitore-tab').find((x) => x.textContent.includes(nomeCont) && x.tutti().some((n) => n.className?.includes('campo-variazione-pm')));
+  assert.ok(riga, 'nel tab Artefatti l’inserimento manuale c’è');
+  const rigaTastini = r.classe('riga-cristallo').find((x) => x.textContent.includes(nomeCont)); // i tastini − e + stanno nella riga compatta
   const campo = riga.tutti().find((n) => n.className?.includes('campo-variazione-pm'));
   assert.ok(campo, 'il campo c’è accanto ai tocchi');
   const applica = riga.tutti().find((n) => n.tagName === 'BUTTON' && n.textContent === 'Applica');
   // ±1 invariato
-  const piu1 = riga.tutti().find((n) => n.tagName === 'BUTTON' && n.textContent === '+1');
+  const piu1 = rigaTastini.tutti().find((n) => n.tagName === 'BUTTON' && n.textContent === '+1');
   clic(piu1);
   const [, uid, uno] = c.chiamate.at(-1);
   assert.equal(uno, 1);

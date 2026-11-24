@@ -33,6 +33,8 @@ const nodi = (r, f) => r.radice.tutti().filter(f);
 /** I nodi che non stanno dentro una zona viva (che per definizione si ricostruisce se il suo testo cambia). */
 const fuoriDalleZone = (r) => { const dentro = new Set(nodi(r, (n) => /regione-viva|riga-chroma-viva/.test(n.className ?? '')).flatMap((z) => z.tutti())); return r.radice.tutti().filter((n) => !dentro.has(n)); };
 const cristallo = (r, parte) => nodi(r, (n) => n.className?.startsWith('riga-cristallo')).find((n) => n.textContent.includes(parte));
+/** Lotto 244: la riga con l'inserimento manuale (campo ±N e «Applica») sta solo nel tab Artefatti; in colonna e in Poteri la riga ha i soli tastini. */
+const contenitoreTab = (r, parte) => nodi(r, (n) => n.className?.includes('contenitore-tab') && n.tutti().some((x) => x.className?.includes('campo-variazione-pm'))).find((n) => n.textContent.includes(parte));
 
 test('PM del personaggio: lo stesso nodo cambia numero, barra e tasti; nessun nodo viene sostituito', () => {
   const c = ctxCon();
@@ -75,11 +77,13 @@ test('PV: stesso comportamento, nella testata e nel riquadro', () => {
 });
 
 test('cristallo: numero, barra, alone e tasti di quella riga cambiano; la riga e il campo ±N restano gli stessi nodi', () => {
-  const c = ctxCon();
+  const c = ctxCon([ROSSO], 'artefatti');
   const r = resa(c);
-  const riga = cristallo(r, 'Batteria Matrice');
+  const riga = cristallo(r, 'Batteria Matrice'); // la riga compatta della colonna: nome, barra, simbolo e tastini
   assert.ok(riga);
-  const campo = riga.tutti().find((n) => n.className?.includes('campo-variazione-pm'));
+  const art = contenitoreTab(r, 'Batteria Matrice'); // la scheda del tab Artefatti: carica viva e inserimento manuale
+  assert.ok(art, 'nel tab Artefatti la scheda del contenitore ha l’inserimento manuale');
+  const campo = art.tutti().find((n) => n.className?.includes('campo-variazione-pm'));
   const barra = riga.tutti().find((n) => n.className === 'barra-traccia');
   const punto = riga.tutti().find((n) => n.className?.includes('chroma-punto'));
   const prima = fuoriDalleZone(r);
@@ -88,13 +92,13 @@ test('cristallo: numero, barra, alone e tasti di quella riga cambiano; la riga e
   cambia(c, (s) => ({ chroma: { ...s.chroma, rosso: { pmAttuali: 0 } } }), ['chroma:rosso']);
   assert.equal(barra.getAttribute('aria-valuenow'), '0');
   assert.match(punto.className, /esausto/);
-  // lotto 211: la Magia 1.19 (§6) chiama «scarico» un cristallo a 0 PM che conserva il colore; «Trasparente» era la parola della 1.11
-  assert.match(riga.textContent, /Scarico \(colore Rosso\)/);
+  // lotto 211: la Magia 1.19 (§6) chiama «scarico» un cristallo a 0 PM che conserva il colore: la parola sta nella riga del tab Poteri
+  // (vedi sotto); la riga compatta della colonna non ha il tipo a parole (lotto 244)
   assert.equal(riga.tutti().find((n) => n.tagName === 'BUTTON' && n.getAttribute('aria-label')?.startsWith('Togli 1')).disabled, true);
   cambia(c, (s) => ({ chroma: { ...s.chroma, rosso: { pmAttuali: 7 } } }), ['chroma:rosso']);
   assert.equal(barra.getAttribute('aria-valuenow'), '7');
   assert.doesNotMatch(punto.className, /esausto/);
-  assert.match(riga.textContent, /Chroma Rosso/);
+  assert.doesNotMatch(riga.textContent, /Scarico \(colore| · Chroma |sintonizz/i, 'la riga compatta ha il nome, la barra e i tastini: niente stato a parole');
   // stessi nodi, e il campo conserva il testo scritto
   const dopo = new Set(r.radice.tutti());
   assert.ok(prima.every((n) => dopo.has(n)), 'nessun nodo sostituito fuori dalle zone vive');
@@ -104,12 +108,28 @@ test('cristallo: numero, barra, alone e tasti di quella riga cambiano; la riga e
   assert.ok(altra.length >= 1);
 });
 
-test('«Applica» e Invio: l’azione parte, il fuoco resta nel campo con il testo selezionato, il testo non si cancella', () => {
-  const c = ctxCon();
+test('la riga del tab Poteri (non compatta) dice ancora il tipo e lo stato a parole, e la riga della colonna no (lotto 244)', () => {
+  const c = ctxCon([ROSSO], 'poteri');
   const r = resa(c);
-  const riga = cristallo(r, 'Batteria Matrice');
-  const campo = riga.tutti().find((n) => n.className?.includes('campo-variazione-pm'));
-  const applica = riga.tutti().find((n) => n.tagName === 'BUTTON' && n.textContent === 'Applica');
+  const righe = nodi(r, (n) => n.className?.startsWith('riga-cristallo') && n.textContent.includes('Batteria Matrice'));
+  const compatta = righe.find((n) => n.className.includes('compatta'));
+  const estesa = righe.find((n) => !n.className.includes('compatta'));
+  assert.ok(compatta && estesa, 'una riga nella colonna e una nel riquadro dei Punti Magia');
+  assert.match(estesa.textContent, / · Chroma Rosso/);
+  assert.ok(!estesa.tutti().some((n) => n.className?.includes('campo-variazione-pm')), 'nel tab Poteri niente inserimento manuale: si usano i tastini');
+  assert.ok(estesa.tutti().filter((n) => n.tagName === 'BUTTON').map((b) => b.textContent).join().includes('+1'), 'i tastini ci sono');
+  assert.doesNotMatch(compatta.textContent, / · Chroma |sintonizz/i);
+  cambia(c, (s) => ({ chroma: { ...s.chroma, rosso: { pmAttuali: 0 } } }), ['chroma:rosso']);
+  assert.match(estesa.textContent, /Scarico \(colore Rosso\)/);
+});
+
+test('«Applica» e Invio: l’azione parte, il fuoco resta nel campo con il testo selezionato, il testo non si cancella', () => {
+  const c = ctxCon([ROSSO], 'artefatti');
+  const r = resa(c);
+  const art = contenitoreTab(r, 'Batteria Matrice');
+  assert.ok(art, 'nel tab Artefatti l’inserimento manuale c’è');
+  const campo = art.tutti().find((n) => n.className?.includes('campo-variazione-pm'));
+  const applica = art.tutti().find((n) => n.tagName === 'BUTTON' && n.textContent === 'Applica');
   let fuochi = 0;
   let selezioni = 0;
   campo.focus = () => { fuochi++; };
