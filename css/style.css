@@ -615,6 +615,10 @@ dl.voci.in-linea dt::after { content: ":"; }
 
 .incantesimo-scheda { break-inside: avoid; margin: 0.75rem 0 1rem; }
 .incantesimo-scheda h4 { margin: 0 0 0.2rem; }
+/* lotto 243: l'effetto dell'incantesimo per primo e in evidenza (barra e fondo del colore della macrofamiglia); le regole di lancio dopo */
+.effetto-incantesimo { margin: 0.35rem 0 0.5rem; padding: 0.4rem 0.6rem; border-left: 4px solid var(--macro, var(--accento, var(--bordo))); background: var(--macro-tenue, var(--accento-tenue, transparent)); border-radius: 0 6px 6px 0; font-size: 1rem; line-height: 1.4; color: var(--testo); }
+.effetto-incantesimo .etichetta-effetto { display: block; font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--macro-testo, var(--tenue)); }
+.effetto-incantesimo p { margin: 0.15rem 0 0; }
 /* Lotto 242: l'indice degli incantesimi conosciuti (un indice, non una seconda scheda: più nomi per riga) e il salto, che porta la
    scheda in cima a quello che si vede, sotto le fasce ferme in alto (--alto-fasce, lotto 177) */
 .incantesimo-scheda { scroll-margin-top: calc(var(--alto-fasce, 0px) + 0.5rem); }

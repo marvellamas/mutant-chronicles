@@ -300,9 +300,12 @@ export function apriScheda(nome) {
     h('header', { class: 'pannello-testa' },
       h('h2', { id: 'pannello-titolo' }, s.titolo, macro ? ' ' : null, pallini(incantesimoDi(nome)?.livello_base), ' ', etichettaMacro(macro)),
       h('button', { type: 'button', class: 'btn tondo chiudi', 'aria-label': 'Chiudi', onclick: () => pannello.close() }, '×')),
+    // lotto 243: l'effetto per primo e in evidenza (il campo `descrizione` intero); le regole di lancio dopo. Senza un effetto
+    // affidabile nei dati (vuoto, TODO) la scheda resta com'era e non evidenzia niente
+    s.effetto ? h('div', { class: 'effetto-incantesimo', role: 'note' }, h('strong', { class: 'etichetta-effetto' }, 'Effetto'), paragrafi(s.effetto)) : null,
     h('p', { class: 'tooltip-sottotitolo' }, s.intestazione),
     paragrafi(s.lancio),
-    paragrafi(s.descrizione),
+    s.effetto ? null : paragrafi(s.descrizione),
     s.tabellaMancante ? h('p', { class: 'nota' }, 'Tabella delle versioni non disponibile nei dati (TODO): consulta il manuale.') : null,
     s.tabelle.map((t) => h('section', {},
       t.titolo ? h('h3', {}, t.titolo) : null,

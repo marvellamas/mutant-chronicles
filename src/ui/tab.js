@@ -13,6 +13,7 @@ import { tabellaRecuperoPm, tabellaRecuperoPv } from './tabelle.js';
 import { incantesimiDaOggetti, incantesimoDiOggetto, attivazioneOggetto } from '../incantesimi-artefatti.js';
 import { pannelloMedita, pulsanteMedita } from './medita.js';
 import { aggiungiIncantesimoAMano, incantesimoPerId, cercaIncantesimi, togliIncantesimoAMano, avvisoLivelloAMano, origini, tipi as tipiAMano, tipoDi as tipoAMano, fraseTipo, classificaIncantesimoAMano, dataLeggibile, rigaRegistro as rigaRegistroAMano } from '../incantesimi-a-mano.js';
+import { effettoIncantesimo } from '../descrizioni.js';
 import { fasciaMaster, toccoMaster, notaCorrezione, sezioneRegistro, conMotivoMaster, bloccoLivelloMaster } from './master.js';
 import { pulsanteSpostaPunti } from './sposta-punti.js';
 import { pulsanteSchermoIntero } from './schermo-intero.js';
@@ -3490,6 +3491,9 @@ function articoloIncantesimo(ctx, i, nomeMacro) {
         ? h('button', { type: 'button', class: 'btn btn-piccolo', title: 'Toglie l’incantesimo dalla scheda (non cambia le quote)', onclick: () => chiediTogliAMano(ctx, { nome: i.nome, origine: agg.origine, quando: agg.quando }) }, 'Togli')
         : [dalLivello ? h('button', { type: 'button', class: 'btn btn-piccolo', title: 'Lo sostituisce con un altro incantesimo', onclick: () => { Object.assign(ctx.ui.incantesimoAMano ??= {}, { sostituisce: { nome: i.nome, livello: dalLivello.livello }, aperto: true, cerca: '', id: null, esito: null, errore: null }); ctx.azioni.ridisegna(); } }, 'Sostituisci') : null,
           h('button', { type: 'button', class: 'btn btn-piccolo', title: 'Toglie l’incantesimo dal personaggio', onclick: () => chiediTogliIncantesimoScelto(ctx, i.nome) }, 'Togli')]),
+    // lotto 243: l'effetto per primo e in evidenza (il campo `descrizione` intero, mai una frase scelta per posizione); senza un effetto
+    // affidabile nei dati niente evidenza. Le regole di lancio (intestazione e Lancio) vengono dopo.
+    effettoIncantesimo(i) ? h('div', { class: 'effetto-incantesimo', role: 'note' }, h('strong', { class: 'etichetta-effetto' }, 'Effetto'), h('p', {}, effettoIncantesimo(i))) : null,
     dalLivello ? h('p', { class: 'piccolo origine-aggiunto' }, h('strong', {}, dalLivello.da ? `Da ${dalLivello.da}` : 'Imparato'), ` al ${dalLivello.livello}° livello.`) : null,
     agg ? h('p', { class: 'piccolo origine-aggiunto' }, h('strong', {}, agg.etichetta ?? agg.origine), ` · ${agg.origine} il ${dataLeggibile(agg.quando)}`, agg.nota ? ` · ${agg.nota}` : '', ' · fuori dalle quote di Classe.') : null,
     agg?.frase ? h('p', { class: 'piccolo' }, agg.frase) : null,
@@ -3526,6 +3530,8 @@ function schedaDaOggetto(ctx, e) {
         type: 'button', class: `btn primario btn-attacca${a?.motivo ? ' con-avviso' : ''}`, disabled: !inc || !riga, title: a?.motivo ?? (inc ? null : 'incantesimo non più nel catalogo'),
         onclick: () => { ctx.ui.lancio = { nome: e.incantesimo, passo: 0, da: e.chiave }; ctx.azioni.ridisegna(); },
       }, 'Lancia!')),
+    // lotto 243: anche la scheda di un incantesimo che arriva da un oggetto ha l'effetto per primo (lo stesso campo, lo stesso criterio)
+    effettoIncantesimo(inc) ? h('div', { class: 'effetto-incantesimo', role: 'note' }, h('strong', { class: 'etichetta-effetto' }, 'Effetto'), h('p', {}, effettoIncantesimo(inc))) : null,
     h('p', { class: 'piccolo' }, consumabile
       ? `Consumabile: ${a.pm} PM sigillati (non sono PM tuoi) · ${a.tempo} · si consuma al completamento (Magia §27.1).`
       : `${a?.pm ?? '—'} PM ${a?.universale ? 'dalla riserva e, se non bastano, personali' : 'dalla riserva interna'} · ${a?.tempo ?? '—'} · senza Prova di Potere (Magia §24.2).`),

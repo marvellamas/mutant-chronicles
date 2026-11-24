@@ -56,11 +56,11 @@ test('tooltip Caratteristica: se Davide scrive la descrizione, compare quella', 
 
 // --- tooltip: Incantesimo -----------------------------------------------------------------
 
-test('tooltip Incantesimo: intestazione, lancio, descrizione e sola riga del livello base', () => {
+test('tooltip Incantesimo: intestazione, effetto PER PRIMO (lotto 243), poi il lancio, e sola riga del livello base', () => {
   const c = contenutoTooltip('incantesimo', 'Colpo Elementale', dati);
-  assert.match(c.sottotitolo, /^Scheda 13\.1 • Macrofamiglia Fisica • Specializzazione Elementi/);
-  assert.match(c.sezioni[0].testo, /^Lancio: 1 AP\./);
-  assert.match(c.sezioni[1].testo, /^Un colpo concentrato di energia elementale/);
+  assert.match(c.sottotitolo, /^Scheda 13.1 • Macrofamiglia Fisica • Specializzazione Elementi/);
+  assert.match(c.sezioni[0].testo, /^Un colpo concentrato di energia elementale/); // lotto 243: l'effetto per primo
+  assert.match(c.sezioni[1].testo, /^Lancio: 1 AP./);
   assert.equal(c.tabella.righe.length, 1);
   assert.deepEqual(c.tabella.righe[0], {
     Livello: '1', PM: '1', 'Gittata Q': '6', Colpi: '1', 'Danno per colpo': '1d6', Natura: 'Naturale', 'Elementi max': '1', 'Mod PS': '0',

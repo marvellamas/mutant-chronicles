@@ -266,13 +266,25 @@ function tooltipIncantesimo(nome, dati) {
     tipo: 'incantesimo',
     titolo: i.nome,
     sottotitolo: i.intestazione ?? `Scheda ${i.scheda} • ${i.macrofamiglia} • ${i.specializzazione}`,
+    // lotto 243: l'effetto per primo, poi le regole di lancio
     sezioni: [
-      { etichetta: null, testo: descrizioneOAvviso(i.lancio) },
       { etichetta: null, testo: descrizioneOAvviso(i.descrizione) },
+      { etichetta: null, testo: descrizioneOAvviso(i.lancio) },
     ],
     tabella: riga ? { titolo: `Livello base ${i.livello_base}`, colonne: Object.keys(riga), righe: [riga] } : null,
     apriScheda: true,
   };
+}
+
+/**
+ * Lotto 243: l'EFFETTO di un incantesimo, da leggere per primo. Nei dati è il campo `descrizione` (il paragrafo della scheda del manuale che
+ * dice che cosa fa), distinto da `intestazione` (Scheda, Macrofamiglia, Rituale, PM utilizzabili) e da `lancio` (le regole di lancio): su
+ * 90 schede su 90 è presente e non vuoto. **Si usa il campo intero, mai una frase scelta per posizione.** Se il campo manca, è vuoto o è un
+ * TODO, torna null e la scheda resta com'era, senza evidenza: una frase evidenziata sbagliata è peggio di nessuna evidenza.
+ */
+export function effettoIncantesimo(i) {
+  const t = typeof i?.descrizione === 'string' ? i.descrizione.trim() : '';
+  return t && !eTodo(t) ? t : null;
 }
 
 function descrizioneOAvviso(testo) {
@@ -296,6 +308,7 @@ export function schedaIncantesimo(nome, dati) {
     intestazione: i.intestazione ?? '',
     lancio: descrizioneOAvviso(i.lancio),
     descrizione: descrizioneOAvviso(i.descrizione),
+    effetto: effettoIncantesimo(i),
     livelloBase: i.livello_base,
     tabelle,
     tabellaMancante: !tabelle.length || eTodo(i.versioni),
