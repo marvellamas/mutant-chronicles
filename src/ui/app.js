@@ -32,7 +32,7 @@ import { comunicaAvanzamento, togliAvanzamento, leggiMomento, attoCampagna, serv
 import { bozzaDi, impostaBozza, leggiBozzaSalvata, salvaBozza } from '../bozza-adeguamento.js';
 import { confermaScadenzaVincolo } from '../pietre-di-luna.js';
 import { confermaAssegnazione, assegna as assegnaAdeguamento, adeguamentoAperto, puntiDellEvento, conPunti } from '../adeguamento-abilita.js';
-import { modalitaMaster, mostraMarchio, statoContestoMaster, registro as registroMaster, nuovaCorrezione, aggiungiCorrezione, annullaCorrezione, avvisoAnnulla, registraDiretta, differenzeDirette, differenzeOggetti, ripristinoDiretta, descriviScelte, soloScelte, ripristinaScelte, masterDiverso, normalizzaCircostanzeMaster } from '../correzioni-master.js';
+import { modalitaMaster, mostraMarchio, statoContestoMaster, registro as registroMaster, nuovaCorrezione, aggiungiCorrezione, annullaCorrezione, avvisoAnnulla, registraDiretta, nascondiNote, differenzeDirette, differenzeOggetti, ripristinoDiretta, descriviScelte, soloScelte, ripristinaScelte, masterDiverso, normalizzaCircostanzeMaster } from '../correzioni-master.js';
 import { descriviVoce, postiTalenti, applicaSceltaTalento, eccezioneSpecializzazione, scelteSuccessive, applicaSceltaSuccessiva, adattaScelteSuccessive } from '../avanzamento.js';
 import { riquadroTalenti } from './talenti-scelta.js';
 import { registraTiro as registraTiroAvanzamento, correggiTiro as correggiTiroAvanzamento, liberaTiri as liberaTiriAvanzamento, registraDaEvento as tiriDaEvento, classeBloccata, tiriPerVoce } from '../tiri-avanzamento.js';
@@ -2072,8 +2072,15 @@ function azioniMaster() {
   const massimi = () => massimiAttuali();
   return {
     // correzione applicata dopo il calcolo («Aggiungi / togli N», «Imposta a N»)
-    correggi: ({ chiave, etichetta, tipo, numero, motivo }) => {
-      scriviCorrezioni(aggiungiCorrezione(correzioniAttuali(), nuovaCorrezione({ chiave, etichetta, tipo, numero, motivo })));
+    correggi: ({ chiave, etichetta, tipo, numero, motivo, notaNascosta = false }) => {
+      scriviCorrezioni(aggiungiCorrezione(correzioniAttuali(), nuovaCorrezione({ chiave, etichetta, tipo, numero, motivo, ...(notaNascosta ? { notaNascosta: true } : {}) })));
+      persisti();
+      ridisegna();
+    },
+    // lotto 243: toglie dalla vista (o rimette) le note «Correzione del master» di tutte le correzioni attive; solo il Direttore
+    // (ctx.master), e il server non lascia a un tablet cambiare il registro. Valori e registro non cambiano.
+    nascondiNote: (nascondi) => {
+      scriviCorrezioni(nascondiNote(correzioniAttuali(), nascondi));
       persisti();
       ridisegna();
     },

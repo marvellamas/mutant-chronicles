@@ -5,7 +5,7 @@
 import { h, segno } from './dom.js';
 import { apri } from './finestrella.js';
 
-import { applicaCorrezioni, correzioniDi } from '../correzioni-master.js';
+import { applicaCorrezioni, correzioniDi, statoNote } from '../correzioni-master.js';
 import { propostaConcessione } from '../livello-px.js';
 
 /** Fascia ben visibile in alto: «Modalità master — ogni modifica viene registrata» e «Esci». */
@@ -39,7 +39,7 @@ export function toccoMaster(ctx, voci, { testo = '✎' } = {}) {
  */
 export function apriCorrezione(ctx, voci) {
   const lista = ctx.scelte?.correzioniMaster ?? [];
-  const st = { voce: voci[0], tipo: voci[0].campo ? 'imposta' : 'aggiungi', numero: voci[0].campo ? voci[0].attuale ?? 0 : 0, motivo: '' };
+  const st = { voce: voci[0], tipo: voci[0].campo ? 'imposta' : 'aggiungi', numero: voci[0].campo ? voci[0].attuale ?? 0 : 0, motivo: '', nascondiNota: false };
   return apri('finestrella-master', `Modifica master: ${voci.length === 1 ? voci[0].etichetta : 'scegli il valore'}`, (fine) => {
     const corpo = h('div', { class: 'corpo-master' });
     const disegna = () => {
@@ -72,12 +72,17 @@ export function apriCorrezione(ctx, voci) {
           anteprima !== null && anteprima !== undefined ? [' Risultato: ', h('strong', {}, String(anteprima))] : null),
         h('label', { class: 'finestrella-campo' }, h('span', {}, 'Motivo (facoltativo)'),
           h('input', { type: 'text', maxlength: 200, value: st.motivo, placeholder: 'es. dono del patrono, A.111…', oninput: (e) => { st.motivo = e.target.value; } })),
+        // lotto 243: la nota «Correzione del master» sulla scheda la decide il Direttore, correzione per correzione. Nasconde la
+        // nota, non la correzione: il registro la tiene sempre, con data e motivo
+        v.campo ? null : h('label', { class: 'finestrella-campo finestrella-spunta' },
+          h('input', { type: 'checkbox', checked: st.nascondiNota || null, onchange: (e) => { st.nascondiNota = !!e.target.checked; } }),
+          h('span', {}, ' Non visualizzare la nota sulla scheda (resta nel registro)')),
         h('div', { class: 'riga-azioni finestrella-azioni' },
           h('button', { type: 'button', class: 'btn', onclick: () => fine(null) }, 'Annulla'),
           h('button', { type: 'button', class: 'btn primario', disabled: v.campo ? numero === v.attuale : st.tipo === 'aggiungi' && numero === 0,
             onclick: () => {
               if (v.campo) ctx.master.diretta({ campo: v.campo, etichetta: v.etichetta, valore: numero, motivo: st.motivo });
-              else ctx.master.correggi({ chiave: v.chiave, etichetta: v.etichetta, tipo: st.tipo, numero, motivo: st.motivo });
+              else ctx.master.correggi({ chiave: v.chiave, etichetta: v.etichetta, tipo: st.tipo, numero, motivo: st.motivo, notaNascosta: st.nascondiNota });
               fine(true);
             } }, 'Conferma')),
       ].filter(Boolean));
@@ -93,7 +98,10 @@ export function notaCorrezione(blocco) {
   // lotto 242 (ritocco 5): la fonte una volta sola, i valori di seguito («Correzione del master: +1, −1, −1»), ciascuno col suo
   // motivo. Nella colonna stretta di una tabella la fonte ripetuta andava a capo parola per parola e la nota pesava più del numero
   const perFonte = new Map();
-  for (const x of blocco.righe) {
+  // lotto 243: una correzione che il Direttore ha scelto di non visualizzare non ha nota sulla scheda (il valore corretto resta, e la riga resta nel registro)
+  const visibili = blocco.righe.filter((x) => x.nascosta !== true);
+  if (!visibili.length) return null;
+  for (const x of visibili) {
     const voce = `${segno(x.valore)}${x.nota && x.nota !== 'senza motivo' ? ` (${x.nota})` : ''}`;
     perFonte.set(x.fonte, [...(perFonte.get(x.fonte) ?? []), voce]);
   }
@@ -114,8 +122,16 @@ export function sezioneRegistro(ctx, righe) {
   if (!ctx.master) righe = (righe ?? []).filter((x) => x.tipo !== 'concessione');
   if (!righe?.length && !ctx.master) return null;
   const attive = (righe ?? []).filter((x) => !x.annullata).length;
+  // lotto 243: il Direttore toglie dalla vista le note «Correzione del master» già fatte (o le rimette); non tocca valori né registro
+  const note = ctx.master ? statoNote(ctx.scelte?.correzioniMaster ?? righe) : null;
+  const comandoNote = note?.totale ? h('p', { class: 'comando-note-master' },
+    note.visibili
+      ? h('button', { type: 'button', class: 'btn btn-piccolo', title: 'Toglie dalla scheda la scritta «Correzione del master»: i valori restano corretti e le righe restano in questo registro', onclick: () => ctx.master.nascondiNote(true) }, 'Non visualizzare «modificato dal master»')
+      : h('button', { type: 'button', class: 'btn btn-piccolo', title: 'Rimette sulla scheda la scritta «Correzione del master»', onclick: () => ctx.master.nascondiNote(false) }, 'Visualizza di nuovo «modificato dal master»'),
+    h('small', { class: 'nota' }, note.nascoste ? ` ${note.nascoste} su ${note.totale} nascoste sulla scheda` : null)) : null;
   return h('details', { class: 'sezione-tab registro-master', open: !!ctx.master || null },
     h('summary', {}, `Modifiche del master (${attive}${righe.length !== attive ? `, ${righe.length - attive} annullate` : ''})`),
+    comandoNote,
     righe.length ? h('ul', { class: 'righe-registro-master' }, righe.map((x) => h('li', { class: x.annullata ? 'annullata' : null },
       h('small', { class: 'nota' }, `${quando(x.quando)} · `),
       h('span', { class: 'cosa-registro' }, x.cosa),

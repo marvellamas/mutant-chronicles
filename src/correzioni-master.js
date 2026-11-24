@@ -60,10 +60,36 @@ export function applicaCorrezioni(calcolato, lista, chiave, { minimo = -Infinity
   for (const x of sue) {
     const dopo = Math.min(massimo, Math.max(minimo, x.tipo === 'imposta' ? x.numero : v + x.numero));
     const nota = [x.tipo === 'imposta' ? `impostato a ${x.numero}` : null, x.motivo || null].filter(Boolean).join(': ') || 'senza motivo';
-    righe.push({ fonte: FONTE, valore: dopo - v, nota, categoria: 'master' });
+    // lotto 243: `nascosta` dice solo che la NOTA sulla scheda non si visualizza (decisione del Direttore); la riga resta nel «Calcolo»
+    // e nel registro, e il valore corretto non cambia
+    righe.push({ fonte: FONTE, valore: dopo - v, nota, categoria: 'master', ...(x.notaNascosta === true ? { nascosta: true } : {}) });
     v = dopo;
   }
   return { calcolato, valore: v, delta: v - calcolato, righe };
+}
+
+/**
+ * Lotto 243: il Direttore decide se la nota «Correzione del master» si vede sulla scheda. `notaNascosta` sta sulla riga del registro
+ * (una scelta per ogni correzione, fatta quando la si fa; oppure per tutte quelle già fatte con questo comando). **Nasconde la nota,
+ * non la correzione e non la traccia**: il valore resta corretto, la riga resta nel registro «Modifiche del master» con data e motivo.
+ * Solo righe di calcolo attive; le altre (diretta, scelta, circostanza…) non hanno nota sulla scheda.
+ * @param nascondi true: nasconde le note di tutte le correzioni attive; false: le mostra di nuovo
+ */
+export function nascondiNote(lista, nascondi = true) {
+  return normalizzaCorrezioni(lista).map((x) => {
+    if (!TIPI_CALCOLO.includes(x.tipo) || x.stato !== 'attiva') return x;
+    if (nascondi) return x.notaNascosta === true ? x : { ...x, notaNascosta: true };
+    if (x.notaNascosta !== true) return x;
+    const { notaNascosta, ...resto } = x;
+    return resto;
+  });
+}
+
+/** Quante correzioni di calcolo attive hanno la nota visibile e quante nascosta (per il comando nel registro). */
+export function statoNote(lista) {
+  const attive = normalizzaCorrezioni(lista).filter((x) => TIPI_CALCOLO.includes(x.tipo) && x.stato === 'attiva');
+  const nascoste = attive.filter((x) => x.notaNascosta === true).length;
+  return { totale: attive.length, nascoste, visibili: attive.length - nascoste };
 }
 
 let contatore = 0;
@@ -117,7 +143,7 @@ export function testoCorrezione(x) {
 
 /** Una riga del registro per la tab Identità: { id, quando, cosa, motivo, annullata, annullataIl }. */
 export function rigaRegistro(x) {
-  return { id: x.id, quando: x.quando, cosa: testoCorrezione(x), motivo: x.motivo || null, tipo: x.tipo, annullata: x.stato === 'annullata', annullataIl: x.annullataIl ?? null };
+  return { id: x.id, quando: x.quando, cosa: testoCorrezione(x) + (x.notaNascosta === true && x.stato === 'attiva' ? ' · nota non visualizzata sulla scheda' : ''), motivo: x.motivo || null, tipo: x.tipo, annullata: x.stato === 'annullata', annullataIl: x.annullataIl ?? null };
 }
 
 /** Il registro da mostrare: la più recente in cima. */
