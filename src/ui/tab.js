@@ -542,17 +542,20 @@ function testataComune(ctx) {
 
 /**
  * Colonna di sinistra (S5, 11/10/2026): PV, Ferite e PM in ogni tab; sotto, gli Stati attivi in sola lettura (un tocco
- * porta al Combattimento, dove si impostano; nessuno Stato, nessuna riga). In Combattimento, al posto degli Stati (che
- * lì stanno in alto), Affaticamento e Corruzione sotto i PM (S13). Nell'Inventario il Carico sopra i PV (S28).
+ * porta al Combattimento, dove si impostano; nessuno Stato, nessuna riga). Sotto i PM, in ogni tab, i riquadri di Affaticamento
+ * e Corruzione (S13; in tutti e otto i tab dal lotto 243); in Combattimento gli Stati stanno in alto nella pagina. Nell'Inventario
+ * il Carico sopra i PV (S28).
  */
 function colonnaRisorse(ctx, { tab = 'identita' } = {}) {
   const dc = ctx.tab.tab.find((x) => x.id === 'combattimento')?.dati ?? null;
   return [
     tab === 'inventario' ? riquadroCarico(ctx, { compatto: true }) : null,
     ...riquadriPvPm(ctx, { compatti: true, ferite: true }),
-    tab === 'combattimento'
-      ? (dc ? h('div', { class: 'ferite-sotto-pv' }, affaticamentoCorruzione(ctx, dc)) : null)
-      : statiAttiviColonna(ctx),
+    // lotto 243: i due riquadri di Affaticamento e Corruzione stanno sotto i PM in **tutti** i tab, non solo nel Combattimento
+    // (il 242 aveva messo una riga di testo nel titolo delle Ferite: non era quello che Marcello aveva chiesto)
+    dc ? h('div', { class: 'ferite-sotto-pv' }, affaticamentoCorruzione(ctx, dc)) : null,
+    // in Combattimento gli Stati stanno in alto nella pagina; negli altri tab si leggono qui, in sola lettura
+    tab === 'combattimento' ? null : statiAttiviColonna(ctx),
   ];
 }
 
@@ -2297,35 +2300,11 @@ function riquadroFerite(ctx) {
   // A.159 (risposta di Davide del 14/10/2026): oltre Grave si entra in Morente, con il contatore qui sotto
   const oltre = ctx.sessione.ferite > ctx.dati.regole.ferite.stati.length ? descriviFerite(ctx.sessione.ferite, ctx.dati).avviso : null;
   return [
-    // lotto 242: nel titolo, accanto a «Ferite», Affaticamento e Corruzione (il «§5.14» passa nel «?»): visibili in ogni tab
-    gradiCompatti(ctx, { titolo: 'Ferite (§5.14)', titoloBreve: 'Ferite', accanto: affaticamentoCorruzioneInBreve(ctx), campo: 'ferite', attuale: ctx.sessione.ferite, gradi: ferite, avviso: oltre,
+    // lotto 243: Affaticamento e Corruzione non stanno più nel titolo delle Ferite (riga del 242): sono i due riquadri della colonna
+    gradiCompatti(ctx, { titolo: 'Ferite (§5.14)', titoloBreve: 'Ferite', campo: 'ferite', attuale: ctx.sessione.ferite, gradi: ferite, avviso: oltre,
       nota: 'Ferite (§5.14). Ogni nuova Ferita fa avanzare di un gradino. La penalità è cumulativa a VA e Prove Salvezza. Oltre Grave il personaggio è Morente (A.159).' }),
     riquadroMorente(ctx),
   ];
-}
-
-/**
- * Lotto 242 (ritocco 4, visto al tavolo da Marcello): Affaticamento (§5.19) e Corruzione (§5.20) si guardano di continuo e si
- * vedevano solo nel Combattimento. Adesso stanno nella colonna di sinistra di tutti i tab, come PV e PM, **sulla riga del titolo
- * delle Ferite** e non in una riga nuova (il lotto 221 ha recuperato 205 px in alto e non si buttano): due valori corti, con la
- * penalità quando c'è. Un tocco porta al Combattimento, dove si impostano.
- */
-function affaticamentoCorruzioneInBreve(ctx) {
-  const dc = ctx.tab.tab.find((x) => x.id === 'combattimento')?.dati ?? null;
-  if (!dc) return null;
-  const s = ctx.sessione;
-  // la penalità, che è quello che pesa al tavolo; per la Corruzione un grado oltre il primo senza penalità (Esposto) o senza numero
-  // (Oscuro) si dice con il nome abbreviato, perché «0» farebbe credere a un personaggio non toccato
-  const voce = (sigla, nome, attuale, gradi, { nomeSenzaPenalita = false } = {}) => {
-    const g = gradi?.[attuale] ?? null;
-    const p = g?.penalita ?? 0;
-    const valore = p ? segno(p) : nomeSenzaPenalita && attuale > 0 && g ? `${g.nome.slice(0, 3)}.` : '0';
-    return h('span', { class: `valore-breve${p || valore !== '0' ? ' con-penalita' : ''}`, 'data-valore': nome.toLowerCase(), title: `${nome}: ${g?.nome ?? 'nessuno'}${p ? ` ${segno(p)} a tutte le Prove` : ''}. Si imposta nella tab Combattimento.` },
-      `${sigla} ${valore}`);
-  };
-  return h('button', { type: 'button', class: 'affaticamento-corruzione-breve', 'aria-label': 'Affaticamento e Corruzione: si impostano nella tab Combattimento', onclick: () => ctx.azioni.vaiTab('combattimento') },
-    voce('Aff.', 'Affaticamento', s.affaticamento ?? 0, dc.affaticamento),
-    voce('Corr.', 'Corruzione', s.corruzione ?? 0, dc.corruzione, { nomeSenzaPenalita: true }));
 }
 
 /**
