@@ -12,14 +12,14 @@ liberato l'avanzamento, il **lotto 246** (24/11) ha censito tutta l'app.
 
 ## Il conto
 
-**Totale 469** blocchi: **pagina 130**, **motore 173**, **server 166**.
-Più **25 tolti** da questo lotto, che restano scritti qui sotto perché non tornino.
+**Totale 470** blocchi: **pagina 130**, **motore 174**, **server 166**.
+Più **24 tolti** da questo lotto, che restano scritti qui sotto perché non tornino.
 
 | gruppo | che cos'è | quanti |
 | :-- | :-- | --: |
-| gruppo A | giudica una scelta o un contenuto del giocatore: **tolti tutti**, sono diventati avvisi | 0 (25 tolti) |
+| gruppo A | giudica una scelta o un contenuto del giocatore: **tolti tutti**, sono diventati avvisi | 0 (24 tolti) |
 | gruppo B | impedisce una scrittura sbagliata (un altro che salva, un dato impossibile, l'impianto del server) | 393 |
-| gruppo C | una regola che Davide ha approvato, con il numero della risposta | 40 |
+| gruppo C | una regola che Davide ha approvato, con il numero della risposta | 41 |
 | gruppo D | l'app non sa che cosa fare: manca un dato, un profilo, una scena. Dice che cosa manca | 31 |
 | gruppo E | da decidere: non sta chiaramente in nessuno dei quattro, e la decisione è di Marcello | 5 |
 
@@ -42,7 +42,7 @@ qualcosa e non lo fa perché l'app giudica la scelta è un blocco, e in questo l
 | `motore:pianoRicarica:rifiuto dichiarato#7` | Scheda, tab Inventario, pannello «Tampone» del trasformatore | Il tampone è vuoto e nell'Inventario non c'è una CEC dello stesso colore con almeno una carica | Il piano non si forma: «il tampone è vuoto e non c'è una carica CEC Rossa da cui prelevare (<regola del prelievo>)» | Ricaricare quando non si hanno le cariche sorgente | E | DA DECIDERE: come sopra, tampone vuoto senza una CEC da cui prelevare |
 | `pagina:riquadroScontro:disabled` | Scheda del giocatore (tablet), riquadro «Scontro in corso», pulsante «🗺 Muovi il PG sulla mappa» | Non è il turno del PG nell'ordine di Iniziativa dello scontro aperto | Pulsante spento, «Non è il tuo turno · tocca a <nome>» e suggerimento «Si attiva al tuo turno (ora tocca a …)» | Non muove il proprio PG sulla mappa fuori dal suo turno | E | Non giudica una scelta e non protegge una scrittura (il server verifica il movimento a parte): è l'ordine dei turni, e al tavolo il Direttore può far muovere qualcuno fuori turno (lui lo fa dalla plancia). Da decidere |
 
-## Gruppo C — regole approvate da Davide (40)
+## Gruppo C — regole approvate da Davide (41)
 
 Se Marcello ne toglie una, va ridichiarata a Davide.
 
@@ -62,6 +62,7 @@ Se Marcello ne toglie una, va ridichiarata a Davide.
 | `motore:rettificaPremio:throw` | Tavolo, PX, rettifica del premio di fine Atto | Il motivo della rettifica è vuoto | niente al tavolo: la rettifica non si registra | Togliere un premio di fine Atto dato per errore | C | A.197: il premio non si duplica e la rettifica è tracciata con il motivo, che è obbligatorio |
 | `motore:controllaTalentiDaTablet:rifiuto dichiarato#5` | Server del Direttore, salvataggio della scheda da un tablet (Specializzazioni) | Il tablet cambia una scelta che porta una voce tolta dal manuale con la sua regola (Specializzazioni di Potere e simili) | Il tablet riceve un rifiuto e la modifica non si salva: «<problema>. La decisione è del Direttore» | Decidere da sé che fare della Specializzazione tolta dal manuale | C | A.229 (01/11) e A.230 (02/11), citate nel commento: la voce tolta resta finché il Direttore la tiene come eccezione o la sostituisce gratis |
 | `motore:controllaTalentiDaTablet:rifiuto dichiarato#6` | Server del Direttore, salvataggio della scheda da un tablet (Specializzazioni) | Il tablet aggiunge o toglie il segno di eccezione su una Specializzazione tolta | Il tablet riceve un rifiuto e la modifica non si salva: «L'eccezione sulla Specializzazione del N° livello la decide il Direttore (A.229, A.230)» | Dichiarare da sé l'eccezione | C | A.229 e A.230: l'eccezione la dichiara il Direttore, con motivo e riga nel registro |
+| `motore:controllaTalentiDaTablet:rifiuto dichiarato#7` | Server del Direttore, salvataggio della scheda da un tablet (Talenti e Specializzazioni) | Il tablet scegliere ex novo, in un livello già registrato, una voce che il manuale ha tolto | Il tablet riceve un rifiuto e la modifica non si salva: «<problema>. Una scelta non ammessa la può fare solo il Direttore» | Prendere una Specializzazione che il manuale non elenca più | C | A.229 e A.230: una voce che il manuale ha tolto non si sceglie di nuovo da un tablet — la rimette solo il Direttore, come eccezione o sostituendola. È una risposta approvata, e il lotto 246 non l’ha toccata |
 | `motore:controllaIncantesimiDaTablet:rifiuto dichiarato` | Server del Direttore, salvataggio della scheda da un tablet (Incantesimi, Tecniche, Scuola Mishima) | Il tablet cambia gli incantesimi o le Tecniche di un livello già registrato violando quote, famiglie accessibili o livello massimo | Il tablet riceve un rifiuto e la modifica non si salva: «<problema>. Una scelta non ammessa la può fare solo il Direttore» | Cambiare un incantesimo di un livello passato fuori dalle quote | C | A.188 (28/10/2026), citata nel commento della funzione: quote, famiglie e livello massimo valgono di nuovo per il giocatore e solo il Direttore forza |
 | `motore:registraTiro:rifiuto dichiarato#2` | Avanzamento di livello, «Tira» dei PV o dei PM | Per quel livello il tiro di quel dado è già registrato | Il pulsante non ritira: «Il tiro dei PV di questo livello è già registrato (5): vale il primo risultato. Solo il Direttore lo corregge» | Ritirare il dado dei PV o dei PM dello stesso livello | C | A.297 (19/11/2026): vale il primo risultato, anche inserito a mano, e lo corregge solo il Direttore |
 | `motore:registraTiro:rifiuto dichiarato#3` | Avanzamento di livello, scelta della Classe del livello | Il primo tiro del livello è già stato fatto con un'altra Classe | Niente: l'operazione non fa nulla, con «Il primo tiro di questo livello è di <Classe>: la Classe non si cambia più (ha un altro dado). Solo il Direttore può liberare i tiri» | Cambiare Classe dopo aver tirato, per cambiare dado | C | A.297: cambiare Classe sarebbe un modo di ritirare; la liberazione dei tiri è del Direttore |
@@ -127,7 +128,7 @@ Non giudicano: manca un dato. Dicono che cosa manca; dove lasciar passare romper
 | `motore:decollaVeicolo:throw` | Mappa e tab Veicoli, «Decolla…» (A.253) | Il profilo non dichiara che il mezzo vola, il mezzo non è a terra, o i dati non hanno le regole del decollo | Niente: l'operazione si interrompe con il motivo («la Neverlost non è a terra: è in volo», «questo mezzo non vola») | Far decollare il mezzo | D | il profilo non dichiara che il mezzo vola, o lo stato di volo non lo consente: l’app dice che cosa manca |
 | `motore:atterraVeicolo:throw` | Mappa e tab Veicoli, «Atterra» (A.253) | Il profilo non dichiara che il mezzo vola, il mezzo è già a terra, o i dati non hanno le regole dell'atterraggio | Niente: l'operazione si interrompe con il motivo («la Neverlost è già a terra») | Far atterrare il mezzo | D | come sopra |
 
-## Tolti dal lotto 246 (25)
+## Tolti dal lotto 246 (24)
 
 Questi non ci sono più: erano del gruppo A. Il controllo fallisce se tornano.
 
@@ -156,7 +157,6 @@ Questi non ci sono più: erano del gruppo A. Il controllo fallisce se tornano.
 | `motore:provaMovimento:rifiuto dichiarato#11` | Mappa, tablet del giocatore, conferma del movimento | Il quadretto è fuori dall'area di movimento calcolata | il tablet riceve «Quel quadretto è fuori dalla tua area di movimento.» | Spostare il proprio PG dove vuole | A | giudica il movimento scelto; il Direttore sulla sua mappa muove libero con Maiusc, il giocatore no |
 | `motore:registraLancioNemico:throw#3` | Plancia del Direttore, carta di un nemico, «Lancia!» | Il costo in PM è maggiore dei PM che il nemico ha adesso (per esempio 5 PM e ne servono 8) | Niente: l'operazione si interrompe con «<nome>: 5 PM, ne servono 8» | Far lanciare al nemico un incantesimo che costa più dei suoi PM | A | Giudica una scelta di gioco (risorse insufficienti), e l'ultima parola sul lancio di un nemico è del Direttore |
 | `motore:cambiaStatoNemico:throw#2` | Plancia del Direttore, carta di un nemico, Stati | Si accende uno Stato che la scheda della creatura elenca fra le immunità | Niente: l'operazione si interrompe con «<nome> è immune a <Stato>» | Applicare uno Stato a una creatura immune (anche quando il Direttore lo vuole per una ragione sua) | A | Giudica un contenuto (le immunità del profilo) e ferma il Direttore invece di avvisarlo |
-| `motore:controllaTalentiDaTablet:rifiuto dichiarato#7` | Server del Direttore, salvataggio della scheda da un tablet (Talenti e Specializzazioni) | Il tablet scegliere ex novo, in un livello già registrato, una voce che il manuale ha tolto | Il tablet riceve un rifiuto e la modifica non si salva: «<problema>. Una scelta non ammessa la può fare solo il Direttore» | Prendere una Specializzazione che il manuale non elenca più | A | Giudica il contenuto della scelta del giocatore (voce fuori elenco) e la rifiuta invece di avvisare; il lotto 241 l'ha tolta solo per il livello che si sta aggiungendo |
 | `motore:controllaTalentiDaTablet:rifiuto dichiarato#8` | Server del Direttore, salvataggio della scheda da un tablet (Talenti) | Il tablet cambia la scelta di un livello già registrato con un Talento che non rispetta requisiti o categoria | Il tablet riceve un rifiuto e la modifica non si salva: «<motivo>. Una scelta non ammessa la può fare solo il Direttore» | Correggere un Talento di un livello passato con una scelta fuori regola | A | Giudica quale Talento il giocatore ha preso: è esattamente la famiglia di blocchi che il lotto 241 ha reso avvisi, qui rimasta fuori dall'avanzamento |
 
 ## Gruppo B — impediscono una scrittura sbagliata (393)

@@ -110,9 +110,11 @@ test('tablet: la decisione è del Direttore (né sostituire né mettere l’ecce
   const tolta = controllaTalentiDaTablet(file(disco), file(conEccezione), dati);
   assert.deepEqual([tolta.ok, tolta.stato], [false, 403]);
   assert.match(tolta.errore, /eccezione.*Direttore/);
-  // lotto 246: per un posto VUOTO il server non rifiuta più la scelta (è una scelta di gioco, e la scheda la segnala):
-  // resta il «no» sull'eccezione, che è la decisione del Direttore (A.229, A.230)
+  // e non la sceglie di nuovo per un posto vuoto: una voce TOLTA dal manuale la rimette solo il Direttore (A.229,
+  // A.230). Il lotto 246 ha tolto i rifiuti che giudicano una scelta ammessa dalle regole, non questo: è una risposta
+  // approvata di Davide, e sta nel gruppo C del registro dei blocchi.
   const vuoto = lucas(null);
   const nuova = controllaTalentiDaTablet(file(lucas({ id: SINTONIA })), file(vuoto), dati);
-  assert.equal(nuova.ok, true, 'la scelta passa: la decide il tavolo, non il server');
+  assert.deepEqual([nuova.ok, nuova.stato], [false, 403]);
+  assert.match(nuova.errore, /A.230/);
 });

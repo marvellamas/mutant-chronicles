@@ -66,9 +66,14 @@ export function controllaTalentiDaTablet(nuovo, disco, dati) {
     }
     // lotto 241: nel livello che si aggiunge (o nel posto vuoto dell'ultimo) una scelta fuori dalle regole è un avviso
     if (inAvanzamento(x.livello, disco, !v?.scelta)) continue;
-    // lotto 246: una scelta che le regole non ammettono non si rifiuta più nemmeno in un livello passato. Il lotto 241
-    // l'aveva già fatto per il livello che si aggiunge; il giocatore che correggeva una scelta vecchia si vedeva
-    // rifiutare il salvataggio e doveva chiamare il Direttore. La scheda lo segnala, e la decisione resta sua.
+    // A.229 e A.230: una voce che il manuale ha tolto non si sceglie di nuovo da un tablet — è una risposta approvata
+    // di Davide (il lotto 164 la scrive per esteso), non un giudizio nostro, e resta.
+    const tolta = x.scelta && x.problemi.find((e) => e.tipo === 'tolta');
+    if (tolta) return { ok: false, stato: 403, errore: `${tolta.problema} (A.230). Una voce tolta dal manuale la rimette solo il Direttore.` };
+    // lotto 246: una scelta che le REGOLE non ammettono (una Specializzazione fuori dall'elenco della Classe, una
+    // Maestria senza il requisito) non si rifiuta più nemmeno in un livello passato. Il lotto 241 l'aveva già fatto per
+    // il livello che si aggiunge; il giocatore che correggeva una scelta vecchia si vedeva rifiutare il salvataggio e
+    // doveva chiamare il Direttore. La scheda lo segnala, e la decisione resta del tavolo.
   }
   return controllaIncantesimiDaTablet(nuovo, disco, dati);
 }

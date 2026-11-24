@@ -8,7 +8,7 @@ Lunedì sera 22/11 l'app ha tenuto ferma la partita per quaranta minuti: sette g
 livello che non si chiudeva, perché un nostro conto sbagliato diceva che «c'era qualcosa che non andava». Non era vero.
 
 Abbiamo passato in rassegna tutta l'app cercando ogni modo in cui può dire di no: un pulsante spento, un'operazione che
-non si conclude, un rifiuto del server. Ne abbiamo trovati **498**. Di questi, **25 giudicavano una scelta del
+non si conclude, un rifiuto del server. Ne abbiamo trovati **498**. Di questi, **24 giudicavano una scelta del
 giocatore e sono spariti**: adesso l'app dice che cosa ha visto, con i numeri, e si procede lo stesso.
 
 **Il principio, in una riga: l'app segnala, il Direttore decide.**
@@ -24,7 +24,7 @@ blocchi di tornare dentro di nascosto.
 
 ## Quello che resta, e che in parte è tuo
 
-**Le regole che hai approvato tu, e che continuano a fermare (40 righe in tutto).** Se un giorno ne vuoi togliere una,
+**Le regole che hai approvato tu, e che continuano a fermare (41 righe in tutto).** Se un giorno ne vuoi togliere una,
 dillo e la togliamo: sono tue. Le principali:
 
 - **A.297** — il tiro dei PV e dei PM all'avanzamento non si rifà: il primo risultato è quello, e solo tu lo correggi.
