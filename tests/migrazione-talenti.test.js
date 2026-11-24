@@ -100,11 +100,12 @@ test('dal tablet: solo opzioni ammesse, niente nei posti chiusi; il Direttore pu
   const conScelta = (posto, scelta) => { const n = applicaSceltaTalento(p, posto, scelta); return { ...disco, scelte: n.creazione, livelli: n.livelli }; };
   // ammessa: Informatica è nell'elenco del Tecnomante
   assert.equal(controllaTalentiDaTablet(conScelta({ categoria: 'specializzazione', livello: 1 }, { id: 'specializzazione-informatica' }), disco, dati).ok, true);
-  // non ammessa: Spade non è nell'elenco; Ritualista Maggiore al 2° senza il Minore
+  // lotto 246: una scelta che le regole non ammettono NON è più un rifiuto del server (Spade fuori dall'elenco del
+  // Tecnomante, Ritualista Maggiore senza il Minore): la scheda la segnala e la decisione è del tavolo. Restano i «no»
+  // che proteggono la parola del Direttore: i posti chiusi e le eccezioni A.229/A.230 (qui sotto).
   const spade = controllaTalentiDaTablet(conScelta({ categoria: 'specializzazione', livello: 1 }, { id: 'specializzazione-spade' }), disco, dati);
-  assert.equal(spade.stato, 403);
-  assert.match(spade.errore, /non è nell’elenco del Tecnomante/);
-  assert.equal(controllaTalentiDaTablet(conScelta({ categoria: 'maestria', livello: 2 }, { id: 'ritualista-maggiore' }), disco, dati).stato, 403);
+  assert.equal(spade.ok, true, 'la scelta passa, l’avviso lo dà la scheda');
+  assert.equal(controllaTalentiDaTablet(conScelta({ categoria: 'maestria', livello: 2 }, { id: 'ritualista-maggiore' }), disco, dati).ok, true);
   // chiusi dal Direttore: il tablet non li cambia e non riapre
   const chiuso = { ...disco, scelte: { ...disco.scelte, talentiChiusiFino: 6, specializzazioneIniziale: { id: 'specializzazione-informatica' } } };
   const cambiato = { ...chiuso, scelte: { ...chiuso.scelte, specializzazioneIniziale: { id: 'specializzazione-laboratorio' } } };

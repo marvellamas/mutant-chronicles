@@ -591,7 +591,8 @@ export function avanti(s, adesso, { indietroMax = 0 } = {}) {
   const conFine = s.durate.map((d) => { const al = fineDi(d, s.round); return { ...d, al, rimasti: al - t.round + 1 }; });
   const finite = conFine.filter((d) => d.al < t.round);
   t.durate = conFine.filter((d) => d.al >= t.round);
-  t = conRiga(t, `Round ${t.round}. Tocca a ${ordinati[0].nome}.`, adesso);
+  // lotto 246: senza nessuna Iniziativa tirata il Round avanza lo stesso, e la riga non nomina nessuno
+  t = conRiga(t, ordinati.length ? `Round ${t.round}. Tocca a ${ordinati[0].nome}.` : `Round ${t.round}. Nessuna Iniziativa tirata.`, adesso);
   // incantesimi lanciati dai nemici: finiscono alla fine del Round R + N
   const effettiFiniti = (s.effetti ?? []).filter((e) => e.al !== null && e.al !== undefined && e.al < t.round);
   if (effettiFiniti.length) {

@@ -101,7 +101,11 @@ test('Iniziativa dei nemici: valore del tipo + d10, nell’ordine con le parità
 test('Stati dei nemici: immunità, durata in Round che finisce da sé', () => {
   let s = aggiungiNemici(conPg(), legionario, 1, {}, T0);
   const id = 'nem:legionario-non-morto:1';
-  assert.throws(() => cambiaStatoNemico(s, id, stato('terrorizzato'), true, T0), /immune a Terrorizzato/);
+  // lotto 246: l'immunità della scheda non ferma più lo Stato (è una regola, e l'ultima parola è del master): si
+  // accende, e il registro scrive che la scheda lo dà immune
+  const conImmune = cambiaStatoNemico(s, id, stato('terrorizzato'), true, T0);
+  assert.ok(conImmune.partecipanti.find((x) => x.id === id).stati.includes('terrorizzato'));
+  assert.match(conImmune.registro.at(-1).testo, /immune/);
   s = cambiaStatoNemico(s, id, stato('stordito'), true, T0);
   s = registraTiro(registraTiro(s, 'pg:Ada', 'd10', vivo(5), dati, T0), id, 'd10', vivo(1), dati, T0);
   s = registraDurata(s, id, stato('stordito'), vivo(2), T0);

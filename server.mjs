@@ -1225,7 +1225,9 @@ async function movimentoDalTablet(req, res, cartelle) {
   const { scena: inGioco } = await scenaInGioco(cartelle, { scontro: typeof d.scontro === 'string' ? d.scontro : null });
   if (!inGioco || inGioco.id !== d.scena) return json(res, 409, { errore: 'La mappa in gioco è cambiata: attendi un momento.' });
   const dove = join(cartelle.scene, `${d.scena}.json`);
-  const perTablet = (p) => ({ costo: p.costo, fascia: p.fascia, percorso: p.percorso, blocco: !!p.blocco, persi: p.persi ?? 0,
+  // lotto 246: gli avvisi del movimento (fascia sbagliata, movimento finito, fuori dall'area) arrivano al tablet, che
+  // li mostra e offre «Muovi comunque»: senza questa riga il giocatore vedrebbe un pulsante normale e nessun motivo
+  const perTablet = (p) => ({ costo: p.costo, fascia: p.fascia, percorso: p.percorso, blocco: !!p.blocco, persi: p.persi ?? 0, avvisi: p.avvisi ?? [],
     // gli Attacchi di Opportunità si dicono al tablet solo per gli avversari che il giocatore vede
     opportunita: p.opportunita.filter((o) => o.visibile).map((o) => ({ nome: o.nomeDa })) });
   if (d.prova) {

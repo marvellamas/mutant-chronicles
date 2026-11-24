@@ -85,7 +85,9 @@ test('tablet: «Attacca questo bersaglio» solo al proprio turno, altrimenti spe
   // il pulsante c'è, sotto il risultato della linea
   assert.match(g, /'🎯 Attacca questo bersaglio'/);
   assert.match(g, /const puoAttaccare = !!st\.io\?\.permesso\?\.puo && bersagliabile;/, 'stesso criterio di «Muovi il PG», più la spunta «Bersaglio» (punto 6 del 12/10)');
-  assert.match(g, /disabled: !puoAttaccare \|\| st\.linea\.copertura === 'totale'/);
+  // lotto 246: non più spento — il motivo si legge sotto il pulsante e «Attacca!» si apre lo stesso (decide il tavolo)
+  assert.doesNotMatch(g, /disabled: !puoAttaccare/, 'il pulsante non si spegne più');
+  assert.match(g, /puoAttaccare && st\.linea\.copertura !== 'totale' \? 'Apre la tua scheda/, 'il motivo resta nel suggerimento');
   assert.match(g, /st\.io\?\.permesso\?\.motivo \?\? 'Non è il tuo turno\.'/);
   // 12/10 (punto 6): un oggetto della scena senza la spunta non si attacca, e il pulsante dice perché
   assert.match(g, /const bersagliabile = st\.linea\?\.bersagliabile !== false;/);

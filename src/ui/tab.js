@@ -487,9 +487,15 @@ function barraRisorsa(ctx, etichetta, attuale, massimo, { classe = '', viva = nu
 function contatoreTavolo(ctx, { titolo, campo, attuale, massimo, passi = [1, 5], nota = null, barra = false, extra = null, classe = '', accanto = null }) {
   const pulsanti = [];
   const b = (delta) => {
+    const aZero = delta < 0 && attuale <= 0;
+    const oltre = massimo !== null && delta > 0 && attuale >= massimo;
     const el = h('button', {
+      // lotto 246: questi due restano spenti, e adesso dicono perché (prima erano muti). Non è un giudizio sulla scelta:
+      // allineaSessione tiene i valori di sessione fra 0 e il massimo, quindi un valore oltre tornerebbe indietro da solo
+      // e un pulsante che finge è peggio di uno spento (lotto 244). Sopra il massimo si passa dal ✎ di «Modifica master».
       type: 'button', class: 'btn-tavolo', onclick: () => ctx.azioni.varia(campo, delta),
-      disabled: (delta < 0 && attuale <= 0) || (massimo !== null && delta > 0 && attuale >= massimo),
+      disabled: aZero || oltre,
+      title: aZero ? `${titolo} già a 0` : oltre ? `${titolo} già al massimo (${massimo}): per andare oltre, il ✎ del Direttore sul massimo` : null,
       'aria-label': `${delta > 0 ? 'Aggiungi' : 'Togli'} ${Math.abs(delta)} a ${titolo}`,
     }, delta > 0 ? `+${delta}` : `−${-delta}`);
     pulsanti.push([el, delta]);
@@ -531,7 +537,10 @@ function testataComune(ctx) {
   // pulsanti da 1 a 1000, meno sopra e più sotto, come nel riquadro di prima
   const PASSI_CREDITI = [1, 5, 10, 50, 100, 500, 1000];
   const bc = (delta) => h('button', {
+    // lotto 246: resta spento (i crediti negativi li riporta a 0 allineaSessione: un pulsante che finge è peggio di uno
+    // spento), ma adesso dice perché — prima era muto
     type: 'button', class: 'btn-tavolo btn-crediti', onclick: () => ctx.azioni.varia('crediti', delta), disabled: delta < 0 && s.crediti + delta < 0,
+    title: delta < 0 && s.crediti + delta < 0 ? `Hai ${s.crediti} crediti: non si scende sotto zero` : `${delta > 0 ? 'Aggiungi' : 'Togli'} ${Math.abs(delta)} crediti`,
     'aria-label': `${delta > 0 ? 'Aggiungi' : 'Togli'} ${Math.abs(delta)} crediti`,
   }, delta > 0 ? `+${delta}` : `−${-delta}`);
   return h('div', { class: 'testata-comune', role: 'group', 'aria-label': 'Punti Eroe, Distintivi e Crediti' },

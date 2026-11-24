@@ -152,13 +152,15 @@ test('oltre i limiti: nebbia, muro, quadretto occupato, oltre il movimento; ness
     const g = await gettone('Bea');
     const rev = leggiScena().revisione;
     assert.match((await muovi({ pg: 'Bea', aiuto: g, a: [28, 1] }, g)).errore, /nebbia/);
-    assert.match((await muovi({ pg: 'Bea', aiuto: g, a: [4, 0] }, g)).errore, /fuori dalla tua area|non è raggiungibile/);
+    // lotto 246: fuori dall'area non è più un rifiuto (è un avviso); qui [4, 0] non ha nessun percorso, e quello resta un «no»
+    assert.match((await muovi({ pg: 'Bea', aiuto: g, a: [4, 0] }, g)).errore, /percorso|non è raggiungibile/);
     assert.equal((await muovi({ pg: 'Bea', aiuto: g, a: [2, 2] }, g)).stato, 422, 'quadretto del predone');
     assert.equal(leggiScena().revisione, rev);
-    // oltre il movimento del PG (Passo 6, Scatto 18 Q): rifiutato come dal tablet del giocatore
-    assert.equal((await muovi({ pg: 'Bea', aiuto: g, a: [15, 1], fascia: 1 }, g)).stato, 422);
-    assert.equal((await muovi({ pg: 'Bea', aiuto: g, a: [25, 1], fascia: 3 }, g)).stato, 422);
-    assert.equal(leggiScena().revisione, rev);
+    // lotto 246: oltre il movimento del PG (Passo 6, Scatto 18 Q) adesso passa con l'avviso, come dal tablet del giocatore
+    const oltre = await muovi({ pg: 'Bea', aiuto: g, a: [15, 1], fascia: 1, prova: true }, g);
+    assert.equal(oltre.stato, 200, `non è più un rifiuto: ${oltre.errore ?? ''}`);
+    if ((oltre.avvisi ?? []).length) assert.match(oltre.avvisi.join(' '), /Q/, 'l’avviso dice i numeri');
+    assert.equal(leggiScena().revisione, rev, 'la prova non scrive');
   } finally { await revoca(); ripristina(); }
 });
 

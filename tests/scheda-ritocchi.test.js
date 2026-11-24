@@ -44,7 +44,10 @@ test('S4: Punti Eroe con il solo «−»; Distintivi con − / + e la conversion
   const dist = r.classe('voce-distintivi')[0].tutti().filter((n) => n.tagName === 'BUTTON');
   assert.deepEqual(dist.map((b) => b.textContent).slice(0, 2), ['−', '+']);
   assert.match(dist[2].textContent, /→ 1 PE/);
-  assert.equal(dist[2].disabled, true, 'senza Distintivi non si converte');
+  // lotto 246: senza Distintivi la conversione NON è più spenta — il §1.8.3 è una regola e l'ultima parola è del
+  // master: il pulsante lo dice nel suggerimento e si preme lo stesso
+  assert.ok(!dist[2].disabled, 'la conversione non si spegne più');
+  assert.match(dist[2].getAttribute('title') ?? '', /decide il master/);
   clic(dist[1]);
   assert.deepEqual(ctx.chiamate.at(-1), ['varia', 'distintivi', 1]);
   const crediti = r.classe('voce-crediti')[0];

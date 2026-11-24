@@ -78,7 +78,10 @@ test('A.73, decisione 8: «Lancia!» di un nemico con dati completi; PM scalati 
   s = registraLancioNemico(s, { id: p.id, incantesimo: 'Dardo Psichico', livello: 8, pm: r.pm_costo, testo: 'Prova di Potere VA 14' }, T0);
   assert.equal(nemico(s).pm.attuali, 4);
   assert.match(s.registro.at(-1).testo, /lancia Dardo Psichico \(livello 8\): PM 12 → 4; Prova di Potere VA 14/);
-  assert.throws(() => registraLancioNemico(s, { id: p.id, incantesimo: 'Dardo Psichico', livello: 8, pm: 8 }, T0), /4 PM, ne servono 8/);
+  // lotto 246: i PM che non bastano non fermano più il lancio di una creatura (il master può avere il suo motivo, e
+  // l'azione non può restare a metà in mezzo a un Round): la riserva va a 0 e non sotto
+  const forzato = registraLancioNemico(s, { id: p.id, incantesimo: 'Dardo Psichico', livello: 8, pm: 8 }, T0);
+  assert.equal(forzato.partecipanti.find((x) => x.id === p.id).pm.attuali, 0, 'a 0, mai sotto');
   s = variaPmNemico(s, p.id, 10, T0);
   assert.equal(nemico(s).pm.attuali, 12);
   // incompleta: solo promemoria

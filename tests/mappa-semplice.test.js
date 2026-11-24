@@ -97,8 +97,11 @@ test('nebbia automatica: accesa nella scena ma ferma con «Mappa semplice»; spe
 
 test('pedina spostabile liberamente dal tablet: nessuna area, nessun conteggio; spenta, i limiti di prima', async () => {
   try {
-    // scena di prima (senza il campo): oltre il movimento rifiutato
-    assert.equal((await muovi({ a: [20, 3] })).stato, 422);
+    // lotto 246: oltre il movimento non si rifiuta più, si avvisa — la differenza con «Mappa semplice» è che lì non
+    // c'è nessun limite da segnalare (nessuna area, nessun conteggio, nessun avviso)
+    const conLimiti = await muovi({ a: [20, 3], prova: true });
+    assert.equal(conLimiti.stato, 200, `non è più un rifiuto: ${conLimiti.errore ?? ''}`);
+    assert.ok(conLimiti.avvisi !== undefined, 'con i limiti la prova porta il campo degli avvisi');
     assert.ok((await vista()).io.area, 'con i limiti c’è l’area');
     // Mappa semplice: lo stesso quadretto va bene, senza fascia né Q contati (qui con «La nebbia si apre con i PG» spento,
     // per provare che la nebbia messa a mano resta un limite: tests/mappa-ritocchi.test.js prova l'apertura)
@@ -115,9 +118,11 @@ test('pedina spostabile liberamente dal tablet: nessuna area, nessun conteggio; 
     // restano i limiti veri: fuori dalla mappa e sotto la nebbia (quello che il giocatore non vede)
     assert.match((await muovi({ a: [28, 1] })).errore, /nebbia/);
     assert.equal((await muovi({ a: [99, 1] })).stato, 422);
-    // spenta: tornano i limiti
+    // spenta: tornano i limiti — che dal lotto 246 si contano e si dicono (avviso), invece di fermare
     scriviScena(conSemplice({ ...leggiScena(), token: scenaBase().token, movimenti: [], annulla: [] }, false));
-    assert.equal((await muovi({ a: [20, 3] })).stato, 422);
+    const tornato = await muovi({ a: [20, 3], prova: true });
+    assert.equal(tornato.stato, 200);
+    assert.ok((tornato.avvisi ?? []).length, 'con i limiti l’avviso c’è; in «Mappa semplice» non c’era niente da dire');
   } finally { scriviScena(scenaBase()); }
 });
 
