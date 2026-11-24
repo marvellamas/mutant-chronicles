@@ -2896,7 +2896,13 @@ function pannelloMunizioni(ctx, a, { riserveModificabili = true } = {}) {
         : h('span', {}, cella ? (m.senzaCella ? `Nessun${nomeCella === 'pacco' ? ' pacco' : 'a cella'} nell’arma` : `${nomeCella === 'pacco' ? 'Pacco' : 'Cella'} inserit${nomeCella === 'pacco' ? 'o' : 'a'}`) : ETICHETTE_MUNIZIONI[a.munizioni?.unita ?? 'colpi'] ?? 'Caricatore', ' ', m.senzaCella ? null : h('strong', {}, String(m.colpi)), capacita !== null && !m.senzaCella ? ` / ${capacita}` : ''),
       pulsante('colpi', -1, 'colpi'),
       capacita !== null && capacita >= 10 ? pulsante('colpi', -5, 'colpi') : null,
-      capacita !== null ? h('button', { type: 'button', class: 'btn', onclick: () => ctx.azioni.ricarica(a.uid), disabled: !stato.possibile, title: stato.motivo ?? `${cella ? 'Cambio' : 'Ricarica'} (${azioneRicarica})` },
+      capacita !== null ? h('button', {
+        type: 'button', class: `btn${stato.motivo && !stato.pieno ? ' con-avviso' : ''}`,
+        // lotto 246: spento solo quando non cambierebbe niente (arma già piena); se l'app non trova le munizioni avvisa,
+        // e con «Procedi comunque» si ricarica lo stesso: la compatibilità sta nei dati, e un dato può mancare
+        disabled: !!stato.pieno,
+        onclick: () => conAvviso(ctx.azioni.storico, { azione: `ricaricare ${a.nome}`, motivo: stato.possibile ? null : stato.motivo, fai: (forza) => ctx.azioni.ricarica(a.uid, null, forza ? { forza: true } : {}) }),
+        title: stato.motivo ?? `${cella ? 'Cambio' : 'Ricarica'} (${azioneRicarica})` },
         info?.singolo ? `Ricarica +${Math.min(info.perOperazione ?? 1, capacita - m.colpi) || info.perOperazione || 1}` : cella ? (m.senzaCella ? `Inserisci ${nomeCella === 'pacco' ? 'il più carico' : 'la più carica'}` : `Cambia ${nomeCella}`) : caricatore && m.senzaCaricatore ? 'Inserisci il più carico' : 'Ricarica') : pulsante('colpi', 1, 'colpi')),
     stato.motivo && capacita !== null && m.colpi < capacita ? h('small', { class: 'motivo', role: 'status' }, `Ricarica: ${stato.motivo}.`) : null,
     // lotto 221: senza compatibilità nei dati l'avviso e la nota in fondo dicevano la stessa cosa: resta la nota, una volta sola
@@ -3094,7 +3100,9 @@ function attivazioneLungaUi(ctx, x, r, riserva) {
       h('div', { class: 'riga-azioni' }, corso
         ? [h('button', { type: 'button', class: 'btn primario', onclick: () => ctx.azioni.attivazioneLunga('completa', x.uid, al) }, `${al.ore} ore compiute (−${al.cm} CM)`), ' ',
           h('button', { type: 'button', class: 'btn', onclick: () => ctx.azioni.attivazioneLunga('interrompi', x.uid, al) }, 'Interrotta')]
-        : h('button', { type: 'button', class: 'btn', disabled: !!motivo, title: motivo ?? `Comincia le ${al.ore} ore: le CM si consumano solo alla fine`, onclick: () => ctx.azioni.attivazioneLunga('avvia', x.uid, al) }, `Avvia (${al.ore} ore)`)));
+        // lotto 246: avviare non consuma niente (le CM si spendono alla fine): il motivo si legge e si comincia lo stesso
+        : h('button', { type: 'button', class: `btn${motivo ? ' con-avviso' : ''}`, title: motivo ?? `Comincia le ${al.ore} ore: le CM si consumano solo alla fine`,
+          onclick: () => conAvviso(ctx.azioni.storico, { azione: `avviare ${x.nome}`, motivo, fai: () => ctx.azioni.attivazioneLunga('avvia', x.uid, al) }) }, motivo ? `Avvia comunque (${al.ore} ore)` : `Avvia (${al.ore} ore)`)));
   });
 }
 

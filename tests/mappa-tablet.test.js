@@ -104,20 +104,20 @@ test('permessi: solo il proprio PG, solo al proprio turno (Bea aspetta), e il se
   assert.match(x.errore, /non è in questa scena/);
 });
 
-test('movimento illegale rifiutato dal server: troppo lontano, nella nebbia, in un muro, fascia sbagliata', async () => {
+test('il server dice ancora di no a quello che non è una regola: nebbia, quadretto che non esiste, «sei già lì»', async () => {
+  // lotto 246: le REGOLE del movimento (fascia, movimento finito, fuori dall'area) adesso avvisano — prova qui sotto.
+  // Restano «no» i segreti del master (la nebbia), l'impianto (un quadretto che non esiste, una fascia che non c'è) e
+  // un movimento che non muoverebbe niente.
   const rev = leggiScena().revisione;
   assert.match((await muovi({ pg: 'Akira', a: [8, 1] })).errore, /nebbia/);
-  assert.match((await muovi({ pg: 'Akira', a: [4, 0] })).errore, /fuori dalla tua area|non è raggiungibile/);
   assert.match((await muovi({ pg: 'Akira', a: [99, 1] })).errore, /nebbia|non valido/);
   assert.match((await muovi({ pg: 'Akira', a: [1, 1] })).errore, /già lì/);
   assert.match((await muovi({ pg: 'Akira', a: 'qui' })).errore, /non valido/);
-  // oltre il Passo ma entro la Corsa: serve la Corsa
-  const { dati: d } = await datiReali();
-  const passo = (await vista('Akira')).io.mini.movimento.passo;
-  if (passo < 6) assert.match((await muovi({ pg: 'Akira', a: [6, 5], fascia: 1 })).errore, /richiede Corsa|fuori/);
   assert.equal(leggiScena().revisione, rev, 'nessuna scrittura');
-  assert.ok(d);
 });
+
+
+
 
 test('prova e movimento legale: percorso e costo, poi scena scritta con la voce per Ctrl+Z; ZoC nel registro', async () => {
   const p = await muovi({ pg: 'Akira', a: [0, 4], prova: true });
@@ -190,7 +190,10 @@ test('funzioni pure: permesso, impostazioni, prova senza scontro', () => {
   assert.equal(p.ok, true);
   // fascia sbagliata: Akira è in [0, 4]; con un Passo di 2 Q, 4 Q chiedono la Corsa; con la Corsa scelta va
   const lento = [{ ...pezzi[0], movimento: { passo: 2, corsa: 4, scatto: 6 } }];
-  assert.match(provaMovimento({ scena: sempre, pezzi: lento, scontro: null, chiavePg: 'Akira', a: [0, 0], fascia: 1, dati }).errore, /richiede Corsa/);
+  // lotto 246: non è più un rifiuto, è un avviso coi numeri (la Corsa si sceglie, ma il giocatore può muoversi lo stesso)
+  const conPasso = provaMovimento({ scena: sempre, pezzi: lento, scontro: null, chiavePg: 'Akira', a: [0, 0], fascia: 1, dati });
+  assert.equal(conPasso.ok, true);
+  assert.match(conPasso.avvisi.join(' '), /Serve Corsa|Costo/);
   const corsa = provaMovimento({ scena: sempre, pezzi: lento, scontro: null, chiavePg: 'Akira', a: [0, 0], fascia: 2, dati });
   assert.equal(corsa.fascia, 'corsa');
   assert.equal(corsa.blocco, true, 'la Corsa è un blocco unico (A.129)');
@@ -419,4 +422,38 @@ test('linea di tiro dal tablet: solo quello che il giocatore vede, anche fuori t
   assert.equal(leggiScena().revisione, rev, 'nessuna scrittura');
   const nascosto = await fetch(`${base}/api/vista-giocatori/linea`, { method: 'POST', body: JSON.stringify({ scena: 'cripta', pg: 'Bea', token: 't-p1' }) });
   assert.equal(nascosto.status, 422);
+});
+
+test('LOTTO 246: le regole del movimento AVVISANO e non fermano più; restano «no» i segreti, l’impianto e il nessun-percorso', () => {
+  // La sera del 22/11 l'app ha fermato il tavolo per quaranta minuti. Da qui in avanti, quando un giocatore tocca un
+  // quadretto, la fascia sbagliata e il movimento finito sono avvisi con i numeri e la pedina si muove lo stesso
+  // («Muovi comunque» sul tablet). Questo test fallisce se uno di quei due torna a essere un rifiuto.
+  const s = leggiScena();
+  const sempre = { ...s, tablet: { movimento: 'sempre' } };
+  const akira = (mov) => [{ chiave: 'partecipante:pg:Akira', rif: { tipo: 'partecipante', id: 'pg:Akira' }, tipo: 'pg', pg: 'Akira', lato: 'pg', movimento: mov }];
+  const dove = s.token.find((t) => t.id === 't-akira').q;
+  const largo = akira({ passo: 20, corsa: 20, scatto: 20 });
+  // un quadretto libero a 2-4 Q da Akira, scelto fra quelli che con un movimento ampio si raggiungono davvero
+  const verso = [[0, 3], [3, 0], [0, -3], [-3, 0], [2, 2], [0, 2], [2, 0]]
+    .map(([dx, dy]) => [dove[0] + dx, dove[1] + dy])
+    .map((q) => ({ q, p: provaMovimento({ scena: sempre, pezzi: largo, scontro: null, chiavePg: 'Akira', a: q, fascia: 3, dati }) }))
+    .find((x) => x.p.ok && !x.p.avvisi.length && x.p.costo >= 2);
+  assert.ok(verso, 'serve un quadretto raggiungibile per la prova');
+
+  // fascia sbagliata: con un Passo di 1 Q un quadretto a 3 Q chiedeva la Corsa e il server diceva no
+  const corto = provaMovimento({ scena: sempre, pezzi: akira({ passo: 1, corsa: 6, scatto: 9 }), scontro: null, chiavePg: 'Akira', a: verso.q, fascia: 1, dati });
+  assert.equal(corto.ok, true, `la fascia sbagliata non ferma più: ${corto.errore ?? ''}`);
+  assert.ok(corto.avvisi.some((x) => /Costo|Serve/.test(x)), `l’avviso dice i numeri: ${JSON.stringify(corto.avvisi)}`);
+  assert.ok(corto.punti.length > 1, 'il percorso c’è lo stesso');
+
+  // movimento finito: 0 Q rimasti
+  const fermo = provaMovimento({ scena: sempre, pezzi: akira({ passo: 0, corsa: 0, scatto: 0 }), scontro: null, chiavePg: 'Akira', a: verso.q, fascia: 1, dati });
+  assert.equal(fermo.ok, true, `il movimento finito non ferma più: ${fermo.errore ?? ''}`);
+  assert.ok(fermo.avvisi.length, 'con l’avviso');
+
+  // e quello che NON deve passare continua a non passare
+  const nebbia = provaMovimento({ scena: sempre, pezzi: akira({ passo: 6, corsa: 12, scatto: 18 }), scontro: null, chiavePg: 'Akira', a: [8, 1], dati });
+  assert.equal(nebbia.ok, false, 'sotto la nebbia resta un no: il percorso direbbe un segreto del master');
+  const fuori = provaMovimento({ scena: sempre, pezzi: akira({ passo: 6, corsa: 12, scatto: 18 }), scontro: null, chiavePg: 'Akira', a: [99, 1], dati });
+  assert.equal(fuori.ok, false, 'un quadretto che non esiste resta un no');
 });

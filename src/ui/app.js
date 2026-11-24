@@ -2837,7 +2837,7 @@ function renderSchedaInterna({ mantieniScorrimento = false } = {}) {
         renderScheda({ mantieniScorrimento: true });
       },
       munizioni: (uid, campo, delta) => cambiaSessione(variaMunizioni(stato.sessione, uid, campo, delta, massimi)),
-      ricarica: (uid, colpi = null) => cambiaSessione(ricaricaArma(stato.sessione, uid, massimi, colpi)),
+      ricarica: (uid, colpi = null, opz = {}) => cambiaSessione(ricaricaArma(stato.sessione, uid, massimi, colpi, opz)),
       togliCaricatore: (uid) => cambiaSessione(togliCaricatoreArma(stato.sessione, uid, massimi)),
       inserisciCaricatore: (uid, colpi) => cambiaSessione(inserisciCaricatoreArma(stato.sessione, uid, colpi, massimi)),
       riempiCaricatore: (uid, scelta) => cambiaSessione(riempiCaricatoreArma(stato.sessione, uid, scelta, massimi)),

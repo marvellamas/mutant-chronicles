@@ -130,7 +130,10 @@ export function pannelloTecnica(ctx, t) {
     : t.durata_tipo === 'tempo' ? `${t.durata}: resta attiva finché non la termini` : `${t.durata}: in corso fino alla fine del Round ${st.round}, per il colpo o la reazione`;
   // N2: la regola (una per Round, Umanità 0, PM) avvisa e chiede «Procedi comunque»; fermano solo la conferma dello
   // svenimento e il dado della cura non ancora scritto
-  const bloccato = (st.possibile && st.conferma && !u.conferma) || (cura && !cura.pronto);
+  // lotto 246: il dado della cura non scritto è un avviso, non un blocco (la Tecnica si attiva lo stesso e il dado si
+  // scrive dopo); resta la spunta di conferma dello svenimento, che è una domanda e non un giudizio sulla scelta
+  const bloccato = st.possibile && st.conferma && !u.conferma;
+  const motivoCura = cura && !cura.pronto ? (cura.avvisi ?? []).join('; ') || 'Manca il risultato del dado della cura' : null;
   const passi = [
     {
       titolo: 'Tecnica',
@@ -171,9 +174,9 @@ export function pannelloTecnica(ctx, t) {
             ' Confermo: la riserva resta a 0 PM e il personaggio è Svenuto') : null,
           h('div', { class: 'attacco-azioni' },
             h('button', {
-              type: 'button', class: 'btn primario btn-grande', disabled: bloccato,
-              title: !st.possibile ? st.motivo : bloccato ? 'Serve la conferma qui sopra' : null,
-              onclick: () => conAvviso(ctx.azioni.storico, { azione: `Attiva ${t.nome}`, motivo: st.possibile ? null : st.motivo, fai: (forza) => { ctx.ui.tecnica = null; return ctx.azioni.attivaTecnica(t.id, { opzione: u.opzione, silenzioMentale: u.silenzio, cura: { bersaglio: u.bersaglio ?? 'se', dado: u.dado ?? null }, ...(forza ? { forza: true } : {}) }); } }),
+              type: 'button', class: `btn primario btn-grande${!st.possibile || motivoCura ? ' con-avviso' : ''}`, disabled: bloccato,
+              title: !st.possibile ? st.motivo : bloccato ? 'Serve la conferma qui sopra' : motivoCura,
+              onclick: () => conAvviso(ctx.azioni.storico, { azione: `Attiva ${t.nome}`, motivo: st.possibile ? motivoCura : [st.motivo, motivoCura].filter(Boolean).join('; '), fai: (forza) => { ctx.ui.tecnica = null; return ctx.azioni.attivaTecnica(t.id, { opzione: u.opzione, silenzioMentale: u.silenzio, cura: { bersaglio: u.bersaglio ?? 'se', dado: u.dado ?? null }, ...(forza ? { forza: true } : {}) }); } }),
             }, st.possibile ? `Attiva (−${st.costo} PM)` : `Attiva comunque (−${Math.min(st.costo, st.pm)} PM)`),
             h('small', { class: 'nota' }, 'Una sola Tecnica per Round (§8.9.1). «Annulla» nell’intestazione annulla l’attivazione e restituisce i PM.'))),
       ],

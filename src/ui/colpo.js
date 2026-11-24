@@ -13,6 +13,7 @@ import { infoValore } from './tooltip.js';
 import { specTiro, tira } from '../tiri.js';
 import { applicaColpo, moltiplicatoreMagistrale, leggiDannoMoltiplicato } from '../danno.js';
 import { periodicoDi } from '../periodici.js';
+import { chiedi } from './finestrella.js';
 
 /** «1d8+2» → spec di src/tiri.js (un gruppo di dadi più un fisso), oppure null. */
 export function specDaFormula(formula) {
@@ -96,6 +97,10 @@ export function apriColpo(ctx, bersaglio, { applica, proposta = {}, fonti = [] }
       r = applicaColpo(bersaglio, c, ctx.dati);
     }
     const esiti = Object.entries(D.nuove_ferite.esiti);
+    // lotto 246: quello che prima spegneva «Applica» adesso è un avviso (l'app avvisa, non blocca)
+    const motivoApplica = r.tempraMancanti.length
+      ? `Manca l’esito della PS di Tempra (applicazion${r.tempraMancanti.length > 1 ? 'i' : 'e'} ${r.tempraMancanti.map((i) => i + 1).join(', ')}): il danno si applica, le Ferite nuove le decide il master`
+      : !c.danni.some((x) => x > 0) ? 'Nessun danno scritto: il colpo si registra lo stesso (un colpo assorbito dall’Armatura è legittimo)' : null;
     finestra.replaceChildren(h('form', { class: 'pannello-contenuto', method: 'dialog', onsubmit: (e) => e.preventDefault() },
       h('header', { class: 'pannello-testa' },
         h('h2', { id: 'colpo-titolo' }, `Colpito: ${bersaglio.nome}`),
@@ -179,11 +184,16 @@ export function apriColpo(ctx, bersaglio, { applica, proposta = {}, fonti = [] }
           })) : null,
         r.promemoria.length ? h('ul', { class: 'promemoria-attacco' }, r.promemoria.map((p) => h('li', {}, p))) : null),
       st.errore ? h('p', { class: 'riquadro errore', role: 'alert' }, st.errore) : null,
+      motivoApplica ? h('p', { class: 'nota motivo' }, motivoApplica) : null,
       h('div', { class: 'riga-azioni' },
         h('button', {
-          type: 'button', class: 'btn primario', disabled: st.inCorso || r.tempraMancanti.length > 0 || !c.danni.some((x) => x > 0),
-          title: r.tempraMancanti.length ? 'Scegli l’esito della PS di Tempra' : null,
+          // lotto 246: è il pulsante che chiude ogni colpo di ogni Round, e restava spento se mancava l'esito di una PS
+          // di Tempra o se il danno era tutto assorbito. Adesso avvisa: senza l'esito della Tempra il danno si applica e
+          // le Ferite nuove non si registrano (le decide il master); un colpo assorbito dall'AR è legittimo e va scritto.
+          type: 'button', class: `btn primario${motivoApplica ? ' con-avviso' : ''}`, disabled: st.inCorso,
+          title: motivoApplica ?? null,
           onclick: async () => {
+            if (motivoApplica && !(await chiedi({ titolo: 'Avviso: applicare il colpo', testo: `${motivoApplica}. L’app avvisa e non blocca: puoi applicare lo stesso.`, si: 'Applica comunque', no: 'Annulla' }))) return;
             st.inCorso = true; st.errore = null; disegna();
             try {
               // perdite periodiche da registrare nello scontro (§5.15): la prima l'ha già applicata il colpo
@@ -196,7 +206,7 @@ export function apriColpo(ctx, bersaglio, { applica, proposta = {}, fonti = [] }
             } catch (e) { st.errore = e.message; }
             st.inCorso = false; disegna();
           },
-        }, 'Applica'),
+        }, motivoApplica ? 'Applica comunque' : 'Applica'),
         h('button', { type: 'button', class: 'btn', onclick: () => chiudi() }, 'Annulla'))));
   };
   disegna();

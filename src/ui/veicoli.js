@@ -636,7 +636,10 @@ function munizioniVeicolo(ctx, mezzo, v, aggiorna) {
     const spara = (n) => aggiorna(munizioniArmaVeicolo(mezzo, i, { sparati: n }, ctx.dati));
     return h('p', {}, h('strong', {}, `${a.nome}: `), `${x.caricate} / ${a.capacita} caricate · riserva ${x.riserva} `,
       h('label', {}, 'colpi sparati ', h('input', { type: 'number', min: 1, class: 'input-d10', value: '', onchange: (e) => spara(intero(e.target.value, 0)) })), ' ',
-      h('button', { type: 'button', class: 'btn btn-piccolo', disabled: !x.riserva || x.caricate >= a.capacita, onclick: () => aggiorna(munizioniArmaVeicolo(mezzo, i, { ricarica: true }, ctx.dati), `${a.nome}: ricaricata dalla riserva.`) }, 'Ricarica'),
+      // lotto 246: era spento e muto. Resta spento solo quando non cambierebbe niente, e adesso dice perché
+      h('button', { type: 'button', class: 'btn btn-piccolo', disabled: !x.riserva || x.caricate >= a.capacita,
+        title: x.caricate >= a.capacita ? 'Già carica' : !x.riserva ? `Riserva a 0: i colpi si scrivono nel campo «riserva» (li conferma il Direttore)` : `Ricarica ${a.nome} dalla riserva`,
+        onclick: () => aggiorna(munizioniArmaVeicolo(mezzo, i, { ricarica: true }, ctx.dati), `${a.nome}: ricaricata dalla riserva.`) }, 'Ricarica'),
       Number.isInteger(a.cr_per_colpo) ? h('small', { class: 'nota' }, ` · ${a.cr_per_colpo} cr a colpo`) : null);
   }));
 }

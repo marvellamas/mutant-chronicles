@@ -804,14 +804,19 @@ export function riempiCaricatoreArma(sessione, uid, scelta, m) {
 }
 
 /** «Ricarica»; per le armi a caricatore `colpi` sceglie quale caricatore di scorta entra (03/11: anche un parziale). */
-export function ricaricaArma(sessione, uid, m, colpi = null) {
+export function ricaricaArma(sessione, uid, m, colpi = null, { forza = false } = {}) {
   const s = allineaSessione(sessione, m);
   const capacita = m.caricatori?.[uid];
   if (capacita === null || capacita === undefined) return s;
   const info = m.ricarica?.[uid];
   if (info) {
     const r = eseguiRicarica(info, s.munizioni[uid], s.scorte, colpi);
-    return r ? modificaSessione(s, { munizioni: { ...s.munizioni, [uid]: r.munizione }, scorte: r.consumi }, m) : s;
+    if (r) return modificaSessione(s, { munizioni: { ...s.munizioni, [uid]: r.munizione }, scorte: r.consumi }, m);
+    // lotto 246: l'app non trova munizioni, celle o caricatori compatibili. Prima il pulsante era spento e in mezzo a un
+    // combattimento non c'era modo di ricaricare (il «+» a mano c'è solo per le armi senza capacità dichiarata): la
+    // compatibilità viene dai dati del catalogo, e un dato mancante non può fermare un'azione da 1 AzP. Con «Procedi
+    // comunque» l'arma si carica al massimo e resta la riga nello storico: che le munizioni ci siano lo dice il master.
+    if (!forza) return s;
   }
   return modificaSessione(s, { munizioni: { ...s.munizioni, [uid]: { ...(s.munizioni[uid] ?? { riserve: 0 }), colpi: capacita } } }, m);
 }

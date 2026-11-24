@@ -305,7 +305,8 @@ export function cartaNemico(ctx, p, { modifica, durate = [], diTurnoOra = false,
       h('span', {}, i.va !== undefined ? [' VA ', h('strong', {}, numero(i.va))] : null, i.costo_pm !== undefined ? ` · ${i.costo_pm} PM` : '',
         i.note ? h('small', { class: 'nota' }, ` · ${i.note}`) : null,
         st.completo && onLancia
-          ? [' ', h('button', { type: 'button', class: 'btn btn-piccolo btn-lancia', disabled: !!senzaPm, title: senzaPm, onclick: () => onLancia(k) }, 'Lancia!')]
+          // lotto 246: i PM che non bastano si leggono accanto al pulsante e il master lancia lo stesso (la riserva va a 0)
+          ? [' ', h('button', { type: 'button', class: `btn btn-piccolo btn-lancia${senzaPm ? ' con-avviso' : ''}`, title: senzaPm ?? 'Lancia con questa creatura', onclick: () => onLancia(k) }, senzaPm ? 'Lancia comunque' : 'Lancia!')]
           : h('small', { class: 'nota' }, ` · promemoria${st.motivo ? `: ${st.motivo}` : ''}`),
         // seguito di A.84: regime mancante, proposta da confermare (mai scritta in silenzio)
         (() => {

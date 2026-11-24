@@ -68,7 +68,8 @@ export function permessoMovimento({ scena, pezzi, scontro = null, chiavePg, dati
   // «Mappa semplice» (N3): la pedina si sposta senza profilo di movimento e senza controlli sui PV
   if (mappaSemplice(scena)) return { puo: true, motivo: null, token, pezzo, bordo: null };
   if (!pezzo.movimento) return no('Il master non ha ancora letto la tua scheda: niente movimento per ora.', ok);
-  if (pezzo.aZero) return no('Sei a 0 PV: non puoi muoverti.', ok);
+  // lotto 246: a 0 PV è una regola, non un impedimento tecnico: la prova lo segna come avviso e il movimento passa
+  if (pezzo.aZero) return no('Sei a 0 PV: muoverti è contro le regole (§5.14).', { ...ok, regola: true });
   // in volo (08/10): Passo, Corsa e Scatto del volo (Giocatore §5.2.3)
   return { puo: true, motivo: null, token, pezzo: inVolo(token) ? { ...pezzo, movimento: movimentoInVolo(pezzo, dati, scena) } : pezzo, bordo: null };
 }
@@ -80,7 +81,7 @@ export function permessoMovimento({ scena, pezzi, scontro = null, chiavePg, dati
  * @param fascia 1 Passo, 2 Corsa, 3 Scatto
  * @returns { area, rimaste, usato, limite, totale, disponibili, chiusa, persi, escluse, motivo, fascia }
  */
-export function areaGiocatore({ scena, token, pezzo, pezzi, scontro = null, fascia = 1, dati, perGiocatori = false }) {
+export function areaGiocatore({ scena, token, pezzo, pezzi, scontro = null, fascia = 1, dati, perGiocatori = false, massimo = null }) {
   const usato = usatoNelRound(scena, token.id, scontro?.id ?? null, scontro?.round ?? null);
   const fatte = fasceNelRound(scena, token.id, scontro?.id ?? null, scontro?.round ?? null);
   const sf = statoFasce(pezzo.movimento, usato, fatte, dati.mappa.movimento);
@@ -98,7 +99,9 @@ export function areaGiocatore({ scena, token, pezzo, pezzi, scontro = null, fasc
   const area = areaRaggiungibile({
     colonne: g.colonne, righe: g.righe, muri, terreno, linee: lineeEffettive(scena, { perGiocatori, larghezza: dati.mappa.porte.larghezza_q }), roccia: rocciaEffettiva(scena),
     token: scena.token.filter(ostacolo).map((x) => ({ id: x.id, q: x.q, ingombro: x.ingombro, angolo: x.angolo, base: x.base, lato: perChiave.get(chiaveRif(x.rif))?.lato ?? null, blocca: !!x.blocca || !!perChiave.get(chiaveRif(x.rif))?.ostacolo })),
-    chi: { id: token.id, q: token.q, ingombro: token.ingombro, angolo: token.angolo, base: token.base, lato: pezzo.lato, attraversaRoccia: !!pezzo.attraversaRoccia }, massimo: totale, regole: regoleMovimento(token, dati),
+    chi: { id: token.id, q: token.q, ingombro: token.ingombro, angolo: token.angolo, base: token.base, lato: pezzo.lato, attraversaRoccia: !!pezzo.attraversaRoccia },
+    // lotto 246: con «massimo» si cerca su tutta la mappa, per sapere se un percorso esiste anche oltre il movimento rimasto
+    massimo: massimo ?? totale, regole: regoleMovimento(token, dati),
   });
   const scelta = sf.chiusa ?? [...FASCE.slice(0, fascia)].reverse().find((f) => rimaste[f] !== null);
   const quando = scontro ? 'del Round' : 'del turno';
@@ -135,12 +138,22 @@ export function areaPerTablet({ scena, pezzi, scontro, chiavePg, fascia = 1, dat
 
 /**
  * Prova del movimento verso `a` (il tablet la chiede prima della conferma, il server la rifà prima di scrivere).
- * @returns { ok: true, costo, fascia, percorso: punti (null sotto la nebbia), opportunita: [{ da, nomeDa, visibile }] }
+ * @returns { ok: true, costo, fascia, percorso: punti (null sotto la nebbia), opportunita: [{ da, nomeDa, visibile }], avvisi: string[] }
  *   oppure { ok: false, errore }
+ *
+ * Lotto 246: le REGOLE del movimento avvisano e non fermano più (il 22/11 l'app ha tenuto fermo il tavolo per quaranta
+ * minuti). Restano «no» soltanto tre cose, e sono di altra natura: ciò che il giocatore non deve sapere (la nebbia, un
+ * muro che non vede: glielo direbbe il percorso), ciò che l'app non sa fare (nessun percorso fino a lì: non si inventa
+ * una strada) e ciò che il master ha deciso lui (token nascosto, movimenti bloccati, turno). Tutto il resto — fascia
+ * sbagliata, movimento del Round finito, fuori dall'area, 0 PV — è un avviso che il tablet mostra e si può superare.
  */
 export function provaMovimento({ scena, pezzi, scontro = null, chiavePg, a, fascia = 1, dati }) {
   const p = permessoMovimento({ scena, pezzi, scontro, chiavePg, dati });
-  if (!p.puo) return { ok: false, errore: p.motivo };
+  const avvisi = [];
+  if (!p.puo) {
+    if (!p.regola) return { ok: false, errore: p.motivo }; // il master ha deciso, o non c'è niente da muovere
+    avvisi.push(p.motivo);
+  }
   if (!Array.isArray(a) || a.length !== 2 || !a.every(Number.isInteger)) return { ok: false, errore: 'quadretto di arrivo non valido' };
   if (!Number.isInteger(fascia) || fascia < 1 || fascia > 3) return { ok: false, errore: 'fascia: 1 Passo, 2 Corsa, 3 Scatto' };
   const { token, pezzo } = p;
@@ -149,31 +162,43 @@ export function provaMovimento({ scena, pezzi, scontro = null, chiavePg, a, fasc
   const nebbia = daBase64(scena.nebbia.coperti);
   if (!visibileAiGiocatori({ q: a, ingombro: token.ingombro, nascosto: false }, scena, nebbia)) return { ok: false, errore: 'Quel quadretto è sotto la nebbia: scegline uno che vedi.' };
   // «Mappa semplice» (N3): nessun conteggio, nessuna fascia, nessun Attacco di Opportunità; basta un quadretto che si vede
-  if (mappaSemplice(scena)) return { ok: true, semplice: true, costo: 0, fascia: null, percorso: [[...token.q], [...a]], punti: [[...token.q], [...a]], opportunita: [], token: token.id, nome: pezzo.nome, rifId: token.rif.id, usato: 0, blocco: false, persi: 0 };
+  if (mappaSemplice(scena)) return { ok: true, avvisi, semplice: true, costo: 0, fascia: null, percorso: [[...token.q], [...a]], punti: [[...token.q], [...a]], opportunita: [], token: token.id, nome: pezzo.nome, rifId: token.rif.id, usato: 0, blocco: false, persi: 0 };
   // quello che il giocatore vede e quello che c'è davvero
   const vista = areaGiocatore({ scena, token, pezzo, pezzi, scontro, fascia, dati, perGiocatori: true });
   const vera = areaGiocatore({ scena, token, pezzo, pezzi, scontro, fascia, dati });
   const costoVisto = costoVerso(vista.area, a);
   const costo = costoVerso(vera.area, a);
+  let areaPercorso = vera.area;
+  let costoVero = costo;
   if (costo > vera.limite) {
-    if (costo !== Infinity && costo <= vera.totale) {
-      const serve = FASCE.find((f) => vera.rimaste[f] !== null && costo <= vera.rimaste[f]);
-      return { ok: false, errore: `Quel quadretto richiede ${nomeFascia(serve)}: sceglila e riprova.` };
-    }
-    if (vera.motivo && vera.limite <= 0) return { ok: false, errore: `Non puoi muoverti: ${vera.motivo}.` };
+    // 1) quello che il giocatore VEDE è raggiungibile e quello che c'è davvero no: un muro, un token, una porta che il
+    //    master tiene nascosti. Il percorso glieli direbbe, quindi questo resta un «no» (è il filtro dei segreti, non una regola).
     if (costoVisto <= vista.limite) return { ok: false, errore: 'Quel quadretto non è raggiungibile: c’è qualcosa che non vedi. Chiedi al master.' };
-    if (vera.escluse.length && costo !== Infinity) return { ok: false, errore: `Oltre il Passo rimasto (${vera.rimaste.passo} Q): Corsa e Scatto si fanno da fermi, in un blocco unico.` };
-    return { ok: false, errore: 'Quel quadretto è fuori dalla tua area di movimento.' };
+    // 2) esiste un percorso, costi quel che costi? si guarda su tutta la mappa, una volta sola e solo in questo caso
+    if (costo === Infinity) {
+      const intera = areaGiocatore({ scena, token, pezzo, pezzi, scontro, fascia, dati, massimo: scena.griglia.colonne * scena.griglia.righe });
+      costoVero = costoVerso(intera.area, a);
+      // nessun percorso: non si inventa una strada attraverso un muro. L'app dice che non sa, e lo spostamento lo fa il master
+      if (costoVero === Infinity) return { ok: false, errore: 'Non c’è un percorso fino a lì: se devi arrivarci lo stesso, chiedi al master di spostarti lui.' };
+      areaPercorso = intera.area;
+    }
+    // 3) lotto 246: da qui in giù sono REGOLE del movimento, e le regole avvisano (il 22/11 fermavano il tavolo)
+    if (costoVero <= vera.totale) {
+      const serve = FASCE.find((f) => vera.rimaste[f] !== null && costoVero <= vera.rimaste[f]);
+      avvisi.push(`Costo ${costoVero} Q: con ${nomeFascia(FASCE[fascia - 1])} ne hai ${vera.limite}${serve ? `. Serve ${nomeFascia(serve)}` : ''}.`);
+    } else if (vera.motivo && vera.limite <= 0) avvisi.push(`Movimento finito per questo Round: ${vera.motivo}. Costo ${costoVero} Q.`);
+    else if (vera.escluse.length) avvisi.push(`Oltre il Passo rimasto (${vera.rimaste.passo} Q): Corsa e Scatto si fanno da fermi, in un blocco unico. Costo ${costoVero} Q.`);
+    else avvisi.push(`Fuori dalla tua area di movimento: costo ${costoVero} Q, ne hai ${vera.limite}.`);
   }
-  const punti = percorsoArea(vera.area, a);
-  const f = fasciaDi(costo, vera.rimaste);
+  const punti = percorsoArea(areaPercorso, a);
+  const f = fasciaDi(costoVero, vera.rimaste);
   // ZoC (Giocatore §5.3): tutti gli avversari contano; al tablet si nomina solo chi si vede
   const avv = avversariZoc(scena, pezzi, token.id, dati);
   const opportunita = attacchiDiOpportunita(punti, token.ingombro, avv, token).map((x) => ({
     da: x.token.rif.id, nomeDa: x.pezzo.nome, visibile: visibileAiGiocatori(x.token, scena, nebbia),
   }));
   const visibili = punti.map((q) => (visibileAiGiocatori({ q, ingombro: token.ingombro, nascosto: false }, scena, nebbia) ? q : null));
-  return { ok: true, costo, fascia: f, percorso: visibili, punti, opportunita, token: token.id, nome: pezzo.nome, rifId: token.rif.id, usato: vera.usato, blocco: f && !dati.mappa.movimento.divisibili.includes(f), persi: f && !dati.mappa.movimento.divisibili.includes(f) ? Math.max(0, (pezzo.movimento[f] ?? 0) - vera.usato - costo) : 0 };
+  return { ok: true, avvisi, costo: costoVero, fascia: f, percorso: visibili, punti, opportunita, token: token.id, nome: pezzo.nome, rifId: token.rif.id, usato: vera.usato, blocco: f && !dati.mappa.movimento.divisibili.includes(f), persi: f && !dati.mappa.movimento.divisibili.includes(f) ? Math.max(0, (pezzo.movimento[f] ?? 0) - vera.usato - costoVero) : 0 };
 }
 
 /**

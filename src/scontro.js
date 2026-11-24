@@ -203,8 +203,10 @@ export function registraLancioNemico(s, l, adesso, dati = null) {
   const p = s.partecipanti.find((x) => x.id === l.id);
   if (p?.tipo !== 'nemico' || !p.pm) throw new Error('nemico senza PM');
   if (!Number.isInteger(l.pm) || l.pm < 0) throw new Error('costo in PM non valido');
-  if (l.pm > p.pm.attuali) throw new Error(`${p.nome}: ${p.pm.attuali} PM, ne servono ${l.pm}`);
-  const attuali = p.pm.attuali - l.pm;
+  // lotto 246: i PM che non bastano non fermano più il lancio di una creatura. Il master può avere il suo motivo (una
+  // capacità, un artefatto, una concessione) e l'azione del nemico non può restare a metà in mezzo a un Round: la
+  // riserva scende a 0 e non sotto, come per i PG («Lancia comunque», src/sessione.js → spendiPmLancio).
+  const attuali = Math.max(0, p.pm.attuali - l.pm);
   let t = { ...s, partecipanti: s.partecipanti.map((x) => (x.id === l.id ? { ...x, pm: { ...x.pm, attuali } } : x)) };
   // durata dell'incantesimo (src/durate-incantesimi.js): fra gli effetti dello scontro, dal Round del lancio alla fine
   // del Round R + N (regole.json → durate_round); a tempo o fino a una condizione: promemoria senza Round
@@ -569,8 +571,10 @@ export function registraDurata(s, partecipante, stato, tiro, adesso, dati = null
 export function avanti(s, adesso, { indietroMax = 0 } = {}) {
   if (s.stato !== 'aperto') return s;
   const { ordinati } = ordineIniziativa(s);
-  if (!ordinati.length) return s;
-  const diT = ordinati[Math.min(s.turno, ordinati.length - 1)] ?? null;
+  // lotto 246: senza nessuna Iniziativa tirata «Avanti» non faceva niente e il pulsante era spento: il Direttore non
+  // poteva nemmeno far scorrere i Round (durate degli Stati, incantesimi in corso, usi per Round). Adesso avanza il
+  // Round, che è quello che serve al tavolo quando si combatte senza ordine di Iniziativa.
+  const diT = ordinati.length ? ordinati[Math.min(s.turno, ordinati.length - 1)] ?? null : null;
   // 12/10 (punto 3): anche il nome, per dire che cos'è successo quando quel partecipante non c'è più (tolto dallo scontro)
   const prima = { round: s.round, turno: s.turno, diTurno: diT?.id ?? null, nome: diT?.nome ?? null };
   const conVoce = (t, extra = {}) => (indietroMax > 0

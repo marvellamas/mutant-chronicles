@@ -635,9 +635,11 @@ export function renderGiocatori(radice, ctx) {
     const conf = p ? h('div', { class: 'tablet-conferma' },
       h('p', {}, p.semplice ? 'Sposta qui la pedina.' : `Arrivo: ${numeroQ(p.costo)} Q (${NOMI_MODI[p.fascia] ?? p.fascia})`, p.blocco ? `, blocco unico${p.persi ? `: ${numeroQ(p.persi)} Q persi` : ''}` : ''),
       ...(p.opportunita ?? []).map((o) => h('p', { class: 'tablet-zoc' }, `⚠ Esci dalla ZoC di ${o.nome}: Attacco di Opportunità!`)),
+      // lotto 246: le regole del movimento avvisano e non fermano: qui si legge che cosa non torna e si muove lo stesso
+      ...(p.avvisi ?? []).map((x) => h('p', { class: 'tablet-zoc' }, `⚠ ${x}`)),
       h('div', { class: 'riga-azioni' },
         h('button', { type: 'button', class: 'btn', onclick: () => { st.prova = null; aggiornaTablet(); tela.richiedi(['sopra']); } }, 'Annulla'),
-        h('button', { type: 'button', class: 'btn primario', disabled: st.inVolo, onclick: () => conferma() }, 'Conferma'))) : null;
+        h('button', { type: 'button', class: `btn primario${(p.avvisi ?? []).length ? ' con-avviso' : ''}`, disabled: st.inVolo, onclick: () => conferma() }, (p.avvisi ?? []).length ? 'Muovi comunque' : 'Conferma'))) : null;
     el.torna.className = `btn tablet-torna${st.mosso ? ' primario' : ''}`;
     // P4: sotto il risultato della linea, «Attacca questo bersaglio» (al proprio turno, come «Muovi il PG»)
     // 12/10 (punto 6): un oggetto della scena si attacca solo se il master gli ha messo la spunta «Bersaglio»

@@ -44,7 +44,8 @@ export function barraIniziativaEl(barra, o = {}) {
       o.daTirare?.nomi.length ? h('button', { type: 'button', class: 'btn primario', title: `Senza Iniziativa, fuori dall’ordine: ${o.daTirare.nomi.join(', ')}`, onclick: () => o.daTirare.chiedi() }, `Iniziativa… (${o.daTirare.nomi.length} senza)`) : null,
       // «Reimposta Iniziativa» (07/10): per tutti o per uno solo, la stessa della plancia
       o.reimposta ? h('button', { type: 'button', class: 'btn', title: 'Reimposta Iniziativa: ritira per tutti (con conferma) o per uno solo (ritiro o valore a mano); chi è di turno resta di turno; «Indietro» la annulla', disabled: !barra.voci.length, onclick: () => o.reimposta() }, '⟳ Iniziativa') : null,
-      h('button', { type: 'button', class: 'btn primario', title: 'Il turno passa al prossimo, che diventa il token scelto (lo stesso «Avanti» della plancia; Maiusc+clic: «Indietro»)', disabled: !barra.voci.length, onclick: (e) => (e.shiftKey && o.indietro ? o.indietro() : o.avanti()) }, 'Avanti'),
+      // lotto 246: come nella plancia, senza Iniziative tirate «Avanti» avanza il Round
+      h('button', { type: 'button', class: 'btn primario', title: barra.voci.length ? 'Il turno passa al prossimo, che diventa il token scelto (lo stesso «Avanti» della plancia; Maiusc+clic: «Indietro»)' : 'Nessuna Iniziativa tirata: «Avanti» fa avanzare il Round', onclick: (e) => (e.shiftKey && o.indietro ? o.indietro() : o.avanti()) }, 'Avanti'),
       // 08/10: «Fine scontro» anche dalla mappa (con conferma): la musica si ferma, i tablet tornano alla scheda
       o.fine ? h('button', { type: 'button', class: 'btn pericolo btn-fine-scontro', title: 'Chiude lo scontro (con conferma), come «Fine scontro» della plancia: il file passa in scontri/archivio/, la musica si ferma, i tablet tornano alla scheda', onclick: () => o.fine() }, '⏹ Fine scontro') : null,
       o.centra ? h('button', {

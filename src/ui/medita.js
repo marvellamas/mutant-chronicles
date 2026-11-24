@@ -81,8 +81,10 @@ export function pannelloMedita(ctx) {
           h('p', { class: 'nota' }, `Resta nel registro: «${piano.registro}»`),
           h('div', { class: 'attacco-azioni' },
             h('button', {
-              type: 'button', class: `btn primario btn-grande${piano.vuoto || c?.motivo ? ' con-avviso' : ''}`, disabled: !!c?.inAttesa,
-              title: c?.inAttesa ? 'Indica prima l’esito della Prova di Potere (Magia sez. 6)' : c?.motivo ?? (piano.vuoto ? 'Non cambia nessun valore' : null),
+              // lotto 246: l'esito della Prova di Potere non scritto è un avviso (senza esito la ricarica non sposta
+              // niente e la Meditazione si fa lo stesso), non più una conferma spenta
+              type: 'button', class: `btn primario btn-grande${piano.vuoto || c?.motivo || c?.inAttesa ? ' con-avviso' : ''}`,
+              title: c?.inAttesa ? 'Senza l’esito della Prova di Potere (Magia sez. 6) il cristallo non si ricarica: la Meditazione si fa lo stesso' : c?.motivo ?? (piano.vuoto ? 'Non cambia nessun valore' : null),
               // un requisito della ricarica che manca (Addestramento Taumaturgo, contatto, sintonizzazione) avvisa e si può superare
               // con «Procedi comunque», con la riga nel registro: la scorciatoia non è più permissiva dei due passaggi separati
               onclick: () => { const fai = () => { ctx.ui.medita = null; ctx.azioni.medita(piano); }; // prima si chiude: l'azione ridisegna la scheda

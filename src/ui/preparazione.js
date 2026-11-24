@@ -289,8 +289,9 @@ export function apriPreparazione(ctx, { bestiario, alTavolo, scontroAperto, iniz
         posizioneIniziale(b),
       ]),
       h('div', { class: 'riga-azioni azioni-bozza' },
-        h('button', { type: 'button', class: 'btn primario', disabled: !b.nemici.length, title: b.nemici.length ? 'Inizia: avvia lo scontro dal Round 1 (poi la finestra «Iniziativa»); la bozza resta per rigiocarlo' : 'Serve almeno un nemico', onclick: () => avvia(false) }, 'Inizia'),
-        h('button', { type: 'button', class: 'btn', disabled: !b.nemici.length, title: b.nemici.length ? 'Inizia e consuma la bozza: avvia lo scontro e archivia la bozza (scontri/archivio/), per uno scontro che non si ripete' : 'Serve almeno un nemico', onclick: () => avvia(true) }, 'Inizia e consuma la bozza'),
+        // lotto 246: una bozza senza nemici si avvia lo stesso (una trappola, un inseguimento, il Round come cronometro)
+        h('button', { type: 'button', class: `btn primario${b.nemici.length ? '' : ' con-avviso'}`, title: b.nemici.length ? 'Inizia: avvia lo scontro dal Round 1 (poi la finestra «Iniziativa»); la bozza resta per rigiocarlo' : 'Nessun nemico nella bozza: lo scontro si apre lo stesso e i nemici si aggiungono dopo', onclick: () => avvia(false) }, 'Inizia'),
+        h('button', { type: 'button', class: 'btn', title: b.nemici.length ? 'Inizia e consuma la bozza: avvia lo scontro e archivia la bozza (scontri/archivio/), per uno scontro che non si ripete' : 'Nessun nemico: si avvia lo stesso e la bozza si archivia', onclick: () => avvia(true) }, 'Inizia e consuma la bozza'),
         h('button', { type: 'button', class: 'btn', title: 'Salva e chiudi: aspetta l’ultimo salvataggio e chiude; la bozza resta fra le bozze', onclick: salvaEChiudi }, 'Salva e chiudi'),
         h('button', { type: 'button', class: 'btn', title: 'Duplica: una copia della bozza con un nome nuovo, da cambiare', onclick: () => duplica(b.id) }, 'Duplica'),
         h('button', { type: 'button', class: 'btn pericolo', title: 'Elimina: con conferma, la bozza va in scontri/archivio/ (non si cancella)', onclick: () => elimina(b.id) }, 'Elimina')),

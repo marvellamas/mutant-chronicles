@@ -127,12 +127,14 @@ test('5. Prova di Potere dal secondo gruppo in su: nessun esito di comodo, la co
   // con l'esito indicato si applica (Successo, Fallimento, Magistrale, Maldestro come da manuale)
   assert.equal(piano(c, { modo: 'breve', ore: 0, destinazione: 'rosso', gruppi: 3, esito: 'successo' }).conversione.entrano, 3);
   assert.equal(piano(c, { modo: 'breve', ore: 0, destinazione: 'rosso', gruppi: 3, esito: 'fallimento' }).conversione.entrano, 0);
-  // nel pannello «Conferma» è spento finché l'esito manca
+  // lotto 246: nel pannello «Conferma» NON è più spento finché l'esito manca — lo dice e si conferma lo stesso
+  // (senza esito la conversione non sposta niente: la Meditazione si fa e il cristallo si ricarica dopo)
   c.ui.medita = { modo: 'breve', ore: 0, oreGia: 0, destinazione: 'rosso', gruppi: 3, esito: null, passo: 2 };
   let pann = resa(c).radice.tutti().find((n) => n.className?.includes('medita-pannello'));
   let conferma = pann.tutti().find((n) => n.tagName === 'BUTTON' && /^Conferma/.test(n.textContent));
-  assert.equal(conferma.disabled, true);
-  assert.match(conferma.getAttribute('title'), /Indica prima l’esito della Prova di Potere/);
+  assert.ok(!conferma.disabled, 'la conferma non si spegne più');
+  assert.match(conferma.getAttribute('title'), /Prova di Potere/);
+  assert.match(conferma.className, /con-avviso/);
   c.ui.medita.esito = 'successo';
   pann = resa(c).radice.tutti().find((n) => n.className?.includes('medita-pannello'));
   conferma = pann.tutti().find((n) => n.tagName === 'BUTTON' && /^Conferma/.test(n.textContent));

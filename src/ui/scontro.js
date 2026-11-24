@@ -102,7 +102,8 @@ export function pannelloScontro(ctx, st, { modifica, crea, prepara = null, ridis
       h('p', { class: 'nota' }, `Nessuno scontro aperto. «Nuovo scontro al volo» parte subito con i PG al tavolo (i nemici si aggiungono dopo); «Prepara scontro» apre le bozze con i nemici già scelti. L’Iniziativa di ciascuno è quella della scheda più ${dado.formula}, tirato dal vivo o dall’app (Giocatore §2.14, §5.1).`),
       h('div', { class: 'riga-azioni' },
         h('button', {
-          type: 'button', class: 'btn primario', disabled: !st.pgAlTavolo.length, title: st.pgAlTavolo.length ? 'Apre subito uno scontro con i PG al tavolo; i nemici si aggiungono dopo' : 'Prima scegli chi è al tavolo',
+          // lotto 246: uno scontro si apre anche senza PG al tavolo (una trappola, un pericolo d'ambiente, solo nemici)
+          type: 'button', class: `btn primario${st.pgAlTavolo.length ? '' : ' con-avviso'}`, title: st.pgAlTavolo.length ? 'Apre subito uno scontro con i PG al tavolo; i nemici si aggiungono dopo' : 'Nessun PG al tavolo: lo scontro si apre lo stesso e i partecipanti si aggiungono dopo',
           onclick: () => crea(nuovoScontro({ id: idNuovo(), pg: st.pgAlTavolo.map(pgDaVista) })),
         }, 'Nuovo scontro al volo'),
         // 09/10 (Marcello): accanto, la preparazione (bozze con i nemici, «Inizia»)
@@ -216,7 +217,8 @@ export function pannelloScontro(ctx, st, { modifica, crea, prepara = null, ridis
         indietroUi ? h('button', { type: 'button', class: 'btn', disabled: !s.indietro?.length, title: s.indietro?.length ? `Annulla l’ultimo «Avanti» (o «Reimposta Iniziativa»): torna il turno di prima, con Round, durate e Stati (${s.indietro.length} passi possibili; anche Maiusc+clic su «Avanti»)` : 'Nessun «Avanti» da annullare', onclick: () => indietroUi() }, '◀ Indietro') : null,
         // ritocchi del 07/10: ritira l'Iniziativa di tutti (con conferma) o di uno solo
         reimposta ? h('button', { type: 'button', class: 'btn', disabled: !ordinati.length, title: 'Ritira l’Iniziativa di tutti (Iniziativa + 1d10, parità come §5.1) o di uno solo; chi è di turno resta di turno; «Indietro» la annulla', onclick: () => reimposta() }, 'Reimposta Iniziativa') : null,
-        h('button', { type: 'button', class: 'btn primario', disabled: !ordinati.length, title: 'Il turno passa al prossimo (Maiusc+clic: «Indietro»)', onclick: (e) => (e.shiftKey && indietroUi ? indietroUi() : modifica((x) => avanti(x, undefined, { indietroMax: ctx.dati.mappa.iniziativa.indietro_max }))) }, 'Avanti'),
+        // lotto 246: senza Iniziative tirate «Avanti» fa avanzare il Round (il Direttore non resta senza comandi)
+        h('button', { type: 'button', class: 'btn primario', title: ordinati.length ? 'Il turno passa al prossimo (Maiusc+clic: «Indietro»)' : 'Nessuna Iniziativa tirata: «Avanti» fa avanzare il Round', onclick: (e) => (e.shiftKey && indietroUi ? indietroUi() : modifica((x) => avanti(x, undefined, { indietroMax: ctx.dati.mappa.iniziativa.indietro_max }))) }, 'Avanti'),
         // pezzo 4: annulla l'ultimo colpo applicato (PV, Ferite e Stati di prima)
         annullaColpo && s.colpi?.length ? h('button', { type: 'button', class: 'btn', title: `Ultimo: ${s.colpi.at(-1).testo}`, onclick: async () => { if (await chiedi({ titolo: `Annullare l’ultimo colpo a ${s.colpi.at(-1).nome}?`, testo: s.colpi.at(-1).testo, si: 'Annulla il colpo', no: 'Lascia' })) annullaColpo(); } }, 'Annulla ultimo colpo') : null,
         h('button', { type: 'button', class: 'btn pericolo', onclick: async () => { if (await chiedi({ titolo: 'Chiudere lo scontro?', testo: 'Il file passa in scontri/archivio/.', si: 'Fine scontro', pericolo: true })) modifica((x) => chiudi(x)); } }, 'Fine scontro'))),

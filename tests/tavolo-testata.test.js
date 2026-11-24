@@ -25,9 +25,12 @@ test('«Scontro» senza scontro aperto: «Nuovo scontro al volo» e «Prepara sc
     assert.equal(preparato, 1);
     // senza la preparazione (per esempio altre viste) resta il solo «Nuovo scontro al volo»
     assert.deepEqual(testi(pannelloScontro({ dati }, { scontro: null, pgAlTavolo: pg }, { ...az, prepara: null })), ['Nuovo scontro al volo']);
-    // senza PG al tavolo «Nuovo scontro al volo» è spento, «Prepara scontro» no
+    // lotto 246: senza PG al tavolo «Nuovo scontro al volo» NON è più spento (una trappola o un pericolo d'ambiente
+    // sono uno scontro di soli nemici): resta acceso, con il motivo scritto accanto e i partecipanti si aggiungono dopo
     const vuoto = pannelloScontro({ dati }, { scontro: null, pgAlTavolo: [] }, az);
-    assert.equal(trova(vuoto, 'Nuovo scontro al volo').attributi.disabled !== undefined || trova(vuoto, 'Nuovo scontro al volo').disabled === true, true);
+    const b = trova(vuoto, 'Nuovo scontro al volo');
+    assert.equal(b.attributi.disabled === undefined && b.disabled !== true, true, 'acceso');
+    assert.match(b.attributi.title ?? b.title ?? '', /Nessun PG al tavolo/, 'con il motivo scritto');
     assert.equal(creato, null);
   } finally {
     togliDomFinto();

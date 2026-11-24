@@ -120,7 +120,9 @@ export function statoRicarica(info0, munizione, consumi = {}) {
   const colpi = munizione?.colpi ?? 0;
   if (!info) return { possibile: true, motivo: null, avviso: null };
   if (info.capacita === null) return { possibile: false, motivo: 'nessun caricatore nella scheda dell’arma', avviso: null };
-  if (colpi >= info.capacita) return { possibile: false, motivo: info.modo === 'cella' ? 'già carica' : 'caricatore già pieno', avviso: null };
+  // lotto 246: «pieno» distingue il pulsante che non cambierebbe niente (resta spento) da quello che l'app rifiuta
+  // perché non trova le munizioni nell'inventario (avvisa, e con «Procedi comunque» si ricarica lo stesso)
+  if (colpi >= info.capacita) return { possibile: false, pieno: true, motivo: info.modo === 'cella' ? 'già carica' : 'caricatore già pieno', avviso: null };
   if (info.modo === null) return { possibile: true, motivo: null, avviso: 'Compatibilità delle munizioni non nei dati: la ricarica non scala le riserve.' };
   if (info.modo === 'caricatore') {
     // 03/11: senza caricatore nell'arma basta un caricatore di scorta con almeno un colpo
