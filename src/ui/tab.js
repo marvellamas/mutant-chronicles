@@ -3360,24 +3360,36 @@ export function pmLivelloBase(inc) {
 
 /**
  * Lotto 242 (ritocco 2, visto al tavolo da Marcello): nel riquadro «Incantesimi» in cima alla tab (quello del conteggio dei
- * conosciuti), un indice con nome e PM del livello base, nell'ordine della pagina sotto; sta nello spazio che il riquadro ha già
+ * conosciuti), un indice con nome e PM del livello base (dal lotto 243 in ordine alfabetico, una voce per riga); sta nello spazio che il riquadro ha già
  * (è alto quanto i Punti Magia accanto), così si vede appena si apre la tab e non aggiunge altezza; un tocco sul nome porta la scheda di quell'incantesimo in cima a quello che si vede,
  * sotto le fasce ferme in alto (`scroll-margin-top` in css/style.css). Lucas e Dimitri ne hanno 21 e 20: si scorreva per trovarli.
  * È un indice, non una seconda scheda: più nomi per riga. Con un incantesimo solo non serve.
  */
 function indiceIncantesimi(ctx, gruppi) {
-  const voci = gruppi.flatMap((mf) => mf.specializzazioni.flatMap((sp) => sp.noti.map((i) => ({ nome: i.nome, macro: mf.nome }))));
+  // lotto 243: in ordine alfabetico per nome (è un indice in cui si cerca un nome, non la pagina sotto), una voce per riga, nome a
+  // sinistra e PM a destra; il CSS le mette su due colonne se il riquadro è abbastanza largo
+  const voci = gruppi.flatMap((mf) => mf.specializzazioni.flatMap((sp) => sp.noti.map((i) => ({ nome: i.nome, macro: mf.nome }))))
+    .sort((x, y) => x.nome.localeCompare(y.nome, 'it', { sensitivity: 'base' }));
   if (voci.length < 2) return null;
-  const salta = (nome) => {
-    const el = globalThis.document?.getElementById?.(idIncantesimo(nome));
-    el?.scrollIntoView?.({ block: 'start', behavior: 'smooth' });
+  const doc = () => globalThis.document;
+  const scheda = (nome) => doc()?.getElementById?.(idIncantesimo(nome)) ?? null;
+  const salta = (nome, bottone) => {
+    const el = scheda(nome);
+    // una scheda che non c'è: l'indice non finge. La voce diventa non cliccabile e si vede (mai un tocco che non porta da nessuna parte)
+    if (!el) { bottone?.setAttribute?.('disabled', ''); bottone?.setAttribute?.('class', `${bottone.getAttribute?.('class') ?? ''} senza-scheda`); return; }
+    el.scrollIntoView?.({ block: 'start', behavior: 'smooth' });
   };
-  return h('nav', { class: 'indice-incantesimi', 'aria-label': `Indice degli incantesimi conosciuti (${voci.length})` },
+  return h('nav', { class: 'indice-incantesimi', 'aria-label': `Indice degli incantesimi conosciuti (${voci.length}), in ordine alfabetico` },
     h('ul', { class: 'indice-voci' }, voci.map((v) => {
-      const pm = pmLivelloBase(ctx.dati.incantesimi.incantesimi.find((x) => x.nome === v.nome));
+      const inc = ctx.dati.incantesimi.incantesimi.find((x) => x.nome === v.nome);
+      const pm = pmLivelloBase(inc);
+      const pmTesto = pm !== null ? h('span', { class: 'sigla' }, `${pm} PM`) : null;
+      // senza una scheda nel catalogo non c'è dove saltare: la voce c'è ma non è un pulsante, e lo dice
+      if (!inc) return h('li', { class: `${classeMacrofamiglia(v.macro)} senza-scheda` },
+        h('span', { class: 'link-indice senza-scheda', title: `${v.nome}: nessuna scheda nel catalogo da raggiungere` }, h('span', { class: 'nome-indice' }, v.nome), pmTesto));
       return h('li', { class: classeMacrofamiglia(v.macro) },
-        h('button', { type: 'button', class: 'link-indice', title: `Vai a ${v.nome}`, onclick: () => salta(v.nome) },
-          v.nome, pm !== null ? h('span', { class: 'sigla' }, ` ${pm} PM`) : null));
+        h('button', { type: 'button', class: 'link-indice', title: `Vai a ${v.nome}`, onclick: (e) => salta(v.nome, e?.currentTarget ?? e?.target ?? null) },
+          h('span', { class: 'nome-indice' }, v.nome), pmTesto));
     })));
 }
 

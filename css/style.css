@@ -618,11 +618,15 @@ dl.voci.in-linea dt::after { content: ":"; }
 /* Lotto 242: l'indice degli incantesimi conosciuti (un indice, non una seconda scheda: più nomi per riga) e il salto, che porta la
    scheda in cima a quello che si vede, sotto le fasce ferme in alto (--alto-fasce, lotto 177) */
 .incantesimo-scheda { scroll-margin-top: calc(var(--alto-fasce, 0px) + 0.5rem); }
-.indice-incantesimi .indice-voci { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 0.1rem 0.4rem; }
-.indice-incantesimi .indice-voci li { border-left: 3px solid var(--macro, var(--bordo)); padding-left: 0.3rem; }
-.link-indice { background: none; border: 0; padding: 0.35rem 0.2rem; min-height: 2.25rem; font: inherit; font-size: 0.95rem; color: var(--testo); cursor: pointer; text-align: left; }
+/* lotto 243: una voce per riga, nome a sinistra e PM a destra; due colonne solo se il riquadro è largo abbastanza (columns), mai un elenco che sborda */
+.indice-incantesimi .indice-voci { list-style: none; margin: 0; padding: 0; columns: 2 12rem; column-gap: 0.9rem; }
+.indice-incantesimi .indice-voci li { border-left: 3px solid var(--macro, var(--bordo)); padding-left: 0.3rem; break-inside: avoid; }
+.link-indice { display: flex; justify-content: space-between; align-items: baseline; gap: 0.5rem; width: 100%; background: none; border: 0; padding: 0.3rem 0.2rem; min-height: 2rem; font: inherit; font-size: 0.95rem; color: var(--testo); cursor: pointer; text-align: left; }
 .link-indice:hover, .link-indice:focus-visible { text-decoration: underline; }
-.link-indice .sigla { white-space: nowrap; }
+.link-indice .sigla { white-space: nowrap; color: var(--tenue); }
+/* una voce senza scheda da raggiungere: c'è, ma non è cliccabile e si vede (testo tenue, barrato leggero, nessun cursore a mano) */
+.link-indice.senza-scheda, .link-indice:disabled { cursor: default; color: var(--tenue); text-decoration: line-through; opacity: 0.75; }
+.link-indice.senza-scheda:hover { text-decoration: line-through; }
 .piccolo { font-size: 0.85rem; color: var(--tenue); margin: 0.15rem 0; }
 
 /* ---------------------------------------------------------------- tiri di dado (src/ui/tiro.js) */
