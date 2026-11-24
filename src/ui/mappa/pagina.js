@@ -4465,7 +4465,8 @@ export function renderMappa(radice, ctx) {
       ...[['movimentoGiocatori', 'Mostra il movimento ai giocatori', 'L’area, la modalità, i Q usati e il percorso del token scelto anche sullo schermo dei giocatori (mai per i token nascosti o sotto la nebbia)'],
         ['zocGiocatori', 'Mostra le ZoC ai giocatori', 'Le zone di controllo degli avversari visibili del token scelto, sullo schermo dei giocatori']].map(([campo, testo, titolo]) => {
         const acceso = st.scena[campo] !== false;
-        return h('button', { type: 'button', role: 'switch', 'aria-checked': String(acceso), class: `interruttore-mappa${acceso ? ' acceso' : ''}`, title: titolo, disabled: campo === 'zocGiocatori' && st.scena.movimentoGiocatori === false, onclick: () => cambiaDirettaGiocatori(campo) },
+        // lotto 246: le ZoC si possono mostrare anche senza il movimento (due scelte del Direttore, non una dipendenza)
+        return h('button', { type: 'button', role: 'switch', 'aria-checked': String(acceso), class: `interruttore-mappa${acceso ? ' acceso' : ''}`, title: campo === 'zocGiocatori' && st.scena.movimentoGiocatori === false ? `${titolo} — con «Mostra il movimento» spento si vedono solo le ZoC` : titolo, onclick: () => cambiaDirettaGiocatori(campo) },
           h('span', { class: 'interruttore-mappa-pallino', 'aria-hidden': 'true' }), `${testo}: ${acceso ? 'sì' : 'no'}`);
       }),
       // M1 (11/10): un interruttore per livello, anche per lo schermo dei giocatori

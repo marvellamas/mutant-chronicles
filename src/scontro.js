@@ -255,7 +255,9 @@ export function azzeraUsiPerRound(partecipanti) {
 export function cambiaStatoNemico(s, id, stato, attivo, adesso) {
   const p = s.partecipanti.find((x) => x.id === id);
   if (p?.tipo !== 'nemico') throw new Error('partecipante non trovato fra i nemici');
-  if (attivo && (p.scheda?.immunita ?? []).includes(stato.id)) throw new Error(`${p.nome} è immune a ${stato.nome}`);
+  // lotto 246: l'immunità della scheda era un errore e lo Stato non si accendeva. È una regola, non un'impossibilità:
+  // il master può avere il suo motivo (una capacità, un'eccezione del manuale) e l'immunità resta scritta nella scheda.
+  const immune = attivo && (p.scheda?.immunita ?? []).includes(stato.id);
   if (attivo === p.stati.includes(stato.id)) return s;
   const stati = attivo ? [...p.stati, stato.id] : p.stati.filter((x) => x !== stato.id);
   // spegnendolo si toglie anche la sua intensità (A.119)
@@ -265,7 +267,7 @@ export function cambiaStatoNemico(s, id, stato, attivo, adesso) {
     partecipanti: s.partecipanti.map((x) => (x.id === id ? { ...x, stati, ...(intensita && Object.keys(intensita).length ? { intensita } : {}), ...(!attivo && x.intensita && !Object.keys(intensita).length ? { intensita: undefined } : {}) } : x)),
     durate: attivo ? s.durate : s.durate.filter((d) => !(d.partecipante === id && d.stato === stato.id)),
   };
-  return conRiga(t, `${p.nome}: ${stato.nome} ${attivo ? 'attivo' : 'tolto'}.`, adesso);
+  return conRiga(t, `${p.nome}: ${stato.nome} ${attivo ? 'attivo' : 'tolto'}.${immune ? ` (la scheda lo dà immune a ${stato.nome}: deciso dal master)` : ''}`, adesso);
 }
 
 /**

@@ -543,8 +543,9 @@ function testataComune(ctx) {
     h('span', { class: 'voce-testata voce-distintivi' },
       h('span', { class: 'etichetta-testata' }, 'Distintivi'), h('strong', { 'aria-live': 'polite' }, String(t.distintivi.valore)),
       tasto('distintivi', -1, !t.distintivi.puoTogliere, 'Togli 1 Distintivo'), tasto('distintivi', 1, false, 'Aggiungi 1 Distintivo'),
-      h('button', { type: 'button', class: 'btn btn-piccolo', onclick: ctx.azioni.convertiDistintivi, disabled: !t.distintivi.puoConvertire,
-        title: `Converti ${t.distintivi.perPuntoEroe} Distintivi in 1 Punto Eroe (§1.8.3: facoltativo, senza superare la riserva massima)` }, `${t.distintivi.perPuntoEroe} → 1 PE`)),
+      // lotto 246: la conversione si legge e si fa lo stesso (il §1.8.3 è una regola, e l'ultima parola è del master)
+      h('button', { type: 'button', class: `btn btn-piccolo${t.distintivi.puoConvertire ? '' : ' con-avviso'}`, onclick: ctx.azioni.convertiDistintivi,
+        title: `Converti ${t.distintivi.perPuntoEroe} Distintivi in 1 Punto Eroe (§1.8.3: facoltativo, senza superare la riserva massima)${t.distintivi.puoConvertire ? '' : '. Adesso non torna: decide il master'}` }, `${t.distintivi.perPuntoEroe} → 1 PE`)),
     t.crediti
       ? h('span', { class: 'voce-testata voce-crediti' },
         h('label', { class: 'etichetta-testata', for: 'crediti-testata' }, 'Crediti'),
@@ -1837,9 +1838,10 @@ function controlloTemporaneo(ctx, c, R) {
   const v = normalizzaTemporanei(ctx.sessione.caratteristicheTemporanee, R).find((y) => y.sigla === c.sigla)?.valore ?? 0;
   const deriva = derivatiDi(c.sigla, ctx.dati);
   return h('div', { class: 'controllo-temporaneo', title: `Modificatore temporaneo di ${c.nome}: vale per ${deriva.join('; ') || 'nessun valore derivato'}.` },
-    h('button', { type: 'button', class: 'btn-tavolo', disabled: v <= R.minimo, 'aria-label': `${c.sigla} temporaneo: togli 1`, onclick: () => salva(variaTemporaneo(ctx.sessione, c.sigla, -1, R)) }, '−'),
+    // lotto 246: i limiti dei dati non valgono contro il Direttore: si legge il minimo e si scende lo stesso
+    h('button', { type: 'button', class: `btn-tavolo${v <= R.minimo ? ' con-avviso' : ''}`, title: v <= R.minimo ? `Sotto il minimo dei dati (${R.minimo}): decide il Direttore` : null, 'aria-label': `${c.sigla} temporaneo: togli 1`, onclick: () => salva(variaTemporaneo(ctx.sessione, c.sigla, -1, R)) }, '−'),
     h('span', { class: `valore-temporaneo${v ? (v < 0 ? ' malus' : ' bonus') : ''}` }, v ? segno(v) : '0'),
-    h('button', { type: 'button', class: 'btn-tavolo', disabled: v >= R.massimo, 'aria-label': `${c.sigla} temporaneo: aggiungi 1`, onclick: () => salva(variaTemporaneo(ctx.sessione, c.sigla, 1, R)) }, '+'));
+    h('button', { type: 'button', class: `btn-tavolo${v >= R.massimo ? ' con-avviso' : ''}`, title: v >= R.massimo ? `Oltre il massimo dei dati (${R.massimo}): decide il Direttore` : null, 'aria-label': `${c.sigla} temporaneo: aggiungi 1`, onclick: () => salva(variaTemporaneo(ctx.sessione, c.sigla, 1, R)) }, '+'));
 }
 
 /**
@@ -1857,9 +1859,9 @@ function riquadroCircostanze(ctx) {
     h('input', { type: 'checkbox', checked: spuntata, onchange: () => salva(commutaCategoria(lista, x.id, id, R)) }), ` ${nome}`);
   const riga = (x) => h('div', { class: `riga-circostanza${x.valore ? '' : ' a-zero'}` },
     h('div', { class: 'valore-circostanza pulsanti-tavolo' },
-      h('button', { type: 'button', class: 'btn-tavolo', disabled: x.valore <= R.minimo, 'aria-label': 'Circostanza: togli 1', onclick: () => salva(variaCircostanza(lista, x.id, -1, R)) }, '−1'),
+      h('button', { type: 'button', class: `btn-tavolo${x.valore <= R.minimo ? ' con-avviso' : ''}`, title: x.valore <= R.minimo ? `Sotto il minimo dei dati (${R.minimo}): decide il Direttore` : null, 'aria-label': 'Circostanza: togli 1', onclick: () => salva(variaCircostanza(lista, x.id, -1, R)) }, '−1'),
       h('strong', { 'aria-live': 'polite' }, x.valore ? segno(x.valore) : '0'),
-      h('button', { type: 'button', class: 'btn-tavolo', disabled: x.valore >= R.massimo, 'aria-label': 'Circostanza: aggiungi 1', onclick: () => salva(variaCircostanza(lista, x.id, 1, R)) }, '+1')),
+      h('button', { type: 'button', class: `btn-tavolo${x.valore >= R.massimo ? ' con-avviso' : ''}`, title: x.valore >= R.massimo ? `Oltre il massimo dei dati (${R.massimo}): decide il Direttore` : null, 'aria-label': 'Circostanza: aggiungi 1', onclick: () => salva(variaCircostanza(lista, x.id, 1, R)) }, '+1')),
     h('div', { class: 'categorie-circostanza', role: 'group', 'aria-label': 'A che cosa si applica' },
       casella(x, TUTTO, 'Tutto', tutteSpuntate(x, R)),
       R.categorie.map((c) => casella(x, c.id, c.nome, x.categorie.includes(c.id)))),
@@ -1922,7 +1924,8 @@ function riquadroUsiTalenti(ctx) {
         v.per
           ? h('button', { type: 'button', class: 'btn btn-piccolo', title: `Segna un uso su un ${v.per} (${nomeFreq(v)})${v.sistemi?.length ? `; già usato su: ${v.sistemi.join(', ')} (${torna})` : ''}`, onclick: () => usaPer(v) }, v.usati ? `${v.usati} ${v.per === 'sistema' ? (v.usati === 1 ? 'sistema' : 'sistemi') : v.per}` : 'Usa')
           // consumato: il pulsante stesso dice quando torna, in breve («↻ nuova scena»); la frase intera nel titolo
-          : h('button', { type: 'button', class: `btn btn-piccolo${pieno ? ' uso-torna' : ''}`, disabled: pieno, title: pieno ? `Già usato (${v.usati}/${v.quantita}): ${torna}` : `Segna un uso (${nomeFreq(v)})`, onclick: () => ctx.azioni.usaUnaVoltaTalento(v, momento) }, pieno && F[v.frequenza]?.breve ? `↻ ${F[v.frequenza].breve}` : `${v.usati}/${v.quantita}`),
+          // lotto 246: gli usi finiti si leggono e un uso in più si segna lo stesso (lo concede il master)
+          : h('button', { type: 'button', class: `btn btn-piccolo${pieno ? ' uso-torna con-avviso' : ''}`, title: pieno ? `Già usato (${v.usati}/${v.quantita}): ${torna}. Un uso in più lo concede il master` : `Segna un uso (${nomeFreq(v)})`, onclick: () => ctx.azioni.usaUnaVoltaTalento(v, momento) }, pieno && F[v.frequenza]?.breve ? `↻ ${F[v.frequenza].breve}` : `${v.usati}/${v.quantita}`),
         v.usati > 0 ? h('button', { type: 'button', class: 'btn btn-piccolo', title: 'Rimetti a mano', 'aria-label': `Azzera gli usi di ${v.nome}`, onclick: () => ctx.azioni.azzeraUsoTalento(v.chiave) }, '↺') : null);
     })));
 }

@@ -153,9 +153,9 @@ export function chiediCircostanza({ nome, R, scontro = null }) {
     const corpo = h('div', { class: 'corpo-master' });
     const disegna = () => corpo.replaceChildren(...[
       h('div', { class: 'numero-master pulsanti-tavolo' },
-        h('button', { type: 'button', class: 'btn-tavolo', disabled: st.valore <= R.minimo, 'aria-label': 'Togli 1', onclick: () => { st.valore -= 1; if (st.valore === 0) st.valore = -1; disegna(); } }, '−1'),
+        h('button', { type: 'button', class: `btn-tavolo${st.valore <= R.minimo ? ' con-avviso' : ''}`, title: st.valore <= R.minimo ? `Sotto il minimo dei dati (${R.minimo}): decidi tu` : null, 'aria-label': 'Togli 1', onclick: () => { st.valore -= 1; if (st.valore === 0) st.valore = -1; disegna(); } }, '−1'),
         h('strong', { class: 'valore-master', 'aria-live': 'polite' }, segno(st.valore)),
-        h('button', { type: 'button', class: 'btn-tavolo', disabled: st.valore >= R.massimo, 'aria-label': 'Aggiungi 1', onclick: () => { st.valore += 1; if (st.valore === 0) st.valore = 1; disegna(); } }, '+1')),
+        h('button', { type: 'button', class: `btn-tavolo${st.valore >= R.massimo ? ' con-avviso' : ''}`, title: st.valore >= R.massimo ? `Oltre il massimo dei dati (${R.massimo}): decidi tu` : null, 'aria-label': 'Aggiungi 1', onclick: () => { st.valore += 1; if (st.valore === 0) st.valore = 1; disegna(); } }, '+1')),
       h('div', { class: 'categorie-circostanza', role: 'group', 'aria-label': 'A che cosa si applica' }, R.categorie.map((c) => h('label', { class: 'casella-circostanza' },
         h('input', { type: 'checkbox', checked: st.categorie.has(c.id), onchange: (e) => { if (e.target.checked) st.categorie.add(c.id); else st.categorie.delete(c.id); disegna(); } }), ` ${c.nome}`))),
       h('label', { class: 'finestrella-campo' }, h('span', {}, 'Descrizione breve'),
@@ -164,7 +164,7 @@ export function chiediCircostanza({ nome, R, scontro = null }) {
       h('p', { class: 'nota' }, 'Il giocatore lo vede nelle «Condizioni attive» con la scritta «dal master» e non lo può togliere.'),
       h('div', { class: 'riga-azioni finestrella-azioni' },
         h('button', { type: 'button', class: 'btn', onclick: () => fine(null) }, 'Annulla'),
-        h('button', { type: 'button', class: 'btn primario', disabled: !st.categorie.size, onclick: () => fine({ valore: st.valore, categorie: [...st.categorie], nota: st.nota.trim(), soloScontro: st.soloScontro }) }, 'Manda al PG')),
+        h('button', { type: 'button', class: `btn primario${st.categorie.size ? '' : ' con-avviso'}`, title: st.categorie.size ? null : 'Nessuna categoria spuntata: non si applica a nulla', onclick: () => fine({ valore: st.valore, categorie: [...st.categorie], nota: st.nota.trim(), soloScontro: st.soloScontro }) }, 'Manda al PG')),
     ].filter(Boolean));
     disegna();
     return [corpo];

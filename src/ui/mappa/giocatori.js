@@ -652,7 +652,8 @@ export function renderGiocatori(radice, ctx) {
       ctx.scheda ? h('div', { class: 'riga-azioni' },
         h('button', {
           type: 'button', class: `btn${puoAttaccare && st.linea.copertura !== 'totale' ? ' primario' : ''}`,
-          disabled: !puoAttaccare || st.linea.copertura === 'totale', title: puoAttaccare && st.linea.copertura !== 'totale' ? 'Apre la tua scheda con «Attacca!» già pronto: bersaglio e distanza di questa linea' : motivoAttacco,
+          // lotto 246: il motivo si legge qui sotto e «Attacca!» si apre lo stesso (il tiro lo decide il tavolo)
+          title: puoAttaccare && st.linea.copertura !== 'totale' ? 'Apre la tua scheda con «Attacca!» già pronto: bersaglio e distanza di questa linea' : motivoAttacco,
           onclick: () => attaccaDallaLinea(),
         }, '🎯 Attacca questo bersaglio'),
         puoAttaccare && st.linea.copertura !== 'totale' ? null : h('small', { class: 'nota' }, motivoAttacco)) : null) : null;

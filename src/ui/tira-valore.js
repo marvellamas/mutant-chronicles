@@ -76,7 +76,8 @@ export function apriTiro(ctx, v) {
       h('div', { class: 'riga-azioni finestrella-azioni' },
         h('button', { type: 'button', class: 'btn', onclick: () => fine(true) }, 'Chiudi'),
         h('button', {
-          type: 'button', class: 'btn primario btn-grande', disabled: !puo.si && !ultimo,
+          // lotto 246: §1.7 è una regola (Prova impossibile, successo automatico): si legge e il dado si tira lo stesso
+          type: 'button', class: `btn primario btn-grande${puo.si || ultimo ? '' : ' con-avviso'}`, title: puo.si || ultimo ? null : (puo.motivo ?? null),
           onclick: () => {
             const r = tiraValore(t, casuale);
             if (!r) return;
