@@ -81,7 +81,8 @@ test('D: gli incantesimi presi con Incrementare Incantesimi sono nell’elenco d
   const r = resa(c);
   const schede = r.radice.tutti().filter((n) => n.tagName === 'ARTICLE' && /incantesimo-scheda/.test(n.className));
   for (const nome of ['Dardo Psichico', 'Terrore']) {
-    const s = schede.find((x) => x.textContent.includes(nome));
+    const titolo = (x) => (x.tutti().find((n) => n.tagName === 'H4')?.textContent ?? '').trim(); // lotto 243: per titolo, perché l'effetto di altri incantesimi può nominarli
+    const s = schede.find((x) => titolo(x).startsWith(nome));
     assert.ok(s, `${nome} nell'elenco`);
     assert.match(s.textContent, /Da Incrementare Incantesimi/);
     assert.match(s.textContent, /al 3° livello./);
@@ -89,7 +90,7 @@ test('D: gli incantesimi presi con Incrementare Incantesimi sono nell’elenco d
     assert.ok(pulsanti.includes('Togli') && pulsanti.includes('Sostituisci'), `${nome}: ${pulsanti}`);
   }
   // un incantesimo imparato in un altro modo non dice «Da Incrementare…»
-  const altri = schede.filter((x) => !/Dardo Psichico|Terrore/.test(x.textContent));
+  const altri = schede.filter((x) => !/^(Dardo Psichico|Terrore)/.test((x.tutti().find((n) => n.tagName === 'H4')?.textContent ?? '').trim()));
   assert.ok(altri.length && altri.every((x) => !/Da Incrementare/.test(x.textContent)));
 });
 
