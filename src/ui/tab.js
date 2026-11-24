@@ -34,6 +34,7 @@ import { normalizzaCircostanze, aggiungiCircostanza, variaCircostanza, commutaCa
 import { info, infoValore, etichettaMacro, pallini, listaProvenienza } from './tooltip.js';
 import { stemma, iconaPagina } from './immagini.js';
 import { classeMacrofamiglia } from '../palette.js';
+import { gruppiIndiceIncantesimi } from '../indice-incantesimi.js';
 import { formulaScomposizione, visioniPersonaggio, abilitaVista, intensitaStato, statiConImplicati } from '../condizioni.js';
 import { rigaScelte } from './pannello-passi.js';
 import { colore, riempimento, condizioniAttiveAbilita } from '../interfaccia.js';
@@ -3392,11 +3393,14 @@ export function pmLivelloBase(inc) {
  * È un indice, non una seconda scheda: più nomi per riga. Con un incantesimo solo non serve.
  */
 function indiceIncantesimi(ctx, gruppi) {
-  // lotto 243: in ordine alfabetico per nome (è un indice in cui si cerca un nome, non la pagina sotto), una voce per riga, nome a
-  // sinistra e PM a destra; il CSS le mette su due colonne se il riquadro è abbastanza largo
-  const voci = gruppi.flatMap((mf) => mf.specializzazioni.flatMap((sp) => sp.noti.map((i) => ({ nome: i.nome, macro: mf.nome }))))
-    .sort((x, y) => x.nome.localeCompare(y.nome, 'it', { sensitivity: 'base' }));
-  if (voci.length < 2) return null;
+  // lotto 243: una voce per riga, nome a sinistra e PM a destra; il CSS le mette su due colonne se il riquadro è abbastanza largo.
+  // lotto 245: raggruppate per tipo (prima i rossi, poi i blu, poi i verdi, src/indice-incantesimi.js), in ordine alfabetico dentro ogni gruppo;
+  // il gruppo si riconosce da un pallino del suo colore davanti al nome (0 px di altezza) e da un piccolo stacco fra un gruppo e l'altro;
+  // ogni gruppo è un blocco che non si spezza fra due colonne.
+  const tutte = gruppi.flatMap((mf) => mf.specializzazioni.flatMap((sp) => sp.noti.map((i) => ({ nome: i.nome, macro: mf.nome }))));
+  const blocchi = gruppiIndiceIncantesimi(tutte, ctx.dati.regole?.chroma?.colori);
+  const totale = blocchi.reduce((n, b) => n + b.voci.length, 0);
+  if (totale < 2) return null;
   const doc = () => globalThis.document;
   const scheda = (nome) => doc()?.getElementById?.(idIncantesimo(nome)) ?? null;
   const salta = (nome, bottone) => {
@@ -3405,18 +3409,23 @@ function indiceIncantesimi(ctx, gruppi) {
     if (!el) { bottone?.setAttribute?.('disabled', ''); bottone?.setAttribute?.('class', `${bottone.getAttribute?.('class') ?? ''} senza-scheda`); return; }
     el.scrollIntoView?.({ block: 'start', behavior: 'smooth' });
   };
-  return h('nav', { class: 'indice-incantesimi', 'aria-label': `Indice degli incantesimi conosciuti (${voci.length}), in ordine alfabetico` },
-    h('ul', { class: 'indice-voci' }, voci.map((v) => {
+  return h('nav', { class: 'indice-incantesimi', 'aria-label': `Indice degli incantesimi conosciuti (${totale}), per tipo e in ordine alfabetico` },
+    h('div', { class: 'indice-voci' }, blocchi.map((b) => h('ul', { class: 'gruppo-indice', 'data-tipo': b.macro, 'aria-label': b.colore ? `${b.colore} · ${b.macro}` : b.macro }, b.voci.map((v) => {
+      v = { ...v, colore: b.colore };
       const inc = ctx.dati.incantesimi.incantesimi.find((x) => x.nome === v.nome);
       const pm = pmLivelloBase(inc);
       const pmTesto = pm !== null ? h('span', { class: 'sigla' }, `${pm} PM`) : null;
+      // il tipo, a parole nel suggerimento («Rosso · Fisica»): il pallino è solo colore, e il colore non basta da solo
+      const tipo = v.colore ? `${v.colore} · ${v.macro}` : v.macro;
+      const pallino = h('span', { class: 'pallino-tipo', 'aria-hidden': 'true', title: tipo });
+      const classe = classeMacrofamiglia(v.macro);
       // senza una scheda nel catalogo non c'è dove saltare: la voce c'è ma non è un pulsante, e lo dice
-      if (!inc) return h('li', { class: `${classeMacrofamiglia(v.macro)} senza-scheda` },
-        h('span', { class: 'link-indice senza-scheda', title: `${v.nome}: nessuna scheda nel catalogo da raggiungere` }, h('span', { class: 'nome-indice' }, v.nome), pmTesto));
-      return h('li', { class: classeMacrofamiglia(v.macro) },
-        h('button', { type: 'button', class: 'link-indice', title: `Vai a ${v.nome}`, onclick: (e) => salta(v.nome, e?.currentTarget ?? e?.target ?? null) },
-          h('span', { class: 'nome-indice' }, v.nome), pmTesto));
-    })));
+      if (!inc) return h('li', { class: `${classe} senza-scheda`, 'data-tipo': v.macro },
+        h('span', { class: 'link-indice senza-scheda', title: `${v.nome}: nessuna scheda nel catalogo da raggiungere` }, pallino, h('span', { class: 'nome-indice' }, v.nome), pmTesto));
+      return h('li', { class: classe, 'data-tipo': v.macro },
+        h('button', { type: 'button', class: 'link-indice', title: `Vai a ${v.nome} (${tipo})`, onclick: (e) => salta(v.nome, e?.currentTarget ?? e?.target ?? null) },
+          pallino, h('span', { class: 'nome-indice' }, v.nome), pmTesto));
+    })))));
 }
 
 /**

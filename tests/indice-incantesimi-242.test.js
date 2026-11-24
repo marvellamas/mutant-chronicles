@@ -1,7 +1,7 @@
 import '../tools/guardia-subito.mjs'; // la guardia sulle cartelle vere, comunque si lanci il test
 // Lotto 242 (ritocco 2) e 243 — in testa agli incantesimi conosciuti un indice con nome e PM; un tocco sul nome porta la scheda in
-// cima a quello che si vede. Dal 243 l'indice è **in ordine alfabetico** (è un indice in cui si cerca un nome, non la pagina sotto),
-// una voce per riga; i pixel veri (le colonne, la scheda in cima, non sotto le fasce) li misura la prova nel browser del lotto: qui
+// cima a quello che si vede. Dal 243 l'indice è in ordine alfabetico, una voce per riga; **dal 245 è raggruppato per tipo (rossi, blu, verdi) e l'ordine
+// alfabetico vale dentro ogni gruppo** (tests/indice-incantesimi-245.test.js); i pixel veri (le colonne, la scheda in cima, non sotto le fasce) li misura la prova nel browser del lotto: qui
 // l'ordine, i collegamenti, il modo del salto e il caso di una voce che non ha dove saltare.
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
@@ -10,7 +10,7 @@ import { contesto, resa, clic, dati, ESEMPI } from './scheda-aiuti.js';
 import { idIncantesimo, pmLivelloBase } from '../src/ui/tab.js';
 
 const ANSELMO = ESEMPI.find((f) => f.startsWith('Fratello-Anselmo'));
-const nomeDi = (b) => String(b.getAttribute?.('title') ?? b.title ?? b.attributi?.title ?? '').replace(/^Vai a /, '');
+const nomeDi = (b) => String(b.getAttribute?.('title') ?? b.title ?? b.attributi?.title ?? '').replace(/^Vai a /, '').replace(/ \([^()]*\)$/, ''); // dal 245 il suggerimento dice anche il tipo: «Vai a X (Rosso · Fisica)»
 const ISTANTANEA = new URL('../istantanee/stato_2026-11-21_2353/personaggi/', import.meta.url);
 const LUCAS_2111 = '../istantanee/stato_2026-11-21_2353/personaggi/LUCAS_liv7_2026-11-21.json';
 const SALTA_ISTANTANEA = !existsSync(new URL('LUCAS_liv7_2026-11-21.json', ISTANTANEA)) && 'istantanea del 21/11 non presente su questo PC';
@@ -25,7 +25,7 @@ function indice(file = ANSELMO) {
 const idSchede = (schede) => schede.map((x) => x.getAttribute?.('id') ?? x.id);
 const nomiOrdinati = (nomi) => [...nomi].sort((a, b) => a.localeCompare(b, 'it', { sensitivity: 'base' }));
 
-test('L’INDICE C’È, NEL RIQUADRO «Incantesimi» IN CIMA ALLA TAB, PRIMA DEI GRUPPI, ED È IN ORDINE ALFABETICO', () => {
+test('L’INDICE C’È, NEL RIQUADRO «Incantesimi» IN CIMA ALLA TAB, PRIMA DEI GRUPPI, SENZA VOCI DOPPIE', () => {
   const { r, sez, voci, schede } = indice();
   assert.ok(sez, 'l’indice c’è');
   // nel riquadro del conteggio dei conosciuti (lo spazio che c’è già: è alto quanto i Punti Magia accanto)
@@ -36,7 +36,7 @@ test('L’INDICE C’È, NEL RIQUADRO «Incantesimi» IN CIMA ALLA TAB, PRIMA DE
   assert.ok(ordine.indexOf(sez) < ordine.indexOf(primoGruppo), 'l’indice viene prima dei gruppi');
   const nomiIndice = voci.map(nomeDi);
   assert.ok(nomiIndice.length >= 2, `${nomiIndice.length} voci`);
-  assert.deepEqual(nomiIndice, nomiOrdinati(nomiIndice), 'in ordine alfabetico, non nell’ordine della pagina sotto');
+  assert.equal(new Set(nomiIndice).size, nomiIndice.length, 'nessuna voce doppia (l’ordine, per tipo e alfabetico, è nel test del 245)');
   // ogni voce ha la sua scheda, e viceversa (a meno dell'ordine)
   assert.deepEqual(new Set(nomiIndice.map(idIncantesimo)), new Set(idSchede(schede)), 'ogni voce ha la sua scheda');
 });
@@ -89,15 +89,15 @@ test('OGNI VOCE DELL’INDICE HA LA SUA SCHEDA, anche un incantesimo aggiunto a 
   const voci = r.classe('indice-incantesimi')[0].querySelectorAll('.link-indice').map(nomeDi);
   const id = new Set(r.classe('incantesimo-scheda').map((x) => x.getAttribute?.('id') ?? x.id).filter(Boolean));
   assert.ok(voci.includes('Esorcizzare Oscurità'), 'l’aggiunto a mano è nell’indice');
-  assert.deepEqual(voci, nomiOrdinati(voci), 'e anche questo indice è in ordine alfabetico');
+  assert.equal(new Set(voci).size, voci.length, 'nessuna voce doppia');
   for (const v of voci) assert.ok(id.has(idIncantesimo(v)), `${v}: la sua scheda ha l’identificativo del salto`);
 });
 
-test('LUCAS DEL 21/11 (la copia buona): tutti i conosciuti in ordine, ognuno con la sua scheda, «Esorcizzare Oscurità» compreso', { skip: SALTA_ISTANTANEA }, () => {
+test('LUCAS DEL 21/11 (la copia buona): tutti i conosciuti, ognuno con la sua scheda, «Esorcizzare Oscurità» compreso', { skip: SALTA_ISTANTANEA }, () => {
   const { voci, schede } = indice(LUCAS_2111);
   const nomi = voci.map(nomeDi);
   assert.ok(nomi.length >= 17, `${nomi.length} voci`);
-  assert.deepEqual(nomi, nomiOrdinati(nomi));
+  assert.equal(new Set(nomi).size, nomi.length, 'nessuna voce doppia');
   assert.ok(nomi.includes('Esorcizzare Oscurità'));
   const id = new Set(idSchede(schede));
   for (const v of nomi) assert.ok(id.has(idIncantesimo(v)), `${v}: la sua scheda ha l’identificativo del salto`);
