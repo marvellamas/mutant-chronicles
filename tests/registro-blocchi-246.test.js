@@ -58,11 +58,15 @@ test('IL CONTO IN TESTA AL REGISTRO TORNA (strato per strato e per gruppo)', () 
     assert.ok(m, `in testa al registro manca il conto di «${nome}»`);
     assert.equal(Number(m[1]), n, `il conto di «${nome}» nel registro dice ${m?.[1]}, il codice ne ha ${n}`);
   }
-  // e i gruppi dichiarati sono quelli che il registro dice di avere
+  // e i gruppi dichiarati sono quelli che il registro dice di avere. Il conto si legge dal TITOLO della sezione —
+  // «## Gruppo C — … (41)» — e non dalla riga della tabella: lì la descrizione può contenere numeri (il lotto 247 ci
+  // ha scritto una data) e il controllo si metterebbe a leggere quelli.
   for (const g of ['B', 'C', 'D', 'E']) {
     const n = registro.vivi.filter((x) => x.gruppo === g).length;
-    const m = new RegExp(`gruppo ${g}[^0-9\\n]{0,60}\\*?\\*?(\\d+)`, 'i').exec(testo);
-    if (m) assert.equal(Number(m[1]), n, `il conto del gruppo ${g} nel registro dice ${m[1]}, le righe sono ${n}`);
+    const titolo = testo.split(String.fromCharCode(10)).find((r) => r.startsWith(`## Gruppo ${g} `));
+    assert.ok(titolo, `manca il titolo della sezione del gruppo ${g} con il suo conto`);
+    const dichiarato = Number(titolo.slice(titolo.lastIndexOf("(") + 1, titolo.lastIndexOf(")")));
+    assert.equal(dichiarato, n, `il conto del gruppo ${g} nel titolo dice ${dichiarato}, le righe sono ${n}`);
   }
 });
 
