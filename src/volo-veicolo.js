@@ -94,13 +94,17 @@ export function movimentoInScena(profilo, mezzo, scalaScena, dati, { round = nul
  * serve. Nel Round del decollo la nave sale in stazionamento, senza spostamento orizzontale.
  * @returns {{ mezzo, azioni, prova, testo }} oppure { errore }
  */
-export function decolla(mezzo, profilo, dati, { round = null, casi = [] } = {}) {
-  if (!vola(profilo)) return { errore: 'questo mezzo non vola' };
+export function decolla(mezzo, profilo, dati, { round = null, casi = [], forza = false } = {}) {
+  // lotto 248: con `forza` il Direttore fa decollare il mezzo lo stesso, e il motivo resta scritto. Non è un
+  // giudizio su una scelta: è un dato che manca (il profilo non dichiara il volo, o le regole non sono nei dati).
+  const avvisi = [];
+  const no = (m) => { if (!forza) return { errore: m }; avvisi.push(m); return null; };
+  if (!vola(profilo)) { const e = no('questo mezzo non vola: il profilo non lo dichiara'); if (e) return e; }
   const R = regoleVolo(dati);
-  const D = R?.decollo;
-  if (!D) return { errore: 'le regole del decollo non sono nei dati' };
+  const D = R?.decollo ?? {};
+  if (!R?.decollo) { const e = no('le regole del decollo non sono nei dati (veicoli.json → volo.decollo)'); if (e) return e; }
   const s = statoVolo(mezzo, dati);
-  if (s?.id !== 'a_terra') return { errore: `${profilo.nome ?? 'il mezzo'} non è a terra: è ${(s?.nome ?? '—').toLowerCase()}` };
+  if (s?.id !== 'a_terra') { const e = no(`${profilo?.nome ?? 'il mezzo'} non è a terra: è ${(s?.nome ?? '—').toLowerCase()}`); if (e) return e; }
   const ammessi = lista(D.prova_nei_casi).map((c) => c.id);
   const dichiarati = lista(casi).filter((c) => ammessi.includes(c));
   const nomi = lista(D.prova_nei_casi).filter((c) => dichiarati.includes(c.id)).map((c) => c.nome);
@@ -108,6 +112,7 @@ export function decolla(mezzo, profilo, dati, { round = null, casi = [] } = {}) 
     mezzo: { ...mezzo, volo: { stato: D.porta_a ?? 'stazionamento', ...(Number.isInteger(round) ? { dal_round: round } : {}) } },
     azioni: { ...(D.azioni ?? {}), testo: D.testo_azioni ?? null },
     prova: dichiarati.length ? { serve: true, casi: dichiarati, nomi } : { serve: false, casi: [], nomi: [] },
+    ...(avvisi.length ? { avvisi } : {}),
     testo: `${D.nome ?? 'Decollo'}: ${D.testo_azioni ?? ''}. ${dichiarati.length ? `Serve una prova: ${nomi.join(', ')}.` : 'Nessuna prova.'} Nel Round del decollo ${D.nel_round ?? 'sale in stazionamento'}.`.replace(/\s+/g, ' ').trim(),
   };
 }
@@ -123,16 +128,20 @@ export function finisciStazionamento(mezzo, profilo, dati, { round = null } = {}
  * L'atterraggio: manovra complessa che **conclude il movimento** del Round.
  * @returns {{ mezzo, concludeMovimento, testo }} oppure { errore }
  */
-export function atterra(mezzo, profilo, dati, { round = null } = {}) {
-  if (!vola(profilo)) return { errore: 'questo mezzo non vola' };
-  const A = regoleVolo(dati)?.atterraggio;
-  if (!A) return { errore: 'le regole dell’atterraggio non sono nei dati' };
+export function atterra(mezzo, profilo, dati, { round = null, forza = false } = {}) {
+  // lotto 248: come il decollo, con `forza` si atterra lo stesso e il motivo resta scritto
+  const avvisi = [];
+  const no = (m) => { if (!forza) return { errore: m }; avvisi.push(m); return null; };
+  if (!vola(profilo)) { const e = no('questo mezzo non vola: il profilo non lo dichiara'); if (e) return e; }
+  const A = regoleVolo(dati)?.atterraggio ?? {};
+  if (!regoleVolo(dati)?.atterraggio) { const e = no('le regole dell’atterraggio non sono nei dati (veicoli.json → volo.atterraggio)'); if (e) return e; }
   const s = statoVolo(mezzo, dati);
-  if (s?.id === 'a_terra') return { errore: `${profilo.nome ?? 'il mezzo'} è già a terra` };
+  if (s?.id === 'a_terra') { const e = no(`${profilo?.nome ?? 'il mezzo'} è già a terra`); if (e) return e; }
   return {
     mezzo: { ...mezzo, volo: { stato: A.porta_a ?? 'a_terra', ...(Number.isInteger(round) ? { dal_round: round } : {}) } },
     concludeMovimento: A.conclude_movimento === true,
     testo: A.testo ?? 'L’atterraggio è una manovra complessa e conclude il movimento del Round.',
+    ...(avvisi.length ? { avvisi } : {}),
   };
 }
 

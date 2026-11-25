@@ -259,9 +259,12 @@ export function usaFunzione(mezzo, profilo, id, { forza = false } = {}) {
 }
 
 /** PM del circuito a mano (ricarica mistica con fonte compatibile col Chroma Bianco, o correzione): mai dalle cariche. */
-export function variaCircuito(mezzo, profilo, delta) {
+export function variaCircuito(mezzo, profilo, delta, { da0 = false } = {}) {
   const r = normalizzaNeverlost(mezzo, profilo);
-  if (r.circuito.pm === null) return mezzo;
+  // lotto 248: i PM del circuito «da registrare» non sono un valore da cui incrementare. Con «da0» si parte da 0 e
+  // il valore nasce qui: non si inventa niente (0 è il minimo) e la riga che si scrive lo dice.
+  if (r.circuito.pm === null && !da0) return mezzo;
+  if (r.circuito.pm === null) return conRisorse(mezzo, { ...r, circuito: { pm: registrato(Math.max(0, delta), profilo.circuito_bianco.pm) } });
   return conRisorse(mezzo, { ...r, circuito: { pm: registrato(r.circuito.pm + delta, profilo.circuito_bianco.pm) } });
 }
 

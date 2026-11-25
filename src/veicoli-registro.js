@@ -268,9 +268,17 @@ export function scegliAndatura(rec, id, scontro, dati) {
 /** Il movimento del Round, all'Iniziativa del conducente. Errore se non si può. */
 export function muoviVeicolo(rec, scontro, diTurno, opzioni = {}) {
   const st = statoMovimento(rec, scontro, diTurno, opzioni);
-  // N2: con `opzioni.forza` il master muove lo stesso (fuori turno, già mosso, andatura Fermo); servono scontro e conducente
-  if (!st.puo && !(opzioni.forza && scontro && rec.conducente)) throw new Error(st.motivo);
-  return { ...rec, movimento: { scontro: scontro.id, round: scontro.round, da: rec.conducente.nome } };
+  // N2: con `opzioni.forza` il master muove lo stesso (fuori turno, già mosso, andatura Fermo).
+  // lotto 248: anche senza scontro aperto e senza conducente. Non erano giudizi su una scelta: era l'app che non
+  // sapeva dove registrare il movimento (il Round dello scontro) o a nome di chi. Adesso il movimento si registra
+  // con quello che c'è e dice che cosa manca, invece di non far muovere il mezzo al tavolo.
+  if (!st.puo && !opzioni.forza) throw new Error(st.motivo);
+  return { ...rec, movimento: {
+    scontro: scontro?.id ?? null,
+    round: scontro?.round ?? null,
+    da: rec.conducente?.nome ?? null,
+    ...(st.puo ? {} : { avviso: st.motivo }),
+  } };
 }
 
 /**
@@ -279,19 +287,19 @@ export function muoviVeicolo(rec, scontro, diTurno, opzioni = {}) {
  * in stazionamento, senza spostamento orizzontale. Il profilo serve per sapere se il mezzo vola.
  * @returns {{ rec, testo, azioni, prova }}
  */
-export function decollaVeicolo(rec, profilo, dati, { round = null, casi = [] } = {}) {
-  const r = decolla(rec?.mezzo, profilo, dati, { round, casi });
+export function decollaVeicolo(rec, profilo, dati, { round = null, casi = [], forza = false } = {}) {
+  const r = decolla(rec?.mezzo, profilo, dati, { round, casi, forza });
   if (r.errore) throw new Error(r.errore);
   const v = rec.mezzo?.nome ?? profilo?.nome ?? 'Il veicolo';
-  return { rec: { ...rec, mezzo: r.mezzo }, azioni: r.azioni, prova: r.prova, testo: `${v}: ${r.testo}` };
+  return { rec: { ...rec, mezzo: r.mezzo }, azioni: r.azioni, prova: r.prova, testo: `${v}: ${r.testo}`, ...(r.avvisi ? { avvisi: r.avvisi } : {}) };
 }
 
 /** A.253: l'atterraggio, manovra complessa che conclude il movimento del Round. */
-export function atterraVeicolo(rec, profilo, dati, { round = null } = {}) {
-  const r = atterra(rec?.mezzo, profilo, dati, { round });
+export function atterraVeicolo(rec, profilo, dati, { round = null, forza = false } = {}) {
+  const r = atterra(rec?.mezzo, profilo, dati, { round, forza });
   if (r.errore) throw new Error(r.errore);
   const v = rec.mezzo?.nome ?? profilo?.nome ?? 'Il veicolo';
-  return { rec: { ...rec, mezzo: r.mezzo }, concludeMovimento: r.concludeMovimento, testo: `${v}: ${r.testo}` };
+  return { rec: { ...rec, mezzo: r.mezzo }, concludeMovimento: r.concludeMovimento, testo: `${v}: ${r.testo}`, ...(r.avvisi ? { avvisi: r.avvisi } : {}) };
 }
 
 /** A.253: dal Round successivo al decollo il mezzo è in volo (lo stazionamento dura il Round del decollo). */

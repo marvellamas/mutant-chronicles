@@ -1612,12 +1612,16 @@ export function renderMappa(radice, ctx) {
     });
     if (!ok) return;
     let r;
-    try { r = decollaVeicolo(rec, prof, ctx.dati, { round: st.fonti?.scontro?.round ?? null }); } catch (e) { avvisoErrore(e.message); return; }
+    try { r = decollaVeicolo(rec, prof, ctx.dati, { round: st.fonti?.scontro?.round ?? null }); } catch (e) {
+      if (!await chiedi({ titolo: 'Far decollare lo stesso?', testo: `${e.message}. Il decollo si registra comunque e il motivo resta scritto nel registro dello scontro: la decisione è tua.`, si: 'Decolla comunque' })) return;
+      try { r = decollaVeicolo(rec, prof, ctx.dati, { round: st.fonti?.scontro?.round ?? null, forza: true }); } catch (e2) { avvisoErrore(e2.message); return; }
+    }
     try {
       const { record } = await aggiornaVeicolo(rec, r.rec);
       if (st.fonti) st.fonti.veicoli = st.fonti.veicoli.map((x) => (x.id === record.id ? record : x));
-      avviso(r.testo, { tipo: 'info', chiave: 'volo' });
-      rigaVeicolo(`Mappa: ${r.testo}`);
+      const forzato = (r.avvisi ?? []).length ? ` (procedi comunque: ${r.avvisi.join('; ')})` : '';
+      avviso(`${r.testo}${forzato}`, { tipo: 'info', chiave: 'volo' });
+      rigaVeicolo(`Mappa: ${r.testo}${forzato}`);
       await aggiornaFonti();
       invalidaArea();
       disegnaPannelli();
@@ -1632,12 +1636,16 @@ export function renderMappa(radice, ctx) {
     const ok = await chiedi({ titolo: `Far atterrare ${nomeTok(t)}?`, testo: 'Manovra complessa: conclude il movimento del Round (A.253). A terra il mezzo non rulla e ha movimento 0.', si: 'Atterra' });
     if (!ok) return;
     let r;
-    try { r = atterraVeicolo(rec, prof, ctx.dati, { round: st.fonti?.scontro?.round ?? null }); } catch (e) { avvisoErrore(e.message); return; }
+    try { r = atterraVeicolo(rec, prof, ctx.dati, { round: st.fonti?.scontro?.round ?? null }); } catch (e) {
+      if (!await chiedi({ titolo: 'Far atterrare lo stesso?', testo: `${e.message}. L'atterraggio si registra comunque e il motivo resta scritto nel registro dello scontro: la decisione è tua.`, si: 'Atterra comunque' })) return;
+      try { r = atterraVeicolo(rec, prof, ctx.dati, { round: st.fonti?.scontro?.round ?? null, forza: true }); } catch (e2) { avvisoErrore(e2.message); return; }
+    }
     try {
       const { record } = await aggiornaVeicolo(rec, r.rec);
       if (st.fonti) st.fonti.veicoli = st.fonti.veicoli.map((x) => (x.id === record.id ? record : x));
-      avviso(`${r.testo}${r.concludeMovimento ? ' Il movimento del Round è concluso.' : ''}`, { tipo: 'info', chiave: 'volo' });
-      rigaVeicolo(`Mappa: ${r.testo}`);
+      const forzatoA = (r.avvisi ?? []).length ? ` (procedi comunque: ${r.avvisi.join('; ')})` : '';
+      avviso(`${r.testo}${r.concludeMovimento ? ' Il movimento del Round è concluso.' : ''}${forzatoA}`, { tipo: 'info', chiave: 'volo' });
+      rigaVeicolo(`Mappa: ${r.testo}${forzatoA}`);
       await aggiornaFonti();
       invalidaArea();
       disegnaPannelli();
