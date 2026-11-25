@@ -96,7 +96,13 @@ Se Marcello ne toglie una, va ridichiarata a Davide.
 
 ## Gruppo D — l'app non sa che cosa fare (13)
 
-Non giudicano: manca un dato. Dicono che cosa manca; dove lasciar passare romperebbe i dati, la riga lo scrive.
+Non giudicano: manca un dato. **Dal lotto 248 (25/11) nessuno di questi ferma più il tavolo per un valore che non
+c'è**: dove manca una riga dei dati si usa la più vicina e la scheda lo dichiara (`src/dati-mancanti.js`), dove manca
+l'oggetto su cui agire l'azione si fa con quello che c'è e dice che cosa manca. Quelli che restano spenti sono la
+**riga di mezzo** del 246 — un comando che non cambierebbe niente non è un blocco, è un comando senza effetto — e
+adesso dicono tutti perché. Chi non si è potuto liberare è andato nel gruppo B (passare romperebbe i dati) o nel
+gruppo E (passare darebbe un risultato vuoto, che non è un avviso); i sette il cui blocco è sparito stanno in
+«Liberati dal lotto 248».
 
 | id | dove | cosa lo fa scattare | cosa vede il giocatore | cosa gli impedisce | gruppo | perché |
 | :-- | :-- | :-- | :-- | :-- | :-- | :-- |
