@@ -20,6 +20,11 @@ fermaSeSconosciuti('ripassa-clic.mjs', process.argv.slice(2));
 const arg = (n) => process.argv.slice(2).find((x) => x.startsWith(`--${n}=`))?.split('=').slice(1).join('=') ?? null;
 const SOLO = (arg('solo') ?? '').split(',').filter(Boolean);
 const VERBOSO = process.argv.includes('--verboso');
+// `--tablet`: lo stesso ripasso dal lato del giocatore (il server non è il suo PC). **Il disco non si guarda**, e
+// il motivo va scritto: da un tablet una modifica si **accoda** (src/giornale.js) e il file lo scrive il rientro,
+// quindi «INVARIATO» sarebbe come è fatta l'app e non un difetto. Quello che conta qui è che il clic non lasci un
+// errore e che l'avviso arrivi al diario del Direttore anche da un tablet.
+const TABLET = process.argv.includes('--tablet');
 
 if (!BROWSER) {
   console.error('Nessun browser (Edge/Chrome) trovato: il ripasso non si può fare, e non si finge.');
@@ -224,7 +229,7 @@ const diDisco = (foto, prima, suo = nomePg) => {
   return { file, json: file ? { ...JSON.parse(foto[file]), _file: file } : null };
 };
 
-const p = await apriApp({ cartella, cartelle, eMaster: () => true });
+const p = await apriApp({ cartella, cartelle, eMaster: () => !TABLET });
 const dormi = (ms) => new Promise((ok) => setTimeout(ok, ms));
 Object.assign(p, {
   dormi,
@@ -277,7 +282,7 @@ try {
       await p.valuta(`Object.defineProperty(document, 'visibilityState', { value: 'hidden', configurable: true }); document.dispatchEvent(new Event('visibilitychange')); window.dispatchEvent(new Event('pagehide')); return 1`);
       await dormi(1500);
     }
-    const esitoDisco = caso.soloNuovo ? { file: null, json: null } : diDisco(fotografia(), fotoPrima, caso.pg ?? nomePg);
+    const esitoDisco = caso.soloNuovo || TABLET ? { file: null, json: null } : diDisco(fotografia(), fotoPrima, caso.pg ?? nomePg);
     // il «prima» del personaggio: la versione che stava sul disco con il nome del file poi cambiato, o la più recente sua
     const suo = caso.pg ?? nomePg;
     const nomiPrima = fotoPrima ? Object.keys(fotoPrima).filter((f) => f.startsWith(suo)).sort() : [];
@@ -285,7 +290,7 @@ try {
     const prima = fotoPrima && filePrima ? JSON.parse(fotoPrima[filePrima]) : null;
     const dopo = esitoDisco.json;
     const avvisiDopo = (await p.api('/api/avvisi')).corpo?.totale ?? 0;
-    const cambiato = caso.soloNuovo || caso.senzaCambio ? null : !!esitoDisco.file;
+    const cambiato = caso.soloNuovo || caso.senzaCambio || TABLET ? null : !!esitoDisco.file;
     // il campo atteso, quando il file è cambiato: dice che è cambiata **quella** cosa e non un’altra
     const ilCampo = esitoDisco.json && caso.cambia ? caso.cambia(prima, esitoDisco.json) : null;
     esiti.push({
