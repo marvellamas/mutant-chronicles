@@ -962,9 +962,23 @@ export function rigaAiutoMaster(s, { nome, aiuto, costo, modo, movimento = null 
   return t;
 }
 
+/**
+ * Lotto 247: un movimento fatto da un tablet contro una regola (fuori turno, oltre il movimento del Round, fuori
+ * dall'area) lascia una riga nel registro dello scontro, che è il posto dove il Direttore guarda. L'app avvisa e non
+ * ferma; ma quello che è stato fatto si deve vedere, con il motivo scritto per esteso.
+ */
+export function rigaMovimentoAvvisato(s, { nome, avvisi, costo, modo, movimento = null }, adesso) {
+  const motivi = (Array.isArray(avvisi) ? avvisi : [avvisi]).filter(Boolean).join('; ');
+  if (!motivi) return s;
+  const quanto = Number.isFinite(costo) ? `: ${String(costo).replace('.', ',')} Q${modo ? ` (${modo})` : ''}` : '';
+  const t = conRiga(s, `Mappa: ${nome} si è mosso dal tablet con un avviso${quanto} — ${motivi}`, adesso);
+  t.registro[t.registro.length - 1].avvisoMovimento = { ...(movimento ? { movimento } : {}), motivi };
+  return t;
+}
+
 /** «Annulla ultimo movimento» o Ctrl+Z sulla mappa: via le righe degli Attacchi di Opportunità (e dell'Aiuto-master) di quel movimento. */
 export function senzaOpportunitaDelMovimento(s, movimento) {
-  const registro = (s.registro ?? []).filter((r) => r.opportunita?.movimento !== movimento && r.aiutoMaster?.movimento !== movimento);
+  const registro = (s.registro ?? []).filter((r) => r.opportunita?.movimento !== movimento && r.aiutoMaster?.movimento !== movimento && r.avvisoMovimento?.movimento !== movimento);
   return registro.length === (s.registro ?? []).length ? s : { ...s, registro };
 }
 

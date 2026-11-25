@@ -2377,6 +2377,30 @@ function renderSchedaInterna({ mantieniScorrimento = false } = {}) {
     // «Modifiche del master» (tab Identità): tutti lo leggono; in modalità master si annulla
     registroMaster: registroMaster(stato.scelte.correzioniMaster),
     master: inMaster ? azioniMaster() : null,
+    // lotto 247: «Sposta i punti» non è più solo del Direttore. Il giocatore sposta i PROPRI punti già spesi dal suo
+    // dispositivo: gli avvisi sono gli stessi (coi numeri, lotto 241), il blocco `puntiDirettore` non si tocca e di
+    // quello che ha fatto resta una riga nello storico del personaggio, che il Direttore legge.
+    spostaPuntiGiocatore: inMaster ? null : {
+      livelli: () => { try { return eventiConPunti(personaggio(), stato.dati).map((e) => e.livello); } catch { return []; } },
+      apri: (livello) => apriSpostaPunti({
+        giocatore: true,
+        personaggio: () => structuredClone(personaggio()),
+        dati: stato.dati,
+        applica: ({ bozza }) => {
+          const quando = new Date().toISOString();
+          const prima = personaggio();
+          const etichetta = descriviSpostamento(prima, bozza, { quando });
+          if (!etichetta) return;
+          const n = applicaSpostamento(prima, bozza, stato.dati, { quando, giocatore: true });
+          stato.scelte = { ...stato.scelte, puntiAbilitaLiberi: n.creazione.puntiAbilitaLiberi };
+          cambiaLivelli(n.livelli);
+          registraStorico(etichetta);
+          stato.messaggioScheda = { tipo: 'ok', testo: `${etichetta}. Resta nello storico del personaggio.` };
+          persisti();
+          ridisegna();
+        },
+      }, livello),
+    },
     // A.187: il conto dei PX per il livello (nota in Identità e scelte del Direttore)
     livelloPx: infoLivelloPx(),
     // Talenti v1.0 (lotto 2): il riquadro «Da scegliere» (src/ui/talenti-scelta.js); i posti da postiTalenti, il conto unico

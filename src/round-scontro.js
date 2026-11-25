@@ -30,7 +30,11 @@ export const urlMuovi = (chiave, scontro, scheda) => `#/mappa/giocatori?${new UR
  */
 export function pulsanteMuovi(coll) {
   if (!coll) return null;
-  return coll.diTurno ? { attivo: true, testo: 'È il tuo turno' } : { attivo: false, testo: `Non è il tuo turno · tocca a ${coll.turnoDi ?? '…'}` };
+  // lotto 247: fuori turno il pulsante non si spegne più. Dice che cosa ha visto, con il nome di chi tocca adesso, e
+  // chi preme lascia una riga nello storico del personaggio e una nel registro dello scontro, che il Direttore legge.
+  if (coll.diTurno) return { attivo: true, avviso: null, testo: 'È il tuo turno' };
+  const chi = coll.turnoDi ?? null;
+  return { attivo: true, avviso: `Non è il tuo turno${chi ? `: adesso tocca a ${chi}` : ''}`, testo: `Non è il tuo turno · tocca a ${chi ?? '…'}` };
 }
 
 /** Round che restano a una durata che vale fino alla fine del Round `al`, visto dal Round `r` (compreso). */

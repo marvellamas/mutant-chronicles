@@ -62,8 +62,13 @@ export function permessoMovimento({ scena, pezzi, scontro = null, chiavePg, dati
   if (token.nascosto) return no('Il master ha nascosto il tuo token.', ok);
   if (imp.bloccato) return no('Il master ha bloccato i movimenti dei giocatori: guardi soltanto.', ok);
   if (imp.movimento === 'turno') {
-    if (!scontro) return no('Nessuno scontro in corso: muovi al tuo turno, quando il master avvia lo scontro.', ok);
-    if (diTurno(scontro)?.id !== token.rif.id) return no('Non è il tuo turno: aspetta il tuo turno per muovere.', ok);
+    // lotto 247: l'ordine dei turni è una regola del gioco, non un veto del master: avvisa e lascia muovere (come i 0 PV
+    // del 246). Il Direttore lo vede nel registro dello scontro, e «bloccato» e «token nascosto» restano dei «no».
+    if (!scontro) return no('Nessuno scontro in corso: di solito si muove al proprio turno, quando il master lo avvia.', { ...ok, regola: true });
+    if (diTurno(scontro)?.id !== token.rif.id) {
+      const chi = diTurno(scontro)?.nome;
+      return no(`Non è il tuo turno${chi ? `: adesso tocca a ${chi}` : ''}.`, { ...ok, regola: true });
+    }
   }
   // «Mappa semplice» (N3): la pedina si sposta senza profilo di movimento e senza controlli sui PV
   if (mappaSemplice(scena)) return { puo: true, motivo: null, token, pezzo, bordo: null };
@@ -124,7 +129,9 @@ export const nomeFascia = (f) => NOMI[f] ?? f;
  */
 export function areaPerTablet({ scena, pezzi, scontro, chiavePg, fascia = 1, dati }) {
   const p = permessoMovimento({ scena, pezzi, scontro, chiavePg, dati });
-  if (!p.puo) return { permesso: p, area: null };
+  // lotto 247: con un «no» che è una regola (fuori turno) l'area si calcola lo stesso: il giocatore deve vedere dove
+  // andrebbe, altrimenti il pulsante liberato aprirebbe una mappa senza niente sopra
+  if (!p.puo && !p.regola) return { permesso: p, area: null };
   // «Mappa semplice» (N3): nessuna area e nessun conteggio; il giocatore tocca un quadretto che vede
   if (mappaSemplice(scena)) return { permesso: p, area: null, semplice: true };
   const info = areaGiocatore({ scena, token: p.token, pezzo: p.pezzo, pezzi, scontro, fascia, dati, perGiocatori: true });

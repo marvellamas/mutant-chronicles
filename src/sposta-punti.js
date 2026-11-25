@@ -94,7 +94,7 @@ export function totaliBozza(personaggio, bozza) {
  * Il personaggio con i punti della bozza al loro posto, e il blocco del Direttore aggiornato in ogni evento cambiato.
  * @param opz { quando, motivo, forzati: { [livello]: [Abilità] }, totali: { [livello]: n } } (dalla conferma del Direttore)
  */
-export function applicaSpostamento(personaggio, bozza, dati, { quando = new Date().toISOString(), motivo = '', forzati = {}, totali = {} } = {}) {
+export function applicaSpostamento(personaggio, bozza, dati, { quando = new Date().toISOString(), motivo = '', forzati = {}, totali = {}, giocatore = false } = {}) {
   const p = migraPersonaggio(personaggio);
   let creazione = p.creazione;
   const livelli = [...p.livelli];
@@ -122,12 +122,15 @@ export function applicaSpostamento(personaggio, bozza, dati, { quando = new Date
       ...(forz.length ? { forzati: forz } : {}),
     };
     const vuoto = !dir.spostati && dir.totale === undefined && !dir.forzati;
+    // lotto 247: quando a spostare è il GIOCATORE dal suo dispositivo, il blocco `puntiDirettore` non si tocca — è il
+    // segno di una decisione del Direttore (totali, forzature, A.247) e il server non lascia a un tablet cambiarlo.
+    // Cambiano solo i punti; quello che non torna lo dice l'avviso, e resta la riga nello storico del personaggio.
     if (livello === 1) {
-      creazione = { ...creazione, puntiAbilitaLiberi: dopo, puntiDirettore: vuoto ? null : dir };
+      creazione = { ...creazione, puntiAbilitaLiberi: dopo, ...(giocatore ? {} : { puntiDirettore: vuoto ? null : dir }) };
     } else {
       const v = { ...livelli[livello - 2], puntiAbilita: dopo };
       if (!Object.keys(dopo).length) delete v.puntiAbilita;
-      if (vuoto) delete v.puntiDirettore; else v.puntiDirettore = dir;
+      if (!giocatore) { if (vuoto) delete v.puntiDirettore; else v.puntiDirettore = dir; }
       livelli[livello - 2] = v;
     }
   }
@@ -398,7 +401,9 @@ export function controllaPuntiDaTablet(nuovo, disco, dati) {
     const aggiunti = Object.entries(dopo).some(([a, v]) => v > (prima[a] ?? 0));
     const soloEccesso = !aggiunti && tolti.reduce((s, [, d]) => s + d, 0) <= ecc;
     if (soloInattivi || soloEccesso) continue;
-    return { ok: false, stato: 403, errore: `Spostare i punti Abilità già spesi ${nelEvento(livello)} lo fa il Direttore (Modifica master → «Sposta i punti»).` };
+    // lotto 247: spostare i propri punti già spesi si fa anche dal tablet. Non è una scrittura sbagliata né il lavoro di
+    // un altro: sono i punti di quel personaggio, e quello che non torna lo dice l'avviso coi numeri (lotto 241).
+    // Resta il «no» qui sopra sul blocco `puntiDirettore`, che è una decisione del Direttore.
   }
   return { ok: true };
 }

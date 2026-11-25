@@ -159,7 +159,7 @@ import { leggiConfigAvvisi } from './tools/config-avvisi.mjs';
 import { creaGestore, leggiConfig } from './tools/salva-sessione.mjs';
 import { avvisoCartellaVuota, postiSalvataggi, rigaSalvataggio } from './tools/ripristina.mjs';
 import { bordoToken } from './src/mappa/colori.js';
-import { validaScontro, rigaOpportunita, rigaAiutoMaster, diTurno, registraRiga, scontroPerGiocatori } from './src/scontro.js';
+import { validaScontro, rigaOpportunita, rigaAiutoMaster, rigaMovimentoAvvisato, diTurno, registraRiga, scontroPerGiocatori } from './src/scontro.js';
 import { validaBozza, STATO_BOZZA_ELIMINATA } from './src/preparazione.js';
 import { NOME_FILE, fileProvvisorio, ultimiPerPersonaggio, ultimiPerPg, fileAttuale, chiaveDaFile, chiavePersonaggio } from './src/cartella.js';
 import { conMetadati, serveCopia, copieDaTogliere, idPersonaggio, cartellaStorico, nomeCopiaStorica, CARTELLA_STORICO } from './src/storico-personaggi.js';
@@ -1195,7 +1195,7 @@ async function perIlTablet(scena, contesto, pg, cartelle) {
     : [];
   return {
     pg, trovato: true, nome: pezzo.nome, token: token && !token.nascosto ? token.id : null, bordo: permesso.bordo ?? null,
-    mini: miniScheda(pezzo), impostazioni: imp, permesso: { puo: permesso.puo, motivo: permesso.motivo }, area, zoc,
+    mini: miniScheda(pezzo), impostazioni: imp, permesso: { puo: permesso.puo, motivo: permesso.motivo, ...(permesso.regola ? { regola: true } : {}) }, area, zoc,
     // «Mappa semplice» (N3): il tablet sposta la pedina senza area né fasce
     ...(mappaSemplice(scena) ? { semplice: true } : {}),
   };
@@ -1257,6 +1257,11 @@ async function movimentoDalTablet(req, res, cartelle) {
   // Attacchi di Opportunità nel registro dello scontro (Giocatore §5.3: uno per Round per avversario), come fa il master
   if (esito.stato === 200 && esito.scontro && esito.prova.opportunita.length) {
     try { await opportunitaNelRegistro(cartelle.scontri, esito.scontro.id, esito.prova, esito.movimento.id); } catch { /* il movimento resta; il master vede l'avviso sulla mappa */ }
+  }
+  // lotto 247: un movimento fatto con un avviso (fuori turno, oltre il movimento del Round, fuori dall'area) lascia la
+  // sua riga nel registro dello scontro: l'app avvisa e non ferma, ma il Direttore deve vedere che cosa è stato fatto
+  if (esito.stato === 200 && esito.scontro && esito.prova?.avvisi?.length) {
+    try { await avvisoNelRegistro(cartelle.scontri, esito.scontro.id, { nome: esito.prova.nome, avvisi: esito.prova.avvisi, costo: esito.prova.semplice ? null : esito.prova.costo, modo: NOMI_FASCE[esito.prova.fascia] ?? null, movimento: esito.movimento.id }); } catch { /* il movimento resta; il master lo vede sulla mappa */ }
   }
   // A.122: «mosso da Aiuto-master (tablet di …)» nel registro dello scontro
   if (esito.stato === 200 && aiuto) {
@@ -1324,6 +1329,17 @@ async function bloccoAiuto(ruolo, scena, contesto, cartelle) {
 }
 
 /** A.122: la riga «mosso da Aiuto-master» nel registro dello scontro (revisione +1). */
+async function avvisoNelRegistro(scontri, id, riga) {
+  if (!ID_SCONTRO.test(id)) return;
+  const dove = join(scontri, `${id}.json`);
+  await inCoda(dove, async () => {
+    const s = await leggiJson(dove);
+    if (s.stato !== 'aperto') return;
+    const t = rigaMovimentoAvvisato(s, riga, new Date());
+    if (t !== s) await scriviJson(dove, { ...t, revisione: s.revisione + 1 });
+  });
+}
+
 async function rigaAiutoNelRegistro(scontri, id, riga) {
   if (!ID_SCONTRO.test(id)) return;
   const dove = join(scontri, `${id}.json`);

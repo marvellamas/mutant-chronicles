@@ -189,21 +189,31 @@ test('il blocco del Direttore si salva nel file e si rilegge; senza, il file res
 // --- server: il tablet non sposta i punti (PUT /api/personaggi/<file> → controllaPuntiDaTablet)
 const file = (p) => ({ scelte: p.creazione, livelli: p.livelli });
 
-test('dal tablet uno spostamento di punti già spesi si rifiuta (403)', () => {
+test('LOTTO 247: dal tablet un giocatore sposta i propri punti già spesi; resta il «no» sul blocco del Direttore', () => {
   const p = pg();
-  const r = controllaPuntiDaTablet(file(applicaSpostamento(p, sposta2(p), dati)), file(p), dati);
-  // il blocco del Direttore non viene dal tablet: anche senza, i punti tolti da Tecnologia si rifiutano
-  assert.equal(r.ok, false);
-  assert.equal(r.stato, 403);
+  // con il blocco del Direttore scritto dentro, il «no» resta: quello lo mette solo lui (Modifica master)
+  const conBlocco = controllaPuntiDaTablet(file(applicaSpostamento(p, sposta2(p), dati)), file(p), dati);
+  assert.equal(conBlocco.ok, false);
+  assert.equal(conBlocco.stato, 403);
+  assert.match(conBlocco.errore, /li ha sistemati il Direttore/);
+  // lo stesso spostamento fatto dal giocatore (senza toccare puntiDirettore) adesso passa
+  const daGiocatore = applicaSpostamento(p, sposta2(p), dati, { giocatore: true });
+  assert.equal(controllaPuntiDaTablet(file(daGiocatore), file(p), dati).ok, true, 'i punti sono suoi: li sposta dal suo dispositivo');
   const senzaBlocco = structuredClone(file(p));
   senzaBlocco.livelli[2].puntiAbilita = { 'Tecnologia': 1, 'Medicina': 2, 'Sopravvivenza': 2, 'Atletica': 2 };
-  const r2 = controllaPuntiDaTablet(senzaBlocco, file(p), dati);
-  assert.equal(r2.ok, false);
-  assert.match(r2.errore, /lo fa il Direttore/);
-  // nemmeno nella creazione
+  assert.equal(controllaPuntiDaTablet(senzaBlocco, file(p), dati).ok, true);
+  // e nella creazione
   const c = structuredClone(file(p));
   c.scelte.puntiAbilitaLiberi = { 'Percezione': 2, 'Tecnologia': 1, 'Cultura': 1, 'Raggirare': 2, 'Oratoria': 1 };
-  assert.equal(controllaPuntiDaTablet(c, file(p), dati).ok, false);
+  assert.equal(controllaPuntiDaTablet(c, file(p), dati).ok, true);
+});
+
+test('LOTTO 247: lo spostamento del giocatore non scrive né cambia il blocco «puntiDirettore»', () => {
+  const p = pg();
+  const n = applicaSpostamento(p, sposta2(p), dati, { giocatore: true });
+  const prima = JSON.stringify(p.livelli.map((v) => v?.puntiDirettore ?? null));
+  assert.equal(JSON.stringify(n.livelli.map((v) => v?.puntiDirettore ?? null)), prima, 'il blocco del Direttore resta identico');
+  assert.notDeepEqual(n.livelli[2].puntiAbilita, p.livelli[2].puntiAbilita, 'ma i punti si sono spostati davvero');
 });
 
 test('dal tablet il blocco del Direttore non si cambia né si toglie', () => {
@@ -262,7 +272,7 @@ after(async () => {
   rmSync(radice, { recursive: true, force: true });
 });
 
-test('dal server: il tablet che sposta i punti di un livello si vede rifiutare (403), il Direttore no', async () => {
+test('LOTTO 247, dal server: il tablet sposta i propri punti (200); il blocco del Direttore resta suo (403)', async () => {
   const nome = 'Prova-Sposta_liv6_2026-11-02.json';
   const url = (b) => `${b}/api/personaggi/${encodeURIComponent(nome)}`;
   const scrivi = (b, p, extra = {}) => fetch(url(b), { method: 'PUT', headers: extra, body: serializza({ ...p.creazione, puntiEsperienza: 9000 }, { livelli: p.livelli }) });
@@ -270,21 +280,23 @@ test('dal server: il tablet che sposta i punti di un livello si vede rifiutare (
   const tablet = { 'X-Mutant-Da': 'giocatore' };
   const p = pg();
   assert.equal((await scrivi(baseMaster, p)).status, 200);
+  // con il blocco del Direttore scritto dentro, il tablet riceve ancora 403: quel blocco lo mette solo lui
   const spostato = applicaSpostamento(p, sposta2(p), dati);
   const r = await scrivi(baseTablet, spostato, tablet);
   assert.equal(r.status, 403);
   const j = await r.json();
   assert.equal(j.puntiAbilita, true);
   assert.deepEqual(letto().livelli[2].puntiAbilita, QUARTO, 'il file non cambia');
-  // anche senza il blocco del Direttore (un tablet che sposta i punti «a mano»)
-  const aMano = structuredClone(spostato);
-  delete aMano.livelli[2].puntiDirettore;
-  assert.equal((await scrivi(baseTablet, aMano, tablet)).status, 403);
-  // il Direttore (PC del server) sì
+  // lotto 247: lo stesso spostamento fatto dal giocatore (senza toccare puntiDirettore) si salva dal suo dispositivo
+  const daGiocatore = applicaSpostamento(p, sposta2(p), dati, { giocatore: true });
+  assert.equal((await scrivi(baseTablet, daGiocatore, tablet)).status, 200, 'i punti sono suoi');
+  assert.deepEqual(letto().livelli[2].puntiAbilita, { 'Atletica': 2, 'Medicina': 2, 'Sopravvivenza': 2, 'Tecnologia': 1 }, 'il file è cambiato davvero');
+  // il Direttore (PC del server) scrive anche il blocco
   assert.equal((await scrivi(baseMaster, spostato)).status, 200);
   assert.deepEqual(letto().livelli[2].puntiAbilita, { 'Atletica': 2, 'Medicina': 2, 'Sopravvivenza': 2, 'Tecnologia': 1 });
   // e dopo, il tablet che rimanda lo stesso file (nessuno spostamento) passa; quello con i punti di prima no
   assert.equal((await scrivi(baseTablet, spostato, tablet)).status, 200);
+  // tornare ai punti di prima vorrebbe dire togliere il blocco che ha scritto il Direttore: quello no
   assert.equal((await scrivi(baseTablet, p, tablet)).status, 403);
 });
 

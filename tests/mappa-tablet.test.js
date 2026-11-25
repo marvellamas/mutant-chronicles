@@ -90,14 +90,18 @@ test('«Sono…»: i PG della scena e il blocco del proprio PG (mini-scheda, per
   assert.equal((await vista()).io, undefined);
 });
 
-test('permessi: solo il proprio PG, solo al proprio turno (Bea aspetta), e il server rifiuta', async () => {
+test('permessi: solo il proprio PG; fuori turno si muove con l’avviso (lotto 247), e il nome di chi tocca è scritto', async () => {
   const v = await vista('Bea');
-  assert.equal(v.io.permesso.puo, false);
-  assert.match(v.io.permesso.motivo, /Non è il tuo turno/);
+  assert.equal(v.io.permesso.puo, false, 'il permesso dice ancora di no…');
+  assert.match(v.io.permesso.motivo, /Non è il tuo turno: adesso tocca a Akira/, '…e dice a chi tocca');
+  assert.equal(v.io.permesso.regola, true, 'ma è una regola del gioco, non un veto del master: la prova la fa passare');
+  // lotto 247: il movimento fuori turno passa, con l'avviso; prima era 422
   const r = await muovi({ pg: 'Bea', a: [5, 3] });
-  assert.equal(r.stato, 422);
-  assert.match(r.errore, /Non è il tuo turno/);
-  assert.deepEqual(leggiScena().token.find((t) => t.id === 't-bea').q, [5, 4], 'Bea non si è mossa');
+  assert.equal(r.stato, 200, `non è più un rifiuto: ${r.errore ?? ''}`);
+  assert.ok((r.avvisi ?? []).some((x) => /Non è il tuo turno/.test(x)), `l’avviso arriva al tablet: ${JSON.stringify(r.avvisi)}`);
+  assert.deepEqual(leggiScena().token.find((t) => t.id === 't-bea').q, [5, 3], 'Bea si è mossa davvero');
+  // e la rimetto dov'era: i test che seguono partono dalla scena di prima
+  scriviScena((sc) => ({ ...sc, token: sc.token.map((t) => (t.id === 't-bea' ? { ...t, q: [5, 4] } : t)), movimenti: [], annulla: [] }));
   // un PG che non c'è
   const x = await muovi({ pg: 'Nessuno', a: [5, 3] });
   assert.equal(x.stato, 422);
@@ -182,8 +186,10 @@ test('«sempre» (scelta del master): anche fuori turno; un ostacolo che non si 
 test('funzioni pure: permesso, impostazioni, prova senza scontro', () => {
   const s = leggiScena();
   const pezzi = [{ chiave: 'partecipante:pg:Akira', rif: { tipo: 'partecipante', id: 'pg:Akira' }, tipo: 'pg', pg: 'Akira', lato: 'pg', movimento: { passo: 6, corsa: 12, scatto: 18 } }];
-  // senza scontro, al turno: non si muove
-  assert.match(permessoMovimento({ scena: s, pezzi, scontro: null, chiavePg: 'Akira', dati }).motivo, /Nessuno scontro/);
+  // senza scontro: lo dice, ma è una regola e la prova la fa passare (lotto 247)
+  const senza = permessoMovimento({ scena: s, pezzi, scontro: null, chiavePg: 'Akira', dati });
+  assert.match(senza.motivo, /Nessuno scontro/);
+  assert.equal(senza.regola, true);
   assert.deepEqual(impostazioniTablet({}, dati), { movimento: 'turno', avvisoTurno: false, bloccato: false });
   const sempre = { ...s, tablet: { movimento: 'sempre' } };
   const p = provaMovimento({ scena: sempre, pezzi, scontro: null, chiavePg: 'Akira', a: [1, 5], dati });
@@ -307,8 +313,9 @@ test('scheda del PG: «Muovi il PG sulla mappa» solo al proprio turno, con chi 
   // di turno Akira (primo nell'ordine): attivo per lui, spento per Bea con «tocca a Akira»
   const akira = collegamentoScontro({ ...sc, turno: 0 }, 'Akira');
   const bea = collegamentoScontro({ ...sc, turno: 0 }, 'Bea');
-  assert.deepEqual(pulsanteMuovi(akira), { attivo: true, testo: 'È il tuo turno' });
-  assert.deepEqual(pulsanteMuovi(bea), { attivo: false, testo: 'Non è il tuo turno · tocca a Akira' });
+  // lotto 247: fuori turno il pulsante NON è più spento — porta l'avviso col nome di chi tocca
+  assert.deepEqual(pulsanteMuovi(akira), { attivo: true, avviso: null, testo: 'È il tuo turno' });
+  assert.deepEqual(pulsanteMuovi(bea), { attivo: true, avviso: 'Non è il tuo turno: adesso tocca a Akira', testo: 'Non è il tuo turno · tocca a Akira' });
   assert.equal(pulsanteMuovi(collegamentoScontro({ ...sc, turno: 1 }, 'Bea')).attivo, true);
   // fuori dallo scontro (o scontro chiuso): nessun riquadro
   assert.equal(pulsanteMuovi(collegamentoScontro({ ...sc, stato: 'chiuso' }, 'Akira')), null);

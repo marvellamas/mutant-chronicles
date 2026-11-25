@@ -150,9 +150,11 @@ function riquadroScontro(ctx) {
   return h('section', { class: `riquadro scontro-in-corso${s.diTurno ? ' tuo-turno' : ''}`, 'aria-label': 'Scontro in corso' },
     h('p', { class: 'scontro-in-corso-testo' }, h('strong', {}, 'Scontro in corso'), ` · ${s.nome} · Round ${s.round}`,
       h('br'), h('span', { class: p.attivo ? 'tuo-turno-testo' : 'nota' }, p.testo)),
-    h('button', { type: 'button', class: 'btn primario btn-muovi-mappa', disabled: !p.attivo,
-      title: s.diTurno ? 'Apre la mappa dello scontro con il tuo PG scelto: tocca il quadretto di arrivo, poi «Conferma»' : `Si attiva al tuo turno (ora tocca a ${s.turnoDi ?? '…'})`,
-      onclick: () => ctx.azioni.muoviSullaMappa() }, '🗺 Muovi il PG sulla mappa'));
+    // lotto 247: fuori turno si apre lo stesso, con l'avviso e la riga nello storico (la mappa avvisa di nuovo prima di muovere)
+    h('button', { type: 'button', class: `btn primario btn-muovi-mappa${p.avviso ? ' con-avviso' : ''}`,
+      title: p.avviso ? `${p.avviso}. Puoi aprire la mappa e muovere lo stesso: resta una riga nello storico e nel registro dello scontro` : 'Apre la mappa dello scontro con il tuo PG scelto: tocca il quadretto di arrivo, poi «Conferma»',
+      onclick: () => conAvviso(ctx.azioni.storico, { azione: 'muovere il PG sulla mappa', motivo: p.avviso, fai: () => ctx.azioni.muoviSullaMappa() }),
+    }, '🗺 Muovi il PG sulla mappa'));
 }
 
 /** Il suggerimento dell'indicatore di salvataggio: il testo intero e, se c'è, il file. */

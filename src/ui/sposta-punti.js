@@ -29,7 +29,8 @@ function contatore(ev) {
 export function apriSpostaPunti(azioni, livello = null) {
   const p = azioni.personaggio();
   const st = { bozza: {}, livello, aggiunte: {}, motivo: '' };
-  return apri('finestrella-master finestrella-sposta', 'Sposta i punti Abilità', (fine) => {
+  const dalGiocatore = !!azioni.giocatore;
+  return apri(`finestrella-master finestrella-sposta`, dalGiocatore ? 'Sposta i tuoi punti Abilità' : 'Sposta i punti Abilità', (fine) => {
     const corpo = h('div', { class: 'corpo-master corpo-sposta' });
     const modificato = () => totaliBozza(p, st.bozza).length > 0;
     const chiudi = async () => {
@@ -53,7 +54,7 @@ export function apriSpostaPunti(azioni, livello = null) {
               h('p', {}, eccezioni.length === 1 ? 'Confermando, il VA passa il limite e nel registro resta questa riga:' : 'Confermando, i VA passano il limite e nel registro restano queste righe:'),
               h('ul', { class: 'avvisi-sposta' }, eccezioni.map((r) => h('li', {}, r))))
             : null,
-          h('p', { class: 'nota' }, 'L’app avvisa e non blocca: l’ultima parola è del Direttore. La decisione resta scritta nel livello e nel registro.'),
+          h('p', { class: 'nota' }, dalGiocatore ? 'L’app avvisa e non blocca: puoi spostarli lo stesso, e di quello che hai fatto resta una riga nello storico del personaggio che il Direttore legge.' : 'L’app avvisa e non blocca: l’ultima parola è del Direttore. La decisione resta scritta nel livello e nel registro.'),
           h('div', { class: 'riga-azioni finestrella-azioni' },
             h('button', { type: 'button', class: 'btn', onclick: () => f(false) }, 'Torna agli spostamenti'),
             h('button', { type: 'button', class: 'btn primario', onclick: () => f(true) }, eccezioni.length ? 'Forza l’eccezione' : 'Procedi comunque')),
@@ -88,10 +89,15 @@ export function apriSpostaPunti(azioni, livello = null) {
         altriAvvisi.length ? h('ul', { class: 'avvisi-sposta' }, altriAvvisi.map((a) => h('li', { class: 'nota motivo' }, a.testo))) : null,
         h('label', { class: 'finestrella-campo' }, h('span', {}, 'Motivo (facoltativo)'),
           h('input', { type: 'text', maxlength: 200, value: st.motivo, placeholder: 'es. errore del giocatore, deciso al tavolo…', oninput: (e) => { st.motivo = e.target.value; } })),
-        h('p', { class: 'nota' }, 'Alla conferma si salva una copia della scheda e la modifica va nel registro «Modifiche del master»; da lì «Annulla» rimette i punti di prima.'),
+        h('p', { class: 'nota' }, dalGiocatore
+          ? 'Alla conferma i punti si spostano e resta una riga nello storico del personaggio, che il Direttore legge. Il blocco dei punti sistemati da lui non si tocca.'
+          : 'Alla conferma si salva una copia della scheda e la modifica va nel registro «Modifiche del master»; da lì «Annulla» rimette i punti di prima.'),
         h('div', { class: 'riga-azioni finestrella-azioni' },
           h('button', { type: 'button', class: 'btn', onclick: chiudi }, 'Annulla'),
-          h('button', { type: 'button', class: 'btn primario', disabled: !modificato(), onclick: conferma }, 'Conferma')),
+          h('button', { type: 'button', class: 'btn primario', disabled: !modificato(),
+            // lotto 247: un pulsante spento dice sempre perché — e questo è spento solo quando non cambierebbe niente
+            title: modificato() ? 'Conferma gli spostamenti' : 'Nessuno spostamento da confermare: togli un punto da un’Abilità e rimettilo in un’altra',
+            onclick: conferma }, 'Conferma')),
       ].filter(Boolean));
     };
     disegna();
@@ -126,10 +132,14 @@ function tabella(s, ev, meno, piu) {
     h('tbody', {}, ...corpo));
 }
 
-/** Il pulsante «Sposta i punti» accanto a un livello della Progressione (solo in modalità master, solo se ha punti). */
+/**
+ * Il pulsante «Sposta i punti» accanto a un livello della Progressione. Dal lotto 247 c'è anche per il giocatore, sul
+ * suo dispositivo: sposta i propri punti già spesi, con gli stessi avvisi, e resta la riga nello storico.
+ */
 export function pulsanteSpostaPunti(ctx, livello) {
-  const sp = ctx.master?.spostaPunti;
+  const sp = ctx.master?.spostaPunti ?? ctx.spostaPuntiGiocatore;
   if (typeof sp?.livelli !== 'function' || !sp.livelli().includes(livello)) return null;
-  return h('button', { type: 'button', class: 'btn btn-piccolo', title: `Sposta i Punti Abilità spesi ${nelEvento(livello)} (Direttore)`, onclick: () => ctx.master.spostaPunti.apri(livello) }, 'Sposta i punti');
+  const mio = !ctx.master?.spostaPunti;
+  return h('button', { type: 'button', class: 'btn btn-piccolo', title: mio ? `Sposta i tuoi Punti Abilità spesi ${nelEvento(livello)}: l'app avvisa e non ferma, e resta una riga nello storico` : `Sposta i Punti Abilità spesi ${nelEvento(livello)} (Direttore)`, onclick: () => sp.apri(livello) }, 'Sposta i punti');
 }
 

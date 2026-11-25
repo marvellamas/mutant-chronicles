@@ -12,16 +12,16 @@ liberato l'avanzamento, il **lotto 246** (24/11) ha censito tutta l'app.
 
 ## Il conto
 
-**Totale 470** blocchi: **pagina 130**, **motore 174**, **server 166**.
-Più **24 tolti** da questo lotto, che restano scritti qui sotto perché non tornino.
+**Totale 468** blocchi: **pagina 129**, **motore 173**, **server 166**.
+Più **26 tolti** da questo lotto, che restano scritti qui sotto perché non tornino.
 
 | gruppo | che cos'è | quanti |
 | :-- | :-- | --: |
-| gruppo A | giudica una scelta o un contenuto del giocatore: **tolti tutti**, sono diventati avvisi | 0 (24 tolti) |
+| gruppo A | giudica una scelta o un contenuto del giocatore: **tolti tutti**, sono diventati avvisi | 0 (26 tolti) |
 | gruppo B | impedisce una scrittura sbagliata (un altro che salva, un dato impossibile, l'impianto del server) | 393 |
 | gruppo C | una regola che Davide ha approvato, con il numero della risposta | 41 |
 | gruppo D | l'app non sa che cosa fare: manca un dato, un profilo, una scena. Dice che cosa manca | 31 |
-| gruppo E | da decidere: non sta chiaramente in nessuno dei quattro, e la decisione è di Marcello | 5 |
+| gruppo E | li ha guardati Marcello e restano (lotto 247): lasciarli passare darebbe un risultato vuoto, che non è un avviso | 3 |
 
 **Che cosa il censimento non può cercare, e va detto invece di fingere:** un riquadro che compare solo a condizione. In
 una pagina ogni cosa è condizionata, e a macchina non si distingue «non lo mostro perché non serve» da «non te lo lascio
@@ -32,15 +32,13 @@ tavolo. Un rifiuto deciso nel motore si conta dove si decide, non dove il server
 da annullare) non è un blocco, è un pulsante senza effetto: resta spento e dice perché. Un pulsante che cambierebbe
 qualcosa e non lo fa perché l'app giudica la scelta è un blocco, e in questo lotto è stato liberato.
 
-## Gruppo E — da decidere (5)
+## Gruppo E — guardati e lasciati dove sono (3)
 
 | id | dove | cosa lo fa scattare | cosa vede il giocatore | cosa gli impedisce | gruppo | perché |
 | :-- | :-- | :-- | :-- | :-- | :-- | :-- |
-| `motore:controllaPuntiDaTablet:rifiuto dichiarato#2` | Server del Direttore, salvataggio della scheda da un tablet (Punti Abilità) | Il tablet toglie punti già spesi in un evento registrato, oltre i casi di «Assegna» (punti inattivi) e «Togli» (eccesso) | Il tablet riceve un rifiuto e la modifica non si salva: «Spostare i punti Abilità già spesi <nell'evento> lo fa il Direttore (Modifica master → «Sposta i punti»)» | Spostare da sé i propri punti già spesi in un livello passato | E | DA DECIDERE: il lotto 165 affida «Sposta i punti» al Direttore (è una sua procedura, con copia di sicurezza e registro), ma è il giocatore che non può toccare i propri punti già spesi |
-| `motore:pianoRicarica:rifiuto dichiarato#4` | Scheda, tab Inventario, pannello «Tampone» del trasformatore | Il colore scelto non è fra quelli della riserva da ricaricare | Il piano non si forma: «<nome> è Rosso o Blu: il colore Verde non è compatibile» | Ricaricare quella riserva con quel colore | E | DA DECIDERE: il colore è una regola del manuale (A.67), ma per proporre un «Ricarica comunque» servirebbe decidere che cosa trasferisce una ricarica fuori colore — il piano oggi non ha i numeri |
-| `motore:pianoRicarica:rifiuto dichiarato#5` | Scheda, tab Inventario, pannello «Tampone» del trasformatore | Il trasformatore è monocromatico e il suo colore, fissato alla costruzione, è un altro | Il piano non si forma: «il monocromatico ha il colore fissato alla costruzione: Rosso» | Usare quel trasformatore per un altro colore | E | DA DECIDERE: come sopra, trasformatore monocromatico |
-| `motore:pianoRicarica:rifiuto dichiarato#7` | Scheda, tab Inventario, pannello «Tampone» del trasformatore | Il tampone è vuoto e nell'Inventario non c'è una CEC dello stesso colore con almeno una carica | Il piano non si forma: «il tampone è vuoto e non c'è una carica CEC Rossa da cui prelevare (<regola del prelievo>)» | Ricaricare quando non si hanno le cariche sorgente | E | DA DECIDERE: come sopra, tampone vuoto senza una CEC da cui prelevare |
-| `pagina:riquadroScontro:disabled` | Scheda del giocatore (tablet), riquadro «Scontro in corso», pulsante «🗺 Muovi il PG sulla mappa» | Non è il turno del PG nell'ordine di Iniziativa dello scontro aperto | Pulsante spento, «Non è il tuo turno · tocca a <nome>» e suggerimento «Si attiva al tuo turno (ora tocca a …)» | Non muove il proprio PG sulla mappa fuori dal suo turno | E | Non giudica una scelta e non protegge una scrittura (il server verifica il movimento a parte): è l'ordine dei turni, e al tavolo il Direttore può far muovere qualcuno fuori turno (lui lo fa dalla plancia). Da decidere |
+| `motore:pianoRicarica:rifiuto dichiarato#4` | Scheda, tab Inventario, pannello «Tampone» del trasformatore | Il colore scelto non è fra quelli della riserva da ricaricare | Il piano non si forma: «<nome> è Rosso o Blu: il colore Verde non è compatibile» | Ricaricare quella riserva con quel colore | E | RESTA (deciso da Marcello il 24/11, lotto 247): lasciar passare vuol dire produrre un piano senza i numeri — quante cariche si trasferiscono, in quanto tempo — e un risultato vuoto non è un avviso. Il colore è una regola del manuale (A.67); per un «Ricarica comunque» servirebbe prima decidere che cosa trasferisce una ricarica fuori colore |
+| `motore:pianoRicarica:rifiuto dichiarato#5` | Scheda, tab Inventario, pannello «Tampone» del trasformatore | Il trasformatore è monocromatico e il suo colore, fissato alla costruzione, è un altro | Il piano non si forma: «il monocromatico ha il colore fissato alla costruzione: Rosso» | Usare quel trasformatore per un altro colore | E | RESTA (deciso da Marcello il 24/11, lotto 247): come sopra, trasformatore monocromatico |
+| `motore:pianoRicarica:rifiuto dichiarato#7` | Scheda, tab Inventario, pannello «Tampone» del trasformatore | Il tampone è vuoto e nell'Inventario non c'è una CEC dello stesso colore con almeno una carica | Il piano non si forma: «il tampone è vuoto e non c'è una carica CEC Rossa da cui prelevare (<regola del prelievo>)» | Ricaricare quando non si hanno le cariche sorgente | E | RESTA (deciso da Marcello il 24/11, lotto 247): come sopra, tampone vuoto senza una CEC da cui prelevare |
 
 ## Gruppo C — regole approvate da Davide (41)
 
@@ -128,7 +126,7 @@ Non giudicano: manca un dato. Dicono che cosa manca; dove lasciar passare romper
 | `motore:decollaVeicolo:throw` | Mappa e tab Veicoli, «Decolla…» (A.253) | Il profilo non dichiara che il mezzo vola, il mezzo non è a terra, o i dati non hanno le regole del decollo | Niente: l'operazione si interrompe con il motivo («la Neverlost non è a terra: è in volo», «questo mezzo non vola») | Far decollare il mezzo | D | il profilo non dichiara che il mezzo vola, o lo stato di volo non lo consente: l’app dice che cosa manca |
 | `motore:atterraVeicolo:throw` | Mappa e tab Veicoli, «Atterra» (A.253) | Il profilo non dichiara che il mezzo vola, il mezzo è già a terra, o i dati non hanno le regole dell'atterraggio | Niente: l'operazione si interrompe con il motivo («la Neverlost è già a terra») | Far atterrare il mezzo | D | come sopra |
 
-## Tolti dal lotto 246 (24)
+## Tolti dal lotto 246 (26)
 
 Questi non ci sono più: erano del gruppo A. Il controllo fallisce se tornano.
 
@@ -137,6 +135,7 @@ Questi non ci sono più: erano del gruppo A. Il controllo fallisce se tornano.
 | `pagina:chiediCircostanza:disabled` | Tavolo del Master, finestrella «Bonus di circostanza a <PG>», pulsante «−1» | Il valore è già al minimo scritto in regole.json → circostanza.minimo | Tasto spento | Il Direttore non può mandare un malus più grande del limite dei dati | A | Giudica il valore che il Direttore sta scegliendo con un limite preso dai dati, su un bonus che è una decisione di tavolo |
 | `pagina:chiediCircostanza:disabled#2` | Tavolo del Master, finestrella «Bonus di circostanza a <PG>», pulsante «+1» | Il valore è già al massimo di regole.json → circostanza.massimo | Tasto spento | Il Direttore non può mandare un bonus più grande del limite dei dati | A | Stesso caso del «−1»: un limite dei dati su una scelta del Direttore |
 | `pagina:chiediCircostanza:disabled#3` | Tavolo del Master, finestrella «Bonus di circostanza», pulsante «Manda al PG» | Nessuna categoria spuntata («A che cosa si applica») | Pulsante spento, senza spiegazione accanto | Non manda il bonus di circostanza al giocatore | A | Giudica il contenuto (nessuna categoria): nella scheda la stessa situazione è solo una nota, «Nessuna categoria spuntata: non si applica a nulla» |
+| `pagina:riquadroScontro:disabled` | Scheda, riquadro «Scontro in corso», pulsante «🗺 Muovi il PG sulla mappa» | Non è il turno del PG | il pulsante era spento, con «Si attiva al tuo turno» | aprire la mappa e muovere la propria pedina fuori turno | A | TOLTO dal lotto 247: l’ordine dei turni è una regola del gioco. Adesso l’avviso dice il nome di chi tocca, il movimento si fa, e resta una riga nello storico del personaggio e nel registro dello scontro |
 | `pagina:testataComune:disabled#3` | Scheda, testata, pulsante «N → 1 PE» (conversione dei Distintivi, §1.8.3) | Distintivi meno di quelli richiesti, oppure Punti Eroe già alla riserva massima | Pulsante spento, suggerimento «Converti N Distintivi in 1 Punto Eroe (§1.8.3: facoltativo, senza superare la riserva massima)» | Non riottiene un Punto Eroe convertendo i Distintivi | A | Giudica il contenuto (quanti Distintivi ha, riserva già piena) e spegne un'azione di gioco invece di avvisare |
 | `pagina:controlloTemporaneo:disabled` | Scheda, tab Identità, colonna del modificatore temporaneo di una Caratteristica, «−» | Il modificatore è già al minimo di regole.json → caratteristiche_temporanee.minimo | Tasto spento | Non applica un malus temporaneo più grande del limite dei dati | A | Giudica con un limite dei dati un valore che al tavolo decide il Direttore |
 | `pagina:controlloTemporaneo:disabled#2` | Scheda, tab Identità, modificatore temporaneo di una Caratteristica, «+» | Il modificatore è già al massimo dei dati | Tasto spento | Non applica un bonus temporaneo più grande del limite | A | Stesso caso del «−»: limite dei dati su una decisione di tavolo |
@@ -157,6 +156,7 @@ Questi non ci sono più: erano del gruppo A. Il controllo fallisce se tornano.
 | `motore:provaMovimento:rifiuto dichiarato#11` | Mappa, tablet del giocatore, conferma del movimento | Il quadretto è fuori dall'area di movimento calcolata | il tablet riceve «Quel quadretto è fuori dalla tua area di movimento.» | Spostare il proprio PG dove vuole | A | giudica il movimento scelto; il Direttore sulla sua mappa muove libero con Maiusc, il giocatore no |
 | `motore:registraLancioNemico:throw#3` | Plancia del Direttore, carta di un nemico, «Lancia!» | Il costo in PM è maggiore dei PM che il nemico ha adesso (per esempio 5 PM e ne servono 8) | Niente: l'operazione si interrompe con «<nome>: 5 PM, ne servono 8» | Far lanciare al nemico un incantesimo che costa più dei suoi PM | A | Giudica una scelta di gioco (risorse insufficienti), e l'ultima parola sul lancio di un nemico è del Direttore |
 | `motore:cambiaStatoNemico:throw#2` | Plancia del Direttore, carta di un nemico, Stati | Si accende uno Stato che la scheda della creatura elenca fra le immunità | Niente: l'operazione si interrompe con «<nome> è immune a <Stato>» | Applicare uno Stato a una creatura immune (anche quando il Direttore lo vuole per una ragione sua) | A | Giudica un contenuto (le immunità del profilo) e ferma il Direttore invece di avvisarlo |
+| `motore:controllaPuntiDaTablet:rifiuto dichiarato#2` | Server del Direttore, salvataggio della scheda da un tablet | Il giocatore sposta Punti Abilità già spesi in un evento registrato | il tablet riceve «Spostare i punti Abilità già spesi … lo fa il Direttore» e la modifica non si salva | spostare i propri punti fra Abilità dal proprio dispositivo | A | TOLTO dal lotto 247: sono i punti di quel personaggio, e quello che non torna lo dice l’avviso coi numeri (lotto 241). Resta il «no» sul blocco «puntiDirettore», che è una decisione del Direttore |
 | `motore:controllaTalentiDaTablet:rifiuto dichiarato#8` | Server del Direttore, salvataggio della scheda da un tablet (Talenti) | Il tablet cambia la scelta di un livello già registrato con un Talento che non rispetta requisiti o categoria | Il tablet riceve un rifiuto e la modifica non si salva: «<motivo>. Una scelta non ammessa la può fare solo il Direttore» | Correggere un Talento di un livello passato con una scelta fuori regola | A | Giudica quale Talento il giocatore ha preso: è esattamente la famiglia di blocchi che il lotto 241 ha reso avvisi, qui rimasta fuori dall'avanzamento |
 
 ## Gruppo B — impediscono una scrittura sbagliata (393)
