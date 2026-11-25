@@ -92,6 +92,7 @@ import { normalizzaCalendario, calendarioAttivo, attivaCalendario, disattivaCale
 import { testoNote } from './calendario.js';
 import { impostaChiAvvisa } from '../avvisi-invio.js';
 import { mandaAvviso } from '../avvisi-invio.js';
+import { installaErroriVisti } from './errori-visti.js';
 
 // Dopo la creazione si possono ancora cambiare solo i campi descrittivi: le altre scelte
 // determinano i livelli successivi (ricognizione dell'avanzamento, §8).
@@ -133,6 +134,11 @@ const stato = {
   // 'non_collegato' (ultimo controllo); conflitto: { file, mtime, testo, sessione } del master in attesa di una scelta
   collegamento: { stato: 'collegato', conflitto: null, scrivendo: false },
 };
+
+// lotto 250: la pagina non mangia più gli errori — un errore che nessuno gestisce si vede: una riga al giocatore,
+// la cosa precisa nel diario del Direttore, l'errore intero in console (src/ui/errori-visti.js). Si installa PRIMA
+// di avvia(), perché un errore durante il caricamento dei dati è il primo che non va perso.
+installaErroriVisti();
 
 avvia();
 
@@ -2693,7 +2699,18 @@ function renderSchedaInterna({ mantieniScorrimento = false } = {}) {
       // «scontro» lo passa la UI (ctx.roundScontro?.id), così si azzera da solo cambiando scontro.
       usaUnaVoltaTalento: (voce, momento, opzioni = {}) => cambiaSessione(usaUnaVoltaSessione(stato.sessione, voce, momento, massimi, opzioni)),
       azzeraUsoTalento: (chiave) => cambiaSessione(azzeraUsoSessione(stato.sessione, chiave, massimi)),
-      convertiDistintivi: () => cambiaSessione(convertiDistintivi(stato.sessione, massimi)),
+      // §1.8.3. Il pulsante resta acceso (non si blocca nessuno) ma **dice perché** quando il conto non torna:
+      // prima non accadeva niente e non si leggeva niente, e il motivo stava nel solo `title`, che su un tablet
+      // nessuno vede — un pulsante che finge, la riga di mezzo del lotto 246. Trovato dal ripasso del 250.
+      convertiDistintivi: () => {
+        const dopo = convertiDistintivi(stato.sessione, massimi);
+        if (dopo) { cambiaSessione(dopo); return; }
+        const s = stato.sessione ?? {};
+        const perUno = massimi.distintiviPerPuntoEroe;
+        avviso(Number(s.distintivi ?? 0) < perUno
+          ? `Non basta: ${s.distintivi ?? 0} Distintivi su ${perUno} per 1 Punto Eroe (§1.8.3). Decide il master.`
+          : `Punti Eroe già al massimo (${s.puntiEroe} su ${massimi.puntiEroe}): la conversione non si applica (§1.8.3). Decide il master.`);
+      },
       // le note si salvano a ogni tasto; l'annullamento riporta al testo di prima della modifica
       inizioNote: () => ricordaPrecedente('note'),
       // calendario: ogni modifica (note, «Avanza», attivazione) salva ed è annullabile
