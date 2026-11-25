@@ -1,616 +1,616 @@
 {
-  "_nota": "Registro dei manuali: un posto solo dice quale versione è corrente e dove sta il suo testo. La chiave è ID di Drive + numero di versione; la data è informazione, non criterio (lotto 188, 10/11/2026). Chi legge un manuale passa da tools/manuali.mjs, mai da un percorso scritto a mano.",
-  "_protocollo": "docs/manuali-drive.md e la sezione «Protocollo dei manuali» di CLAUDE.md",
-  "cartella_lavoro": "1p4jh2tKIN9kRimD4ifzth_YjWUZTH6-6",
-  "cartella_archivio": "1tVAzASERKxCEZPCrAf-LFHiYLqhey9Rc",
-  "controllato": "2026-11-25",
-  "manuali": [
-    {
-      "id": "giocatore",
-      "nome": "Manuale del Giocatore",
-      "drive": "110LNyYLZFWRGYuym836EqKYOUvoQRYvqBzm_2bJqybc",
-      "formato": "doc",
-      "versione": "0.65",
-      "testo": "giocatore-0.65.md",
-      "modificato": "2026-11-19T13:12:43Z",
-      "confronto": "alla cieca",
-      "recepita": {
-        "versione": "0.65",
-        "quando": "2026-11-20",
-        "lotto": 229,
-        "cosa": "Confronto alla cieca (in sezione 7 del Doc non c’è la riga della 0.65). 0.64 → 0.65: due righe sole nel testo salvato — il numero di edizione e il nuovo §5.2.7 «Cavalcature e combattimento in sella» (la regola della A.296 e del blocco E&L del 19/11). Il cap. 8 (passaggio di livello, PX, soglie, dadi PV/PM), il profilo delle Abilità 4/7/9/4, i 127 punti, i limiti del VA e il §8.3.1 sono identici byte per byte; verificato anche coi valori: i sette personaggi dell’istantanea del 17/11 ricalcolati prima e dopo sono identici (tools/pg-prima-dopo.mjs). Il §5.2.7 non dà capienze o andature per altre cavalcature: solo l’esempio del Turk (3 posti, Passo 6/Corsa 12/Scatto 18 con uno o due a bordo, 4/8/niente Scatto con tre), già nei dati dal lotto 228; le altre restano «da definire». Il commento di Drive al §3.5.2 non è testo.",
-        "documento": "docs/diff-lotto229-2026-11-20.md"
-      },
-      "recepimento_in_attesa": {
-        "versione": "0.68",
-        "motivo": "Lotto 248 (l’ambito era il gruppo D del registro dei blocchi): letta su Drive, non recepita. La 0.68 porta due revisioni approvate da Davide il 24/11 e registrate nell’E&L: gli **Scudi** (§§2.16.8, 2.16.27, 3.5.4 e 5.9, recepiti nel manuale già dalla 0.67) e i **Salti ordinari a fasce di Atletica** (§5.2.8 nuovo, con la tabella nativa e il rimando da Atletica). Tocca valori di combattimento (AR, VA, MOV) e di movimento, quindi è un lotto a sé: con la penalità di categoria nuova il solo dei sette che cambia è Michele (Scudo Punisher Wächter, Medio/Grande: −1 Q al MOV, AR e VA invariati); Oshi non cambia perché lo Scudo piccolo resta +1 AR senza penalità, e nessuno dei sette ha Assalto Armato.",
-        "drive_modificato": "2026-11-24T20:35:30Z"
-      },
-      "versioni_mai_viste": {
-        "quali": [
-          "0.67"
-        ],
-        "perché": "Lotto 248: terza intermedia che salta, dopo la Veicoli 0.20 e 0.22 (A.303). Che cosa conteneva lo dice il registro dell’E&L del 24/11, non una deduzione nostra: il blocco «Scudi: protezione, penalità e Assalto Armato» scrive «Recepito nel Manuale del Giocatore v0.67, §§2.16.8, 2.16.27, 3.5.4 e 5.9, e nel Manuale degli Armamenti v0.91, §§7.4, 7.11.1 e 7.22.4». Quindi la 0.67 è l’edizione degli Scudi, e la 0.68 aggiunge i Salti (§5.2.8). Il testo della 0.67 non è recuperabile: il Doc ha una sola revisione."
-      }
-    },
-    {
-      "id": "magia",
-      "nome": "Manuale della Magia",
-      "drive": "1F5npdIujLUEVcHVX6CvF5jOHNMG5LS7dx0tgklDpzAY",
-      "formato": "doc",
-      "versione": "1.20",
-      "testo": "magia-1.20.md",
-      "modificato": "2026-11-20T10:52:26Z",
-      "confronto": "alla cieca (in sezione 7 del Doc non c’è la riga della 1.20)",
-      "recepita": {
-        "versione": "1.20",
-        "quando": "2026-11-20",
-        "lotto": 231,
-        "cosa": "Impronta riscaricata 4e926448e3ae = quella del registro delle 11:22 UTC (nessun cambio a numero fermo). Il testo è lo stesso delle 10:36 già salvato come 1.19 dal lotto 229: cambiano il numero di edizione, il «Registro delle modifiche 1.19 → 1.20» e la forma di sei titoli; nessun numero. Il §28.6 «Dotazioni rimovibili del Warden TC» (Modulo Individuare 6, Modulo Esorcizzare Corruzione 12, Cofanetto del Silenzio corazzato) è applicato ai dati: tre voci, riserve e costi interi in CM, prezzi 9.900/37.800/27.000 = costo × 3 × coefficiente (A.256). Le 90 schede d’incantesimo rilette sulla 1.20: 90 invariate. Il Veicoli §17.10 (scheda del mezzo) non è leggibile.",
-        "documento": "docs/diff-lotto231-2026-11-20.md"
-      }
-    },
-    {
-      "id": "armamenti",
-      "nome": "Manuale degli Armamenti",
-      "drive": "1eDZJHfgBIYPvzKg78tEGwiLtrI_6gzpQOIfJA9aYiYg",
-      "formato": "doc",
-      "versione": "0.90",
-      "testo": "armamenti-0.90.md",
-      "modificato": "2026-11-20T11:03:17Z",
-      "recepita": {
-        "versione": "0.90",
-        "quando": "2026-11-20",
-        "lotto": 231,
-        "cosa": "Impronta riscaricata 69efdd855282 = quella del registro delle 11:22 UTC. Il testo è lo stesso delle 10:38 già salvato come 0.89 dal lotto 229 (compreso tutto il §7.28.3: Thunder TC, Storm T8, Sentinel TC): cambiano il numero, il «Registro delle modifiche 0.89 → 0.90» e la forma dei titoli e delle tabelle del §7.28.3. Le armi del catalogo rilette sulla 0.90: 222 voci su 222 identiche al lotto 230. Cannoni, lanciamissili e artiglieria (§§7.28.2–7.28.3) hanno profilo di combattimento, ma «specifiche autonome di acquisto, massa, Integrità e FOR restano da definire» e i mezzi che li montano (Veicoli cap. 16–17) non sono leggibili: nessuna voce nel catalogo (A.305).",
-        "documento": "docs/diff-lotto231-2026-11-20.md"
-      },
-      "confronto": "alla cieca (in sezione 7 del Doc non c’è la riga della 0.90; l’ultima è la 0.89)",
-      "recepimento_in_attesa": {
-        "versione": "0.91",
-        "motivo": "Lotto 248: letta su Drive, non recepita. È la metà «armamenti» della revisione degli Scudi del 24/11 (§§7.4, 7.11.1 e 7.22.4: tabella MOV del catalogo generale, profili degli Scudi Enormi, Punisher e variante Wächter, scudi corporativi di base). Requisiti FOR, PI e proprietà delle Parate restano quelli delle schede. Va col lotto degli Scudi, insieme al Giocatore 0.68.",
-        "drive_modificato": "2026-11-24T19:39:45Z"
-      }
-    },
-    {
-      "id": "equipaggiamento",
-      "nome": "Manuale dell’Equipaggiamento",
-      "drive": "1bvTeJphQ6BNKazpV5twivvRbqkHrRowNBDZ_RakQiXA",
-      "formato": "doc",
-      "versione": "0.42",
-      "testo": "equipaggiamento-0.42.md",
-      "modificato": "2026-11-13T12:38:21Z",
-      "confronto": "alla cieca (in sezione 7 c’è la riga della 0.40, non della 0.41)",
-      "recepita": {
-        "versione": "0.42",
-        "quando": "2026-11-17",
-        "lotto": 212,
-        "cosa": "0.41 → 0.42: solo il §10.14 nuovo (Collana di papiro dei Mutanti, manufatto di campagna: lotto lunare, non applicato). Rispetto alla 0.30, da cui vengono i dati: 363 righe, esaminate una per una in docs/diff-lotto212-2026-11-17.md.",
-        "documento": "docs/diff-lotto212-2026-11-17.md"
-      },
-      "recepimento_in_attesa": {
-        "versione": "0.43",
-        "motivo": "Lotto 239 (solo documenti): letto contro la 0.42, non recepito. Cambia soltanto il §6.6: trattamenti delle malattie a fasi — supporto (+2 alle PS previste per 24 ore), sospensivo, risolutivo (+1 successo, al massimo uno per fase e per malattia, nessun effetto sui Terminali); nessuno dei trattamenti stabilizza Morente. Il resto è forma (le celle del carico «Oltre FOR × 10 kg» e «fino a FOR × 20 kg», unite in una nella 0.42, e una riga di sottolineatura). Blocco dell’E&L del 23/11.",
-        "documento": "docs/diff-lotto239-2026-11-23.md"
-      }
-    },
-    {
-      "id": "veicoli",
-      "nome": "Manuale dei Veicoli",
-      "drive": "1lo_c3KLK7kntJwv195v5aD2ieuMfRuaThsDhPJCX3T4",
-      "formato": "doc",
-      "versione": "0.23",
-      "testo": "veicoli-0.23.md",
-      "modificato": "2026-11-21T21:11:44Z",
-      "recepita": {
-        "versione": "0.23",
-        "quando": "2026-11-23",
-        "lotto": 236,
-        "cosa": "Il manuale si legge, e non andava diviso. Per due lotti lo avevamo creduto illeggibile — il Doc è passato da 40 a 67 MB in tre giorni e l’esportazione in Markdown viene rifiutata con «File too large for export» — e il lotto 229 era arrivato a chiedere a Davide di dividerlo. Davide ha proposto una verifica invece di accettare la richiesta, e la verifica era giusta: l’esportazione in **testo semplice** riesce (199 KB, 5.089 righe) e porta tutto, capitoli 16, 17 e 18 compresi. Non era il documento a essere troppo grande: era la nostra richiesta a chiedere il formato sbagliato, perché l’esportazione in Markdown impacchetta le immagini nel testo e quei 67 MB sono quasi tutti immagini. Il testo salvato è l’esportazione in testo semplice (tools/estrai-doc-markdown.mjs la riconosce e la normalizza); le tabelle si leggono con tools/tabelle-testo.mjs, che nei capitoli 16, 17 e 18 legge 41 tabelle su 41. **Recepita l’edizione, non i dati:** i ventuno mezzi terrestri dei capitoli 16 e 17 e i due del 18 non entrano in data/veicoli.json, che resta dichiarato alla 0.19 in edizioni_in_attesa — applicarli è un lotto suo, e tocca il profilo asa-scout-mk4, che è anche il FIAT LUX dei sette. Quello che il manuale dice si legge in docs/diff-lotto236-2026-11-23.md.",
-        "documento": "docs/diff-lotto236-2026-11-23.md",
-        "forma": "testo semplice (text/plain): nel testo non ci sono le immagini, il grassetto né i livelli dei titoli; un titolo si riconosce dalla sua numerazione",
-        "capitoli": {
-          "dentro": "capitoli 1–13 (regole, autovettura, Scout, Neverlost, motocicletta, furgone) e il §16.1 col §10 per la separazione fra lo Scout T4 di serie e il FIAT LUX dei PG, applicata col lotto 237.",
-          "fuori": "i ventuno mezzi dei capitoli 16 e 17 e i due del capitolo 18 (Pursuit T4 e Pursuit T4 SIA). Non sono nel catalogo e non lo saranno finché Davide non risponde alla A.304 — quanti di quei mezzi servono davvero al tavolo: modellarne ventuno che il gruppo non userà è il lavoro che non vogliamo fare. Il testo è salvato e letto (41 tabelle su 41 nei tre capitoli, lotto 236), quindi il lotto che li applicherà non deve riscaricare niente.",
-          "lotto_237": "Aggiunto il profilo asa-scout-t4 (modello di serie dell’Alleanza: Mitragliatore Leggero Punisher, 132.510 cr) e lasciato intatto asa-scout-mk4 (FIAT LUX dei PG: Capitol M606, 126.510 cr, arco frontale 180° della A.280, copriruote di Petra). Nessun record è stato creato o ricollegato: nell’istantanea del 21/11 l’unico record su quel profilo è il FIAT LUX (veimvozx57q0) e non si è mosso di un valore."
-        }
-      },
-      "versioni_mai_viste": {
-        "quali": [
-          "0.20",
-          "0.22"
-        ],
-        "perché": "Il Doc ha una sola revisione (list_file_revisions ne torna una, e il connettore non sa scaricare una revisione: «Attempting to download a file at a given revision is not yet supported»), quindi le edizioni intermedie non sono recuperabili. Quello che contenevano lo dice il manuale stesso nei suoi registri delle modifiche: la **0.20** ha aggiunto il capitolo 16 con le dodici categorie d’impiego e i profili dei mezzi terrestri militari, ha uniformato il modello corrente in «Scout T4» e ne ha aggiornato l’armamento standard col Mitragliatore Leggero Punisher; la **0.22** aveva già il capitolo 17, e la 0.23 del 20/11 ha aggiunto il capitolo 18 (Pursuit T4 e allestimento SIA, dotazione di squadra, prezzi 218.000 e 258.000 cr) e sostituito la tavola del FIAT LUX con la livrea antracite. È una ricostruzione dichiarata, letta nei §18.5 e nei registri che li precedono, non una nostra ipotesi: fra la 0.21 e la 0.23 resta una versione che non abbiamo mai letto."
-      },
-      "confronto": "non alla cieca, ma non dal Doc: il Manuale dei Veicoli porta dentro di sé un «Registro delle modifiche» per ogni versione (§18.5 per la 0.22 → 0.23, e i precedenti per la 0.19 → 0.20 e la 0.20 → 0.21), quindi si sa che cosa è cambiato anche senza la riga in sezione 7. Resta fuori la 0.22, il cui registro non è nel testo corrente (vedi versioni_mai_viste)."
-    },
-    {
-      "id": "mostri",
-      "nome": "Manuale dei Mostri",
-      "drive": "1qScWOJpDjNSw7j5rNUlHGTKPbsUiEgvG",
-      "formato": "docx",
-      "versione": "0.69",
-      "testo": "mostri-0.69.md",
-      "modificato": "2026-11-15T13:25:23Z",
-      "confronto": "alla cieca",
-      "nota": "Il Google Doc 0.23 è archiviato: vale il Word (lotto 187 su Drive, lotto 188 nel repo).",
-      "sha256_docx": "48a832aa2bde9cf4786846bd5f2e2da8eca05683435d9f4518b5e45fb1a4efdf",
-      "recepita": {
-        "versione": "0.69",
-        "quando": "2026-11-15",
-        "lotto": 203,
-        "cosa": "La 0.68 (14/11) aggiunge la Viverna della Sabbia nel §7.20 — profilo della Viverna comune con Mimetismo desertico e Resistenza cristallina — e riscrive l’aspetto delle Vespe del Deserto del §7.17 per la mutazione dai cristalli, «mantenendo invariati i valori della scheda»; la 0.69 è la stessa edizione col titolo «Fauna del deserto». Il §4.2 e il §4.2.1, che reggono la gestione senza Ferite e il +30% già incluso nei PV stampati, non cambiano una parola rispetto alla 0.67.",
-        "documento": "docs/diff-lotto203-2026-11-15.md"
-      }
-    },
-    {
-      "id": "direttore",
-      "nome": "Manuale del Direttore",
-      "drive": "1lfwR5Z9pIqfoASAuNt1Ia01sOj8OOb-5",
-      "formato": "docx",
-      "versione": "0.51",
-      "testo": "direttore-0.51.md",
-      "modificato": "2026-11-13T11:58:17Z",
-      "confronto": "alla cieca",
-      "nota": "Lotto 214 (17/11/2026): i dati dal capitolo 9 (PX, scala dei GS, correttivo dei PG, Titoli, PNG generici per Grado ed EQ) letti con tools/importa-direttore.mjs sulle edizioni 0.46, 0.49 e 0.51: 0 scarti. Cambia nel codice solo l’arrotondamento a mezzo (31,5 → 32) e il Titolo dal livello raggiunto (§9.8.2–3). Procedure del manuale che l’app non ha: docs/diff-lotto214-2026-11-17.md.",
-      "recepita": {
-        "versione": "0.51",
-        "quando": "2026-11-14",
-        "lotto": 197,
-        "cosa": "Nuovo §9.6.2 «Acquisizioni e valori pronti»: le tre progressioni dei PNG generici, la lettura dei bonus (i VA personali delle 24 Abilità escludono Talenti, Specializzazioni, EQ, strumenti e condizioni; le tabelle pronte li comprendono già), EQ una volta sola, e i modelli generici che mantengono PV e Ferite senza il +30% dei mostri. GS e PX invariati: valore unitario = PX base del Grado × (1 + 0,50 × EQ). Il §9.9 «Mostri senza Ferite» non cambia dalla 0.49.",
-        "documento": "docs/diff-lotto197-2026-11-14.md"
-      },
-      "recepimento_in_attesa": {
-        "versione": "0.53",
-        "motivo": "Lotto 248: letta su Drive, non recepita. Porta il §9.10 con il riepilogo e la tabella dei Salti ordinari a fasce di Atletica e il rimando operativo dal §9.1 (blocco E&L del 24/11). Va col lotto dei Salti, insieme al Giocatore 0.68.",
-        "drive_modificato": "2026-11-24T20:38:42Z"
-      }
-    },
-    {
-      "id": "talenti",
-      "nome": "Talenti, Specializzazioni e Maestrie",
-      "drive": "10ztjyeX1apff5tnh3SzNiswsvXNjyX0m",
-      "formato": "docx",
-      "versione": "1.1",
-      "testo": "talenti-specializzazioni-maestrie-1.1.md",
-      "modificato": "2026-11-03T11:33:41Z",
-      "nota": "Sui Talenti vale su quello che dice il Manuale del Giocatore (regola di precedenza del 25/10)."
-    },
-    {
-      "id": "revisione-nec",
-      "nome": "Revisione NEC — registro unico",
-      "drive": "1AJyKJ0qQOGmGh12hBUI8g2gmoFDMHgk_",
-      "formato": "docx",
-      "versione": "2.11",
-      "testo": "revisione-nec-2.11.md",
-      "modificato": "2026-10-31T10:47:53Z"
-    },
-    {
-      "id": "energia",
-      "nome": "Energia — riepilogo per l’app",
-      "drive": "1s9saJZl1DpK5o1IMUMyct75jOdwWSrnH",
-      "formato": "docx",
-      "versione": "1.0",
-      "testo": "energia-riepilogo-app-1.0.md",
-      "modificato": "2026-11-02T16:23:56Z"
-    }
-  ],
-  "schede": [
-    {
-      "id": "asa-scout",
-      "nome": "ASA Scout MK4 — scheda",
-      "drive": "1DgvIVekDypu7UKHup-SHSSKCzuK_R-l75Xd9kPsRhHY",
-      "formato": "doc",
-      "versione": "0.6",
-      "testo": "asa-scout-mk4-0.6.md",
-      "modificato": "2026-11-21T21:11:57Z",
-      "impronta": "04f6d39e26f5",
-      "_nota_0_6_cambiata": "Lotto 235 (23/11/2026): la scheda è cambiata su Drive il 21/11 alle 21:11 UTC SENZA cambiare numero (resta 0.6) — il caso della regola 4 del protocollo, visto con la data e confermato con l’impronta. Le sole differenze di contenuto: le dimensioni in trasporto passano da «6 × 2,6 m» a «6 × 2,6 × 2,7 m» e un paragrafo nuovo dà i pesi (4.500 kg a vuoto, 1.500 kg di carico utile, 6.000 kg a pieno carico). NESSUN valore del FIAT LUX che l’app tiene cambia: altezza e pesi non esistono in data/veicoli.json (ci sono lunghezza_m, larghezza_m, ingombro_q e carico_kg 1500, che la scheda conferma). Non applicati oggi perché la serata è stasera: entrano con il lotto dei Veicoli."
-    },
-    {
-      "id": "neverlost",
-      "nome": "Neverlost — scheda tecnologica",
-      "drive": "1MWn5jv3XB6W5h1JQyZEnnWDyeQfe_EbZ",
-      "formato": "docx",
-      "versione": "1.6",
-      "testo": "neverlost-scheda-tecnologica-1.6.md",
-      "modificato": "2026-10-29T17:23:03Z"
-    },
-    {
-      "id": "wachter",
-      "nome": "Scudo Punisher Wächter",
-      "drive": "1mDFtahzSrrkSKowJif9iagT_peIqIBRE",
-      "formato": "docx",
-      "versione": "1.2",
-      "testo": "punisher-wachter-1.2.md",
-      "modificato": "2026-10-29T17:23:13Z"
-    },
-    {
-      "id": "guanti-lucas",
-      "nome": "Guanti mistici di Lucas — scheda",
-      "drive": "1SbF2U8eRSZiA11_B9KNODeptNYDCVO4s",
-      "formato": "docx",
-      "versione": "1.0",
-      "testo": "guanti-mistici-lucas-1.0.md",
-      "modificato": "2026-11-02T16:23:49Z"
-    },
-    {
-      "id": "cyberarma-dimitri",
-      "nome": "CyberArma Opzioni per Dimitri",
-      "drive": "1pcumz4X6IDT0ITeAb7kE6tUf-RsBhs1o-bC5xAqmJC0",
-      "formato": "doc",
-      "versione": "1.0",
-      "testo": "cyberarma-dimitri-1.0.md",
-      "modificato": "2026-11-02T16:15:21Z"
-    }
-  ],
-  "scambio": [
-    {
-      "id": "per-davide",
-      "nome": "per-davide.md (domande a Davide)",
-      "drive": "1Jg5rqbBtcHGE1E10xYElO_qCDCwh8K87LAInovtpF6A",
-      "formato": "doc",
-      "testo": "../per-davide.md",
-      "modificato": "2026-11-24T12:11:38Z",
-      "impronta": "8ea0498a6b52",
-      "nota": "Fonte unica delle domande; lo scrive solo Davide (e Cowork per il pacchetto). docs/protocollo-davide.md. Lotto 248: il cambio del 24/11 12:11 è nostro (Cowork ha applicato il pacchetto del 23/11: il Doc si intitola «Aggiornato al 23 novembre 2026»); in sezione 7 le ultime risposte sono del 19/11, quelle del 24/11 sono nell’E&L."
-    },
-    {
-      "id": "e-l",
-      "nome": "E&L — Risposte e correzioni approvate",
-      "drive": "1VaqZaAe4NK5P8A956Eahua_ZT60eh3ohnR2xSqh-tVs",
-      "formato": "doc",
-      "testo": "../risposte-master-2026-09-26.md",
-      "modificato": "2026-11-24T20:39:29Z",
-      "impronta": "6f339f8ff5a7",
-      "nota": "Lotto 248: riscaricato per intero (regola 10). Blocchi nuovi del 24/11: risposte A.307, A.308, A.309, A.310, A.312 e le due revisioni approvate — «Scudi: protezione, penalità e Assalto Armato» e «Salti ordinari a fasce di Atletica». Registrate in docs/risposte-master.md; da applicare in un lotto a parte, perché toccano valori di combattimento e di movimento."
-    }
-  ],
-  "archiviati": [
-    {
-      "nome": "ARCHIVIO — Manuale dei Mostri 0.23 — SUPERATO",
-      "drive": "11Uxmz9GM2vU2knngtIPk_80532ABlHC3xL8ZvAXX7rE",
-      "versione": "0.23",
-      "archiviato": "2026-11-10",
-      "motivo": "Superato dal Word 0.47. È il file che il 9/11 fece descrivere il Lorath con il Getto acido invece del veleno paralizzante: aveva il numero più basso e la data più recente."
-    }
-  ],
-  "senza_versione": [
-    {
-      "testo": "talenti-magici-mistici.md",
-      "nota": "Doc di Davide del 27/09 senza numero di versione: non è un manuale del registro, lo legge il solo lotto storico dei testi dei Talenti."
-    },
-    {
-      "testo": "layout-app-davide.md",
-      "nota": "Appunti di layout, non un manuale."
-    },
-    {
-      "testo": "modifiche-layout-app.md",
-      "nota": "Appunti di layout, non un manuale."
-    }
-  ],
-  "_edizioni_in_attesa": "Lotto 189: i file di `data/` che restano a un'edizione precedente perché il manuale nuovo cambia una regola ancora da decidere. Si scrive { \"data/x.json\": { \"<manuale>\": { \"motivo\": \"…\", \"domanda\": \"A.n\" } } }, e `tools/edizioni-dati.mjs` non li segnala più. Un'eccezione senza motivo non è un'eccezione: è un file dimenticato. Oggi è vuoto — tutti e 40 i file dichiarano l'edizione corrente.",
-  "edizioni_in_attesa": {
-    "data/veicoli.json": {
-      "veicoli": {
-        "edizione": "0.19",
-        "motivo": "Lotto 229: la 0.21 porta con sé la 0.20, che nessuno aveva visto (Scout T4 con il Punisher al posto del M606 e prezzo standard 132.510 cr al posto di 126.510; nuovo cap. 16 con dieci mezzi terrestri dell’Alleanza). I numeri dei cinque profili del catalogo sono riletti sulla 0.21 e non cambiano (0 scarti, 40 campi: l’edizione per campo sta in _edizione.campi), ma il profilo «asa-scout-mk4» è anche lo Scout del FIAT LUX, il mezzo del gruppo: cambiargli prezzo e arma sposterebbe il valore di un mezzo dei sette (126.510 → 132.510) contro il manuale stesso, che tiene il FIAT LUX col M606. Serve un profilo nuovo («Scout T4») e un lotto che lo tratti; i dieci mezzi del cap. 16 non hanno un modello. Le astronavi dei cap. 14 e 15 restano fuori catalogo come dal 213.",
-        "lotto": "Scout T4 e cap. 16",
-        "documento": "docs/diff-lotto229-2026-11-20.md"
-      }
-    },
-    "data/abilita.json": {
-      "giocatore": {
-        "motivo": "Giocatore 0.62: riscrive il profilo delle Abilità (da 2/6/12/4 a 4/7/9/4), i punti base (122 → 127), i limiti del VA e i 25 profili di Classe, e aggiunge le regole del Morente (§§5.14.2–3). I dati non sono ancora stati rigenerati: l’etichetta si aggiorna nel lotto che li rigenera (lotto B, poi D per il Morente e G per i testi dei Talenti). Scriverla adesso direbbe che i dati vengono dalla 0.62, e non è vero.",
-        "lotto": "B",
-        "documento": "docs/ricognizione-manuali-2026-11-12-lotto190.md"
-      }
-    },
-    "data/addestramenti.json": {
-      "giocatore": {
-        "motivo": "Giocatore 0.62: riscrive il profilo delle Abilità (da 2/6/12/4 a 4/7/9/4), i punti base (122 → 127), i limiti del VA e i 25 profili di Classe, e aggiunge le regole del Morente (§§5.14.2–3). I dati non sono ancora stati rigenerati: l’etichetta si aggiorna nel lotto che li rigenera (lotto B, poi D per il Morente e G per i testi dei Talenti). Scriverla adesso direbbe che i dati vengono dalla 0.62, e non è vero.",
-        "lotto": "B",
-        "documento": "docs/ricognizione-manuali-2026-11-12-lotto190.md"
-      }
-    },
-    "data/caratteristiche.json": {
-      "giocatore": {
-        "motivo": "Giocatore 0.62: riscrive il profilo delle Abilità (da 2/6/12/4 a 4/7/9/4), i punti base (122 → 127), i limiti del VA e i 25 profili di Classe, e aggiunge le regole del Morente (§§5.14.2–3). I dati non sono ancora stati rigenerati: l’etichetta si aggiorna nel lotto che li rigenera (lotto B, poi D per il Morente e G per i testi dei Talenti). Scriverla adesso direbbe che i dati vengono dalla 0.62, e non è vero.",
-        "lotto": "B",
-        "documento": "docs/ricognizione-manuali-2026-11-12-lotto190.md"
-      }
-    },
-    "data/corporazioni.json": {
-      "giocatore": {
-        "motivo": "Giocatore 0.62: riscrive il profilo delle Abilità (da 2/6/12/4 a 4/7/9/4), i punti base (122 → 127), i limiti del VA e i 25 profili di Classe, e aggiunge le regole del Morente (§§5.14.2–3). I dati non sono ancora stati rigenerati: l’etichetta si aggiorna nel lotto che li rigenera (lotto B, poi D per il Morente e G per i testi dei Talenti). Scriverla adesso direbbe che i dati vengono dalla 0.62, e non è vero.",
-        "lotto": "B",
-        "documento": "docs/ricognizione-manuali-2026-11-12-lotto190.md"
-      }
-    },
-    "data/dotazioni.json": {
-      "giocatore": {
-        "motivo": "Lotto 195: la nota dei NEC del §2.16.1 viene dal Giocatore 0.63 (A.266, risposta). I venti testi del §2.16 restano quelli della 0.54: la 0.62 riscrive il profilo delle Abilità e la 0.63 non li tocca, ma non sono stati riletti, quindi l’etichetta del file resta 0.54.",
-        "lotto": "G",
-        "documento": "docs/diff-lotto195-2026-11-14.md"
-      }
-    },
-    "data/formato_nemici.json": {
-      "giocatore": {
-        "motivo": "Giocatore 0.62: riscrive il profilo delle Abilità (da 2/6/12/4 a 4/7/9/4), i punti base (122 → 127), i limiti del VA e i 25 profili di Classe, e aggiunge le regole del Morente (§§5.14.2–3). I dati non sono ancora stati rigenerati: l’etichetta si aggiorna nel lotto che li rigenera (lotto B, poi D per il Morente e G per i testi dei Talenti). Scriverla adesso direbbe che i dati vengono dalla 0.62, e non è vero.",
-        "lotto": "B",
-        "documento": "docs/ricognizione-manuali-2026-11-12-lotto190.md"
-      }
-    },
-    "data/mappa.json": {
-      "giocatore": {
-        "motivo": "Giocatore 0.62: riscrive il profilo delle Abilità (da 2/6/12/4 a 4/7/9/4), i punti base (122 → 127), i limiti del VA e i 25 profili di Classe, e aggiunge le regole del Morente (§§5.14.2–3). I dati non sono ancora stati rigenerati: l’etichetta si aggiorna nel lotto che li rigenera (lotto B, poi D per il Morente e G per i testi dei Talenti). Scriverla adesso direbbe che i dati vengono dalla 0.62, e non è vero.",
-        "lotto": "B",
-        "documento": "docs/ricognizione-manuali-2026-11-12-lotto190.md"
-      }
-    },
-    "data/regole.json": {
-      "giocatore": {
-        "motivo": "Lotti 192 e 193: il blocco `competenze` (§§2.3, 8.3, 8.7) e il blocco `ferite.morente` (§§5.14.2–5.14.3, con la frase del §5.14 riscritta) vengono dalla 0.62. Il resto del file è ancora della 0.54: restano indietro le due frasi delle Manovre riscritte dal manuale nuovo — il Tiro Ravvicinato di `attacco_distanza` e l'Immobilizzare Migliorato di `attacco_ravvicinato` (§5.12) — che sono un ambito a sé. L'etichetta del file resta 0.54 finché non sono fatte.",
-        "lotto": "G",
-        "documento": "docs/diff-lotto193-2026-11-13.md"
-      },
-      "magia": {
-        "motivo": "Lotto 211: la Magia 1.19 è letta per intero (docs/diff-lotto211-2026-11-17.md). Cambia, rispetto alla 1.11 da cui vengono questi blocchi: il §6 (un cristallo a 0 PM è «scarico» e conserva il colore; «Esausto neutro» è un altro stato, non ricaricabile) — applicato come parola e come dato (`chroma.colori.Trasparente`); le regole del Morente (§6, già in `ferite.morente` dal lotto 193). Restano alla 1.11 `chroma`, `cariche_mistiche` e `lancio` perché nessun loro numero cambia; NON applicati, con il motivo: il §26.8 Pietre di Luna e il §28.5 manufatti lunari dei Mutanti (vanno con Armamenti §7.27 ed Equipaggiamento §10.14: lotto a sé), i costi di creazione nuovi dei §§24.4–24.7 (supporto 100 cr, corredo 1.200 cr, dotazione rituale 300 cr, Chroma grezzo 200/800 cr per PM: la procedura di creazione non è nel motore). Il prezzo di vendita del §24.3 e i prezzi del §24.7 (lotto 195) NON sono contraddetti dalla 1.19.",
-        "lotto": "G",
-        "documento": "docs/diff-lotto211-2026-11-17.md"
-      },
-      "equipaggiamento": {
-        "motivo": "Lotto 212: i blocchi dell’energia (`nec`, i trasformatori, il carico) sono scritti sulla 0.30 e la 0.42 li riorganizza (§5.4, §5.4.12): si rileggono nel lotto che li rigenera. Il blocco `prezzi_artefatti` cita la 0.41, da cui viene davvero (le pagine sono identiche nella 0.42).",
-        "lotto": "G",
-        "documento": "docs/diff-lotto212-2026-11-17.md"
-      }
-    },
-    "data/specializzazioni.json": {
-      "giocatore": {
-        "motivo": "Giocatore 0.62: riscrive il profilo delle Abilità (da 2/6/12/4 a 4/7/9/4), i punti base (122 → 127), i limiti del VA e i 25 profili di Classe, e aggiunge le regole del Morente (§§5.14.2–3). I dati non sono ancora stati rigenerati: l’etichetta si aggiorna nel lotto che li rigenera (lotto B, poi D per il Morente e G per i testi dei Talenti). Scriverla adesso direbbe che i dati vengono dalla 0.62, e non è vero.",
-        "lotto": "B",
-        "documento": "docs/ricognizione-manuali-2026-11-12-lotto190.md"
-      }
-    },
-    "data/talenti_liberi.json": {
-      "giocatore": {
-        "motivo": "Giocatore 0.62: riscrive il profilo delle Abilità (da 2/6/12/4 a 4/7/9/4), i punti base (122 → 127), i limiti del VA e i 25 profili di Classe, e aggiunge le regole del Morente (§§5.14.2–3). I dati non sono ancora stati rigenerati: l’etichetta si aggiorna nel lotto che li rigenera (lotto B, poi D per il Morente e G per i testi dei Talenti). Scriverla adesso direbbe che i dati vengono dalla 0.62, e non è vero.",
-        "lotto": "B",
-        "documento": "docs/ricognizione-manuali-2026-11-12-lotto190.md"
-      }
-    },
-    "data/tecniche_interiori.json": {
-      "giocatore": {
-        "motivo": "Giocatore 0.62: riscrive il profilo delle Abilità (da 2/6/12/4 a 4/7/9/4), i punti base (122 → 127), i limiti del VA e i 25 profili di Classe, e aggiunge le regole del Morente (§§5.14.2–3). I dati non sono ancora stati rigenerati: l’etichetta si aggiorna nel lotto che li rigenera (lotto B, poi D per il Morente e G per i testi dei Talenti). Scriverla adesso direbbe che i dati vengono dalla 0.62, e non è vero.",
-        "lotto": "B",
-        "documento": "docs/ricognizione-manuali-2026-11-12-lotto190.md"
-      }
-    },
-    "data/equipaggiamento/accessori_armi.json": {
-      "armamenti": {
-        "motivo": "Armamenti 0.87: il lotto 206 (0.86) e il lotto 223 (0.87, solo l’etichetta: l’importatore rilegge le armi sulla 0.87 e trova 0 differenze) hanno portato all’edizione corrente le 218 voci d’arma (`armi.json`, `armi_corporative.json`, `armi_distanza.json`, `armi_distanza_corporative.json`), con la provenienza per campo. Questo file contiene protezioni, munizioni, accessori o dispositivi, che il lotto 206 non ha toccato: resta all’edizione da cui i suoi dati vengono davvero, e la distanza si dichiara qui. Da fare in un lotto a sé, insieme ai prezzi della A.261 e al gradino di Reperibilità «Epica 4» che `regole.json` non ha.",
-        "lotto": "dopo il 206",
-        "documento": "docs/diff-lotto206-2026-11-16.md"
-      }
-    },
-    "data/equipaggiamento/armature.json": {
-      "armamenti": {
-        "motivo": "Armamenti 0.87: il lotto 206 (0.86) e il lotto 223 (0.87, solo l’etichetta: l’importatore rilegge le armi sulla 0.87 e trova 0 differenze) hanno portato all’edizione corrente le 218 voci d’arma (`armi.json`, `armi_corporative.json`, `armi_distanza.json`, `armi_distanza_corporative.json`), con la provenienza per campo. Questo file contiene protezioni, munizioni, accessori o dispositivi, che il lotto 206 non ha toccato: resta all’edizione da cui i suoi dati vengono davvero, e la distanza si dichiara qui. Da fare in un lotto a sé, insieme ai prezzi della A.261 e al gradino di Reperibilità «Epica 4» che `regole.json` non ha.",
-        "lotto": "dopo il 206",
-        "documento": "docs/diff-lotto206-2026-11-16.md"
-      }
-    },
-    "data/equipaggiamento/armature_corporative.json": {
-      "armamenti": {
-        "motivo": "Armamenti 0.87: il lotto 206 (0.86) e il lotto 223 (0.87, solo l’etichetta: l’importatore rilegge le armi sulla 0.87 e trova 0 differenze) hanno portato all’edizione corrente le 218 voci d’arma (`armi.json`, `armi_corporative.json`, `armi_distanza.json`, `armi_distanza_corporative.json`), con la provenienza per campo. Questo file contiene protezioni, munizioni, accessori o dispositivi, che il lotto 206 non ha toccato: resta all’edizione da cui i suoi dati vengono davvero, e la distanza si dichiara qui. Da fare in un lotto a sé, insieme ai prezzi della A.261 e al gradino di Reperibilità «Epica 4» che `regole.json` non ha.",
-        "lotto": "dopo il 206",
-        "documento": "docs/diff-lotto206-2026-11-16.md"
-      }
-    },
-    "data/equipaggiamento/corredi_dispositivi.json": {
-      "armamenti": {
-        "motivo": "Armamenti 0.87: il lotto 206 (0.86) e il lotto 223 (0.87, solo l’etichetta: l’importatore rilegge le armi sulla 0.87 e trova 0 differenze) hanno portato all’edizione corrente le 218 voci d’arma (`armi.json`, `armi_corporative.json`, `armi_distanza.json`, `armi_distanza_corporative.json`), con la provenienza per campo. Questo file contiene protezioni, munizioni, accessori o dispositivi, che il lotto 206 non ha toccato: resta all’edizione da cui i suoi dati vengono davvero, e la distanza si dichiara qui. Da fare in un lotto a sé, insieme ai prezzi della A.261 e al gradino di Reperibilità «Epica 4» che `regole.json` non ha.",
-        "lotto": "dopo il 206",
-        "documento": "docs/diff-lotto206-2026-11-16.md"
-      }
-    },
-    "data/equipaggiamento/elmetti.json": {
-      "armamenti": {
-        "motivo": "Armamenti 0.87: il lotto 206 (0.86) e il lotto 223 (0.87, solo l’etichetta: l’importatore rilegge le armi sulla 0.87 e trova 0 differenze) hanno portato all’edizione corrente le 218 voci d’arma (`armi.json`, `armi_corporative.json`, `armi_distanza.json`, `armi_distanza_corporative.json`), con la provenienza per campo. Questo file contiene protezioni, munizioni, accessori o dispositivi, che il lotto 206 non ha toccato: resta all’edizione da cui i suoi dati vengono davvero, e la distanza si dichiara qui. Da fare in un lotto a sé, insieme ai prezzi della A.261 e al gradino di Reperibilità «Epica 4» che `regole.json` non ha.",
-        "lotto": "dopo il 206",
-        "documento": "docs/diff-lotto206-2026-11-16.md"
-      }
-    },
-    "data/equipaggiamento/index.json": {
-      "armamenti": {
-        "motivo": "Armamenti 0.87: il lotto 206 (0.86) e il lotto 223 (0.87, solo l’etichetta: l’importatore rilegge le armi sulla 0.87 e trova 0 differenze) hanno portato all’edizione corrente le 218 voci d’arma (`armi.json`, `armi_corporative.json`, `armi_distanza.json`, `armi_distanza_corporative.json`), con la provenienza per campo. Questo file contiene protezioni, munizioni, accessori o dispositivi, che il lotto 206 non ha toccato: resta all’edizione da cui i suoi dati vengono davvero, e la distanza si dichiara qui. Da fare in un lotto a sé, insieme ai prezzi della A.261 e al gradino di Reperibilità «Epica 4» che `regole.json` non ha.",
-        "lotto": "dopo il 206",
-        "documento": "docs/diff-lotto206-2026-11-16.md"
-      }
-    },
-    "data/equipaggiamento/munizioni.json": {
-      "armamenti": {
-        "motivo": "Armamenti 0.87: il lotto 206 (0.86) e il lotto 223 (0.87, solo l’etichetta: l’importatore rilegge le armi sulla 0.87 e trova 0 differenze) hanno portato all’edizione corrente le 218 voci d’arma (`armi.json`, `armi_corporative.json`, `armi_distanza.json`, `armi_distanza_corporative.json`), con la provenienza per campo. Questo file contiene protezioni, munizioni, accessori o dispositivi, che il lotto 206 non ha toccato: resta all’edizione da cui i suoi dati vengono davvero, e la distanza si dichiara qui. Da fare in un lotto a sé, insieme ai prezzi della A.261 e al gradino di Reperibilità «Epica 4» che `regole.json` non ha.",
-        "lotto": "dopo il 206",
-        "documento": "docs/diff-lotto206-2026-11-16.md"
-      }
-    },
-    "data/equipaggiamento/nec.json": {
-      "equipaggiamento": {
-        "motivo": "Lotto 212: il §5.4 dell’Equipaggiamento 0.42 (nomenclatura «accumulatori e caricatori energetici», «alimentatore» al posto di «caricatore», nucleo di Cristallo Instabile stabilizzato, §5.4.12 materiali e fabbricazione industriale) non è stato riletto riga per riga contro `nec.json`: il lettore delle tabelle copre peso, costo e reperibilità, non i contatori né i trasformatori. L’etichetta resta 0.30 finché non si rilegge.",
-        "lotto": "G",
-        "documento": "docs/diff-lotto212-2026-11-17.md"
-      }
-    },
-    "data/equipaggiamento/rinforzi.json": {
-      "armamenti": {
-        "motivo": "Armamenti 0.87: il lotto 206 (0.86) e il lotto 223 (0.87, solo l’etichetta: l’importatore rilegge le armi sulla 0.87 e trova 0 differenze) hanno portato all’edizione corrente le 218 voci d’arma (`armi.json`, `armi_corporative.json`, `armi_distanza.json`, `armi_distanza_corporative.json`), con la provenienza per campo. Questo file contiene protezioni, munizioni, accessori o dispositivi, che il lotto 206 non ha toccato: resta all’edizione da cui i suoi dati vengono davvero, e la distanza si dichiara qui. Da fare in un lotto a sé, insieme ai prezzi della A.261 e al gradino di Reperibilità «Epica 4» che `regole.json` non ha.",
-        "lotto": "dopo il 206",
-        "documento": "docs/diff-lotto206-2026-11-16.md"
-      }
-    },
-    "data/equipaggiamento/scudi.json": {
-      "armamenti": {
-        "motivo": "Armamenti 0.87: il lotto 206 (0.86) e il lotto 223 (0.87, solo l’etichetta: l’importatore rilegge le armi sulla 0.87 e trova 0 differenze) hanno portato all’edizione corrente le 218 voci d’arma (`armi.json`, `armi_corporative.json`, `armi_distanza.json`, `armi_distanza_corporative.json`), con la provenienza per campo. Questo file contiene protezioni, munizioni, accessori o dispositivi, che il lotto 206 non ha toccato: resta all’edizione da cui i suoi dati vengono davvero, e la distanza si dichiara qui. Da fare in un lotto a sé, insieme ai prezzi della A.261 e al gradino di Reperibilità «Epica 4» che `regole.json` non ha.",
-        "lotto": "dopo il 206",
-        "documento": "docs/diff-lotto206-2026-11-16.md"
-      }
-    },
-    "data/equipaggiamento/unita_robotiche.json": {
-      "armamenti": {
-        "motivo": "Armamenti 0.87: il lotto 206 (0.86) e il lotto 223 (0.87, solo l’etichetta: l’importatore rilegge le armi sulla 0.87 e trova 0 differenze) hanno portato all’edizione corrente le 218 voci d’arma (`armi.json`, `armi_corporative.json`, `armi_distanza.json`, `armi_distanza_corporative.json`), con la provenienza per campo. Questo file contiene protezioni, munizioni, accessori o dispositivi, che il lotto 206 non ha toccato: resta all’edizione da cui i suoi dati vengono davvero, e la distanza si dichiara qui. Da fare in un lotto a sé, insieme ai prezzi della A.261 e al gradino di Reperibilità «Epica 4» che `regole.json` non ha.",
-        "lotto": "dopo il 206",
-        "documento": "docs/diff-lotto206-2026-11-16.md"
-      }
-    },
-    "data/png_generici.json": {
-      "mostri": {
-        "edizione": "0.67",
-        "motivo": "I venticinque modelli di PNG generici vengono dal file di dati `png-abilita-0.67.json`, che dichiara lo sha256 del Manuale dei Mostri **0.67** (`7e44083c…`). Su Drive il manuale è la **0.69** (`48a832aa…`): le due fonti non sono più la stessa edizione, e i modelli nascono intrecciando i numeri del JSON con la prosa e i blocchi comuni del Word. Intrecciare JSON 0.67 e Word 0.69 produrrebbe profili incoerenti senza che nessun numero diventi assurdo, quindi non si fa: i modelli restano alla 0.67, dichiarata, finché Davide non pubblica il JSON dell’edizione corrente. Le creature del Bestiario non c’entrano — vengono dal solo Word e il lotto 203 le ha rigenerate sulla 0.69.",
-        "lotto": "PNG generici sull’edizione corrente",
-        "documento": "docs/diff-lotto203-2026-11-15.md"
-      }
-    }
+ "_nota": "Registro dei manuali: un posto solo dice quale versione è corrente e dove sta il suo testo. La chiave è ID di Drive + numero di versione; la data è informazione, non criterio (lotto 188, 10/11/2026). Chi legge un manuale passa da tools/manuali.mjs, mai da un percorso scritto a mano.",
+ "_protocollo": "docs/manuali-drive.md e la sezione «Protocollo dei manuali» di CLAUDE.md",
+ "cartella_lavoro": "1p4jh2tKIN9kRimD4ifzth_YjWUZTH6-6",
+ "cartella_archivio": "1tVAzASERKxCEZPCrAf-LFHiYLqhey9Rc",
+ "controllato": "2026-11-25",
+ "manuali": [
+  {
+   "id": "giocatore",
+   "nome": "Manuale del Giocatore",
+   "drive": "110LNyYLZFWRGYuym836EqKYOUvoQRYvqBzm_2bJqybc",
+   "formato": "doc",
+   "versione": "0.65",
+   "testo": "giocatore-0.65.md",
+   "modificato": "2026-11-19T13:12:43Z",
+   "confronto": "alla cieca",
+   "recepita": {
+    "versione": "0.65",
+    "quando": "2026-11-20",
+    "lotto": 229,
+    "cosa": "Confronto alla cieca (in sezione 7 del Doc non c’è la riga della 0.65). 0.64 → 0.65: due righe sole nel testo salvato — il numero di edizione e il nuovo §5.2.7 «Cavalcature e combattimento in sella» (la regola della A.296 e del blocco E&L del 19/11). Il cap. 8 (passaggio di livello, PX, soglie, dadi PV/PM), il profilo delle Abilità 4/7/9/4, i 127 punti, i limiti del VA e il §8.3.1 sono identici byte per byte; verificato anche coi valori: i sette personaggi dell’istantanea del 17/11 ricalcolati prima e dopo sono identici (tools/pg-prima-dopo.mjs). Il §5.2.7 non dà capienze o andature per altre cavalcature: solo l’esempio del Turk (3 posti, Passo 6/Corsa 12/Scatto 18 con uno o due a bordo, 4/8/niente Scatto con tre), già nei dati dal lotto 228; le altre restano «da definire». Il commento di Drive al §3.5.2 non è testo.",
+    "documento": "docs/diff-lotto229-2026-11-20.md"
+   },
+   "recepimento_in_attesa": {
+    "versione": "0.68",
+    "motivo": "Lotto 248 (l’ambito era il gruppo D del registro dei blocchi): letta su Drive, non recepita. La 0.68 porta due revisioni approvate da Davide il 24/11 e registrate nell’E&L: gli **Scudi** (§§2.16.8, 2.16.27, 3.5.4 e 5.9, recepiti nel manuale già dalla 0.67) e i **Salti ordinari a fasce di Atletica** (§5.2.8 nuovo, con la tabella nativa e il rimando da Atletica). Tocca valori di combattimento (AR, VA, MOV) e di movimento, quindi è un lotto a sé: con la penalità di categoria nuova il solo dei sette che cambia è Michele (Scudo Punisher Wächter, Medio/Grande: −1 Q al MOV, AR e VA invariati); Oshi non cambia perché lo Scudo piccolo resta +1 AR senza penalità, e nessuno dei sette ha Assalto Armato.",
+    "drive_modificato": "2026-11-24T20:35:30Z"
+   },
+   "versioni_mai_viste": {
+    "quali": [
+     "0.67"
+    ],
+    "perché": "Lotto 248: terza intermedia che salta, dopo la Veicoli 0.20 e 0.22 (A.303). Che cosa conteneva lo dice il registro dell’E&L del 24/11, non una deduzione nostra: il blocco «Scudi: protezione, penalità e Assalto Armato» scrive «Recepito nel Manuale del Giocatore v0.67, §§2.16.8, 2.16.27, 3.5.4 e 5.9, e nel Manuale degli Armamenti v0.91, §§7.4, 7.11.1 e 7.22.4». Quindi la 0.67 è l’edizione degli Scudi, e la 0.68 aggiunge i Salti (§5.2.8). Il testo della 0.67 non è recuperabile: il Doc ha una sola revisione."
+   }
   },
-  "_edizioni_citate": "Le edizioni superate che restano in `docs/manuali-txt/` perché un dato o uno strumento le cita ancora, con chi le cita. Quando nessuno le cita più si archiviano in `docs/manuali-txt/archivio/`: l'elenco serve a saperlo senza cercarlo a mano. Lotto 191: le sei edizioni recepite fino al lotto 189 restano in cartella perché sono quelle da cui i dati vengono davvero, ed è il confronto che `edizioni_in_attesa` dichiara.",
-  "edizioni_citate": {
-    "veicoli-0.19.md": "l’edizione da cui vengono i dati di data/veicoli.json (`edizioni_in_attesa`: il profilo dello Scout e il cap. 16 aspettano un lotto a sé, lotto 229)",
-    "giocatore-0.50.md": "data/talenti_liberi.json (`fonte_edizione` delle 15 voci superate dalla 0.54) e tools/lotti/lotto_testi_completi_talenti.mjs",
-    "giocatore-0.54.md": "l'edizione da cui vengono i dati di 11 file di `data/` (`edizioni_in_attesa`, lotto B)",
-    "magia-1.11.md": "l'edizione da cui vengono i dati di `regole.json`, `incantesimi.json` e `talenti_liberi.json` (`edizioni_in_attesa`, lotto F)",
-    "armamenti-0.74.md": "l'edizione da cui vengono i dati di 10 file del catalogo — protezioni, munizioni, accessori, dispositivi (`edizioni_in_attesa`); le 218 voci d'arma sono passate alla 0.86 col lotto 206",
-    "equipaggiamento-0.30.md": "l'edizione da cui vengono i dati di `regole.json` e di 9 file del catalogo (`edizioni_in_attesa`, lotto F)",
-    "mostri-0.67.md": "l’edizione del JSON dei PNG generici (`dati` → png-abilita, `sha256_manuale`): i venticinque modelli di `data/png_generici.json` vengono da lì e restano dichiarati alla 0.67 (`edizioni_in_attesa`, lotto 203)",
-    "armamenti-0.83.md": "l'edizione da cui vengono le tre voci della CyberArma di `data/equipaggiamento/armi.json` (lotto 195, §§7.25–7.25.4): il corpo della 0.86 è identico, ma la voce dichiara l'edizione su cui è stata scritta",
-    "magia-1.17.md": "l’edizione da cui vengono le etichette «Magia 1.17 §…» di tre voci del catalogo degli Artefatti (lotto 195: Anello §25.4, Consumabili §27, configurazione di Dimitri); la 1.19 ha le stesse pagine, parola per parola (lotto 211)",
-    "equipaggiamento-0.41.md": "l’edizione da cui viene il blocco `prezzi_artefatti` di `regole.json` (lotto 195, etichetta «Equipaggiamento 0.41»); la 0.42 ha le stesse pagine (lotto 212)",
-    "veicoli-0.10.md": "l’edizione da cui vengono i dati di `data/veicoli.json` prima del lotto 213 (rete del lettore `tools/importa-veicoli.mjs`: la 0.10 e la 0.19 hanno gli stessi numeri di scheda)"
+  {
+   "id": "magia",
+   "nome": "Manuale della Magia",
+   "drive": "1F5npdIujLUEVcHVX6CvF5jOHNMG5LS7dx0tgklDpzAY",
+   "formato": "doc",
+   "versione": "1.20",
+   "testo": "magia-1.20.md",
+   "modificato": "2026-11-20T10:52:26Z",
+   "confronto": "alla cieca (in sezione 7 del Doc non c’è la riga della 1.20)",
+   "recepita": {
+    "versione": "1.20",
+    "quando": "2026-11-20",
+    "lotto": 231,
+    "cosa": "Impronta riscaricata 4e926448e3ae = quella del registro delle 11:22 UTC (nessun cambio a numero fermo). Il testo è lo stesso delle 10:36 già salvato come 1.19 dal lotto 229: cambiano il numero di edizione, il «Registro delle modifiche 1.19 → 1.20» e la forma di sei titoli; nessun numero. Il §28.6 «Dotazioni rimovibili del Warden TC» (Modulo Individuare 6, Modulo Esorcizzare Corruzione 12, Cofanetto del Silenzio corazzato) è applicato ai dati: tre voci, riserve e costi interi in CM, prezzi 9.900/37.800/27.000 = costo × 3 × coefficiente (A.256). Le 90 schede d’incantesimo rilette sulla 1.20: 90 invariate. Il Veicoli §17.10 (scheda del mezzo) non è leggibile.",
+    "documento": "docs/diff-lotto231-2026-11-20.md"
+   }
   },
-  "_testi_archiviati": "Lotto 191: le edizioni superate che nessun dato e nessuno strumento cita più, spostate in `docs/manuali-txt/archivio/` e non cancellate. Un archiviato non è un doppione (regola 5 del protocollo, applicata qui alla cartella del repo come su Drive).",
-  "testi_archiviati": [
-    {
-      "testo": "archivio/magia-1.19.md",
-      "archiviato": "2026-11-20",
-      "motivo": "Nessun dato la cita più dal lotto 231: il testo è lo stesso della 1.20, a parte il numero e il registro delle modifiche; le 90 schede e le etichette di edizione sono passate alla 1.20."
-    },
-    {
-      "testo": "archivio/armamenti-0.89.md",
-      "archiviato": "2026-11-20",
-      "motivo": "Nessun dato la cita più dal lotto 231: il testo è lo stesso della 0.90, a parte il numero, il registro delle modifiche e la forma dei titoli del §7.28.3; le armi e i file ASA/SIA sono passati alla 0.90 (222 voci su 222 identiche)."
-    },
-    {
-      "testo": "archivio/armamenti-0.87.md",
-      "archiviato": "2026-11-20",
-      "motivo": "Nessun dato la cita più dal lotto 229: le armi e i file ASA/SIA sono passati alla 0.89 (stesse tabelle; in più il §7.28)."
-    },
-    {
-      "testo": "archivio/giocatore-0.64.md",
-      "archiviato": "2026-11-20",
-      "motivo": "Nessun dato la cita più dal lotto 229: classi.json è passato alla 0.65 (cambia solo il §5.2.7)."
-    },
-    {
-      "testo": "archivio/armamenti-0.86.md",
-      "archiviato": "2026-11-18",
-      "motivo": "Nessun dato la cita più dal lotto 223: le armi sono passate alla 0.87 (stesse tabelle)."
-    },
-    {
-      "testo": "archivio/magia-1.7.md",
-      "archiviato": "2026-11-12",
-      "motivo": "Nessun dato la cita più dal lotto 189."
-    },
-    {
-      "testo": "archivio/armamenti-0.68.md",
-      "archiviato": "2026-11-12",
-      "motivo": "Nessun dato la cita più dal lotto 189."
-    },
-    {
-      "testo": "archivio/armamenti-0.70.md",
-      "archiviato": "2026-11-12",
-      "motivo": "Nessun dato la cita più dal lotto 189."
-    },
-    {
-      "testo": "archivio/equipaggiamento-0.22.md",
-      "archiviato": "2026-11-12",
-      "motivo": "Nessun dato la cita più dal lotto 189."
-    },
-    {
-      "testo": "archivio/equipaggiamento-0.24.md",
-      "archiviato": "2026-11-12",
-      "motivo": "Nessun dato la cita più dal lotto 189."
-    },
-    {
-      "testo": "archivio/equipaggiamento-0.25.md",
-      "archiviato": "2026-11-12",
-      "motivo": "Nessun dato la cita più dal lotto 189."
-    },
-    {
-      "testo": "archivio/revisione-nec-2.7.md",
-      "archiviato": "2026-11-12",
-      "motivo": "Nessun dato la cita più dal lotto 189."
-    },
-    {
-      "testo": "archivio/revisione-nec-2.9.md",
-      "archiviato": "2026-11-12",
-      "motivo": "Nessun dato la cita più dal lotto 189."
-    },
-    {
-      "testo": "archivio/revisione-nec-2.10.md",
-      "archiviato": "2026-11-12",
-      "motivo": "Nessun dato la cita più dal lotto 189."
-    },
-    {
-      "testo": "archivio/mostri-0.23.md",
-      "archiviato": "2026-11-12",
-      "motivo": "Il Google Doc superato dal Word: è il file del Lorath del 9/11. Su Drive è già nella cartella «ARCHIVIO — Manuali superati»."
-    },
-    {
-      "testo": "archivio/mostri-0.23-2026-11-03.md",
-      "archiviato": "2026-11-12",
-      "motivo": "Seconda estrazione della stessa edizione superata."
-    },
-    {
-      "testo": "archivio/veicoli-0.10-2026-11-03.md",
-      "archiviato": "2026-11-12",
-      "motivo": "Doppione della 0.10 corrente: due estrazioni della stessa edizione, diverse in 490 righe fra indice e segnalibri. La regola 1 vuole un solo testo corrente per manuale, e il registro indica `veicoli-0.10.md`."
-    },
-    {
-      "testo": "archivio/mostri-0.66.md",
-      "archiviato": "2026-11-14",
-      "motivo": "Edizione superata dal recepimento del lotto 197, nessun dato la cita."
-    },
-    {
-      "testo": "archivio/direttore-0.46.md",
-      "archiviato": "2026-11-14",
-      "motivo": "Nessun dato la cita più dal lotto 197: png_generici.json è rigenerato sulla 0.67 / 0.51."
-    },
-    {
-      "testo": "archivio/direttore-0.49.md",
-      "archiviato": "2026-11-14",
-      "motivo": "Edizione superata dal recepimento del lotto 197, nessun dato la cita."
-    },
-    {
-      "testo": "archivio/veicoli-0.21.md",
-      "archiviato": "2026-11-23",
-      "motivo": "Superata dalla 0.23 col lotto 236, e nessun dato la cita: data/veicoli.json dichiara la 0.19 (edizioni_in_attesa) e la 0.10 resta come rete del lettore. Un archiviato non è un doppione: resta leggibile, fuori dalla cartella di lavoro (regola 5 del protocollo)."
+  {
+   "id": "armamenti",
+   "nome": "Manuale degli Armamenti",
+   "drive": "1eDZJHfgBIYPvzKg78tEGwiLtrI_6gzpQOIfJA9aYiYg",
+   "formato": "doc",
+   "versione": "0.90",
+   "testo": "armamenti-0.90.md",
+   "modificato": "2026-11-20T11:03:17Z",
+   "recepita": {
+    "versione": "0.90",
+    "quando": "2026-11-20",
+    "lotto": 231,
+    "cosa": "Impronta riscaricata 69efdd855282 = quella del registro delle 11:22 UTC. Il testo è lo stesso delle 10:38 già salvato come 0.89 dal lotto 229 (compreso tutto il §7.28.3: Thunder TC, Storm T8, Sentinel TC): cambiano il numero, il «Registro delle modifiche 0.89 → 0.90» e la forma dei titoli e delle tabelle del §7.28.3. Le armi del catalogo rilette sulla 0.90: 222 voci su 222 identiche al lotto 230. Cannoni, lanciamissili e artiglieria (§§7.28.2–7.28.3) hanno profilo di combattimento, ma «specifiche autonome di acquisto, massa, Integrità e FOR restano da definire» e i mezzi che li montano (Veicoli cap. 16–17) non sono leggibili: nessuna voce nel catalogo (A.305).",
+    "documento": "docs/diff-lotto231-2026-11-20.md"
+   },
+   "confronto": "alla cieca (in sezione 7 del Doc non c’è la riga della 0.90; l’ultima è la 0.89)",
+   "recepimento_in_attesa": {
+    "versione": "0.91",
+    "motivo": "Lotto 248: letta su Drive, non recepita. È la metà «armamenti» della revisione degli Scudi del 24/11 (§§7.4, 7.11.1 e 7.22.4: tabella MOV del catalogo generale, profili degli Scudi Enormi, Punisher e variante Wächter, scudi corporativi di base). Requisiti FOR, PI e proprietà delle Parate restano quelli delle schede. Va col lotto degli Scudi, insieme al Giocatore 0.68.",
+    "drive_modificato": "2026-11-24T19:39:45Z"
+   }
+  },
+  {
+   "id": "equipaggiamento",
+   "nome": "Manuale dell’Equipaggiamento",
+   "drive": "1bvTeJphQ6BNKazpV5twivvRbqkHrRowNBDZ_RakQiXA",
+   "formato": "doc",
+   "versione": "0.42",
+   "testo": "equipaggiamento-0.42.md",
+   "modificato": "2026-11-13T12:38:21Z",
+   "confronto": "alla cieca (in sezione 7 c’è la riga della 0.40, non della 0.41)",
+   "recepita": {
+    "versione": "0.42",
+    "quando": "2026-11-17",
+    "lotto": 212,
+    "cosa": "0.41 → 0.42: solo il §10.14 nuovo (Collana di papiro dei Mutanti, manufatto di campagna: lotto lunare, non applicato). Rispetto alla 0.30, da cui vengono i dati: 363 righe, esaminate una per una in docs/diff-lotto212-2026-11-17.md.",
+    "documento": "docs/diff-lotto212-2026-11-17.md"
+   },
+   "recepimento_in_attesa": {
+    "versione": "0.43",
+    "motivo": "Lotto 239 (solo documenti): letto contro la 0.42, non recepito. Cambia soltanto il §6.6: trattamenti delle malattie a fasi — supporto (+2 alle PS previste per 24 ore), sospensivo, risolutivo (+1 successo, al massimo uno per fase e per malattia, nessun effetto sui Terminali); nessuno dei trattamenti stabilizza Morente. Il resto è forma (le celle del carico «Oltre FOR × 10 kg» e «fino a FOR × 20 kg», unite in una nella 0.42, e una riga di sottolineatura). Blocco dell’E&L del 23/11.",
+    "documento": "docs/diff-lotto239-2026-11-23.md"
+   }
+  },
+  {
+   "id": "veicoli",
+   "nome": "Manuale dei Veicoli",
+   "drive": "1lo_c3KLK7kntJwv195v5aD2ieuMfRuaThsDhPJCX3T4",
+   "formato": "doc",
+   "versione": "0.23",
+   "testo": "veicoli-0.23.md",
+   "modificato": "2026-11-21T21:11:44Z",
+   "recepita": {
+    "versione": "0.23",
+    "quando": "2026-11-23",
+    "lotto": 236,
+    "cosa": "Il manuale si legge, e non andava diviso. Per due lotti lo avevamo creduto illeggibile — il Doc è passato da 40 a 67 MB in tre giorni e l’esportazione in Markdown viene rifiutata con «File too large for export» — e il lotto 229 era arrivato a chiedere a Davide di dividerlo. Davide ha proposto una verifica invece di accettare la richiesta, e la verifica era giusta: l’esportazione in **testo semplice** riesce (199 KB, 5.089 righe) e porta tutto, capitoli 16, 17 e 18 compresi. Non era il documento a essere troppo grande: era la nostra richiesta a chiedere il formato sbagliato, perché l’esportazione in Markdown impacchetta le immagini nel testo e quei 67 MB sono quasi tutti immagini. Il testo salvato è l’esportazione in testo semplice (tools/estrai-doc-markdown.mjs la riconosce e la normalizza); le tabelle si leggono con tools/tabelle-testo.mjs, che nei capitoli 16, 17 e 18 legge 41 tabelle su 41. **Recepita l’edizione, non i dati:** i ventuno mezzi terrestri dei capitoli 16 e 17 e i due del 18 non entrano in data/veicoli.json, che resta dichiarato alla 0.19 in edizioni_in_attesa — applicarli è un lotto suo, e tocca il profilo asa-scout-mk4, che è anche il FIAT LUX dei sette. Quello che il manuale dice si legge in docs/diff-lotto236-2026-11-23.md.",
+    "documento": "docs/diff-lotto236-2026-11-23.md",
+    "forma": "testo semplice (text/plain): nel testo non ci sono le immagini, il grassetto né i livelli dei titoli; un titolo si riconosce dalla sua numerazione",
+    "capitoli": {
+     "dentro": "capitoli 1–13 (regole, autovettura, Scout, Neverlost, motocicletta, furgone) e il §16.1 col §10 per la separazione fra lo Scout T4 di serie e il FIAT LUX dei PG, applicata col lotto 237.",
+     "fuori": "i ventuno mezzi dei capitoli 16 e 17 e i due del capitolo 18 (Pursuit T4 e Pursuit T4 SIA). Non sono nel catalogo e non lo saranno finché Davide non risponde alla A.304 — quanti di quei mezzi servono davvero al tavolo: modellarne ventuno che il gruppo non userà è il lavoro che non vogliamo fare. Il testo è salvato e letto (41 tabelle su 41 nei tre capitoli, lotto 236), quindi il lotto che li applicherà non deve riscaricare niente.",
+     "lotto_237": "Aggiunto il profilo asa-scout-t4 (modello di serie dell’Alleanza: Mitragliatore Leggero Punisher, 132.510 cr) e lasciato intatto asa-scout-mk4 (FIAT LUX dei PG: Capitol M606, 126.510 cr, arco frontale 180° della A.280, copriruote di Petra). Nessun record è stato creato o ricollegato: nell’istantanea del 21/11 l’unico record su quel profilo è il FIAT LUX (veimvozx57q0) e non si è mosso di un valore."
     }
-  ],
-  "_confronto": "Lotto 191: il campo `confronto` di una voce dice come si è arrivati a conoscere che cosa è cambiato in quell'edizione. «alla cieca» vuol dire che in sezione 7 del Doc «Per Davide» non c'è la riga di registro di quella pubblicazione, e la differenza è stata ricavata dal solo diff dei testi: per quei manuali una differenza ambigua è un'ipotesi, non una certezza, e chi lavora al lotto B o C deve saperlo. La ricognizione del 190 ha trovato 3 righe su 27 pubblicazioni (Magia 1.16, Equipaggiamento 0.40, Mostri 0.47).",
-  "_dati": "Lotto 197: le fonti di **dati** che Davide pubblica insieme a un manuale — numeri strutturati, non testo. Stanno in `docs/manuali-txt/` con la versione nel nome e si leggono solo da `tools/manuali.mjs` (`fonteDati`), come i testi. `sha256_manuale` è l’impronta del Word a cui la fonte dichiara di appartenere, verificata contro il file scaricato da Drive: è ciò che permette di dire «questa fonte è dell’edizione recepita» senza rete.",
-  "dati": [
-    {
-      "id": "png-abilita",
-      "nome": "Abilità e acquisizioni dei 25 PNG generici",
-      "drive": "1KSjdcssH0t1FqyC8KZrdrpmnS7egkKVr",
-      "formato": "json",
-      "versione": "0.67",
-      "file": "png-abilita-0.67.json",
-      "modificato": "2026-11-13T11:24:36Z",
-      "manuale": "mostri",
-      "sha256_manuale": "7e44083cf549cbbd72106de2191fb892daa860f59789d733f5bae3adebbe25a9",
-      "impronta_verificata": "2026-11-14",
-      "schema": "1.1",
-      "voci": 3600,
-      "nota": "SIMPLY_RPG_PNG_Abilita_v0.67.json. 25 modelli × 6 Gradi × 24 Abilità = 3.600 voci (categoria, base, incrementi automatici, punti liberi, VA grezzo, limite, VA personale), più acquisizioni, valori pronti, Salvezze e note operative. Dichiara lo sha256 del Manuale dei Mostri 0.67: verificato byte per byte contro il .docx di Drive il 14/11/2026. Lo legge tools/importa-png-generici.mjs; i blocchi comuni e la prosa restano nel Word."
-    }
-  ]
+   },
+   "versioni_mai_viste": {
+    "quali": [
+     "0.20",
+     "0.22"
+    ],
+    "perché": "Il Doc ha una sola revisione (list_file_revisions ne torna una, e il connettore non sa scaricare una revisione: «Attempting to download a file at a given revision is not yet supported»), quindi le edizioni intermedie non sono recuperabili. Quello che contenevano lo dice il manuale stesso nei suoi registri delle modifiche: la **0.20** ha aggiunto il capitolo 16 con le dodici categorie d’impiego e i profili dei mezzi terrestri militari, ha uniformato il modello corrente in «Scout T4» e ne ha aggiornato l’armamento standard col Mitragliatore Leggero Punisher; la **0.22** aveva già il capitolo 17, e la 0.23 del 20/11 ha aggiunto il capitolo 18 (Pursuit T4 e allestimento SIA, dotazione di squadra, prezzi 218.000 e 258.000 cr) e sostituito la tavola del FIAT LUX con la livrea antracite. È una ricostruzione dichiarata, letta nei §18.5 e nei registri che li precedono, non una nostra ipotesi: fra la 0.21 e la 0.23 resta una versione che non abbiamo mai letto."
+   },
+   "confronto": "non alla cieca, ma non dal Doc: il Manuale dei Veicoli porta dentro di sé un «Registro delle modifiche» per ogni versione (§18.5 per la 0.22 → 0.23, e i precedenti per la 0.19 → 0.20 e la 0.20 → 0.21), quindi si sa che cosa è cambiato anche senza la riga in sezione 7. Resta fuori la 0.22, il cui registro non è nel testo corrente (vedi versioni_mai_viste)."
+  },
+  {
+   "id": "mostri",
+   "nome": "Manuale dei Mostri",
+   "drive": "1qScWOJpDjNSw7j5rNUlHGTKPbsUiEgvG",
+   "formato": "docx",
+   "versione": "0.69",
+   "testo": "mostri-0.69.md",
+   "modificato": "2026-11-15T13:25:23Z",
+   "confronto": "alla cieca",
+   "nota": "Il Google Doc 0.23 è archiviato: vale il Word (lotto 187 su Drive, lotto 188 nel repo).",
+   "sha256_docx": "48a832aa2bde9cf4786846bd5f2e2da8eca05683435d9f4518b5e45fb1a4efdf",
+   "recepita": {
+    "versione": "0.69",
+    "quando": "2026-11-15",
+    "lotto": 203,
+    "cosa": "La 0.68 (14/11) aggiunge la Viverna della Sabbia nel §7.20 — profilo della Viverna comune con Mimetismo desertico e Resistenza cristallina — e riscrive l’aspetto delle Vespe del Deserto del §7.17 per la mutazione dai cristalli, «mantenendo invariati i valori della scheda»; la 0.69 è la stessa edizione col titolo «Fauna del deserto». Il §4.2 e il §4.2.1, che reggono la gestione senza Ferite e il +30% già incluso nei PV stampati, non cambiano una parola rispetto alla 0.67.",
+    "documento": "docs/diff-lotto203-2026-11-15.md"
+   }
+  },
+  {
+   "id": "direttore",
+   "nome": "Manuale del Direttore",
+   "drive": "1lfwR5Z9pIqfoASAuNt1Ia01sOj8OOb-5",
+   "formato": "docx",
+   "versione": "0.51",
+   "testo": "direttore-0.51.md",
+   "modificato": "2026-11-13T11:58:17Z",
+   "confronto": "alla cieca",
+   "nota": "Lotto 214 (17/11/2026): i dati dal capitolo 9 (PX, scala dei GS, correttivo dei PG, Titoli, PNG generici per Grado ed EQ) letti con tools/importa-direttore.mjs sulle edizioni 0.46, 0.49 e 0.51: 0 scarti. Cambia nel codice solo l’arrotondamento a mezzo (31,5 → 32) e il Titolo dal livello raggiunto (§9.8.2–3). Procedure del manuale che l’app non ha: docs/diff-lotto214-2026-11-17.md.",
+   "recepita": {
+    "versione": "0.51",
+    "quando": "2026-11-14",
+    "lotto": 197,
+    "cosa": "Nuovo §9.6.2 «Acquisizioni e valori pronti»: le tre progressioni dei PNG generici, la lettura dei bonus (i VA personali delle 24 Abilità escludono Talenti, Specializzazioni, EQ, strumenti e condizioni; le tabelle pronte li comprendono già), EQ una volta sola, e i modelli generici che mantengono PV e Ferite senza il +30% dei mostri. GS e PX invariati: valore unitario = PX base del Grado × (1 + 0,50 × EQ). Il §9.9 «Mostri senza Ferite» non cambia dalla 0.49.",
+    "documento": "docs/diff-lotto197-2026-11-14.md"
+   },
+   "recepimento_in_attesa": {
+    "versione": "0.53",
+    "motivo": "Lotto 248: letta su Drive, non recepita. Porta il §9.10 con il riepilogo e la tabella dei Salti ordinari a fasce di Atletica e il rimando operativo dal §9.1 (blocco E&L del 24/11). Va col lotto dei Salti, insieme al Giocatore 0.68.",
+    "drive_modificato": "2026-11-24T20:38:42Z"
+   }
+  },
+  {
+   "id": "talenti",
+   "nome": "Talenti, Specializzazioni e Maestrie",
+   "drive": "10ztjyeX1apff5tnh3SzNiswsvXNjyX0m",
+   "formato": "docx",
+   "versione": "1.1",
+   "testo": "talenti-specializzazioni-maestrie-1.1.md",
+   "modificato": "2026-11-03T11:33:41Z",
+   "nota": "Sui Talenti vale su quello che dice il Manuale del Giocatore (regola di precedenza del 25/10)."
+  },
+  {
+   "id": "revisione-nec",
+   "nome": "Revisione NEC — registro unico",
+   "drive": "1AJyKJ0qQOGmGh12hBUI8g2gmoFDMHgk_",
+   "formato": "docx",
+   "versione": "2.11",
+   "testo": "revisione-nec-2.11.md",
+   "modificato": "2026-10-31T10:47:53Z"
+  },
+  {
+   "id": "energia",
+   "nome": "Energia — riepilogo per l’app",
+   "drive": "1s9saJZl1DpK5o1IMUMyct75jOdwWSrnH",
+   "formato": "docx",
+   "versione": "1.0",
+   "testo": "energia-riepilogo-app-1.0.md",
+   "modificato": "2026-11-02T16:23:56Z"
+  }
+ ],
+ "schede": [
+  {
+   "id": "asa-scout",
+   "nome": "ASA Scout MK4 — scheda",
+   "drive": "1DgvIVekDypu7UKHup-SHSSKCzuK_R-l75Xd9kPsRhHY",
+   "formato": "doc",
+   "versione": "0.6",
+   "testo": "asa-scout-mk4-0.6.md",
+   "modificato": "2026-11-21T21:11:57Z",
+   "impronta": "04f6d39e26f5",
+   "_nota_0_6_cambiata": "Lotto 235 (23/11/2026): la scheda è cambiata su Drive il 21/11 alle 21:11 UTC SENZA cambiare numero (resta 0.6) — il caso della regola 4 del protocollo, visto con la data e confermato con l’impronta. Le sole differenze di contenuto: le dimensioni in trasporto passano da «6 × 2,6 m» a «6 × 2,6 × 2,7 m» e un paragrafo nuovo dà i pesi (4.500 kg a vuoto, 1.500 kg di carico utile, 6.000 kg a pieno carico). NESSUN valore del FIAT LUX che l’app tiene cambia: altezza e pesi non esistono in data/veicoli.json (ci sono lunghezza_m, larghezza_m, ingombro_q e carico_kg 1500, che la scheda conferma). Non applicati oggi perché la serata è stasera: entrano con il lotto dei Veicoli."
+  },
+  {
+   "id": "neverlost",
+   "nome": "Neverlost — scheda tecnologica",
+   "drive": "1MWn5jv3XB6W5h1JQyZEnnWDyeQfe_EbZ",
+   "formato": "docx",
+   "versione": "1.6",
+   "testo": "neverlost-scheda-tecnologica-1.6.md",
+   "modificato": "2026-10-29T17:23:03Z"
+  },
+  {
+   "id": "wachter",
+   "nome": "Scudo Punisher Wächter",
+   "drive": "1mDFtahzSrrkSKowJif9iagT_peIqIBRE",
+   "formato": "docx",
+   "versione": "1.2",
+   "testo": "punisher-wachter-1.2.md",
+   "modificato": "2026-10-29T17:23:13Z"
+  },
+  {
+   "id": "guanti-lucas",
+   "nome": "Guanti mistici di Lucas — scheda",
+   "drive": "1SbF2U8eRSZiA11_B9KNODeptNYDCVO4s",
+   "formato": "docx",
+   "versione": "1.0",
+   "testo": "guanti-mistici-lucas-1.0.md",
+   "modificato": "2026-11-02T16:23:49Z"
+  },
+  {
+   "id": "cyberarma-dimitri",
+   "nome": "CyberArma Opzioni per Dimitri",
+   "drive": "1pcumz4X6IDT0ITeAb7kE6tUf-RsBhs1o-bC5xAqmJC0",
+   "formato": "doc",
+   "versione": "1.0",
+   "testo": "cyberarma-dimitri-1.0.md",
+   "modificato": "2026-11-02T16:15:21Z"
+  }
+ ],
+ "scambio": [
+  {
+   "id": "per-davide",
+   "nome": "per-davide.md (domande a Davide)",
+   "drive": "1Jg5rqbBtcHGE1E10xYElO_qCDCwh8K87LAInovtpF6A",
+   "formato": "doc",
+   "testo": "../per-davide.md",
+   "modificato": "2026-11-24T12:11:38Z",
+   "impronta": "8ea0498a6b52",
+   "nota": "Fonte unica delle domande; lo scrive solo Davide (e Cowork per il pacchetto). docs/protocollo-davide.md. Lotto 248: il cambio del 24/11 12:11 è nostro (Cowork ha applicato il pacchetto del 23/11: il Doc si intitola «Aggiornato al 23 novembre 2026»); in sezione 7 le ultime risposte sono del 19/11, quelle del 24/11 sono nell’E&L."
+  },
+  {
+   "id": "e-l",
+   "nome": "E&L — Risposte e correzioni approvate",
+   "drive": "1VaqZaAe4NK5P8A956Eahua_ZT60eh3ohnR2xSqh-tVs",
+   "formato": "doc",
+   "testo": "../risposte-master-2026-09-26.md",
+   "modificato": "2026-11-24T20:39:29Z",
+   "impronta": "6f339f8ff5a7",
+   "nota": "Lotto 248: riscaricato per intero (regola 10). Blocchi nuovi del 24/11: risposte A.307, A.308, A.309, A.310, A.312 e le due revisioni approvate — «Scudi: protezione, penalità e Assalto Armato» e «Salti ordinari a fasce di Atletica». Registrate in docs/risposte-master.md; da applicare in un lotto a parte, perché toccano valori di combattimento e di movimento."
+  }
+ ],
+ "archiviati": [
+  {
+   "nome": "ARCHIVIO — Manuale dei Mostri 0.23 — SUPERATO",
+   "drive": "11Uxmz9GM2vU2knngtIPk_80532ABlHC3xL8ZvAXX7rE",
+   "versione": "0.23",
+   "archiviato": "2026-11-10",
+   "motivo": "Superato dal Word 0.47. È il file che il 9/11 fece descrivere il Lorath con il Getto acido invece del veleno paralizzante: aveva il numero più basso e la data più recente."
+  }
+ ],
+ "senza_versione": [
+  {
+   "testo": "talenti-magici-mistici.md",
+   "nota": "Doc di Davide del 27/09 senza numero di versione: non è un manuale del registro, lo legge il solo lotto storico dei testi dei Talenti."
+  },
+  {
+   "testo": "layout-app-davide.md",
+   "nota": "Appunti di layout, non un manuale."
+  },
+  {
+   "testo": "modifiche-layout-app.md",
+   "nota": "Appunti di layout, non un manuale."
+  }
+ ],
+ "_edizioni_in_attesa": "Lotto 189: i file di `data/` che restano a un'edizione precedente perché il manuale nuovo cambia una regola ancora da decidere. Si scrive { \"data/x.json\": { \"<manuale>\": { \"motivo\": \"…\", \"domanda\": \"A.n\" } } }, e `tools/edizioni-dati.mjs` non li segnala più. Un'eccezione senza motivo non è un'eccezione: è un file dimenticato. Oggi è vuoto — tutti e 40 i file dichiarano l'edizione corrente.",
+ "edizioni_in_attesa": {
+  "data/veicoli.json": {
+   "veicoli": {
+    "edizione": "0.19",
+    "motivo": "Lotto 229: la 0.21 porta con sé la 0.20, che nessuno aveva visto (Scout T4 con il Punisher al posto del M606 e prezzo standard 132.510 cr al posto di 126.510; nuovo cap. 16 con dieci mezzi terrestri dell’Alleanza). I numeri dei cinque profili del catalogo sono riletti sulla 0.21 e non cambiano (0 scarti, 40 campi: l’edizione per campo sta in _edizione.campi), ma il profilo «asa-scout-mk4» è anche lo Scout del FIAT LUX, il mezzo del gruppo: cambiargli prezzo e arma sposterebbe il valore di un mezzo dei sette (126.510 → 132.510) contro il manuale stesso, che tiene il FIAT LUX col M606. Serve un profilo nuovo («Scout T4») e un lotto che lo tratti; i dieci mezzi del cap. 16 non hanno un modello. Le astronavi dei cap. 14 e 15 restano fuori catalogo come dal 213.",
+    "lotto": "Scout T4 e cap. 16",
+    "documento": "docs/diff-lotto229-2026-11-20.md"
+   }
+  },
+  "data/abilita.json": {
+   "giocatore": {
+    "motivo": "Giocatore 0.62: riscrive il profilo delle Abilità (da 2/6/12/4 a 4/7/9/4), i punti base (122 → 127), i limiti del VA e i 25 profili di Classe, e aggiunge le regole del Morente (§§5.14.2–3). I dati non sono ancora stati rigenerati: l’etichetta si aggiorna nel lotto che li rigenera (lotto B, poi D per il Morente e G per i testi dei Talenti). Scriverla adesso direbbe che i dati vengono dalla 0.62, e non è vero.",
+    "lotto": "B",
+    "documento": "docs/ricognizione-manuali-2026-11-12-lotto190.md"
+   }
+  },
+  "data/addestramenti.json": {
+   "giocatore": {
+    "motivo": "Giocatore 0.62: riscrive il profilo delle Abilità (da 2/6/12/4 a 4/7/9/4), i punti base (122 → 127), i limiti del VA e i 25 profili di Classe, e aggiunge le regole del Morente (§§5.14.2–3). I dati non sono ancora stati rigenerati: l’etichetta si aggiorna nel lotto che li rigenera (lotto B, poi D per il Morente e G per i testi dei Talenti). Scriverla adesso direbbe che i dati vengono dalla 0.62, e non è vero.",
+    "lotto": "B",
+    "documento": "docs/ricognizione-manuali-2026-11-12-lotto190.md"
+   }
+  },
+  "data/caratteristiche.json": {
+   "giocatore": {
+    "motivo": "Giocatore 0.62: riscrive il profilo delle Abilità (da 2/6/12/4 a 4/7/9/4), i punti base (122 → 127), i limiti del VA e i 25 profili di Classe, e aggiunge le regole del Morente (§§5.14.2–3). I dati non sono ancora stati rigenerati: l’etichetta si aggiorna nel lotto che li rigenera (lotto B, poi D per il Morente e G per i testi dei Talenti). Scriverla adesso direbbe che i dati vengono dalla 0.62, e non è vero.",
+    "lotto": "B",
+    "documento": "docs/ricognizione-manuali-2026-11-12-lotto190.md"
+   }
+  },
+  "data/corporazioni.json": {
+   "giocatore": {
+    "motivo": "Giocatore 0.62: riscrive il profilo delle Abilità (da 2/6/12/4 a 4/7/9/4), i punti base (122 → 127), i limiti del VA e i 25 profili di Classe, e aggiunge le regole del Morente (§§5.14.2–3). I dati non sono ancora stati rigenerati: l’etichetta si aggiorna nel lotto che li rigenera (lotto B, poi D per il Morente e G per i testi dei Talenti). Scriverla adesso direbbe che i dati vengono dalla 0.62, e non è vero.",
+    "lotto": "B",
+    "documento": "docs/ricognizione-manuali-2026-11-12-lotto190.md"
+   }
+  },
+  "data/dotazioni.json": {
+   "giocatore": {
+    "motivo": "Lotto 195: la nota dei NEC del §2.16.1 viene dal Giocatore 0.63 (A.266, risposta). I venti testi del §2.16 restano quelli della 0.54: la 0.62 riscrive il profilo delle Abilità e la 0.63 non li tocca, ma non sono stati riletti, quindi l’etichetta del file resta 0.54.",
+    "lotto": "G",
+    "documento": "docs/diff-lotto195-2026-11-14.md"
+   }
+  },
+  "data/formato_nemici.json": {
+   "giocatore": {
+    "motivo": "Giocatore 0.62: riscrive il profilo delle Abilità (da 2/6/12/4 a 4/7/9/4), i punti base (122 → 127), i limiti del VA e i 25 profili di Classe, e aggiunge le regole del Morente (§§5.14.2–3). I dati non sono ancora stati rigenerati: l’etichetta si aggiorna nel lotto che li rigenera (lotto B, poi D per il Morente e G per i testi dei Talenti). Scriverla adesso direbbe che i dati vengono dalla 0.62, e non è vero.",
+    "lotto": "B",
+    "documento": "docs/ricognizione-manuali-2026-11-12-lotto190.md"
+   }
+  },
+  "data/mappa.json": {
+   "giocatore": {
+    "motivo": "Giocatore 0.62: riscrive il profilo delle Abilità (da 2/6/12/4 a 4/7/9/4), i punti base (122 → 127), i limiti del VA e i 25 profili di Classe, e aggiunge le regole del Morente (§§5.14.2–3). I dati non sono ancora stati rigenerati: l’etichetta si aggiorna nel lotto che li rigenera (lotto B, poi D per il Morente e G per i testi dei Talenti). Scriverla adesso direbbe che i dati vengono dalla 0.62, e non è vero.",
+    "lotto": "B",
+    "documento": "docs/ricognizione-manuali-2026-11-12-lotto190.md"
+   }
+  },
+  "data/regole.json": {
+   "giocatore": {
+    "motivo": "Lotti 192 e 193: il blocco `competenze` (§§2.3, 8.3, 8.7) e il blocco `ferite.morente` (§§5.14.2–5.14.3, con la frase del §5.14 riscritta) vengono dalla 0.62. Il resto del file è ancora della 0.54: restano indietro le due frasi delle Manovre riscritte dal manuale nuovo — il Tiro Ravvicinato di `attacco_distanza` e l'Immobilizzare Migliorato di `attacco_ravvicinato` (§5.12) — che sono un ambito a sé. L'etichetta del file resta 0.54 finché non sono fatte.",
+    "lotto": "G",
+    "documento": "docs/diff-lotto193-2026-11-13.md"
+   },
+   "magia": {
+    "motivo": "Lotto 211: la Magia 1.19 è letta per intero (docs/diff-lotto211-2026-11-17.md). Cambia, rispetto alla 1.11 da cui vengono questi blocchi: il §6 (un cristallo a 0 PM è «scarico» e conserva il colore; «Esausto neutro» è un altro stato, non ricaricabile) — applicato come parola e come dato (`chroma.colori.Trasparente`); le regole del Morente (§6, già in `ferite.morente` dal lotto 193). Restano alla 1.11 `chroma`, `cariche_mistiche` e `lancio` perché nessun loro numero cambia; NON applicati, con il motivo: il §26.8 Pietre di Luna e il §28.5 manufatti lunari dei Mutanti (vanno con Armamenti §7.27 ed Equipaggiamento §10.14: lotto a sé), i costi di creazione nuovi dei §§24.4–24.7 (supporto 100 cr, corredo 1.200 cr, dotazione rituale 300 cr, Chroma grezzo 200/800 cr per PM: la procedura di creazione non è nel motore). Il prezzo di vendita del §24.3 e i prezzi del §24.7 (lotto 195) NON sono contraddetti dalla 1.19.",
+    "lotto": "G",
+    "documento": "docs/diff-lotto211-2026-11-17.md"
+   },
+   "equipaggiamento": {
+    "motivo": "Lotto 212: i blocchi dell’energia (`nec`, i trasformatori, il carico) sono scritti sulla 0.30 e la 0.42 li riorganizza (§5.4, §5.4.12): si rileggono nel lotto che li rigenera. Il blocco `prezzi_artefatti` cita la 0.41, da cui viene davvero (le pagine sono identiche nella 0.42).",
+    "lotto": "G",
+    "documento": "docs/diff-lotto212-2026-11-17.md"
+   }
+  },
+  "data/specializzazioni.json": {
+   "giocatore": {
+    "motivo": "Giocatore 0.62: riscrive il profilo delle Abilità (da 2/6/12/4 a 4/7/9/4), i punti base (122 → 127), i limiti del VA e i 25 profili di Classe, e aggiunge le regole del Morente (§§5.14.2–3). I dati non sono ancora stati rigenerati: l’etichetta si aggiorna nel lotto che li rigenera (lotto B, poi D per il Morente e G per i testi dei Talenti). Scriverla adesso direbbe che i dati vengono dalla 0.62, e non è vero.",
+    "lotto": "B",
+    "documento": "docs/ricognizione-manuali-2026-11-12-lotto190.md"
+   }
+  },
+  "data/talenti_liberi.json": {
+   "giocatore": {
+    "motivo": "Giocatore 0.62: riscrive il profilo delle Abilità (da 2/6/12/4 a 4/7/9/4), i punti base (122 → 127), i limiti del VA e i 25 profili di Classe, e aggiunge le regole del Morente (§§5.14.2–3). I dati non sono ancora stati rigenerati: l’etichetta si aggiorna nel lotto che li rigenera (lotto B, poi D per il Morente e G per i testi dei Talenti). Scriverla adesso direbbe che i dati vengono dalla 0.62, e non è vero.",
+    "lotto": "B",
+    "documento": "docs/ricognizione-manuali-2026-11-12-lotto190.md"
+   }
+  },
+  "data/tecniche_interiori.json": {
+   "giocatore": {
+    "motivo": "Giocatore 0.62: riscrive il profilo delle Abilità (da 2/6/12/4 a 4/7/9/4), i punti base (122 → 127), i limiti del VA e i 25 profili di Classe, e aggiunge le regole del Morente (§§5.14.2–3). I dati non sono ancora stati rigenerati: l’etichetta si aggiorna nel lotto che li rigenera (lotto B, poi D per il Morente e G per i testi dei Talenti). Scriverla adesso direbbe che i dati vengono dalla 0.62, e non è vero.",
+    "lotto": "B",
+    "documento": "docs/ricognizione-manuali-2026-11-12-lotto190.md"
+   }
+  },
+  "data/equipaggiamento/accessori_armi.json": {
+   "armamenti": {
+    "motivo": "Armamenti 0.87: il lotto 206 (0.86) e il lotto 223 (0.87, solo l’etichetta: l’importatore rilegge le armi sulla 0.87 e trova 0 differenze) hanno portato all’edizione corrente le 218 voci d’arma (`armi.json`, `armi_corporative.json`, `armi_distanza.json`, `armi_distanza_corporative.json`), con la provenienza per campo. Questo file contiene protezioni, munizioni, accessori o dispositivi, che il lotto 206 non ha toccato: resta all’edizione da cui i suoi dati vengono davvero, e la distanza si dichiara qui. Da fare in un lotto a sé, insieme ai prezzi della A.261 e al gradino di Reperibilità «Epica 4» che `regole.json` non ha.",
+    "lotto": "dopo il 206",
+    "documento": "docs/diff-lotto206-2026-11-16.md"
+   }
+  },
+  "data/equipaggiamento/armature.json": {
+   "armamenti": {
+    "motivo": "Armamenti 0.87: il lotto 206 (0.86) e il lotto 223 (0.87, solo l’etichetta: l’importatore rilegge le armi sulla 0.87 e trova 0 differenze) hanno portato all’edizione corrente le 218 voci d’arma (`armi.json`, `armi_corporative.json`, `armi_distanza.json`, `armi_distanza_corporative.json`), con la provenienza per campo. Questo file contiene protezioni, munizioni, accessori o dispositivi, che il lotto 206 non ha toccato: resta all’edizione da cui i suoi dati vengono davvero, e la distanza si dichiara qui. Da fare in un lotto a sé, insieme ai prezzi della A.261 e al gradino di Reperibilità «Epica 4» che `regole.json` non ha.",
+    "lotto": "dopo il 206",
+    "documento": "docs/diff-lotto206-2026-11-16.md"
+   }
+  },
+  "data/equipaggiamento/armature_corporative.json": {
+   "armamenti": {
+    "motivo": "Armamenti 0.87: il lotto 206 (0.86) e il lotto 223 (0.87, solo l’etichetta: l’importatore rilegge le armi sulla 0.87 e trova 0 differenze) hanno portato all’edizione corrente le 218 voci d’arma (`armi.json`, `armi_corporative.json`, `armi_distanza.json`, `armi_distanza_corporative.json`), con la provenienza per campo. Questo file contiene protezioni, munizioni, accessori o dispositivi, che il lotto 206 non ha toccato: resta all’edizione da cui i suoi dati vengono davvero, e la distanza si dichiara qui. Da fare in un lotto a sé, insieme ai prezzi della A.261 e al gradino di Reperibilità «Epica 4» che `regole.json` non ha.",
+    "lotto": "dopo il 206",
+    "documento": "docs/diff-lotto206-2026-11-16.md"
+   }
+  },
+  "data/equipaggiamento/corredi_dispositivi.json": {
+   "armamenti": {
+    "motivo": "Armamenti 0.87: il lotto 206 (0.86) e il lotto 223 (0.87, solo l’etichetta: l’importatore rilegge le armi sulla 0.87 e trova 0 differenze) hanno portato all’edizione corrente le 218 voci d’arma (`armi.json`, `armi_corporative.json`, `armi_distanza.json`, `armi_distanza_corporative.json`), con la provenienza per campo. Questo file contiene protezioni, munizioni, accessori o dispositivi, che il lotto 206 non ha toccato: resta all’edizione da cui i suoi dati vengono davvero, e la distanza si dichiara qui. Da fare in un lotto a sé, insieme ai prezzi della A.261 e al gradino di Reperibilità «Epica 4» che `regole.json` non ha.",
+    "lotto": "dopo il 206",
+    "documento": "docs/diff-lotto206-2026-11-16.md"
+   }
+  },
+  "data/equipaggiamento/elmetti.json": {
+   "armamenti": {
+    "motivo": "Armamenti 0.87: il lotto 206 (0.86) e il lotto 223 (0.87, solo l’etichetta: l’importatore rilegge le armi sulla 0.87 e trova 0 differenze) hanno portato all’edizione corrente le 218 voci d’arma (`armi.json`, `armi_corporative.json`, `armi_distanza.json`, `armi_distanza_corporative.json`), con la provenienza per campo. Questo file contiene protezioni, munizioni, accessori o dispositivi, che il lotto 206 non ha toccato: resta all’edizione da cui i suoi dati vengono davvero, e la distanza si dichiara qui. Da fare in un lotto a sé, insieme ai prezzi della A.261 e al gradino di Reperibilità «Epica 4» che `regole.json` non ha.",
+    "lotto": "dopo il 206",
+    "documento": "docs/diff-lotto206-2026-11-16.md"
+   }
+  },
+  "data/equipaggiamento/index.json": {
+   "armamenti": {
+    "motivo": "Armamenti 0.87: il lotto 206 (0.86) e il lotto 223 (0.87, solo l’etichetta: l’importatore rilegge le armi sulla 0.87 e trova 0 differenze) hanno portato all’edizione corrente le 218 voci d’arma (`armi.json`, `armi_corporative.json`, `armi_distanza.json`, `armi_distanza_corporative.json`), con la provenienza per campo. Questo file contiene protezioni, munizioni, accessori o dispositivi, che il lotto 206 non ha toccato: resta all’edizione da cui i suoi dati vengono davvero, e la distanza si dichiara qui. Da fare in un lotto a sé, insieme ai prezzi della A.261 e al gradino di Reperibilità «Epica 4» che `regole.json` non ha.",
+    "lotto": "dopo il 206",
+    "documento": "docs/diff-lotto206-2026-11-16.md"
+   }
+  },
+  "data/equipaggiamento/munizioni.json": {
+   "armamenti": {
+    "motivo": "Armamenti 0.87: il lotto 206 (0.86) e il lotto 223 (0.87, solo l’etichetta: l’importatore rilegge le armi sulla 0.87 e trova 0 differenze) hanno portato all’edizione corrente le 218 voci d’arma (`armi.json`, `armi_corporative.json`, `armi_distanza.json`, `armi_distanza_corporative.json`), con la provenienza per campo. Questo file contiene protezioni, munizioni, accessori o dispositivi, che il lotto 206 non ha toccato: resta all’edizione da cui i suoi dati vengono davvero, e la distanza si dichiara qui. Da fare in un lotto a sé, insieme ai prezzi della A.261 e al gradino di Reperibilità «Epica 4» che `regole.json` non ha.",
+    "lotto": "dopo il 206",
+    "documento": "docs/diff-lotto206-2026-11-16.md"
+   }
+  },
+  "data/equipaggiamento/nec.json": {
+   "equipaggiamento": {
+    "motivo": "Lotto 212: il §5.4 dell’Equipaggiamento 0.42 (nomenclatura «accumulatori e caricatori energetici», «alimentatore» al posto di «caricatore», nucleo di Cristallo Instabile stabilizzato, §5.4.12 materiali e fabbricazione industriale) non è stato riletto riga per riga contro `nec.json`: il lettore delle tabelle copre peso, costo e reperibilità, non i contatori né i trasformatori. L’etichetta resta 0.30 finché non si rilegge.",
+    "lotto": "G",
+    "documento": "docs/diff-lotto212-2026-11-17.md"
+   }
+  },
+  "data/equipaggiamento/rinforzi.json": {
+   "armamenti": {
+    "motivo": "Armamenti 0.87: il lotto 206 (0.86) e il lotto 223 (0.87, solo l’etichetta: l’importatore rilegge le armi sulla 0.87 e trova 0 differenze) hanno portato all’edizione corrente le 218 voci d’arma (`armi.json`, `armi_corporative.json`, `armi_distanza.json`, `armi_distanza_corporative.json`), con la provenienza per campo. Questo file contiene protezioni, munizioni, accessori o dispositivi, che il lotto 206 non ha toccato: resta all’edizione da cui i suoi dati vengono davvero, e la distanza si dichiara qui. Da fare in un lotto a sé, insieme ai prezzi della A.261 e al gradino di Reperibilità «Epica 4» che `regole.json` non ha.",
+    "lotto": "dopo il 206",
+    "documento": "docs/diff-lotto206-2026-11-16.md"
+   }
+  },
+  "data/equipaggiamento/scudi.json": {
+   "armamenti": {
+    "motivo": "Armamenti 0.87: il lotto 206 (0.86) e il lotto 223 (0.87, solo l’etichetta: l’importatore rilegge le armi sulla 0.87 e trova 0 differenze) hanno portato all’edizione corrente le 218 voci d’arma (`armi.json`, `armi_corporative.json`, `armi_distanza.json`, `armi_distanza_corporative.json`), con la provenienza per campo. Questo file contiene protezioni, munizioni, accessori o dispositivi, che il lotto 206 non ha toccato: resta all’edizione da cui i suoi dati vengono davvero, e la distanza si dichiara qui. Da fare in un lotto a sé, insieme ai prezzi della A.261 e al gradino di Reperibilità «Epica 4» che `regole.json` non ha.",
+    "lotto": "dopo il 206",
+    "documento": "docs/diff-lotto206-2026-11-16.md"
+   }
+  },
+  "data/equipaggiamento/unita_robotiche.json": {
+   "armamenti": {
+    "motivo": "Armamenti 0.87: il lotto 206 (0.86) e il lotto 223 (0.87, solo l’etichetta: l’importatore rilegge le armi sulla 0.87 e trova 0 differenze) hanno portato all’edizione corrente le 218 voci d’arma (`armi.json`, `armi_corporative.json`, `armi_distanza.json`, `armi_distanza_corporative.json`), con la provenienza per campo. Questo file contiene protezioni, munizioni, accessori o dispositivi, che il lotto 206 non ha toccato: resta all’edizione da cui i suoi dati vengono davvero, e la distanza si dichiara qui. Da fare in un lotto a sé, insieme ai prezzi della A.261 e al gradino di Reperibilità «Epica 4» che `regole.json` non ha.",
+    "lotto": "dopo il 206",
+    "documento": "docs/diff-lotto206-2026-11-16.md"
+   }
+  },
+  "data/png_generici.json": {
+   "mostri": {
+    "edizione": "0.67",
+    "motivo": "I venticinque modelli di PNG generici vengono dal file di dati `png-abilita-0.67.json`, che dichiara lo sha256 del Manuale dei Mostri **0.67** (`7e44083c…`). Su Drive il manuale è la **0.69** (`48a832aa…`): le due fonti non sono più la stessa edizione, e i modelli nascono intrecciando i numeri del JSON con la prosa e i blocchi comuni del Word. Intrecciare JSON 0.67 e Word 0.69 produrrebbe profili incoerenti senza che nessun numero diventi assurdo, quindi non si fa: i modelli restano alla 0.67, dichiarata, finché Davide non pubblica il JSON dell’edizione corrente. Le creature del Bestiario non c’entrano — vengono dal solo Word e il lotto 203 le ha rigenerate sulla 0.69.",
+    "lotto": "PNG generici sull’edizione corrente",
+    "documento": "docs/diff-lotto203-2026-11-15.md"
+   }
+  }
+ },
+ "_edizioni_citate": "Le edizioni superate che restano in `docs/manuali-txt/` perché un dato o uno strumento le cita ancora, con chi le cita. Quando nessuno le cita più si archiviano in `docs/manuali-txt/archivio/`: l'elenco serve a saperlo senza cercarlo a mano. Lotto 191: le sei edizioni recepite fino al lotto 189 restano in cartella perché sono quelle da cui i dati vengono davvero, ed è il confronto che `edizioni_in_attesa` dichiara.",
+ "edizioni_citate": {
+  "veicoli-0.19.md": "l’edizione da cui vengono i dati di data/veicoli.json (`edizioni_in_attesa`: il profilo dello Scout e il cap. 16 aspettano un lotto a sé, lotto 229)",
+  "giocatore-0.50.md": "data/talenti_liberi.json (`fonte_edizione` delle 15 voci superate dalla 0.54) e tools/lotti/lotto_testi_completi_talenti.mjs",
+  "giocatore-0.54.md": "l'edizione da cui vengono i dati di 11 file di `data/` (`edizioni_in_attesa`, lotto B)",
+  "magia-1.11.md": "l'edizione da cui vengono i dati di `regole.json`, `incantesimi.json` e `talenti_liberi.json` (`edizioni_in_attesa`, lotto F)",
+  "armamenti-0.74.md": "l'edizione da cui vengono i dati di 10 file del catalogo — protezioni, munizioni, accessori, dispositivi (`edizioni_in_attesa`); le 218 voci d'arma sono passate alla 0.86 col lotto 206",
+  "equipaggiamento-0.30.md": "l'edizione da cui vengono i dati di `regole.json` e di 9 file del catalogo (`edizioni_in_attesa`, lotto F)",
+  "mostri-0.67.md": "l’edizione del JSON dei PNG generici (`dati` → png-abilita, `sha256_manuale`): i venticinque modelli di `data/png_generici.json` vengono da lì e restano dichiarati alla 0.67 (`edizioni_in_attesa`, lotto 203)",
+  "armamenti-0.83.md": "l'edizione da cui vengono le tre voci della CyberArma di `data/equipaggiamento/armi.json` (lotto 195, §§7.25–7.25.4): il corpo della 0.86 è identico, ma la voce dichiara l'edizione su cui è stata scritta",
+  "magia-1.17.md": "l’edizione da cui vengono le etichette «Magia 1.17 §…» di tre voci del catalogo degli Artefatti (lotto 195: Anello §25.4, Consumabili §27, configurazione di Dimitri); la 1.19 ha le stesse pagine, parola per parola (lotto 211)",
+  "equipaggiamento-0.41.md": "l’edizione da cui viene il blocco `prezzi_artefatti` di `regole.json` (lotto 195, etichetta «Equipaggiamento 0.41»); la 0.42 ha le stesse pagine (lotto 212)",
+  "veicoli-0.10.md": "l’edizione da cui vengono i dati di `data/veicoli.json` prima del lotto 213 (rete del lettore `tools/importa-veicoli.mjs`: la 0.10 e la 0.19 hanno gli stessi numeri di scheda)"
+ },
+ "_testi_archiviati": "Lotto 191: le edizioni superate che nessun dato e nessuno strumento cita più, spostate in `docs/manuali-txt/archivio/` e non cancellate. Un archiviato non è un doppione (regola 5 del protocollo, applicata qui alla cartella del repo come su Drive).",
+ "testi_archiviati": [
+  {
+   "testo": "archivio/magia-1.19.md",
+   "archiviato": "2026-11-20",
+   "motivo": "Nessun dato la cita più dal lotto 231: il testo è lo stesso della 1.20, a parte il numero e il registro delle modifiche; le 90 schede e le etichette di edizione sono passate alla 1.20."
+  },
+  {
+   "testo": "archivio/armamenti-0.89.md",
+   "archiviato": "2026-11-20",
+   "motivo": "Nessun dato la cita più dal lotto 231: il testo è lo stesso della 0.90, a parte il numero, il registro delle modifiche e la forma dei titoli del §7.28.3; le armi e i file ASA/SIA sono passati alla 0.90 (222 voci su 222 identiche)."
+  },
+  {
+   "testo": "archivio/armamenti-0.87.md",
+   "archiviato": "2026-11-20",
+   "motivo": "Nessun dato la cita più dal lotto 229: le armi e i file ASA/SIA sono passati alla 0.89 (stesse tabelle; in più il §7.28)."
+  },
+  {
+   "testo": "archivio/giocatore-0.64.md",
+   "archiviato": "2026-11-20",
+   "motivo": "Nessun dato la cita più dal lotto 229: classi.json è passato alla 0.65 (cambia solo il §5.2.7)."
+  },
+  {
+   "testo": "archivio/armamenti-0.86.md",
+   "archiviato": "2026-11-18",
+   "motivo": "Nessun dato la cita più dal lotto 223: le armi sono passate alla 0.87 (stesse tabelle)."
+  },
+  {
+   "testo": "archivio/magia-1.7.md",
+   "archiviato": "2026-11-12",
+   "motivo": "Nessun dato la cita più dal lotto 189."
+  },
+  {
+   "testo": "archivio/armamenti-0.68.md",
+   "archiviato": "2026-11-12",
+   "motivo": "Nessun dato la cita più dal lotto 189."
+  },
+  {
+   "testo": "archivio/armamenti-0.70.md",
+   "archiviato": "2026-11-12",
+   "motivo": "Nessun dato la cita più dal lotto 189."
+  },
+  {
+   "testo": "archivio/equipaggiamento-0.22.md",
+   "archiviato": "2026-11-12",
+   "motivo": "Nessun dato la cita più dal lotto 189."
+  },
+  {
+   "testo": "archivio/equipaggiamento-0.24.md",
+   "archiviato": "2026-11-12",
+   "motivo": "Nessun dato la cita più dal lotto 189."
+  },
+  {
+   "testo": "archivio/equipaggiamento-0.25.md",
+   "archiviato": "2026-11-12",
+   "motivo": "Nessun dato la cita più dal lotto 189."
+  },
+  {
+   "testo": "archivio/revisione-nec-2.7.md",
+   "archiviato": "2026-11-12",
+   "motivo": "Nessun dato la cita più dal lotto 189."
+  },
+  {
+   "testo": "archivio/revisione-nec-2.9.md",
+   "archiviato": "2026-11-12",
+   "motivo": "Nessun dato la cita più dal lotto 189."
+  },
+  {
+   "testo": "archivio/revisione-nec-2.10.md",
+   "archiviato": "2026-11-12",
+   "motivo": "Nessun dato la cita più dal lotto 189."
+  },
+  {
+   "testo": "archivio/mostri-0.23.md",
+   "archiviato": "2026-11-12",
+   "motivo": "Il Google Doc superato dal Word: è il file del Lorath del 9/11. Su Drive è già nella cartella «ARCHIVIO — Manuali superati»."
+  },
+  {
+   "testo": "archivio/mostri-0.23-2026-11-03.md",
+   "archiviato": "2026-11-12",
+   "motivo": "Seconda estrazione della stessa edizione superata."
+  },
+  {
+   "testo": "archivio/veicoli-0.10-2026-11-03.md",
+   "archiviato": "2026-11-12",
+   "motivo": "Doppione della 0.10 corrente: due estrazioni della stessa edizione, diverse in 490 righe fra indice e segnalibri. La regola 1 vuole un solo testo corrente per manuale, e il registro indica `veicoli-0.10.md`."
+  },
+  {
+   "testo": "archivio/mostri-0.66.md",
+   "archiviato": "2026-11-14",
+   "motivo": "Edizione superata dal recepimento del lotto 197, nessun dato la cita."
+  },
+  {
+   "testo": "archivio/direttore-0.46.md",
+   "archiviato": "2026-11-14",
+   "motivo": "Nessun dato la cita più dal lotto 197: png_generici.json è rigenerato sulla 0.67 / 0.51."
+  },
+  {
+   "testo": "archivio/direttore-0.49.md",
+   "archiviato": "2026-11-14",
+   "motivo": "Edizione superata dal recepimento del lotto 197, nessun dato la cita."
+  },
+  {
+   "testo": "archivio/veicoli-0.21.md",
+   "archiviato": "2026-11-23",
+   "motivo": "Superata dalla 0.23 col lotto 236, e nessun dato la cita: data/veicoli.json dichiara la 0.19 (edizioni_in_attesa) e la 0.10 resta come rete del lettore. Un archiviato non è un doppione: resta leggibile, fuori dalla cartella di lavoro (regola 5 del protocollo)."
+  }
+ ],
+ "_confronto": "Lotto 191: il campo `confronto` di una voce dice come si è arrivati a conoscere che cosa è cambiato in quell'edizione. «alla cieca» vuol dire che in sezione 7 del Doc «Per Davide» non c'è la riga di registro di quella pubblicazione, e la differenza è stata ricavata dal solo diff dei testi: per quei manuali una differenza ambigua è un'ipotesi, non una certezza, e chi lavora al lotto B o C deve saperlo. La ricognizione del 190 ha trovato 3 righe su 27 pubblicazioni (Magia 1.16, Equipaggiamento 0.40, Mostri 0.47).",
+ "_dati": "Lotto 197: le fonti di **dati** che Davide pubblica insieme a un manuale — numeri strutturati, non testo. Stanno in `docs/manuali-txt/` con la versione nel nome e si leggono solo da `tools/manuali.mjs` (`fonteDati`), come i testi. `sha256_manuale` è l’impronta del Word a cui la fonte dichiara di appartenere, verificata contro il file scaricato da Drive: è ciò che permette di dire «questa fonte è dell’edizione recepita» senza rete.",
+ "dati": [
+  {
+   "id": "png-abilita",
+   "nome": "Abilità e acquisizioni dei 25 PNG generici",
+   "drive": "1KSjdcssH0t1FqyC8KZrdrpmnS7egkKVr",
+   "formato": "json",
+   "versione": "0.67",
+   "file": "png-abilita-0.67.json",
+   "modificato": "2026-11-13T11:24:36Z",
+   "manuale": "mostri",
+   "sha256_manuale": "7e44083cf549cbbd72106de2191fb892daa860f59789d733f5bae3adebbe25a9",
+   "impronta_verificata": "2026-11-14",
+   "schema": "1.1",
+   "voci": 3600,
+   "nota": "SIMPLY_RPG_PNG_Abilita_v0.67.json. 25 modelli × 6 Gradi × 24 Abilità = 3.600 voci (categoria, base, incrementi automatici, punti liberi, VA grezzo, limite, VA personale), più acquisizioni, valori pronti, Salvezze e note operative. Dichiara lo sha256 del Manuale dei Mostri 0.67: verificato byte per byte contro il .docx di Drive il 14/11/2026. Lo legge tools/importa-png-generici.mjs; i blocchi comuni e la prosa restano nel Word."
+  }
+ ]
 }
