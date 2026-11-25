@@ -3450,3 +3450,55 @@ Nessuna risposta nuova di Davide (l'E&L è invariato dal 18/11). La serata del 2
 - **A.287 — il pezzo mancante applicato:** alla salita la quota degli incantesimi dei livelli passati non conta più; decide il livello nuovo. Dimitri all'8°: 20 su 20, nessun avviso.
 - **A.281/A.293 — verificato:** le correzioni a mano alle Abilità non entrano nel conto dei punti liberi (test). Trovato un secondo conto doppio, sulle Caratteristiche corrette: un punto conta se conta con o senza la correzione (nessun valore di oggi cambia).
 - **Domanda nuova: A.313** (le correzioni di Caratteristica e i punti Abilità dei livelli passati). Primo numero libero: **A.314**.
+
+## 24/11/2026, ore 20:39 UTC — cinque risposte e due revisioni approvate (lotto 248, `docs/diff-lotto248-2026-11-25.md`)
+
+Trovate nell'E&L riscaricato per intero (regola 10: data al secondo e impronta del testo; `modificato` e `impronta`
+aggiornati insieme nel registro). **Registrate, non applicate**: toccano valori di combattimento e di movimento, e
+l'ambito del lotto 248 era il gruppo D del registro dei blocchi. Il lotto che le applica le trova qui.
+
+- **A.307 — CyberArma Viola.** Per il Tecnomante e per le CyberArmi convertite il danno base è **1d8 Magico, senza
+  bonus fisso del cristallo Viola**; si applicano i modificatori del personaggio. ⚠ Da confrontare con il lotto 235,
+  che aveva scritto il bonus fisso del §7.25.5 per tutti e cinque i colori: qui il Viola fa eccezione.
+- **A.308 — Dimitri.** «Nel salvataggio del 23/11/2026 alle 23:31 Dimitri impugna già la CyberArma Verde. Nessun
+  intervento sulla scheda: non rimontare il cristallo e non aggiungere una seconda volta i suoi bonus.» Conferma per
+  iscritto quello che Marcello aveva riferito a voce e che il lotto 240 ha applicato (dichiarazione nei dati, nessuna
+  scrittura nel file). Verificato nel lotto 248: il Verde non si conta due volte.
+- **A.309 — Catalogo e configurazione.** «CyberArma» è la **famiglia**; le sole voci visibili sono **cinque**
+  (Bianca, Rossa, Blu, Verde, Viola). La SIN è facoltativa e installabile su qualsiasi CyberArma; cambiare il solo
+  cristallo o installare la sola SIN conserva i PM personali e le proprietà da Custode; la conversione a CM o NeC li
+  toglie. ⚠ Nel catalogo le voci sono **otto** (le cinque dei colori più le tre dei lotti 157 e 164): il lotto che
+  applica la A.309 decide quali restano visibili, e non le cancella senza dirlo.
+- **A.310 — Elmetto Recon ASA.** Prezzo di riferimento **7.500 cr**, Qualità **Non comune**, PS Integrità **12**,
+  Reperibilità **RA**. I quattro valori coincidono con quelli del SIA Recon, ma **ASA e SIA restano due voci
+  distinte**; le funzioni della A.294 non cambiano e **gli esemplari negli inventari non si sostituiscono**.
+- **A.312 — Veleni e malattie.** Dopo il playtest l'app seguirà il Giocatore 0.66 §5.18: per Avvelenato e Ammalato si
+  scelgono **gravità** e si preme **«Insorgenza»**, senza scegliere il nome; le fasi le scandisce il Direttore, l'app
+  calcola la perdita di PV e applica le penalità fisse. Le penalità specifiche le mette a mano il Direttore (o il
+  giocatore su sua indicazione), **senza conteggiare due volte** ciò che l'app ha già applicato. Per la malattia
+  Terminale: «8 PV persi per fase · Penalità generale al VA: non definita», e **nessun malus generale automatico**.
+
+**Revisione approvata — Scudi: protezione, penalità e Assalto Armato** (recepita nel Giocatore **0.67** §§2.16.8,
+2.16.27, 3.5.4 e 5.9 e negli Armamenti **0.91** §§7.4, 7.11.1 e 7.22.4):
+
+- **Leggero o Piccolo**: +1 AR, nessuna penalità propria al VA o al MOV.
+- **Medio o Grande**: +2 AR, nessuna penalità al VA, **−1 Q al MOV**.
+- **Enorme**: +3 AR, **−1 VA** agli attacchi e alle Prove di Agilità, **−2 Q al MOV**. Il −1 VA **non** si applica
+  alle Prove di Difese, Schivate e Parate comprese.
+- Le penalità valgono mentre lo Scudo è impugnato e **si sommano a quelle dell'armatura**; la penalità MOV si sottrae
+  **una sola volta** al budget della modalità scelta (Passo, Corsa o Scatto). Soddisfare il requisito di FOR **non**
+  elimina le penalità di categoria; «Ingombrante» richiama quelle dell'Enorme senza applicarle due volte.
+- **Assalto Armato**: riduce di **2 Q, fino a 0**, la penalità complessiva residua al MOV di armatura e scudo *dopo*
+  le proprietà dei singoli oggetti; **non modifica il VA**.
+- *Che cosa cambia ai sette* (istantanea del 21/11, sola lettura): **Michele** ha lo Scudo Punisher Wächter
+  imbracciato (Medio, detto anche Grande, A.190–A.195) e perde **1 Q di MOV** — AR 6 e VA invariati; **Oshi** non
+  cambia (lo Scudo piccolo resta +1 AR senza penalità, e nel suo file lo scudo risulta ceduto negli acquisti della
+  dotazione: fra le protezioni non c'è). **Nessuno dei sette ha Assalto Armato.** Nel catalogo lo Scudo enorme ha
+  oggi −1 Q di MOV e nessun −1 VA: sono i due valori che il lotto degli Scudi deve correggere.
+
+**Revisione approvata — Salti ordinari a fasce di Atletica** (Giocatore **0.68** §5.2.8, Direttore **0.53** §9.10):
+sei fasce sul VA personale di Atletica prima dei modificatori (1–5, 6–15, 16–25, 26–35, 36–45, 46–55), da fermo da
+«Q adiacente e 50 cm» a «5 Q vuoti e 3 m», e con almeno 2 Q di rincorsa nello stesso Movimento **raddoppiano** Q
+vuoti e altezza. «Saltare 1 Q» = scavalcare un Q vuoto e atterrare nel successivo. Un salto agevole è automatico; al
+limite chiede Atletica, e un unico tiro risolve andatura e salto. Per l'app: **mostrare i quattro valori di salto
+già ricavati dalla fascia** nelle regole di movimento.
