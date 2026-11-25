@@ -42,10 +42,12 @@ export function apriSpostaPunti(azioni, livello = null) {
       const decisioni = decisioniConferma(p, st.bozza, avvisi);
       // A.247: se si forza un limite il VA sale davvero, quindi la conferma dice per esteso che cosa cambierà e che cosa
       // resterà scritto nel registro: non un «Procedi comunque» qualunque
-      const eccezioni = avvisi.some((a) => a.tipo === 'limite')
+      const eccezioni = !dalGiocatore && avvisi.some((a) => a.tipo === 'limite')
         ? descriviEccezioni(p, applicaSpostamento(p, st.bozza, azioni.dati, { motivo: st.motivo.trim(), ...decisioni }), azioni.dati,
           { dove: azioni.dove ?? 'PC', chi: azioni.chi ?? 'il Direttore' })
         : [];
+      // il punto oltre il limite, spostato dal giocatore, resta registrato ma non alza il VA: l'eccezione la registra il Direttore (A.247)
+      const oltreIlLimite = dalGiocatore && avvisi.some((a) => a.tipo === 'limite');
       if (avvisi.length) {
         const ok = await apri('finestrella-master', eccezioni.length ? 'Forzare l’eccezione al limite?' : 'Avviso: procedere comunque?', (f) => [
           h('ul', { class: 'avvisi-sposta' }, avvisi.map((a) => h('li', {}, a.testo))),
@@ -54,6 +56,7 @@ export function apriSpostaPunti(azioni, livello = null) {
               h('p', {}, eccezioni.length === 1 ? 'Confermando, il VA passa il limite e nel registro resta questa riga:' : 'Confermando, i VA passano il limite e nel registro restano queste righe:'),
               h('ul', { class: 'avvisi-sposta' }, eccezioni.map((r) => h('li', {}, r))))
             : null,
+          oltreIlLimite ? h('p', {}, 'Il punto si sposta lo stesso, ma oltre il limite della categoria il VA non sale: l’eccezione la registra il Direttore (A.247).') : null,
           h('p', { class: 'nota' }, dalGiocatore ? 'L’app avvisa e non blocca: puoi spostarli lo stesso, e di quello che hai fatto resta una riga nello storico del personaggio che il Direttore legge.' : 'L’app avvisa e non blocca: l’ultima parola è del Direttore. La decisione resta scritta nel livello e nel registro.'),
           h('div', { class: 'riga-azioni finestrella-azioni' },
             h('button', { type: 'button', class: 'btn', onclick: () => f(false) }, 'Torna agli spostamenti'),

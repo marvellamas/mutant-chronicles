@@ -2389,7 +2389,8 @@ function renderSchedaInterna({ mantieniScorrimento = false } = {}) {
         applica: ({ bozza }) => {
           const quando = new Date().toISOString();
           const prima = personaggio();
-          const etichetta = descriviSpostamento(prima, bozza, { quando });
+          // «dal tuo dispositivo», non «PC»: a spostare è il giocatore, e la riga dello storico lo dice
+          const etichetta = descriviSpostamento(prima, bozza, { quando, dove: 'dal tuo dispositivo' });
           if (!etichetta) return;
           const n = applicaSpostamento(prima, bozza, stato.dati, { quando, giocatore: true });
           stato.scelte = { ...stato.scelte, puntiAbilitaLiberi: n.creazione.puntiAbilitaLiberi };

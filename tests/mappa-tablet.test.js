@@ -5,7 +5,7 @@
 import '../tools/guardia-subito.mjs'; // la guardia sulle cartelle vere, comunque si lanci il test
 import { test, before, after } from 'node:test';
 import assert from 'node:assert/strict';
-import { mkdtempSync, rmSync, mkdirSync, writeFileSync, readFileSync } from 'node:fs';
+import { mkdtempSync, rmSync, mkdirSync, writeFileSync, readFileSync, readdirSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { creaServer } from '../server.mjs';
@@ -463,4 +463,40 @@ test('LOTTO 246: le regole del movimento AVVISANO e non fermano più; restano «
   assert.equal(nebbia.ok, false, 'sotto la nebbia resta un no: il percorso direbbe un segreto del master');
   const fuori = provaMovimento({ scena: sempre, pezzi: akira({ passo: 6, corsa: 12, scatto: 18 }), scontro: null, chiavePg: 'Akira', a: [99, 1], dati });
   assert.equal(fuori.ok, false, 'un quadretto che non esiste resta un no');
+});
+
+test('LOTTO 247, il confine che resta: un tablet muove la PROPRIA pedina, non quella di un altro', async () => {
+  // Liberato il movimento fuori turno, questo è il «no» che deve restare (gruppo B: protegge il lavoro di un altro).
+  // Fino al 247 il server si fidava del nome nel corpo: dal tablet si sarebbe potuta muovere la pedina di chiunque.
+  const disp = 'tablet-prova-mappa-247';
+  const intestazioni = { 'Content-Type': 'application/json', 'X-Mutant-Da': 'giocatore', 'X-Mutant-Dispositivo': disp };
+  // un tablet vero non è il PC del Direttore: chi prova qualcosa che un tablet fa diversamente lo prova con eMaster falso (lotto 215)
+  const srvTablet = creaServer({ cartella: c.personaggi, tavolo: c.tavolo, scontri: c.scontri, nemici: c.nemici, veicoli: c.veicoli, scene: c.scene, mappe: c.mappe, eMaster: () => false });
+  await new Promise((ok) => srvTablet.listen(0, '127.0.0.1', ok));
+  const baseT = `http://127.0.0.1:${srvTablet.address().port}`;
+  const chiedi = async (corpo) => {
+    const r = await fetch(`${baseT}/api/vista-giocatori/movimento`, { method: 'POST', headers: intestazioni, body: JSON.stringify({ scena: 'cripta', fascia: 1, prova: true, ...corpo }) });
+    return { stato: r.status, ...(await r.json()) };
+  };
+  // un tablet che non ha ancora scelto non muove nessuno
+  const senzaScelta = await chiedi({ pg: 'Akira', a: [1, 2] });
+  assert.equal(senzaScelta.stato, 403);
+  assert.match(senzaScelta.errore, /non ha ancora scelto/);
+  // sceglie Akira: la sua pedina si muove
+  // l'identificativo stabile del personaggio: lo stesso che calcola il server (il file di prova non lo porta scritto)
+  const { idPersonaggio } = await import('../src/storico-personaggi.js');
+  const { chiaveDaFile } = await import('../src/cartella.js');
+  const fileAkira = readdirSync(c.personaggi).find((f) => /Akira/i.test(f));
+  const pgId = idPersonaggio(JSON.parse(readFileSync(join(c.personaggi, fileAkira), 'utf8')), chiaveDaFile(fileAkira));
+  assert.ok(pgId, 'l’identificativo di Akira');
+  await fetch(`${baseT}/api/dispositivo`, { method: 'POST', headers: { 'Content-Type': 'application/json', 'X-Mutant-Dispositivo': disp }, body: JSON.stringify({ pgId }) });
+  assert.equal((await chiedi({ pg: 'Akira', a: [1, 2] })).stato, 200, 'la propria pedina si muove');
+  // quella di Bea no, e il messaggio dice di chi è il tablet
+  const altrui = await chiedi({ pg: 'Bea', a: [5, 3] });
+  assert.equal(altrui.stato, 403);
+  assert.match(altrui.errore, /muove solo/);
+  // e dal PC del Direttore (che non è un tablet) il controllo non si applica: muove chi vuole, come sempre
+  const r = await fetch(`${base}/api/vista-giocatori/movimento`, { method: 'POST', headers: intestazioni, body: JSON.stringify({ scena: 'cripta', fascia: 1, prova: true, pg: 'Bea', a: [5, 3] }) });
+  assert.equal(r.status, 200, 'il Direttore non passa di qui');
+  await new Promise((ok) => srvTablet.close(ok));
 });

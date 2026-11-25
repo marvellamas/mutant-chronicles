@@ -43,6 +43,7 @@ import { dimensioni, centroToken, celleToken } from '../../mappa/token.js';
 import { apri as apriFinestrella } from '../finestrella.js';
 import { creaAllarme } from '../allarme.js';
 import { INTESTAZIONE as INTESTAZIONE_AIUTO } from '../../mappa/aiuto-master.js';
+import { intestazioneDispositivo } from '../dispositivo.js';
 
 // fase 2, lotto 7: il PG scelto con «Sono…», ricordato su questo tablet
 const CHIAVE_PG = 'mutant.tablet.pg';
@@ -542,7 +543,8 @@ export function renderGiocatori(radice, ctx) {
   const chiama = async (corpo) => {
     // A.122: il movimento dell'Aiuto-master porta il gettone del ruolo e il PG che crede di muovere (il server ricontrolla)
     const aiuto = st.io?.aiuto && st.aiuto ? { aiuto: st.aiuto.gettone, bersaglio: st.io.pg } : {};
-    const r = await fetch('api/vista-giocatori/movimento', { method: 'POST', headers: { 'Content-Type': 'application/json', ...(aiuto.aiuto ? { [INTESTAZIONE_AIUTO]: aiuto.aiuto } : {}) }, body: JSON.stringify({ scena: st.vista.id, pg: st.pg, fascia: st.fascia, ...(ctx.scontro ? { scontro: ctx.scontro } : {}), ...aiuto, ...corpo }) });
+    // lotto 247: il tablet dice chi è (abbinamento del 21/10), così il server sa che muove la PROPRIA pedina
+    const r = await fetch('api/vista-giocatori/movimento', { method: 'POST', headers: { 'Content-Type': 'application/json', ...intestazioneDispositivo(), ...(aiuto.aiuto ? { [INTESTAZIONE_AIUTO]: aiuto.aiuto } : {}) }, body: JSON.stringify({ scena: st.vista.id, pg: st.pg, fascia: st.fascia, ...(ctx.scontro ? { scontro: ctx.scontro } : {}), ...aiuto, ...corpo }) });
     const j = await r.json().catch(() => ({}));
     return { ok: r.ok && j.ok !== false, ...j };
   };

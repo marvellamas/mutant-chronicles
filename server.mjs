@@ -889,6 +889,20 @@ async function apiScene(req, res, percorso, scene, mappe, radice, cartelle) {
  * come nella plancia (src/tavolo.js → vistaPlancia, al Round dello scontro), riletto solo se cambia.
  */
 const visteServer = new Map(); // file → { mtime, round, vista }
+/**
+ * Lotto 247: l'identificativo stabile del personaggio di una chiave (il file attuale di quella chiave, come vistePg).
+ * Serve al confine del movimento dal tablet: un giocatore muove la propria pedina, non quella di un altro.
+ */
+async function pgIdDiChiave(chiave, cartella) {
+  let elenco = [];
+  try {
+    for (const f of (await readdir(cartella)).filter((x) => x.endsWith('.json'))) elenco.push({ file: f, mtime: (await stat(join(cartella, f))).mtimeMs });
+  } catch { return null; }
+  const voce = [...ultimiPerPersonaggio(elenco)].find(([k]) => stessaChiave(k, chiave))?.[1];
+  if (!voce) return null;
+  try { return idPersonaggio(await leggiJson(join(cartella, voce.file)), chiaveDaFile(voce.file)); } catch { return null; }
+}
+
 async function vistePg(chiavi, cartella, dati, round) {
   const viste = new Map();
   if (!chiavi.length) return viste;
@@ -1222,6 +1236,22 @@ async function movimentoDalTablet(req, res, cartelle) {
     d.scontro = ruolo.scontro;
   }
   const chiavePg = aiuto ? aiuto.chiave : d.pg;
+  // lotto 247: liberato il movimento fuori turno, resta il confine — la PROPRIA pedina. Lo controlla il server, con lo
+  // stesso abbinamento tablet↔personaggio di PUT /api/personaggi (21/10): fin qui il server si fidava del nome nel
+  // corpo, e dal tablet si sarebbe potuta muovere la pedina di un altro. Chi non dichiara il dispositivo (client di
+  // prima, strumenti, prove) non ci passa, come allora: migrazione silenziosa. L'Aiuto-master ha il suo gettone (A.122).
+  if (!req.mutantMaster && !aiuto && req.headers['x-mutant-da'] === 'giocatore') {
+    const idDisp = req.headers['x-mutant-dispositivo'];
+    if (typeof idDisp === 'string' && ID_DISPOSITIVO.test(idDisp)) {
+      let dbDisp; try { dbDisp = await leggiJson(join(cartelle.tavolo, FILE_DISPOSITIVI)); } catch { dbDisp = { versione: 1, dispositivi: {} }; }
+      const a = associazioneDi(dbDisp, idDisp);
+      if (!a?.pgId) return json(res, 403, { ok: false, errore: 'Questo tablet non ha ancora scelto un personaggio: sceglilo prima di muovere.', nonAutorizzato: true });
+      const suo = await pgIdDiChiave(chiavePg, cartelle.cartella);
+      if (!suo || !puoScrivere(dbDisp, idDisp, suo)) {
+        return json(res, 403, { ok: false, errore: `Questo tablet muove solo «${a.pgNome ?? 'il personaggio che ha scelto'}»: la pedina di un altro la muove il suo giocatore, o il master.`, nonAutorizzato: true });
+      }
+    }
+  }
   const { scena: inGioco } = await scenaInGioco(cartelle, { scontro: typeof d.scontro === 'string' ? d.scontro : null });
   if (!inGioco || inGioco.id !== d.scena) return json(res, 409, { errore: 'La mappa in gioco è cambiata: attendi un momento.' });
   const dove = join(cartelle.scene, `${d.scena}.json`);
