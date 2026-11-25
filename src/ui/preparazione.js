@@ -337,7 +337,8 @@ export function apriPreparazione(ctx, { bestiario, alTavolo, scontroAperto, iniz
       h('select', { 'aria-label': 'Scena per questa bozza', onchange: (e) => { st.scenaScelta = e.target.value; } },
         h('option', { value: '', selected: !st.scenaScelta }, 'Nuova scena…'),
         scene.map((v) => h('option', { value: v.id, selected: v.id === st.scenaScelta }, `${v.nome}${v.id === gia ? ' (collegata)' : v.collegamento?.scontro || v.collegamento?.bozza ? ' (collegata ad altro)' : ''}`))),
-      h('button', { type: 'button', class: 'btn', disabled: st.scene === null, title: 'Collega la scena a questa bozza e apre la mappa per mettere i token', onclick: () => apriMappa(b) }, 'Prepara la mappa'),
+      // lotto 248: spento solo finché l'elenco delle scene non è arrivato dal server, e adesso lo dice (non è un «no»: è un'attesa)
+      h('button', { type: 'button', class: 'btn', disabled: st.scene === null, title: st.scene === null ? 'Sto chiedendo al server l’elenco delle scene: un momento' : 'Collega la scena a questa bozza e apre la mappa per mettere i token', onclick: () => apriMappa(b) }, 'Prepara la mappa'),
       h('span', { class: 'nota' }, gia ? ' la scena collegata si apre già con i pezzi della bozza' : ' i pezzi della bozza saranno fra i «senza token», da mettere in mappa'));
   };
   const apriMappa = async (b) => {

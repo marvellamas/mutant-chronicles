@@ -1320,9 +1320,10 @@ function renderWizard() {
       const completo = !req && p.completo(ctx);
       return h('li', {}, h('button', {
         type: 'button',
-        class: `passo-link${i === stato.passo ? ' attuale' : ''}${completo ? ' completo' : ''}`,
         'aria-current': i === stato.passo ? 'step' : null,
-        disabled: !!req && i !== stato.passo,
+        // lotto 248: un passo che dipende da una scelta non ancora fatta si apre e si legge (dentro c'è scritto che
+        // cosa scegliere prima): non è un giudizio su una scelta, è un dato che manca
+        class: `passo-link${i === stato.passo ? ' attuale' : ''}${completo ? ' completo' : ''}${req && i !== stato.passo ? ' con-avviso' : ''}`,
         title: req ?? (completo ? 'Completo' : 'Da completare'),
         onclick: () => vaiAlPasso(i),
       }, h('span', { class: 'num' }, completo ? '✓' : String(n)), h('span', { class: 'etichetta-passo' }, p.titolo)));
@@ -1335,15 +1336,19 @@ function renderWizard() {
       stato.precedente ? h('button', { type: 'button', class: 'btn', onclick: annulla }, 'Annulla la modifica') : null,
       h('button', { type: 'button', class: 'btn', onclick: () => { stato.avvisi = []; stato.precedente = null; renderWizard(); } }, 'Ho capito'))) : null;
 
+  // lotto 248: con un requisito non soddisfatto il passo si apre lo stesso: in cima la riga che dice che cosa
+  // scegliere prima, e sotto quello che si riesce a disegnare (se non si riesce, solo la riga: niente si rompe).
   const corpo = requisito
-    ? [h('p', { class: 'nota errore' }, requisito)]
+    ? [h('p', { class: 'riquadro attenzione', role: 'status' }, requisito, ' Qui sotto c’è quello che si può già vedere.'),
+      ...(() => { try { return passo.render(ctx) ?? []; } catch { return [h('p', { class: 'nota' }, 'Il resto del passo si disegna quando la scelta è fatta.')]; } })()]
     : passo.render(ctx);
   // la stessa barra in cima e (se il passo supera lo schermo) in fondo: src/ui/navigazione.js
   const barra = (posizione) => barraPassi({
     posizione,
     indietro: prec !== undefined ? { etichetta: '← Indietro', onclick: () => vaiAlPasso(prec) } : { etichetta: '← Personaggi', onclick: () => vai('#/') },
     avanti: succ !== undefined
-      ? { etichetta: `${PASSI[succ].titolo} →`, corta: 'Avanti →', disabilitato: !!requisitoSucc, motivo: requisitoSucc, onclick: () => vaiAlPasso(succ) }
+      // lotto 248: «Avanti» non si spegne più per un requisito: si va al passo e lì si legge che cosa manca
+      ? { etichetta: `${PASSI[succ].titolo} →`, corta: 'Avanti →', motivo: requisitoSucc, onclick: () => vaiAlPasso(succ) }
       : { etichetta: 'Torna ai personaggi', primario: false, onclick: () => vai('#/') },
   });
   const fondo = barra('fondo');

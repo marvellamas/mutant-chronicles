@@ -3608,7 +3608,7 @@ function schedaDaOggetto(ctx, e) {
         inc ? etichettaMacro(inc.macrofamiglia) : null,
         h('span', { class: 'sigla' }, ` · livello ${e.livello} · da ${e.oggetto}${consumabile ? ` (× ${e.quantita})` : ''}`)),
       h('button', {
-        type: 'button', class: `btn primario btn-attacca${a?.motivo ? ' con-avviso' : ''}`, disabled: !inc || !riga, title: a?.motivo ?? (inc ? null : 'incantesimo non più nel catalogo'),
+        type: 'button', class: `btn primario btn-attacca${a?.motivo ? ' con-avviso' : ''}`, disabled: !inc || !riga, title: a?.motivo ?? (!inc ? 'Incantesimo non più nel catalogo: la finestra del lancio non ha i suoi numeri' : !riga ? `Manca la riga del livello ${e.livello} per questo oggetto nei dati: la finestra del lancio non ha i suoi numeri` : null),
         onclick: () => { ctx.ui.lancio = { nome: e.incantesimo, passo: 0, da: e.chiave }; ctx.azioni.ridisegna(); },
       }, 'Lancia!')),
     // lotto 243: anche la scheda di un incantesimo che arriva da un oggetto ha l'effetto per primo (lo stesso campo, lo stesso criterio)
