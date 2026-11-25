@@ -70,7 +70,7 @@ test('«Segna lette» non cancella: la voce resta, con l’ora in cui è stata l
 // --------------------------------------------------------------------------- 4. non blocca, e non è una vidimazione
 test('IL DIARIO NON BLOCCA E NON VIDIMA: niente «Approva», niente «Respingi», nessun contatore da azzerare', () => {
   const motore = leggi('src/avvisi-direttore.js');
-  const pannello = leggi('src/ui/avvisi.js');
+  const pannello = leggi('src/ui/avvisi-direttore.js');
   // non è la parola che conta, è il PULSANTE: nessun comando del pannello approva o respinge una voce
   for (const m of pannello.matchAll(/h\('button'[\s\S]{0,400}?\}, ([^)]*)\)/g)) {
     assert.doesNotMatch(m[1], /approv|resping|autorizz|conferm/i, `un pulsante che approva: ${m[1].slice(0, 60)} — il master legge, non vidima`);
@@ -116,7 +116,7 @@ test('il tocco costa zero spazio in alto: sta nella riga del titolo che c’è g
   assert.match(riga, /pulsanteAvvisi/, 'il tocco è dentro la riga del titolo, non in una riga nuova');
   // e non è un pannello sempre aperto
   assert.doesNotMatch(tavolo, /pannelloAvvisi\(\)\s*,\s*$/m);
-  assert.match(leggi('src/ui/avvisi.js'), /niente pannello sempre/);
+  assert.match(leggi('src/ui/avvisi-direttore.js'), /niente pannello sempre/);
 });
 
 // --------------------------------------------------------------------------- 6. il registro dichiara il censimento
@@ -139,4 +139,23 @@ test('il registro dei blocchi dice dove finisce ogni avviso, e quante non arriva
     quante += 1;
   }
   assert.equal(quante, 33, 'le 26 del 246 più le 7 del 248');
+});
+
+// --------------------------------------------------------------------------- 7. parte F: due avvisi che non dicevano niente
+test('un valore che non c’è si legge «—», non «undefined» e non «NaN»', async () => {
+  const { erroreRisposta } = await import('../src/ui/errore-risposta.js');
+  // il motivo del server non si butta: «bestiario non leggibile (500)» non diceva niente a nessuno
+  const conMotivo = await erroreRisposta({ status: 500, json: async () => ({ errore: 'Scrittura rifiutata: la cartella sta in una cartella con personaggi' }) }, 'bestiario');
+  assert.match(conMotivo.message, /^bestiario: Scrittura rifiutata/);
+  assert.equal(conMotivo.stato, 500);
+  const senza = await erroreRisposta({ status: 503, json: async () => { throw new Error('niente JSON'); } }, 'elenco della musica');
+  assert.equal(senza.message, 'elenco della musica non leggibile (503)');
+  // e la tabella dell'Iniziativa non scrive più «undefined + 5» né «NaN»
+  const s = readFileSync(new URL('../src/ui/scontro.js', import.meta.url), 'utf8');
+  assert.match(s, /const numero = \(n\) => \(!Number\.isFinite/, 'numero() torna «—» per un valore che non è un numero');
+  assert.match(s, /senzaBase\(p\) \? '—' : numero\(p\.base \+ p\.d10\.valore\)/, 'nessun totale inventato senza la base');
+  assert.match(s, /Iniziativa della scheda non registrata/, 'e la riga dice che cosa manca');
+  for (const f of ['src/ui/nemici.js', 'src/ui/musica.js', 'src/ui/scontro.js']) {
+    assert.match(readFileSync(new URL(`../${f}`, import.meta.url), 'utf8'), /erroreRisposta\(r, '/, `${f}: il motivo del server deve arrivare a chi legge`);
+  }
 });

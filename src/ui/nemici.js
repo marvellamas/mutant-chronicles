@@ -27,7 +27,7 @@ const numero = (n) => (n < 0 ? `−${-n}` : String(n));
 /** Elenco del bestiario dal server: [{ file, mtime, nemico } | { file, mtime, errore }]. */
 export async function elencoNemici() {
   const r = await fetch('api/nemici', { cache: 'no-store' });
-  if (!r.ok) throw new Error(`bestiario non leggibile (${r.status})`);
+  if (!r.ok) throw await erroreRisposta(r, 'bestiario');
   return r.json();
 }
 
@@ -43,6 +43,7 @@ import { apriTiro } from './tira-valore.js';
 import { configurazioneAttuale, cambiaConfigurazione, formaAttuale, cambiaForma, attacchiAttuali, attacchiNonInForma } from '../scontro.js';
 import { leggiDannoMoltiplicato } from '../danno.js';
 import { spazioEffettivo } from '../mappa/token.js';
+import { erroreRisposta } from './errore-risposta.js';
 
 // etichette dei campi del formato: presentazione (i campi e le regole stanno nel formato)
 const ETICHETTE = {

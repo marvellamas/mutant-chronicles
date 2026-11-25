@@ -14,8 +14,12 @@ import {
 import { stessaChiave } from '../veicoli-registro.js';
 import { apriAggiungiNemico } from './aggiungi-nemico.js';
 import { baseIniziativaNemico } from '../iniziativa-creature.js';
+import { erroreRisposta } from './errore-risposta.js';
 
-const numero = (n) => (n < 0 ? `−${-n}` : String(n));
+// lotto 249: un valore che non c'è si legge «—», non «undefined» e non «NaN» (un partecipante scritto fuori
+// dall'app può non avere la base dell'Iniziativa: lo dice, invece di mostrare una parola inglese)
+const numero = (n) => (!Number.isFinite(Number(n)) ? '—' : (Number(n) < 0 ? `−${-Number(n)}` : String(Number(n))));
+const senzaBase = (p) => !Number.isFinite(Number(p?.base));
 /** M4 (11/10): livello medio dei PG al tavolo, per le tabelle di «Crea nemico…» (8 senza nessuno al tavolo). */
 const livelloPg = (st) => {
   const l = (st.pgAlTavolo ?? []).map((v) => v.livello).filter((x) => typeof x === 'number');
@@ -27,7 +31,7 @@ const dalVivo = (valore, spec) => { const r = tiroManuale(valore, spec); if (r.e
 /** Scontro aperto più recente sul server, o null. */
 export async function leggiScontroAperto() {
   const r = await fetch('api/scontri', { cache: 'no-store' });
-  if (!r.ok) throw new Error(`scontri non leggibili (${r.status})`);
+  if (!r.ok) throw await erroreRisposta(r, 'scontri');
   const aperto = (await r.json()).find((s) => s.stato === 'aperto');
   if (!aperto) return null;
   return { id: aperto.id, revisione: aperto.revisione };
@@ -35,7 +39,7 @@ export async function leggiScontroAperto() {
 
 export async function leggiScontro(id) {
   const r = await fetch(`api/scontri/${encodeURIComponent(id)}`, { cache: 'no-store' });
-  if (!r.ok) throw new Error(`scontro non leggibile (${r.status})`);
+  if (!r.ok) throw await erroreRisposta(r, 'scontro');
   return r.json();
 }
 
@@ -162,8 +166,10 @@ export function pannelloScontro(ctx, st, { modifica, crea, prepara = null, ridis
         p.tipo === 'pg' && tablet ? statoTablet(p) : null,
         p.lato === 'avversario' || p.tipo === 'nemico' ? h('small', { class: 'nota nome-lato' }, ` ${p.lato}`) : null,
         p.tipo === 'nemico' ? h('small', { class: 'nota' }, ` · PV ${p.pv.attuali}/${p.pv.massimo}`) : null),
-      h('td', {}, baseConProvenienza(p), ` + ${p.d10.valore}`, h('small', { class: 'nota' }, ` (${origine(p.d10)})`)),
-      h('td', { class: 'totale-scontro' }, h('strong', {}, numero(p.base + p.d10.valore))),
+      h('td', {}, baseConProvenienza(p), ` + ${p.d10.valore}`, h('small', { class: 'nota' }, ` (${origine(p.d10)})`),
+        // lotto 249: senza la base non si inventa un totale, e si dice che cosa manca
+        senzaBase(p) ? h('small', { class: 'nota motivo' }, ' Iniziativa della scheda non registrata: scrivila con «Iniziativa…».') : null),
+      h('td', { class: 'totale-scontro' }, h('strong', {}, senzaBase(p) ? '—' : numero(p.base + p.d10.valore))),
       h('td', { class: 'parita-scontro' },
         inSpareggio ? [h('small', { class: 'motivo' }, p.spareggio ? `spareggio ${p.spareggio.valore}: alla pari, ritira ` : 'Parità con un avversario: spareggio '), tiroDalVivo(p, 'spareggio')]
           : p.spareggio ? h('small', { class: 'nota' }, `spareggio ${p.spareggio.valore}`) : null,

@@ -8,7 +8,7 @@ import { chiediCircostanza } from './master.js';
 import { procediComunque } from '../storico.js';
 import { h, svuota } from './dom.js';
 import { pulsanteSchermoIntero } from './schermo-intero.js';
-import { pulsanteAvvisi, pannelloAvvisi } from './avvisi.js';
+import { pulsanteAvvisi, pannelloAvvisi } from './avvisi-direttore.js';
 import { infoValore, nascondiTooltip } from './tooltip.js';
 import { iconaPagina } from './immagini.js';
 import { riempimento } from '../interfaccia.js';

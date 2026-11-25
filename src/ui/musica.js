@@ -3,11 +3,12 @@
 // (src/ui/mappa/audio.js), ripetuta di continuo, finché lo scontro è aperto.
 import { h } from './dom.js';
 import { apri } from './finestrella.js';
+import { erroreRisposta } from './errore-risposta.js';
 
 /** Elenco dei file di musica/ ([{ file, dimensione }]); errore se il server non risponde. */
 export async function elencoMusica() {
   const r = await fetch('api/musica', { cache: 'no-store' });
-  if (!r.ok) throw new Error(`elenco della musica non leggibile (${r.status})`);
+  if (!r.ok) throw await erroreRisposta(r, 'elenco della musica');
   return r.json();
 }
 
