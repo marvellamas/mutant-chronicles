@@ -101,18 +101,22 @@ test('OGNI «Procedi comunque» LASCIA UNA VOCE LEGGIBILE DAL DIRETTORE', () => 
   // Le eccezioni si dichiarano con il MOTIVO, e un'eccezione senza motivo il controllo la rifiuta: è una scelta
   // del Direttore sul suo schermo, non un'irregolarità di gioco da riferire a lui stesso.
   const ECCEZIONI = {
-    'ui/galleria.js': 'la GIF pesante mostrata ai giocatori è una scelta del Direttore sul suo PC, non un’irregolarità di un giocatore: una voce nel suo diario gli direbbe quello che ha appena fatto lui',
+    'galleria.js': 'la GIF pesante mostrata ai giocatori è una scelta del Direttore sul suo PC, non un’irregolarità di un giocatore: una voce nel suo diario gli direbbe quello che ha appena fatto lui',
   };
   for (const [f, motivo] of Object.entries(ECCEZIONI)) assert.ok(motivo && motivo.length > 40, `eccezione senza motivo: ${f}`);
-  const file = [...elencaFile(new URL('../src/', import.meta.url))];
+  const file = [...elencaFile(new URL('../src/ui/', import.meta.url))];
   const colpevoli = [];
   for (const f of file) {
     const s = readFileSync(f, 'utf8');
     const senzaCommenti = s.replace(/\/\/[^\n]*/g, '');
-    const haComunque = /si:\s*['`][^'`]*comunque/.test(senzaCommenti);
+    // qualunque forma: «si: 'Procedi comunque'» della finestrella e anche l'etichetta di un pulsante fatto a mano
+    // (sposta-punti.js ha la sua finestrella: la prima versione di questo controllo non lo vedeva)
+    const chiede = /si:\s*['`][^'`]*comunque/.test(senzaCommenti);
+    const finestrellaAMano = /apri\('finestrella/.test(senzaCommenti) && /['`][^'`\n]*comunque['`]/.test(senzaCommenti);
+    const haComunque = chiede || finestrellaAMano;
     if (!haComunque) continue;
     const passa = /conAvviso\(/.test(senzaCommenti) || /mandaAvviso\(/.test(senzaCommenti);
-    const nome = String(f).split('/src/')[1];
+    const nome = String(f).split('/src/ui/')[1];
     if (!passa && !ECCEZIONI[nome]) colpevoli.push(nome);
   }
   assert.deepEqual(colpevoli, [],

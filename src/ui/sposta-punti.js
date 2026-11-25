@@ -9,6 +9,7 @@ import {
   statoPannello, spostaInBozza, avvisiSpostamento, decisioniConferma, totaliBozza, nelEvento,
   applicaSpostamento, descriviEccezioni,
 } from '../sposta-punti.js';
+import { mandaAvviso, chiAvvisa } from '../avvisi-invio.js';
 
 const punti = (n) => (n === 1 ? '1 punto' : `${n} punti`);
 const etichettaEvento = (e) => (e.livello === 1 ? 'Creazione' : `${e.livello}° livello`);
@@ -65,6 +66,18 @@ export function apriSpostaPunti(azioni, livello = null) {
         if (!ok) return;
       }
       azioni.applica({ bozza: st.bozza, decisioni, motivo: st.motivo.trim() });
+      // lotto 249: al Direttore, sempre. Questa finestrella è sua (non passa da conAvviso), quindi la voce la manda qui:
+      // sposta punti già spesi, cioè cambia i VA nel file — è una voce grossa.
+      if (avvisi.length) {
+        mandaAvviso({
+          chi: p?.creazione?.nome ?? chiAvvisa(),
+          cosa: dalGiocatore ? 'ha spostato Punti Abilità con un avviso' : 'il Direttore ha spostato Punti Abilità con un avviso',
+          numeri: totaliBozza(p, st.bozza).map((t) => `${t.nome} ${t.prima} → ${t.dopo}`).join(', ') || null,
+          motivo: avvisi.map((x) => x.testo).join('; '),
+          dove: 'storico del personaggio',
+          gravita: 'grossa',
+        });
+      }
       fine(true);
     };
     const disegna = () => {
