@@ -482,7 +482,7 @@ export function renderTavolo(radice, ctx) {
       : null;
     const scene = pannelloScene(ctx, stato.scene, { ridisegna: disegna, apri: (id) => ctx.azioni.mappa(id), scontroAperto: stato.ultimo ? (stato.scontro?.id ?? null) : undefined });
     // Galleria (N1): la stessa tab nella barra della mappa e nella pagina del Tavolo
-    const galleria = pannelloGalleria(ctx, Object.assign(stato.uiGalleria, { indice: stato.galleria }), {
+    const galleria = pannelloGalleria(ctx, Object.assign(stato.uiGalleria, { indice: stato.galleria, errore: stato.erroreGalleria ?? null }), {
       ridisegna: () => { stato.galleria = stato.uiGalleria.indice ?? stato.galleria; stato.firmaGalleria = null; disegna(); },
     });
     const fascia = fasciaGalleria(ctx, stato.galleria, { nascondi: nascondiGalleria, vai: () => (ctx.inMappa?.vaiAlGruppo ? ctx.inMappa.vaiAlGruppo('galleria') : document.querySelector('.galleria-pannello')?.scrollIntoView({ behavior: 'smooth', block: 'start' })) });
@@ -1272,7 +1272,12 @@ export function renderTavolo(radice, ctx) {
     }
     try {
       if (await aggiornaGalleria()) cambiato = true;
-    } catch { /* senza server della galleria: la tab dice che non si legge */ }
+      if (stato.erroreGalleria) { stato.erroreGalleria = null; cambiato = true; }
+    } catch (e) {
+      // lotto 249: il motivo del server arriva alla tab, invece di diventare «Nessuna immagine» (la tab lo diceva
+      // in un commento e non sullo schermo: un avviso che non dice niente a nessuno)
+      if (stato.erroreGalleria !== e.message) { stato.erroreGalleria = e.message; cambiato = true; }
+    }
     try {
       // PX della partita: solo sul PC del master (il server risponde 403 agli altri)
       if (ctx.master && !ctx.inMappa && await aggiornaPx()) cambiato = true;

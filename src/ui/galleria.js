@@ -111,6 +111,8 @@ export async function completaCopie(voce, dati) {
 export function pannelloGalleria(ctx, st, az) {
   const G = ctx.dati.galleria;
   const indice = st.indice ?? { immagini: [], mostrata: null };
+  // lotto 249: se la cartella non si legge lo dice, col motivo del server, invece di far credere che sia vuota
+  const nonLetta = st.errore ? h('p', { class: 'riquadro errore', role: 'alert' }, `La cartella galleria/ non si legge: ${st.errore}`) : null;
   const voci = vociPerMaster(indice, { categoria: st.categoria, cerca: st.cerca });
   const mostrata = indice.immagini.find((v) => v.file === indice.mostrata) ?? null;
 
@@ -239,6 +241,7 @@ export function pannelloGalleria(ctx, st, az) {
         h('strong', {}, G.testi.fascia.replace('{nome}', mostrata.nome)),
         h('button', { type: 'button', class: 'btn btn-piccolo', onclick: nascondi }, G.testi.nascondi))
       : h('p', { class: 'nota' }, 'Nessuna immagine ai giocatori in questo momento.'),
+    nonLetta,
     zona);
 }
 

@@ -14,7 +14,10 @@ export function apri(classe, titolo, corpo) {
     // via anche subito (non solo all'evento «close», che in una scheda in secondo piano può tardare)
     const fine = (v) => { if (fatto) return; fatto = true; risolvi(v); d.close(); d.remove(); };
     d.addEventListener('close', () => { if (!fatto) { fatto = true; risolvi(null); } d.remove(); });
-    d.append(h('h2', { class: 'finestrella-titolo' }, titolo), ...[corpo(fine)].flat());
+    // lotto 249: i rami vuoti (`condizione ? h(...) : null`) si tolgono, altrimenti nella finestrella si legge la
+    // parola «null» — lo ha trovato la prova nel browser nel pannello «Sposta i punti», e una finestrella che dice
+    // «null» è un avviso che non dice niente a nessuno (la stessa materia della parte F del lotto 248)
+    d.append(h('h2', { class: 'finestrella-titolo' }, titolo), ...[corpo(fine)].flat().filter((x) => x != null && x !== false));
     document.body.append(d);
     d.showModal();
     d.querySelector('input, [autofocus], .btn.primario')?.focus();

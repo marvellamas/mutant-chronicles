@@ -20,7 +20,7 @@ import { mandaAvviso, chiAvvisa } from '../avvisi-invio.js';
  *   chi?: il personaggio a cui è successo, numeri?: i numeri che servono a capirlo, gravita?: 'grossa'|'media'|'piccola' }
  * @returns true se l'azione è stata fatta
  */
-export async function conAvviso(registra, { azione, motivo, fai, chi = null, numeri = null, gravita = null }) {
+export async function conAvviso(registra, { azione, motivo, fai, chi = null, numeri = null, gravita = null, dove = null }) {
   if (!motivo) { await fai(false); return true; }
   const ok = await chiedi({ titolo: `Avviso: ${azione}`, testo: `${String(motivo).replace(/\.\s*$/, '')}. L’app avvisa e non blocca: se il master è d’accordo puoi procedere; resta una riga nello storico del personaggio e una nel diario del Direttore.`, si: 'Procedi comunque', no: 'Annulla' });
   if (!ok) return false;
@@ -30,10 +30,10 @@ export async function conAvviso(registra, { azione, motivo, fai, chi = null, num
   const quale = chi ?? chiAvvisa();
   await mandaAvviso({
     chi: quale,
-    cosa: `${azione} con «Procedi comunque»`,
+    cosa: `ha proceduto comunque — ${azione}`,
     numeri,
     motivo: String(motivo).replace(/\.\s*$/, ''),
-    dove: registra ? (quale ? `storico di ${quale}` : 'storico del personaggio') : null,
+    dove: dove ?? (registra ? (quale ? `storico di ${quale}` : 'storico del personaggio') : null),
     gravita: gravita ?? (registra ? 'grossa' : 'media'),
   });
   return true;

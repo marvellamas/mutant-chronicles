@@ -7,7 +7,7 @@ import { h, segno } from './dom.js';
 import { apri, chiedi } from './finestrella.js';
 import {
   statoPannello, spostaInBozza, avvisiSpostamento, decisioniConferma, totaliBozza, nelEvento,
-  applicaSpostamento, descriviEccezioni,
+  applicaSpostamento, descriviEccezioni, descriviSpostamento,
 } from '../sposta-punti.js';
 import { mandaAvviso, chiAvvisa } from '../avvisi-invio.js';
 
@@ -71,8 +71,7 @@ export function apriSpostaPunti(azioni, livello = null) {
       if (avvisi.length) {
         mandaAvviso({
           chi: p?.creazione?.nome ?? chiAvvisa(),
-          cosa: dalGiocatore ? 'ha spostato Punti Abilità con un avviso' : 'il Direttore ha spostato Punti Abilità con un avviso',
-          numeri: totaliBozza(p, st.bozza).map((t) => `${t.nome} ${t.prima} → ${t.dopo}`).join(', ') || null,
+          cosa: descriviSpostamento(p, st.bozza, { quando: new Date().toISOString(), dove: dalGiocatore ? 'dal tuo dispositivo' : 'PC' }) ?? 'ha spostato Punti Abilità con un avviso',
           motivo: avvisi.map((x) => x.testo).join('; '),
           dove: 'storico del personaggio',
           gravita: 'grossa',

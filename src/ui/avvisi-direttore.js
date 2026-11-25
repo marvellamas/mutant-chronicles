@@ -61,7 +61,7 @@ export function pannelloAvvisi() {
       },
       h('span', { class: 'avviso-segno', title: `${GRAVITA[v.gravita]?.nome ?? v.gravita}: ${GRAVITA[v.gravita]?.criterio ?? ''}` }, GRAVITA[v.gravita]?.segno ?? '◐'),
       h('span', { class: 'avviso-riga' }, v.riga),
-      v.dove ? h('small', { class: 'nota avviso-dove' }, ` la traccia è in ${v.dove}`) : null))) : null,
+      v.dove ? h('small', { class: 'nota avviso-dove' }, ` traccia: ${v.dove}`) : null))) : null,
       daLeggere.length ? h('div', { class: 'riga-azioni' },
         h('button', {
           type: 'button', class: 'btn', title: 'Le voci restano scritte, con l’ora in cui le hai lette: non si cancella niente, né qui né nello storico',

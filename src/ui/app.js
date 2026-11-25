@@ -2410,7 +2410,10 @@ function renderSchedaInterna({ mantieniScorrimento = false } = {}) {
           registraStorico(etichetta);
           stato.messaggioScheda = { tipo: 'ok', testo: `${etichetta}. Resta nello storico del personaggio.` };
           persisti();
-          ridisegna();
+          // lotto 249: qui 'ridisegna' non esiste in questo contesto — era un ReferenceError che la pagina si mangiava,
+          // e il pannello del giocatore restava aperto come se non fosse successo niente (lo ha trovato la prova nel
+          // browser, non il test: dal 247 il salvataggio avveniva e il resto no)
+          renderScheda({ mantieniScorrimento: true });
         },
       }, livello),
     },
