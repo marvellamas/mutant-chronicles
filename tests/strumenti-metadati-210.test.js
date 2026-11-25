@@ -95,6 +95,9 @@ test('RASSEGNA: ogni strumento che scrive file di personaggi passa da scriviPers
     'genera_esempio_tecniche.mjs': 'genera un esempio da zero',
     'esempio_cibernetica.mjs': 'genera un esempio da zero',
     'cartella-di-prova.mjs': 'crea una cartella vuota',
+    // lotto 250: il ripasso dei comandi preme i pulsanti nella pagina e legge il disco; i personaggi li scrive
+    // l'app, dal browser, col suo PUT (che mette i metadati). Lo strumento scrive solo il proprio rapporto.
+    'ripassa-clic.mjs': 'legge il disco e scrive il rapporto del ripasso: i personaggi li scrive l’app dal browser',
   };
   const lista = readdirSync(new URL('tools/', RADICE)).filter((f) => f.endsWith('.mjs'));
   const colpevoli = [];
