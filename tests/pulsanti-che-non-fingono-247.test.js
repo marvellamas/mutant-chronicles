@@ -8,11 +8,13 @@ import '../tools/guardia-subito.mjs'; // la guardia sulle cartelle vere, comunqu
 //   1. il comando liberato, premuto nel caso che prima era vietato, fa davvero quello che promette;
 //   2. l'avviso arriva a chi preme (e, dal tablet, passa anche dal server: senza, il giocatore vede un pulsante
 //      normale e nessun motivo);
-//   3. quello che è stato fatto resta scritto dove il Direttore lo legge;
+//   3. quello che è stato fatto resta scritto dove il Direttore lo legge — e dal lotto 249 arriva nel suo diario
+//      (src/avvisi-direttore.js): un «Procedi comunque» che non lascia una voce leggibile dal Direttore è
+//      informazione persa, perché prima stava nel blocco che abbiamo togliato;
 //   4. un pulsante che resta spento perché non cambierebbe niente dice perché: non è mai muto.
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { readFileSync } from 'node:fs';
+import { readFileSync, readdirSync } from 'node:fs';
 import { pulsanteMuovi } from '../src/round-scontro.js';
 import { applicaSpostamento, controllaPuntiDaTablet, avvisiSpostamento } from '../src/sposta-punti.js';
 import { permessoMovimento } from '../src/mappa/tablet.js';
@@ -90,3 +92,49 @@ test('il pannello si apre anche dal dispositivo del giocatore, e il pulsante lo 
   assert.match(app, /applicaSpostamento\(prima, bozza, stato\.dati, \{ quando, giocatore: true \}\)/, 'che non tocca il blocco del Direttore');
   assert.match(app, /registraStorico\(etichetta\)/, 'e lascia la riga nello storico');
 });
+
+// --------------------------------------------------------------------------- lotto 249: e arriva al DIRETTORE
+test('OGNI «Procedi comunque» LASCIA UNA VOCE LEGGIBILE DAL DIRETTORE', () => {
+  // La prima metà della regola (nessuno viene fermato) è sicura solo se vale la seconda (il Direttore è informato):
+  // finora l'informazione stava nel blocco, e il pulsante spento era il messaggio. Chi aggiunge un «Procedi
+  // comunque» passa da conAvviso — che manda la voce da sé — oppure la manda lui: non c'è una terza strada.
+  // Le eccezioni si dichiarano con il MOTIVO, e un'eccezione senza motivo il controllo la rifiuta: è una scelta
+  // del Direttore sul suo schermo, non un'irregolarità di gioco da riferire a lui stesso.
+  const ECCEZIONI = {
+    'ui/galleria.js': 'la GIF pesante mostrata ai giocatori è una scelta del Direttore sul suo PC, non un’irregolarità di un giocatore: una voce nel suo diario gli direbbe quello che ha appena fatto lui',
+  };
+  for (const [f, motivo] of Object.entries(ECCEZIONI)) assert.ok(motivo && motivo.length > 40, `eccezione senza motivo: ${f}`);
+  const file = [...elencaFile(new URL('../src/', import.meta.url))];
+  const colpevoli = [];
+  for (const f of file) {
+    const s = readFileSync(f, 'utf8');
+    const senzaCommenti = s.replace(/\/\/[^\n]*/g, '');
+    const haComunque = /si:\s*['`][^'`]*comunque/.test(senzaCommenti);
+    if (!haComunque) continue;
+    const passa = /conAvviso\(/.test(senzaCommenti) || /mandaAvviso\(/.test(senzaCommenti);
+    const nome = String(f).split('/src/')[1];
+    if (!passa && !ECCEZIONI[nome]) colpevoli.push(nome);
+  }
+  assert.deepEqual(colpevoli, [],
+    'questi file chiedono «… comunque» e non mandano niente al diario del Direttore: passa da conAvviso (src/ui/procedi.js) o chiama mandaAvviso (src/avvisi-invio.js).');
+});
+
+test('il diario del Direttore non è una vidimazione: nessun «Procedi comunque» aspetta la sua risposta', () => {
+  // un avviso che non lascia procedere è un blocco con un altro nome
+  const procedi = readFileSync(new URL('../src/ui/procedi.js', import.meta.url), 'utf8');
+  const dopo = procedi.slice(procedi.indexOf('await fai(true);'));
+  assert.ok(dopo.split('\n').some((r) => r === '  await mandaAvviso({'), 'la voce parte DOPO che l’azione è stata fatta, e non dentro una condizione');
+  assert.doesNotMatch(procedi, /await mandaAvviso[\s\S]{0,120}?if \(!/, 'e il suo esito non decide niente');
+  // e l'invio non lancia mai: se il server non c'è, l'azione resta fatta
+  const invio = readFileSync(new URL('../src/avvisi-invio.js', import.meta.url), 'utf8');
+  assert.match(invio, /catch \{ return false; \}/, 'mandaAvviso non lancia: il diario non è parte dell’azione');
+});
+
+/** Tutti i .js sotto una cartella, ricorsivamente. */
+function* elencaFile(dir) {
+  for (const v of readdirSync(dir, { withFileTypes: true })) {
+    const u = new URL(`${v.name}${v.isDirectory() ? '/' : ''}`, dir);
+    if (v.isDirectory()) yield* elencaFile(u);
+    else if (v.name.endsWith('.js')) yield u;
+  }
+}
