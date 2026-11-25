@@ -98,6 +98,9 @@ export function avanzamentoTurno(barra) {
 
 /** Tacche della scala: ogni valore fino a 30 punti di ampiezza, poi ogni 5 (sempre gli estremi). */
 export function tacche(barra) {
+  // lotto 247 (trovato nella prova sul tablet): senza nessuna Iniziativa tirata massimo e minimo sono null, e il ciclo
+  // ne produceva una sola, con scritto «null», in mezzo alla barra. Senza numeri non c'è scala: nessuna tacca.
+  if (!Number.isFinite(barra?.massimo) || !Number.isFinite(barra?.minimo)) return [];
   const passo = barra.massimo - barra.minimo > 30 ? 5 : 1;
   const r = [];
   for (let v = barra.massimo; v >= barra.minimo; v--) if (v === barra.massimo || v === barra.minimo || v % passo === 0) r.push(v);

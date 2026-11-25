@@ -1257,7 +1257,9 @@ async function movimentoDalTablet(req, res, cartelle) {
   const dove = join(cartelle.scene, `${d.scena}.json`);
   // lotto 246: gli avvisi del movimento (fascia sbagliata, movimento finito, fuori dall'area) arrivano al tablet, che
   // li mostra e offre «Muovi comunque»: senza questa riga il giocatore vedrebbe un pulsante normale e nessun motivo
-  const perTablet = (p) => ({ costo: p.costo, fascia: p.fascia, percorso: p.percorso, blocco: !!p.blocco, persi: p.persi ?? 0, avvisi: p.avvisi ?? [],
+  // lotto 247 (trovato nella prova sul tablet): in «Mappa semplice» non ci sono Q né fasce, e senza questo campo il
+  // pannello del giocatore scriveva «Arrivo: 0 Q (null)». Il motore lo dice già: basta non perderlo per strada.
+  const perTablet = (p) => ({ costo: p.costo, fascia: p.fascia, percorso: p.percorso, blocco: !!p.blocco, persi: p.persi ?? 0, avvisi: p.avvisi ?? [], ...(p.semplice ? { semplice: true } : {}),
     // gli Attacchi di Opportunità si dicono al tablet solo per gli avversari che il giocatore vede
     opportunita: p.opportunita.filter((o) => o.visibile).map((o) => ({ nome: o.nomeDa })) });
   if (d.prova) {

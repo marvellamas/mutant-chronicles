@@ -444,13 +444,13 @@ export function renderGiocatori(radice, ctx) {
     // «Tocca a te» lo manda il server al cambio di turno (08/10), alla scheda o alla mappa aperta
     st.turnoPrima = st.io?.mini ? turno : null;
     // il permesso è cambiato o il token si è mosso: la prova non vale più
-    if (st.prova && (!st.io?.permesso?.puo || prima?.area?.usato !== st.io?.area?.usato)) st.prova = null;
+    if (st.prova && (!puoProvare() || prima?.area?.usato !== st.io?.area?.usato)) st.prova = null;
     aggiornaTablet();
   }
 
   /** Celle dell'area del proprio PG fino alla fascia scelta (1 Passo, 2 Corsa, 3 Scatto), o null. */
   function celleMie() {
-    if (!st.io?.permesso?.puo || !st.io.area || !st.vista) return null;
+    if (!puoProvare() || !st.io.area || !st.vista) return null;
     if (st.celleMie?.fascia === st.fascia) return st.celleMie.celle;
     const celle = celleDellaDiretta({ area: st.io.area.maschere }, st.vista);
     if (celle) for (let i = 0; i < celle.length; i++) if (celle[i] > st.fascia) celle[i] = 0;
@@ -473,12 +473,19 @@ export function renderGiocatori(radice, ctx) {
     return [Math.floor((m.x - g.scosto_x) / g.q_px - (w - 1) / 2), Math.floor((m.y - g.scosto_y) / g.q_px - (hh - 1) / 2)];
   }
 
+  /**
+   * Lotto 247: il permesso dice di no, ma è una REGOLA del gioco (fuori turno)? Allora la mappa funziona lo stesso:
+   * l'area si vede, il quadretto si tocca, e l'avviso arriva con la prova («Muovi comunque»). Restano fermi i «no» che
+   * regole non sono: il master ha bloccato i movimenti, il token è nascosto, il PG non è nella scena.
+   */
+  const puoProvare = () => !!st.io?.permesso?.puo || !!st.io?.permesso?.regola;
+
   /** Un tocco sulla mappa: con il permesso di muovere, la prova del movimento verso quel quadretto. */
   function tocco(p) {
     if (!st.pg || !st.vista || !st.io) return false;
     // 08/10: «Linea di tiro» attiva: il tocco sceglie il bersaglio, un token o un quadretto (anche fuori turno)
     if (st.lineaModo) { lineaVerso(p); return true; }
-    if (!st.io.permesso?.puo) {
+    if (!puoProvare()) {
       if (st.io.permesso?.motivo) avviso(st.io.permesso.motivo, { tipo: 'info', chiave: 'tablet-fermo' });
       return true;
     }
@@ -622,11 +629,13 @@ export function renderGiocatori(radice, ctx) {
       m?.pv ? h('span', { class: 'tablet-valore' }, 'PV ', h('b', {}, `${m.pv.attuali} / ${m.pv.massimo}`), barra(m.pv, 'pv')) : null,
       pm ? h('span', { class: 'tablet-valore' }, 'PM ', h('b', {}, `${pm.attuali} / ${pm.massimo}`), barra(pm, 'pm')) : null,
       h('span', { class: 'tablet-stati' }, [m?.ferite, ...(m?.stati ?? [])].filter(Boolean).join(', ') || 'Nessuno Stato'));
-    const puo = !!io.permesso?.puo;
+    const puo = !!io.permesso?.puo || !!io.permesso?.regola;
     const a = io.area;
     const stato = puo
       ? h('p', { class: 'tablet-stato puo' }, io.semplice ? 'Mappa semplice: tocca il quadretto dove vuoi andare, poi «Conferma».' : a?.motivo ? `Movimento: ${a.motivo}.` : `Tocca un quadretto dell’area, poi «Conferma». Usati ${numeroQ(a?.usato ?? 0)} Q.`)
       : h('p', { class: `tablet-stato${io.impostazioni?.bloccato ? ' bloccato' : ''}` }, io.impostazioni?.bloccato ? '🔒 ' : '', io.permesso?.motivo ?? '');
+    // fuori turno il motivo resta scritto sopra l'area: si muove, ma si sa che cosa si sta facendo (lotto 247)
+    const avvisoRegola = io.permesso?.regola && io.permesso?.motivo ? h('p', { class: 'tablet-stato con-avviso' }, io.permesso.motivo) : null;
     const r = a?.rimaste ?? {};
     const fasce = puo && !io.semplice ? h('div', { class: 'tablet-fasce', role: 'group', 'aria-label': 'Fascia di movimento' }, ['passo', 'corsa', 'scatto'].map((f, i) => h('button', {
       type: 'button', class: `btn modo-${f}${st.fascia === i + 1 ? ' scelto' : ''}`, 'aria-pressed': String(st.fascia === i + 1), disabled: r[f] === null || r[f] === undefined,
@@ -663,7 +672,7 @@ export function renderGiocatori(radice, ctx) {
     const aiuto = st.aiuto ? h('div', { class: `tablet-aiuto${st.aiutoModo ? ' attivo' : ''}`, role: 'status' },
       h('p', {}, h('strong', {}, '🛡 Sei Aiuto-master'), st.aiutoModo ? `: stai muovendo ${io.nome}, il PG del turno attivo.` : st.aiuto.turno ? `: puoi muovere ${st.aiuto.turno.nome}, il PG del turno attivo.` : `. ${st.aiuto.motivo ?? ''}`),
       st.aiuto.turno || st.aiutoModo ? h('button', { type: 'button', class: `btn${st.aiutoModo ? '' : ' primario'}`, onclick: () => cambiaAiutoModo() }, st.aiutoModo ? '← Torna al mio PG' : `🛡 Muovi ${st.aiuto.turno.nome}`) : null) : null;
-    svuota(el.tablet, aiuto, st.io?.aiuto ? h('p', { class: 'tablet-nome' }, h('strong', {}, io.nome), ' · turno attivo') : mini, stato, fasce, conf, linea,
+    svuota(el.tablet, aiuto, st.io?.aiuto ? h('p', { class: 'tablet-nome' }, h('strong', {}, io.nome), ' · turno attivo') : mini, stato, avvisoRegola, fasce, conf, linea,
       h('div', { class: 'riga-azioni tablet-comandi' },
         h('button', { type: 'button', class: `btn${st.lineaModo ? ' scelto' : ''}`, 'aria-pressed': String(!!st.lineaModo), title: 'Dal tuo PG verso un token o un quadretto che vedi: distanza, Copertura, protetto, luce. Anche fuori turno; non cambia nulla', onclick: () => cambiaLineaModo() }, st.lineaModo ? '🎯 Linea di tiro: tocca il bersaglio (chiudi)' : '🎯 Linea di tiro'),
         h('button', { type: 'button', class: 'btn', onclick: () => centraSuDiMe() }, '⌖ Centra su di me'),
