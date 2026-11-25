@@ -171,9 +171,15 @@ test('veicolo già mosso nel Round: il master può muoverlo lo stesso', () => {
   const st = statoMovimento(rec, scontro, scontro.partecipanti[0]);
   assert.equal(st.puo, false);
   assert.throws(() => muoviVeicolo(rec, scontro, scontro.partecipanti[0]));
-  assert.deepEqual(muoviVeicolo(rec, scontro, scontro.partecipanti[0], { forza: true }).movimento, { scontro: 's1', round: 2, da: 'Akira' });
-  // senza conducente non c'è niente da muovere: errore vero
-  assert.throws(() => muoviVeicolo({ ...rec, conducente: null }, scontro, null, { forza: true }));
+  // lotto 248: il movimento forzato porta con sé il motivo, e la plancia lo scrive nel registro dello scontro
+  assert.deepEqual(muoviVeicolo(rec, scontro, scontro.partecipanti[0], { forza: true }).movimento,
+    { scontro: 's1', round: 2, da: 'Akira', avviso: 'già mosso nel Round 2 (con Akira)' });
+  // lotto 248: anche senza conducente il mezzo si muove — non era un giudizio su una scelta, era l'app che non
+  // sapeva a nome di chi registrare il movimento. Adesso lo registra con quello che c'è e dice che cosa manca.
+  const senzaConducente = muoviVeicolo({ ...rec, conducente: null, movimento: null }, scontro, null, { forza: true });
+  assert.equal(senzaConducente.movimento.da, null);
+  assert.match(senzaConducente.movimento.avviso, /nessun conducente/);
+  assert.throws(() => muoviVeicolo({ ...rec, conducente: null, movimento: null }, scontro, null), /nessun conducente/);
 });
 
 test('punti in eccesso tolti: la salita torna regolare senza avvisi', () => {

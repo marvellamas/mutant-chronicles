@@ -107,8 +107,14 @@ test('turni e Round: «Avanti» passa al successivo; dopo l’ultimo nuovo Round
   // un file di prima, con i soli Round rimasti, finisce come allora
   const vecchio = { ...s, durate: [{ partecipante: 'pg:Ada', stato: 'stordito', nome: 'Stordito', rimasti: 1 }] };
   assert.deepEqual(avanti(avanti(avanti(vecchio, T0), T0), T0).durate, []);
-  // una durata non in Round («fino a quando si rialza») non si registra: solo promemoria
-  assert.throws(() => registraDurata(s, 'pg:Ada', dati.regole.stati.elenco.find((x) => x.id === 'a-terra'), vivo(1)), /solo promemoria/);
+  // lotto 248: una durata che i dati non danno in Round si registra lo stesso col numero di Round scritto a mano,
+  // e la riga del registro dice da dove viene quel numero (prima era un rifiuto: «solo promemoria»). Il «no» resta
+  // solo se nessuno ha scritto il numero, perché allora non c'è niente da registrare.
+  const aTerra = dati.regole.stati.elenco.find((x) => x.id === 'a-terra');
+  const conMano = registraDurata(s, 'pg:Ada', aTerra, vivo(1), T0, dati);
+  assert.ok(conMano.durate.some((d) => d.stato === 'a-terra'), 'il contatore si mette');
+  assert.match(conMano.registro.at(-1).testo, /durata non in Round nei dati/);
+  assert.throws(() => registraDurata(s, 'pg:Ada', aTerra, null, T0, dati), /scrivi tu quanti Round/);
   // registro: ora e Round per ogni evento
   assert.ok(s.registro.every((r) => r.ora && Number.isInteger(r.round) && r.testo));
 });

@@ -955,6 +955,11 @@ export function renderTavolo(radice, ctx) {
         stato.veicoli = stato.veicoli.map((x) => (x.id === record.id ? record : x));
         if (conflitti.length) avviso(`${record.mezzo.nome}: ${conflitti.join(', ')} cambiati anche altrove, resta il valore del registro.`);
         else if (messaggio) avviso(messaggio);
+        // lotto 248: un movimento fatto con un dato che manca (nessun conducente, nessuno scontro) lascia la sua riga
+        // nel registro dello scontro, dove il Direttore la rilegge dopo: nel record resta il motivo, qui resta il fatto
+        if (record.movimento?.avviso && stato.scontro && record.movimento.scontro === stato.scontro.id) {
+          await modifica((x) => registraRiga(x, `${record.mezzo?.nome ?? 'Il veicolo'}: movimento registrato con un avviso — ${record.movimento.avviso}.`));
+        }
       } catch (e) { avvisoErrore(`Veicolo non salvato: ${e.message}`); }
       disegna();
     };
