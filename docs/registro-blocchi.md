@@ -12,13 +12,13 @@ liberato l'avanzamento, il **lotto 246** (24/11) ha censito tutta l'app.
 
 ## Il conto
 
-**Totale 468** blocchi: **pagina 129**, **motore 173**, **server 166**.
+**Totale 470** blocchi: **pagina 129**, **motore 173**, **server 168**.
 Più **26 tolti** da questo lotto, che restano scritti qui sotto perché non tornino.
 
 | gruppo | che cos'è | quanti |
 | :-- | :-- | --: |
 | gruppo A | giudica una scelta o un contenuto del giocatore: **tolti tutti**, sono diventati avvisi | 0 (26 tolti) |
-| gruppo B | impedisce una scrittura sbagliata (un altro che salva, un dato impossibile, l'impianto del server) | 393 |
+| gruppo B | impedisce una scrittura sbagliata (un altro che salva, un dato impossibile, l'impianto del server) | 395 |
 | gruppo C | una regola che Davide ha approvato, con il numero della risposta | 41 |
 | gruppo D | l'app non sa che cosa fare: manca un dato, un profilo, una scena. Dice che cosa manca | 31 |
 | gruppo E | li ha guardati Marcello e restano (lotto 247): lasciarli passare darebbe un risultato vuoto, che non è un avviso | 3 |
@@ -159,7 +159,7 @@ Questi non ci sono più: erano del gruppo A. Il controllo fallisce se tornano.
 | `motore:controllaPuntiDaTablet:rifiuto dichiarato#2` | Server del Direttore, salvataggio della scheda da un tablet | Il giocatore sposta Punti Abilità già spesi in un evento registrato | il tablet riceve «Spostare i punti Abilità già spesi … lo fa il Direttore» e la modifica non si salva | spostare i propri punti fra Abilità dal proprio dispositivo | A | TOLTO dal lotto 247: sono i punti di quel personaggio, e quello che non torna lo dice l’avviso coi numeri (lotto 241). Resta il «no» sul blocco «puntiDirettore», che è una decisione del Direttore |
 | `motore:controllaTalentiDaTablet:rifiuto dichiarato#8` | Server del Direttore, salvataggio della scheda da un tablet (Talenti) | Il tablet cambia la scelta di un livello già registrato con un Talento che non rispetta requisiti o categoria | Il tablet riceve un rifiuto e la modifica non si salva: «<motivo>. Una scelta non ammessa la può fare solo il Direttore» | Correggere un Talento di un livello passato con una scelta fuori regola | A | Giudica quale Talento il giocatore ha preso: è esattamente la famiglia di blocchi che il lotto 241 ha reso avvisi, qui rimasta fuori dall'avanzamento |
 
-## Gruppo B — impediscono una scrittura sbagliata (393)
+## Gruppo B — impediscono una scrittura sbagliata (395)
 
 La coda lunga: l'impianto del server (metodo sbagliato, indirizzo inesistente, corpo non leggibile), i `throw` su un
 identificativo che non esiste, i pulsanti che non cambierebbero niente, il 409 di due tablet sulla stessa scheda, il
@@ -234,6 +234,8 @@ filtro dei dati segreti dei nemici. Se Marcello ne toglie uno, la colonna «perc
 | `server:movimentoDalTablet:400` | Server, movimento del proprio PG dalla mappa sul tablet | Il corpo della richiesta non è JSON leggibile (massimo 64 KB) | il tablet riceve il rifiuto «contenuto non valido: …» e la pedina non si muove | Muovere la propria pedina dal tablet | B | impianto: corpo non leggibile |
 | `server:movimentoDalTablet:400#2` | Server, movimento del proprio PG dalla mappa sul tablet | Manca il personaggio o la scena, o l’identificativo di scena è fuori formato | il tablet riceve il rifiuto «pg e scena attesi» e la pedina non si muove | Muovere la propria pedina senza dire chi si muove e in quale scena | B | impianto: parametro mancante o fuori formato |
 | `server:movimentoDalTablet:403` | Server, movimento con il gettone di Aiuto-master dal tablet | Il gettone non è quello dell’Aiuto-master in corso: il Direttore ha revocato il ruolo o lo ha dato a un altro tablet | il tablet riceve il rifiuto «Non sei Aiuto-master: il Direttore ha revocato il ruolo o lo ha dato a un altro tablet.» e la pedina non si muove | Muovere la pedina di un altro come Aiuto-master | B | protegge la parola del Direttore: il ruolo lo dà e lo revoca lui (A.122), e il tablet non muove il PG di un altro senza il gettone in corso |
+| `server:movimentoDalTablet:403#2` | Server, movimento del proprio PG dalla mappa sul tablet | Il tablet non ha ancora scelto un personaggio | il tablet riceve «Questo tablet non ha ancora scelto un personaggio: sceglilo prima di muovere» e la pedina non si muove | muovere una pedina qualunque senza avere scelto chi si è | B | protegge il lavoro di un altro: è lo stesso controllo di PUT /api/personaggi (abbinamento tablet↔personaggio del 21/10) |
+| `server:movimentoDalTablet:403#3` | Server, movimento del proprio PG dalla mappa sul tablet | Il tablet chiede di muovere la pedina di un altro personaggio | il tablet riceve «Questo tablet muove solo «Lucas»: la pedina di un altro la muove il suo giocatore, o il master» | muovere la pedina di un altro giocatore | B | è il confine che resta dopo la liberazione del 247: il PC del Direttore e l’Aiuto-master (A.122) hanno le loro strade |
 | `server:movimentoDalTablet:409` | Server, movimento del proprio PG dalla mappa sul tablet | La scena in gioco adesso non è quella su cui il tablet sta muovendo | il tablet riceve il rifiuto «La mappa in gioco è cambiata: attendi un momento.» e la pedina non si muove | Muovere la pedina su una mappa che il Direttore ha intanto cambiato | B | evita di scrivere nella scena sbagliata: stato vecchio sul tablet, nessun giudizio di gioco |
 | `server:movimentoDalTablet:409#2` | Server, prova di movimento (anteprima) con il gettone di Aiuto-master | La mappa in gioco non è quella dello scontro per cui è stato dato il ruolo di Aiuto-master | il tablet riceve il rifiuto «La mappa in gioco non è quella dello scontro dell’Aiuto-master.» e l’anteprima non arriva | Provare un movimento come Aiuto-master su una mappa che non è del suo scontro | B | il ruolo vale per uno scontro solo: evita di scrivere fuori da quello, non giudica la scelta |
 | `server:movimentoDalTablet:422` | Server, anteprima del movimento del proprio PG dalla mappa sul tablet («quanto mi costa arrivare lì») | Il motore rifiuta il quadretto scelto: fuori dall’area di movimento, oltre il Passo rimasto, serve un’andatura più alta, sotto la nebbia, non è il tuo turno, «Sei già lì» | il tablet riceve il rifiuto con il motivo («Quel quadretto è fuori dalla tua area di movimento.», «Oltre il Passo rimasto (N Q): Corsa e Scatto si fanno da fermi, in un blocco unico.», «Quel quadretto non è raggiungibile: c’è qualcosa che non vedi. Chiedi al master.») e l’anteprima non arriva | Vedere dal tablet dove può arrivare la propria pedina quando la scelta sfora le regole di movimento | B | riporta al tablet i soli «no» rimasti nel motore: la nebbia, un quadretto che non esiste, nessun percorso |
