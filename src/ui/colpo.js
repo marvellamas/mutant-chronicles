@@ -14,6 +14,7 @@ import { specTiro, tira } from '../tiri.js';
 import { applicaColpo, moltiplicatoreMagistrale, leggiDannoMoltiplicato } from '../danno.js';
 import { periodicoDi } from '../periodici.js';
 import { chiedi } from './finestrella.js';
+import { mandaAvviso, chiAvvisa } from '../avvisi-invio.js';
 
 /** «1d8+2» → spec di src/tiri.js (un gruppo di dadi più un fisso), oppure null. */
 export function specDaFormula(formula) {
@@ -193,7 +194,15 @@ export function apriColpo(ctx, bersaglio, { applica, proposta = {}, fonti = [] }
           type: 'button', class: `btn primario${motivoApplica ? ' con-avviso' : ''}`, disabled: st.inCorso,
           title: motivoApplica ?? null,
           onclick: async () => {
-            if (motivoApplica && !(await chiedi({ titolo: 'Avviso: applicare il colpo', testo: `${motivoApplica}. L’app avvisa e non blocca: puoi applicare lo stesso.`, si: 'Applica comunque', no: 'Annulla' }))) return;
+            if (motivoApplica && !(await chiedi({ titolo: 'Avviso: applicare il colpo', testo: `${motivoApplica}. L’app avvisa e non blocca: puoi applicare lo stesso, e il Direttore lo vede nel suo diario.`, si: 'Applica comunque', no: 'Annulla' }))) return;
+            // lotto 249: al Direttore, sempre. Cambia PV e Ferite: è una voce grossa.
+            if (motivoApplica) {
+              mandaAvviso({
+                chi: bersaglio?.nome ?? chiAvvisa(), cosa: 'colpo applicato con «Applica comunque»',
+                numeri: r?.pv ? `PV ${r.pv.prima} → ${r.pv.dopo}` : null,
+                motivo: motivoApplica, dove: 'registro dello scontro', gravita: 'grossa',
+              });
+            }
             st.inCorso = true; st.errore = null; disegna();
             try {
               // perdite periodiche da registrare nello scontro (§5.15): la prima l'ha già applicata il colpo

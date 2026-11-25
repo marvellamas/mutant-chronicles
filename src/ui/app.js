@@ -91,6 +91,7 @@ import { conOrdinale } from '../lingua.js';
 import { normalizzaCalendario, calendarioAttivo, attivaCalendario, disattivaCalendario, contaNote, fileCalendario, leggiFileCalendario, momentoCalendario } from '../calendario.js';
 import { testoNote } from './calendario.js';
 import { impostaChiAvvisa } from '../avvisi-invio.js';
+import { mandaAvviso } from '../avvisi-invio.js';
 
 // Dopo la creazione si possono ancora cambiare solo i campi descrittivi: le altre scelte
 // determinano i livelli successivi (ricognizione dell'avanzamento, §8).
@@ -1703,6 +1704,8 @@ function renderSaliPagina() {
           const ok = await chiedi({ titolo: `Avviso: correzione del ${L}° livello`, testo: `${err.map((e) => e.problema).join('; ')}. L’app avvisa e non blocca: se il master è d’accordo puoi procedere; resta una riga nello storico del personaggio.`, si: 'Procedi comunque' });
           if (!ok) return undefined;
           registraStorico(testoProcedi(`correzione del ${L}° livello`, err.map((e) => e.problema).join('; ')));
+          // lotto 249: al Direttore, sempre (cambia le scelte di un livello già registrato)
+          mandaAvviso({ chi: stato.scelte?.nome, cosa: `correzione del ${L}° livello con «Procedi comunque»`, motivo: err.map((e) => e.problema).join('; '), dove: 'storico del personaggio', gravita: 'grossa' });
         }
         const dopo = conseguenzeCorrezione(personaggio(), L, bozza.voce, dati);
         const primaCorrezione = personaggio();

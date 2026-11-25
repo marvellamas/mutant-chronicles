@@ -1300,6 +1300,16 @@ async function movimentoDalTablet(req, res, cartelle) {
   // sua riga nel registro dello scontro: l'app avvisa e non ferma, ma il Direttore deve vedere che cosa è stato fatto
   if (esito.stato === 200 && esito.scontro && esito.prova?.avvisi?.length) {
     try { await avvisoNelRegistro(cartelle.scontri, esito.scontro.id, { nome: esito.prova.nome, avvisi: esito.prova.avvisi, costo: esito.prova.semplice ? null : esito.prova.costo, modo: NOMI_FASCE[esito.prova.fascia] ?? null, movimento: esito.movimento.id }); } catch { /* il movimento resta; il master lo vede sulla mappa */ }
+    // lotto 249: e nel diario del Direttore, che è il posto solo dove legge. Lo scrive il server perché è lui a
+    // sapere che il movimento è passato: vale anche se il tablet si spegne subito dopo.
+    try {
+      await scriviAvvisoDirettore(cartelle.tavolo, {
+        chi: esito.prova.nome,
+        cosa: `si è mosso con un avviso: ${esito.prova.avvisi.join('; ')}`,
+        numeri: esito.prova.semplice ? null : `${esito.prova.costo} Q${esito.movimento?.da && esito.movimento?.a ? `, da ${esito.movimento.da} a ${esito.movimento.a}` : ''}`,
+        dove: 'registro dello scontro', da: 'dal tablet', gravita: 'media',
+      });
+    } catch { /* il movimento resta: il diario non è parte dell'azione */ }
   }
   // A.122: «mosso da Aiuto-master (tablet di …)» nel registro dello scontro
   if (esito.stato === 200 && aiuto) {
@@ -1367,6 +1377,25 @@ async function bloccoAiuto(ruolo, scena, contesto, cartelle) {
 }
 
 /** A.122: la riga «mosso da Aiuto-master» nel registro dello scontro (revisione +1). */
+/**
+ * lotto 249: una voce nel diario del Direttore (tavolo/avvisi.json, src/avvisi-direttore.js). La scrive il server
+ * quando è lui a sapere che un'azione irregolare è passata (il movimento dal tablet). Non è parte dell'azione: se
+ * fallisce, l'azione resta fatta e la traccia resta nel registro dello scontro.
+ */
+async function scriviAvvisoDirettore(tavolo, voce) {
+  const dove = join(tavolo, 'avvisi.json');
+  const v = nuovaVoceAvviso(voce);
+  if (!v) return null;
+  await mkdir(tavolo, { recursive: true });
+  return inCoda(dove, async () => {
+    let d;
+    try { d = normalizzaDiario(JSON.parse(await readFile(dove, 'utf8'))); } catch { d = nuovoDiario(); }
+    const nuovo = aggiungiAvviso(d, v);
+    await scriviJson(dove, nuovo);
+    return nuovo;
+  });
+}
+
 async function avvisoNelRegistro(scontri, id, riga) {
   if (!ID_SCONTRO.test(id)) return;
   const dove = join(scontri, `${id}.json`);

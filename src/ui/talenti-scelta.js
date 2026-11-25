@@ -17,6 +17,7 @@ import { chiedi } from './finestrella.js';
 import { delNome } from '../lingua.js';
 import { voceTalento, rigaBreve, schedaTalento, testoPrerequisiti, scelteAperte, nomeCategoria, testiIncantesimo, testiTecnica } from '../talenti-testi.js';
 import { nomeCheSiApre } from './talento-leggibile.js';
+import { mandaAvviso, chiAvvisa } from '../avvisi-invio.js';
 
 const NOMI = {
   talento_libero: ['Talento Libero', 'Talenti Liberi'],
@@ -206,7 +207,11 @@ function opzione(t, posto, o, ammessa) {
     // lotto 241: nell'avanzamento una scelta fuori dalle regole si fa anche dal tablet, con l'avviso (resta nello storico)
     if (!t.master) {
       const ok = await chiedi({ titolo: `Scegliere ${o.nome} lo stesso?`, testo: `Le regole non la ammettono adesso: ${o.motivo}. L’app avvisa e non blocca: puoi sceglierla comunque, e resta una riga nello storico del personaggio per il Direttore.`, si: 'Scegli comunque' });
-      if (ok) t.azioni.scegli(posto, scelta(), { avviso: o.motivo });
+      if (ok) {
+        t.azioni.scegli(posto, scelta(), { avviso: o.motivo });
+        // lotto 249: al Direttore, sempre: è una scelta permanente del personaggio
+        mandaAvviso({ chi: chiAvvisa(), cosa: `ha scelto «${o.nome}» con un avviso`, numeri: `${posto.livello}° livello`, motivo: o.motivo, dove: 'storico del personaggio', gravita: 'grossa' });
+      }
       return;
     }
     const ok = await chiedi({
@@ -244,7 +249,10 @@ function passoSuccessivo(t, s) {
       if (ammessa) { t.azioni.scegliSuccessiva(s, o.id); return; }
       if (!t.master) {
         const ok = await chiedi({ titolo: `Scegliere ${o.nome} lo stesso?`, testo: `Le regole non lo ammettono adesso: ${o.motivo}. L’app avvisa e non blocca: puoi sceglierlo comunque, e resta una riga nello storico del personaggio per il Direttore.`, si: 'Scegli comunque' });
-        if (ok) t.azioni.scegliSuccessiva(s, o.id, { avviso: o.motivo });
+        if (ok) {
+          t.azioni.scegliSuccessiva(s, o.id, { avviso: o.motivo });
+          mandaAvviso({ chi: chiAvvisa(), cosa: `ha scelto «${o.nome}» con un avviso`, numeri: `${s.livello}° livello`, motivo: o.motivo, dove: 'storico del personaggio', gravita: 'grossa' });
+        }
         return;
       }
       const ok = await chiedi({

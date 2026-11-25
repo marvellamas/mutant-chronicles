@@ -131,6 +131,7 @@ import { segnaDallaMappa, vistaDaRimettere, dimenticaMappa } from '../ritorno.js
 import { scegliImmagineNemico, impostaImmagineNemico } from '../immagine-nemico.js';
 import { impostazioniTablet, fondiMovimentiTablet } from '../../mappa/tablet.js';
 import { inVolo, quotaDi, movimentoInVolo, regoleMovimento, sapeVolare, conVolo } from '../../mappa/volo.js';
+import { mandaAvviso } from '../../avvisi-invio.js';
 
 const ATTESA_SALVATAGGIO_MS = 600;
 const ATTESA_RIPROVA_MS = 5000; // dopo un errore di rete o del server
@@ -1620,6 +1621,8 @@ export function renderMappa(radice, ctx) {
       const { record } = await aggiornaVeicolo(rec, r.rec);
       if (st.fonti) st.fonti.veicoli = st.fonti.veicoli.map((x) => (x.id === record.id ? record : x));
       const forzato = (r.avvisi ?? []).length ? ` (procedi comunque: ${r.avvisi.join('; ')})` : '';
+      // lotto 249: al Direttore, sempre
+      if (forzato) mandaAvviso({ chi: rec.mezzo?.nome ?? nomeTok(t), cosa: 'decollo registrato con un avviso', motivo: r.avvisi.join('; '), dove: 'registro dello scontro', gravita: 'media' });
       avviso(`${r.testo}${forzato}`, { tipo: 'info', chiave: 'volo' });
       rigaVeicolo(`Mappa: ${r.testo}${forzato}`);
       await aggiornaFonti();
@@ -1644,6 +1647,7 @@ export function renderMappa(radice, ctx) {
       const { record } = await aggiornaVeicolo(rec, r.rec);
       if (st.fonti) st.fonti.veicoli = st.fonti.veicoli.map((x) => (x.id === record.id ? record : x));
       const forzatoA = (r.avvisi ?? []).length ? ` (procedi comunque: ${r.avvisi.join('; ')})` : '';
+      if (forzatoA) mandaAvviso({ chi: rec.mezzo?.nome ?? nomeTok(t), cosa: 'atterraggio registrato con un avviso', motivo: r.avvisi.join('; '), dove: 'registro dello scontro', gravita: 'media' });
       avviso(`${r.testo}${r.concludeMovimento ? ' Il movimento del Round è concluso.' : ''}${forzatoA}`, { tipo: 'info', chiave: 'volo' });
       rigaVeicolo(`Mappa: ${r.testo}${forzatoA}`);
       await aggiornaFonti();
