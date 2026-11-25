@@ -13,8 +13,8 @@ vuol dire che **la procedura di adeguamento al profilo 4/7/9/4 non è stata eseg
 non sono stati ridistribuiti. Era il motivo della serata.
 
 **Cosa comporta.** I sette sono saliti all'8° col profilo vecchio (2/6/12/4): le loro Abilità hanno ancora le
-categorie e i limiti di prima, e **33 Abilità su 168 cambieranno categoria quando l'adeguamento parte** — tutte in
-salita, nessuna in discesa (misurato sui file, non stimato).
+categorie e i limiti di prima, e **33 Abilità su 168 cambieranno categoria quando l'adeguamento parte**, con **40
+VA che salgono e nessuno che scende** (misurato sui file dell'istantanea del 21/11, non stimato: il conto si fa a punti liberi azzerati su entrambi i lati).
 
 **La buona notizia: adesso il momento è quello giusto.** Il monte da ridistribuire è «7 punti per ogni Grado
 complessivo» (§8.3.1): al livello 7 erano **14**, al livello 8 sono **21** — esattamente la destinazione approvata nel
