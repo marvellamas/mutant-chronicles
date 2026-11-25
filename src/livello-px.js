@@ -33,7 +33,9 @@ export function permessoSalita({ livello, px, atto, correzioni = [] }, p) {
   const tetto = limiteAtto(atto, p);
   const richiesti = p.soglie_px[prossimo - 1] ?? null;
   const base = { prossimo, richiesti, limiteAtto: tetto, concessione: conc };
-  if (richiesti === null && !conc) return { ...base, ok: false, mancanti: 0, motivo: `Il livello ${prossimo} non è nella tabella dei PX.` };
+  // lotto 248: il livello non è nella tabella dei PX (px_partita.json → soglie_px). Non è un giudizio su una scelta:
+  // è una riga che manca nei dati, e la decisione su un livello fuori tabella è del Direttore. Si avvisa e si passa.
+  if (richiesti === null && !conc) return { ...base, ok: true, mancanti: 0, motivo: null, avviso: `Il livello ${prossimo} non è nella tabella dei PX (px_partita.json → soglie_px): l'app non sa quanti PX servono. Decidi tu.`, datoMancante: true };
   if (conc) return { ...base, ok: true, mancanti: 0, motivo: null };
   if (prossimo > tetto) return { ...base, ok: false, mancanti: 0, motivo: `L'Atto ${atto} arriva al livello ${tetto}: per il livello ${prossimo} serve l'Atto successivo.` };
   const mancanti = Math.max(0, richiesti - num(px));

@@ -1245,7 +1245,7 @@ function contesto() {
     // lotto 241: punti, Talenti da scegliere ed errori dei livelli avvisano («Procedi comunque»); fermano creazione incompleta e PX
     // lotto 246: la creazione incompleta è un avviso, non più un pulsante spento (il 23/11 un nostro difetto di conto
     // l'ha spento a tutti e sette insieme). Resta spento solo per i PX e l'Atto (A.187), che decide il Direttore.
-    avvisoSalita: [scheda.completa ? null : 'La creazione non risulta completa (passi precedenti): controlla, o sali lo stesso.', avvisoPrimaDiSalire(schedaPersonaggio)].filter(Boolean).join('; ') || null,
+    avvisoSalita: [scheda.completa ? null : 'La creazione non risulta completa (passi precedenti): controlla, o sali lo stesso.', permessoPx()?.avviso ?? null, avvisoPrimaDiSalire(schedaPersonaggio)].filter(Boolean).join('; ') || null,
     motivoNoSalita: permessoPx()?.motivo ?? null,
     saliDiLivello,
     stampa: () => vai(`#/p/${stato.id}/stampa`),
@@ -2361,7 +2361,7 @@ function renderSchedaInterna({ mantieniScorrimento = false } = {}) {
     // N2: avviso con «Procedi comunque» (riga nello storico); restano fermi creazione incompleta ed errori dei livelli
     // lotto 241: nell'avanzamento nessun controllo sulla distribuzione impedisce di salire: punti, Talenti da scegliere ed errori dei
     // livelli già acquisiti sono un avviso, con i numeri, e «Procedi comunque». Fermano solo la creazione incompleta e i PX (A.187)
-    avvisoSalita: avvisoPrimaDiSalire({ ...tab.scheda, errori: tab.errori ?? [] }, { talentiDaScegliere }),
+    avvisoSalita: [permessoPx()?.avviso ?? null, avvisoPrimaDiSalire({ ...tab.scheda, errori: tab.errori ?? [] }, { talentiDaScegliere })].filter(Boolean).join('; ') || null,
     motivoNoSalita: permessoPx()?.motivo ?? null, // lotto 246: la creazione incompleta avvisa (sopra), non spegne
     // regole aggiornate (regole.json → regole_aggiornate): punti da completare e in eccesso
     avvisoRegole: dati.regole.regole_aggiornate?.punti_abilita ?? 'Regole aggiornate',

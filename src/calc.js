@@ -1,6 +1,7 @@
 // Motore di calcolo: funzioni pure. Le costanti numeriche arrivano dai dati (data/*.json);
 // qui stanno solo le formule, ciascuna con il paragrafo del Manuale del Giocatore.
 import { calcolaSchedaPersonaggio } from './avanzamento.js';
+import { apriRaccolta, chiudiRaccolta, conDatiMancanti, conRipiego, chiavePiuVicina, fasciaPiuVicina } from './dati-mancanti.js';
 import { competenzaDi, baseIniziale, limiteAbilita, vaPersonale, puntiUtili, limiteConEccezioni, oltreIlLimite, profiloCompetenze } from './competenze.js';
 
 // Avanzamento di livello (cap. 8): la validazione di un livello sta in avanzamento.js.
@@ -16,10 +17,14 @@ export function modSalvezza(valore, tabella) {
   return leggiTabella(tabella, valore, 'modificatore per le Salvezze');
 }
 
-function leggiTabella(tabella, valore, cosa) {
+function leggiTabella(tabella, valore, cosa, chiave = 'caratteristiche.json') {
   const m = tabella?.[String(valore)];
-  if (!Number.isInteger(m)) throw new RangeError(`Nessun ${cosa} per il valore ${valore}`);
-  return m;
+  if (Number.isInteger(m)) return m;
+  // lotto 248: la riga non c'è. Non si ferma il calcolo della scheda: si usa la riga più vicina e si dichiara
+  // (src/dati-mancanti.js). Senza nessuna riga in tabella non c'è ripiego, e allora sì, è un errore dei dati.
+  const vicina = chiavePiuVicina(tabella, valore);
+  if (vicina === null) throw new RangeError(`Nessun ${cosa} per il valore ${valore}`);
+  return conRipiego({ dato: `il ${cosa}`, chiave, valore, ripiego: tabella[vicina], come: `quello del valore ${vicina} (${tabella[vicina] >= 0 ? '+' : ''}${tabella[vicina]})` });
 }
 
 /**
@@ -114,9 +119,13 @@ export function caratteristicaDanno(nomeAbilita, dati) {
 
 /** §1.2.3: bonus di Avanzamento alle Salvezze per livello del personaggio. */
 export function bonusAvanzamentoSalvezze(livello, regole) {
-  const riga = regole.salvezze.avanzamento_per_livello.find((r) => livello >= r.da && livello <= r.a);
-  if (!riga) throw new RangeError(`Nessun bonus di Avanzamento alle Salvezze per il livello ${livello}`);
-  return riga.bonus;
+  const tabella = regole.salvezze.avanzamento_per_livello;
+  const riga = tabella.find((r) => livello >= r.da && livello <= r.a);
+  if (riga) return riga.bonus;
+  // lotto 248: il livello non è in tabella. Si usa la fascia più vicina e si dichiara, invece di non disegnare la scheda.
+  const vicina = fasciaPiuVicina(tabella, livello);
+  if (!vicina) throw new RangeError(`Nessun bonus di Avanzamento alle Salvezze per il livello ${livello}`);
+  return conRipiego({ dato: 'la fascia del bonus di Avanzamento alle Salvezze', chiave: 'regole.json → salvezze.avanzamento_per_livello', valore: `il livello ${livello}`, ripiego: vicina.bonus, come: `quella dei livelli ${vicina.da}–${vicina.a} (+${vicina.bonus})` });
 }
 
 // ---------------------------------------------------------------------------
@@ -305,6 +314,14 @@ export function erroriParametriTalenti(talentiAcquisiti, parametri) {
 export function calcolaScheda(scelte, dati) {
   // Personaggio v2 { creazione, livelli }: si rigiocano creazione e livelli (cap. 8).
   if (scelte?.creazione) return calcolaSchedaPersonaggio(scelte, dati);
+  // lotto 248: le righe dei dati che mancano si raccolgono qui e viaggiano con la scheda (campo datiMancanti)
+  apriRaccolta();
+  try {
+    return conDatiMancanti(calcolaSchedaDiCreazione(scelte, dati));
+  } finally { chiudiRaccolta(); }
+}
+
+function calcolaSchedaDiCreazione(scelte, dati) {
   const errori = validaScelte(scelte, dati);
   const { corp, addestr, classe } = risolvi(scelte, dati);
   const bloccanti = errori.filter((e) => e.tipo === 'violazione' && (['corporazione', 'addestramento', 'classe'].includes(e.campo) || e.campo.startsWith('puntiCaratteristica.')));

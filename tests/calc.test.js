@@ -6,6 +6,7 @@ import {
   calcolaScheda, validaScelte, incantesimiLiberi, livelloMassimoIncantesimi,
 } from '../src/calc.js';
 import { datiReali, copia } from './helpers.js';
+import { apriRaccolta, chiudiRaccolta } from '../src/dati-mancanti.js';
 
 const { dati } = await datiReali();
 const tabOrd = dati.caratteristiche.modificatore_ordinario;
@@ -27,7 +28,14 @@ const MISHIMA_AGENTE = {
 
 test('§2.1 modificatore ordinario: valore − 5', () => {
   for (let v = 1; v <= 10; v++) assert.equal(modOrdinario(v, tabOrd), v - 5);
-  assert.throws(() => modOrdinario(11, tabOrd), RangeError);
+  // lotto 248: un valore fuori dalla tabella dei modificatori non ferma più il calcolo della scheda: si usa la riga
+  // più vicina e il ripiego si dichiara in cima alla scheda (src/dati-mancanti.js, gruppo D del registro dei blocchi)
+  apriRaccolta();
+  assert.equal(modOrdinario(11, tabOrd), 5, 'ripiego: la riga più vicina (10 → +5)');
+  const righe = chiudiRaccolta();
+  assert.equal(righe.length, 1);
+  assert.match(righe[0].testo, /modificatore ordinario per 11/);
+  assert.match(righe[0].testo, /quello del valore 10/);
 });
 
 test('§1.2.3 modificatore per le Salvezze', () => {

@@ -120,7 +120,7 @@ export function pannelloScontro(ctx, st, { modifica, crea, prepara = null, ridis
         const v = Number(input.value);
         modifica((x) => registraTiro(x, p.id, campo, dalVivo(v, dado), ctx.dati));
       } }, 'Inserisci'),
-      h('button', { type: 'button', class: 'btn btn-piccolo', onclick: () => modifica((x) => registraTiro(x, p.id, campo, tira(dado).tiro, ctx.dati)) }, `Tira ${dado.formula}`));
+      dado.mancante ? h('small', { class: 'nota' }, dado.motivo) : h('button', { type: 'button', class: 'btn btn-piccolo', onclick: () => modifica((x) => registraTiro(x, p.id, campo, tira(dado).tiro, ctx.dati)) }, `Tira ${dado.formula}`));
   };
   const baseConProvenienza = (p) => {
     // A.200: un nemico tira con la base di scheda (mai sotto 0) più le penalità che ha adesso (Ferite, Stati): può essere negativa
@@ -232,7 +232,7 @@ export function pannelloScontro(ctx, st, { modifica, crea, prepara = null, ridis
       h('p', { class: 'nota' }, 'Senza Iniziativa non entrano nell’ordine finché non hanno un valore.'),
       // difetto del test del 07/10: la finestra «Iniziativa» (dal vivo, totale a mano o app)
       chiediUi ? h('button', { type: 'button', class: 'btn btn-piccolo primario', onclick: () => chiediUi() }, 'Iniziativa…') : null,
-      h('button', { type: 'button', class: 'btn btn-piccolo', onclick: () => modifica((x) => daTirare.reduce((acc, p) => registraTiro(acc, p.id, 'd10', tira(dado).tiro, ctx.dati), x)) }, 'Tira per tutti con l’app'),
+      dado.mancante ? h('p', { class: 'nota' }, dado.motivo) : h('button', { type: 'button', class: 'btn btn-piccolo', onclick: () => modifica((x) => daTirare.reduce((acc, p) => registraTiro(acc, p.id, 'd10', tira(dado).tiro, ctx.dati), x)) }, 'Tira per tutti con l’app'),
       h('ul', {}, daTirare.map((p) => h('li', {}, h('strong', {}, p.nome), p.provvisorio ? h('span', { class: 'etichetta' }, 'provvisorio') : null, ' · Iniziativa ', baseConProvenienza(p), ' + ', tiroDalVivo(p, 'd10'))))) : null,
   ];
   const gestione = [
@@ -294,7 +294,7 @@ export function scegliReimposta(s, dado, soloId = null) {
       const conferma = (tiro) => { if (tiro) fine({ id: p.id, tiro }); };
       svuotaIn(corpo,
         h('p', {}, h('strong', {}, p.nome), ` · ora ${numero(p.base + p.d10.valore)} (${numero(p.base)} + ${p.d10.valore}${p.d10.origine === 'mano' ? ', a mano' : ''})`),
-        h('div', { class: 'riga-azioni' }, h('button', { type: 'button', class: 'btn primario', onclick: () => conferma({ ...tira(dado).tiro, origine: 'app' }) }, `Ritira ${dado.formula} con l’app`)),
+        dado.mancante ? h('p', { class: 'nota' }, dado.motivo) : h('div', { class: 'riga-azioni' }, h('button', { type: 'button', class: 'btn primario', onclick: () => conferma({ ...tira(dado).tiro, origine: 'app' }) }, `Ritira ${dado.formula} con l’app`)),
         h('label', { class: 'finestrella-campo' }, h('span', {}, `${dado.formula} dal vivo`), h('span', { class: 'riga-azioni' }, vivo, h('button', { type: 'button', class: 'btn', onclick: () => {
           const r = tiroManuale(Number(vivo.value), dado);
           if (r.errore) { errore.textContent = r.errore; return; }
@@ -333,7 +333,7 @@ export function chiediIniziativa(s, dado, ids = null) {
     const st = new Map(lista.map((p) => [p.id, { d10: null, totale: null, errore: null }]));
     const righe = h('div', { class: 'iniziativa-righe' });
     const errore = h('p', { class: 'motivo', role: 'alert' });
-    const appA = (filtro) => { for (const p of lista.filter(filtro)) { const x = st.get(p.id); Object.assign(x, { d10: tira(dado).tiro, totale: null, errore: null }); x.aggiorna(); } };
+    const appA = (filtro) => { if (dado.mancante) return; for (const p of lista.filter(filtro)) { const x = st.get(p.id); Object.assign(x, { d10: tira(dado).tiro, totale: null, errore: null }); x.aggiorna(); } };
     const riga = (p) => {
       const x = st.get(p.id);
       const esito = h('span', { class: 'iniziativa-totale' });
@@ -369,7 +369,7 @@ export function chiediIniziativa(s, dado, ids = null) {
       el.append(
         h('span', { class: 'iniziativa-nome' }, h('strong', {}, p.nome), h('small', { class: 'nota' }, ` ${p.tipo === 'pg' ? 'PG' : p.lato} · Iniziativa ${numero(p.base)}`)),
         h('label', {}, `${dado.formula} `, vivo),
-        h('button', { type: 'button', class: 'btn btn-piccolo', onclick: () => { Object.assign(x, { d10: tira(dado).tiro, totale: null, errore: null }); aggiorna(); } }, 'Tira con l’app'),
+        dado.mancante ? null : h('button', { type: 'button', class: 'btn btn-piccolo', onclick: () => { Object.assign(x, { d10: tira(dado).tiro, totale: null, errore: null }); aggiorna(); } }, 'Tira con l’app'),
         h('label', {}, ' o totale ', mano),
         esito, motivo);
       aggiorna();
@@ -382,10 +382,11 @@ export function chiediIniziativa(s, dado, ids = null) {
     };
     disegna();
     return [
+      dado.mancante ? h('p', { class: 'nota', role: 'status' }, dado.motivo) : null,
       h('p', { class: 'nota' }, `Iniziativa della scheda + ${dado.formula} (Giocatore §2.14). Scrivi il dado tirato dal vivo, oppure il totale a mano, oppure tira con l’app. Chi resta vuoto non entra nell’ordine finché non ha un valore. Parità come §5.1: DES, poi INT, poi scelta fra alleati o spareggio fra avversari.`),
       h('div', { class: 'riga-azioni' },
-        lista.some((p) => p.tipo !== 'pg') ? h('button', { type: 'button', class: 'btn', onclick: () => appA((p) => p.tipo !== 'pg') }, 'Tira con l’app per tutti i nemici') : null,
-        h('button', { type: 'button', class: 'btn', onclick: () => appA(() => true) }, 'Tira con l’app per tutti')),
+        dado.mancante || !lista.some((p) => p.tipo !== 'pg') ? null : h('button', { type: 'button', class: 'btn', onclick: () => appA((p) => p.tipo !== 'pg') }, 'Tira con l’app per tutti i nemici'),
+        dado.mancante ? null : h('button', { type: 'button', class: 'btn', onclick: () => appA(() => true) }, 'Tira con l’app per tutti')),
       righe,
       errore,
       h('div', { class: 'riga-azioni finestrella-azioni' },

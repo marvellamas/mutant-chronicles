@@ -760,6 +760,8 @@ export function renderTavolo(radice, ctx) {
     const scelta = await scegliReimposta(stato.scontro, dado, soloId);
     if (!scelta) return false;
     const opz = { indietroMax: ctx.dati.mappa.iniziativa.indietro_max };
+    // lotto 248: senza il dado nei dati non si ritira con l'app (tirerebbe 0): si scrive a mano
+    if (dado.mancante && scelta.tutti) { avviso(dado.motivo, { tipo: 'info', durata: 10000, chiave: 'dado-mancante' }); return false; }
     const app = () => tira(dado).tiro;
     if (scelta.tutti) {
       if (!await chiedi({ titolo: 'Reimpostare l’Iniziativa di tutti?', testo: `Ognuno ritira ${dado.formula} con l’app; gli spareggi fra avversari si tirano di nuovo. Chi è di turno resta di turno. «Indietro» la annulla.`, si: 'Ritira per tutti' })) return false;

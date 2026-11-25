@@ -274,6 +274,7 @@ export function renderTab(ctx) {
     ctx.talenti ? ctx.talenti.disegna(ctx.talenti) : null,
     riquadroScontro(ctx),
     // punti liberi in eccesso: nella tab Abilità l'avviso sta sopra la tabella, con le Abilità segnate
+    avvisoDatiMancanti(tab.scheda),
     avvisoRegoleAggiornate(ctx, tab.scheda, { eccesso: corrente.id !== 'abilita' }),
     tab.errori?.length ? h('div', { class: 'riquadro attenzione' },
       h('p', {}, h('strong', {}, 'Scheda non ancora completa:')),
@@ -352,6 +353,19 @@ function avvisoRegoleAggiornate(ctx, scheda, { eccesso = true } = {}) {
       h('button', { type: 'button', class: 'btn primario', onclick: ctx.azioni.completaPunti }, 'Assegna'))) : null;
   // i due avvisi sono indipendenti: riquadri separati, quello dell'eccesso per primo (si toglie prima)
   return h('div', { class: 'avvisi-regole' }, ecc ? avvisoPuntiEccesso(ctx, ecc) : null, assegna);
+}
+
+/**
+ * lotto 248: le righe dei dati delle regole che mancano (gruppo D del registro dei blocchi). Non fermano il calcolo:
+ * la scheda si apre con il ripiego dichiarato, e qui si legge che cosa manca, con la chiave del file.
+ */
+function avvisoDatiMancanti(scheda) {
+  const righe = scheda?.datiMancanti ?? [];
+  if (!righe.length) return null;
+  return h('div', { class: 'riquadro attenzione avviso-dati-mancanti', role: 'status' },
+    h('p', {}, h('strong', {}, righe.length === 1 ? 'Manca una riga nei dati delle regole' : `Mancano ${righe.length} righe nei dati delle regole`),
+      ' — la scheda si calcola lo stesso con un ripiego, dichiarato qui sotto. Controllalo tu: i numeri che ne dipendono possono essere diversi da quelli del manuale.'),
+    h('ul', {}, righe.map((r) => h('li', {}, r.testo))));
 }
 
 /**

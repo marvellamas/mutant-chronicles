@@ -30,6 +30,7 @@ import { umanita, pmConUmanita } from './umanita.js';
 import { erroriParametriTalenti } from './calc.js';
 import { avvisoIncantesimo } from './quote-incantesimi.js';
 import { competenzaDi, baseIniziale, limiteAbilita, vaPersonale, puntiUtili, limiteConEccezioni, oltreIlLimite, profiloCompetenze, regimeAbilitaNuovo } from './competenze.js';
+import { apriRaccolta, chiudiRaccolta, conDatiMancanti, conRipiego, fasciaPiuVicina } from './dati-mancanti.js';
 
 /**
  * Il Talento a scelta di una Classe dal nome salvato nel file. Un Talento rinominato dal manuale conserva i nomi di prima
@@ -89,10 +90,14 @@ export function annullaUltimoLivello(personaggio) {
 // ---------------------------------------------------------------------------
 // Regole per livello (regole.json → avanzamento)
 
-function fascia(tabella, livello, campo) {
+function fascia(tabella, livello, campo, chiave = 'regole.json → avanzamento') {
   const f = tabella.find((x) => livello >= x.da && livello <= x.a);
-  if (!f) throw new RangeError(`Nessun valore per il livello ${livello}`);
-  return f[campo];
+  if (f) return f[campo];
+  // lotto 248: il livello non è in tabella (per esempio oltre il 20°). Si usa la fascia più vicina e si dichiara,
+  // invece di non far aprire la scheda: la decisione su un livello fuori tabella è del Direttore.
+  const vicina = fasciaPiuVicina(tabella, livello);
+  if (!vicina) throw new RangeError(`Nessun valore per il livello ${livello}`);
+  return conRipiego({ dato: `la fascia dei livelli (${campo})`, chiave, valore: `il livello ${livello}`, ripiego: vicina[campo], come: `quella dei livelli ${vicina.da}–${vicina.a} (${vicina[campo]})` });
 }
 
 export function eventiLivello(livello, dati) {
@@ -1780,6 +1785,14 @@ function magiaDelPersonaggio(stato, caratteristiche, dati) {
  * (src/condizioni.js); senza, coincidono con quelli a riposo (regole + equipaggiamento).
  */
 export function calcolaSchedaPersonaggio(personaggio, dati) {
+  // lotto 248: le righe dei dati che mancano viaggiano con la scheda (src/dati-mancanti.js)
+  apriRaccolta();
+  try {
+    return conDatiMancanti(calcolaSchedaPersonaggioGrezza(personaggio, dati));
+  } finally { chiudiRaccolta(); }
+}
+
+function calcolaSchedaPersonaggioGrezza(personaggio, dati) {
   const scheda = schedaARiposo(personaggio, dati);
   // S11: i bonus di circostanza mandati dal master valgono al tavolo come quelli del giocatore («dal master»)
   const creazione = migraPersonaggio(personaggio).creazione;

@@ -34,8 +34,11 @@ export const VERSIONE_SCONTRO = 1;
 /** Dado dell'Iniziativa in combattimento dai dati («1d10» → spec di src/tiri.js). */
 export function dadoIniziativa(dati) {
   const m = /^(\d+)d(\d+)$/.exec(String(dati.regole.iniziativa?.dado_in_combattimento ?? ''));
-  if (!m) throw new Error('regole.json → iniziativa.dado_in_combattimento mancante o non valido');
-  return specTiro({ dadi: Number(m[1]), facce: Number(m[2]) });
+  if (m) return specTiro({ dadi: Number(m[1]), facce: Number(m[2]) });
+  // lotto 248: senza il dado nei dati la plancia non si disegnava più, cioè lo scontro non si apriva. Adesso il dado
+  // manca e lo dice: l'Iniziativa si tira a mano e si scrive, e i pulsanti «Tira con l'app» non ci sono.
+  return { ...specTiro({ dadi: 0, facce: 1 }), mancante: true, formula: 'a mano',
+    motivo: 'Manca il dado dell’Iniziativa nei dati (regole.json → iniziativa.dado_in_combattimento): tiralo a mano e scrivi il numero.' };
 }
 
 /** Durata di uno Stato in Round dai dati («1+1d3 Round» → spec), oppure null («fino a quando…»). */
@@ -553,14 +556,20 @@ export function diTurno(s) {
  */
 export function registraDurata(s, partecipante, stato, tiro, adesso, dati = null) {
   const spec = durataStato(stato);
-  if (!spec) throw new Error(`${stato.nome}: durata non in Round (${stato.durata}), solo promemoria`);
-  const motivo = motivoFuoriIntervallo(tiro?.valore, spec);
-  if (motivo) throw new Error(motivo);
+  // lotto 248: se i dati di quello Stato non danno una formula in Round, l'app non sa quanti Round scrivere — ma il
+  // numero lo può scrivere il Direttore, e allora il contatore si mette lo stesso, dichiarando da dove viene.
+  const avvisi = [];
+  if (!spec) {
+    if (!Number.isInteger(tiro?.valore)) throw new Error(`${stato.nome}: durata non in Round (${stato.durata}): scrivi tu quanti Round`);
+    avvisi.push(`i dati danno «${stato.durata}», non Round: ${tiro.valore} scritti a mano`);
+  }
+  const motivo = spec ? motivoFuoriIntervallo(tiro?.valore, spec) : null;
+  if (motivo) avvisi.push(motivo);
   const p = s.partecipanti.find((x) => x.id === partecipante);
   // Giocatore §5.18: il Round di applicazione non conta, lo Stato finisce alla fine del Round R + N (regole.json → durate_round)
   const al = fineDurata(s.round, tiro.valore, dati);
-  const durate = [...s.durate.filter((d) => !(d.partecipante === partecipante && d.stato === stato.id)), { partecipante, stato: stato.id, nome: stato.nome, al, rimasti: al - s.round + 1 }];
-  return conRiga({ ...s, durate }, `${stato.nome} di ${p?.nome ?? partecipante}: ${tiro.valore} Round (${spec.formula}, ${tiro.origine === 'app' ? 'tirato dall’app' : 'dal vivo'}), fino alla fine del Round ${al}.`, adesso);
+  const durate = [...s.durate.filter((d) => !(d.partecipante === partecipante && d.stato === stato.id)), { partecipante, stato: stato.id, nome: stato.nome, al, rimasti: al - s.round + 1, ...(avvisi.length ? { avvisi } : {}) }];
+  return conRiga({ ...s, durate }, `${stato.nome} di ${p?.nome ?? partecipante}: ${tiro.valore} Round (${spec ? spec.formula : 'durata non in Round nei dati'}, ${tiro.origine === 'app' ? 'tirato dall’app' : 'dal vivo'}), fino alla fine del Round ${al}${avvisi.length ? ` — ${avvisi.join('; ')}` : ''}.`, adesso);
 }
 
 /**
