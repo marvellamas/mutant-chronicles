@@ -90,6 +90,7 @@ import {
 import { conOrdinale } from '../lingua.js';
 import { normalizzaCalendario, calendarioAttivo, attivaCalendario, disattivaCalendario, contaNote, fileCalendario, leggiFileCalendario, momentoCalendario } from '../calendario.js';
 import { testoNote } from './calendario.js';
+import { impostaChiAvvisa } from '../avvisi-invio.js';
 
 // Dopo la creazione si possono ancora cambiare solo i campi descrittivi: le altre scelte
 // determinano i livelli successivi (ricognizione dell'avanzamento, §8).
@@ -2232,6 +2233,9 @@ function renderScheda(opzioni = {}) {
 
 function renderSchedaInterna({ mantieniScorrimento = false } = {}) {
   nascondiTooltip();
+  // lotto 249: chi sta usando la scheda adesso, così ogni voce del diario del Direttore porta il nome senza che i
+  // 32 punti di «Procedi comunque» debbano passarlo (src/avvisi-invio.js)
+  impostaChiAvvisa(stato.scelte?.nome);
   const y = window.scrollY;
   const { dati } = stato;
   // Round collegato allo scontro (src/round-scontro.js): la sessione vista al Round dello scontro, in memoria; si

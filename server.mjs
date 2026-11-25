@@ -27,6 +27,11 @@
 //                                      409 con { esiste: true } («Aggiungi PG al tavolo»: non sovrascrive mai)
 //   GET /api/tavolo                    selezione del Tavolo del Master: { versione, personaggi: [nomi] }
 //   PUT /api/tavolo                    la salva in tavolo/sessione.json (fuori da git come personaggi/)
+//   GET /api/avvisi                    il diario del Direttore (lotto 249): { da_leggere, grosse, voci: [...] }
+//   POST /api/avvisi                   { chi, cosa, numeri?, motivo?, dove?, gravita? }: una voce, da chiunque (il
+//                                      tablet e il PC del Direttore); il server scrive «da» e l'ora
+//   POST /api/avvisi/letti             { ids: [...] | 'tutte' }, solo dal PC del Direttore: segna lette le voci,
+//                                      che **restano** (non cancella niente, qui né nello storico)
 //   GET /api/momento                   scena e capitolo della campagna (lotto 175, A.233): { scena, capitolo, ultimo? }
 //   POST /api/momento                  { azione: 'scena' | 'capitolo' | 'annulla' }, solo dal PC del master (403 dai
 //                                      tablet): numeri in tavolo/momento.json; non scrive nei file dei personaggi
@@ -160,6 +165,7 @@ import { creaGestore, leggiConfig } from './tools/salva-sessione.mjs';
 import { avvisoCartellaVuota, postiSalvataggi, rigaSalvataggio } from './tools/ripristina.mjs';
 import { bordoToken } from './src/mappa/colori.js';
 import { validaScontro, rigaOpportunita, rigaAiutoMaster, rigaMovimentoAvvisato, diTurno, registraRiga, scontroPerGiocatori } from './src/scontro.js';
+import { nuovoDiario, normalizzaDiario, aggiungi as aggiungiAvviso, nuovaVoce as nuovaVoceAvviso, segnaLetti as segnaLettiAvvisi, vista as vistaAvvisi } from './src/avvisi-direttore.js';
 import { validaBozza, STATO_BOZZA_ELIMINATA } from './src/preparazione.js';
 import { NOME_FILE, fileProvvisorio, ultimiPerPersonaggio, ultimiPerPg, fileAttuale, chiaveDaFile, chiavePersonaggio } from './src/cartella.js';
 import { conMetadati, serveCopia, copieDaTogliere, idPersonaggio, cartellaStorico, nomeCopiaStorica, CARTELLA_STORICO } from './src/storico-personaggi.js';
@@ -2076,6 +2082,35 @@ async function api(req, res, percorso, cartella, tavolo, scontri, nemici, radice
       await inCoda(dove, () => scriviJson(dove, v));
       if (v.personaggi.length) await migraVeicoliCartella({ cartella, veicoli: migraIn, radice, chiavi: v.personaggi }).catch(() => null);
       return json(res, 200, v);
+    }
+    return json(res, 405, { errore: 'metodo non ammesso' });
+  }
+  // lotto 249: il diario del Direttore — UN POSTO SOLO dove legge che cosa è successo di irregolare (src/avvisi-direttore.js).
+  // Scrive chiunque (il tablet di un giocatore e il PC del Direttore), legge chiunque, ma **segna letto solo il
+  // Direttore**: è la sua coda, non un contatore da azzerare per far proseguire il gioco. Il file sta in
+  // tavolo/avvisi.json, quindi sopravvive al riavvio del server e lo porta con sé «Salva sessione».
+  if (percorso === '/api/avvisi' || percorso === '/api/avvisi/letti') {
+    const dove = join(tavolo, 'avvisi.json');
+    const leggiD = async () => { try { return normalizzaDiario(JSON.parse(await readFile(dove, 'utf8'))); } catch { return nuovoDiario(); } };
+    if (percorso === '/api/avvisi' && req.method === 'GET') return json(res, 200, vistaAvvisi(await leggiD()));
+    if (percorso === '/api/avvisi' && req.method === 'POST') {
+      let c;
+      try { c = JSON.parse((await leggiCorpo(req, 8192)).toString('utf8')); } catch { return json(res, 400, { errore: 'corpo non valido' }); }
+      const voce = nuovaVoceAvviso({ ...c, da: c?.da ?? (req.mutantMaster ? 'dal PC del Direttore' : 'dal tablet') });
+      if (!voce) return json(res, 400, { errore: 'serve «cosa»: una riga che non dice niente è peggio di nessuna riga' });
+      await mkdir(tavolo, { recursive: true });
+      let esito = null;
+      await inCoda(dove, async () => { esito = aggiungiAvviso(await leggiD(), voce); await scriviJson(dove, esito); });
+      return json(res, 200, { ok: true, voce, ...vistaAvvisi(esito) });
+    }
+    if (percorso === '/api/avvisi/letti' && req.method === 'POST') {
+      if (!req.mutantMaster) return json(res, 403, { errore: 'le voci le segna lette il Direttore, dal PC del server' });
+      let c;
+      try { c = JSON.parse((await leggiCorpo(req, 65536)).toString('utf8')); } catch { return json(res, 400, { errore: 'corpo non valido' }); }
+      await mkdir(tavolo, { recursive: true });
+      let esito = null;
+      await inCoda(dove, async () => { esito = segnaLettiAvvisi(await leggiD(), c?.ids ?? 'tutte'); await scriviJson(dove, esito); });
+      return json(res, 200, vistaAvvisi(esito));
     }
     return json(res, 405, { errore: 'metodo non ammesso' });
   }

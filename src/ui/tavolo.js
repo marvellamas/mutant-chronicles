@@ -8,6 +8,7 @@ import { chiediCircostanza } from './master.js';
 import { procediComunque } from '../storico.js';
 import { h, svuota } from './dom.js';
 import { pulsanteSchermoIntero } from './schermo-intero.js';
+import { pulsanteAvvisi, pannelloAvvisi } from './avvisi.js';
 import { infoValore, nascondiTooltip } from './tooltip.js';
 import { iconaPagina } from './immagini.js';
 import { riempimento } from '../interfaccia.js';
@@ -532,6 +533,9 @@ export function renderTavolo(radice, ctx) {
           h('div', { class: 'riga-titolo' }, h('a', { class: 'marchio marchio-in-linea', href: '#/', title: 'Elenco dei personaggi' }, 'Mutant'),
             h('h1', { class: 'titolo-con-stemma' }, iconaPagina('combattimento', '96', { classe: 'badge-pagina', lato: 40 }), 'Tavolo del Master'),
             aggiornato,
+            // lotto 249: il tocco del diario del Direttore, nella riga che c'è già (0 px in più): un tocco e un
+            // contatore, mai un pannello sempre aperto (src/ui/avvisi.js)
+            pulsanteAvvisi(() => pannelloAvvisi()),
             // lotto 166: schermo intero accanto al titolo (src/ui/schermo-intero.js); nella plancia dentro la mappa c'è quello della mappa
             pulsanteSchermoIntero()),
           testataGruppi()),
