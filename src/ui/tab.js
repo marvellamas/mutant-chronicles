@@ -2375,6 +2375,8 @@ function alimentazioneUi(ctx, a) {
       opzioni.filter((o) => !o.attiva).map((o) => h('option', { value: o.id, selected: o.id === scelto }, o.nome))),
     ' ',
     h('button', { type: 'button', class: 'btn btn-piccolo', disabled: !scelto, title: scelto ? 'Cambia l’alimentazione di questo esemplare' : 'Prima scegli un’alimentazione', onclick: cambia }, 'Cambia alimentazione'),
+    // lotto 251: un pulsante spento dice perché, e il motivo si deve VEDERE — su un tablet il suggerimento non esiste
+    scelto ? null : h('small', { class: 'nota' }, ' Prima scegli un’alimentazione.'),
     h('br'), h('small', { class: 'sigla' }, 'Opzione di questo esemplare (A.309): non si compra niente, e nome, Integrità e storico restano.'),
     ...opzioni.filter((o) => o.conversione).map((o) => h('small', { class: 'nota' }, ` · ${o.nome}: ${o.capacita ? `${o.capacita.n} ${o.capacita.unita} (in attesa della ${o.capacita.attesa})` : 'capacità non dichiarata'}`)));
 }

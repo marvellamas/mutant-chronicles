@@ -1,6 +1,11 @@
 // Talenti nuovi, lotto 1 (25/10/2026): i personaggi salvati con i Talenti vecchi si aprono e calcolano come su `main`.
 // tests/fixtures/talenti-vecchi/: copie dei sette PG del gruppo (6° livello) e l'impronta dei loro valori calcolata su
 // `main` prima del lotto (attese.json, insieme ai cinque PG d'esempio). Se un numero cambia, è un difetto del lotto.
+//
+// Lotto 254 (rif. 07 del collaudo del 25/11/2026): in attese.json sono cambiate **sette stringhe e nessun numero**
+// — la condizione dell’effetto dell’Elmetto Recon ASA, che a schermo si legge «+1 VA a Percezione» invece della
+// citazione generica del manuale «+X VA a Percezione» (il calcolo usava già 1, A.294). Il confronto è stato fatto
+// campo per campo prima di toccare il file: 7 differenze, tutte in abilita[].disponibili[].condizione, 0 numeriche.
 import '../tools/guardia-subito.mjs'; // la guardia sulle cartelle vere, comunque si lanci il test
 import { test } from 'node:test';
 import assert from 'node:assert/strict';

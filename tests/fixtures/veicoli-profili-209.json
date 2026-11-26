@@ -1,5 +1,6 @@
 {
- "neverlost": "b87955d45b",
+ "neverlost": "7210610592",
  "asa-scout-mk4": "b0eb8c172d",
- "autovettura-civile": "58e8468596"
+ "autovettura-civile": "58e8468596",
+ "_nota": "Lotto 254 (rif. 09 del collaudo del 25/11/2026): l_impronta della Neverlost è cambiata per una ragione sola e voluta — il paragrafo del decollo (A.253) compariva TRE volte in mov_testo, perché il generatore del lotto 182 lo appendeva senza guardare se c_era già, e adesso compare una volta. Nessun numero del profilo è cambiato (MOV, MAN, PI, AR, riserve, scudo, prezzo): solo quel testo. Che compaia una volta sola lo pretende tests/nomi-fasce-254.test.js, e il generatore è idempotente. Impronta di prima: b87955d45b."
 }

@@ -104,3 +104,29 @@ test('il profilo della Neverlost non è cambiato: la fascia resta la stessa, cam
   assert.equal(a.nome, 'Veloce');
 });
 
+
+test('rif. 09: il censimento delle altre scale — due casi in tutto, entrambi dichiarati', () => {
+  // Il censimento chiesto dal rif. 09: oltre alle andature, nelle scale con gradini a nome (Ferite, Affaticamento,
+  // Corruzione, modalità di fuoco, frequenze, manovrabilità, copertura) **un solo altro gradino ha due nomi**: la
+  // modalità «Tiro Singolo», che il manuale chiama anche «Colpo Singolo» nella nota della famiglia dei Fucili a
+  // Pallini. È dichiarata in `nomi_alternativi` e il nome che l'app usa è uno solo. Il test tiene fermo il conto:
+  // un gradino nuovo con due nomi, o un secondo nome non dichiarato, lo fa diventare rosso.
+  const scale = [
+    ['Ferite', dati.regole.ferite?.stati], ['Affaticamento', dati.regole.affaticamento?.stati],
+    ['Corruzione', dati.regole.corruzione?.stati], ['frequenze', dati.regole.frequenze],
+    ['manovrabilità', dati.veicoli.manovrabilita.fasce], ['copertura', dati.veicoli.copertura.fasce],
+    ['andature', dati.veicoli.andature.elenco], ['modalità di fuoco', dati.regole.modalita_di_fuoco],
+  ];
+  const doppi = [];
+  for (const [dove, g] of scale) {
+    assert.ok(g, `la scala «${dove}» si legge dai dati`);
+    const voci = Array.isArray(g) ? g : Object.values(g);
+    for (const v of voci.filter((x) => x && typeof x === 'object')) {
+      for (const alt of v.nomi_alternativi ?? []) doppi.push(`${dove}: «${v.nome}» anche «${alt}»`);
+    }
+  }
+  assert.deepEqual(doppi.sort(), [
+    'andature: «Veloce» anche «Rapida»',
+    'modalità di fuoco: «Tiro Singolo» anche «Colpo Singolo»',
+  ], `i gradini con due nomi sono cambiati:\n${doppi.join('\n')}`);
+});

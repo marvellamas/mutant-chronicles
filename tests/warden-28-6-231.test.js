@@ -67,7 +67,12 @@ test('Cofanetto corazzato: Grado IV, Molto Rara, SnT 0, nessuna CM, solo proprie
   assert.equal(o.artefatto.contenitore, undefined, 'nessuna riserva: nessuna CM');
   assert.equal(o.attivazione_artefatto, undefined);
   assert.match(riga(t, 'Massa a vuoto / carico del contenuto'), new RegExp(`^${o.peso} kg /`));
-  assert.equal(riga(t, 'Qualità fisica / Integrità'), `${o.qualita}; PS ${o.ps_int}; ${o.pi} PI; AR ${o.ar}`);
+  // lotto 254 (rif. 07): l’AR di questa voce era l’unica scritta come numero nudo mentre tutte le altre sono
+  // { totale, magica }, e la vista ci leggeva «AR undefined». Il valore non cambia (4): cambia la forma, e il
+  // test la legge come la legge la vista invece di interpolare l’oggetto.
+  const ar = typeof o.ar === 'number' ? o.ar : o.ar.totale;
+  assert.equal(ar, 4, 'l’AR del manuale non cambia');
+  assert.equal(riga(t, 'Qualità fisica / Integrità'), `${o.qualita}; PS ${o.ps_int}; ${o.pi} PI; AR ${ar}`);
   assert.match(riga(t, 'Capacità mistica'), new RegExp(`^Tre punti complessivi di Corruzione`));
   assert.equal(o.schermatura.corruzione, 3);
   // e non è il Cofanetto del Silenzio ordinario del §10.13.3

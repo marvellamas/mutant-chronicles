@@ -23,7 +23,10 @@ test('LA CARTA DELL’ARMA DICE LA FONTE: PM personali, riserva di CM, NeC', () 
   const cm = rigaAlimentazione({ rif: 'armi:cyberarma-batteria-verde' }, dati);
   assert.match(cm.fonte, /CM/);
   assert.match(cm.testo, /10 Round/, 'una carica intera alimenta 10 Round (A.260)');
-  assert.match(cm.testo, /cariche: da registrare/, 'senza il valore della sessione la riga lo dice, non inventa un numero');
+  // lotto 254: la riga dice anche la capacità dichiarata dai dati e che aspetta la A.314; quello che questo
+  // controllo pretende resta lo stesso — senza il valore della sessione non si inventa un numero di cariche.
+  assert.match(cm.testo, /cariche di adesso: da registrare|cariche: da registrare/, 'senza il valore della sessione la riga lo dice, non inventa un numero');
+  assert.match(cm.testo, /in attesa della A.314/, 'e la capacità aspetta la A.314, non la scegliamo noi');
 
   const nec = rigaAlimentazione({ rif: 'armi:cyberarma-nec' }, dati);
   assert.match(nec.fonte, /NeC/);

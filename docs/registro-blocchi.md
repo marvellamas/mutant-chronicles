@@ -12,7 +12,7 @@ liberato l'avanzamento, il **lotto 246** (24/11) ha censito tutta l'app.
 
 ## Il conto
 
-**Totale 468** blocchi: **pagina 125**, **motore 170**, **server 173**.
+**Totale 469** blocchi: **pagina 126**, **motore 170**, **server 173**.
 Più **26 tolti** dal lotto 246 e **7 liberati** dal lotto 248, che restano scritti qui sotto perché non tornino.
 
 | gruppo | che cos'è | quanti |
@@ -20,7 +20,7 @@ Più **26 tolti** dal lotto 246 e **7 liberati** dal lotto 248, che restano scri
 | gruppo A | giudica una scelta o un contenuto del giocatore: **tolti tutti**, sono diventati avvisi | 0 (26 tolti) |
 | gruppo B | impedisce una scrittura sbagliata (un altro che salva, un dato impossibile, l'impianto del server) | 404 |
 | gruppo C | una regola che Davide ha approvato, con il numero della risposta | 41 |
-| gruppo D | l'app non sa che cosa fare: manca un dato. Dal lotto 248 lo dice e lascia passare; dove resta spento è perché non cambierebbe niente | 13 |
+| gruppo D | l'app non sa che cosa fare: manca un dato. Dal lotto 248 lo dice e lascia passare; dove resta spento è perché non cambierebbe niente | 14 |
 | gruppo E | aspettano Marcello (lotti 247 e 248): lasciarli passare darebbe un risultato vuoto, che non è un avviso | 10 |
 
 **Che cosa il censimento non può cercare, e va detto invece di fingere:** un riquadro che compare solo a condizione. In
@@ -127,7 +127,7 @@ Se Marcello ne toglie una, va ridichiarata a Davide.
 | `pagina:sezioneProgetti:disabled#2` | Scheda, tab Artefatti, progetto del Direttore, pulsante «Consegna l'arma» | La configurazione è incoerente: l'esemplare ha già una riserva interna o un NeC e resterebbe insieme ai PM personali, o sarebbe una seconda conversione | Pulsante spento e riquadro «La consegna è ferma: <motivo>.» con il rimando alla A.251 | Il Direttore non consegna l'arma del progetto (e l'arma non entra nell'inventario) | C | A.251 e A.271: una consegna non lascia mai insieme riserva interna e PM personali, e le conversioni non si cumulano; gli altri casi (forma non scelta, progetto non riuscito, budget superato) sono solo avvisi |
 | `pagina:apriTiro:disabled` | Scheda, finestrella del tiro di un valore, pulsante «Ripeti con <Capolavoro>» | Il Capolavoro è già stato usato in questa sessione, o in questa prova si è già usato un Capolavoro o già ripetuto il tiro | Pulsante spento, con il motivo nel suggerimento e, accanto, quando torna disponibile | Non ripete il tiro con il Capolavoro | C | A.259: un solo Capolavoro per prova, una sola ripetizione, un uso per sessione per ciascun Capolavoro |
 
-## Gruppo D — l'app non sa che cosa fare (13)
+## Gruppo D — l'app non sa che cosa fare (14)
 
 Non giudicano: manca un dato. **Dal lotto 248 (25/11) nessuno di questi ferma più il tavolo per un valore che non
 c'è**: dove manca una riga dei dati si usa la più vicina e la scheda lo dichiara (`src/dati-mancanti.js`), dove manca
@@ -153,6 +153,7 @@ gruppo E (passare darebbe un risultato vuoto, che non è un avviso); i sette il 
 | `motore:muoviVeicolo:throw` | Plancia e mappa, «Muovi» del veicolo | Nessuno scontro aperto, nessun conducente, il conducente non è nello scontro, il mezzo si è già mosso in questo Round, non è il turno del conducente, oppure l'andatura è Fermo | Niente: l'operazione si interrompe con il motivo (per esempio «già mosso nel Round 3 (con Pablo)» o «si muove all'Iniziativa di Pablo») | Muovere il veicolo | D | manca lo scontro o il conducente: non c’è niente da registrare. Le regole (già mosso, fuori turno, andatura Fermo) le supera «Muovi» con «Procedi comunque» — lotto 248: senza scontro aperto e senza conducente il mezzo si muove lo stesso («procedi comunque»), e il motivo resta scritto nel record. Il «no» resta per chi chiama senza «forza». |
 | `motore:decollaVeicolo:throw` | Mappa e tab Veicoli, «Decolla…» (A.253) | Il profilo non dichiara che il mezzo vola, il mezzo non è a terra, o i dati non hanno le regole del decollo | Niente: l'operazione si interrompe con il motivo («la Neverlost non è a terra: è in volo», «questo mezzo non vola») | Far decollare il mezzo | D | il profilo non dichiara che il mezzo vola, o lo stato di volo non lo consente: l’app dice che cosa manca — lotto 248: con la seconda conferma («Decolla comunque») il decollo si registra anche se il profilo non dichiara il volo o se le regole non sono nei dati, e il motivo finisce nel registro dello scontro. Il «no» resta per chi chiama senza «forza». |
 | `motore:atterraVeicolo:throw` | Mappa e tab Veicoli, «Atterra» (A.253) | Il profilo non dichiara che il mezzo vola, il mezzo è già a terra, o i dati non hanno le regole dell'atterraggio | Niente: l'operazione si interrompe con il motivo («la Neverlost è già a terra») | Far atterrare il mezzo | D | come sopra — lotto 248: come il decollo, con «Atterra comunque». |
+| `pagina:alimentazioneUi:disabled` | Scheda, tab Combattimento, carta dell'arma impugnata, «Cambia alimentazione» (solo in «Modifica master») | Nella tendina non è stata scelta nessuna alimentazione | Tasto spento con il motivo a vista accanto: «Prima scegli un'alimentazione.» | Non apre la conferma del cambio di alimentazione | D | **riga di mezzo** del 246: senza una scelta non ci sarebbe niente da cambiare, quindi non è un blocco ma un comando senza effetto. Non giudica la scelta: scelta un'alimentazione il comando è acceso per qualunque opzione, la conferma dice che cosa si perde e lascia procedere (lotto 254, rif. 05, A.309). |
 
 ## Liberati dal lotto 248 (7)
 
