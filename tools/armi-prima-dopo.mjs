@@ -35,7 +35,7 @@ export function vociA(ref, file, radice = '.') {
  * Il confronto fra due basi: `{ voci, uguali, cambiate, differenze, sparite, nuove }`.
  * Una voce sparita o nuova si dice a parte: nel 204 una rigenerazione cambiò un `id` e ruppe i rimandi.
  */
-export function confrontaBasi(ref, radice = '.', file = FILE_ARMI) {
+export function confrontaBasi(ref, radice = '.', file = FILE_ARMI, campi = CAMPI_CONFRONTO) {
   const esito = { voci: 0, uguali: 0, cambiate: 0, differenze: [], sparite: [], nuove: [] };
   for (const f of file) {
     const prima = vociA(ref, f, radice);
@@ -44,7 +44,7 @@ export function confrontaBasi(ref, radice = '.', file = FILE_ARMI) {
       esito.voci += 1;
       const d = dopo.get(id);
       if (!d) { esito.sparite.push({ file: f, id, nome: p.nome }); continue; }
-      const diverse = CAMPI_CONFRONTO.filter((k) => !uguale(p[k], d[k]));
+      const diverse = campi.filter((k) => !uguale(p[k], d[k]));
       if (!diverse.length) { esito.uguali += 1; continue; }
       esito.cambiate += 1;
       for (const k of diverse) {

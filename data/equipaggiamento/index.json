@@ -143,7 +143,7 @@
     {
       "id": "manufatti_lunari",
       "file": "manufatti_lunari.json",
-      "descrizione": "Manufatti lunari dei Mutanti: Pugnale e Spada lunare d’osso, Spada dei Tre Riflessi, Balestra e Quadrelli d’osso, Collana di papiro (Armamenti 0.90 §7.27, Equipaggiamento 0.42 §10.14, Magia 1.20 §26.8 e §28.5)"
+      "descrizione": "Manufatti lunari dei Mutanti: Pugnale e Spada lunare d’osso, Spada dei Tre Riflessi, Balestra e Quadrelli d’osso, Collana di papiro (Armamenti 0.92 §7.27, Equipaggiamento 0.42 §10.14, Magia 1.20 §26.8 e §28.5)"
     }
   ],
   "_nota_reperibilita": "Scala: Comune, Non comune, Rara, Molto rara, Leggendaria (risposta di Davide A.14, 28/09/2026). Leggendaria è superiore a Molto rara. I valori economici degli oggetti rari sono riferimenti per eventuali scambi, non un listino che garantisce l’acquisto: deve prima esistere un produttore o possessore disposto a cedere l’oggetto; una Prova di Oratoria, da sola, non crea questa disponibilità. La reperibilità resta distinta dalla potenza mistica e dalla Qualità costruttiva.",
@@ -242,7 +242,7 @@
   },
   "_nota_rif_sostituiti": "Voci di catalogo uscite perché sostituite da un’altra scheda: al caricamento di un personaggio (src/character.js → normalizza) la voce passa al rif nuovo, con lo stato tradotto se indicato.",
   "catalogo_armi": {
-    "edizione": "Armamenti 0.90",
+    "edizione": "Armamenti 0.92",
     "cyberarma_offerte": 5,
     "cyberarma_non_elencate": 3,
     "_nota_cyberarma": "Lotto 254 (rif. 05 del collaudo del 25/11/2026, A.309): nel catalogo si offrono le cinque CyberArma per colore del cristallo focalizzatore; l'originale e le due conversioni (riserva interna di CM, NeC) restano nei dati con `non_elencata` — si leggono e si risolvono, non si offrono — perché una scheda già scritta le cita e perché portano il profilo convertito. Le conversioni sono opzioni dello stesso esemplare: src/cyberarma.js → opzioniEsemplare, applicaAlimentazioneEsemplare.",

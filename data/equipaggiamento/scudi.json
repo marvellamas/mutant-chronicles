@@ -1,5 +1,5 @@
 {
-  "versione_manuale": "Armamenti 0.74",
+  "versione_manuale": "Armamenti 0.92",
   "fonte": "Manuale degli Armamenti v0.50, §7.4 Scudi e protezioni (pp. 23–30): tabelle §7.4.2 e §7.4.11, schede in prosa §7.4.1, §7.4.4–7.4.10, proprietà §7.4.3; lotto 3",
   "_nota": "Generato da tools/lotti/lotto3_scudi.mjs; da qui in poi si modifica questo file. «parata» sono i modificatori propri dello Scudo alle Parate (§7.4.11), prima di armatura, FOR insufficiente e altri effetti; «profili_alternativi» sono le condizioni che li cambiano (SIN collegato, Scudo Magico, Contenimento, Antiesplosione). Le proprietà e le note delle schede corporative sono trascritte dal testo in prosa.",
   "regole": [
@@ -53,7 +53,12 @@
       "ps_int": 10,
       "reperibilita": "CO",
       "costo": 500,
-      "proprieta": []
+      "proprieta": [],
+      "_edizione": {
+        "campi": {
+          "mov": "Armamenti 0.92"
+        }
+      }
     },
     {
       "id": "scudo-medio",
@@ -73,7 +78,7 @@
       },
       "for_richiesta": 5,
       "pi": 6,
-      "mov": 0,
+      "mov": -1,
       "parata": {
         "ravvicinata": 0,
         "distanza": -4
@@ -83,7 +88,12 @@
       "ps_int": 10,
       "reperibilita": "NC",
       "costo": 1500,
-      "proprieta": []
+      "proprieta": [],
+      "_edizione": {
+        "campi": {
+          "mov": "Armamenti 0.92"
+        }
+      }
     },
     {
       "id": "scudo-enorme",
@@ -103,7 +113,7 @@
       },
       "for_richiesta": 7,
       "pi": 8,
-      "mov": -1,
+      "mov": -2,
       "parata": {
         "ravvicinata": 0,
         "distanza": -4
@@ -116,9 +126,22 @@
       "proprieta": [
         {
           "nome": "Ingombrante",
-          "testo": "Gli Scudi enormi impongono −1 Q a Passo, Corsa e Scatto mentre sono impugnati. La penalità si somma a quelle pertinenti di armatura e arma e non viene eliminata soddisfacendo il requisito di FOR."
+          "testo": "Negli Scudi enormi, Ingombrante richiama le penalità della categoria: −2 Q a Passo, Corsa o Scatto e −1 VA agli attacchi e alle Prove di Agilità mentre sono impugnati. Non aggiunge una seconda applicazione delle stesse penalità. Il −1 VA non si applica alle Prove di Difese, comprese Schivate e Parate. Le penalità si sommano a quelle pertinenti di armatura e arma e non vengono eliminate soddisfacendo il requisito di FOR."
         }
-      ]
+      ],
+      "penalita": {
+        "agilita": -1,
+        "attacchi_ravvicinati": -1,
+        "attacchi_distanza": -1
+      },
+      "_nota_penalita": "Armamenti 0.92 §7.4 e Giocatore 0.69 §5.9 (revisione approvata il 24/11/2026): la categoria Enorme dà −1 VA agli attacchi e alle Prove di Agilità. Il −1 NON si applica alle Prove di Difese, comprese Schivate e Parate: per questo qui non c’è una chiave «difese», e il validatore non la ammette. Lo esclude src/equipaggiamento.js → penalitaScudo.",
+      "_edizione": {
+        "campi": {
+          "mov": "Armamenti 0.92",
+          "penalita": "Armamenti 0.92",
+          "proprieta.Ingombrante": "Armamenti 0.92"
+        }
+      }
     },
     {
       "id": "scudo-d-ordinanza-bleu",
@@ -138,7 +161,7 @@
       },
       "for_richiesta": 5,
       "pi": 6,
-      "mov": 0,
+      "mov": -1,
       "parata": {
         "ravvicinata": 0,
         "distanza": -4
@@ -161,7 +184,12 @@
           "nome": "Contenimento 1",
           "testo": "Concede +1 VA alle Parate ravvicinate effettuate con lo Scudo contro attacchi di Corpo a corpo. Non si applica contro Armi da Mischia o da Guerra e non concede bonus alle Prove per afferrare o Immobilizzare."
         }
-      ]
+      ],
+      "_edizione": {
+        "campi": {
+          "mov": "Armamenti 0.92"
+        }
+      }
     },
     {
       "id": "scudo-d-assalto-blitzer",
@@ -200,7 +228,12 @@
           "nome": "Difensiva 1 (ravvicinata)",
           "testo": "Negli scudi che la indicano come ravvicinata, concede +1 VA esclusivamente alle Parate ravvicinate effettuate con quello Scudo. Il Punisher la applica espressamente sia alle Parate ravvicinate sia a quelle a distanza. Il bonus non si trasferisce a una Parata effettuata con un’altra arma."
         }
-      ]
+      ],
+      "_edizione": {
+        "campi": {
+          "mov": "Armamenti 0.92"
+        }
+      }
     },
     {
       "id": "scudo-da-breccia-dei-dragoni",
@@ -220,7 +253,7 @@
       },
       "for_richiesta": 7,
       "pi": 10,
-      "mov": -1,
+      "mov": -2,
       "parata": {
         "ravvicinata": 0,
         "distanza": -4
@@ -249,7 +282,7 @@
         },
         {
           "nome": "Ingombrante",
-          "testo": "Gli Scudi enormi impongono −1 Q a Passo, Corsa e Scatto mentre sono impugnati. La penalità si somma a quelle pertinenti di armatura e arma e non viene eliminata soddisfacendo il requisito di FOR."
+          "testo": "Negli Scudi enormi, Ingombrante richiama le penalità della categoria: −2 Q a Passo, Corsa o Scatto e −1 VA agli attacchi e alle Prove di Agilità mentre sono impugnati. Non aggiunge una seconda applicazione delle stesse penalità. Il −1 VA non si applica alle Prove di Difese, comprese Schivate e Parate. Le penalità si sommano a quelle pertinenti di armatura e arma e non vengono eliminate soddisfacendo il requisito di FOR."
         }
       ],
       "effetti": [
@@ -262,7 +295,20 @@
           "fonte": "Armamenti §7.4.3",
           "proprieta": "Antiesplosione 1"
         }
-      ]
+      ],
+      "penalita": {
+        "agilita": -1,
+        "attacchi_ravvicinati": -1,
+        "attacchi_distanza": -1
+      },
+      "_nota_penalita": "Armamenti 0.92 §7.4 e Giocatore 0.69 §5.9 (revisione approvata il 24/11/2026): la categoria Enorme dà −1 VA agli attacchi e alle Prove di Agilità. Il −1 NON si applica alle Prove di Difese, comprese Schivate e Parate: per questo qui non c’è una chiave «difese», e il validatore non la ammette. Lo esclude src/equipaggiamento.js → penalitaScudo.",
+      "_edizione": {
+        "campi": {
+          "mov": "Armamenti 0.92",
+          "penalita": "Armamenti 0.92",
+          "proprieta.Ingombrante": "Armamenti 0.92"
+        }
+      }
     },
     {
       "id": "scudo-delle-guardie-ducali",
@@ -282,7 +328,7 @@
       },
       "for_richiesta": 5,
       "pi": 8,
-      "mov": 0,
+      "mov": -1,
       "parata": {
         "ravvicinata": 1,
         "distanza": -4
@@ -301,7 +347,12 @@
           "nome": "Difensiva 1 (ravvicinata)",
           "testo": "Negli scudi che la indicano come ravvicinata, concede +1 VA esclusivamente alle Parate ravvicinate effettuate con quello Scudo. Il Punisher la applica espressamente sia alle Parate ravvicinate sia a quelle a distanza. Il bonus non si trasferisce a una Parata effettuata con un’altra arma."
         }
-      ]
+      ],
+      "_edizione": {
+        "campi": {
+          "mov": "Armamenti 0.92"
+        }
+      }
     },
     {
       "id": "scudo-compatto-asa",
@@ -336,7 +387,12 @@
           "nome": "Ripiegabile",
           "testo": "Aprire o richiudere lo Scudo già pronto richiede 1 AzP. Chiuso non concede AR e non consente Parate. Aperto occupa una mano, è riconoscibile e fornisce AR +1, Parata ravvicinata 0 e a distanza −4 VA (§7.4.5)."
         }
-      ]
+      ],
+      "_edizione": {
+        "campi": {
+          "mov": "Armamenti 0.92"
+        }
+      }
     },
     {
       "id": "scudo-punisher",
@@ -356,7 +412,7 @@
       },
       "for_richiesta": 5,
       "pi": 8,
-      "mov": 0,
+      "mov": -1,
       "parata": {
         "ravvicinata": 1,
         "distanza": -3
@@ -379,7 +435,12 @@
           "nome": "Difensiva 1 (ravvicinata e a distanza)",
           "testo": "Negli scudi che la indicano come ravvicinata, concede +1 VA esclusivamente alle Parate ravvicinate effettuate con quello Scudo. Il Punisher la applica espressamente sia alle Parate ravvicinate sia a quelle a distanza. Il bonus non si trasferisce a una Parata effettuata con un’altra arma."
         }
-      ]
+      ],
+      "_edizione": {
+        "campi": {
+          "mov": "Armamenti 0.92"
+        }
+      }
     },
     {
       "id": "scudo-da-sfondamento-bastion",
@@ -399,7 +460,7 @@
       },
       "for_richiesta": 7,
       "pi": 10,
-      "mov": -1,
+      "mov": -2,
       "parata": {
         "ravvicinata": 0,
         "distanza": -4
@@ -420,9 +481,22 @@
         },
         {
           "nome": "Ingombrante",
-          "testo": "Gli Scudi enormi impongono −1 Q a Passo, Corsa e Scatto mentre sono impugnati. La penalità si somma a quelle pertinenti di armatura e arma e non viene eliminata soddisfacendo il requisito di FOR."
+          "testo": "Negli Scudi enormi, Ingombrante richiama le penalità della categoria: −2 Q a Passo, Corsa o Scatto e −1 VA agli attacchi e alle Prove di Agilità mentre sono impugnati. Non aggiunge una seconda applicazione delle stesse penalità. Il −1 VA non si applica alle Prove di Difese, comprese Schivate e Parate. Le penalità si sommano a quelle pertinenti di armatura e arma e non vengono eliminate soddisfacendo il requisito di FOR."
         }
-      ]
+      ],
+      "penalita": {
+        "agilita": -1,
+        "attacchi_ravvicinati": -1,
+        "attacchi_distanza": -1
+      },
+      "_nota_penalita": "Armamenti 0.92 §7.4 e Giocatore 0.69 §5.9 (revisione approvata il 24/11/2026): la categoria Enorme dà −1 VA agli attacchi e alle Prove di Agilità. Il −1 NON si applica alle Prove di Difese, comprese Schivate e Parate: per questo qui non c’è una chiave «difese», e il validatore non la ammette. Lo esclude src/equipaggiamento.js → penalitaScudo.",
+      "_edizione": {
+        "campi": {
+          "mov": "Armamenti 0.92",
+          "penalita": "Armamenti 0.92",
+          "proprieta.Ingombrante": "Armamenti 0.92"
+        }
+      }
     },
     {
       "id": "scudo-antisommossa-css",
@@ -442,7 +516,7 @@
       },
       "for_richiesta": 5,
       "pi": 6,
-      "mov": 0,
+      "mov": -1,
       "parata": {
         "ravvicinata": 0,
         "distanza": -4
@@ -465,7 +539,12 @@
           "nome": "Contenimento 1",
           "testo": "Concede +1 VA alle Parate ravvicinate effettuate con lo Scudo contro attacchi di Corpo a corpo. Non si applica contro Armi da Mischia o da Guerra e non concede bonus alle Prove per afferrare o Immobilizzare."
         }
-      ]
+      ],
+      "_edizione": {
+        "campi": {
+          "mov": "Armamenti 0.92"
+        }
+      }
     },
     {
       "id": "scudo-tattico-alpha",
@@ -485,7 +564,7 @@
       },
       "for_richiesta": 5,
       "pi": 6,
-      "mov": 0,
+      "mov": -1,
       "parata": {
         "ravvicinata": 0,
         "distanza": -3
@@ -500,7 +579,12 @@
           "nome": "Intercettazione balistica 1",
           "testo": "Riduce di 1 la penalità alla Parata contro attacchi a distanza: il −4 dello Scudo diventa −3 VA. Non aumenta l’AR, non modifica la Parata ravvicinata e non rende parabile un attacco che normalmente non lo è."
         }
-      ]
+      ],
+      "_edizione": {
+        "campi": {
+          "mov": "Armamenti 0.92"
+        }
+      }
     },
     {
       "id": "scudo-da-breccia-free-marines",
@@ -520,7 +604,7 @@
       },
       "for_richiesta": 7,
       "pi": 10,
-      "mov": -1,
+      "mov": -2,
       "parata": {
         "ravvicinata": 0,
         "distanza": -4
@@ -549,7 +633,7 @@
         },
         {
           "nome": "Ingombrante",
-          "testo": "Gli Scudi enormi impongono −1 Q a Passo, Corsa e Scatto mentre sono impugnati. La penalità si somma a quelle pertinenti di armatura e arma e non viene eliminata soddisfacendo il requisito di FOR."
+          "testo": "Negli Scudi enormi, Ingombrante richiama le penalità della categoria: −2 Q a Passo, Corsa o Scatto e −1 VA agli attacchi e alle Prove di Agilità mentre sono impugnati. Non aggiunge una seconda applicazione delle stesse penalità. Il −1 VA non si applica alle Prove di Difese, comprese Schivate e Parate. Le penalità si sommano a quelle pertinenti di armatura e arma e non vengono eliminate soddisfacendo il requisito di FOR."
         }
       ],
       "effetti": [
@@ -562,7 +646,20 @@
           "fonte": "Armamenti §7.4.3",
           "proprieta": "Antiesplosione 1"
         }
-      ]
+      ],
+      "penalita": {
+        "agilita": -1,
+        "attacchi_ravvicinati": -1,
+        "attacchi_distanza": -1
+      },
+      "_nota_penalita": "Armamenti 0.92 §7.4 e Giocatore 0.69 §5.9 (revisione approvata il 24/11/2026): la categoria Enorme dà −1 VA agli attacchi e alle Prove di Agilità. Il −1 NON si applica alle Prove di Difese, comprese Schivate e Parate: per questo qui non c’è una chiave «difese», e il validatore non la ammette. Lo esclude src/equipaggiamento.js → penalitaScudo.",
+      "_edizione": {
+        "campi": {
+          "mov": "Armamenti 0.92",
+          "penalita": "Armamenti 0.92",
+          "proprieta.Ingombrante": "Armamenti 0.92"
+        }
+      }
     },
     {
       "id": "scudo-della-sicurezza",
@@ -582,7 +679,7 @@
       },
       "for_richiesta": 5,
       "pi": 6,
-      "mov": 0,
+      "mov": -1,
       "parata": {
         "ravvicinata": 0,
         "distanza": -4
@@ -605,7 +702,12 @@
           "nome": "SIN 1",
           "testo": "SIN 1 concede +1 VA e SIN 2 concede +2 VA alle Prove di Parata effettuate con lo Scudo, ravvicinate e a distanza. Il beneficio richiede un Innesto di Interfaccia Neurale compatibile e attivo; gli innesti Cybertronic si abbinano automaticamente, quelli di altre marche seguono la configurazione con Tecnologia del §7.15.1. Senza collegamento lo Scudo mantiene AR e funzionamento ordinari, ma non il bonus SIN."
         }
-      ]
+      ],
+      "_edizione": {
+        "campi": {
+          "mov": "Armamenti 0.92"
+        }
+      }
     },
     {
       "id": "scudo-d-assalto-chasseur",
@@ -625,7 +727,7 @@
       },
       "for_richiesta": 5,
       "pi": 8,
-      "mov": 0,
+      "mov": -1,
       "parata": {
         "ravvicinata": 0,
         "distanza": -4
@@ -652,7 +754,12 @@
           "nome": "SIN 2",
           "testo": "SIN 1 concede +1 VA e SIN 2 concede +2 VA alle Prove di Parata effettuate con lo Scudo, ravvicinate e a distanza. Il beneficio richiede un Innesto di Interfaccia Neurale compatibile e attivo; gli innesti Cybertronic si abbinano automaticamente, quelli di altre marche seguono la configurazione con Tecnologia del §7.15.1. Senza collegamento lo Scudo mantiene AR e funzionamento ordinari, ma non il bonus SIN."
         }
-      ]
+      ],
+      "_edizione": {
+        "campi": {
+          "mov": "Armamenti 0.92"
+        }
+      }
     },
     {
       "id": "scudo-pesante-reaver",
@@ -672,7 +779,7 @@
       },
       "for_richiesta": 7,
       "pi": 10,
-      "mov": -1,
+      "mov": -2,
       "parata": {
         "ravvicinata": 0,
         "distanza": -4
@@ -701,9 +808,22 @@
         },
         {
           "nome": "Ingombrante",
-          "testo": "Gli Scudi enormi impongono −1 Q a Passo, Corsa e Scatto mentre sono impugnati. La penalità si somma a quelle pertinenti di armatura e arma e non viene eliminata soddisfacendo il requisito di FOR."
+          "testo": "Negli Scudi enormi, Ingombrante richiama le penalità della categoria: −2 Q a Passo, Corsa o Scatto e −1 VA agli attacchi e alle Prove di Agilità mentre sono impugnati. Non aggiunge una seconda applicazione delle stesse penalità. Il −1 VA non si applica alle Prove di Difese, comprese Schivate e Parate. Le penalità si sommano a quelle pertinenti di armatura e arma e non vengono eliminate soddisfacendo il requisito di FOR."
         }
-      ]
+      ],
+      "penalita": {
+        "agilita": -1,
+        "attacchi_ravvicinati": -1,
+        "attacchi_distanza": -1
+      },
+      "_nota_penalita": "Armamenti 0.92 §7.4 e Giocatore 0.69 §5.9 (revisione approvata il 24/11/2026): la categoria Enorme dà −1 VA agli attacchi e alle Prove di Agilità. Il −1 NON si applica alle Prove di Difese, comprese Schivate e Parate: per questo qui non c’è una chiave «difese», e il validatore non la ammette. Lo esclude src/equipaggiamento.js → penalitaScudo.",
+      "_edizione": {
+        "campi": {
+          "mov": "Armamenti 0.92",
+          "penalita": "Armamenti 0.92",
+          "proprieta.Ingombrante": "Armamenti 0.92"
+        }
+      }
     },
     {
       "id": "scudo-da-trincea-trencher",
@@ -723,7 +843,7 @@
       },
       "for_richiesta": 7,
       "pi": 10,
-      "mov": -1,
+      "mov": -2,
       "parata": {
         "ravvicinata": 0,
         "distanza": -4
@@ -744,9 +864,22 @@
         },
         {
           "nome": "Ingombrante",
-          "testo": "Gli Scudi enormi impongono −1 Q a Passo, Corsa e Scatto mentre sono impugnati. La penalità si somma a quelle pertinenti di armatura e arma e non viene eliminata soddisfacendo il requisito di FOR."
+          "testo": "Negli Scudi enormi, Ingombrante richiama le penalità della categoria: −2 Q a Passo, Corsa o Scatto e −1 VA agli attacchi e alle Prove di Agilità mentre sono impugnati. Non aggiunge una seconda applicazione delle stesse penalità. Il −1 VA non si applica alle Prove di Difese, comprese Schivate e Parate. Le penalità si sommano a quelle pertinenti di armatura e arma e non vengono eliminate soddisfacendo il requisito di FOR."
         }
-      ]
+      ],
+      "penalita": {
+        "agilita": -1,
+        "attacchi_ravvicinati": -1,
+        "attacchi_distanza": -1
+      },
+      "_nota_penalita": "Armamenti 0.92 §7.4 e Giocatore 0.69 §5.9 (revisione approvata il 24/11/2026): la categoria Enorme dà −1 VA agli attacchi e alle Prove di Agilità. Il −1 NON si applica alle Prove di Difese, comprese Schivate e Parate: per questo qui non c’è una chiave «difese», e il validatore non la ammette. Lo esclude src/equipaggiamento.js → penalitaScudo.",
+      "_edizione": {
+        "campi": {
+          "mov": "Armamenti 0.92",
+          "penalita": "Armamenti 0.92",
+          "proprieta.Ingombrante": "Armamenti 0.92"
+        }
+      }
     },
     {
       "id": "scudo-d-assalto-dei-clan",
@@ -785,7 +918,12 @@
           "nome": "Difensiva 1 (ravvicinata)",
           "testo": "Negli scudi che la indicano come ravvicinata, concede +1 VA esclusivamente alle Parate ravvicinate effettuate con quello Scudo. Il Punisher la applica espressamente sia alle Parate ravvicinate sia a quelle a distanza. Il bonus non si trasferisce a una Parata effettuata con un’altra arma."
         }
-      ]
+      ],
+      "_edizione": {
+        "campi": {
+          "mov": "Armamenti 0.92"
+        }
+      }
     },
     {
       "id": "scudo-della-young-guard",
@@ -805,7 +943,7 @@
       },
       "for_richiesta": 5,
       "pi": 8,
-      "mov": 0,
+      "mov": -1,
       "parata": {
         "ravvicinata": 1,
         "distanza": -4
@@ -824,7 +962,12 @@
           "nome": "Difensiva 1 (ravvicinata)",
           "testo": "Negli scudi che la indicano come ravvicinata, concede +1 VA esclusivamente alle Parate ravvicinate effettuate con quello Scudo. Il Punisher la applica espressamente sia alle Parate ravvicinate sia a quelle a distanza. Il bonus non si trasferisce a una Parata effettuata con un’altra arma."
         }
-      ]
+      ],
+      "_edizione": {
+        "campi": {
+          "mov": "Armamenti 0.92"
+        }
+      }
     },
     {
       "id": "scudo-da-campo-ashigaru",
@@ -844,7 +987,7 @@
       },
       "for_richiesta": 5,
       "pi": 6,
-      "mov": 0,
+      "mov": -1,
       "parata": {
         "ravvicinata": 0,
         "distanza": -4
@@ -859,7 +1002,12 @@
           "nome": "Manutenzione semplice",
           "testo": "Concede +1 VA alle Prove di Tecnologia per riparare questo Scudo, disponendo di strumenti e materiali necessari. Non riduce automaticamente tempi o costi e non ripristina PI senza una riparazione."
         }
-      ]
+      ],
+      "_edizione": {
+        "campi": {
+          "mov": "Armamenti 0.92"
+        }
+      }
     },
     {
       "id": "scudo-da-duello-samurai",
@@ -898,7 +1046,12 @@
           "nome": "Difensiva 1 (ravvicinata)",
           "testo": "Negli scudi che la indicano come ravvicinata, concede +1 VA esclusivamente alle Parate ravvicinate effettuate con quello Scudo. Il Punisher la applica espressamente sia alle Parate ravvicinate sia a quelle a distanza. Il bonus non si trasferisce a una Parata effettuata con un’altra arma."
         }
-      ]
+      ],
+      "_edizione": {
+        "campi": {
+          "mov": "Armamenti 0.92"
+        }
+      }
     },
     {
       "id": "scudo-pesante-hatamoto",
@@ -918,7 +1071,7 @@
       },
       "for_richiesta": 7,
       "pi": 10,
-      "mov": -1,
+      "mov": -2,
       "parata": {
         "ravvicinata": 0,
         "distanza": -4
@@ -939,9 +1092,22 @@
         },
         {
           "nome": "Ingombrante",
-          "testo": "Gli Scudi enormi impongono −1 Q a Passo, Corsa e Scatto mentre sono impugnati. La penalità si somma a quelle pertinenti di armatura e arma e non viene eliminata soddisfacendo il requisito di FOR."
+          "testo": "Negli Scudi enormi, Ingombrante richiama le penalità della categoria: −2 Q a Passo, Corsa o Scatto e −1 VA agli attacchi e alle Prove di Agilità mentre sono impugnati. Non aggiunge una seconda applicazione delle stesse penalità. Il −1 VA non si applica alle Prove di Difese, comprese Schivate e Parate. Le penalità si sommano a quelle pertinenti di armatura e arma e non vengono eliminate soddisfacendo il requisito di FOR."
         }
-      ]
+      ],
+      "penalita": {
+        "agilita": -1,
+        "attacchi_ravvicinati": -1,
+        "attacchi_distanza": -1
+      },
+      "_nota_penalita": "Armamenti 0.92 §7.4 e Giocatore 0.69 §5.9 (revisione approvata il 24/11/2026): la categoria Enorme dà −1 VA agli attacchi e alle Prove di Agilità. Il −1 NON si applica alle Prove di Difese, comprese Schivate e Parate: per questo qui non c’è una chiave «difese», e il validatore non la ammette. Lo esclude src/equipaggiamento.js → penalitaScudo.",
+      "_edizione": {
+        "campi": {
+          "mov": "Armamenti 0.92",
+          "penalita": "Armamenti 0.92",
+          "proprieta.Ingombrante": "Armamenti 0.92"
+        }
+      }
     },
     {
       "id": "scudo-del-pellegrino",
@@ -980,7 +1146,12 @@
           "nome": "Difensiva 1 (ravvicinata)",
           "testo": "Negli scudi che la indicano come ravvicinata, concede +1 VA esclusivamente alle Parate ravvicinate effettuate con quello Scudo. Il Punisher la applica espressamente sia alle Parate ravvicinate sia a quelle a distanza. Il bonus non si trasferisce a una Parata effettuata con un’altra arma."
         }
-      ]
+      ],
+      "_edizione": {
+        "campi": {
+          "mov": "Armamenti 0.92"
+        }
+      }
     },
     {
       "id": "scudo-della-sentinella",
@@ -1000,7 +1171,7 @@
       },
       "for_richiesta": 5,
       "pi": 6,
-      "mov": 0,
+      "mov": -1,
       "parata": {
         "ravvicinata": 0,
         "distanza": -3
@@ -1015,7 +1186,12 @@
           "nome": "Intercettazione balistica 1",
           "testo": "Riduce di 1 la penalità alla Parata contro attacchi a distanza: il −4 dello Scudo diventa −3 VA. Non aumenta l’AR, non modifica la Parata ravvicinata e non rende parabile un attacco che normalmente non lo è."
         }
-      ]
+      ],
+      "_edizione": {
+        "campi": {
+          "mov": "Armamenti 0.92"
+        }
+      }
     },
     {
       "id": "scudo-dei-sacri-guerrieri",
@@ -1035,7 +1211,7 @@
       },
       "for_richiesta": 7,
       "pi": 10,
-      "mov": -1,
+      "mov": -2,
       "parata": {
         "ravvicinata": 0,
         "distanza": -4
@@ -1056,9 +1232,22 @@
         },
         {
           "nome": "Ingombrante",
-          "testo": "Gli Scudi enormi impongono −1 Q a Passo, Corsa e Scatto mentre sono impugnati. La penalità si somma a quelle pertinenti di armatura e arma e non viene eliminata soddisfacendo il requisito di FOR."
+          "testo": "Negli Scudi enormi, Ingombrante richiama le penalità della categoria: −2 Q a Passo, Corsa o Scatto e −1 VA agli attacchi e alle Prove di Agilità mentre sono impugnati. Non aggiunge una seconda applicazione delle stesse penalità. Il −1 VA non si applica alle Prove di Difese, comprese Schivate e Parate. Le penalità si sommano a quelle pertinenti di armatura e arma e non vengono eliminate soddisfacendo il requisito di FOR."
         }
-      ]
+      ],
+      "penalita": {
+        "agilita": -1,
+        "attacchi_ravvicinati": -1,
+        "attacchi_distanza": -1
+      },
+      "_nota_penalita": "Armamenti 0.92 §7.4 e Giocatore 0.69 §5.9 (revisione approvata il 24/11/2026): la categoria Enorme dà −1 VA agli attacchi e alle Prove di Agilità. Il −1 NON si applica alle Prove di Difese, comprese Schivate e Parate: per questo qui non c’è una chiave «difese», e il validatore non la ammette. Lo esclude src/equipaggiamento.js → penalitaScudo.",
+      "_edizione": {
+        "campi": {
+          "mov": "Armamenti 0.92",
+          "penalita": "Armamenti 0.92",
+          "proprieta.Ingombrante": "Armamenti 0.92"
+        }
+      }
     },
     {
       "id": "scudo-delle-guardie-sacre",
@@ -1078,7 +1267,7 @@
       },
       "for_richiesta": 5,
       "pi": 6,
-      "mov": 0,
+      "mov": -1,
       "parata": {
         "ravvicinata": 0,
         "distanza": -4
@@ -1135,7 +1324,12 @@
           "fonte": "Armamenti §7.4.10",
           "proprieta": "Scudo Magico"
         }
-      ]
+      ],
+      "_edizione": {
+        "campi": {
+          "mov": "Armamenti 0.92"
+        }
+      }
     },
     {
       "id": "scudo-leggero-di-servizio-b10",
@@ -1168,9 +1362,15 @@
       "proprieta": [
         {
           "nome": "Manutenzione semplice",
-          "testo": "+1 VA a Tecnologia per riparare quell’oggetto, con strumenti e materiali necessari. Non ripristina PI automaticamente e non riduce da sola tempi o costi (§7.22.5)."
+          "testo": "Concede +1 VA alle Prove di Tecnologia per riparare questo Scudo, disponendo di strumenti e materiali necessari. Non riduce automaticamente tempi o costi e non ripristina PI senza una riparazione."
         }
-      ]
+      ],
+      "_edizione": {
+        "campi": {
+          "mov": "Armamenti 0.92",
+          "proprieta.Manutenzione semplice": "Armamenti 0.92"
+        }
+      }
     },
     {
       "id": "scudo-compatto-css",
@@ -1211,9 +1411,15 @@
       "proprieta": [
         {
           "nome": "Contenimento 1",
-          "testo": "+1 VA alle Parate ravvicinate effettuate con quello Scudo contro Corpo a corpo; non contro Armi da Mischia o da Guerra (§7.22.5)."
+          "testo": "Concede +1 VA alle Parate ravvicinate effettuate con lo Scudo contro attacchi di Corpo a corpo. Non si applica contro Armi da Mischia o da Guerra e non concede bonus alle Prove per afferrare o Immobilizzare."
         }
-      ]
+      ],
+      "_edizione": {
+        "campi": {
+          "mov": "Armamenti 0.92",
+          "proprieta.Contenimento 1": "Armamenti 0.92"
+        }
+      }
     },
     {
       "id": "scudo-di-servizio-s100",
@@ -1248,7 +1454,12 @@
           "nome": "Isolante 1",
           "testo": "Contromisura di soglia 1 contro l’effetto aggiuntivo Elettricità; non riduce ulteriormente il danno (§7.22.5)."
         }
-      ]
+      ],
+      "_edizione": {
+        "campi": {
+          "mov": "Armamenti 0.92"
+        }
+      }
     },
     {
       "id": "scudo-dell-accolito",
@@ -1283,7 +1494,12 @@
           "nome": "Imbottita 1",
           "testo": "Contromisura di soglia 1 contro l’effetto aggiuntivo Concussivo; non riduce ulteriormente il danno (§7.22.5)."
         }
-      ]
+      ],
+      "_edizione": {
+        "campi": {
+          "mov": "Armamenti 0.92"
+        }
+      }
     },
     {
       "id": "scudo-leggero-territoriale-dei-clan",
@@ -1316,9 +1532,15 @@
       "proprieta": [
         {
           "nome": "Struttura robusta",
-          "testo": "+2 PI massimi, già inclusi nella tabella del modello; nessun incremento della PS Integrità (§7.22.5)."
+          "testo": "Aggiunge 2 PI massimi, già compresi nei valori del catalogo. Il beneficio non aumenta la PS Integrità e non va conteggiato di nuovo."
         }
-      ]
+      ],
+      "_edizione": {
+        "campi": {
+          "mov": "Armamenti 0.92",
+          "proprieta.Struttura robusta": "Armamenti 0.92"
+        }
+      }
     },
     {
       "id": "scudo-leggero-ashigaru",
@@ -1351,9 +1573,15 @@
       "proprieta": [
         {
           "nome": "Manutenzione semplice",
-          "testo": "+1 VA a Tecnologia per riparare quell’oggetto, con strumenti e materiali necessari. Non ripristina PI automaticamente e non riduce da sola tempi o costi (§7.22.5)."
+          "testo": "Concede +1 VA alle Prove di Tecnologia per riparare questo Scudo, disponendo di strumenti e materiali necessari. Non riduce automaticamente tempi o costi e non ripristina PI senza una riparazione."
         }
-      ]
+      ],
+      "_edizione": {
+        "campi": {
+          "mov": "Armamenti 0.92",
+          "proprieta.Manutenzione semplice": "Armamenti 0.92"
+        }
+      }
     },
     {
       "id": "scudo-di-servizio-b20",
@@ -1373,7 +1601,7 @@
       },
       "for_richiesta": 5,
       "pi": 6,
-      "mov": 0,
+      "mov": -1,
       "parata": {
         "ravvicinata": 0,
         "distanza": -4
@@ -1386,9 +1614,15 @@
       "proprieta": [
         {
           "nome": "Manutenzione semplice",
-          "testo": "+1 VA a Tecnologia per riparare quell’oggetto, con strumenti e materiali necessari. Non ripristina PI automaticamente e non riduce da sola tempi o costi (§7.22.5)."
+          "testo": "Concede +1 VA alle Prove di Tecnologia per riparare questo Scudo, disponendo di strumenti e materiali necessari. Non riduce automaticamente tempi o costi e non ripristina PI senza una riparazione."
         }
-      ]
+      ],
+      "_edizione": {
+        "campi": {
+          "mov": "Armamenti 0.92",
+          "proprieta.Manutenzione semplice": "Armamenti 0.92"
+        }
+      }
     },
     {
       "id": "scudo-di-servizio-s200",
@@ -1408,7 +1642,7 @@
       },
       "for_richiesta": 5,
       "pi": 6,
-      "mov": 0,
+      "mov": -1,
       "parata": {
         "ravvicinata": 0,
         "distanza": -4
@@ -1423,7 +1657,12 @@
           "nome": "Isolante 1",
           "testo": "Contromisura di soglia 1 contro l’effetto aggiuntivo Elettricità; non riduce ulteriormente il danno (§7.22.5)."
         }
-      ]
+      ],
+      "_edizione": {
+        "campi": {
+          "mov": "Armamenti 0.92"
+        }
+      }
     },
     {
       "id": "scudo-del-novizio",
@@ -1443,7 +1682,7 @@
       },
       "for_richiesta": 5,
       "pi": 6,
-      "mov": 0,
+      "mov": -1,
       "parata": {
         "ravvicinata": 0,
         "distanza": -4
@@ -1458,7 +1697,12 @@
           "nome": "Imbottita 1",
           "testo": "Contromisura di soglia 1 contro l’effetto aggiuntivo Concussivo; non riduce ulteriormente il danno (§7.22.5)."
         }
-      ]
+      ],
+      "_edizione": {
+        "campi": {
+          "mov": "Armamenti 0.92"
+        }
+      }
     },
     {
       "id": "scudo-medio-territoriale-dei-clan",
@@ -1478,7 +1722,7 @@
       },
       "for_richiesta": 5,
       "pi": 8,
-      "mov": 0,
+      "mov": -1,
       "parata": {
         "ravvicinata": 0,
         "distanza": -4
@@ -1491,9 +1735,15 @@
       "proprieta": [
         {
           "nome": "Struttura robusta",
-          "testo": "+2 PI massimi, già inclusi nella tabella del modello; nessun incremento della PS Integrità (§7.22.5)."
+          "testo": "Aggiunge 2 PI massimi, già compresi nei valori del catalogo. Il beneficio non aumenta la PS Integrità e non va conteggiato di nuovo."
         }
-      ]
+      ],
+      "_edizione": {
+        "campi": {
+          "mov": "Armamenti 0.92",
+          "proprieta.Struttura robusta": "Armamenti 0.92"
+        }
+      }
     },
     {
       "id": "scudo-punisher-wachter",
@@ -1513,7 +1763,7 @@
       },
       "for_richiesta": 5,
       "pi": 8,
-      "mov": 0,
+      "mov": -1,
       "parata": {
         "ravvicinata": 1,
         "distanza": -3
@@ -1543,6 +1793,11 @@
         "usi": 3,
         "unita_usi": "cariche Blu (barriera 1, cupola 3)",
         "paragrafo": "§7.4.1"
+      },
+      "_edizione": {
+        "campi": {
+          "mov": "Armamenti 0.92"
+        }
       }
     }
   ]

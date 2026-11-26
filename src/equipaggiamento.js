@@ -1039,6 +1039,8 @@ export function calcolaEquipaggiamento(base, voci, dati) {
   let attacchiDist = 0;
   let movimentoQ = 0;
   let movimentoQProtezioni = 0; // parte di armatura e scudo (Assalto Armato)
+  // quanta parte viene dagli Scudi impugnati: serve all’etichetta della provenienza, non al conto (lotto 255)
+  let movimentoQScudo = 0;
   let lancioPotere = 0;
   let forMancanteArmature = 0;
   const rinforziValidi = new Set();
@@ -1062,6 +1064,22 @@ export function calcolaEquipaggiamento(base, voci, dati) {
     movimentoQProtezioni += penalita.movimento_q ?? 0;
     lancioPotere += penalita.lancio_potere ?? 0;
     forMancanteArmature += forMancante;
+  };
+  /**
+   * Le penalità di **categoria** dello Scudo impugnato (revisione approvata il 24/11/2026; Armamenti 0.92 §7.4,
+   * Giocatore 0.69 §5.9). Differiscono da quelle dell'armatura in un punto che vale la funzione a parte: **il −1 VA
+   * della categoria Enorme non si applica alle Prove di Difese, Schivate e Parate comprese.** Per questo i dati non
+   * hanno una chiave «difese» (il validatore non la ammette) e qui le Difese non si toccano. Il requisito FOR dello
+   * Scudo segue il §7.1.6 (Parate e attacchi effettuati con lo Scudo) e non penalizza Agilità, Difese o gli altri
+   * attacchi, quindi `forMancante` non entra. Soddisfare il requisito di FOR non elimina le penalità della categoria.
+   */
+  const penalitaScudo = (nome, penalita) => {
+    const va = penalita.agilita ?? 0;
+    for (const a of agilitaAbilita) aggiungi(a, va, `Scudo (${nome})`);
+    attacchiRavv += penalita.attacchi_ravvicinati ?? 0;
+    attacchiDist += penalita.attacchi_distanza ?? 0;
+    // la riga «nessuna penalità» per le Difese: si vede che è stata guardata e non dimenticata
+    if (difeseAbilita && va) (zeriEquip[difeseAbilita] ??= []).push({ etichetta: nome, valore: 0, nota: 'Scudo: il −1 VA della categoria non si applica alle Prove di Difese (§7.4)' });
   };
   for (const o of oggetti.filter((x) => x.attivo && (x.tipo === 'armatura' || x.tipo === 'scudo' || x.tipo === 'elmetto'))) {
     const d = o.def;
@@ -1111,10 +1129,13 @@ export function calcolaEquipaggiamento(base, voci, dati) {
     // §7.21.1: l'elmetto non fornisce AR e non ha requisiti FOR né penalità
     if (o.tipo === 'elmetto') continue;
     if (o.tipo === 'scudo') {
-      // §7.4: il requisito FOR dello Scudo segue il §7.1.6 (Parate e attacchi con lo Scudo), non
-      // penalizza Agilità, Difese o gli altri attacchi; gli Scudi enormi tolgono 1 Q al MOV
+      // §7.4 (revisione del 24/11/2026): la penalità al MOV della categoria — Piccolo o leggero nessuna, Medio o
+      // grande −1 Q, Enorme −2 Q — si sottrae **una sola volta** al budget della modalità scelta (Passo, Corsa o
+      // Scatto): la sottrazione sta in src/condizioni.js, una volta per modalità, e non si somma qui tre volte.
       movimentoQ += d?.mov ?? 0;
       movimentoQProtezioni += d?.mov ?? 0;
+      movimentoQScudo += d?.mov ?? 0;
+      penalitaScudo(o.nome, penalita);
       continue;
     }
     // §7.11.1: armature — penalità di categoria e FOR mancante su Agilità, Difese e attacchi
@@ -1643,6 +1664,7 @@ export function calcolaEquipaggiamento(base, voci, dati) {
     abilitaDifese: difeseAbilita,
     movimentoQ,
     movimentoQProtezioni,
+    movimentoQScudo,
     lancioPotere,
     forMancanteArmature,
     sintonizzazione,

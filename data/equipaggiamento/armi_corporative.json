@@ -1,5 +1,5 @@
 {
- "versione_manuale": "Armamenti 0.90",
+ "versione_manuale": "Armamenti 0.92",
  "fonte": "Manuale degli Armamenti v0.50, §7.1.9 Cataloghi delle Corporazioni (pp. 11–17): 39 armi ravvicinate; definizioni delle proprietà dal §7.1.3–7.1.4 e dal Giocatore §5.24; lotto 4",
  "_nota": "Generato da tools/lotti/lotto4_armi_ravvicinate_corporative.mjs; da qui in poi si modifica questo file. Lo Scudo delle Guardie Sacre, elencato nel §7.1.9, è in scudi.json. «attivazione» è il danno aggiuntivo a carica (§7.1.4); «munizioni» sono le cariche della cella o i PM della riserva; «manovre» le Manovre compatibili della scheda. Famiglie delle 12 armi senza famiglia dichiarata: risposta di Davide A.9 (28/09/2026), con la nuova Specializzazione Armi a Sega. La famiglia non cambia l’Abilità della scheda.",
  "note_per_catalogo": {
@@ -49,18 +49,18 @@
    ],
    "_edizione": {
     "campi": {
-     "abilita": "Armamenti 0.90",
+     "abilita": "Armamenti 0.92",
      "famiglia": "Armamenti 0.74",
-     "catalogo": "Armamenti 0.90",
-     "mani": "Armamenti 0.90",
-     "danno": "Armamenti 0.90",
-     "portata_q": "Armamenti 0.90",
-     "for_richiesta": "Armamenti 0.90",
-     "pi": "Armamenti 0.90",
-     "qualita": "Armamenti 0.90",
-     "ps_int": "Armamenti 0.90",
-     "reperibilita": "Armamenti 0.90",
-     "costo": "Armamenti 0.90"
+     "catalogo": "Armamenti 0.92",
+     "mani": "Armamenti 0.92",
+     "danno": "Armamenti 0.92",
+     "portata_q": "Armamenti 0.92",
+     "for_richiesta": "Armamenti 0.92",
+     "pi": "Armamenti 0.92",
+     "qualita": "Armamenti 0.92",
+     "ps_int": "Armamenti 0.92",
+     "reperibilita": "Armamenti 0.92",
+     "costo": "Armamenti 0.92"
     }
    }
   },
@@ -110,19 +110,19 @@
    },
    "_edizione": {
     "campi": {
-     "abilita": "Armamenti 0.90",
+     "abilita": "Armamenti 0.92",
      "famiglia": "Armamenti 0.74",
-     "catalogo": "Armamenti 0.90",
-     "mani": "Armamenti 0.90",
-     "danno": "Armamenti 0.90",
-     "portata_q": "Armamenti 0.90",
+     "catalogo": "Armamenti 0.92",
+     "mani": "Armamenti 0.92",
+     "danno": "Armamenti 0.92",
+     "portata_q": "Armamenti 0.92",
      "munizioni": "Armamenti 0.74",
-     "for_richiesta": "Armamenti 0.90",
-     "pi": "Armamenti 0.90",
-     "qualita": "Armamenti 0.90",
-     "ps_int": "Armamenti 0.90",
-     "reperibilita": "Armamenti 0.90",
-     "costo": "Armamenti 0.90"
+     "for_richiesta": "Armamenti 0.92",
+     "pi": "Armamenti 0.92",
+     "qualita": "Armamenti 0.92",
+     "ps_int": "Armamenti 0.92",
+     "reperibilita": "Armamenti 0.92",
+     "costo": "Armamenti 0.92"
     }
    }
   },
@@ -167,18 +167,18 @@
    ],
    "_edizione": {
     "campi": {
-     "abilita": "Armamenti 0.90",
+     "abilita": "Armamenti 0.92",
      "famiglia": "Armamenti 0.74",
-     "catalogo": "Armamenti 0.90",
-     "mani": "Armamenti 0.90",
-     "danno": "Armamenti 0.90",
-     "portata_q": "Armamenti 0.90",
-     "for_richiesta": "Armamenti 0.90",
-     "pi": "Armamenti 0.90",
-     "qualita": "Armamenti 0.90",
-     "ps_int": "Armamenti 0.90",
-     "reperibilita": "Armamenti 0.90",
-     "costo": "Armamenti 0.90"
+     "catalogo": "Armamenti 0.92",
+     "mani": "Armamenti 0.92",
+     "danno": "Armamenti 0.92",
+     "portata_q": "Armamenti 0.92",
+     "for_richiesta": "Armamenti 0.92",
+     "pi": "Armamenti 0.92",
+     "qualita": "Armamenti 0.92",
+     "ps_int": "Armamenti 0.92",
+     "reperibilita": "Armamenti 0.92",
+     "costo": "Armamenti 0.92"
     }
    }
   },
@@ -236,19 +236,19 @@
    },
    "_edizione": {
     "campi": {
-     "abilita": "Armamenti 0.90",
+     "abilita": "Armamenti 0.92",
      "famiglia": "Armamenti 0.74",
-     "catalogo": "Armamenti 0.90",
-     "mani": "Armamenti 0.90",
-     "danno": "Armamenti 0.90",
-     "portata_q": "Armamenti 0.90",
+     "catalogo": "Armamenti 0.92",
+     "mani": "Armamenti 0.92",
+     "danno": "Armamenti 0.92",
+     "portata_q": "Armamenti 0.92",
      "munizioni": "Armamenti 0.74",
-     "for_richiesta": "Armamenti 0.90",
-     "pi": "Armamenti 0.90",
-     "qualita": "Armamenti 0.90",
-     "ps_int": "Armamenti 0.90",
-     "reperibilita": "Armamenti 0.90",
-     "costo": "Armamenti 0.90"
+     "for_richiesta": "Armamenti 0.92",
+     "pi": "Armamenti 0.92",
+     "qualita": "Armamenti 0.92",
+     "ps_int": "Armamenti 0.92",
+     "reperibilita": "Armamenti 0.92",
+     "costo": "Armamenti 0.92"
     }
    }
   },
@@ -285,18 +285,18 @@
    ],
    "_edizione": {
     "campi": {
-     "abilita": "Armamenti 0.90",
+     "abilita": "Armamenti 0.92",
      "famiglia": "Armamenti 0.74",
-     "catalogo": "Armamenti 0.90",
-     "mani": "Armamenti 0.90",
-     "danno": "Armamenti 0.90",
-     "portata_q": "Armamenti 0.90",
-     "for_richiesta": "Armamenti 0.90",
-     "pi": "Armamenti 0.90",
-     "qualita": "Armamenti 0.90",
-     "ps_int": "Armamenti 0.90",
-     "reperibilita": "Armamenti 0.90",
-     "costo": "Armamenti 0.90"
+     "catalogo": "Armamenti 0.92",
+     "mani": "Armamenti 0.92",
+     "danno": "Armamenti 0.92",
+     "portata_q": "Armamenti 0.92",
+     "for_richiesta": "Armamenti 0.92",
+     "pi": "Armamenti 0.92",
+     "qualita": "Armamenti 0.92",
+     "ps_int": "Armamenti 0.92",
+     "reperibilita": "Armamenti 0.92",
+     "costo": "Armamenti 0.92"
     }
    }
   },
@@ -353,19 +353,19 @@
    },
    "_edizione": {
     "campi": {
-     "abilita": "Armamenti 0.90",
+     "abilita": "Armamenti 0.92",
      "famiglia": "Armamenti 0.74",
-     "catalogo": "Armamenti 0.90",
-     "mani": "Armamenti 0.90",
-     "danno": "Armamenti 0.90",
-     "portata_q": "Armamenti 0.90",
+     "catalogo": "Armamenti 0.92",
+     "mani": "Armamenti 0.92",
+     "danno": "Armamenti 0.92",
+     "portata_q": "Armamenti 0.92",
      "munizioni": "Armamenti 0.74",
-     "for_richiesta": "Armamenti 0.90",
-     "pi": "Armamenti 0.90",
-     "qualita": "Armamenti 0.90",
-     "ps_int": "Armamenti 0.90",
-     "reperibilita": "Armamenti 0.90",
-     "costo": "Armamenti 0.90"
+     "for_richiesta": "Armamenti 0.92",
+     "pi": "Armamenti 0.92",
+     "qualita": "Armamenti 0.92",
+     "ps_int": "Armamenti 0.92",
+     "reperibilita": "Armamenti 0.92",
+     "costo": "Armamenti 0.92"
     }
    }
   },
@@ -426,19 +426,19 @@
    },
    "_edizione": {
     "campi": {
-     "abilita": "Armamenti 0.90",
+     "abilita": "Armamenti 0.92",
      "famiglia": "Armamenti 0.74",
-     "catalogo": "Armamenti 0.90",
-     "mani": "Armamenti 0.90",
-     "danno": "Armamenti 0.90",
-     "portata_q": "Armamenti 0.90",
+     "catalogo": "Armamenti 0.92",
+     "mani": "Armamenti 0.92",
+     "danno": "Armamenti 0.92",
+     "portata_q": "Armamenti 0.92",
      "munizioni": "Armamenti 0.74",
-     "for_richiesta": "Armamenti 0.90",
-     "pi": "Armamenti 0.90",
-     "qualita": "Armamenti 0.90",
-     "ps_int": "Armamenti 0.90",
-     "reperibilita": "Armamenti 0.90",
-     "costo": "Armamenti 0.90"
+     "for_richiesta": "Armamenti 0.92",
+     "pi": "Armamenti 0.92",
+     "qualita": "Armamenti 0.92",
+     "ps_int": "Armamenti 0.92",
+     "reperibilita": "Armamenti 0.92",
+     "costo": "Armamenti 0.92"
     }
    }
   },
@@ -496,19 +496,19 @@
    },
    "_edizione": {
     "campi": {
-     "abilita": "Armamenti 0.90",
+     "abilita": "Armamenti 0.92",
      "famiglia": "Armamenti 0.74",
-     "catalogo": "Armamenti 0.90",
-     "mani": "Armamenti 0.90",
-     "danno": "Armamenti 0.90",
-     "portata_q": "Armamenti 0.90",
+     "catalogo": "Armamenti 0.92",
+     "mani": "Armamenti 0.92",
+     "danno": "Armamenti 0.92",
+     "portata_q": "Armamenti 0.92",
      "munizioni": "Armamenti 0.74",
-     "for_richiesta": "Armamenti 0.90",
-     "pi": "Armamenti 0.90",
-     "qualita": "Armamenti 0.90",
-     "ps_int": "Armamenti 0.90",
-     "reperibilita": "Armamenti 0.90",
-     "costo": "Armamenti 0.90"
+     "for_richiesta": "Armamenti 0.92",
+     "pi": "Armamenti 0.92",
+     "qualita": "Armamenti 0.92",
+     "ps_int": "Armamenti 0.92",
+     "reperibilita": "Armamenti 0.92",
+     "costo": "Armamenti 0.92"
     }
    }
   },
@@ -565,19 +565,19 @@
    },
    "_edizione": {
     "campi": {
-     "abilita": "Armamenti 0.90",
+     "abilita": "Armamenti 0.92",
      "famiglia": "Armamenti 0.74",
-     "catalogo": "Armamenti 0.90",
-     "mani": "Armamenti 0.90",
-     "danno": "Armamenti 0.90",
-     "portata_q": "Armamenti 0.90",
+     "catalogo": "Armamenti 0.92",
+     "mani": "Armamenti 0.92",
+     "danno": "Armamenti 0.92",
+     "portata_q": "Armamenti 0.92",
      "munizioni": "Armamenti 0.74",
-     "for_richiesta": "Armamenti 0.90",
-     "pi": "Armamenti 0.90",
-     "qualita": "Armamenti 0.90",
-     "ps_int": "Armamenti 0.90",
-     "reperibilita": "Armamenti 0.90",
-     "costo": "Armamenti 0.90"
+     "for_richiesta": "Armamenti 0.92",
+     "pi": "Armamenti 0.92",
+     "qualita": "Armamenti 0.92",
+     "ps_int": "Armamenti 0.92",
+     "reperibilita": "Armamenti 0.92",
+     "costo": "Armamenti 0.92"
     }
    }
   },
@@ -630,19 +630,19 @@
    },
    "_edizione": {
     "campi": {
-     "abilita": "Armamenti 0.90",
+     "abilita": "Armamenti 0.92",
      "famiglia": "Armamenti 0.74",
-     "catalogo": "Armamenti 0.90",
-     "mani": "Armamenti 0.90",
-     "danno": "Armamenti 0.90",
-     "portata_q": "Armamenti 0.90",
+     "catalogo": "Armamenti 0.92",
+     "mani": "Armamenti 0.92",
+     "danno": "Armamenti 0.92",
+     "portata_q": "Armamenti 0.92",
      "munizioni": "Armamenti 0.74",
-     "for_richiesta": "Armamenti 0.90",
-     "pi": "Armamenti 0.90",
-     "qualita": "Armamenti 0.90",
-     "ps_int": "Armamenti 0.90",
-     "reperibilita": "Armamenti 0.90",
-     "costo": "Armamenti 0.90"
+     "for_richiesta": "Armamenti 0.92",
+     "pi": "Armamenti 0.92",
+     "qualita": "Armamenti 0.92",
+     "ps_int": "Armamenti 0.92",
+     "reperibilita": "Armamenti 0.92",
+     "costo": "Armamenti 0.92"
     }
    }
   },
@@ -696,19 +696,19 @@
    },
    "_edizione": {
     "campi": {
-     "abilita": "Armamenti 0.90",
+     "abilita": "Armamenti 0.92",
      "famiglia": "Armamenti 0.74",
-     "catalogo": "Armamenti 0.90",
-     "mani": "Armamenti 0.90",
-     "danno": "Armamenti 0.90",
-     "portata_q": "Armamenti 0.90",
+     "catalogo": "Armamenti 0.92",
+     "mani": "Armamenti 0.92",
+     "danno": "Armamenti 0.92",
+     "portata_q": "Armamenti 0.92",
      "munizioni": "Armamenti 0.74",
-     "for_richiesta": "Armamenti 0.90",
-     "pi": "Armamenti 0.90",
-     "qualita": "Armamenti 0.90",
-     "ps_int": "Armamenti 0.90",
-     "reperibilita": "Armamenti 0.90",
-     "costo": "Armamenti 0.90"
+     "for_richiesta": "Armamenti 0.92",
+     "pi": "Armamenti 0.92",
+     "qualita": "Armamenti 0.92",
+     "ps_int": "Armamenti 0.92",
+     "reperibilita": "Armamenti 0.92",
+     "costo": "Armamenti 0.92"
     }
    }
   },
@@ -761,19 +761,19 @@
    },
    "_edizione": {
     "campi": {
-     "abilita": "Armamenti 0.90",
+     "abilita": "Armamenti 0.92",
      "famiglia": "Armamenti 0.74",
-     "catalogo": "Armamenti 0.90",
-     "mani": "Armamenti 0.90",
-     "danno": "Armamenti 0.90",
-     "portata_q": "Armamenti 0.90",
+     "catalogo": "Armamenti 0.92",
+     "mani": "Armamenti 0.92",
+     "danno": "Armamenti 0.92",
+     "portata_q": "Armamenti 0.92",
      "munizioni": "Armamenti 0.74",
-     "for_richiesta": "Armamenti 0.90",
-     "pi": "Armamenti 0.90",
-     "qualita": "Armamenti 0.90",
-     "ps_int": "Armamenti 0.90",
-     "reperibilita": "Armamenti 0.90",
-     "costo": "Armamenti 0.90"
+     "for_richiesta": "Armamenti 0.92",
+     "pi": "Armamenti 0.92",
+     "qualita": "Armamenti 0.92",
+     "ps_int": "Armamenti 0.92",
+     "reperibilita": "Armamenti 0.92",
+     "costo": "Armamenti 0.92"
     }
    }
   },
@@ -815,18 +815,18 @@
    ],
    "_edizione": {
     "campi": {
-     "abilita": "Armamenti 0.90",
+     "abilita": "Armamenti 0.92",
      "famiglia": "Armamenti 0.74",
-     "catalogo": "Armamenti 0.90",
-     "mani": "Armamenti 0.90",
-     "danno": "Armamenti 0.90",
-     "portata_q": "Armamenti 0.90",
-     "for_richiesta": "Armamenti 0.90",
-     "pi": "Armamenti 0.90",
-     "qualita": "Armamenti 0.90",
-     "ps_int": "Armamenti 0.90",
-     "reperibilita": "Armamenti 0.90",
-     "costo": "Armamenti 0.90"
+     "catalogo": "Armamenti 0.92",
+     "mani": "Armamenti 0.92",
+     "danno": "Armamenti 0.92",
+     "portata_q": "Armamenti 0.92",
+     "for_richiesta": "Armamenti 0.92",
+     "pi": "Armamenti 0.92",
+     "qualita": "Armamenti 0.92",
+     "ps_int": "Armamenti 0.92",
+     "reperibilita": "Armamenti 0.92",
+     "costo": "Armamenti 0.92"
     }
    }
   },
@@ -868,18 +868,18 @@
    ],
    "_edizione": {
     "campi": {
-     "abilita": "Armamenti 0.90",
+     "abilita": "Armamenti 0.92",
      "famiglia": "Armamenti 0.74",
-     "catalogo": "Armamenti 0.90",
-     "mani": "Armamenti 0.90",
-     "danno": "Armamenti 0.90",
-     "portata_q": "Armamenti 0.90",
-     "for_richiesta": "Armamenti 0.90",
-     "pi": "Armamenti 0.90",
-     "qualita": "Armamenti 0.90",
-     "ps_int": "Armamenti 0.90",
-     "reperibilita": "Armamenti 0.90",
-     "costo": "Armamenti 0.90"
+     "catalogo": "Armamenti 0.92",
+     "mani": "Armamenti 0.92",
+     "danno": "Armamenti 0.92",
+     "portata_q": "Armamenti 0.92",
+     "for_richiesta": "Armamenti 0.92",
+     "pi": "Armamenti 0.92",
+     "qualita": "Armamenti 0.92",
+     "ps_int": "Armamenti 0.92",
+     "reperibilita": "Armamenti 0.92",
+     "costo": "Armamenti 0.92"
     }
    }
   },
@@ -926,18 +926,18 @@
    ],
    "_edizione": {
     "campi": {
-     "abilita": "Armamenti 0.90",
+     "abilita": "Armamenti 0.92",
      "famiglia": "Armamenti 0.74",
-     "catalogo": "Armamenti 0.90",
-     "mani": "Armamenti 0.90",
-     "danno": "Armamenti 0.90",
-     "portata_q": "Armamenti 0.90",
-     "for_richiesta": "Armamenti 0.90",
-     "pi": "Armamenti 0.90",
-     "qualita": "Armamenti 0.90",
-     "ps_int": "Armamenti 0.90",
-     "reperibilita": "Armamenti 0.90",
-     "costo": "Armamenti 0.90"
+     "catalogo": "Armamenti 0.92",
+     "mani": "Armamenti 0.92",
+     "danno": "Armamenti 0.92",
+     "portata_q": "Armamenti 0.92",
+     "for_richiesta": "Armamenti 0.92",
+     "pi": "Armamenti 0.92",
+     "qualita": "Armamenti 0.92",
+     "ps_int": "Armamenti 0.92",
+     "reperibilita": "Armamenti 0.92",
+     "costo": "Armamenti 0.92"
     }
    }
   },
@@ -992,19 +992,19 @@
    },
    "_edizione": {
     "campi": {
-     "abilita": "Armamenti 0.90",
+     "abilita": "Armamenti 0.92",
      "famiglia": "Armamenti 0.74",
-     "catalogo": "Armamenti 0.90",
-     "mani": "Armamenti 0.90",
-     "danno": "Armamenti 0.90",
-     "portata_q": "Armamenti 0.90",
+     "catalogo": "Armamenti 0.92",
+     "mani": "Armamenti 0.92",
+     "danno": "Armamenti 0.92",
+     "portata_q": "Armamenti 0.92",
      "munizioni": "Armamenti 0.74",
-     "for_richiesta": "Armamenti 0.90",
-     "pi": "Armamenti 0.90",
-     "qualita": "Armamenti 0.90",
-     "ps_int": "Armamenti 0.90",
-     "reperibilita": "Armamenti 0.90",
-     "costo": "Armamenti 0.90"
+     "for_richiesta": "Armamenti 0.92",
+     "pi": "Armamenti 0.92",
+     "qualita": "Armamenti 0.92",
+     "ps_int": "Armamenti 0.92",
+     "reperibilita": "Armamenti 0.92",
+     "costo": "Armamenti 0.92"
     }
    }
   },
@@ -1063,19 +1063,19 @@
    },
    "_edizione": {
     "campi": {
-     "abilita": "Armamenti 0.90",
+     "abilita": "Armamenti 0.92",
      "famiglia": "Armamenti 0.74",
-     "catalogo": "Armamenti 0.90",
-     "mani": "Armamenti 0.90",
-     "danno": "Armamenti 0.90",
-     "portata_q": "Armamenti 0.90",
+     "catalogo": "Armamenti 0.92",
+     "mani": "Armamenti 0.92",
+     "danno": "Armamenti 0.92",
+     "portata_q": "Armamenti 0.92",
      "munizioni": "Armamenti 0.74",
-     "for_richiesta": "Armamenti 0.90",
-     "pi": "Armamenti 0.90",
-     "qualita": "Armamenti 0.90",
-     "ps_int": "Armamenti 0.90",
-     "reperibilita": "Armamenti 0.90",
-     "costo": "Armamenti 0.90"
+     "for_richiesta": "Armamenti 0.92",
+     "pi": "Armamenti 0.92",
+     "qualita": "Armamenti 0.92",
+     "ps_int": "Armamenti 0.92",
+     "reperibilita": "Armamenti 0.92",
+     "costo": "Armamenti 0.92"
     }
    }
   },
@@ -1130,19 +1130,19 @@
    },
    "_edizione": {
     "campi": {
-     "abilita": "Armamenti 0.90",
+     "abilita": "Armamenti 0.92",
      "famiglia": "Armamenti 0.74",
-     "catalogo": "Armamenti 0.90",
-     "mani": "Armamenti 0.90",
-     "danno": "Armamenti 0.90",
-     "portata_q": "Armamenti 0.90",
+     "catalogo": "Armamenti 0.92",
+     "mani": "Armamenti 0.92",
+     "danno": "Armamenti 0.92",
+     "portata_q": "Armamenti 0.92",
      "munizioni": "Armamenti 0.74",
-     "for_richiesta": "Armamenti 0.90",
-     "pi": "Armamenti 0.90",
-     "qualita": "Armamenti 0.90",
-     "ps_int": "Armamenti 0.90",
-     "reperibilita": "Armamenti 0.90",
-     "costo": "Armamenti 0.90"
+     "for_richiesta": "Armamenti 0.92",
+     "pi": "Armamenti 0.92",
+     "qualita": "Armamenti 0.92",
+     "ps_int": "Armamenti 0.92",
+     "reperibilita": "Armamenti 0.92",
+     "costo": "Armamenti 0.92"
     }
    }
   },
@@ -1191,18 +1191,18 @@
    ],
    "_edizione": {
     "campi": {
-     "abilita": "Armamenti 0.90",
+     "abilita": "Armamenti 0.92",
      "famiglia": "Armamenti 0.74",
-     "catalogo": "Armamenti 0.90",
-     "mani": "Armamenti 0.90",
-     "danno": "Armamenti 0.90",
-     "portata_q": "Armamenti 0.90",
-     "for_richiesta": "Armamenti 0.90",
-     "pi": "Armamenti 0.90",
-     "qualita": "Armamenti 0.90",
-     "ps_int": "Armamenti 0.90",
-     "reperibilita": "Armamenti 0.90",
-     "costo": "Armamenti 0.90"
+     "catalogo": "Armamenti 0.92",
+     "mani": "Armamenti 0.92",
+     "danno": "Armamenti 0.92",
+     "portata_q": "Armamenti 0.92",
+     "for_richiesta": "Armamenti 0.92",
+     "pi": "Armamenti 0.92",
+     "qualita": "Armamenti 0.92",
+     "ps_int": "Armamenti 0.92",
+     "reperibilita": "Armamenti 0.92",
+     "costo": "Armamenti 0.92"
     }
    }
   },
@@ -1251,18 +1251,18 @@
    ],
    "_edizione": {
     "campi": {
-     "abilita": "Armamenti 0.90",
+     "abilita": "Armamenti 0.92",
      "famiglia": "Armamenti 0.74",
-     "catalogo": "Armamenti 0.90",
-     "mani": "Armamenti 0.90",
-     "danno": "Armamenti 0.90",
-     "portata_q": "Armamenti 0.90",
-     "for_richiesta": "Armamenti 0.90",
-     "pi": "Armamenti 0.90",
-     "qualita": "Armamenti 0.90",
-     "ps_int": "Armamenti 0.90",
-     "reperibilita": "Armamenti 0.90",
-     "costo": "Armamenti 0.90"
+     "catalogo": "Armamenti 0.92",
+     "mani": "Armamenti 0.92",
+     "danno": "Armamenti 0.92",
+     "portata_q": "Armamenti 0.92",
+     "for_richiesta": "Armamenti 0.92",
+     "pi": "Armamenti 0.92",
+     "qualita": "Armamenti 0.92",
+     "ps_int": "Armamenti 0.92",
+     "reperibilita": "Armamenti 0.92",
+     "costo": "Armamenti 0.92"
     }
    }
   },
@@ -1315,19 +1315,19 @@
    },
    "_edizione": {
     "campi": {
-     "abilita": "Armamenti 0.90",
+     "abilita": "Armamenti 0.92",
      "famiglia": "Armamenti 0.74",
-     "catalogo": "Armamenti 0.90",
-     "mani": "Armamenti 0.90",
-     "danno": "Armamenti 0.90",
-     "portata_q": "Armamenti 0.90",
+     "catalogo": "Armamenti 0.92",
+     "mani": "Armamenti 0.92",
+     "danno": "Armamenti 0.92",
+     "portata_q": "Armamenti 0.92",
      "munizioni": "Armamenti 0.74",
-     "for_richiesta": "Armamenti 0.90",
-     "pi": "Armamenti 0.90",
-     "qualita": "Armamenti 0.90",
-     "ps_int": "Armamenti 0.90",
-     "reperibilita": "Armamenti 0.90",
-     "costo": "Armamenti 0.90"
+     "for_richiesta": "Armamenti 0.92",
+     "pi": "Armamenti 0.92",
+     "qualita": "Armamenti 0.92",
+     "ps_int": "Armamenti 0.92",
+     "reperibilita": "Armamenti 0.92",
+     "costo": "Armamenti 0.92"
     }
    }
   },
@@ -1380,19 +1380,19 @@
    },
    "_edizione": {
     "campi": {
-     "abilita": "Armamenti 0.90",
+     "abilita": "Armamenti 0.92",
      "famiglia": "Armamenti 0.74",
-     "catalogo": "Armamenti 0.90",
-     "mani": "Armamenti 0.90",
-     "danno": "Armamenti 0.90",
-     "portata_q": "Armamenti 0.90",
+     "catalogo": "Armamenti 0.92",
+     "mani": "Armamenti 0.92",
+     "danno": "Armamenti 0.92",
+     "portata_q": "Armamenti 0.92",
      "munizioni": "Armamenti 0.74",
-     "for_richiesta": "Armamenti 0.90",
-     "pi": "Armamenti 0.90",
-     "qualita": "Armamenti 0.90",
-     "ps_int": "Armamenti 0.90",
-     "reperibilita": "Armamenti 0.90",
-     "costo": "Armamenti 0.90"
+     "for_richiesta": "Armamenti 0.92",
+     "pi": "Armamenti 0.92",
+     "qualita": "Armamenti 0.92",
+     "ps_int": "Armamenti 0.92",
+     "reperibilita": "Armamenti 0.92",
+     "costo": "Armamenti 0.92"
     }
    }
   },
@@ -1441,18 +1441,18 @@
    ],
    "_edizione": {
     "campi": {
-     "abilita": "Armamenti 0.90",
+     "abilita": "Armamenti 0.92",
      "famiglia": "Armamenti 0.74",
-     "catalogo": "Armamenti 0.90",
-     "mani": "Armamenti 0.90",
-     "danno": "Armamenti 0.90",
-     "portata_q": "Armamenti 0.90",
-     "for_richiesta": "Armamenti 0.90",
-     "pi": "Armamenti 0.90",
-     "qualita": "Armamenti 0.90",
-     "ps_int": "Armamenti 0.90",
-     "reperibilita": "Armamenti 0.90",
-     "costo": "Armamenti 0.90"
+     "catalogo": "Armamenti 0.92",
+     "mani": "Armamenti 0.92",
+     "danno": "Armamenti 0.92",
+     "portata_q": "Armamenti 0.92",
+     "for_richiesta": "Armamenti 0.92",
+     "pi": "Armamenti 0.92",
+     "qualita": "Armamenti 0.92",
+     "ps_int": "Armamenti 0.92",
+     "reperibilita": "Armamenti 0.92",
+     "costo": "Armamenti 0.92"
     }
    }
   },
@@ -1497,18 +1497,18 @@
    ],
    "_edizione": {
     "campi": {
-     "abilita": "Armamenti 0.90",
+     "abilita": "Armamenti 0.92",
      "famiglia": "Armamenti 0.74",
-     "catalogo": "Armamenti 0.90",
-     "mani": "Armamenti 0.90",
-     "danno": "Armamenti 0.90",
-     "portata_q": "Armamenti 0.90",
-     "for_richiesta": "Armamenti 0.90",
-     "pi": "Armamenti 0.90",
-     "qualita": "Armamenti 0.90",
-     "ps_int": "Armamenti 0.90",
-     "reperibilita": "Armamenti 0.90",
-     "costo": "Armamenti 0.90"
+     "catalogo": "Armamenti 0.92",
+     "mani": "Armamenti 0.92",
+     "danno": "Armamenti 0.92",
+     "portata_q": "Armamenti 0.92",
+     "for_richiesta": "Armamenti 0.92",
+     "pi": "Armamenti 0.92",
+     "qualita": "Armamenti 0.92",
+     "ps_int": "Armamenti 0.92",
+     "reperibilita": "Armamenti 0.92",
+     "costo": "Armamenti 0.92"
     }
    }
   },
@@ -1557,18 +1557,18 @@
    ],
    "_edizione": {
     "campi": {
-     "abilita": "Armamenti 0.90",
+     "abilita": "Armamenti 0.92",
      "famiglia": "Armamenti 0.74",
-     "catalogo": "Armamenti 0.90",
-     "mani": "Armamenti 0.90",
-     "danno": "Armamenti 0.90",
-     "portata_q": "Armamenti 0.90",
-     "for_richiesta": "Armamenti 0.90",
-     "pi": "Armamenti 0.90",
-     "qualita": "Armamenti 0.90",
-     "ps_int": "Armamenti 0.90",
-     "reperibilita": "Armamenti 0.90",
-     "costo": "Armamenti 0.90"
+     "catalogo": "Armamenti 0.92",
+     "mani": "Armamenti 0.92",
+     "danno": "Armamenti 0.92",
+     "portata_q": "Armamenti 0.92",
+     "for_richiesta": "Armamenti 0.92",
+     "pi": "Armamenti 0.92",
+     "qualita": "Armamenti 0.92",
+     "ps_int": "Armamenti 0.92",
+     "reperibilita": "Armamenti 0.92",
+     "costo": "Armamenti 0.92"
     }
    }
   },
@@ -1621,19 +1621,19 @@
    },
    "_edizione": {
     "campi": {
-     "abilita": "Armamenti 0.90",
+     "abilita": "Armamenti 0.92",
      "famiglia": "Armamenti 0.74",
-     "catalogo": "Armamenti 0.90",
-     "mani": "Armamenti 0.90",
-     "danno": "Armamenti 0.90",
-     "portata_q": "Armamenti 0.90",
+     "catalogo": "Armamenti 0.92",
+     "mani": "Armamenti 0.92",
+     "danno": "Armamenti 0.92",
+     "portata_q": "Armamenti 0.92",
      "munizioni": "Armamenti 0.74",
-     "for_richiesta": "Armamenti 0.90",
-     "pi": "Armamenti 0.90",
-     "qualita": "Armamenti 0.90",
-     "ps_int": "Armamenti 0.90",
-     "reperibilita": "Armamenti 0.90",
-     "costo": "Armamenti 0.90"
+     "for_richiesta": "Armamenti 0.92",
+     "pi": "Armamenti 0.92",
+     "qualita": "Armamenti 0.92",
+     "ps_int": "Armamenti 0.92",
+     "reperibilita": "Armamenti 0.92",
+     "costo": "Armamenti 0.92"
     }
    }
   },
@@ -1704,19 +1704,19 @@
    ],
    "_edizione": {
     "campi": {
-     "abilita": "Armamenti 0.90",
+     "abilita": "Armamenti 0.92",
      "famiglia": "Armamenti 0.74",
-     "catalogo": "Armamenti 0.90",
-     "mani": "Armamenti 0.90",
-     "danno": "Armamenti 0.90",
-     "portata_q": "Armamenti 0.90",
+     "catalogo": "Armamenti 0.92",
+     "mani": "Armamenti 0.92",
+     "danno": "Armamenti 0.92",
+     "portata_q": "Armamenti 0.92",
      "munizioni": "Armamenti 0.74",
-     "for_richiesta": "Armamenti 0.90",
-     "pi": "Armamenti 0.90",
-     "qualita": "Armamenti 0.90",
-     "ps_int": "Armamenti 0.90",
-     "reperibilita": "Armamenti 0.90",
-     "costo": "Armamenti 0.90"
+     "for_richiesta": "Armamenti 0.92",
+     "pi": "Armamenti 0.92",
+     "qualita": "Armamenti 0.92",
+     "ps_int": "Armamenti 0.92",
+     "reperibilita": "Armamenti 0.92",
+     "costo": "Armamenti 0.92"
     }
    }
   },
@@ -1774,19 +1774,19 @@
    },
    "_edizione": {
     "campi": {
-     "abilita": "Armamenti 0.90",
+     "abilita": "Armamenti 0.92",
      "famiglia": "Armamenti 0.74",
-     "catalogo": "Armamenti 0.90",
-     "mani": "Armamenti 0.90",
-     "danno": "Armamenti 0.90",
-     "portata_q": "Armamenti 0.90",
+     "catalogo": "Armamenti 0.92",
+     "mani": "Armamenti 0.92",
+     "danno": "Armamenti 0.92",
+     "portata_q": "Armamenti 0.92",
      "munizioni": "Armamenti 0.74",
-     "for_richiesta": "Armamenti 0.90",
-     "pi": "Armamenti 0.90",
-     "qualita": "Armamenti 0.90",
-     "ps_int": "Armamenti 0.90",
-     "reperibilita": "Armamenti 0.90",
-     "costo": "Armamenti 0.90"
+     "for_richiesta": "Armamenti 0.92",
+     "pi": "Armamenti 0.92",
+     "qualita": "Armamenti 0.92",
+     "ps_int": "Armamenti 0.92",
+     "reperibilita": "Armamenti 0.92",
+     "costo": "Armamenti 0.92"
     }
    }
   },
@@ -1822,18 +1822,18 @@
    ],
    "_edizione": {
     "campi": {
-     "abilita": "Armamenti 0.90",
+     "abilita": "Armamenti 0.92",
      "famiglia": "Armamenti 0.74",
-     "catalogo": "Armamenti 0.90",
-     "mani": "Armamenti 0.90",
-     "danno": "Armamenti 0.90",
-     "portata_q": "Armamenti 0.90",
-     "for_richiesta": "Armamenti 0.90",
-     "pi": "Armamenti 0.90",
-     "qualita": "Armamenti 0.90",
-     "ps_int": "Armamenti 0.90",
-     "reperibilita": "Armamenti 0.90",
-     "costo": "Armamenti 0.90"
+     "catalogo": "Armamenti 0.92",
+     "mani": "Armamenti 0.92",
+     "danno": "Armamenti 0.92",
+     "portata_q": "Armamenti 0.92",
+     "for_richiesta": "Armamenti 0.92",
+     "pi": "Armamenti 0.92",
+     "qualita": "Armamenti 0.92",
+     "ps_int": "Armamenti 0.92",
+     "reperibilita": "Armamenti 0.92",
+     "costo": "Armamenti 0.92"
     }
    }
   },
@@ -1877,18 +1877,18 @@
    ],
    "_edizione": {
     "campi": {
-     "abilita": "Armamenti 0.90",
+     "abilita": "Armamenti 0.92",
      "famiglia": "Armamenti 0.74",
-     "catalogo": "Armamenti 0.90",
-     "mani": "Armamenti 0.90",
-     "danno": "Armamenti 0.90",
-     "portata_q": "Armamenti 0.90",
-     "for_richiesta": "Armamenti 0.90",
-     "pi": "Armamenti 0.90",
-     "qualita": "Armamenti 0.90",
-     "ps_int": "Armamenti 0.90",
-     "reperibilita": "Armamenti 0.90",
-     "costo": "Armamenti 0.90"
+     "catalogo": "Armamenti 0.92",
+     "mani": "Armamenti 0.92",
+     "danno": "Armamenti 0.92",
+     "portata_q": "Armamenti 0.92",
+     "for_richiesta": "Armamenti 0.92",
+     "pi": "Armamenti 0.92",
+     "qualita": "Armamenti 0.92",
+     "ps_int": "Armamenti 0.92",
+     "reperibilita": "Armamenti 0.92",
+     "costo": "Armamenti 0.92"
     }
    }
   },
@@ -1933,18 +1933,18 @@
    ],
    "_edizione": {
     "campi": {
-     "abilita": "Armamenti 0.90",
+     "abilita": "Armamenti 0.92",
      "famiglia": "Armamenti 0.74",
-     "catalogo": "Armamenti 0.90",
-     "mani": "Armamenti 0.90",
-     "danno": "Armamenti 0.90",
-     "portata_q": "Armamenti 0.90",
-     "for_richiesta": "Armamenti 0.90",
-     "pi": "Armamenti 0.90",
-     "qualita": "Armamenti 0.90",
-     "ps_int": "Armamenti 0.90",
-     "reperibilita": "Armamenti 0.90",
-     "costo": "Armamenti 0.90"
+     "catalogo": "Armamenti 0.92",
+     "mani": "Armamenti 0.92",
+     "danno": "Armamenti 0.92",
+     "portata_q": "Armamenti 0.92",
+     "for_richiesta": "Armamenti 0.92",
+     "pi": "Armamenti 0.92",
+     "qualita": "Armamenti 0.92",
+     "ps_int": "Armamenti 0.92",
+     "reperibilita": "Armamenti 0.92",
+     "costo": "Armamenti 0.92"
     }
    }
   },
@@ -1989,18 +1989,18 @@
    ],
    "_edizione": {
     "campi": {
-     "abilita": "Armamenti 0.90",
+     "abilita": "Armamenti 0.92",
      "famiglia": "Armamenti 0.74",
-     "catalogo": "Armamenti 0.90",
-     "mani": "Armamenti 0.90",
-     "danno": "Armamenti 0.90",
-     "portata_q": "Armamenti 0.90",
-     "for_richiesta": "Armamenti 0.90",
-     "pi": "Armamenti 0.90",
-     "qualita": "Armamenti 0.90",
-     "ps_int": "Armamenti 0.90",
-     "reperibilita": "Armamenti 0.90",
-     "costo": "Armamenti 0.90"
+     "catalogo": "Armamenti 0.92",
+     "mani": "Armamenti 0.92",
+     "danno": "Armamenti 0.92",
+     "portata_q": "Armamenti 0.92",
+     "for_richiesta": "Armamenti 0.92",
+     "pi": "Armamenti 0.92",
+     "qualita": "Armamenti 0.92",
+     "ps_int": "Armamenti 0.92",
+     "reperibilita": "Armamenti 0.92",
+     "costo": "Armamenti 0.92"
     }
    }
   },
@@ -2059,19 +2059,19 @@
    "decisione": "A.62 (E&L del 02/10/2026, decisione 15): la Natura resta Naturale; attiva infligge 1d8 + 1 + 1d6 con la proprietà Plasma, un solo colpo (Difese e AR una volta); «Plasma» non è una Natura.",
    "_edizione": {
     "campi": {
-     "abilita": "Armamenti 0.90",
+     "abilita": "Armamenti 0.92",
      "famiglia": "Armamenti 0.74",
-     "catalogo": "Armamenti 0.90",
-     "mani": "Armamenti 0.90",
-     "danno": "Armamenti 0.90",
-     "portata_q": "Armamenti 0.90",
+     "catalogo": "Armamenti 0.92",
+     "mani": "Armamenti 0.92",
+     "danno": "Armamenti 0.92",
+     "portata_q": "Armamenti 0.92",
      "munizioni": "Armamenti 0.74",
-     "for_richiesta": "Armamenti 0.90",
-     "pi": "Armamenti 0.90",
-     "qualita": "Armamenti 0.90",
-     "ps_int": "Armamenti 0.90",
-     "reperibilita": "Armamenti 0.90",
-     "costo": "Armamenti 0.90"
+     "for_richiesta": "Armamenti 0.92",
+     "pi": "Armamenti 0.92",
+     "qualita": "Armamenti 0.92",
+     "ps_int": "Armamenti 0.92",
+     "reperibilita": "Armamenti 0.92",
+     "costo": "Armamenti 0.92"
     }
    }
   },
@@ -2121,18 +2121,18 @@
    ],
    "_edizione": {
     "campi": {
-     "abilita": "Armamenti 0.90",
+     "abilita": "Armamenti 0.92",
      "famiglia": "Armamenti 0.74",
-     "catalogo": "Armamenti 0.90",
-     "mani": "Armamenti 0.90",
-     "danno": "Armamenti 0.90",
-     "portata_q": "Armamenti 0.90",
-     "for_richiesta": "Armamenti 0.90",
-     "pi": "Armamenti 0.90",
-     "qualita": "Armamenti 0.90",
-     "ps_int": "Armamenti 0.90",
-     "reperibilita": "Armamenti 0.90",
-     "costo": "Armamenti 0.90"
+     "catalogo": "Armamenti 0.92",
+     "mani": "Armamenti 0.92",
+     "danno": "Armamenti 0.92",
+     "portata_q": "Armamenti 0.92",
+     "for_richiesta": "Armamenti 0.92",
+     "pi": "Armamenti 0.92",
+     "qualita": "Armamenti 0.92",
+     "ps_int": "Armamenti 0.92",
+     "reperibilita": "Armamenti 0.92",
+     "costo": "Armamenti 0.92"
     }
    }
   },
@@ -2190,19 +2190,19 @@
    },
    "_edizione": {
     "campi": {
-     "abilita": "Armamenti 0.90",
+     "abilita": "Armamenti 0.92",
      "famiglia": "Armamenti 0.74",
-     "catalogo": "Armamenti 0.90",
-     "mani": "Armamenti 0.90",
-     "danno": "Armamenti 0.90",
-     "portata_q": "Armamenti 0.90",
+     "catalogo": "Armamenti 0.92",
+     "mani": "Armamenti 0.92",
+     "danno": "Armamenti 0.92",
+     "portata_q": "Armamenti 0.92",
      "munizioni": "Armamenti 0.74",
-     "for_richiesta": "Armamenti 0.90",
-     "pi": "Armamenti 0.90",
-     "qualita": "Armamenti 0.90",
-     "ps_int": "Armamenti 0.90",
-     "reperibilita": "Armamenti 0.90",
-     "costo": "Armamenti 0.90"
+     "for_richiesta": "Armamenti 0.92",
+     "pi": "Armamenti 0.92",
+     "qualita": "Armamenti 0.92",
+     "ps_int": "Armamenti 0.92",
+     "reperibilita": "Armamenti 0.92",
+     "costo": "Armamenti 0.92"
     }
    }
   },
@@ -2247,18 +2247,18 @@
    ],
    "_edizione": {
     "campi": {
-     "abilita": "Armamenti 0.90",
+     "abilita": "Armamenti 0.92",
      "famiglia": "Armamenti 0.74",
-     "catalogo": "Armamenti 0.90",
-     "mani": "Armamenti 0.90",
-     "danno": "Armamenti 0.90",
-     "portata_q": "Armamenti 0.90",
-     "for_richiesta": "Armamenti 0.90",
-     "pi": "Armamenti 0.90",
-     "qualita": "Armamenti 0.90",
-     "ps_int": "Armamenti 0.90",
-     "reperibilita": "Armamenti 0.90",
-     "costo": "Armamenti 0.90"
+     "catalogo": "Armamenti 0.92",
+     "mani": "Armamenti 0.92",
+     "danno": "Armamenti 0.92",
+     "portata_q": "Armamenti 0.92",
+     "for_richiesta": "Armamenti 0.92",
+     "pi": "Armamenti 0.92",
+     "qualita": "Armamenti 0.92",
+     "ps_int": "Armamenti 0.92",
+     "reperibilita": "Armamenti 0.92",
+     "costo": "Armamenti 0.92"
     }
    }
   },
@@ -2314,19 +2314,19 @@
    },
    "_edizione": {
     "campi": {
-     "abilita": "Armamenti 0.90",
+     "abilita": "Armamenti 0.92",
      "famiglia": "Armamenti 0.74",
-     "catalogo": "Armamenti 0.90",
-     "mani": "Armamenti 0.90",
-     "danno": "Armamenti 0.90",
-     "portata_q": "Armamenti 0.90",
+     "catalogo": "Armamenti 0.92",
+     "mani": "Armamenti 0.92",
+     "danno": "Armamenti 0.92",
+     "portata_q": "Armamenti 0.92",
      "munizioni": "Armamenti 0.74",
-     "for_richiesta": "Armamenti 0.90",
-     "pi": "Armamenti 0.90",
-     "qualita": "Armamenti 0.90",
-     "ps_int": "Armamenti 0.90",
-     "reperibilita": "Armamenti 0.90",
-     "costo": "Armamenti 0.90"
+     "for_richiesta": "Armamenti 0.92",
+     "pi": "Armamenti 0.92",
+     "qualita": "Armamenti 0.92",
+     "ps_int": "Armamenti 0.92",
+     "reperibilita": "Armamenti 0.92",
+     "costo": "Armamenti 0.92"
     }
    }
   },
@@ -2371,18 +2371,18 @@
    ],
    "_edizione": {
     "campi": {
-     "abilita": "Armamenti 0.90",
+     "abilita": "Armamenti 0.92",
      "famiglia": "Armamenti 0.74",
-     "catalogo": "Armamenti 0.90",
-     "mani": "Armamenti 0.90",
-     "danno": "Armamenti 0.90",
-     "portata_q": "Armamenti 0.90",
-     "for_richiesta": "Armamenti 0.90",
-     "pi": "Armamenti 0.90",
-     "qualita": "Armamenti 0.90",
-     "ps_int": "Armamenti 0.90",
-     "reperibilita": "Armamenti 0.90",
-     "costo": "Armamenti 0.90"
+     "catalogo": "Armamenti 0.92",
+     "mani": "Armamenti 0.92",
+     "danno": "Armamenti 0.92",
+     "portata_q": "Armamenti 0.92",
+     "for_richiesta": "Armamenti 0.92",
+     "pi": "Armamenti 0.92",
+     "qualita": "Armamenti 0.92",
+     "ps_int": "Armamenti 0.92",
+     "reperibilita": "Armamenti 0.92",
+     "costo": "Armamenti 0.92"
     }
    }
   },
@@ -2439,19 +2439,19 @@
    },
    "_edizione": {
     "campi": {
-     "abilita": "Armamenti 0.90",
+     "abilita": "Armamenti 0.92",
      "famiglia": "Armamenti 0.74",
-     "catalogo": "Armamenti 0.90",
-     "mani": "Armamenti 0.90",
-     "danno": "Armamenti 0.90",
-     "portata_q": "Armamenti 0.90",
+     "catalogo": "Armamenti 0.92",
+     "mani": "Armamenti 0.92",
+     "danno": "Armamenti 0.92",
+     "portata_q": "Armamenti 0.92",
      "munizioni": "Armamenti 0.74",
-     "for_richiesta": "Armamenti 0.90",
-     "pi": "Armamenti 0.90",
-     "qualita": "Armamenti 0.90",
-     "ps_int": "Armamenti 0.90",
-     "reperibilita": "Armamenti 0.90",
-     "costo": "Armamenti 0.90"
+     "for_richiesta": "Armamenti 0.92",
+     "pi": "Armamenti 0.92",
+     "qualita": "Armamenti 0.92",
+     "ps_int": "Armamenti 0.92",
+     "reperibilita": "Armamenti 0.92",
+     "costo": "Armamenti 0.92"
     }
    }
   },
@@ -2512,19 +2512,19 @@
    },
    "_edizione": {
     "campi": {
-     "abilita": "Armamenti 0.90",
+     "abilita": "Armamenti 0.92",
      "famiglia": "Armamenti 0.74",
-     "catalogo": "Armamenti 0.90",
-     "mani": "Armamenti 0.90",
-     "danno": "Armamenti 0.90",
-     "portata_q": "Armamenti 0.90",
+     "catalogo": "Armamenti 0.92",
+     "mani": "Armamenti 0.92",
+     "danno": "Armamenti 0.92",
+     "portata_q": "Armamenti 0.92",
      "munizioni": "Armamenti 0.74",
-     "for_richiesta": "Armamenti 0.90",
-     "pi": "Armamenti 0.90",
-     "qualita": "Armamenti 0.90",
-     "ps_int": "Armamenti 0.90",
-     "reperibilita": "Armamenti 0.90",
-     "costo": "Armamenti 0.90"
+     "for_richiesta": "Armamenti 0.92",
+     "pi": "Armamenti 0.92",
+     "qualita": "Armamenti 0.92",
+     "ps_int": "Armamenti 0.92",
+     "reperibilita": "Armamenti 0.92",
+     "costo": "Armamenti 0.92"
     }
    }
   }

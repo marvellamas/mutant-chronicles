@@ -1,5 +1,5 @@
 {
-  "versione_manuale": "Giocatore 0.65 (Google Doc del 19/11/2026)",
+  "versione_manuale": "Giocatore 0.69 (Google Doc del 25/11/2026)",
   "_nota_edizione": "Lotto 192: i 25 profili di competenza 4/7/9/4 vengono dal Giocatore 0.62, capitolo 3. Lotto 195: l’etichetta passa alla 0.63 perché fra 0.62 e 0.63 cambiano quattro righe, tutte nel §2.16.1 dei NEC (verificato col diff): l’ambito di questo file è identico byte per byte e nessun numero si è mosso.",
   "fonte": "§3.4, §3.6, §3.8 (profili); §3.5.2–3.5.11, §3.7, §3.9 (Talenti)",
   "_nota": "PV e PM per Grado: fisso + 1d<dado> (dado 0 = nessun dado). Al 1° livello il dado dei PV è massimizzato (§2.12, §3.3). Le quote incantesimi valgono per le Classi taumaturgiche (§3.8).",
@@ -1186,7 +1186,7 @@
         {
           "grado": 3,
           "nome": "Assalto Armato",
-          "testo": "Riduce di 2 Q complessivi, fino a un minimo di 0, la penalità al Movimento prodotta dall’armatura indossata e dallo scudo impugnato. Si applicano prima le proprietà che riducono le penalità dei singoli oggetti, poi il Talento alla penalità residua complessiva. Armatura media e scudo enorme passano da −2 Q a 0; armatura pesante e scudo enorme da −3 Q a −1 Q (Manuale degli Armamenti, §§7.4 e 7.11.1).\nIl beneficio non riduce le penalità delle armi, del Sovraccarico, degli Stati o del terreno e non modifica le penalità al VA, comprese quelle di Corsa e Scatto.",
+          "testo": "Riduce di 2 Q complessivi, fino a un minimo di 0, la penalità al Movimento prodotta dall’armatura indossata e dallo scudo impugnato. Si applicano prima le proprietà che riducono le penalità dei singoli oggetti, poi il Talento alla penalità residua complessiva. Armatura media e scudo medio passano da −2 Q a 0; armatura media e scudo enorme da −3 Q a −1 Q; armatura pesante e scudo enorme da −4 Q a −2 Q (Manuale degli Armamenti, §§7.4 e 7.11.1).\nIl beneficio non riduce le penalità delle armi, del Sovraccarico, degli Stati o del terreno e non modifica le penalità al VA, comprese quelle di Corsa e Scatto.",
           "effetti": {
             "valori": [
               {
@@ -2966,7 +2966,7 @@
         {
           "specializzazione": "Militare",
           "nome": "Manovra Evasiva",
-          "testo": "Dopo che un attacco ha colpito il veicolo e prima di applicare il danno, il Pilota può spendere un’Azione Principale disponibile, anche fuori dalla propria Iniziativa, ed effettuare una Prova di Pilotare con −4 VA. Con un successo evita l’attacco. Il veicolo deve poter effettuare concretamente la manovra.\nContro un Successo Magistrale serve un Successo Magistrale. Contro una Raffica si applica un ulteriore −2 VA e una sola Prova riuscita evita tutti i colpi. Un Fallimento Maldestro impone −2 VA fino all’arrivo dell’Iniziativa successiva. Non si può tentare una seconda Difesa contro lo stesso attacco.\nNon permette di evitare attacchi ad Area, inevitabili o non percepiti. Non consente di utilizzare Azioni del Round successivo.\nAlle Prove si applicano la Manovrabilità del veicolo, l’andatura e gli altri modificatori pertinenti. Il Talento permette anche di evitare uno Speronamento, alle medesime condizioni, senza concedere Movimento aggiuntivo (Manuale dei Veicoli, §§3.3 e 6.3)."
+          "testo": "Dopo che un attacco ha colpito il veicolo e prima di applicare il danno, il Pilota può spendere un’Azione Principale disponibile, anche fuori dalla propria Iniziativa, ed effettuare una Prova di Pilotare con −4 VA. Con un successo evita l’attacco. Il veicolo deve poter effettuare concretamente la manovra.\nContro un Successo Magistrale serve un Successo Magistrale. Contro una Raffica si applica un ulteriore −2 VA e una sola Prova riuscita evita tutti i colpi. Con un Fallimento Maldestro la Difesa fallisce e si applica soltanto l’esito della tabella dei Maldestri (§5.17), senza aggiungere un −2 VA fisso. Non si può tentare una seconda Difesa contro lo stesso attacco.\nNon permette di evitare attacchi ad Area, inevitabili o non percepiti. Non consente di utilizzare Azioni del Round successivo.\nAlle Prove si applicano la Manovrabilità del veicolo, l’andatura e gli altri modificatori pertinenti. Il Talento permette anche di evitare uno Speronamento, alle medesime condizioni, senza concedere Movimento aggiuntivo (Manuale dei Veicoli, §§3.3 e 6.3)."
         },
         {
           "specializzazione": "Militare",
@@ -3141,7 +3141,7 @@
         {
           "specializzazione": "Informatico",
           "nome": "Contromisure Elettroniche",
-          "testo": "Quando rileva un’intrusione, un disturbo, un comando ostile o un tentativo di controllo contro un dispositivo collegato, il Tecnico può spendere un’Azione Principale disponibile, anche fuori dalla propria Iniziativa, prima che l’effetto venga applicato.\nEffettua una Prova di Tecnologia: con un successo annulla quel singolo effetto. Se la fonte è rintracciabile attraverso il collegamento, ne individua anche la provenienza approssimativa. Può proteggere un dispositivo alleato raggiungibile attraverso la stessa rete o comunicazione, purché disponga dell’accesso tecnico necessario.\nSi considera una Difesa: contro un Successo Magistrale serve un Successo Magistrale; un Fallimento Maldestro impone −2 VA fino all’arrivo dell’Iniziativa successiva. Non consente di utilizzare Azioni del Round successivo e non concede immunità ai tentativi successivi."
+          "testo": "Quando rileva un’intrusione, un disturbo, un comando ostile o un tentativo di controllo contro un dispositivo collegato, il Tecnico può spendere un’Azione Principale disponibile, anche fuori dalla propria Iniziativa, prima che l’effetto venga applicato.\nEffettua una Prova di Tecnologia: con un successo annulla quel singolo effetto. Se la fonte è rintracciabile attraverso il collegamento, ne individua anche la provenienza approssimativa. Può proteggere un dispositivo alleato raggiungibile attraverso la stessa rete o comunicazione, purché disponga dell’accesso tecnico necessario.\nSi considera una Difesa: contro un Successo Magistrale serve un Successo Magistrale; con un Fallimento Maldestro la Difesa fallisce e si applica soltanto l’esito della tabella dei Maldestri (§5.17). Non consente di utilizzare Azioni del Round successivo e non concede immunità ai tentativi successivi."
         },
         {
           "specializzazione": "Comune",
@@ -4422,7 +4422,7 @@
         {
           "specializzazione": "Comune",
           "nome": "Difesa Astrale",
-          "testo": "Una volta per Round, mentre impugna l’Arma Astrale, il Custode può effettuare gratuitamente una Parata con Difese contro un attacco parabile, anche quando non dispone più di Azioni. Non concede una seconda Difesa dopo il fallimento di un’altra Difesa contro lo stesso attacco.\nSi applicano le regole ordinarie della Parata: un successo dimezza per eccesso il danno prima dell’Armatura; un Successo Magistrale lo annulla; un Fallimento Maldestro comporta −2 VA fino all’arrivo dell’Iniziativa successiva. Contro gli attacchi a distanza si applica −8 VA con l’arma, con un ulteriore −2 contro le Raffiche. Non rende parabili attacchi o effetti normalmente imparabili."
+          "testo": "Una volta per Round, mentre impugna l’Arma Astrale, il Custode può effettuare gratuitamente una Parata con Difese contro un attacco parabile, anche quando non dispone più di Azioni. Non concede una seconda Difesa dopo il fallimento di un’altra Difesa contro lo stesso attacco.\nSi applicano le regole ordinarie della Parata: un successo dimezza per eccesso il danno prima dell’Armatura; un Successo Magistrale lo annulla; con un Fallimento Maldestro la Difesa fallisce e si applica soltanto l’esito della tabella dei Maldestri (§5.17). Contro gli attacchi a distanza si applica −8 VA con l’arma, con un ulteriore −2 contro le Raffiche. Non rende parabili attacchi o effetti normalmente imparabili."
         }
       ],
       "competenze_precedenti": {

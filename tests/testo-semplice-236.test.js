@@ -19,7 +19,7 @@ import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import {
-  blocchiTesto, tabelleTesto, intestazioneDi, INTESTAZIONI, censiteNonViste,
+  blocchiTesto, tabelleTesto, intestazioneDi, INTESTAZIONI, INTESTAZIONI_VEICOLI, INTESTAZIONI_ARMAMENTI, censiteNonViste, comeTestoSemplice,
   eTestoSemplice, righeTesto, titoloNumerato, capitoloTesto,
 } from '../tools/tabelle-testo.mjs';
 import { leggiTabelle, leggiSchede, confronta, refertoForma, CAPITOLO_PROFILO } from '../tools/importa-veicoli.mjs';
@@ -149,7 +149,12 @@ test('l’estrattore riconosce la forma, e dichiara che nel testo semplice non c
 });
 
 test('il censimento non invecchia: ogni intestazione censita si vede nel manuale', () => {
-  assert.deepEqual(censiteNonViste(VEICOLI), [], 'un’intestazione censita che non compare in nessun manuale è una nostra invenzione');
+  // lotto 255: le intestazioni censite sono due famiglie, e ciascuna si cerca nel suo manuale. Con l'elenco unico
+  // questo controllo chiedeva ai Veicoli anche le nove intestazioni del §7.4 degli Armamenti, che lì non ci sono.
+  assert.deepEqual(censiteNonViste(VEICOLI, INTESTAZIONI_VEICOLI), [], 'un’intestazione dei Veicoli che non compare nel manuale è una nostra invenzione');
+  const armamenti = testoManuale('armamenti');
+  assert.deepEqual(censiteNonViste(comeTestoSemplice(armamenti), INTESTAZIONI_ARMAMENTI), [], 'un’intestazione degli Armamenti che non compare nel manuale è una nostra invenzione');
+  assert.equal(INTESTAZIONI.length, INTESTAZIONI_VEICOLI.length + INTESTAZIONI_ARMAMENTI.length, 'l’elenco unico è l’unione delle due famiglie');
   assert.ok(INTESTAZIONI.length >= 10);
   // nei capitoli dei mezzi non resta una tabella non letta
   const righe = righeTesto(VEICOLI);

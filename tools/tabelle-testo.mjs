@@ -45,6 +45,35 @@ export function righeTesto(testo) {
   return String(testo).replace(new RegExp('^' + BOM), '').replace(/\r/g, '').split('\n').map((r) => r.replace(/[ ]+$/, ''));
 }
 
+/**
+ * **Un Markdown nella convenzione del testo semplice**, così che un lettore solo valga per le due forme.
+ *
+ * Perché serve: i Veicoli si esportano **solo** in testo semplice (67 MB in Markdown, undicesima regola) e gli
+ * Armamenti **solo** in Markdown per chi legge le frasi e le armi — e una stessa edizione non si salva due volte,
+ * perché due estrazioni della stessa edizione sono un doppione (nona regola). Quindi la forma si converte quando
+ * serve, invece di tenere due file.
+ *
+ * La conversione è fedele alla convenzione: ogni cella su una riga preceduta da una tabulazione, il blocco chiuso da
+ * una riga con la sola tabulazione. Le righe separatrici («| :--- | :--- |») non sono celle e si buttano; la prosa
+ * non si tocca. Chi era già testo semplice torna com'era.
+ */
+export function comeTestoSemplice(testo) {
+  if (eTestoSemplice(testo)) return String(testo);
+  const out = [];
+  let dentro = false;
+  for (const riga of righeTesto(testo)) {
+    const eRiga = /^\s*\|.*\|\s*$/.test(riga);
+    if (!eRiga) { if (dentro) { out.push('\t'); dentro = false; } out.push(riga); continue; }
+    if (/^\s*\|[\s:|-]*\|\s*$/.test(riga)) continue; // la riga separatrice dell'intestazione
+    const celle = riga.trim().replace(/^\|/, '').replace(/\|$/, '').split('|')
+      .map((c) => c.replace(/\\([^A-Za-z0-9\s])/g, '$1').replace(/\*/g, '').replace(/[ ]+/g, ' ').trim());
+    // la convenzione dell’esportazione: la PRIMA cella del blocco sta a filo, le altre con la tabulazione
+    for (const c of celle) { out.push(dentro ? '\t' + c : c); dentro = true; }
+  }
+  if (dentro) out.push('\t');
+  return out.join('\n');
+}
+
 /** Vero se il testo è un export in testo semplice (celle con la tabulazione) e non un Markdown (righe con le barre). */
 export function eTestoSemplice(testo) {
   const r = righeTesto(testo);
@@ -86,9 +115,13 @@ export function blocchiTesto(testo) {
  * Le intestazioni **censite**: quelle che sappiamo leggere, e quante colonne hanno. Si aggiunge una voce qui dopo
  * aver guardato la tabella nel manuale, non perché un conto tornava.
  *
- * Censite sul Manuale dei Veicoli 0.23 (capitoli 1–18) il 23/11/2026.
+ * Censite sul Manuale dei Veicoli 0.23 (capitoli 1–18) il 23/11/2026 e sul §7.4 degli Armamenti 0.92 il 26/11/2026.
+ *
+ * Le famiglie restano separate perché `censiteNonViste` confronta l'elenco con **un** testo: col solo elenco unico,
+ * leggendo i Veicoli direbbe «non si vedono» le nove intestazioni degli scudi, e quella riga serve a scoprire una
+ * voce morta, non a contare quelle di un altro manuale. `INTESTAZIONI` resta l'unione, per chi legge senza scegliere.
  */
-export const INTESTAZIONI = [
+export const INTESTAZIONI_VEICOLI = [
   // le schede dei mezzi dei capitoli 16, 17 e 18 (29 + 21 + 20 + 20 + 20 tabelle)
   ['Dato', 'Valore'],
   ['Requisito', 'Valore'],
@@ -119,13 +152,33 @@ export const INTESTAZIONI = [
 ];
 
 /**
+ * Le intestazioni del §7.4 degli Armamenti (Scudi e protezioni), censite sulla 0.92 il 26/11/2026: il quadro delle
+ * categorie, il confronto con il Tonfa, le schede del Punisher e del Wächter, la barriera della Fratellanza, le due
+ * tabelle del catalogo generale (profili e costi) e i modificatori alle Parate.
+ */
+export const INTESTAZIONI_ARMAMENTI = [
+  ['Scudo', 'Protezione e penalità'],
+  ['Equipaggiamento', 'AR passiva aggiuntiva', 'Parata ravvicinata', 'Parata a distanza'],
+  ['Modello', 'Taglia', 'Mani', 'AR', 'AR magica', 'FOR', 'PI'],
+  ['Qualità', 'PS Integrità', 'Reperibilità', 'Costo'],
+  ['Taglia', 'Mani', 'AR', 'AR magica', 'FOR', 'PI', 'PS Integrità'],
+  ['Parametro', 'Barriera personale', 'Cupola protettiva'],
+  ['Catalogo e modello', 'Taglia', 'AR', 'FOR', 'PI', 'MOV'],
+  ['Catalogo e modello', 'Qualità', 'PS INT', 'REP', 'Costo'],
+  ['Modelli o condizione', 'Ravvicinata', 'A distanza'],
+];
+
+/** Tutte le intestazioni censite, di qualunque manuale. */
+export const INTESTAZIONI = [...INTESTAZIONI_VEICOLI, ...INTESTAZIONI_ARMAMENTI];
+
+/**
  * Le intestazioni censite che nel testo non combaciano con niente: una voce che non si vede in nessun manuale non
  * e un censimento, e una regola che nessuno applica invecchia senza farsi notare. Il referto la nomina.
  */
-export function censiteNonViste(testo) {
+export function censiteNonViste(testo, elenco = INTESTAZIONI) {
   const viste = new Set();
   for (const b of blocchiTesto(testo)) { const h = intestazioneDi(b.celle); if (h) viste.add(h.join('|')); }
-  return INTESTAZIONI.filter((h) => !viste.has(h.join('|'))).map((h) => h.join(' | '));
+  return elenco.filter((h) => !viste.has(h.join('|'))).map((h) => h.join(' | '));
 }
 
 /** L'intestazione censita più lunga che combacia con l'inizio di queste celle, o null. */

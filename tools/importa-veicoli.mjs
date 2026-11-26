@@ -14,7 +14,7 @@ import { readFileSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import { testoManuale } from './manuali.mjs';
 import { leggiTabelle as leggiTabelleGrezze, censimentoIntestazioni, numeroDi, chiave } from './importa-equipaggiamento.mjs';
-import { eTestoSemplice, tabelleTesto, capitoloTesto, righeTesto, censiteNonViste } from './tabelle-testo.mjs';
+import { eTestoSemplice, tabelleTesto, capitoloTesto, righeTesto, censiteNonViste, INTESTAZIONI_VEICOLI } from './tabelle-testo.mjs';
 
 export { censimentoIntestazioni };
 
@@ -37,7 +37,7 @@ export function leggiTabelle(testo) {
 export function refertoForma(testo) {
   if (!eTestoSemplice(testo)) return { forma: 'Markdown', spaiate: [], nonRiconosciute: [], censiteNonViste: [] };
   const r = tabelleTesto(testo);
-  return { forma: 'testo semplice', spaiate: r.spaiate, nonRiconosciute: r.nonRiconosciute, censiteNonViste: censiteNonViste(testo) };
+  return { forma: 'testo semplice', spaiate: r.spaiate, nonRiconosciute: r.nonRiconosciute, censiteNonViste: censiteNonViste(testo, INTESTAZIONI_VEICOLI) };
 }
 
 /** Il capitolo → il profilo del catalogo. I capitoli 14 e 15 (astronavi) non hanno un profilo: sono dichiarati in `veicoli.json → fuori_catalogo`. */

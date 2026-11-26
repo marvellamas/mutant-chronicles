@@ -634,6 +634,10 @@ export function valoriTavolo(scheda, sessione, dati) {
   // Assalto Armato (Assaltatore, Armamenti §7.11.1): riduce di 2 Q complessivi, fino a 0, la penalità
   // MOV di armatura indossata e scudo impugnato (non quella delle armi)
   const movProtezioni = scheda.equipaggiamento?.movimentoQProtezioni ?? 0;
+  // lotto 255: con la revisione del 24/11 anche uno Scudo medio toglie 1 Q, quindi l’etichetta dice da dove viene
+  // la penalità invece di dire sempre «Armatura»: un valore giusto con la provenienza sbagliata non si controlla.
+  const movScudo = scheda.equipaggiamento?.movimentoQScudo ?? 0;
+  const etichettaMov = movScudo && movScudo === mov ? 'Scudo (MOV)' : movScudo ? 'Armatura e scudo (MOV)' : 'Armatura (MOV)';
   const assalto = talOff ? [] : effettiTalenti(scheda, dati).filter((e) => e.tipo === 'movimento_armatura');
   const vociAssalto = movProtezioni < 0 ? assalto.map((e) => voce(e.talento, Math.min(e.valore, -movProtezioni), 'talento')).slice(0, 1) : [];
   const carico = isOggetto(sessione) && r.carico ? (scheda.carico ?? calcolaCarico(scheda, sessione, dati)) : null;
@@ -643,7 +647,7 @@ export function valoriTavolo(scheda, sessione, dati) {
   for (const modo of ['passo', 'corsa', 'scatto']) {
     const note = [];
     let voci = [voce(`${modo[0].toUpperCase()}${modo.slice(1)} da regole`, base[modo] ?? 0, 'regole')];
-    if (mov) voci.push(voce('Armatura (MOV)', mov, 'equipaggiamento'), ...vociAssalto);
+    if (mov) voci.push(voce(etichettaMov, mov, 'equipaggiamento'), ...vociAssalto);
     // Equipaggiamento §7.5: Q in più al Movimento degli impianti installati (gambe potenziate)
     for (const m of scheda.equipaggiamento?.movimentoEquip ?? []) voci.push(voce(m.etichetta, m.valore, 'equipaggiamento'));
     let disponibile = true;

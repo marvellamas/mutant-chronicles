@@ -115,5 +115,7 @@ export const ARGOMENTI = {
   'pg-valori.mjs': ['cartella'],
   'pg-prima-dopo.mjs': ['cartella', 'base'],
   'importa-armi.mjs': ['modello', 'specializzazioni'],
+  'importa-scudi.mjs': ['scrivi', 'edizione'],
+  'scudi-prima-dopo.mjs': ['da'],
   'armi-prima-dopo.mjs': ['da', 'cartella'],
 };
