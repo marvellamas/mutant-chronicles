@@ -1,0 +1,215 @@
+{
+ "_nota": "Lotto 255, parte E. Che cosa portano i sette, in categorie. I file dei sette non stanno in git (sono su Drive e nelle istantanee), quindi questo elenco è una **fotografia con la sua data** e lo si rifà con «node tools/cose-dei-sette.mjs --scrivi» quando arriva un’istantanea nuova. Il test tests/pg-di-prova-255.test.js pretende che ogni voce esista in almeno un PG di prova: serve a non avere più un controllo verde sull’assenza, come il «+X» dell’Elmetto Recon nel lotto 254.",
+ "istantanea": "/istantanee/stato_2026-11-21_2353/personaggi",
+ "quando": "2026-11-26T17:48:31.949Z",
+ "personaggi": [
+  "BOTHA PRETORIUS",
+  "Dimitri Orlav",
+  "DUNCAN MCDUFF",
+  "LUCAS",
+  "MICHELE GIORGETTI",
+  "OSHI NAGATA",
+  "PABLO ZAION"
+ ],
+ "cose": {
+  "CyberArma": [
+   "Dimitri Orlav"
+  ],
+  "Guanti da Combattimento Mistico": [
+   "LUCAS"
+  ],
+  "Talenti nuovi (regimeTalenti 2)": [
+   "BOTHA PRETORIUS",
+   "Dimitri Orlav",
+   "DUNCAN MCDUFF",
+   "LUCAS",
+   "MICHELE GIORGETTI",
+   "OSHI NAGATA",
+   "PABLO ZAION"
+  ],
+  "Umanità con impianti registrati": [
+   "Dimitri Orlav"
+  ],
+  "accessorio montato su un altro oggetto": [
+   "BOTHA PRETORIUS",
+   "Dimitri Orlav",
+   "DUNCAN MCDUFF",
+   "LUCAS",
+   "MICHELE GIORGETTI",
+   "OSHI NAGATA",
+   "PABLO ZAION"
+  ],
+  "correzioni del Direttore": [
+   "BOTHA PRETORIUS",
+   "Dimitri Orlav",
+   "DUNCAN MCDUFF",
+   "LUCAS",
+   "MICHELE GIORGETTI",
+   "OSHI NAGATA",
+   "PABLO ZAION"
+  ],
+  "dotazione ASA o SIA": [
+   "BOTHA PRETORIUS",
+   "Dimitri Orlav",
+   "DUNCAN MCDUFF",
+   "LUCAS",
+   "MICHELE GIORGETTI",
+   "OSHI NAGATA",
+   "PABLO ZAION"
+  ],
+  "dotazione iniziale": [
+   "BOTHA PRETORIUS",
+   "Dimitri Orlav",
+   "DUNCAN MCDUFF",
+   "LUCAS",
+   "MICHELE GIORGETTI",
+   "OSHI NAGATA",
+   "PABLO ZAION"
+  ],
+  "elmetto: elmetto-asa-recon": [
+   "BOTHA PRETORIUS",
+   "Dimitri Orlav",
+   "DUNCAN MCDUFF",
+   "LUCAS",
+   "MICHELE GIORGETTI",
+   "OSHI NAGATA",
+   "PABLO ZAION"
+  ],
+  "famiglia del catalogo: accessori_armi": [
+   "BOTHA PRETORIUS",
+   "DUNCAN MCDUFF",
+   "LUCAS",
+   "MICHELE GIORGETTI",
+   "OSHI NAGATA"
+  ],
+  "famiglia del catalogo: armature_corporative": [
+   "BOTHA PRETORIUS",
+   "Dimitri Orlav",
+   "DUNCAN MCDUFF",
+   "LUCAS",
+   "MICHELE GIORGETTI",
+   "OSHI NAGATA",
+   "PABLO ZAION"
+  ],
+  "famiglia del catalogo: armi": [
+   "BOTHA PRETORIUS",
+   "Dimitri Orlav",
+   "DUNCAN MCDUFF",
+   "LUCAS",
+   "MICHELE GIORGETTI",
+   "OSHI NAGATA",
+   "PABLO ZAION"
+  ],
+  "famiglia del catalogo: armi_corporative": [
+   "Dimitri Orlav",
+   "DUNCAN MCDUFF",
+   "OSHI NAGATA"
+  ],
+  "famiglia del catalogo: armi_distanza": [
+   "Dimitri Orlav"
+  ],
+  "famiglia del catalogo: armi_distanza_corporative": [
+   "BOTHA PRETORIUS",
+   "Dimitri Orlav",
+   "DUNCAN MCDUFF",
+   "LUCAS",
+   "MICHELE GIORGETTI",
+   "OSHI NAGATA",
+   "PABLO ZAION"
+  ],
+  "famiglia del catalogo: artefatti": [
+   "Dimitri Orlav",
+   "LUCAS",
+   "OSHI NAGATA"
+  ],
+  "famiglia del catalogo: comunicazione": [
+   "BOTHA PRETORIUS",
+   "Dimitri Orlav",
+   "DUNCAN MCDUFF",
+   "LUCAS",
+   "MICHELE GIORGETTI",
+   "OSHI NAGATA",
+   "PABLO ZAION"
+  ],
+  "famiglia del catalogo: dotazioni_personali": [
+   "BOTHA PRETORIUS",
+   "Dimitri Orlav",
+   "DUNCAN MCDUFF",
+   "LUCAS",
+   "MICHELE GIORGETTI",
+   "OSHI NAGATA",
+   "PABLO ZAION"
+  ],
+  "famiglia del catalogo: elmetti": [
+   "BOTHA PRETORIUS",
+   "Dimitri Orlav",
+   "DUNCAN MCDUFF",
+   "LUCAS",
+   "MICHELE GIORGETTI",
+   "OSHI NAGATA",
+   "PABLO ZAION"
+  ],
+  "famiglia del catalogo: esplorazione": [
+   "BOTHA PRETORIUS",
+   "Dimitri Orlav",
+   "DUNCAN MCDUFF",
+   "LUCAS",
+   "MICHELE GIORGETTI",
+   "OSHI NAGATA",
+   "PABLO ZAION"
+  ],
+  "famiglia del catalogo: impianti": [
+   "Dimitri Orlav"
+  ],
+  "famiglia del catalogo: munizioni": [
+   "MICHELE GIORGETTI"
+  ],
+  "famiglia del catalogo: rinforzi": [
+   "BOTHA PRETORIUS",
+   "Dimitri Orlav",
+   "DUNCAN MCDUFF",
+   "LUCAS",
+   "MICHELE GIORGETTI",
+   "OSHI NAGATA",
+   "PABLO ZAION"
+  ],
+  "famiglia del catalogo: sanitario": [
+   "Dimitri Orlav",
+   "DUNCAN MCDUFF",
+   "LUCAS",
+   "MICHELE GIORGETTI",
+   "OSHI NAGATA",
+   "PABLO ZAION"
+  ],
+  "famiglia del catalogo: scudi": [
+   "MICHELE GIORGETTI"
+  ],
+  "famiglia del catalogo: strumenti_professionali": [
+   "Dimitri Orlav",
+   "DUNCAN MCDUFF",
+   "LUCAS",
+   "PABLO ZAION"
+  ],
+  "impianto cibernetico": [
+   "Dimitri Orlav"
+  ],
+  "progetto del Direttore": [
+   "BOTHA PRETORIUS",
+   "Dimitri Orlav",
+   "DUNCAN MCDUFF",
+   "LUCAS",
+   "MICHELE GIORGETTI",
+   "OSHI NAGATA",
+   "PABLO ZAION"
+  ],
+  "scudo imbracciato": [
+   "MICHELE GIORGETTI"
+  ],
+  "scudo": [
+   "MICHELE GIORGETTI"
+  ],
+  "veicolo nel file del PG": [
+   "LUCAS"
+  ]
+ }
+}

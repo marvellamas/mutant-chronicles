@@ -118,5 +118,6 @@ export const ARGOMENTI = {
   'importa-scudi.mjs': ['scrivi', 'edizione'],
   'scudi-prima-dopo.mjs': ['da'],
   'lotto_255_salti.mjs': ['scrivi'],
+  'cose-dei-sette.mjs': ['scrivi', 'istantanea'],
   'armi-prima-dopo.mjs': ['da', 'cartella'],
 };
