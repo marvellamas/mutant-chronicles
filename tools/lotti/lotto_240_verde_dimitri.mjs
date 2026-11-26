@@ -13,6 +13,9 @@
 //   node tools/lotti/lotto_240_verde_dimitri.mjs --scrivi   scrive data/equipaggiamento/armi.json (idempotente)
 import { readFileSync, writeFileSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
+// lotto 255: l’edizione non si scrive qui (nona regola). La 0.92 ha fatto invecchiare un «0.90» scritto a mano,
+// e il controllo di idempotenza del lotto 240 è diventato rosso: giusto così, ed è il motivo per cui si chiede al registro.
+import { versioneManuale } from '../manuali.mjs';
 
 const FILE = fileURLToPath(new URL('../../data/equipaggiamento/armi.json', import.meta.url));
 
@@ -21,7 +24,7 @@ export const DICHIARATI = [
     uid: 'emwqzcjim4d0k',
     colore: 'Verde',
     di: 'la CyberArma di Dimitri Orlav (voce `armi:cyberarma`, impugnata e sintonizzata nell’istantanea del 21/11/2026, 23:53)',
-    perche: 'Armamenti 0.90 §7.25.4, «Stato delle modifiche»: «È installato soltanto il focalizzatore Verde» (Dimitri ha sostituito il frammento Viola dell’esemplare di Park con la propria scheggia Verde stabilizzata). Confermato da Davide il 23/11/2026 (A.308), riferito da Marcello.',
+    perche: `Armamenti ${versioneManuale('armamenti')} §7.25.4, «Stato delle modifiche»: «È installato soltanto il focalizzatore Verde» (Dimitri ha sostituito il frammento Viola dell’esemplare di Park con la propria scheggia Verde stabilizzata). Confermato da Davide il 23/11/2026 (A.308), riferito da Marcello.`,
     risposta: 'A.308',
   },
 ];
