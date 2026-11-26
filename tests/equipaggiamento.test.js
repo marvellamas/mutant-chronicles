@@ -330,7 +330,11 @@ test('lotto 3: 26 scudi del §7.4.2 con i modificatori alle Parate del §7.4.11'
   assert.equal(pun.attacco.danno, '1d6+1');
   assert.equal(pun.costo, 6000);
   const enorme = catalogo(dati).perRif.get('scudi:scudo-enorme');
-  assert.equal(enorme.mov, -1);
+  // lotto 255 (revisione approvata il 24/11/2026, Armamenti 0.92 §7.4): l’Enorme passa da −1 a −2 Q al MOV e
+  // guadagna −1 VA ad attacchi e Prove di Agilità. Il numero viene dalla tabella del manuale, modello per modello.
+  assert.equal(enorme.mov, -2);
+  assert.equal(enorme.penalita.agilita, -1);
+  assert.equal(enorme.penalita.difese, undefined); // il −1 VA non si applica alle Prove di Difese
   assert.equal(enorme.for_richiesta, 7);
   const sic = catalogo(dati).perRif.get('scudi:scudo-della-sicurezza');
   assert.deepEqual(sic.parata, { ravvicinata: 0, distanza: -4 }); // senza SIN
@@ -367,9 +371,17 @@ test('scudo imbracciato: AR, Parata già calcolata con Difese e modificatori, at
   const difA = a.abilita.find((x) => x.nome === 'Difese');
   assert.equal(pe.forMancante, 2);
   assert.equal(pe.parata.ravvicinata, difA.vaEquip - 2);
-  assert.equal(difA.equip, 0); // non è un'armatura: Difese e Agilità non cambiano
-  assert.ok(a.abilita.every((x) => x.equip === 0));
-  assert.equal(a.equipaggiamento.movimentoQ, -1);
+  // lotto 255: le **Difese** restano a 0 — è il punto che la revisione del 24/11 ripete tre volte, e resta pinnato.
+  assert.equal(difA.equip, 0); // il −1 VA dell’Enorme non si applica alle Prove di Difese, Schivate e Parate
+  // le Prove di **Agilità** invece scendono di 1 (Atletica e Furtività)
+  const agilita = a.abilita.filter((x) => ['Atletica', 'Furtività'].includes(x.nome));
+  assert.equal(agilita.length, 2);
+  for (const x of agilita) assert.equal(x.equip, -1, `${x.nome}: la categoria Enorme dà −1 alle Prove di Agilità`);
+  for (const x of a.abilita.filter((y) => !['Atletica', 'Furtività'].includes(y.nome))) {
+    assert.equal(x.equip, 0, `${x.nome}: lo Scudo non tocca le altre Abilità`);
+  }
+  assert.equal(a.equipaggiamento.movimentoQ, -2); // −2 Q al MOV (prima −1)
+  assert.equal(a.equipaggiamento.movimentoQScudo, -2); // e la quota è tutta dello scudo: l’etichetta lo dirà
   // SIN: il profilo alternativo è già calcolato
   const c = scheda(MISHIMA_AGENTE, [voce('c', 'scudi:scudo-d-assalto-chasseur', 'imbracciato')]);
   const alt = c.equipaggiamento.protezioni[0].alternative[0];
@@ -386,7 +398,9 @@ test('scudi: due imbracciati non si sommano (avviso); stampa della riga Protezio
   const [riga] = f3.protezioni.righe;
   assert.deepEqual(riga.slice(0, 3), ['Scudo pesante Reaver', '3', 'Enorme']);
   // Agente: Difese 8 (Mod DES +2, base Professionale 6, Giocatore del 29/09), FOR 6 su 7 richiesta → −1 alle Parate con lo Scudo (§7.1.6)
-  assert.equal(riga[3], 'Parata 7 ravv. / 3 dist.; con SIN collegato (Innesto di Interfaccia Neurale attivo): Parata 8/4; MOV −1 Q; FOR 7 (−1)');
+  // lotto 255: la riga stampata porta le penalità nuove della categoria Enorme (MOV −2 Q, −1 ad Agilità e
+  // agli attacchi): si vedono sul foglio, e le Difese non ci sono perché il −1 VA non le tocca.
+  assert.equal(riga[3], 'Parata 7 ravv. / 3 dist.; con SIN collegato (Innesto di Interfaccia Neurale attivo): Parata 8/4; MOV −2 Q; Agilità −1; attacchi −1 ravv. / −1 dist.; FOR 7 (−1)');
 });
 
 test('validatore degli scudi: Parata, profili alternativi, attacco', () => {

@@ -21,9 +21,9 @@
   "difese": 11,
   "iniziativa": 3,
   "movimento": {
-    "passo": 5,
-    "corsa": 11,
-    "scatto": 17
+    "passo": 4,
+    "corsa": 10,
+    "scatto": 16
   },
   "salvezze": {
     "tempra": 11,

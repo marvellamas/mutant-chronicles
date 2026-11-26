@@ -102,6 +102,9 @@ test('RASSEGNA: ogni strumento che scrive file di personaggi passa da scriviPers
     // falso — il file della copia e identico a quello da cui viene, ed e proprio quello che serve per confrontare.
     'copia-di-prova.mjs': 'copia i personaggi byte per byte: scrive solo il marcatore della copia e il LEGGIMI',
     'ripassa-clic.mjs': 'legge il disco e scrive il rapporto del ripasso: i personaggi li scrive l’app dal browser',
+    // lotto 255: il censimento legge i sette e i PG di prova e scrive **soltanto** l’elenco delle categorie in
+    // tests/fixtures/cose-dei-sette.json. Nessun personaggio esce da qui, e i file veri si aprono in lettura.
+    'cose-dei-sette.mjs': 'censisce in sola lettura e scrive solo l’elenco delle categorie (tests/fixtures/cose-dei-sette.json)',
   };
   const lista = readdirSync(new URL('tools/', RADICE)).filter((f) => f.endsWith('.mjs'));
   const colpevoli = [];

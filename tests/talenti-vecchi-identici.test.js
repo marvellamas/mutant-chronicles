@@ -6,6 +6,12 @@
 // — la condizione dell’effetto dell’Elmetto Recon ASA, che a schermo si legge «+1 VA a Percezione» invece della
 // citazione generica del manuale «+X VA a Percezione» (il calcolo usava già 1, A.294). Il confronto è stato fatto
 // campo per campo prima di toccare il file: 7 differenze, tutte in abilita[].disponibili[].condizione, 0 numeriche.
+//
+// Lotto 255 (gli Scudi, revisione approvata il 24/11/2026): in attese.json cambiano **15 valori di un solo
+// personaggio** — Torvald, che porta uno scudo medio: Passo 5 → 4, Corsa 11 → 10, Scatto 17 → 16, la penalità
+// −1 → −2 (armatura media −1 + scudo medio −1) e l’etichetta «Armatura (MOV)» → «Armatura e scudo (MOV)».
+// **Le attese dei sette non si muovono di un valore**, ed è la cosa che questo controllo esiste per dire. Il
+// confronto è stato fatto campo per campo prima di toccare il file: 15 differenze, tutte nel Movimento.
 import '../tools/guardia-subito.mjs'; // la guardia sulle cartelle vere, comunque si lanci il test
 import { test } from 'node:test';
 import assert from 'node:assert/strict';

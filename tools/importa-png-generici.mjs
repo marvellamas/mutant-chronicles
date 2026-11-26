@@ -23,8 +23,8 @@
 //
 //   node tools/importa-png-generici.mjs [--scrivi] [--testo=file] [--json=file] [--dest=file] [--verifica]
 import { readFileSync, writeFileSync, existsSync } from 'node:fs';
-import { testoDeiDati } from './edizioni-dati.mjs';
-import { testoManuale, fonteDati, percorsoFonteDati, voceDati } from './manuali.mjs';
+import { testoDeiDati, edizioneDeiDati } from './edizioni-dati.mjs';
+import { testoManuale, fonteDati, percorsoFonteDati, voceDati, versioneManuale } from './manuali.mjs';
 import { createHash } from 'node:crypto';
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -299,11 +299,15 @@ export function importaPng(testoWord, fonte, { versione_manuale, nota_fonte } = 
     throw new Error(`l’arma «${a}» non è nella tabella degli armamenti astratti: se è un nome nuovo del manuale, va letta o dichiarata`);
   }
   return {
-    versione_manuale: versione_manuale ?? 'Mostri 0.67; Direttore 0.51 §§9.6–9.6.2',
+    // lotto 255: le due edizioni non si scrivono qui (nona regola: un numero di edizione dentro un programma è un
+    // posto in più in cui restare indietro in silenzio). I Mostri sono l’edizione **dei dati** — il JSON dei PNG
+    // dichiara lo sha256 del Word a cui appartiene, e resta dichiarata in attesa finché Davide non pubblica il JSON
+    // dell’edizione corrente; il Direttore è la corrente del registro.
+    versione_manuale: versione_manuale ?? `Mostri ${edizioneDeiDati('mostri')}; Direttore ${versioneManuale('direttore')} §§9.6–9.6.2`,
     fonte: nota_fonte ?? 'Manuale dei Mostri 0.67, «PNG generici Classe Grado ed EQ» (prosa, blocchi comuni) e SIMPLY_RPG_PNG_Abilita_v0.67.json di Davide (numeri, Abilità, acquisizioni, valori pronti): docs/manuali-txt/png-abilita-0.67.json, con lo sha256 del Word che dichiara. Venticinque modelli, centocinquanta righe di Grado.',
     gradi: GRADI,
     movimento: { passo: 6, corsa: 12, scatto: 18, nota: 'Movimento: 6/12/18 Q Base (Agente, tabella delle risorse); una AM per Round.' },
-    valori_pronti: 'I valori pronti delle tabelle comprendono già i benefici fissi delle acquisizioni raggiunte, una volta sola (Mostri 0.67, «Bonus permanenti»; Direttore 0.51 §9.6.2). I VA delle 24 Abilità sono personali, prima di Specializzazioni, EQ, strumenti e condizioni. Non si risommano: si aggiunge EQ una volta sola e i soli modificatori condizionati pertinenti.',
+    valori_pronti: `I valori pronti delle tabelle comprendono già i benefici fissi delle acquisizioni raggiunte, una volta sola (Mostri ${edizioneDeiDati('mostri')}, «Bonus permanenti»; Direttore ${versioneManuale('direttore')} §9.6.2). I VA delle 24 Abilità sono personali, prima di Specializzazioni, EQ, strumenti e condizioni. Non si risommano: si aggiunge EQ una volta sola e i soli modificatori condizionati pertinenti.`,
     livelli_acquisizioni: fonte.livelli_acquisizioni,
     ...comuni,
     classi,
