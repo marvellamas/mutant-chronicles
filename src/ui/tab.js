@@ -50,7 +50,7 @@ import { statoIntegrita, oggettiRotti } from '../protezione.js';
 import { schermaQualcosa, statoContenitore, statoSchermatura } from '../schermatura.js';
 import { renderEquipaggiamento } from './equipaggiamento.js';
 import { testoDanno } from '../stampa.js';
-import { assegnaMani, infoNecSenzaConteggio, legendaModalita, aggiungiDanno, NOMI_FAMIGLIE_MUNIZIONI, NOMI_STATI, consumabili, normalizzaEquipaggiamento, testoEffettoOggetto, catalogo, risolvi, infoArtefattoVoce, infusiDi, regoleSintonizzazione, rapportoConversione, riserveNec, tempiProtezione, cambioProtezione } from '../equipaggiamento.js';
+import { assegnaMani, infoNecSenzaConteggio, legendaModalita, aggiungiDanno, NOMI_FAMIGLIE_MUNIZIONI, NOMI_STATI, consumabili, normalizzaEquipaggiamento, testoEffettoOggetto, catalogo, risolvi, infoArtefattoVoce, infusiDi, regoleSintonizzazione, rapportoConversione, riserveNec, tempiProtezione, cambioProtezione, etichettaValore } from '../equipaggiamento.js';
 import { dotazioneApplicata, crediti } from '../dotazioni.js';
 import { provenienzaCarico } from '../carico.js';
 import { talentiSituazionali } from '../talenti.js';
@@ -3734,6 +3734,11 @@ function tabArtefatti(ctx) {
   const nf = (n) => n.toLocaleString('it-IT');
   /** A.256: la riga del prezzo nella scheda di un Artefatto. null quando non c'è niente da dire. */
   const rigaPrezzoArtefatto = (c, def) => {
+    // lotto 254 (rif. 03): un oggetto che non è in vendita non ha un «Prezzo»: ha un valore indicativo, detto
+    // una volta sola nella forma di `etichettaValore` (prima: «Prezzo: 7.500 cr · valore indicativo di un pezzo
+    // unico: non si compra dal catalogo»).
+    const val = etichettaValore(def);
+    if (val?.indicativo) return h('p', { class: 'nota' }, h('strong', {}, `${val.etichetta}: `), h('span', { title: val.titolo }, val.valore));
     const pz = prezzoArtefatto(def, c.dati, { numero: nf });
     // A.265: un pezzo unico può avere un valore indicativo scritto nel manuale (la CyberArma, 7.500 cr): si legge,
     // e la riga dice che è un valore e non un listino.

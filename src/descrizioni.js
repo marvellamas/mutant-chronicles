@@ -1,7 +1,7 @@
 // Contenuto dei tooltip e della scheda completa degli incantesimi, ricavato solo dai dati.
 // Funzioni pure: la UI (src/ui/tooltip.js) trasforma il risultato in DOM.
 import { costiCreazione } from './consumabili-mistici.js';
-import { catalogo, NOMI_TIPI, moduliDi, munizioneDiRiferimento, tabellaSin, tabellaMunizioniArmi, NOMI_FAMIGLIE_MUNIZIONI, infoArtefatto, testoCura, testoProvaPostazione } from './equipaggiamento.js';
+import { catalogo, NOMI_TIPI, moduliDi, munizioneDiRiferimento, tabellaSin, tabellaMunizioniArmi, NOMI_FAMIGLIE_MUNIZIONI, infoArtefatto, testoCura, testoProvaPostazione, etichettaValore } from './equipaggiamento.js';
 
 const trova = (lista, nome) => lista.find((x) => x.nome === nome);
 const eTodo = (v) => typeof v === 'string' && v.startsWith('TODO(');
@@ -107,7 +107,11 @@ function tooltipOggetto(rif, dati) {
   if (o.pi !== undefined && o.pi !== null) riga.PI = String(o.pi);
   if (o.qualita) riga['Qualità'] = `${o.qualita}${o.ps_int ? ` (PS INT ${o.ps_int})` : ''}`;
   if (o.reperibilita) riga.REP = rep ? `${o.reperibilita} ${rep.nome}` : o.reperibilita;
-  if (o.costo !== undefined && o.costo !== null) riga.Costo = o.costo.toLocaleString('it-IT');
+  // lotto 254 (rif. 03): la cifra di un oggetto che non è in vendita si legge «Valore indicativo: 7.500 cr»,
+  // in un'etichetta sola. Prima questa riga diceva «Costo 7500» e la riga dei dati dell'Inventario «valore
+  // 7.500 cr (non è un prezzo)»: due frasi vere che insieme si contraddicono.
+  const val = etichettaValore(o);
+  if (val) riga[val.etichetta] = val.valore;
   if (o.modulo_di) riga.Costo = 'compreso nell’arma';
   const sezioni = [];
   if (o.nomi_alternativi?.length) sezioni.push({ etichetta: 'Comprende', testo: o.nomi_alternativi.join(', ') });

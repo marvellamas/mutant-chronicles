@@ -11,7 +11,7 @@ import { info } from './tooltip.js';
 import { prezzoArtefatto } from '../prezzi-artefatti.js';
 import {
   TIPI, NOMI_TIPI, STATI, NOMI_STATI, catalogo, risolvi, opzioniCascata, cercaNelCatalogo, statoIniziale, puoMontare, rinforzoCompatibile, infoArtefattoVoce,
-  regoleSintonizzazione, coloriChroma, testoEffettoOggetto, regolaCapolavoro, AMBITI_EFFETTO, NOMI_AMBITI, statiInventario, testoCura, condizioneCessione,
+  regoleSintonizzazione, coloriChroma, testoEffettoOggetto, regolaCapolavoro, AMBITI_EFFETTO, NOMI_AMBITI, statiInventario, testoCura, condizioneCessione, etichettaValore,
 } from '../equipaggiamento.js';
 import { pesoVoce } from '../carico.js';
 
@@ -294,7 +294,9 @@ function datiOggetto(ctx, r) {
   // unico o una reliquia non ha prezzo di catalogo. Rarità e reperibilità restano separate.
   const pz = d.artefatto || d.unico || Number.isFinite(d.creazione_cr) ? prezzoArtefatto(d, ctx.dati, { numero: (n) => n.toLocaleString('it-IT') }) : null;
   const parti = [
-    Number.isFinite(d.costo) ? (condizioneCessione(d)?.valoreNonPrezzo ? h('span', { title: 'Non è un prezzo d’acquisto: l’oggetto non è in vendita (A.290).' }, `valore ${d.costo.toLocaleString('it-IT')} cr (non è un prezzo)`) : `costo ${d.costo.toLocaleString('it-IT')}`) : null,
+    // lotto 254 (rif. 03): una forma sola, da `etichettaValore`. Prima qui si leggeva «valore 7.500 cr (non è
+    // un prezzo)» e nella scheda dello stesso oggetto «Costo 7500».
+    (() => { const v = etichettaValore(d); return v ? h('span', { title: v.titolo }, v.indicativo ? `${v.etichetta.toLowerCase()}: ${v.valore}` : `costo ${v.valore}`) : null; })(),
     pz?.unico ? h('span', { title: d._nota_unico ?? pz.nota ?? null }, 'senza prezzo di catalogo (A.256)')
       : pz && pz.vendita !== null && pz.vendita !== pz.catalogo ? h('span', { title: `A.256: ${pz.conto}${pz.nota ? ` — ${pz.nota}` : ''}` }, `vendita ${pz.vendita.toLocaleString('it-IT')}${pz.catalogo === null ? ' (A.256)' : ' calcolata (A.256)'}`)
         : pz && pz.vendita === null && pz.catalogo === null && pz.motivo ? h('span', { class: 'da-definire' }, pz.motivo) : null,
@@ -562,7 +564,10 @@ function riassuntoProfilo(o) {
   if (o.mov) parti.push(`MOV −${-o.mov} Q`);
   if (o.categoria) parti.push(o.categoria);
   if (o.for_richiesta) parti.push(`FOR ${o.for_richiesta}`);
-  if (o.costo !== undefined && o.costo !== null) parti.push(`costo ${o.costo.toLocaleString('it-IT')}`);
+  // lotto 254 (rif. 03): anche la riga di riepilogo del catalogo passa da `etichettaValore`, così un pezzo
+  // che non è in vendita non si legge «costo 7.500» in un posto e «Valore indicativo» in un altro.
+  const vl = etichettaValore(o);
+  if (vl) parti.push(vl.indicativo ? `${vl.etichetta.toLowerCase()}: ${vl.valore}` : `costo ${vl.valore}`);
   if (o.proprieta?.length) parti.push(o.proprieta.map((p) => p.nome).join(', '));
   return parti.join(' · ');
 }

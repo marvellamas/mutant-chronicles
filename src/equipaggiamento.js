@@ -1717,3 +1717,27 @@ export function condizioneCessione(def) {
     modo: c?.modo ?? null,
   };
 }
+
+/**
+ * Lotto 254 (rif. 03 del collaudo di Davide del 25/11/2026): la cifra di un oggetto che non è in vendita si legge
+ * **una volta sola e in una forma sola**, «Valore indicativo: 7.500 cr».
+ *
+ * *Il motivo, che va scritto perché la regola non si perda:* nella carta della CyberArma si leggevano insieme
+ * «Costo 7500» (la riga della scheda, `descrizioni.js`) e «valore 7.500 cr (non è un prezzo)» (la riga dei dati
+ * dell'Inventario) — **due frasi vere che insieme si contraddicono**, e il Direttore deve indovinare quale vale.
+ * La cifra resta quella del manuale (A.261, A.265): cambia come si legge, non quanto vale.
+ *
+ * Chi scrive la cifra di un oggetto passa da qui.
+ * @returns { etichetta, valore, indicativo, titolo } oppure null se l'oggetto non ha un costo
+ */
+export function etichettaValore(def, { numero = (n) => n.toLocaleString('it-IT', { useGrouping: true }) } = {}) {
+  if (!def || !Number.isFinite(def.costo)) return null;
+  const c = condizioneCessione(def);
+  if (!c) return { etichetta: 'Costo', valore: numero(def.costo), indicativo: false, titolo: null };
+  return {
+    etichetta: 'Valore indicativo',
+    valore: `${numero(def.costo)} cr`,
+    indicativo: true,
+    titolo: `Non è un prezzo d'acquisto: ${c.testo}`,
+  };
+}
