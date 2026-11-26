@@ -1,4 +1,5 @@
 import '../tools/guardia-subito.mjs'; // la guardia sulle cartelle vere, comunque si lanci il test
+import { readdirSync } from 'node:fs';
 // Lotto 238 (23/11/2026) — il trasporto a bordo di una nave e il recupero dello scudo.
 //
 // I quattro controlli che il lotto chiede per nome, e che devono restare verdi sempre:
@@ -280,8 +281,14 @@ test('il quadro del trasporto, e l’edizione che lo dà', () => {
   // un mezzo di cui il manuale non dà nessuna misura di trasporto non ha un riquadro da mostrare
   assert.equal(quadroTrasporto({ id: 'x' }, dati), null);
   // l'edizione la dà il registro
-  assert.equal(versioneManuale('veicoli'), '0.23');
-  assert.match(regoleTrasporto(dati).versione_manuale, /Veicoli 0\.23/);
+  // lotto 255: l’edizione corrente non si scrive a mano (la 0.24 l’ha fatta invecchiare). Quello che conta è che
+  // il blocco del trasporto **dichiari** da quale edizione vengono i suoi campi, e che quell’edizione sia una che
+  // il repo ha davvero: è la provenienza per campo del lotto 237.
+  const dichiarata = regoleTrasporto(dati).versione_manuale;
+  assert.match(dichiarata, /^Veicoli [0-9]+[.][0-9]+/, 'il blocco del trasporto dichiara la sua edizione');
+  const salvate = readdirSync(new URL('../docs/manuali-txt/', import.meta.url)).concat(readdirSync(new URL('../docs/manuali-txt/archivio/', import.meta.url)));
+  const v = /^Veicoli ([0-9]+[.][0-9]+)/.exec(dichiarata)[1];
+  assert.ok(salvate.includes(`veicoli-${v}.md`), `il testo dell’edizione dichiarata (${v}) è nel repo`);
 });
 
 /** Un record della Neverlost col suo scudo: le risorse stanno nel record, non nel profilo. */

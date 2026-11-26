@@ -1,5 +1,5 @@
 {
-  "versione_manuale": "Mostri 0.67; Direttore 0.51 §§9.6–9.6.2",
+  "versione_manuale": "Mostri 0.67; Direttore 0.53 §§9.6–9.6.2",
   "fonte": "Manuale dei Mostri 0.67, «PNG generici Classe Grado ed EQ» (prosa, blocchi comuni) e SIMPLY_RPG_PNG_Abilita_v0.67.json di Davide (numeri, Abilità, acquisizioni, valori pronti): docs/manuali-txt/png-abilita-0.67.json, con lo sha256 del Word che dichiara. Venticinque modelli, centocinquanta righe di Grado.",
   "gradi": [
     "I",
@@ -15,7 +15,7 @@
     "scatto": 18,
     "nota": "Movimento: 6/12/18 Q Base (Agente, tabella delle risorse); una AM per Round."
   },
-  "valori_pronti": "I valori pronti delle tabelle comprendono già i benefici fissi delle acquisizioni raggiunte, una volta sola (Mostri 0.67, «Bonus permanenti»; Direttore 0.51 §9.6.2). I VA delle 24 Abilità sono personali, prima di Specializzazioni, EQ, strumenti e condizioni. Non si risommano: si aggiunge EQ una volta sola e i soli modificatori condizionati pertinenti.",
+  "valori_pronti": "I valori pronti delle tabelle comprendono già i benefici fissi delle acquisizioni raggiunte, una volta sola (Mostri 0.67, «Bonus permanenti»; Direttore 0.53 §9.6.2). I VA delle 24 Abilità sono personali, prima di Specializzazioni, EQ, strumenti e condizioni. Non si risommano: si aggiunge EQ una volta sola e i soli modificatori condizionati pertinenti.",
   "livelli_acquisizioni": {
     "specializzazioni": [
       1,

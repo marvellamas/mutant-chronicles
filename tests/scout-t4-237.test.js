@@ -1,4 +1,5 @@
 import '../tools/guardia-subito.mjs'; // la guardia sulle cartelle vere, comunque si lanci il test
+import { eccezioni } from '../tools/edizioni-dati.mjs';
 // Lotto 237 (23/11/2026) — due profili, non uno modificato: lo Scout T4 di serie e il FIAT LUX dei PG.
 //
 // I tre controlli che il lotto chiede per nome, scritti perché **restino verdi sempre**:
@@ -156,7 +157,13 @@ test('i ventuno mezzi dei capitoli 16 e 17 NON sono nel catalogo: aspettano la A
   // i titoli dei ventuno ci sono nel testo salvato: il lotto che applica non deve riscaricare niente
   const righe = righeTesto(testoManuale('veicoli'));
   for (const t of ['16.11 Bastion TC', '17.10 Warden TC', '18.1 Pursuit T4']) assert.ok(righe.includes(t), `il testo salvato ha «${t}»`);
-  assert.equal(versioneManuale('veicoli'), '0.23');
+  // lotto 255: qui c’era «0.23» scritto a mano, e la 0.24 l’ha fatto invecchiare. L’invariante che non scade è
+  // un altro: i ventuno mezzi restano fuori dai dati, e la distanza fra l’edizione dei dati e quella corrente è
+  // **dichiarata** in edizioni_in_attesa col motivo (la A.304).
+  const attesa = eccezioni()['data/veicoli.json']?.veicoli;
+  assert.ok(attesa?.edizione, 'data/veicoli.json dichiara da quale edizione dei Veicoli vengono i suoi numeri');
+  assert.ok(attesa.motivo && attesa.motivo.length > 80, 'e l’eccezione porta il suo motivo per esteso');
+  assert.notEqual(attesa.edizione, versioneManuale('veicoli'), 'se fosse la corrente l’eccezione non servirebbe');
 });
 
 test('sull’istantanea del 21/11 il FIAT LUX dei sette è quello di sempre', () => {

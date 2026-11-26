@@ -489,13 +489,15 @@
   "fuori_iniziativa": true,
   "va": -4,
   "raffica_va": -2,
-  "maldestro_va_fino_a_iniziativa": -2,
   "contro_magistrale": "serve un Magistrale",
   "frasi": [
    "Il Talento Manovra Evasiva del Pilota permette, dopo che un attacco ha colpito il veicolo e prima del danno, di spendere 1 AzP disponibile anche fuori dalla propria Iniziativa e tirare Pilotare −4.",
    "Contro una Raffica si applica un ulteriore −2 VA e una sola Prova riuscita evita tutti i colpi.",
-   "Il Talento non evita effetti ad Area, inevitabili o non percepiti e non permette una seconda Difesa contro lo stesso attacco."
-  ]
+   "Il Talento non evita effetti ad Area, inevitabili o non percepiti e non permette una seconda Difesa contro lo stesso attacco.",
+   "Con un Fallimento Maldestro la Manovra Evasiva fallisce: si applica solo l’esito della tabella dei Maldestri (Manuale del Giocatore, §5.17), senza un −2 VA fisso aggiuntivo."
+  ],
+  "maldestro": "tabella dei Maldestri (Giocatore §5.17)",
+  "_nota_maldestro": "Veicoli 0.24 §3.3 (25/11/2026): «Con un Fallimento Maldestro la Manovra Evasiva fallisce: si applica solo l’esito della tabella dei Maldestri (Manuale del Giocatore, §5.17), senza un −2 VA fisso aggiuntivo.» Prima c’era qui il numero `maldestro_va_fino_a_iniziativa: -2`: il manuale lo ha togliato, e l’app non lo applicava da sé (nessun modulo lo leggeva). La tabella dei Maldestri la tira il tavolo: sta fra le regole che l’app non conta."
  },
  "strutture": {
   "paragrafo": "§4.1, §4.4",

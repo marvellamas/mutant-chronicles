@@ -141,22 +141,17 @@
    "nome": "Manuale del Direttore",
    "drive": "1lfwR5Z9pIqfoASAuNt1Ia01sOj8OOb-5",
    "formato": "docx",
-   "versione": "0.51",
-   "testo": "direttore-0.51.md",
-   "modificato": "2026-11-13T11:58:17Z",
+   "versione": "0.53",
+   "testo": "direttore-0.53.md",
+   "modificato": "2026-11-24T20:38:42Z",
    "confronto": "alla cieca",
-   "nota": "Lotto 214 (17/11/2026): i dati dal capitolo 9 (PX, scala dei GS, correttivo dei PG, Titoli, PNG generici per Grado ed EQ) letti con tools/importa-direttore.mjs sulle edizioni 0.46, 0.49 e 0.51: 0 scarti. Cambia nel codice solo l’arrotondamento a mezzo (31,5 → 32) e il Titolo dal livello raggiunto (§9.8.2–3). Procedure del manuale che l’app non ha: docs/diff-lotto214-2026-11-17.md.",
+   "nota": "Lotto 255: recepita la 0.53 (Drive 24/11 20:38). Porta il §9.10 — riepilogo e tabella dei Salti ordinari a fasce di Atletica, col rimando operativo dal §9.1 — e il prontuario di veleni e malattie a fasi (A.312). Confronto della prosa con la 0.51: 65 periodi comparsi, 0 spariti; i §§9.3, 9.4 e 9.6 non sono toccati, e il lettore del lotto 214 li rilegge con 0 scarti.",
    "recepita": {
     "versione": "0.51",
     "quando": "2026-11-14",
     "lotto": 197,
     "cosa": "Nuovo §9.6.2 «Acquisizioni e valori pronti»: le tre progressioni dei PNG generici, la lettura dei bonus (i VA personali delle 24 Abilità escludono Talenti, Specializzazioni, EQ, strumenti e condizioni; le tabelle pronte li comprendono già), EQ una volta sola, e i modelli generici che mantengono PV e Ferite senza il +30% dei mostri. GS e PX invariati: valore unitario = PX base del Grado × (1 + 0,50 × EQ). Il §9.9 «Mostri senza Ferite» non cambia dalla 0.49.",
     "documento": "docs/diff-lotto197-2026-11-14.md"
-   },
-   "recepimento_in_attesa": {
-    "versione": "0.53",
-    "motivo": "Lotto 248: letta su Drive, non recepita. Porta il §9.10 con il riepilogo e la tabella dei Salti ordinari a fasce di Atletica e il rimando operativo dal §9.1 (blocco E&L del 24/11). Va col lotto dei Salti, insieme al Giocatore 0.68.",
-    "drive_modificato": "2026-11-24T20:38:42Z"
    }
   },
   {

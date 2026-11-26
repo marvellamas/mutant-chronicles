@@ -9,7 +9,8 @@ import { leggiDirettore, confronta, leggiTabella, numero, righeCelle } from '../
 
 const { dati } = await datiReali();
 const testo = (f) => readFileSync(new URL(`../docs/manuali-txt/${f}`, import.meta.url), 'utf8');
-const TESTI = ['archivio/direttore-0.46.md', 'archivio/direttore-0.49.md', 'direttore-0.51.md'];
+// lotto 255: la 0.53 è la corrente; la 0.51 è passata in archivio/ come le altre due (nessun dato la cita più)
+const TESTI = ['archivio/direttore-0.46.md', 'archivio/direttore-0.49.md', 'archivio/direttore-0.51.md', 'direttore-0.53.md'];
 
 for (const f of TESTI) {
   test(`${f}: tutte le tabelle del §9.3, §9.4 e §9.6 si leggono e coincidono coi dati (0 scarti)`, () => {
@@ -32,7 +33,7 @@ test('una tabella assente è null, non una tabella vuota; una riga a barre diven
 });
 
 test('MUTANTE: un PX ritoccato nei dati compare come scarto, e un titolo mancante come tabella non letta', () => {
-  const T = leggiDirettore(testo('direttore-0.51.md'));
+  const T = leggiDirettore(testo('archivio/direttore-0.51.md'));
   const sporco = structuredClone(dati);
   sporco.px_partita.titoli[2].fattore += 1;
   assert.ok(confronta(T, sporco).scarti.length >= 1);
