@@ -22,9 +22,10 @@
     "documento": "docs/diff-lotto229-2026-11-20.md"
    },
    "recepimento_in_attesa": {
-    "versione": "0.68",
-    "motivo": "Lotto 248 (l’ambito era il gruppo D del registro dei blocchi): letta su Drive, non recepita. La 0.68 porta due revisioni approvate da Davide il 24/11 e registrate nell’E&L: gli **Scudi** (§§2.16.8, 2.16.27, 3.5.4 e 5.9, recepiti nel manuale già dalla 0.67) e i **Salti ordinari a fasce di Atletica** (§5.2.8 nuovo, con la tabella nativa e il rimando da Atletica). Tocca valori di combattimento (AR, VA, MOV) e di movimento, quindi è un lotto a sé: con la penalità di categoria nuova il solo dei sette che cambia è Michele (Scudo Punisher Wächter, Medio/Grande: −1 Q al MOV, AR e VA invariati); Oshi non cambia perché lo Scudo piccolo resta +1 AR senza penalità, e nessuno dei sette ha Assalto Armato.",
-    "drive_modificato": "2026-11-24T20:35:30Z"
+    "versione": "0.69",
+    "motivo": "Lotto 251 (l'ambito era il ripasso dei comandi nel browser): la 0.68 dichiarata dal lotto 248 è stata superata: su Drive c’è la 0.69, pubblicata il 25/11 alle 15:36 UTC. Vista nell’elenco di Drive e **non letta**: la dichiarazione dice il numero e la data, non che cosa cambia — dirlo vorrebbe dire leggerla, e la lettura va col lotto che la recepisce. Finché resta qui, i dati citano le edizioni di prima e il registro non sembra aggiornato per sbaglio (nona regola, lotto 191).",
+    "drive_modificato": "2026-11-25T15:36:26Z",
+    "supera": "0.68 (lotto 248), 0.66 (lotto 239), 0.67 mai vista"
    },
    "versioni_mai_viste": {
     "quali": [
@@ -67,9 +68,10 @@
    },
    "confronto": "alla cieca (in sezione 7 del Doc non c’è la riga della 0.90; l’ultima è la 0.89)",
    "recepimento_in_attesa": {
-    "versione": "0.91",
-    "motivo": "Lotto 248: letta su Drive, non recepita. È la metà «armamenti» della revisione degli Scudi del 24/11 (§§7.4, 7.11.1 e 7.22.4: tabella MOV del catalogo generale, profili degli Scudi Enormi, Punisher e variante Wächter, scudi corporativi di base). Requisiti FOR, PI e proprietà delle Parate restano quelli delle schede. Va col lotto degli Scudi, insieme al Giocatore 0.68.",
-    "drive_modificato": "2026-11-24T19:39:45Z"
+    "versione": "0.92",
+    "motivo": "Lotto 251 (l'ambito era il ripasso dei comandi nel browser): la 0.91 dichiarata dal lotto 248 è stata superata: su Drive c’è la 0.92, pubblicata il 25/11 alle 15:36 UTC. Vista nell’elenco di Drive e **non letta**: la dichiarazione dice il numero e la data, non che cosa cambia — dirlo vorrebbe dire leggerla, e la lettura va col lotto che la recepisce. Finché resta qui, i dati citano le edizioni di prima e il registro non sembra aggiornato per sbaglio (nona regola, lotto 191).",
+    "drive_modificato": "2026-11-25T15:36:32Z",
+    "supera": "0.91 (lotto 248)"
    }
   },
   {
@@ -122,7 +124,12 @@
     ],
     "perché": "Il Doc ha una sola revisione (list_file_revisions ne torna una, e il connettore non sa scaricare una revisione: «Attempting to download a file at a given revision is not yet supported»), quindi le edizioni intermedie non sono recuperabili. Quello che contenevano lo dice il manuale stesso nei suoi registri delle modifiche: la **0.20** ha aggiunto il capitolo 16 con le dodici categorie d’impiego e i profili dei mezzi terrestri militari, ha uniformato il modello corrente in «Scout T4» e ne ha aggiornato l’armamento standard col Mitragliatore Leggero Punisher; la **0.22** aveva già il capitolo 17, e la 0.23 del 20/11 ha aggiunto il capitolo 18 (Pursuit T4 e allestimento SIA, dotazione di squadra, prezzi 218.000 e 258.000 cr) e sostituito la tavola del FIAT LUX con la livrea antracite. È una ricostruzione dichiarata, letta nei §18.5 e nei registri che li precedono, non una nostra ipotesi: fra la 0.21 e la 0.23 resta una versione che non abbiamo mai letto."
    },
-   "confronto": "non alla cieca, ma non dal Doc: il Manuale dei Veicoli porta dentro di sé un «Registro delle modifiche» per ogni versione (§18.5 per la 0.22 → 0.23, e i precedenti per la 0.19 → 0.20 e la 0.20 → 0.21), quindi si sa che cosa è cambiato anche senza la riga in sezione 7. Resta fuori la 0.22, il cui registro non è nel testo corrente (vedi versioni_mai_viste)."
+   "confronto": "non alla cieca, ma non dal Doc: il Manuale dei Veicoli porta dentro di sé un «Registro delle modifiche» per ogni versione (§18.5 per la 0.22 → 0.23, e i precedenti per la 0.19 → 0.20 e la 0.20 → 0.21), quindi si sa che cosa è cambiato anche senza la riga in sezione 7. Resta fuori la 0.22, il cui registro non è nel testo corrente (vedi versioni_mai_viste).",
+   "recepimento_in_attesa": {
+    "versione": "0.24",
+    "motivo": "Lotto 251 (l'ambito era il ripasso dei comandi nel browser): su Drive c’è la 0.24, pubblicata il 25/11 alle 15:36 UTC; nel repo è recepita la 0.23 (lotto 236). Vista nell’elenco di Drive e **non letta**: la dichiarazione dice il numero e la data, non che cosa cambia — dirlo vorrebbe dire leggerla, e la lettura va col lotto che la recepisce. Finché resta qui, i dati citano le edizioni di prima e il registro non sembra aggiornato per sbaglio (nona regola, lotto 191). Da leggere in TESTO SEMPLICE: l’esportazione in Markdown è di 67 MB e Drive la rifiuta (undicesima regola, lotto 236).",
+    "drive_modificato": "2026-11-25T15:36:37Z"
+   }
   },
   {
    "id": "mostri",
