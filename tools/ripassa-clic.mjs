@@ -112,7 +112,17 @@ const CASI = [
   {
     id: 'ricarica', lotto: 246, pg: 'Rhea-Valdis', nome: 'Ricarica / Cambia caricatore', avviso: null,
     dove: (p) => p.tab('combattimento'),
-    fai: async (p) => p.clic(/^(Ricarica|Cambia caricatore|Cambia cella|Cambia pacco)$/),
+    fai: async (p) => {
+      // «Ricarica» compare solo se nell'arma manca qualcosa: si spendono i colpi col tastino della riga delle
+      // munizioni (è quello che fa il giocatore quando spara), poi si ricarica.
+      const spesi = await p.valuta(`const b = [...document.querySelectorAll('button')].filter((x) => /^(−5|−1)$/.test(x.textContent.trim()) && /colpi|Caricatore|munizioni/i.test((x.closest('li, p, div') || {}).innerText || '') && !x.disabled); if (!b.length) return false; b[0].click(); return true`);
+      if (!spesi) return 'nessun tastino dei colpi: l’arma non è a caricatore';
+      await p.dormi(900);
+      const ric = await p.clic(/^(Ricarica|Ricarica \+\d+|Cambia caricatore|Cambia cella|Cambia pacco|Inserisci il più carico)$/);
+      if (!ric) return 'nessun «Ricarica» dopo aver speso i colpi';
+      await p.dormi(900);
+      return ric;
+    },
     cambia: (a, b) => JSON.stringify(a.sessione?.munizioni ?? {}) !== JSON.stringify(b.sessione?.munizioni ?? {}),
   },
   {
@@ -182,7 +192,15 @@ const CASI = [
     id: 'circostanza-piu', lotto: 246, nome: 'Bonus di circostanza, «+1» di una riga', avviso: false,
     dove: (p) => p.tab('combattimento'),
     // il riquadro è `.riga-circostanza` (il 250 cercava `.riquadro-circostanze`, che non esiste)
-    fai: async (p) => p.clicIn('.riga-circostanza', /^\+1$/),
+    fai: async (p) => {
+      // senza righe il riquadro ha solo «+ Aggiungi»: la riga la crea il Direttore, ed è il primo passo del comando
+      if (!await p.clic(/^\+ Aggiungi$/)) return 'nessun «+ Aggiungi» nelle circostanze';
+      await p.dormi(1000);
+      const piu = await p.clicIn('.riga-circostanza', /^\+1$/);
+      if (!piu) return 'nessun «+1» nella riga appena aggiunta';
+      await p.dormi(700);
+      return 'aggiunta e aumentata';
+    },
     cambia: (a, b) => JSON.stringify(a.sessione?.circostanze ?? {}) !== JSON.stringify(b.sessione?.circostanze ?? {}),
   },
   {
@@ -306,7 +324,8 @@ Object.assign(p, {
     + ` const visibile = c ? c.innerText.replace(b.textContent, '').trim() : '';`
     + ` const parola = t.split(/[^A-Za-zÀ-ÿ0-9]+/).filter((w) => w.length > 5)[0] || '';`
     + ` if (parola && visibile.includes(parola)) return 'a vista';`
-    + ` return t ? 'solo nel title' : 'nessun motivo'`),
+    + ` const chi = (b.getAttribute('aria-label') || b.textContent.trim()).slice(0, 40);`
+    + ` return (t ? 'solo nel title' : 'nessun motivo') + ' (' + chi + ')'`),
   tab: async (id) => {
     await p.valuta(`location.hash = location.hash.replace(/\\/t\\/.*$/, '').replace(/#\\/$/, '#/') + '/t/${id}'; return 1`);
     await dormi(700);

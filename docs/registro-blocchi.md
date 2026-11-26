@@ -615,3 +615,85 @@ filtro dei dati segreti dei nemici. Se Marcello ne toglie uno, la colonna «perc
 | `server:/api/avvisi/letti:403` | Server del Direttore, «Segna lette» da un tablet | La richiesta non viene dal PC del Direttore | Dal tablet non c’è nessun pulsante che lo chieda | Segnare lette le voci del diario del Direttore | B | lotto 249: è la coda di lettura del Direttore, e un tablet non la svuota. Non ferma niente: segnare letto non è un passo del gioco |
 | `server:/api/avvisi/letti:400` | Server del Direttore, «Segna lette» | Il corpo non è JSON leggibile | Niente | Segnare lette le voci | B | lotto 249: impianto, come sopra |
 | `server:/api/avvisi/letti:405` | Server del Direttore, rotte del diario | Un metodo HTTP che non è GET o POST | Niente | — | B | lotto 249: impianto delle rotte |
+
+## I sette del gruppo E, in parole da tavolo (lotto 251, 26/11/2026)
+
+Dal lotto 248 sette blocchi aspettano una decisione di Marcello, e i loro nomi — `profiloCompetenze`,
+`lineaPerTablet`, `pianoRicarica` — non dicono niente a chi deve decidere. Per ciascuno, tre righe: **che cosa
+accade al tavolo**, **che cosa accadrebbe liberandolo** (con i numeri, o dicendo che numeri non ci sono) e **quanto
+spesso capita**, misurato dove si poteva misurare.
+
+I tre del trasformatore del lotto 247 (colore non compatibile, monocromatico, tampone vuoto) restano decisi: la
+ragione è scritta nelle loro righe, ed è la stessa del punto 5 qui sotto.
+
+### 1. «Avanti: “Attacca!”» spento sulla carta di un nemico (`apriAttaccoNemico:disabled`)
+
+- **Al tavolo:** il Direttore ha messo in campo una creatura, apre il suo pannello d'attacco e il pulsante che porta
+  ad «Attacca!» è spento. Sopra c'è la frase che dice il perché: o quella creatura non ha nessun attacco scritto nel
+  suo profilo, o nello scontro non c'è nessuno da colpire (nessun PG al tavolo e nessun altro nemico).
+- **Liberandolo:** si aprirebbe un pannello d'attacco **senza VA e senza danno**, perché quei numeri vengono dal
+  profilo e il profilo non li ha. Non è una scelta che l'app giudica: è un dato che manca. Quello che servirebbe è
+  un «attacco descritto al tavolo», con VA e danno scritti dal Direttore sul momento — una cosa da costruire, non
+  da sbloccare.
+- **Quanto spesso:** **15 profili su 493** del Bestiario non hanno nessun attacco (Acererak demilich delle gemme,
+  Cavalluccio marino, Raccoglitore, Regina Incubatrice, Regina Madre, Trasportatore…). Quindi capita ogni volta che
+  una di quelle quindici entra in campo, e mai con le altre 478. Il caso «nessun bersaglio» capita solo in uno
+  scontro senza PG al tavolo.
+
+### 2. «Lancia!» spento su un incantesimo che arriva da un Artefatto (`schedaDaOggetto:disabled`)
+
+- **Al tavolo:** un giocatore apre nei Poteri la scheda di un incantesimo che gli viene da un oggetto (una Batteria,
+  una pergamena) e «Lancia!» è spento, con scritto che l'incantesimo non è più nel catalogo o che manca la riga del
+  livello di quell'oggetto.
+- **Liberandolo:** la finestra del lancio si aprirebbe **senza costo in PM, senza durata e senza Prova di Potere**,
+  perché sono esattamente i numeri che mancano. Gli altri motivi (oggetto rotto, usi esauriti) non spengono niente:
+  sono già soltanto un avviso.
+- **Quanto spesso:** **mai finora.** Tutti e nove gli incantesimi che gli oggetti del catalogo citano esistono nel
+  catalogo degli incantesimi (controllato nome per nome). Capiterebbe se una pubblicazione togliesse un incantesimo
+  che un oggetto cita, cioè come effetto di un recepimento sbagliato.
+
+### 3. e 4. «Il tuo PG non è in questa scena» / «non è sulla mappa» sul tablet (`lineaPerTablet` ×2)
+
+- **Al tavolo:** un giocatore, sul suo tablet, tocca due punti della mappa per misurare una distanza o per scegliere
+  un bersaglio, e riceve una riga: «Il tuo PG non è in questa scena», oppure «Il tuo PG non è sulla mappa», oppure
+  «Sei a bordo di un veicolo: la linea dal mezzo la traccia il master».
+- **Liberandolo:** la linea **non avrebbe un punto di partenza**. Una distanza si misura da dove sta la propria
+  pedina: senza la pedina non c'è un numero da dare, e quello che tornerebbe sarebbe una linea vuota. Il terzo caso
+  non è nemmeno un dato che manca: è una decisione del Direttore (chi è a bordo misura dal mezzo, e il mezzo lo
+  muove lui).
+- **Quanto spesso:** capita a chiunque apra la mappa dal tablet **prima** che il Direttore abbia messo la sua pedina
+  nella scena — quindi nei primi minuti di ogni scontro nuovo, finché i pezzi non sono in campo. Non si misura in un
+  numero, perché dipende da quando il giocatore guarda.
+
+### 5. e 6. «Scegli il colore» / «Scegli che cosa ricaricare» nel pannello Tampone (`pianoRicarica` ×2)
+
+- **Al tavolo:** un giocatore apre il pannello del trasformatore per ricaricare qualcosa e, finché non ha scelto il
+  colore e che cosa ricaricare (un NEC, un pacco, una cella tolta), il piano non compare: al suo posto si legge
+  «scegli il colore da ricaricare» o «scegli che cosa ricaricare».
+- **Liberandolo:** non c'è niente da liberare, perché non c'è niente da far passare: **il piano è fatto di numeri**
+  — quante cariche si trasferiscono, in quanto tempo, che cosa resta nel tampone — e senza il colore e il bersaglio
+  quei numeri non esistono. È la stessa ragione con cui i tre del trasformatore sono rimasti nel 247: un risultato
+  vuoto non è un avviso.
+- **Quanto spesso:** **a ogni apertura del pannello**, perché è lo stato iniziale della finestra. Non è un blocco che
+  scatta: è un modulo che aspetta due scelte. Nel censimento è finito fra i blocchi perché a macchina un rifiuto
+  dichiarato si legge così.
+
+### 7. Le Abilità che non si calcolano (`profiloCompetenze:throw`)
+
+- **Al tavolo:** non è mai accaduto. Accadrebbe così: si apre una scheda — qualunque scheda — e la pagina si fermerebbe
+  con un messaggio che nomina il dato mancante (file e chiave), perché senza il profilo delle competenze non si sa in
+  quale categoria sta ciascuna delle 24 Abilità.
+- **Liberandolo:** le 24 Abilità resterebbero **senza categoria e senza base**, cioè una scheda di valori vuoti o
+  sbagliati, che è peggio di una scheda che non si apre: al tavolo nessuno saprebbe che i VA che legge non valgono.
+- **Quanto spesso:** **mai**, e per accadere servirebbe un `data/regole.json` rotto: oggi il blocco
+  `competenze.categorie` c'è, con le sue quattro categorie, e un controllo di `npm test` lo pretende.
+
+### Il quadro per decidere
+
+| | cosa manca | liberandolo si otterrebbe | quanto spesso capita |
+|---|---|---|---|
+| 1 | gli attacchi del profilo, o un bersaglio | un pannello d'attacco senza VA né danno | 15 creature su 493 |
+| 2 | la scheda dell'incantesimo o la riga del livello | una finestra di lancio senza costo né durata | mai finora (0 su 9) |
+| 3–4 | la pedina del PG nella scena | una linea senza punto di partenza | nei primi minuti di ogni scontro |
+| 5–6 | il colore e il bersaglio della ricarica | un piano senza numeri | a ogni apertura del pannello |
+| 7 | `competenze.categorie` di `regole.json` | 24 Abilità senza categoria né base | mai (il dato c'è, e un test lo pretende) |
