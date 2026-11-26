@@ -117,5 +117,6 @@ export const ARGOMENTI = {
   'importa-armi.mjs': ['modello', 'specializzazioni'],
   'importa-scudi.mjs': ['scrivi', 'edizione'],
   'scudi-prima-dopo.mjs': ['da'],
+  'lotto_255_salti.mjs': ['scrivi'],
   'armi-prima-dopo.mjs': ['da', 'cartella'],
 };

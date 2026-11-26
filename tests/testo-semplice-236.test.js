@@ -19,7 +19,7 @@ import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import {
-  blocchiTesto, tabelleTesto, intestazioneDi, INTESTAZIONI, INTESTAZIONI_VEICOLI, INTESTAZIONI_ARMAMENTI, censiteNonViste, comeTestoSemplice,
+  blocchiTesto, tabelleTesto, intestazioneDi, INTESTAZIONI, INTESTAZIONI_VEICOLI, INTESTAZIONI_ARMAMENTI, INTESTAZIONI_GIOCATORE, censiteNonViste, comeTestoSemplice,
   eTestoSemplice, righeTesto, titoloNumerato, capitoloTesto,
 } from '../tools/tabelle-testo.mjs';
 import { leggiTabelle, leggiSchede, confronta, refertoForma, CAPITOLO_PROFILO } from '../tools/importa-veicoli.mjs';
@@ -154,7 +154,8 @@ test('il censimento non invecchia: ogni intestazione censita si vede nel manuale
   assert.deepEqual(censiteNonViste(VEICOLI, INTESTAZIONI_VEICOLI), [], 'un’intestazione dei Veicoli che non compare nel manuale è una nostra invenzione');
   const armamenti = testoManuale('armamenti');
   assert.deepEqual(censiteNonViste(comeTestoSemplice(armamenti), INTESTAZIONI_ARMAMENTI), [], 'un’intestazione degli Armamenti che non compare nel manuale è una nostra invenzione');
-  assert.equal(INTESTAZIONI.length, INTESTAZIONI_VEICOLI.length + INTESTAZIONI_ARMAMENTI.length, 'l’elenco unico è l’unione delle due famiglie');
+  assert.deepEqual(censiteNonViste(comeTestoSemplice(testoManuale('giocatore')), INTESTAZIONI_GIOCATORE), [], 'un’intestazione del Giocatore che non compare nel manuale è una nostra invenzione');
+  assert.equal(INTESTAZIONI.length, INTESTAZIONI_VEICOLI.length + INTESTAZIONI_ARMAMENTI.length + INTESTAZIONI_GIOCATORE.length, 'l’elenco unico è l’unione delle famiglie');
   assert.ok(INTESTAZIONI.length >= 10);
   // nei capitoli dei mezzi non resta una tabella non letta
   const righe = righeTesto(VEICOLI);

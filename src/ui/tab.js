@@ -37,6 +37,7 @@ import { stemma, iconaPagina } from './immagini.js';
 import { classeMacrofamiglia } from '../palette.js';
 import { gruppiIndiceIncantesimi } from '../indice-incantesimi.js';
 import { formulaScomposizione, visioniPersonaggio, abilitaVista, intensitaStato, statiConImplicati } from '../condizioni.js';
+import { vistaSalti } from '../salti.js';
 import { rigaScelte } from './pannello-passi.js';
 import { colore, riempimento, condizioniAttiveAbilita } from '../interfaccia.js';
 import { statoMorente } from '../morente.js';
@@ -1681,6 +1682,28 @@ function tabAbilita(ctx, d) {
 }
 
 // ---------------------------------------------------------------------------
+/**
+ * I quattro valori di salto nel riquadro del Movimento (§5.2.8). Una riga sola, e il conto dei Q di Movimento nel
+ * suggerimento: «1 Q» vuol dire scavalcare un Q vuoto e atterrare nel successivo, quindi il Movimento speso è un Q
+ * in più (chiarimento esplicito di Davide). Senza Atletica nella scheda non c’è riga: non si inventa una fascia.
+ */
+function rigaSalti(ctx, t) {
+  const ab = (ctx.tab.scheda.abilita ?? []).find((a) => a.nome === 'Atletica');
+  const va = ab?.totale ?? ab?.daRegole ?? null;
+  const mov = { passo: t.movimento?.passo?.effettivo, corsa: t.movimento?.corsa?.effettivo, scatto: t.movimento?.scatto?.effettivo };
+  const s = vistaSalti(va, ctx.dati.regole, mov);
+  if (!s) return null;
+  const titolo = [
+    `Fascia ${s.fascia} sul VA personale di Atletica ${s.va} (§5.2.8): i modificatori alla Prova non cambiano la fascia.`,
+    `In lungo «${s.lungoFermo}» sono i Q vuoti che si scavalcano, atterrando nel Q successivo: da fermo richiede ${s.qFermo} Q di Movimento, con rincorsa ${s.qRincorsa} (compresi i ${s.rincorsa.qMinimi} Q di rincorsa).`,
+    s.rincorsa.serveCorsa ? null : 'La rincorsa non obbliga a scegliere l’andatura Corsa.',
+    s.nota,
+  ].filter(Boolean).join('\n');
+  return h('p', { class: 'nota', title: titolo },
+    h('strong', {}, 'Salti '), `(§5.2.8, fascia ${s.fascia}): `,
+    `lungo ${s.lungoFermo}, con rincorsa ${s.lungoRincorsa} · alto ${s.altoFermo}, con rincorsa ${s.altoRincorsa}`,
+    h('br'), h('small', { class: 'sigla' }, `Movimento richiesto: ${s.qFermo} Q da fermo, ${s.qRincorsa} Q con rincorsa`));
+}
 // Iniziativa, Movimento e Azioni effettivi (scheda.tavolo, src/condizioni.js → valoriTavolo): stesse
 // pillole dei VA, con colore ▼/▲ rispetto ai valori da regole e la scomposizione nel tooltip.
 
@@ -1744,7 +1767,12 @@ function riquadriTavolo(ctx) {
       h('p', { class: 'nota' }, 'Mod DES + Mod INT e Talenti (§2.14)')),
     h('section', { class: 'contatore-tavolo riquadro-valore' }, h('h3', {}, 'Movimento', toccoMaster(ctx, ['passo', 'corsa', 'scatto'].map((k) => { const mv = ctx.tab.scheda.movimento ?? {}; return { chiave: `movimento:${k}`, etichetta: `Movimento: ${k[0].toUpperCase()}${k.slice(1)} (Q)`, attuale: mv[k], calcolato: mv.correzioniMaster?.[k]?.calcolato ?? mv[k], limiti: { minimo: 0 } }; }))),
       h('p', { class: 'valore-tavolo' }, pillolaTavolo('Movimento', [{ nome: 'Passo', v: t.movimento.passo }, { nome: 'Corsa', v: t.movimento.corsa }, { nome: 'Scatto', v: t.movimento.scatto }]), h('span', {}, ` ${u}`)),
-      h('p', { class: 'nota' }, 'Passo · Corsa · Scatto (§5.2)')),
+      h('p', { class: 'nota' }, 'Passo · Corsa · Scatto (§5.2)'),
+      // Lotto 255 (§5.2.8, regola approvata il 24/11/2026): i quattro valori di salto **già ricavati dalla fascia**,
+      // come Davide ha chiesto. La fascia si legge sul VA PERSONALE di Atletica, non su quello effettivo: i
+      // modificatori alla Prova — la penalità di un’armatura, uno Stato, un bonus di circostanza — non cambiano la
+      // fascia. Non è un calcolatore e non applica niente: quando serve una Prova lo decide il Direttore.
+      rigaSalti(ctx, t)),
     h('section', { class: 'contatore-tavolo riquadro-valore' }, h('h3', {}, 'Azioni'),
       h('p', { class: 'valore-tavolo' }, pillolaTavolo('Azioni', [{ nome: 'Principali', v: t.azioni.principali }, { nome: 'di Movimento', v: t.azioni.movimento }])),
       h('p', { class: 'nota' }, 'Principali · di Movimento per Round (§5.1)')),

@@ -4747,5 +4747,78 @@
       ]
     },
     "rinnovo": "Gli usi dei Capolavori si rinnovano con «Nuova sessione», come gli altri usi per sessione (A.233)."
+  },
+  "salti": {
+    "paragrafo": "§5.2.8",
+    "fonte": "Giocatore 0.69 §5.2.8; Direttore 0.53 §9.10; blocco E&L del 24/11/2026",
+    "_nota": "Le sei fasce si leggono sul VA personale di Atletica PRIMA dei modificatori alla Prova: bonus e penalità alla Prova non cambiano la fascia. «1 Q» sono i Q VUOTI che si scavalcano, atterrando nel primo Q utile oltre il vuoto — chiarimento esplicito di Davide — quindi il movimento speso è un Q in più. La tabella non modifica i limiti del VA personale (§8.3).",
+    "fasce": [
+      {
+        "da": 1,
+        "a": 5,
+        "lungo_fermo_q": 0,
+        "lungo_rincorsa_q": 0,
+        "alto_fermo_cm": 50,
+        "alto_rincorsa_cm": 100
+      },
+      {
+        "da": 6,
+        "a": 15,
+        "lungo_fermo_q": 1,
+        "lungo_rincorsa_q": 2,
+        "alto_fermo_cm": 100,
+        "alto_rincorsa_cm": 200
+      },
+      {
+        "da": 16,
+        "a": 25,
+        "lungo_fermo_q": 2,
+        "lungo_rincorsa_q": 4,
+        "alto_fermo_cm": 150,
+        "alto_rincorsa_cm": 300
+      },
+      {
+        "da": 26,
+        "a": 35,
+        "lungo_fermo_q": 3,
+        "lungo_rincorsa_q": 6,
+        "alto_fermo_cm": 200,
+        "alto_rincorsa_cm": 400
+      },
+      {
+        "da": 36,
+        "a": 45,
+        "lungo_fermo_q": 4,
+        "lungo_rincorsa_q": 8,
+        "alto_fermo_cm": 250,
+        "alto_rincorsa_cm": 500
+      },
+      {
+        "da": 46,
+        "a": 55,
+        "lungo_fermo_q": 5,
+        "lungo_rincorsa_q": 10,
+        "alto_fermo_cm": 300,
+        "alto_rincorsa_cm": 600
+      }
+    ],
+    "oltre_la_tabella": {
+      "ogni_punti": 10,
+      "lungo_q": 1,
+      "alto_cm": 50,
+      "_nota": "Ogni ulteriore fascia di 10 punti aumenta i valori da fermo di 1 Q vuoto e 50 cm; quelli con rincorsa restano doppi."
+    },
+    "rincorsa": {
+      "q_minimi": 2,
+      "metri": 3,
+      "raddoppia": true,
+      "serve_corsa": false,
+      "_nota": "Almeno 2 Q (3 metri) percorsi immediatamente prima dello stacco, compresi nel Movimento della stessa AzM. Raddoppiano i Q vuoti del lungo e l’altezza. Non occorre scegliere l’andatura Corsa. Nella fascia 1–5 non ci sono Q vuoti da raddoppiare."
+    },
+    "movimento": {
+      "atterraggio_q": 1,
+      "_nota": "Rincorsa e salto sono compresi nel Movimento disponibile della stessa AzM, compreso il raggiungimento del Q di atterraggio: non concedono movimento aggiuntivo. Esempio del manuale con Atletica 18: il lungo massimo con rincorsa richiede 7 Q di movimento, 2 di rincorsa e 5 dallo stacco all’arrivo."
+    },
+    "al_tavolo": "Un salto agevole e senza conseguenze significative non richiede una Prova; al limite, sopra un vuoto pericoloso o con appoggi difficili, richiede Atletica con i modificatori pertinenti e l’eventuale Specializzazione Acrobatiche. L’app mostra i quattro valori e non li applica da sé: quando serve una Prova lo decide il Direttore."
   }
 }

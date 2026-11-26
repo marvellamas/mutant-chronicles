@@ -590,6 +590,42 @@ function validaRegole(r, err, dati = {}) {
     if (!isOggetto(v) || !Object.values(v).every(isIntero)) err(F, tab, 'tabella {valore: quantità} mancante o non numerica');
   }
   if (typeof r.creazione?.dado_pm_massimizzato !== 'boolean') err(F, 'creazione.dado_pm_massimizzato', 'vero o falso mancante');
+  // §5.2.8 (regola approvata il 24/11/2026): i Salti ordinari a fasce di Atletica. Il validatore **pretende il
+  // conto**: sei fasce contigue, i valori con rincorsa doppi di quelli da fermo, e il passo fra le fasce uguale
+  // alla formula dichiarata per quelle ulteriori. Un invariante verde su zero voci ci ha ingannato tre volte,
+  // quindi il numero delle fasce è parte del controllo.
+  const sal = r.salti;
+  if (!isOggetto(sal)) err(F, 'salti', 'blocco dei Salti mancante (§5.2.8)');
+  else {
+    const fa = sal.fasce;
+    if (!Array.isArray(fa) || fa.length !== 6) err(F, 'salti.fasce', `sei fasce attese (§5.2.8), trovate ${Array.isArray(fa) ? fa.length : 0}`);
+    else fa.forEach((f, i) => {
+      for (const k of ['da', 'a', 'lungo_fermo_q', 'lungo_rincorsa_q', 'alto_fermo_cm', 'alto_rincorsa_cm']) {
+        if (!isIntero(f?.[k]) || f[k] < 0) err(F, `salti.fasce[${i}].${k}`, 'intero ≥ 0 atteso');
+      }
+      if (f.a < f.da) err(F, `salti.fasce[${i}]`, 'la fascia finisce prima di cominciare');
+      if (i > 0 && f.da !== fa[i - 1].a + 1) err(F, `salti.fasce[${i}].da`, `le fasce devono essere contigue: la precedente finisce a ${fa[i - 1].a}`);
+      if (f.lungo_rincorsa_q !== f.lungo_fermo_q * 2) err(F, `salti.fasce[${i}].lungo_rincorsa_q`, 'la rincorsa raddoppia i Q vuoti del lungo (§5.2.8)');
+      if (f.alto_rincorsa_cm !== f.alto_fermo_cm * 2) err(F, `salti.fasce[${i}].alto_rincorsa_cm`, 'la rincorsa raddoppia l’altezza (§5.2.8)');
+    });
+    const o = sal.oltre_la_tabella;
+    if (!isOggetto(o) || !isIntero(o.ogni_punti) || o.ogni_punti <= 0 || !isIntero(o.lungo_q) || !isIntero(o.alto_cm)) {
+      err(F, 'salti.oltre_la_tabella', 'servono ogni_punti, lungo_q e alto_cm (§5.2.8: ogni ulteriore fascia di 10 punti, +1 Q vuoto e +50 cm)');
+    } else if (Array.isArray(fa) && fa.length === 6) {
+      // dalla seconda fascia in poi il passo della tabella deve essere quello della formula: due fonti che si
+      // contraddicono sono peggio di una sola (la prima fascia parte dal Q adiacente e non fa passo)
+      for (let i = 2; i < fa.length; i += 1) {
+        if (fa[i].lungo_fermo_q - fa[i - 1].lungo_fermo_q !== o.lungo_q) err(F, `salti.fasce[${i}].lungo_fermo_q`, `il passo fra le fasce deve essere ${o.lungo_q} Q, come oltre_la_tabella`);
+        if (fa[i].alto_fermo_cm - fa[i - 1].alto_fermo_cm !== o.alto_cm) err(F, `salti.fasce[${i}].alto_fermo_cm`, `il passo fra le fasce deve essere ${o.alto_cm} cm, come oltre_la_tabella`);
+        if (fa[i].a - fa[i].da + 1 !== o.ogni_punti) err(F, `salti.fasce[${i}]`, `una fascia copre ${o.ogni_punti} punti`);
+      }
+    }
+    const ri = sal.rincorsa;
+    if (!isOggetto(ri) || !isIntero(ri.q_minimi) || ri.q_minimi <= 0) err(F, 'salti.rincorsa.q_minimi', 'i Q minimi di rincorsa mancano (§5.2.8: almeno 2 Q)');
+    if (isOggetto(ri) && ri.serve_corsa !== false) err(F, 'salti.rincorsa.serve_corsa', 'la rincorsa non obbliga a scegliere l’andatura Corsa (§5.2.8): deve essere false');
+    if (!isIntero(sal.movimento?.atterraggio_q)) err(F, 'salti.movimento.atterraggio_q', 'il Q di atterraggio manca: «1 Q» è scavalcare un Q vuoto e atterrare nel successivo');
+    if (!isTesto(sal.al_tavolo)) err(F, 'salti.al_tavolo', 'manca la frase che dice che la Prova la decide il Direttore (§5.2.8)');
+  }
   // §5.14 e §5.18: Stati di Ferita e Stati, stampati sul foglio Combattimento
   const fer = r.ferite?.stati;
   if (!Array.isArray(fer) || !fer.length) err(F, 'ferite.stati', 'elenco {nome, penalita} mancante');

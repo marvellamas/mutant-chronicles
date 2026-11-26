@@ -343,7 +343,7 @@
   },
   "data/regole.json": {
    "giocatore": {
-    "motivo": "Lotti 192 e 193: il blocco `competenze` (§§2.3, 8.3, 8.7) e il blocco `ferite.morente` (§§5.14.2–5.14.3, con la frase del §5.14 riscritta) vengono dalla 0.62. Il resto del file è ancora della 0.54: restano indietro le due frasi delle Manovre riscritte dal manuale nuovo — il Tiro Ravvicinato di `attacco_distanza` e l'Immobilizzare Migliorato di `attacco_ravvicinato` (§5.12) — che sono un ambito a sé. L'etichetta del file resta 0.54 finché non sono fatte.",
+    "motivo": "Lotti 192 e 193: il blocco `competenze` (§§2.3, 8.3, 8.7) e il blocco `ferite.morente` (§§5.14.2–5.14.3, con la frase del §5.14 riscritta) vengono dalla 0.62. Il resto del file è ancora della 0.54: restano indietro le due frasi delle Manovre riscritte dal manuale nuovo — il Tiro Ravvicinato di `attacco_distanza` e l'Immobilizzare Migliorato di `attacco_ravvicinato` (§5.12) — che sono un ambito a sé. L'etichetta del file resta 0.54 finché non sono fatte. Lotto 255: il blocco «salti» viene invece dal Giocatore 0.69 §5.2.8 (regola approvata il 24/11), e lo dichiara nel suo campo «fonte»: il resto del file resta alla 0.54 finché il lotto che rigenera i dati non arriva.",
     "lotto": "G",
     "documento": "docs/diff-lotto193-2026-11-13.md"
    },

@@ -168,8 +168,16 @@ export const INTESTAZIONI_ARMAMENTI = [
   ['Modelli o condizione', 'Ravvicinata', 'A distanza'],
 ];
 
+/**
+ * Le intestazioni del Manuale del Giocatore, censite sulla 0.69 il 26/11/2026: la tabella dei Salti ordinari a fasce
+ * di Atletica (§5.2.8, regola approvata il 24/11/2026).
+ */
+export const INTESTAZIONI_GIOCATORE = [
+  ['VA Atletica', 'Lungo da fermo', 'Lungo con rincorsa', 'Alto da fermo', 'Alto con rincorsa'],
+];
+
 /** Tutte le intestazioni censite, di qualunque manuale. */
-export const INTESTAZIONI = [...INTESTAZIONI_VEICOLI, ...INTESTAZIONI_ARMAMENTI];
+export const INTESTAZIONI = [...INTESTAZIONI_VEICOLI, ...INTESTAZIONI_ARMAMENTI, ...INTESTAZIONI_GIOCATORE];
 
 /**
  * Le intestazioni censite che nel testo non combaciano con niente: una voce che non si vede in nessun manuale non
