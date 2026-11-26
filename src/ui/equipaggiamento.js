@@ -5,6 +5,7 @@
 // Modalità Inventario (docs/layout-sd.md, pezzo 2; ctx.inventario): sezioni per famiglia
 // (SEZIONI_INVENTARIO), stato con il deposito comune, costo / Qualità / reperibilità / peso nella
 // riga, contenuto aggiunto dalla tab (ctx.rigaExtra: PI e Ripara) e «Compra» (ctx.compra).
+import { testoCapacita } from '../cariche-mistiche.js';
 import { conAvviso } from './procedi.js';
 import { h } from './dom.js';
 import { info } from './tooltip.js';
@@ -239,7 +240,9 @@ function voceEquip(ctx, r, risolte, cambia) {
       : art ? h('label', { class: 'campo-inline' },
         h('input', { type: 'checkbox', checked: v.sintonizzato === true, onchange: (e) => cambia(v.uid, { sintonizzato: e.target.checked || undefined }) }),
         ` Sintonizzato (SnT ${art.sintonizzazione}, §7.10)`) : null,
-    art?.contenitore ? h('p', { class: 'nota' }, `Chroma ${art.contenitore.energia}, ${art.contenitore.capacita_pm} PM${art.contenitore.integrato ? `, riserva integrata: ${nomeRiserva(tipoRiserva(art.contenitore, dati), dati)}, proprietà ${nomeAlimentazione(alimentazioneRiserva(art.contenitore, dati), dati)} (Magia §26.2)` : ''}.`) : null,
+    // lotto 254 (rif. 07): la capacità è in CM o in PM secondo il contenitore, e dove non è dichiarata la riga lo
+    // dice. Prima un contenitore in CM (il Bordone di un Taumaturgo) si leggeva «Chroma Rosso, undefined PM».
+    art?.contenitore ? h('p', { class: 'nota' }, `Chroma ${art.contenitore.energia}, ${testoCapacita(art.contenitore)}${art.contenitore.integrato ? `, riserva integrata: ${nomeRiserva(tipoRiserva(art.contenitore, dati), dati)}, proprietà ${nomeAlimentazione(alimentazioneRiserva(art.contenitore, dati), dati)} (Magia §26.2)` : ''}.`) : null,
     // E&L 2 (A.19): acquistato pieno; trovato con la carica stabilita dal Direttore
     contenitoreSingolo ? h('div', { class: 'campo-inline' },
       h('label', {}, h('input', { type: 'checkbox', checked: Number.isInteger(v.pm_iniziali), onchange: (e) => cambia(v.uid, { pm_iniziali: e.target.checked ? 0 : undefined }) }),

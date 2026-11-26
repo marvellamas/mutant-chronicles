@@ -1,6 +1,7 @@
 // Contenuto dei tooltip e della scheda completa degli incantesimi, ricavato solo dai dati.
 // Funzioni pure: la UI (src/ui/tooltip.js) trasforma il risultato in DOM.
 import { costiCreazione } from './consumabili-mistici.js';
+import { testoProprieta, notaConIGradi } from './segnaposto.js';
 import { catalogo, NOMI_TIPI, moduliDi, munizioneDiRiferimento, tabellaSin, tabellaMunizioniArmi, NOMI_FAMIGLIE_MUNIZIONI, infoArtefatto, testoCura, testoProvaPostazione, etichettaValore } from './equipaggiamento.js';
 
 const trova = (lista, nome) => lista.find((x) => x.nome === nome);
@@ -98,7 +99,10 @@ function tooltipOggetto(rif, dati) {
   if (o.mov) riga.MOV = `−${-o.mov} Q`;
   if (o.categoria) riga.Categoria = o.categoria;
   if (o.taglia) riga.Taglia = o.taglia;
-  if (o.ar) riga.AR = `${o.ar.totale}${o.ar.magica ? ` (${o.ar.magica} magica)` : ''}`;
+  // lotto 254 (rif. 07): l'AR si scrive se c'è un totale. Il Cofanetto del Silenzio ha un blocco `ar` con la
+  // sola parte magica, e la riga diceva «AR undefined».
+  if (Number.isFinite(o.ar?.totale)) riga.AR = `${o.ar.totale}${o.ar.magica ? ` (${o.ar.magica} magica)` : ''}`;
+  else if (o.ar?.magica) riga.AR = `${o.ar.magica} magica`;
   if (o.supporti) riga.Supporti = o.supporti;
   if (o.autonomia) riga.Autonomia = o.autonomia;
   if (o.applicazioni) riga[(o.nome_applicazioni ?? 'applicazioni').replace(/^./, (c) => c.toUpperCase())] = String(o.applicazioni);
@@ -115,7 +119,8 @@ function tooltipOggetto(rif, dati) {
   if (o.modulo_di) riga.Costo = 'compreso nell’arma';
   const sezioni = [];
   if (o.nomi_alternativi?.length) sezioni.push({ etichetta: 'Comprende', testo: o.nomi_alternativi.join(', ') });
-  for (const p of o.proprieta ?? []) sezioni.push({ etichetta: p.nome, testo: p.testo });
+  // lotto 254 (rif. 07): il grado al posto del marcatore, dove la voce ha il numero (src/segnaposto.js)
+  for (const p of o.proprieta ?? []) sezioni.push({ etichetta: p.nome, testo: testoProprieta(p) });
   const conSegno = (n) => (n < 0 ? `−${-n}` : n > 0 ? `+${n}` : '0');
   if (o.parata) riga.Parata = `${conSegno(o.parata.ravvicinata)} ravv. / ${conSegno(o.parata.distanza)} dist.`;
   // penalità proprie del modello (armature corporative: categoria con gli effetti delle proprietà)
@@ -166,7 +171,9 @@ function tooltipOggetto(rif, dati) {
     sezioni.push({ etichetta: 'Consumabile', testo: `${c.incantesimo} ${c.livello}, Grado ${c.grado}: ${c.pm_sigillati} PM sigillati in Cariche Esclusive di Chroma ${c.energia} (non una riserva del personaggio); SnT 0, nessuna sintonizzazione. Attivazione: ${c.attivazione.testo}, senza Prove di Potere; si consuma al completamento (Magia §27.1).` },
       { etichetta: 'Effetto', testo: c.effetto });
     if (cons) sezioni.push({ etichetta: 'Creazione', testo: `Con il progetto disponibile: ${cons.creazione.toLocaleString('it-IT')} cr (supporto ${cons.supporto} + reagenti ${cons.reagenti}), ${cons.ore} ore di costruzione, ${cons.pmTotali} PM (${cons.pmLavoro} di lavoro + ${cons.pmSigillati} sigillati); vendita indicativa ${cons.vendita.toLocaleString('it-IT')} cr (Magia §27.2).` });
-  } else if (art) sezioni.push({ etichetta: 'Artefatto', testo: `${art.tipologia}; potenza ${art.potenza}, SnT ${art.sintonizzazione} (costo di Sintonizzazione)${art.contenitore ? `; ${art.contenitore.integrato ? 'riserva integrata' : 'contenitore'} di ${Number.isInteger(art.contenitore.capacita_cm) ? `${art.contenitore.capacita_cm} Cariche Mistiche (CM, ` : `${art.contenitore.capacita_pm} PM (`}Chroma ${art.contenitore.energia})` : ''} (§7.10).` });
+  // lotto 254 (rif. 07): la potenza si scrive solo se c'è. Una Scheggia instabile è materia prima e non ha una
+  // rarità: la riga diceva «potenza undefined» su ventinove schede.
+  } else if (art) sezioni.push({ etichetta: 'Artefatto', testo: `${art.tipologia}${art.potenza ? `; potenza ${art.potenza}` : ''}, SnT ${art.sintonizzazione} (costo di Sintonizzazione)${art.contenitore ? `; ${art.contenitore.integrato ? 'riserva integrata' : 'contenitore'} di ${Number.isInteger(art.contenitore.capacita_cm) ? `${art.contenitore.capacita_cm} Cariche Mistiche (CM, ` : Number.isInteger(art.contenitore.capacita_pm) ? `${art.contenitore.capacita_pm} PM (` : 'capacità non dichiarata ('}Chroma ${art.contenitore.energia})` : ''} (§7.10).` });
   // risposta A.21: fonte di Corruzione passiva (regole.json → corruzione)
   const cp = o.corruzione_passiva ? dati.regole?.corruzione?.[o.corruzione_passiva] : null;
   if (cp) {
@@ -200,7 +207,7 @@ function tooltipOggetto(rif, dati) {
   for (const t of o.tabelle ?? []) {
     sezioni.push({ etichetta: t.titolo, testo: t.righe.map((r) => (t.colonne.length === 2 ? `${r[0]}: ${r[1]}` : `${r[0]}: ${r.slice(1).map((v, i) => `${t.colonne[i + 1]} ${v}`).join(', ')}`)).join(' · ') });
   }
-  if (o.note_manuale) sezioni.push({ etichetta: null, testo: o.note_manuale });
+  if (o.note_manuale) sezioni.push({ etichetta: null, testo: notaConIGradi(o.note_manuale) });
   const noteCatalogo = dati.equipaggiamento.file?.[o.file]?.note_per_catalogo?.[o.catalogo];
   if (noteCatalogo) sezioni.push({ etichetta: `Note del catalogo ${o.catalogo}`, testo: Array.isArray(noteCatalogo) ? noteCatalogo.join(' ') : noteCatalogo });
   return {

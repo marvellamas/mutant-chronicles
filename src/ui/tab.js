@@ -21,7 +21,7 @@ import { pulsanteSchermoIntero } from './schermo-intero.js';
 import { eUnaPietra, colorePietra, COLORI_PIETRA, PROMEMORIA_VINCOLO, statoVincolo, registraContatto, toglieContatto, GIORNI_VINCOLO } from '../pietre-di-luna.js';
 import { apriTiro, sezioneTiri } from './tira-valore.js';
 import { pianoGetto } from '../getti-artefatto.js';
-import { costoRiserva, numeroRiserva, testoCosto, interoRiserva } from '../cariche-mistiche.js';
+import { costoRiserva, numeroRiserva, testoCosto, interoRiserva, testoCapacita } from '../cariche-mistiche.js';
 import { prezzoArtefatto } from '../prezzi-artefatti.js';
 import { alimentazioneSceglibile, eCyberArma, opzioniEsemplare, applicaAlimentazioneEsemplare } from '../cyberarma.js';
 import { modelliProgetto, apriProgetto, scegliForma, scegliAlimentazione, registraTentativo, togliUltimoTentativo, chiudiProgetto, riapriProgetto, riepilogoProgetto, formaSceglibile, avvisiConsegna, avvisoNonConsegnata, esemplariDi, storicoDi, configurazioneConsegna, ESITI_TENTATIVO, NOMI_ESITO, ESITI_FINALI, NOMI_FINALE } from '../progetti.js';
@@ -3755,7 +3755,8 @@ function sezioneDaArtefatti(ctx) {
       return h('li', {},
         h('strong', {}, x.nome), h('small', { class: 'sigla' }, ` · ${x.sintonizzato ? 'sintonizzato' : 'non sintonizzato'}${r.deposito ? ' · nel deposito comune' : ''}`),
         at ? h('p', { class: 'nota' }, `Attivazione: +${at.danno_extra} ${at.natura}${at.anche ? ` e ${at.anche}` : ''} al danno del colpo (§7.1.4)${at.sintonizzazione ? `, Sintonizzazione ${at.sintonizzazione}` : ''}.`) : null,
-        ris ? h('p', { class: 'nota' }, `Riserva integrata di Chroma ${ris.energia}, ${ris.capacita_pm} PM: ${nomeRiserva(ris.riserva ?? ctx.dati.regole.chroma.riserve?.integrata_predefinita, ctx.dati)}, proprietà ${nomeAlimentazione(ris.alimentazione ?? ctx.dati.regole.chroma.riserve?.proprieta_predefinita, ctx.dati)} (Magia §26.2).`) : null,
+        // lotto 254 (rif. 07): CM o PM secondo il contenitore; «undefined PM» era quello che si leggeva prima
+        ris ? h('p', { class: 'nota' }, `Riserva integrata di Chroma ${ris.energia}, ${testoCapacita(ris)}: ${nomeRiserva(ris.riserva ?? ctx.dati.regole.chroma.riserve?.integrata_predefinita, ctx.dati)}, proprietà ${nomeAlimentazione(ris.alimentazione ?? ctx.dati.regole.chroma.riserve?.proprieta_predefinita, ctx.dati)} (Magia §26.2).`) : null,
         attivazioneInfusaUi(ctx, x, r, contenitori.find((c) => c.uid === x.uid && c.integrato), { conPulsante: false }));
     })),
     h('p', { class: 'nota' }, 'Sola lettura: sintonizzazione e riserve si gestiscono nella tab Artefatti.'));

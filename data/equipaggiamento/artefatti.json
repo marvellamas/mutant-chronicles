@@ -2924,11 +2924,15 @@
       "qualita": "Rara",
       "ps_int": 14,
       "pi": 10,
-      "ar": 4,
+      "ar": {
+        "totale": 4,
+        "magica": 0
+      },
       "da_definire": [
         "reperibilita"
       ],
-      "_nota_prezzo": "A.256: creazione 3.000 cr (supporto 1.000 + infusione passiva 2.000) × 3 × coefficiente 3 (Molto Rara) = 27.000 cr: la cifra del manuale («Vendita indicativa»). Dotazione mistica complessiva del Warden TC 74.700 cr (9.900 + 37.800 + 27.000), compresa nel prezzo arrotondato del veicolo."
+      "_nota_prezzo": "A.256: creazione 3.000 cr (supporto 1.000 + infusione passiva 2.000) × 3 × coefficiente 3 (Molto Rara) = 27.000 cr: la cifra del manuale («Vendita indicativa»). Dotazione mistica complessiva del Warden TC 74.700 cr (9.900 + 37.800 + 27.000), compresa nel prezzo arrotondato del veicolo.",
+      "_nota_ar": "Lotto 254 (rif. 07 del collaudo del 25/11/2026): l’AR era scritta come numero mentre le altre 151 voci del catalogo hanno { totale, magica }. Una cosa con due forme: la scheda leggeva `ar.totale` e scriveva «AR undefined». È l’AR del cofanetto (Magia §28.6), non di chi lo porta: la voce è un `artefatto` e non entra fra le protezioni del personaggio."
     }
   ],
   "fuori_scala": {

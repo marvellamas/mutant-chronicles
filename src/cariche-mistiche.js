@@ -80,3 +80,18 @@ export function pmPerGruppo(c, rapporto, dati) {
   const f = dati?.regole?.chroma?.cariche_mistiche?.ricarica?.fattore ?? 2;
   return inCariche(c) ? rapporto * f : rapporto;
 }
+
+/**
+ * **La capacità di un contenitore, come si legge** (lotto 254, rif. 07 del collaudo del 25/11/2026): «6 CM», «20 PM»,
+ * e dove il dato non c'è «capacità non dichiarata».
+ *
+ * Il motivo: due righe dell'interfaccia scrivevano `${c.capacita_pm} PM` senza guardare l'unità, e su un contenitore
+ * in CM — il Bordone di un Taumaturgo — si leggeva **«Chroma Rosso, undefined PM»**. Un «undefined» a schermo è un
+ * dato mancante travestito da testo, e si chiude in un posto solo.
+ */
+export function testoCapacita(contenitore) {
+  const c = contenitore ?? {};
+  if (Number.isFinite(c.capacita_cm)) return `${numeroRiserva(c.capacita_cm)} CM`;
+  if (Number.isFinite(c.capacita_pm)) return `${numeroRiserva(c.capacita_pm)} PM`;
+  return 'capacità non dichiarata';
+}

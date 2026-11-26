@@ -21,6 +21,7 @@ import { dataValida } from './calendario.js';
 import { riga, provenienza, rigaBonusCaratteristica as rigaBonus } from './provenienza.js';
 import { calcolaAR, oggettiConPi, oggettiSenzaPi, oggettiIndistruttibili, oggettiIntegritaDaDefinire } from './protezione.js';
 import { conManifestazione, manifestazioniDi, sceltaLibera, motivoFormaFissa } from './manifestazione.js';
+import { testoProprieta, condizioneEffetto } from './segnaposto.js';
 import { tipoRiserva, alimentazione as alimentazioneRiserva, fontePerPg } from './fonti.js';
 import { rigaProvenienzaVoce } from './provenienza-catalogo.js';
 import { bonusFocalizzatore, dannoCondizionaleCristallo, condizioneSulBersaglio, dichiarazioneDeiDati, rigaAlimentazione, alimentazioneDellaVoce } from './cyberarma.js';
@@ -89,6 +90,9 @@ export const AMBITI_EFFETTO = ['generale', 'situazionale', 'uso_specifico'];
 export const NOMI_AMBITI = { generale: 'sempre', situazionale: 'condizione da attivare al tavolo', uso_specifico: 'solo per un uso' };
 
 /** Stati ammessi per un oggetto: quelli del tipo, oppure In uso / Nello zaino se ha effetti. */
+/** Le proprietà di una voce come la vista le mostra: il grado della voce al posto del marcatore (lotto 254). */
+const proprietaDaMostrare = (d) => (d?.proprieta ?? []).map((p) => (typeof p.testo === 'string' ? { ...p, testo: testoProprieta(p) } : p));
+
 export function statiPer(tipo, effetti = []) {
   const s = STATI[tipo] ?? [];
   return s.length || !effetti.length ? s : STATI_CON_EFFETTI;
@@ -180,7 +184,8 @@ export function normalizzaEffetti(lista) {
       ambito: AMBITI_EFFETTO.includes(e.ambito) ? e.ambito : 'generale',
     };
     if (x.ambito === 'uso_specifico') x.uso = testo(e.uso).trim().slice(0, 40) || 'uso indicato';
-    if (testo(e.condizione).trim()) x.condizione = testo(e.condizione).trim().slice(0, 300);
+    // lotto 254 (rif. 07): la condizione si legge col grado della voce, non col marcatore «+X»
+    if (testo(condizioneEffetto(e)).trim()) x.condizione = testo(condizioneEffetto(e)).trim().slice(0, 300);
     return x;
   }).filter((e) => e.abilita && e.valore);
 }
@@ -701,7 +706,7 @@ export function normalizzaEquipaggiamento(valore) {
         ...(testo(p.abilita) ? { abilita: p.abilita } : {}),
         ...(testo(p.danno) ? { danno: p.danno } : {}),
         ...(Number.isInteger(p.ar) && p.ar >= 0 ? { ar: p.ar } : {}),
-        ...(testo(p.testo) ? { testo: p.testo } : {}),
+        ...(testo(p.testo) ? { testo: testoProprieta(p) } : {}),
         // Artefatto personalizzato (§7.5, §7.10): potenza → costo di sintonizzazione; contenitore di Chroma
         ...(testo(p.potenza) ? { potenza: p.potenza } : {}),
         ...(p.solo_passive === true ? { solo_passive: true } : {}), // §7.10: SnT 0
@@ -864,7 +869,9 @@ export function risolvi(voce, cat) {
   // A.231: un esemplare con un nome proprio («CyberArma Park», «CyberArma Dimitri») si chiama così
   const nomeEsemplare = def && typeof voce.esemplare?.nome === 'string' && voce.esemplare.nome.trim() ? voce.esemplare.nome.trim() : null;
   const nome = (schedaDotazione ? voce.personalizzato?.nome : null) ?? nomeEsemplare ?? (def ? voce.nome_dotazione : null) ?? def?.nome ?? voce.personalizzato?.nome ?? (fuoriCatalogo ? voce.rif : 'Oggetto');
-  const effetti = fuoriCatalogo ? [] : def?.effetti ?? cat.dotazione?.[voce.dotazione_id]?.effetti ?? voce.personalizzato?.effetti ?? [];
+  // lotto 254 (rif. 07): le condizioni degli effetti si leggono col grado della voce, non col marcatore «+X»
+  const effetti = (fuoriCatalogo ? [] : def?.effetti ?? cat.dotazione?.[voce.dotazione_id]?.effetti ?? voce.personalizzato?.effetti ?? [])
+    .map((e) => (typeof e?.condizione === 'string' ? { ...e, condizione: condizioneEffetto(e) } : e));
   // un rinforzo si indossa da solo solo se la sua voce lo consente (rinforzi.json → indossabile_da_solo)
   const stati0 = statiPer(tipo, effetti).filter((s) => !(tipo === 'rinforzo' && s === 'indossata' && !def?.indossabile_da_solo));
   // un Artefatto da indossare (Guanti da Combattimento Mistico, Armamenti §7.24): anche «Indossata»
@@ -1091,7 +1098,7 @@ export function calcolaEquipaggiamento(base, voci, dati) {
       // A.61: Capolavoro del Corazzaio (Contromisura +1, non AR): per la riga di provenienza dell'AR
       capolavoro: o.tipo === 'armatura' && o.voce.capolavoro ? effettoCapolavoro(o, dati) : null,
       ar, penalita, forRichiesta, forMancante, personalizzato: o.personalizzato,
-      mov: d?.mov ?? 0, parata: null, proprieta: d?.proprieta ?? [],
+      mov: d?.mov ?? 0, parata: null, proprieta: proprietaDaMostrare(d),
       // §7.14.2, §7.16.3: armature servoassistite a sistema spento (FOR e penalità proprie), mostrate
       // come promemoria; il calcolo usa il profilo acceso
       alternative: o.tipo === 'armatura' ? (d?.profili_alternativi ?? []).map((a) => ({
@@ -1430,7 +1437,7 @@ export function calcolaEquipaggiamento(base, voci, dati) {
       usoPerClasse: d?.uso_per_classe ?? null,
       // lotto 219: i poteri cromatici di un'arma-Artefatto (Spada dei Tre Riflessi, src/poteri-arma.js)
       poteriArma: d?.poteri_arma ?? null,
-      proprieta: d?.proprieta ?? [], parata, personalizzato: o.personalizzato,
+      proprieta: proprietaDaMostrare(d), parata, personalizzato: o.personalizzato,
       // §7.5.1: riserva di Chroma integrata (Bordone Templare…), mostrata accanto all'arma
       contenitore: extra.moduloDi ? null : (infoArtefatto(d, dati)?.contenitore ?? null),
       specializzazione: spec ? `Specializzazione in ${spec.nome}` : null,
