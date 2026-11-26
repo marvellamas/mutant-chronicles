@@ -502,16 +502,22 @@ function barraRisorsa(ctx, etichetta, attuale, massimo, { classe = '', viva = nu
 }
 function contatoreTavolo(ctx, { titolo, campo, attuale, massimo, passi = [1, 5], nota = null, barra = false, extra = null, classe = '', accanto = null }) {
   const pulsanti = [];
+  // **Perché è spento: un posto solo.** Il motivo e lo spegnimento vengono dalla stessa funzione, così non possono
+  // più dire cose diverse: il valore vivo (sotto) spegneva il tasto senza dargli il motivo, e dopo una cura ai PV
+  // massimi il «+5» restava spento e **muto** — la classe del difetto dei Distintivi del 250, trovata dal ripasso
+  // nel browser del lotto 251.
+  const motivoTasto = (x, delta) => (delta < 0 && x <= 0 ? `${titolo} già a 0`
+    : massimo !== null && delta > 0 && x >= massimo ? `${titolo} già al massimo (${massimo}): per andare oltre, il ✎ del Direttore sul massimo`
+    : null);
   const b = (delta) => {
-    const aZero = delta < 0 && attuale <= 0;
-    const oltre = massimo !== null && delta > 0 && attuale >= massimo;
+    const motivo = motivoTasto(attuale, delta);
     const el = h('button', {
       // lotto 246: questi due restano spenti, e adesso dicono perché (prima erano muti). Non è un giudizio sulla scelta:
       // allineaSessione tiene i valori di sessione fra 0 e il massimo, quindi un valore oltre tornerebbe indietro da solo
       // e un pulsante che finge è peggio di uno spento (lotto 244). Sopra il massimo si passa dal ✎ di «Modifica master».
       type: 'button', class: 'btn-tavolo', onclick: () => ctx.azioni.varia(campo, delta),
-      disabled: aZero || oltre,
-      title: aZero ? `${titolo} già a 0` : oltre ? `${titolo} già al massimo (${massimo}): per andare oltre, il ✎ del Direttore sul massimo` : null,
+      disabled: !!motivo,
+      title: motivo,
       'aria-label': `${delta > 0 ? 'Aggiungi' : 'Togli'} ${Math.abs(delta)} a ${titolo}`,
     }, delta > 0 ? `+${delta}` : `−${-delta}`);
     pulsanti.push([el, delta]);
@@ -524,7 +530,12 @@ function contatoreTavolo(ctx, { titolo, campo, attuale, massimo, passi = [1, 5],
   registraVivo(campo, () => {
     const x = ctx.sessione[campo];
     numeroEl.textContent = String(x);
-    for (const [el, delta] of pulsanti) el.disabled = (delta < 0 && x <= 0) || (massimo !== null && delta > 0 && x >= massimo);
+    for (const [el, delta] of pulsanti) {
+      // il motivo segue lo spegnimento: un tasto che si spegne adesso lo dice adesso
+      const m = motivoTasto(x, delta);
+      el.disabled = !!m;
+      if (m) el.setAttribute('title', m); else el.removeAttribute('title');
+    }
   });
   return h('div', { class: `contatore-tavolo ${classe}`.trim() },
     h('h3', {}, titolo, accanto),
