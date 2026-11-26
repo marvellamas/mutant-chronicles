@@ -2663,6 +2663,9 @@ function schedaArma(ctx, a) {
     // nell'Inventario (docs/layout-sd.md, pezzo 3)
     a.condizioneArma && a.condizioneArma.id !== 'integra' ? h('p', { class: 'condizione-arma motivo', title: a.condizioneArma.testo }, h('span', { class: 'sigla' }, 'Condizione '), h('strong', {}, a.condizioneArma.nome)) : null,
     a.moduloDi ? h('p', { class: 'nota' }, `Modulo integrato di ${a.moduloDi}: si sceglie il profilo prima di ogni attacco; alimentazione separata (§7.8).`) : null,
+    // lotto 252 (collaudo del 25/11): che cosa alimenta l'arma. Nella carta dell'arma **impugnata**, che è dove
+    // Davide ha cercato la fonte: una CyberArma in mano non compare fra le «Armi» possedute.
+    a.rigaFonte ? h('p', { class: 'fonte-arma' }, h('span', { class: 'sigla' }, 'Fonte '), h('strong', {}, testoFonteArma(ctx, a))) : null,
     // risposta A.10: stato al tavolo dell'attacco (lama estratta), lo stesso interruttore della tab Abilità
     a.statoAlternativo ? h('label', { class: `stato-tavolo${a.statoAlternativo.acceso ? ' attivo' : ''}` },
       h('input', { type: 'checkbox', checked: !!a.statoAlternativo.acceso, onchange: () => ctx.azioni.condizioneOggetto(a.statoAlternativo.chiave) }),

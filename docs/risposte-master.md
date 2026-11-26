@@ -3502,3 +3502,35 @@ sei fasce sul VA personale di Atletica prima dei modificatori (1–5, 6–15, 16
 vuoti e altezza. «Saltare 1 Q» = scavalcare un Q vuoto e atterrare nel successivo. Un salto agevole è automatico; al
 limite chiede Atletica, e un unico tiro risolve andatura e salto. Per l'app: **mostrare i quattro valori di salto
 già ricavati dalla fascia** nelle regole di movimento.
+
+## 25/11/2026 — il rapporto di collaudo di Davide (lotto 252, `docs/diff-lotto252-2026-11-26.md`)
+
+`Mutant_Collaudo_per_Marcello_2026-11-25.pdf`, tre pagine, sulla versione dell'app del 24/11: due priorità, due
+prove da sbloccare, quattro voci di catalogo e interfaccia, e i controlli chiusi di pagina 3.
+
+- **Priorità 02 (Dimitri, Armi da mischia 6 invece di 8) — applicata.** La causa: l'adeguamento annullava le
+  correzioni alle Abilità **del giorno dichiarato** dalla A.293 (il 2/11), e il −2 compensativo era del 23/11. Il
+  criterio è diventato «ogni correzione di calcolo a un'Abilità attiva al momento dell'adeguamento»; per chi è già
+  adeguato c'è `node tools/correzione-compensativa.mjs`. Il riepilogo del VA ometteva la correzione: adesso è una
+  riga del conto, col motivo.
+- **Priorità 01 (due Neverlost) — indagata, niente rimosso.** Nati il 2/11 a 40 secondi uno dall'altro; quello del
+  gruppo (rev 7) ha Rosso 100, Blu 10, Verde 30 e scudo 200, quello personale (rev 1) le ha tutte «da registrare».
+  `node tools/confronta-veicoli.mjs` li affianca campo per campo. La rimozione la fa il Direttore (lotto 218).
+- **Prova 04 (copia scrivibile) — sbloccata.** Una cartella può dichiararsi copia di prova (`COPIA-DI-PROVA.json`),
+  e dentro una cartella così si scrive; le cartelle vere non si sbloccano con un file.
+  `node tools/copia-di-prova.mjs`, e la fascia in cima a ogni pagina lo dice anche sul PC del Direttore.
+- **Prova 02 (fonte e cariche della CyberArma) — sbloccata.** La riga «Fonte» nella carta dell'arma impugnata e nel
+  «?» dell'arma: PM personali, riserva interna di CM o NeC, col consumo della A.260 e le cariche di adesso.
+- **I controlli chiusi di pagina 3 coincidono con i nostri dati**: copriruote del FIAT LUX 3/3/0/0 senza ricambi,
+  Circuito Bianco 120 = 6 × 20 di capacità col saldo «da registrare», Assetto armonico condizionato alla
+  sintonizzazione (Pablo non è sintonizzato), Umanità di Dimitri 19/20 per una sola perdita.
+
+### Domanda nuova
+
+- **A.314 — Le cariche della CyberArma: 10 CM e 5 cariche, o 5 CM e 10 cariche?** Nel rapporto: «la fonte
+  installata (PM personali, **CM verde da 10** o **NeC rosso da 5**)». I nostri dati hanno i due numeri scambiati, e
+  vengono da due risposte approvate: la Batteria Verde ha `capacita_cm` **5** (erano 10 PM, convertiti a 2:1 nella
+  revisione delle Cariche Mistiche del 02/11, lotto 171) e `cyberarma-nec` ha `alimentazione.usi` **10** cariche di
+  un NEC Rosso 10 (A.237, 02/11). Non è stato cambiato niente: la riga del rapporto è una parentesi in una domanda,
+  non una decisione numerata. Con la A.260 (una carica intera alimenta 10 Round) al tavolo la differenza è fra 50 e
+  100 Round a piena carica. **Primo numero libero: A.315.**

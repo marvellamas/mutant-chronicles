@@ -78,7 +78,10 @@ export function contoVa(a) {
     nome: a.nome,
     colonne,
     correzioniMaster,
-    calcolato: Number.isFinite(a.calcolato) ? a.calcolato : null,
+    // il valore prima delle correzioni: se la riga non lo porta, è il mostrato meno le correzioni (aritmetica, non
+    // un'ipotesi), così la riga «da regole … con la correzione …» c'è sempre quando c'è una correzione
+    calcolato: Number.isFinite(a.calcolato) ? a.calcolato
+      : (correzioniMaster.length ? a.totale - correzioniMaster.reduce((s, x) => s + x.valore, 0) : null),
     grezzo: a.grezzo,
     limite: a.limite ?? null,
     limitato,

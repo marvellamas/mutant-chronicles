@@ -97,6 +97,10 @@ test('RASSEGNA: ogni strumento che scrive file di personaggi passa da scriviPers
     'cartella-di-prova.mjs': 'crea una cartella vuota',
     // lotto 250: il ripasso dei comandi preme i pulsanti nella pagina e legge il disco; i personaggi li scrive
     // l'app, dal browser, col suo PUT (che mette i metadati). Lo strumento scrive solo il proprio rapporto.
+    // lotto 252: la copia di prova copia i file **byte per byte** (copyFileSync) e scrive solo il proprio
+    // marcatore e il LEGGIMI: una copia non e una riscrittura, e far salire la versione di salvataggio direbbe il
+    // falso — il file della copia e identico a quello da cui viene, ed e proprio quello che serve per confrontare.
+    'copia-di-prova.mjs': 'copia i personaggi byte per byte: scrive solo il marcatore della copia e il LEGGIMI',
     'ripassa-clic.mjs': 'legge il disco e scrive il rapporto del ripasso: i personaggi li scrive l’app dal browser',
   };
   const lista = readdirSync(new URL('tools/', RADICE)).filter((f) => f.endsWith('.mjs'));
