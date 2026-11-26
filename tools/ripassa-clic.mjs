@@ -15,6 +15,7 @@ import { join } from 'node:path';
 import { fermaSeSconosciuti } from './argomenti.mjs';
 import { BROWSER, apriApp, cartelleDiProva } from '../tests/browser-vero.js';
 import { personaggiDellaCartella } from './personaggi-cartella.mjs';
+import { preparaTutto } from '../tests/preparazione-tavolo.js';
 
 fermaSeSconosciuti('ripassa-clic.mjs', process.argv.slice(2));
 const arg = (n) => process.argv.slice(2).find((x) => x.startsWith(`--${n}=`))?.split('=').slice(1).join('=') ?? null;
@@ -25,6 +26,8 @@ const VERBOSO = process.argv.includes('--verboso');
 // quindi «INVARIATO» sarebbe come è fatta l'app e non un difetto. Quello che conta qui è che il clic non lasci un
 // errore e che l'avviso arrivi al diario del Direttore anche da un tablet.
 const TABLET = process.argv.includes('--tablet');
+// `--senza-preparazione`: il giro del 250, senza costruire scontro, arma e mezzo (più corto, e sette casi non si provano)
+const SENZA_PREP = process.argv.includes('--senza-preparazione');
 
 if (!BROWSER) {
   console.error('Nessun browser (Edge/Chrome) trovato: il ripasso non si può fare, e non si finge.');
@@ -35,6 +38,56 @@ if (!BROWSER) {
 // ---------------------------------------------------------------------------------------------- i casi del ripasso
 // `lotto` dice da dove viene la liberazione; `avviso: true` se il comando deve lasciare una voce nel diario.
 const CASI = [
+  // ---------- i due che si fanno decine di volte a serata (parte B del lotto 251)
+  {
+    id: 'danno-applicato', lotto: 246, pagina: 'plancia', nome: 'Il danno applicato a un nemico («Colpito» della plancia)', avviso: null,
+    // il bersaglio in campo e lo scontro aperto li costruisce la preparazione (parte A); senza, il 250 non lo provava
+    senzaCambio: true,
+    atteso: 'il nemico perde PV e la riga resta nel registro dello scontro',
+    fai: async (p) => {
+      const pv = await p.valuta(`const b = [...document.querySelectorAll('.btn-colpito')][0]; if (!b) return 'nessun bersaglio in campo';`
+        + ` const c = b.closest('article, li, section'); const t = c ? c.innerText : ''; b.click(); return t.replace(/\\s+/g, ' ').slice(0, 60)`);
+      if (pv === 'nessun bersaglio in campo') return pv;
+      await p.dormi(1200);
+      const scritto = await p.valuta(`const i = document.querySelector('dialog[open] input[type=number].input-d10'); if (!i) return false;`
+        + ` i.value = '7'; i.dispatchEvent(new Event('input', { bubbles: true })); i.dispatchEvent(new Event('change', { bubbles: true })); return true`);
+      if (!scritto) return 'la finestra «Colpito» non ha il campo del danno';
+      await p.dormi(600);
+      const applica = await p.clicIn('dialog[open]', /^Applica/);
+      if (!applica) return 'nessun «Applica» nella finestra';
+      await p.dormi(1500);
+      return 'applicato';
+    },
+    cambia: () => true,
+  },
+  {
+    id: 'movimento', lotto: 247, nome: 'Il movimento del PG sulla mappa, dalla scheda',
+    // la voce nel diario si pretende **solo se l'avviso è comparso**: al proprio turno non c'è irregolarità, e
+    // chiedere la voce sarebbe un rosso finto (la regola del 249 vale per i «Procedi comunque», non per i turni giusti)
+    avviso: (fatto) => /fuori turno/.test(String(fatto)),
+    dove: (p) => p.tab('combattimento'),
+    senzaCambio: true,
+    atteso: 'apre la mappa dello scontro (fuori turno con l’avviso) e lascia la riga',
+    fai: async (p) => {
+      // la scheda scopre lo scontro dal server a intervalli (src/ui/app.js): si aspetta il riquadro, invece di
+      // guardare una volta sola e dire che non c'e'
+      for (let k = 0; k < 16; k += 1) {
+        if (await p.valuta(`return !!document.querySelector('.scontro-in-corso')`)) break;
+        await p.dormi(700);
+      }
+      const riquadro = await p.valuta(`const r = document.querySelector('.scontro-in-corso'); return r ? r.innerText.replace(/\\s+/g, ' ').slice(0, 90) : 'nessun riquadro «Scontro in corso»'`);
+      if (riquadro.startsWith('nessun')) return riquadro;
+      const b = await p.valuta(`const b = document.querySelector('.btn-muovi-mappa'); if (!b) return 'nessun pulsante «Muovi»'; if (b.disabled) return 'il pulsante è SPENTO'; b.click(); return 'premuto'`);
+      if (b !== 'premuto') return b;
+      await p.dormi(900);
+      // fuori turno l’app chiede conferma: si procede, ed è la strada vera
+      const fuoriTurno = await p.valuta(`const x = [...document.querySelectorAll('dialog button')].find((y) => /Procedi comunque/.test(y.textContent)); if (!x) return false; x.click(); return true`);
+      await p.dormi(1800);
+      const dove = await p.valuta(`return location.hash.indexOf('#/mappa') === 0 ? 'mappa aperta' : 'la mappa non si è aperta: ' + location.hash`);
+      return fuoriTurno ? (dove + ' · fuori turno, procedi comunque') : (dove + ' · al suo turno, senza avviso');
+    },
+    cambia: () => true,
+  },
   // ---------- le cinque azioni di ogni sera
   {
     id: 'pv-meno', lotto: 246, nome: 'PV: il tastino «−1» della colonna', avviso: false,
@@ -43,15 +96,18 @@ const CASI = [
     cambia: (prima, dopo) => prima.sessione?.pvAttuali !== dopo.sessione?.pvAttuali,
   },
   {
-    id: 'pv-piu-al-massimo', lotto: 246, nome: 'PV: «+5» ai PV massimi (deve restare spento e dire perché)', avviso: false,
+    id: 'pv-al-massimo-dice-perche', lotto: 246, nome: 'PV al massimo: «+5» spento deve dire perché A VISTA', avviso: false,
     dove: (p) => p.tab('combattimento'),
-    fai: async (p) => {
-      const t = await p.valuta(`const b = [...document.querySelectorAll('.colonna-risorse button')].find((x) => x.textContent.trim() === '+5'); if (!b) return null; return { spento: !!b.disabled, titolo: b.title || '' }`);
-      return t && t.spento && t.titolo.length > 3 ? 'spento e dice perché' : t ? `spento=${t?.spento} titolo=«${t?.titolo}»` : 'pulsante non trovato';
-    },
-    cambia: () => true, // non deve cambiare niente: lo controlla `atteso`
-    atteso: 'niente cambia, e il pulsante dice perché',
     senzaCambio: true,
+    atteso: 'il motivo si legge sullo schermo, non solo nel suggerimento del mouse',
+    // la quarta verifica del lotto 251, dal difetto dei Distintivi del 250: su un tablet il `title` non esiste.
+    fai: async (p) => {
+      // prima si portano i PV al massimo premendo «+5» finché si può: è il presupposto, e lo costruisce il comando
+      await p.valuta(`const c = document.querySelector('.colonna-risorse'); for (let i = 0; i < 12; i += 1) { const b = [...c.querySelectorAll('button')].find((x) => x.textContent.trim() === '+5' && !x.disabled); if (!b) break; b.click(); } return 1`);
+      await p.dormi(900);
+      return p.motivoAVista('/^\\+5$/');
+    },
+    cambia: () => true,
   },
   {
     id: 'ricarica', lotto: 246, pg: 'Rhea-Valdis', nome: 'Ricarica / Cambia caricatore', avviso: null,
@@ -107,21 +163,7 @@ const CASI = [
       || JSON.stringify(a.scelte?.abilita ?? null) !== JSON.stringify(b.scelte?.abilita ?? null),
   },
   {
-    id: 'muovi-fuori-turno', lotto: 247, nome: 'Muovi il PG sulla mappa, fuori turno', avviso: true,
-    dove: (p) => p.tab('combattimento'),
-    fai: async (p) => {
-      const b = await p.valuta(`const b = document.querySelector('.btn-muovi-mappa'); if (!b) return 'nessuno scontro aperto'; b.click(); return 'premuto'`);
-      if (b !== 'premuto') return b;
-      await p.dormi(500);
-      await p.valuta(`const b = [...document.querySelectorAll('dialog button')].find((x) => /Procedi comunque/.test(x.textContent)); if (b) b.click(); return 1`);
-      return 'premuto';
-    },
-    cambia: () => true,
-    senzaCambio: true,
-    atteso: 'apre la mappa e lascia la riga nello storico',
-  },
-  {
-    id: 'distintivi-pe', lotto: 246, nome: 'Conversione dei Distintivi in Punti Eroe', avviso: null,
+    id: 'distintivi-pe', lotto: 246, pg: 'Aiko-Tenzan', nome: 'Conversione dei Distintivi in Punti Eroe', avviso: null,
     dove: (p) => p.tab('identita'),
     // Aiko ha 0 Distintivi: il conto non torna e il pulsante non cambia niente — allora deve **dire perché**
     // (la riga di mezzo del 246). Prima non diceva niente e il motivo stava nel solo `title`: lo ha trovato
@@ -139,7 +181,8 @@ const CASI = [
   {
     id: 'circostanza-piu', lotto: 246, nome: 'Bonus di circostanza, «+1» di una riga', avviso: false,
     dove: (p) => p.tab('combattimento'),
-    fai: async (p) => p.clicIn('.riquadro-circostanze', /^\+1$/),
+    // il riquadro è `.riga-circostanza` (il 250 cercava `.riquadro-circostanze`, che non esiste)
+    fai: async (p) => p.clicIn('.riga-circostanza', /^\+1$/),
     cambia: (a, b) => JSON.stringify(a.sessione?.circostanze ?? {}) !== JSON.stringify(b.sessione?.circostanze ?? {}),
   },
   {
@@ -155,22 +198,34 @@ const CASI = [
   {
     id: 'stato-attiva', lotto: 246, nome: 'Uno Stato acceso dalla scheda', avviso: false,
     dove: (p) => p.tab('combattimento'),
-    fai: async (p) => p.valuta(`
-      const b = [...document.querySelectorAll('.stati-elenco input[type=checkbox], .riquadro-stati input[type=checkbox]')][0];
-      if (!b) return 'nessuno Stato nell’elenco';
-      b.click(); return 'premuto'`),
+    // le caselle stanno in `.stati-compatti` (il 250 cercava due classi che non esistono) e si accende **uno spento**:
+    // quello della preparazione è già acceso, e spegnerlo proverebbe un'altra cosa
+    fai: async (p) => p.valuta(`const l = [...document.querySelectorAll('.stati-compatti input[type=checkbox]')].filter((x) => !x.checked);
+      if (!l.length) return 'nessuno Stato da accendere';
+      l[0].click(); return 'acceso'`),
     cambia: (a, b) => JSON.stringify(a.sessione?.stati ?? []) !== JSON.stringify(b.sessione?.stati ?? []),
   },
   {
     id: 'usi-talento', lotto: 246, pg: 'Torvald-Krane', nome: 'Un uso di Talento consumato', avviso: false,
     dove: (p) => p.tab('combattimento'),
-    fai: async (p) => p.clicIn('.riquadro-usi', /^(Usa|Consuma|Usato)/),
+    // il riquadro è `.riquadro-usi-talenti` (il 250 cercava `.riquadro-usi`)
+    fai: async (p) => p.clicIn('.riquadro-usi-talenti', /^(Usa|Consuma|\d)/),
     cambia: (a, b) => JSON.stringify(a.sessione?.usiTalenti ?? {}) !== JSON.stringify(b.sessione?.usiTalenti ?? {}),
   },
   {
     id: 'ripara-oggetto', lotto: 246, nome: 'PI di un oggetto: Ripara', avviso: false,
     dove: (p) => p.tab('inventario'),
-    fai: async (p) => p.clic(/^Ripara$/),
+    // «Ripara» compare solo su un oggetto danneggiato: il presupposto lo costruisce il comando stesso, togliendo
+    // un PI con il tastino della riga (è quello che farebbe il giocatore al tavolo)
+    fai: async (p) => {
+      const meno = await p.valuta(`const b = [...document.querySelectorAll('button')].find((x) => /^Togli 1 PI/.test(x.getAttribute('aria-label') || '') && !x.disabled);
+        if (!b) return false; b.click(); return true`);
+      if (!meno) return 'nessun oggetto con i PI da togliere';
+      await p.dormi(900);
+      if (!await p.clic(/^Ripara$/)) return 'nessun «Ripara» dopo il danno';
+      await p.dormi(900);
+      return 'riparato';
+    },
     cambia: (a, b) => JSON.stringify(a.sessione?.integrita ?? {}) !== JSON.stringify(b.sessione?.integrita ?? {}),
   },
   {
@@ -207,7 +262,8 @@ for (const f of readdirSync(esempi).filter((x) => x.endsWith('.json'))) {
   const vecchia = new Date(Date.now() - 7 * 24 * 3600 * 1000);
   utimesSync(join(cartella, f), vecchia, vecchia);
 }
-const nomeFile = readdirSync(cartella).find((f) => f.startsWith('Aiko')) ?? readdirSync(cartella)[0];
+// il PG del ripasso è quello che la preparazione attrezza: arma a caricatore in mano, uno Stato, un mezzo (lotto 251)
+const nomeFile = readdirSync(cartella).find((f) => f.startsWith('Rhea')) ?? readdirSync(cartella)[0];
 const nomePg = nomeFile.split('_')[0];
 // **il file attuale, non quello di partenza**: l'app non sovrascrive mai, salva un file nuovo con la data di oggi
 // (lotto 200). Leggere il nome di partenza vorrebbe dire guardare un file che non cambia mai e dire «INVARIATO»:
@@ -238,6 +294,19 @@ Object.assign(p, {
     const ok = await p.valuta(`const nome = ${JSON.stringify(quale)}; const carte = [...document.querySelectorAll('article,li')]; const c = carte.find((x) => x.textContent.trim().toUpperCase().startsWith(nome.toUpperCase())); const b = c ? [...c.querySelectorAll('button')].find((x) => x.textContent.trim() === 'Apri') : null; if (!b) return false; b.click(); return true`);
     if (!ok) throw new Error(`la scheda di ${quale} non si apre dalla lista`);
   },
+  /**
+   * **Il motivo si deve vedere sullo schermo, non solo nel `title`** (lotto 251, dalla lezione dei Distintivi del
+   * 250): su un tablet il suggerimento del mouse non esiste, e un comando che spiega solo lì è muto per chi gioca.
+   * Per il primo pulsante spento che corrisponde torna 'a vista', 'solo nel title' o 'nessun motivo'.
+   */
+  motivoAVista: (re) => p.valuta(`const b = [...document.querySelectorAll('button')].find((x) => ${re}.test(x.textContent.trim()) && x.disabled);`
+    + ` if (!b) return 'nessun pulsante spento';`
+    + ` const t = (b.getAttribute('title') || '').trim();`
+    + ` const c = b.closest('li, p, div, section') || b.parentElement;`
+    + ` const visibile = c ? c.innerText.replace(b.textContent, '').trim() : '';`
+    + ` const parola = t.split(/[^A-Za-zÀ-ÿ0-9]+/).filter((w) => w.length > 5)[0] || '';`
+    + ` if (parola && visibile.includes(parola)) return 'a vista';`
+    + ` return t ? 'solo nel title' : 'nessun motivo'`),
   tab: async (id) => {
     await p.valuta(`location.hash = location.hash.replace(/\\/t\\/.*$/, '').replace(/#\\/$/, '#/') + '/t/${id}'; return 1`);
     await dormi(700);
@@ -247,8 +316,16 @@ Object.assign(p, {
 // il nome come lo scrive la carta della lista: «Aiko-Tenzan» nel file, «Aiko Tenzan» a schermo
 const nomeVisto = nomePg.replace(/-/g, ' ');
 const esiti = [];
+let preparazione = null;
 try {
   await p.attendi(`return [...document.querySelectorAll('button')].some((x) => /^Apri$/.test(x.textContent.trim()))`, 'la lista dei personaggi');
+  // **I presupposti, una volta sola e usando l'app** (parte A del lotto 251, tests/preparazione-tavolo.js): senza di
+  // loro sette casi su quattordici non si possono premere, ed è il buco che il 250 ha dichiarato invece di coprire.
+  if (!SENZA_PREP) {
+    preparazione = await preparaTutto(p, { pg: nomeVisto });
+    console.log('\nPREPARAZIONE (fatta con l’app):');
+    for (const [k, v] of Object.entries(preparazione)) console.log(('  ' + k.padEnd(12) + ' ' + (typeof v === 'string' ? v : JSON.stringify(v))).slice(0, 160));
+  }
   // sul PC del Direttore non c'è «Scegli»: il server autorizza sempre (req.mutantMaster)
   // il tablet sceglie il suo personaggio, altrimenti il server rifiuta le scritture (lotto 247)
 
@@ -258,17 +335,22 @@ try {
     let fotoPrima = null;
     const avvisiPrima = (await p.api('/api/avvisi')).corpo?.totale ?? 0;
     p.azzeraErrori();
-    if (!caso.soloNuovo) {
+    if (caso.pagina === 'plancia') {
+      // i comandi del Direttore stanno nella plancia, non nella scheda: il danno applicato, l'ordine
+      // dell'Iniziativa, il movimento del mezzo. Si va lì e si lascia che la plancia si disegni.
+      await p.valuta(`location.hash = '#/tavolo'; return 1`);
+      await dormi(1800);
+    } else if (!caso.soloNuovo) {
       await p.valuta(`location.hash = '#/'; return 1`);
       await dormi(500);
       await p.apriIlMio(caso.pg ? caso.pg.replace(/-/g, ' ') : nomeVisto);
       await p.attendi(`return /#\\/p\\//.test(location.hash)`, 'la scheda aperta');
       await dormi(600);
-      if (caso.dove) await caso.dove(p);
     } else {
       await p.valuta(`location.hash = '#/'; return 1`);
       await dormi(500);
     }
+    if (caso.dove) await caso.dove(p);
     fotoPrima = caso.soloNuovo ? null : fotografia();
     let fatto;
     try { fatto = await caso.fai(p); } catch (e) { fatto = `ERRORE del ripasso: ${e.message}`; }
@@ -296,7 +378,7 @@ try {
     esiti.push({
       id: caso.id, lotto: caso.lotto, nome: caso.nome, fatto, errori,
       cambiato, ilCampo, fileNuovo: esitoDisco.file, senzaCambio: !!caso.senzaCambio, atteso: caso.atteso ?? null,
-      avviso: caso.avviso, avvisiNuovi: avvisiDopo - avvisiPrima,
+      avviso: typeof caso.avviso === 'function' ? caso.avviso(fatto) : caso.avviso, avvisiNuovi: avvisiDopo - avvisiPrima,
     });
     if (VERBOSO) console.log('   [diag] errori=' + JSON.stringify(errori) + ' | fileNuovo=' + (esitoDisco.file ?? '-') + ' campo=' + ilCampo);
     if (VERBOSO) console.log(`· ${caso.id}: fatto=${fatto} errori=${errori.length} cambiato=${cambiato} avvisi=+${avvisiDopo - avvisiPrima}`);

@@ -71,7 +71,7 @@ export const ARGOMENTI = {
   'aggiorna-avviatori.mjs': ['prova', 'radice', 'salta', 'fuori'],
   'console.mjs': ['porta', 'radice'],
   'cartella-di-prova.mjs': [],
-  'ripassa-clic.mjs': ['solo', 'verboso'],
+  'ripassa-clic.mjs': ['solo', 'verboso', 'tablet', 'senza-preparazione'],
   'descrizioni-bestiario.mjs': ['profili'],
   'riserve-intere.mjs': ['scrivi'],
   'riferimenti-rotti.mjs': ['scrivi'],
