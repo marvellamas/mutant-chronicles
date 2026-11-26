@@ -37,9 +37,10 @@
 // separato, esplicito e registrato, e nell'app è il ✎ di «Modifica master» sul VA, che chiede il motivo e scrive
 // la sua riga — esattamente «separata, esplicita e registrata».
 import { calcolaSchedaPersonaggio, migraPersonaggio } from './avanzamento.js';
-import { nuovaCorrezione, aggiungiCorrezione, normalizzaCorrezioni } from './correzioni-master.js';
+import { nuovaCorrezione, aggiungiCorrezione, normalizzaCorrezioni, TIPI_CALCOLO } from './correzioni-master.js';
 import { profiloCompetenze, competenzaDi, limiteAbilita, PROFILO_NUOVO } from './competenze.js';
 import { nomeEvento, puntiPrevisti } from './sposta-punti.js';
+import { rigaStorico } from './storico.js';
 import { concessioniLivello } from './livello-px.js';
 
 const isOggetto = (x) => x !== null && typeof x === 'object' && !Array.isArray(x);
@@ -47,17 +48,27 @@ const somma = (o) => Object.values(o ?? {}).reduce((a, b) => a + (Number.isInteg
 const pulisci = (o) => Object.fromEntries(Object.entries(o ?? {}).filter(([, n]) => Number.isInteger(n) && n > 0));
 
 /**
- * A.293 (Davide, 19/11/2026): dopo l'adeguamento si annullano le sole correzioni manuali **alle Abilità** del giorno dichiarato in
- * `regole.json → adeguamento_abilita.annulla_correzioni_abilita` (per Dimitri: i due +1 ad Armi da mischia, il −1 a Percezione e il −1 a
- * Scienza del 2 novembre). Restano attive — e **non si riapplicano** — quelle alle Caratteristiche. La riga della nota di prima
- * (chiave «abilita», senza i due punti) non è una correzione di VA e non si tocca.
+ * A.293 (Davide, 19/11/2026): dopo l'adeguamento le correzioni manuali **alle Abilità** non incidono più sui valori e restano nello
+ * storico. Restano attive — e **non si riapplicano** — quelle alle Caratteristiche. La riga della nota di prima (chiave «abilita»,
+ * senza i due punti) non è una correzione di VA e non si tocca.
+ *
+ * **Il criterio, e perché è cambiato nel lotto 252.** Prima si annullavano le correzioni **del giorno dichiarato** (il 2 novembre,
+ * quello dell'elenco della A.293). Il collaudo di Davide del 25/11 ha trovato il buco: il −2 ad Armi da mischia che Dimitri aveva
+ * ricevuto il **23/11** per compensare i due +1 è sopravvissuto all'adeguamento del 24/11, e il suo VA è rimasto 6 invece di 8. Un
+ * elenco scritto a mano non copre la correzione fatta il giorno dopo averlo scritto, e sarebbe tornato alla correzione successiva.
+ * Adesso il criterio è **ogni correzione di calcolo a un'Abilità attiva al momento dell'adeguamento**: il giorno resta nei dati come
+ * origine della regola. Le righe di altro tipo (l'eccezione al limite della A.247, una concessione) non sono correzioni di calcolo e
+ * non si toccano.
  * @returns le righe (attive) da annullare
  */
 export function correzioniAbilitaDaAnnullare(correzioni, dati) {
   const R = dati?.regole?.adeguamento_abilita?.annulla_correzioni_abilita;
   if (!R) return [];
+  const soloIlGiorno = R.tutte_le_correzioni_di_calcolo !== true;
   return normalizzaCorrezioni(correzioni).filter((x) => x.stato === 'attiva' && !x?.[MARCA]
-    && typeof x.chiave === 'string' && x.chiave.startsWith(R.prefisso_chiave) && String(x.quando ?? '').slice(0, 10) === R.giorno);
+    && typeof x.chiave === 'string' && x.chiave.startsWith(R.prefisso_chiave)
+    && TIPI_CALCOLO.includes(x.tipo)
+    && (!soloIlGiorno || String(x.quando ?? '').slice(0, 10) === R.giorno));
 }
 
 /** Marca della riga di registro che porta la nota: la cerca `notaPerScheda`, e un tablet non la toglie. */
@@ -519,6 +530,71 @@ export function confermaAdeguamentoLegittima(nuovo, disco, dati) {
  * Annulla l'adeguamento di **questo** personaggio: rimette i campi toccati com'erano e toglie la riga della nota.
  * Il file torna identico a com'era, contrassegno compreso.
  */
+/**
+ * **Le correzioni rimaste in piedi dopo l'adeguamento** (lotto 252, dal collaudo di Davide del 25/11/2026).
+ *
+ * Un personaggio già adeguato non ripassa da `pianoAdeguamento`, quindi una correzione di calcolo a un'Abilità che
+ * l'adeguamento avrebbe dovuto annullare — e che non ha annullato perché il criterio guardava un solo giorno — resta
+ * addosso al VA per sempre, senza che nessuno la veda: è il −2 ad Armi da mischia di Dimitri, che ha tenuto il suo VA a
+ * 6 invece di 8. Questa funzione le trova; `annullaCorrezioniRimaste` le annulla **lasciandole nello storico**, come
+ * vuole la A.293, senza aggiungere nessun bonus nuovo e senza toccare le Caratteristiche.
+ * @returns le righe attive da annullare (vuoto se il personaggio non è adeguato: in quel caso le annulla l’adeguamento)
+ */
+/**
+ * Il VA di un'Abilità come lo mostra la scheda, partendo dal file sul disco (che ha `scelte`, mentre il motore vuole
+ * `creazione` con dentro le correzioni del master: è la trappola del lotto 225). null se la scheda non si calcola, e
+ * allora `motivo` dice perché — un «?» senza motivo è un ripiego silenzioso (lotto 248).
+ * @returns {{ valore, motivo }}
+ */
+export function vaAbilita(o, nome, dati) {
+  const p = personaggio(o);
+  const scheda = calcolaSchedaPersonaggio({ ...p, sessione: o?.sessione ?? null }, dati);
+  if (!Array.isArray(scheda.abilita)) return { valore: null, motivo: (scheda.errori ?? []).map((e) => e.problema).slice(0, 2).join('; ') || 'la scheda non si calcola' };
+  const r = scheda.abilita.find((x) => x.nome === nome);
+  return r ? { valore: r.totale, motivo: null } : { valore: null, motivo: `l'Abilità «${nome}» non è nell'elenco` };
+}
+
+export function correzioniRimaste(o, dati) {
+  if (o?.scelte?.regimeAbilita !== PROFILO_NUOVO) return [];
+  // **solo quelle di prima dell'adeguamento.** Una correzione fatta dal Direttore DOPO l'adeguamento è una sua
+  // decisione di adesso e non si tocca; quella di prima è la compensazione di un bonus che l'adeguamento ha già
+  // annullato, e resta addosso al VA per sbaglio (il −2 di Dimitri del 23/11, adeguamento del 24/11).
+  const quando = quandoAdeguato(o);
+  const prima = correzioniAbilitaDaAnnullare(o?.correzioni_master, dati);
+  if (!quando) return prima;
+  return prima.filter((x) => String(x.quando ?? "") <= quando);
+}
+
+/** Quando l'adeguamento è stato fatto, dal blocco `puntiDirettore` che lo dichiara (ISO), o null. */
+export function quandoAdeguato(o) {
+  const blocchi = [o?.scelte?.puntiDirettore, ...(o?.livelli ?? []).map((v) => v?.puntiDirettore)]
+    .filter((x) => x && x.adeguamento === true && typeof x.quando === "string");
+  if (!blocchi.length) return null;
+  return blocchi.map((x) => x.quando).sort()[0];
+}
+
+/**
+ * Annulla le correzioni rimaste, con la riga nello storico. Non cambia nient’altro: nessun punto, nessun bonus nuovo,
+ * nessuna Caratteristica (A.293). Il valore torna quello che l’adeguamento avrebbe dato il giorno in cui è stato fatto.
+ * @returns {{ nuovo, annullate, descrizione }} oppure null se non c’era niente da annullare
+ */
+export function annullaCorrezioniRimaste(o, dati, { quando = new Date(), chi = "" } = {}) {
+  const rimaste = correzioniRimaste(o, dati);
+  if (!rimaste.length) return null;
+  const ids = new Set(rimaste.map((x) => x.id));
+  const motivo = dati?.regole?.adeguamento_abilita?.annulla_correzioni_abilita?.motivo ?? null;
+  const correzioni = normalizzaCorrezioni(o.correzioni_master).map((x) => (ids.has(x.id)
+    ? { ...x, stato: 'annullata', annullataIl: quando.toISOString(), ...(motivo ? { annullataPer: motivo } : {}) }
+    : x));
+  const descrizione = `${rimaste.length === 1 ? "Annullata la correzione" : `Annullate le ${rimaste.length} correzioni`} alle Abilità rimaste in piedi dopo l’adeguamento`
+    + `: ${rimaste.map((x) => `${x.chiave.replace("abilita:", "")} ${x.numero > 0 ? "+" : ""}${x.numero}`).join(", ")}`
+    + ` (A.293; collaudo del 25/11/2026${chi ? `, ${chi}` : ''}).`;
+  // la riga dello storico sta nella sessione (src/storico.js → rigaStorico), come ogni altra riga che il
+  // giocatore e il Direttore rileggono nella tab Identità
+  const sessione = rigaStorico(o.sessione, descrizione, quando);
+  return { nuovo: { ...o, correzioni_master: correzioni, sessione }, annullate: rimaste, descrizione };
+}
+
 export function annullaAdeguamento(o) {
   const r = righeNota(o?.correzioni_master)[0];
   const prima = r?.primaDelAdeguamento;

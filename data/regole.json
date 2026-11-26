@@ -4643,6 +4643,8 @@
     "annulla_correzioni_abilita": {
       "prefisso_chiave": "abilita:",
       "giorno": "2026-11-02",
+      "tutte_le_correzioni_di_calcolo": true,
+      "perche_tutte": "Lotto 252 (collaudo di Davide del 25/11/2026): il criterio era «le correzioni del giorno dichiarato», e il −2 ad Armi da mischia che Dimitri aveva ricevuto il 23/11 per compensare i due +1 è sopravvissuto all'adeguamento del 24/11 — VA 6 invece di 8. Un elenco scritto a mano non copre la correzione fatta il giorno dopo averlo scritto: il criterio è «ogni correzione di calcolo a un'Abilità attiva al momento dell'adeguamento», e il giorno resta solo come origine della regola (A.293).",
       "risposta": "A.293",
       "motivo": "A.293 (Davide, 19/11/2026): dopo l'adeguamento le correzioni manuali alle Abilità del 2 novembre non incidono più sui valori; restano nello storico."
     }

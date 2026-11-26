@@ -67,6 +67,9 @@ export function validaDati(dati) {
     if (!isTesto(AA.giorno) || !/^\d{4}-\d{2}-\d{2}$/.test(AA.giorno)) err('regole', 'adeguamento_abilita.annulla_correzioni_abilita.giorno', 'serve un giorno AAAA-MM-GG');
     if (!isTesto(AA.risposta) || !/^A\.\d+$/.test(AA.risposta)) err('regole', 'adeguamento_abilita.annulla_correzioni_abilita.risposta', 'serve il numero della risposta (A.nnn): un’eccezione senza motivo è una dimenticanza');
     if (!isTesto(AA.motivo)) err('regole', 'adeguamento_abilita.annulla_correzioni_abilita.motivo', 'serve il motivo scritto');
+    // lotto 252: il criterio largo (tutte le correzioni di calcolo alle Abilità, non solo quelle del giorno) si dichiara col suo perché
+    if (AA.tutte_le_correzioni_di_calcolo !== true) err('regole', 'adeguamento_abilita.annulla_correzioni_abilita.tutte_le_correzioni_di_calcolo', 'dal lotto 252 il criterio è «ogni correzione di calcolo a un’Abilità attiva al momento dell’adeguamento»: un elenco per giorno lascia in piedi la correzione del giorno dopo (il −2 di Dimitri del 23/11)');
+    if (AA.tutte_le_correzioni_di_calcolo === true && !isTesto(AA.perche_tutte)) err('regole', 'adeguamento_abilita.annulla_correzioni_abilita.perche_tutte', 'serve il perché del criterio largo: una regola senza il suo motivo, fra sei mesi, qualcuno la restringe');
   }
 
   // Lotto 225 (A.291): le Pietre di Luna intere sono tre voci distinte (5, 10, 15 PM), con la SnT per colore del §26.8; il conto si pretende

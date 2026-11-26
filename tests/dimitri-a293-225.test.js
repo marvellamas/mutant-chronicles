@@ -150,15 +150,30 @@ test('--annulla riporta Dimitri com’era: le correzioni alle Abilità tornano a
   assert.deepEqual(netto(r.file), NETTO);
 });
 
-test('un’Abilità corretta in un altro giorno non si annulla: la regola è quella dichiarata nei dati, non «ogni correzione di Abilità»', () => {
+// **Adeguato dal lotto 252, col motivo.** Questo controllo pretendeva il contrario: che una correzione di un altro giorno
+// sopravvivesse all'adeguamento, perché la A.293 elencava le quattro del 2 novembre. Il collaudo di Davide del 25/11 ha
+// mostrato che quel criterio è sbagliato in partita: il −2 ad Armi da mischia registrato il 23/11 per compensare i due +1 è
+// sopravvissuto all'adeguamento del 24/11, e Dimitri è rimasto con VA 6 invece di 8. Adesso si annulla **ogni correzione di
+// calcolo a un'Abilità attiva al momento dell'adeguamento**; quello che non cambia — e che questo controllo tiene fermo — è
+// che le Caratteristiche non si toccano, che le righe non di calcolo restano, e che la riga della nota di prima non è una
+// correzione di VA.
+test('si annulla ogni correzione di calcolo a un’Abilità, anche di un altro giorno (il −2 del 23/11: collaudo del 25/11)', () => {
   const o = grezzo();
   const x = copia(o);
-  x.correzioni_master = [...x.correzioni_master, { id: 'cor-prova-225', quando: '2026-11-20T10:00:00.000Z', chiave: 'abilita:Furtività', etichetta: 'VA di Furtività', tipo: 'aggiungi', numero: 1, motivo: 'dopo la serata', stato: 'attiva' }];
+  x.correzioni_master = [...x.correzioni_master,
+    { id: 'cor-prova-225', quando: '2026-11-20T10:00:00.000Z', chiave: 'abilita:Furtività', etichetta: 'VA di Furtività', tipo: 'aggiungi', numero: 1, motivo: 'dopo la serata', stato: 'attiva' },
+    // la compensativa di Dimitri, come l'ha vista Davide: un giorno dopo l'elenco della A.293, senza motivo
+    { id: 'cor-compensativa', quando: '2026-11-23T20:21:00.000Z', chiave: 'abilita:Armi da mischia', etichetta: 'VA di Armi da mischia', tipo: 'aggiungi', numero: -2, motivo: '', stato: 'attiva' },
+    // e due righe che NON sono correzioni di calcolo: non si toccano
+    { id: 'cor-eccezione', quando: '2026-11-23T20:30:00.000Z', chiave: 'abilita:Occultismo', etichetta: 'Eccezione al limite', tipo: 'eccezione', numero: 1, motivo: 'A.247', stato: 'attiva' },
+    { id: 'cor-car', quando: '2026-11-23T20:31:00.000Z', chiave: 'car:DES', etichetta: 'DES', tipo: 'aggiungi', numero: 2, motivo: 'resta', stato: 'attiva' }];
   const da = correzioniAbilitaDaAnnullare(x.correzioni_master, dati);
-  assert.equal(da.length, 4, 'una correzione del 20 novembre non è fra quelle del 2 novembre');
-  assert.ok(!da.some((r) => r.id === 'cor-prova-225'));
+  assert.equal(da.length, 6, 'le quattro del 2/11 più quella del 20/11 e la compensativa del 23/11');
+  assert.ok(da.some((y) => y.id === 'cor-compensativa'), 'la compensativa del 23/11 si annulla: è il difetto del collaudo');
+  assert.ok(!da.some((y) => y.id === 'cor-eccezione'), 'l’eccezione al limite (A.247) non è una correzione di calcolo');
+  assert.ok(!da.some((y) => y.chiave.startsWith('car:')), 'le Caratteristiche non si toccano (A.293)');
   // e la riga della nota di prima («abilita», senza i due punti) non è una correzione di VA
   const p = pianoAdeguamento(x, dati);
-  const nota = normalizzaCorrezioni(p.nuovo.correzioni_master).find((r) => r[MARCA]);
+  const nota = normalizzaCorrezioni(p.nuovo.correzioni_master).find((y) => y[MARCA]);
   assert.equal(correzioniAbilitaDaAnnullare([nota], dati).length, 0);
 });

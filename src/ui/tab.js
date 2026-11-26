@@ -1538,7 +1538,11 @@ function apriCalcolo(ctx, a) {
     h('p', { class: 'nota' }, c.formula),
     c.limitato ? h('p', {}, h('span', { class: 'al-limite' }, '⚑ '), `Mod + Base + Corp + Avanz fa ${c.grezzo}: oltre il limite ${c.limiteVero ?? c.limite} della categoria (§8.3), conta ${c.limiteVero ?? c.limite}.`) : null,
     c.oltreLimite ? h('p', {}, h('span', { class: 'eccezione-limite' }, '✦ '), `${c.oltreLimite === 1 ? '1 punto forzato' : `${c.oltreLimite} punti forzati`} dal Direttore oltre il limite ${c.limite} (A.247): il VA sale davvero, il limite della categoria resta ${c.limite}.`) : null,
-    h('p', {}, 'Valore da regole: ', h('strong', {}, numero(c.daRegole))),
+    // lotto 252: le correzioni del master, con il loro motivo, prima del valore da regole: così la somma torna
+    c.correzioniMaster.length ? h('ul', { class: 'tooltip-provenienza correzioni-nel-calcolo' }, c.correzioniMaster.map((x) => h('li', {},
+      h('span', {}, x.voce, x.nota ? h('small', { class: 'nota' }, ` · ${x.nota}`) : null), h('strong', {}, x.testo)))) : null,
+    h('p', {}, 'Valore da regole: ', h('strong', {}, numero(c.daRegole)),
+      c.correzioniMaster.length && c.calcolato !== null ? h('small', { class: 'nota' }, ` (da regole ${numero(c.calcolato)}, con la correzione del master ${numero(c.daRegole)})`) : null),
     a.provenienza ? [h('p', { class: 'tooltip-etichetta' }, 'Conto del VA'), listaProvenienza(a.provenienza, 'VA')]
       : c.condizioni.length ? h('ul', { class: 'tooltip-provenienza' }, c.condizioni.map((x) => h('li', {}, h('span', {}, x.voce), h('strong', {}, x.testo)))) : null,
     h('p', { class: 'calcolo-totale' }, 'VA: ', h('strong', { class: 'pillola-va' }, numero(c.effettivo))),

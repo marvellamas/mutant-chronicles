@@ -69,9 +69,16 @@ export function contoVa(a) {
   ];
   // la scomposizione parte dal valore da regole; le voci dopo sono equipaggiamento e condizioni della sessione
   const condizioni = (a.scomposizione ?? []).slice(1).map((x) => ({ voce: x.etichetta, valore: x.valore, testo: segno(x.valore), fonte: x.fonte ?? null }));
+  // **Lotto 252 (collaudo di Davide del 25/11/2026): una correzione del master che cambia il VA sta nel riepilogo.**
+  // Prima il «Calcolo» mostrava Mod + Base + Corp + Avanz e poi «Valore da regole», che è il valore **corretto**: per
+  // Dimitri la somma faceva 8 e la riga diceva 6, senza una parola sul −2. Il conto che non torna è il motivo per cui
+  // quel −2 è sfuggito a noi per due giorni e lo ha visto lui in mezz'ora.
+  const correzioniMaster = (a.correzioniMaster ?? []).map((x) => ({ voce: x.fonte ?? 'Correzione del master', valore: x.valore, testo: segno(x.valore), nota: x.nota ?? null }));
   return {
     nome: a.nome,
     colonne,
+    correzioniMaster,
+    calcolato: Number.isFinite(a.calcolato) ? a.calcolato : null,
     grezzo: a.grezzo,
     limite: a.limite ?? null,
     limitato,
@@ -88,8 +95,12 @@ export function contoVa(a) {
 
 /** Modificatori attivi accanto al VA di un'Abilità (S8): le voci della scomposizione dopo il valore da regole. */
 export function modificatoriAttivi(a) {
-  return (a.scomposizione ?? []).slice(1).filter((x) => x.valore)
-    .map((x) => ({ voce: x.etichetta, valore: x.valore, testo: `${segno(x.valore)} ${x.etichetta}`, verso: x.valore < 0 ? 'malus' : 'bonus' }));
+  // lotto 252: la correzione del master è un modificatore attivo come gli altri, e si legge accanto al VA (prima si
+  // vedeva solo dentro il «Calcolo», e nemmeno nel suo riepilogo)
+  const master = (a.correzioniMaster ?? []).filter((x) => x.valore)
+    .map((x) => ({ voce: x.fonte ?? 'Correzione del master', valore: x.valore, testo: `${segno(x.valore)} ${x.fonte ?? 'Correzione del master'}`, verso: x.valore < 0 ? 'malus' : 'bonus' }));
+  return [...master, ...(a.scomposizione ?? []).slice(1).filter((x) => x.valore)
+    .map((x) => ({ voce: x.etichetta, valore: x.valore, testo: `${segno(x.valore)} ${x.etichetta}`, verso: x.valore < 0 ? 'malus' : 'bonus' }))];
 }
 
 /**
