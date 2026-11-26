@@ -243,6 +243,9 @@
   "_nota_rif_sostituiti": "Voci di catalogo uscite perché sostituite da un’altra scheda: al caricamento di un personaggio (src/character.js → normalizza) la voce passa al rif nuovo, con lo stato tradotto se indicato.",
   "catalogo_armi": {
     "edizione": "Armamenti 0.90",
+    "cyberarma_offerte": 5,
+    "cyberarma_non_elencate": 3,
+    "_nota_cyberarma": "Lotto 254 (rif. 05 del collaudo del 25/11/2026, A.309): nel catalogo si offrono le cinque CyberArma per colore del cristallo focalizzatore; l'originale e le due conversioni (riserva interna di CM, NeC) restano nei dati con `non_elencata` — si leggono e si risolvono, non si offrono — perché una scheda già scritta le cita e perché portano il profilo convertito. Le conversioni sono opzioni dello stesso esemplare: src/cyberarma.js → opzioniEsemplare, applicaAlimentazioneEsemplare.",
     "file": [
       "armi.json",
       "armi_corporative.json",

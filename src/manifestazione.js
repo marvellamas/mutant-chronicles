@@ -31,11 +31,24 @@ export function manifestazioneProgetto(def) {
  * Chi impugna l'arma sceglie liberamente la forma? (A.166: il Custode sì; Tecnomante e altri no)
  * @param classi nomi delle Classi del personaggio
  */
-export function sceltaLibera(def, classi = []) {
+export function sceltaLibera(def, classi = [], { proprietaCustode = true } = {}) {
   const b = bloccoManifestazioni(def);
   if (!b) return false;
+  // lotto 254 (rif. 05 del collaudo, A.309): la scelta libera della forma è una **proprietà da Custode**, e una
+  // conversione energetica (riserva interna di CM, NeC) le fa perdere tutte — «una SIN non le ripristina». Quindi
+  // sull'arma convertita la forma resta quella del progetto anche per un Custode. **Il limite non impedisce di
+  // attivare la lama:** riguarda chi cambia la forma, non chi la manifesta (`attivaArmaSessione` non la guarda).
+  if (proprietaCustode === false) return false;
   const chi = new Set(b.scelta_libera ?? []);
   return (classi ?? []).some((c) => chi.has(c));
+}
+
+/** Perché la forma non si sceglie liberamente: una frase, o null se si sceglie. Avvisa, non impedisce di attivare. */
+export function motivoFormaFissa(def, classi = [], { proprietaCustode = true } = {}) {
+  const b = bloccoManifestazioni(def);
+  if (!b || sceltaLibera(def, classi, { proprietaCustode })) return null;
+  if (proprietaCustode === false) return 'L’arma è convertita (riserva interna di CM o NeC): ha perso le proprietà da Custode, e con quelle la scelta libera della forma (A.251, A.309). La lama si attiva comunque, nella forma del progetto; cambiarla è una modifica del manufatto.';
+  return `La forma segue il progetto: la sceglie liberamente solo ${(b.scelta_libera ?? ['il Custode']).join(', ')} (A.166). Cambiarla è una modifica del manufatto, non una facoltà di cambio forma.`;
 }
 
 /**

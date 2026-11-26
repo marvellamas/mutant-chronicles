@@ -2055,7 +2055,9 @@
    },
    "famiglia_cyberarma": "CyberArma",
    "non_in_vendita": true,
-   "_nota_non_in_vendita": "Lotto 235: «CyberArma» è il nome della famiglia e queste tre voci sono configurazioni dell’originale o delle sue conversioni, non articoli di listino: §7.25, «ogni esemplare rimane tuttavia un pezzo unico… Il valore indicativo non garantisce una vendita: il Direttore stabilisce compratore, disponibilità e prezzo effettivo in gioco». Dove c’è un costo, resta scritto come valore e non come prezzo (valoreNonPrezzo). Non cambia nessun valore di combattimento: la voce di Dimitri è «armi:cyberarma» e il suo VA, il suo danno e la sua Parata non si muovono."
+   "_nota_non_in_vendita": "Lotto 235: «CyberArma» è il nome della famiglia e queste tre voci sono configurazioni dell’originale o delle sue conversioni, non articoli di listino: §7.25, «ogni esemplare rimane tuttavia un pezzo unico… Il valore indicativo non garantisce una vendita: il Direttore stabilisce compratore, disponibilità e prezzo effettivo in gioco». Dove c’è un costo, resta scritto come valore e non come prezzo (valoreNonPrezzo). Non cambia nessun valore di combattimento: la voce di Dimitri è «armi:cyberarma» e il suo VA, il suo danno e la sua Parata non si muovono.",
+   "non_elencata": true,
+   "_nota_non_elencata": "Lotto 254 (rif. 05 del collaudo di Davide del 25/11/2026; A.309 del 24/11): «Nessuna voce aggiuntiva per originale, CM, NeC o SIN». Nel catalogo si offrono i cinque colori; questa voce resta nei dati perché una scheda già scritta la cita (l’esemplare di Dimitri) e perché è il profilo di partenza — PM personali e proprietà da Custode — a cui le conversioni si confrontano. `non_elencata` vuol dire: si legge e si risolve, non si offre."
   },
   {
    "tipo": "arma_ravvicinata",
@@ -2268,7 +2270,9 @@
    "_nota_unico": "Armamenti 0.74 §7.25: «Ogni originale è un pezzo unico». Rarità «Unico o reliquia» della A.256: senza prezzo di catalogo. Il valore dipende da fattura, unicità, proprietà e provenienza, e lo decide il Direttore.",
    "famiglia_cyberarma": "CyberArma",
    "non_in_vendita": true,
-   "_nota_non_in_vendita": "Lotto 235: «CyberArma» è il nome della famiglia e queste tre voci sono configurazioni dell’originale o delle sue conversioni, non articoli di listino: §7.25, «ogni esemplare rimane tuttavia un pezzo unico… Il valore indicativo non garantisce una vendita: il Direttore stabilisce compratore, disponibilità e prezzo effettivo in gioco». Dove c’è un costo, resta scritto come valore e non come prezzo (valoreNonPrezzo). Non cambia nessun valore di combattimento: la voce di Dimitri è «armi:cyberarma» e il suo VA, il suo danno e la sua Parata non si muovono."
+   "_nota_non_in_vendita": "Lotto 235: «CyberArma» è il nome della famiglia e queste tre voci sono configurazioni dell’originale o delle sue conversioni, non articoli di listino: §7.25, «ogni esemplare rimane tuttavia un pezzo unico… Il valore indicativo non garantisce una vendita: il Direttore stabilisce compratore, disponibilità e prezzo effettivo in gioco». Dove c’è un costo, resta scritto come valore e non come prezzo (valoreNonPrezzo). Non cambia nessun valore di combattimento: la voce di Dimitri è «armi:cyberarma» e il suo VA, il suo danno e la sua Parata non si muovono.",
+   "non_elencata": true,
+   "_nota_non_elencata": "Lotto 254 (rif. 05, A.309): la riserva interna di CM è un’**opzione dello stesso esemplare**, non un articolo da aggiungere all’inventario. Questa voce resta nei dati come portatrice del profilo convertito (la capacità della riserva si legge qui: `capacitaConversione`) e perché una scheda già scritta può citarla; non si offre più in «Aggiungi oggetto»."
   },
   {
    "tipo": "arma_ravvicinata",
@@ -2464,7 +2468,9 @@
    "_nota_unico": "Armamenti 0.74 §7.25: «Ogni originale è un pezzo unico». Rarità «Unico o reliquia» della A.256: senza prezzo di catalogo. Il valore dipende da fattura, unicità, proprietà e provenienza, e lo decide il Direttore.",
    "famiglia_cyberarma": "CyberArma",
    "non_in_vendita": true,
-   "_nota_non_in_vendita": "Lotto 235: «CyberArma» è il nome della famiglia e queste tre voci sono configurazioni dell’originale o delle sue conversioni, non articoli di listino: §7.25, «ogni esemplare rimane tuttavia un pezzo unico… Il valore indicativo non garantisce una vendita: il Direttore stabilisce compratore, disponibilità e prezzo effettivo in gioco». Dove c’è un costo, resta scritto come valore e non come prezzo (valoreNonPrezzo). Non cambia nessun valore di combattimento: la voce di Dimitri è «armi:cyberarma» e il suo VA, il suo danno e la sua Parata non si muovono."
+   "_nota_non_in_vendita": "Lotto 235: «CyberArma» è il nome della famiglia e queste tre voci sono configurazioni dell’originale o delle sue conversioni, non articoli di listino: §7.25, «ogni esemplare rimane tuttavia un pezzo unico… Il valore indicativo non garantisce una vendita: il Direttore stabilisce compratore, disponibilità e prezzo effettivo in gioco». Dove c’è un costo, resta scritto come valore e non come prezzo (valoreNonPrezzo). Non cambia nessun valore di combattimento: la voce di Dimitri è «armi:cyberarma» e il suo VA, il suo danno e la sua Parata non si muovono.",
+   "non_elencata": true,
+   "_nota_non_elencata": "Lotto 254 (rif. 05, A.309): la conversione a NeC è un’**opzione dello stesso esemplare**, non un articolo da aggiungere all’inventario. Questa voce resta nei dati come portatrice del profilo convertito (la capacità si legge qui: `capacitaConversione`) e perché una scheda già scritta può citarla; non si offre più in «Aggiungi oggetto»."
   },
   {
    "id": "cyberarma-bianca",

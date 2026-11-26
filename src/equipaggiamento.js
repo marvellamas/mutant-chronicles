@@ -20,10 +20,10 @@ import { bonusDannoCaratteristica, caratteristicaDanno } from './calc.js';
 import { dataValida } from './calendario.js';
 import { riga, provenienza, rigaBonusCaratteristica as rigaBonus } from './provenienza.js';
 import { calcolaAR, oggettiConPi, oggettiSenzaPi, oggettiIndistruttibili, oggettiIntegritaDaDefinire } from './protezione.js';
-import { conManifestazione, manifestazioniDi, sceltaLibera } from './manifestazione.js';
+import { conManifestazione, manifestazioniDi, sceltaLibera, motivoFormaFissa } from './manifestazione.js';
 import { tipoRiserva, alimentazione as alimentazioneRiserva, fontePerPg } from './fonti.js';
 import { rigaProvenienzaVoce } from './provenienza-catalogo.js';
-import { bonusFocalizzatore, dannoCondizionaleCristallo, condizioneSulBersaglio, dichiarazioneDeiDati, rigaAlimentazione } from './cyberarma.js';
+import { bonusFocalizzatore, dannoCondizionaleCristallo, condizioneSulBersaglio, dichiarazioneDeiDati, rigaAlimentazione, alimentazioneDellaVoce } from './cyberarma.js';
 import { infoPietra, COLORI_PIETRA } from './pietre-di-luna.js';
 
 export const TIPI = ['arma_ravvicinata', 'arma_distanza', 'scudo', 'armatura', 'rinforzo', 'elmetto', 'accessorio', 'munizioni', 'sanitario', 'artefatto', 'impianto', 'altro'];
@@ -616,7 +616,10 @@ export function catalogo(dati) {
 /** Voci per la cascata Tipo → Catalogo → Famiglia → Profilo: ogni livello solo ciò che esiste. */
 export function opzioniCascata(dati, { tipo = null, catalogo: cat = null, famiglia = null, cataloghiRif = null } = {}) {
   // §7.8: il modulo integrato è compreso nell'arma; A.278: un profilo archiviato non si offre più (resta nel catalogo per chi lo ha)
-  const tutti = catalogo(dati).oggetti.filter((o) => !o.modulo_di && !o.archiviata);
+  // lotto 254 (rif. 05 del collaudo, A.309): `non_elencata` è la terza di queste condizioni e dice una cosa diversa
+  // dalle altre due — la voce **esiste** e si risolve (una scheda già scritta la cita, e porta il profilo di una
+  // conversione), ma non si offre: le CyberArma offerte sono i cinque colori, non otto.
+  const tutti = catalogo(dati).oggetti.filter((o) => !o.modulo_di && !o.archiviata && !o.non_elencata);
   const unici = (lista) => [...new Set(lista)];
   // «Aggiungi» di una categoria dell'Inventario (S32): solo gli oggetti dei suoi capitoli (prefisso del riferimento)
   const delCapitolo = (o) => !Array.isArray(cataloghiRif) || cataloghiRif.includes(String(o.rif).split(':')[0]);
@@ -636,7 +639,7 @@ export function cercaNelCatalogo(dati, testoCercato, massimo = 12) {
   const q = normalizzaTesto(testoCercato.trim());
   if (q.length < 2) return [];
   return catalogo(dati).oggetti
-    .filter((o) => !o.modulo_di && !o.archiviata)
+    .filter((o) => !o.modulo_di && !o.archiviata && !o.non_elencata)
     .filter((o) => [o.nome, ...(o.nomi_alternativi ?? [])].some((n) => normalizzaTesto(n).includes(q)))
     .slice(0, massimo);
 }
@@ -735,8 +738,18 @@ export function normalizzaEquipaggiamento(valore) {
       out.esemplare = Object.fromEntries(Object.entries(v.esemplare).filter(([, x]) => typeof x === 'string' && x.trim()).map(([k, x]) => [k, x.trim().slice(0, 300)]));
       // A.231: storico dell'esemplare (profilo originario, modifiche confermate dal Direttore: data, nome, esito, interventi)
       const storico = (Array.isArray(v.esemplare.storico) ? v.esemplare.storico : []).filter((r) => isOggetto(r) && testo(r.quando) && testo(r.cosa))
-        .map((r) => Object.fromEntries(['quando', 'nome', 'esito', 'cosa', 'da', 'progetto'].filter((k) => testo(r[k])).map((k) => [k, r[k].trim().slice(0, 300)])));
+        .map((r) => Object.fromEntries(['quando', 'nome', 'esito', 'cosa', 'da', 'progetto', 'prima', 'dopo', 'motivo', 'paragrafo'].filter((k) => testo(r[k])).map((k) => [k, r[k].trim().slice(0, 300)])));
       if (storico.length) out.esemplare.storico = storico;
+      // lotto 254 (rif. 05, A.309): **l’alimentazione scelta è un dato dell’esemplare**, e un oggetto. Il filtro qui
+      // sopra tiene i soli campi di testo, quindi senza questa riga la conversione si perderebbe a ogni
+      // normalizzazione — la stessa cosa che l’A.259 dice tre righe più sotto per il Capolavoro, e che la prova nel
+      // browser ha visto: la finestrella confermava, il diario registrava, e riaprendo la scheda l’arma era di nuovo
+      // a PM personali. La corruzione del frammento Viola (A.246) è un valore, non un testo: segue la stessa sorte.
+      const al = isOggetto(v.esemplare.alimentazione) ? v.esemplare.alimentazione : null;
+      if (al && typeof al.id === 'string' && al.id) {
+        out.esemplare.alimentazione = { id: al.id, conversione: al.conversione === true, pm_personali: al.pm_personali === true, proprieta_custode: al.proprieta_custode === true };
+      }
+      if (typeof v.esemplare.corruzione === 'number' && Number.isFinite(v.esemplare.corruzione)) out.esemplare.corruzione = v.esemplare.corruzione;
     }
     if (isOggetto(v.consegna) && testo(v.consegna.quando) && testo(v.consegna.da)) out.consegna = { quando: v.consegna.quando, da: v.consegna.da, ...(testo(v.consegna.progetto) ? { progetto: v.consegna.progetto } : {}) };
     // A.61: armatura Capolavoro del Corazzaio, con la Contromisura scelta alla costruzione.
@@ -1424,7 +1437,9 @@ export function calcolaEquipaggiamento(base, voci, dati) {
       // A.166: la forma manifestata (null per le armi che non ne hanno), con le sue Manovre
       manifestazione: d?.manifestazione ?? null,
       manifestazioni: manifestazioniDi(dBase),
-      manifestazioneLibera: sceltaLibera(dBase, base.classi ?? []),
+      // lotto 254: la scelta libera cade con le proprietà da Custode (A.309); il motivo si legge accanto
+      manifestazioneLibera: sceltaLibera(dBase, base.classi ?? [], { proprietaCustode: alimentazioneDellaVoce(o.voce, dati).proprietaCustode }),
+      ...(motivoFormaFissa(dBase, base.classi ?? [], { proprietaCustode: alimentazioneDellaVoce(o.voce, dati).proprietaCustode }) ? { manifestazioneMotivo: motivoFormaFissa(dBase, base.classi ?? [], { proprietaCustode: alimentazioneDellaVoce(o.voce, dati).proprietaCustode }) } : {}),
       ...extra,
     });
     if (!a && o.personalizzato) avvisi.push(`${o.nome}: arma personalizzata senza Abilità, VA non calcolato.`);

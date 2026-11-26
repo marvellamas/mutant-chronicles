@@ -8,6 +8,7 @@
 import { allineaStorico } from '../storico.js';
 import { datiTestata, statiAttiviVista, contoVa, modificatoriAttivi, sintesiMani, sintesiProtezioni, sintesiSintonizzazione, inColonne, variazioneDaTesto } from '../scheda-vista.js';
 import { informa, chiedi, chiediTesto } from './finestrella.js';
+import { mandaAvviso, chiAvvisa } from '../avvisi-invio.js';
 import { registraVivo, azzeraVivi, regioneVivaSe } from './vivi.js';
 import { tabellaRecuperoPm, tabellaRecuperoPv } from './tabelle.js';
 import { incantesimiDaOggetti, incantesimoDiOggetto, attivazioneOggetto } from '../incantesimi-artefatti.js';
@@ -22,7 +23,7 @@ import { apriTiro, sezioneTiri } from './tira-valore.js';
 import { pianoGetto } from '../getti-artefatto.js';
 import { costoRiserva, numeroRiserva, testoCosto, interoRiserva } from '../cariche-mistiche.js';
 import { prezzoArtefatto } from '../prezzi-artefatti.js';
-import { alimentazioneSceglibile } from '../cyberarma.js';
+import { alimentazioneSceglibile, eCyberArma, opzioniEsemplare, applicaAlimentazioneEsemplare } from '../cyberarma.js';
 import { modelliProgetto, apriProgetto, scegliForma, scegliAlimentazione, registraTentativo, togliUltimoTentativo, chiudiProgetto, riapriProgetto, riepilogoProgetto, formaSceglibile, avvisiConsegna, avvisoNonConsegnata, esemplariDi, storicoDi, configurazioneConsegna, ESITI_TENTATIVO, NOMI_ESITO, ESITI_FINALI, NOMI_FINALE } from '../progetti.js';
 import { circostanzeMasterAttive } from '../correzioni-master.js';
 import { cristalliCyberArma, cambiaCristallo, coloreCristallo } from '../cyberarma.js';
@@ -2272,7 +2273,8 @@ function manifestazioneUi(ctx, a) {
     puo
       ? h('select', { class: 'scelta-manifestazione', 'aria-label': `Forma manifestata di ${a.nome}`, title: titolo, onchange: (e) => cambia(e.target.value) },
         a.manifestazioni.map((m) => h('option', { value: m.id, selected: m.id === a.manifestazione.id }, m.nome)))
-      : h('span', { class: 'etichetta etichetta-manifestazione', title: `${titolo} · La forma segue il progetto: si cambia modificando il manufatto (Modifica master).` }, a.manifestazione.nome),
+      // lotto 254 (rif. 05): il motivo lo dice il motore (`motivoFormaFissa`), perché cambia con le proprietà da Custode
+      : h('span', { class: 'etichetta etichetta-manifestazione', title: `${titolo} · ${a.manifestazioneMotivo ?? 'La forma segue il progetto: si cambia modificando il manufatto (Modifica master).'}` }, a.manifestazione.nome),
     h('small', { class: 'nota' }, ` ${a.manifestazione.famiglia}`),
     a.manifestazione.nota ? infoValore('?', { titolo: 'Manifestazione (A.166)', sezioni: [{ testo: a.manifestazione.nota }] }, { classe: 'info-gradi' }) : null);
 }
@@ -2318,6 +2320,63 @@ function cristalloUi(ctx, a) {
     ' ',
     h('button', { type: 'button', class: 'btn btn-piccolo', disabled: !scelto, title: scelto ? 'Cambia il cristallo di questo esemplare' : 'Prima scegli un cristallo', onclick: cambia }, 'Cambia cristallo'),
     h('br'), h('small', { class: 'sigla' }, 'Aggiorna questo esemplare: nome, Integrità e storico restano, e non nasce una seconda arma (§7.25.3).'));
+}
+/**
+ * Lotto 254 (rif. 05 del collaudo di Davide del 25/11/2026; A.309 del 24/11) — **l'alimentazione è un'opzione di
+ * questo esemplare**, non una voce da comprare.
+ *
+ * Davide: «trattare CyberArma come famiglia e Batteria Verde/NeC come opzioni dello stesso esemplare, conservando la
+ * compatibilità con le vecchie schede». E la A.309: «Nessuna voce aggiuntiva per originale, CM, NeC o SIN». Quindi nel
+ * catalogo si offrono i cinque colori, e la conversione si fa **qui**, sull'arma che il personaggio ha già.
+ *
+ * Tre cose che questo pannello rispetta:
+ * 1. **dice che cosa si perde prima di essere scelto** (A.309: la conversione toglie i PM personali e le proprietà da
+ *    Custode, e una SIN non le ripristina) e **non lo impedisce**: conferma e si procede;
+ * 2. **non crea un secondo esemplare e non tocca il record**: uid, nome, Integrità e storico restano, e lo storico si
+ *    allunga di una riga (`applicaAlimentazioneEsemplare`, la distinzione del lotto 185 e della A.295);
+ * 3. **cambia un numero che resta nel file**, quindi la voce arriva nel diario del Direttore (regola ferrea del 249).
+ *
+ * La capacità della riserva si legge dai dati e **la A.314 non si risolve qui**: la riga dice il numero che i dati
+ * hanno e che aspetta la risposta.
+ */
+function alimentazioneUi(ctx, a) {
+  if (!ctx.master || !eCyberArma({ rif: a.rif })) return null;
+  const voce = (ctx.scelte.equipaggiamento ?? []).find((v) => v.uid === a.uid);
+  if (!voce) return null;
+  const opzioni = opzioniEsemplare(voce, ctx.dati);
+  if (opzioni.length < 2) return null;
+  const ora = opzioni.find((o) => o.attiva) ?? null;
+  const u = (ctx.ui.alimentazione ??= {});
+  const scelto = u[a.uid] ?? '';
+  const cambia = async () => {
+    const o = opzioni.find((x) => x.id === scelto);
+    if (!o) return;
+    const esito = applicaAlimentazioneEsemplare(voce, o.id, ctx.dati, { quando: new Date().toISOString(), da: 'Modifica master', motivo: null });
+    if (esito.errore) { await informa({ titolo: 'Alimentazione', testo: esito.errore }); return; }
+    const perde = o.perde.length ? `Si perdono ${o.perde.join(' e ')} (A.251), e una SIN non le ripristina (A.309). ` : '';
+    const cap = o.capacita ? `Capacità dichiarata dai dati: ${o.capacita.n} ${o.capacita.unita}, in attesa della ${o.capacita.attesa}. ` : '';
+    const ok = await chiedi({
+      titolo: `Alimentazione di ${a.nome}`,
+      testo: `L'alimentazione passa ${ora ? `da «${ora.nome}» ` : ''}a «${o.nome}». ${perde}${o.consumo?.testo ? `Consumo: ${o.consumo.testo} (A.260). ` : ''}${cap}È lo stesso esemplare: restano nome, Integrità e storico, e non nasce una seconda arma. La riga resta nello storico.`,
+      si: `Passa a ${o.nome}`, no: 'Lascia',
+    });
+    if (!ok) return;
+    ctx.azioni.equipaggiamento((ctx.scelte.equipaggiamento ?? []).map((v) => (v.uid === a.uid ? esito.voce : v)));
+    mandaAvviso({
+      chi: ctx.scelte?.nome ?? chiAvvisa(), cosa: `alimentazione di ${a.nome} cambiata in «${o.nome}»`,
+      numeri: o.perde.length ? `si perdono ${o.perde.join(' e ')}` : 'torna ai PM personali',
+      motivo: null, dove: 'storico dell’esemplare', gravita: 'grossa',
+    });
+  };
+  return h('p', { class: 'nota alimentazione-master' },
+    h('strong', {}, 'Alimentazione: '), ora?.nome ?? 'PM personali', ' · ',
+    h('select', { class: 'scelta-alimentazione', 'aria-label': `Alimentazione di ${a.nome}`, onchange: (e) => { u[a.uid] = e.target.value; ctx.azioni.ridisegna(); } },
+      h('option', { value: '', selected: !scelto }, 'Scegli l’alimentazione…'),
+      opzioni.filter((o) => !o.attiva).map((o) => h('option', { value: o.id, selected: o.id === scelto }, o.nome))),
+    ' ',
+    h('button', { type: 'button', class: 'btn btn-piccolo', disabled: !scelto, title: scelto ? 'Cambia l’alimentazione di questo esemplare' : 'Prima scegli un’alimentazione', onclick: cambia }, 'Cambia alimentazione'),
+    h('br'), h('small', { class: 'sigla' }, 'Opzione di questo esemplare (A.309): non si compra niente, e nome, Integrità e storico restano.'),
+    ...opzioni.filter((o) => o.conversione).map((o) => h('small', { class: 'nota' }, ` · ${o.nome}: ${o.capacita ? `${o.capacita.n} ${o.capacita.unita} (in attesa della ${o.capacita.attesa})` : 'capacità non dichiarata'}`)));
 }
 /**
  * A.158: attivazione a Round di un'arma (CyberArma, Armamenti §7.25). Costo e durata sono quelli della Classe
@@ -2725,6 +2784,7 @@ function schedaArma(ctx, a) {
         ? `Corruzione ${numero(a.corruzioneFrammento)} (valore di questo frammento, ${a.focalizzatore.corruzioneDalFrammento.paragrafo}).`
         : `Corruzione: indicare il valore del frammento (${a.focalizzatore.corruzioneDalFrammento.paragrafo}). Il manuale non ne dà uno: lo scrive il Direttore sull’esemplare.`) : null,
     cristalloUi(ctx, a),
+    alimentazioneUi(ctx, a),
     a.accessori?.length ? h('p', { class: 'nota' }, h('strong', {}, 'Accessori: '), a.accessori.map((x) => x.nome).join(', '),
       a.dannoAccessori ? ` · danno ${segno(a.dannoAccessori)}` : null) : null,
     a.mirino ? h('p', { class: 'nota', title: a.mirino.testo }, `${a.mirino.nome}: −${a.mirino.riduzione} alla penalità di distanza (fino a 0), ${a.mirino.distanza_max_q ? `fino a ${a.mirino.distanza_max_q} Q` : 'entro la gittata'}${a.mirino.azp_minime ? `, almeno ${a.mirino.azp_minime} AzP` : ''} (§7.3)`) : null,

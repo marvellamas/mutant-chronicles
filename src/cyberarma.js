@@ -28,6 +28,12 @@ export function regoleAlimentazione(dati) {
 /** Le famiglie di modifica previste: [{ id, nome, conversione, pm_personali, proprieta_custode, consumo?, testo }]. */
 export const famiglieAlimentazione = (dati) => lista(regoleAlimentazione(dati)?.famiglie);
 
+/** Una voce dell'inventario è una CyberArma? Dal riferimento, in un posto solo. */
+export const eCyberArma = (voce) => typeof voce?.rif === 'string' && /^armi:cyberarma/.test(voce.rif);
+
+/** La voce di catalogo per riferimento, senza passare da equipaggiamento.js (questo modulo non ha dipendenze). */
+const vocePerRif = (rif, dati) => { const [f, id] = String(rif ?? '').split(':'); return (dati?.equipaggiamento?.file?.[f]?.oggetti ?? []).find((o) => o.id === id) ?? null; };
+
 /** Una famiglia per id, oppure null. */
 export const famigliaAlimentazione = (id, dati) => famiglieAlimentazione(dati).find((f) => f.id === id) ?? null;
 
@@ -265,10 +271,98 @@ export function rigaAlimentazione(voce, dati, cariche = null) {
       parti.push(`adesso ${cariche.attuali}${Number.isFinite(cariche.massime) ? ` / ${cariche.massime}` : ''} ${u}`);
       if (consumo?.round) parti.push(`${cariche.attuali * consumo.round} Round con queste`);
     } else {
-      parti.push('cariche: da registrare');
+      // lotto 254: dove la sessione non ha il valore si dice la capacità dichiarata dai dati, e che aspetta la A.314
+      const cap = capacitaConversione(stato.conversione, dati);
+      parti.push(cap ? `capacità ${cap.n} ${cap.unita} (in attesa della ${cap.attesa}) · cariche di adesso: da registrare` : 'cariche: da registrare');
     }
   }
   return { testo: parti.join(' · '), fonte: fam ? fam.nome : 'PM personali', conversione: stato.conversione ?? null, round: consumo?.round ?? null };
+}
+
+/**
+ * **La capacità dichiarata dai dati per una conversione** (lotto 254, rif. 05 del collaudo del 25/11/2026).
+ *
+ * Ogni famiglia di conversione dichiara la `voce` che porta il suo profilo (`armi:cyberarma-batteria-verde`,
+ * `armi:cyberarma-nec`): quelle voci restano nei dati come **portatrici del profilo convertito**, non come articoli
+ * da comprare (A.309: «Nessuna voce aggiuntiva per originale, CM, NeC o SIN»). La capacità si legge da lì.
+ *
+ * **La A.314 non si risolve qui.** Nel rapporto di collaudo Davide scrive «CM verde da 10 o NeC rosso da 5»; i dati
+ * hanno 5 CM (revisione delle Cariche Mistiche del 02/11) e 10 cariche di NeC (A.237), cioè i due numeri scambiati, e
+ * sono due sue decisioni precedenti. Si mostra il numero dei dati e si dice che la capacità aspetta la A.314:
+ * scegliere fra due risposte sue non è una cosa che facciamo noi.
+ * @returns {{ n, unita, rif, attesa }} oppure null
+ */
+export function capacitaConversione(id, dati) {
+  const fam = famigliaAlimentazione(id, dati);
+  if (!fam?.voce || fam.conversione !== true) return null;
+  const def = vocePerRif(fam.voce, dati);
+  // la riserva di CM di una voce-Artefatto sta nel suo blocco di artefatti.json, non nella voce dell’arma
+  const cm = bloccoArtefatto(fam.voce, dati)?.contenitore?.capacita_cm ?? def?.contenitore?.capacita_cm;
+  if (Number.isFinite(cm)) return { n: cm, unita: 'CM', rif: fam.voce, attesa: 'A.314' };
+  const usi = def?.alimentazione?.usi;
+  if (Number.isFinite(usi)) return { n: usi, unita: def.alimentazione?.unita_usi ?? 'cariche', rif: fam.voce, attesa: 'A.314' };
+  return null;
+}
+
+/**
+ * **Le opzioni di alimentazione di un esemplare** (rif. 05 del collaudo, A.309).
+ *
+ * Davide: «trattare CyberArma come famiglia e Batteria Verde/NeC come **opzioni dello stesso esemplare**». Quindi non
+ * sono voci da aggiungere all'inventario: sono tre scelte su un'arma che il personaggio ha già, e ciascuna dice che
+ * cosa si perde **prima** di essere scelta (A.309: la conversione toglie i PM personali e le proprietà da Custode, e
+ * una SIN non le ripristina). Avvisa e lascia procedere: la scelta è del Direttore, non dell'app.
+ * @returns [{ id, nome, attiva, conversione, perde, testo, capacita, consumo }]
+ */
+export function opzioniEsemplare(voce, dati) {
+  if (!regoleAlimentazione(dati) || !eCyberArma(voce)) return [];
+  const stato = alimentazioneDellaVoce(voce, dati);
+  const perdite = lista(regoleAlimentazione(dati)?.perdite);
+  const pm = {
+    id: 'pm_personali',
+    nome: 'PM personali',
+    attiva: !stato.conversione,
+    conversione: false,
+    perde: [],
+    testo: 'L’arma si alimenta con i PM personali e conserva le proprietà da Custode (A.251). È lo stato di partenza di ogni esemplare.',
+    capacita: null,
+    consumo: null,
+  };
+  return [pm, ...conversioniAlimentazione(dati).map((f) => ({
+    id: f.id,
+    nome: f.nome,
+    attiva: stato.conversione === f.id,
+    conversione: true,
+    perde: perdite,
+    testo: f.testo ?? '',
+    capacita: capacitaConversione(f.id, dati),
+    consumo: f.consumo ?? null,
+  }))];
+}
+
+/**
+ * **Applica un'alimentazione all'esemplare.** Non crea una seconda voce e non tocca il record: uid, nome, Integrità e
+ * storico restano (la distinzione del lotto 185 e della A.295), e lo storico si allunga di una riga. Il `rif` non
+ * cambia: la conversione è un'opzione dell'esemplare, non un altro articolo del catalogo (A.309).
+ * @returns {{ voce, riga }} oppure {{ errore }}
+ */
+export function applicaAlimentazioneEsemplare(voce, id, dati, { quando = null, da = null, motivo = null } = {}) {
+  if (!eCyberArma(voce)) return { errore: 'Non è una CyberArma: l’alimentazione si cambia solo su una CyberArma (§7.25).' };
+  const opzioni = opzioniEsemplare(voce, dati);
+  const scelta = opzioni.find((o) => o.id === id);
+  if (!scelta) return { errore: `L’alimentazione «${id}» non è fra quelle del manuale (${opzioni.map((o) => o.nome).join(', ')}).` };
+  if (scelta.attiva) return { errore: `L’arma è già a «${scelta.nome}»: non c’è niente da cambiare.` };
+  const prima = opzioni.find((o) => o.attiva) ?? null;
+  const riga = {
+    quando, da, motivo,
+    cosa: 'cambio dell’alimentazione',
+    prima: prima?.nome ?? null,
+    dopo: scelta.nome,
+    paragrafo: '§7.25, A.251, A.309',
+  };
+  const esemplare = { ...(voce.esemplare ?? {}), storico: [...lista(voce.esemplare?.storico), riga] };
+  if (scelta.conversione) esemplare.alimentazione = { id: scelta.id, conversione: true, pm_personali: false, proprieta_custode: false };
+  else delete esemplare.alimentazione;
+  return { voce: { ...voce, esemplare }, riga };
 }
 
 /** Le incoerenze di una voce già scritta: riserva interna e PM personali dichiarati insieme, o due conversioni. [] se coerente. */

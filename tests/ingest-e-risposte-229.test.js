@@ -209,6 +209,23 @@ const RISPOSTE = [
     assert.deepEqual(p('asa-scout-mk4').ingombro_trasporto.altezza_m, 2.7);
     assert.equal(p('neverlost').stiva.apertura.altezza_m, 3.5);
   }],
+  // lotto 254 (rif. 05 del collaudo del 25/11/2026): «Nessuna voce aggiuntiva per originale, CM, NeC o SIN».
+  ['A.309', 'le CyberArma offerte dal catalogo sono cinque, e le tre configurazioni restano risolvibili ma non si offrono', () => {
+    const tutte = dati.equipaggiamento.file.armi.oggetti.filter((o) => /^cyberarma/.test(o.id));
+    assert.equal(tutte.filter((o) => !o.non_elencata).length, 5, 'cinque offerte: i cinque colori');
+    for (const id of ['cyberarma', 'cyberarma-batteria-verde', 'cyberarma-nec']) {
+      const o = tutte.find((x) => x.id === id);
+      assert.equal(o.non_elencata, true, `${id}: non si offre`);
+      assert.ok(o._nota_non_elencata, `${id}: con il motivo scritto`);
+    }
+    // la conversione toglie i PM personali e le proprietà da Custode, e una SIN non le ripristina
+    const fam = tutte.find((o) => o.id === 'cyberarma').alimentazione_modifiche.famiglie;
+    for (const f of fam.filter((x) => x.conversione === true)) {
+      assert.equal(f.pm_personali, false, `${f.id}`);
+      assert.equal(f.proprieta_custode, false, `${f.id}`);
+    }
+    for (const f of fam.filter((x) => x.conversione === false)) assert.equal(f.proprieta_custode, true, `${f.id}: cristallo e SIN non toccano l’alimentazione`);
+  }],
   ['A.295', 'ASA e SIA sono due sigle: il «riservato» è SIA, le divise e l’elmetto di servizio restano ASA', () => {
     const rif = (r) => dati.equipaggiamento.file.rinforzi.oggetti.find((o) => o.id === r);
     assert.equal(rif('soprabito-asa-riservato').nome, 'Soprabito SIA riservato');
