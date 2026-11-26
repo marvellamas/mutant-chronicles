@@ -152,6 +152,7 @@ export async function creaNemico(p, { nelloScontro = false } = {}) {
   await dormi(1500);
   let inCampo = null;
   if (nelloScontro) {
+    await attendiFinestra(p, '/^Aggiungi/');
     inCampo = await clic(p, '/^Aggiungi allo scontro$/', 'dialog[open]') || await clic(p, '/^Aggiungi$/', 'dialog[open]');
     await dormi(1500);
   }
@@ -163,8 +164,21 @@ export async function creaNemico(p, { nelloScontro = false } = {}) {
   return { fatto: !!salvato, salvato, inCampo, iniziativa: ini };
 }
 
+/** Aspetta una finestra aperta che contenga un pulsante che corrisponde (le finestre dell’app arrivano dopo un
+    salvataggio o una lettura dal server: un’occhiata sola a volte le manca). Torna true/false. */
+export async function attendiFinestra(p, re, volte = 12) {
+  for (let i = 0; i < volte; i += 1) {
+    const c = await p.valuta(`const d = document.querySelector('dialog[open]'); if (!d) return false;`
+      + ` return [...d.querySelectorAll('button')].some((b) => ${re}.test(b.textContent.trim()))`);
+    if (c) return true;
+    await dormi(600);
+  }
+  return false;
+}
+
 /** La finestra «Iniziativa»: tira per tutti con l'app e registra. Torna che cosa ha fatto, o 'nessuna finestra'. */
 export async function tiraIniziative(p) {
+  if (!await attendiFinestra(p, '/^Tira/')) return 'nessuna finestra';
   const tirate = await p.valuta(`const d = document.querySelector('dialog[open]'); if (!d) return 'nessuna finestra';`
     + ` const tutte = [...d.querySelectorAll('button')].find((b) => /Tira tutt/i.test(b.textContent)); if (tutte) { tutte.click(); return 'Tira tutte'; }`
     + ` const uno = [...d.querySelectorAll('button')].filter((b) => /^Tira/.test(b.textContent.trim())); uno.forEach((b) => b.click()); return uno.length + ' tiri'`);

@@ -45,8 +45,8 @@ const CASI = [
     senzaCambio: true,
     atteso: 'il nemico perde PV e la riga resta nel registro dello scontro',
     fai: async (p) => {
-      const pv = await p.valuta(`const b = [...document.querySelectorAll('.btn-colpito')][0]; if (!b) return 'nessun bersaglio in campo';`
-        + ` const c = b.closest('article, li, section'); const t = c ? c.innerText : ''; b.click(); return t.replace(/\\s+/g, ' ').slice(0, 60)`);
+      const pv = await p.valuta(`const l = [...document.querySelectorAll('.btn-colpito')]; if (!l.length) return 'nessun bersaglio in campo'; const b = l[l.length - 1]; const c = b.closest('article, li, section'); const t = ((c && c.innerText) || (c && c.textContent) || 'bersaglio').replace(/\s+/g, ' ').slice(0, 50); b.click(); return t || 'bersaglio'`);
+
       if (pv === 'nessun bersaglio in campo') return pv;
       await p.dormi(1200);
       const scritto = await p.valuta(`const i = document.querySelector('dialog[open] input[type=number].input-d10'); if (!i) return false;`

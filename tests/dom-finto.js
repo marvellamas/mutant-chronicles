@@ -19,6 +19,9 @@ class Elemento extends Nodo {
   set textContent(t) { this.testo = String(t); this.children = []; }
   setAttribute(k, v) { this.attributi[k] = String(v); if (k === 'id') this.id = String(v); }
   getAttribute(k) { return this.attributi[k] ?? null; }
+  // lotto 251: il DOM finto sapeva mettere e leggere un attributo, non toglierlo, e il valore vivo che
+  // toglie il `title` quando il tasto si riaccende cadeva qui (src/ui/tab.js → motivoTasto)
+  removeAttribute(k) { delete this.attributi[k]; if (k === "id") this.id = null; }
   addEventListener(tipo, fn) { (this.ascolti[tipo] ??= []).push(fn); }
   append(...figli) { for (const f of figli) this.aggiungi(f, false); }
   // <dialog> delle finestrelle (src/ui/finestrella.js): si apre e si chiude senza fare altro
