@@ -1236,3 +1236,27 @@ export function pilotareDelPersonaggio(abilita, dati, { scheda = null } = {}) {
   const prov = a.provenienza ?? (scheda ? provenienza(righeRegoleAbilita(a, scheda), a.totale) : null);
   return { va, provenienza: prov, nome: a.nome };
 }
+
+/**
+ * **Un nome solo per ogni fascia, nei testi che si mostrano** (lotto 254, rif. 09 del collaudo del 25/11/2026).
+ *
+ * Davide: «per la fascia da 16 Q tattici si legge in un posto "Rapida" e in un altro "Veloce"». Aveva ragione, e la
+ * causa non è nostra: **il manuale usa due nomi** — «Veloce» dove definisce la sequenza delle andature (§2.1,
+ * «Fermo, Controllata, Veloce, Massima») e «Rapida» nelle tabelle delle autonomie. È un'errata del manuale, e come
+ * tale va nel pacchetto: quale dei due valga non lo scegliamo noi.
+ *
+ * Nel frattempo l'app ne mostra **uno**, quello con cui la fascia è definita. I dati tengono la citazione del
+ * manuale (`verifica_frasi` la controlla frase per frase) e qui si sostituisce il nome alternativo dichiarato
+ * (`andature.elenco[].nomi_alternativi`) col nome ufficiale. Chi mostra un testo di un veicolo passa da qui.
+ */
+export function conNomiDelleFasce(testo, dati) {
+  if (typeof testo !== 'string') return testo;
+  let out = testo;
+  for (const f of dati?.veicoli?.andature?.elenco ?? []) {
+    for (const alt of f.nomi_alternativi ?? []) out = out.replace(new RegExp('\\b' + alt + '\\b', 'g'), f.nome);
+  }
+  return out;
+}
+
+/** Il nome di una fascia dell'andatura, dai dati: mai scritto nel codice (lotto 254, rif. 09). */
+export const nomeAndatura = (id, dati) => (dati?.veicoli?.andature?.elenco ?? []).find((f) => f.id === id)?.nome ?? id;

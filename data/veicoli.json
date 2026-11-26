@@ -343,7 +343,11 @@
     "moltiplicatore": 2,
     "pilotare": -2,
     "attacco_da_bordo": -2,
-    "attacco_contro": -2
+    "attacco_contro": -2,
+    "nomi_alternativi": [
+     "Rapida"
+    ],
+    "_nota_nomi": "Lotto 254 (rif. 09 del collaudo del 25/11/2026): il Manuale dei Veicoli chiama questa fascia «Veloce» dove definisce la sequenza («Fermo, Controllata, Veloce, Massima», §2.1) e «Rapida» nelle tabelle delle autonomie (35 occorrenze contro 11). È un’errata del manuale, non una nostra scelta: il nome ufficiale resta quello della sequenza, l’altro è dichiarato qui, e nei testi che si mostrano si legge un nome solo (src/veicoli.js → conNomiDelleFasce). La correzione sta in sezione 4 del Doc."
    },
    {
     "id": "massima",
@@ -1800,7 +1804,7 @@
    "carico_nota": "50 t, comprese persone, Scout e materiali mobili. Il peso degli impianti standard è già compreso nel mezzo.",
    "mov_q": 8,
    "mov_unita": "Q Tattici",
-   "mov_testo": "MOV di combattimento in Q Tattici: 8 / 16 / 24 per Round (Controllata, Rapida, Massima). Fuori dal regime tattico il MOV atmosferico di riferimento è 400 / 800 / 1.200 Q Base per Round. Velocità di viaggio e MOV di combattimento sono regimi distinti: all’inizio dello scontro si usa il MOV tattico, senza convertirlo. A.253 (06/11/2026): a terra la nave non rulla e ha movimento 0; il decollo verticale è una manovra complessa (1 AzM + 1 AzP) e nel suo Round sale in stazionamento senza spostamento orizzontale; dal Round successivo valgono 8 / 16 / 24 Q Tattici, che non si convertono sulla mappa in Q Base. A.253 (06/11/2026): a terra la nave non rulla e ha movimento 0; il decollo verticale è una manovra complessa (1 AzM + 1 AzP) e nel suo Round sale in stazionamento senza spostamento orizzontale; dal Round successivo valgono 8 / 16 / 24 Q Tattici, che non si convertono sulla mappa in Q Base. A.253 (06/11/2026): a terra la nave non rulla e ha movimento 0; il decollo verticale è una manovra complessa (1 AzM + 1 AzP) e nel suo Round sale in stazionamento senza spostamento orizzontale; dal Round successivo valgono 8 / 16 / 24 Q Tattici, che non si convertono sulla mappa in Q Base.",
+   "mov_testo": "MOV di combattimento in Q Tattici: 8 / 16 / 24 per Round (Controllata, Rapida, Massima). Fuori dal regime tattico il MOV atmosferico di riferimento è 400 / 800 / 1.200 Q Base per Round. Velocità di viaggio e MOV di combattimento sono regimi distinti: all’inizio dello scontro si usa il MOV tattico, senza convertirlo. A.253 (06/11/2026): a terra la nave non rulla e ha movimento 0; il decollo verticale è una manovra complessa (1 AzM + 1 AzP) e nel suo Round sale in stazionamento senza spostamento orizzontale; dal Round successivo valgono 8 / 16 / 24 Q Tattici, che non si convertono sulla mappa in Q Base.",
    "velocita_kmh": {
     "atmosferico": {
      "controllata": 360,
@@ -2162,7 +2166,8 @@
     },
     "paragrafo": "§11",
     "nota": "Ogni stiva laterale ha un portellone anteriore con l’apertura utile indicata; ogni rampa è larga 4,5 m e porta 10 t. Il manuale non dà la profondità della stiva, quindi la lunghezza del mezzo non si confronta: la giudica il Direttore."
-   }
+   },
+   "_nota_mov_testo": "Lotto 254 (rif. 09 del collaudo del 25/11/2026): il paragrafo del decollo (A.253) era appeso tre volte, perché il generatore del lotto 182 lo aggiungeva senza guardare se c’era già. Adesso è una volta sola, e il generatore non lo ripete."
   },
   {
    "id": "motocicletta-civile",

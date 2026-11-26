@@ -77,7 +77,9 @@ nev.volo_andature = {
   per_andatura: { controllata: 8, veloce: 16, massima: 24 },
   _nota: 'I movimenti della scala tattica, 8 / 16 / 24 Q Tattici per Round. Non si convertono in Q Base (A.253): su una mappa terrestre si passa alla scala tattica o si esce dalla mappa.',
 };
-nev.mov_testo = `${nev.mov_testo} A.253 (06/11/2026): a terra la nave non rulla e ha movimento 0; il decollo verticale è una manovra complessa (1 AzM + 1 AzP) e nel suo Round sale in stazionamento senza spostamento orizzontale; dal Round successivo valgono 8 / 16 / 24 Q Tattici, che non si convertono sulla mappa in Q Base.`;
+// lotto 254 (rif. 09): se la frase c'è già non la si appende una seconda volta. Rilanciato tre volte, questo
+// generatore aveva moltiplicato per tre il paragrafo del decollo, e Davide lo ha letto due volte sulla scheda.
+if (!nev.mov_testo.includes('A.253 (06/11/2026): a terra la nave non rulla')) nev.mov_testo = `${nev.mov_testo} A.253 (06/11/2026): a terra la nave non rulla e ha movimento 0; il decollo verticale è una manovra complessa (1 AzM + 1 AzP) e nel suo Round sale in stazionamento senza spostamento orizzontale; dal Round successivo valgono 8 / 16 / 24 Q Tattici, che non si convertono sulla mappa in Q Base.`;
 
 // ───────────────────────── B. A.254: dove sta la testa ─────────────────────────
 // «Il Direttore può collocare la testa in qualunque casella occupata dalla sagoma corrente, anche centrale, purché la

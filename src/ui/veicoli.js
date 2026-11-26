@@ -16,8 +16,7 @@ import { rigaScelte } from './pannello-passi.js';
 import {
   nuovoVeicolo, vistaVeicoloPersonaggio, pilotareDelPersonaggio, colpisciVeicolo, applicaRiparazione, conPi,
   montaRicambio, profiliCreabili, registraMunizioniVeicolo, struttureVeicolo, profiloDi, registraViaggio, registraSupportoVitale, chiudiGiornata, ricaricaEnergia, ricaricaBombole, installaRicambioEnergia, aggiungiRicambioEnergia, testoCariche, munizioniArmaVeicolo,
-  sollecitazioneFallita, eseguiCambioAndatura, movimentoMassimo, profiloVeicolo as profiloDelCatalogo, testoArco,
-} from '../veicoli.js';
+  sollecitazioneFallita, eseguiCambioAndatura, movimentoMassimo, profiloVeicolo as profiloDelCatalogo, testoArco, conNomiDelleFasce, nomeAndatura } from '../veicoli.js';
 import { migraVeicoli, nuovoRecord, riferimento, vede, eRiferimento, statoMovimento, muoviVeicolo, cambiaConducente, movimentoResiduo, stessaChiave, scegliAndatura, conCopie, mezzoDallaCopia } from '../veicoli-registro.js';
 import { elencoVeicoli, scriviVeicolo, aggiornaVeicolo, citazioniDelVeicolo, cancellaVeicolo, copieCancellate, ripristinaCopia } from './veicoli-registro.js';
 import { chiedi } from './finestrella.js';
@@ -474,7 +473,8 @@ function profiloVeicolo(v, d, { ctx = null, mezzo = null, aggiorna = null } = {}
     voce('Reperibilità', v.daDefinire.reperibilita ? daDefinire() : p.reperibilita),
     p.carico_kg ? voce('Carico', `${numero(p.carico_kg)} kg`) : null,
     p.man_testo ? h('p', { class: 'nota' }, p.man_testo) : null,
-    p.mov_testo ? h('p', { class: 'nota' }, p.mov_testo) : null,
+    // lotto 254 (rif. 09): la fascia ha un nome solo anche nei testi che citano il manuale (conNomiDelleFasce)
+    p.mov_testo ? h('p', { class: 'nota' }, conNomiDelleFasce(p.mov_testo, d)) : null,
     v.todo ? h('p', { class: 'nota todo-veicolo' }, `Da chiarire con Davide: ${v.todo}`) : null);
 }
 
@@ -854,12 +854,15 @@ function neverlostUi(ctx, mezzo, v, aggiorna) {
     h('p', { class: 'riquadro attenzione regola-riserve' }, h('strong', {}, 'Le riserve non si riempiono da sole. '),
       'Il massimo non è la riserva: le cariche attuali le registra il Direttore e cambiano solo con i consumi o con una ricarica a un approdo che serve la nave (A.196).'),
     h('div', { class: 'riserve-neverlost' }, n.riserve.map((r) => h('p', {}, h('strong', {}, `${r.nome}: `), campoValore(`Riserva ${nome(r.colore)}`, r.cariche, r.massimo, r.colore, 'cariche'),
-      h('small', { class: 'nota' }, ` · ${r.testo}`)))),
+      h('small', { class: 'nota' }, ` · ${conNomiDelleFasce(r.testo, ctx.dati)}`)))),
     h('h4', {}, 'Volo e giornata'),
     h('div', { class: 'consumi-veicolo' },
       h('label', { class: 'campo-veicolo' }, 'Volo (minuti) ', h('input', { type: 'text', inputmode: 'decimal', class: 'input-d10', value: c.minuti, onchange: (e) => { c.minuti = e.target.value; } })),
       h('select', { 'aria-label': 'Andatura del volo', onchange: (e) => { c.andatura = e.target.value; } },
-        ['controllata', 'veloce', 'massima'].map((a) => h('option', { value: a, selected: c.andatura === a }, { controllata: 'Controllata (60 min a carica)', veloce: 'Rapida (30 min)', massima: 'Massima (12 min)' }[a]))),
+        // lotto 254 (rif. 09): il nome della fascia viene dai dati, non dal codice. Qui era scritto «Rapida (30
+        // min)» accanto a una fascia che l'app chiama «Veloce»: la stessa cosa con due nomi, nella stessa pagina.
+        ['controllata', 'veloce', 'massima'].map((a) => h('option', { value: a, selected: c.andatura === a },
+          `${nomeAndatura(a, ctx.dati)} (${{ controllata: '60 min a carica', veloce: '30 min', massima: '12 min' }[a]})`))),
       h('button', { type: 'button', class: 'btn btn-piccolo', onclick: () => { const m = num(c.minuti, 0); c.minuti = ''; if (m > 0) dopo(registraVolo(mezzo, p, m, c.andatura)); } }, 'Aggiungi il volo'),
       h('label', { class: 'campo-veicolo' }, 'Stazionario (ore) ', h('input', { type: 'text', inputmode: 'decimal', class: 'input-d10', value: c.ore, onchange: (e) => { c.ore = e.target.value; } })),
       h('button', { type: 'button', class: 'btn btn-piccolo', onclick: () => { const o = num(c.ore, 0); c.ore = ''; if (o > 0) dopo(registraStazionario(mezzo, p, o)); } }, 'Aggiungi lo stazionario'),
