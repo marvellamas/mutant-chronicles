@@ -117,12 +117,57 @@ export function inCartellaDiProva(percorso, { temp = tempProve() } = {}) {
   return false;
 }
 
+// --- la copia di prova dichiarata (lotto 252, dal collaudo di Davide del 25/11/2026) --------------------------------
+// **Il criterio del lotto 161 impediva proprio il caso utile.** «In una prova non si scrive in una cartella che
+// contiene personaggi, se la prova non l'ha creata» protegge i PG veri, ma proibisce anche l'unica prova che conta:
+// provare una procedura **sui sette veri, su una copia**. Davide si è fermato lì: «la protezione rifiuta di scrivere
+// nella cartella che contiene schede copiate, non create dalla prova».
+//
+// La distinzione che serve non è «chi ha creato i file» ma «questa cartella è una copia, e lo dice». Una copia di
+// prova porta dentro di sé un file che la dichiara (`COPIA-DI-PROVA.json`: quando, da dove, da chi, perché), scritto
+// da `node tools/copia-di-prova.mjs`. Dentro una cartella così si scrive.
+//
+// **Quello che il marcatore non può fare**: le cartelle vere (quelle dell'app e quelle del profilo di Windows) non
+// si sbloccano con un file. Quella guardia è un'altra (`cartelleReali`, `installaGuardiaScrittura`) e resta intera:
+// un marcatore messo per sbaglio in `personaggi/` non apre niente.
+export const MARCATORE_COPIA = 'COPIA-DI-PROVA.json';
+
+/** La dichiarazione della copia di prova che contiene (o è) `percorso`, salendo, o null. */
+export function copiaDiProvaDi(percorso) {
+  for (const d of catena(percorso)) {
+    let testo;
+    try { testo = fs.readFileSync(join(d, MARCATORE_COPIA), 'utf8'); } catch { continue; }
+    try {
+      const o = JSON.parse(testo);
+      if (o?.formato === 'mutant-copia-di-prova') return { ...o, cartella: d };
+    } catch { /* un marcatore illeggibile non dichiara niente */ }
+  }
+  return null;
+}
+
+/** Scrive il marcatore in una cartella: la dichiara copia di prova (la usa `tools/copia-di-prova.mjs`). */
+export function dichiaraCopiaDiProva(dir, { daDove = '', chi = '', perche = '' } = {}, adesso = new Date()) {
+  creaCartellaOriginale(dir, { recursive: true });
+  const o = {
+    formato: 'mutant-copia-di-prova',
+    creata: adesso.toISOString(),
+    da_dove: daDove,
+    chi,
+    perche: perche || 'Copia di prova dei personaggi: qui si può scrivere, i file veri stanno altrove.',
+    avviso: 'QUESTA NON È LA CARTELLA VERA. È una copia per le prove: quello che si scrive qui non arriva ai personaggi della campagna.',
+  };
+  scriviOriginale(join(dir, MARCATORE_COPIA), `${JSON.stringify(o, null, 1)}\n`);
+  return o;
+}
+
 /**
  * La cartella con personaggi che contiene (o è) `percorso`, o null: la prima, salendo, riconosciuta dal contenuto.
- * null anche quando il percorso sta in una cartella nata dentro una prova (inCartellaDiProva).
+ * null anche quando il percorso sta in una cartella nata dentro una prova (inCartellaDiProva) **o in una copia di
+ * prova dichiarata** (lotto 252).
  */
 export function cartellaConPersonaggiDi(percorso, opz = {}) {
   if (inCartellaDiProva(percorso, opz)) return null;
+  if (copiaDiProvaDi(percorso)) return null;
   for (const d of catena(percorso)) if (eCartellaConPersonaggi(d)) return d;
   return null;
 }

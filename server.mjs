@@ -190,7 +190,7 @@ import { avversariZoc } from './src/mappa/zoc.js';
 import { dimensioniImmagine } from './src/mappa/immagine.js';
 import { pezziDellaScena } from './src/mappa/partecipanti.js';
 import { fermaSeSconosciuti, ARGOMENTI } from './tools/argomenti.mjs';
-import { controllaAvvioDiProva, cartelleReali, installaGuardiaScrittura } from './tools/protezione-reali.mjs';
+import { controllaAvvioDiProva, cartelleReali, installaGuardiaScrittura, copiaDiProvaDi } from './tools/protezione-reali.mjs';
 import { vistaPlancia } from './src/tavolo.js';
 import { INTESTAZIONE as INTESTAZIONE_AIUTO, rifiutoAiuto, assegnaAiuto, ruoloValido, ruoloDopoScontro, eAiuto, pgDaMuovere, ruoloPubblico } from './src/mappa/aiuto-master.js';
 import { pgDellaScena, pezzoDelPg, areaPerTablet, provaMovimento, eseguiMovimentoGiocatore, impostazioniTablet, miniScheda, fondiMovimentiTablet, lineaPerTablet } from './src/mappa/tablet.js';
@@ -269,7 +269,13 @@ function leggiMarcatore(radice, cartella) {
   // 25/10/2026 («un ingresso solo»): il ruolo scelto da Mutant.bat vale sopra il file; senza ruolo, come prima
   let ruolo = null;
   try { ruolo = leggiRuolo(radice); } catch { /* profilo non leggibile: come prima */ }
-  return statoDaRuolo(ruolo, marcatore);
+  // lotto 252: la copia di prova della cartella in uso (tools/copia-di-prova.mjs) vale sopra il ruolo del PC
+  let copia = null;
+  try {
+    const c = copiaDiProvaDi(cartella);
+    if (c) copia = { creata: c.creata, daDove: c.da_dove ?? '' };
+  } catch { copia = null; }
+  return statoDaRuolo(ruolo, marcatore, copia);
 }
 
 /**
@@ -2378,7 +2384,7 @@ export function creaServer({ radice = RADICE, cartella = join(RADICE, CARTELLA),
         // A.187: l'Atto corrente (il limite di livello dei PX) lo conosce anche la scheda del giocatore, che non legge i PX
         let atto = null;
         try { atto = await attoCorrente(px, (await datiDelServer(base)).dati.px_partita); } catch { /* i dati non si leggono: la scheda usa l'Atto di partenza */ }
-        return json(res, 200, { ok: true, app: 'mutant', cartella: CARTELLA, ...identita, master: req.mutantMaster, ...(atto ? { atto } : {}), ...(c.copiaDiLavoro ? { copiaDiLavoro: true, notaCopia: c.nota, ...(c.nomePc ? { nomePc: c.nomePc } : {}) } : {}) });
+        return json(res, 200, { ok: true, app: 'mutant', cartella: CARTELLA, ...identita, master: req.mutantMaster, ...(atto ? { atto } : {}), ...(c.copiaDiLavoro ? { copiaDiLavoro: true, notaCopia: c.nota, ...(c.nomePc ? { nomePc: c.nomePc } : {}), ...(c.copiaDiProva ? { copiaDiProva: c.copiaDiProva } : {}) } : {}) });
       }
       // Cartella dei personaggi vuota all'avvio (12/10/2026): il Tavolo lo dice al master, con il percorso in uso
       if (percorso === '/api/avvio') return json(res, 200, avvio ? avvio() : { vuota: false, percorso: cartella, salvataggi: [], testo: '' });
@@ -2481,11 +2487,19 @@ if (process.argv[1] && fileURLToPath(import.meta.url) === process.argv[1]) {
     },
   };
   // Cartella dei personaggi vuota (12/10/2026): si ricalcola a ogni richiesta, così sparisce appena si ripristina
+  // lotto 252: se la cartella in uso è una copia di prova dichiarata (tools/copia-di-prova.mjs) lo dice l'app, non
+  // solo chi l'ha fatta: chi apre la cartella sbagliata lo deve vedere subito, non dopo aver scritto qualcosa
+  const copiaDiProva = () => {
+    try {
+      const c = copiaDiProvaDi(cartella);
+      return c ? { cartella: c.cartella, creata: c.creata, daDove: c.da_dove ?? '', avviso: c.avviso ?? '' } : null;
+    } catch { return null; }
+  };
   const avvisoPersonaggiVuoti = () => {
     try {
       const posti = postiSalvataggi(baseSalvataggi, leggiConfig(fileConfig));
-      return avvisoCartellaVuota({ cartella, ...posti, salvataggi: dirSalvataggi, autosave: dirAutosave });
-    } catch { return { vuota: false, percorso: cartella, quanti: 0, salvataggi: [], testo: '' }; }
+      return { ...avvisoCartellaVuota({ cartella, ...posti, salvataggi: dirSalvataggi, autosave: dirAutosave }), copia: copiaDiProva() };
+    } catch { return { vuota: false, percorso: cartella, quanti: 0, salvataggi: [], testo: '', copia: copiaDiProva() }; }
   };
   const server = creaServer({ cartella, tavolo, scontri, nemici, veicoli, scene, mappe, musica, galleria, px, soloLocale, avvisi, salvataggi, avvio: avvisoPersonaggiVuoti });
   // si spegne quando si chiude la finestra di avvia-server.bat (o con Ctrl+C), senza restare in ascolto da solo; prima
@@ -2509,6 +2523,14 @@ if (process.argv[1] && fileURLToPath(import.meta.url) === process.argv[1]) {
   const avvia = () => server.listen(porta, host, () => {
     console.log(testoAvvio(indirizziRete(networkInterfaces(), porta), porta, { soloLocale }));
     console.log(`Personaggi salvati in ${cartella}${dati.fonte === 'profilo' ? ' (la cartella dei dati di questo PC)' : ''}`);
+    // lotto 252: la copia di prova si annuncia da sé, in grande, nella finestra nera
+    const copia = copiaDiProva();
+    if (copia) {
+      console.log(`\n${'='.repeat(70)}\nCOPIA DI PROVA — QUESTA NON È LA CARTELLA VERA`);
+      console.log(`Fatta il ${new Date(copia.creata).toLocaleString('it-IT')} da ${copia.daDove || '(sorgente non scritta)'}`);
+      console.log('Quello che si scrive qui non arriva ai personaggi della campagna.');
+      console.log('='.repeat(70));
+    }
     console.log(minuti ? `Salvataggio automatico ogni ${minuti} minuti in ${dirAutosave}; «Salva sessione» e «Spegni Mutant» nel Tavolo del Master.` : 'Salvataggio automatico spento (config-salvataggi.json → autosave_minuti: 0).');
     // Cartella dei personaggi vuota (12/10/2026, docs/diagnosi-dati-spariti-2026-10-12.md): lo si dice subito,
     // con il percorso in uso e i salvataggi da cui si può ripartire. Lo stesso avviso arriva al Tavolo (/api/avvio).

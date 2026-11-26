@@ -111,3 +111,6 @@ test-ripetuto/
 # arrivano a noi da lì. Non entrano in git, come personaggi/: sono dati di gioco, non codice.
 istantanee/
 mutant-stato_*.zip
+
+# lotto 252: le copie di prova dei personaggi (tools/copia-di-prova.mjs). Dati di nessuno: si buttano.
+copie-di-prova/

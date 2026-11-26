@@ -1,5 +1,5 @@
 {
-  "_nota": "File e cartelle di questo PC che non stanno su GitHub: nessun aggiornamento li cancella mai e prima ne fa una copia zip in «cartella_backup» (le ultime «backup_da_tenere»). Lo fanno l'aggiornamento da zip (distribuzione/aggiorna-da-zip.ps1, chiamato da distribuzione/1_scarica_o_aggiorna_app.bat) e, dal 12/10/2026, anche quello con Git (aggiorna.bat e la voce 2 della console, tools/dati-locali.mjs). «cartelle» e «file»: in cima alla cartella dell'app; «annidati»: dentro cartelle dell'app (con * per i nomi), si rimettono dopo l'aggiornamento senza sovrascrivere i file nuovi; «backup_esclusi»: conservati ma non copiati nello zip di sicurezza (ricostruibili o troppo grandi); «controllo_zip»: ciò che deve esserci nello zip scaricato, altrimenti non si tocca nulla; «controllo_svuotamento»: le cartelle di dati su cui si confronta prima e dopo l'aggiornamento (se una aveva file e ora è vuota l'aggiornamento si ferma e propone di rimettere la copia).",
+  "_nota": "File e cartelle di questo PC che non stanno su GitHub: nessun aggiornamento li cancella mai e prima ne fa una copia zip in «cartella_backup» (le ultime «backup_da_tenere»). Lo fanno l'aggiornamento da zip (distribuzione/aggiorna-da-zip.ps1, chiamato da distribuzione/1_scarica_o_aggiorna_app.bat) e, dal 12/10/2026, anche quello con Git (aggiorna.bat e la voce 2 della console, tools/dati-locali.mjs). «cartelle» e «file»: in cima alla cartella dell'app; «annidati»: dentro cartelle dell'app (con * per i nomi), si rimettono dopo l'aggiornamento senza sovrascrivere i file nuovi; «backup_esclusi»: conservati ma non copiati nello zip di sicurezza (ricostruibili o troppo grandi); «controllo_zip»: ciò che deve esserci nello zip scaricato, altrimenti non si tocca nulla; «controllo_svuotamento»: le cartelle di dati su cui si confronta prima e dopo l'aggiornamento (se una aveva file e ora è vuota l'aggiornamento si ferma e propone di rimettere la copia). Lotto 252: «copie-di-prova» sta fra le cartelle locali perché un aggiornamento non la deve cancellare mentre una prova è in corso, ma NON fra quelle del controllo di svuotamento né fra quelle di «Salva sessione»: non è un dato di gioco, è una copia che si butta.",
   "cartelle": [
     "personaggi",
     "tavolo",
@@ -16,7 +16,9 @@
     "px",
     "avvisi",
     "node_modules",
-    "backup-prima-aggiornamento", "istantanee"
+    "backup-prima-aggiornamento",
+    "istantanee",
+    "copie-di-prova"
   ],
   "file": [
     "config-salvataggi.json",

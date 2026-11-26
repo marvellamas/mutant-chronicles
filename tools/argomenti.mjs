@@ -71,6 +71,7 @@ export const ARGOMENTI = {
   'aggiorna-avviatori.mjs': ['prova', 'radice', 'salta', 'fuori'],
   'console.mjs': ['porta', 'radice'],
   'cartella-di-prova.mjs': [],
+  'copia-di-prova.mjs': ['da', 'dove', 'porta'],
   'confronta-veicoli.mjs': ['coppia'],
   'correzione-compensativa.mjs': ['solo', 'scrivi'],
   'motivi-nel-title.mjs': ['elenco'],

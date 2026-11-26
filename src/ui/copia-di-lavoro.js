@@ -10,7 +10,7 @@ export async function leggiStatoInstallazione(fetchFn = fetch) {
     const r = await fetchFn('api/ping', { cache: 'no-store' });
     if (!r.ok) return null;
     const p = await r.json();
-    return p?.copiaDiLavoro ? { copiaDiLavoro: true, nota: typeof p.notaCopia === 'string' ? p.notaCopia : '', ...(typeof p.nomePc === 'string' && p.nomePc ? { nomePc: p.nomePc } : {}) } : null;
+    return p?.copiaDiLavoro ? { copiaDiLavoro: true, nota: typeof p.notaCopia === 'string' ? p.notaCopia : '', ...(typeof p.nomePc === 'string' && p.nomePc ? { nomePc: p.nomePc } : {}), ...(p.copiaDiProva ? { copiaDiProva: p.copiaDiProva } : {}) } : null;
   } catch { return null; }
 }
 

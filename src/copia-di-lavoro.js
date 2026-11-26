@@ -37,10 +37,22 @@ export function statoInstallazione(contenuto) {
  * @param ruolo { ruolo: 'originale' | 'prova' | null, nomePc } @param marcatore lo stato dal file (statoInstallazione)
  * @returns {{ copiaDiLavoro, nota, nomePc?, ruolo? }}
  */
-export function statoDaRuolo(ruolo, marcatore = statoInstallazione(null)) {
+export function statoDaRuolo(ruolo, marcatore = statoInstallazione(null), copiaDiProva = null) {
+  // **Lotto 252: una copia di prova dichiarata vince sul ruolo del PC.** Il ruolo dice che PC è questo; il marcatore
+  // `COPIA-DI-PROVA.json` (tools/copia-di-prova.mjs) dice che **cartella** si sta usando, e sul PC del Direttore —
+  // dove il ruolo «originale» spegne ogni fascia — è proprio lì che serve: se apre la copia per sbaglio lo deve vedere
+  // subito, prima di scriverci.
+  if (copiaDiProva) return { copiaDiLavoro: true, nota: '', copiaDiProva, ruolo: ruolo?.ruolo ?? null };
   if (ruolo?.ruolo === 'prova') return { copiaDiLavoro: true, nota: '', nomePc: String(ruolo.nomePc ?? '').slice(0, 80), ruolo: 'prova' };
   if (ruolo?.ruolo === 'originale') return { copiaDiLavoro: false, nota: '', ruolo: 'originale' };
   return marcatore;
+}
+
+/** La riga della copia di prova di una cartella: dice quando è stata fatta e da dove. */
+export function testoCopiaDiProvaCartella(copia) {
+  const d = new Date(copia?.creata ?? '');
+  const quando = Number.isNaN(d.getTime()) ? '' : ` del ${d.toLocaleDateString('it-IT', { day: 'numeric', month: 'long' })}`;
+  return `COPIA DI PROVA${quando} — i personaggi veri non sono in questa cartella`;
 }
 
 /** La riga della copia di prova con il nome del PC su cui gira. */
@@ -52,6 +64,8 @@ export const testoCopiaDiProva = (nomePc) => `Copia di prova su ${nomePc || 'que
  */
 export function fasciaDaMostrare(stato) {
   if (!stato?.copiaDiLavoro) return null;
+  // lotto 252: la cartella in uso è una copia di prova: lo dice per prima cosa, e con la sorgente
+  if (stato.copiaDiProva) return { testo: testoCopiaDiProvaCartella(stato.copiaDiProva), nota: stato.copiaDiProva.daDove ? `copiata da ${stato.copiaDiProva.daDove}` : '' };
   // ruolo scelto: il nome vero del PC, letto dal sistema; senza (il vecchio file scritto a mano) come prima
   if (stato.nomePc) return { testo: testoCopiaDiProva(stato.nomePc), nota: '' };
   return { testo: TESTO_COPIA, nota: stato.nota || '' };
