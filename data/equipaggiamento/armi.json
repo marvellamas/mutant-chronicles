@@ -1834,7 +1834,7 @@
     }
    ],
    "alimentazione_modifiche": {
-    "fonte": "A.251 (Davide, 06/11/2026); A.265 (14/11/2026); Armamenti 0.83 §§7.25–7.25.4",
+    "fonte": "A.251 (Davide, 06/11/2026); A.265 (14/11/2026); Armamenti 0.83 §§7.25–7.25.4; A.309 (24/11/2026): «CyberArma» è la famiglia, le voci visibili sono cinque, la SIN è facoltativa e installabile su qualsiasi CyberArma",
     "_nota": "A.251: due famiglie di modifiche che non si comportano allo stesso modo. Cristallo sostituito e SIN inserita non toccano l’alimentazione: l’arma continua a potersi alimentare con i PM personali e le due cose possono coesistere con quell’alimentazione. Riserva interna di CM e conversione a NeC sono conversioni energetiche alternative: impediscono l’uso dei PM personali, fanno perdere le proprietà da Custode e non si cumulano fra loro. La scelta non si torna indietro facilmente: va detta in chiaro prima di confermare, perché chi la fa da un tablet non ha il manuale davanti.",
     "pm_personali_predefiniti": true,
     "perdite": [
@@ -1896,7 +1896,8 @@
      "riserva_cm",
      "nec"
     ],
-    "_nota_a260": "A.260 (Davide, 15/11/2026): l’attivazione di una conversione consuma 1 CM intero, oppure 1 carica intera di NeC Rosso, e alimenta la manifestazione per 10 Round consecutivi, indipendentemente da attacchi, colpi o Azioni; trascorsi i 10 Round serve una nuova carica. Non si usano frazioni. Il «ogni 10 colpi» della A.251 è superato. La CyberArma convertita è un’arma ravvicinata e non effettua Raffiche."
+    "_nota_a260": "A.260 (Davide, 15/11/2026): l’attivazione di una conversione consuma 1 CM intero, oppure 1 carica intera di NeC Rosso, e alimenta la manifestazione per 10 Round consecutivi, indipendentemente da attacchi, colpi o Azioni; trascorsi i 10 Round serve una nuova carica. Non si usano frazioni. Il «ogni 10 colpi» della A.251 è superato. La CyberArma convertita è un’arma ravvicinata e non effettua Raffiche.",
+    "_a309": "A.309 (Davide, 24/11/2026): «CyberArma è la famiglia; le sole voci visibili sono cinque (Bianca, Rossa, Blu, Verde, Viola). La SIN è facoltativa e installabile su qualsiasi CyberArma; cambiare il solo cristallo o installare la sola SIN conserva i PM personali e le proprietà da Custode; la conversione a CM o NeC li toglie.» Le cinque voci visibili e le conversioni come opzioni dell_esemplare le ha applicate il lotto 254 (le tre voci di prima restano con non_elencata, perché una scheda già scritta le cita); le due famiglie che conservano i PM personali erano già qui dal lotto 181 (A.251). Nessuna voce è stata cancellata senza dirlo: il conto sta in index.json."
    },
    "unico": true,
    "_nota_unico": "Armamenti 0.83 §7.25: «Ogni originale è un pezzo unico». Dalla A.265 il manuale gli dà comunque un valore indicativo (7.500 cr): l’app lo mostra come prezzo letto dal catalogo e dice che è indicativo, non che è un listino. La formula della A.256 non si applica da sé a un pezzo unico.",
@@ -1904,7 +1905,7 @@
    "ravvicinata_senza_raffiche": true,
    "_nota_ravvicinata": "A.260 (15/11/2026): la CyberArma è un’arma ravvicinata e non effettua Raffiche, in nessuna configurazione. Oggi nessuna delle tre voci ha modalità di fuoco e «Attacca!» non le offrirebbe, ma la regola è scritta perché un domani non torni per sbaglio: tests/a260-cyberarma-round.test.js fallisce se una modalità di Raffica compare su una CyberArma.",
    "focalizzatori": {
-    "fonte": "Armamenti 0.92 §7.25 (Cristallo focalizzatore; «Profili delle CyberArmi originali dei Custodi») e §7.25.5 (Riferimento rapido); Giocatore 0.65 §5.24 (Plasma ed Elettricità); Equipaggiamento 0.41 §10.9 (esemplare di Dimitri)",
+    "fonte": "Armamenti 0.92 §7.25 (Cristallo focalizzatore; «Profili delle CyberArmi originali dei Custodi») e §7.25.5 (Riferimento rapido); Giocatore 0.65 §5.24 (Plasma ed Elettricità); Equipaggiamento 0.41 §10.9 (esemplare di Dimitri); A.307 (24/11/2026, il Viola senza bonus fisso)",
     "_nota": "Lotto 210: un bonus per colore, calcolato dove si calcola il VA (src/cyberarma.js → bonusFocalizzatore, src/equipaggiamento.js). Vale per il Tecnomante e per le conversioni a CM e NeC; il Custode usa la sua tabella per Grado, che il cristallo ce l'ha già dentro (sommarlo lo conterebbe due volte). Un colore senza numero qui sotto non ha numero nel manuale: non si inventa.",
     "si_applica_a": "non_custode",
     "dichiarati": [
@@ -2048,7 +2049,9 @@
        "senza_predefinito": true,
        "_senza_predefinito": "Il manuale dice «annotare il valore del singolo frammento»: il valore è del frammento, non del colore, e un valore predefinito sarebbe inventato. Finché non c’è, la scheda scrive il posto vuoto e lo dice."
       },
-      "voce": "armi:cyberarma-viola"
+      "voce": "armi:cyberarma-viola",
+      "risposta": "A.307",
+      "_a307": "A.307 (Davide, 24/11/2026): «Per il Tecnomante e per le CyberArmi convertite il danno base è 1d8 Magico, senza bonus fisso del cristallo Viola; si applicano i modificatori del personaggio.» Controllato nei dati e già così dal lotto 235: va_attacco 0, va_parata 0, danno 0 e danno_base_tecnomante 1d8. Il lotto 235 non aveva scritto un bonus al Viola, perché il manuale non ne dà uno: la risposta lo conferma e qui resta il suo numero."
      }
     ],
     "_lotto_235": "Rosso, Blu e Viola non hanno un bonus numerico nel manuale, e non averlo non vuol dire non avere effetto: Plasma, Elettricità e Corruzione sono effetti sul bersaglio, scritti qui con le condizioni del §5.24. L’app li scrive e non li applica: non tira la PS Tempra, non applica il −2 VA, non blocca le Azioni e non conta i Round. Stanno nell’elenco delle regole che l’app non conta."

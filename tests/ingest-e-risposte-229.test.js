@@ -83,6 +83,17 @@ const veicoli = dati.veicoli;
 const profilo = (id) => (veicoli.profili ?? []).find((p) => p.id === id);
 const nemico = (id) => JSON.parse(readFileSync(new URL(`../esempi/nemici/mostri/${id}.json`, import.meta.url), 'utf8'));
 const lunare = (id) => dati.equipaggiamento.file.manufatti_lunari.oggetti.find((v) => v.id === id);
+// lotto 255: gli accessori per le righe nuove — le voci si chiedono al catalogo, i blocchi di regole al file
+const CAT = catalogo(dati);
+const voceCatalogo = (rif) => CAT.perRif.get(rif);
+const tutteLeVoci = () => CAT.oggetti;
+const regole = () => dati.regole;
+const bloccoArmi = (chiave) => {
+  for (const o of dati.equipaggiamento.file.armi.oggetti) if (o[chiave]) return o[chiave];
+  return null;
+};
+const focalizzatore = (id) => bloccoArmi('focalizzatori').elenco.find((x) => x.id === id);
+const modificheAlimentazione = () => bloccoArmi('alimentazione_modifiche');
 
 /** Una riga = una risposta approvata. `verifica` lancia se il dato la contraddice. */
 /** Una voce del catalogo delle armi, per id (lotto 235). */
@@ -123,6 +134,51 @@ const RISPOSTE = [
   }],
   ['A.294', 'Elmetto Recon ASA: +1 Iniziativa e +1 Percezione solo da indossato (qui: il testo del manuale corrente lo dice ancora)', () => {
     assert.match(testoManuale('armamenti'), /Nello zaino non concede alcun beneficio/);
+  }],
+  // lotto 255: le due regole approvate il 24/11 (Scudi e Salti) e le tre risposte controllate nei dati
+  ['A.307', 'CyberArma Viola: nessun bonus fisso del cristallo — 1d8 Magico per il Tecnomante e per le convertite', () => {
+    const v = focalizzatore('viola');
+    assert.deepEqual([v.va_attacco, v.va_parata, v.danno], [0, 0, 0], 'il Viola non ha un bonus numerico');
+    assert.equal(v.danno_base_tecnomante, '1d8');
+  }],
+  ['A.310', 'Elmetto Recon ASA: 7.500 cr, Non comune, PS Integrità 12, RA — e distinto dal SIA Recon', () => {
+    const a = voceCatalogo('elmetti:elmetto-asa-recon');
+    const s = voceCatalogo('elmetti:elmetto-sia-recon');
+    assert.deepEqual([a.costo, a.qualita, a.ps_int, a.reperibilita], [7500, 'Non comune', 12, 'RA']);
+    assert.notEqual(a.id, s.id, 'ASA e SIA restano due voci distinte');
+  }],
+  ['A.309', 'CyberArma: cinque voci offerte, e cristallo o SIN conservano i PM personali e le proprietà da Custode', () => {
+    const m = modificheAlimentazione();
+    for (const id of ['cristallo', 'sin']) {
+      const f = m.famiglie.find((x) => x.id === id);
+      assert.equal(f.pm_personali, true, `${id}: conserva i PM personali`);
+      assert.equal(f.proprieta_custode, true, `${id}: conserva le proprietà da Custode`);
+      assert.equal(f.conversione, false);
+    }
+    for (const id of ['riserva_cm', 'nec']) {
+      const f = m.famiglie.find((x) => x.id === id);
+      assert.equal(f.pm_personali, false, `${id}: la conversione toglie i PM personali`);
+      assert.equal(f.proprieta_custode, false);
+    }
+  }],
+  ['Scudi (24/11/2026)', 'Piccolo 0 · Medio −1 Q · Enorme −2 Q e −1 VA ad attacchi e Agilità, mai alle Difese', () => {
+    const s = (id) => voceCatalogo(`scudi:${id}`);
+    assert.equal(s('scudo-piccolo').mov ?? 0, 0);
+    assert.equal(s('scudo-medio').mov, -1);
+    assert.equal(s('scudo-enorme').mov, -2);
+    assert.equal(s('scudo-enorme').penalita.agilita, -1);
+    for (const o of tutteLeVoci().filter((x) => x.tipo === 'scudo')) {
+      assert.equal(o.penalita?.difese, undefined, `${o.id}: nessuna penalità alle Difese`);
+    }
+  }],
+  ['Salti (24/11/2026)', 'sei fasce sul VA personale di Atletica; Atletica 18 → 2/4 Q vuoti e 1,5/3 m, 7 Q di Movimento', () => {
+    const f = regole().salti.fasce;
+    assert.equal(f.length, 6);
+    const terza = f[2];
+    assert.deepEqual([terza.da, terza.a], [16, 25]);
+    assert.deepEqual([terza.lungo_fermo_q, terza.lungo_rincorsa_q], [2, 4]);
+    assert.deepEqual([terza.alto_fermo_cm, terza.alto_rincorsa_cm], [150, 300]);
+    assert.equal(regole().salti.rincorsa.q_minimi, 2);
   }],
   // lotto 231: le CM si consumano intere e la sigla delle voci ASA/SIA resta quella decisa
   ['A.252', 'Cariche Mistiche: solo quantità intere — ogni riserva in CM e ogni costo in CM del catalogo è un intero ≥ 1 (compresi i moduli del Warden TC)', () => {

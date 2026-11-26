@@ -1439,7 +1439,9 @@
         "nec": "nec:verde-standard",
         "ordinaria": true,
         "paragrafo": "§5.4.3"
-      }
+      },
+      "risposta": "A.310",
+      "_a310": "A.310 (Davide, 24/11/2026): prezzo di riferimento 7.500 cr, Qualità Non comune, PS Integrità 12, Reperibilità RA. I quattro valori coincidono con quelli del SIA Recon — e sono già questi dal lotto 228 — ma ASA e SIA restano due voci distinte: le funzioni della A.294 non cambiano e gli esemplari negli inventari non si sostituiscono (tools/dotazione-asa.mjs migra i soprabiti, non gli elmetti)."
     },
     {
       "id": "elmetto-sia-recon",
