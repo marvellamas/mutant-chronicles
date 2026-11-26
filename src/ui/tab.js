@@ -1080,6 +1080,18 @@ function tabInventario(ctx) {
   ];
 }
 
+/**
+ * La riga «Fonte» dell'arma: quella calcolata a riposo (src/cyberarma.js → rigaAlimentazione) più le cariche di
+ * adesso, che stanno nella sessione e che il calcolo a riposo non vede. Se il contenitore di quella voce non c'è, la
+ * riga resta quella a riposo e dice «cariche: da registrare»: nessun numero inventato.
+ */
+function testoFonteArma(ctx, a) {
+  const c = (ctx.tab?.scheda?.equipaggiamento?.contenitori ?? []).find((x) => x.uid === a.uid);
+  if (!c || !Number.isFinite(c.pmAttuali)) return a.rigaFonte.testo;
+  const round = a.rigaFonte.round ? ` · ${c.pmAttuali * a.rigaFonte.round} Round con queste` : '';
+  return `${a.rigaFonte.testo.replace(' · cariche: da registrare', '')} · adesso ${c.pmAttuali}${Number.isFinite(c.capacita) ? ` / ${c.capacita}` : ''} ${c.unita ?? 'CM'}${round}`;
+}
+
 /** Gli Artefatti con PM spendibili del personaggio, pronti per primi (trasportati e sintonizzati). */
 function cristalli(ctx) {
   return [...(ctx.tab.scheda.equipaggiamento?.contenitori ?? [])]
@@ -2212,6 +2224,9 @@ function riquadroArmi(ctx, d, mani) {
         a.condizioneArma && a.condizioneArma.id !== 'integra' ? { etichetta: 'Condizione', testo: `${a.condizioneArma.nome}: ${a.condizioneArma.testo}` } : null,
         // lotto 206: quando non tutti i valori di questa voce vengono dall'edizione corrente del manuale, si dice
         // quali e da dove; quando è tutta corrente la riga non c'è (il segno si spegne da sé, come il ⚑ del 204)
+        // lotto 252 (collaudo del 25/11): che cosa alimenta l'arma, con le cariche di adesso lette dai contenitori
+        // del personaggio. Per ogni altra arma la riga non c'è.
+        a.rigaFonte ? { etichetta: 'Fonte', testo: testoFonteArma(ctx, a) } : null,
         a.rigaEdizione ? { etichetta: '⚑ Edizione', testo: a.rigaEdizione } : null,
       ].filter(Boolean),
     }, { classe: 'info-gradi' });

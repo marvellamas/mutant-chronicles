@@ -230,6 +230,47 @@ export function alimentazioneDellaVoce(voce, dati) {
   return { conversione: d?.conversione ? d.id ?? null : null, pmPersonali: d ? d.pm_personali !== false : true, proprietaCustode: d ? d.proprieta_custode !== false : true };
 }
 
+/**
+ * **La fonte che alimenta questa CyberArma, in una riga** (lotto 252, dal collaudo di Davide del 25/11/2026).
+ *
+ * Davide si è fermato qui: «Nell'Inventario l'arma è integra (4/4 PI). Il dettaglio identifica il cristallo
+ * focalizzatore verde, non la fonte. In Artefatti compaiono solo la Batteria Matrice rossa e due Schegge verdi: non
+ * sono prova di cosa alimenti l'arma». Aveva ragione: `alimentazioneDellaVoce` c'era dal lotto 181, ma la leggeva
+ * **solo** il pannello dei progetti del Direttore. Il cristallo dice di che colore è l'arma, non con che cosa si
+ * accende: sono due cose diverse, e la seconda non si vedeva da nessuna parte.
+ *
+ * Il modello è quello della A.309: ogni CyberArma nasce a **PM personali** e può essere convertita, in alternativa, a
+ * una riserva interna di **CM** o a un **NeC**; con la A.260 una carica intera alimenta **10 Round consecutivi**,
+ * qualunque numero di attacchi ci stia dentro. **I numeri non si inventano**: capacità e consumo vengono dai dati
+ * (`alimentazione_modifiche` e il contenitore della voce), e dove un dato manca la riga lo dice.
+ *
+ * @param voce la voce dell'inventario (col suo `rif` e l'eventuale `esemplare`)
+ * @param cariche { attuali, massime, unita } della sessione, se il chiamante le ha (la riga vale anche senza)
+ * @returns {{ testo, fonte, conversione, round }} oppure null se non è una CyberArma
+ */
+export function rigaAlimentazione(voce, dati, cariche = null) {
+  if (!regoleAlimentazione(dati) || !/cyberarma/i.test(String(voce?.rif ?? ''))) return null;
+  const stato = alimentazioneDellaVoce(voce, dati);
+  const fam = stato.conversione ? famigliaAlimentazione(stato.conversione, dati) : null;
+  const consumo = fam?.consumo ?? null;
+  const parti = [];
+  if (!fam) {
+    parti.push('PM personali');
+    if (stato.proprietaCustode) parti.push('proprietà da Custode conservate');
+  } else {
+    parti.push(fam.nome);
+    if (consumo?.testo) parti.push(consumo.testo);
+    if (cariche && Number.isFinite(cariche.attuali)) {
+      const u = cariche.unita ?? (consumo?.cm ? 'CM' : 'cariche');
+      parti.push(`adesso ${cariche.attuali}${Number.isFinite(cariche.massime) ? ` / ${cariche.massime}` : ''} ${u}`);
+      if (consumo?.round) parti.push(`${cariche.attuali * consumo.round} Round con queste`);
+    } else {
+      parti.push('cariche: da registrare');
+    }
+  }
+  return { testo: parti.join(' · '), fonte: fam ? fam.nome : 'PM personali', conversione: stato.conversione ?? null, round: consumo?.round ?? null };
+}
+
 /** Le incoerenze di una voce già scritta: riserva interna e PM personali dichiarati insieme, o due conversioni. [] se coerente. */
 export function incoerenzeAlimentazione(voce, dati) {
   const conv = conversioneDellaVoce(voce?.rif, dati);

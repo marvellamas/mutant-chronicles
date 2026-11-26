@@ -23,7 +23,7 @@ import { calcolaAR, oggettiConPi, oggettiSenzaPi, oggettiIndistruttibili, oggett
 import { conManifestazione, manifestazioniDi, sceltaLibera } from './manifestazione.js';
 import { tipoRiserva, alimentazione as alimentazioneRiserva, fontePerPg } from './fonti.js';
 import { rigaProvenienzaVoce } from './provenienza-catalogo.js';
-import { bonusFocalizzatore, dannoCondizionaleCristallo, condizioneSulBersaglio, dichiarazioneDeiDati } from './cyberarma.js';
+import { bonusFocalizzatore, dannoCondizionaleCristallo, condizioneSulBersaglio, dichiarazioneDeiDati, rigaAlimentazione } from './cyberarma.js';
 import { infoPietra, COLORI_PIETRA } from './pietre-di-luna.js';
 
 export const TIPI = ['arma_ravvicinata', 'arma_distanza', 'scudo', 'armatura', 'rinforzo', 'elmetto', 'accessorio', 'munizioni', 'sanitario', 'artefatto', 'impianto', 'altro'];
@@ -1377,6 +1377,9 @@ export function calcolaEquipaggiamento(base, voci, dati) {
       // lotto 206: la riga che dice se non tutti i valori di questa voce vengono dall'edizione corrente del
       // manuale, e **null** quando è tutta corrente — il segno si spegne da sé (come il ⚑ del Bestiario, 204)
       rigaEdizione: rigaProvenienzaVoce(d, edizioneDelFile(d?.rif, dati)),
+      // lotto 252: che cosa alimenta una CyberArma (PM personali, CM, NeC) e quanto dura una carica. Qui siamo nel
+      // calcolo a riposo, che non vede la sessione (principio 3): le cariche di adesso le aggiunge la scheda.
+      rigaFonte: rigaAlimentazione(o.voce, dati),
       righeDanno,
       danno: dannoBase ? { una_mano: aggiungiDanno(dannoBase.una_mano, bonusDanno + dannoAccessori + dannoCar), due_mani: aggiungiDanno(dannoBase.due_mani, bonusDanno + dannoAccessori + dannoCar) } : null,
       dannoAccessori, bonusCaratteristica,
