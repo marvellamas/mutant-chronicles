@@ -16,8 +16,8 @@ export function riquadroIncantesimiInCorso(ctx) {
     h('h3', {}, 'Incantesimi in corso'),
     h('p', { class: 'nota' }, 'Round ', h('strong', {}, String(r)), scontro ? h('span', { class: 'round-scontro' }, ' · dallo scontro') : null, ' ',
       h('button', {
-        type: 'button', class: 'btn btn-piccolo', onclick: ctx.azioni.nuovoRound, disabled: !!scontro,
-        title: scontro ? `Sei nello scontro «${scontro.nome}»: il Round lo fa avanzare il master dalla plancia.` : 'Passa al Round successivo: scadono le durate finite',
+        type: 'button', class: 'btn btn-piccolo', onclick: ctx.azioni.nuovoRound, spento: scontro && `Sei nello scontro «${scontro.nome}»: il Round lo fa avanzare il master dalla plancia.`,
+        title: 'Passa al Round successivo: scadono le durate finite',
       }, 'Nuovo Round')),
     attivi.length ? h('ul', {}, attivi.map((x) => h('li', {},
       h('strong', {}, x.nome), x.livello ? ` (livello ${x.livello}${x.modalita ? `, ${x.modalita}` : ''})` : '',

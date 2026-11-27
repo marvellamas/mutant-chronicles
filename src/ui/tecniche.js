@@ -58,9 +58,8 @@ export function sezioneRisorseInteriori(ctx) {
         // con il server e il PG in uno scontro aperto il Round è quello dello scontro (src/round-scontro.js)
         h('p', { class: 'valore-tavolo' }, h('strong', {}, String(round)), ctx.roundScontro ? h('span', { class: 'round-scontro' }, ' · dallo scontro') : null),
         h('button', {
-          type: 'button', class: 'btn', onclick: ctx.azioni.nuovoRound, disabled: !!ctx.roundScontro,
-          title: ctx.roundScontro ? `Sei nello scontro «${ctx.roundScontro.nome}»: il Round lo fa avanzare il master dalla plancia, così le durate scadono per tutti allo stesso momento. Il contatore torna alla scheda quando lo scontro finisce.`
-            : scadono.length ? `Scadono: ${scadono.join(', ')}` : 'Passa al Round successivo: si può attivare un’altra Tecnica',
+          type: 'button', class: 'btn', onclick: ctx.azioni.nuovoRound, spento: ctx.roundScontro && `Sei nello scontro «${ctx.roundScontro.nome}»: il Round lo fa avanzare il master dalla plancia, così le durate scadono per tutti allo stesso momento. Il contatore torna alla scheda quando lo scontro finisce.`,
+          title: scadono.length ? `Scadono: ${scadono.join(', ')}` : 'Passa al Round successivo: si può attivare un’altra Tecnica',
         }, 'Nuovo Round'),
         h('p', { class: 'nota' }, ultima ? `Questo Round: ${ultima.nome}. La prossima Tecnica dal Round ${round + 1} (§8.9.1).` : 'Nessuna Tecnica attivata in questo Round: se ne può attivare una (§8.9.1).',
           scadono.length ? (ctx.roundScontro ? ` Al prossimo Round dello scontro scade: ${scadono.join(', ')}.` : ` Con «Nuovo Round» scade: ${scadono.join(', ')}.`) : null)),
@@ -174,8 +173,8 @@ export function pannelloTecnica(ctx, t) {
             ' Confermo: la riserva resta a 0 PM e il personaggio è Svenuto') : null,
           h('div', { class: 'attacco-azioni' },
             h('button', {
-              type: 'button', class: `btn primario btn-grande${!st.possibile || motivoCura ? ' con-avviso' : ''}`, disabled: bloccato,
-              title: !st.possibile ? st.motivo : bloccato ? 'Serve la conferma qui sopra' : motivoCura,
+              type: 'button', class: `btn primario btn-grande${!st.possibile || motivoCura ? ' con-avviso' : ''}`, spento: bloccato && 'Serve la conferma qui sopra: spunta «Confermo».',
+              title: !st.possibile ? st.motivo : motivoCura,
               onclick: () => conAvviso(ctx.azioni.storico, { azione: `Attiva ${t.nome}`, motivo: st.possibile ? motivoCura : [st.motivo, motivoCura].filter(Boolean).join('; '), fai: (forza) => { ctx.ui.tecnica = null; return ctx.azioni.attivaTecnica(t.id, { opzione: u.opzione, silenzioMentale: u.silenzio, cura: { bersaglio: u.bersaglio ?? 'se', dado: u.dado ?? null }, ...(forza ? { forza: true } : {}) }); } }),
             }, st.possibile ? `Attiva (−${st.costo} PM)` : `Attiva comunque (−${Math.min(st.costo, st.pm)} PM)`),
             h('small', { class: 'nota' }, 'Una sola Tecnica per Round (§8.9.1). «Annulla» nell’intestazione annulla l’attivazione e restituisce i PM.'))),

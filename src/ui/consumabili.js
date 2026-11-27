@@ -152,7 +152,7 @@ export function pannelloCreaConsumabile(ctx) {
         piano.errori.map((e) => h('p', { class: 'nota motivo' }, `Manca un dato: ${e}.`)),
         // N2: le regole non rispettate avvisano; «Registra comunque» chiede conferma e lascia la riga nello storico
         (piano.irregolari ?? []).map((e) => h('p', { class: 'nota motivo' }, `Avviso: ${e}.`)),
-        h('button', { type: 'button', class: `btn primario${piano.irregolari?.length ? ' con-avviso' : ''}`, disabled: !!piano.errori.length,
+        h('button', { type: 'button', class: `btn primario${piano.irregolari?.length ? ' con-avviso' : ''}`, spento: piano.errori.length ? `Manca un dato: ${piano.errori.join('; ')}.` : null,
           onclick: async () => {
             const ok = await chiedi({ titolo: 'Registra la creazione', testo: `Si scalano ${piano.crediti.toLocaleString('it-IT')} cr e ${piano.pm} PM personali.${piano.creato ? ` Nell’Inventario entra «${piano.voce.personalizzato.nome}».` : ' Nessun Consumabile creato.'}`, si: 'Registra' });
             if (!ok) return;

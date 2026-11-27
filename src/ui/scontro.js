@@ -220,9 +220,9 @@ export function pannelloScontro(ctx, st, { modifica, crea, prepara = null, ridis
       h('h2', {}, `${s.nome} · Round ${s.round}`),
       h('div', { class: 'riga-azioni' },
         // «Indietro» (07/10): annulla l'ultimo «Avanti» (anche Maiusc+clic su «Avanti»)
-        indietroUi ? h('button', { type: 'button', class: 'btn', disabled: !s.indietro?.length, title: s.indietro?.length ? `Annulla l’ultimo «Avanti» (o «Reimposta Iniziativa»): torna il turno di prima, con Round, durate e Stati (${s.indietro.length} passi possibili; anche Maiusc+clic su «Avanti»)` : 'Nessun «Avanti» da annullare', onclick: () => indietroUi() }, '◀ Indietro') : null,
+        indietroUi ? h('button', { type: 'button', class: 'btn', spento: !s.indietro?.length && 'Nessun «Avanti» da annullare.', title: s.indietro?.length ? `Annulla l’ultimo «Avanti» (o «Reimposta Iniziativa»): torna il turno di prima, con Round, durate e Stati (${s.indietro.length} passi possibili; anche Maiusc+clic su «Avanti»)` : null, onclick: () => indietroUi() }, '◀ Indietro') : null,
         // ritocchi del 07/10: ritira l'Iniziativa di tutti (con conferma) o di uno solo
-        reimposta ? h('button', { type: 'button', class: 'btn', disabled: !ordinati.length, title: 'Ritira l’Iniziativa di tutti (Iniziativa + 1d10, parità come §5.1) o di uno solo; chi è di turno resta di turno; «Indietro» la annulla', onclick: () => reimposta() }, 'Reimposta Iniziativa') : null,
+        reimposta ? h('button', { type: 'button', class: 'btn', spento: !ordinati.length && 'Nessuno ha ancora l’Iniziativa: non c’è niente da reimpostare.', title: 'Ritira l’Iniziativa di tutti (Iniziativa + 1d10, parità come §5.1) o di uno solo; chi è di turno resta di turno; «Indietro» la annulla', onclick: () => reimposta() }, 'Reimposta Iniziativa') : null,
         // lotto 246: senza Iniziative tirate «Avanti» fa avanzare il Round (il Direttore non resta senza comandi)
         h('button', { type: 'button', class: 'btn primario', title: ordinati.length ? 'Il turno passa al prossimo (Maiusc+clic: «Indietro»)' : 'Nessuna Iniziativa tirata: «Avanti» fa avanzare il Round', onclick: (e) => (e.shiftKey && indietroUi ? indietroUi() : modifica((x) => avanti(x, undefined, { indietroMax: ctx.dati.mappa.iniziativa.indietro_max }))) }, 'Avanti'),
         // pezzo 4: annulla l'ultimo colpo applicato (PV, Ferite e Stati di prima)

@@ -277,11 +277,11 @@ export function apriCreaNemico(ctx, { voci = [], salvato = () => {}, destinazion
       errori.length || st.errori.length ? h('div', { class: 'riquadro attenzione', role: 'alert' }, h('p', {}, h('strong', {}, 'Da correggere:')), h('ul', {}, [...errori, ...st.errori].map((e) => h('li', {}, typeof e === 'string' ? e : formattaErrore({ ...e, file: '' }).replace(/^ › /, ''))))) : null,
       st.salvatoIn ? h('p', { class: 'riquadro ok', role: 'status' }, `Salvato nel bestiario: nemici/${st.salvatoIn}.`) : null,
       h('div', { class: 'riga-azioni' },
-        h('button', { type: 'button', class: 'btn primario', disabled: errori.length > 0, onclick: () => salvaNelBestiario(n) }, 'Salva nel bestiario'),
+        h('button', { type: 'button', class: 'btn primario', spento: errori.length > 0 && 'La scheda ha ancora cose da correggere (nel riquadro «Da correggere»).', onclick: () => salvaNelBestiario(n) }, 'Salva nel bestiario'),
         destinazione ? [
           h('label', {}, 'Quanti ', h('input', { type: 'number', min: 1, max: 30, step: 1, class: 'input-d10', value: st.quanti, oninput: (e) => { st.quanti = e.target.value; } })),
           h('label', {}, 'Lato ', h('select', { onchange: (e) => { st.lato = e.target.value; } }, ['avversario', 'alleato'].map((x) => h('option', { value: x, selected: st.lato === x }, x)))),
-          h('button', { type: 'button', class: 'btn primario', disabled: errori.length > 0, onclick: () => aggiungi(n) }, destinazione.etichetta),
+          h('button', { type: 'button', class: 'btn primario', spento: errori.length > 0 && 'La scheda ha ancora cose da correggere (nel riquadro «Da correggere»).', onclick: () => aggiungi(n) }, destinazione.etichetta),
         ] : null),
     ];
   };
@@ -379,7 +379,7 @@ export function apriCreaNemico(ctx, { voci = [], salvato = () => {}, destinazion
         h('button', { type: 'button', class: 'btn', title: 'La procedura in 5 passi del §6.6 in un clic, poi il riepilogo: ogni passo si può ritirare', onclick: tuttoACaso }, 'Tutto a caso')),
       h('section', { class: 'passo-crea' }, contenuti[passo]()),
       h('nav', { class: 'attacco-nav crea-nav', 'aria-label': 'Indietro e avanti' },
-        h('button', { type: 'button', class: 'btn', disabled: passo === 0, onclick: () => { st.passo -= 1; disegna(); } }, '← Indietro'),
+        h('button', { type: 'button', class: 'btn', spento: passo === 0 && 'Sei al primo passo.', onclick: () => { st.passo -= 1; disegna(); } }, '← Indietro'),
         !ultimo && !(passo === 2 && st.scelte.creatura) && !(st.scelte.png && (passo === 1 || passo === 2)) ? h('button', { type: 'button', class: 'btn', title: 'Questo passo con le tabelle del cap. 6; gli altri restano', onclick: aCasoPasso }, 'A caso') : null,
         !ultimo ? h('button', { type: 'button', class: 'btn primario', onclick: () => { st.passo += 1; disegna(); } }, `${PASSI[passo + 1]} →`) : null)));
     finestra.scrollTop = scorrimento;

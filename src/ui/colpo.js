@@ -191,7 +191,7 @@ export function apriColpo(ctx, bersaglio, { applica, proposta = {}, fonti = [] }
           // lotto 246: è il pulsante che chiude ogni colpo di ogni Round, e restava spento se mancava l'esito di una PS
           // di Tempra o se il danno era tutto assorbito. Adesso avvisa: senza l'esito della Tempra il danno si applica e
           // le Ferite nuove non si registrano (le decide il master); un colpo assorbito dall'AR è legittimo e va scritto.
-          type: 'button', class: `btn primario${motivoApplica ? ' con-avviso' : ''}`, disabled: st.inCorso,
+          type: 'button', class: `btn primario${motivoApplica ? ' con-avviso' : ''}`, spento: st.inCorso && 'Un attimo: sto applicando il colpo.',
           title: motivoApplica ?? null,
           onclick: async () => {
             if (motivoApplica && !(await chiedi({ titolo: 'Avviso: applicare il colpo', testo: `${motivoApplica}. L’app avvisa e non blocca: puoi applicare lo stesso, e il Direttore lo vede nel suo diario.`, si: 'Applica comunque', no: 'Annulla' }))) return;

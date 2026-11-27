@@ -259,7 +259,7 @@ function voceEquip(ctx, r, risolte, cambia) {
     h('div', { class: 'equip-riga' },
       contenitoreSingolo ? h('span', { class: 'quantita nota' }, 'Un contenitore per voce: per averne un altro, aggiungilo di nuovo.')
         : h('span', { class: 'quantita' }, 'Quantità ',
-          h('button', { type: 'button', class: 'btn-tavolo piccolo', disabled: v.quantita <= 1, 'aria-label': `Togli uno a ${r.nome}`, onclick: () => cambia(v.uid, { quantita: v.quantita - 1 }) }, '−'),
+          h('button', { type: 'button', class: 'btn-tavolo piccolo', spento: v.quantita <= 1 && 'La quantità non scende sotto 1.', 'aria-label': `Togli uno a ${r.nome}`, onclick: () => cambia(v.uid, { quantita: v.quantita - 1 }) }, '−'),
           h('output', {}, String(v.quantita)),
           h('button', { type: 'button', class: 'btn-tavolo piccolo', 'aria-label': `Aggiungi uno a ${r.nome}`, onclick: () => cambia(v.uid, { quantita: v.quantita + 1 }) }, '+')),
       // §1.6: il peso degli oggetti personalizzati si corregge qui (quelli del catalogo vengono dai dati)
@@ -546,7 +546,7 @@ export function bottoneCompra(ctx, scelto, nuovaVoce, etichetta = 'Compra') {
   const avvisoRep = !motivo && pz && pz.catalogo === null && !scelto.reperibilita ? 'Reperibilità non indicata: il prezzo di vendita non garantisce un venditore (A.256). Il Direttore decide se l’oggetto si trova.' : null;
   const avvisoCrediti = !motivo && ctx.crediti < costo ? `Crediti insufficienti: ne hai ${ctx.crediti.toLocaleString('it-IT')}, ne servono ${costo.toLocaleString('it-IT')}` : null;
   return h('button', {
-    type: 'button', class: `btn${avvisoCrediti || avvisoRep ? ' con-avviso' : ''}`, disabled: !!motivo, title: motivo ?? [avvisoRep, avvisoCrediti].filter(Boolean).join(' '),
+    type: 'button', class: `btn${avvisoCrediti || avvisoRep ? ' con-avviso' : ''}`, spento: motivo || null, title: [avvisoRep, avvisoCrediti].filter(Boolean).join(' ') || null,
     onclick: () => conAvviso(ctx.storico ?? null, { azione: `comprare ${scelto.nome ?? 'un oggetto'}`, motivo: [avvisoRep, avvisoCrediti].filter(Boolean).join(' ') || null, fai: () => ctx.compra(nuovaVoce(), costo) }),
   }, costo === null ? etichetta : `${etichetta} (−${costo.toLocaleString('it-IT')} crediti)`);
 }

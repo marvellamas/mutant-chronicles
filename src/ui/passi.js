@@ -117,7 +117,7 @@ export function dettagli(ctx, chiave, sommario, ...contenuto) {
 
 export function bottoneScelta(selezionato, onclick, etichetta = 'Scegli') {
   return selezionato
-    ? h('button', { type: 'button', class: 'btn scelto', disabled: true, 'aria-pressed': 'true' }, 'Scelta ✓')
+    ? h('button', { type: 'button', class: 'btn scelto', spento: 'È già la tua scelta.', 'aria-pressed': 'true' }, 'Scelta ✓')
     : h('button', { type: 'button', class: 'btn primario', onclick }, etichetta);
 }
 
@@ -153,7 +153,7 @@ export function contatore(rimasti, totale, etichetta) {
  */
 export function stepper(valore, { meno, piu, motivoMeno, motivoPiu, etichetta, fermo = false }) {
   const bottone = (segno, onclick, motivo, testo) => h('button', {
-    type: 'button', class: `btn tondo${motivo ? ' con-avviso' : ''}`, onclick, disabled: fermo && !!motivo,
+    type: 'button', class: `btn tondo${motivo ? ' con-avviso' : ''}`, onclick, spento: fermo && motivo,
     title: motivo ?? `${testo} un punto a ${etichetta}`, 'aria-label': `${testo} un punto a ${etichetta}${motivo ? `: ${motivo}` : ''}`,
   }, segno);
   return h('span', { class: 'stepper' },

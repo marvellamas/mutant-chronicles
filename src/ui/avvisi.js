@@ -10,6 +10,9 @@ const DURATA = { ok: 4500, info: 4500, errore: 10000 };
 
 function contenitore() {
   let c = document.getElementById('avvisi');
+  // lotto 258: un tocco su un pulsante spento dentro una finestrella modale porta qui il contenitore (src/ui/spento.js); chiusa la
+  // finestrella, torna nel documento, altrimenti gli avvisi restano nascosti con lei
+  if (c && c.parentNode !== document.body && !c.closest?.('dialog[open]')) document.body.append(c);
   if (!c) {
     c = h('div', { id: 'avvisi', class: 'avvisi', 'aria-live': 'polite' });
     document.body.append(c);

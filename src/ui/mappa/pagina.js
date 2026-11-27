@@ -23,6 +23,7 @@
 import { iconaSalvataggio, pulsanteAudio, clicFuori } from '../../mappa/barra.js';
 import { conLineaDallaMappa, presetDaLinea } from '../../dalla-mappa.js';
 import { h, svuota } from '../dom.js';
+import { spegni } from '../spento.js';
 import { pulsanteSchermoIntero } from '../schermo-intero.js';
 import { avviso, avvisoErrore } from '../avvisi.js';
 import { cameraIniziale, zoomVerso, sposta, adatta, mappaDaSchermo, schermoDaMappa, rettangoloVisibile, mantieniCentro, riadattaCentro } from '../../mappa/camera.js';
@@ -725,7 +726,7 @@ export function renderMappa(radice, ctx) {
     if (st.scena.griglia.bloccata) return avvisoErrore('La griglia è bloccata: sbloccala per cambiare l’immagine di fondo.');
     const controllo = await controllaFile(file, ctx.dati);
     if (controllo.errore) return avvisoErrore(controllo.errore, { durata: 12000 });
-    el.btnCarica.disabled = true;
+    spegni(el.btnCarica, 'Un attimo: sto caricando l’immagine.');
     testoStato(`Caricamento di ${file.name}…`);
     try {
       const ridotta = await preparaRidotta(file, ctx.dati);
@@ -743,7 +744,7 @@ export function renderMappa(radice, ctx) {
       testoStato('');
       avvisoErrore(`Immagine non caricata: ${e.message}`, { durata: 12000 });
     } finally {
-      el.btnCarica.disabled = false;
+      spegni(el.btnCarica, null);
     }
   }
 
@@ -1380,7 +1381,7 @@ export function renderMappa(radice, ctx) {
         const v = VOCI[id];
         if (!v) return null;
         return h('button', {
-          type: 'button', role: 'menuitem', class: 'voce-strumenti', disabled: !sc || !!v.spenta, title: !sc ? 'Nessuna scena aperta' : v.spenta ?? v.titolo,
+          type: 'button', role: 'menuitem', class: 'voce-strumenti', spento: !sc ? 'Nessuna scena aperta.' : (v.spenta || null), title: v.titolo ?? null,
           onclick: () => { el.strumenti.open = false; v.azione(); },
         }, h('span', { class: 'voce-testo' }, v.testo), v.tasto ? h('kbd', { class: 'voce-tasto' }, v.tasto) : null);
       }))));
@@ -1912,7 +1913,7 @@ export function renderMappa(radice, ctx) {
   const disegnoAttivo = () => (N.strumento ? { gruppo: 'nebbia', forma: N.strumento } : M.strumento ? { gruppo: 'muri', forma: M.strumento } : L.strumento ? { gruppo: 'luci', forma: L.strumento } : null);
   const quanteAnnulla = () => st.scena.annulla.length;
   const pulsanteScelta = (testo, attivo, onclick, titolo) => h('button', { type: 'button', class: `btn btn-piccolo${attivo ? ' scelto' : ''}`, 'aria-pressed': String(attivo), title: titolo, onclick }, testo);
-  const pulsanteAnnulla = () => h('button', { type: 'button', class: 'btn btn-piccolo', disabled: !quanteAnnulla(), title: 'Annulla l’ultima azione del master: movimento, muro, nebbia, token (Ctrl+Z)', onclick: () => annullaUi() }, `Annulla (${quanteAnnulla()})`);
+  const pulsanteAnnulla = () => h('button', { type: 'button', class: 'btn btn-piccolo', spento: !quanteAnnulla() && 'Niente da annullare in questa scena.', title: 'Annulla l’ultima azione del master: movimento, muro, nebbia, token (Ctrl+Z)', onclick: () => annullaUi() }, `Annulla (${quanteAnnulla()})`);
   const campoLato = (o) => h('label', { class: 'mappa-campo' }, h('span', {}, 'Dimensione del pennello (Q)'),
     h('input', { type: 'number', min: 1, max: 15, step: 1, value: String(o.lato), onchange: (e) => { o.lato = Math.max(1, Math.min(15, Math.round(Number(e.target.value) || 1))); e.target.value = String(o.lato); } }));
   function disegnaPannelloNebbia() {
@@ -1979,7 +1980,7 @@ export function renderMappa(radice, ctx) {
           h('input', { type: 'checkbox', checked: M.raddrizza, onchange: (e) => { M.raddrizza = e.target.checked; } }), ' Raddrizza')) : null,
       S === 'muro' && M.strumento === 'linea' && M.tracciato === 'punti' && M.punti.length ? h('div', { class: 'mappa-azioni-token' },
         h('span', { class: 'nota' }, `${M.punti.length} ${M.punti.length === 1 ? 'vertice' : 'vertici'}`),
-        h('button', { type: 'button', class: 'btn btn-piccolo primario', disabled: M.punti.length < 2, onclick: () => chiudiMuroAPunti() }, 'Chiudi muro (Invio)'),
+        h('button', { type: 'button', class: 'btn btn-piccolo primario', spento: M.punti.length < 2 && 'Servono almeno 2 vertici per chiudere un muro.', onclick: () => chiudiMuroAPunti() }, 'Chiudi muro (Invio)'),
         h('button', { type: 'button', class: 'btn btn-piccolo', onclick: () => { M.punti = []; M.cursore = null; disegnaPannelloMuri(); ridisegna(['sopra']); } }, 'Annulla (Esc)')) : null,
       S === 'muro' ? h('p', { class: 'nota' }, M.strumento !== 'linea'
         ? 'Dipingi i quadretti di muro. Per cancellarli: strumento Gomma.'
@@ -3964,8 +3965,8 @@ export function renderMappa(radice, ctx) {
     // le voci del token (data/mappa.json → menu.token dice ordine e gruppi; qui solo cosa fanno e quando si possono usare)
     const fabbriche = {
       passo: () => ({ testo: 'Passo', azione: () => cambiaFascia(1), scelta: st.fascia === 1, disabilitata: !mov || !Number.isFinite(mov.passo) || mov.passo === 0, titolo: motivoFermo ?? `Area fino al Passo (${mov.passo} Q)` }),
-      corsa: () => ({ testo: 'Corsa', azione: () => cambiaFascia(2), scelta: st.fascia === 2, disabilitata: !Number.isFinite(mov?.corsa) || bloccata('corsa'), titolo: motivoFermo ?? (bloccata('corsa') ? titoloBloccata : 'Amplia l’area fino alla Corsa (un blocco unico: i Q non usati si perdono)') }),
-      scatto: () => ({ testo: 'Scatto', azione: () => cambiaFascia(3), scelta: st.fascia === 3, disabilitata: !Number.isFinite(mov?.scatto) || bloccata('scatto'), titolo: motivoFermo ?? (bloccata('scatto') ? titoloBloccata : 'Amplia l’area fino allo Scatto (un blocco unico: i Q non usati si perdono)') }),
+      corsa: () => ({ testo: 'Corsa', azione: () => cambiaFascia(2), scelta: st.fascia === 2, disabilitata: !Number.isFinite(mov?.corsa) || bloccata('corsa'), titolo: motivoFermo ?? (!Number.isFinite(mov?.corsa) ? 'Questa creatura non ha la Corsa.' : bloccata('corsa') ? titoloBloccata : 'Amplia l’area fino alla Corsa (un blocco unico: i Q non usati si perdono)') }),
+      scatto: () => ({ testo: 'Scatto', azione: () => cambiaFascia(3), scelta: st.fascia === 3, disabilitata: !Number.isFinite(mov?.scatto) || bloccata('scatto'), titolo: motivoFermo ?? (!Number.isFinite(mov?.scatto) ? 'Questa creatura non ha lo Scatto.' : bloccata('scatto') ? titoloBloccata : 'Amplia l’area fino allo Scatto (un blocco unico: i Q non usati si perdono)') }),
       libero: () => ({ testo: 'Libero', azione: () => cambiaFascia(LIBERO), scelta: st.fascia === LIBERO, titolo: 'In qualunque quadretto, senza area e senza conteggio (scorciatoia: tieni premuto Maiusc)' }),
       annulla_movimento: () => (ultimo ? { testo: 'Annulla ultimo movimento', tasto: ultimaVoce?.tipo === 'movimento' && ultimaVoce.token === tok.id ? 'Ctrl+Z' : null, azione: () => annullaMovimentoUi(tok.id) } : null),
       nuovo_turno: () => (conScontro ? null : { testo: 'Nuovo turno', titolo: 'Senza scontro: il movimento di questo token riparte da 0', azione: () => nuovoTurnoUi(tok.id) }),
@@ -4356,7 +4357,7 @@ export function renderMappa(radice, ctx) {
     const m = audio.statoMusica();
     const puo = !!(f?.scontro || f?.bozza);
     svuota(el.audioMusica,
-      h('button', { type: 'button', class: `btn btn-piccolo${file ? ' acceso' : ''}`, disabled: !puo, title: puo ? `Musica di fondo: ${file ?? 'nessuna'} (clic per sceglierla dalla cartella musica/)` : 'Musica di fondo: collega la scena a uno scontro o a una bozza', 'aria-label': 'Musica di fondo', onclick: () => scegliMusicaUi() },
+      h('button', { type: 'button', class: `btn btn-piccolo${file ? ' acceso' : ''}`, spento: !puo && 'Musica di fondo: collega la scena a uno scontro o a una bozza.', title: `Musica di fondo: ${file ?? 'nessuna'} (clic per sceglierla dalla cartella musica/)`, 'aria-label': 'Musica di fondo', onclick: () => scegliMusicaUi() },
         conIcona('♫', file ? file.replace(/\.[^.]+$/, '') : 'Musica')),
       f?.scontro && file ? h('button', { type: 'button', class: 'btn btn-piccolo tondo', title: m.pausa ? 'Riprendi la musica' : 'Metti in pausa la musica', 'aria-label': m.pausa ? 'Riprendi la musica' : 'Pausa della musica', onclick: () => { audio.pausa(!m.pausa); disegnaAudio(); } }, m.pausa ? '▶' : '⏸') : null);
   }

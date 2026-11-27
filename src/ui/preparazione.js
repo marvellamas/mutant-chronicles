@@ -255,8 +255,8 @@ export function apriPreparazione(ctx, { bestiario, alTavolo, scontroAperto, iniz
       riquadroPrep('2', 'PG e veicoli', 'Chi partecipa: senza scelta, i PG al tavolo quando premi «Inizia».', [
       h('fieldset', { class: 'campo-nemico gruppo' }, h('legend', {}, 'PG'),
         chiaviCartella.length ? h('div', { class: 'riga-azioni' },
-          h('button', { type: 'button', class: 'btn btn-piccolo', disabled: chiaviCartella.every((k) => pgNomi.has(k)), onclick: async () => { await Promise.all(chiaviCartella.map(vista)); modifica((x) => cambiaBozza(x, { pg: [...chiaviCartella] })); } }, 'Tutti'),
-          h('button', { type: 'button', class: 'btn btn-piccolo', disabled: !pgNomi.size, onclick: () => modifica((x) => cambiaBozza(x, { pg: [] })) }, 'Nessuno')) : null,
+          h('button', { type: 'button', class: 'btn btn-piccolo', spento: chiaviCartella.every((k) => pgNomi.has(k)) && 'Tutti i PG sono già scelti.', onclick: async () => { await Promise.all(chiaviCartella.map(vista)); modifica((x) => cambiaBozza(x, { pg: [...chiaviCartella] })); } }, 'Tutti'),
+          h('button', { type: 'button', class: 'btn btn-piccolo', spento: !pgNomi.size && 'Non c’è nessun PG scelto.', onclick: () => modifica((x) => cambiaBozza(x, { pg: [] })) }, 'Nessuno')) : null,
         chiaviCartella.length ? h('div', { class: 'caselle-nemico' }, chiaviCartella.map((k) => h('label', {}, h('input', { type: 'checkbox', checked: pgNomi.has(k), onchange: async (e) => {
           if (e.target.checked) await vista(k);
           modifica((x) => cambiaBozza(x, { pg: e.target.checked ? [...(x.pg ?? []), k] : (x.pg ?? []).filter((y) => y !== k) }));
@@ -338,7 +338,7 @@ export function apriPreparazione(ctx, { bestiario, alTavolo, scontroAperto, iniz
         h('option', { value: '', selected: !st.scenaScelta }, 'Nuova scena…'),
         scene.map((v) => h('option', { value: v.id, selected: v.id === st.scenaScelta }, `${v.nome}${v.id === gia ? ' (collegata)' : v.collegamento?.scontro || v.collegamento?.bozza ? ' (collegata ad altro)' : ''}`))),
       // lotto 248: spento solo finché l'elenco delle scene non è arrivato dal server, e adesso lo dice (non è un «no»: è un'attesa)
-      h('button', { type: 'button', class: 'btn', disabled: st.scene === null, title: st.scene === null ? 'Sto chiedendo al server l’elenco delle scene: un momento' : 'Collega la scena a questa bozza e apre la mappa per mettere i token', onclick: () => apriMappa(b) }, 'Prepara la mappa'),
+      h('button', { type: 'button', class: 'btn', spento: st.scene === null && 'Sto chiedendo al server l’elenco delle scene: un momento.', title: st.scene === null ? 'Sto chiedendo al server l’elenco delle scene: un momento' : 'Collega la scena a questa bozza e apre la mappa per mettere i token', onclick: () => apriMappa(b) }, 'Prepara la mappa'),
       h('span', { class: 'nota' }, gia ? ' la scena collegata si apre già con i pezzi della bozza' : ' i pezzi della bozza saranno fra i «senza token», da mettere in mappa'));
   };
   const apriMappa = async (b) => {

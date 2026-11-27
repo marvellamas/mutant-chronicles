@@ -249,8 +249,8 @@ const barraPv = (p, modifica) => h('div', { class: 'plancia-barra risorsa-pv' },
     h('span', { class: 'barra-riempimento', style: `width: ${riempimento(p.pv.attuali, p.pv.massimo)}%` })),
   h('span', { class: 'barra-numero' }, `${p.pv.attuali} / ${p.pv.massimo}`),
   h('span', { class: 'pv-nemico-pulsanti' },
-    h('button', { type: 'button', class: 'btn btn-piccolo', 'aria-label': `${p.nome}: −1 PV`, disabled: p.pv.attuali <= 0, onclick: () => modifica((x) => variaPvNemico(x, p.id, -1)) }, '−'),
-    h('button', { type: 'button', class: 'btn btn-piccolo', 'aria-label': `${p.nome}: +1 PV`, disabled: p.pv.attuali >= p.pv.massimo, onclick: () => modifica((x) => variaPvNemico(x, p.id, 1)) }, '+')));
+    h('button', { type: 'button', class: 'btn btn-piccolo', 'aria-label': `${p.nome}: −1 PV`, spento: p.pv.attuali <= 0 && `${p.nome} è già a 0 PV.`, onclick: () => modifica((x) => variaPvNemico(x, p.id, -1)) }, '−'),
+    h('button', { type: 'button', class: 'btn btn-piccolo', 'aria-label': `${p.nome}: +1 PV`, spento: p.pv.attuali >= p.pv.massimo && `${p.nome} è già al massimo dei PV (${p.pv.massimo}).`, onclick: () => modifica((x) => variaPvNemico(x, p.id, 1)) }, '+')));
 
 const barraPm = (p, modifica) => h('div', { class: 'plancia-barra risorsa-pm' },
   h('span', { class: 'barra-etichetta' }, 'PM'),
@@ -258,8 +258,8 @@ const barraPm = (p, modifica) => h('div', { class: 'plancia-barra risorsa-pm' },
     h('span', { class: 'barra-riempimento', style: `width: ${riempimento(p.pm.attuali, p.pm.massimo)}%` })),
   h('span', { class: 'barra-numero' }, `${p.pm.attuali} / ${p.pm.massimo}`),
   h('span', { class: 'pv-nemico-pulsanti' },
-    h('button', { type: 'button', class: 'btn btn-piccolo', 'aria-label': `${p.nome}: −1 PM`, disabled: p.pm.attuali <= 0, onclick: () => modifica((x) => variaPmNemico(x, p.id, -1)) }, '−'),
-    h('button', { type: 'button', class: 'btn btn-piccolo', 'aria-label': `${p.nome}: +1 PM`, disabled: p.pm.attuali >= p.pm.massimo, onclick: () => modifica((x) => variaPmNemico(x, p.id, 1)) }, '+')));
+    h('button', { type: 'button', class: 'btn btn-piccolo', 'aria-label': `${p.nome}: −1 PM`, spento: p.pm.attuali <= 0 && `${p.nome} è già a 0 PM.`, onclick: () => modifica((x) => variaPmNemico(x, p.id, -1)) }, '−'),
+    h('button', { type: 'button', class: 'btn btn-piccolo', 'aria-label': `${p.nome}: +1 PM`, spento: p.pm.attuali >= p.pm.massimo && `${p.nome} è già al massimo dei PM (${p.pm.massimo}).`, onclick: () => modifica((x) => variaPmNemico(x, p.id, 1)) }, '+')));
 
 /** «1 Azione Principale e 1 di Movimento» dal campo azioni (A.73, decisione 5). */
 function testoAzioni(a) {
@@ -323,7 +323,7 @@ export function cartaNemico(ctx, p, { modifica, durate = [], diTurnoOra = false,
   return h('article', { class: `carta-plancia carta-nemico lato-${p.lato}${diTurnoOra ? ' di-turno' : ''}${p.pv.attuali === 0 ? ' a-zero' : ''}`, 'aria-label': `${p.nome}, ${p.lato}${diTurnoOra ? ', di turno' : ''}` },
     h('header', { class: 'carta-plancia-testa' },
       // A.131: immagine del token sulla mappa (un clic la cambia per tutte le copie del tipo e nel bestiario)
-      urlImmagine(n.immagine) ? h('button', { type: 'button', class: 'immagine-carta', title: onImmagine ? 'Immagine sulla mappa: clic per cambiarla' : null, disabled: !onImmagine, onclick: onImmagine },
+      urlImmagine(n.immagine) ? h('button', { type: 'button', class: 'immagine-carta', title: onImmagine ? 'Immagine sulla mappa: clic per cambiarla' : null, spento: !onImmagine && 'Da qui l’immagine non si cambia: lo fa il master dalla plancia.', onclick: onImmagine },
         h('img', { src: urlImmagine(n.immagine), alt: '', class: 'ritratto-plancia' })) : null,
       h('div', {},
         h('h2', {}, p.nome),
@@ -382,10 +382,10 @@ export function cartaNemico(ctx, p, { modifica, durate = [], diTurnoOra = false,
             ...n.configurazioni.map((c) => h('option', { value: c.id, selected: c.id === conf.id }, `${c.nome} (${c.spazio})`)))) : null,
         conf?.nota ? h('small', { class: 'nota' }, ` ${conf.nota}`) : null,
         forma ? h('span', { class: 'etichetta tratto-nemico tratto-forma', title: forma.nota ?? null }, `Forma: ${forma.nome}${Number.isInteger(p.forma?.fino) ? ` fino al Round ${p.forma.fino}` : ''}`) : null,
-        forma && forma.id === prima.id ? altre.map((f) => h('button', { type: 'button', class: 'btn btn-piccolo', disabled: !modifica,
+        forma && forma.id === prima.id ? altre.map((f) => h('button', { type: 'button', class: 'btn btn-piccolo', spento: !modifica && 'Scontro in sola lettura: la forma la cambia il master dalla plancia.',
           title: `${f.nome}: ${f.nota ?? ''} Dura fino alla fine del Round successivo a questo, poi la creatura torna ${prima.nome.toLowerCase()} da sola.`,
           onclick: () => modifica((x) => cambiaForma(x, p.id, f.id, { fino: (scontro?.round ?? 1) + 1 })) }, f.nome)) : null,
-        forma && forma.id !== prima.id ? h('button', { type: 'button', class: 'btn btn-piccolo', disabled: !modifica, onclick: () => modifica((x) => cambiaForma(x, p.id, prima.id)) }, `Torna ${prima.nome.toLowerCase()}`) : null,
+        forma && forma.id !== prima.id ? h('button', { type: 'button', class: 'btn btn-piccolo', spento: !modifica && 'Scontro in sola lettura: la forma la cambia il master dalla plancia.', onclick: () => modifica((x) => cambiaForma(x, p.id, prima.id)) }, `Torna ${prima.nome.toLowerCase()}`) : null,
         forma && forma.muove === false ? h('small', { class: 'nota' }, ' Non si muove, non attacca, non attraversa la roccia, non Schiva.') : null);
     })(),
     // Lotto 204: **quando una scheda porta valori di due edizioni, al tavolo si deve leggere.** Davide prepara gli
@@ -418,10 +418,10 @@ export function cartaNemico(ctx, p, { modifica, durate = [], diTurnoOra = false,
         // §4.2.1: ciò che su un PG sarebbe una Ferita, qui è −5 PV che ignorano l'AR; uno stato curato, +5 PV.
         // Due tocchi, con il motivo scritto nel registro: a mano sarebbero −5 e +5 da ricordare a memoria.
         modifica ? h('p', { class: 'riga-azioni azioni-senza-ferite' },
-          h('button', { type: 'button', class: 'btn btn-piccolo', disabled: p.pv.attuali <= 0,
+          h('button', { type: 'button', class: 'btn btn-piccolo', spento: p.pv.attuali <= 0 && `${p.nome} è già a 0 PV: non c’è altro da togliere.`,
             title: `Una Ferita inflitta direttamente: −${perFerita} PV, ignorando l’AR (§4.2.1). Non è un danno da tirare.`,
             onclick: () => modifica((x) => feritaDirettaNemico(x, p.id, 1, dati, new Date())) }, `Ferita diretta (−${perFerita} PV)`),
-          h('button', { type: 'button', class: 'btn btn-piccolo', disabled: p.pv.attuali >= p.pv.massimo,
+          h('button', { type: 'button', class: 'btn btn-piccolo', spento: p.pv.attuali >= p.pv.massimo && `${p.nome} è già al massimo dei PV: non c’è niente da curare.`,
             title: `Uno stato di Ferita curato o ridotto: +${perCura} PV, fino al massimo (§4.2.1).`,
             onclick: () => modifica((x) => curaFeritaNemico(x, p.id, 1, dati, new Date())) }, `Ferita curata (+${perCura} PV)`)) : null);
     })(),

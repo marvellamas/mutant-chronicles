@@ -141,10 +141,10 @@ export function bloccoControNemico(ctx, a, r, info) {
     nodi,
     st.errore ? h('p', { class: 'motivo', role: 'alert' }, st.errore) : null,
     st.ultimo ? h('p', { class: 'esito-attacco', role: 'status' }, st.ultimo.testo,
-      st.ultimo.colpo ? [' ', h('button', { type: 'button', class: 'btn btn-piccolo', disabled: st.inCorso, onclick: annulla }, 'Annulla questo colpo')] : null) : null,
+      st.ultimo.colpo ? [' ', h('button', { type: 'button', class: 'btn btn-piccolo', spento: st.inCorso && 'Un attimo: sto ancora registrando.', onclick: annulla }, 'Annulla questo colpo')] : null) : null,
     h('div', { class: 'riga-azioni' },
-      e.colpisce && conDanno && !filtrato ? h('button', { type: 'button', class: 'btn primario btn-grande', disabled: st.inCorso || !b, onclick: applica }, 'Applica il danno') : null,
-      e.completo ? h('button', { type: 'button', class: `btn${e.colpisce && conDanno && !filtrato ? '' : ' primario'}`, disabled: st.inCorso || !b, onclick: registra }, filtrato ? 'Registra l’attacco per il master' : e.colpisce ? 'Registra senza danno' : 'Registra l’attacco') : null),
+      e.colpisce && conDanno && !filtrato ? h('button', { type: 'button', class: 'btn primario btn-grande', spento: (st.inCorso && 'Un attimo: sto ancora registrando.') || (!b && 'Scegli prima il bersaglio.'), onclick: applica }, 'Applica il danno') : null,
+      e.completo ? h('button', { type: 'button', class: `btn${e.colpisce && conDanno && !filtrato ? '' : ' primario'}`, spento: (st.inCorso && 'Un attimo: sto ancora registrando.') || (!b && 'Scegli prima il bersaglio.'), onclick: registra }, filtrato ? 'Registra l’attacco per il master' : e.colpisce ? 'Registra senza danno' : 'Registra l’attacco') : null),
     h('small', { class: 'nota' }, filtrato
       ? 'Va nel registro dello scontro con una riga: il master la vede nella plancia e applica lui il danno.'
       : 'Va nel registro dello scontro con una riga; «Applica il danno» apre «Colpito» sul nemico. Si corregge con «Annulla questo colpo» o, nella plancia, «Annulla ultimo colpo».'));

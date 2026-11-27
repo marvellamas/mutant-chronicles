@@ -106,7 +106,7 @@ function bloccoPg(pg, scelte) {
     pg.righe.length ? h('ul', { class: 'rientro-elenco' }, pg.righe.map((r) => riga(pg, r, scelte))) : null,
     ritirateDi(pg),
     pg.righe.length ? h('div', { class: 'riga-azioni' },
-      h('button', { type: 'button', class: 'btn primario', disabled: decise === 0, onclick: () => applica(pg, scelte) },
+      h('button', { type: 'button', class: 'btn primario', spento: decise === 0 && 'Scegli prima, riga per riga, che cosa fare di ogni modifica.', onclick: () => applica(pg, scelte) },
         decise === 0 ? 'Scegli che cosa fare' : `Applica a ${pg.nome} (${decise} di ${pg.righe.length})`),
       decise < pg.righe.length ? h('span', { class: 'nota' }, `${pg.righe.length - decise} resta${pg.righe.length - decise === 1 ? '' : 'no'} in attesa`) : null) : null);
 }

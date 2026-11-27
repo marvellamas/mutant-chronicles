@@ -148,18 +148,20 @@ main:has(> .scheda-tab.larghezza-piena) { max-width: 1650px; }
   color: var(--testo);
   cursor: pointer;
 }
-.btn:hover:not(:disabled) { border-color: var(--accento); }
+.btn:hover:not(:disabled):not([aria-disabled="true"]) { border-color: var(--accento); }
 .btn:focus-visible, .passo-link:focus-visible, summary:focus-visible, input:focus-visible, textarea:focus-visible {
   outline: 2px solid var(--accento);
   outline-offset: 2px;
 }
 .btn:disabled { opacity: 0.45; cursor: not-allowed; }
+/* lotto 258: un pulsante spento resta toccabile e dice perché (src/ui/spento.js): stesso aspetto del disabled */
+button[aria-disabled="true"][data-motivo] { opacity: 0.45; cursor: not-allowed; }
 .btn.primario { background: var(--accento); border-color: var(--accento); color: var(--accento-testo); font-weight: 600; }
 .btn.scelto { background: var(--ok-tenue); border-color: var(--ok); color: var(--ok); opacity: 1; cursor: default; font-weight: 600; }
 .btn.pericolo { color: var(--errore); }
 /* 08/10: una conferma «pericolo» è primario + pericolo: prima testo --errore su sfondo --accento (illeggibile, soprattutto
    nel tema scuro: salmone su arancione); ora rosso pieno con testo bianco, anche al passaggio del mouse e al clic */
-.btn.primario.pericolo, .btn.primario.pericolo:hover:not(:disabled), .btn.primario.pericolo:active, .btn.primario.pericolo:focus-visible { background: var(--pericolo-pieno); border-color: var(--pericolo-pieno); color: var(--pericolo-testo); }
+.btn.primario.pericolo, .btn.primario.pericolo:hover:not(:disabled):not([aria-disabled="true"]), .btn.primario.pericolo:active, .btn.primario.pericolo:focus-visible { background: var(--pericolo-pieno); border-color: var(--pericolo-pieno); color: var(--pericolo-testo); }
 .btn.tondo { width: 2.5rem; min-width: 2.5rem; padding: 0; font-size: 1.2rem; font-weight: 700; }
 
 .riga-azioni { display: flex; flex-wrap: wrap; gap: 0.5rem; align-items: center; margin: 0.75rem 0; }
@@ -832,7 +834,7 @@ details.sezione-tab > summary { font-weight: 700; cursor: pointer; min-height: 4
   background: var(--sfondo); color: var(--testo); cursor: pointer;
   touch-action: manipulation; -webkit-user-select: none; user-select: none;
 }
-.btn-tavolo:active:not(:disabled) { background: var(--accento-tenue); border-color: var(--accento); }
+.btn-tavolo:active:not(:disabled):not([aria-disabled="true"]) { background: var(--accento-tenue); border-color: var(--accento); }
 .btn-tavolo:disabled { opacity: 0.4; cursor: not-allowed; }
 /* Crediti: 14 pulsanti in due file compatte (meno sopra, più sotto), alti almeno 32 px per il tocco;
    se il riquadro è stretto spariscono ±500 e ±1000 (si usa il campo del totale), mai i piccoli */
@@ -1398,7 +1400,7 @@ body.con-sfondo::before {
   padding: 0.35rem 0.6rem; border: 1px solid var(--bordo); border-radius: var(--raggio); background: var(--superficie);
   color: var(--testo); font: inherit; text-align: left; cursor: pointer;
 }
-.interruttore:hover:not(:disabled) { border-color: var(--accento); }
+.interruttore:hover:not(:disabled):not([aria-disabled="true"]) { border-color: var(--accento); }
 .interruttore:focus-visible { outline: 3px solid var(--accento); outline-offset: 1px; }
 .interruttore:disabled { opacity: 0.45; cursor: not-allowed; }
 .interruttore.acceso { border-color: var(--accento); background: var(--accento-tenue); }
@@ -1779,9 +1781,10 @@ body.con-sfondo::before {
 .avviso { pointer-events: auto; cursor: pointer; padding: 0.6rem 0.8rem; border-radius: 6px; border: 1px solid var(--bordo); border-left-width: 5px; background: var(--sfondo); color: var(--testo); box-shadow: 0 4px 14px rgba(0, 0, 0, 0.18); font-size: 0.95rem; animation: avviso-entra 0.18s ease-out; }
 .avviso p { margin: 0; }
 .avviso p + p { margin-top: 0.2rem; }
-.avviso-ok { border-left-color: var(--ok); background: var(--ok-tenue); }
-.avviso-info { border-left-color: var(--attenzione); background: var(--attenzione-tenue); }
-.avviso-errore { border-left-color: var(--errore); background: var(--errore-tenue); font-weight: 600; }
+/* lotto 258: lo sfondo tenue si lasciava attraversare dal testo sotto (il motivo di un pulsante spento va letto in un tocco): ora sopra lo sfondo pieno */
+.avviso-ok { border-left-color: var(--ok); background: linear-gradient(var(--ok-tenue), var(--ok-tenue)), var(--sfondo); }
+.avviso-info { border-left-color: var(--attenzione); background: linear-gradient(var(--attenzione-tenue), var(--attenzione-tenue)), var(--sfondo); }
+.avviso-errore { border-left-color: var(--errore); background: linear-gradient(var(--errore-tenue), var(--errore-tenue)), var(--sfondo); font-weight: 600; }
 @keyframes avviso-entra { from { opacity: 0; transform: translateY(0.4rem); } to { opacity: 1; transform: none; } }
 @media (prefers-reduced-motion: reduce) { .avviso { animation: none; } }
 @media print { .avvisi { display: none; } }
@@ -2097,7 +2100,7 @@ body:has(.mappa-pagina) .piede { display: none; }
 .mappa-menu-gruppo + .mappa-menu-gruppo { border-top: 1px solid var(--bordo); }
 .mappa-menu-intestazione { margin: 0.15rem 0 0; padding: 0 0.5rem; font-size: 0.72rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em; color: var(--tenue); }
 .mappa-menu .mappa-menu-voce { font: inherit; display: flex; align-items: center; justify-content: space-between; gap: 1rem; min-height: var(--voce-menu, 40px); text-align: left; background: none; border: none; color: var(--testo); padding: 0.3rem 0.5rem; border-radius: 4px; cursor: pointer; }
-.mappa-menu .mappa-menu-voce:hover:not(:disabled), .mappa-menu .mappa-menu-voce:focus-visible, .mappa-menu .mappa-menu-opzioni[aria-expanded="true"] { background: var(--accento-tenue); }
+.mappa-menu .mappa-menu-voce:hover:not(:disabled):not([aria-disabled="true"]), .mappa-menu .mappa-menu-voce:focus-visible, .mappa-menu .mappa-menu-opzioni[aria-expanded="true"] { background: var(--accento-tenue); }
 .mappa-menu .mappa-menu-voce.scelta { font-weight: 700; }
 .mappa-menu .mappa-menu-voce:disabled { opacity: 0.45; cursor: default; }
 .mappa-menu .mappa-menu-voce.pericolo { color: var(--errore, #e03131); font-weight: 600; }
@@ -3206,6 +3209,7 @@ p.da-applicare { margin: 0.2rem 0 0.5rem; }
 .btn-annulla[data-stato="attivo"] { border-color: var(--accento, currentColor); }
 .btn-annulla[data-stato="non-annullabile"] .annulla-dettaglio { color: var(--attenzione); opacity: 1; }
 .btn-annulla:disabled, .btn-annulla[aria-disabled="true"] { cursor: not-allowed; opacity: 0.75; }
+.btn-annulla[aria-disabled="true"][data-motivo] { opacity: 0.75; } /* lotto 258: resta com'era, più leggibile degli altri spenti */
 
 /* lotto 245: l'indice degli incantesimi per tipo — un pallino del colore del tipo davanti al nome (nessuna altezza in più) e un piccolo stacco fra i gruppi */
 .indice-incantesimi .pallino-tipo { flex: none; align-self: center; width: 0.55rem; height: 0.55rem; margin-right: 0.4rem; border-radius: 50%; background: var(--macro, var(--bordo)); }

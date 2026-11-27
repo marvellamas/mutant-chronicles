@@ -86,7 +86,7 @@ export function pannelloPassi({ etichetta, titolo, classe = '', chiudi, passi, s
           i === ultimo ? p.contenuto : disponi(p.contenuto))),
         // telefono: un passo per schermata
         h('nav', { class: 'attacco-nav', 'aria-label': etichettaNav },
-          h('button', { type: 'button', class: 'btn', disabled: passo === 0, onclick: () => vai(passo - 1) }, '← Indietro'),
+          h('button', { type: 'button', class: 'btn', spento: passo === 0 && 'Sei al primo passo.', onclick: () => vai(passo - 1) }, '← Indietro'),
           h('span', { class: 'nota' }, `${passo + 1} / ${passi.length}`),
           passo < ultimo ? h('button', { type: 'button', class: 'btn primario', onclick: () => vai(passo + 1) }, `${passi[passo + 1].titolo} →`) : null))));
 }

@@ -87,7 +87,7 @@ export function apriSpostaPunti(azioni, livello = null) {
       const piu = (r) => h('button', { type: 'button', class: 'btn-tavolo', 'aria-label': `Metti un punto in ${r.nome}`,
         title: ev.differenza >= 0 ? 'Nessun punto da ricollocare: questo sarebbe un punto in più del livello (te lo chiede alla conferma)' : `Rimetti un punto in ${r.nome}`,
         onclick: () => { st.bozza = spostaInBozza(p, st.bozza, ev.livello, r.nome, 1); disegna(); } }, '+');
-      const meno = (r) => h('button', { type: 'button', class: 'btn-tavolo', 'aria-label': `Togli un punto da ${r.nome}`, disabled: r.ora <= 0,
+      const meno = (r) => h('button', { type: 'button', class: 'btn-tavolo', 'aria-label': `Togli un punto da ${r.nome}`, spento: r.ora <= 0 && `${r.nome} non ha punti da togliere in questo livello.`,
         onclick: () => { st.bozza = spostaInBozza(p, st.bozza, ev.livello, r.nome, -1); disegna(); } }, '−');
       corpo.replaceChildren(...[
         h('p', { class: 'nota' }, 'Togli i punti da dove sono stati messi e rimettili altrove, nello stesso livello. I VA si ricalcolano mentre sposti; le correzioni «✎» restano a parte.'),
@@ -109,9 +109,9 @@ export function apriSpostaPunti(azioni, livello = null) {
           : 'Alla conferma si salva una copia della scheda e la modifica va nel registro «Modifiche del master»; da lì «Annulla» rimette i punti di prima.'),
         h('div', { class: 'riga-azioni finestrella-azioni' },
           h('button', { type: 'button', class: 'btn', onclick: chiudi }, 'Annulla'),
-          h('button', { type: 'button', class: 'btn primario', disabled: !modificato(),
+          h('button', { type: 'button', class: 'btn primario', spento: !modificato() && 'Nessuno spostamento da confermare: togli un punto da un’Abilità e rimettilo in un’altra.',
             // lotto 247: un pulsante spento dice sempre perché — e questo è spento solo quando non cambierebbe niente
-            title: modificato() ? 'Conferma gli spostamenti' : 'Nessuno spostamento da confermare: togli un punto da un’Abilità e rimettilo in un’altra',
+            title: 'Conferma gli spostamenti',
             onclick: conferma }, 'Conferma')),
       ].filter(Boolean));
     };

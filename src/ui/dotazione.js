@@ -86,7 +86,7 @@ export function renderDotazione(ctx) {
       h('button', {
         // lotto 246: le mancanze si leggono qui sopra e la dotazione si mette lo stesso (un personaggio nuovo con
         // venti crediti di troppo non può restare senza equipaggiamento). Spento solo se non cambierebbe niente.
-        type: 'button', class: `btn primario${mancanze.length ? ' con-avviso' : ''}`, disabled: allineata,
+        type: 'button', class: `btn primario${mancanze.length ? ' con-avviso' : ''}`, spento: allineata && 'La dotazione nell’inventario è già com’è nelle scelte.',
         title: mancanze.length ? `${mancanze.join('; ')}. Puoi metterla lo stesso: la decisione è del Direttore.` : null,
         onclick: () => {
           if (applicata && !confirm('Le voci della dotazione iniziale nell’inventario vengono sostituite (stato e note compresi). Gli altri oggetti restano. Procedere?')) return;
@@ -202,7 +202,7 @@ function acquisti(ctx, d, imposta, conti, cat) {
       motivo && scelto ? h('p', { class: 'motivo', role: 'alert' }, motivo) : null,
       h('button', {
         // lotto 246: il motivo (crediti insufficienti, oggetto non cedibile) è scritto qui sopra e l'acquisto si fa lo stesso
-        type: 'button', class: `btn${motivo ? ' con-avviso' : ''}`, disabled: !bozza.rif,
+        type: 'button', class: `btn${motivo ? ' con-avviso' : ''}`, spento: !bozza.rif && 'Scegli prima l’oggetto da acquistare.',
         title: motivo ?? null,
         onclick: () => {
           ctx.ui.acquistoDotazione = { rif: '', cede: [] };

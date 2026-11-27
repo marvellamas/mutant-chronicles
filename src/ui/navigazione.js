@@ -23,7 +23,7 @@ export function barraPassi({ indietro, avanti, extra = null, posizione }) {
   h('button', { type: 'button', class: 'btn', onclick: indietro.onclick }, indietro.etichetta),
   h('small', { class: 'motivo', title: avanti.motivo ?? null }, avanti.motivo ?? ''),
   h('button', {
-    type: 'button', class: `btn${avanti.primario === false ? '' : ' primario'}`, disabled: !!avanti.disabilitato,
+    type: 'button', class: `btn${avanti.primario === false ? '' : ' primario'}`, spento: avanti.disabilitato ? (avanti.motivo || 'In questo passo manca ancora qualcosa.') : null,
     title: avanti.motivo ?? null, 'aria-label': avanti.corta ? avanti.etichetta : null, onclick: avanti.onclick,
   }, etichetta(avanti.etichetta, avanti.corta)),
   extra ? h('button', { type: 'button', class: 'btn', 'aria-label': extra.corta ? extra.etichetta : null, onclick: extra.onclick }, etichetta(extra.etichetta, extra.corta)) : null);

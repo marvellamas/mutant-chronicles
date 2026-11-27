@@ -119,7 +119,7 @@ export function pannelloScene(ctx, st, { ridisegna, apri, scontroAperto = undefi
   h('summary', {}, h('strong', {}, 'Mappe di battaglia'), st.elenco ? ` (${elenco.length} scen${elenco.length === 1 ? 'a' : 'e'})` : ''),
   h('p', { class: 'nota' }, 'Scene della mappa, in scene/ sul server: immagine, griglia e, nei prossimi lotti, nebbia, muri e token. Le immagini stanno in mappe/.'),
   h('div', { class: 'riga-azioni' },
-    h('button', { type: 'button', class: 'btn', disabled: st.occupato, onclick: azioni.nuova }, 'Nuova scena')),
+    h('button', { type: 'button', class: 'btn', spento: st.occupato && 'Un attimo: sto aspettando il server.', onclick: azioni.nuova }, 'Nuova scena')),
   st.errore ? h('p', { class: 'riquadro attenzione', role: 'status' }, st.errore) : null,
   st.elenco === null ? h('p', { class: 'vuoto' }, 'Lettura delle scene…')
     : elenco.length ? h('ul', { class: 'scene-elenco' }, elenco.map((v) => h('li', {},
@@ -127,9 +127,9 @@ export function pannelloScene(ctx, st, { ridisegna, apri, scontroAperto = undefi
       v.statoScontro ? h('span', { class: `etichetta-scena ${v.statoScontro}`, title: ETICHETTE_SCENA[v.statoScontro].titolo }, ETICHETTE_SCENA[v.statoScontro].testo) : null,
       h('small', { class: 'nota' }, ` ${v.colonne} × ${v.righe} Q · ${v.mappa ? 'con immagine' : 'senza immagine'} · rev. ${v.revisione}`),
       h('span', { class: 'scene-azioni' },
-        h('button', { type: 'button', class: 'btn btn-piccolo primario', disabled: st.occupato, onclick: () => apri(v.id) }, 'Apri'),
-        h('button', { type: 'button', class: 'btn btn-piccolo', disabled: st.occupato, onclick: () => azioni.rinomina(v) }, 'Rinomina'),
-        h('button', { type: 'button', class: 'btn btn-piccolo', disabled: st.occupato, onclick: () => azioni.duplica(v) }, 'Duplica'),
-        h('button', { type: 'button', class: 'btn btn-piccolo', disabled: st.occupato, title: 'Toglie la scena dall’elenco senza cancellarla (scene/archivio/)', onclick: () => azioni.archivia(v) }, 'Archivia')))))
+        h('button', { type: 'button', class: 'btn btn-piccolo primario', spento: st.occupato && 'Un attimo: sto aspettando il server.', onclick: () => apri(v.id) }, 'Apri'),
+        h('button', { type: 'button', class: 'btn btn-piccolo', spento: st.occupato && 'Un attimo: sto aspettando il server.', onclick: () => azioni.rinomina(v) }, 'Rinomina'),
+        h('button', { type: 'button', class: 'btn btn-piccolo', spento: st.occupato && 'Un attimo: sto aspettando il server.', onclick: () => azioni.duplica(v) }, 'Duplica'),
+        h('button', { type: 'button', class: 'btn btn-piccolo', spento: st.occupato && 'Un attimo: sto aspettando il server.', title: 'Toglie la scena dall’elenco senza cancellarla (scene/archivio/)', onclick: () => azioni.archivia(v) }, 'Archivia')))))
       : h('p', { class: 'vuoto' }, 'Nessuna scena: «Nuova scena» ne crea una.'));
 }

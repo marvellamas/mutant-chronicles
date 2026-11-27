@@ -186,8 +186,8 @@ export function pannelloGalleria(ctx, st, az) {
       h('button', { type: 'button', class: 'galleria-tocco', title: 'Anteprima grande (solo per te)', onclick: () => anteprima(v) }, miniatura(v)),
       h('div', { class: 'galleria-dati' }, rinomina(v), categoriaDi(v)),
       h('div', { class: 'galleria-azioni' },
-        h('button', { type: 'button', class: `btn btn-piccolo galleria-mostra${mostrataOra ? '' : ' primario'}`, disabled: mostrataOra,
-          title: mostrataOra ? 'È già sugli schermi dei giocatori' : 'La manda allo schermo dei giocatori e a tutti i tablet',
+        h('button', { type: 'button', class: `btn btn-piccolo galleria-mostra${mostrataOra ? '' : ' primario'}`, spento: mostrataOra && 'È già sugli schermi dei giocatori.',
+          title: 'La manda allo schermo dei giocatori e a tutti i tablet',
           onclick: () => mostra(v) }, mostrataOra ? '📺 Ai giocatori' : '📺 Mostra ai giocatori'),
         v.mostrata && v.daiGiocatori !== false
           ? iconaBtn('🚫', 'Togli dalla galleria dei giocatori (a te resta)', () => conErrore('Non tolta', () => cambiaVoce(v.file, { daiGiocatori: false })))

@@ -28,6 +28,7 @@ import { modelliProgetto, apriProgetto, scegliForma, scegliAlimentazione, regist
 import { circostanzeMasterAttive } from '../correzioni-master.js';
 import { cristalliCyberArma, cambiaCristallo, coloreCristallo } from '../cyberarma.js';
 import { conAvviso } from './procedi.js';
+import { spegni, motivoLimite } from './spento.js';
 import { h, segno, svuota } from './dom.js';
 import { avviso } from './avvisi.js';
 import { normalizzaTemporanei, variaTemporaneo, durataTemporaneo, togliTemporaneo, derivatiDi } from '../temporanei.js';
@@ -215,10 +216,9 @@ export function renderTab(ctx) {
         const aggiornaAnnulla = () => {
           const a = ctx.leggiAnnulla ? ctx.leggiAnnulla()
             : { attivo: !!ctx.puoAnnullareSessione, vuoto: !ctx.puoAnnullareSessione, etichetta: 'ultima modifica', motivo: 'Niente da annullare: non hai ancora fatto nessuna azione.' };
-          // vuoto: niente da dire, davvero spento. Non annullabile: resta toccabile (aria-disabled) perché il tocco mostri il MOTIVO per intero,
-          // che sul tablet non c'è un suggerimento da leggere (src/ui/app.js → annullaSessione)
-          annulla.disabled = !!a.vuoto;
-          annulla.setAttribute('aria-disabled', String(!a.attivo));
+          // lotto 258: come ogni pulsante spento, passa da spegni(): resta toccabile e il tocco mostra il MOTIVO per intero (sul tablet non c'è
+          // un suggerimento da leggere). Vuoto («niente da annullare») e non annullabile hanno ciascuno il suo testo, già scritto in a.motivo
+          spegni(annulla, a.attivo ? null : (a.motivo || 'Niente da annullare.'));
           annulla.setAttribute('data-stato', a.attivo ? 'attivo' : a.vuoto ? 'vuoto' : 'non-annullabile');
           dettaglioAnnulla.textContent = a.attivo ? a.etichetta : a.vuoto ? 'niente da annullare' : a.motivo.replace(/ Questo pulsante rimette solo.*$/, '');
           annulla.title = a.attivo ? `Annulla l’ultima azione: ${a.etichetta}` : a.motivo;
@@ -230,7 +230,7 @@ export function renderTab(ctx) {
       })(),
       id.livello < livelloMax
         // N2: punti in eccesso (A.108) e riassegnazioni in sospeso (A.107) sono un avviso con «Procedi comunque»
-        ? h('button', { type: 'button', class: `btn primario${ctx.avvisoSalita ? ' con-avviso' : ''}`, disabled: !!ctx.motivoNoSalita, title: ctx.motivoNoSalita ?? ctx.avvisoSalita, onclick: azioni.sali }, `Sali al livello ${id.livello + 1}`)
+        ? h('button', { type: 'button', class: `btn primario${ctx.avvisoSalita ? ' con-avviso' : ''}`, spento: ctx.motivoNoSalita || null, title: ctx.avvisoSalita ?? null, onclick: azioni.sali }, `Sali al livello ${id.livello + 1}`)
         : null,
       // 13/10: «Cerca nella scheda»: un campo e l'elenco di tutto ciò che contiene quella parola (aperta dal menu Azioni dal lotto 221)
       ctx.ui?.cerca?.aperta ? cercaNellaScheda(ctx) : null,
@@ -392,7 +392,7 @@ function liberiInEccesso(avviso, nome) {
 
 function menuAzioni(ctx) {
   const { azioni } = ctx;
-  const voce = (testo, onclick, opz = {}) => h('button', { type: 'button', class: `btn${opz.pericolo ? ' pericolo' : ''}`, onclick, disabled: !!opz.disabilitato, title: opz.titolo ?? null }, testo);
+  const voce = (testo, onclick, opz = {}) => h('button', { type: 'button', class: `btn${opz.pericolo ? ' pericolo' : ''}`, onclick, spento: opz.disabilitato && (opz.titolo ?? 'Adesso non si può fare.'), title: opz.titolo ?? null }, testo);
   return h('details', { class: 'menu-azioni' },
     h('summary', { class: 'btn' }, 'Azioni ▾'),
     h('div', { class: 'menu-voci' },
@@ -518,8 +518,7 @@ function contatoreTavolo(ctx, { titolo, campo, attuale, massimo, passi = [1, 5],
       // allineaSessione tiene i valori di sessione fra 0 e il massimo, quindi un valore oltre tornerebbe indietro da solo
       // e un pulsante che finge è peggio di uno spento (lotto 244). Sopra il massimo si passa dal ✎ di «Modifica master».
       type: 'button', class: 'btn-tavolo', onclick: () => ctx.azioni.varia(campo, delta),
-      disabled: !!motivo,
-      title: motivo,
+      spento: motivo,
       'aria-label': `${delta > 0 ? 'Aggiungi' : 'Togli'} ${Math.abs(delta)} a ${titolo}`,
     }, delta > 0 ? `+${delta}` : `−${-delta}`);
     pulsanti.push([el, delta]);
@@ -535,8 +534,7 @@ function contatoreTavolo(ctx, { titolo, campo, attuale, massimo, passi = [1, 5],
     for (const [el, delta] of pulsanti) {
       // il motivo segue lo spegnimento: un tasto che si spegne adesso lo dice adesso
       const m = motivoTasto(x, delta);
-      el.disabled = !!m;
-      if (m) el.setAttribute('title', m); else el.removeAttribute('title');
+      spegni(el, m);
     }
   });
   return h('div', { class: `contatore-tavolo ${classe}`.trim() },
@@ -560,27 +558,27 @@ function contatoreTavolo(ctx, { titolo, campo, attuale, massimo, passi = [1, 5],
 function testataComune(ctx) {
   const t = datiTestata(ctx.sessione, ctx.massimi);
   const s = ctx.sessione;
-  const tasto = (campo, delta, disabilitato, etichetta) => h('button', {
-    type: 'button', class: 'btn-tavolo btn-mini', disabled: disabilitato, 'aria-label': etichetta, title: etichetta, onclick: () => ctx.azioni.varia(campo, delta),
+  const tasto = (campo, delta, motivo, etichetta) => h('button', {
+    type: 'button', class: 'btn-tavolo btn-mini', spento: motivo, 'aria-label': etichetta, title: etichetta, onclick: () => ctx.azioni.varia(campo, delta),
   }, delta > 0 ? '+' : '−');
   // pulsanti da 1 a 1000, meno sopra e più sotto, come nel riquadro di prima
   const PASSI_CREDITI = [1, 5, 10, 50, 100, 500, 1000];
   const bc = (delta) => h('button', {
     // lotto 246: resta spento (i crediti negativi li riporta a 0 allineaSessione: un pulsante che finge è peggio di uno
     // spento), ma adesso dice perché — prima era muto
-    type: 'button', class: 'btn-tavolo btn-crediti', onclick: () => ctx.azioni.varia('crediti', delta), disabled: delta < 0 && s.crediti + delta < 0,
-    title: delta < 0 && s.crediti + delta < 0 ? `Hai ${s.crediti} crediti: non si scende sotto zero` : `${delta > 0 ? 'Aggiungi' : 'Togli'} ${Math.abs(delta)} crediti`,
+    type: 'button', class: 'btn-tavolo btn-crediti', onclick: () => ctx.azioni.varia('crediti', delta), spento: delta < 0 && s.crediti + delta < 0 && `Hai ${s.crediti} crediti: non si scende sotto zero.`,
+    title: `${delta > 0 ? 'Aggiungi' : 'Togli'} ${Math.abs(delta)} crediti`,
     'aria-label': `${delta > 0 ? 'Aggiungi' : 'Togli'} ${Math.abs(delta)} crediti`,
   }, delta > 0 ? `+${delta}` : `−${-delta}`);
   return h('div', { class: 'testata-comune', role: 'group', 'aria-label': 'Punti Eroe, Distintivi e Crediti' },
     segnoTalentiSpenti(ctx),
     h('span', { class: 'voce-testata voce-pe', title: `Punti Eroe: ${t.puntiEroe.valore} su ${t.puntiEroe.massimo ?? '—'}. «−» ne spende uno; si riottengono convertendo i Distintivi (§1.8.3).` },
       h('span', { class: 'etichetta-testata' }, 'Punti Eroe'), h('strong', { 'aria-live': 'polite' }, String(t.puntiEroe.valore)),
-      tasto('puntiEroe', -1, !t.puntiEroe.puoTogliere, 'Spendi 1 Punto Eroe'),
+      tasto('puntiEroe', -1, !t.puntiEroe.puoTogliere && 'Non hai Punti Eroe da spendere.', 'Spendi 1 Punto Eroe'),
       toccoMaster(ctx, { chiave: 'sessione:puntiEroe', campo: 'puntiEroe', etichetta: 'Punti Eroe', attuale: t.puntiEroe.valore })),
     h('span', { class: 'voce-testata voce-distintivi' },
       h('span', { class: 'etichetta-testata' }, 'Distintivi'), h('strong', { 'aria-live': 'polite' }, String(t.distintivi.valore)),
-      tasto('distintivi', -1, !t.distintivi.puoTogliere, 'Togli 1 Distintivo'), tasto('distintivi', 1, false, 'Aggiungi 1 Distintivo'),
+      tasto('distintivi', -1, !t.distintivi.puoTogliere && 'Non hai Distintivi da togliere.', 'Togli 1 Distintivo'), tasto('distintivi', 1, null, 'Aggiungi 1 Distintivo'),
       // lotto 246: la conversione si legge e si fa lo stesso (il §1.8.3 è una regola, e l'ultima parola è del master)
       h('button', { type: 'button', class: `btn btn-piccolo${t.distintivi.puoConvertire ? '' : ' con-avviso'}`, onclick: ctx.azioni.convertiDistintivi,
         title: `Converti ${t.distintivi.perPuntoEroe} Distintivi in 1 Punto Eroe (§1.8.3: facoltativo, senza superare la riserva massima)${t.distintivi.puoConvertire ? '' : '. Adesso non torna: decide il master'}` }, `${t.distintivi.perPuntoEroe} → 1 PE`)),
@@ -781,13 +779,13 @@ function controlliPi(ctx, { x, n, quantita = 1, voci = [x] }, dove = 'riquadro')
   const rotto = soglia?.effetto === 'inutilizzabile';
   const b = (delta) => h('button', {
     type: 'button', class: 'btn-tavolo btn-mini', onclick: () => ctx.azioni.integrita(x.uid, delta),
-    disabled: delta < 0 ? n <= 0 : n >= x.piMax, 'aria-label': `${delta < 0 ? 'Togli' : 'Aggiungi'} 1 PI a ${x.nome}`,
+    spento: motivoLimite(n, delta, x.piMax, `I PI di ${x.nome}`), 'aria-label': `${delta < 0 ? 'Togli' : 'Aggiungi'} 1 PI a ${x.nome}`,
   }, delta < 0 ? '−' : '+');
   const ripara = rip ? (() => {
     const cond = armi.find((w) => String(w.uid).split(':')[0] === x.uid)?.condizioneArma?.id ?? null;
     const ok = riparabile(x, cond, rip);
-    return h('button', { type: 'button', class: `btn btn-piccolo btn-ripara${rotto && ok.si ? ' primario' : ''}`, disabled: !ok.si || n >= x.piMax,
-      title: !ok.si ? ok.motivo : n >= x.piMax ? 'PI già al massimo.' : `Riparazione strutturale: ${rip.ore} ora, Prova di ${rip.abilita} (A.46).`,
+    return h('button', { type: 'button', class: `btn btn-piccolo btn-ripara${rotto && ok.si ? ' primario' : ''}`, spento: !ok.si ? ok.motivo : n >= x.piMax ? 'PI già al massimo.' : null,
+      title: `Riparazione strutturale: ${rip.ore} ora, Prova di ${rip.abilita} (A.46).`,
       onclick: () => { ctx.ui.riparazione = { uid: x.uid, improvvisati: false, esito: null, dove }; ctx.azioni.ridisegna(); } }, 'Ripara');
   })() : null;
   return {
@@ -859,7 +857,7 @@ function tavoloRigaInventario(ctx, r) {
   const info = r.tipo === 'arma_distanza' ? ctx.massimi.ricarica?.[r.uid] ?? null : null;
   if (r.tipo === 'arma_distanza' && ctx.massimi.caricatori?.[r.uid] !== undefined && (!info || info.modo === 'caricatore' || info.modo === null)) {
     const m = ctx.sessione.munizioni?.[r.uid] ?? { riserve: 0 };
-    const b = (d) => h('button', { type: 'button', class: 'btn-tavolo btn-mini', disabled: d < 0 && m.riserve <= 0,
+    const b = (d) => h('button', { type: 'button', class: 'btn-tavolo btn-mini', spento: d < 0 && m.riserve <= 0 && `Nessun caricatore di riserva per ${r.nome}.`,
       'aria-label': `${d > 0 ? 'Aggiungi' : 'Togli'} un caricatore di riserva a ${r.nome}`, onclick: () => ctx.azioni.munizioni(r.uid, 'riserve', d) }, d > 0 ? '+' : '−');
     const cap = ctx.massimi.caricatori[r.uid];
     // 03/11: ogni caricatore con i suoi colpi, «(15/30)»: quello nell'arma e quelli di scorta (il + aggiunge un pieno)
@@ -969,7 +967,7 @@ function rigaNec(ctx, r, x) {
   // A.252 (06/11/2026): il conto esatto resta nello storico e la riserva sale all'intero superiore, una volta sola
   const notaConversione = cv ? ` Convertita da ${cv.valore.toLocaleString('it-IT')} su ${cv.capacita.toLocaleString('it-IT')} (Lx, UE o ore di prima, A.193): ${numeroRiserva(cv.esatto)} cariche su ${cv.massimo}, arrotondate una volta sola a ${Math.min(cv.massimo, Math.ceil(cv.esatto - 1e-9))} (A.252); il valore di prima resta nel file.` : '';
   const b = (d) => h('button', {
-    type: 'button', class: 'btn-tavolo btn-mini', disabled: d < 0 ? n <= 0 : n >= x.massimo,
+    type: 'button', class: 'btn-tavolo btn-mini', spento: motivoLimite(n, d, x.massimo, `Le cariche di ${x.nome}`),
     'aria-label': `${d > 0 ? 'Aggiungi' : 'Togli'} ${Math.abs(d)} ${x.unita} a ${x.nome}`, onclick: () => ctx.azioni.nec(x.chiave, d),
   }, d > 0 ? `+${d}` : `−${-d}`);
   return h('div', { class: `pi-voce riserva-nec${n === 0 ? ' esaurita' : ''}` },
@@ -1293,7 +1291,7 @@ function pannelloRiparazione(ctx, lista, pi, rip) {
       e.costoMateriali && !Number.isInteger(crediti) ? ' — crediti non tracciati: annotali a mano' : null,
       e.costoMateriali && Number.isInteger(crediti) && crediti < e.costoMateriali ? ` — crediti insufficienti (${crediti})` : null) : null,
     h('div', { class: 'barra-azioni' },
-      h('button', { type: 'button', class: 'btn primario', disabled: !e,
+      h('button', { type: 'button', class: 'btn primario', spento: !e && 'Scegli prima l’esito della Prova.',
         onclick: () => { ctx.ui.riparazione = null; ctx.azioni.ripara(x.uid, e.piNuovi, e.costoMateriali); } }, 'Conferma'),
       h('button', { type: 'button', class: 'btn', onclick: chiudi }, 'Annulla')));
 }
@@ -1903,7 +1901,7 @@ function righeCaratteristica(ctx, c) {
   return [riga, h('tr', { class: 'riga-durata-temporaneo' }, h('td', { colspan: 5 },
     h('div', { class: 'durata-temporaneo' },
       h('span', { class: 'nota' }, `${c.sigla} ${segno(x.valore)} per `),
-      h('button', { type: 'button', class: 'btn-tavolo', disabled: x.numero <= 1, 'aria-label': `Durata di ${c.sigla}: togli 1`, onclick: () => salva(durataTemporaneo(ctx.sessione, c.sigla, { numero: x.numero - 1 }, R)) }, '−'),
+      h('button', { type: 'button', class: 'btn-tavolo', spento: x.numero <= 1 && 'La durata minima è 1.', 'aria-label': `Durata di ${c.sigla}: togli 1`, onclick: () => salva(durataTemporaneo(ctx.sessione, c.sigla, { numero: x.numero - 1 }, R)) }, '−'),
       h('strong', {}, String(x.numero)),
       h('button', { type: 'button', class: 'btn-tavolo', 'aria-label': `Durata di ${c.sigla}: aggiungi 1`, onclick: () => salva(durataTemporaneo(ctx.sessione, c.sigla, { numero: x.numero + 1 }, R)) }, '+'),
       h('select', { 'aria-label': `Unità della durata di ${c.sigla}`, onchange: (e) => salva(durataTemporaneo(ctx.sessione, c.sigla, { unita: e.target.value }, R)) },
@@ -2346,7 +2344,7 @@ function cristalloUi(ctx, a) {
       h('option', { value: '', selected: !scelto }, 'Scegli il cristallo…'),
       cristalli.map((c) => h('option', { value: c.id, selected: c.id === scelto }, c.nome))),
     ' ',
-    h('button', { type: 'button', class: 'btn btn-piccolo', disabled: !scelto, title: scelto ? 'Cambia il cristallo di questo esemplare' : 'Prima scegli un cristallo', onclick: cambia }, 'Cambia cristallo'),
+    h('button', { type: 'button', class: 'btn btn-piccolo', spento: !scelto && 'Prima scegli un cristallo.', title: 'Cambia il cristallo di questo esemplare', onclick: cambia }, 'Cambia cristallo'),
     h('br'), h('small', { class: 'sigla' }, 'Aggiorna questo esemplare: nome, Integrità e storico restano, e non nasce una seconda arma (§7.25.3).'));
 }
 /**
@@ -2402,7 +2400,7 @@ function alimentazioneUi(ctx, a) {
       h('option', { value: '', selected: !scelto }, 'Scegli l’alimentazione…'),
       opzioni.filter((o) => !o.attiva).map((o) => h('option', { value: o.id, selected: o.id === scelto }, o.nome))),
     ' ',
-    h('button', { type: 'button', class: 'btn btn-piccolo', disabled: !scelto, title: scelto ? 'Cambia l’alimentazione di questo esemplare' : 'Prima scegli un’alimentazione', onclick: cambia }, 'Cambia alimentazione'),
+    h('button', { type: 'button', class: 'btn btn-piccolo', spento: !scelto && 'Prima scegli un’alimentazione.', title: 'Cambia l’alimentazione di questo esemplare', onclick: cambia }, 'Cambia alimentazione'),
     // lotto 251: un pulsante spento dice perché, e il motivo si deve VEDERE — su un tablet il suggerimento non esiste
     scelto ? null : h('small', { class: 'nota' }, ' Prima scegli un’alimentazione.'),
     h('br'), h('small', { class: 'sigla' }, 'Opzione di questo esemplare (A.309): non si compra niente, e nome, Integrità e storico restano.'),
@@ -2864,9 +2862,9 @@ function rigaCarichini(ctx, a, info, m, capacita) {
   const nome = info.carichini[0].nome;
   return h('div', { class: 'riga-munizioni carichini-tavolo' },
     h('span', {}, `${nome}: `, stati.map((n, i) => h('span', { class: `carichino${n ? '' : ' vuoto'}`, title: n ? `${n} colpi` : 'vuoto' }, `${i ? ' · ' : ''}${n}/${info.colpiCarichino}`))),
-    h('button', { type: 'button', class: `btn${motivoRotto ? ' con-avviso' : ''}`, disabled: !pieni.length || spazi <= 0, title: motivoRotto ?? (!pieni.length ? 'Nessun carichino preparato' : spazi <= 0 ? 'Arma già piena' : `Trasferisce fino a ${C?.per_operazione ?? 6} colpi in 1 AzP, entro gli spazi liberi; il resto rimane nel carichino (A.135)`),
+    h('button', { type: 'button', class: `btn${motivoRotto ? ' con-avviso' : ''}`, spento: !pieni.length ? 'Nessun carichino preparato.' : spazi <= 0 ? 'L’arma è già piena.' : null, title: motivoRotto ?? (`Trasferisce fino a ${C?.per_operazione ?? 6} colpi in 1 AzP, entro gli spazi liberi; il resto rimane nel carichino (A.135)`),
       onclick: () => conAvviso(ctx.azioni.storico, { azione: `usare ${info.carichini[0].nome}`, motivo: motivoRotto, fai: () => ctx.azioni.usaCarichino(a.uid) }) }, `Usa carichino +${Math.min(spazi, Math.max(0, ...pieni)) || 0}`),
-    h('button', { type: 'button', class: `btn${motivoRotto ? ' con-avviso' : ''}`, disabled: !daRiempire, title: motivoRotto ?? (daRiempire ? `Riempie un carichino con le munizioni sciolte compatibili: ${C?.preparazione ?? 'fuori dal combattimento'} (A.135)` : 'Nessun carichino da riempire o nessuna munizione compatibile'),
+    h('button', { type: 'button', class: `btn${motivoRotto ? ' con-avviso' : ''}`, spento: !daRiempire && 'Nessun carichino da riempire, o nessuna munizione compatibile.', title: motivoRotto ?? `Riempie un carichino con le munizioni sciolte compatibili: ${C?.preparazione ?? 'fuori dal combattimento'} (A.135)`,
       onclick: () => conAvviso(ctx.azioni.storico, { azione: `preparare ${info.carichini[0].nome}`, motivo: motivoRotto, fai: () => ctx.azioni.preparaCarichino(a.uid) }) }, 'Prepara'),
     motivoRotto ? h('small', { class: 'nota motivo' }, motivoRotto) : null);
 }
@@ -2898,7 +2896,7 @@ function rigaCelle(ctx, a, info, m, capacita, azioneCella, nome = 'cella') {
       m.senzaCella
         ? [h('select', { 'aria-label': 'Cella da inserire in ' + a.nome, disabled: !scelte.length, onchange: (e) => { u.scelta = e.target.value; } },
           scelte.map((x) => h('option', { value: x.valore, selected: scelta?.valore === x.valore }, x.testo))),
-        h('button', { type: 'button', class: 'btn', disabled: !scelta, title: 'Mette ' + (pacco ? 'il pacco scelto' : 'la cella scelta') + ' nell’arma vuota: ' + costi.inserimento.azione + ' (A.243)', onclick: () => ctx.azioni.inserisciCella(a.uid, scelta.scelta) }, 'Inserisci')]
+        h('button', { type: 'button', class: 'btn', spento: !scelta && `Scegli prima ${pacco ? 'il pacco' : 'la cella'} da inserire.`, title: 'Mette ' + (pacco ? 'il pacco scelto' : 'la cella scelta') + ' nell’arma vuota: ' + costi.inserimento.azione + ' (A.243)', onclick: () => ctx.azioni.inserisciCella(a.uid, scelta.scelta) }, 'Inserisci')]
         : h('button', { type: 'button', class: 'btn', title: (pacco ? 'Toglie il pacco con i getti che ha' : 'Toglie la cella con le cariche che ha') + ': ' + costi.estrazione.azione + ' (A.243), resta con te e si ricarica fuori dall’arma', onclick: () => ctx.azioni.togliCella(a.uid) }, pacco ? 'Togli il pacco' : 'Togli la cella')),
     rigaPiCelle(ctx, a, m, dett, capacita, piMax, pacco, info),
     h('small', { class: 'nota' }, 'Togliere ' + costi.estrazione.azione + ' · inserire ' + costi.inserimento.azione + ' · sostituire, una sola operazione e non la somma dei due, ' + costi.sostituzione.azione + ' (A.243). '
@@ -2915,9 +2913,9 @@ function rigaPiCelle(ctx, a, m, dett, capacita, piMax, pacco, info) {
   const pila = (info?.scorte ?? []).filter((x) => disponibili(x, ctx.sessione.scorte) > 0);
   const riga = (chiave, etichetta, cariche, pi, rotta) => h('li', { class: rotta ? 'cella-rotta' : null },
     h('span', {}, etichetta + ' ' + cariche + '/' + capacita + ' · '),
-    h('button', { type: 'button', class: 'btn btn-piccolo', disabled: pi <= 0, title: 'Un PI in meno', onclick: () => ctx.azioni.variaPiCella(a.uid, chiave, -1, etichetta + ' ' + cariche + '/' + capacita) }, '−'),
+    h('button', { type: 'button', class: 'btn btn-piccolo', spento: pi <= 0 && 'La cella è già a 0 PI.', title: 'Un PI in meno', onclick: () => ctx.azioni.variaPiCella(a.uid, chiave, -1, etichetta + ' ' + cariche + '/' + capacita) }, '−'),
     h('strong', { class: 'pi-cella' }, pi + '/' + piMax + ' PI'),
-    h('button', { type: 'button', class: 'btn btn-piccolo', disabled: pi >= piMax, title: rotta ? 'Una cella distrutta normalmente non si ripara (A.245): lo decide il Direttore' : 'Un PI in più', onclick: () => ctx.azioni.variaPiCella(a.uid, chiave, +1, etichetta) }, '+'),
+    h('button', { type: 'button', class: 'btn btn-piccolo', spento: pi >= piMax && (rotta ? 'Una cella distrutta normalmente non si ripara (A.245): lo decide il Direttore.' : 'La cella è già ai PI massimi.'), title: 'Un PI in più', onclick: () => ctx.azioni.variaPiCella(a.uid, chiave, +1, etichetta) }, '+'),
     rotta ? h('span', { class: 'nota motivo' }, ' distrutta: fuori dalle scorte utilizzabili (A.245)') : null);
   const inserita = !m.senzaCella;
   const piDentro = Number.isInteger(m.piCella) ? m.piCella : piMax;
@@ -2974,8 +2972,8 @@ function rigaCaricatori(ctx, a, info, m, capacita, azione) {
       gruppi.length ? [
         h('select', { 'aria-label': 'Caricatore di scorta da mettere in ' + a.nome, onchange: (e) => { u.scelta = Number(e.target.value); ctx.azioni.ridisegna?.(); } },
           gruppi.map((g) => h('option', { value: String(g.colpi), selected: scelta?.colpi === g.colpi }, colpiCaricatore(g.colpi, capacita) + (g.quanti > 1 ? ' ×' + g.quanti : '')))),
-        h('button', { type: 'button', class: 'btn', disabled: !scelta || !eProntoColpi(scelta.colpi, ctx.dati),
-          title: !scelta ? '' : !eProntoColpi(scelta.colpi, ctx.dati) ? 'Un caricatore vuoto non è pronto (A.250)'
+        h('button', { type: 'button', class: 'btn', spento: !scelta ? 'Scegli prima un caricatore.' : !eProntoColpi(scelta.colpi, ctx.dati) ? 'Un caricatore vuoto non è pronto (A.250).' : null,
+          title: !scelta ? null
             : (dentro ? 'Sostituzione diretta: fuori il vecchio, dentro il nuovo — ' + costi.sostituzione.azione + ' in tutto, non la somma di togliere e inserire (A.249)' : 'Mette nell’arma il caricatore scelto: ' + costi.inserimento.azione + ' (A.249)')
               + (scelta.colpi < capacita ? '. Un parziale con almeno un colpo è pronto come un pieno (A.250)' : ''),
           onclick: () => (dentro ? ctx.azioni.ricarica(a.uid, scelta.colpi) : ctx.azioni.inserisciCaricatore(a.uid, scelta.colpi)) }, dentro ? 'Cambia con questo' : 'Inserisci'),
@@ -3036,7 +3034,7 @@ function pannelloMunizioni(ctx, a, { riserveModificabili = true } = {}) {
   const azioneRicarica = azioneCella ?? (voceArma?.rif ? catalogo(ctx.dati).perRif.get(voceArma.rif)?.ricarica : null) ?? '1 AzP, Giocatore §5.1.1';
   const caricatore = info?.modo === 'caricatore' && Number.isInteger(capacita);
   const pulsante = (campo, d, etichetta) => h('button', {
-    type: 'button', class: 'btn-tavolo', disabled: (d < 0 && m[campo] <= 0) || (campo === 'colpi' && d > 0 && capacita !== null && m.colpi >= capacita),
+    type: 'button', class: 'btn-tavolo', spento: (d < 0 && m[campo] <= 0 && `Non c’è niente da togliere: ${etichetta} a 0.`) || (campo === 'colpi' && d > 0 && capacita !== null && m.colpi >= capacita && 'Il caricatore è già pieno.'),
     'aria-label': `${d > 0 ? 'Aggiungi' : 'Togli'} ${Math.abs(d)} ${etichetta} a ${a.nome}`,
     onclick: () => ctx.azioni.munizioni(a.uid, campo, d),
   }, d > 0 ? `+${d}` : `−${-d}`);
@@ -3051,7 +3049,7 @@ function pannelloMunizioni(ctx, a, { riserveModificabili = true } = {}) {
         type: 'button', class: `btn${stato.motivo && !stato.pieno ? ' con-avviso' : ''}`,
         // lotto 246: spento solo quando non cambierebbe niente (arma già piena); se l'app non trova le munizioni avvisa,
         // e con «Procedi comunque» si ricarica lo stesso: la compatibilità sta nei dati, e un dato può mancare
-        disabled: !!stato.pieno,
+        spento: stato.pieno ? (stato.motivo ? `${stato.motivo[0].toUpperCase()}${stato.motivo.slice(1)}.` : 'L’arma è già piena.') : null,
         onclick: () => conAvviso(ctx.azioni.storico, { azione: `ricaricare ${a.nome}`, motivo: stato.possibile ? null : stato.motivo, fai: (forza) => ctx.azioni.ricarica(a.uid, null, forza ? { forza: true } : {}) }),
         title: stato.motivo ?? `${cella ? 'Cambio' : 'Ricarica'} (${azioneRicarica})` },
         info?.singolo ? `Ricarica +${Math.min(info.perOperazione ?? 1, capacita - m.colpi) || info.perOperazione || 1}` : cella ? (m.senzaCella ? `Inserisci ${nomeCella === 'pacco' ? 'il più carico' : 'la più carica'}` : `Cambia ${nomeCella}`) : caricatore && m.senzaCaricatore ? 'Inserisci il più carico' : 'Ricarica') : pulsante('colpi', 1, 'colpi')),
@@ -3122,10 +3120,11 @@ function rigaCristallo(ctx, c, { compatto = false, manuale = true } = {}) {
   const esausto = pm === 0;
   const pronto = c.trasportato && c.sintonizzato;
   const pulsanti = [];
+  const motivoChroma = (x, d) => (d < 0 ? (x <= 0 || (x + d < -1e-9 && x % 1 > 1e-9) ? `${c.nome} non ha ${c.unita ?? 'PM'} da togliere.` : null) : x >= c.capacita ? `${c.nome} è già al massimo (${c.capacita} ${c.unita ?? 'PM'}).` : null);
   const pulsante = (d) => {
     const el = h('button', {
       // A.252 (06/11/2026): le riserve sono intere; un − che porterebbe sotto zero resta spento, come sempre
-      type: 'button', class: 'btn-tavolo', disabled: d < 0 ? pm <= 0 : pm >= c.capacita,
+      type: 'button', class: 'btn-tavolo', spento: motivoChroma(pm, d),
       'aria-label': `${d > 0 ? 'Aggiungi' : 'Togli'} ${Math.abs(d)} ${c.unita ?? 'PM'} a ${c.nome}`,
       onclick: () => ctx.azioni.chroma(c.uid, d),
     }, d > 0 ? `+${d}` : `−${-d}`);
@@ -3144,7 +3143,7 @@ function rigaCristallo(ctx, c, { compatto = false, manuale = true } = {}) {
     const x = leggi();
     punto.className = `chroma-punto chroma-${c.energia.toLowerCase()}${x === 0 ? ' esausto' : ''}`;
     sigla.textContent = ` · ${stato(x)}`;
-    for (const [el, d] of pulsanti) el.disabled = d < 0 ? (x <= 0 || (x + d < -1e-9 && x % 1 > 1e-9)) : x >= c.capacita;
+    for (const [el, d] of pulsanti) spegni(el, motivoChroma(x, d));
   });
   // 27/10 (lotto 129, parte D): «Ricarica dalla Matrice» anche da qui, non solo dalla tab Artefatti — stesso
   // pannello (ricaricaMatriceUi), un solo calcolo; un tocco lo apre o lo richiude, per non allungare la riga.
@@ -3495,7 +3494,7 @@ function sezioneIncantesimiAMano(ctx) {
       !sost && avvisoScelto ? h('p', { class: 'nota motivo' }, `Avviso: ${avvisoScelto}`) : null,
       !sost && u.tipo === 'appreso' && !contesto.accesso && !(ctx.master && u.concessione.trim()) ? h('p', { class: 'nota motivo' }, 'Avviso: il personaggio non ha accesso alla magia: l’incantesimo conta come conosciuto ma resta annotato e non lanciabile (A.176).') : null,
       u.errore ? h('p', { class: 'nota motivo', role: 'alert' }, u.errore) : null,
-      h('button', { type: 'button', class: `btn primario${avvisoScelto || fuoriRegole ? ' con-avviso' : ''}`, onclick: aggiungi, disabled: !scelto || (fuoriRegole && !ctx.master), title: fuoriRegole ? verifica.motivo : avvisoScelto ?? (scelto ? `Aggiunge ${scelto.nome}` : 'Prima scegli un incantesimo') },
+      h('button', { type: 'button', class: `btn primario${avvisoScelto || fuoriRegole ? ' con-avviso' : ''}`, onclick: aggiungi, spento: !scelto ? 'Prima scegli un incantesimo.' : (fuoriRegole && !ctx.master) ? verifica.motivo : null, title: fuoriRegole ? verifica.motivo : avvisoScelto ?? (scelto ? `Aggiunge ${scelto.nome}` : null) },
         scelto ? `${sost ? (fuoriRegole ? (ctx.master ? 'Forza la sostituzione con' : 'Non ammessa:') : 'Sostituisci con') : avvisoScelto ? 'Aggiungi comunque' : 'Aggiungi'} ${scelto.nome}` : 'Aggiungi'))));
 }
 
@@ -3684,7 +3683,7 @@ function articoloIncantesimo(ctx, i, nomeMacro) {
         // A.176: un incantesimo solo annotato (o appreso senza accesso alla magia) non si lancia: il pulsante resta, spento, con il motivo
         const nonLanciabile = agg && agg.lancio && !agg.lancio.lanciabile;
         // N2: senza versioni accessibili (livello, Ritualista) il pannello si apre lo stesso, con l'avviso; fermo solo senza dati
-        return h('button', { type: 'button', class: `btn primario btn-attacca${st.disabilitato || nonLanciabile ? ' con-avviso' : ''}`, disabled: !inc || !(inc.versioni ?? []).length || nonLanciabile, title: nonLanciabile ? agg.lancio.motivo : st.motivo,
+        return h('button', { type: 'button', class: `btn primario btn-attacca${st.disabilitato || nonLanciabile ? ' con-avviso' : ''}`, spento: !inc ? 'Incantesimo non più nel catalogo.' : !(inc.versioni ?? []).length ? (st.motivo ?? 'Nessuna versione lanciabile con quello che hai.') : nonLanciabile ? agg.lancio.motivo : null, title: nonLanciabile ? agg.lancio.motivo : st.motivo,
           onclick: () => { ctx.ui.lancio = { nome: i.nome, passo: 0 }; ctx.azioni.ridisegna(); } }, 'Lancia!');
       })(),
       agg
@@ -3731,7 +3730,7 @@ function schedaDaOggetto(ctx, e) {
         inc ? etichettaMacro(inc.macrofamiglia) : null,
         h('span', { class: 'sigla' }, ` · livello ${e.livello} · da ${e.oggetto}${consumabile ? ` (× ${e.quantita})` : ''}`)),
       h('button', {
-        type: 'button', class: `btn primario btn-attacca${a?.motivo ? ' con-avviso' : ''}`, disabled: !inc || !riga, title: a?.motivo ?? (!inc ? 'Incantesimo non più nel catalogo: la finestra del lancio non ha i suoi numeri' : !riga ? `Manca la riga del livello ${e.livello} per questo oggetto nei dati: la finestra del lancio non ha i suoi numeri` : null),
+        type: 'button', class: `btn primario btn-attacca${a?.motivo ? ' con-avviso' : ''}`, spento: !inc ? 'Incantesimo non più nel catalogo: la finestra del lancio non ha i suoi numeri.' : !riga ? `Manca la riga del livello ${e.livello} per questo oggetto nei dati: la finestra del lancio non ha i suoi numeri.` : null, title: a?.motivo ?? null,
         onclick: () => { ctx.ui.lancio = { nome: e.incantesimo, passo: 0, da: e.chiave }; ctx.azioni.ridisegna(); },
       }, 'Lancia!')),
     // lotto 243: anche la scheda di un incantesimo che arriva da un oggetto ha l'effetto per primo (lo stesso campo, lo stesso criterio)
@@ -4020,7 +4019,7 @@ function sezioneProgetti(ctx) {
           h('div', {}, h('strong', {}, o.nome), h('span', { class: 'nota' }, `${o.compresa ? ' · compresa nei giorni del progetto' : ' · sviluppo successivo'}${o.consumo ? ` · ${o.consumo.testo}` : ''}`)),
           h('div', { class: o.conversione ? 'nota motivo' : 'nota' }, o.perdite),
           scelta ? h('span', { class: 'nota' }, '✓ scelta')
-            : h('button', { type: 'button', class: `btn btn-piccolo${o.conversione ? ' con-avviso' : ''}`, disabled: !puo, title: puo ? o.testo : o.motivo ?? '',
+            : h('button', { type: 'button', class: `btn btn-piccolo${o.conversione ? ' con-avviso' : ''}`, spento: !puo && (o.motivo || 'Questa alimentazione non si può scegliere adesso.'), title: puo ? o.testo : null,
               onclick: () => conAvviso(ctx.azioni.storico, {
                 azione: `scegliere l’alimentazione «${o.nome}» per «${p.nome}»`,
                 motivo: o.conversione ? `${o.perdite} Le due conversioni non si cumulano fra loro. Consumo: ${o.consumo?.testo ?? '—'}.` : null,
@@ -4093,7 +4092,7 @@ function sezioneProgetti(ctx) {
           cfg.nota ? h('p', { class: 'nota' }, cfg.nota) : null,
           cfg.errori.length ? h('p', { class: 'nota motivo', role: 'alert' }, h('strong', {}, 'La consegna è ferma: '), cfg.errori.join('. ') + '.') : null) : null,
         avv.length ? h('p', { class: 'nota motivo' }, `Avviso: ${avv.join('; ')}.`) : null,
-        h('button', { type: 'button', class: `btn primario${avv.length ? ' con-avviso' : ''}`, disabled: !!cfg?.errori.length, title: cfg?.errori.length ? cfg.errori.join('. ') : null,
+        h('button', { type: 'button', class: `btn primario${avv.length ? ' con-avviso' : ''}`, spento: cfg?.errori.length ? cfg.errori.join('. ') : null,
           onclick: () => conAvviso(ctx.azioni.storico, { azione: `consegnare l’arma del progetto «${p.nome}»`, motivo: avv.join('; ') || null,
             fai: () => ctx.azioni.consegnaArma(p.id, { provenienza: c.provenienza, donatore: c.donatore || null, scheggia: c.scheggia || null, esemplare: c.esemplare || null }) }) }, 'Consegna l’arma'))
         : h('p', { class: 'nota' }, 'Le modifiche diventano valide soltanto quando il Direttore consegna l’arma.');
@@ -4157,10 +4156,10 @@ function attivabile(ctx, imp, mieiChip = []) {
     const max = imp.cartucce;
     return h('div', { class: 'attivabile-impianto' },
       h('p', {}, h('strong', {}, 'Cartucce caricate: '),
-        h('button', { type: 'button', class: 'btn tondo', 'aria-label': 'Una cartuccia in meno', disabled: n <= 0, onclick: () => ctx.azioni.impianto((s) => impostaCartucce(s, imp.uid, n - 1, max)) }, '−'),
+        h('button', { type: 'button', class: 'btn tondo', 'aria-label': 'Una cartuccia in meno', spento: n <= 0 && 'Nessuna cartuccia da togliere.', onclick: () => ctx.azioni.impianto((s) => impostaCartucce(s, imp.uid, n - 1, max)) }, '−'),
         h('span', { class: 'conteggio-cartucce' }, ` ${n} / ${max} `),
-        h('button', { type: 'button', class: 'btn tondo', 'aria-label': 'Una cartuccia in più', disabled: n >= max, onclick: () => ctx.azioni.impianto((s) => impostaCartucce(s, imp.uid, n + 1, max)) }, '+'),
-        ' ', h('button', { type: 'button', class: 'btn primario', disabled: n <= 0, title: frasi, onclick: () => ctx.azioni.impianto((s) => somministra(s, imp.uid), 'Caricatore vuoto: rifornirlo richiede un minuto (§7.9).') }, `Somministra (${imp.azione})`)),
+        h('button', { type: 'button', class: 'btn tondo', 'aria-label': 'Una cartuccia in più', spento: n >= max && `Il caricatore è già pieno (${max}).`, onclick: () => ctx.azioni.impianto((s) => impostaCartucce(s, imp.uid, n + 1, max)) }, '+'),
+        ' ', h('button', { type: 'button', class: 'btn primario', spento: n <= 0 && 'Nessuna cartuccia caricata da somministrare.', title: frasi, onclick: () => ctx.azioni.impianto((s) => somministra(s, imp.uid), 'Caricatore vuoto: rifornirlo richiede un minuto (§7.9).') }, `Somministra (${imp.azione})`)),
       h('p', { class: 'nota' }, `Una cartuccia del §6.2 o dei naniti del §6.7, con i loro effetti; venduto senza cartucce, rifornimento in un minuto (§7.9). La cartuccia somministrata si toglie dall’Inventario a mano.`));
   }
   if (imp.tipo === 'chip') {

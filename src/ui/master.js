@@ -3,6 +3,7 @@
 // registro «Modifiche del master» della tab Identità e la finestrella del bonus di circostanza del Tavolo.
 // ctx.master (solo in modalità master, src/ui/app.js): { correggi, diretta, annulla, esci, togliCircostanza, concediLivello, annullaUltimoLivello, scelteUltimoLivello }.
 import { h, segno } from './dom.js';
+import { spegni } from './spento.js';
 import { apri } from './finestrella.js';
 
 import { applicaCorrezioni, correzioniDi, statoNote } from '../correzioni-master.js';
@@ -79,7 +80,7 @@ export function apriCorrezione(ctx, voci) {
           h('span', {}, ' Non visualizzare la nota sulla scheda (resta nel registro)')),
         h('div', { class: 'riga-azioni finestrella-azioni' },
           h('button', { type: 'button', class: 'btn', onclick: () => fine(null) }, 'Annulla'),
-          h('button', { type: 'button', class: 'btn primario', disabled: v.campo ? numero === v.attuale : st.tipo === 'aggiungi' && numero === 0,
+          h('button', { type: 'button', class: 'btn primario', spento: (v.campo ? numero === v.attuale : st.tipo === 'aggiungi' && numero === 0) && (v.campo ? 'Il valore è già quello: scrivine uno diverso.' : 'Da aggiungere ci sono 0: scrivi un numero diverso da zero.'),
             onclick: () => {
               if (v.campo) ctx.master.diretta({ campo: v.campo, etichetta: v.etichetta, valore: numero, motivo: st.motivo });
               else ctx.master.correggi({ chiave: v.chiave, etichetta: v.etichetta, tipo: st.tipo, numero, motivo: st.motivo, notaNascosta: st.nascondiNota });
@@ -196,12 +197,14 @@ export async function conMotivoMaster(ctx, { titolo, testo, conferma = 'Conferma
   fai();
 }
 
+const MOTIVO_VUOTO = 'Scrivi il motivo: resta nel registro delle modifiche del master.';
+
 /** Il motivo, obbligatorio: la finestrella non conferma a campo vuoto. @returns Promise<string | null> */
 function chiediMotivoObbligatorio({ titolo, testo, conferma, proposta = '' }) {
   return apri('finestrella-master', titolo, (fine) => {
     const campo = h('input', { type: 'text', maxlength: 200, placeholder: 'es. recupero di una partita, deciso al tavolo…', 'aria-label': 'Motivo', value: proposta });
-    const vai = h('button', { type: 'button', class: 'btn primario', disabled: !proposta.trim(), onclick: () => fine(campo.value.trim()) }, conferma);
-    campo.addEventListener('input', () => { vai.disabled = !campo.value.trim(); });
+    const vai = h('button', { type: 'button', class: 'btn primario', spento: !proposta.trim() && MOTIVO_VUOTO, onclick: () => fine(campo.value.trim()) }, conferma);
+    campo.addEventListener('input', () => { spegni(vai, campo.value.trim() ? null : MOTIVO_VUOTO); });
     return [
       h('p', {}, testo),
       h('label', { class: 'finestrella-campo' }, h('span', {}, 'Motivo (obbligatorio)'), campo),

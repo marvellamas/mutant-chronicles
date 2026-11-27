@@ -28,9 +28,9 @@ function riga(ctx, a, s) {
     h('td', { class: 'va-adeguamento' }, h('strong', {}, String(a.dopo.va)),
       h('small', { class: 'nota' }, ` / ${a.limite ?? '—'}`)),
     h('td', { class: 'punti-adeguamento' },
-      h('button', { type: 'button', class: 'btn btn-piccolo', disabled: !a.punti, title: 'Togli un punto da questa Abilità', onclick: () => ctx.azioni.adeguamento.punto(a.nome, -1) }, '−'),
+      h('button', { type: 'button', class: 'btn btn-piccolo', spento: !a.punti && 'Questa Abilità non ha punti assegnati da togliere.', title: 'Togli un punto da questa Abilità', onclick: () => ctx.azioni.adeguamento.punto(a.nome, -1) }, '−'),
       h('span', { class: 'numero-punti' }, String(a.punti)),
-      h('button', { type: 'button', class: `btn btn-piccolo${a.avvisoPiu ? ' con-avviso' : ''}`, disabled: !!a.motivoPiu, title: a.motivoPiu ?? a.avvisoPiu ?? `Assegna un punto: il massimo su questa Abilità è ${a.massimo}`, onclick: () => ctx.azioni.adeguamento.punto(a.nome, 1) }, '+')),
+      h('button', { type: 'button', class: `btn btn-piccolo${a.avvisoPiu ? ' con-avviso' : ''}`, spento: a.motivoPiu || null, title: a.avvisoPiu ?? `Assegna un punto: il massimo su questa Abilità è ${a.massimo}`, onclick: () => ctx.azioni.adeguamento.punto(a.nome, 1) }, '+')),
     h('td', { class: 'dettaglio nota' }, a.avvisoPiu ?? (a.motivoPiu && !a.punti ? a.motivoPiu : '')));
 }
 
@@ -68,8 +68,8 @@ export function riquadroAdeguamento(ctx) {
       h('thead', {}, h('tr', {}, h('th', {}, 'Abilità'), h('th', {}, 'Prima'), h('th', {}, 'Adesso / limite'), h('th', {}, 'Punti'), h('th', {}, ''))),
       h('tbody', {}, s.abilita.map((a) => riga(ctx, a, s)))),
     h('p', { class: 'azioni-adeguamento' },
-      h('button', { type: 'button', class: 'btn btn-piccolo', disabled: !s.assegnati, title: 'Toglie tutti i punti assegnati e ricomincia', onclick: () => ctx.azioni.adeguamento.azzera() }, 'Ricomincia'),
-      h('button', { type: 'button', class: 'btn primario btn-piccolo', disabled: !s.finito, title: s.finito ? 'Chiude l’adeguamento: i punti entrano nella scheda' : `Restano ${s.rimasti} punti da assegnare`, onclick: () => ctx.azioni.adeguamento.conferma() }, 'Conferma')),
+      h('button', { type: 'button', class: 'btn btn-piccolo', spento: !s.assegnati && 'Non hai ancora assegnato nessun punto.', title: 'Toglie tutti i punti assegnati e ricomincia', onclick: () => ctx.azioni.adeguamento.azzera() }, 'Ricomincia'),
+      h('button', { type: 'button', class: 'btn primario btn-piccolo', spento: !s.finito && `Restano ${s.rimasti} punti da assegnare.`, title: 'Chiude l’adeguamento: i punti entrano nella scheda', onclick: () => ctx.azioni.adeguamento.conferma() }, 'Conferma')),
     riquadroNotaDiPrima(ctx));
 }
 

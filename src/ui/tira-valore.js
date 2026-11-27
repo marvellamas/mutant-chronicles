@@ -68,7 +68,7 @@ export function apriTiro(ctx, v) {
           : h('ul', { class: 'elenco-capolavori' }, capolavori().map((x) => {
             const ok = puoUsare(x.voce, prova, ctx.dati);
             return h('li', {},
-              h('button', { type: 'button', class: 'btn btn-piccolo', disabled: !ok.si, title: ok.si ? null : ok.motivo, onclick: () => usaIlCapolavoro(x) },
+              h('button', { type: 'button', class: 'btn btn-piccolo', spento: !ok.si && (ok.motivo || 'Con questo Capolavoro non si può ripetere adesso.'), onclick: () => usaIlCapolavoro(x) },
                 `Ripeti con ${x.nome}`),
               h('small', { class: 'nota' }, x.usato ? ` · ${quandoTorna(ctx.dati)}` : ''));
           })),

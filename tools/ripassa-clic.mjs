@@ -77,7 +77,7 @@ const CASI = [
       }
       const riquadro = await p.valuta(`const r = document.querySelector('.scontro-in-corso'); return r ? r.innerText.replace(/\\s+/g, ' ').slice(0, 90) : 'nessun riquadro «Scontro in corso»'`);
       if (riquadro.startsWith('nessun')) return riquadro;
-      const b = await p.valuta(`const b = document.querySelector('.btn-muovi-mappa'); if (!b) return 'nessun pulsante «Muovi»'; if (b.disabled) return 'il pulsante è SPENTO'; b.click(); return 'premuto'`);
+      const b = await p.valuta(`const b = document.querySelector('.btn-muovi-mappa'); if (!b) return 'nessun pulsante «Muovi»'; if (b.disabled || b.getAttribute('aria-disabled') === 'true') return 'il pulsante è SPENTO'; b.click(); return 'premuto'`);
       if (b !== 'premuto') return b;
       await p.dormi(900);
       // fuori turno l’app chiede conferma: si procede, ed è la strada vera
@@ -103,7 +103,7 @@ const CASI = [
     // la quarta verifica del lotto 251, dal difetto dei Distintivi del 250: su un tablet il `title` non esiste.
     fai: async (p) => {
       // prima si portano i PV al massimo premendo «+5» finché si può: è il presupposto, e lo costruisce il comando
-      await p.valuta(`const c = document.querySelector('.colonna-risorse'); for (let i = 0; i < 12; i += 1) { const b = [...c.querySelectorAll('button')].find((x) => x.textContent.trim() === '+5' && !x.disabled); if (!b) break; b.click(); } return 1`);
+      await p.valuta(`const c = document.querySelector('.colonna-risorse'); for (let i = 0; i < 12; i += 1) { const b = [...c.querySelectorAll('button')].find((x) => x.textContent.trim() === '+5' && !(x.disabled || x.getAttribute('aria-disabled') === 'true')); if (!b) break; b.click(); } return 1`);
       await p.dormi(900);
       return p.motivoAVista('/^\\+5$/');
     },
@@ -115,7 +115,7 @@ const CASI = [
     fai: async (p) => {
       // «Ricarica» compare solo se nell'arma manca qualcosa: si spendono i colpi col tastino della riga delle
       // munizioni (è quello che fa il giocatore quando spara), poi si ricarica.
-      const spesi = await p.valuta(`const b = [...document.querySelectorAll('button')].filter((x) => /^(−5|−1)$/.test(x.textContent.trim()) && /colpi|Caricatore|munizioni/i.test((x.closest('li, p, div') || {}).innerText || '') && !x.disabled); if (!b.length) return false; b[0].click(); return true`);
+      const spesi = await p.valuta(`const b = [...document.querySelectorAll('button')].filter((x) => /^(−5|−1)$/.test(x.textContent.trim()) && /colpi|Caricatore|munizioni/i.test((x.closest('li, p, div') || {}).innerText || '') && !(x.disabled || x.getAttribute('aria-disabled') === 'true')); if (!b.length) return false; b[0].click(); return true`);
       if (!spesi) return 'nessun tastino dei colpi: l’arma non è a caricatore';
       await p.dormi(900);
       const ric = await p.clic(/^(Ricarica|Ricarica \+\d+|Cambia caricatore|Cambia cella|Cambia pacco|Inserisci il più carico)$/);
@@ -155,7 +155,7 @@ const CASI = [
       await p.attendi(`return !!document.querySelector('.finestrella-sposta')`, 'il pannello degli spostamenti');
       // il «−» e il «+» si riconoscono dall'aria-label, non dalla posizione: il primo pulsante della riga è il «+»,
       // e premendo quello il totale non cambiava, «Conferma» restava spento e il ripasso diceva «non trovata».
-      const tolto = await p.valuta(`const b = [...document.querySelectorAll('.finestrella-sposta button')].find((x) => /^Togli un punto da /.test(x.getAttribute('aria-label') || '') && !x.disabled); if (!b) return 'nessun punto da togliere'; const dove = b.getAttribute('aria-label'); b.click(); return dove`);
+      const tolto = await p.valuta(`const b = [...document.querySelectorAll('.finestrella-sposta button')].find((x) => /^Togli un punto da /.test(x.getAttribute('aria-label') || '') && !(x.disabled || x.getAttribute('aria-disabled') === 'true')); if (!b) return 'nessun punto da togliere'; const dove = b.getAttribute('aria-label'); b.click(); return dove`);
       if (/nessun/.test(tolto)) return tolto;
       await p.dormi(400);
       const nomeTolto = JSON.stringify(String(tolto).replace(/^Togli un punto da /, ""));
@@ -208,7 +208,7 @@ const CASI = [
     dove: (p) => p.tab('identita'),
     fai: async (p) => p.valuta(`
       const r = [...document.querySelectorAll('.controllo-temporaneo, .temporaneo-caratteristica')];
-      const b = r.flatMap((x) => [...x.querySelectorAll('button')]).find((x) => x.textContent.trim() === '+' && !x.disabled);
+      const b = r.flatMap((x) => [...x.querySelectorAll('button')]).find((x) => x.textContent.trim() === '+' && !(x.disabled || x.getAttribute('aria-disabled') === 'true'));
       if (!b) return 'nessun controllo temporaneo';
       b.click(); return 'premuto'`),
     cambia: (a, b) => JSON.stringify(a.sessione?.temporanei ?? {}) !== JSON.stringify(b.sessione?.temporanei ?? {}),
@@ -236,7 +236,7 @@ const CASI = [
     // «Ripara» compare solo su un oggetto danneggiato: il presupposto lo costruisce il comando stesso, togliendo
     // un PI con il tastino della riga (è quello che farebbe il giocatore al tavolo)
     fai: async (p) => {
-      const meno = await p.valuta(`const b = [...document.querySelectorAll('button')].find((x) => /^Togli 1 PI/.test(x.getAttribute('aria-label') || '') && !x.disabled);
+      const meno = await p.valuta(`const b = [...document.querySelectorAll('button')].find((x) => /^Togli 1 PI/.test(x.getAttribute('aria-label') || '') && !(x.disabled || x.getAttribute('aria-disabled') === 'true'));
         if (!b) return false; b.click(); return true`);
       if (!meno) return 'nessun oggetto con i PI da togliere';
       await p.dormi(900);
@@ -256,7 +256,7 @@ const CASI = [
       const esito = await p.valuta(`
         const b = [...document.querySelectorAll('.passo-link')].find((x) => /Scegli prima/.test(x.title || ''));
         if (!b) return 'nessun passo con un requisito';
-        if (b.disabled) return 'il passo è ancora SPENTO';
+        if (b.disabled || b.getAttribute('aria-disabled') === 'true') return 'il passo è ancora SPENTO';
         b.click(); return 'aperto';`);
       if (esito !== 'aperto') return esito;
       await p.dormi(500);
@@ -307,7 +307,7 @@ const p = await apriApp({ cartella, cartelle, eMaster: () => !TABLET });
 const dormi = (ms) => new Promise((ok) => setTimeout(ok, ms));
 Object.assign(p, {
   dormi,
-  clicIn: (sel, re) => p.valuta(`const c = document.querySelector('${sel}'); if (!c) return false; const b = [...c.querySelectorAll('button')].find((x) => ${re}.test(x.textContent.trim()) && !x.disabled); if (!b) return false; b.click(); return true`),
+  clicIn: (sel, re) => p.valuta(`const c = document.querySelector('${sel}'); if (!c) return false; const b = [...c.querySelectorAll('button')].find((x) => ${re}.test(x.textContent.trim()) && !(x.disabled || x.getAttribute('aria-disabled') === 'true')); if (!b) return false; b.click(); return true`),
   apriIlMio: async (quale = nomeVisto) => {
     const ok = await p.valuta(`const nome = ${JSON.stringify(quale)}; const carte = [...document.querySelectorAll('article,li')]; const c = carte.find((x) => x.textContent.trim().toUpperCase().startsWith(nome.toUpperCase())); const b = c ? [...c.querySelectorAll('button')].find((x) => x.textContent.trim() === 'Apri') : null; if (!b) return false; b.click(); return true`);
     if (!ok) throw new Error(`la scheda di ${quale} non si apre dalla lista`);
@@ -317,15 +317,17 @@ Object.assign(p, {
    * 250): su un tablet il suggerimento del mouse non esiste, e un comando che spiega solo lì è muto per chi gioca.
    * Per il primo pulsante spento che corrisponde torna 'a vista', 'solo nel title' o 'nessun motivo'.
    */
-  motivoAVista: (re) => p.valuta(`const b = [...document.querySelectorAll('button')].find((x) => ${re}.test(x.textContent.trim()) && x.disabled);`
-    + ` if (!b) return 'nessun pulsante spento';`
-    + ` const t = (b.getAttribute('title') || '').trim();`
-    + ` const c = b.closest('li, p, div, section') || b.parentElement;`
-    + ` const visibile = c ? c.innerText.replace(b.textContent, '').trim() : '';`
-    + ` const parola = t.split(/[^A-Za-zÀ-ÿ0-9]+/).filter((w) => w.length > 5)[0] || '';`
-    + ` if (parola && visibile.includes(parola)) return 'a vista';`
-    + ` const chi = (b.getAttribute('aria-label') || b.textContent.trim()).slice(0, 40);`
-    + ` return (t ? 'solo nel title' : 'nessun motivo') + ' (' + chi + ')'`),
+  motivoAVista: async (re) => {
+    // lotto 258: il motivo si legge al TOCCO (src/ui/spento.js): si tocca il primo pulsante spento che corrisponde e si guarda l'avviso
+    const chi = await p.valuta(`const b = [...document.querySelectorAll('button')].find((x) => ${re}.test(x.textContent.trim()) && x.getAttribute('aria-disabled') === 'true');`
+      + ` if (!b) return null; const m = b.dataset.motivo || ''; const nome = (b.getAttribute('aria-label') || b.textContent.trim()).slice(0, 40); b.click(); return JSON.stringify({ m, nome })`);
+    if (!chi) return 'nessun pulsante spento';
+    const { m, nome } = JSON.parse(chi);
+    if (!m) return `nessun motivo (${nome})`;
+    await dormi(400);
+    const visto = await p.valuta(`return (document.getElementById('avvisi') || { innerText: '' }).innerText`);
+    return String(visto).includes(m.slice(0, 30)) ? 'a vista' : `il tocco non mostra il motivo (${nome})`;
+  },
   tab: async (id) => {
     await p.valuta(`location.hash = location.hash.replace(/\\/t\\/.*$/, '').replace(/#\\/$/, '#/') + '/t/${id}'; return 1`);
     await dormi(700);

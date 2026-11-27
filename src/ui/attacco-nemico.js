@@ -120,7 +120,7 @@ export function apriAttaccoNemico(ctx, p, { bersagli, registra, dichiarazione = 
         }, b.nome, b.descrizione ? h('small', { class: 'nota' }, ` · ${b.descrizione}`) : null)))
           : h('p', { class: 'nota' }, 'Nessun bersaglio: servono PG al tavolo o altri nemici nello scontro.')),
       h('div', { class: 'attacco-azioni' },
-        h('button', { type: 'button', class: 'btn primario btn-grande', disabled: !attacchi[st.indice] || !st.bersaglio, title: !attacchi[st.indice] ? 'Il profilo di questo nemico non ha attacchi nei dati: il pannello non avrebbe né VA né danno. Descrivi tu l’attacco e applica il danno con «Colpito».' : !st.bersaglio ? 'Nessun bersaglio: servono PG al tavolo o altri nemici nello scontro.' : null, onclick: () => {
+        h('button', { type: 'button', class: 'btn primario btn-grande', spento: !attacchi[st.indice] ? 'Il profilo di questo nemico non ha attacchi nei dati: il pannello non avrebbe né VA né danno. Descrivi tu l’attacco e applica il danno con «Colpito».' : !st.bersaglio ? 'Scegli prima il bersaglio. Nessun bersaglio? Servono PG al tavolo o altri nemici nello scontro.' : null, onclick: () => {
           // sintesi A Terra: con il bersaglio A Terra (o Svenuto) la casella «Bersaglio A Terra» parte accesa
           const b = bersagli.find((x) => x.id === st.bersaglio);
           st.fase = 'pannello'; st.dichiarazione = { ...dichiarazione, ...(b?.aTerra ? { bersaglio: { ...(dichiarazione.bersaglio ?? {}), aTerra: true } } : {}) }; st.ui = {}; st.tiri = []; disegna();
@@ -152,8 +152,8 @@ export function apriAttaccoNemico(ctx, p, { bersagli, registra, dichiarazione = 
       nodi,
       st.errore ? h('p', { class: 'motivo', role: 'alert' }, st.errore) : null,
       h('div', { class: 'riga-azioni' },
-        e.colpisce && conDanno ? h('button', { type: 'button', class: 'btn primario btn-grande', disabled: st.inCorso, onclick: () => esegui(true) }, 'Applica danno') : null,
-        e.completo ? h('button', { type: 'button', class: `btn${e.colpisce && conDanno ? '' : ' primario'}`, disabled: st.inCorso, onclick: () => esegui(false) }, e.colpisce ? 'Registra senza danno' : 'Registra l’attacco') : null),
+        e.colpisce && conDanno ? h('button', { type: 'button', class: 'btn primario btn-grande', spento: st.inCorso && 'Un attimo: sto ancora registrando.', onclick: () => esegui(true) }, 'Applica danno') : null,
+        e.completo ? h('button', { type: 'button', class: `btn${e.colpisce && conDanno ? '' : ' primario'}`, spento: st.inCorso && 'Un attimo: sto ancora registrando.', onclick: () => esegui(false) }, e.colpisce ? 'Registra senza danno' : 'Registra l’attacco') : null),
       h('small', { class: 'nota' }, 'L’attacco va nel registro dello scontro; con «Applica danno» si apre «Colpito» sul bersaglio, già compilata.'));
   };
 

@@ -50,7 +50,7 @@ function rigaRiferimentoRotto(ctx, rotto, record) {
       }, h('option', { value: '', selected: !scelta[rotto.rif] }, 'scegli il veicolo…'),
       s.candidati.map((r) => h('option', { value: r.id, selected: scelta[rotto.rif] === r.id }, `${r.mezzo?.nome ?? r.id} (${r.id})`))) : null,
       s.candidati.length ? h('button', {
-        type: 'button', class: 'btn', disabled: !scelta[rotto.rif] ? 'disabled' : null,
+        type: 'button', class: 'btn', spento: !scelta[rotto.rif] ? 'Scegli prima, dalla tendina, il veicolo a cui ricollegarlo.' : null,
         onclick: () => applica(ricollegaVeicolo(ctx.scelte.veicoli ?? [], rotto.rif, scelta[rotto.rif], record, { master: true })),
       }, 'Ricollega') : null,
       h('button', {
@@ -429,7 +429,7 @@ function valoreEsemplareUi(v, d, { ctx = null, mezzo = null, aggiorna = null } =
     const x = cambiaDotazioneExtra(mezzo, profilo, r.id, r.quantita + n);
     if (x.errore) return h('span', { class: 'nota', title: x.errore }, '');
     return h('button', {
-      type: 'button', class: 'btn btn-piccolo', disabled: r.quantita + n < 0, 'aria-label': `${n < 0 ? 'Togli' : 'Aggiungi'} ${r.nome}`,
+      type: 'button', class: 'btn btn-piccolo', spento: r.quantita + n < 0 && `${r.nome} è già a 0.`, 'aria-label': `${n < 0 ? 'Togli' : 'Aggiungi'} ${r.nome}`,
       title: n < 0 ? `Consumata, rimossa o trasferita: esce dal valore (A.257)` : 'Rimessa a bordo o assegnata: rientra nel valore (A.257)',
       onclick: () => aggiorna(x.mezzo, `${v.nome}: ${r.nome} ${r.quantita} → ${x.quantita}; il valore dell’esemplare cambia (A.257).`),
     }, n < 0 ? '−' : '+');
@@ -526,10 +526,10 @@ function struttureVeicoloUi(ctx, mezzo, v, aggiorna) {
     return h('div', { class: `struttura-veicolo stato-${s.stato}` },
       h('h3', {}, s.nome, ' ', h('span', { class: `etichetta stato-struttura stato-${s.stato}` }, s.statoNome ?? '—'), h('small', { class: 'nota' }, ` · ${pen}`)),
       h('p', { class: 'riga-pi' },
-        h('button', { type: 'button', class: 'btn tondo', 'aria-label': `Togli un PI a ${s.nome}`, disabled: s.pi <= 0, onclick: () => cambia(s.pi - 1) }, '−'),
+        h('button', { type: 'button', class: 'btn tondo', 'aria-label': `Togli un PI a ${s.nome}`, spento: s.pi <= 0 && `${s.nome} è già a 0 PI.`, onclick: () => cambia(s.pi - 1) }, '−'),
         h('input', { type: 'number', class: 'input-d10', min: 0, max: s.massimi, value: s.pi, 'aria-label': `PI attuali di ${s.nome}`, onchange: (e) => cambia(intero(e.target.value, s.pi)) }),
         h('span', {}, ` / ${s.massimi} PI `),
-        h('button', { type: 'button', class: 'btn tondo', 'aria-label': `Aggiungi un PI a ${s.nome}`, disabled: s.pi >= s.massimi, onclick: () => cambia(s.pi + 1) }, '+')),
+        h('button', { type: 'button', class: 'btn tondo', 'aria-label': `Aggiungi un PI a ${s.nome}`, spento: s.pi >= s.massimi && `${s.nome} è già ai PI massimi (${s.massimi}).`, onclick: () => cambia(s.pi + 1) }, '+')),
       quadratiniPi(s.pi, s.massimi),
       h('p', { class: 'soglie-veicolo nota' }, s.soglie.map((x, i) => [i ? ' · ' : null,
         h('span', { class: x.stato === s.stato ? 'attuale' : null }, `${x.nome} ${x.da === x.a ? x.da : `${x.da}–${x.a}`}`, x.penalita === null ? ' (fuori uso)' : x.penalita ? ` (${segno(x.penalita)})` : '')])));
@@ -544,7 +544,7 @@ function rinforziVeicolo(mezzo, v, aggiorna, ctx) {
       h('h3', {}, r.nome, h('small', { class: 'nota' }, ` · ${r.struttura}, PS Integrità ${r.ps ?? '—'}`)),
       h('p', {}, 'Montati: ', r.montati.map((n, i) => h('span', { class: `pezzo-rinforzo${n === 0 ? ' esaurito' : ''}` }, `${i ? ' · ' : ''}${n}/${r.piPerPezzo}`)),
         ` · ricambi: ${r.ricambi.length ? r.ricambi.map((n) => `${n}/${r.piPerPezzo}`).join(', ') : 'nessuno'} `,
-        h('button', { type: 'button', class: 'btn btn-piccolo', disabled: !nuovo, title: nuovo ? 'Sostituisce il primo pezzo esaurito con un ricambio (30 minuti e una Prova di Tecnologia, dalla scheda)' : 'Serve un pezzo esaurito e un ricambio', onclick: () => aggiorna(nuovo, `${r.nome}: montato un ricambio.`) }, 'Monta un ricambio'), ' ',
+        h('button', { type: 'button', class: 'btn btn-piccolo', spento: !nuovo && 'Serve un pezzo esaurito e un ricambio.', title: 'Sostituisce il primo pezzo esaurito con un ricambio (30 minuti e una Prova di Tecnologia, dalla scheda)', onclick: () => aggiorna(nuovo, `${r.nome}: montato un ricambio.`) }, 'Monta un ricambio'), ' ',
         // A.101: Terre del Fuoco, oltre 30 Q effettivi nel Round una PS Integrità 12; fallita: −1 PI
         r.sollecitazioni ? h('button', { type: 'button', class: 'btn btn-piccolo', title: `${r.sollecitazioni.ambiente}: oltre ${r.sollecitazioni.oltre_q} Q effettivi nel Round, una PS Integrità ${r.sollecitazioni.ps_integrita} a fine movimento. Fallita: −1 PI al copriruota attivo, o alla Propulsione; ignora AR e Corazzato.`, onclick: () => { const x = sollecitazioneFallita(mezzo, ctx.dati); aggiorna(x.mezzo, x.avviso); } }, 'Sollecitazione: PS fallita') : null),
       h('p', { class: 'nota' }, r.frasi[1] ?? ''));
@@ -572,7 +572,7 @@ function necVeicolo(ctx, mezzo, v, aggiorna) {
     `Ricambi: ${ric.length ? ric.map((x) => testoCariche(x)).join(', ') : 'nessuno'} `,
     // A.227: il ricambio di prima si converte per frazione; se la frazione non si ricostruisce lo verifica il Direttore
     daConvertire?.length ? daConv(`· ricambio di prima da verificare dal Direttore (A.227): ${daConvertire.map((x) => `${numero(x)} Lx`).join(', ')} `) : null,
-    h('button', { type: 'button', class: 'btn btn-piccolo', disabled: !ric.length, title: 'Installa il ricambio al posto dell’accumulatore installato; quello tolto resta fra i ricambi con le sue cariche (niente travaso)',
+    h('button', { type: 'button', class: 'btn btn-piccolo', spento: !ric.length && 'Non c’è nessun ricambio da installare.', title: 'Installa il ricambio al posto dell’accumulatore installato; quello tolto resta fra i ricambi con le sue cariche (niente travaso)',
       onclick: () => { const x = installaRicambioEnergia(mezzo, colore, ctx.dati); if (x) aggiorna(x, `${v.nome}: installato il ricambio ${colore === 'rosso' ? 'Rosso' : 'Verde'}.`); } }, 'Installa il ricambio'), ' ',
     h('button', { type: 'button', class: 'btn btn-piccolo', title: 'Aggiunge un accumulatore di ricambio pieno (le scorte aggiuntive sono facoltative e occupano carico)',
       onclick: () => { const x = aggiungiRicambioEnergia(mezzo, colore, ctx.dati); if (x) aggiorna(x, `${v.nome}: aggiunto un ricambio ${colore === 'rosso' ? 'Rosso' : 'Verde'} pieno.`); } }, 'Aggiungi un ricambio pieno'));
@@ -601,8 +601,8 @@ function necVeicolo(ctx, mezzo, v, aggiorna) {
       r?.aria || r?.verde ? h('label', { class: 'campo-veicolo' }, 'Supporto vitale (ore) ', h('input', { type: 'text', inputmode: 'decimal', class: 'input-d10', value: c.supporto, onchange: (e) => { c.supporto = e.target.value; } })) : null,
       r?.aria || r?.verde ? h('button', { type: 'button', class: 'btn btn-piccolo', title: 'Toglie le ore effettive dall’aria; la carica Verde del giorno è una sola, quante che siano le accensioni', onclick: registraOre }, 'Usa il supporto') : null,
       h('button', { type: 'button', class: 'btn btn-piccolo btn-primario', title: 'Sottrae le cariche Rosse dei chilometri sommati (arrotondando una volta sola) e, se il supporto vitale è stato usato, una carica Verde. Per ora la chiude il Direttore con un tocco (A.219)', onclick: () => dopo(chiudiGiornata(mezzo, ctx.dati)) }, 'Chiudi la giornata'),
-      h('button', { type: 'button', class: 'btn btn-piccolo', disabled: !ricarica, title: ricarica ? ricarica.righe.join(' · ') : 'Gli accumulatori sono già carichi', onclick: () => ricarica && aggiorna(ricarica.mezzo, ricarica.righe.join('; ')) }, 'Ricarica completa'),
-      r?.aria ? h('button', { type: 'button', class: 'btn btn-piccolo', disabled: !bombole, title: bombole ? bombole.righe.join(' · ') : 'Le bombole sono piene', onclick: () => bombole && aggiorna(bombole.mezzo, bombole.righe.join('; ')) }, 'Ricarica le bombole') : null) : null,
+      h('button', { type: 'button', class: 'btn btn-piccolo', spento: !ricarica && 'Gli accumulatori sono già carichi.', title: ricarica ? ricarica.righe.join(' · ') : null, onclick: () => ricarica && aggiorna(ricarica.mezzo, ricarica.righe.join('; ')) }, 'Ricarica completa'),
+      r?.aria ? h('button', { type: 'button', class: 'btn btn-piccolo', spento: !bombole && 'Le bombole sono già piene.', title: bombole ? bombole.righe.join(' · ') : null, onclick: () => bombole && aggiorna(bombole.mezzo, bombole.righe.join('; ')) }, 'Ricarica le bombole') : null) : null,
     r?.aria?.testo ? h('p', { class: 'nota' }, r.aria.testo) : null);
 }
 
@@ -637,8 +637,8 @@ function munizioniVeicolo(ctx, mezzo, v, aggiorna) {
     return h('p', {}, h('strong', {}, `${a.nome}: `), `${x.caricate} / ${a.capacita} caricate · riserva ${x.riserva} `,
       h('label', {}, 'colpi sparati ', h('input', { type: 'number', min: 1, class: 'input-d10', value: '', onchange: (e) => spara(intero(e.target.value, 0)) })), ' ',
       // lotto 246: era spento e muto. Resta spento solo quando non cambierebbe niente, e adesso dice perché
-      h('button', { type: 'button', class: 'btn btn-piccolo', disabled: !x.riserva || x.caricate >= a.capacita,
-        title: x.caricate >= a.capacita ? 'Già carica' : !x.riserva ? `Riserva a 0: i colpi si scrivono nel campo «riserva» (li conferma il Direttore)` : `Ricarica ${a.nome} dalla riserva`,
+      h('button', { type: 'button', class: 'btn btn-piccolo', spento: x.caricate >= a.capacita ? `${a.nome} è già carica.` : !x.riserva ? 'Riserva a 0: i colpi si scrivono nel campo «riserva» (li conferma il Direttore).' : null,
+        title: `Ricarica ${a.nome} dalla riserva`,
         onclick: () => aggiorna(munizioniArmaVeicolo(mezzo, i, { ricarica: true }, ctx.dati), `${a.nome}: ricaricata dalla riserva.`) }, 'Ricarica'),
       Number.isInteger(a.cr_per_colpo) ? h('small', { class: 'nota' }, ` · ${a.cr_per_colpo} cr a colpo`) : null);
   }));
@@ -693,7 +693,7 @@ function pannelloColpo(ctx, mezzo, v, aggiorna) {
     rigaScelte(`PS Integrità ${v.profilo.ps_integrita ?? '—'} della struttura (una per colpo, tirata al tavolo)`, [{ valore: 'fallita', etichetta: 'Fallita' }, { valore: 'riuscita', etichetta: 'Riuscita', riga: 'dimezza, minimo 1' }], c.ps, (x) => { c.ps = x; ridisegna(); }),
     r ? dettaglioColpo(r, d) : h('p', { class: 'nota' }, 'Scrivi il danno per vedere il calcolo.'),
     h('p', { class: 'riga-azioni' },
-      h('button', { type: 'button', class: 'btn primario', disabled: !r, title: r ? 'Applica il colpo al mezzo' : 'Scrivi il danno (o segna il Magistrale, o i PI delle proprietà): con zero danno l’applicazione non cambierebbe nulla', onclick: () => { statoUi(ctx).colpo[mezzo.uid] = null; aggiorna(r.mezzo, r.avviso); } }, 'Applica'),
+      h('button', { type: 'button', class: 'btn primario', spento: !r && 'Scrivi il danno (o segna il Magistrale, o i PI delle proprietà): con zero danno l’applicazione non cambierebbe nulla.', title: 'Applica il colpo al mezzo', onclick: () => { statoUi(ctx).colpo[mezzo.uid] = null; aggiorna(r.mezzo, r.avviso); } }, 'Applica'),
       h('button', { type: 'button', class: 'btn', onclick: () => { statoUi(ctx).colpo[mezzo.uid] = null; ridisegna(); } }, 'Chiudi')));
 }
 
@@ -893,8 +893,8 @@ function neverlostUi(ctx, mezzo, v, aggiorna) {
             const sc = statoScudo(mezzo, p, ctx.roundScontro);
             return [
               h('button', {
-                type: 'button', class: `btn btn-piccolo${sc && !sc.puo ? ' con-avviso' : ''}`, disabled: !!(sc && !sc.puo),
-                title: sc?.motivo ?? sc?.testo ?? 'Round senza colpi',
+                type: 'button', class: `btn btn-piccolo${sc && !sc.puo ? ' con-avviso' : ''}`, spento: sc && !sc.puo ? (sc.motivo || 'Adesso non si può: serve uno scontro aperto.') : null,
+                title: sc?.testo ?? 'Round senza colpi',
                 onclick: () => dopo(recuperaScudo(mezzo, p, ctx.roundScontro)),
               }, 'Round senza colpi'),
               sc && !sc.puo ? h('small', { class: 'nota' }, ` ${sc.motivo}`) : null,
@@ -927,7 +927,7 @@ function neverlostUi(ctx, mezzo, v, aggiorna) {
     h('h4', {}, 'Misure'),
     h('p', { class: 'nota' }, `Corpo: ${p.dimensioni.lunghezza_m} × ${p.dimensioni.larghezza_m} m (${p.dimensioni.nota}) · Pedina di combattimento: ${p.pedina_tattica} Q Tattici · ${p.planimetria}`),
     h('div', { class: 'consumi-veicolo' },
-      h('button', { type: 'button', class: 'btn btn-piccolo', disabled: !ricarica, title: ricarica ? ricarica.righe.join(' · ') : 'Niente da ricaricare (o riserve da registrare)', onclick: () => ricarica && aggiorna(ricarica.mezzo, ricarica.righe.join('; ')) }, 'Ricarica all’approdo')));
+      h('button', { type: 'button', class: 'btn btn-piccolo', spento: !ricarica && 'Niente da ricaricare (o riserve da registrare).', title: ricarica ? ricarica.righe.join(' · ') : null, onclick: () => ricarica && aggiorna(ricarica.mezzo, ricarica.righe.join('; ')) }, 'Ricarica all’approdo')));
 }
 
 /** Per «Colpito» della Neverlost: il danno passa prima dallo scudo; torna { mezzo, residuo, riga } o null se non c'è scudo. */

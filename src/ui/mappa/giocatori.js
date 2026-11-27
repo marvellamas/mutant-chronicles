@@ -638,8 +638,8 @@ export function renderGiocatori(radice, ctx) {
     const avvisoRegola = io.permesso?.regola && io.permesso?.motivo ? h('p', { class: 'tablet-stato con-avviso' }, io.permesso.motivo) : null;
     const r = a?.rimaste ?? {};
     const fasce = puo && !io.semplice ? h('div', { class: 'tablet-fasce', role: 'group', 'aria-label': 'Fascia di movimento' }, ['passo', 'corsa', 'scatto'].map((f, i) => h('button', {
-      type: 'button', class: `btn modo-${f}${st.fascia === i + 1 ? ' scelto' : ''}`, 'aria-pressed': String(st.fascia === i + 1), disabled: r[f] === null || r[f] === undefined,
-      title: r[f] === null ? (a?.escluse?.includes(f) ? 'Passo già cominciato: Corsa e Scatto si fanno da fermi' : 'Non disponibile') : `${NOMI_MODI[f]}: ${numeroQ(r[f])} Q`,
+      type: 'button', class: `btn modo-${f}${st.fascia === i + 1 ? ' scelto' : ''}`, 'aria-pressed': String(st.fascia === i + 1), spento: (r[f] === null || r[f] === undefined) && (a?.escluse?.includes(f) ? 'Passo già cominciato: Corsa e Scatto si fanno da fermi.' : `${NOMI_MODI[f]} non è disponibile adesso.`),
+      title: r[f] === null || r[f] === undefined ? null : `${NOMI_MODI[f]}: ${numeroQ(r[f])} Q`,
       onclick: () => cambiaFascia(i + 1),
     }, NOMI_MODI[f], r[f] !== null && r[f] !== undefined ? h('small', {}, ` ${numeroQ(r[f])} Q`) : null))) : null;
     const p = st.prova;
@@ -650,7 +650,7 @@ export function renderGiocatori(radice, ctx) {
       ...(p.avvisi ?? []).map((x) => h('p', { class: 'tablet-zoc' }, `⚠ ${x}`)),
       h('div', { class: 'riga-azioni' },
         h('button', { type: 'button', class: 'btn', onclick: () => { st.prova = null; aggiornaTablet(); tela.richiedi(['sopra']); } }, 'Annulla'),
-        h('button', { type: 'button', class: `btn primario${(p.avvisi ?? []).length ? ' con-avviso' : ''}`, disabled: st.inVolo, onclick: () => conferma() }, (p.avvisi ?? []).length ? 'Muovi comunque' : 'Conferma'))) : null;
+        h('button', { type: 'button', class: `btn primario${(p.avvisi ?? []).length ? ' con-avviso' : ''}`, spento: st.inVolo && 'Un attimo: il movimento è in corso.', onclick: () => conferma() }, (p.avvisi ?? []).length ? 'Muovi comunque' : 'Conferma'))) : null;
     el.torna.className = `btn tablet-torna${st.mosso ? ' primario' : ''}`;
     // P4: sotto il risultato della linea, «Attacca questo bersaglio» (al proprio turno, come «Muovi il PG»)
     // 12/10 (punto 6): un oggetto della scena si attacca solo se il master gli ha messo la spunta «Bersaglio»

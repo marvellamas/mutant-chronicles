@@ -511,7 +511,7 @@ export function renderTavolo(radice, ctx) {
         c?.bozza ? h('section', { class: 'riquadro scontro-pannello' }, h('h2', {}, 'Scontro non ancora iniziato'),
           h('p', { class: 'nota' }, `La scena è collegata alla bozza «${c.nomeBozza ?? c.bozza}»: l’ordine d’Iniziativa compare quando lo scontro inizia.`),
           stato.scontro ? h('p', { class: 'nota' }, `È già aperto lo scontro «${stato.scontro.nome}»: chiudilo con «Fine scontro» prima di iniziarne un altro.`) : null,
-          h('button', { type: 'button', class: 'btn primario', disabled: !!stato.scontro, title: 'Inizia scontro: come «Inizia» della bozza; poi la finestra «Iniziativa». La bozza resta per rigiocarlo', onclick: () => iniziaDallaMappa(c.bozza) }, 'Inizia scontro'))
+          h('button', { type: 'button', class: 'btn primario', spento: stato.scontro && `È già aperto lo scontro «${stato.scontro.nome}»: chiudilo con «Fine scontro» prima di iniziarne un altro.`, title: 'Inizia scontro: come «Inizia» della bozza; poi la finestra «Iniziativa». La bozza resta per rigiocarlo', onclick: () => iniziaDallaMappa(c.bozza) }, 'Inizia scontro'))
           : !c?.scontro ? riquadro('Nessuno scontro collegato', 'Collega la scena a uno scontro o a una bozza dal gruppo «Mappa».')
             : c.scontro !== stato.scontro?.id ? riquadro('Lo scontro della scena non è aperto', stato.scontro ? `È aperto un altro scontro («${stato.scontro.nome}»): collega la scena a quello dal gruppo «Mappa», o chiudilo.` : 'Lo scontro collegato è chiuso: collega la scena a un altro scontro o a una bozza dal gruppo «Mappa».')
               : pannelloScontro(ctx, stScontro, azScontro, 'iniziativa')));

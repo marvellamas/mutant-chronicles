@@ -23,7 +23,8 @@ export const RADICE = new URL('..', import.meta.url).pathname.replace(/^\/([A-Za
 /** I meccanismi cercati, uno per strato. Chi aggiunge un modo di fermare qualcuno lo aggiunge qui. */
 export const MECCANISMI = {
   pagina: [
-    { nome: 'disabled', re: /(?:^|[\s,{(])disabled\s*[:=]\s*(?!false\b)(?!undefined\b)([^,;)\n]+)/ },
+    // lotto 258: `spento: motivo` (src/ui/spento.js) è lo stesso blocco di prima, scritto perché il tocco dica perché: stesso nome, stessi id
+    { nome: 'disabled', re: /(?:(?:^|[\s,{(])disabled\s*[:=]|(?<=^\s*|[,{(]\s*)spento\s*:)\s*(?!false\b)(?!undefined\b)([^,;)\n]+)/ },
     { nome: 'aria-disabled', re: /'aria-disabled'\s*:\s*(?!'false')([^,;)\n]+)/ },
     { nome: "setAttribute('disabled')", re: /setAttribute\(\s*'disabled'/ },
   ],

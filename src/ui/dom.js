@@ -1,13 +1,16 @@
 // Piccole utilità DOM, senza dipendenze.
+import { spegni } from './spento.js';
 
 /**
  * Crea un elemento. props: class, on<Evento>, dataset, proprietà DOM (value, checked, disabled…)
  * o attributi; i figli possono essere nodi, stringhe, numeri, array o null.
+ * `spento: 'motivo'` (lotto 258) spegne il pulsante restando toccabile: il tocco dice perché (src/ui/spento.js).
  */
 export function h(tag, props, ...figli) {
   const el = document.createElement(tag);
   for (const [k, v] of Object.entries(props ?? {})) {
     if (v === null || v === undefined || v === false) continue;
+    if (k === 'spento') continue; // lotto 258: si applica dopo, quando titolo e il resto ci sono (src/ui/spento.js)
     if (k === 'class') el.className = v;
     else if (k === 'dataset') Object.assign(el.dataset, v);
     else if (k.startsWith('on') && typeof v === 'function') el.addEventListener(k.slice(2).toLowerCase(), v);
@@ -15,6 +18,7 @@ export function h(tag, props, ...figli) {
     else if (v === true) el.setAttribute(k, '');
     else el.setAttribute(k, String(v));
   }
+  if (props?.spento) spegni(el, props.spento);
   aggiungi(el, figli);
   return el;
 }

@@ -11,6 +11,7 @@
 // stato bozza), nello scontro aperto (scontri/<id>.json) o in tutti e due per la mappa. Il bestiario di nemici/ non
 // si tocca mai: il nemico aggiunto è una copia, e i ritocchi fatti dopo restano in quello scontro.
 import { h } from './dom.js';
+import { spegni } from './spento.js';
 import { avviso, avvisoErrore } from './avvisi.js';
 import { nascondiTooltip } from './tooltip.js';
 import { apriCreaNemico, caricaUmano } from './crea-nemico.js';
@@ -175,7 +176,7 @@ export function apriAggiungiNemico(ctx, { voci = [], livello = 8, dove = '', des
     sceltoUi.textContent = x
       ? `Scelto: ${x.nome}${x.tipo === 'creatura' ? ` (${BE.gradi.find((y) => y.id === st.grado)?.nome ?? ''})` : ''}`
       : 'Scegli un nemico dall’elenco';
-    btnAggiungi.disabled = !x || st.occupato;
+    spegni(btnAggiungi, !x ? 'Scegli prima un nemico dall’elenco.' : st.occupato ? 'Un attimo: lo sto aggiungendo.' : null);
     btnAggiungi.textContent = st.occupato ? 'Aggiungo…' : 'Aggiungi';
     fattiUi.hidden = !st.fatti.length;
     fattiUi.textContent = `Aggiunti${dove ? ` ${dove}` : ''}: ${st.fatti.join(', ')}.`;

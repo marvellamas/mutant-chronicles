@@ -4,6 +4,7 @@
 // L'esito si mostra in una riga («Sessione salvata: zip 812 KB · Drive ✓ · ntfy ✓»), con gli errori sotto: mai
 // bloccanti, lo zip locale c'è sempre. «Spegni Mutant» funziona solo dal PC del server e chiede conferma.
 import { h, svuota } from './dom.js';
+import { spegni } from './spento.js';
 import { avviso } from './avvisi.js';
 import { chiedi } from './finestrella.js';
 
@@ -30,7 +31,7 @@ export function pulsanteSalvaSessione() {
     type: 'button', class: 'btn',
     title: 'Salvataggio completo: zip in salvataggi/ (mai sovrascritto), copia nella cartella di Google Drive e notifica a Marcello con i dati. Il server salva comunque da solo ogni 5 minuti in autosave/',
     onclick: async () => {
-      b.disabled = true;
+      spegni(b, 'Un attimo: sto ancora lavorando.');
       b.textContent = 'Salvo…';
       try {
         const e = await chiama('api/salva-sessione');
@@ -38,7 +39,7 @@ export function pulsanteSalvaSessione() {
       } catch (err) {
         avviso(`Sessione NON salvata: ${err.message}. Si può usare la voce 3 «Salva la sessione» di Mutant.bat.`, { tipo: 'errore', chiave: 'salva-sessione' });
       } finally {
-        b.disabled = false;
+        spegni(b, null);
         b.textContent = 'Salva sessione';
       }
     },
@@ -72,14 +73,14 @@ export function pulsanteMandaStato() {
     type: 'button', class: 'btn',
     title: 'Scrive subito l’istantanea dello stato (personaggi, veicoli, PX e il rapporto stato-mutant.txt) nella cartella sincronizzata col cloud, da cui arriva a Marcello. Non manda niente in rete e non salva la sessione: per quello c’è «Salva sessione»',
     onclick: async () => {
-      b.disabled = true;
+      spegni(b, 'Un attimo: sto ancora lavorando.');
       b.textContent = 'Scrivo…';
       try {
         const e = await mandaIstantanea('Manda lo stato');
         if (!e) avviso('Istantanea non fatta: «Manda lo stato» funziona solo dal PC dove gira Mutant.', { tipo: 'errore', chiave: 'istantanea' });
         else avviso(e.riga ?? 'Istantanea fatta.', { tipo: e.fatto ? 'ok' : 'errore', chiave: 'istantanea', durata: e.fatto ? 8000 : 15000 });
       } finally {
-        b.disabled = false;
+        spegni(b, null);
         b.textContent = 'Manda lo stato';
       }
     },
@@ -102,13 +103,13 @@ export function pulsanteSpegni() {
         si: 'Salva e spegni', pericolo: true,
       });
       if (!si) return;
-      b.disabled = true;
+      spegni(b, 'Un attimo: sto ancora lavorando.');
       b.textContent = 'Salvo e spengo…';
       let e;
       try {
         e = await chiama('api/spegni');
       } catch (err) {
-        b.disabled = false;
+        spegni(b, null);
         b.textContent = 'Spegni Mutant';
         avviso(`Mutant NON è stato spento: ${err.message}`, { tipo: 'errore', chiave: 'spegni' });
         return;

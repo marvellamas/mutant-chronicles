@@ -80,7 +80,7 @@ function rigaTokenAppeso(x, v, a) {
       // l'identificativo la tendina ne mostrava due uguali e indistinguibili (visto provando a 820 px)
       x.candidati.map((c) => h('option', { value: c.id, selected: scelto === c.id }, `${c.nome} · ${c.id}${c.nato ? ` (del ${c.nato})` : ''}`))) : null,
       x.candidati.length ? h('button', {
-        type: 'button', class: 'btn btn-piccolo', disabled: scelto ? null : 'disabled',
+        type: 'button', class: 'btn btn-piccolo', spento: scelto ? null : 'Scegli prima, dalla tendina, a che cosa ricollegarlo.',
         onclick: () => a.ricollegaAppeso(x.token, scelto),
       }, 'Ricollega') : null,
       h('button', {
@@ -192,10 +192,8 @@ function sezioneMovimento(m, a) {
       m.veicolo && a.rigaAndature ? a.rigaAndature() : null,
       mov && !m.veicolo ? fasce.map(([testo, n, v, f]) => h('button', {
         type: 'button', class: `btn btn-piccolo fascia-${n}${m.fascia === n ? ' scelto' : ''}`, 'aria-pressed': String(m.fascia === n),
-        disabled: !Number.isFinite(v) || spenta(f),
-        title: !Number.isFinite(v) ? 'Non disponibile'
-          : spenta(f) ? (m.chiusa ? 'Movimento del Round finito: Corsa o Scatto già fatti in un blocco' : 'Passo già cominciato: Corsa e Scatto si fanno in un blocco unico, da fermi')
-          : f === 'passo' ? 'Area fino al Passo (si divide prima e dopo l’Azione Principale)' : `Area fino ${f === 'corsa' ? 'alla Corsa' : 'allo Scatto'} (un blocco unico: i Q non usati si perdono)`,
+        spento: !Number.isFinite(v) ? 'Non disponibile per questa creatura.' : spenta(f) ? (m.chiusa ? 'Movimento del Round finito: Corsa o Scatto già fatti in un blocco.' : 'Passo già cominciato: Corsa e Scatto si fanno in un blocco unico, da fermi.') : null,
+        title: f === 'passo' ? 'Area fino al Passo (si divide prima e dopo l’Azione Principale)' : `Area fino ${f === 'corsa' ? 'alla Corsa' : 'allo Scatto'} (un blocco unico: i Q non usati si perdono)`,
         onclick: () => a.fascia(n),
       }, testo)) : null,
       // quarta modalità (primo test di Marcello, 06/10/2026), per tutti i token: Maiusc ne è la scorciatoia
@@ -204,7 +202,7 @@ function sezioneMovimento(m, a) {
       m.porte.map((p) => h('button', { type: 'button', class: 'btn btn-piccolo', title: p.stato === 'bloccata' ? 'Porta bloccata: serve sbloccarla, scassinarla o forzarla' : 'Adiacente, con una mano libera, senza Prova: 1 AzP (A.125)', onclick: () => a.porta(p.id) },
         p.stato === 'aperta' ? 'Chiudi porta' : p.stato === 'bloccata' ? 'Apri porta (bloccata)' : 'Apri porta'))) : null,
     h('div', { class: 'mappa-azioni-token' },
-      h('button', { type: 'button', class: 'btn btn-piccolo', disabled: !m.annullabile, onclick: a.annullaMovimento }, 'Annulla ultimo movimento'),
+      h('button', { type: 'button', class: 'btn btn-piccolo', spento: !m.annullabile && 'Nessun movimento da annullare.', onclick: a.annullaMovimento }, 'Annulla ultimo movimento'),
       // fase 2, lotto 3: linea di tiro verso il mouse o un token (distanza, vista, Copertura)
       a.lineaTiro ? h('button', { type: 'button', class: 'btn btn-piccolo', title: 'Distanza, vista e Copertura verso il mouse o un token (Giocatore §5.8); clic per fissarla', onclick: a.lineaTiro }, 'Linea di tiro (L)') : null,
       // senza scontro aperto il Round non avanza: il turno lo fa ripartire il master

@@ -30,7 +30,7 @@ const attributiComuni = {
 function voceEl(v) {
   return h('button', {
     type: 'button', role: 'menuitem', class: `mappa-menu-voce${v.scelta ? ' scelta' : ''}${v.pericolo ? ' pericolo' : ''}`,
-    disabled: !!v.disabilitata, title: v.titolo ?? null, 'aria-checked': v.scelta === undefined ? null : String(!!v.scelta),
+    spento: v.disabilitata && (v.titolo || 'Adesso non si può fare.'), title: v.titolo ?? null, 'aria-checked': v.scelta === undefined ? null : String(!!v.scelta),
     onclick: () => { chiudiMenuToken(); v.azione(); },
   }, h('span', { class: 'mappa-menu-testo' }, v.testo), v.tasto ? h('kbd', { class: 'mappa-menu-tasto' }, v.tasto) : null);
 }
@@ -72,7 +72,7 @@ export function apriMenuToken(contenitore, x, y, titolo, menu, o = {}) {
   },
   h('p', { class: 'mappa-menu-titolo' }, titolo),
   rapida.length ? h('div', { class: 'mappa-menu-rapida', role: 'group', 'aria-label': 'Movimento rapido' }, rapida.map((v) => h('button', {
-    type: 'button', class: `btn btn-piccolo${v.scelta ? ' scelto' : ''}`, disabled: !!v.disabilitata, title: v.titolo ?? null, 'aria-pressed': String(!!v.scelta),
+    type: 'button', class: `btn btn-piccolo${v.scelta ? ' scelto' : ''}`, spento: v.disabilitata && (v.titolo || 'Adesso non si può fare.'), title: v.titolo ?? null, 'aria-pressed': String(!!v.scelta),
     onclick: () => { chiudiMenuToken(); v.azione(); },
   }, v.testo))) : null,
   gruppi.map((g) => h('div', { class: 'mappa-menu-gruppo', role: 'group', 'aria-label': g.titolo },
@@ -84,7 +84,7 @@ export function apriMenuToken(contenitore, x, y, titolo, menu, o = {}) {
   aperto.style.left = `${pos.left}px`;
   aperto.style.top = `${pos.top}px`;
   setTimeout(() => document.addEventListener('pointerdown', fuori, true), 0);
-  aperto.querySelector('button:not([disabled])')?.focus({ preventScroll: true });
+  aperto.querySelector('button:not([disabled]):not([aria-disabled="true"])')?.focus({ preventScroll: true });
 }
 
 export const menuAperto = () => !!aperto;

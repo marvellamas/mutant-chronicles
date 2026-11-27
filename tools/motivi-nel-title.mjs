@@ -1,17 +1,20 @@
-// Lotto 251, parte B — **il censimento dei motivi che stanno nel solo `title`.**
+// Lotto 251, parte B — il censimento dei motivi che stanno nel solo `title`; lotto 258 — **chiuso: un pulsante spento
+// dice perché al tocco, con una funzione sola** (src/ui/spento.js).
 //
-// Il difetto dei Distintivi del 250 non era isolato: un pulsante che si spegne (o che non cambierebbe niente) e
-// spiega il perché **solo nel `title`** è muto su un tablet, dove il suggerimento del mouse non esiste. Questo
-// strumento conta la classe: ogni pulsante della pagina che ha un `disabled:` e un `title:` nello stesso oggetto.
+// Il difetto: su 108 pulsanti spenti, 65 davano il motivo nel solo `title` e 43 nemmeno quello. Il `title` è il suggerimento
+// del mouse: su un tablet non c'è, e un pulsante `disabled` non riceve nemmeno il tocco. Dal lotto 258 un pulsante spento
+// si scrive `h('button', { …, spento: 'motivo' })` (o `spegni(el, motivo)` per un pulsante già disegnato): resta toccabile
+// (`aria-disabled`) e il tocco mostra il motivo come avviso breve.
 //
-// **Il limite del metodo, dichiarato:** a macchina si vede che il motivo sta nel `title`, non si vede se accanto
-// c'è anche una riga visibile che lo dice (può starci, scritta da un altro pezzo della funzione). Quindi il numero
-// è il numero dei *candidati*, e la riga «a vista o no» la dà il ripasso nel browser (`motivoAVista` di
-// `tools/ripassa-clic.mjs`), che guarda la pagina vera.
+// Questo strumento conta ancora la classe, per accorgersi se torna: ogni pulsante della pagina con un `disabled:` è un
+// pulsante che non dice perché al tocco (col `title` accanto o senza), e ogni `spento: true` è un motivo dimenticato.
+//
+// **Il limite del metodo, dichiarato:** a macchina si vede che il motivo c'è, non si vede se è il motivo giusto, né se
+// accanto c'è anche una riga visibile. La risposta per un comando preciso la dà la prova nel browser (tests/browser-vero.js,
+// tools/ripassa-clic.mjs → motivoAVista).
 //
 // Uso: node tools/motivi-nel-title.mjs [--elenco]
 import { readdirSync, readFileSync } from 'node:fs';
-import { join } from 'node:path';
 
 const RADICE = new URL('../src/', import.meta.url);
 const ELENCO = process.argv.includes('--elenco');
@@ -20,7 +23,7 @@ const file = (base, rel = '') => readdirSync(new URL(rel, base), { withFileTypes
   d.isDirectory() ? file(base, `${rel}${d.name}/`) : (/\.js$/.test(d.name) ? [`${rel}${d.name}`] : [])));
 
 /** I blocchi `h('button', { … })` di un testo, col loro contenuto fra graffe. */
-function bottoni(testo) {
+export function bottoni(testo) {
   const fuori = [];
   const re = /h\('button',\s*\{/g;
   for (const m of testo.matchAll(re)) {
@@ -36,36 +39,41 @@ function bottoni(testo) {
   return fuori;
 }
 
-const righe = [];
-let bottoniTotali = 0;
-let conDisabled = 0;
-for (const f of file(RADICE)) {
-  const testo = readFileSync(new URL(f, RADICE), 'utf8');
-  for (const b of bottoni(testo)) {
-    bottoniTotali += 1;
-    const spento = /\bdisabled:/.test(b.corpo);
-    if (!spento) continue;
-    conDisabled += 1;
-    const conTitle = /\btitle:/.test(b.corpo);
-    if (!conTitle) { righe.push({ f, riga: b.riga, caso: 'spento senza motivo' }); continue; }
-    righe.push({ f, riga: b.riga, caso: 'motivo nel title' });
+/** Il valore di `spento:` letto grezzo, per accorgersi di un `spento: true` (un motivo dimenticato). */
+const spentoVuoto = (corpo) => /\bspento:\s*(true|''|""|`\s*`)\s*[,}\n]/.test(corpo);
+
+export function censisci() {
+  const righe = [];
+  let bottoniTotali = 0;
+  let conSpento = 0;
+  for (const f of file(RADICE)) {
+    const testo = readFileSync(new URL(f, RADICE), 'utf8');
+    for (const b of bottoni(testo)) {
+      bottoniTotali += 1;
+      if (/\bspento:/.test(b.corpo)) {
+        conSpento += 1;
+        if (spentoVuoto(b.corpo)) righe.push({ f, riga: b.riga, caso: 'spento senza motivo' });
+      }
+      if (/\bdisabled:/.test(b.corpo)) {
+        righe.push({ f, riga: b.riga, caso: /\btitle:/.test(b.corpo) ? 'motivo nel title' : 'spento senza motivo' });
+      }
+    }
   }
+  return { righe, bottoniTotali, conSpento };
 }
 
-const perCaso = (c) => righe.filter((r) => r.caso === c);
-console.log(`\nMOTIVI NEL SOLO «title» — censimento del lotto 251\n`);
-console.log(`pulsanti della pagina (h('button')): ${bottoniTotali}`);
-console.log(`di questi, con un \`disabled:\`: ${conDisabled}`);
-console.log(`  · col motivo nel \`title\`: ${perCaso('motivo nel title').length}  ← la classe del difetto dei Distintivi`);
-console.log(`  · spenti senza nessun motivo: ${perCaso('spento senza motivo').length}`);
-console.log('\nIl numero è quello dei candidati: a macchina non si vede se accanto c’è anche una riga visibile.');
-console.log('La risposta per un comando preciso la dà il ripasso nel browser (motivoAVista di tools/ripassa-clic.mjs).');
-if (ELENCO) {
-  console.log('\nElenco:');
-  for (const r of righe) console.log(`  ${r.caso.padEnd(22)} src/${r.f}:${r.riga}`);
+if (process.argv[1]?.endsWith('motivi-nel-title.mjs')) {
+  const { righe, bottoniTotali, conSpento } = censisci();
+  const perCaso = (c) => righe.filter((r) => r.caso === c);
+  console.log('\nMOTIVI NEL SOLO «title» — censimento del lotto 251, chiuso dal lotto 258\n');
+  console.log(`pulsanti della pagina (h('button')): ${bottoniTotali}`);
+  console.log(`di questi, spenti con \`spento:\` (il tocco dice perché): ${conSpento}`);
+  console.log(`  · col motivo nel \`title\` e \`disabled:\` (muto al tocco): ${perCaso('motivo nel title').length}  ← la classe del difetto dei Distintivi`);
+  console.log(`  · spenti senza nessun motivo: ${perCaso('spento senza motivo').length}`);
+  console.log('\nIl numero è quello dei candidati: a macchina non si vede se il motivo è quello giusto, né se accanto c’è anche una riga visibile.');
+  console.log('La risposta per un comando preciso la dà la prova nel browser (tests/browser-vero.js, motivoAVista di tools/ripassa-clic.mjs).');
+  if (ELENCO) {
+    console.log('\nElenco:');
+    for (const r of righe) console.log(`  ${r.caso.padEnd(22)} src/${r.f}:${r.riga}`);
+  }
 }
-const perFile = {};
-for (const r of righe) perFile[r.f] = (perFile[r.f] ?? 0) + 1;
-const ordinati = Object.entries(perFile).sort((a, b) => b[1] - a[1]).slice(0, 8);
-console.log('\nI file che ne hanno più:');
-for (const [f, n] of ordinati) console.log(`  ${String(n).padStart(3)}  src/${f}`);
