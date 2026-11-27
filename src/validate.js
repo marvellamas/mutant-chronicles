@@ -71,6 +71,17 @@ export function validaDati(dati) {
     if (AA.tutte_le_correzioni_di_calcolo !== true) err('regole', 'adeguamento_abilita.annulla_correzioni_abilita.tutte_le_correzioni_di_calcolo', 'dal lotto 252 il criterio è «ogni correzione di calcolo a un’Abilità attiva al momento dell’adeguamento»: un elenco per giorno lascia in piedi la correzione del giorno dopo (il −2 di Dimitri del 23/11)');
     if (AA.tutte_le_correzioni_di_calcolo === true && !isTesto(AA.perche_tutte)) err('regole', 'adeguamento_abilita.annulla_correzioni_abilita.perche_tutte', 'serve il perché del criterio largo: una regola senza il suo motivo, fra sei mesi, qualcuno la restringe');
   }
+  // lotto 256: il metro di Davide (VA e punti liberi attesi dopo la correzione), che lo strumento ripete prima di scrivere
+  const metro = dati.regole?.adeguamento_abilita?.metro;
+  if (!Array.isArray(metro) || !metro.length) err('regole', 'adeguamento_abilita.metro', 'manca il metro di Davide (personaggio, abilita, va, punti_disponibili, fonte): lo strumento della compensazione non avrebbe un numero a cui ripetere il conto');
+  else metro.forEach((m, k) => {
+    const P = `adeguamento_abilita.metro[${k}]`;
+    if (!isTesto(m?.personaggio)) err('regole', `${P}.personaggio`, 'serve il nome (o l’inizio del nome) del personaggio');
+    if (!isTesto(m?.abilita) || !(dati.abilita?.abilita ?? []).some((a) => a.nome === m.abilita)) err('regole', `${P}.abilita`, 'serve il nome di un’Abilità dei dati');
+    if (!isIntero(m?.va)) err('regole', `${P}.va`, 'serve il VA atteso (intero)');
+    if (m?.punti_disponibili !== undefined && !(isIntero(m.punti_disponibili) && m.punti_disponibili >= 0)) err('regole', `${P}.punti_disponibili`, 'intero ≥ 0 atteso');
+    if (!isTesto(m?.fonte) || !isTesto(m?.perche)) err('regole', `${P}.fonte`, 'servono la fonte e il perché: un numero senza il suo motivo è una dimenticanza');
+  });
 
   // Lotto 225 (A.291): le Pietre di Luna intere sono tre voci distinte (5, 10, 15 PM), con la SnT per colore del §26.8; il conto si pretende
   // (un controllo verde su zero voci ci ha già ingannato)

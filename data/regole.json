@@ -4647,7 +4647,18 @@
       "perche_tutte": "Lotto 252 (collaudo di Davide del 25/11/2026): il criterio era «le correzioni del giorno dichiarato», e il −2 ad Armi da mischia che Dimitri aveva ricevuto il 23/11 per compensare i due +1 è sopravvissuto all'adeguamento del 24/11 — VA 6 invece di 8. Un elenco scritto a mano non copre la correzione fatta il giorno dopo averlo scritto: il criterio è «ogni correzione di calcolo a un'Abilità attiva al momento dell'adeguamento», e il giorno resta solo come origine della regola (A.293).",
       "risposta": "A.293",
       "motivo": "A.293 (Davide, 19/11/2026): dopo l'adeguamento le correzioni manuali alle Abilità del 2 novembre non incidono più sui valori; restano nello storico."
-    }
+    },
+    "metro": [
+      {
+        "personaggio": "Dimitri",
+        "abilita": "Armi da mischia",
+        "va": 8,
+        "punti_disponibili": 21,
+        "fonte": "Rapporto di collaudo di Davide del 24–25/11/2026, priorità 02",
+        "citazione": "prima di distribuire punti, Armi da mischia deve mostrare VA 8 e il contatore deve restare a 21 punti liberi",
+        "perche": "Lotto 256: il metro lo ha scritto Davide e lo strumento della compensazione lo ripete dopo aver corretto — e prima di scrivere. Se il conto non dà quello, non scrive (o, se ha scritto, torna indietro): una correzione che porta a un numero diverso da quello che il Direttore ha indicato è una correzione sbagliata, qualunque cosa dica la premessa."
+      }
+    ]
   },
   "frequenze": {
     "fonte": "Giocatore 0.54 §3.2 (tabella delle frequenze); A.233 (Davide, 02/11/2026): il capitolo è distinto dall’Atto dei PX; scena e capitolo li comincia il Direttore dalla plancia; gli usi per sessione si rinnovano all’inizio della partita; giorno e settimana seguono il calendario della campagna; i comandi non ripristinano PM, munizioni o altre risorse.",

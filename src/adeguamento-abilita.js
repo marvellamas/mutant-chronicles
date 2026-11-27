@@ -595,6 +595,76 @@ export function annullaCorrezioniRimaste(o, dati, { quando = new Date(), chi = "
   return { nuovo: { ...o, correzioni_master: correzioni, sessione }, annullate: rimaste, descrizione };
 }
 
+/**
+ * **La premessa su cui si corregge, verificata prima di scrivere** (lotto 256).
+ *
+ * Il lotto 252 ha costruito lo strumento sullo stato che Davide descrive nel rapporto: l'adeguamento ha annullato i due +1 e ha lasciato
+ * in piedi il −2 che li compensava, quindi Armi da mischia di Dimitri segna 6 invece di 8. L'istantanea del 27/11 mostra un'altra
+ * realtà: nel file i tre sono **tutti attivi**, il file non dice di essere adeguato, e la somma fa 0. Uno strumento che corregge
+ * deve controllare la premessa su cui corregge, non fidarsi di averla letta in un rapporto: è lo stesso difetto del criterio «le
+ * correzioni del giorno dichiarato», una premessa scritta a mano che un giorno non vale più.
+ *
+ * Per ogni Abilità con correzioni da annullare dice se si può **e perché no**. Si ferma quando:
+ *   · il file non è adeguato (`regimeAbilita` ≠ 2): non c'è niente che sia rimasto in piedi dopo un adeguamento che non c'è stato;
+ *   · le correzioni attive dell'Abilità **si compensano già** (somma 0): annullarle non cambia il VA e riscriverebbe il file per niente;
+ *   · annullarle lascerebbe attive correzioni **di segno opposto** (il −2 con i +1 ancora vivi): è il «+2 dove serve 0»;
+ *   · una correzione attiva è «imposta a N», che non è un delta e non si somma;
+ *   · il VA dopo non è quello che la premessa prevede (VA prima − somma annullata);
+ *   · il metro dichiarato nei dati (`regole.json` → `adeguamento_abilita.metro`) per quel personaggio non torna: il VA, o il contatore dei
+ *     punti liberi, che si può leggere solo da un adeguamento aperto.
+ *
+ * Non scrive niente: è la parte che si può provare senza un file.
+ * @returns {{ ok, adeguato, motivi: string[], abilita: object[], metro: object|null }}
+ */
+export function verificaCompensazione(o, dati, { metro = null } = {}) {
+  const motivi = [];
+  const adeguato = o?.scelte?.regimeAbilita === PROFILO_NUOVO;
+  if (!adeguato) {
+    return { ok: false, adeguato, motivi: ['il file non dice di essere adeguato (regimeAbilita assente o diverso da 2): le correzioni alle Abilità contano ancora e non c’è un adeguamento di cui correggere lo strascico'], abilita: [], metro: null };
+  }
+  const rimaste = correzioniRimaste(o, dati);
+  if (!rimaste.length) return { ok: false, adeguato, motivi: ['nessuna correzione da annullare'], abilita: [], metro: null };
+  const tutte = normalizzaCorrezioni(o.correzioni_master).filter((x) => x.stato === 'attiva' && TIPI_CALCOLO.includes(x.tipo));
+  const nomi = [...new Set(rimaste.map((x) => String(x.chiave).replace(/^abilita:/, '')))];
+  const idDaAnnullare = new Set(rimaste.map((x) => x.id));
+  const prova = annullaCorrezioniRimaste(o, dati, { quando: new Date(), chi: 'verifica' });
+  const abilita = nomi.map((nome) => {
+    const attive = tutte.filter((x) => x.chiave === `abilita:${nome}`);
+    const da = attive.filter((x) => idDaAnnullare.has(x.id));
+    const restano = attive.filter((x) => !idDaAnnullare.has(x.id));
+    const r = { nome, attive: attive.map((x) => ({ id: x.id, numero: x.numero, tipo: x.tipo, quando: x.quando })), daAnnullare: da.map((x) => x.id), restano: restano.map((x) => x.id), ferma: null };
+    if (attive.some((x) => x.tipo !== 'aggiungi')) { r.ferma = `una correzione «imposta a N» non è un delta: non si può dire che cosa tolga`; return r; }
+    r.sommaAttive = attive.reduce((a, x) => a + x.numero, 0);
+    r.sommaDaAnnullare = da.reduce((a, x) => a + x.numero, 0);
+    if (r.sommaAttive === 0) { r.ferma = `le ${attive.length} correzioni attive (${attive.map((x) => (x.numero > 0 ? '+' : '') + x.numero).join(', ')}) si compensano già: la somma è 0 e il VA non cambia annullandole`; return r; }
+    if (r.sommaDaAnnullare === 0) { r.ferma = 'le correzioni da annullare si compensano fra loro (somma 0): non c’è niente da correggere'; return r; }
+    const opposte = restano.filter((x) => Math.sign(x.numero) === -Math.sign(r.sommaDaAnnullare));
+    if (opposte.length) { r.ferma = `annullarne ${r.sommaDaAnnullare > 0 ? '+' : ''}${r.sommaDaAnnullare} lascerebbe attive ${opposte.map((x) => (x.numero > 0 ? '+' : '') + x.numero).join(', ')} di segno opposto: i bonus che la correzione compensava sono ancora in piedi`; return r; }
+    const prima = vaAbilita(o, nome, dati); const dopo = vaAbilita(prova.nuovo, nome, dati);
+    r.vaPrima = prima.valore; r.vaDopo = dopo.valore;
+    if (prima.valore === null || dopo.valore === null) { r.ferma = `il VA non si calcola (${prima.motivo ?? dopo.motivo})`; return r; }
+    r.atteso = prima.valore - r.sommaDaAnnullare;
+    if (dopo.valore !== r.atteso) r.ferma = `annullandole il VA passerebbe da ${prima.valore} a ${dopo.valore}, ma la premessa prevede ${r.atteso} (${prima.valore} − ${r.sommaDaAnnullare}): il conto non torna`;
+    return r;
+  });
+  for (const r of abilita) if (r.ferma) motivi.push(`${r.nome}: ${r.ferma}`);
+  // il metro di Davide: se per questo personaggio è dichiarato, il risultato deve essere esattamente quello
+  let m = null;
+  if (metro) {
+    const nomeAbil = abilita.find((r) => r.nome === metro.abilita);
+    const va = vaAbilita(prova.nuovo, metro.abilita, dati).valore;
+    const ap = adeguamentoAperto(prova.nuovo, dati);
+    m = { abilita: metro.abilita, vaAtteso: metro.va, vaOttenuto: va, puntiAttesi: metro.punti_disponibili, puntiOttenuti: ap ? ap.rimasti : null, fonte: metro.fonte ?? null };
+    if (!nomeAbil) motivi.push(`il metro dichiarato parla di ${metro.abilita}, ma lì non c’è niente da annullare`);
+    if (va !== metro.va) motivi.push(`metro: ${metro.abilita} dovrebbe dare ${metro.va} e darebbe ${va}`);
+    if (Number.isInteger(metro.punti_disponibili)) {
+      if (!ap) motivi.push(`metro: il contatore dovrebbe leggere ${metro.punti_disponibili} punti liberi, ma nel file non c’è un adeguamento aperto da cui leggerlo`);
+      else if (ap.rimasti !== metro.punti_disponibili) motivi.push(`metro: il contatore dovrebbe leggere ${metro.punti_disponibili} punti liberi e legge ${ap.rimasti}`);
+    }
+  }
+  return { ok: motivi.length === 0, adeguato, motivi, abilita, metro: m };
+}
+
 export function annullaAdeguamento(o) {
   const r = righeNota(o?.correzioni_master)[0];
   const prima = r?.primaDelAdeguamento;

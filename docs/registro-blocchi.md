@@ -12,13 +12,13 @@ liberato l'avanzamento, il **lotto 246** (24/11) ha censito tutta l'app.
 
 ## Il conto
 
-**Totale 469** blocchi: **pagina 126**, **motore 170**, **server 173**.
+**Totale 471** blocchi: **pagina 126**, **motore 172**, **server 173**.
 Più **26 tolti** dal lotto 246 e **7 liberati** dal lotto 248, che restano scritti qui sotto perché non tornino.
 
 | gruppo | che cos'è | quanti |
 | :-- | :-- | --: |
 | gruppo A | giudica una scelta o un contenuto del giocatore: **tolti tutti**, sono diventati avvisi | 0 (26 tolti) |
-| gruppo B | impedisce una scrittura sbagliata (un altro che salva, un dato impossibile, l'impianto del server) | 404 |
+| gruppo B | impedisce una scrittura sbagliata (un altro che salva, un dato impossibile, l'impianto del server) | 406 |
 | gruppo C | una regola che Davide ha approvato, con il numero della risposta | 41 |
 | gruppo D | l'app non sa che cosa fare: manca un dato. Dal lotto 248 lo dice e lascia passare; dove resta spento è perché non cambierebbe niente | 14 |
 | gruppo E | aspettano Marcello (lotti 247 e 248): lasciarli passare darebbe un risultato vuoto, che non è un avviso | 10 |
@@ -204,7 +204,7 @@ Questi non ci sono più: erano del gruppo A. Il controllo fallisce se tornano.
 | `motore:controllaPuntiDaTablet:rifiuto dichiarato#2` | Server del Direttore, salvataggio della scheda da un tablet | Il giocatore sposta Punti Abilità già spesi in un evento registrato | il tablet riceve «Spostare i punti Abilità già spesi … lo fa il Direttore» e la modifica non si salva | spostare i propri punti fra Abilità dal proprio dispositivo | A | TOLTO dal lotto 247: sono i punti di quel personaggio, e quello che non torna lo dice l’avviso coi numeri (lotto 241). Resta il «no» sul blocco «puntiDirettore», che è una decisione del Direttore | storico del PG (lo scrive la scheda che salva) |
 | `motore:controllaTalentiDaTablet:rifiuto dichiarato#8` | Server del Direttore, salvataggio della scheda da un tablet (Talenti) | Il tablet cambia la scelta di un livello già registrato con un Talento che non rispetta requisiti o categoria | Il tablet riceve un rifiuto e la modifica non si salva: «<motivo>. Una scelta non ammessa la può fare solo il Direttore» | Correggere un Talento di un livello passato con una scelta fuori regola | A | Giudica quale Talento il giocatore ha preso: è esattamente la famiglia di blocchi che il lotto 241 ha reso avvisi, qui rimasta fuori dall'avanzamento | storico del PG |
 
-## Gruppo B — impediscono una scrittura sbagliata (404)
+## Gruppo B — impediscono una scrittura sbagliata (406)
 
 La coda lunga: l'impianto del server (metodo sbagliato, indirizzo inesistente, corpo non leggibile), i `throw` su un
 identificativo che non esiste, i pulsanti che non cambierebbero niente, il 409 di due tablet sulla stessa scheda, il
@@ -212,6 +212,8 @@ filtro dei dati segreti dei nemici. Se Marcello ne toglie uno, la colonna «perc
 
 | id | dove | cosa lo fa scattare | cosa vede il giocatore | cosa gli impedisce | gruppo | perché |
 | :-- | :-- | :-- | :-- | :-- | :-- | :-- |
+| `motore:verificaCompensazione:rifiuto dichiarato` | Strumento da riga di comando `correzione-compensativa.mjs` (non la scheda: nessun giocatore lo vede) | Il file non è adeguato (`regimeAbilita` ≠ 2) | Lo strumento non annulla correzioni e dice che il file non è adeguato | Annullare un −2 compensativo dove l'adeguamento non c'è stato | B | RESTA (lotto 256): lo strumento scrive su un personaggio vero; con la premessa falsa darebbe +2 dove serve 0. Non è un blocco del tavolo: l'app si usa come prima |
+| `motore:verificaCompensazione:rifiuto dichiarato#2` | Strumento `correzione-compensativa.mjs` | Non c'è nessuna correzione da annullare | Lo strumento dice «nessuna correzione da annullare» e non scrive | Riscrivere un file senza niente da cambiare | B | RESTA (lotto 256): una scrittura che non cambia niente fa salire la versione di salvataggio e fa credere al server che il file sia cambiato |
 | `server:apiBackupMaster:403` | Server, copie di sicurezza dei file dei PG prima di una «Modifica master» | La richiesta non arriva dal PC dove gira il server | il tablet riceve il rifiuto «Le copie della «Modifica master» si usano solo dal PC dove gira il server.» e la modifica non si salva | Scrivere o rileggere la copia di sicurezza di un personaggio prima di una modifica del Direttore | B | comandi del Direttore: le copie di sicurezza sono sue e nessun giudizio di gioco entra nel rifiuto |
 | `server:/api/backup-master:400` | Server, salvataggio di una copia di sicurezza della «Modifica master» | Il corpo della richiesta non è JSON leggibile | il tablet riceve il rifiuto «contenuto non valido: …» e la modifica non si salva | Salvare la copia di sicurezza del personaggio | B | impianto: corpo non leggibile, nessun contenuto di gioco guardato |
 | `server:/api/backup-master:400#2` | Server, salvataggio di una copia di sicurezza della «Modifica master» | Il testo della copia non è un personaggio di Mutant (`formato` diverso da «mutant-personaggio») | il tablet riceve il rifiuto «copia non valida: …» e la modifica non si salva | Salvare come copia di sicurezza un file che non è una scheda | B | impedisce di scrivere nella cartella delle copie un file che non è un personaggio: coerenza dei dati, non giudizio |
