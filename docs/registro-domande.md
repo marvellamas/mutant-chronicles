@@ -358,3 +358,4 @@
 | Gli Scudi per categoria (24/11), con il Movimento di Michele | 26/11 | 255 |
 | I Salti ordinari a fasce di Atletica (24/11) | 26/11 | 255 |
 | Lo strumento della compensazione verifica la premessa prima di scrivere (D1: l’adeguamento di Dimitri nei file che ci arrivano non c’è) | 27/11 | 256 |
+| I pulsanti spenti dicono perché al tocco, con una funzione sola (`spento:`, src/ui/spento.js): 43 muti e 65 col motivo nel solo `title`, convertiti; nessun blocco in più né in meno | 27/11 | 258 |

@@ -5,6 +5,10 @@ conclude, un rifiuto del server. Lo tiene aggiornato a macchina `tools/blocchi.m
 e lo ricontrolla a ogni commit `tests/registro-blocchi-246.test.js`, che fallisce se nel codice compare un blocco che
 qui non c'è. Chi aggiunge un controllo che ferma qualcuno scrive qui la sua riga, con il gruppo e il perché.
 
+**Come si scrive un pulsante spento (lotto 258).** Nelle righe sotto, «pulsante spento» vuol dire un pulsante che resta toccabile e **dice perché al tocco**: si scrive
+`spento: 'motivo'` (o `spegni(el, motivo)`, `src/ui/spento.js`), mai `disabled:`. Per il censimento è lo stesso blocco di prima (`tools/blocchi.mjs` lo legge come
+`disabled`: stessi nome e stessi id, nessuna riga è cambiata). La frase «suggerimento …» di una riga è il testo del motivo, che adesso compare anche al tocco.
+
 **Perché esiste.** La sera del **22/11/2026** l'app ha fermato il tavolo per **quaranta minuti**: sette giocatori in
 attesa e un passaggio di livello che non si chiudeva, per un difetto nostro. Il principio del progetto è scritto in
 `CLAUDE.md`: *l'app propone, non obbliga; avvisa, non blocca; l'ultima parola è del master*. Il lotto 241 (23/11) ha
