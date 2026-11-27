@@ -18,11 +18,12 @@ const tab = readFileSync(new URL('src/ui/tab.js', RADICE), 'utf8');
 test('lo spegnimento e il motivo di un tasto vengono dalla stessa funzione', () => {
   assert.match(tab, /const motivoTasto = \(x, delta\) =>/, 'manca `motivoTasto` in src/ui/tab.js');
   // al disegno
-  assert.match(tab, /disabled: !!motivo,\s*\n\s*title: motivo,/, 'il pulsante non prende spegnimento e motivo da `motivoTasto`');
+  // lotto 258: lo spegnimento passa dalla funzione unica (`spento:` / `spegni`), che dà il motivo al tocco e al mouse
+  assert.match(tab, /spento: motivo,/, 'il pulsante non prende spegnimento e motivo da `motivoTasto`');
   // e nell'aggiornamento vivo, che è il percorso su cui il motivo si perdeva
   const vivo = tab.slice(tab.indexOf('registraVivo(campo, () => {'));
   assert.match(vivo.slice(0, 600), /const m = motivoTasto\(x, delta\);/, 'il valore vivo non chiede il motivo a `motivoTasto`');
-  assert.match(vivo.slice(0, 600), /setAttribute\('title', m\)/, 'il valore vivo spegne il tasto senza dargli il motivo');
+  assert.match(vivo.slice(0, 600), /spegni\(el, m\)/, 'il valore vivo spegne il tasto senza dargli il motivo');
 });
 
 test('il motivo non torna a essere calcolato due volte con due testi diversi', () => {
@@ -36,7 +37,7 @@ test('il censimento dei motivi nel solo title gira e dice i suoi numeri', () => 
     cwd: RADICE.pathname.replace(/^\/([A-Za-z]:)/, '$1'), encoding: 'utf8',
   });
   // non si congelano i numeri (cambiano a ogni lotto): si pretende che il censimento li sappia dire
-  assert.match(fuori, /col motivo nel `title`: \d+/);
+  assert.match(fuori, /col motivo nel `title` e `disabled:` \(muto al tocco\): \d+/);
   assert.match(fuori, /spenti senza nessun motivo: \d+/);
   assert.match(fuori, /Il numero è quello dei candidati/, 'il censimento deve dichiarare il limite del metodo');
 });

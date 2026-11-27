@@ -2,6 +2,7 @@
 // livello massimo e requisiti valgono di nuovo; il Direttore può forzare con conferma; ogni modifica va nello storico con
 // data, ora e provenienza; gli incantesimi a mano e quelli degli artefatti restano fuori dalle quote.
 import '../tools/guardia-subito.mjs'; // la guardia sulle cartelle vere, comunque si lanci il test
+import { eSpento } from '../src/ui/spento.js'; // lotto 258: spento = aria-disabled (toccabile, col motivo), non `disabled`
 import { test, before, after } from 'node:test';
 import assert from 'node:assert/strict';
 import { mkdtempSync, rmSync, mkdirSync, readFileSync } from 'node:fs';
@@ -103,7 +104,7 @@ test('scheda: per il giocatore la sostituzione fuori regola è spenta e dice per
   const s = r.radice.tutti().find((n) => n.tagName === 'DETAILS' && /incantesimi-a-mano/.test(n.className));
   const pulsante = s.tutti().find((n) => n.tagName === 'BUTTON' && /^(Sostituisci con|Forza la sostituzione con|Non ammessa:) /.test(n.textContent));
   assert.ok(pulsante, 'il pulsante c’è');
-  assert.ok(pulsante.disabled || pulsante.getAttribute('disabled') !== null, 'spento per il giocatore');
+  assert.ok(eSpento(pulsante), 'spento per il giocatore');
   assert.match(s.textContent, /Non ammessa dalle regole: .*oltre il livello massimo/);
   assert.equal(c.chiamate.filter(([a]) => a === 'sostituisciIncantesimoLivello').length, 0);
 });
@@ -114,7 +115,7 @@ test('scheda: per il Direttore la stessa sostituzione si può forzare', () => {
   const s = r.radice.tutti().find((n) => n.tagName === 'DETAILS' && /incantesimi-a-mano/.test(n.className));
   const pulsante = s.tutti().find((n) => n.tagName === 'BUTTON' && /^Forza la sostituzione con /.test(n.textContent));
   assert.ok(pulsante, 'il pulsante dice che forza');
-  assert.ok(!pulsante.disabled && pulsante.getAttribute('disabled') === null);
+  assert.ok(!eSpento(pulsante));
   assert.match(s.textContent, /Come Direttore puoi forzarla/);
 });
 

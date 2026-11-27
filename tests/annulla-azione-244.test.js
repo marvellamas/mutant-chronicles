@@ -105,8 +105,8 @@ test('IL PULSANTE È CABLATO COSÌ: si ricontrolla al momento di premere, è spe
   assert.match(annulla, /const ora = leggiAnnulla\(\);\s+if \(!ora\.attivo\)/, 'l’azione ricontrolla che sia attivo prima di rimettere qualcosa');
   assert.ok(annulla.indexOf('leggiAnnulla()') < annulla.indexOf('precedenteTavolo.prima'), 'prima il controllo, poi il ripristino');
   assert.match(app, /chiudiPrecedente\(snap, fotoStato\(\)\)/, 'ogni fotografia registra com’era lo stato subito dopo l’azione');
-  assert.match(tab, /aria-disabled', String\(!a\.attivo\)/, 'spento (aria-disabled) quando non si può');
-  assert.match(tab, /annulla\.disabled = !!a\.vuoto/, 'davvero spento solo se non c’è niente da dire; altrimenti il tocco spiega');
+  // lotto 258: lo spegnimento passa dalla funzione unica (src/ui/spento.js): aria-disabled, mai `disabled`, e il tocco mostra il motivo
+  assert.match(tab, /spegni\(annulla, a\.attivo \? null : \(a\.motivo \|\| 'Niente da annullare\.'\)\)/, 'spento (aria-disabled, toccabile) quando non si può, col motivo');
   assert.match(app, /stato\.messaggioScheda = \{ tipo: 'attenzione', testo: ora\.motivo \}/, 'il tocco su un pulsante spento dice il motivo per intero');
   assert.match(tab, /annulla\.title = a\.attivo \?/, 'col motivo o con l’effetto nel suggerimento');
   assert.doesNotMatch(tab, /annulla\.hidden/, 'non si nasconde più: è sempre lì, e dice');

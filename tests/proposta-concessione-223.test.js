@@ -20,6 +20,6 @@ test('la proposta nomina il personaggio e i due livelli, cita la A.286 e dice ch
 test('la finestrella la propone ma non la conferma da sola: il pulsante parte attivo solo con il testo, e il Direttore può cambiarlo', () => {
   const ui = readFileSync(new URL('../src/ui/master.js', import.meta.url), 'utf8');
   assert.match(ui, /proposta: propostaConcessione\(\{ nome, da: livello, a: permesso\.prossimo \}\)/, 'la proposta va solo alla concessione del passaggio');
-  assert.match(ui, /disabled: !proposta\.trim\(\)/, 'senza proposta il pulsante resta spento a campo vuoto, come prima');
+  assert.match(ui, /spento: !proposta\.trim\(\) && MOTIVO_VUOTO/, 'senza proposta il pulsante resta spento a campo vuoto, come prima');
   assert.match(ui, /fine\(campo\.value\.trim\(\)\)/, 'si conferma il testo del campo, non quello proposto: chi lo cambia lo cambia');
 });

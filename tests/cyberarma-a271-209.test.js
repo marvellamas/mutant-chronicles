@@ -153,7 +153,7 @@ test('A.271: il progetto dice prima quale configurazione sta applicando, che cos
   // la tab mostra il riquadro e spegne il pulsante: lo dice il sorgente, la prova nel browser lo conferma
   const tab = readFileSync(new URL('../src/ui/tab.js', import.meta.url), 'utf8');
   assert.match(tab, /data-configurazione-consegna/);
-  assert.match(tab, /disabled: !!cfg\?\.errori\.length/);
+  assert.match(tab, /spento: cfg\?\.errori\.length/);
 });
 
 test('A.271: controllaConsegna non ferma le combinazioni coerenti', () => {

@@ -79,8 +79,8 @@ test('«Sposta i punti» dal tablet: lo spostamento si salva davvero e l’avvis
 
 test('nessun pulsante muto: quello che resta spento perché non cambierebbe niente dice perché', () => {
   const ui = leggi('src/ui/sposta-punti.js');
-  const conferma = /disabled: !modificato\(\)[\s\S]{0,400}?'Conferma'\)/.exec(ui)[0];
-  assert.match(conferma, /title: modificato\(\)/, 'la Conferma spenta ha il suo motivo scritto');
+  const conferma = /spento: !modificato\(\)[\s\S]{0,400}?'Conferma'\)/.exec(ui)[0];
+  assert.match(conferma, /spento: !modificato\(\) && /, 'la Conferma spenta ha il suo motivo scritto (lotto 258: nel `spento:`, non nel solo title)');
   assert.match(conferma, /Nessuno spostamento da confermare/);
 });
 

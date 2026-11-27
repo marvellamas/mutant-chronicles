@@ -2,6 +2,7 @@
 // fermi restando gli altri requisiti) oppure SOLO ANNOTATO (non è appreso, non concede accesso alla magia, Abilità o PM, e
 // non si lancia). Le righe salvate prima della distinzione restano «da classificare», com'erano.
 import '../tools/guardia-subito.mjs'; // la guardia sulle cartelle vere, comunque si lanci il test
+import { eSpento } from '../src/ui/spento.js'; // lotto 258: spento = aria-disabled (toccabile, col motivo), non `disabled`
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
@@ -132,8 +133,8 @@ test('Taumaturgo: un appreso e un annotato nell’elenco, con la loro etichetta;
   assert.match(cura.textContent, /Solo annotato/);
   assert.match(cura.textContent, /Non si lancia: È solo annotato/);
   const lancia = (s) => pulsante(s, 'Lancia!');
-  assert.ok(!lancia(scudo).disabled);
-  assert.ok(lancia(cura).disabled, 'annotato: pulsante spento');
+  assert.ok(!eSpento(lancia(scudo)));
+  assert.ok(eSpento(lancia(cura)), 'annotato: pulsante spento');
   assert.match(lancia(cura).getAttribute('title'), /solo annotato.*non concede accesso alla magia/);
   // nel browser il pulsante spento non reagisce; anche se il pannello venisse aperto da un'altra strada, dice che non si lancia e non offre i passi
   clic(lancia(cura));
@@ -153,7 +154,7 @@ test('personaggio SENZA accesso alla magia: un annotato (e anche un appreso) non
     const [s] = schedeAMano(r);
     assert.ok(s, `${tipo}: la scheda c’è`);
     const b = pulsante(s, 'Lancia!');
-    assert.ok(b.disabled, `${tipo}: pulsante spento`);
+    assert.ok(eSpento(b), `${tipo}: pulsante spento`);
     assert.match(s.textContent, /Non si lancia:/);
     assert.match(b.getAttribute('title'), tipo === 'annotato' ? /solo annotato/ : /non ha accesso alla magia/);
     assert.doesNotMatch(r.testo(), /Nessun potere/, 'resta annotato, visibile');
@@ -167,7 +168,7 @@ test('«da classificare»: restano com’erano, con il segno e un avviso; i gioc
   assert.match(sezioneDi(rg).textContent, /2 da classificare/);
   assert.match(sezioneDi(rg).textContent, /lo dice il Direttore/);
   for (const s of schedeAMano(rg)) {
-    assert.ok(!pulsante(s, 'Lancia!').disabled, 'resta com’era: si lancia con le regole normali');
+    assert.ok(!eSpento(pulsante(s, 'Lancia!')), 'resta com’era: si lancia con le regole normali');
     assert.ok(!pulsante(s, 'Segna come appreso'), 'il giocatore non classifica');
   }
   const master = ctxCon(vecchi);

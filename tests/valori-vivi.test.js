@@ -12,6 +12,7 @@ import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import { contesto, resa, clic, dati } from './scheda-aiuti.js';
 import { aggiornaVivi, quantiVivi } from '../src/ui/vivi.js';
+import { eSpento } from '../src/ui/spento.js'; // lotto 258: un pulsante spento è aria-disabled (toccabile, col motivo), non `disabled`
 
 const ESEMPIO = 'Fratello-Anselmo-Viri_liv3_2026-10-02.json';
 const ROSSO = { uid: 'rosso', rif: 'artefatti:batteria-matrice-da-10-pm-chroma-rosso', stato: 'trasportato', quantita: 1, note: '', sintonizzato: true };
@@ -57,11 +58,11 @@ test('PM del personaggio: lo stesso nodo cambia numero, barra e tasti; nessun no
   // i tasti −: a 0 PM si spengono, +: al massimo si spengono
   const meno = nodi(r, (n) => n.tagName === 'BUTTON' && n.getAttribute('aria-label') === 'Togli 1 a Punti Magia');
   cambia(c, () => ({ pmAttuali: 0 }), ['pmAttuali']);
-  assert.ok(meno.length && meno.every((b) => b.disabled === true));
+  assert.ok(meno.length && meno.every((b) => eSpento(b) && b.dataset.motivo), 'a 0 il − è spento e dice perché');
   cambia(c, () => ({ pmAttuali: c.massimi.pm }), ['pmAttuali']);
   const piu = nodi(r, (n) => n.tagName === 'BUTTON' && n.getAttribute('aria-label') === 'Aggiungi 1 a Punti Magia');
-  assert.ok(piu.every((b) => b.disabled === true), 'al massimo il + è spento');
-  assert.ok(meno.every((b) => b.disabled === false));
+  assert.ok(piu.every((b) => eSpento(b) && /al massimo/.test(b.dataset.motivo)), 'al massimo il + è spento e dice perché');
+  assert.ok(meno.every((b) => !eSpento(b)), 'e il − si riaccende da vivo, senza motivo residuo');
 });
 
 test('PV: stesso comportamento, nella testata e nel riquadro', () => {
@@ -94,7 +95,7 @@ test('cristallo: numero, barra, alone e tasti di quella riga cambiano; la riga e
   assert.match(punto.className, /esausto/);
   // lotto 211: la Magia 1.19 (§6) chiama «scarico» un cristallo a 0 PM che conserva il colore: la parola sta nella riga del tab Poteri
   // (vedi sotto); la riga compatta della colonna non ha il tipo a parole (lotto 244)
-  assert.equal(riga.tutti().find((n) => n.tagName === 'BUTTON' && n.getAttribute('aria-label')?.startsWith('Togli 1')).disabled, true);
+  assert.equal(riga.tutti().find((n) => n.tagName === 'BUTTON' && n.getAttribute('aria-label')?.startsWith('Togli 1'))?.getAttribute('aria-disabled'), 'true');
   cambia(c, (s) => ({ chroma: { ...s.chroma, rosso: { pmAttuali: 7 } } }), ['chroma:rosso']);
   assert.equal(barra.getAttribute('aria-valuenow'), '7');
   assert.doesNotMatch(punto.className, /esausto/);
@@ -165,10 +166,11 @@ test('«Annulla» è sempre nel documento e compare senza ridisegnare', () => {
   const r = resa(c);
   const annulla = nodi(r, (n) => n.tagName === 'BUTTON' && n.textContent.startsWith('↶ Annulla'))[0];
   assert.ok(annulla, 'il pulsante c’è anche senza modifiche da annullare');
-  assert.equal(annulla.disabled, true, 'lotto 244: senza niente da annullare il pulsante c’è, spento, e lo dice');
+  assert.equal(annulla.getAttribute('aria-disabled'), 'true', 'lotto 244 (e 258): senza niente da annullare il pulsante c’è, spento (toccabile), e lo dice');
+  assert.match(annulla.dataset.motivo, /Niente da annullare/, 'e il tocco mostra il motivo');
   const prima = r.radice.tutti();
   cambia(c, (s) => ({ pmAttuali: s.pmAttuali - 1 }), ['pmAttuali']);
-  assert.equal(annulla.disabled, false, 'dopo la modifica si attiva');
+  assert.equal(annulla.getAttribute('aria-disabled'), null, 'dopo la modifica si attiva');
   assert.ok(prima.every((x) => new Set(r.radice.tutti()).has(x)));
 });
 

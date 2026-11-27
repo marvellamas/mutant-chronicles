@@ -14,7 +14,7 @@ const dormi = (ms) => new Promise((ok) => setTimeout(ok, ms));
 
 /** Preme il primo pulsante che corrisponde, dentro `dove`; torna la sua etichetta, o false. */
 export const clic = (p, re, dove = 'body') => p.valuta(`const c = document.querySelector(${JSON.stringify(dove)}); if (!c) return false;`
-  + ` const b = [...c.querySelectorAll('button')].find((x) => ${re}.test(x.textContent.trim()) && !x.disabled);`
+  + ` const b = [...c.querySelectorAll('button')].find((x) => ${re}.test(x.textContent.trim()) && !(x.disabled || x.getAttribute('aria-disabled') === 'true'));`
   + ` if (!b) return false; b.click(); return b.textContent.trim()`);
 
 /** Le etichette dei pulsanti dentro `dove`: serve ai messaggi quando un passo non trova quello che cerca. */

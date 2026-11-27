@@ -106,7 +106,7 @@ export async function apriApp({ cartella, cartelle = {}, eMaster = () => false, 
   };
   /** Clicca il primo pulsante il cui testo combacia, e torna false se non c'è. */
   const clic = (testoRegex, { dentro = 'document' } = {}) => s.valuta(
-    `const b = [...${dentro}.querySelectorAll('button,a')].find((x) => ${testoRegex}.test(x.textContent.trim()) && !x.disabled); if (!b) return false; b.click(); return true`);
+    `const b = [...${dentro}.querySelectorAll('button,a')].find((x) => ${testoRegex}.test(x.textContent.trim()) && !(x.disabled || x.getAttribute('aria-disabled') === 'true')); if (!b) return false; b.click(); return true`);
 
   return {
     url, base, porta,

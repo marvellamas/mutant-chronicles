@@ -6,6 +6,7 @@ import '../tools/guardia-subito.mjs'; // la guardia sulle cartelle vere, comunqu
 //          prezzo; le quantità sono la disponibilità della campagna e NON diventano scorte dell'app; nessuna sigla di Reperibilità nuova;
 //   A.291  Pietre di Luna intere: tre voci (5, 10, 15 PM), colore scelto alla sintonizzazione, promemoria dei 7 giorni, e **la scadenza
 //          la conferma solo il Direttore**: l'app non svuota mai una pietra da sola.
+import { eSpento } from '../src/ui/spento.js'; // lotto 258: spento = aria-disabled (toccabile, col motivo), non `disabled`
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { datiReali, copia } from './helpers.js';
@@ -34,7 +35,7 @@ test('A.289: il Modulo al plasma Banshee è Capitol (non Bauhaus), non in vendit
   assert.deepEqual(m.montabile_su, ['corredi_dispositivi:propulsore-d-assalto-banshee']);
   assert.ok(condizioneCessione(m), 'non è comprabile: la condizione di cessione c’è');
   const bottone = bottoneCompra({ dati, crediti: 100000, compra: () => {}, ui: {}, storico: null }, m, () => ({}));
-  assert.equal(bottone.disabled, true, '«Compra» è spento: non si vende da solo');
+  assert.equal(eSpento(bottone), true, '«Compra» è spento: non si vende da solo');
 });
 
 // ———————————————————————————————————————————————————————————————— A.292
@@ -75,11 +76,11 @@ test('A.290: i quadrelli lunari NON sono in vendita né in baratto: solo in dono
   assert.equal(c.valoreNonPrezzo, true);
   // IL CONTROLLO CHE CONTA: un quadrello lunare non risulta acquistabile (né singolo né a confezione)
   const ctx = { dati, crediti: 100000, compra: () => {}, ui: {}, storico: null };
-  assert.equal(bottoneCompra(ctx, q, () => ({})).disabled, true, 'Compra spento');
+  assert.equal(eSpento(bottoneCompra(ctx, q, () => ({}))), true, 'Compra spento');
   assert.match(bottoneCompra(ctx, q, () => ({})).attributi.title, /dono/, 'e il motivo dice «dono»');
-  assert.equal(bottoneCompra(ctx, { ...q, costo: q.munizione.confezione.costo }, () => ({}), 'Compra 10').disabled, true, 'anche la confezione da dieci');
+  assert.equal(eSpento(bottoneCompra(ctx, { ...q, costo: q.munizione.confezione.costo }, () => ({}), 'Compra 10')), true, 'anche la confezione da dieci');
   // senza i crediti il pulsante dice lo stesso: non è un problema di soldi
-  assert.equal(bottoneCompra({ ...ctx, crediti: 0 }, q, () => ({})).disabled, true);
+  assert.equal(eSpento(bottoneCompra({ ...ctx, crediti: 0 }, q, () => ({}))), true);
 });
 
 test('A.290: la Balestra d’osso dice come si ottiene (3–4 al massimo, non una quota), e le quantità della campagna NON sono scorte dell’app', () => {
@@ -110,7 +111,7 @@ test('A.290: tutte le voci «non in vendita» del catalogo hanno una condizione 
   for (const o of nonVendibili) {
     const c = condizioneCessione(o);
     assert.ok(c && c.testo.length > 20, `${o.nome}: manca la condizione di cessione`);
-    assert.equal(bottoneCompra({ dati, crediti: 1e6, compra: () => {}, ui: {}, storico: null }, o, () => ({})).disabled, true, `${o.nome}: «Compra» deve restare spento`);
+    assert.equal(eSpento(bottoneCompra({ dati, crediti: 1e6, compra: () => {}, ui: {}, storico: null }, o, () => ({}))), true, `${o.nome}: «Compra» deve restare spento`);
   }
 });
 
