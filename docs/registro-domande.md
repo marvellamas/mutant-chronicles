@@ -6,7 +6,7 @@
 
 **Come si legge la colonna «Applicata».** Una data vuol dire che l’app fa quello che Davide ha deciso; «già così» che lo faceva già prima della risposta; «vedi A.n» che il numero è trattato dentro un’altra voce; «chiusa», «ritirata» o «mai usato» che non c’è niente da applicare. Dove la risposta ne supera un’altra, o dove resta una riserva, è scritto nella stessa riga.
 
-**I numeri che non sono qui sono nel Doc**, perché riguardano Davide o sono lavoro in corso: A.296, da A.299 a A.307, A.309, A.310, A.312 e A.313. (La A.311 è qui: l’abbiamo ritirata.)
+**I numeri che non sono qui sono nel Doc**, perché riguardano Davide o sono lavoro in corso: A.296, da A.299 a A.306, A.312, A.313 e A.314. (La A.311 è qui: l’abbiamo ritirata.)
 
 ## Le domande, una riga per numero
 
@@ -294,10 +294,13 @@
 | A.292 | Il peso della Cartuccia Stabilizzante | 19/11 | 19/11 | 225 |
 | A.293 | Dimitri: le correzioni di Caratteristica del 2 novembre | 19/11 | 19/11 | 225 |
 | A.294 | Le funzioni dell'Elmetto Recon ASA | 19/11 | 20/11 | 228 |
-| A.295 | Le voci SIA nel catalogo, e i soprabiti dei PG | 19/11 | 20/11 — la migrazione dei cinque rimasti (Botha, Duncan, Michele, Oshi, Pablo; Dimitri e Lucas sono già a posto): sezione 8 | 228 |
+| A.295 | Le voci SIA nel catalogo, e i soprabiti dei PG | 19/11 | 20/11 — la migrazione del soprabito: nell’istantanea del 27/11 resta da fare solo per Botha (il 21/11 erano cinque); sezione 8 | 228 |
 | A.297 | Il tiro dei PV e dei PM alla salita di livello | 19/11 | 20/11 | 228 |
 | A.298 | Pietre di Luna: l'ultimo contatto e l'avviso «Verifica il vincolo» | 19/11 | 20/11 | 228 |
-| A.308 | Il focalizzatore Verde sulla CyberArma di Dimitri | 21/11 | 23/11 — sì, installato (riferito da Marcello; non ancora scritto nell’E&L né nel Doc). Applicata: VA 10, danno 1d8+2, Parata 9 solo con l’arma manifestata, dichiarato nei dati per quell’esemplare | 240 |
+| A.307 | Il cristallo Viola del Tecnomante: 1d8 Magico senza bonus fisso | 24/11 | già così — verificato nei dati il 26/11 (il Viola non ha il bonus fisso, e porta la Corruzione del singolo frammento) | 255 |
+| A.308 | Il focalizzatore Verde sulla CyberArma di Dimitri | 21/11 | 23/11 — sì, installato (riferito da Marcello; scritto poi nell’E&L del 24/11). Applicata: VA 10, danno 1d8+2, Parata 9 solo con l’arma manifestata, dichiarato nei dati per quell’esemplare | 240 |
+| A.309 | Le voci di CyberArma visibili sono cinque | 24/11 | 26/11 — cinque CyberArma nel catalogo, una per colore; originale, Batteria Verde e NeC restano `non_elencata` (si leggono, non si offrono) e l’alimentazione è un’opzione dello stesso esemplare | 254, 255 |
+| A.310 | L’Elmetto Recon ASA: 7.500 cr, Non comune, PS 12, RA | 24/11 | già così — verificato nei dati il 26/11; ASA e SIA restano due voci distinte | 255 |
 | A.311 | L’arco di tiro del Mitragliatore Leggero Punisher sullo Scout T4 di serie (domanda del lotto 237) | — | ritirata il 23/11: **errore nostro**, il manuale lo dà (Veicoli 0.23 §10, «rotazione orizzontale di 360° nei limiti degli ostacoli reali»); nei dati l’arco manca ancora e lo scriviamo noi | 239 |
 
 ## Voci senza numero (manuali recepiti, schede, lavori nostri)
@@ -350,3 +353,8 @@
 | Lo Scout T4 di serie e il FIAT LUX: due profili distinti (Veicoli §16.1, A.284) | 23/11 | 237 |
 | Il trasporto a bordo di una nave (ingombro, altezza, piazzola) e il recupero dello scudo solo dentro uno scontro aperto | 23/11 | 238 |
 | Giocatore 0.66, Equipaggiamento 0.43 e Direttore 0.52 (veleni e malattie a fasi, playtest a matita): letti, non recepiti | 23/11 | 239 |
+| Il collaudo di Davide del 25/11: Dimitri (Armi da mischia), la copia scrivibile dei sette, la riga «Fonte» della CyberArma, le due Neverlost confrontate | 26/11 | 252 |
+| Le quattro voci di «Catalogo e interfaccia» del collaudo (valore indicativo, cinque CyberArma, «+1» dell’Elmetto, decollo e «Veloce») | 26/11 | 254 |
+| Gli Scudi per categoria (24/11), con il Movimento di Michele | 26/11 | 255 |
+| I Salti ordinari a fasce di Atletica (24/11) | 26/11 | 255 |
+| Lo strumento della compensazione verifica la premessa prima di scrivere (D1: l’adeguamento di Dimitri nei file che ci arrivano non c’è) | 27/11 | 256 |
